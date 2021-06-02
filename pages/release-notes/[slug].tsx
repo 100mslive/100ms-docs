@@ -3,16 +3,17 @@ import hydrate from 'next-mdx-remote/hydrate';
 import { getFiles, getFileBySlug } from '@/lib/mdx';
 import MDXComponents from '@/components/MDXComponents';
 import React from 'react';
+import DocLayout from '@/layouts/DocLayout';
 
 export default function Blog({ mdxSource, frontMatter }: any) {
     const content = hydrate(mdxSource, {
         components: MDXComponents
     });
-    return <>{content}</>;
+    return <DocLayout>{content}</DocLayout>;
 }
 
 export async function getStaticPaths() {
-    const notes = await getFiles('notes');
+    const notes = await getFiles('release-notes');
 
     return {
         paths: notes.map((p) => ({
@@ -26,6 +27,6 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
     // params: { slug: 'blog-slug' }
-    const post = await getFileBySlug('notes', params.slug);
+    const post = await getFileBySlug('release-notes', params.slug);
     return { props: post };
 }

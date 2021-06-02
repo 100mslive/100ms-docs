@@ -1,0 +1,32 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import hydrate from 'next-mdx-remote/hydrate';
+import { getFiles, getFileBySlug } from '@/lib/mdx';
+import MDXComponents from '@/components/MDXComponents';
+import React from 'react';
+import DocLayout from '@/layouts/DocLayout';
+
+export default function Blog({ mdxSource, frontMatter }: any) {
+    const content = hydrate(mdxSource, {
+        components: MDXComponents
+    });
+    return <DocLayout>{content}</DocLayout>;
+}
+
+export async function getStaticPaths() {
+    const notes = await getFiles('clientsdks');
+
+    return {
+        paths: notes.map((p) => ({
+            params: {
+                slug: p.replace(/\.mdx/, '')
+            }
+        })),
+        fallback: false
+    };
+}
+
+export async function getStaticProps({ params }: any) {
+    // params: { slug: 'blog-slug' }
+    const post = await getFileBySlug('clientsdks', params.slug);
+    return { props: post };
+}
