@@ -10,11 +10,11 @@ import MDXComponents from '@/components/MDXComponents';
 const root = process.cwd();
 
 export async function getFiles(type: string) {
-    return fs.readdirSync(path.join(root, 'data', type));
+    return fs.readdirSync(path.join(root, 'docs', type));
 }
 
 export async function getFileBySlug(type: string, slug: string) {
-    const source = fs.readFileSync(path.join(root, 'data', type, `${slug}.mdx`), 'utf8');
+    const source = fs.readFileSync(path.join(root, 'docs', type, `${slug}.mdx`), 'utf8');
 
     const { data, content } = matter(source);
     const mdxSource = await renderToString(content, {
@@ -41,10 +41,10 @@ export async function getFileBySlug(type: string, slug: string) {
 }
 
 export async function getAllFilesFrontMatter(type: string) {
-    const files = fs.readdirSync(path.join(root, 'data', type));
+    const files = fs.readdirSync(path.join(root, 'docs', type));
 
     return files.reduce((allPosts, postSlug) => {
-        const source = fs.readFileSync(path.join(root, 'data', type, postSlug), 'utf8');
+        const source = fs.readFileSync(path.join(root, 'docs', type, postSlug), 'utf8');
         const { data } = matter(source);
         return [
             {

@@ -1,10 +1,9 @@
+import React from 'react';
+import Logo from '@/assets/logo/logo';
 import SvgMoon from '@/assets/icons/Moon';
 import SvgSun from '@/assets/icons/Sun';
-import React from 'react';
-import Link from 'next/link';
-import LogoSvg from '@/assets/logo/logo';
 
-const Navbar = () => {
+const Sidebar = () => {
     const [isDark, setIsDark] = React.useState<boolean>(true);
     React.useEffect(() => {
         const docHtml = document.documentElement.dataset;
@@ -33,42 +32,50 @@ const Navbar = () => {
         setIsDark(!isDark);
     };
     return (
-        <nav>
-            <div className="nav-logo">
-                <Link href="/">
-                    <LogoSvg height={50} className="pointer" />
-                </Link>
+        <div className="sidebar">
+            <div className="sidebar-header">
+                <Logo width={36} />
+                <b>100ms 2.0</b>
                 <span
                     aria-label="theme-toggle-button"
                     className="pointer"
                     role="button"
+                    style={{ paddingTop: '5px', paddingLeft: '10px' }}
                     tabIndex={0}
                     onKeyPress={() => toggleTheme()}
                     onClick={() => toggleTheme()}>
                     {isDark ? <SvgMoon /> : <SvgSun />}
                 </span>
             </div>
-            <style jsx>
-                {`
-                    nav {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        width: 100%;
-                        padding: 10px 0;
-                        position: sticky;
-                        z-index: 50;
-                        top: 0;
-                        background-color: var(--background);
-                    }
-                    .nav-logo {
-                        display: flex;
-                        align-items: center;
-                    }
-                `}
-            </style>
-        </nav>
+            <h1>Nice</h1>
+            <style jsx>{`
+                .sidebar {
+                    width: calc((100% - 1448px) / 2 + 298px);
+                    display: flex;
+                    flex-direction: column;
+                    align-items: stretch;
+                    border-right: 1px solid var(--accents2);
+                    height: 100vh;
+                    min-width: 298px;
+                    background-color: var(--accents1);
+                    overflow-x: hidden;
+                    overflow-y: overlay;
+                    top: 0;
+                    left: 0;
+                    position: sticky;
+                }
+                .sidebar-header {
+                    padding: 20px 10px;
+                    font-size: 24px;
+                    display: flex;
+                    align-items: center;
+                }
+                .sidebar-header b {
+                    margin-left: 0.5rem;
+                }
+            `}</style>
+        </div>
     );
 };
 
-export default Navbar;
+export default Sidebar;
