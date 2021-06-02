@@ -37,6 +37,9 @@ const CssBaseline: React.FC = () => (
                 --token_inserted: ${dark.token_inserted};
                 --token_comment: ${dark.token_comment};
                 --code_line_marker: ${dark.code_line_marker};
+                --success-lighter: #d3e5ff;
+                --success-light: #3291ff;
+                --success: #0070f3;
             }
 
             [data-theme='light'] {
@@ -68,23 +71,15 @@ const CssBaseline: React.FC = () => (
                 --token_inserted: ${dark.token_inserted};
                 --token_comment: ${light.token_comment};
                 --code_line_marker: ${light.code_line_marker};
+                --success-lighter: #d3e5ff;
+                --success-light: #3291ff;
+                --success: #0070f3;
             }
             html,
             body {
                 background-color: var(--background);
                 color: var(--foreground);
                 transition: none;
-            }
-
-            @font-face {
-                font-family: 'Inter';
-                font-style: normal;
-                font-weight: 100 900;
-                font-display: optional;
-                src: url(/fonts/inter-var-latin.woff2) format('woff2');
-                unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
-                    U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF,
-                    U+FFFD;
             }
             html {
                 font-size: 16px;
@@ -199,7 +194,6 @@ const CssBaseline: React.FC = () => (
             h5,
             h6 {
                 color: inherit;
-                margin: 0 0 0.625rem 0;
             }
 
             h1 {
@@ -314,7 +308,10 @@ const CssBaseline: React.FC = () => (
             }
 
             hr {
-                border-color: var(--accents2);
+                border: 0;
+                border-top: 1px solid rgba(141, 147, 171, 0.3);
+                height: 2px;
+                margin: 40px 0;
             }
 
             blockquote {

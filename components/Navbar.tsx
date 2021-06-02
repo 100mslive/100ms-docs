@@ -36,9 +36,8 @@ const Navbar = () => {
         <nav>
             <div className="nav-logo">
                 <Link href="/">
-                    <LogoSvg className="pointer" fill={isDark ? `white` : `black`} />
+                    <LogoSvg height={50} className="pointer" />
                 </Link>
-
                 <span
                     aria-label="theme-toggle-button"
                     className="pointer"
@@ -49,11 +48,6 @@ const Navbar = () => {
                     {isDark ? <SvgMoon /> : <SvgSun />}
                 </span>
             </div>
-            <div className="nav-wrapper">
-                {/* <Link href="/blogs">
-                    <span className="pointer">Blogs</span>
-                </Link> */}
-            </div>
             <style jsx>
                 {`
                     nav {
@@ -61,8 +55,7 @@ const Navbar = () => {
                         justify-content: space-between;
                         align-items: center;
                         width: 100%;
-                        padding: 30px 0;
-                        margin-bottom: 40px;
+                        padding: 10px 0;
                         position: sticky;
                         z-index: 50;
                         top: 0;
@@ -71,19 +64,6 @@ const Navbar = () => {
                     .nav-logo {
                         display: flex;
                         align-items: center;
-                    }
-                    .nav-logo span {
-                        margin-top: 5px;
-                        margin-left: 15px;
-                    }
-                    .nav-wrapper {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        font-weight: 600;
-                    }
-                    .nav-wrapper span {
-                        margin-left: 15px;
                     }
                 `}
             </style>

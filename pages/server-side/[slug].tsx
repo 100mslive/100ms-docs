@@ -1,19 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import hydrate from 'next-mdx-remote/hydrate';
 import { getFiles, getFileBySlug } from '@/lib/mdx';
-import NoteLayout from '@/layouts/NoteLayout';
 import MDXComponents from '@/components/MDXComponents';
 import React from 'react';
+import DocLayout from '@/layouts/DocLayout';
+import getSidebarData from '@/lib/getSidebarData';
 
-export default function Blog({ mdxSource, frontMatter }: any) {
+export default function Blog(data: any) {
+    const { mdxSource, frontMatter } = data.post;
+    const sideArr = data.sidebarData;
     const content = hydrate(mdxSource, {
         components: MDXComponents
     });
-    return <NoteLayout frontMatter={frontMatter}>{content}</NoteLayout>;
+    return (
+        <DocLayout frontMatter={frontMatter} docsArr={sideArr}>
+            {content}
+        </DocLayout>
+    );
 }
 
 export async function getStaticPaths() {
-    const notes = await getFiles('test');
+    const notes = await getFiles('server-side');
 
     return {
         paths: notes.map((p) => ({
@@ -27,6 +34,8 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
     // params: { slug: 'blog-slug' }
-    const post = await getFileBySlug('test', params.slug);
-    return { props: post };
+    const sidebarData = await getSidebarData();
+    const post = await getFileBySlug('server-side', params.slug);
+    const data = { sidebarData, post };
+    return { props: data };
 }

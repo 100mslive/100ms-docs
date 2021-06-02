@@ -1,0 +1,81 @@
+---
+title: Create Room
+excerpt: Create Room
+date: 31-12-2020
+---
+
+# Create room
+
+---
+
+## Overview
+
+To allow users to join a 100ms video conferencing session inside your app, you first need to create a `room`. The `rooms` API allows you to create rooms and configure room settings - whether you want to enable recording, where to store recording etc
+
+---
+
+## Base URL
+
+All 100ms APIs will have the following base URL
+
+---
+
+### recording_info
+
+<table className="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>enabled</td>
+            <td>
+                <code>boolean</code>
+            </td>
+            <td>Enable recording. Disabled by default</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>upload_info</td>
+            <td>
+                <code>object</code>
+            </td>
+            <td>
+                <p>
+                    Object of type <code>upload_info</code>. This object contains information on
+                    recordings&apos; storage location.
+                </p>
+                <p></p>
+                <p>
+                    If you want to store recording with 100ms, and not use your own <code>s3</code>,
+                    don&apos;t add this to the object
+                </p>
+            </td>
+            <td>No</td>
+        </tr>
+    </tbody>
+</table>
+
+---
+
+### upload_info
+
+| Name        | Type     | Description                                                                                                                                                                                      | Required |
+| :---------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| type        | `string` | Upload Destination type. Currently, only `s3` is supported                                                                                                                                       | Yes      |
+| location    | `string` | Name of the AWS s3 bucket in which you want to store all recordings                                                                                                                              | Yes      |
+| prefix      | `string` | Upload prefix path                                                                                                                                                                               | No       |
+| options     | `object` | Options to be used for uploading i.e. region, ACLs etc                                                                                                                                           | No       |
+| credentials | `object` | Object of type `Credentials`. This is used to share AWS credentials to access the s3 bucket specified. Leave this blank if you are using an `IAM role` to provide 100ms access to your s3 bucket | No       |
+
+### credentials
+
+| Name   | Type     | Description                                                                  | Required |
+| :----- | :------- | :--------------------------------------------------------------------------- | :------- |
+| key    | `string` | Access Key for the AWS account hosting the s3 bucket for recordings' storage | Yes      |
+| secret | `string` | Secret for the AWS account hosting the s3 bucket for recordings' storage     | Yes      |
