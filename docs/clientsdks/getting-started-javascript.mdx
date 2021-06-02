@@ -1,3 +1,9 @@
+---
+title: Getting Started - JavaScript
+excerpt: Getting Started - JavaScript
+date: 31-12-2020
+---
+
 # Getting Started - JavaScript
 
 ### Introduction
@@ -14,10 +20,10 @@ Our alpha release has been tested on modern Chrome browsers. We will expand brow
 
 ### Basic Concepts
 
-* `Room` - A room represents a real-time audio, video session, the basic building block of the 100ms Video SDK
-* `Track` - A track represents either the audio or video that makes up a peer's stream
-* `Peer` - A peer represents all participants connected to a room. Peers can be "local" or "remote"
-* `Broadcast` - A local peer can send any message/data to all remote peers in the room
+-   `Room` - A room represents a real-time audio, video session, the basic building block of the 100ms Video SDK
+-   `Track` - A track represents either the audio or video that makes up a peer's stream
+-   `Peer` - A peer represents all participants connected to a room. Peers can be "local" or "remote"
+-   `Broadcast` - A local peer can send any message/data to all remote peers in the room
 
 ### Pre-requisites
 
@@ -29,7 +35,7 @@ npm install --save @100mslive/hms-video@latest
 
 2. **Get Access Keys**: You can get your access keys in the [Developer](https://dashboard.100ms.live/developer) section of [100ms dashboard](https://dashboard.100ms.live)
 
-4. **Create a room and setup a token generation service**: To create a room, follow the steps described [in this section](../server-side/create-room.md). To setup a token generation service, follow the steps in [this section](../server-side/generate-client-side-token.md). Alternatively, you can use our [quickstart server](../server-side/100ms-quickstart-app-server.md) for this.
+3. **Create a room and setup a token generation service**: To create a room, follow the steps described [in this section](../server-side/create-room.md). To setup a token generation service, follow the steps in [this section](../server-side/generate-client-side-token.md). Alternatively, you can use our [quickstart server](../server-side/100ms-quickstart-app-server.md) for this.
 
 ### Import modules & instantiate 100ms Client
 
@@ -43,45 +49,43 @@ const hms = new HMSSdk();
 
 {% tabs %}
 {% tab title="Joining code" %}
+
 ```jsx
 const joinConfig = {
     userName: 'Erlich Bachmann',
     authToken: '<Auth token>', //This is the client-side token generated from your token service
-    metaData: 'Custom description', //This is a custom data. You can send stringified JSON  
+    metaData: 'Custom description', //This is a custom data. You can send stringified JSON
     settings: {
         isAudioMuted: false,
-        isVideoMuted: false,
-    },
+        isVideoMuted: false
+    }
 };
 
 const listener = {
-    onJoin(room){
+    onJoin(room) {
         // This will be called on a successful JOIN of the room by the user
         // This is the point where applications can stop showing its loading state
         // Parameter room: the room which was joined
-        
         // For now, no events are sent to this callback. Leave this empty
     },
-    onRoomUpdate(type, room){
+    onRoomUpdate(type, room) {
         // This is called when there is a change in any property of the Room. This is an advanced use case
         // Parameters:
         // type: the triggered update type. Should be used to perform different UI Actions
         // room: the room which was joined
-        
         // check the type tab to see all types
     },
-    onPeerUpdate(type, peer){
+    onPeerUpdate(type, peer) {
         // This will be called whenever there is an update on an existing peer
         // or a new peer got added/existing peer is removed.
         // This callback can be used to keep a track of all the peers in the room
-        // Parameters:        
+        // Parameters:
         // type: the triggered update type. Should be used to perform different UI Actions
         // peer: the peer who joined/left or was updated
-        // .Usually a call to getPeers(), getLocalPeer() is needed here 
-
-        // check the type tab to see all types    
+        // .Usually a call to getPeers(), getLocalPeer() is needed here
+        // check the type tab to see all types
     },
-    onTrackUpdate(type, track, peer){
+    onTrackUpdate(type, track, peer) {
         // This is called when there are updates on an existing track
         // or a new track got added/existing track is removed
         // This callback can be used to render the video on screen whenever a track gets added
@@ -90,16 +94,14 @@ const listener = {
         // track: the track which was added, removed or updated
         // peer: the peer for which track was added, removed or updated
         // Usually a call to getPeers(), getLocalPeer() is needed here
-
         // check the type tab to see all types
-
-        },
-    onMessageReceived(message){
+    },
+    onMessageReceived(message) {
         // This is called when there is a new broadcast message from any other peer in the room
         // This can be used to implement chat is the room
         // Parameter message: the received broadcast message
-        },
-    onError(error){
+    },
+    onError(error) {
         // This will be called when there is an error in the system
         // and SDK has already retried to fix the error
         // Parameter error: the error that occured
@@ -112,11 +114,13 @@ function onAudioLevelUpdate(speakers) {
 }
 
 hms.join(joinConfig, listener);
-hms.addAudioListener({onAudioLevelUpdate:onAudioLevelUpdate});
+hms.addAudioListener({ onAudioLevelUpdate: onAudioLevelUpdate });
 ```
+
 {% endtab %}
 
 {% tab title="Room,  Peer,  Track Interfaces" %}
+
 ```jsx
 interface HMSPeer {
     peerId: string;
@@ -152,9 +156,11 @@ interface HMSMessage {
     message: string;
 }
 ```
+
 {% endtab %}
 
 {% tab title="Update types" %}
+
 ```jsx
 
 //this is the enum for type parameter in onPeerUpdate
@@ -175,6 +181,7 @@ enum HMSTrackUpdate {
 
 // There are other events yet to be implmeneted, which will fill in the enum gaps
 ```
+
 {% endtab %}
 {% endtabs %}
 
@@ -196,7 +203,7 @@ const videoElement = document.getElementById('local-video-id');
 localVideoTrack.addSink(videoElement);
 
 //rendering code
-<video id='local-video-id' autoplay muted></video>
+<video id="local-video-id" autoplay muted></video>;
 ```
 
 ### Mute/unmute local tracks
@@ -214,12 +221,12 @@ localVideoTrack.addSink(videoElement);
 
 ```jsx
 // Starting screenshare
-hms.startScreenshare(onStop) 
-    // onStop is the callback called if user stops the screenshare
-    // from the system prompt
-    
+hms.startScreenshare(onStop);
+// onStop is the callback called if user stops the screenshare
+// from the system prompt
+
 // Stopping screenshare
-hms.stopScreensare()
+hms.stopScreensare();
 ```
 
 ### Leave
@@ -232,24 +239,23 @@ hms.leave();
 
 #### Showing a preview screen before joining
 
-To display a preview of your local stream before joining the call, you can use the `getLocalStream` method provided by the SDK.   
-  
+To display a preview of your local stream before joining the call, you can use the `getLocalStream` method provided by the SDK.
+
 This method does NOT publish this video to the room. Publishing `localStream` is handled via the join method
 
 ```jsx
 import { getLocalStream } from '@100mslive/hms-video';
 
 const previewStream = await getLocalStream({
-  audio: { deviceId: selectedAudioInput },
-  video: { deviceId: selectedVideoInput },
-}); //parameters to the function is a constraints object - 
-    //Refer https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamConstraints
+    audio: { deviceId: selectedAudioInput },
+    video: { deviceId: selectedVideoInput }
+}); //parameters to the function is a constraints object -
+//Refer https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamConstraints
 
 const videoElement = document.getElementById('preview-video-id');
 videoElement.srcObject = previewStream;
 
-
-<video id='preview-video-id' autoplay muted></video>
+<video id="preview-video-id" autoplay muted></video>;
 ```
 
 #### Changing mic/camera before/during the call
@@ -259,7 +265,7 @@ videoElement.srcObject = previewStream;
 const joinConfig = {
     userName: 'Erlich Bachmann',
     authToken: '<Auth token>', //This is the client-side token generated from your token service
-    metaData: 'Custom description', //This is a custom data. You can send stringified JSON  
+    metaData: 'Custom description', //This is a custom data. You can send stringified JSON
     settings: {
         isAudioMuted: false,
         isVideoMuted: false,
@@ -273,4 +279,3 @@ hms.join(joinConfig, listener);
 //Changing midway during the call
 localVideoTrack.setSettings({deviceId:'default'});
 ```
-

@@ -12,7 +12,11 @@ export default function Blog(data: any) {
     const content = hydrate(mdxSource, {
         components: MDXComponents
     });
-    return <DocLayout docsArr={sideArr}>{content}</DocLayout>;
+    return (
+        <DocLayout frontMatter={frontMatter} docsArr={sideArr}>
+            {content}
+        </DocLayout>
+    );
 }
 
 export async function getStaticPaths() {

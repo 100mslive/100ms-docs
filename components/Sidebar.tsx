@@ -91,10 +91,15 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                     padding-bottom: 100px;
                 }
                 .sidebar-header {
+                    background-color: var(--accents1);
+                    top: 0;
+                    left: 0;
+                    position: sticky;
                     padding: 20px 10px;
                     font-size: 24px;
                     display: flex;
                     align-items: center;
+                    z-index: 100;
                 }
                 .sidebar-header b {
                     margin-left: 0.5rem;
