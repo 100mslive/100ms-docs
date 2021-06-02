@@ -1,0 +1,59 @@
+---
+title: Introduction to Javascript
+excerpt: Here we learn JavaScript, starting from scratch and go on to advanced concepts like OOP.
+date: 31-12-2020
+slug: 1-intro-to-javascript
+---
+
+### What is JavaScript?
+
+```swift
+  // Basic Usage
+  hms = HMSSDK.build() // ensure to keep an instance of HMSSDK alive in the class as an instance property
+  let config = HMSConfig(userID: "userID", roomID: "roomID", authToken: "authToken")
+  hms?.join(config: config, delegate: self)
+
+
+  // Advanced Usage
+  hms = HMSSDK.build { (hms) in
+            hms.logLevel = .verbose
+            hms.analyticsLevel = .verbose
+            let videoSettings = HMSVideoTrackSettings(maxBitrate: 512,
+                                                      maxFrameRate: 25,
+                                                      cameraFacing: .front,
+                                                      trackDescription: "Just a normal video track")
+            let audioSettings = HMSAudioTrackSettings(maxBitrate: 32, trackDescription: "Just a normal audio track")
+            hms.trackSettings = HMSTrackSettings(videoSettings: videoSettings, audioSettings: audioSettings)
+            hms.logger = self
+        }
+
+  let config = HMSConfig(userName: "userName",
+                           userID: "userID",
+                           roomID: "roomID",
+                        authToken: "authToken",
+              shouldSkipPIIEvents: true,
+                         metaData: "someMetaData",
+                         endpoint: "wss://myWebSocketEndpoint/ws")
+
+  hms?.join(config: config, delegate: self)
+```
+
+JavaScript was initially created to “make web pages alive”.
+
+The programs in this language are called scripts. They can be written right in a web page’s HTML and run automatically as the page loads.
+
+Scripts are provided and executed as plain text. They don’t need special preparation or compilation to run.
+
+In this aspect, JavaScript is very different from another language called Java.
+
+Today, JavaScript can execute not only in the browser, but also on the server, or actually on any device that has a special program called the JavaScript engine.
+
+The browser has an embedded engine sometimes called a “JavaScript virtual machine”.
+
+Different engines have different “codenames”. For example:
+
+-   V8 – in Chrome and Opera.
+-   SpiderMonkey – in Firefox.
+-   There are other codenames like “Chakra” for IE, “ChakraCore” for Microsoft Edge, “Nitro” and “SquirrelFish” for Safari, etc.
+
+The terms above are good to remember because they are used in developer articles on the internet. We’ll use them too. For instance, if “a feature X is supported by V8”, then it probably works in Chrome and Opera.
