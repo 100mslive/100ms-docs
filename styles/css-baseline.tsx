@@ -40,6 +40,13 @@ const CssBaseline: React.FC = () => (
                 --success-lighter: #d3e5ff;
                 --success-light: #3291ff;
                 --success: #0070f3;
+                --error-lighter: #f7d4d6;
+                --error-light: #ff1a1a;
+                --error: #e00;
+                --error-dark: #c50000;
+                --warning-lighter: #ffefcf;
+                --warning-light: #f7b955;
+                --warning: #f5a623;
             }
 
             [data-theme='light'] {
@@ -74,6 +81,13 @@ const CssBaseline: React.FC = () => (
                 --success-lighter: #d3e5ff;
                 --success-light: #3291ff;
                 --success: #0070f3;
+                --error-lighter: #f7d4d6;
+                --error-light: #ff1a1a;
+                --error: #e00;
+                --error-dark: #c50000;
+                --warning-lighter: #ffefcf;
+                --warning-light: #f7b955;
+                --warning: #f5a623;
             }
             html,
             body {
