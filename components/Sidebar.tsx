@@ -2,8 +2,13 @@ import React from 'react';
 import Logo from '@/assets/logo/logo';
 import SvgMoon from '@/assets/icons/Moon';
 import SvgSun from '@/assets/icons/Sun';
+import { SidebarDataType } from '@/lib/getSidebarData';
 
-const Sidebar = () => {
+interface Props {
+    docsArr?: SidebarDataType[];
+}
+
+const Sidebar: React.FC<Props> = ({ docsArr }) => {
     const [isDark, setIsDark] = React.useState<boolean>(true);
     React.useEffect(() => {
         const docHtml = document.documentElement.dataset;
@@ -50,29 +55,16 @@ const Sidebar = () => {
 
             {/* Sidebar Menu Section */}
 
-            <section className="menu-container">
-                <div className="menu-item">Basics</div>
-                <div className="menu-item">What's new in 2.0</div>
-            </section>
-            <section className="menu-container">
-                <div className="menu-title">SERVER SIDE</div>
-                <div className="menu-item">Introduction to tokens</div>
-                <div className="menu-item">Generate server-side token</div>
-                <div className="menu-item">Create room</div>
-                <div className="menu-item">Generate client-side token</div>
-                <div className="menu-item">100ms quickstart app server</div>
-            </section>
-            <section className="menu-container">
-                <div className="menu-title">CLIENT SDKs</div>
-                <div className="menu-item">Getting Started - Android</div>
-                <div className="menu-item">Getting Started - iOS</div>
-                <div className="menu-item">Getting Started - JavaScript</div>
-            </section>
-            <section className="menu-container">
-                <div className="menu-title">WEB FRAMEWORKS</div>
-                <div className="menu-item">Getting Started - React</div>
-                <div className="menu-item">Getting Started - React UI Components</div>
-            </section>
+            {docsArr!.map((el) => (
+                <section className="menu-container" key={el.topic}>
+                    {el.topic !== '' ? <div className="menu-title">{el.topic}</div> : null}
+                    {el.fileSlugs.map((dt) => (
+                        <a href={dt.slug} key={dt.slug}>
+                            <div className="menu-item">{dt.text}</div>
+                        </a>
+                    ))}
+                </section>
+            ))}
 
             <style jsx>{`
                 .sidebar {
@@ -101,7 +93,8 @@ const Sidebar = () => {
                 }
                 .menu-container {
                     padding-left: 10px;
-                    margin: 20px 0;
+                    margin: 10px 0;
+                    border-bottom: 1px solid rgba(141, 147, 171, 0.3);
                 }
                 .menu-item {
                     border-top-left-radius: 5px;
@@ -115,7 +108,10 @@ const Sidebar = () => {
                 }
                 .menu-item:hover {
                     color: var(--success-light);
-                    background-color: var(--accents2);
+                    background-color: rgba(141, 147, 171, 0.3);
+                }
+                a {
+                    text-decoration: none;
                 }
                 .menu-title {
                     padding-left: 10px;

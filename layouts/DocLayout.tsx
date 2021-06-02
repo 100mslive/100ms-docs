@@ -1,12 +1,15 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react';
 import Sidebar from '@/components/Sidebar';
+import { SidebarDataType } from '@/lib/getSidebarData';
 
-interface Props {}
+interface Props {
+    docsArr: SidebarDataType[];
+}
 
-const DocLayout: React.FC<Props> = ({ children }) => (
+const DocLayout: React.FC<Props> = ({ docsArr, children }) => (
     <div className="page">
-        <Sidebar />
+        <Sidebar docsArr={docsArr} />
         <div className="content">{children}</div>
         <style jsx>{`
             .page {

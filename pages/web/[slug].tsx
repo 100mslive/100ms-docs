@@ -4,12 +4,15 @@ import { getFiles, getFileBySlug } from '@/lib/mdx';
 import MDXComponents from '@/components/MDXComponents';
 import React from 'react';
 import DocLayout from '@/layouts/DocLayout';
+import getSidebarData from '@/lib/getSidebarData';
 
-export default function Blog({ mdxSource, frontMatter }: any) {
+export default function Blog(data: any) {
+    const { mdxSource, frontMatter } = data.post;
+    const sideArr = data.sidebarData;
     const content = hydrate(mdxSource, {
         components: MDXComponents
     });
-    return <DocLayout>{content}</DocLayout>;
+    return <DocLayout docsArr={sideArr}>{content}</DocLayout>;
 }
 
 export async function getStaticPaths() {
@@ -27,6 +30,8 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
     // params: { slug: 'blog-slug' }
+    const sidebarData = await getSidebarData();
     const post = await getFileBySlug('web', params.slug);
-    return { props: post };
+    const data = { sidebarData, post };
+    return { props: data };
 }
