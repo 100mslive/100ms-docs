@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import MainLayout from '@/layouts/MainLayout';
+import MainLayout from '@/layouts/DocLayout';
 import { NextSeo } from 'next-seo';
 import React from 'react';
 

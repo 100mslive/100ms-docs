@@ -4,22 +4,10 @@ import Sidebar from '@/components/Sidebar';
 
 interface Props {}
 
-const Home: React.FC<Props> = () => (
+const DocLayout: React.FC<Props> = ({ children }) => (
     <div className="page">
         <Sidebar />
-        <div className="content">
-            <h1>Content</h1>
-            <h1>Content</h1>
-            <h1>Content</h1>
-            <h1>Content</h1>
-            <h1>Content</h1>
-            <h1>Content</h1>
-            <h1>Content</h1>
-            <h1>Content</h1>
-            <h1>Content</h1>
-            <h1>Content</h1>
-            <h1>Content</h1>
-        </div>
+        <div className="content">{children}</div>
         <style jsx>{`
             .page {
                 width: 100%;
@@ -28,11 +16,14 @@ const Home: React.FC<Props> = () => (
                 display: flex;
             }
             .content {
-                max-width: 100%;
+                padding-top: 30px;
+                padding-left: 80px;
+                padding-bottom: 150px;
+                max-width: 750px;
                 overflow-y: scroll;
             }
         `}</style>
     </div>
 );
 
-export default Home;
+export default DocLayout;

@@ -47,7 +47,33 @@ const Sidebar = () => {
                     {isDark ? <SvgMoon /> : <SvgSun />}
                 </span>
             </div>
-            <h1>Nice</h1>
+
+            {/* Sidebar Menu Section */}
+
+            <section className="menu-container">
+                <div className="menu-item">Basics</div>
+                <div className="menu-item">What's new in 2.0</div>
+            </section>
+            <section className="menu-container">
+                <div className="menu-title">SERVER SIDE</div>
+                <div className="menu-item">Introduction to tokens</div>
+                <div className="menu-item">Generate server-side token</div>
+                <div className="menu-item">Create room</div>
+                <div className="menu-item">Generate client-side token</div>
+                <div className="menu-item">100ms quickstart app server</div>
+            </section>
+            <section className="menu-container">
+                <div className="menu-title">CLIENT SDKs</div>
+                <div className="menu-item">Getting Started - Android</div>
+                <div className="menu-item">Getting Started - iOS</div>
+                <div className="menu-item">Getting Started - JavaScript</div>
+            </section>
+            <section className="menu-container">
+                <div className="menu-title">WEB FRAMEWORKS</div>
+                <div className="menu-item">Getting Started - React</div>
+                <div className="menu-item">Getting Started - React UI Components</div>
+            </section>
+
             <style jsx>{`
                 .sidebar {
                     width: calc((100% - 1448px) / 2 + 298px);
@@ -72,6 +98,28 @@ const Sidebar = () => {
                 }
                 .sidebar-header b {
                     margin-left: 0.5rem;
+                }
+                .menu-container {
+                    padding-left: 10px;
+                    margin: 20px 0;
+                }
+                .menu-item {
+                    border-top-left-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                    cursor: pointer;
+                    padding: 8px 0;
+                    padding-left: 10px;
+                    margin: 5px 0;
+                    color: var(--accents8);
+                    font-weight: 600;
+                }
+                .menu-item:hover {
+                    color: var(--success-light);
+                    background-color: var(--accents2);
+                }
+                .menu-title {
+                    padding-left: 10px;
+                    opacity: 0.6;
                 }
             `}</style>
         </div>
