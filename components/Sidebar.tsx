@@ -3,12 +3,14 @@ import Logo from '@/assets/logo/logo';
 import SvgMoon from '@/assets/icons/Moon';
 import SvgSun from '@/assets/icons/Sun';
 import { SidebarDataType } from '@/lib/getSidebarData';
+import { useRouter } from 'next/dist/client/router';
 
 interface Props {
     docsArr?: SidebarDataType[];
 }
 
 const Sidebar: React.FC<Props> = ({ docsArr }) => {
+    const router = useRouter();
     const [isDark, setIsDark] = React.useState<boolean>(true);
     React.useEffect(() => {
         const docHtml = document.documentElement.dataset;
@@ -60,7 +62,12 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                     {el.topic !== '' ? <div className="menu-title">{el.topic}</div> : null}
                     {el.fileSlugs.map((dt) => (
                         <a href={dt.slug} key={dt.slug}>
-                            <div className="menu-item">{dt.text}</div>
+                            <div
+                                className={`menu-item ${
+                                    dt.slug === router.asPath ? 'active-link' : ''
+                                }`}>
+                                {dt.text}
+                            </div>
                         </a>
                     ))}
                 </section>
@@ -81,6 +88,7 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                     top: 0;
                     left: 0;
                     position: sticky;
+                    padding-bottom: 100px;
                 }
                 .sidebar-header {
                     padding: 20px 10px;
@@ -105,6 +113,10 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                     margin: 5px 0;
                     color: var(--accents8);
                     font-weight: 600;
+                }
+                .active-link {
+                    color: var(--success-light);
+                    background-color: rgba(141, 147, 171, 0.3);
                 }
                 .menu-item:hover {
                     color: var(--success-light);

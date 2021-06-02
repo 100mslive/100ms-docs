@@ -1,3 +1,11 @@
+// const withMDX = require('@next/mdx')({
+//     extension: /\.mdx?$/
+// });
+
+// module.exports = withMDX({
+//     pageExtensions: ['mdx', 'tsx']
+// });
+
 module.exports = {
     webpack: (config, { isServer }) => {
         // Fixes npm packages that depend on `fs` module
