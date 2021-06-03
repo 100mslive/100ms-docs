@@ -41,8 +41,7 @@ const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = ({
                 if (item.value !== next.value) return item;
                 return {
                     ...item,
-                    label: next.label,
-                    disabled: next.disabled
+                    label: next.label
                 };
             });
         });
@@ -63,7 +62,6 @@ const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = ({
     }, [value]);
 
     const clickHandler = (item: TabsLabelItem) => {
-        if (item.disabled) return;
         setSelfValue(item.value);
         onChange && onChange(item.value);
     };
@@ -74,9 +72,7 @@ const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = ({
                 <header className={hideDivider ? 'hide-divider' : ''}>
                     {tabs.map((item) => (
                         <div
-                            className={`tab ${selfValue === item.value ? 'active' : ''} ${
-                                item.disabled ? 'disabled' : ''
-                            }`}
+                            className={`tab ${selfValue === item.value ? 'active' : ''}`}
                             role="button"
                             key={item.value}
                             onClick={() => clickHandler(item)}>
@@ -94,7 +90,7 @@ const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = ({
                         display: flex;
                         flex-wrap: nowrap;
                         align-items: center;
-                        border-bottom: 1px solid green;
+                        border-bottom: 1px solid var(--border);
                         overflow: scroll;
                         scrollbar-width: none;
                     }
@@ -120,7 +116,7 @@ const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = ({
                         font-size: 1rem;
                         white-space: nowrap;
                         margin: 0 10px;
-                        color: red;
+                        color: var(--foreground);
                         user-select: none;
                         display: flex;
                         align-items: center;
@@ -142,7 +138,7 @@ const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = ({
                     }
 
                     .tab.active:after {
-                        background-color: red;
+                        background-color: var(--foreground);
                         transform: scaleX(1);
                     }
 
@@ -156,12 +152,7 @@ const Tabs: React.FC<React.PropsWithChildren<TabsProps>> = ({
                     }
 
                     .tab.active {
-                        color: red;
-                    }
-
-                    .tab.disabled {
-                        color: red;
-                        cursor: not-allowed;
+                        color: var(--foreground);
                     }
                 `}</style>
             </div>

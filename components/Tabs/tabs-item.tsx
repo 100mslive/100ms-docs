@@ -5,31 +5,19 @@ import { useTabsContext } from './tabs-context';
 interface Props {
     label: string | React.ReactNode;
     value: string;
-    disabled?: boolean;
 }
 
-const defaultProps = {
-    disabled: false
-};
+export type TabsItemProps = Props;
 
-export type TabsItemProps = Props & typeof defaultProps;
-
-const TabsItem: React.FC<React.PropsWithChildren<TabsItemProps>> = ({
-    children,
-    value,
-    label,
-    disabled
-}) => {
+const TabsItem: React.FC<React.PropsWithChildren<TabsItemProps>> = ({ children, value, label }) => {
     const { register, currentValue } = useTabsContext();
     const isActive = useMemo(() => currentValue === value, [currentValue, value]);
 
     useEffect(() => {
-        register && register({ value, label, disabled });
-    }, [value, label, disabled]);
+        register && register({ value, label });
+    }, [value, label]);
 
-    /* eslint-disable react/jsx-no-useless-fragment */
     return isActive ? <>{children}</> : null;
 };
 
 export default TabsItem;
-/* eslint-enable */
