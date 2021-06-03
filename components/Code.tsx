@@ -52,7 +52,7 @@ const Code: React.FC<PropsWithChildren<Props>> = ({ id, children, tab }) => {
                 button {
                     z-index: 1000;
                     top: 10px;
-                    right: 10px;
+                    right: 20px;
                     position: absolute;
                     border: none;
                     outline: none;
@@ -68,7 +68,7 @@ const Code: React.FC<PropsWithChildren<Props>> = ({ id, children, tab }) => {
                     border: 1px solid var(--border);
                     border-radius: 5px;
                     top: 40px;
-                    right: 0px;
+                    right: 10px;
                     position: absolute;
                 }
             `}</style>

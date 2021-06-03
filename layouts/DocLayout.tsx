@@ -50,7 +50,7 @@ const DocLayout: React.FC<Props> = ({ docsArr, children, frontMatter }) => {
                     padding-left: 80px;
                     padding-bottom: 150px;
                     max-width: 750px;
-                    overflow-y: scroll;
+                    overflow: scroll;
                 }
             `}</style>
         </div>
