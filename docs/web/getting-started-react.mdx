@@ -1,12 +1,20 @@
+---
+title: Getting Started - React
+excerpt: Getting Started - React
+date: 31-12-2020
+---
+
 # Getting Started - React
 
 ### Introduction
 
 This guide provides an overview of the key objects you'll use with 100ms' React SDK to build a live audio/video application
 
-{% hint style="info" %}
+<Note>
+
 If you haven't already done so, try our sample [quickstart app](https://github.com/100mslive/100ms-web-v2). Then you can come back later to see how to build your own live audio/video app in more detail
-{% endhint %}
+
+</Note>
 
 ### Supported Devices
 
@@ -14,10 +22,10 @@ Our alpha release has been tested on modern Chrome browsers. We will expand brow
 
 ### Basic Concepts
 
-* `Room` - A room represents a real-time audio, video session, the basic building block of the 100ms Video SDK
-* `Track` - A track represents either the audio or video that makes up a peer's stream
-* `Peer` - A peer represents all participants connected to a room. Peers can be "local" or "remote"
-* `Broadcast` - A local peer can send any message/data to all remote peers in the room
+-   `Room` - A room represents a real-time audio, video session, the basic building block of the 100ms Video SDK
+-   `Track` - A track represents either the audio or video that makes up a peer's stream
+-   `Peer` - A peer represents all participants connected to a room. Peers can be "local" or "remote"
+-   `Broadcast` - A local peer can send any message/data to all remote peers in the room
 
 ### Pre-requisites
 
@@ -29,182 +37,191 @@ npm install --save @100mslive/hms-video-react@latest
 
 2. **Get Access Keys**: You can get your access keys in the [Developer](https://dashboard.100ms.live/developer) section of [100ms dashboard](https://dashboard.100ms.live)
 
-4. **Create a room and setup a token generation service**: To create a room, follow the steps described [in this section](../server-side/create-room.md). To setup a token generation service, follow the steps in [this section](../server-side/generate-client-side-token.md). Alternatively, you can use our [quickstart server](../server-side/100ms-quickstart-app-server.md) for this.
+3. **Create a room and setup a token generation service**: To create a room, follow the steps described [in this section](../server-side/create-room.md). To setup a token generation service, follow the steps in [this section](../server-side/generate-client-side-token.md). Alternatively, you can use our [quickstart server](../server-side/100ms-quickstart-app-server.md) for this.
 
 ### Import modules & instantiate 100ms Client
 
 100ms' React SDK provides 2 hooks
 
-* `useHMSActions` - provides core methods to alter the state of a room `join`, `leave` , `setScreenShareEnabled` etc.
-* `useHMStore` - provides a read-only data store to access the state-tree of the room eg. `peers` , `dominantSpeaker` etc. 
+-   `useHMSActions` - provides core methods to alter the state of a room `join`, `leave` , `setScreenShareEnabled` etc.
+-   `useHMStore` - provides a read-only data store to access the state-tree of the room eg. `peers` , `dominantSpeaker` etc.
 
 If you've worked with Redux \(or any other state container\) before, actions and store should be familiar
 
 ```jsx
-import { useHMSActions, useHMSStore, HMSRoomProvider } from "@100mslive/hms-video-react";
+import { useHMSActions, useHMSStore, HMSRoomProvider } from '@100mslive/hms-video-react';
 
 const Conference = () => {
     const hmsActions = useHMSActions();
     const hmsStore = useHMSStore(dataSelector);
-    return (
-            {/*
+    return {
+        /*
             ... Conference code goes here            
-            */}
-    )
-}
+            */
+    };
+};
 
 const App = () => {
     return (
         <HMSRoomProvider>
-            <Conference/>
+            <Conference />
         </HMSRoomProvider>
-    )
-}
+    );
+};
 ```
 
 ### Provide joining configuration and join a room
 
 {% tabs %}
 {% tab title="Joining code" %}
+
 ```jsx
 const joinConfig = {
     userName: 'Erlich Bachmann',
     authToken: '<Auth token>', //This token should be generated from your token service
-    metaData:'custom description', //This is custom string that you can attach.
+    metaData: 'custom description', //This is custom string that you can attach.
     settings: {
         isAudioMuted: false, // Join with audio muted?
-        isVideoMuted: false, // Join with video muted?
-    },
+        isVideoMuted: false // Join with video muted?
+    }
 };
 
 hmsActions.join(joinConfig);
 ```
+
 {% endtab %}
 
 {% tab title="Full code" %}
+
 ```jsx
-import { useHMSActions, useHMSStore, HMSRoomProvider } from "@100mslive/sdk-components";
+import { useHMSActions, useHMSStore, HMSRoomProvider } from '@100mslive/sdk-components';
 
 const Conference = () => {
     const hmsActions = useHMSActions();
     const hmsStore = useHMSStore();
-    
+
     const joinConfig = {
         userName: 'Erlich Bachmann',
         authToken: '<Auth token>', //This token should be generated from your token service
-        metaData: 'student', //Currently metadata accepts only 1 field - role. 
+        metaData: 'student', //Currently metadata accepts only 1 field - role.
         settings: {
             isAudioMuted: false, //Optional - Join with audio muted?
             isVideoMuted: false, //Optional - Join with video muted?
-            audioInputDeviceId:'default', //Optional
-            videoInputDeviceId:'default' //Optional
-        },
+            audioInputDeviceId: 'default', //Optional
+            videoInputDeviceId: 'default' //Optional
+        }
     };
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         hmsActions.join(joinConfig);
-    },[authToken]);
-    
-    return (
-        {/*
+    }, [authToken]);
+
+    return {
+        /*
             Main conference code goes here
-        */}
-    )
-}
+        */
+    };
+};
 
 const App = () => {
     return (
-            <HMSRoomProvider>
-                <Conference/>
-            </HMSRoomProvider>
-    )
-}
+        <HMSRoomProvider>
+            <Conference />
+        </HMSRoomProvider>
+    );
+};
 ```
+
 {% endtab %}
 {% endtabs %}
 
 ### Get peers' states
 
-The data store provides granular access to the room's state variables via `selectors`.   
-100ms provides pre-built selectors to select most commonly used states. 
+The data store provides granular access to the room's state variables via `selectors`.  
+100ms provides pre-built selectors to select most commonly used states.
 
 {% tabs %}
 {% tab title="Data store code" %}
+
 ```jsx
-import { 
-    selectLocalPeer, 
-    selectPeers, 
-    selectIsLocalAudioEnabed, 
-    selectIsLocalVideoEnabled, 
+import {
+    selectLocalPeer,
+    selectPeers,
+    selectIsLocalAudioEnabed,
+    selectIsLocalVideoEnabled,
     selectIsConnectedToRoom,
     selectIsSomeoneScreenSharing,
-    selectIsPeerAudioEnabled } from '@100mslive/hms-video-react';
+    selectIsPeerAudioEnabled
+} from '@100mslive/hms-video-react';
 
 const localPeer = useHMSStore(selectLocalPeer);
 const peers = useHMSStore(selectPeers); //Get a list of all peers - local and remote
 const isLocalAudioEnabled = useHMSStore(selectIsLocalAudioEnabled); //Is the local peer muted?
-const isLocalVideoEnabled = useHMSStore(selectIsLocalVideoEnabled); 
+const isLocalVideoEnabled = useHMSStore(selectIsLocalVideoEnabled);
 const isConnected = useHMSStore(selectIsConnectedToRoom); //Is the room connected?
 const isSomeoneScreenSharing = useHMSStore(selectIsSomeoneScreenSharing); //Is someone in the room screensharing?
-const isPeerAudioEnabled = useHMSStore(store => selectIsPeerAudioEnabled(store, peer.id)); //Is a remote peer muted?
+const isPeerAudioEnabled = useHMSStore((store) => selectIsPeerAudioEnabled(store, peer.id)); //Is a remote peer muted?
 ```
+
 {% endtab %}
 
 {% tab title="Store interface" %}
+
 ```jsx
 interface HMSStore {
-  room: HMSRoom;
-  peers: Record<HMSPeerID, HMSPeer>;
-  speakers: Record<HMSPeerID, HMSSpeaker>;
-  tracks: Record<HMSTrackID, HMSTrack>;
-  messages: {
-    byID: Record<HMSMessageID, HMSMessage>;
-    allIDs: HMSMessageID[];
-  };
-  settings: HMSMediaSettings;
+    room: HMSRoom;
+    peers: Record<HMSPeerID, HMSPeer>;
+    speakers: Record<HMSPeerID, HMSSpeaker>;
+    tracks: Record<HMSTrackID, HMSTrack>;
+    messages: {
+        byID: Record<HMSMessageID, HMSMessage>,
+        allIDs: HMSMessageID[]
+    };
+    settings: HMSMediaSettings;
 }
 
 interface HMSPeer {
-  id: HMSPeerID;
-  name: string;
-  role?: string;
-  isLocal: boolean;
-  isStarred?: boolean;
-  videoTrack?: HMSTrackID;
-  audioTrack?: HMSTrackID;
-  auxiliaryTracks: HMSTrackID[];
+    id: HMSPeerID;
+    name: string;
+    role?: string;
+    isLocal: boolean;
+    isStarred?: boolean;
+    videoTrack?: HMSTrackID;
+    audioTrack?: HMSTrackID;
+    auxiliaryTracks: HMSTrackID[];
 }
 
 interface HMSTrack {
-  id: HMSTrackID;
-  source?: HMSTrackSource;
-  type: HMSTrackType;
-  enabled: boolean;
-  height?: number;
-  width?: number
+    id: HMSTrackID;
+    source?: HMSTrackSource;
+    type: HMSTrackType;
+    enabled: boolean;
+    height?: number;
+    width?: number;
 }
 
 export interface HMSSpeaker {
-  audioLevel?: number;
+    audioLevel?: number;
 }
 
 export interface HMSMessage {
-  id: HMSMessageID;
-  sender: HMSPeerID;
-  senderName?: string; 
-  time: Date;
-  read: boolean;
-  type: HMSMessageType;
-  message: string;
+    id: HMSMessageID;
+    sender: HMSPeerID;
+    senderName?: string;
+    time: Date;
+    read: boolean;
+    type: HMSMessageType;
+    message: string;
 }
 
 export interface HMSMediaSettings {
-  audioInputDeviceId: string;
-  videoInputDeviceId: string;
-  audioOutputDeviceId?: string;
-  maxTileCount?: number;
+    audioInputDeviceId: string;
+    videoInputDeviceId: string;
+    audioOutputDeviceId?: string;
+    maxTileCount?: number;
 }
 ```
+
 {% endtab %}
 {% endtabs %}
 
@@ -223,7 +240,7 @@ import { selectVideoByPeerId, selectCameraStreamByPeerId, selectScreenShareByPee
 
 function VideoTile(props) {
     const videoRef = useRef(null)
-    
+
     // Render camera track. To render screenShare track, use the selectScreenShareByPeerId selector
     const videoTrack = useHMSStore((store) => selectCameraStreamByPeerID(store, peer.id));
     useEffect(async ()=>{
@@ -235,7 +252,7 @@ function VideoTile(props) {
             await hmsActions.detatchVideo(videoTrack.id, videoRef.current);
         }
     }, [videoRef, videoTrack]);
-    
+
     //Rendering logic
     return <video ref={videoRef}></video>
 }
@@ -259,11 +276,10 @@ This interface might change in an upcoming release
 {% endhint %}
 
 ```jsx
-import { selectHMSMessages } from '@100mslive/hms-video-react'
+import { selectHMSMessages } from '@100mslive/hms-video-react';
 
 hmsActions.sendMessage('Hello');
 const storeMessages = useHMSStore(selectHMSMessages);
-
 ```
 
 ### Share screen
@@ -277,4 +293,3 @@ hmsActions.setScreenShareEnabled(true);
 ```jsx
 hmsActions.leave();
 ```
-
