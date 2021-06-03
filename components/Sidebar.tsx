@@ -85,6 +85,7 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                     background-color: var(--accents1);
                     overflow-x: hidden;
                     overflow-y: overlay;
+                    overflow: scroll;
                     top: 0;
                     left: 0;
                     position: sticky;

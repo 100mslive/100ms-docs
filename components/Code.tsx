@@ -2,9 +2,10 @@ import React, { PropsWithChildren } from 'react';
 
 interface Props {
     id: string;
+    tab?: boolean
 }
 
-const Code: React.FC<PropsWithChildren<Props>> = ({ id, children }) => {
+const Code: React.FC<PropsWithChildren<Props>> = ({ id, children , tab }) => {
     const copyFunction = () => {
         const copyText = document.getElementById(id)!.textContent;
         const textArea = document.createElement('textarea');
@@ -15,7 +16,7 @@ const Code: React.FC<PropsWithChildren<Props>> = ({ id, children }) => {
         textArea.remove();
     };
     return (
-        <div>
+        <div id={`${id}`} style={{ display: `${tab? 'none' : 'block'}` }}>
             <button onClick={() => copyFunction()} type="button">
                 Copy Code
             </button>
