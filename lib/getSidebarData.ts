@@ -22,21 +22,12 @@ const getSidebarData  = async ():  Promise<SidebarDataType[]> => {
     finalData = [...finalData , {
       topic: el.replace('-',' ').toUpperCase(),
       fileSlugs: files.map(e => ({
-          text: prettify(e).replace('.mdx',''),
-          slug: `/${el}/${e.replace('.mdx','')}`
+          text: prettify(e),
+          slug: `/${el}/${prettify(e)}`
         }) )
     }]
   })
-  data.files.forEach(el => {
-    finalData.push({
-      topic: '',
-      fileSlugs: [{
-        text: prettify(el),
-        slug: `/${el}`
-      }]
-    })
-  })
-  return finalData.reverse();
+  return finalData;
 }
 
 export default getSidebarData;
