@@ -64,11 +64,7 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                 </button>
                 <div className="sidebar-header">
                     <a href="/">
-                        <img
-                            width={36}
-                            src="/static/favicons/apple-touch-icon.png"
-                            alt="100ms Logo"
-                        />
+                        <img width={36} src="/logo.svg" alt="100ms Logo" />
                         <b>100ms 2.0</b>
                     </a>
                 </div>
@@ -88,11 +84,7 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
             <div className="sidebar">
                 <div className="sidebar-header">
                     <a href="/">
-                        <img
-                            width={36}
-                            src="/static/favicons/apple-touch-icon.png"
-                            alt="100ms Logo"
-                        />
+                        <img width={36} src="/logo.svg" alt="100ms Logo" />
                         <b>100ms 2.0</b>
                     </a>
 
