@@ -47,7 +47,7 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                     aria-label="theme-toggle-button"
                     className="pointer"
                     role="button"
-                    style={{ paddingTop: '5px', paddingLeft: '10px' }}
+                    style={{ paddingTop: '8px', paddingLeft: '10px' }}
                     tabIndex={0}
                     onKeyPress={() => toggleTheme()}
                     onClick={() => toggleTheme()}>
@@ -120,11 +120,11 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                 }
                 .active-link {
                     color: var(--success-light);
-                    background-color: rgba(141, 147, 171, 0.3);
+                    background-color: var(--offset);
                 }
                 .menu-item:hover {
                     color: var(--success-light);
-                    background-color: rgba(141, 147, 171, 0.3);
+                    background-color: var(--offset);
                 }
                 a {
                     text-decoration: none;

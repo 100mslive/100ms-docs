@@ -51,7 +51,7 @@ const Code: React.FC<PropsWithChildren<Props>> = ({ id, children, tab }) => {
                 }
                 button {
                     z-index: 1000;
-                    top: 10px;
+                    top: 15px;
                     right: 20px;
                     position: absolute;
                     border: none;
@@ -63,11 +63,13 @@ const Code: React.FC<PropsWithChildren<Props>> = ({ id, children, tab }) => {
                     opacity: 0.8;
                 }
                 .copied {
+                    z-index: 1000;
                     padding: 5px;
                     font-size: 12px;
                     border: 1px solid var(--border);
+                    background: var(--background);
                     border-radius: 5px;
-                    top: 40px;
+                    top: 50px;
                     right: 10px;
                     position: absolute;
                 }

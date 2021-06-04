@@ -21,9 +21,10 @@ export async function getFileBySlug(type: string, slug: string) {
         components: MDXComponents,
         mdxOptions: {
             remarkPlugins: [
-                require('remark-autolink-headings'),
                 require('remark-slug'),
-                require('remark-code-titles')
+                require('remark-autolink-headings'),
+                require('remark-code-titles'),
+                require('@fec/remark-a11y-emoji')
             ],
             rehypePlugins: [mdxPrism]
         }

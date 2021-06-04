@@ -1,11 +1,9 @@
+/* eslint-disable no-console */
 import fs from 'fs';
 import path from 'path';
-import { data } from "./data"
-import prettify from './prettify';
-
+import  folderList  from "@/data/folder"
 
 const root = process.cwd();
-const folder = `docs`
 
 export interface SidebarDataType {
   topic: string;
@@ -17,26 +15,20 @@ export interface SidebarDataType {
 
 const getSidebarData  = async ():  Promise<SidebarDataType[]> => {
   let finalData : SidebarDataType[]  = []
-  data.folders.forEach(el => {
-    const files = fs.readdirSync(path.join(root, folder, el));
-    finalData = [...finalData , {
-      topic: el.replace('-',' ').toUpperCase(),
-      fileSlugs: files.map(e => ({
-          text: prettify(e).replace('.mdx',''),
-          slug: `/${el}/${e.replace('.mdx','')}`
-        }) )
-    }]
+  folderList.forEach(el => {
+    if(el!==null){
+      try {
+        const data = fs.readFileSync(path.join(root, 'data/files', `${el}.json`), 'utf8');
+        finalData = [...finalData , {
+          topic: el.replace('-',' ').toUpperCase(),
+          fileSlugs: JSON.parse(data)
+        }]
+      } catch(e) {
+          console.log('Error:', e.stack);
+      }
+    }
   })
-  data.files.forEach(el => {
-    finalData.push({
-      topic: '',
-      fileSlugs: [{
-        text: prettify(el),
-        slug: `/${el}`
-      }]
-    })
-  })
-  return finalData.reverse();
+  return finalData;
 }
 
 export default getSidebarData;

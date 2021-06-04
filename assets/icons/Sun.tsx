@@ -3,12 +3,26 @@ import * as React from 'react';
 function SvgSun(props: React.SVGProps<SVGSVGElement>) {
     return (
         <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width={24}
-            height={24}
             viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            fill="none"
+            shapeRendering="geometricPrecision"
+            style={{ color: 'var(--foreground)' }}
             {...props}>
-            <path d="M17 12c0 2.762-2.238 5-5 5s-5-2.238-5-5 2.238-5 5-5 5 2.238 5 5zm-5-7c.34 0 .672.033 1 .08V3h-2v2.08c.328-.047.66-.08 1-.08zM7.816 6.401L6.344 4.928 4.929 6.343l1.473 1.473a7.048 7.048 0 011.414-1.415zm9.782 1.414l1.473-1.473-1.414-1.414-1.473 1.473a7.043 7.043 0 011.414 1.414zM12 19c-.34 0-.672-.033-1-.08V21h2v-2.08c-.328.047-.66.08-1 .08zm4.185-1.402l1.473 1.473 1.415-1.415-1.473-1.472a7.1 7.1 0 01-1.415 1.414zM5 12c0-.34.033-.672.08-1H3v2h2.08A7.026 7.026 0 015 12zm13.92-1c.047.328.08.66.08 1s-.033.672-.08 1H21v-2h-2.08zM6.401 16.184l-1.473 1.473 1.414 1.414 1.473-1.473a7.043 7.043 0 01-1.414-1.414z" />
+            <circle cx="12" cy="12" r="5" />
+            <path d="M12 1v2" />
+            <path d="M12 21v2" />
+            <path d="M4.22 4.22l1.42 1.42" />
+            <path d="M18.36 18.36l1.42 1.42" />
+            <path d="M1 12h2" />
+            <path d="M21 12h2" />
+            <path d="M4.22 19.78l1.42-1.42" />
+            <path d="M18.36 5.64l1.42-1.42" />
         </svg>
     );
 }
