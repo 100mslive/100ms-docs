@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { data } from "./data"
+import  folderList  from "@/data/folder"
 import prettify from './prettify';
 
 
@@ -17,15 +17,17 @@ export interface SidebarDataType {
 
 const getSidebarData  = async ():  Promise<SidebarDataType[]> => {
   let finalData : SidebarDataType[]  = []
-  data.folders.forEach(el => {
-    const files = fs.readdirSync(path.join(root, folder, el));
-    finalData = [...finalData , {
-      topic: el.replace('-',' ').toUpperCase(),
-      fileSlugs: files.map(e => ({
-          text: prettify(e),
-          slug: `/${el}/${e.replace('.mdx','')}`
-        }) )
-    }]
+  folderList.forEach(el => {
+    if(el!==null){
+      const files = fs.readdirSync(path.join(root, folder, el));
+      finalData = [...finalData , {
+        topic: el.replace('-',' ').toUpperCase(),
+        fileSlugs: files.map(e => ({
+            text: prettify(e),
+            slug: `/${el}/${e.replace('.mdx','')}`
+          }) )
+      }]
+    }
   })
   return finalData;
 }
