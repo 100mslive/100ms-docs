@@ -1,5 +1,4 @@
 import React from 'react';
-import Logo from '@/assets/logo/logo';
 import SvgMoon from '@/assets/icons/Moon';
 import SvgSun from '@/assets/icons/Sun';
 import { SidebarDataType } from '@/lib/getSidebarData';
@@ -60,12 +59,16 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
     return (
         <>
             <div className="mobile-sidebar">
-                <button type="button" onClick={() => setMenu(!menu)}>
+                <button aria-label="menu-button" type="button" onClick={() => setMenu(!menu)}>
                     <MenuIcon />
                 </button>
                 <div className="sidebar-header">
                     <a href="/">
-                        <Logo width={36} />
+                        <img
+                            width={36}
+                            src="/static/favicons/apple-touch-icon.png"
+                            alt="100ms Logo"
+                        />
                         <b>100ms 2.0</b>
                     </a>
                 </div>
@@ -85,7 +88,11 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
             <div className="sidebar">
                 <div className="sidebar-header">
                     <a href="/">
-                        <Logo width={36} />
+                        <img
+                            width={36}
+                            src="/static/favicons/apple-touch-icon.png"
+                            alt="100ms Logo"
+                        />
                         <b>100ms 2.0</b>
                     </a>
 
@@ -154,6 +161,7 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                     display: flex;
                     align-items: center;
                     z-index: 100;
+                    background-color: var(--accents1);
                 }
                 .sidebar-header b {
                     margin-left: 0.5rem;
@@ -193,6 +201,10 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                 }
                 @media screen and (max-width: 1000px) {
                     .sidebar {
+                        position: absolute;
+                        top: 80px;
+                        height: calc(100% - 80px);
+                        left: 0;
                         display: ${menu ? 'block' : 'none'};
                     }
                     .mobile-sidebar {
@@ -206,6 +218,9 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                         left: 0;
                         background-color: var(--accents1);
                         z-index: 100000000;
+                    }
+                    .sidebar .sidebar-header {
+                        display: none;
                     }
                 }
             `}</style>

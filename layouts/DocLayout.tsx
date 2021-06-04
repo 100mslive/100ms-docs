@@ -40,6 +40,7 @@ const DocLayout: React.FC<Props> = ({ docsArr, children, frontMatter }) => {
             <article className="content">{children}</article>
             <style jsx>{`
                 .page {
+                    position: relative;
                     width: 100%;
                     min-height: 100%;
                     height: initial;
