@@ -26,10 +26,10 @@ interface Props {
 
 const DocLayout: React.FC<Props> = ({ docsArr, children, frontMatter }) => {
     const SEO = {
-        title: `${frontMatter.title} | 100mslive`,
+        title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`,
         description: `${frontMatter.excerpt}`,
         openGraph: {
-            title: `${frontMatter.title} | 100mslive`,
+            title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`,
             description: `${frontMatter.excerpt}`
         }
     };
@@ -50,7 +50,7 @@ const DocLayout: React.FC<Props> = ({ docsArr, children, frontMatter }) => {
                     padding-left: 80px;
                     padding-bottom: 150px;
                     max-width: 750px;
-                    overflow-y: scroll;
+                    overflow: scroll;
                 }
             `}</style>
         </div>

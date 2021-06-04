@@ -10,9 +10,13 @@ date: 31-12-2020
 
 Any service calling 100ms' REST APIs need to authenticate using a management token. The service required to generate this token should be hosted on your server
 
-> **Don't have the time to write your own token generation service?**
+<Note type='success'>
 
-> We have put together a [quickstart app server](100ms-quickstart-app-server.md) guide that will setup & deploy your token generation service in a few minutes
+**Don't have the time to write your own token generation service?**
+
+We have put together a [quickstart app server](100ms-quickstart-app-server.md) guide that will setup & deploy your token generation service in a few minutes
+
+</Note>
 
 ## Obtaining Keys
 
@@ -25,7 +29,11 @@ You can get following keys from the [Developer](https://dashboard.100ms.live/dev
 
 You can use the following code snippets to generate your token.
 
-```javascript
+<Tabs id="test-code" items={['Node.js', 'Python']} />
+
+<Code tab id='test-code-0'>
+
+```js
 var jwt = require('jsonwebtoken');
 var uuid4 = require('uuid4');
 
@@ -43,7 +51,11 @@ jwt.sign(
 );
 ```
 
-```python
+</Code>
+
+<Code tab id='test-code-1'>
+
+```py
 #!/usr/bin/env python3
 import jwt
 import uuid
@@ -70,3 +82,5 @@ def generate(expires=0):
 if __name__ == "__main__":
     print(generate())
 ```
+
+</Code>
