@@ -23,7 +23,7 @@ const getSidebarData  = async ():  Promise<SidebarDataType[]> => {
       topic: el.replace('-',' ').toUpperCase(),
       fileSlugs: files.map(e => ({
           text: prettify(e),
-          slug: `/${el}/${prettify(e)}`
+          slug: `/${el}/${e.replace('.mdx','')}`
         }) )
     }]
   })
