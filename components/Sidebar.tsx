@@ -9,7 +9,26 @@ interface Props {
     docsArr?: SidebarDataType[];
 }
 
+export const MenuIcon = () => (
+    <svg
+        viewBox="0 0 24 24"
+        width="24"
+        height="24"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+        shapeRendering="geometricPrecision"
+        style={{ color: 'var(--foreground)' }}>
+        <path d="M3 12h18" />
+        <path d="M3 6h18" />
+        <path d="M3 18h18" />
+    </svg>
+);
+
 const Sidebar: React.FC<Props> = ({ docsArr }) => {
+    const [menu, setMenu] = React.useState(false);
     const router = useRouter();
     const [isDark, setIsDark] = React.useState<boolean>(true);
     React.useEffect(() => {
@@ -39,41 +58,77 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
         setIsDark(!isDark);
     };
     return (
-        <div className="sidebar">
-            <div className="sidebar-header">
-                <Logo width={36} />
-                <b>100ms 2.0</b>
-                <span
-                    aria-label="theme-toggle-button"
-                    className="pointer"
-                    role="button"
-                    style={{ paddingTop: '8px', paddingLeft: '10px' }}
-                    tabIndex={0}
-                    onKeyPress={() => toggleTheme()}
-                    onClick={() => toggleTheme()}>
-                    {isDark ? <SvgMoon /> : <SvgSun />}
-                </span>
+        <>
+            <div className="mobile-sidebar">
+                <button type="button" onClick={() => setMenu(!menu)}>
+                    <MenuIcon />
+                </button>
+                <div className="sidebar-header">
+                    <a href="/">
+                        <Logo width={36} />
+                        <b>100ms 2.0</b>
+                    </a>
+                </div>
+                <div>
+                    <span
+                        aria-label="theme-toggle-button"
+                        className="pointer"
+                        role="button"
+                        style={{ paddingTop: '8px', paddingLeft: '10px' }}
+                        tabIndex={0}
+                        onKeyPress={() => toggleTheme()}
+                        onClick={() => toggleTheme()}>
+                        {isDark ? <SvgMoon /> : <SvgSun />}
+                    </span>
+                </div>
             </div>
+            <div className="sidebar">
+                <div className="sidebar-header">
+                    <a href="/">
+                        <Logo width={36} />
+                        <b>100ms 2.0</b>
+                    </a>
 
-            {/* Sidebar Menu Section */}
+                    <span
+                        aria-label="theme-toggle-button"
+                        className="pointer"
+                        role="button"
+                        style={{ paddingTop: '8px', paddingLeft: '10px' }}
+                        tabIndex={0}
+                        onKeyPress={() => toggleTheme()}
+                        onClick={() => toggleTheme()}>
+                        {isDark ? <SvgMoon /> : <SvgSun />}
+                    </span>
+                </div>
 
-            {docsArr!.map((el) => (
-                <section className="menu-container" key={el.topic}>
-                    {el.topic !== '' ? <div className="menu-title">{el.topic}</div> : null}
-                    {el.fileSlugs.map((dt) => (
-                        <a href={dt.slug} key={dt.slug}>
-                            <div
-                                className={`menu-item ${
-                                    dt.slug === router.asPath ? 'active-link' : ''
-                                }`}>
-                                {dt.text}
-                            </div>
-                        </a>
-                    ))}
-                </section>
-            ))}
+                {/* Sidebar Menu Section */}
 
+                {docsArr!.map((el) => (
+                    <section className="menu-container" key={el.topic}>
+                        {el.topic !== '' ? <div className="menu-title">{el.topic}</div> : null}
+                        {el.fileSlugs.map((dt) => (
+                            <a href={dt.slug} key={dt.slug}>
+                                <div
+                                    className={`menu-item ${
+                                        dt.slug === router.asPath ? 'active-link' : ''
+                                    }`}>
+                                    {dt.text}
+                                </div>
+                            </a>
+                        ))}
+                    </section>
+                ))}
+            </div>
             <style jsx>{`
+                .sidebar-header a {
+                    display: flex;
+                    color: inherit;
+                }
+                button {
+                    outline: none;
+                    background: transparent;
+                    border: none;
+                }
                 .sidebar {
                     width: calc((100% - 1448px) / 2 + 298px);
                     display: flex;
@@ -88,9 +143,9 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                     left: 0;
                     position: sticky;
                     padding-bottom: 100px;
+                    z-index: 10000000;
                 }
                 .sidebar-header {
-                    background-color: var(--accents1);
                     top: 0;
                     left: 0;
                     position: sticky;
@@ -133,8 +188,28 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                     padding-left: 10px;
                     opacity: 0.6;
                 }
+                .mobile-sidebar {
+                    display: none;
+                }
+                @media screen and (max-width: 1000px) {
+                    .sidebar {
+                        display: ${menu ? 'block' : 'none'};
+                    }
+                    .mobile-sidebar {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 0 20px;
+                        height: 80px;
+                        position: sticky;
+                        top: 0;
+                        left: 0;
+                        background-color: var(--accents1);
+                        z-index: 100000000;
+                    }
+                }
             `}</style>
-        </div>
+        </>
     );
 };
 

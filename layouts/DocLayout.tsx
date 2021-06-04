@@ -52,6 +52,15 @@ const DocLayout: React.FC<Props> = ({ docsArr, children, frontMatter }) => {
                     max-width: 750px;
                     overflow: scroll;
                 }
+                @media screen and (max-width: 1000px) {
+                    .page {
+                        flex-direction: column;
+                    }
+                    .content {
+                        padding-right: 20px;
+                        padding-left: 20px;
+                    }
+                }
             `}</style>
         </div>
     );
