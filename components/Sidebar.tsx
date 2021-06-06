@@ -1,11 +1,11 @@
 import React from 'react';
 import SvgMoon from '@/assets/icons/Moon';
 import SvgSun from '@/assets/icons/Sun';
-import { SidebarDataType } from '@/lib/getSidebarData';
+import { SidebarType } from '@/lib/getSidebarData';
 import { useRouter } from 'next/dist/client/router';
 
 interface Props {
-    docsArr?: SidebarDataType[];
+    docsArr?: SidebarType[];
 }
 
 export const MenuIcon = () => (

@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import React from 'react';
 import Sidebar from '@/components/Sidebar';
-import { SidebarDataType } from '@/lib/getSidebarData';
+import { SidebarType } from '@/lib/getSidebarData';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/dist/client/router';
 import getPagination from '@/lib/getPagination';
@@ -23,7 +23,7 @@ interface DocLayoutType {
 }
 
 interface Props {
-    docsArr: SidebarDataType[];
+    docsArr: SidebarType[];
     frontMatter: DocLayoutType;
     allSlugList: string[];
 }

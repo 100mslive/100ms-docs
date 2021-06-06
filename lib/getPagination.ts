@@ -8,6 +8,13 @@ const getPagination = (list: string[], slug: string) => {
           nextPost: list[0]
       };
   }
+  // if it's the 1st post 
+  if (idx === 0) {
+    return {
+        previousPost: list[len-1],
+        nextPost: list[1]
+    };
+}
   return {
       previousPost: list[idx - 1],
       nextPost: list[idx + 1]
