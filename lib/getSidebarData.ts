@@ -5,7 +5,7 @@ import  folderList  from "@/data/folder"
 
 const root = process.cwd();
 
-export interface SidebarDataType {
+export interface SidebarType {
   topic: string;
   fileSlugs: {
     text: string;
@@ -13,8 +13,15 @@ export interface SidebarDataType {
   }[]
 }
 
-const getSidebarData  = async ():  Promise<SidebarDataType[]> => {
-  let finalData : SidebarDataType[]  = []
+
+export interface SidebarDataType {
+  sidebarData: SidebarType[];
+  allSlugList: string[]
+}
+
+const getSidebarData  = async ():  Promise<SidebarDataType> => {
+  const allSlugList: string[] = []
+  let finalData : SidebarType[]  = []
   folderList.forEach(el => {
     if(el!==null){
       try {
@@ -23,12 +30,21 @@ const getSidebarData  = async ():  Promise<SidebarDataType[]> => {
           topic: el.replace('-',' ').toUpperCase(),
           fileSlugs: JSON.parse(data)
         }]
+        const dt =  JSON.parse(data)
+        if(dt){
+          dt.forEach((e: {
+            text: string;
+            slug: string;
+          }) => {
+            allSlugList.push(e.slug)
+          })
+        }
       } catch(e) {
           console.log('Error:', e.stack);
       }
     }
   })
-  return finalData;
+  return { sidebarData: finalData , allSlugList };
 }
 
 export default getSidebarData;

@@ -3,6 +3,9 @@ import React from 'react';
 import Sidebar from '@/components/Sidebar';
 import { SidebarDataType } from '@/lib/getSidebarData';
 import { NextSeo } from 'next-seo';
+import { useRouter } from 'next/dist/client/router';
+import getPagination from '@/lib/getPagination';
+import Pagination from '@/components/Pagination';
 
 interface ReadingTimeType {
     text: string;
@@ -22,9 +25,10 @@ interface DocLayoutType {
 interface Props {
     docsArr: SidebarDataType[];
     frontMatter: DocLayoutType;
+    allSlugList: string[];
 }
 
-const DocLayout: React.FC<Props> = ({ docsArr, children, frontMatter }) => {
+const DocLayout: React.FC<Props> = ({ docsArr, children, frontMatter, allSlugList }) => {
     const SEO = {
         title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`,
         description: `${frontMatter.excerpt}`,
@@ -33,11 +37,18 @@ const DocLayout: React.FC<Props> = ({ docsArr, children, frontMatter }) => {
             description: `${frontMatter.excerpt}`
         }
     };
+    const router = useRouter();
+    const { previousPost, nextPost } = getPagination(allSlugList, router.asPath);
     return (
         <div className="page">
             <NextSeo {...SEO} />
             <Sidebar docsArr={docsArr} />
-            <article className="content">{children}</article>
+            <article className="content">
+                {children}
+                <hr />
+                <Pagination next={nextPost} prev={previousPost} />
+                <hr />
+            </article>
             <style jsx>{`
                 .page {
                     position: relative;

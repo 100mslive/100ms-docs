@@ -4,7 +4,7 @@ import { getFiles, getFileBySlug } from '@/lib/mdx';
 import MDXComponents from '@/components/MDXComponents';
 import React from 'react';
 import DocLayout from '@/layouts/DocLayout';
-import getSidebarData from '@/lib/getSidebarData';
+import getSidebarData, { SidebarDataType } from '@/lib/getSidebarData';
 
 export default function Blog(data: any) {
     const { mdxSource, frontMatter } = data.post;
@@ -13,7 +13,7 @@ export default function Blog(data: any) {
         components: MDXComponents
     });
     return (
-        <DocLayout frontMatter={frontMatter} docsArr={sideArr}>
+        <DocLayout allSlugList={data.allSlugList} frontMatter={frontMatter} docsArr={sideArr}>
             {content}
         </DocLayout>
     );
@@ -33,8 +33,8 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
     // params: { slug: 'blog-slug' }
-    const sidebarData = await getSidebarData();
+    const { sidebarData, allSlugList }: SidebarDataType = await getSidebarData();
     const post = await getFileBySlug('v2', params.slug);
-    const data = { sidebarData, post };
+    const data = { sidebarData, post, allSlugList };
     return { props: data };
 }
