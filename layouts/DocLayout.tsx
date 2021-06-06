@@ -52,6 +52,8 @@ const DocLayout: React.FC<Props> = ({ docsArr, children, frontMatter }) => {
                     padding-bottom: 350px;
                     max-width: 750px;
                     overflow: scroll;
+                    overflow-y: hidden;
+                    overflow-x: hidden;
                 }
                 @media screen and (max-width: 1000px) {
                     .page {
