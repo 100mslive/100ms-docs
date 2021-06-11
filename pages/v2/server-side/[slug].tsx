@@ -34,7 +34,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
     // params: { slug: 'blog-slug' }
-    const { sidebarData, allSlugList }: SidebarDataType = await getSidebarData();
+    const { sidebarData, allSlugList }: SidebarDataType = await getSidebarData('v2');
     const post = await getFileBySlug('/v2/server-side', params.slug);
     const data = { sidebarData, post, allSlugList };
     return { props: data };
