@@ -100,6 +100,17 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                     </span>
                 </div>
 
+                {/* Sidebar Version Section */}
+                <select
+                    onChange={(e) => {
+                        window.location.href = e.target.value;
+                    }}
+                    name="version"
+                    id="version-selector">
+                    <option value="/v1/100ms-v1/basics">v1.0.0</option>
+                    <option value="/v2/100ms-v2/Basics">v2.0.0</option>
+                </select>
+
                 {/* Sidebar Menu Section */}
 
                 {docsArr!.map((el) => (
