@@ -1,10 +1,9 @@
 const chalk = require('chalk');
 const fs = require('fs');
-const folderData = require('../data/folder');
 
 const folder = process.argv[2];
 const docsDir = `./docs/${folder}`;
-const fileDataDir = `./data/files/${folder}.json`;
+const fileDataDir = `./data/${folder}.json`;
 
 const prettify = (str) => str.replace('.mdx', '').replace(/-/g, ' ');
 

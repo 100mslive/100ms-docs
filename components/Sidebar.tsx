@@ -85,7 +85,7 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                 <div className="sidebar-header">
                     <a href="/">
                         <img width={36} src="/logo.svg" alt="100ms Logo" />
-                        <b>100ms 2.0</b>
+                        <b>100ms</b>
                     </a>
 
                     <span

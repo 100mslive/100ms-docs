@@ -4,6 +4,7 @@ const fs = require('fs');
 const folderData = require('../data/folder');
 
 const folder = process.argv[2];
+const version = process.argv[3];
 
 const slugContent = `/* eslint-disable @typescript-eslint/no-explicit-any */
 import hydrate from 'next-mdx-remote/hydrate';
@@ -42,14 +43,14 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }: any) {
     // params: { slug: 'blog-slug' }
     const sidebarData = await getSidebarData();
-    const post = await getFileBySlug('${folder.toLowerCase()}', params.slug);
+    const post = await getFileBySlug('/${version}/${folder.toLowerCase()}', params.slug);
     const data = { sidebarData, post };
     return { props: data };
 }`;
 
-const docsDir = `./docs/${folder}`;
-const pagesDir = `./pages/${folder}`;
-const folderDataFile = `./data/folder.js`;
+const docsDir = `./docs/${version}/${folder}`;
+const pagesDir = `./pages/${version}/${folder}`;
+const folderDataFile = `./data/${version}/folder.js`;
 
 // Create a Folder in /pages/folder-name
 // Create a File in /pages/folder-name/[slug].tsx and put Slug Code
