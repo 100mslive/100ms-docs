@@ -20,7 +20,7 @@ export default function Blog(data: any) {
 }
 
 export async function getStaticPaths() {
-    const notes = await getFiles('v2');
+    const notes = await getFiles('/v2/100ms-v2');
     return {
         paths: notes.map((p) => ({
             params: {
@@ -34,7 +34,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }: any) {
     // params: { slug: 'blog-slug' }
     const { sidebarData, allSlugList }: SidebarDataType = await getSidebarData();
-    const post = await getFileBySlug('v2', params.slug);
+    const post = await getFileBySlug('/v2/100ms-v2', params.slug);
     const data = { sidebarData, post, allSlugList };
     return { props: data };
 }
