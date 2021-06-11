@@ -65,7 +65,7 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                 <div className="sidebar-header">
                     <a href="/">
                         <img width={36} src="/logo.svg" alt="100ms Logo" />
-                        <b>100ms 2.0</b>
+                        <b>100ms</b>
                     </a>
                 </div>
                 <div>
@@ -101,15 +101,16 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                 </div>
 
                 {/* Sidebar Version Section */}
-                <select
-                    onChange={(e) => {
-                        window.location.href = e.target.value;
-                    }}
-                    name="version"
-                    id="version-selector">
-                    <option value="/v1/100ms-v1/basics">v1.0.0</option>
-                    <option value="/v2/100ms-v2/Basics">v2.0.0</option>
-                </select>
+                <section className="menu-container">
+                    <div className="menu-title">VERSIONS</div>
+
+                    <a href="/v1/100ms-v1/Basics">
+                        <div className="menu-item">v1.0.0</div>
+                    </a>
+                    <a href="/v2/100ms-v2/Basics">
+                        <div className="menu-item">v2.0.0</div>
+                    </a>
+                </section>
 
                 {/* Sidebar Menu Section */}
 
