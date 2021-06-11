@@ -67,6 +67,7 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
                     outline: none;
                     cursor: pointer;
                     border: none;
+                    margin-right: 1rem;
                 }
                 .tab-active {
                     border-bottom: 2px solid var(--foreground);
