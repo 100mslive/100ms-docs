@@ -1,8 +1,60 @@
 ---
-title: JavaScript v0.0.14
+title: JavaScript SDK
 ---
 
-# JavaScript v0.0.14
+# JavaScript SDK
+
+---
+
+## 0.0.26 - 2021-06-11
+
+#### Added
+
+-   HMSPeer object will now have `customerUserId` property that stores the `userId` from [Client Token](../server-side/generate-client-side-token.md#sample-client-side-token-generation-code).
+
+#### Fixed
+
+-   Removed unsupported deviceId constraint in Safari.
+-   Use EventEmitter instead of EventTarget to support older versions of some browsers.
+
+## 0.0.24 - 2021-06-10
+
+#### Added
+
+-   Handle device change on mid-call.
+
+## 0.0.22 - 2021-06-09
+
+#### Added
+
+-   Support for Firefox\(&gt;=60\).
+-   Shim and polyfills for cross browser compatibility.
+-   Exported `isSupported` method to check if browser and device are supported. `import { isSupported } from "@100mslive/hms-video";`
+
+## 0.0.19 - 2021-06-02
+
+#### Added
+
+-   Error Codes - every error thrown from the SDK now will be of type HMSException, a wrapper over the native Error.
+
+```typescript
+interface HMSException {
+    code: number; // A code number denoting the type of error
+    name: string; // Name of the error
+    action: string; // What action caused the error
+    message: string; // Message related to the error
+    description: string; // Additional information and steps to recover from the error
+}
+```
+
+## 0.0.18 - 2021-06-02
+
+#### Fixed
+
+-   Screenshare permitted only when user's role is allowed to share screen.
+-   Improved screenshare quality by removing maxBitrate limit.
+
+## 0.0.17
 
 Our alpha release is here 🙌🙌. If you want to know more about our motivations to move to 2.0, head [here](../)
 
