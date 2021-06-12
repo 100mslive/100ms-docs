@@ -1,0 +1,140 @@
+---
+title: Android
+---
+
+# Android
+
+This page provides the release notes for the 100ms SDK for Android.
+
+---
+
+## v0.9.17.5 - 2021-04-21
+
+### Fixed
+
+-   Fix crash - IllegalargumentException: reason.size() > 123
+
+-   Fix Analytics issue where icestate and ice_candidate were going together in one field field
+
+---
+
+## v0.9.17.4 - 2021-04-12
+
+### Added
+
+-   Added ice_candidates and ice_states to failed events
+-   set canRetry default value to true and make it false only for 3 types of errors
+
+### Fixed
+
+-   Fixed bug where analytics was being sent when ice connection was failing
+
+---
+
+## v0.9.17.3 - 2021-04-06
+
+### Added
+
+-   Added application version_name to event properties
+
+### Fixed
+
+-   Fixed issue of correct sdk_version not going in analytics events
+
+---
+
+## v0.9.17.2 - 2021-04-02
+
+### Added
+
+-   Added description field in HMSStreamInfo which the clients will get
+
+---
+
+## v0.9.17.1 - 2021-03-30
+
+### Added
+
+-   Added extra logs to log the IPs returned by Android OS
+
+---
+
+## v0.9.17 - 2021-03-30
+
+### Fixed
+
+-   ICE Failure when connecting via network carriers like vodafone giving ip6 and stacked ip4 addresses
+-   Media stream disposed crash fix while trying to send publish error event analytics
+
+---
+
+## v0.9.16.4 - 2021-03-29
+
+### Added
+
+-   Added logs and sending failure reason to event analytics while setting remote SDP
+
+### Fixed
+
+-   Call PUBLISH only after receiving ICE candidates
+
+---
+
+## v0.9.16.3 - 2021-03-26
+
+### Added
+
+-   Added canRetry field to HMSException which can be used by clients to add retry logic. This is set to true only in errors due to network issues and other errors that can be retried
+
+### Fixed
+
+-   Issue where onStream-add was being sent for the previously published stream of the same client, which is now unpublished now, which was causing Media Not found issue while subscribing to it.
+
+---
+
+## v0.9.16.1 - 2021-03-12
+
+### Added
+
+-   Added support for detecting bad network via a callback of getting NetworkInfo
+-   Added @SerializedName annotation to all model classes which needs serialization - to prevent from being obfuscated while gson parsing
+-   User-Agent is being sent via url-params while connecting now
+
+---
+
+## v0.9.16 - 2021-03-05
+
+### Added
+
+-   Added events for monitoring of analytics
+-   100ms app changed to reflect how to set event logging level
+
+---
+
+## v0.9.15 - 2021-02-25
+
+### Added
+
+-   API to start monitoring audioEnergyLevels of peers at a periodic interval
+
+---
+
+## v0.9.14.1 - 2021-02-18
+
+### Fixed
+
+-   Streamlined HMSMediaStream interface. Check migration guide here
+-   Multiple streams can be published now from same client - For eg : one audio and one video
+    Changed
+-   stopCapture() can now be called on streams individually
+
+---
+
+## v0.9.13 - 2021-02-05
+
+### Fixed
+
+-   Bug fixes related to media streams getting disposed
+    Changed
+-   Changed method signature of onFailure callbacks. Check migration guide here
+-   getUserMedia() method changed to getLocalStream()

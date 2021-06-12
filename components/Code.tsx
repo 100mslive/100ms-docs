@@ -3,6 +3,7 @@ import React, { PropsWithChildren } from 'react';
 interface Props {
     id: string;
     tab?: boolean;
+    noCopy?: boolean;
 }
 
 export const CopyIcon = () => (
@@ -21,7 +22,7 @@ export const CopyIcon = () => (
     </svg>
 );
 
-const Code: React.FC<PropsWithChildren<Props>> = ({ id, children, tab }) => {
+const Code: React.FC<PropsWithChildren<Props>> = ({ id, children, tab, noCopy = false }) => {
     const copyFunction = () => {
         const copyText = document.getElementById(id)!.textContent;
         const textArea = document.createElement('textarea');
@@ -40,10 +41,16 @@ const Code: React.FC<PropsWithChildren<Props>> = ({ id, children, tab }) => {
     const [copy, setCopy] = React.useState(false);
     return (
         <div id={`${id}`} style={{ display: `${tab ? 'none' : 'block'}` }} className="code-block">
-            <button onClick={() => copyFunction()} type="button">
-                <CopyIcon />
-            </button>
-            {copy ? <span className="copied">Copied</span> : null}
+            {noCopy ? null : (
+                <>
+                    {' '}
+                    <button onClick={() => copyFunction()} type="button">
+                        <CopyIcon />
+                    </button>
+                    {copy ? <span className="copied">Copied</span> : null}{' '}
+                </>
+            )}
+
             <div id={id}>{children}</div>
             <style jsx>{`
                 .code-block {
