@@ -1,0 +1,38 @@
+---
+title: Beam - RTMP Live streaming & Recording
+---
+
+# RTMP Live streaming & Recording
+
+To stream or record your video streaming web apps built on 100ms infra to any platform that supports RTMP input.
+
+---
+
+<PostRequest
+    title="Start/Stop Streaming (Alpha)"
+    desp="This endpoint is used to start or stop live streaming. "
+    url="https://prod-in2.100ms.live/api/v2/beam"
+>
+
+</PostRequest>
+
+<Tabs items={['Request', 'Response']} id="req" />
+
+<div id="req-0">
+
+### Headers
+
+| Authentication <br/> (_REQUIRED_) | `string` | Authentication Bearer Token. This requires server-side token. |
+| --------------------------------- | -------- | ------------------------------------------------------------- |
+
+### Body Paramters
+
+| operation <br/> (_REQUIRED_)  | `string` | Allowed values: [`start`,`stop`] to `start` and `stop` beam respectively.                  |
+| ----------------------------- | -------- | ------------------------------------------------------------------------------------------ |
+| roomId <br/> (_REQUIRED_)     | `string` | the room id for which to beam                                                              |
+| meetingUrl <br/> (_REQUIRED_) | `string` | URL of the meeting, the web page to be shown on the stream. Optional for operation:stop    |
+| rtmpUrls <br/> (_REQUIRED_)   | `string` | comma separated list of rtmp URLs. Optional for operation:stop Supports rtmp:// & rtmps:// |
+
+</div>
+
+<Response id="req-1" res="200: OK" resText="Beam has started successfully" />

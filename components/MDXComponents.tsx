@@ -7,12 +7,16 @@ import { Tabs, Tab } from './Tabs';
 
 import Code from './Code';
 import Note from './Note';
+import PostRequest from './PostRequest';
+import Response from './Response';
 
 const CodeCustom = (props: any) => <Code id={nanoid(10)}>{props.children}</Code>;
 
 const NoteCustom = (props: any) => <Note type="success">{props.children}</Note>;
 
 const MDXComponents = {
+    Response,
+    PostRequest,
     Note,
     Image,
     blockquote: NoteCustom,
