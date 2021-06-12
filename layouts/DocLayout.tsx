@@ -31,10 +31,8 @@ interface Props {
 const DocLayout: React.FC<Props> = ({ docsArr, children, frontMatter, allSlugList }) => {
     const SEO = {
         title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`,
-        description: `${frontMatter.excerpt}`,
         openGraph: {
-            title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`,
-            description: `${frontMatter.excerpt}`
+            title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`
         }
     };
     const router = useRouter();
