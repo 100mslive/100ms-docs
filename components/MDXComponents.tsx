@@ -1,17 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from 'next/image';
 import DocLayout from '@/layouts/DocLayout';
-import { Tabs ,Tab } from './Tabs';
+import React from 'react';
+import { nanoid } from 'nanoid';
+import { Tabs, Tab } from './Tabs';
 
 import Code from './Code';
 import Note from './Note';
 
+const CodeCustom = (props: any) => <Code id={nanoid(10)}>{props.children}</Code>;
 
 const MDXComponents = {
     Note,
     Image,
+    code: CodeCustom,
     Code,
     DocLayout,
-    Tab,Tabs
+    Tab,
+    Tabs
 };
 
 export default MDXComponents;
