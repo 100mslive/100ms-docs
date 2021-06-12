@@ -1,0 +1,216 @@
+---
+title: React Extension to the JS SDK
+---
+
+# React Extension to the JS SDK
+
+---
+
+## Introduction
+
+We also provide a flux based reactive data store layer over our core SDK. This guide gives an overview of how to use the reactive layer for data management and dispatching actions.
+
+<Image src="/docs/HMS-Store.png" width={1634} height={566} />
+
+> If you haven't already done so, try our [sample quickstart app.](https://github.com/100mslive/100ms-ios) Then you can come back later to see how to build your own live audio/video app in more detail <br/> <br/> We also provide a barebones samples using the reactive store and typescript on codesandbox here. You may need to change getToken.ts per your token generation logic in the code provided in sandbox.
+
+## Concepts
+
+-   **Store** - The reactive store for reading data using selectors. The store acts as a single source of truth for any data related to the room.
+-   **Actions** - The actions interface for dispatching actions which in turn may reach out to server and update the store.
+-   **Selectors** - These are small functions used to get or subscribe to a portion of the store.
+
+## Pre-requisite
+
+1. Get the [100ms Reactive JS SDK](https://www.npmjs.com/package/@100mslive/hms-video-store)
+
+```bash
+npm install --save @100mslive/hms-video@latest
+npm install --save @100mslive/hms-video-store@latest
+```
+
+2. **Get Access Keys**: You can get your access keys in the [Developer section](https://dashboard.100ms.live/developer) of [100ms dashboard](https://dashboard.100ms.live/dashboard)
+
+3. **Create a room and setup a token generation service**: To create a room, follow the steps described [in this section.](/v2/server-side/Create-room) To setup a token generation service, follow the steps [in this section](/v2/server-side/Generate-server-side-token). Alternatively, you can use our[ quickstart server ](/v2/server-side/100ms-quickstart-app-server) for this.
+
+## Import modules & instantiate 100ms Reactive Store
+
+<Tabs id="store" items={['hms.js', 'another_file.js']} />{' '}
+
+<Code tab id='store-0'>
+
+```js
+import { HMSReactiveStore } from '@100mslive/hms-video-store';
+
+const hmsManager = new HMSReactiveStore();
+
+const hmsActions = hmsManager.getHMSActions();
+const hmsStore = hmsManager.getStore();
+
+export { hmsActions, hmsStore };
+```
+
+</Code>
+
+<Code tab id='store-1'>
+
+```js
+import { hmsActions, hmsStore } from './hms';
+```
+
+</Code>
+
+## Provide joining configuration and join a room
+
+```js
+const joinConfig = {
+    userName: 'Erlich Bachmann',
+    authToken: '<Auth token>', // client-side token generated from your token service
+    metaData: 'Custom description', //This is a custom data. You can send stringified JSON
+    settings: {
+        isAudioMuted: false,
+        isVideoMuted: false
+    }
+};
+
+hmsActions.join(joinConfig);
+```
+
+## Get peers/tracks data using selectors
+
+```js
+import {
+    selectLocalPeer,
+    selectPeers,
+    selectIsLocalAudioEnabed,
+    selectIsLocalVideoEnabled,
+    selectIsConnectedToRoom,
+    selectIsSomeoneScreenSharing,
+    selectPeersWithAudioStatus,
+    selectIsPeerAudioEnabled
+} from '@100mslive/hms-video-store';
+
+const localPeer = hmsStore.getState(selectLocalPeer);
+const peers = hmsStore.getState(selectPeers);
+const localVideoEnabled = hmsStore.getState(selectIsLocalVideoEnabled);
+const localVideoEnabled = hmsStore.getState(selectIsLocalAudioEnabled);
+const isConnected = hmsStore.getState(selectIsConnectedToRoom);
+const isScreenshareGoinOn = hmsStore.getState(selectIsSomeoneScreenSharing);
+const isPeerMuted = hmsStore.getState(selectIsPeerAudioEnabled(peerID));
+const participants = hmsStore.getState(selectPeersWithAudioStatus);
+```
+
+## Listen to changes in peers/tracks data
+
+You can subscribe to a part of the central store by passing a callback. The callback is called with two arguments, the current state and the previous state. The callback will only be called when the slice of the state being asked for changes.
+
+```js
+unsub = hmsStore.subscribe(onLocalPeerChange, selectLocalPeer);
+hmsStore.subscribe(onPeersChange, selectPeers);
+hmsStore.subscribe(onVideoMuteChange, selectIsLocalVideoEnabled);
+
+// you can also unsubscribe for clean up when the UI component is destroyed
+// note that all subsribers are cleaned up on room leave automatically
+unsub();
+```
+
+## Render video
+
+All audio tracks are rendered automatically by the SDK. As the developer, you just need to render the video track.
+
+Remember to call `detachVideo` when the video is not being rendered
+
+```js
+const localPeer = hmsStore.getState(selectLocalPeer);
+const videoElement = document.getElementById('local-video-id');
+hmsActions.attachVideo(localPeer.videoTrack, videoElement);
+
+//rendering code
+<video id="local-video-id" autoplay muted></video>;
+```
+
+## Mute/unmute local tracks
+
+```js
+hmsActions.setLocalVideoEnabled(false);
+hmsActions.setLocalAudioEnabled(true);
+
+const toggleAudio = () => {
+    const isEnabled = hmsStore.getState(selectIsLocalAudioEnabled);
+    hmsActions.setLocalAudioEnabled(!isEnabled);
+};
+```
+
+## Show Current Speaker
+
+```js
+const onSpeakerUpdate = (speaker, prevSpeaker) => {
+    console.log('speaker changed from - ', prevSpeaker, ', to - ', speaker);
+};
+
+hmsStore.subscribe(onSpeakerUpdate, selectDominantSpeakerName);
+
+// audio level for a peer
+const peer = hmsStore.getState(selectLocalPeer);
+hmsStore.getState(selectPeerAudioByID(peer.id));
+```
+
+## Sharing screen
+
+```js
+hmsActions.setScreenShareEnabled(true);
+
+const presenter = hmsStore(selectPeerScreenSharing);
+const amIScreenSharing = hmsStore(selectIsLocalScreenShared);
+const screenshareTrack = hmsStore(selectScreenShareByPeerID(presenter.id));
+```
+
+## Broadcasting and receiving messages
+
+<Note type="warning">This interface might change in an upcoming release</Note>
+
+```js
+import { selectHMSMessages } from '@100mslive/hms-video-store';
+
+hmsActions.sendMessage('Hello');
+hmsStore.subscribe(renderMessageList, selectHMSMessages);
+
+function renderMessageList(messages, oldMessages) {
+    document.getElementById('old-messages').textContent = JSON.stringify(oldMessages);
+    document.getElementById('messages').textContent = JSON.stringify(messages);
+}
+```
+
+## Leave
+
+```js
+hmsActions.leave();
+```
+
+## dvanced use cases
+
+Showing a preview screen before joining
+
+[Please check this page.](/v2/100ms-v2/Basics)
+
+Changing mic/camera before/during the call
+
+```js
+//Changing before the call
+const joinConfig = {
+    userName: 'Erlich Bachmann',
+    authToken: '<Auth token>', //This is the client-side token generated from your token service
+    metaData: 'Custom description', //This is a custom data. You can send stringified JSON
+    settings: {
+        isAudioMuted: false,
+        isVideoMuted: false,
+        audioInputDeviceId: 'default';
+        videoInputDeviceId: 'default';
+    },
+};
+hmsActions.join(joinConfig);
+
+
+//Changing midway during the call
+hmsActions.setVideoSettings({deviceId:'default'});
+```
