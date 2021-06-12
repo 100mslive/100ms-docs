@@ -1,0 +1,95 @@
+---
+title: Generate server-side token
+---
+
+# Generate server-side token
+
+---
+
+## Overview
+
+Any service calling 100ms' REST APIs need to authenticate using a management token. The service required to generate this token should be hosted on your server
+
+<Note>
+
+**Don't have the time to write your own token generation service?**
+
+We have hosted a [sample token generation service on runkit](https://runkit.com/apnerve/100ms-services) which you can clone and run with your access keys. This will setup & deploy your token generation service in a few minutes
+
+</Note>
+
+---
+
+## Obtaining Keys
+
+You can get following keys from the [Developer](https://dashboard.100ms.live/login) section of [100ms Dashboard](https://dashboard.100ms.live/login)
+
+---
+
+-   `management_key` - You will be assigned a unique management key
+-   `management_secret` - This unique secret is used to sign the token
+-   `customer_id` - This is an identifier for your organisation
+
+---
+
+## Sample management token generation code
+
+You can use the following code snippets to generate your token
+
+<Tabs id="code-gen" items={['Node.js', 'Python']} />
+
+<Code tab id='code-gen-0'>
+
+```js
+var jwt = require('jsonwebtoken');
+var uuid4 = require('uuid4');
+
+var customer_id = '5f679ec41aa12942cde1c3c1';
+var management_secret =
+    'lfpt0lHMrBfJYiBFlEtReIgztywwY078SpaLGHIpieK89oN8kLDBzaMP7nxSGfS1ya-VT5CUiTRrILasqNKHnDDoBd8m3cCAhtCcPJpu8Nn1TCvC7fwwkygxO7u8MHxUmiEnbnN6tPAbJh7GQAJRKJyGikXcRlerj3EvEWX32hY=';
+var management_key = '5f679ec41aa12942cde1c3c3';
+
+jwt.sign(
+    { access_key: management_key },
+    management_secret,
+    { algorithm: 'HS256', expiresIn: '24h', issuer: customer_id, jwtid: uuid4() },
+    function (err, token) {
+        console.log(token);
+    }
+);
+```
+
+</Code>
+
+<Code tab id='code-gen-1'>
+
+```Python
+
+#!/usr/bin/env python3
+import jwt
+import uuid
+import datetime
+
+customer_id = "5f74558a7ef1723ded60a127"
+management_secret = "g-fRy7V2844qw_17KZ3igkx8jUz3UW5v0MKD7pJCa4wMKJWniY7irfFx38ewAZup2QtAwu5IIVCv5Vkn1Y5QVjukd0JSByTzatvTaphHnctSIHDqXNp0b-lSoxpePZpFnnd-9bTe0QTWsCGEhjra9Yncc-MbJ1J7gl_nIkfGzpM="
+management_key = "5f74558a7ef1723ded60a129"
+
+def generate(expires=0):
+    expires = expires or 24 * 3600
+    now = datetime.datetime.utcnow()
+    exp  = now+ datetime.timedelta(seconds=expires)
+    return jwt.encode(payload={
+				                "access_key": management_key,
+				                "iss": customer_id,
+				                "jti": str(uuid.uuid4()),
+				                "exp": exp,
+				                "iat": now,
+				                "nbf": now},
+										  key=management_secret).decode("utf-8")
+
+if __name__ == "__main__":
+    print(generate())
+
+```
+
+</Code>

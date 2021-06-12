@@ -46,7 +46,7 @@ const DocLayout: React.FC<Props> = ({ docsArr, children, frontMatter, allSlugLis
             <article className="content">
                 {children}
                 <hr />
-                <Pagination next={nextPost} prev={previousPost} />
+                {previousPost && <Pagination next={nextPost} prev={previousPost} />}
                 <hr />
             </article>
             <style jsx>{`

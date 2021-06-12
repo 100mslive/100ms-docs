@@ -1,0 +1,87 @@
+---
+title: Android - Migration from 0.9.13
+---
+
+# Android - Migration from 0.9.13
+
+This guide is for users migrating from android SDK v0.9.13 to higher versions
+
+---
+
+## Breaking Changes
+
+### Imports
+
+1. The `HMSRTCMediaStream` class imports is changed from `import live.hms.video.webrtc.HMSRTCMediaStream` to `import live.hms.video.HMSRTCMediaStream`
+2. Instead of using webrtc classes `AudioTrack`, `VideoTrack` and `MediaStreamuse` `HMSRTCAudioTrack`, `HMSRTCVideoTrack` and `HMSRTCMediaStream` respectively.
+
+#### Change - Import
+
+```java:before
+// Before
+import live.hms.video.webrtc.HMSRTCMediaStream
+
+import org.webrtc.AudioTrack;
+import org.webrtc.MediaStream;
+import org.webrtc.VideoTrack;
+```
+
+```java:adter
+// After
+import live.hms.video.HMSRTCMediaStream
+
+import live.hms.video.webrtc.AudioTrack;
+import live.hms.video.webrtc.VideoTrack;
+```
+
+### GetLocalStreamListener is renamed
+
+-   `HMSClient.GetLocalStreamListener` is renamed to `HMSClient.LocalStreamListener`
+
+#### Change - GetLocalStreamListener
+
+<Tabs id="quality-level" items={['Java', 'Kotlin']} />
+
+<Code id='quality-level-0' noCopy tab>
+
+```java
+// Before
+public void getLocalStream(
+    Context context,
+    HMSRTCMediaStreamConstraints constraints,
+    HMSClient.GetLocalStreamListener getLocalStreamListener
+)
+```
+
+```java
+// After
+public void getLocalStream(
+    Context context,
+    HMSRTCMediaStreamConstraints constraints,
+    HMSClient.LocalStreamListener localStreamListener
+)
+```
+
+</Code>
+
+<Code id='quality-level-1' noCopy tab>
+
+```Kotlin
+// Before
+public fun getLocalStream(
+    context: Context,
+    constraints: HMSRTCMediaStreamConstraints,
+    getLocalStreamListener: HMSClient.GetLocalStreamListener
+)
+```
+
+```Kotlin
+// After
+public fun getLocalStream(
+    context: Context,
+    constraints: HMSRTCMediaStreamConstraints,
+    localStreamListener: HMSClient.LocalStreamListener
+)
+```
+
+</Code>

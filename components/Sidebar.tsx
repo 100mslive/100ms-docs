@@ -65,7 +65,7 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                 <div className="sidebar-header">
                     <a href="/">
                         <img width={36} src="/logo.svg" alt="100ms Logo" />
-                        <b>100ms 2.0</b>
+                        <b>100ms</b>
                     </a>
                 </div>
                 <div>
@@ -85,7 +85,7 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                 <div className="sidebar-header">
                     <a href="/">
                         <img width={36} src="/logo.svg" alt="100ms Logo" />
-                        <b>100ms 2.0</b>
+                        <b>100ms</b>
                     </a>
 
                     <span
@@ -99,6 +99,18 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                         {isDark ? <SvgMoon /> : <SvgSun />}
                     </span>
                 </div>
+
+                {/* Sidebar Version Section */}
+                <section className="menu-container">
+                    <div className="menu-title">VERSIONS</div>
+
+                    <a href="/v1/100ms-v1/basics">
+                        <div className="menu-item">v1.0.0</div>
+                    </a>
+                    <a href="/v2/100ms-v2/Basics">
+                        <div className="menu-item">v2.0.0</div>
+                    </a>
+                </section>
 
                 {/* Sidebar Menu Section */}
 

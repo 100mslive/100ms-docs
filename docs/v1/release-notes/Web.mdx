@@ -1,0 +1,63 @@
+---
+title: Web
+---
+
+# Web
+
+This page provides the release notes for the 100ms JavaScript SDK.
+
+---
+
+## v1.0.6 - 2021-05-07
+
+### Added
+
+-   Support for mic change during meeting
+-   Allow retry for publish and subscribe errors
+-   dd subscribe failure events to analytics
+-   Send reason (ERR_CONNECTION_REFUSED | CONNECTION_CLOSED) when emitting disconnect event to distinguish between connection closing and not being able to establish a connection (because of wrong room id or internet issues)
+
+---
+
+## v1.0.0 - 2021-03-18
+
+### Fixed
+
+-   Screenshare on electron
+-   This fix requires setting `shouldPublishVideo` to true when calling `getLocalStream` to get the desktop capturer stream in electron
+
+---
+
+## v0.9.26 - 2021-03-13
+
+### Fixed
+
+-   Accepting string as custom metadata instead of an object.
+
+---
+
+## v0.9.25 - 2021-03-11
+
+### Added
+
+-   An option to add custom metadata as part of peer creation.
+-   This breaks the incoming stream from electron screen share and other devices which send custom metadata as a string. We highly recommend upgrading to v0.9.26.
+-   Audio level monitoring - Two new methods startAudioLevelMonitor and stopAudioLevelMonitor have been added to monitor the audio levels of all the streams.
+
+### Changed
+
+-   Reverted camera mute/unmute logic. This re-introduces the green light staying issue when the camera is switched off in Chrome/Safari/Edge/Opera
+
+---
+
+## v0.9.24 - 2021-03-08
+
+### Added
+
+-   Event analytics
+
+### Fixed
+
+-   Publish returns localStream with mid immediately and we no longer need to poll for mid
+-   Honour `shouldPublishAudio` and shouldPublishVideo in `getLocalStream` correctly
+-   Do not show green light when unmuting the video
