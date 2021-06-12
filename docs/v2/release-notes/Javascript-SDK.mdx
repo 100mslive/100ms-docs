@@ -1,0 +1,79 @@
+---
+title: JavaScript SDK
+---
+
+# JavaScript SDK
+
+---
+
+## 0.0.26 - 2021-06-11
+
+#### Added
+
+-   HMSPeer object will now have `customerUserId` property that stores the `userId` from [Client Token](../server-side/generate-client-side-token.md#sample-client-side-token-generation-code).
+
+#### Fixed
+
+-   Removed unsupported deviceId constraint in Safari.
+-   Use EventEmitter instead of EventTarget to support older versions of some browsers.
+
+## 0.0.24 - 2021-06-10
+
+#### Added
+
+-   Handle device change on mid-call.
+
+## 0.0.22 - 2021-06-09
+
+#### Added
+
+-   Support for Firefox\(&gt;=60\).
+-   Shim and polyfills for cross browser compatibility.
+-   Exported `isSupported` method to check if browser and device are supported. `import { isSupported } from "@100mslive/hms-video";`
+
+## 0.0.19 - 2021-06-02
+
+#### Added
+
+-   Error Codes - every error thrown from the SDK now will be of type HMSException, a wrapper over the native Error.
+
+```typescript
+interface HMSException {
+    code: number; // A code number denoting the type of error
+    name: string; // Name of the error
+    action: string; // What action caused the error
+    message: string; // Message related to the error
+    description: string; // Additional information and steps to recover from the error
+}
+```
+
+## 0.0.18 - 2021-06-02
+
+#### Fixed
+
+-   Screenshare permitted only when user's role is allowed to share screen.
+-   Improved screenshare quality by removing maxBitrate limit.
+
+## 0.0.17
+
+Our alpha release is here 🙌🙌. If you want to know more about our motivations to move to 2.0, head [here](../)
+
+Thanks for your patience :\).
+
+This release might still have bugs, some interfaces can change \(we will keep them to a minimum\)
+
+This release has
+
+-   Simplified SDK interfaces that can power a fully-featured video conferencing application
+    -   `join`
+    -   `leave`
+    -   `getPeers, getLocalPeer` for tracks/peers/other data
+-   Features not covered in this release
+    -   Handling network disconnections \(disconnect from wi-fi to 4g ends the call\)
+    -   Handling subscription network degradations
+    -   Handling second order publish network degradations
+    -   Detailed analytics
+    -   Recording
+-   Our sample app is currently a React edtech app to demonstrate how roles work, and also how our UI-components work. Documentation for these roles will be released soon
+-   Browser coverage is limited to latest versions of Chrome on desktop. We will improve this over the next few releases
+-   Please contact @akash goswami in your Slack channel if you have any questions

@@ -1,7 +1,5 @@
 ---
 title: Getting Started - JavaScript
-excerpt: Getting Started - JavaScript
-date: 31-12-2020
 ---
 
 # Getting Started - JavaScript
@@ -10,11 +8,7 @@ date: 31-12-2020
 
 This guide provides an overview of the key objects you'll use with 100ms' JavaScript SDK to build a live audio/video application
 
-<Note>
-
-If you haven't already done so, try our sample [quickstartapp](https://github.com/100mslive/100ms-web-v2). Then you can come back later to see how to build your own live audio/video app in more detail
-
-</Note>
+> If you haven't already done so, try our sample [quickstartapp](https://github.com/100mslive/100ms-web-v2). Then you can come back later to see how to build your own live audio/video app in more detail
 
 ### Supported Devices
 
@@ -49,8 +43,9 @@ const hms = new HMSSdk();
 
 ### Provide joining configuration, add listeners and join a room
 
-{% tabs %}
-{% tab title="Joining code" %}
+<Tabs id="join-room" items={['Joining code', 'Room,Peer,Track Interfaces', 'Update Types']} />{' '}
+
+<Code id='join-room-0' tab>
 
 ```jsx
 const joinConfig = {
@@ -119,9 +114,9 @@ hms.join(joinConfig, listener);
 hms.addAudioListener({ onAudioLevelUpdate: onAudioLevelUpdate });
 ```
 
-{% endtab %}
+</Code>
 
-{% tab title="Room,  Peer,  Track Interfaces" %}
+<Code id='join-room-1' tab>
 
 ```jsx
 interface HMSPeer {
@@ -159,9 +154,9 @@ interface HMSMessage {
 }
 ```
 
-{% endtab %}
+</Code>
 
-{% tab title="Update types" %}
+<Code id='join-room-2' tab>
 
 ```jsx
 
@@ -184,8 +179,7 @@ enum HMSTrackUpdate {
 // There are other events yet to be implmeneted, which will fill in the enum gaps
 ```
 
-{% endtab %}
-{% endtabs %}
+</Code>
 
 ### Get peers/tracks data
 

@@ -31,10 +31,8 @@ interface Props {
 const DocLayout: React.FC<Props> = ({ docsArr, children, frontMatter, allSlugList }) => {
     const SEO = {
         title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`,
-        description: `${frontMatter.excerpt}`,
         openGraph: {
-            title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`,
-            description: `${frontMatter.excerpt}`
+            title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`
         }
     };
     const router = useRouter();
@@ -60,7 +58,6 @@ const DocLayout: React.FC<Props> = ({ docsArr, children, frontMatter, allSlugLis
                 .content {
                     padding-top: 30px;
                     padding-left: 80px;
-                    padding-bottom: 350px;
                     max-width: 750px;
                     overflow: scroll;
                     overflow-y: hidden;

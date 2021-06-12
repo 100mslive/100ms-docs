@@ -1,7 +1,5 @@
 ---
 title: Getting Started - Android
-excerpt: Getting Started - Android
-date: 31-12-2020
 ---
 
 # Getting Started - Android
@@ -10,11 +8,7 @@ date: 31-12-2020
 
 This guide provides an overview of the key objects you'll use with 100ms Android SDK to build a live audio/video application
 
-<Note>
-
-If you haven't already done so, try our sample [quickstart app](https://github.com/100mslive/100ms-android). Then you can come back later to see how to build your own live audio/video app in more detail
-
-</Note>
+> If you haven't already done so, try our sample [quickstart app](https://github.com/100mslive/100ms-android). Then you can come back later to see how to build your own live audio/video app in more detail
 
 ## Supported Devices
 
@@ -85,9 +79,6 @@ To start using 100ms SDK first, the SDK needs to be built using the required con
 -   `HMSLogger.LogLevel` - to specify the log level needed. Default value is `DEBUG`
 -   `AnalyticEventLevel` - to specify the event level of analytics to be sent. Default value is `ERROR`
 
-{% tabs %}
-{% tab title="Kotlin" %}
-
 ```java
 val hmsSDK = HMSSDK
     .Builder(application) // pass the application context
@@ -97,21 +88,11 @@ val hmsSDK = HMSSDK
     .build()
 ```
 
-{% endtab %}
-{% endtabs %}
-
-<Note>
-
-Just `HMSSDK.Builder(application).build()` should work for most cases.
-
-</Note>
+> Just `HMSSDK.Builder(application).build()` should work for most cases.
 
 ## Provide joining configuration
 
 To join a room created by following the steps described [in this section](../server-side/create-room.md), clients need to create a `HMSConfig` instance and use that instance to call `join` method of `HMSSDK` .
-
-{% tabs %}
-{% tab title="Kotlin" %}
 
 ```java
 // Create a new HMSConfig
@@ -121,19 +102,11 @@ val config = HMSConfig(
         info.toString(), // optional -- any  json string or metadata that user need to paas while joining
         endpoint // optional -- to override the default endpoint (advanced)
       )
-
-
 ```
-
-{% endtab %}
-{% endtabs %}
 
 ## Add event listeners
 
 100ms SDK provides callbacks to the client app about any change or update happening in the room after a user has joined by implementing `HMSUpdateListener` . These updates can be used to render the video on screen or to display other info regarding the room.
-
-{% tabs %}
-{% tab title="Kotlin" %}
 
 ```java
       val hmsUpdateListener = object: HMSUpdateListener{
@@ -172,45 +145,27 @@ val config = HMSConfig(
       }
 ```
 
-{% endtab %}
-{% endtabs %}
-
 ## Join room
 
 Use the `HMSConfig` and `HMSUpdateListener` instances to call `join` method on the instance of `HMSSDK` created above.
 
 Once `Join` succeeds, all the callbacks keep coming on every change in the room and the app can react accordingly
 
-{% tabs %}
-{% tab title="Kotlin" %}
-
 ```java
 hmsSDK.join(hmsConfig, hmsUpdateListener) // to join a room
 ```
-
-{% endtab %}
-{% endtabs %}
 
 ## Leave room
 
 Call the `leave` method on the `HMSSDK` instance
 
-{% tabs %}
-{% tab title="Kotlin" %}
-
 ```java
 hmsSDK.leave() // to leave a room
 ```
 
-{% endtab %}
-{% endtabs %}
-
 ## Get peers/tracks data
 
 `HMSSDK` has other methods which the client app can use to get more info about the `Room` , `Peer` and `Tracks`
-
-{% tabs %}
-{% tab title="Kotlin" %}
 
 ```java
     fun join(config: HMSConfig, hmsUpdateListener: HMSUpdateListener) {
@@ -247,9 +202,6 @@ hmsSDK.leave() // to leave a room
     }
 ```
 
-{% endtab %}
-{% endtabs %}
-
 ## HMSTracks explained
 
 `HMSTrack` is the super class of all the tracks that are used inside `HMSSDK` . Its hierarchy looks like this
@@ -261,9 +213,6 @@ hmsSDK.leave() // to leave a room
     -   `HMSVideoTrack`
         -   `HMSLocalVideoTrack`
         -   `HMSRemoteVideoTrack`
-
-{% tabs %}
-{% tab title="Kotlin" %}
 
 ```java
     class HMSTrack {
@@ -304,6 +253,3 @@ hmsSDK.leave() // to leave a room
     }
 
 ```
-
-{% endtab %}
-{% endtabs %}

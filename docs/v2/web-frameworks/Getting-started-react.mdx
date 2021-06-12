@@ -1,7 +1,5 @@
 ---
 title: Getting Started - React
-excerpt: Getting Started - React
-date: 31-12-2020
 ---
 
 # Getting Started - React
@@ -72,8 +70,9 @@ const App = () => {
 
 ### Provide joining configuration and join a room
 
-{% tabs %}
-{% tab title="Joining code" %}
+<Tabs id="join-room" items={['Joining Code', 'Full Code']} />{' '}
+
+<Code id='join-room-0' tab>
 
 ```jsx
 const joinConfig = {
@@ -89,9 +88,9 @@ const joinConfig = {
 hmsActions.join(joinConfig);
 ```
 
-{% endtab %}
+</Code>
 
-{% tab title="Full code" %}
+<Code id='join-room-1' tab>
 
 ```jsx
 import { useHMSActions, useHMSStore, HMSRoomProvider } from '@100mslive/sdk-components';
@@ -132,16 +131,16 @@ const App = () => {
 };
 ```
 
-{% endtab %}
-{% endtabs %}
+</Code>
 
 ### Get peers' states
 
 The data store provides granular access to the room's state variables via `selectors`.  
 100ms provides pre-built selectors to select most commonly used states.
 
-{% tabs %}
-{% tab title="Data store code" %}
+<Tabs id="data-room" items={['Joining Code', 'Full Code']} />{' '}
+
+<Code id='data-room-0' tab>
 
 ```jsx
 import {
@@ -163,9 +162,8 @@ const isSomeoneScreenSharing = useHMSStore(selectIsSomeoneScreenSharing); //Is s
 const isPeerAudioEnabled = useHMSStore((store) => selectIsPeerAudioEnabled(store, peer.id)); //Is a remote peer muted?
 ```
 
-{% endtab %}
-
-{% tab title="Store interface" %}
+</Code>
+<Code id='data-room-1' tab>
 
 ```jsx
 interface HMSStore {
@@ -222,12 +220,9 @@ export interface HMSMediaSettings {
 }
 ```
 
-{% endtab %}
-{% endtabs %}
+</Code>
 
-{% hint style="info" %}
-`selectors` are functions that accept the current data store state as an argument and return data that is derived from that state. For advanced use cases, you can write your own selector
-{% endhint %}
+> `selectors` are functions that accept the current data store state as an argument and return data that is derived from that state. For advanced use cases, you can write your own selector
 
 ### Render videos
 
@@ -258,9 +253,7 @@ function VideoTile(props) {
 }
 ```
 
-{% hint style="info" %}
-`selectCameraStreamByPeerID` returns the first camera track of the peer. If you have advanced, multi-camera usage - you can write your own selectors to choose multiple tracks
-{% endhint %}
+> `selectCameraStreamByPeerID` returns the first camera track of the peer. If you have advanced, multi-camera usage - you can write your own selectors to choose multiple tracks
 
 ### Muting, unmuting
 
@@ -273,8 +266,6 @@ hmsActions.setLocalAudioEnabled(true);
 
 <Note type="warning">This interface might change in an upcoming release</Note>
 
-<Code >
-
 ```jsx
 import { selectHMSMessages } from '@100mslive/hms-video-react';
 
@@ -282,24 +273,14 @@ hmsActions.sendMessage('Hello');
 const storeMessages = useHMSStore(selectHMSMessages);
 ```
 
-</Code >
-
 ### Share screen
-
-<Code >
 
 ```jsx
 hmsActions.setScreenShareEnabled(true);
 ```
 
-</Code >
-
 ### Leave room
-
-<Code >
 
 ```jsx
 hmsActions.leave();
 ```
-
-</Code>

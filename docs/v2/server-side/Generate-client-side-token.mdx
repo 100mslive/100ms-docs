@@ -1,7 +1,5 @@
 ---
 title: Generate client-side token
-excerpt: Generate client-side token
-date: 31-12-2020
 ---
 
 # Generate client-side token
@@ -10,7 +8,7 @@ date: 31-12-2020
 
 Client-side apps need to send a token to 100ms when instantiating 100ms' SDKs. This token generating service should be hosted on your server
 
-<Note type='success'>
+<Note>
 
 **Don't have the time to write your own token generation service?**
 
@@ -26,6 +24,10 @@ You can get following keys from the [Developer](https://dashboard.100ms.live/dev
 -   `app_secret` - This unique secret is used to sign the token.
 
 ## Sample client-side token generation code <a id="sample-client-side-token-generation-code"></a>
+
+<Tabs id="client-code-token" items={['Nodejs', 'Python']} />
+
+<Code id='client-code-token-0' tab>
 
 ```javascript
 var jwt = require('jsonwebtoken');
@@ -53,6 +55,10 @@ jwt.sign(
     }
 );
 ```
+
+</Code>
+
+<Code id='client-code-token-1' tab >
 
 ```python
 #!/usr/bin/env python3
@@ -89,3 +95,5 @@ if __name__ == "__main__":
         role = sys.argv[2]
     print(generate(room_id=room_id, user_id=user_id, role=role))
 ```
+
+</Code>
