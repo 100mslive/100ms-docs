@@ -6,6 +6,7 @@ import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/dist/client/router';
 import getPagination from '@/lib/getPagination';
 import Pagination from '@/components/Pagination';
+import EditFile from '@/components/EditFile';
 
 interface ReadingTimeType {
     text: string;
@@ -35,6 +36,7 @@ const DocLayout: React.FC<Props> = ({ docsArr, children, frontMatter, allSlugLis
             title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`
         }
     };
+
     const router = useRouter();
     const { previousPost, nextPost } = getPagination(allSlugList, router.asPath);
     return (
@@ -45,6 +47,8 @@ const DocLayout: React.FC<Props> = ({ docsArr, children, frontMatter, allSlugLis
                 {children}
                 <hr />
                 {previousPost && <Pagination next={nextPost} prev={previousPost} />}
+                <hr />
+                <EditFile slug={router.asPath} />
                 <hr />
             </article>
             <style jsx>{`
