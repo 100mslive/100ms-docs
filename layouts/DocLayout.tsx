@@ -55,7 +55,7 @@ const DocLayout: React.FC<Props> = ({ docsArr, children, frontMatter, allSlugLis
                 .page {
                     position: relative;
                     width: 100%;
-                    min-height: 100%;
+                    min-height: 100vh;
                     height: initial;
                     display: flex;
                 }

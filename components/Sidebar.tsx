@@ -230,6 +230,10 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                         left: 0;
                         display: ${menu ? 'block' : 'none'};
                     }
+                    :global(.page) {
+                        height: ${menu ? '100vh !important' : ''};
+                        overflow: ${menu ? 'hidden !important' : ''};
+                    }
                     .mobile-sidebar {
                         display: flex;
                         justify-content: space-between;
