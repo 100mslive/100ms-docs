@@ -27,6 +27,10 @@ You can get following keys from the [Developer](https://dashboard.100ms.live/dev
 
 ## Sample client-side token generation code <a id="sample-client-side-token-generation-code"></a>
 
+<Tabs id="client-code-token" items={['Nodejs', 'Python']} />
+
+<Code id='client-code-token-0' tab>
+
 ```javascript
 var jwt = require('jsonwebtoken');
 var uuid4 = require('uuid4');
@@ -53,6 +57,10 @@ jwt.sign(
     }
 );
 ```
+
+</Code>
+
+<Code id='client-code-token-1' tab >
 
 ```python
 #!/usr/bin/env python3
@@ -89,3 +97,5 @@ if __name__ == "__main__":
         role = sys.argv[2]
     print(generate(room_id=room_id, user_id=user_id, role=role))
 ```
+
+</Code>
