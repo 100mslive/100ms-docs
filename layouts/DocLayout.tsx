@@ -6,7 +6,6 @@ import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/dist/client/router';
 import getPagination from '@/lib/getPagination';
 import Pagination from '@/components/Pagination';
-import EditFile from '@/components/EditFile';
 
 interface ReadingTimeType {
     text: string;
@@ -48,7 +47,7 @@ const DocLayout: React.FC<Props> = ({ docsArr, children, frontMatter, allSlugLis
                 <hr />
                 {previousPost && <Pagination next={nextPost} prev={previousPost} />}
                 <hr />
-                <EditFile slug={router.asPath} />
+                {/* <EditFile slug={router.asPath} /> */}
                 <hr />
             </article>
             <style jsx>{`
