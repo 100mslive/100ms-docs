@@ -9,6 +9,7 @@ import Code from './Code';
 import Note from './Note';
 import PostRequest from './PostRequest';
 import Response from './Response';
+import CodeEditor from './CodeEditor';
 
 const CodeCustom = (props: any) => <Code id={nanoid(10)}>{props.children}</Code>;
 
@@ -24,7 +25,8 @@ const MDXComponents = {
     Code,
     DocLayout,
     Tab,
-    Tabs
+    Tabs,
+    CodeEditor
 };
 
 export default MDXComponents;
