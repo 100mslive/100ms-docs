@@ -1,10 +1,3 @@
-import React from 'react';
+import redirect from '@/lib/redirect';
 
-const Home = () => {
-    React.useEffect(() => {
-        window.location.href = '/v2/100ms-v2/Basics';
-    }, []);
-    return <></>;
-};
-
-export default Home;
+export default redirect('/v2/100ms-v2/Basics');
