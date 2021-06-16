@@ -18,7 +18,8 @@ const withTableofContents = (toc?: any[]) => () => (tree) => {
         const slug = slugify(title)
 
         node.type = 'jsx'
-        node.value = `<p id={"${slug}"} level={${node.depth}}>${title}</p>`
+        // Return the Correspondind Heading Tag based on the Node Depth
+        node.value = `<h${node.depth} id={"${slug}"} level={${node.depth}}>${title}</h${node.depth}>`
 
         if (Array.isArray(toc)) {
           toc.push({ slug, title, depth: node.depth })

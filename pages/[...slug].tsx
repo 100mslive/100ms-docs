@@ -10,10 +10,22 @@ import mdxPrism from 'mdx-prism';
 import hydrate from 'next-mdx-remote/hydrate';
 import components from '@/components/MDXComponents';
 import withTableofContents from '@/lib/withTableofContents';
+import Nav from '@/components/Navigation';
+import { useRouter } from 'next/router';
 
 const DocSlugs = ({ toc, source, allDocs, nav, frontMatter }) => {
+    const {
+        query: { slug },
+        asPath
+    } = useRouter();
+    const [lib] = slug as string[];
     const content = hydrate(source, { components });
-    return <article>{content}</article>;
+    return (
+        <div>
+            <Nav nav={nav[lib]} />
+            <article>{content}</article>
+        </div>
+    );
 };
 
 export default DocSlugs;
@@ -50,7 +62,6 @@ export const getStaticProps = async ({ params }) => {
         mdxOptions: {
             remarkPlugins: [
                 require('remark-slug'),
-                require('remark-autolink-headings'),
                 require('remark-code-titles'),
                 require('@fec/remark-a11y-emoji'),
                 withTableofContents(toc)
