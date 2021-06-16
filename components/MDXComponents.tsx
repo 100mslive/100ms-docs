@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from 'next/image';
-import DocLayout from '@/layouts/DocLayout';
 import React from 'react';
 import { nanoid } from 'nanoid';
 import { Tabs, Tab } from './Tabs';
@@ -23,7 +22,6 @@ const MDXComponents = {
     blockquote: NoteCustom,
     code: CodeCustom,
     Code,
-    DocLayout,
     Tab,
     Tabs,
     CodeEditor

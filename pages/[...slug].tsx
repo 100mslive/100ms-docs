@@ -12,19 +12,21 @@ import components from '@/components/MDXComponents';
 import withTableofContents from '@/lib/withTableofContents';
 import Nav from '@/components/Navigation';
 import { useRouter } from 'next/router';
+import DocLayout from '@/layouts/DocLayout';
 
 const DocSlugs = ({ toc, source, allDocs, nav, frontMatter }) => {
+    console.log(frontMatter);
     const {
         query: { slug },
         asPath
     } = useRouter();
-    const [lib] = slug as string[];
+    const [currentDoc] = slug as string[];
+
     const content = hydrate(source, { components });
     return (
-        <div>
-            <Nav nav={nav[lib]} />
-            <article>{content}</article>
-        </div>
+        <DocLayout frontMatter={frontMatter} nav={nav[currentDoc]}>
+            {content}
+        </DocLayout>
     );
 };
 
