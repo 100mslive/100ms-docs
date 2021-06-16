@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import SvgMoon from '@/assets/icons/Moon';
 import SvgSun from '@/assets/icons/Sun';
+import CrossIcon from '@/assets/icons/CrossIcon';
+import MenuIcon from '@/assets/icons/MenuIcon';
 
 type NavRoute = {
     url: string;
@@ -46,6 +48,29 @@ const Sidebar: React.FC<Props> = ({ nav }) => {
     };
     return (
         <>
+            <div className="mobile-sidebar">
+                <button aria-label="menu-button" type="button" onClick={() => setMenu(!menu)}>
+                    {menu ? <CrossIcon /> : <MenuIcon />}
+                </button>
+                <div className="sidebar-header">
+                    <a href="/">
+                        <img width={36} src="/logo.svg" alt="100ms Logo" />
+                        <b>100ms</b>
+                    </a>
+                </div>
+                <div>
+                    <span
+                        aria-label="theme-toggle-button"
+                        className="pointer"
+                        role="button"
+                        style={{ paddingTop: '8px', paddingLeft: '10px' }}
+                        tabIndex={0}
+                        onKeyPress={() => toggleTheme()}
+                        onClick={() => toggleTheme()}>
+                        {isDark ? <SvgMoon /> : <SvgSun />}
+                    </span>
+                </div>
+            </div>
             <div className="sidebar">
                 <div className="sidebar-header">
                     <a href="/">
