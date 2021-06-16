@@ -1,49 +1,20 @@
-import React from 'react';
+/* eslint-disable react/no-array-index-key */
+import React, { Fragment } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import SvgMoon from '@/assets/icons/Moon';
 import SvgSun from '@/assets/icons/Sun';
-import { SidebarType } from '@/lib/getSidebarData';
-import { useRouter } from 'next/dist/client/router';
+
+type NavRoute = {
+    url: string;
+    title: string;
+};
 
 interface Props {
-    docsArr?: SidebarType[];
+    nav: Record<string, Record<string, NavRoute>>;
 }
 
-export const CrossIcon = () => (
-    <svg
-        viewBox="0 0 24 24"
-        width="15"
-        height="15"
-        xmlns="http://www.w3.org/2000/svg"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-        shapeRendering="geometricPrecision"
-        style={{ color: 'var(--foreground)' }}>
-        <path d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z" />
-    </svg>
-);
-
-export const MenuIcon = () => (
-    <svg
-        viewBox="0 0 24 24"
-        width="24"
-        height="24"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-        shapeRendering="geometricPrecision"
-        style={{ color: 'var(--foreground)' }}>
-        <path d="M3 12h18" />
-        <path d="M3 6h18" />
-        <path d="M3 18h18" />
-    </svg>
-);
-
-const Sidebar: React.FC<Props> = ({ docsArr }) => {
+const Sidebar: React.FC<Props> = ({ nav }) => {
     const [menu, setMenu] = React.useState(false);
     const router = useRouter();
     const [isDark, setIsDark] = React.useState<boolean>(true);
@@ -75,29 +46,6 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
     };
     return (
         <>
-            <div className="mobile-sidebar">
-                <button aria-label="menu-button" type="button" onClick={() => setMenu(!menu)}>
-                    {menu ? <CrossIcon /> : <MenuIcon />}
-                </button>
-                <div className="sidebar-header">
-                    <a href="/">
-                        <img width={36} src="/logo.svg" alt="100ms Logo" />
-                        <b>100ms</b>
-                    </a>
-                </div>
-                <div>
-                    <span
-                        aria-label="theme-toggle-button"
-                        className="pointer"
-                        role="button"
-                        style={{ paddingTop: '8px', paddingLeft: '10px' }}
-                        tabIndex={0}
-                        onKeyPress={() => toggleTheme()}
-                        onClick={() => toggleTheme()}>
-                        {isDark ? <SvgMoon /> : <SvgSun />}
-                    </span>
-                </div>
-            </div>
             <div className="sidebar">
                 <div className="sidebar-header">
                     <a href="/">
@@ -131,16 +79,16 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
 
                 {/* Sidebar Menu Section */}
 
-                {docsArr!.map((el) => (
-                    <section className="menu-container" key={el.topic}>
-                        {el.topic !== '' ? <div className="menu-title">{el.topic}</div> : null}
-                        {el.fileSlugs.map((dt) => (
-                            <a href={dt.slug} key={dt.slug}>
+                {Object.entries(nav).map(([key, children]) => (
+                    <section className="menu-container" key={key}>
+                        <div className="menu-title">{key.replace(/-/g, ' ').toUpperCase()}</div>
+                        {Object.entries(children).map(([_, route]) => (
+                            <a href={route.url} key={route.url}>
                                 <div
                                     className={`menu-item ${
-                                        dt.slug === router.asPath ? 'active-link' : ''
+                                        route.url === router.asPath ? 'active-link' : ''
                                     }`}>
-                                    {dt.text}
+                                    {route.title}
                                 </div>
                             </a>
                         ))}

@@ -10,7 +10,6 @@ import mdxPrism from 'mdx-prism';
 import hydrate from 'next-mdx-remote/hydrate';
 import components from '@/components/MDXComponents';
 import withTableofContents from '@/lib/withTableofContents';
-import Nav from '@/components/Navigation';
 import { useRouter } from 'next/router';
 import DocLayout from '@/layouts/DocLayout';
 

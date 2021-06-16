@@ -1,4 +1,4 @@
-import Nav from '@/components/Navigation';
+import Sidebar from '@/components/Sidebar';
 import { NextSeo } from 'next-seo';
 import React from 'react';
 
@@ -25,7 +25,7 @@ const DocLayout: React.FC<Props> = ({ frontMatter, nav, children }) => {
     return (
         <div className="page">
             <NextSeo {...SEO} />
-            <Nav nav={nav} />
+            <Sidebar nav={nav} />
             <article className="content">{children}</article>
             <hr />
             <style jsx>{`
