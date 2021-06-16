@@ -13,7 +13,7 @@ import withTableofContents from '@/lib/withTableofContents';
 import { useRouter } from 'next/router';
 import DocLayout from '@/layouts/DocLayout';
 
-const DocSlugs = ({ toc, source, allDocs, nav, frontMatter }) => {
+const DocSlugs = ({ toc, source, nav, frontMatter }) => {
     const {
         query: { slug }
     } = useRouter();

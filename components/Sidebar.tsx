@@ -1,11 +1,10 @@
 /* eslint-disable react/no-array-index-key */
-import React, { Fragment } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import SvgMoon from '@/assets/icons/Moon';
 import SvgSun from '@/assets/icons/Sun';
 import CrossIcon from '@/assets/icons/CrossIcon';
 import MenuIcon from '@/assets/icons/MenuIcon';
+import React from 'react';
 
 type NavRoute = {
     url: string;
