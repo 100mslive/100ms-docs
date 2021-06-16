@@ -9,8 +9,9 @@ import fs from 'fs';
 import mdxPrism from 'mdx-prism';
 import hydrate from 'next-mdx-remote/hydrate';
 import components from '@/components/MDXComponents';
+import withTableofContents from '@/lib/withTableofContents';
 
-const DocSlugs = ({ source, allDocs, nav, frontMatter }) => {
+const DocSlugs = ({ toc, source, allDocs, nav, frontMatter }) => {
     const content = hydrate(source, { components });
     return <article>{content}</article>;
 };
@@ -42,6 +43,7 @@ export const getStaticProps = async ({ params }) => {
         return n;
     }, {});
 
+    const toc = [];
     const mdxSource = await renderToString(content, {
         components,
         // Optionally pass remark/rehype plugins
@@ -50,7 +52,8 @@ export const getStaticProps = async ({ params }) => {
                 require('remark-slug'),
                 require('remark-autolink-headings'),
                 require('remark-code-titles'),
-                require('@fec/remark-a11y-emoji')
+                require('@fec/remark-a11y-emoji'),
+                withTableofContents(toc)
             ],
             rehypePlugins: [mdxPrism]
         },
@@ -59,6 +62,7 @@ export const getStaticProps = async ({ params }) => {
 
     return {
         props: {
+            toc,
             allDocs,
             nav,
             source: mdxSource,
