@@ -14,16 +14,13 @@ import { useRouter } from 'next/router';
 import DocLayout from '@/layouts/DocLayout';
 
 const DocSlugs = ({ toc, source, allDocs, nav, frontMatter }) => {
-    console.log(frontMatter);
     const {
-        query: { slug },
-        asPath
+        query: { slug }
     } = useRouter();
     const [currentDoc] = slug as string[];
-
     const content = hydrate(source, { components });
     return (
-        <DocLayout frontMatter={frontMatter} nav={nav[currentDoc]}>
+        <DocLayout frontMatter={frontMatter} nav={nav[currentDoc]} toc={toc}>
             {content}
         </DocLayout>
     );

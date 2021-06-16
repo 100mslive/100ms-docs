@@ -132,6 +132,12 @@ const Sidebar: React.FC<Props> = ({ nav }) => {
                     background: transparent;
                     border: none;
                 }
+                ::-webkit-scrollbar {
+                    width: 0px;
+                }
+                ::-webkit-scrollbar-thumb {
+                    outline: 0px solid var(--accents4);
+                }
                 .sidebar {
                     width: calc((100% - 1448px) / 2 + 298px);
                     display: flex;
@@ -140,8 +146,8 @@ const Sidebar: React.FC<Props> = ({ nav }) => {
                     border-right: 1px solid var(--accents2);
                     height: 100vh;
                     min-width: 298px;
-                    background-color: var(--accents1);
-                    overflow: scroll;
+                    background-color: var(--sidebarBg);
+                    overflow-y: scroll;
                     top: 0;
                     left: 0;
                     position: sticky;
@@ -157,7 +163,7 @@ const Sidebar: React.FC<Props> = ({ nav }) => {
                     display: flex;
                     align-items: center;
                     z-index: 100;
-                    background-color: var(--accents1);
+                    background-color: var(--sidebarBg);
                 }
                 .sidebar-header b {
                     margin-left: 0.5rem;

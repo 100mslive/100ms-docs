@@ -1,4 +1,5 @@
 import Sidebar from '@/components/Sidebar';
+import Toc, { TocItem } from '@/components/Toc';
 import { NextSeo } from 'next-seo';
 import React from 'react';
 
@@ -13,9 +14,10 @@ interface Props {
         nav: number;
     };
     nav: Record<string, Record<string, NavRoute>>;
+    toc: TocItem[];
 }
 
-const DocLayout: React.FC<Props> = ({ frontMatter, nav, children }) => {
+const DocLayout: React.FC<Props> = ({ frontMatter, nav, children, toc }) => {
     const SEO = {
         title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`,
         openGraph: {
@@ -26,8 +28,11 @@ const DocLayout: React.FC<Props> = ({ frontMatter, nav, children }) => {
         <div className="page">
             <NextSeo {...SEO} />
             <Sidebar nav={nav} />
-            <article className="content">{children}</article>
-            <hr />
+            <article className="content">
+                {children}
+                <hr />
+            </article>
+            <Toc toc={toc} />
             <style jsx>{`
                 .page {
                     position: relative;

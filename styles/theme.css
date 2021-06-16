@@ -13,6 +13,7 @@
     --foreground: #fff;
     --selection: #3291ff;
     --secondary: #888;
+    --sidebarBg: #090909;
     --code: #79ffe1;
     --border: #333;
     --link: #3291ff;
@@ -42,8 +43,8 @@
 }
 
 [data-theme='light'] {
-    --offset: #e2e2e2;
-    --accents1: #fafafa;
+    --offset: #ebe8e8;
+    --accents1: #fdfdfd;
     --accents2: #eaeaea;
     --accents3: #999;
     --accents4: #888;
@@ -55,6 +56,7 @@
     --foreground: #000;
     --selection: #3291ff;
     --secondary: #666;
+    --sidebarBg: #fafafa;
     --code: #f81ce5;
     --border: #eaeaea;
     --link: #0070f3;
@@ -88,6 +90,7 @@ body {
     color: var(--foreground);
     transition: none;
     overscroll-behavior-y: none;
+    scroll-behavior: smooth;
 }
 html {
     font-size: 16px;
@@ -530,11 +533,4 @@ pre[class*='language-'] {
 ::-webkit-scrollbar-thumb {
     background-color: var(--accents4);
     outline: 1px solid var(--accents4);
-}
-
-select {
-    background-color: transparent;
-    border-radius: 5px;
-    padding: 0.2rem 0.5rem;
-    margin: 0 0.5rem;
 }
