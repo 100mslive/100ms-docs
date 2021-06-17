@@ -289,6 +289,10 @@ hmsActions.leave();
 
 Now you can get updated on notifications like PEER_JOINED, PEER_LEFT, NEW_MESSAGE, ERROR.
 
+<Tabs id="notifications" items={['Usage', 'Interfaces']} />{' '}
+
+<Code id='notifications-0' tab>
+
 ```jsx
 import {
   useHMSNotifications,
@@ -320,7 +324,12 @@ function component() {
         }
     }, [notification]);
 }
+```
+</Code>
 
+<Code id='notifications-1' tab>
+
+```jsx
 export interface HMSNotification {
   id: number;
   type: string;
@@ -337,3 +346,4 @@ export class HMSNotificationTypes {
 }
 
 ```
+</Code>
