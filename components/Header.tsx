@@ -4,6 +4,8 @@ import SvgSun from '@/assets/icons/Sun';
 import CrossIcon from '@/assets/icons/CrossIcon';
 import MenuIcon from '@/assets/icons/MenuIcon';
 import React from 'react';
+import useSearch from '@/lib/useSearch';
+import EnterIcon from '@/assets/icons/EnterIcon';
 
 type NavRoute = {
     url: string;
@@ -16,9 +18,12 @@ interface Props {
         menu: boolean;
         setMenu: React.Dispatch<React.SetStateAction<boolean>>;
     };
+    docs: { url: string; title: string; description: string; nav: number; content: string }[];
+    currentDocSlug: string;
 }
 
-const Header: React.FC<Props> = ({ nav, menuState }) => {
+const Header: React.FC<Props> = ({ docs, currentDocSlug, nav, menuState }) => {
+    const [search, setSearch] = React.useState('');
     const { menu, setMenu } = menuState;
     const [isDark, setIsDark] = React.useState<boolean>(true);
     React.useEffect(() => {
@@ -47,6 +52,11 @@ const Header: React.FC<Props> = ({ nav, menuState }) => {
         // update the state
         setIsDark(!isDark);
     };
+    const res = useSearch({
+        search,
+        folder: currentDocSlug,
+        docs
+    });
     return (
         <div className="ctx">
             <div className="head-left">
@@ -73,8 +83,25 @@ const Header: React.FC<Props> = ({ nav, menuState }) => {
             <div className="search-ctx">
                 <div className="search-wrapper">
                     <SearchIcon />
-                    <input type="text" placeholder="Quick search for anything" />
+                    <input
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        placeholder="Quick search for anything"
+                        type="text"
+                    />
                 </div>
+                {res.length > 0 ? (
+                    <div className="res-ctx">
+                        {res.map((e) => (
+                            <a href={e.url} key={e.url}>
+                                <div className="res-box">
+                                    <span>{e.title}</span>
+                                    <EnterIcon />
+                                </div>
+                            </a>
+                        ))}
+                    </div>
+                ) : null}
             </div>
             <div className="menu-btn">
                 <button aria-label="menu-button" type="button" onClick={() => setMenu(!menu)}>
@@ -94,7 +121,33 @@ const Header: React.FC<Props> = ({ nav, menuState }) => {
                     padding: 0.5rem;
                     background-color: var(--background);
                 }
+                .res-ctx {
+                    background-color: var(--accents1);
+                    border-bottom-right-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                    padding: 1rem 2rem;
+                    z-index: 1000;
+                    position: absolute;
+                }
+                .res-box:hover {
+                    opacity: 1;
+                }
+                .res-box {
+                    margin: 0.5rem 0;
+                    border-radius: 5px;
+                    padding: 0 2rem;
+                    height: 50px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    background-color: var(--offset);
+                    opacity: 0.6;
+                }
+                .res-box span {
+                    margin-right: 1rem;
+                }
                 a {
+                    color: inherit;
                     text-decoration: none;
                 }
                 a:hover {

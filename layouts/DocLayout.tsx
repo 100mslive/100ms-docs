@@ -54,7 +54,12 @@ const DocLayout: React.FC<Props> = ({
     return (
         <div className="page">
             <NextSeo {...SEO} />
-            <Header menuState={menuState} nav={nav} />
+            <Header
+                docs={allDocs}
+                currentDocSlug={currentDocSlug}
+                menuState={menuState}
+                nav={nav}
+            />
             <div className="ctx">
                 <Sidebar menu={menu} nav={nav} />
                 <div className="content-wrapper">
