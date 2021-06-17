@@ -4,7 +4,6 @@ import SvgSun from '@/assets/icons/Sun';
 import CrossIcon from '@/assets/icons/CrossIcon';
 import MenuIcon from '@/assets/icons/MenuIcon';
 import React from 'react';
-import Sidebar from './Sidebar';
 
 type NavRoute = {
     url: string;

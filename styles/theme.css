@@ -93,13 +93,22 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-/* Sets Offset for Header Anchor Clicks */
-/* https://stackoverflow.com/a/22655654/12958016  */
-:target::before {
-    content: '';
+/* https://css-tricks.com/hash-tag-links-padding/ */
+h2::before {
     display: block;
-    height: 6rem;
-    margin-top: 6rem;
+    content: ' ';
+    margin-top: -120px;
+    height: 120px;
+    visibility: hidden;
+    pointer-events: none;
+}
+h3::before {
+    display: block;
+    content: ' ';
+    margin-top: -120px;
+    height: 120px;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 html,
