@@ -13,7 +13,7 @@
     --foreground: #fff;
     --selection: #3291ff;
     --secondary: #888;
-    --sidebarBg: #090909;
+    --offsetBg: #090909;
     --code: #79ffe1;
     --border: #333;
     --link: #3291ff;
@@ -56,7 +56,7 @@
     --foreground: #000;
     --selection: #3291ff;
     --secondary: #666;
-    --sidebarBg: #fafafa;
+    --offsetBg: #fafafa;
     --code: #f81ce5;
     --border: #eaeaea;
     --link: #0070f3;
@@ -91,24 +91,6 @@
     box-sizing: inherit;
     text-rendering: geometricPrecision;
     -webkit-tap-highlight-color: transparent;
-}
-
-/* https://css-tricks.com/hash-tag-links-padding/ */
-h2::before {
-    display: block;
-    content: ' ';
-    margin-top: -120px;
-    height: 120px;
-    visibility: hidden;
-    pointer-events: none;
-}
-h3::before {
-    display: block;
-    content: ' ';
-    margin-top: -120px;
-    height: 120px;
-    visibility: hidden;
-    pointer-events: none;
 }
 
 html,
@@ -261,6 +243,24 @@ h6 {
     font-size: 0.875rem;
     letter-spacing: -0.005625rem;
     font-weight: 600;
+}
+
+/* https://css-tricks.com/hash-tag-links-padding/ */
+h2::before {
+    display: block;
+    content: ' ';
+    margin-top: -120px;
+    height: 120px;
+    visibility: hidden;
+    pointer-events: none;
+}
+h3::before {
+    display: block;
+    content: ' ';
+    margin-top: -120px;
+    height: 120px;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 button,

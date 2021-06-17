@@ -20,11 +20,17 @@ interface Props {
 const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
     const [search, setSearch] = React.useState('');
     const escPressed = useKeyPress('Escape');
+    const slashPressed = useKeyPress('/');
+    const inputRef = React.useRef();
     React.useEffect(() => {
         if (escPressed) {
             setSearch('');
         }
     }, [escPressed]);
+    React.useEffect(() => {
+        // @ts-ignore
+        inputRef.current?.focus();
+    }, [slashPressed]);
     const { menu, setMenu } = menuState;
     const [isDark, setIsDark] = React.useState<boolean>(true);
     React.useEffect(() => {
@@ -85,11 +91,14 @@ const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
                 <div className="search-wrapper">
                     <SearchIcon />
                     <input
+                        // @ts-ignore
+                        ref={inputRef}
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         placeholder="Quick search for anything"
                         type="text"
                     />
+                    {search === '' ? <span className="hot-key">/</span> : null}
                 </div>
                 {res.length > 0 ? (
                     <div className="res-ctx">
@@ -123,7 +132,7 @@ const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
                     background-color: var(--background);
                 }
                 .res-ctx {
-                    background-color: var(--accents1);
+                    background-color: var(--offsetBg);
                     border-bottom-right-radius: 5px;
                     border-bottom-left-radius: 5px;
                     padding: 1rem 2rem;
@@ -204,11 +213,13 @@ const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
                 .menu-btn {
                     display: none;
                 }
-                @media screen and (max-width: 600px) {
-                    .search-ctx {
-                        position: absolute;
-                        display: none;
-                    }
+                .hot-key {
+                    position: absolute;
+                    left: 280px;
+                    opacity: 0.6;
+                    border-radius: 5px;
+                    padding: 0 8px;
+                    border: 1px solid var(--accents3);
                 }
                 @media screen and (max-width: 600px) {
                     .search-ctx {
