@@ -6,14 +6,9 @@ import MenuIcon from '@/assets/icons/MenuIcon';
 import React from 'react';
 import useSearch from '@/lib/useSearch';
 import EnterIcon from '@/assets/icons/EnterIcon';
-
-type NavRoute = {
-    url: string;
-    title: string;
-};
+import useKeyPress from '@/lib/useKeyPress';
 
 interface Props {
-    nav: Record<string, Record<string, NavRoute>>;
     menuState: {
         menu: boolean;
         setMenu: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,8 +17,14 @@ interface Props {
     currentDocSlug: string;
 }
 
-const Header: React.FC<Props> = ({ docs, currentDocSlug, nav, menuState }) => {
+const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
     const [search, setSearch] = React.useState('');
+    const escPressed = useKeyPress('Escape');
+    React.useEffect(() => {
+        if (escPressed) {
+            setSearch('');
+        }
+    }, [escPressed]);
     const { menu, setMenu } = menuState;
     const [isDark, setIsDark] = React.useState<boolean>(true);
     React.useEffect(() => {
