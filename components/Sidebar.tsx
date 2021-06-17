@@ -8,10 +8,11 @@ type NavRoute = {
 };
 
 interface Props {
+    menu: boolean;
     nav: Record<string, Record<string, NavRoute>>;
 }
 
-const Sidebar: React.FC<Props> = ({ nav }) => {
+const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const router = useRouter();
     return (
         <div className="ctx">
@@ -53,9 +54,10 @@ const Sidebar: React.FC<Props> = ({ nav }) => {
                     height: calc(100vh - 80px);
                     min-width: 298px;
                     overflow-y: scroll;
-                    top: 80px;
+                    top: ${menu ? '10px' : '80px'};
                     left: 0;
-                    position: sticky;
+                    position: ${menu ? 'absolute' : 'sticky'};
+                    background: var(--background);
                     z-index: 40;
                 }
                 ::-webkit-scrollbar {
@@ -95,6 +97,17 @@ const Sidebar: React.FC<Props> = ({ nav }) => {
                     opacity: 0.6;
                     font-weight: bold;
                     font-size: 14px;
+                }
+                @media screen and (max-width: 1000px) {
+                    .ctx {
+                        display: ${menu ? 'flex' : 'none'};
+                        height: calc(100vh - 10px);
+                    }
+                    :global(.page) {
+                        height: ${menu ? '100vh !important' : ''};
+                        overflow: ${menu ? 'hidden !important' : ''};
+                        padding-right: 1rem;
+                    }
                 }
             `}</style>
         </div>

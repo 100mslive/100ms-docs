@@ -1,9 +1,26 @@
 import SearchIcon from '@/assets/icons/SearchIcon';
 import SvgMoon from '@/assets/icons/Moon';
 import SvgSun from '@/assets/icons/Sun';
+import CrossIcon from '@/assets/icons/CrossIcon';
+import MenuIcon from '@/assets/icons/MenuIcon';
 import React from 'react';
+import Sidebar from './Sidebar';
 
-const Header = () => {
+type NavRoute = {
+    url: string;
+    title: string;
+};
+
+interface Props {
+    nav: Record<string, Record<string, NavRoute>>;
+    menuState: {
+        menu: boolean;
+        setMenu: React.Dispatch<React.SetStateAction<boolean>>;
+    };
+}
+
+const Header: React.FC<Props> = ({ nav, menuState }) => {
+    const { menu, setMenu } = menuState;
     const [isDark, setIsDark] = React.useState<boolean>(true);
     React.useEffect(() => {
         const docHtml = document.documentElement.dataset;
@@ -60,6 +77,11 @@ const Header = () => {
                     <input type="text" placeholder="Quick search for anything" />
                 </div>
             </div>
+            <div className="menu-btn">
+                <button aria-label="menu-button" type="button" onClick={() => setMenu(!menu)}>
+                    {menu ? <CrossIcon /> : <MenuIcon />}
+                </button>
+            </div>
             <style jsx>{`
                 .ctx {
                     display: flex;
@@ -78,6 +100,13 @@ const Header = () => {
                 }
                 a:hover {
                     opacity: 1;
+                }
+                button {
+                    width: 24px;
+                    height: 24px;
+                    outline: none;
+                    background: transparent;
+                    border: none;
                 }
                 .head-left {
                     display: flex;
@@ -106,7 +135,6 @@ const Header = () => {
                 .search-wrapper {
                     height: 4rem;
                     display: flex;
-                    flex: 1 1 auto;
                     align-items: center;
                     border-bottom: 1px solid var(--accents2);
                     border-bottom-width: 1px;
@@ -119,6 +147,29 @@ const Header = () => {
                     font-size: 1rem;
                     font-weight: 500;
                     color: var(--accents6);
+                }
+                .menu-btn {
+                    display: none;
+                }
+                @media screen and (max-width: 600px) {
+                    .search-ctx {
+                        position: absolute;
+                        display: none;
+                    }
+                }
+                @media screen and (max-width: 600px) {
+                    .search-ctx {
+                        display: none;
+                    }
+                    .ctx {
+                        justify-content: space-between;
+                    }
+                    .head-left {
+                        width: unset;
+                    }
+                    .menu-btn {
+                        display: block;
+                    }
                 }
             `}</style>
         </div>

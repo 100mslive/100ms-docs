@@ -49,34 +49,33 @@ const DocLayout: React.FC<Props> = ({
             title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`
         }
     };
+    const [menu, setMenu] = React.useState(false);
+    const menuState = { menu, setMenu };
     return (
         <div className="page">
             <NextSeo {...SEO} />
-            <Header />
+            <Header menuState={menuState} nav={nav} />
             <div className="ctx">
-                <Sidebar nav={nav} />
-                <div className="content-ctx">
-                    <div className="content-wrapper">
-                        <article>
-                            {children}
-                            <hr />
-                            {pagination.previousPost && (
-                                <Pagination
-                                    next={pagination.nextPost}
-                                    prev={pagination.previousPost}
-                                />
-                            )}
-                        </article>
-                        <Toc toc={toc} />
-                    </div>
+                <Sidebar menu={menu} nav={nav} />
+                <div className="content-wrapper">
+                    <article>
+                        {children}
+                        <hr />
+                        {pagination.previousPost && (
+                            <Pagination next={pagination.nextPost} prev={pagination.previousPost} />
+                        )}
+                    </article>
+                    <Toc toc={toc} />
                 </div>
             </div>
             <style jsx>{`
-                .ctx {
-                    display: flex;
+                .page {
+                    max-width: 1600px;
+                    margin: 0 auto;
                 }
-                .content-ctx {
-                    flex: 1 1 auto;
+                .ctx {
+                    position: relative;
+                    display: flex;
                 }
                 .wrapper-ctx {
                     display: flex;
@@ -92,6 +91,17 @@ const DocLayout: React.FC<Props> = ({
                 .content-wrapper {
                     width: 100%;
                     display: flex;
+                }
+                .mobile-menu {
+                    display: none;
+                    position: absolute;
+                }
+                @media screen and (max-width: 1000px) {
+                    article {
+                        padding: 2rem 1rem;
+                        max-width: 100%;
+                        width: 100%;
+                    }
                 }
             `}</style>
         </div>
