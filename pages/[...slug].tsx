@@ -28,7 +28,9 @@ const DocSlugs = ({ toc, source, allDocs, nav, frontMatter }) => {
             frontMatter={frontMatter}
             nav={nav[currentDocSlug]}
             toc={toc}
-            pagination={pagination}>
+            pagination={pagination}
+            allDocs={allDocs}
+            currentDocSlug={currentDocSlug}>
             {content}
         </DocLayout>
     );
