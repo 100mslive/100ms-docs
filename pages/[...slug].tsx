@@ -12,15 +12,23 @@ import components from '@/components/MDXComponents';
 import withTableofContents from '@/lib/withTableofContents';
 import { useRouter } from 'next/router';
 import DocLayout from '@/layouts/DocLayout';
+import getPagination from '@/lib/getPagination';
 
-const DocSlugs = ({ toc, source, nav, frontMatter }) => {
+const DocSlugs = ({ toc, source, allDocs, nav, frontMatter }) => {
     const {
         query: { slug }
     } = useRouter();
-    const [currentDoc] = slug as string[];
+    const [currentDocSlug] = slug as string[];
+    const currentDocs = allDocs.filter((doc) => doc.url.includes(`/${currentDocSlug}/`));
+    const { previousPost, nextPost } = getPagination(currentDocs, slug as string[]);
+    const pagination = { previousPost, nextPost };
     const content = hydrate(source, { components });
     return (
-        <DocLayout frontMatter={frontMatter} nav={nav[currentDoc]} toc={toc}>
+        <DocLayout
+            frontMatter={frontMatter}
+            nav={nav[currentDocSlug]}
+            toc={toc}
+            pagination={pagination}>
             {content}
         </DocLayout>
     );
@@ -74,7 +82,8 @@ export const getStaticProps = async ({ params }) => {
             toc,
             nav,
             source: mdxSource,
-            frontMatter: data
+            frontMatter: data,
+            allDocs
         }
     };
 };

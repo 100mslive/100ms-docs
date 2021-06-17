@@ -1,5 +1,7 @@
+import Pagination from '@/components/Pagination';
 import Sidebar from '@/components/Sidebar';
 import Toc, { TocItem } from '@/components/Toc';
+import { PaginationType } from '@/lib/getPagination';
 import { NextSeo } from 'next-seo';
 import React from 'react';
 
@@ -15,9 +17,13 @@ interface Props {
     };
     nav: Record<string, Record<string, NavRoute>>;
     toc: TocItem[];
+    pagination: {
+        previousPost: PaginationType;
+        nextPost: PaginationType;
+    };
 }
 
-const DocLayout: React.FC<Props> = ({ frontMatter, nav, children, toc }) => {
+const DocLayout: React.FC<Props> = ({ frontMatter, nav, children, toc, pagination }) => {
     const SEO = {
         title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`,
         openGraph: {
@@ -31,6 +37,9 @@ const DocLayout: React.FC<Props> = ({ frontMatter, nav, children, toc }) => {
             <article className="content">
                 {children}
                 <hr />
+                {pagination.previousPost && (
+                    <Pagination next={pagination.nextPost} prev={pagination.previousPost} />
+                )}
             </article>
             <Toc toc={toc} />
             <style jsx>{`
