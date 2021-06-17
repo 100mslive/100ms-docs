@@ -284,3 +284,56 @@ hmsActions.setScreenShareEnabled(true);
 ```jsx
 hmsActions.leave();
 ```
+
+#### Notifications
+
+Now you can get updated on notifications like PEER_JOINED, PEER_LEFT, NEW_MESSAGE, ERROR.
+
+```jsx
+import {
+  useHMSNotifications,
+  HMSNotificationTypes,
+} from "@100mslive/hms-video-react";
+
+function component() {
+    const notification = useHMSNotifications();
+
+    useEffect(() => {
+        if (!notification) {
+            return;
+        }
+        switch (notification.type) {
+            case HMSNotificationTypes.PEER_JOINED:
+                console.log("[Peer Joined]", notification);
+                break;
+            case HMSNotificationTypes.PEER_LEFT:
+                console.log("[Peer Left]", notification);
+                break;
+            case HMSNotificationTypes.NEW_MESSAGE:
+                console.log("[New Message]", notification);
+                break;
+            case HMSNotificationTypes.ERROR:
+                console.log("[Error]", notification);
+                break;
+            default:
+                break;
+        }
+    }, [notification]);
+}
+
+export interface HMSNotification {
+  id: number;
+  type: string;
+  message: string;
+  data: any;
+  severity?: 'info' | 'error' | 'critical';
+}
+
+export class HMSNotificationTypes {
+  static PEER_JOINED = 'PEER_JOINED';
+  static PEER_LEFT = 'PEER_LEFT';
+  static NEW_MESSAGE = 'NEW_MESSAGE';
+  static ERROR = 'ERROR';
+}
+
+```
