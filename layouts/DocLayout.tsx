@@ -1,4 +1,5 @@
 import Header from '@/components/Header';
+import Pagination from '@/components/Pagination';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import Toc, { TocItem } from '@/components/Toc';
 import { PaginationType } from '@/lib/getPagination';
@@ -53,11 +54,20 @@ const DocLayout: React.FC<Props> = ({
             <NextSeo {...SEO} />
             <Header />
             <div className="ctx">
-                <Sidebar />
+                <Sidebar nav={nav} />
                 <div className="content-ctx">
                     <div className="content-wrapper">
-                        <article>{children}</article>
-                        <div className="toc-ctx">toc</div>
+                        <article>
+                            {children}
+                            <hr />
+                            {pagination.previousPost && (
+                                <Pagination
+                                    next={pagination.nextPost}
+                                    prev={pagination.previousPost}
+                                />
+                            )}
+                        </article>
+                        <Toc toc={toc} />
                     </div>
                 </div>
             </div>
@@ -82,15 +92,6 @@ const DocLayout: React.FC<Props> = ({
                 .content-wrapper {
                     width: 100%;
                     display: flex;
-                }
-                .toc-ctx {
-                    display: flex;
-                    flex-direction: column;
-                    position: sticky;
-                    top: 80px;
-                    right: 0;
-                    height: calc(100vh - 80px);
-                    overflow-y: auto;
                 }
             `}</style>
         </div>

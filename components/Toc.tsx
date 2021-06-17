@@ -24,19 +24,13 @@ const TocContainer = ({ toc }: TocProps) => (
         )}
         <style jsx>{`
             .toc-ctx {
-                width: 250px;
                 display: flex;
                 flex-direction: column;
-                height: 100vh;
-                min-height: 100vh;
-                overflow-y: scroll;
-                margin-top: 70px;
-                margin-left: 40px;
-                top: 0;
-                left: 0;
                 position: sticky;
-                z-index: 10000000;
-                padding-bottom: 100px;
+                top: 80px;
+                right: 0;
+                height: calc(100vh - 80px);
+                overflow-y: auto;
             }
             .head {
                 font-weight: bold;

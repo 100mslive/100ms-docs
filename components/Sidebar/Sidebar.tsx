@@ -1,37 +1,49 @@
+/* eslint-disable react/no-array-index-key */
+import { useRouter } from 'next/router';
 import React from 'react';
 
-const Sidebar = () => {
-    const temp = ``;
+type NavRoute = {
+    url: string;
+    title: string;
+};
+
+interface Props {
+    nav: Record<string, Record<string, NavRoute>>;
+}
+
+const Sidebar: React.FC<Props> = ({ nav }) => {
+    const router = useRouter();
     return (
         <div className="ctx">
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
-            <p>nice</p>
+            {/* Sidebar Version Section */}
+            <section className="menu-container">
+                <div className="menu-title">VERSIONS</div>
+
+                <a href="/v1/100ms-v1/basics">
+                    <div className="menu-item">v1.0.0</div>
+                </a>
+                <a href="/v2/100ms-v2/Basics">
+                    <div className="menu-item">v2.0.0</div>
+                </a>
+            </section>
+
+            {/* Sidebar Menu Section */}
+
+            {Object.entries(nav).map(([key, children], index) => (
+                <section className="menu-container" key={`${key}-${index}`}>
+                    <div className="menu-title">{key.replace(/-/g, ' ').toUpperCase()}</div>
+                    {Object.entries(children).map(([_, route]) => (
+                        <a href={route.url} key={`${route.url}-${index}`}>
+                            <div
+                                className={`menu-item ${
+                                    route.url === router.asPath ? 'active-link' : ''
+                                }`}>
+                                {route.title}
+                            </div>
+                        </a>
+                    ))}
+                </section>
+            ))}
             <style jsx>{`
                 .ctx {
                     width: calc((100% - 1448px) / 2 + 298px);
@@ -51,6 +63,39 @@ const Sidebar = () => {
                 }
                 ::-webkit-scrollbar-thumb {
                     outline: 0px;
+                }
+                .menu-container {
+                    padding-left: 10px;
+                    margin: 10px 0;
+                    border-bottom: 1px solid rgba(141, 147, 171, 0.3);
+                }
+                .menu-item {
+                    border-top-left-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                    cursor: pointer;
+                    padding: 8px 0;
+                    padding-left: 10px;
+                    margin: 5px 0;
+                    color: var(--accents8);
+                    font-weight: 600;
+                    font-size: 14px;
+                }
+                a {
+                    text-decoration: none;
+                }
+                .active-link {
+                    color: var(--success-light);
+                    background-color: var(--offset);
+                }
+                .menu-item:hover {
+                    color: var(--success-light);
+                    background-color: var(--offset);
+                }
+                .menu-title {
+                    padding-left: 10px;
+                    opacity: 0.6;
+                    font-weight: bold;
+                    font-size: 14px;
                 }
             `}</style>
         </div>
