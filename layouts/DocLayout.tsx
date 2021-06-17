@@ -65,7 +65,7 @@ const DocLayout: React.FC<Props> = ({
                             <Pagination next={pagination.nextPost} prev={pagination.previousPost} />
                         )}
                     </article>
-                    <Toc toc={toc} />
+                    {toc.length > 0 ? <Toc toc={toc} /> : null}
                 </div>
             </div>
             <style jsx>{`
