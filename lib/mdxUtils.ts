@@ -38,7 +38,7 @@ export const getAllDocs = async () => {
     .map((path) => {
       // Get frontMatter from markdown
       const source = readFileSync(join(DOCS_PATH, `${path}.mdx`))
-      const { data, content } = matter(source)
+      const { data } = matter(source)
       // Normalize paths for web
       const url = path.replace(/\\/g, '/')
 
@@ -50,7 +50,8 @@ export const getAllDocs = async () => {
         title: data.title || pathname!.replace(/\-/g, ' '),
         description: data.description || '',
         nav: data.nav ?? Infinity,
-        content,
+        // Include Content for search func
+        // content ,
       }
     })
     .sort((a, b) => (a.nav > b.nav ? 1 : -1))

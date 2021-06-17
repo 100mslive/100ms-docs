@@ -72,7 +72,6 @@ export const getStaticProps = async ({ params }) => {
     return {
         props: {
             toc,
-            allDocs,
             nav,
             source: mdxSource,
             frontMatter: data
