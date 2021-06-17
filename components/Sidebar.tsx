@@ -181,6 +181,7 @@ const Sidebar: React.FC<Props> = ({ nav }) => {
                     margin: 5px 0;
                     color: var(--accents8);
                     font-weight: 600;
+                    font-size: 14px;
                 }
                 .active-link {
                     color: var(--success-light);
@@ -196,6 +197,8 @@ const Sidebar: React.FC<Props> = ({ nav }) => {
                 .menu-title {
                     padding-left: 10px;
                     opacity: 0.6;
+                    font-weight: bold;
+                    font-size: 14px;
                 }
                 .mobile-sidebar {
                     display: none;
