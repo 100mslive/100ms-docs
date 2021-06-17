@@ -70,7 +70,7 @@ const Code: React.FC<PropsWithChildren<Props>> = ({ id, children, tab, noCopy = 
                     opacity: 0.8;
                 }
                 .copied {
-                    z-index: 1000;
+                    z-index: 45;
                     padding: 5px;
                     font-size: 12px;
                     border: 1px solid var(--border);

@@ -55,7 +55,7 @@ const TocContainer = ({ toc }: TocProps) => (
             ::-webkit-scrollbar-thumb {
                 outline: 0px solid var(--accents4);
             }
-            @media screen and (max-width: 1000px) {
+            @media screen and (max-width: 1250px) {
                 .toc-ctx {
                     display: none;
                 }

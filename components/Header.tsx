@@ -1,18 +1,59 @@
 import SearchIcon from '@/assets/icons/SearchIcon';
+import SvgMoon from '@/assets/icons/Moon';
+import SvgSun from '@/assets/icons/Sun';
 import React from 'react';
 
 const Header = () => {
-    const temp = 1;
+    const [isDark, setIsDark] = React.useState<boolean>(true);
+    React.useEffect(() => {
+        const docHtml = document.documentElement.dataset;
+        const winLocal = window.localStorage;
+        // theme saved
+        if (winLocal.getItem('theme')) {
+            const savedTheme = winLocal.getItem('theme');
+            docHtml.theme = savedTheme === 'dark' ? 'dark' : 'light';
+            setIsDark(savedTheme === 'dark');
+        }
+        // unsaved
+        else {
+            docHtml.theme = 'dark';
+            winLocal.setItem('theme', 'dark');
+            setIsDark(true);
+        }
+    }, []);
+    const toggleTheme = () => {
+        const docHtml = document.documentElement.dataset;
+        // toggle theme
+        // set local storage
+        window.localStorage.setItem('theme', `${!isDark ? 'dark' : 'light'}`);
+        // update the html data
+        docHtml.theme = `${!isDark ? 'dark' : 'light'}`;
+        // update the state
+        setIsDark(!isDark);
+    };
     return (
         <div className="ctx">
-            <a href="/">
-                <div className="logo-ctx">
-                    <img width={36} src="/logo.svg" alt="100ms Logo" />
-                    <p className="company">
-                        100ms<span>.docs</span>
-                    </p>
-                </div>
-            </a>
+            <div className="head-left">
+                <a href="/">
+                    <div className="logo-ctx">
+                        <img width={36} src="/logo.svg" alt="100ms Logo" />
+                        <p className="company">
+                            100ms<span>.docs</span>
+                        </p>
+                    </div>
+                </a>
+                <span
+                    aria-label="theme-toggle-button"
+                    className="pointer"
+                    role="button"
+                    style={{ paddingTop: '8px', paddingLeft: '10px' }}
+                    tabIndex={0}
+                    onKeyPress={() => toggleTheme()}
+                    onClick={() => toggleTheme()}>
+                    {isDark ? <SvgMoon /> : <SvgSun />}
+                </span>
+            </div>
+
             <div className="search-ctx">
                 <div className="search-wrapper">
                     <SearchIcon />
@@ -35,10 +76,17 @@ const Header = () => {
                 a {
                     text-decoration: none;
                 }
+                a:hover {
+                    opacity: 1;
+                }
+                .head-left {
+                    display: flex;
+                    align-items: center;
+                    width: 400px;
+                }
                 .logo-ctx {
                     display: flex;
                     align-items: center;
-                    width: 18rem;
                     color: var(--foreground);
                     font-size: 24px;
                 }
