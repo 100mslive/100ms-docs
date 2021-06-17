@@ -8,7 +8,9 @@ const Header = () => {
             <a href="/">
                 <div className="logo-ctx">
                     <img width={36} src="/logo.svg" alt="100ms Logo" />
-                    <span>100ms.docs</span>
+                    <p className="company">
+                        100ms<span>.docs</span>
+                    </p>
                 </div>
             </a>
             <div className="search-ctx">
@@ -60,6 +62,15 @@ const Header = () => {
                     align-items: center;
                     border-bottom: 1px solid var(--accents2);
                     border-bottom-width: 1px;
+                }
+                .company {
+                    font-size: 1.2rem;
+                    font-weight: 700;
+                }
+                .company span {
+                    font-size: 1rem;
+                    font-weight: 500;
+                    color: var(--accents6);
                 }
             `}</style>
         </div>

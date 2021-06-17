@@ -1,6 +1,6 @@
 import Header from '@/components/Header';
 import Pagination from '@/components/Pagination';
-import Sidebar from '@/components/Sidebar/Sidebar';
+import Sidebar from '@/components/Sidebar';
 import Toc, { TocItem } from '@/components/Toc';
 import { PaginationType } from '@/lib/getPagination';
 import { NextSeo } from 'next-seo';

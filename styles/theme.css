@@ -93,6 +93,15 @@
     -webkit-tap-highlight-color: transparent;
 }
 
+/* Sets Offset for Header Anchor Clicks */
+/* https://stackoverflow.com/a/22655654/12958016  */
+:target::before {
+    content: '';
+    display: block;
+    height: 6rem;
+    margin-top: 6rem;
+}
+
 html,
 body {
     background-color: var(--background);

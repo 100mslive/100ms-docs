@@ -57,7 +57,7 @@ const Code: React.FC<PropsWithChildren<Props>> = ({ id, children, tab, noCopy = 
                     position: relative;
                 }
                 button {
-                    z-index: 1000;
+                    z-index: 35;
                     top: 15px;
                     right: 20px;
                     position: absolute;
