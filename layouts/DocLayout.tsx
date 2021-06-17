@@ -1,6 +1,5 @@
-import Pagination from '@/components/Pagination';
-import Search from '@/components/Search';
-import Sidebar from '@/components/Sidebar';
+import Header from '@/components/Header';
+import Sidebar from '@/components/Sidebar/Sidebar';
 import Toc, { TocItem } from '@/components/Toc';
 import { PaginationType } from '@/lib/getPagination';
 import { NextSeo } from 'next-seo';
@@ -52,41 +51,46 @@ const DocLayout: React.FC<Props> = ({
     return (
         <div className="page">
             <NextSeo {...SEO} />
-
-            <Sidebar nav={nav} />
-            <article className="content">
-                <Search currentDocSlug={currentDocSlug} docs={allDocs} />
-                {children}
-                <hr />
-                {pagination.previousPost && (
-                    <Pagination next={pagination.nextPost} prev={pagination.previousPost} />
-                )}
-            </article>
-            <Toc toc={toc} />
+            <Header />
+            <div className="ctx">
+                <Sidebar />
+                <div className="content-ctx">
+                    <div className="content-wrapper">
+                        <article>{children}</article>
+                        <div className="toc-ctx">toc</div>
+                    </div>
+                </div>
+            </div>
             <style jsx>{`
-                .page {
-                    position: relative;
-                    width: 100%;
-                    min-height: 100vh;
-                    height: initial;
+                .ctx {
                     display: flex;
                 }
-                .content {
-                    padding-top: 30px;
-                    padding-left: 80px;
-                    max-width: 750px;
-                    overflow: scroll;
-                    overflow-y: hidden;
-                    overflow-x: hidden;
+                .content-ctx {
+                    flex: 1 1 auto;
                 }
-                @media screen and (max-width: 1000px) {
-                    .page {
-                        flex-direction: column;
-                    }
-                    .content {
-                        padding-right: 20px;
-                        padding-left: 20px;
-                    }
+                .wrapper-ctx {
+                    display: flex;
+                    width: 100%;
+                }
+                article {
+                    max-width: 760px;
+                    padding: 2rem 3rem;
+                }
+                .content-ctx {
+                    min-height: 100vh;
+                }
+                .content-wrapper {
+                    width: 100%;
+                    display: flex;
+                }
+                .toc-ctx {
+                    display: flex;
+                    flex-direction: column;
+                    position: sticky;
+                    top: 80px;
+                    right: 0;
+                    height: calc(100vh - 80px);
+                    overflow-y: auto;
                 }
             `}</style>
         </div>
