@@ -47,7 +47,7 @@ export const getAllDocs = async () => {
 
       return {
         url,
-        title: data.title || pathname!.replace(/\-/g, ' '),
+        title: data.title || pathname!.replace(/-/g, ' '),
         description: data.description || '',
         nav: data.nav ?? Infinity,
         // Include Content for search func
