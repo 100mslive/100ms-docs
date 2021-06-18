@@ -1,78 +1,106 @@
-/* eslint-disable no-nested-ternary */
-import React from 'react';
-import Sidebar from '@/components/Sidebar';
-import { SidebarType } from '@/lib/getSidebarData';
-import { NextSeo } from 'next-seo';
-import { useRouter } from 'next/dist/client/router';
-import getPagination from '@/lib/getPagination';
+import Header from '@/components/Header';
 import Pagination from '@/components/Pagination';
+import Sidebar from '@/components/Sidebar';
+import Toc, { TocItem } from '@/components/Toc';
+import { PaginationType } from '@/lib/getPagination';
+import { NextSeo } from 'next-seo';
+import React from 'react';
 
-interface ReadingTimeType {
-    text: string;
-    minutes: number;
-    time: number;
-    words: number;
-}
-interface DocLayoutType {
-    wordCount: number;
-    readingTime: ReadingTimeType;
+type NavRoute = {
+    url: string;
     title: string;
-    date: string;
-    slug: string;
-    excerpt: string;
-}
+};
+
+export type AllDocsType = {
+    url: string;
+    title: string;
+    description: string;
+    nav: number;
+    content: string;
+};
 
 interface Props {
-    docsArr: SidebarType[];
-    frontMatter: DocLayoutType;
-    allSlugList: string[];
+    frontMatter: {
+        title: string;
+        nav: number;
+    };
+    nav: Record<string, Record<string, NavRoute>>;
+    toc: TocItem[];
+    pagination: {
+        previousPost: PaginationType;
+        nextPost: PaginationType;
+    };
+    allDocs: AllDocsType[];
+    currentDocSlug: string;
 }
 
-const DocLayout: React.FC<Props> = ({ docsArr, children, frontMatter, allSlugList }) => {
+const DocLayout: React.FC<Props> = ({
+    frontMatter,
+    nav,
+    children,
+    toc,
+    pagination,
+    allDocs,
+    currentDocSlug
+}) => {
     const SEO = {
         title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`,
         openGraph: {
             title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`
         }
     };
-
-    const router = useRouter();
-    const { previousPost, nextPost } = getPagination(allSlugList, router.asPath);
+    const [menu, setMenu] = React.useState(false);
+    const menuState = { menu, setMenu };
     return (
         <div className="page">
             <NextSeo {...SEO} />
-            <Sidebar docsArr={docsArr} />
-            <article className="content">
-                {children}
-                <hr />
-                {previousPost && <Pagination next={nextPost} prev={previousPost} />}
-                <hr />
-                {/* <EditFile slug={router.asPath} /> */}
-                <hr />
-            </article>
+            <Header docs={allDocs} currentDocSlug={currentDocSlug} menuState={menuState} />
+            <div className="ctx">
+                <Sidebar menu={menu} nav={nav} />
+                <div className="content-wrapper">
+                    <article>
+                        {children}
+                        <hr />
+                        {pagination.previousPost && (
+                            <Pagination next={pagination.nextPost} prev={pagination.previousPost} />
+                        )}
+                    </article>
+                    {toc.length > 0 ? <Toc toc={toc} /> : null}
+                </div>
+            </div>
             <style jsx>{`
                 .page {
+                    max-width: 1600px;
+                    margin: 0 auto;
+                }
+                .ctx {
                     position: relative;
-                    width: 100%;
-                    min-height: 100vh;
-                    height: initial;
                     display: flex;
                 }
-                .content {
-                    padding-top: 30px;
-                    padding-left: 80px;
-                    max-width: 750px;
-                    overflow: scroll;
-                    overflow-y: hidden;
-                    overflow-x: hidden;
+                .wrapper-ctx {
+                    display: flex;
+                    width: 100%;
+                }
+                article {
+                    max-width: 760px;
+                    padding: 2rem 3rem;
+                }
+                .content-ctx {
+                    min-height: 100vh;
+                }
+                .content-wrapper {
+                    width: 100%;
+                    display: flex;
+                }
+                .mobile-menu {
+                    display: none;
+                    position: absolute;
                 }
                 @media screen and (max-width: 1000px) {
-                    .page {
-                        flex-direction: column;
-                    }
-                    .content {
-                        padding-right: 20px;
-                        padding-left: 20px;
+                    article {
+                        padding: 2rem 1rem;
+                        max-width: 100%;
+                        width: 100%;
                     }
                 }
             `}</style>

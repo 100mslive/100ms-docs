@@ -1,5 +1,6 @@
 ---
 title: 100ms quickstart app server
+nav: 8
 ---
 
 # 100ms quickstart app server
@@ -8,35 +9,54 @@ title: 100ms quickstart app server
 
 We've put together a quick-start app server that will help you quickly get started with server side functions.
 
-The quick-start app has two endpoints
+The quick-start app server has the following endpoint:
 
--   `/api/room` - You can create a new room with this POST endpoint by providing a `name` for your room. Internally, this API generates the server side token
 -   `/api/token` - You can generate a token required to join a room with this POST endpoint by providing `room_id`,`user_id` and `role` .
 
-### Keys & Secrets
+You can create room using [create room API](create-room.md) or from [Create Room](https://dashboard.100ms.live/create-room) section on [100ms Dashboard.](https://dashboard.100ms.live) You can find `room_id` and `role` of the room created on dashboard in room details section.
 
-You can get following keys from the [Developer](https://dashboard.100ms.live/developer) section of [100ms Dashboard](https://dashboard.100ms.live/).
+#### Creating room from Dashboard
 
--   `app_access_key` - You can generate unique access_keys for multiple access points.
--   `app_secret` - This unique secret is used to sign the token. This should ideally be stored server-side.
+<Image width={2168} height={1212} alt="Create a room" src="/docs/v2/create-a-room.png" />
 
-### Host a token generation endpoint
+#### Room Details on Dashboard
 
--   Clone [this runkit document](https://runkit.com/100mslive/100ms-quickstart-app-server)
--   Add the following environment variables in runkit [settings/environment](https://runkit.com/settings/environment) -
-    -   `HMS_ACCESS_KEY` = `app_access_key`
-    -   `HMS_SECRET` = `app_secret`
+Clicking on any of the room ids on [Rooms Page](https://dashboard.100ms.live/rooms) on Dashboard will take you to details page of that room.
 
-<Image width={1542} height={1052} alt="Runkit Settings" src="/docs/Token-Gen.png" />
+<Image width={2732} height={588} alt="Room Details on Dashboard" src="/docs/v2/room-detail.png" />
 
-Publish your runkit and copy the endpoint URL \(click on it and copy the URL that opens\)
+`user_id` is the identifier for the user at your end. It can be any string.
 
-> Opening your published runkit endpoint in the browser gives error with `statusCode = 400`. Kindly ignore this error and move on to the next steps of implementation.
+### Token Generation endpoint
 
-### Android
+You can get the token generation endpoint from the [Developer](https://dashboard.100ms.live/developer) section of [100ms Dashboard](https://dashboard.100ms.live/).
+
+<Image width={2670} height={772} alt="Token Generaton" src="/docs/v2/token-gen.png" />
+
+### Using Token Generation Endpoint in Quickstart apps
+
+#### Android
 
 The endpoint you copied needs to be added as `TOKEN_ENDPOINT` in your app's `app/gradle.properties` file.
 
-### Web
+> Please add the `TOKEN_ENDPOINT`with the trailing slash `/`
 
-Append `/api/token` to the endpoint you copied and add it as`REACT_APP_TOKEN_GENERATION_ENDPOINT` in your app's .env file
+#### Web
+
+Add it as`REACT_APP_TOKEN_GENERATION_ENDPOINT` in your app's .env file
+
+> Please add the `REACT_APP_TOKEN_GENERATION_ENDPOINT` with the trailing slash `/`
+
+### **Limitations to Token Generation Endpoint**
+
+The token generation endpoint you get from dashboard is only for demo purpose and has following limitations:
+
+-   For security purpose, it has only client token generation.
+-   The token generation endpoint becomes invalid after your first 10K free minutes are over. We suggest you to setup your own server after that.
+-   Token generation endpoint has ratelimit of 2000 requests per minute. If you foresee scale bigger than that, we suggest you to setup your own server.
+
+In either of the above scenarios, we suggest you to set up your own app server.
+
+### **Setting up your own app server**
+
+We provide code snippet for [client](generate-client-side-token.md) & [server side](generate-server-side-token.md) tokens and API for [creating a room](create-room.md). Using the code snippets of your chosen language & API you can build your APIs and host them on your servers.

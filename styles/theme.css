@@ -13,6 +13,7 @@
     --foreground: #fff;
     --selection: #3291ff;
     --secondary: #888;
+    --offsetBg: #090909;
     --code: #79ffe1;
     --border: #333;
     --link: #3291ff;
@@ -42,8 +43,8 @@
 }
 
 [data-theme='light'] {
-    --offset: #e2e2e2;
-    --accents1: #fafafa;
+    --offset: #ebe8e8;
+    --accents1: #fdfdfd;
     --accents2: #eaeaea;
     --accents3: #999;
     --accents4: #888;
@@ -55,6 +56,7 @@
     --foreground: #000;
     --selection: #3291ff;
     --secondary: #666;
+    --offsetBg: #fafafa;
     --code: #f81ce5;
     --border: #eaeaea;
     --link: #0070f3;
@@ -82,15 +84,22 @@
     --warning-light: #f7b955;
     --warning: #f5a623;
 }
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+    text-rendering: geometricPrecision;
+    -webkit-tap-highlight-color: transparent;
+}
+
 html,
 body {
     background-color: var(--background);
-    color: var(--foreground);
+    color: var(--accents7);
     transition: none;
     overscroll-behavior-y: none;
-}
-html {
-    font-size: 16px;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -108,18 +117,9 @@ body {
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
-*,
-*:before,
-*:after {
-    box-sizing: inherit;
-    text-rendering: geometricPrecision;
-    -webkit-tap-highlight-color: transparent;
-}
-
 p,
 small {
     font-weight: 400;
-    color: inherit;
     letter-spacing: -0.005625rem;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
         'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
@@ -139,6 +139,7 @@ small {
 }
 
 b {
+    color: var(--foreground);
     font-weight: 600;
 }
 
@@ -164,15 +165,17 @@ a {
 }
 
 a:hover {
-    opacity: 0.7;
+    opacity: 0.8;
 }
 
 ul,
 ol {
+    font-size: 1em;
+    font-weight: 500;
+    line-height: 1.625em;
     padding: 0;
     list-style-type: none;
     margin: 8pt 8pt 8pt 16pt;
-    color: var(--foreground);
 }
 
 ol {
@@ -200,26 +203,28 @@ h4,
 h5,
 h6 {
     position: relative;
-    color: inherit;
+    color: var(--foreground);
 }
 
 h1 {
+    letter-spacing: -0.05em;
     font-size: 3rem;
-    letter-spacing: -0.066875rem;
     line-height: 1.5;
     font-weight: 700;
 }
 
 h2 {
-    font-size: 2.25rem;
-    letter-spacing: -0.020625rem;
-    font-weight: 600;
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    letter-spacing: -0.025em;
+    font-weight: 700;
 }
 
 h3 {
-    font-size: 1.5rem;
-    letter-spacing: -0.029375rem;
-    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    letter-spacing: -0.025em;
+    font-weight: 700;
 }
 
 h4 {
@@ -238,6 +243,24 @@ h6 {
     font-size: 0.875rem;
     letter-spacing: -0.005625rem;
     font-weight: 600;
+}
+
+/* https://css-tricks.com/hash-tag-links-padding/ */
+h2::before {
+    display: block;
+    content: ' ';
+    margin-top: -120px;
+    height: 120px;
+    visibility: hidden;
+    pointer-events: none;
+}
+h3::before {
+    display: block;
+    content: ' ';
+    margin-top: -120px;
+    height: 120px;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 button,
@@ -350,6 +373,7 @@ blockquote :global(*:last-child) {
 }
 
 table {
+    margin: 2rem 0;
     border-collapse: separate;
     border-spacing: 0;
     width: 100%;
@@ -508,6 +532,7 @@ pre[class*='language-'] {
     border-left-width: 8px;
     background-color: var(--code_line_marker);
 }
+
 .pointer {
     cursor: pointer;
 }
@@ -532,9 +557,18 @@ pre[class*='language-'] {
     outline: 1px solid var(--accents4);
 }
 
-select {
+input {
+    color: var(--foreground);
+    border: none;
     background-color: transparent;
-    border-radius: 5px;
-    padding: 0.2rem 0.5rem;
-    margin: 0 0.5rem;
+}
+
+/* Header Anchor Links */
+.head-link {
+    color: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    font-weight: inherit;
+    text-decoration: none;
 }

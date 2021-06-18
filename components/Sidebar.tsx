@@ -1,208 +1,88 @@
+/* eslint-disable react/no-array-index-key */
+import { useRouter } from 'next/router';
 import React from 'react';
-import SvgMoon from '@/assets/icons/Moon';
-import SvgSun from '@/assets/icons/Sun';
-import { SidebarType } from '@/lib/getSidebarData';
-import { useRouter } from 'next/dist/client/router';
+
+type NavRoute = {
+    url: string;
+    title: string;
+};
 
 interface Props {
-    docsArr?: SidebarType[];
+    menu: boolean;
+    nav: Record<string, Record<string, NavRoute>>;
 }
 
-export const CrossIcon = () => (
-    <svg
-        viewBox="0 0 24 24"
-        width="15"
-        height="15"
-        xmlns="http://www.w3.org/2000/svg"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-        shapeRendering="geometricPrecision"
-        style={{ color: 'var(--foreground)' }}>
-        <path d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z" />
-    </svg>
-);
-
-export const MenuIcon = () => (
-    <svg
-        viewBox="0 0 24 24"
-        width="24"
-        height="24"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-        shapeRendering="geometricPrecision"
-        style={{ color: 'var(--foreground)' }}>
-        <path d="M3 12h18" />
-        <path d="M3 6h18" />
-        <path d="M3 18h18" />
-    </svg>
-);
-
-const Sidebar: React.FC<Props> = ({ docsArr }) => {
-    const [menu, setMenu] = React.useState(false);
+const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const router = useRouter();
-    const [isDark, setIsDark] = React.useState<boolean>(true);
-    React.useEffect(() => {
-        const docHtml = document.documentElement.dataset;
-        const winLocal = window.localStorage;
-        // theme saved
-        if (winLocal.getItem('theme')) {
-            const savedTheme = winLocal.getItem('theme');
-            docHtml.theme = savedTheme === 'dark' ? 'dark' : 'light';
-            setIsDark(savedTheme === 'dark');
-        }
-        // unsaved
-        else {
-            docHtml.theme = 'dark';
-            winLocal.setItem('theme', 'dark');
-            setIsDark(true);
-        }
-    }, []);
-    const toggleTheme = () => {
-        const docHtml = document.documentElement.dataset;
-        // toggle theme
-        // set local storage
-        window.localStorage.setItem('theme', `${!isDark ? 'dark' : 'light'}`);
-        // update the html data
-        docHtml.theme = `${!isDark ? 'dark' : 'light'}`;
-        // update the state
-        setIsDark(!isDark);
-    };
     return (
-        <>
-            <div className="mobile-sidebar">
-                <button aria-label="menu-button" type="button" onClick={() => setMenu(!menu)}>
-                    {menu ? <CrossIcon /> : <MenuIcon />}
-                </button>
-                <div className="sidebar-header">
-                    <a href="/">
-                        <img width={36} src="/logo.svg" alt="100ms Logo" />
-                        <b>100ms</b>
-                    </a>
-                </div>
-                <div>
-                    <span
-                        aria-label="theme-toggle-button"
-                        className="pointer"
-                        role="button"
-                        style={{ paddingTop: '8px', paddingLeft: '10px' }}
-                        tabIndex={0}
-                        onKeyPress={() => toggleTheme()}
-                        onClick={() => toggleTheme()}>
-                        {isDark ? <SvgMoon /> : <SvgSun />}
-                    </span>
-                </div>
-            </div>
-            <div className="sidebar">
-                <div className="sidebar-header">
-                    <a href="/">
-                        <img width={36} src="/logo.svg" alt="100ms Logo" />
-                        <b>100ms</b>
-                    </a>
+        <div className="ctx">
+            {/* Sidebar Version Section */}
+            <section className="menu-container">
+                <div className="menu-title">VERSIONS</div>
 
-                    <span
-                        aria-label="theme-toggle-button"
-                        className="pointer"
-                        role="button"
-                        style={{ paddingTop: '8px', paddingLeft: '10px' }}
-                        tabIndex={0}
-                        onKeyPress={() => toggleTheme()}
-                        onClick={() => toggleTheme()}>
-                        {isDark ? <SvgMoon /> : <SvgSun />}
-                    </span>
-                </div>
+                <a href="/v1/100ms-v1/basics">
+                    <div className="menu-item">v1.0.0</div>
+                </a>
+                <a href="/v2/100ms-v2/Basics">
+                    <div className="menu-item">v2.0.0</div>
+                </a>
+            </section>
 
-                {/* Sidebar Version Section */}
-                <section className="menu-container">
-                    <div className="menu-title">VERSIONS</div>
+            {/* Sidebar Menu Section */}
 
-                    <a href="/v1/100ms-v1/basics">
-                        <div className="menu-item">v1.0.0</div>
-                    </a>
-                    <a href="/v2/100ms-v2/Basics">
-                        <div className="menu-item">v2.0.0</div>
-                    </a>
+            {Object.entries(nav).map(([key, children], index) => (
+                <section className="menu-container" key={`${key}-${index}`}>
+                    <div className="menu-title">{key.replace(/-/g, ' ').toUpperCase()}</div>
+                    {Object.entries(children).map(([_, route]) => (
+                        <a href={route.url} key={`${route.url}-${index}`}>
+                            <div
+                                className={`menu-item ${
+                                    route.url === router.asPath ? 'active-link' : ''
+                                }`}>
+                                {route.title}
+                            </div>
+                        </a>
+                    ))}
                 </section>
-
-                {/* Sidebar Menu Section */}
-
-                {docsArr!.map((el) => (
-                    <section className="menu-container" key={el.topic}>
-                        {el.topic !== '' ? <div className="menu-title">{el.topic}</div> : null}
-                        {el.fileSlugs.map((dt) => (
-                            <a href={dt.slug} key={dt.slug}>
-                                <div
-                                    className={`menu-item ${
-                                        dt.slug === router.asPath ? 'active-link' : ''
-                                    }`}>
-                                    {dt.text}
-                                </div>
-                            </a>
-                        ))}
-                    </section>
-                ))}
-            </div>
+            ))}
             <style jsx>{`
-                .sidebar-header a {
-                    display: flex;
-                    color: inherit;
-                }
-                button {
-                    width: 24px;
-                    height: 24px;
-                    outline: none;
-                    background: transparent;
-                    border: none;
-                }
-                .sidebar {
+                .ctx {
                     width: calc((100% - 1448px) / 2 + 298px);
                     display: flex;
                     flex-direction: column;
                     align-items: stretch;
-                    border-right: 1px solid var(--accents2);
-                    height: 100vh;
+                    height: calc(100vh - 80px);
                     min-width: 298px;
-                    background-color: var(--accents1);
-                    overflow: scroll;
-                    top: 0;
+                    overflow-y: scroll;
+                    top: ${menu ? '10px' : '80px'};
                     left: 0;
-                    position: sticky;
-                    padding-bottom: 100px;
-                    z-index: 10000000;
+                    position: ${menu ? 'absolute' : 'sticky'};
+                    background: var(--background);
+                    z-index: 40;
                 }
-                .sidebar-header {
-                    top: 0;
-                    left: 0;
-                    position: sticky;
-                    padding: 20px 10px;
-                    font-size: 24px;
-                    display: flex;
-                    align-items: center;
-                    z-index: 100;
-                    background-color: var(--accents1);
+                ::-webkit-scrollbar {
+                    width: 0px;
                 }
-                .sidebar-header b {
-                    margin-left: 0.5rem;
+                ::-webkit-scrollbar-thumb {
+                    outline: 0px;
                 }
                 .menu-container {
                     padding-left: 10px;
                     margin: 10px 0;
-                    border-bottom: 1px solid rgba(141, 147, 171, 0.3);
                 }
                 .menu-item {
-                    border-top-left-radius: 5px;
-                    border-bottom-left-radius: 5px;
+                    border-radius: 5px;
                     cursor: pointer;
                     padding: 8px 0;
                     padding-left: 10px;
                     margin: 5px 0;
                     color: var(--accents8);
                     font-weight: 600;
+                    font-size: 14px;
+                }
+
+                a {
+                    text-decoration: none;
                 }
                 .active-link {
                     color: var(--success-light);
@@ -212,46 +92,25 @@ const Sidebar: React.FC<Props> = ({ docsArr }) => {
                     color: var(--success-light);
                     background-color: var(--offset);
                 }
-                a {
-                    text-decoration: none;
-                }
                 .menu-title {
                     padding-left: 10px;
                     opacity: 0.6;
-                }
-                .mobile-sidebar {
-                    display: none;
+                    font-weight: bold;
+                    font-size: 14px;
                 }
                 @media screen and (max-width: 1000px) {
-                    .sidebar {
-                        position: absolute;
-                        top: 80px;
-                        height: calc(100% - 80px);
-                        left: 0;
-                        display: ${menu ? 'block' : 'none'};
+                    .ctx {
+                        display: ${menu ? 'flex' : 'none'};
+                        height: calc(100vh - 10px);
                     }
                     :global(.page) {
                         height: ${menu ? '100vh !important' : ''};
                         overflow: ${menu ? 'hidden !important' : ''};
-                    }
-                    .mobile-sidebar {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        padding: 0 20px;
-                        height: 80px;
-                        position: sticky;
-                        top: 0;
-                        left: 0;
-                        background-color: var(--accents1);
-                        z-index: 100000000;
-                    }
-                    .sidebar .sidebar-header {
-                        display: none;
+                        padding-right: 1rem;
                     }
                 }
             `}</style>
-        </>
+        </div>
     );
 };
 

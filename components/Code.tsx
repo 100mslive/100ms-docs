@@ -22,7 +22,7 @@ export const CopyIcon = () => (
     </svg>
 );
 
-const Code: React.FC<PropsWithChildren<Props>> = ({ id, children, tab, noCopy = false }) => {
+const Code: React.FC<PropsWithChildren<Props>> = ({ id, children, tab }) => {
     const copyFunction = () => {
         const copyText = document.getElementById(id)!.textContent;
         const textArea = document.createElement('textarea');
@@ -41,7 +41,7 @@ const Code: React.FC<PropsWithChildren<Props>> = ({ id, children, tab, noCopy = 
     const [copy, setCopy] = React.useState(false);
     return (
         <div id={`${id}`} style={{ display: `${tab ? 'none' : 'block'}` }} className="code-block">
-            {noCopy ? null : (
+            {tab ? null : (
                 <>
                     {' '}
                     <button onClick={() => copyFunction()} type="button">
@@ -57,7 +57,7 @@ const Code: React.FC<PropsWithChildren<Props>> = ({ id, children, tab, noCopy = 
                     position: relative;
                 }
                 button {
-                    z-index: 1000;
+                    z-index: 35;
                     top: 15px;
                     right: 20px;
                     position: absolute;
@@ -70,7 +70,7 @@ const Code: React.FC<PropsWithChildren<Props>> = ({ id, children, tab, noCopy = 
                     opacity: 0.8;
                 }
                 .copied {
-                    z-index: 1000;
+                    z-index: 45;
                     padding: 5px;
                     font-size: 12px;
                     border: 1px solid var(--border);

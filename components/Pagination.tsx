@@ -1,9 +1,9 @@
-import prettify from '@/lib/prettify';
+import { PaginationType } from '@/lib/getPagination';
 import React from 'react';
 
 interface Props {
-    prev: string;
-    next: string;
+    prev: PaginationType;
+    next: PaginationType;
 }
 
 const PrevIcon = () => (
@@ -25,48 +25,40 @@ const NextIcon = () => (
     </svg>
 );
 
-const Pagination: React.FC<Props> = ({ prev, next }) => {
-    const parseSlug = (s: string) => {
-        const idx = s.lastIndexOf('/');
-        return prettify(s.slice(idx + 1));
-    };
-    const pStr = parseSlug(prev);
-    const nStr = parseSlug(next);
-    return (
-        <div className="pag-ctx">
-            <a href={prev}>
-                <span>
-                    <PrevIcon />
-                    {pStr}
-                </span>
-            </a>
-            <a href={next}>
-                <span>
-                    {nStr}
-                    <NextIcon />
-                </span>
-            </a>
-            <style jsx>{`
-                .pag-ctx {
-                    margin: 50px 0;
-                    display: flex;
-                    justify-content: space-between;
-                }
-                a {
-                    text-decoration: none;
-                }
-                span:hover {
-                    background-color: var(--accents1);
-                    border-radius: 5px;
-                }
-                span {
-                    padding: 5px;
-                    display: inline-flex;
-                    vertical-align: middle;
-                }
-            `}</style>
-        </div>
-    );
-};
+const Pagination: React.FC<Props> = ({ prev, next }) => (
+    <div className="pag-ctx">
+        <a href={prev.url}>
+            <span>
+                <PrevIcon />
+                {prev.title}
+            </span>
+        </a>
+        <a href={next.url}>
+            <span>
+                {next.title}
+                <NextIcon />
+            </span>
+        </a>
+        <style jsx>{`
+            .pag-ctx {
+                margin: 50px 0;
+                display: flex;
+                justify-content: space-between;
+            }
+            a {
+                text-decoration: none;
+            }
+            span:hover {
+                background-color: var(--accents1);
+                border-radius: 5px;
+            }
+            span {
+                padding: 5px;
+                display: inline-flex;
+                vertical-align: middle;
+            }
+        `}</style>
+    </div>
+);
 
 export default Pagination;
