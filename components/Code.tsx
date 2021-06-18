@@ -41,7 +41,7 @@ const Code: React.FC<PropsWithChildren<Props>> = ({ id, children, tab, noCopy = 
     const [copy, setCopy] = React.useState(false);
     return (
         <div id={`${id}`} style={{ display: `${tab ? 'none' : 'block'}` }} className="code-block">
-            {noCopy ? null : (
+            {tab ? null : (
                 <>
                     {' '}
                     <button onClick={() => copyFunction()} type="button">
