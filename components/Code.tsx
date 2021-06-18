@@ -22,7 +22,7 @@ export const CopyIcon = () => (
     </svg>
 );
 
-const Code: React.FC<PropsWithChildren<Props>> = ({ id, children, tab, noCopy = false }) => {
+const Code: React.FC<PropsWithChildren<Props>> = ({ id, children, tab }) => {
     const copyFunction = () => {
         const copyText = document.getElementById(id)!.textContent;
         const textArea = document.createElement('textarea');
