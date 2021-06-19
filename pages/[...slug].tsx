@@ -74,7 +74,7 @@ export const getStaticProps = async ({ params }) => {
                 require('@fec/remark-a11y-emoji'),
                 withTableofContents(toc)
             ],
-            rehypePlugins: [mdxPrism]
+            rehypePlugins: [require('../lib/rehype-highlight-word')]
         },
         scope: data
     });
