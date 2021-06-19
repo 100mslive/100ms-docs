@@ -91,13 +91,13 @@ export type Result = { title: string; url: string; content: string };
 
 Add Line Highlighting `tsx{1-2,15-18}:useSearch.ts`
 
-```tsx{1-2,15-18}:useSearch.ts nice hello world
+```tsx{1-2,15-18}:useSearch.ts
 import { useMemo } from 'react';
 import { matchSorter } from 'match-sorter';
 
 export type Result = { title: string; url: string; content: string };
 
-export default function useSearch({ search, folder, docs }): Result[] {
+export default function ___useSearch___({ search, folder, docs }): Result[] {
     const results = useMemo(() => {
         if (!search) return [];
         const re: Result[] = matchSorter(

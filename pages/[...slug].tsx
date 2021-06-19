@@ -69,7 +69,6 @@ export const getStaticProps = async ({ params }) => {
         // Optionally pass remark/rehype plugins
         mdxOptions: {
             remarkPlugins: [
-                require('remark-slug'),
                 require('@/lib/remark-code-header'),
                 require('@fec/remark-a11y-emoji'),
                 withTableofContents(toc)
