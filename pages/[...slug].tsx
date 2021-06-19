@@ -70,11 +70,11 @@ export const getStaticProps = async ({ params }) => {
         mdxOptions: {
             remarkPlugins: [
                 require('remark-slug'),
-                require('remark-code-titles'),
+                require('@/lib/remark-code-header'),
                 require('@fec/remark-a11y-emoji'),
                 withTableofContents(toc)
             ],
-            rehypePlugins: [require('../lib/rehype-highlight-word')]
+            rehypePlugins: [mdxPrism]
         },
         scope: data
     });
