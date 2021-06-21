@@ -60,7 +60,6 @@ const DocLayout: React.FC<Props> = ({
                 <div className="content-wrapper">
                     <article>
                         <h1>{frontMatter.title}</h1>
-                        <hr />
                         {children}
                         <hr />
                         {pagination.previousPost && (

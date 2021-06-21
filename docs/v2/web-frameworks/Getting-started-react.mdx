@@ -3,7 +3,7 @@ title: Getting Started - React
 nav: 14
 ---
 
-### Introduction
+## Introduction
 
 This guide provides an overview of the key objects you'll use with 100ms' React SDK to build a live audio/video application
 
@@ -13,18 +13,18 @@ If you haven't already done so, try our sample [quickstart app](https://github.c
 
 </Note>
 
-### Supported Devices
+## Supported Devices
 
 Our alpha release has been tested on modern Chrome browsers. We will expand browser support to all modern browsers soon.
 
-### Basic Concepts
+## Basic Concepts
 
 -   `Room` - A room represents a real-time audio, video session, the basic building block of the 100ms Video SDK
 -   `Track` - A track represents either the audio or video that makes up a peer's stream
 -   `Peer` - A peer represents all participants connected to a room. Peers can be "local" or "remote"
 -   `Broadcast` - A local peer can send any message/data to all remote peers in the room
 
-### Pre-requisites
+## Pre-requisites
 
 1. **Get the 100ms React SDK**
 
@@ -36,7 +36,7 @@ npm install --save @100mslive/hms-video-react@latest
 
 3. **Create a room and setup a token generation service**: To create a room, follow the steps described [in this section](/v2/server-side/Create-room). To setup a token generation service, follow the steps in [this section](/v2/server-side/Generate-client-side-token). Alternatively, you can use our [quickstart server](/v2/server-side/100ms-quickstart-app-server) for this.
 
-### Import modules & instantiate 100ms Client
+## Import modules & instantiate 100ms Client
 
 100ms' React SDK provides 2 hooks
 
@@ -68,7 +68,7 @@ const App = () => {
 };
 ```
 
-### Provide joining configuration and join a room
+## Provide joining configuration and join a room
 
 <Tabs id="join-room" items={['Joining Code', 'Full Code']} />{' '}
 
@@ -133,7 +133,7 @@ const App = () => {
 
 </Code>
 
-### Get peers' states
+## Get peers' states
 
 The data store provides granular access to the room's state variables via `selectors`.  
 100ms provides pre-built selectors to select most commonly used states.
@@ -224,7 +224,7 @@ export interface HMSMediaSettings {
 
 > `selectors` are functions that accept the current data store state as an argument and return data that is derived from that state. For advanced use cases, you can write your own selector
 
-### Render videos
+## Render videos
 
 To render the video of a peer, you can get the peer's video from the data store and attach it to a `video` element in which you want to render it using 100ms' `attachVideo` method
 
@@ -255,14 +255,14 @@ function VideoTile(props) {
 
 > `selectCameraStreamByPeerID` returns the first camera track of the peer. If you have advanced, multi-camera usage - you can write your own selectors to choose multiple tracks
 
-### Muting, unmuting
+## Muting, unmuting
 
 ```jsx
 hmsActions.setLocalVideoEnabled(false);
 hmsActions.setLocalAudioEnabled(true);
 ```
 
-### Broadcasting and receiving messages
+## Broadcasting and receiving messages
 
 <Note type="warning">This interface might change in an upcoming release</Note>
 
@@ -273,7 +273,7 @@ hmsActions.sendMessage('Hello');
 const storeMessages = useHMSStore(selectHMSMessages);
 ```
 
-### Notifications
+## Notifications
 
 <Tabs id="notif" items={['Code', 'Interface']} />
 
@@ -333,21 +333,21 @@ class HMSNotificationTypes {
 
 </Code>
 
-### Share screen
+## Share screen
 
 ```jsx
 hmsActions.setScreenShareEnabled(true);
 ```
 
-### Leave room
+## Leave room
 
 ```jsx
 hmsActions.leave();
 ```
 
-### Advanced use cases
+## Advanced use cases
 
-#### Adding / removing auxiliary tracks
+### Adding / removing auxiliary tracks
 
 To add an auxiliary track\(canvas capture, electron screen-share, etc...\), you can use the addTrack method provided by the SDK. This method adds the track to the local peer's list of auxiliary tracks and publishes it to make it available to remote peers.
 
