@@ -49,6 +49,17 @@ const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
             setIsDark(true);
         }
     }, []);
+    React.useEffect(() => {
+        document.addEventListener('keydown', (e) => {
+            e.preventDefault();
+            if ((e.shiftKey || e.ctrlKey) && e.code === 'KeyT') {
+                toggleTheme();
+            }
+        });
+        return () => {
+            window.removeEventListener('keydown', () => {});
+        };
+    });
     const toggleTheme = () => {
         const docHtml = document.documentElement.dataset;
         // toggle theme
@@ -85,6 +96,7 @@ const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
                     onClick={() => toggleTheme()}>
                     {isDark ? <SvgMoon /> : <SvgSun />}
                 </span>
+                <span className="key-stroke">Shift + T</span>
             </div>
 
             <div className="search-ctx">
@@ -212,6 +224,11 @@ const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
                 }
                 .menu-btn {
                     display: none;
+                }
+                .key-stroke {
+                    border-radius: 5px;
+                    padding: 0 8px;
+                    border: 1px solid var(--accents3);
                 }
                 .hot-key {
                     position: absolute;
