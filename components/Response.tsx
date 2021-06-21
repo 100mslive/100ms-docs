@@ -13,10 +13,8 @@ const Response: React.FC<Props> = ({ id, res, resText }) => (
             <div className="head">
                 <div className="dot" /> {res}
             </div>
-
-            <code>{resText}</code>
+            {resText ? <code>{resText}</code> : null}
         </Note>
-
         <style jsx>{`
             .head {
                 display: flex;

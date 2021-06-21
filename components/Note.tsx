@@ -11,11 +11,11 @@ const Note: React.FC<Props> = ({ type = 'success', children }) => {
             {children}
             <style jsx>{`
                 div {
-                    background-color: var(--offset);
                     padding: 10px;
                     padding-left: 20px;
                     margin: 20px 0;
                     border-radius: 5px;
+                    border 1px solid var(--accents2);
                     border-left: 5px solid ${resolveColor()};
                 }
             `}</style>

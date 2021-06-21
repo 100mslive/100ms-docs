@@ -3,8 +3,6 @@ title: Getting Started - iOS
 nav: 11
 ---
 
-# Getting Started - iOS
-
 This guide provides an overview of the key objects you'll use with 100ms iOS SDK to build a Live Audio/Video application.
 
 ### ☝️ Pre-requisites
@@ -14,11 +12,11 @@ This guide provides an overview of the key objects you'll use with 100ms iOS SDK
 
 ### 🚂 Setup Guide
 
--   Host your token generation service [following this guide](https://app.gitbook.com/@100ms/s/100ms-v2/server-side/generate-client-side-token)
+-   Host your token generation service [following this guide](/v2/server-side/Introduction-to-tokens)
 -   Get Access Keys: Sign up on [https://dashboard.100ms.live/register](https://dashboard.100ms.live/register) & visit the Developer tab to get your access credentials
--   Generate a server-side token, follow the steps described here - [https://app.gitbook.com/@100ms/s/100ms-v2/server-side/generate-server-side-token](https://app.gitbook.com/@100ms/s/100ms-v2/server-side/generate-server-side-token)
--   Create a room, follow the steps described here - [https://app.gitbook.com/@100ms/s/100ms-v2/server-side/create-room](https://app.gitbook.com/@100ms/s/100ms-v2/server-side/create-room)
--   Generate a client-side token, follow the steps described here - [https://app.gitbook.com/@100ms/s/100ms-v2/server-side/generate-client-side-token](https://app.gitbook.com/@100ms/s/100ms-v2/server-side/generate-client-side-token)
+-   Generate a server-side token, follow the steps described here - [/v2/server-side/Generate-server-side-token](/v2/server-side/Generate-server-side-token)
+-   Create a room, follow the steps described here - [/v2/server-side/Create-room](/v2/server-side/Create-room)
+-   Generate a client-side token, follow the steps described here - [/v2/server-side/Generate-client-side-token](/v2/server-side/Generate-client-side-token)
 -   Get the HMSSDK via [Cocoapods](https://cocoapods.org/). Add the `pod 'HMSSDK'` to your Podfile as follows:
 
 ```ruby
@@ -167,6 +165,33 @@ protocol HMSUpdateListener {
 ```
 
 </Code>
+
+### 🤔 How to listen to Track, Peer and Room updates?
+
+The `HMS` SDK sends updates to the application about any change in `HMSPeer` , `HMSTrack` or `HMSRoom` via the callbacks in `HMSUpdateListener` . Application need to listen to the corresponding updates in `onPeerUpdate` , `onTrackUpdate` or `onRoomUpdate`
+
+The following are the different types of updates that are emitted by the SDK
+
+```
+HMSPeerUpdate
+    case PEER_JOINED A new peer joins the room
+    case PEER_LEFT - An existing peer leaves the room
+    case BECAME_DOMINANT_SPEAKER - A peer becomes a dominant speaker
+    case NO_DOMINANT_SPEAKER - There is silence in the room (No speaker is detected)
+
+HMSTrackUpdate
+    case TRACK_ADDED - A new track is added by a remote peer
+    case TRACK_REMOVED - An existing track is removed from a remote peer
+    case TRACK_MUTED - An existing track of a remote peer is muted
+    case TRACK_UNMUTED - An existing track of a remote peer is unmuted
+    case TRACK_DESCRIPTION_CHANGED - The optional description of a track of a remote peer is changed
+```
+
+### 🛤 How to know the type and source of Track?
+
+`HMSTrack` contain a field called `source` which denotes the source of the Track. `source` can have the following values - `regular` \(normal\), `screen` \(for screenshare\)and `plugin` \(for plugins\)
+
+To know the type of track, check the value of `type` which would be one of the enum values - `AUDIO` or `VIDEO`
 
 ### 🤝 Provide joining configuration
 

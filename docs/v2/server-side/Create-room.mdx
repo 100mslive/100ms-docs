@@ -3,19 +3,82 @@ title: Create Room
 nav: 6
 ---
 
-# Create room
-
----
-
 ## Overview
 
-To allow users to join a 100ms video conferencing session inside your app, you first need to create a `room`. The `rooms` API allows you to create rooms and configure room settings - whether you want to enable recording, where to store recording etc
+To allow users to join a 100ms video conferencing session inside your app, you first need to create a `room`.
 
----
+## Create Room On Dashboard
 
-## Base URL
+You can create room on [100ms Dashboard](https://dashboard.100ms.live/create-rooms). While creating a room you can specify it's name, roles or enable recording.
 
-All 100ms APIs will have the following base URL
+<Image width={2168} height={1212} alt="Create a room" src="/docs/v2/create-a-room.png" />
+
+You can add or modify roles on [100ms Dashboard](https://dashboard.100ms.live/roles).
+
+## Create Room using API
+
+You can use following API to create room.
+
+<Image
+    width={2462}
+    height={1638}
+    alt="Room Details on Dashboard"
+    src="/docs/v2/role-dashboard.png"
+/>
+
+<PostRequest
+    title="Create Room API"
+    desp="This endpoint is used to create Room. "
+    url="https://prod-in2.100ms.live/api/v2/rooms"
+/>
+
+<Tabs items={['Request', 'Response']} id="req" />
+
+<div id="req-0">
+
+### Headers
+
+|                                  |          |
+| -------------------------------- | -------- | ---------------------------- |
+| Content-type <br/> (_REQUIRED_)  | `string` | application/json             |
+| Authorization <br/> (_REQUIRED_) | `string` | Bearer `<Server Side Token>` |
+
+### Body Paramters
+
+|                                     |          |
+| ----------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| name <br/> (_OPTIONAL_)             | `string` | <br/> A unique identifier you can assign to 100ms rooms. This is `case-insensitive`. Accepted characters are `a-z, A-Z, 0-9, and . - : _` If not provided, this is generated automatically. <br/><br/> Please note that with `createRoom` is called with the same room name, then the same room ID is returned <br/> |
+| description <br/> (_OPTIONAL_)      | `string` | A string to describe your room's usage - eg. "9PM English Class Batch 2"                                                                                                                                                                                                                                             |
+| recording_info <br/> (\_OPTIONAL\*) | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings etc.                                                                                                                                                                                |
+
+</div>
+
+<div id="req-1">
+
+<Response res="200: OK" />
+
+```json
+{
+    "id": "5fd0cdeb7b86052f14384482",
+    "name": "class_9_english_batch_2",
+    "description": "Class 9 English Batch 2",
+    "active": false,
+    "recording_info": {
+        "enabled": true,
+        "upload_info": {
+            "type": "s3",
+            "location": "client-name-recordings"
+        }
+    },
+    "user": "5fd0cc767b86052f1438447d",
+    "customer": "5fd0cc767b86052f1438447e",
+    "created_at": "2020-12-09T13:15:23.875Z",
+    "updated_at": "2021-01-01T08:03:09.495990338Z",
+    "template": "sample-template"
+}
+```
+
+</div>
 
 ---
 
@@ -25,8 +88,6 @@ All 100ms APIs will have the following base URL
 | ----------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
 | enabled     | `boolean` | Enable recording. Disabled by default                                                                                                                                                           | no       |
 | upload_info | `object`  | object of type `upload_info`. This object contains information on recordings storage location. If you want to store recording with 100ms, and not use your own s3, don't add this to the object | no       |
-
----
 
 ### upload_info
 

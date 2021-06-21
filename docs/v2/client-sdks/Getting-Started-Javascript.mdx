@@ -3,8 +3,6 @@ title: Getting Started - JavaScript
 nav: 12
 ---
 
-# Getting Started - JavaScript
-
 ### Introduction
 
 This guide provides an overview of the key objects you'll use with 100ms' JavaScript SDK to build a live audio/video application
@@ -276,3 +274,24 @@ hms.join(joinConfig, listener);
 //Changing midway during the call
 localVideoTrack.setSettings({deviceId:'default'});
 ```
+
+#### Adding / removing auxiliary tracks
+
+To add an auxiliary track\(canvas capture, electron screen-share, etc...\), you can use the addTrack method provided by the SDK. This method adds the track to the local peer's list of auxiliary tracks and publishes it to make it available to remote peers.
+
+```jsx
+/**
+ * track: MediaStreamTrack - Track to be added
+ * source: 'regular' | 'screen' | 'plugin' - Source of track - default: 'regular'
+ */
+await hms.addTrack(track, source);
+```
+
+To remove an auxiliary track, you can use the removeTrack method provided by the SDK. This method removes the track from the local peer's list of auxiliary tracks and unpublishes it.
+
+```jsx
+// trackId: ID of the track to be removed
+await hms.removeTrack(trackId);
+```
+
+> `removeTrack` removes the track only from the list of auxiliary tracks of the local peer. It doesn't remove/unpublish the `audioTrack`/ `videoTrack` of the local peer.

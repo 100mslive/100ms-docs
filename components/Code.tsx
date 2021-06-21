@@ -44,7 +44,10 @@ const Code: React.FC<PropsWithChildren<Props>> = ({ id, children, tab }) => {
             {tab ? null : (
                 <>
                     {' '}
-                    <button onClick={() => copyFunction()} type="button">
+                    <button
+                        aria-label="Copy to Clipboard"
+                        onClick={() => copyFunction()}
+                        type="button">
                         <CopyIcon />
                     </button>
                     {copy ? <span className="copied">Copied</span> : null}{' '}
