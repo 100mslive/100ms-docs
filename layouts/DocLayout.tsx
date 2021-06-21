@@ -59,6 +59,8 @@ const DocLayout: React.FC<Props> = ({
                 <Sidebar menu={menu} nav={nav} />
                 <div className="content-wrapper">
                     <article>
+                        <h1>{frontMatter.title}</h1>
+                        <hr />
                         {children}
                         <hr />
                         {pagination.previousPost && (

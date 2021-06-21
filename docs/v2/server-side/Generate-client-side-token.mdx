@@ -3,8 +3,6 @@ title: Generate client-side token
 nav: 7
 ---
 
-# Generate client-side token
-
 ## Overview
 
 Client-side apps need to send a token to 100ms when instantiating 100ms' SDKs. This token generating service should be hosted on your server
@@ -26,7 +24,7 @@ You can get following keys from the [Developer](https://dashboard.100ms.live/dev
 
 ## Sample client-side token generation code <a id="sample-client-side-token-generation-code"></a>
 
-<Tabs id="client-code-token" items={['Nodejs', 'Python']} />
+<Tabs id="client-code-token" items={['Nodejs', 'Python', 'Java', 'Ruby', 'Php']} />
 
 <Code id='client-code-token-0' tab>
 
@@ -95,6 +93,95 @@ if __name__ == "__main__":
         user_id = sys.argv[1]
         role = sys.argv[2]
     print(generate(room_id=room_id, user_id=user_id, role=role))
+```
+
+</Code>
+
+<Code id='client-code-token-2' tab >
+
+```java
+import java.time.Instant;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
+private void generateHmsClientToken() {
+    Map<String, Object> payload = new HashMap<>();
+    payload.put("access_key", <app_access_key>);
+    payload.put("room_id", <room_id>);
+    payload.put("user_id", <user_id>);
+    payload.put("app_id", <app_id>);
+    payload.put("role", <role>);
+    payload.put("type", "app");
+    payload.put("version", 2);
+    String token = Jwts.builder().setClaims(payload).setId(UUID.randomUUID().toString())
+        .setExpiration(new Date(System.currentTimeMillis() + 86400 * 1000))
+        .setIssuedAt(Date.from(Instant.ofEpochMilli(System.currentTimeMillis() - 60000)))
+        .signWith(SignatureAlgorithm.HS256, <app_secret>.getBytes()).compact();
+  }
+```
+
+</Code>
+
+<Code id='client-code-token-3' tab >
+
+```ruby
+require 'jwt'
+
+payload = {
+  access_key: <app_access_key> ,
+  room_id: <room_id>,
+  user_id: <user_id>,
+  app_id: <app_id>,
+  role: <role>,
+  type: "app",
+  version: 2
+}
+
+secret = <app_secret>
+token = JWT.encode(payload, secret, 'HS256')
+```
+
+</Code>
+
+<Code id='client-code-token-4' tab >
+
+```php
+<?php
+
+use Firebase\JWT\JWT;
+
+$issuedAt   = new DateTimeImmutable();
+$expire     = $issuedAt->modify('+24 hours')->getTimestamp();
+$appId   = <app_id>;
+$accessKey = <access_key>;
+$version = 2;
+$type = "app";
+$role = <role>;
+$roomId = <room_id>;
+
+$payload = [
+    'iat'  => $issuedAt->getTimestamp(),         // Issued at: time when the token was generated
+    'nbf'  => $issuedAt->getTimestamp(),         // Not before
+    'exp'  => $expire,                           // Expire
+    'app_id' => $appId,
+    'access_key' => $accessKey,
+    'type' => $type,
+    'version' => $version,
+    'role' => $role,
+    'room_id' => $roomId
+];
+
+$secret = <app_secret>;
+
+$token = JWT::encode(
+    $payload,
+    $secret,
+    'HS256'
+);
 ```
 
 </Code>

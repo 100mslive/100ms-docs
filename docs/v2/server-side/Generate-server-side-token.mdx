@@ -3,8 +3,6 @@ title: Generate server-side token
 nav: 5
 ---
 
-# Generate server-side token
-
 ## Overview
 
 Any service calling 100ms' REST APIs need to authenticate using a management token. The service required to generate this token should be hosted on your server
@@ -28,7 +26,7 @@ You can get following keys from the [Developer](https://dashboard.100ms.live/dev
 
 You can use the following code snippets to generate your token.
 
-<Tabs id="test-code" items={['Node.js', 'Python']} />
+<Tabs id="test-code" items={['Node.js', 'Python', 'Java', 'Ruby', 'Php']} />
 
 <Code tab id='test-code-0'>
 
@@ -80,6 +78,77 @@ def generate(expires=0):
 
 if __name__ == "__main__":
     print(generate())
+```
+
+</Code>
+
+<Code tab id="test-code-2">
+
+```java
+import java.time.Instant;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
+private void generateHmsServerToken() {
+    Map<String, Object> payload = new HashMap<>();
+    payload.put("access_key", <app_access_key>);
+    payload.put("app_id", <app_id>);
+    payload.put("type", "management");
+    payload.put("version", 2);
+    String token = Jwts.builder().setClaims(payload).setId(UUID.randomUUID().toString())
+        .setExpiration(new Date(System.currentTimeMillis() + 86400 * 1000))
+        .setIssuedAt(Date.from(Instant.ofEpochMilli(System.currentTimeMillis() - 60000)))
+        .signWith(SignatureAlgorithm.HS256, <app_secret>.getBytes()).compact();
+  }
+```
+
+</Code>
+
+<Code tab id="test-code-3">
+
+```ruby
+require 'jwt'
+
+payload = {
+  access_key: <app_access_key> ,
+  app_id: <app_id> ,
+  type: "management",
+  version: 2
+}
+
+secret = <app_secret>
+token = JWT.encode(payload, secret, 'HS256')
+```
+
+</Code>
+
+<Code tab id="test-code-4">
+
+```php
+<?php
+
+use Firebase\JWT\JWT;
+
+$issuedAt   = new DateTimeImmutable();
+$expire     = $issuedAt->modify('+24 hours')->getTimestamp();
+
+$payload = [
+    'access_key' => <app_access_key>,            // Your App Access Key
+    'app_id' => <app_id>,                        // Your App Id
+		'type' => 'management',
+    'version' => 2
+    'iat'  => $issuedAt->getTimestamp(),         // Issued at: time when the token was generated
+    'iss'  => $serverName,                       // Issuer
+    'nbf'  => $issuedAt->getTimestamp(),         // Not before
+    'exp'  => $expire,                           // Expire
+];
+
+$secret = <your app secret>;
+$token = JWT::encode($payload, $secret, 'HS256');
 ```
 
 </Code>
