@@ -2,15 +2,20 @@ import React from 'react';
 import SearchIcon from '@/assets/icons/SearchIcon';
 import useSearch from '@/lib/useSearch';
 import EnterIcon from '@/assets/icons/EnterIcon';
+import useClickOutside from '@/lib/useClickOutside';
 
 interface Props {
     docs: { url: string; title: string; description: string; nav: number; content: string }[];
     currentDocSlug: string;
+    setModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SearchModal: React.FC<Props> = ({ docs, currentDocSlug }) => {
+const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
     const [search, setSearch] = React.useState('');
+    const ref = React.useRef();
     const inputRef = React.useRef();
+    // @ts-ignore
+    useClickOutside(ref, () => setModal(false));
     React.useEffect(() => {
         // @ts-ignore
         inputRef.current?.focus();
@@ -21,7 +26,8 @@ const SearchModal: React.FC<Props> = ({ docs, currentDocSlug }) => {
         docs
     });
     return (
-        <div className="search-modal">
+        // @ts-ignore
+        <div className="search-modal" ref={ref}>
             <div className="input-wrapper">
                 <SearchIcon />
                 <input

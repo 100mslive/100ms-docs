@@ -11,16 +11,12 @@ interface Props {
         menu: boolean;
         setMenu: React.Dispatch<React.SetStateAction<boolean>>;
     };
-    modalState: {
-        modal: boolean;
-        setModal: React.Dispatch<React.SetStateAction<boolean>>;
-    };
+    setModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Header: React.FC<Props> = ({ menuState, modalState }) => {
+const Header: React.FC<Props> = ({ menuState, setModal }) => {
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
-    const { setModal } = modalState;
     React.useEffect(() => {
         if (escPressed) {
             setModal(false);

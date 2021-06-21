@@ -54,14 +54,15 @@ const DocLayout: React.FC<Props> = ({
     const [menu, setMenu] = React.useState(false);
     const [modal, setModal] = React.useState(false);
     const menuState = { menu, setMenu };
-    const modalState = { modal, setModal };
     useLockBodyScroll(modal);
     return (
         <>
-            {modal ? <SearchModal docs={allDocs} currentDocSlug={currentDocSlug} /> : null}
+            {modal ? (
+                <SearchModal setModal={setModal} docs={allDocs} currentDocSlug={currentDocSlug} />
+            ) : null}
             <div className="page">
                 <NextSeo {...SEO} />
-                <Header modalState={modalState} menuState={menuState} />
+                <Header setModal={setModal} menuState={menuState} />
                 <div className="ctx">
                     <Sidebar menu={menu} nav={nav} />
                     <div className="content-wrapper">
