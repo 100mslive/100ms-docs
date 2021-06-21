@@ -49,17 +49,6 @@ const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
             setIsDark(true);
         }
     }, []);
-    React.useEffect(() => {
-        document.addEventListener('keydown', (e) => {
-            e.preventDefault();
-            if ((e.shiftKey || e.ctrlKey) && e.code === 'KeyT') {
-                toggleTheme();
-            }
-        });
-        return () => {
-            window.removeEventListener('keydown', () => {});
-        };
-    });
     const toggleTheme = () => {
         const docHtml = document.documentElement.dataset;
         // toggle theme
@@ -96,34 +85,14 @@ const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
                     onClick={() => toggleTheme()}>
                     {isDark ? <SvgMoon /> : <SvgSun />}
                 </span>
-                <span className="key-stroke">Shift + T</span>
             </div>
 
             <div className="search-ctx">
-                <div className="search-wrapper">
+                <button type="button" className="search-btn">
                     <SearchIcon />
-                    <input
-                        // @ts-ignore
-                        ref={inputRef}
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        placeholder="Quick search for anything"
-                        type="text"
-                    />
-                    {search === '' ? <span className="hot-key">/</span> : null}
-                </div>
-                {res.length > 0 ? (
-                    <div className="res-ctx">
-                        {res.map((e) => (
-                            <a href={e.url} key={e.url}>
-                                <div className="res-box">
-                                    <span>{e.title}</span>
-                                    <EnterIcon />
-                                </div>
-                            </a>
-                        ))}
-                    </div>
-                ) : null}
+                    <span>Quick search for anything</span>
+                    <span className="hot-key">/</span>
+                </button>
             </div>
             <div className="menu-btn">
                 <button aria-label="menu-button" type="button" onClick={() => setMenu(!menu)}>
@@ -175,13 +144,6 @@ const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
                 a:hover {
                     opacity: 1;
                 }
-                button {
-                    width: 24px;
-                    height: 24px;
-                    outline: none;
-                    background: transparent;
-                    border: none;
-                }
                 .head-left {
                     display: flex;
                     align-items: center;
@@ -197,21 +159,35 @@ const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
                     margin-left: 1rem;
                     margin-right: 1rem;
                 }
-                input {
-                    margin-left: 1rem;
-                    width: 100%;
-                }
                 .search-ctx {
                     width: 100%;
                     position: relative;
                     padding: 0 1rem;
                 }
-                .search-wrapper {
-                    height: 4rem;
+                .search-btn {
+                    opacity: 0.6;
+                    background-color: transparent;
                     display: flex;
                     align-items: center;
+                    border: none;
+                    border-radius: 5px;
+                    width: 100%;
+                    cursor: pointer;
                     border-bottom: 1px solid var(--accents2);
                     border-bottom-width: 1px;
+                    padding-bottom: 1rem;
+                }
+                .search-btn span {
+                    margin-left: 1rem;
+                }
+                .hot-key {
+                    margin-left: 1rem;
+                    border-radius: 5px;
+                    padding: 0 8px;
+                    border: 1px solid var(--accents3);
+                }
+                .search-btn:hover {
+                    opacity: 1;
                 }
                 .company {
                     font-size: 1.2rem;
@@ -224,19 +200,6 @@ const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
                 }
                 .menu-btn {
                     display: none;
-                }
-                .key-stroke {
-                    border-radius: 5px;
-                    padding: 0 8px;
-                    border: 1px solid var(--accents3);
-                }
-                .hot-key {
-                    position: absolute;
-                    left: 280px;
-                    opacity: 0.6;
-                    border-radius: 5px;
-                    padding: 0 8px;
-                    border: 1px solid var(--accents3);
                 }
                 @media screen and (max-width: 600px) {
                     .search-ctx {
