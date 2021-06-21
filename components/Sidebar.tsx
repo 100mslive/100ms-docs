@@ -14,6 +14,7 @@ interface Props {
 
 const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const router = useRouter();
+    console.log(menu);
     return (
         <div className="ctx">
             {/* Sidebar Version Section */}
