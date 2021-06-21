@@ -9,7 +9,6 @@ const getPagination = (list: PaginationType[], slug: string[]): {
     previousPost: PaginationType
     nextPost: PaginationType
 } => {
-    console.log(list)
     const len = list.length
     const slugString = slug.join('/');
     const idx = list.findIndex(e => e.url === `/${slugString}`)

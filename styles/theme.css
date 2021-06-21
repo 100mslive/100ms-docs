@@ -9,7 +9,7 @@
     --accents6: #999;
     --accents7: #eaeaea;
     --accents8: #fafafa;
-    --background: #111;
+    --background: #0b0f15;
     --foreground: #fff;
     --selection: #3291ff;
     --secondary: #888;
@@ -100,6 +100,11 @@ body {
     transition: none;
     overscroll-behavior-y: none;
     scroll-behavior: smooth;
+}
+
+/* This is to make Scroll Adjustments */
+html {
+    scroll-padding-top: 120px; /* height of sticky header */
 }
 
 body {
@@ -244,24 +249,6 @@ h6 {
     font-size: 0.875rem;
     letter-spacing: -0.005625rem;
     font-weight: 600;
-}
-
-/* https://css-tricks.com/hash-tag-links-padding/ */
-h2::before {
-    display: block;
-    content: ' ';
-    margin-top: -120px;
-    height: 120px;
-    visibility: hidden;
-    pointer-events: none;
-}
-h3::before {
-    display: block;
-    content: ' ';
-    margin-top: -120px;
-    height: 120px;
-    visibility: hidden;
-    pointer-events: none;
 }
 
 button,

@@ -11,7 +11,7 @@ const Note: React.FC<Props> = ({ type = 'success', children }) => {
             {children}
             <style jsx>{`
                 div {
-                    background-color: var(--accents1);
+                    background-color: var(--offset);
                     padding: 10px;
                     padding-left: 20px;
                     margin: 20px 0;
