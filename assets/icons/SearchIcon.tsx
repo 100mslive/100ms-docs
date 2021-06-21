@@ -2,6 +2,7 @@ import React from 'react';
 
 const SearchIcon = () => (
     <svg
+        opacity={0.6}
         viewBox="0 0 24 24"
         width="30"
         height="30"

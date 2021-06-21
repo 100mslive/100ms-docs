@@ -58,15 +58,10 @@ const DocLayout: React.FC<Props> = ({
     useLockBodyScroll(modal);
     return (
         <>
-            {modal ? <SearchModal /> : null}
+            {modal ? <SearchModal docs={allDocs} currentDocSlug={currentDocSlug} /> : null}
             <div className="page">
                 <NextSeo {...SEO} />
-                <Header
-                    modalState={modalState}
-                    docs={allDocs}
-                    currentDocSlug={currentDocSlug}
-                    menuState={menuState}
-                />
+                <Header modalState={modalState} menuState={menuState} />
                 <div className="ctx">
                     <Sidebar menu={menu} nav={nav} />
                     <div className="content-wrapper">
@@ -89,7 +84,8 @@ const DocLayout: React.FC<Props> = ({
                         max-width: 1600px;
                         margin: 0 auto;
                         position: relative;
-                        opacity: ${modal ? 0.5 : 1};
+                        opacity: ${modal ? 0.3 : 1};
+                        height: ${modal ? '100vh !important' : ''};
                     }
                     .ctx {
                         position: relative;

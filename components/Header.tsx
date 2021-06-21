@@ -4,8 +4,6 @@ import SvgSun from '@/assets/icons/Sun';
 import CrossIcon from '@/assets/icons/CrossIcon';
 import MenuIcon from '@/assets/icons/MenuIcon';
 import React from 'react';
-import useSearch from '@/lib/useSearch';
-import EnterIcon from '@/assets/icons/EnterIcon';
 import useKeyPress from '@/lib/useKeyPress';
 
 interface Props {
@@ -17,14 +15,11 @@ interface Props {
         modal: boolean;
         setModal: React.Dispatch<React.SetStateAction<boolean>>;
     };
-    docs: { url: string; title: string; description: string; nav: number; content: string }[];
-    currentDocSlug: string;
 }
 
-const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState, modalState }) => {
+const Header: React.FC<Props> = ({ menuState, modalState }) => {
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
-    const inputRef = React.useRef();
     const { setModal } = modalState;
     React.useEffect(() => {
         if (escPressed) {
