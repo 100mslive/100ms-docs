@@ -494,45 +494,10 @@ table tr:not(:last-of-type) td {
     color: var(--token_regex_imp_var);
 }
 
-.token.inserted {
-    background-color: var(--token_inserted);
-}
-.token.deleted {
-    background-color: var(--token_deleted);
-}
-
 code[class*='language-'],
 pre[class*='language-'] {
     color: var(--token_code_class);
 }
-
-.remark-code-title {
-    color: var(--code_title);
-    padding: 5px 10px;
-    border: 0.5px solid var(--accents2);
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    font-size: 0.8rem;
-    font-weight: bold;
-}
-
-.remark-code-title + pre {
-    margin-top: 0;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
-}
-
-.mdx-marker {
-    display: block;
-    margin-left: -1.5rem;
-    margin-right: -1.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    border: 0px solid #3b82f6;
-    border-left-width: 8px;
-    background-color: var(--code_line_marker);
-}
-
 .pointer {
     cursor: pointer;
 }
@@ -571,4 +536,47 @@ input {
     letter-spacing: inherit;
     font-weight: inherit;
     text-decoration: none;
+}
+
+/* Code Higlight Word */
+.highlight-word {
+    padding: 2px;
+    color: var(--background);
+    background-color: var(--code);
+    border-radius: 5px;
+}
+
+.remark-code-title {
+    color: var(--code_title);
+    padding: 5px 10px;
+    border: 0.5px solid var(--accents2);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.remark-code-title + pre {
+    margin-top: 0;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+/* Line Highlight */
+
+.mdx-marker {
+    display: block;
+    margin-left: -1rem;
+    padding-left: 1rem;
+    border-left: 0.3rem solid var(--code);
+    background-color: var(--code_line_marker);
+}
+
+/* Git Diff Syntax Highlight */
+
+.token.inserted {
+    background-color: var(--token_inserted);
+}
+.token.deleted {
+    background-color: var(--token_deleted);
 }
