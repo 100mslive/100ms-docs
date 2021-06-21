@@ -13,23 +13,28 @@ interface Props {
         menu: boolean;
         setMenu: React.Dispatch<React.SetStateAction<boolean>>;
     };
+    modalState: {
+        modal: boolean;
+        setModal: React.Dispatch<React.SetStateAction<boolean>>;
+    };
     docs: { url: string; title: string; description: string; nav: number; content: string }[];
     currentDocSlug: string;
 }
 
-const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
-    const [search, setSearch] = React.useState('');
+const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState, modalState }) => {
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
     const inputRef = React.useRef();
+    const { setModal } = modalState;
     React.useEffect(() => {
         if (escPressed) {
-            setSearch('');
+            setModal(false);
         }
     }, [escPressed]);
     React.useEffect(() => {
-        // @ts-ignore
-        inputRef.current?.focus();
+        if (slashPressed) {
+            setModal(true);
+        }
     }, [slashPressed]);
     const { menu, setMenu } = menuState;
     const [isDark, setIsDark] = React.useState<boolean>(true);
@@ -59,11 +64,6 @@ const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
         // update the state
         setIsDark(!isDark);
     };
-    const res = useSearch({
-        search,
-        folder: currentDocSlug,
-        docs
-    });
     return (
         <div className="ctx">
             <div className="head-left">
@@ -88,12 +88,13 @@ const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
             </div>
 
             <div className="search-ctx">
-                <button type="button" className="search-btn">
+                <button onClick={() => setModal(true)} type="button" className="search-btn">
                     <SearchIcon />
                     <span>Quick search for anything</span>
                     <span className="hot-key">/</span>
                 </button>
             </div>
+
             <div className="menu-btn">
                 <button aria-label="menu-button" type="button" onClick={() => setMenu(!menu)}>
                     {menu ? <CrossIcon /> : <MenuIcon />}
