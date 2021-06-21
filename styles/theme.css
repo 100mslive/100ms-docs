@@ -529,6 +529,7 @@ input {
     border-radius: 5px;
 }
 
+/* Reamark Code Header / Title */
 .remark-code-title {
     color: var(--code_title);
     padding: 5px 10px;
@@ -545,8 +546,7 @@ input {
     border-top-right-radius: 0px;
 }
 
-/* Line Highlight */
-
+/* Code Line Highlight */
 .mdx-marker {
     display: block;
     margin-left: -1rem;
@@ -556,10 +556,24 @@ input {
 }
 
 /* Git Diff Syntax Highlight */
-
 .token.inserted {
     background-color: var(--token_inserted);
 }
 .token.deleted {
     background-color: var(--token_deleted);
+}
+
+/* Copy Anchor Icon */
+.copy-anchor {
+    opacity: 0;
+    margin-top: 1rem;
+    margin-left: 0.5rem;
+    width: 20px;
+    height: 20px;
+}
+h2:hover .copy-anchor {
+    opacity: 1;
+}
+h3:hover .copy-anchor {
+    opacity: 1;
 }
