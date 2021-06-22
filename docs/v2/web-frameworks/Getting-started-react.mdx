@@ -238,18 +238,21 @@ function VideoTile(props) {
 
     // Render camera track. To render screenShare track, use the selectScreenShareByPeerId selector
     const videoTrack = useHMSStore((store) => selectCameraStreamByPeerID(store, peer.id));
-    useEffect(async ()=>{
-        if(videoRef.current && videoTrack){
-            await hmsActions.attachVideo(videoTrack.id, videoRef.current);
+    useEffect(() => {
+    (async () => {
+      if (videoRef.current && videoTrack) {
+        if (videoTrack.enabled) {
+          await hmsActions.attachVideo(videoTrack.id, videoRef.current);
+        } else {
+          await hmsActions.detachVideo(videoTrack.id, videoRef.current);
         }
-        //Cleanup when video is not being rendered
-        return function cleanup() {
-            await hmsActions.detatchVideo(videoTrack.id, videoRef.current);
-        }
-    }, [videoRef, videoTrack]);
+      }
+    })();
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [videoTrack?.id, videoTrack?.enabled, videoTrack?.deviceID]);
 
     //Rendering logic
-    return <video ref={videoRef}></video>
+    return <video ref={videoRef} autoplay muted></video>
 }
 ```
 

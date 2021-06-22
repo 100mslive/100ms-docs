@@ -31,19 +31,7 @@ const Header: React.FC<Props> = ({ menuState, setModal }) => {
     const [isDark, setIsDark] = React.useState<boolean>(true);
     React.useEffect(() => {
         const docHtml = document.documentElement.dataset;
-        const winLocal = window.localStorage;
-        // theme saved
-        if (winLocal.getItem('theme')) {
-            const savedTheme = winLocal.getItem('theme');
-            docHtml.theme = savedTheme === 'dark' ? 'dark' : 'light';
-            setIsDark(savedTheme === 'dark');
-        }
-        // unsaved
-        else {
-            docHtml.theme = 'dark';
-            winLocal.setItem('theme', 'dark');
-            setIsDark(true);
-        }
+        setIsDark(docHtml.theme === 'dark');
     }, []);
     const toggleTheme = () => {
         const docHtml = document.documentElement.dataset;
