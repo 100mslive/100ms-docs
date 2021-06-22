@@ -181,6 +181,11 @@ const Header: React.FC<Props> = ({ menuState, setModal }) => {
                 .menu-btn {
                     display: none;
                 }
+                button {
+                    background: transparent;
+                    outline: none;
+                    border: none;
+                }
                 @media screen and (max-width: 600px) {
                     .search-ctx {
                         display: none;
