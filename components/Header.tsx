@@ -4,8 +4,6 @@ import SvgSun from '@/assets/icons/Sun';
 import CrossIcon from '@/assets/icons/CrossIcon';
 import MenuIcon from '@/assets/icons/MenuIcon';
 import React from 'react';
-import useSearch from '@/lib/useSearch';
-import EnterIcon from '@/assets/icons/EnterIcon';
 import useKeyPress from '@/lib/useKeyPress';
 
 interface Props {
@@ -13,41 +11,27 @@ interface Props {
         menu: boolean;
         setMenu: React.Dispatch<React.SetStateAction<boolean>>;
     };
-    docs: { url: string; title: string; description: string; nav: number; content: string }[];
-    currentDocSlug: string;
+    setModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
-    const [search, setSearch] = React.useState('');
+const Header: React.FC<Props> = ({ menuState, setModal }) => {
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
-    const inputRef = React.useRef();
     React.useEffect(() => {
         if (escPressed) {
-            setSearch('');
+            setModal(false);
         }
     }, [escPressed]);
     React.useEffect(() => {
-        // @ts-ignore
-        inputRef.current?.focus();
+        if (slashPressed) {
+            setModal(true);
+        }
     }, [slashPressed]);
     const { menu, setMenu } = menuState;
     const [isDark, setIsDark] = React.useState<boolean>(true);
     React.useEffect(() => {
         const docHtml = document.documentElement.dataset;
-        const winLocal = window.localStorage;
-        // theme saved
-        if (winLocal.getItem('theme')) {
-            const savedTheme = winLocal.getItem('theme');
-            docHtml.theme = savedTheme === 'dark' ? 'dark' : 'light';
-            setIsDark(savedTheme === 'dark');
-        }
-        // unsaved
-        else {
-            docHtml.theme = 'dark';
-            winLocal.setItem('theme', 'dark');
-            setIsDark(true);
-        }
+        setIsDark(docHtml.theme === 'dark');
     }, []);
     const toggleTheme = () => {
         const docHtml = document.documentElement.dataset;
@@ -59,11 +43,6 @@ const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
         // update the state
         setIsDark(!isDark);
     };
-    const res = useSearch({
-        search,
-        folder: currentDocSlug,
-        docs
-    });
     return (
         <div className="ctx">
             <div className="head-left">
@@ -88,31 +67,13 @@ const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
             </div>
 
             <div className="search-ctx">
-                <div className="search-wrapper">
+                <button onClick={() => setModal(true)} type="button" className="search-btn">
                     <SearchIcon />
-                    <input
-                        // @ts-ignore
-                        ref={inputRef}
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        placeholder="Quick search for anything"
-                        type="text"
-                    />
-                    {search === '' ? <span className="hot-key">/</span> : null}
-                </div>
-                {res.length > 0 ? (
-                    <div className="res-ctx">
-                        {res.map((e) => (
-                            <a href={e.url} key={e.url}>
-                                <div className="res-box">
-                                    <span>{e.title}</span>
-                                    <EnterIcon />
-                                </div>
-                            </a>
-                        ))}
-                    </div>
-                ) : null}
+                    <span>Quick search for anything</span>
+                    <span className="hot-key">/</span>
+                </button>
             </div>
+
             <div className="menu-btn">
                 <button aria-label="menu-button" type="button" onClick={() => setMenu(!menu)}>
                     {menu ? <CrossIcon /> : <MenuIcon />}
@@ -163,13 +124,6 @@ const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
                 a:hover {
                     opacity: 1;
                 }
-                button {
-                    width: 24px;
-                    height: 24px;
-                    outline: none;
-                    background: transparent;
-                    border: none;
-                }
                 .head-left {
                     display: flex;
                     align-items: center;
@@ -185,21 +139,35 @@ const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
                     margin-left: 1rem;
                     margin-right: 1rem;
                 }
-                input {
-                    margin-left: 1rem;
-                    width: 100%;
-                }
                 .search-ctx {
                     width: 100%;
                     position: relative;
                     padding: 0 1rem;
                 }
-                .search-wrapper {
-                    height: 4rem;
+                .search-btn {
+                    opacity: 0.6;
+                    background-color: transparent;
                     display: flex;
                     align-items: center;
+                    border: none;
+                    border-radius: 5px;
+                    width: 100%;
+                    cursor: pointer;
                     border-bottom: 1px solid var(--accents2);
                     border-bottom-width: 1px;
+                    padding-bottom: 1rem;
+                }
+                .search-btn span {
+                    margin-left: 1rem;
+                }
+                .hot-key {
+                    margin-left: 1rem;
+                    border-radius: 5px;
+                    padding: 0 8px;
+                    border: 1px solid var(--accents3);
+                }
+                .search-btn:hover {
+                    opacity: 1;
                 }
                 .company {
                     font-size: 1.2rem;
@@ -213,13 +181,10 @@ const Header: React.FC<Props> = ({ docs, currentDocSlug, menuState }) => {
                 .menu-btn {
                     display: none;
                 }
-                .hot-key {
-                    position: absolute;
-                    left: 280px;
-                    opacity: 0.6;
-                    border-radius: 5px;
-                    padding: 0 8px;
-                    border: 1px solid var(--accents3);
+                button {
+                    background: transparent;
+                    outline: none;
+                    border: none;
                 }
                 @media screen and (max-width: 600px) {
                     .search-ctx {

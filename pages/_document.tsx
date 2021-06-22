@@ -37,6 +37,8 @@ class MyDocument extends Document {
                         content="/static/favicons/browserconfig.xml"
                         name="msapplication-config"
                     />
+                    {/* To Avoid Flickering */}
+                    <script type="text/javascript" src="/static/theme.js" />
                 </Head>
                 <body>
                     <Main />
