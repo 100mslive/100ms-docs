@@ -17,13 +17,13 @@ Any application built using 100ms' SDKs has 2 components
 ## How 100ms Video Conferencing Applications Work
 
 1. **Server creates a room**
-    - Your server calls 100ms' Rooms API to create a room using a server-side-token. After validating the token, 100ms returns a room_id, a unique identifier for a room which can be used later by clients
+    - Your server calls [100ms' Rooms API](/v2/server-side/Create-room#create-room-using-api) to create a room using a [server-side-token](/v2/server-side/Generate-server-side-token). After validating the token, 100ms returns a `room_id`, a unique identifier for a room which can be used later by clients
 2. **Client gets an access token**
-    - You client requests a token from your server. This is typically achieved by an HTTP request from your client application to your server
+    - You client [requests a token from your server](/v2/server-side/Generate-client-side-token). This is typically achieved by an HTTP request from your client application to your server
 3. **Client connects to a room**
-    - Client then connects to the previously generated room_id by calling 100ms' SDK's join method
+    - Client then connects to the previously generated `room_id` by calling 100ms' SDK's join method
 4. **Client joins a room, publishes their video and gets remote peers' tracks**
-    - After successful join, 100ms' SDK provides methods to access peers/tracks/other data for the room.
+    - After successful `join`, 100ms' SDK provides methods to access peers/tracks/other data for the room.
 
 ---
 
@@ -33,3 +33,13 @@ Basic Concepts
 -   `Track` - A track represents either the audio or video that makes up a peer's stream
 -   `Peer` - A peer represents all participants connected to a room. Peers can be "local" or "remote"
 -   `Broadcast` - A local peer can send any message/data to all remote peers in the room
+
+## Where should I start?
+
+### Quickstart
+
+If you just want to see 100ms' SDKs in action in under 5 minutes, run one our quickstart app for [**Android**](https://github.com/100mslive/100ms-android)
+
+### Full SDK reference
+
+If you just want to start developing and play with some code you should jump to our detailed client-side guide for [**Android**](/v2/release-notes/Android-sdk)

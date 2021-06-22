@@ -9,7 +9,7 @@ We also provide a flux based reactive data store layer over our core SDK. This g
 
 <Image src="/docs/HMS-Store.png" width={1634} height={566} />
 
-> If you haven't already done so, try our [sample quickstart app.](https://github.com/100mslive/100ms-ios) Then you can come back later to see how to build your own live audio/video app in more detail <br/> <br/> We also provide a barebones samples using the reactive store and typescript on codesandbox here. You may need to change getToken.ts per your token generation logic in the code provided in sandbox.
+> If you haven't already done so, try our [sample quickstart app.](https://github.com/100mslive/100ms-ios) Then you can come back later to see how to build your own live audio/video app in more detail <br/> <br/> We also provide a barebones samples using the reactive store and typescript on codesandbox [here](https://codesandbox.io/s/agitated-sun-26u2j?file=/src/index.ts). You may need to change getToken.ts per your token generation logic in the code provided in sandbox.
 
 ## Concepts
 
@@ -160,7 +160,7 @@ import { hmsNotifications } from './hms';
 
 hmsNotifications.onNotification((notification) => {
     // initial value of notification will be null
-    if (!notification) {
+    if(!notification) {
         return;
     }
     // you can use the following to show appropriate toast notifications for eg.
@@ -172,17 +172,14 @@ hmsNotifications.onNotification((notification) => {
             console.log(`${notification.data.name} left`);
             break;
         case HMSNotificationTypes.NEW_MESSAGE:
-            console.log(
-                `${notification.data.message} received from ${notification.data.senderName}`
-            );
+            console.log(`${notification.data.message} received from ${notification.data.senderName}`);
             break;
         case HMSNotificationTypes.ERROR:
-            console.log('[Error]', notification.data);
+            console.log("[Error]", notification.data);
             break;
         default:
             break;
     }
-});
 ```
 
 ## Sharing screen

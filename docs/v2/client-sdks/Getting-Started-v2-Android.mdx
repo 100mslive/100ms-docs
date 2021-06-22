@@ -96,11 +96,13 @@ To join a room created by following the steps described [in this section](/v2/se
 ```java
 // Create a new HMSConfig
 val config = HMSConfig(
-        roomDetails.username, // the name that the user wants to be displayed while in the room
-        roomDetails.authToken, // the auth token to be used
-        info.toString(), // optional -- any  json string or metadata that user need to paas while joining
+        username, // the name that the user wants to be displayed while in the room
+        authToken, // the auth token to be used
+        description, // optional -- any  json string or metadata that user need to paas while joining
         endpoint // optional -- to override the default endpoint (advanced)
       )
+
+
 ```
 
 ## Add event listeners
@@ -276,6 +278,11 @@ hmsSDK.leave() // to leave a room
 
     class HMSRemoteVideoTrack {
         var isPlaybackAllowed: Boolean // to set or get if local playback is allowed for the remote video track
+    }
+
+    enum class HMSTrackType {
+        AUDIO, // Denotes AUDIO track
+        VIDEO  // Denotes VIDEO track
     }
 
 ```

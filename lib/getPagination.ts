@@ -8,7 +8,7 @@ export interface PaginationType {
 const getPagination = (list: PaginationType[], slug: string[]): {
     previousPost: PaginationType
     nextPost: PaginationType
-} => {
+} => {    
     const len = list.length
     const slugString = slug.join('/');
     const idx = list.findIndex(e => e.url === `/${slugString}`)
