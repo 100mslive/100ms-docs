@@ -3,7 +3,6 @@ import SearchIcon from '@/assets/icons/SearchIcon';
 import useSearch from '@/lib/useSearch';
 import EnterIcon from '@/assets/icons/EnterIcon';
 import useClickOutside from '@/lib/useClickOutside';
-import FocusTrap from 'focus-trap-react';
 
 interface Props {
     docs: { url: string; title: string; description: string; nav: number; content: string }[];
@@ -41,26 +40,24 @@ const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
                 />
                 <span className="esc">esc</span>
             </div>
-            <FocusTrap>
-                {res.length > 0 ? (
-                    <div className="res-ctx">
-                        {res.map((e) => (
-                            <a href={e.url} key={e.url}>
-                                <div className="res-box">
-                                    <span>{e.title}</span>
-                                    <EnterIcon />
-                                </div>
-                            </a>
-                        ))}
-                    </div>
-                ) : null}
-            </FocusTrap>
+            {res.length > 0 ? (
+                <div className="res-ctx">
+                    {res.map((e) => (
+                        <a href={e.url} key={e.url}>
+                            <div className="res-box">
+                                <span>{e.title}</span>
+                                <EnterIcon />
+                            </div>
+                        </a>
+                    ))}
+                </div>
+            ) : null}
             <style jsx>{`
                 .search-modal {
                     max-width: 600px;
                     width: 100%;
                     position: absolute;
-                    top: 20%;
+                    top: 200px;
                     left: 50%;
                     transform: translate(-50%, 0%);
                     border-radius: 5px;

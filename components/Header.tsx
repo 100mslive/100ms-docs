@@ -5,6 +5,7 @@ import CrossIcon from '@/assets/icons/CrossIcon';
 import MenuIcon from '@/assets/icons/MenuIcon';
 import React from 'react';
 import useKeyPress from '@/lib/useKeyPress';
+import SearchModal from './SearchModal';
 
 interface Props {
     menuState: {
@@ -12,9 +13,12 @@ interface Props {
         setMenu: React.Dispatch<React.SetStateAction<boolean>>;
     };
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
+    docs: { url: string; title: string; description: string; nav: number; content: string }[];
+    currentDocSlug: string;
+    modal: boolean;
 }
 
-const Header: React.FC<Props> = ({ menuState, setModal }) => {
+const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocSlug }) => {
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
     React.useEffect(() => {
@@ -73,6 +77,10 @@ const Header: React.FC<Props> = ({ menuState, setModal }) => {
                     <span className="hot-key">/</span>
                 </button>
             </div>
+
+            {modal ? (
+                <SearchModal setModal={setModal} docs={docs} currentDocSlug={currentDocSlug} />
+            ) : null}
 
             <div className="menu-btn">
                 <button aria-label="menu-button" type="button" onClick={() => setMenu(!menu)}>
