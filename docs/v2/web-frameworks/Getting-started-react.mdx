@@ -241,7 +241,7 @@ function VideoTile(props) {
     const videoRef = useRef(null);
 
     // Render camera track. To render screenShare track, use the selectScreenShareByPeerId selector
-    const videoTrack = useHMSStore((store) => selectCameraStreamByPeerID(store, peer.id));
+    const videoTrack = useHMSStore(selectCameraStreamByPeerID(peer.id));
     useEffect(() => {
         (async () => {
             if (videoRef.current && videoTrack) {
