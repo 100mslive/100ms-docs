@@ -342,6 +342,14 @@ class HMSNotificationTypes {
     static NEW_MESSAGE = 'NEW_MESSAGE';
     static ERROR = 'ERROR';
 }
+
+// this will be the format of notification.data in ERROR cases
+interface HMSException {
+    name: string;
+    message: string;
+    description: string;
+    readonly code: number;
+}
 ```
 
 </Code>

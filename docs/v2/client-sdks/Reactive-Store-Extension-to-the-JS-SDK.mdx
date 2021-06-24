@@ -152,7 +152,11 @@ const peer = hmsStore.getState(selectLocalPeer);
 hmsStore.getState(selectPeerAudioByID(peer.id));
 ```
 
-### Notifications
+## Notifications
+
+<Tabs id="notif" items={['Code', 'Interface']} />
+
+<Code id='notif-0' tab >
 
 ```jsx
 import { HMSNotificationTypes } from '@100mslive/hms-video-store';
@@ -177,10 +181,48 @@ hmsNotifications.onNotification((notification) => {
         case HMSNotificationTypes.ERROR:
             console.log("[Error]", notification.data);
             break;
+        case HMSNotificationTypes.RECONNECTED:
+            console.log('[Reconnected]');
+            break;
+        case HMSNotificationTypes.RECONNECTING:
+            console.log('[Reconnecting]', notification.data);
+            break;
         default:
             break;
     }
 ```
+
+</Code>
+
+<Code id='notif-1' tab >
+
+```typescript
+interface HMSNotification {
+    id: number;
+    type: string;
+    message: string;
+    data: any;
+    severity?: 'info' | 'error' | 'critical';
+}
+
+class HMSNotificationTypes {
+    static PEER_JOINED = 'PEER_JOINED';
+    static PEER_LEFT = 'PEER_LEFT';
+    static NEW_MESSAGE = 'NEW_MESSAGE';
+    static ERROR = 'ERROR';
+}
+
+// this will be the format of notification.data in ERROR cases
+interface HMSException {
+    name: string;
+    message: string;
+    description: string;
+    readonly code: number;
+}
+```
+
+</Code>
+
 
 ## Sharing screen
 
