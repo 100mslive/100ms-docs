@@ -177,6 +177,28 @@ HMSTrackUpdate
     case TRACK_DESCRIPTION_CHANGED - The optional description of a track of a remote peer is changed
 ```
 
+## How to use Preview API
+
+`HMSSDK` provides a `preview` API which can be used by client apps to show preview screnn of the camera device being used to capture the video. Calling this API also means the SDK makes sure that there is a valid network path between the client and the servers. The token used is also validated in this. 
+
+```
+// Call the preview api by passing the config object
+sdk.preview(config: HMSConfig, listener: HMSPreviewListener)
+
+interface HMSPreviewListener {
+	/** Send the list of local tracks which can be shown in a Preview Screen
+	 * Here, room can be used to get all peers already in the room
+	*/
+	override onPreview(room: HMSRoom, localTracks: Array<HMSTrack>)
+	/** Call Error on case of any errors happening during the INIT call, 
+	 * websocket connection creation or network
+	*/
+	override onError(error: HMSException)
+}
+```
+Please note that `hmsSDK.leave()` should be called while navigating back from the preview screen to cleanup the websockets that are being open. 
+
+
 ## How to know the type and source of Track
 
 `HMSTrack` contain a field called `source` which denotes the source of the Track. `source` can have the following values - `regular` \(normal\), `screen` \(for screenshare\)and `plugin` \(for plugins\)
