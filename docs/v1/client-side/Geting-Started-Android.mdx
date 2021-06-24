@@ -457,7 +457,7 @@ To start receiving callbacks call `startAudioLevelMonitor` passing an update int
 
 <Tabs id="audio-level" items={['Java', 'Kotlin']} />
 
-<Code tab id='audio-level-0'>
+<Tab  id='audio-level-0'>
 
 ```java
 // 500 is the interval in milliseconds
@@ -476,9 +476,9 @@ client.startAudioLevelMonitor(500, audioInfo -> {
 });
 ```
 
-</Code>
+</Tab>
 
-<Code tab id="audio-level-1">
+<Tab id="audio-level-1">
 
 ```Kotlin
 client.startAudioLevelMonitor(500) { audioInfo ->
@@ -488,7 +488,7 @@ client.startAudioLevelMonitor(500) { audioInfo ->
 }
 ```
 
-</Code>
+</Tab>
 
 When the audio level info is no longer needed call `stopAudioLevelMonitor()`
 
@@ -506,7 +506,7 @@ This callback is received every 2000ms
 
 <Tabs id="quality-level" items={['Java', 'Kotlin']} />
 
-<Code tab id='quality-level-0'>
+<Tab id='quality-level-0'>
 
 ```java
 // Start
@@ -529,9 +529,9 @@ client.startNetworkMonitor(networkInfo -> {
 client.stopNetworkMonitor()
 ```
 
-</Code>
+</Tab>
 
-<Code tab id='quality-level-1'>
+<Tab  id='quality-level-1'>
 
 ```Kotlin
 // Start
@@ -546,6 +546,6 @@ client.startNetworkMonitor { networkInfo ->
 client.stopNetworkMonitor()
 ```
 
-</Code>
+</Tab>
 
 > For now there is only one peer's info that is being set, which is the local peer.

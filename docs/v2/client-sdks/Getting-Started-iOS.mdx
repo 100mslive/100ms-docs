@@ -40,7 +40,7 @@ end
 
 <Tabs id="event-lis" items={['Swift', 'Objective-C']} />
 
-<Code id='event-lis-0' tab>
+<Tab id='event-lis-0'>
 
 ```swift
 protocol HMSUpdateListener {
@@ -98,8 +98,8 @@ protocol HMSUpdateListener {
 }
 ```
 
-</Code>
-<Code id='event-lis-1' tab>
+</Tab>
+<Tab id='event-lis-1'>
 
 ```objectivec
 @protocol HMSUpdateListener
@@ -162,7 +162,7 @@ protocol HMSUpdateListener {
 - (void)onReconnected;
 ```
 
-</Code>
+</Tab>
 
 ### 🤔 How to listen to Track, Peer and Room updates?
 
@@ -197,7 +197,7 @@ To join a room created by following the steps described in the above section, cl
 
 <Tabs id="join-config" items={['Swift', 'Objective-C']} />
 
-<Code id='join-config-0' tab>
+<Tab id='join-config-0'>
 
 ```swift
   // Create a new HMSConfig object
@@ -207,8 +207,8 @@ To join a room created by following the steps described in the above section, cl
                         authToken: token) // authorisation token of the user
 ```
 
-</Code>
-<Code id='join-config-1' tab>
+</Tab>
+<Tab id='join-config-1'>
 
 ```objectivec
 // Create a new HMSConfig object
@@ -221,7 +221,7 @@ HMSConfig *config = [[HMSConfig alloc] initWithUserName:@"userName"
                                                endpoint:@"endpoint"];
 ```
 
-</Code>
+</Tab>
 
 ### 🙏 Join a room
 
@@ -229,7 +229,7 @@ Use the HMSConfig and HMSUpdateListener instances to call the join method on the
 
 <Tabs id="join-room" items={['Swift', 'Objective-C']} />
 
-<Code id='join-room-0' tab>
+<Tab id='join-room-0'>
 
 ```swift
   // Basic Usage
@@ -262,9 +262,9 @@ Use the HMSConfig and HMSUpdateListener instances to call the join method on the
   hms?.join(config: config, delegate: self)
 ```
 
-  </Code>
+  </Tab>
 
-<Code id="join-room-1" tab>
+<Tab id="join-room-1">
 
 ```objectivec
 // ensure to keep an instance of HMSSDK alive in the class as an instance property
@@ -283,7 +283,7 @@ HMSConfig *config = [[HMSConfig alloc] initWithUserName:@"userName"
 [hms joinWithConfig:config delegate:self];
 ```
 
-</Code>
+</Tab>
 
 ### 👋 Leave Room
 
@@ -291,21 +291,21 @@ Call the leave method on the HMSSDK instance
 
 <Tabs id="leave-room" items={['Swift', 'Objective-C']} />
 
-<Code id='leave-room-0' tab>
+<Tab id='leave-room-0'>
 
 ```swift
 hms?.leave() // to leave a room
 ```
 
-</Code>
+</Tab>
 
-<Code id='leave-room-1' tab>
+<Tab id='leave-room-1' >
 
 ```objectivec
 [hms leave];
 ```
 
-</Code>
+</Tab>
 
 ### 👌 Get Peers/tracks data
 
@@ -313,7 +313,7 @@ hms?.leave() // to leave a room
 
 <Tabs id="peer-room" items={['Swift', 'Objective-C']} />
 
-<Code id='peer-room-0' tab>
+<Tab id='peer-room-0' >
 
 ```swift
 /// Returns the local peer, which contains the local tracks
@@ -328,9 +328,9 @@ var remotePeers: [HMSRemotePeer]? { get }
 var room: HMSRoom? { get }
 ```
 
-</Code>
+</Tab>
 
-<Code id="peer-room-1" tab>
+<Tab id="peer-room-1" >
 
 ```objectivec
 /// Returns the local peer, which contains the local tracks
@@ -345,7 +345,7 @@ var room: HMSRoom? { get }
 @property (nonatomic, readonly, strong) HMSRoom * _Nullable room;
 ```
 
-</Code>
+</Tab>
 
 ### 🙊 Mute/Unmute Local Audio
 
@@ -353,7 +353,7 @@ Use the `HMSLocalAudioTrack` and `HMSLocalVideoTrack` to mute/unmute tracks
 
 <Tabs id="mute-room" items={['Swift', 'Objective-C']} />{' '}
 
-<Code id='mute-room-0' tab>
+<Tab id='mute-room-0' >
 
 ```swift
 class HMSLocalAudioTrack : HMSAudioTrack {
@@ -364,9 +364,9 @@ class HMSLocalAudioTrack : HMSAudioTrack {
 }
 ```
 
-</Code>
+</Tab>
 
-<Code id="mute-room-1" tab>
+<Tab id="mute-room-1" >
 
 ```objectivec
 @interface HMSLocalAudioTrack : HMSAudioTrack
@@ -378,13 +378,13 @@ class HMSLocalAudioTrack : HMSAudioTrack {
 @end
 ```
 
-</Code>
+</Tab>
 
 ### 🙈 Mute/Unmute Local Video
 
 <Tabs id="video-room" items={['Swift', 'Objective-C']} />{' '}
 
-<Code id='video-room-0' tab>
+<Tab id='video-room-0' >
 
 ```swift
   class HMSLocalVideoTrack : HMSVideoTrack {
@@ -401,9 +401,9 @@ class HMSLocalAudioTrack : HMSAudioTrack {
 }
 ```
 
-</Code>
+</Tab>
 
-<Code id='video-room-1' tab>
+<Tab id='video-room-1' >
 
 ```objectivec
 @interface HMSLocalVideoTrack : HMSVideoTrack
@@ -419,7 +419,7 @@ class HMSLocalAudioTrack : HMSAudioTrack {
 @end
 ```
 
-</Code>
+</Tab>
 
 ### 🛤 HMSTracks Explained
 

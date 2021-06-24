@@ -72,7 +72,7 @@ const App = () => {
 
 <Tabs id="join-room" items={['Joining Code', 'Full Code']} />{' '}
 
-<div id='join-room-0' >
+<Tab id='join-room-0' >
 
 ```jsx
 const joinConfig = {
@@ -88,9 +88,9 @@ const joinConfig = {
 hmsActions.join(joinConfig);
 ```
 
-</div>
+</Tab>
  
-<div id='join-room-1' style={{ display: 'none' }}>
+<Tab id='join-room-1'>
 
 ```jsx
 import { useHMSActions, useHMSStore, HMSRoomProvider } from '@100mslive/sdk-components';
@@ -131,16 +131,16 @@ const App = () => {
 };
 ```
 
-</div>
+</Tab>
 
 ## Get peers' states
 
 The data store provides granular access to the room's state variables via `selectors`.  
 100ms provides pre-built selectors to select most commonly used states.
 
-<divs id="data-room" items={['Joining Code', 'Full Code']} />{' '}
+<Tabs id="data-room" items={['Joining Code', 'Full Code']} />{' '}
 
-<div id='data-room-0' >
+<Tab id='data-room-0' >
 
 ```jsx
 import {
@@ -162,8 +162,8 @@ const isSomeoneScreenSharing = useHMSStore(selectIsSomeoneScreenSharing); //Is s
 const isPeerAudioEnabled = useHMSStore((store) => selectIsPeerAudioEnabled(store, peer.id)); //Is a remote peer muted?
 ```
 
-</div>
-<div id='data-room-1' style={{ display: 'none' }}>
+</Tab>
+<Tab id='data-room-1'>
 
 ```jsx
 interface HMSStore {
@@ -220,7 +220,7 @@ export interface HMSMediaSettings {
 }
 ```
 
-</div>
+</Tab>
 
 > `selectors` are functions that accept the current data store state as an argument and return data that is derived from that state. For advanced use cases, you can write your own selector
 
@@ -284,7 +284,7 @@ const storeMessages = useHMSStore(selectHMSMessages);
 
 <Tabs id="notif" items={['Code', 'Interface']} />
 
-<div id='notif-0'  >
+<Tab id='notif-0'  >
 
 ```jsx
 import { useHMSNotifications, HMSNotificationTypes } from '@100mslive/hms-video-react';
@@ -323,9 +323,9 @@ function component() {
 }
 ```
 
-</div>
+</Tab>
 
-<div id='notif-1' style={{ display: 'none' }} >
+<Tab id='notif-1' >
 
 ```typescript
 interface HMSNotification {
@@ -353,7 +353,7 @@ interface HMSException {
 }
 ```
 
-</div>
+</Tab>
 
 ## Share screen
 
