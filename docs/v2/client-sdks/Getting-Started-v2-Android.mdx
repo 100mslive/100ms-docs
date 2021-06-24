@@ -148,7 +148,7 @@ val config = HMSConfig(
           // This can be used to show a loading notification in the UI
           // Parameter error: the error from the action that failed and caused the connection reestablishment
         }
-    
+
         override fun onReconnected() {
           // This is called when the connection reestablishment completed susccessfully
         }
@@ -179,9 +179,9 @@ HMSTrackUpdate
 
 ## How to use Preview API
 
-`HMSSDK` provides a `preview` API which can be used by client apps to show preview screnn of the camera device being used to capture the video. Calling this API also means the SDK makes sure that there is a valid network path between the client and the servers. The token used is also validated in this. 
+`HMSSDK` provides a `preview` API which can be used by client apps to show preview screnn of the camera device being used to capture the video. Calling this API also means the SDK makes sure that there is a valid network path between the client and the servers. The token used is also validated in this.
 
-```
+```java
 // Call the preview api by passing the config object
 sdk.preview(config: HMSConfig, listener: HMSPreviewListener)
 
@@ -190,14 +190,14 @@ interface HMSPreviewListener {
 	 * Here, room can be used to get all peers already in the room
 	*/
 	override onPreview(room: HMSRoom, localTracks: Array<HMSTrack>)
-	/** Call Error on case of any errors happening during the INIT call, 
+	/** Call Error on case of any errors happening during the INIT call,
 	 * websocket connection creation or network
 	*/
 	override onError(error: HMSException)
 }
 ```
-Please note that `hmsSDK.leave()` should be called while navigating back from the preview screen to cleanup the websockets that are being open. 
 
+Please note that `hmsSDK.leave()` should be called while navigating back from the preview screen to cleanup the websockets that are being open.
 
 ## How to know the type and source of Track
 
