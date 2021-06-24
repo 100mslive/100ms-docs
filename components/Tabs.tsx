@@ -23,19 +23,6 @@ interface TabsProps {
 export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
     const def = 0;
     const [tab, setTab] = useState(def);
-    React.useEffect(() => {
-        items.forEach((_, i) => {
-            const ele = document.getElementById(`${id}-${i}`);
-            if (ele) {
-                ele.style.display = 'none';
-            }
-        });
-        const ele = document.getElementById(`${id}-${def}`);
-        if (ele) {
-            ele.style.display = 'block';
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
     const changeTab = (idx: number) => {
         items.forEach((_, i) => {
             if (i !== idx) {
