@@ -3,24 +3,24 @@ title: Getting Started - JavaScript
 nav: 12
 ---
 
-### Introduction
+## Introduction
 
 This guide provides an overview of the key objects you'll use with 100ms' JavaScript SDK to build a live audio/video application
 
 > If you haven't already done so, try our sample [quickstartapp](https://github.com/100mslive/100ms-web-v2). Then you can come back later to see how to build your own live audio/video app in more detail
 
-### Supported Devices
+## Supported Devices
 
 Our alpha release has been tested on modern Chrome browsers. We will expand browser support to all modern browsers soon.
 
-### Basic Concepts
+## Basic Concepts
 
 -   `Room` - A room represents a real-time audio, video session, the basic building block of the 100ms Video SDK
 -   `Track` - A track represents either the audio or video that makes up a peer's stream
 -   `Peer` - A peer represents all participants connected to a room. Peers can be "local" or "remote"
 -   `Broadcast` - A local peer can send any message/data to all remote peers in the room
 
-### Pre-requisites
+## Pre-requisites
 
 1. **Get the 100ms JS SDK**
 
@@ -32,7 +32,7 @@ npm install --save @100mslive/hms-video@latest
 
 3. **Create a room and setup a token generation service**: To create a room, follow the steps described [in this section](/v2/server-side/Create-room). To setup a token generation service, follow the steps in [this section](/v2/server-side/Generate-client-side-token). Alternatively, you can use our [quickstart server](/v2/server-side/100ms-quickstart-app-server) for this.
 
-### Import modules & instantiate 100ms Client
+## Import modules & instantiate 100ms Client
 
 ```jsx
 import { HMSSdk } from '@100mslive/hms-video';
@@ -40,7 +40,7 @@ import { HMSSdk } from '@100mslive/hms-video';
 const hms = new HMSSdk();
 ```
 
-### Provide joining configuration, add listeners and join a room
+## Provide joining configuration, add listeners and join a room
 
 <Tabs id="join-room" items={['Joining code', 'Room,Peer,Track Interfaces', 'Update Types']} />{' '}
 
@@ -188,7 +188,7 @@ enum HMSTrackUpdate {
 
 </Tab>
 
-### Get peers/tracks data
+## Get peers/tracks data
 
 ```jsx
 const localPeer = hms.getLocalPeer();
@@ -196,7 +196,7 @@ const peers = hms.getPeers();
 const localVideoTrack = localPeer.videoTrack;
 ```
 
-### Render video
+## Render video
 
 All audio tracks are rendered automatically by the SDK. As the developer, you just need to render the video track
 
@@ -209,7 +209,7 @@ localVideoTrack.addSink(videoElement);
 <video id="local-video-id" autoplay muted></video>;
 ```
 
-### Mute/unmute local tracks
+## Mute/unmute local tracks
 
 ```jsx
 await localVideoTrack.setEnabled(false);
@@ -220,7 +220,7 @@ await localVideoTrack.setEnabled(true);
 localVideoTrack.addSink(videoElement);
 ```
 
-### Sharing screen
+## Sharing screen
 
 ```jsx
 // Starting screenshare
@@ -232,15 +232,15 @@ hms.startScreenshare(onStop);
 hms.stopScreensare();
 ```
 
-### Leave
+## Leave
 
 ```jsx
 hms.leave();
 ```
 
-### Advanced use cases
+## Advanced use cases
 
-#### Showing a preview screen before joining
+### Showing a preview screen before joining
 
 To display a preview of your local stream before joining the call, you can use the `getLocalStream` method provided by the SDK.
 
@@ -261,7 +261,7 @@ videoElement.srcObject = previewStream;
 <video id="preview-video-id" autoplay muted></video>;
 ```
 
-#### Changing mic/camera before/during the call
+### Changing mic/camera before/during the call
 
 ```jsx
 //Changing before the call
@@ -283,7 +283,7 @@ hms.join(joinConfig, listener);
 localVideoTrack.setSettings({deviceId:'default'});
 ```
 
-#### Adding / removing auxiliary tracks
+### Adding / removing auxiliary tracks
 
 To add an auxiliary track\(canvas capture, electron screen-share, etc...\), you can use the addTrack method provided by the SDK. This method adds the track to the local peer's list of auxiliary tracks and publishes it to make it available to remote peers.
 
