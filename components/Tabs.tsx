@@ -73,8 +73,12 @@ interface TabProps {
     id: string;
 }
 
-export const Tab: React.FC<PropsWithChildren<TabProps>> = ({ id, children }) => (
-    <div className="hide" id={`tab-${id}`}>
-        {children}
-    </div>
-);
+export const Tab: React.FC<PropsWithChildren<TabProps>> = ({ id, children }) => {
+    // if it's the 1st tab
+    const bool = id.includes('0');
+    return (
+        <div id={id} style={{ display: `${bool} ? 'block' : 'none'` }}>
+            {children}
+        </div>
+    );
+};
