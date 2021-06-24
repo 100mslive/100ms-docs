@@ -13,6 +13,12 @@ const CodeCustom = (props: any) => <Code id={nanoid(10)}>{props.children}</Code>
 
 const NoteCustom = (props: any) => <Note type="success">{props.children}</Note>;
 
+const TableCustom = (props: any) => (
+    <div className="table-wrapper">
+        <table>{props.children}</table>
+    </div>
+);
+
 const MDXComponents = {
     Response,
     PostRequest,
@@ -20,6 +26,7 @@ const MDXComponents = {
     Image,
     blockquote: NoteCustom,
     code: CodeCustom,
+    table: TableCustom,
     Code,
     Tab,
     Tabs,
