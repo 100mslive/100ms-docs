@@ -310,6 +310,12 @@ function component() {
             case HMSNotificationTypes.ERROR:
                 console.log('[Error]', notification.data);
                 break;
+            case HMSNotificationTypes.RECONNECTED:
+                console.log('[Reconnected]');
+                break;
+            case HMSNotificationTypes.RECONNECTING:
+                console.log('[Reconnecting]', notification.data);
+                break;
             default:
                 break;
         }
