@@ -143,6 +143,16 @@ val config = HMSConfig(
           // and SDK has already retried to fix the error
         }
 
+        override fun onReconnecting(error: HMSException) {
+          // This is called when connection reestablishment starts
+          // This can be used to show a loading notification in the UI
+          // Parameter error: the error from the action that failed and caused the connection reestablishment
+        }
+    
+        override fun onReconnected() {
+          // This is called when the connection reestablishment completed susccessfully
+        }
+
       }
 ```
 
