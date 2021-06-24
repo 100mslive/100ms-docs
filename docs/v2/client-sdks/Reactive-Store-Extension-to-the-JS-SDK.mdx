@@ -162,7 +162,7 @@ hmsStore.getState(selectPeerAudioByID(peer.id));
 import { HMSNotificationTypes } from '@100mslive/hms-video-store';
 import { hmsNotifications } from './hms';
 
-hmsNotifications.onNotification((notification) => {
+const unsub = hmsNotifications.onNotification((notification) => {
     // initial value of notification will be null
     if(!notification) {
         return;
@@ -190,6 +190,9 @@ hmsNotifications.onNotification((notification) => {
         default:
             break;
     }
+
+// to unsubscribe from notifications
+ unsub();   
 ```
 
 </Code>
