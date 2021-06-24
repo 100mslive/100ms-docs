@@ -152,13 +152,17 @@ const peer = hmsStore.getState(selectLocalPeer);
 hmsStore.getState(selectPeerAudioByID(peer.id));
 ```
 
-### Notifications
+## Notifications
+
+<Tabs id="notif" items={['Code', 'Interface']} />
+
+<Code id='notif-0' tab >
 
 ```jsx
 import { HMSNotificationTypes } from '@100mslive/hms-video-store';
 import { hmsNotifications } from './hms';
 
-hmsNotifications.onNotification((notification) => {
+const unsub = hmsNotifications.onNotification((notification) => {
     // initial value of notification will be null
     if(!notification) {
         return;
@@ -177,10 +181,52 @@ hmsNotifications.onNotification((notification) => {
         case HMSNotificationTypes.ERROR:
             console.log("[Error]", notification.data);
             break;
+        case HMSNotificationTypes.RECONNECTED:
+            console.log('[Reconnected]');
+            break;
+        case HMSNotificationTypes.RECONNECTING:
+            console.log('[Reconnecting]', notification.data);
+            break;
         default:
             break;
     }
+
+// to unsubscribe from notifications
+ unsub();   
 ```
+
+</Code>
+
+<Code id='notif-1' tab >
+
+```typescript
+interface HMSNotification {
+    id: number;
+    type: string;
+    message: string;
+    data: any;
+    severity?: 'info' | 'error' | 'critical';
+}
+
+class HMSNotificationTypes {
+    static PEER_JOINED = 'PEER_JOINED';
+    static PEER_LEFT = 'PEER_LEFT';
+    static NEW_MESSAGE = 'NEW_MESSAGE';
+    static ERROR = 'ERROR';
+}
+
+// this will be the format of notification.data in ERROR cases
+//[See Documentation](/v2/error-codes/error-codes-and-description)
+interface HMSException {
+    name: string;
+    message: string;
+    description: string;
+    readonly code: number;
+}
+```
+
+</Code>
+
 
 ## Sharing screen
 
@@ -211,7 +257,7 @@ function renderMessageList(messages, oldMessages) {
 ## Leave
 
 ```js
-hmsActions.leave();
+await hmsActions.leave();
 ```
 
 ## Advanced use cases
