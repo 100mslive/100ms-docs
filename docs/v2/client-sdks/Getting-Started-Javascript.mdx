@@ -101,6 +101,15 @@ const listener = {
         // This will be called when there is an error in the system
         // and SDK has already retried to fix the error
         // Parameter error: the error that occured
+        // The error.isTerminal property denotes a terminal/fatal error and the session cannot continue
+    },
+    onReconnecting(error: HMSException) {
+        // This is called when connection reestablishment starts
+        // This can be used to show a loading notification in the UI
+        // Parameter error: the error from the action that failed and caused the connection reestablishment
+    },
+    onReconnected() {
+        // This is called when the connection reestablishment completed susccessfully
     }
 };
 
