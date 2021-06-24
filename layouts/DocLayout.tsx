@@ -89,6 +89,7 @@ const DocLayout: React.FC<Props> = ({
                     }
                     .ctx {
                         display: flex;
+                        filter: blur(${modal ? '10px' : '0px'});
                     }
                     .wrapper-ctx {
                         display: flex;
