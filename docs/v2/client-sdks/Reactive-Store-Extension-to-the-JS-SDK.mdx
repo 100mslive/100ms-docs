@@ -147,12 +147,12 @@ const toggleAudio = () => {
 
 ```js
 const onSpeakerUpdate = (speaker, prevSpeaker) => {
-    console.log('speaker changed from - ', prevSpeaker, ', to - ', speaker);
+    console.log('speaker changed from - ', prevSpeaker.name, ', to - ', speaker.name);
 };
 
-hmsStore.subscribe(onSpeakerUpdate, selectDominantSpeakerName);
+hmsStore.subscribe(onSpeakerUpdate, selectDominantSpeaker);
 
-// audio level for a peer
+// audio level for a peer(0-100)
 const peer = hmsStore.getState(selectLocalPeer);
 hmsStore.getState(selectPeerAudioByID(peer.id));
 ```
