@@ -45,7 +45,11 @@ const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
                     {res.map((e) => (
                         <a href={e.url} key={e.url}>
                             <div className="res-box">
-                                <span>{e.title}</span>
+                                <div>
+                                    <span>{e.title}</span>
+                                    <span className="slug">{e.url}</span>
+                                </div>
+
                                 <EnterIcon />
                             </div>
                         </a>
@@ -89,7 +93,7 @@ const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
                 }
                 .res-box {
                     margin: 0.5rem 0;
-                    padding: 0 2rem;
+                    padding: 0.25rem 2rem;
                     height: 50px;
                     display: flex;
                     justify-content: space-between;
@@ -97,8 +101,12 @@ const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
                     opacity: 0.4;
                     background-color: var(--offset);
                 }
-                .res-box span {
-                    margin-right: 1rem;
+                .res-box div {
+                    display: flex;
+                    flex-direction: column;
+                }
+                .res-box .slug {
+                    opacity: 0.6;
                 }
                 a {
                     color: inherit;

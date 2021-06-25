@@ -72,7 +72,7 @@ const App = () => {
 
 <Tabs id="join-room" items={['Joining Code', 'Full Code']} />{' '}
 
-<Code id='join-room-0' tab>
+<Tab id='join-room-0' >
 
 ```jsx
 const joinConfig = {
@@ -88,9 +88,9 @@ const joinConfig = {
 hmsActions.join(joinConfig);
 ```
 
-</Code>
-
-<Code id='join-room-1' tab>
+</Tab>
+ 
+<Tab id='join-room-1'>
 
 ```jsx
 import { useHMSActions, useHMSStore, HMSRoomProvider } from '@100mslive/sdk-components';
@@ -131,7 +131,7 @@ const App = () => {
 };
 ```
 
-</Code>
+</Tab>
 
 ## Get peers' states
 
@@ -140,7 +140,7 @@ The data store provides granular access to the room's state variables via `selec
 
 <Tabs id="data-room" items={['Joining Code', 'Full Code']} />{' '}
 
-<Code id='data-room-0' tab>
+<Tab id='data-room-0' >
 
 ```jsx
 import {
@@ -162,8 +162,8 @@ const isSomeoneScreenSharing = useHMSStore(selectIsSomeoneScreenSharing); //Is s
 const isPeerAudioEnabled = useHMSStore((store) => selectIsPeerAudioEnabled(store, peer.id)); //Is a remote peer muted?
 ```
 
-</Code>
-<Code id='data-room-1' tab>
+</Tab>
+<Tab id='data-room-1'>
 
 ```jsx
 interface HMSStore {
@@ -220,7 +220,7 @@ export interface HMSMediaSettings {
 }
 ```
 
-</Code>
+</Tab>
 
 > `selectors` are functions that accept the current data store state as an argument and return data that is derived from that state. For advanced use cases, you can write your own selector
 
@@ -284,7 +284,7 @@ const storeMessages = useHMSStore(selectHMSMessages);
 
 <Tabs id="notif" items={['Code', 'Interface']} />
 
-<Code id='notif-0' tab >
+<Tab id='notif-0'  >
 
 ```jsx
 import { useHMSNotifications, HMSNotificationTypes } from '@100mslive/hms-video-react';
@@ -323,9 +323,9 @@ function component() {
 }
 ```
 
-</Code>
+</Tab>
 
-<Code id='notif-1' tab >
+<Tab id='notif-1' >
 
 ```typescript
 interface HMSNotification {
@@ -353,7 +353,7 @@ interface HMSException {
 }
 ```
 
-</Code>
+</Tab>
 
 ## Share screen
 

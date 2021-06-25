@@ -34,7 +34,7 @@ npm install --save @100mslive/hms-video-store@latest
 
 <Tabs id="store" items={['hms.js', 'another_file.js']} />{' '}
 
-<Code tab id='store-0'>
+<Tab id='store-0'>
 
 ```js
 import { HMSReactiveStore } from '@100mslive/hms-video-store';
@@ -47,15 +47,15 @@ const hmsStore = hmsManager.getStore();
 export { hmsActions, hmsStore };
 ```
 
-</Code>
+</Tab>
 
-<Code tab id='store-1'>
+<Tab  id='store-1'>
 
 ```js
 import { hmsActions, hmsStore } from './hms';
 ```
 
-</Code>
+</Tab>
 
 ## Provide joining configuration and join a room
 
@@ -156,7 +156,7 @@ hmsStore.getState(selectPeerAudioByID(peer.id));
 
 <Tabs id="notif" items={['Code', 'Interface']} />
 
-<Code id='notif-0' tab >
+<Tab id='notif-0' >
 
 ```jsx
 import { HMSNotificationTypes } from '@100mslive/hms-video-store';
@@ -192,12 +192,12 @@ const unsub = hmsNotifications.onNotification((notification) => {
     }
 
 // to unsubscribe from notifications
- unsub();   
+ unsub();
 ```
 
-</Code>
+</Tab>
 
-<Code id='notif-1' tab >
+<Tab id='notif-1' >
 
 ```typescript
 interface HMSNotification {
@@ -225,8 +225,7 @@ interface HMSException {
 }
 ```
 
-</Code>
-
+</Tab>
 
 ## Sharing screen
 

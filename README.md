@@ -107,20 +107,20 @@ by default all `<code></code>` will wrapped around `<Code />` component this giv
 ```jsx
 <Tabs id="quality-level" items={['Java', 'Kotlin']} />
 
-<Code id='quality-level-0'>
+<Tab id='quality-level-0'>
 
 // Code Block for Java
 
-</Code>
+</Tab>
 
-<Code id='quality-level-1'>
+<Tab id='quality-level-1'>
 
 // Code Block for Kotlin
 
-</Code>
+</Tab>
 ```
 
-using the same `id` as in `<Tabs>` in the `<Code>` component with index is important or it won't work.
+using the same `id` as in `<Tabs>` in the `<Tab>` component with index is important or it won't work.
 
 ---
 
@@ -133,6 +133,18 @@ Super easy just get the `id`
 ```
 
 ---
+
+## ✅ Do's
+
+- Use Emojis 😅😂🚀✅🙂🎉😇🌟🥵
+- Maintain the Header Order (H1 , H2 , H3 ...)
+- Use Language Attributes in Code Blocks for Syntax Highlight
+- Use https://tableconvert.com/ to create Markdown Tables
+
+## ❌ Don't 
+
+- Don't use Bold in Header (eg: **  ## Don't ** )
+- Dont't Keep the File Names with Decimals (eg: Don't android-v2.0.0.mdx) instead keep it as `title` in frontMatter
 
 ## 🎨 Customization
 

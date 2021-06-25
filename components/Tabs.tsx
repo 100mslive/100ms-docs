@@ -23,19 +23,6 @@ interface TabsProps {
 export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
     const def = 0;
     const [tab, setTab] = useState(def);
-    React.useEffect(() => {
-        items.forEach((_, i) => {
-            const ele = document.getElementById(`${id}-${i}`);
-            if (ele) {
-                ele.style.display = 'none';
-            }
-        });
-        const ele = document.getElementById(`${id}-${def}`);
-        if (ele) {
-            ele.style.display = 'block';
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
     const changeTab = (idx: number) => {
         items.forEach((_, i) => {
             if (i !== idx) {
@@ -86,8 +73,12 @@ interface TabProps {
     id: string;
 }
 
-export const Tab: React.FC<PropsWithChildren<TabProps>> = ({ id, children }) => (
-    <div className="hide" id={`tab-${id}`}>
-        {children}
-    </div>
-);
+export const Tab: React.FC<PropsWithChildren<TabProps>> = ({ id, children }) => {
+    // if it's the 1st tab
+    const bool = id.includes('0');
+    return (
+        <div id={id} style={{ display: `${bool ? 'block' : 'none'}` }}>
+            {children}
+        </div>
+    );
+};
