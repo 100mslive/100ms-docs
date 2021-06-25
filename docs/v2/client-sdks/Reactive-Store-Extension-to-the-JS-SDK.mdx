@@ -40,6 +40,10 @@ npm install --save @100mslive/hms-video-store@latest
 import { HMSReactiveStore } from '@100mslive/hms-video-store';
 
 const hmsManager = new HMSReactiveStore();
+    
+// by default subscriber is notified about store changes post subscription only, this can be
+// changed to call it right after subscribing too using this function.
+hmsManager.triggerOnSubscribe();  // optional
 
 const hmsActions = hmsManager.getHMSActions();
 const hmsStore = hmsManager.getStore();
