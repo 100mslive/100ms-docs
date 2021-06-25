@@ -134,6 +134,18 @@ Super easy just get the `id`
 
 ---
 
+## ✅ Do's
+
+- Use Emojis 😅😂🚀✅🙂🎉😇🌟🥵
+- Maintain the Header Order (H1 , H2 , H3 ...)
+- Use Language Attributes in Code Blocks for Syntax Highlight
+- Use https://tableconvert.com/ to create Markdown Tables
+
+## ❌ Don't 
+
+- Don't use Bold in Header (eg: **  ## Don't ** )
+- Dont't Keep the File Names with Decimals (eg: Don't android-v2.0.0.mdx) instead keep it as `title` in frontMatter
+
 ## 🎨 Customization
 
 Every style of docs is fully customisable and is fully built with CSS Variables.
