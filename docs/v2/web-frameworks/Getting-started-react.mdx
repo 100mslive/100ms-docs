@@ -242,7 +242,7 @@ function VideoTile(props) {
   const videoRef = useRef(null);
   const hmsActions = useHMSActions();
   // Render camera track. To render screenShare track, use the selectScreenShareByPeerId selector
-  const videoTrack = useHMSStore(selectCameraStreamByPeerID(props.id));
+  const videoTrack = useHMSStore(selectCameraStreamByPeerID(props.peer.id));
   useEffect(() => {
     (async () => {
       if (videoRef.current && videoTrack) {
@@ -257,7 +257,7 @@ function VideoTile(props) {
   }, [videoTrack?.id, videoTrack?.enabled, videoTrack?.deviceID]);
 
   //Rendering logic
-  return <video ref={videoRef} autoplay muted></video>;
+  return <video ref={videoRef} autoPlay muted></video>;
 }
 
 export default VideoTile;
