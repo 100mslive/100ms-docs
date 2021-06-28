@@ -232,32 +232,35 @@ Remember to call `detachVideo` when the video is not being rendered
 
 ```jsx
 import {
-    selectVideoByPeerId,
-    selectCameraStreamByPeerId,
-    selectScreenShareByPeerId
+  useHMSStore,
+  useHMSActions,
+  selectCameraStreamByPeerID,
 } from '@100mslive/hms-video-react';
+import React, { useRef, useEffect } from 'react';
 
 function VideoTile(props) {
-    const videoRef = useRef(null);
+  const videoRef = useRef(null);
+  const hmsActions = useHMSActions();
+  // Render camera track. To render screenShare track, use the selectScreenShareByPeerId selector
+  const videoTrack = useHMSStore(selectCameraStreamByPeerID(props.id));
+  useEffect(() => {
+    (async () => {
+      if (videoRef.current && videoTrack) {
+        if (videoTrack.enabled) {
+          await hmsActions.attachVideo(videoTrack.id, videoRef.current);
+        } else {
+          await hmsActions.detachVideo(videoTrack.id, videoRef.current);
+        }
+      }
+    })();
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [videoTrack?.id, videoTrack?.enabled, videoTrack?.deviceID]);
 
-    // Render camera track. To render screenShare track, use the selectScreenShareByPeerId selector
-    const videoTrack = useHMSStore(selectCameraStreamByPeerID(peer.id));
-    useEffect(() => {
-        (async () => {
-            if (videoRef.current && videoTrack) {
-                if (videoTrack.enabled) {
-                    await hmsActions.attachVideo(videoTrack.id, videoRef.current);
-                } else {
-                    await hmsActions.detachVideo(videoTrack.id, videoRef.current);
-                }
-            }
-        })();
-        //eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [videoTrack?.id, videoTrack?.enabled, videoTrack?.deviceID]);
-
-    //Rendering logic
-    return <video ref={videoRef} autoplay muted></video>;
+  //Rendering logic
+  return <video ref={videoRef} autoplay muted></video>;
 }
+
+export default VideoTile;
 ```
 
 > `selectCameraStreamByPeerID` returns the first camera track of the peer. If you have advanced, multi-camera usage - you can write your own selectors to choose multiple tracks
