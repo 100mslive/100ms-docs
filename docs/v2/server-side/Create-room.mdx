@@ -40,16 +40,17 @@ You can use following API to create room.
 
 | media type                       | type     | response type                |
 | -------------------------------- | -------- | ---------------------------- |
-| Content-type <br/> (_REQUIRED_)  | `string` | application/json             |
-| Authorization <br/> (_REQUIRED_) | `string` | Bearer `<Server Side Token>` |
+| Content-type <br/> (REQUIRED)  | `string` | application/json             |
+| Authorization <br/> (REQUIRED) | `string` | Bearer `<Server Side Token>` |
 
 ### Body Paramters
 
 | params                              | type     | description                                                                                                                                                                                                                                                                                                          |
 | ----------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| name <br/> (_OPTIONAL_)             | `string` | <br/> A unique identifier you can assign to 100ms rooms. This is `case-insensitive`. Accepted characters are `a-z, A-Z, 0-9, and . - : _` If not provided, this is generated automatically. <br/><br/> Please note that with `createRoom` is called with the same room name, then the same room ID is returned <br/> |
-| description <br/> (_OPTIONAL_)      | `string` | A string to describe your room's usage - eg. "9PM English Class Batch 2"                                                                                                                                                                                                                                             |
-| recording_info <br/> (\_OPTIONAL\*) | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings etc.                                                                                                                                                                                |
+| name <br/> (REQUIRED)             | `string` | <br/> A unique identifier you can assign to 100ms rooms. This is `case-insensitive`. Accepted characters are `a-z, A-Z, 0-9, and . - : _` If not provided, this is generated automatically. <br/><br/> Please note that with `createRoom` is called with the same room name, then the same room ID is returned <br/> |
+| description <br/> (OPTIONAL)      | `string` | A string to describe your room's usage - eg. "9PM English Class Batch 2" | 
+| template <br/> (OPTIONAL)         | `string` | You can get template name from room details section on dashboard    |
+| recording_info <br/> (OPTIONAL) | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings etc. |
 
 </div>
 
