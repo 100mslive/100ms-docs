@@ -4,206 +4,11 @@
 
 -   `HMSInterface`
 
-## Table of contents
-
-### Constructors
-
--   [constructor](#constructor)
-
-### Properties
-
--   [TAG](#tag)
--   [audioListener](#audiolistener)
--   [audioSinkManager](#audiosinkmanager)
--   [deviceManager](#devicemanager)
--   [hmsRoom](#hmsroom)
--   [isReconnecting](#isreconnecting)
--   [listener](#listener)
--   [localPeer](#localpeer)
--   [notificationManager](#notificationmanager)
--   [observer](#observer)
--   [publishParams](#publishparams)
--   [published](#published)
--   [roomId](#roomid)
--   [transport](#transport)
--   [transportState](#transportstate)
-
-### Methods
-
--   [addAudioListener](#addaudiolistener)
--   [addTrack](#addtrack)
--   [cleanUp](#cleanup)
--   [createRoom](#createroom)
--   [getLocalPeer](#getlocalpeer)
--   [getPeers](#getpeers)
--   [join](#join)
--   [leave](#leave)
--   [publish](#publish)
--   [removeTrack](#removetrack)
--   [sendMessage](#sendmessage)
--   [setAnalyticsLevel](#setanalyticslevel)
--   [setAndPublishTracks](#setandpublishtracks)
--   [setLocalPeerTrack](#setlocalpeertrack)
--   [setLogLevel](#setloglevel)
--   [startScreenShare](#startscreenshare)
--   [stopEndedScreenshare](#stopendedscreenshare)
--   [stopScreenShare](#stopscreenshare)
-
 ## Constructors
 
 ### constructor
 
 • **new HMSSdk**()
-
-## Properties
-
-### TAG
-
-• `Private` **TAG**: `string` = `'[HMSSdk]:'`
-
-#### Defined in
-
-[sdk/index.ts:46](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L46)
-
----
-
-### audioListener
-
-• `Private` **audioListener**: `null` \| [`HMSAudioListener`](../interfaces/hmsaudiolistener.md) = `null`
-
-#### Defined in
-
-[sdk/index.ts:49](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L49)
-
----
-
-### audioSinkManager
-
-• `Private` **audioSinkManager**: `default`
-
-#### Defined in
-
-[sdk/index.ts:50](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L50)
-
----
-
-### deviceManager
-
-• `Private` **deviceManager**: `default`
-
-#### Defined in
-
-[sdk/index.ts:54](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L54)
-
----
-
-### hmsRoom
-
-• `Private` `Optional` **hmsRoom**: `null` \| `default`
-
-#### Defined in
-
-[sdk/index.ts:51](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L51)
-
----
-
-### isReconnecting
-
-• `Private` **isReconnecting**: `boolean` = `false`
-
-#### Defined in
-
-[sdk/index.ts:56](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L56)
-
----
-
-### listener
-
-• `Private` **listener**: `null` \| `default`
-
-#### Defined in
-
-[sdk/index.ts:48](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L48)
-
----
-
-### localPeer
-
-• **localPeer**: `null` \| `HMSLocalPeer`
-
-#### Defined in
-
-[sdk/index.ts:44](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L44)
-
----
-
-### notificationManager
-
-• `Private` **notificationManager**: `default`
-
-#### Defined in
-
-[sdk/index.ts:47](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L47)
-
----
-
-### observer
-
-• `Private` **observer**: `default`
-
-#### Defined in
-
-[sdk/index.ts:58](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L58)
-
----
-
-### publishParams
-
-• `Private` **publishParams**: `any` = `null`
-
-#### Defined in
-
-[sdk/index.ts:53](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L53)
-
----
-
-### published
-
-• `Private` **published**: `boolean` = `false`
-
-#### Defined in
-
-[sdk/index.ts:52](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L52)
-
----
-
-### roomId
-
-• **roomId**: `null` \| `string`
-
-#### Defined in
-
-[sdk/index.ts:43](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L43)
-
----
-
-### transport
-
-• **transport**: `null` \| `default`
-
-#### Defined in
-
-[sdk/index.ts:42](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L42)
-
----
-
-### transportState
-
-• `Private` **transportState**: `TransportState`
-
-#### Defined in
-
-[sdk/index.ts:55](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L55)
 
 ## Methods
 
@@ -213,17 +18,13 @@
 
 #### Parameters
 
-| Name            | Type                                                    |
-| :-------------- | :------------------------------------------------------ |
-| `audioListener` | [`HMSAudioListener`](../interfaces/hmsaudiolistener.md) |
+| Name            | Type                                                       |
+| :-------------- | :--------------------------------------------------------- |
+| `audioListener` | [`HMSAudioListener`](/ts-docs/interfaces/hmsaudiolistener) |
 
 #### Returns
 
 `void`
-
-#### Defined in
-
-[sdk/index.ts:279](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L279)
 
 ---
 
@@ -233,10 +34,10 @@
 
 #### Parameters
 
-| Name     | Type                                             | Default value |
-| :------- | :----------------------------------------------- | :------------ |
-| `track`  | `MediaStreamTrack`                               | `undefined`   |
-| `source` | [`HMSTrackSource`](../modules.md#hmstracksource) | `'regular'`   |
+| Name     | Type                                                | Default value | Description                                                         |
+| :------- | :-------------------------------------------------- | :------------ | :------------------------------------------------------------------ |
+| `track`  | `MediaStreamTrack`                                  | `undefined`   | (https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack) |
+| `source` | [`HMSTrackSource`](/ts-docs/modules#hmstracksource) | `'regular'`   | -                                                                   |
 
 #### Returns
 
@@ -246,73 +47,43 @@
 
 HMSInterface.addTrack
 
-#### Defined in
-
-[sdk/index.ts:248](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L248)
-
----
-
-### cleanUp
-
-▸ `Private` **cleanUp**(): `void`
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[sdk/index.ts:153](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L153)
-
 ---
 
 ### createRoom
 
-▸ **createRoom**(): `default`
+▸ **createRoom**(): [`HMSRoom`](/ts-docs/interfaces/hmsroom)
 
 #### Returns
 
-`default`
-
-#### Defined in
-
-[sdk/index.ts:361](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L361)
+[`HMSRoom`](/ts-docs/interfaces/hmsroom)
 
 ---
 
 ### getLocalPeer
 
-▸ **getLocalPeer**(): `HMSLocalPeer`
+▸ **getLocalPeer**(): [`HMSLocalPeer`](/ts-docs/classes/hmslocalpeer)
 
 #### Returns
 
-`HMSLocalPeer`
+[`HMSLocalPeer`](/ts-docs/classes/hmslocalpeer)
 
 #### Implementation of
 
 HMSInterface.getLocalPeer
 
-#### Defined in
-
-[sdk/index.ts:183](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L183)
-
 ---
 
 ### getPeers
 
-▸ **getPeers**(): (`HMSLocalPeer` \| `HMSRemotePeer`)[]
+▸ **getPeers**(): ([`HMSLocalPeer`](/ts-docs/classes/hmslocalpeer) \| [`HMSRemotePeer`](/ts-docs/classes/hmsremotepeer))[]
 
 #### Returns
 
-(`HMSLocalPeer` \| `HMSRemotePeer`)[]
+([`HMSLocalPeer`](/ts-docs/classes/hmslocalpeer) \| [`HMSRemotePeer`](/ts-docs/classes/hmsremotepeer))[]
 
 #### Implementation of
 
 HMSInterface.getPeers
-
-#### Defined in
-
-[sdk/index.ts:187](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L187)
 
 ---
 
@@ -322,10 +93,10 @@ HMSInterface.getPeers
 
 #### Parameters
 
-| Name       | Type      |
-| :--------- | :-------- |
-| `config`   | `default` |
-| `listener` | `default` |
+| Name       | Type                                                         |
+| :--------- | :----------------------------------------------------------- |
+| `config`   | [`HMSConfig`](/ts-docs/interfaces/hmsconfig)                 |
+| `listener` | [`HMSUpdateListener`](/ts-docs/interfaces/hmsupdatelistener) |
 
 #### Returns
 
@@ -334,10 +105,6 @@ HMSInterface.getPeers
 #### Implementation of
 
 HMSInterface.join
-
-#### Defined in
-
-[sdk/index.ts:112](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L112)
 
 ---
 
@@ -352,30 +119,6 @@ HMSInterface.join
 #### Implementation of
 
 HMSInterface.leave
-
-#### Defined in
-
-[sdk/index.ts:166](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L166)
-
----
-
-### publish
-
-▸ `Private` **publish**(`initialSettings`): `Promise`<`void`\>
-
-#### Parameters
-
-| Name              | Type      |
-| :---------------- | :-------- |
-| `initialSettings` | `default` |
-
-#### Returns
-
-`Promise`<`void`\>
-
-#### Defined in
-
-[sdk/index.ts:283](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L283)
 
 ---
 
@@ -396,10 +139,6 @@ HMSInterface.leave
 #### Implementation of
 
 HMSInterface.removeTrack
-
-#### Defined in
-
-[sdk/index.ts:261](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L261)
 
 ---
 
@@ -423,10 +162,6 @@ HMSInterface.removeTrack
 
 HMSInterface.sendMessage
 
-#### Defined in
-
-[sdk/index.ts:194](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L194)
-
 ---
 
 ### setAnalyticsLevel
@@ -435,9 +170,9 @@ HMSInterface.sendMessage
 
 #### Parameters
 
-| Name    | Type                |
-| :------ | :------------------ |
-| `level` | `HMSAnalyticsLevel` |
+| Name    | Type                                                    |
+| :------ | :------------------------------------------------------ |
+| `level` | [`HMSAnalyticsLevel`](/ts-docs/enums/hmsanalyticslevel) |
 
 #### Returns
 
@@ -447,50 +182,6 @@ HMSInterface.sendMessage
 
 HMSInterface.setAnalyticsLevel
 
-#### Defined in
-
-[sdk/index.ts:271](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L271)
-
----
-
-### setAndPublishTracks
-
-▸ `Private` **setAndPublishTracks**(`tracks`): `void`
-
-#### Parameters
-
-| Name     | Type              |
-| :------- | :---------------- |
-| `tracks` | `HMSLocalTrack`[] |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[sdk/index.ts:341](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L341)
-
----
-
-### setLocalPeerTrack
-
-▸ `Private` **setLocalPeerTrack**(`track`): `void`
-
-#### Parameters
-
-| Name    | Type            |
-| :------ | :-------------- |
-| `track` | `HMSLocalTrack` |
-
-#### Returns
-
-`void`
-
-#### Defined in
-
-[sdk/index.ts:349](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L349)
-
 ---
 
 ### setLogLevel
@@ -499,9 +190,9 @@ HMSInterface.setAnalyticsLevel
 
 #### Parameters
 
-| Name    | Type          |
-| :------ | :------------ |
-| `level` | `HMSLogLevel` |
+| Name    | Type                                        |
+| :------ | :------------------------------------------ |
+| `level` | [`HMSLogLevel`](/ts-docs/enums/hmsloglevel) |
 
 #### Returns
 
@@ -510,10 +201,6 @@ HMSInterface.setAnalyticsLevel
 #### Implementation of
 
 HMSInterface.setLogLevel
-
-#### Defined in
-
-[sdk/index.ts:275](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L275)
 
 ---
 
@@ -535,30 +222,6 @@ HMSInterface.setLogLevel
 
 HMSInterface.startScreenShare
 
-#### Defined in
-
-[sdk/index.ts:201](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L201)
-
----
-
-### stopEndedScreenshare
-
-▸ `Private` **stopEndedScreenshare**(`onStop`): `Promise`<`void`\>
-
-#### Parameters
-
-| Name     | Type         |
-| :------- | :----------- |
-| `onStop` | () => `void` |
-
-#### Returns
-
-`Promise`<`void`\>
-
-#### Defined in
-
-[sdk/index.ts:234](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L234)
-
 ---
 
 ### stopScreenShare
@@ -572,7 +235,3 @@ HMSInterface.startScreenShare
 #### Implementation of
 
 HMSInterface.stopScreenShare
-
-#### Defined in
-
-[sdk/index.ts:240](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/sdk/index.ts#L240)

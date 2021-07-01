@@ -1,143 +1,45 @@
 # @100mslive/hms-video
 
-## Table of contents
+## Enumerations
 
-### Enumerations
-
+-   [HMSAnalyticsLevel](/ts-docs/enums/hmsanalyticslevel)
+-   [HMSLogLevel](/ts-docs/enums/hmsloglevel)
 -   [HMSPeerUpdate](/ts-docs/enums/hmspeerupdate)
 -   [HMSRoomUpdate](/ts-docs/enums/hmsroomupdate)
 -   [HMSTrackType](/ts-docs/enums/hmstracktype)
 -   [HMSTrackUpdate](/ts-docs/enums/hmstrackupdate)
 
-### Classes
+## Classes
 
+-   [HMSAudioTrack](/ts-docs/classes/hmsaudiotrack)
+-   [HMSLocalAudioTrack](/ts-docs/classes/hmslocalaudiotrack)
+-   [HMSLocalPeer](/ts-docs/classes/hmslocalpeer)
+-   [HMSLocalVideoTrack](/ts-docs/classes/hmslocalvideotrack)
+-   [HMSPeer](/ts-docs/classes/hmspeer)
+-   [HMSRemotePeer](/ts-docs/classes/hmsremotepeer)
 -   [HMSSdk](/ts-docs/classes/hmssdk)
+-   [HMSTrack](/ts-docs/classes/hmstrack)
+-   [HMSVideoTrack](/ts-docs/classes/hmsvideotrack)
 
-### Interfaces
+## Interfaces
 
--   [HMSAudioListener](/ts-docsinterfaces/hmsaudiolistener)
-
-### Type aliases
-
--   [HMSTrackSource](modules#hmstracksource)
-
-### Variables
-
--   [isSupported](modules#issupported)
--   [parsedUserAgent](modules#parseduseragent)
--   [userAgent](modules#useragent)
-
-### Functions
-
--   [getLocalDevices](modules#getlocaldevices)
--   [getLocalScreen](modules#getlocalscreen)
--   [getLocalStream](modules#getlocalstream)
--   [validateDeviceAV](modules#validatedeviceav)
+-   [Exception](/ts-docs/interfaces/exception)
+-   [HMSAudioListener](/ts-docs/interfaces/hmsaudiolistener)
+-   [HMSConfig](/ts-docs/interfaces/hmsconfig)
+-   [HMSMessage](/ts-docs/interfaces/hmsmessage)
+-   [HMSRoom](/ts-docs/interfaces/hmsroom)
+-   [HMSSpeaker](/ts-docs/interfaces/hmsspeaker)
+-   [HMSUpdateListener](/ts-docs/interfaces/hmsupdatelistener)
+-   [InitialSettings](/ts-docs/interfaces/initialsettings)
 
 ## Type aliases
+
+### HMSLocalTrack
+
+Ƭ **HMSLocalTrack**: [`HMSLocalAudioTrack`](/ts-docs/classes/hmslocalaudiotrack) \| [`HMSLocalVideoTrack`](/ts-docs/classes/hmslocalvideotrack)
+
+---
 
 ### HMSTrackSource
 
 Ƭ **HMSTrackSource**: `"regular"` \| `"screen"` \| `"plugin"`
-
-#### Defined in
-
-[media/tracks/HMSTrack.ts:4](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/media/tracks/HMSTrack.ts#L4)
-
-## Variables
-
-### isSupported
-
-• `Const` **isSupported**: `boolean`
-
-#### Defined in
-
-[utils/support.ts:16](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/utils/support.ts#L16)
-
----
-
-### parsedUserAgent
-
-• `Const` **parsedUserAgent**: `UAParserInstance`
-
-#### Defined in
-
-[utils/support.ts:4](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/utils/support.ts#L4)
-
----
-
-### userAgent
-
-• `Const` **userAgent**: `string`
-
-#### Defined in
-
-[utils/support.ts:33](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/utils/support.ts#L33)
-
-## Functions
-
-### getLocalDevices
-
-▸ **getLocalDevices**(): `Promise`<`MediaDeviceGroups`\>
-
-#### Returns
-
-`Promise`<`MediaDeviceGroups`\>
-
-#### Defined in
-
-[utils/media.ts:28](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/utils/media.ts#L28)
-
----
-
-### getLocalScreen
-
-▸ **getLocalScreen**(`constraints`): `Promise`<`MediaStream`\>
-
-#### Parameters
-
-| Name          | Type                                  |
-| :------------ | :------------------------------------ |
-| `constraints` | `MediaStreamConstraints`[``"video"``] |
-
-#### Returns
-
-`Promise`<`MediaStream`\>
-
-#### Defined in
-
-[utils/media.ts:12](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/utils/media.ts#L12)
-
----
-
-### getLocalStream
-
-▸ **getLocalStream**(`constraints`): `Promise`<`MediaStream`\>
-
-#### Parameters
-
-| Name          | Type                     |
-| :------------ | :----------------------- |
-| `constraints` | `MediaStreamConstraints` |
-
-#### Returns
-
-`Promise`<`MediaStream`\>
-
-#### Defined in
-
-[utils/media.ts:3](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/utils/media.ts#L3)
-
----
-
-### validateDeviceAV
-
-▸ **validateDeviceAV**(): `Promise`<`boolean`\>
-
-#### Returns
-
-`Promise`<`boolean`\>
-
-#### Defined in
-
-[utils/device-error.ts:9](https://github.com/100mslive/hms-video-web/blob/9edc8cc/src/utils/device-error.ts#L9)

@@ -1,0 +1,127 @@
+# Interface: HMSUpdateListener
+
+## Methods
+
+### onError
+
+▸ **onError**(`error`): `void`
+
+#### Parameters
+
+| Name    | Type      |
+| :------ | :-------- |
+| `error` | `default` |
+
+#### Returns
+
+`void`
+
+---
+
+### onJoin
+
+▸ **onJoin**(`room`): `void`
+
+#### Parameters
+
+| Name   | Type                                     |
+| :----- | :--------------------------------------- |
+| `room` | [`HMSRoom`](/ts-docs/interfaces/hmsroom) |
+
+#### Returns
+
+`void`
+
+---
+
+### onMessageReceived
+
+▸ **onMessageReceived**(`message`): `void`
+
+#### Parameters
+
+| Name      | Type                                           |
+| :-------- | :--------------------------------------------- |
+| `message` | [`HMSMessage`](/ts-docs/interfaces/hmsmessage) |
+
+#### Returns
+
+`void`
+
+---
+
+### onPeerUpdate
+
+▸ **onPeerUpdate**(`type`, `peer`): `void`
+
+#### Parameters
+
+| Name   | Type                                            |
+| :----- | :---------------------------------------------- |
+| `type` | [`HMSPeerUpdate`](/ts-docs/enums/hmspeerupdate) |
+| `peer` | `null` \| [`HMSPeer`](/ts-docs/classes/hmspeer) |
+
+#### Returns
+
+`void`
+
+---
+
+### onReconnected
+
+▸ **onReconnected**(): `void`
+
+#### Returns
+
+`void`
+
+---
+
+### onReconnecting
+
+▸ **onReconnecting**(`error`): `void`
+
+#### Parameters
+
+| Name    | Type      |
+| :------ | :-------- |
+| `error` | `default` |
+
+#### Returns
+
+`void`
+
+---
+
+### onRoomUpdate
+
+▸ **onRoomUpdate**(`type`, `room`): `void`
+
+#### Parameters
+
+| Name   | Type                                            |
+| :----- | :---------------------------------------------- |
+| `type` | [`HMSRoomUpdate`](/ts-docs/enums/hmsroomupdate) |
+| `room` | [`HMSRoom`](/ts-docs/interfaces/hmsroom)        |
+
+#### Returns
+
+`void`
+
+---
+
+### onTrackUpdate
+
+▸ **onTrackUpdate**(`type`, `track`, `peer`): `void`
+
+#### Parameters
+
+| Name    | Type                                              |
+| :------ | :------------------------------------------------ |
+| `type`  | [`HMSTrackUpdate`](/ts-docs/enums/hmstrackupdate) |
+| `track` | [`HMSTrack`](/ts-docs/classes/hmstrack)           |
+| `peer`  | [`HMSPeer`](/ts-docs/classes/hmspeer)             |
+
+#### Returns
+
+`void`
