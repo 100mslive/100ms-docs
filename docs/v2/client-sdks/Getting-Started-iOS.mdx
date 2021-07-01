@@ -434,3 +434,20 @@ class HMSLocalAudioTrack : HMSAudioTrack {
           - LocalVideoTrack
           - RemoteVideoTrack
 ```
+  
+## 🎞 Display a Track
+  To display a video track, first get the `HMSVideoTrack` & pass it on to `HMSVideoView` using `setVideoTrack` function. Ensure to attach the `HMSVideoView` to your UI hierarchy.
+
+  ```
+  // The following code is a sample.
+
+  // Get the video track to be displayed
+  let track = peer.videoTrack  
+
+  // Create a view for rendering video track and add to the UI hierarchy
+
+  let videoView = HMSVideoView()
+  videoView.setVideoTrack(track)
+  view.addSubview(videoView)
+
+  ```
