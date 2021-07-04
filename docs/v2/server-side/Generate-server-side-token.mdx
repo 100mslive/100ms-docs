@@ -34,17 +34,15 @@ You can use the following code snippets to generate your token.
 var jwt = require('jsonwebtoken');
 var uuid4 = require('uuid4');
 
-var app_secret =
-    'lfpt0lHMrBfJYiBFlEtReIgztywwY078SpaLGHIpieK89oN8kLDBzaMP7nxSGfS1ya-VT5CUiTRrILasqNKHnDDoBd8m3cCAhtCcPJpu8Nn1TCvC7fwwkygxO7u8MHxUmiEnbnN6tPAbJh7GQAJRKJyGikXcRlerj3EvEWX32hY=';
+var app_secret ='lfpt0lHMrBfJYiBFlEtReIgztywwY078SpaLGHIpieK89oN8kLDBzaMP7nxSGfS1ya-VT5CUiTRrILasqNKHnDDoBd8m3cCAhtCcPJpu8Nn1TCvC7fwwkygxO7u8MHxUmiEnbnN6tPAbJh7GQAJRKJyGikXcRlerj3EvEWX32hY=';
 var app_access_key = '5f679ec41aa12942cde1c3c3';
 
-jwt.sign(
-    { access_key: app_access_key, type: 'management', version: 2 },
-    app_secret,
-    { algorithm: 'HS256', expiresIn: '24h', jwtid: uuid4() },
-    function (err, token) {
-        console.log(token);
-    }
+jwt.sign({ access_key: app_access_key, type: 'management', version: 2 },
+          app_secret,
+          { algorithm: 'HS256', expiresIn: '24h', jwtid: uuid4() },
+          function (err, token) {
+              console.log(token);
+          }
 );
 ```
 
@@ -66,15 +64,7 @@ def generate(expires=0):
     expires = expires or 24 * 3600
     now = datetime.datetime.utcnow()
     exp  = now+ datetime.timedelta(seconds=expires)
-    return jwt.encode(payload={
-				                "access_key": app_access_key,
-												"type": "management",
-												"version": 2,
-				                "jti": str(uuid.uuid4()),
-				                "exp": exp,
-				                "iat": now,
-				                "nbf": now},
-										  key=app_secret).decode("utf-8")
+    return jwt.encode(payload={"access_key": app_access_key,"type": "management","version": 2,"jti": str(uuid.uuid4()),"exp": exp,"iat": now,"nbf": now},key=app_secret).decode("utf-8")
 
 if __name__ == "__main__":
     print(generate())
