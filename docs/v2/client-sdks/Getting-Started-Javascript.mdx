@@ -181,7 +181,6 @@ enum HMSTrackUpdate {
     TRACK_REMOVED = 1,
     TRACK_MUTED = 2,
     TRACK_UNMUTED = 3,
-    TRACK_PROCESSED = 4,
 }
 
 // There are other events yet to be implmeneted, which will fill in the enum gaps
@@ -286,15 +285,17 @@ localVideoTrack.setSettings({deviceId:'default'});
 ### Setting virtual Background
 
 ```jsx
-interface HMSVideoProcessor{
-     processVideo(input: OffscreenCanvas, output: HTMLCanvasElement): Promise<void> | void;
-     isSupported(): boolean;
-     getFrameRate(): number;
-     clean(): void;
-}
 
+```bash
+npm install --save @100mslive/hms-virtual-background
+```
 import HMSBackgroundProcessor from "@100mslive/hms-virtual-background"
 
+//Initialize a new Processor for Virtual Background, it accepts parameters as
+// 1) background : 'blur' -> to blur the background
+//                 'imgSource' -> image URL to replace the background
+//                  'default' -> to set back default background
+// 2) framerate : fps to run the process
 backgroundProcessor = new HMSBackgroundProcessor({background: 'blur'|'default'|imgSource, framerate: 30})
 hms.getLocalPeer().videoTrack.addProcessor(backgroundProcessor);
 hms.getLocalPeer().videoTrack.removeProcessor(backgroundProcessor);
