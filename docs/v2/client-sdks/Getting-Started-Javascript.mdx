@@ -181,6 +181,7 @@ enum HMSTrackUpdate {
     TRACK_REMOVED = 1,
     TRACK_MUTED = 2,
     TRACK_UNMUTED = 3,
+    TRACK_PROCESSED = 4,
 }
 
 // There are other events yet to be implmeneted, which will fill in the enum gaps
@@ -282,6 +283,25 @@ hms.join(joinConfig, listener);
 //Changing midway during the call
 localVideoTrack.setSettings({deviceId:'default'});
 ```
+
+###Setting virtual Background
+
+```jsx
+interface HMSVideoProcessor{
+     processVideo(input: OffscreenCanvas, output: HTMLCanvasElement): Promise<void> | void;
+     isSupported(): boolean;
+     getFrameRate(): number;
+     clean(): void;
+}
+
+import HMSBackgroundProcessor from "@100mslive/hms-virtual-background"
+
+backgroundProcessor = new HMSBackgroundProcessor({background: 'blur'|'default'|imgSource, framerate: 30})
+//Attach Processor
+hms.getLocalPeer().videoTrack.addProcessor(backgroundProcessor)
+//Remove Processor
+hms.getLocalPeer().videoTrack.removeProcessor(backgroundProcessor)
+
 
 ### Adding / removing auxiliary tracks
 
