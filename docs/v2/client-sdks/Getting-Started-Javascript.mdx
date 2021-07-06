@@ -284,24 +284,22 @@ hms.join(joinConfig, listener);
 localVideoTrack.setSettings({deviceId:'default'});
 ```
 
-### Setting virtual Background
+<!-- ### Setting virtual Background -->
 
-```jsx
-interface HMSVideoProcessor{
-     processVideo(input: OffscreenCanvas, output: HTMLCanvasElement): Promise<void> | void;
-     isSupported(): boolean;
-     getFrameRate(): number;
-     clean(): void;
-}
+<!-- ```jsx -->
+<!-- interface HMSVideoProcessor{ -->
+<!--      processVideo(input: OffscreenCanvas, output: HTMLCanvasElement): Promise<void> | void; -->
+<!--      isSupported(): boolean; -->
+<!--      getFrameRate(): number; -->
+<!--      clean(): void; -->
+<!-- } -->
 
-import HMSBackgroundProcessor from "@100mslive/hms-virtual-background"
+<!-- import HMSBackgroundProcessor from "@100mslive/hms-virtual-background" -->
 
-backgroundProcessor = new HMSBackgroundProcessor({background: 'blur'|'default'|imgSource, framerate: 30})
-//Attach Processor
-hms.getLocalPeer().videoTrack.addProcessor(backgroundProcessor)
-//Remove Processor
-hms.getLocalPeer().videoTrack.removeProcessor(backgroundProcessor)
-```
+<!-- backgroundProcessor = new HMSBackgroundProcessor({background: 'blur'|'default'|imgSource, framerate: 30}) -->
+<!-- hms.getLocalPeer().videoTrack.addProcessor(backgroundProcessor); -->
+<!-- hms.getLocalPeer().videoTrack.removeProcessor(backgroundProcessor); -->
+<!-- ``` -->
 
 
 ### Adding / removing auxiliary tracks
