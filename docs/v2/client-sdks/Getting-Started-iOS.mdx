@@ -462,3 +462,34 @@ class HMSLocalAudioTrack : HMSAudioTrack {
   view.addSubview(videoView)
 
   ```
+  
+## 📨 Chat Messaging
+  You can send a chat or any other kind of message from local peer to all remote peers in the room.
+  
+  To send a message first create an instance of `HMSMessage` object.
+  
+  Add the information to be sent in the `message` property of `HMSMessage`.
+  
+  Then use the `func send(message: HMSMessage)` function on instance of HMSSDK.
+  
+  When you(the local peer) receives a message from others(any remote peer), `func on(message: HMSMessage)` function of `HMSUpdateListener` is invoked.
+  
+  ```
+    // following is an example implementation of chat messaging
+  
+    // to send a broadcast message
+    let broadcast = HMSMessage(sender: "peerID", // the peerID of local peer, can be empty
+                               time: "\(Date())", // the timestamp when message is being sent, can be empty
+                               type: "chat", // the type of message, you can set it to any arbitary string value & use it to filter on your Chat UI
+                               message: "my message") // the message information to be sent in string
+
+    hmsSDK.send(message: broadcast) // hmsSDK is an instance of `HMSSDK` object
+  
+    // receiving messages
+    // the object conforming to `HMSUpdateListener` will be invoked with `on(message: HMSMessage)`, add your logic to update Chat UI within this listener
+    func on(message: HMSMessage) {
+        let messageReceived = message.message // extract message payload from `HMSMessage` object that is received
+        // update your Chat UI with the messageReceived
+    }
+  ```
+  
