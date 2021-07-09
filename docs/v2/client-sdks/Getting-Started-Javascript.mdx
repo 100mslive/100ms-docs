@@ -242,24 +242,42 @@ hms.leave();
 
 ### Showing a preview screen before joining
 
-To display a preview of your local stream before joining the call, you can use the `getLocalStream` method provided by the SDK.
+To display a preview of your local stream before joining the call, you can use the `preview` method provided by the SDK.
 
-This method does NOT publish this video to the room. Publishing `localStream` is handled via the join method
+This method does NOT publish this video to the room. Publishing is handled via the join method.
 
 ```jsx
-import { getLocalStream } from '@100mslive/hms-video';
+const previewConfig = {
+    userName: 'Erlich Bachmann', // If you choose to provide a name later, you can pass an empty string here
+    authToken: '<Auth token>', //This is the client-side token generated from your token service
+    settings: {
+        isAudioMuted: false,
+        isVideoMuted: false
+    }
+};
 
-const previewStream = await getLocalStream({
-    audio: { deviceId: selectedAudioInput },
-    video: { deviceId: selectedVideoInput }
-}); //parameters to the function is a constraints object -
-//Refer https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamConstraints
+const previewListener = {
+    onPreview(room, localTracks) {
+        // localTracks contains the video and audio tracks of the user
+        // Inside this callback you are safe to access local peer
+        const localPeer = hms.getLocalPeer();
 
-const videoElement = document.getElementById('preview-video-id');
-videoElement.srcObject = previewStream;
+        const videoTrack = localPeer.videoTrack;
+
+        videoTrack.addSink(document.getElementById('preview-video-id'));
+    },
+    onError(exception) {
+        // this will be called if there were any errors accessing user's camera or mic
+        // or if there is network disconnection
+    }
+};
+
+hms.preview(previewConfig, previewListener);
 
 <video id="preview-video-id" autoplay muted></video>;
 ```
+
+You can use the [track methods](#mute-unmute-local-tracks) mentioned above to mute/unmute local tracks during preview.
 
 ### Changing mic/camera before/during the call
 
