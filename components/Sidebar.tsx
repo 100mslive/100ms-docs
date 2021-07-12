@@ -20,11 +20,11 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
             <section className="menu-container">
                 <div className="menu-title">VERSIONS</div>
 
-                <a href="/v1/100ms-v1/basics">
-                    <div className="menu-item">v1.0.0</div>
-                </a>
                 <a href="/v2/100ms-v2/Basics">
                     <div className="menu-item">v2.0.0</div>
+                </a>
+                <a href="/v1/100ms-v1/basics">
+                    <div className="menu-item">v1.0.0</div>
                 </a>
             </section>
 
