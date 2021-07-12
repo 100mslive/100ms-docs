@@ -21,16 +21,16 @@ To stream or record your video streaming web apps built on 100ms infra to any pl
 
 ### Headers
 
-| Authentication <br/> (_REQUIRED_) | `string` | Authentication Bearer Token. This requires server-side token. |
+| Authentication <br/> (REQUIRED) | `string` | Authentication Bearer Token. This requires server-side token. |
 | --------------------------------- | -------- | ------------------------------------------------------------- |
 
 ### Body Paramters
 
-| operation <br/> (_REQUIRED_)  | `string` | Should be equal to "start"                                                                 |
+| operation <br/> (REQUIRED)  | `string` | Should be equal to "start"                                                                 |
 | ----------------------------- | -------- | ------------------------------------------------------------------------------------------ |
-| "room_id" <br/> (_REQUIRED_)     | `string` | the room id for which to start the stream                                                 |
-| "meeting_url" <br/> (_REQUIRED_) | `string` | the meeting url to be streamed.                                                            |
-| "rtmp_url" <br/> (_REQUIRED_)   | `string` | the rtmp url to which you want to stream the meeting. Supports rtmp:// & rtmps://          |
+| "room_id" <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                                 |
+| "meeting_url" <br/> (REQUIRED) | `string` | the meeting url to be streamed.                                                            |
+| "rtmp_url" <br/> (REQUIRED)   | `string` | the rtmp url to which you want to stream the meeting. Supports rtmp:// & rtmps://          |
 
 </div>
 
@@ -45,24 +45,24 @@ To stream or record your video streaming web apps built on 100ms infra to any pl
     url="https://prod-in2.100ms.live/api/v2/beam"
 />
 
-<Tabs items={['Request', 'Response']} id="req" />
+<Tabs items={['Request', 'Response']} id="stream" />
 
-<div id="req-0">
+<div id="stream-0">
 
 ### Headers
 
-| Authentication <br/> (_REQUIRED_) | `string` | Authentication Bearer Token. This requires server-side token. |
+| Authentication <br/> (REQUIRED) | `string` | Authentication Bearer Token. This requires server-side token. |
 | --------------------------------- | -------- | ------------------------------------------------------------- |
 
 ### Body Paramters
 
-| operation <br/> (_REQUIRED_)  | `string` | Should be equal to "stop"                                                                 |
+| operation <br/> (REQUIRED)  | `string` | Should be equal to "stop"                                                                 |
 | ----------------------------- | -------- | ------------------------------------------------------------------------------------------ |
-| "room_id" <br/> (_REQUIRED_)     | `string` | the room id for which to start the stream                                                 |
+| "room_id" <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                                 |
 
 </div>
 
-<Response id="req-1" res="200: OK" resText="Beam has stopped successfully" />
+<Response id="stream-1" res="200: OK" resText="Beam has stopped successfully" />
 
 
 
@@ -74,26 +74,26 @@ To stream or record your video streaming web apps built on 100ms infra to any pl
     url="https://prod-in2.100ms.live/api/v2/beam"
 />
 
-<Tabs items={['Request', 'Response']} id="req" />
+<Tabs items={['Request', 'Response']} id="rec" />
 
-<div id="req-0">
+<div id="rec-0">
 
 ### Headers
 
-| Authentication <br/> (_REQUIRED_) | `string` | Authentication Bearer Token. This requires server-side token. |
+| Authentication <br/> (REQUIRED) | `string` | Authentication Bearer Token. This requires server-side token. |
 | --------------------------------- | -------- | ------------------------------------------------------------- |
 
 ### Body Paramters
 
-| operation <br/> (_REQUIRED_)   | `string` | Should be equal to "start"                                                                 |
+| operation <br/> (REQUIRED)   | `string` | Should be equal to "start"                                                                 |
 | -----------------------------  | -------- | ------------------------------------------------------------------------------------------ |
-| "room_id" <br/> (_REQUIRED_)     | `string` | the room id for which to start the stream                                                  |
-| "meeting_url" <br/> (_REQUIRED_) | `string` | the meeting url to be streamed.                                                            |
-| record <br/> (_REQUIRED_)      | `bool`   | should be equal to "true"                                                                  |
+| "room_id" <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                                  |
+| "meeting_url" <br/> (REQUIRED) | `string` | the meeting url to be streamed.                                                            |
+| record <br/> (REQUIRED)      | `bool`   | should be equal to "true"                                                                  |
 
 </div>
 
-<Response id="req-1" res="200: OK" resText="Beam has started successfully" />
+<Response id="rec-1" res="200: OK" resText="Beam has started successfully" />
 
 
 
@@ -105,24 +105,24 @@ To stream or record your video streaming web apps built on 100ms infra to any pl
     url="https://prod-in2.100ms.live/api/v2/beam"
 />
 
-<Tabs items={['Request', 'Response']} id="req" />
+<Tabs items={['Request', 'Response']} id="stop" />
 
-<div id="req-0">
+<div id="stop-0">
 
 ### Headers
 
-| Authentication <br/> (_REQUIRED_) | `string` | Authentication Bearer Token. This requires server-side token. |
+| Authentication <br/> (REQUIRED) | `string` | Authentication Bearer Token. This requires server-side token. |
 | --------------------------------- | -------- | ------------------------------------------------------------- |
 
 ### Body Paramters
 
-| operation <br/> (_REQUIRED_)  | `string` | Should be equal to "stop"                                                                 |
+| operation <br/> (REQUIRED)  | `string` | Should be equal to "stop"                                                                 |
 | ----------------------------- | -------- | ------------------------------------------------------------------------------------------ |
-| "room_id" <br/> (_REQUIRED_)     | `string` | the room id for which to start the stream                                                 |
+| "room_id" <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                                 |
 
 </div>
 
-<Response id="req-1" res="200: OK" resText="Beam has stopped successfully" />
+<Response id="stop-1" res="200: OK" resText="Beam has stopped successfully" />
 
 
 
@@ -135,27 +135,27 @@ To stream or record your video streaming web apps built on 100ms infra to any pl
     url="https://prod-in2.100ms.live/api/v2/beam"
 />
 
-<Tabs items={['Request', 'Response']} id="req" />
+<Tabs items={['Request', 'Response']} id="strec" />
 
-<div id="req-0">
+<div id="strec-0">
 
 ### Headers
 
-| Authentication <br/> (_REQUIRED_) | `string` | Authentication Bearer Token. This requires server-side token. |
+| Authentication <br/> (REQUIRED) | `string` | Authentication Bearer Token. This requires server-side token. |
 | --------------------------------- | -------- | ------------------------------------------------------------- |
 
 ### Body Paramters
 
-| operation <br/> (_REQUIRED_)  | `string` | Should be equal to "start"                                                                 |
+| operation <br/> (REQUIRED)  | `string` | Should be equal to "start"                                                                 |
 | ----------------------------- | -------- | ------------------------------------------------------------------------------------------ |
-| "room_id" <br/> (_REQUIRED_)     | `string` | the room id for which to start the stream                                                 |
-| "meeting_url" <br/> (_REQUIRED_) | `string` | the meeting url to be streamed.                                                            |
-| "rtmp_url" <br/> (_REQUIRED_)   | `string` | the rtmp url to which you want to stream the meeting. Supports rtmp:// & rtmps://          |
-| record <br/> (_REQUIRED_)   | `string` | should be equal to true       |
+| "room_id" <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                                 |
+| "meeting_url" <br/> (REQUIRED) | `string` | the meeting url to be streamed.                                                            |
+| "rtmp_url" <br/> (REQUIRED)   | `string` | the rtmp url to which you want to stream the meeting. Supports rtmp:// & rtmps://          |
+| record <br/> (REQUIRED)   | `string` | should be equal to true       |
 
 </div>
 
-<Response id="req-1" res="200: OK" resText="Beam has started successfully" />
+<Response id="strec-1" res="200: OK" resText="Beam has started successfully" />
 
 
 
@@ -167,23 +167,23 @@ To stream or record your video streaming web apps built on 100ms infra to any pl
     url="https://prod-in2.100ms.live/api/v2/beam"
 />
 
-<Tabs items={['Request', 'Response']} id="req" />
+<Tabs items={['Request', 'Response']} id="stoprec" />
 
-<div id="req-0">
+<div id="stoprec-0">
 
 ### Headers
 
-| Authentication <br/> (_REQUIRED_) | `string` | Authentication Bearer Token. This requires server-side token. |
+| Authentication <br/> (REQUIRED) | `string` | Authentication Bearer Token. This requires server-side token. |
 | --------------------------------- | -------- | ------------------------------------------------------------- |
 
 ### Body Paramters
 
-| operation <br/> (_REQUIRED_)  | `string` | Should be equal to "stop"                                                                 |
+| operation <br/> (REQUIRED)  | `string` | Should be equal to "stop"                                                                 |
 | ----------------------------- | -------- | ------------------------------------------------------------------------------------------ |
-| "room_id" <br/> (_REQUIRED_)     | `string` | the room id for which to start the stream                                                 |
+| "room_id" <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                                 |
 
 </div>
 
-<Response id="req-1" res="200: OK" resText="Beam has stopped successfully" />
+<Response id="stoprec-1" res="200: OK" resText="Beam has stopped successfully" />
 
 
