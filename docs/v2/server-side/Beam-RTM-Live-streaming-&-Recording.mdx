@@ -6,11 +6,12 @@ nav: 9
 
 To stream or record your video streaming web apps built on 100ms infra to any platform that supports RTMP input.
 
+[Click here to see how to generate server side token](/v2/server-side/Generate-server-side-token)
 ---
 
 <PostRequest
-    title="Start/Stop Streaming (Alpha)"
-    desp="This endpoint is used to start or stop live streaming. "
+    title="Start Streaming"
+    desp="This endpoint is used to start live streaming. "
     url="https://prod-in2.100ms.live/api/v2/beam"
 />
 
@@ -20,19 +21,169 @@ To stream or record your video streaming web apps built on 100ms infra to any pl
 
 ### Headers
 
-| Authentication <br/> (_REQUIRED_) | `string` | Authentication Bearer Token. This requires server-side token. |
+| Authentication <br/> (REQUIRED) | `string` | Authentication Bearer Token. This requires server-side token. |
 | --------------------------------- | -------- | ------------------------------------------------------------- |
 
 ### Body Paramters
 
-| operation <br/> (_REQUIRED_)  | `string` | Allowed values: [`start`,`stop`] to `start` and `stop` beam respectively.                  |
+| operation <br/> (REQUIRED)  | `string` | Should be equal to "start"                                                                 |
 | ----------------------------- | -------- | ------------------------------------------------------------------------------------------ |
-| roomId <br/> (_REQUIRED_)     | `string` | the room id for which to beam                                                              |
-| meetingUrl <br/> (_REQUIRED_) | `string` | URL of the meeting, the web page to be shown on the stream. Optional for operation:stop    |
-| rtmpUrls <br/> (_REQUIRED_)   | `string` | comma separated list of rtmp URLs. Optional for operation:stop Supports rtmp:// & rtmps:// |
+| room_id <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                                 |
+| meeting_url <br/> (REQUIRED) | `string` | the meeting url to be streamed.                                                            |
+| rtmp_url <br/> (REQUIRED)   | `string` | the rtmp url to which you want to stream the meeting. Supports rtmp:// & rtmps://          |
 
 </div>
 
 <Response id="req-1" res="200: OK" resText="Beam has started successfully" />
 
-[Click here to see how to generate server side token](/v2/server-side/Generate-server-side-token)
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+<PostRequest
+    title="Stop Streaming"
+    desp="This endpoint is used to stop live streaming. "
+    url="https://prod-in2.100ms.live/api/v2/beam"
+/>
+
+<Tabs items={['Request', 'Response']} id="stream" />
+
+<div id="stream-0">
+
+### Headers
+
+| Authentication <br/> (REQUIRED) | `string` | Authentication Bearer Token. This requires server-side token. |
+| --------------------------------- | -------- | ------------------------------------------------------------- |
+
+### Body Paramters
+
+| operation <br/> (REQUIRED)  | `string` | Should be equal to "stop"                                                                 |
+| ----------------------------- | -------- | ------------------------------------------------------------------------------------------ |
+| "room_id" <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                                 |
+
+</div>
+
+<Response id="stream-1" res="200: OK" resText="Beam has stopped successfully" />
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+<PostRequest
+    title="Start Recording"
+    desp="This endpoint is used to start recording. "
+    url="https://prod-in2.100ms.live/api/v2/beam"
+/>
+
+<Tabs items={['Request', 'Response']} id="rec" />
+
+<div id="rec-0">
+
+### Headers
+
+| Authentication <br/> (REQUIRED) | `string` | Authentication Bearer Token. This requires server-side token. |
+| --------------------------------- | -------- | ------------------------------------------------------------- |
+
+### Body Paramters
+
+| operation <br/> (REQUIRED)   | `string` | Should be equal to "start"                                                                 |
+| -----------------------------  | -------- | ------------------------------------------------------------------------------------------ |
+| room_id <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                                  |
+| meeting_url <br/> (REQUIRED) | `string` | the meeting url to be streamed.                                                            |
+| record <br/> (REQUIRED)      | `bool`   | should be equal to "true"                                                                  |
+
+</div>
+
+<Response id="rec-1" res="200: OK" resText="Beam has started successfully" />
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+<PostRequest
+    title="Stop Recording"
+    desp="This endpoint is used to stop recording. "
+    url="https://prod-in2.100ms.live/api/v2/beam"
+/>
+
+<Tabs items={['Request', 'Response']} id="stop" />
+
+<div id="stop-0">
+
+### Headers
+
+| Authentication <br/> (REQUIRED) | `string` | Authentication Bearer Token. This requires server-side token. |
+| --------------------------------- | -------- | ------------------------------------------------------------- |
+
+### Body Paramters
+
+| operation <br/> (REQUIRED)  | `string` | Should be equal to "stop"                                                                 |
+| ----------------------------- | -------- | ------------------------------------------------------------------------------------------ |
+| room_id <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                                 |
+
+</div>
+
+<Response id="stop-1" res="200: OK" resText="Beam has stopped successfully" />
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+<PostRequest
+    title="Start Streaming and Recording"
+    desp="This endpoint is used to start live streaming and recording. "
+    url="https://prod-in2.100ms.live/api/v2/beam"
+/>
+
+<Tabs items={['Request', 'Response']} id="strec" />
+
+<div id="strec-0">
+
+### Headers
+
+| Authentication <br/> (REQUIRED) | `string` | Authentication Bearer Token. This requires server-side token. |
+| --------------------------------- | -------- | ------------------------------------------------------------- |
+
+### Body Paramters
+
+| operation <br/> (REQUIRED)  | `string` | Should be equal to "start"                                                                 |
+| ----------------------------- | -------- | ------------------------------------------------------------------------------------------ |
+| room_id <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                                 |
+| meeting_url <br/> (REQUIRED) | `string` | the meeting url to be streamed.                                                            |
+| rtmp_url <br/> (REQUIRED)   | `string` | the rtmp url to which you want to stream the meeting. Supports rtmp:// & rtmps://          |
+| record <br/> (REQUIRED)   | `string` | should be equal to true       |
+
+</div>
+
+<Response id="strec-1" res="200: OK" resText="Beam has started successfully" />
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+<PostRequest
+    title="Stop Streaming and Recording"
+    desp="This endpoint is used to stop recording. "
+    url="https://prod-in2.100ms.live/api/v2/beam"
+/>
+
+<Tabs items={['Request', 'Response']} id="stoprec" />
+
+<div id="stoprec-0">
+
+### Headers
+
+| Authentication <br/> (REQUIRED) | `string` | Authentication Bearer Token. This requires server-side token. |
+| --------------------------------- | -------- | ------------------------------------------------------------- |
+
+### Body Paramters
+
+| operation <br/> (REQUIRED)  | `string` | Should be equal to "stop"                                                                 |
+| ----------------------------- | -------- | ------------------------------------------------------------------------------------------ |
+| room_id <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                                 |
+
+</div>
+
+<Response id="stoprec-1" res="200: OK" resText="Beam has stopped successfully" />
+
+
