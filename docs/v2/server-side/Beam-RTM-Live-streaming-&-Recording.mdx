@@ -6,8 +6,7 @@ nav: 9
 
 To stream or record your video streaming web apps built on 100ms infra to any platform that supports RTMP input.
 
-[Click here to see how to generate server side token](/v2/server-side/Generate-server-side-token)
----
+## [Click here to see how to generate server side token](/v2/server-side/Generate-server-side-token)
 
 <PostRequest
     title="Start Streaming"
@@ -22,22 +21,23 @@ To stream or record your video streaming web apps built on 100ms infra to any pl
 ### Headers
 
 | Authentication <br/> (REQUIRED) | `string` | Authentication Bearer Token. This requires server-side token. |
-| --------------------------------- | -------- | ------------------------------------------------------------- |
+| ------------------------------- | -------- | ------------------------------------------------------------- |
 
 ### Body Paramters
 
-| operation <br/> (REQUIRED)  | `string` | Should be equal to "start"                                                                 |
-| ----------------------------- | -------- | ------------------------------------------------------------------------------------------ |
-| room_id <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                                 |
-| meeting_url <br/> (REQUIRED) | `string` | the meeting url to be streamed.                                                            |
-| rtmp_url <br/> (REQUIRED)   | `string` | the rtmp url to which you want to stream the meeting. Supports rtmp:// & rtmps://          |
+| operation <br/> (REQUIRED)   | `string` | Should be equal to "start"                                                        |
+| ---------------------------- | -------- | --------------------------------------------------------------------------------- |
+| room_id <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                         |
+| meeting_url <br/> (REQUIRED) | `string` | the meeting url to be streamed.                                                   |
+| rtmp_url <br/> (REQUIRED)    | `string` | the rtmp url to which you want to stream the meeting. Supports rtmp:// & rtmps:// |
 
 </div>
 
-<Response id="req-1" res="200: OK" resText="Beam has started successfully" />
+<Tab id="req-1">
+    <Response res="200: OK" resText="Beam has started successfully" />
+</Tab>
 
-
-------------------------------------------------------------------------------------------------------------------------------------------------
+---
 
 <PostRequest
     title="Stop Streaming"
@@ -52,21 +52,21 @@ To stream or record your video streaming web apps built on 100ms infra to any pl
 ### Headers
 
 | Authentication <br/> (REQUIRED) | `string` | Authentication Bearer Token. This requires server-side token. |
-| --------------------------------- | -------- | ------------------------------------------------------------- |
+| ------------------------------- | -------- | ------------------------------------------------------------- |
 
 ### Body Paramters
 
-| operation <br/> (REQUIRED)  | `string` | Should be equal to "stop"                                                                 |
-| ----------------------------- | -------- | ------------------------------------------------------------------------------------------ |
-| "room_id" <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                                 |
+| operation <br/> (REQUIRED) | `string` | Should be equal to "stop"                 |
+| -------------------------- | -------- | ----------------------------------------- |
+| "room_id" <br/> (REQUIRED) | `string` | the room id for which to start the stream |
 
 </div>
 
-<Response id="stream-1" res="200: OK" resText="Beam has stopped successfully" />
+<Tab id="stream-1">
+    <Response res="200: OK" resText="Beam has stopped successfully" />
+</Tab>
 
-
-
-------------------------------------------------------------------------------------------------------------------------------------------------
+---
 
 <PostRequest
     title="Start Recording"
@@ -81,23 +81,23 @@ To stream or record your video streaming web apps built on 100ms infra to any pl
 ### Headers
 
 | Authentication <br/> (REQUIRED) | `string` | Authentication Bearer Token. This requires server-side token. |
-| --------------------------------- | -------- | ------------------------------------------------------------- |
+| ------------------------------- | -------- | ------------------------------------------------------------- |
 
 ### Body Paramters
 
-| operation <br/> (REQUIRED)   | `string` | Should be equal to "start"                                                                 |
-| -----------------------------  | -------- | ------------------------------------------------------------------------------------------ |
-| room_id <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                                  |
-| meeting_url <br/> (REQUIRED) | `string` | the meeting url to be streamed.                                                            |
-| record <br/> (REQUIRED)      | `bool`   | should be equal to "true"                                                                  |
+| operation <br/> (REQUIRED)   | `string` | Should be equal to "start"                |
+| ---------------------------- | -------- | ----------------------------------------- |
+| room_id <br/> (REQUIRED)     | `string` | the room id for which to start the stream |
+| meeting_url <br/> (REQUIRED) | `string` | the meeting url to be streamed.           |
+| record <br/> (REQUIRED)      | `bool`   | should be equal to "true"                 |
 
 </div>
 
-<Response id="rec-1" res="200: OK" resText="Beam has started successfully" />
+<Tab id="rec-1">
+    <Response res="200: OK" resText="Beam has started successfully" />
+</Tab>
 
-
-
-------------------------------------------------------------------------------------------------------------------------------------------------
+---
 
 <PostRequest
     title="Stop Recording"
@@ -112,22 +112,21 @@ To stream or record your video streaming web apps built on 100ms infra to any pl
 ### Headers
 
 | Authentication <br/> (REQUIRED) | `string` | Authentication Bearer Token. This requires server-side token. |
-| --------------------------------- | -------- | ------------------------------------------------------------- |
+| ------------------------------- | -------- | ------------------------------------------------------------- |
 
 ### Body Paramters
 
-| operation <br/> (REQUIRED)  | `string` | Should be equal to "stop"                                                                 |
-| ----------------------------- | -------- | ------------------------------------------------------------------------------------------ |
-| room_id <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                                 |
+| operation <br/> (REQUIRED) | `string` | Should be equal to "stop"                 |
+| -------------------------- | -------- | ----------------------------------------- |
+| room_id <br/> (REQUIRED)   | `string` | the room id for which to start the stream |
 
 </div>
 
-<Response id="stop-1" res="200: OK" resText="Beam has stopped successfully" />
+<Tab id="stop-1">
+    <Response res="200: OK" resText="Beam has stopped successfully" />
+</Tab>
 
-
-
-------------------------------------------------------------------------------------------------------------------------------------------------
-
+---
 
 <PostRequest
     title="Start Streaming and Recording"
@@ -142,24 +141,24 @@ To stream or record your video streaming web apps built on 100ms infra to any pl
 ### Headers
 
 | Authentication <br/> (REQUIRED) | `string` | Authentication Bearer Token. This requires server-side token. |
-| --------------------------------- | -------- | ------------------------------------------------------------- |
+| ------------------------------- | -------- | ------------------------------------------------------------- |
 
 ### Body Paramters
 
-| operation <br/> (REQUIRED)  | `string` | Should be equal to "start"                                                                 |
-| ----------------------------- | -------- | ------------------------------------------------------------------------------------------ |
-| room_id <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                                 |
-| meeting_url <br/> (REQUIRED) | `string` | the meeting url to be streamed.                                                            |
-| rtmp_url <br/> (REQUIRED)   | `string` | the rtmp url to which you want to stream the meeting. Supports rtmp:// & rtmps://          |
-| record <br/> (REQUIRED)   | `string` | should be equal to true       |
+| operation <br/> (REQUIRED)   | `string` | Should be equal to "start"                                                        |
+| ---------------------------- | -------- | --------------------------------------------------------------------------------- |
+| room_id <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                         |
+| meeting_url <br/> (REQUIRED) | `string` | the meeting url to be streamed.                                                   |
+| rtmp_url <br/> (REQUIRED)    | `string` | the rtmp url to which you want to stream the meeting. Supports rtmp:// & rtmps:// |
+| record <br/> (REQUIRED)      | `string` | should be equal to true                                                           |
 
 </div>
 
-<Response id="strec-1" res="200: OK" resText="Beam has started successfully" />
+<Tab id="strec-1">
+    <Response res="200: OK" resText="Beam has started successfully" />
+</Tab>
 
-
-
-------------------------------------------------------------------------------------------------------------------------------------------------
+---
 
 <PostRequest
     title="Stop Streaming and Recording"
@@ -174,16 +173,17 @@ To stream or record your video streaming web apps built on 100ms infra to any pl
 ### Headers
 
 | Authentication <br/> (REQUIRED) | `string` | Authentication Bearer Token. This requires server-side token. |
-| --------------------------------- | -------- | ------------------------------------------------------------- |
+| ------------------------------- | -------- | ------------------------------------------------------------- |
 
 ### Body Paramters
 
-| operation <br/> (REQUIRED)  | `string` | Should be equal to "stop"                                                                 |
-| ----------------------------- | -------- | ------------------------------------------------------------------------------------------ |
-| room_id <br/> (REQUIRED)     | `string` | the room id for which to start the stream                                                 |
+| operation <br/> (REQUIRED) | `string` | Should be equal to "stop"                 |
+| -------------------------- | -------- | ----------------------------------------- |
+| room_id <br/> (REQUIRED)   | `string` | the room id for which to start the stream |
 
 </div>
 
-<Response id="stoprec-1" res="200: OK" resText="Beam has stopped successfully" />
+<Tab id="stoprec-1">
+    <Response res="200: OK" resText="Beam has stopped successfully" />
 
-
+</Tab>
