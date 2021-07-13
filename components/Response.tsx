@@ -4,11 +4,10 @@ import Note from './Note';
 interface Props {
     res: string;
     resText: string;
-    id: string;
 }
 
-const Response: React.FC<Props> = ({ id, res, resText }) => (
-    <div id={id}>
+const Response: React.FC<Props> = ({ res, resText }) => (
+    <div>
         <Note type="success">
             <div className="head">
                 <div className="dot" /> {res}
