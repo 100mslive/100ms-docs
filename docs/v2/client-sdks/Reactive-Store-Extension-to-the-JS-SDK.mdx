@@ -143,6 +143,18 @@ const toggleAudio = () => {
 };
 ```
 
+## Adjust remote peer volume
+
+```jsx
+//mute
+hmsActions.setVolume(peer.audioTrack, 0); 
+//unmute
+hmsActions.setVolume(peer.audioTrack, 100); 
+// here we should probably use something between 0-100
+hmsActions.setVolume(peer.audioTrack, 10); 
+```
+
+
 ## Show Current Speaker
 
 ```js

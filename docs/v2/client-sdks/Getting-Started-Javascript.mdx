@@ -147,8 +147,8 @@ interface HMSTrack {
 }
 
 interface HMSSpeaker {
-    peerId: string;
-    trackId: string;
+    peer: HMSPeer;
+    track: HMSTrack;
     audioLevel: number;
 }
 
@@ -219,6 +219,20 @@ await localAudioTrack.setEnabled(false);
 await localVideoTrack.setEnabled(true);
 localVideoTrack.addSink(videoElement);
 ```
+
+## Adjust remote peer volume
+
+```jsx
+const remotePeer = hms.getPeers().filter(peer => !peer.isLocal)[0];
+const remoteAudioTrack = remotePeer.audioTrack;
+//mute
+remoteAudioTrack.setVolume(0); 
+//unmute
+remoteAudioTrack.setVolume(100);
+// here we should probably use something between 0-100
+remoteAudioTrack.setVolume(100);
+```
+
 
 ## Sharing screen
 
