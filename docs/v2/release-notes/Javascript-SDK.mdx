@@ -7,8 +7,15 @@ description: Release Notes for 100ms JavaScript SDK
 
 #### Added
 - Adjust remote peer volume locally
-- Add peer to Speaker 
-- Add policy to peer
+- Add HMSPeer, HMSTrack objects to HMSSpeaker for use in `onAudioLevelUpdate` callback.
+```ts
+interface HMSSpeaker {
+    peer: HMSPeer;
+    track: HMSTrack;
+    audioLevel: number;
+}
+``` 
+- Add HMSPolicy to HMSPeer.
 
 #### Fixed
 - Analytics
