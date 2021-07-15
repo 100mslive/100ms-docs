@@ -152,6 +152,11 @@ hmsActions.setVolume(peer.audioTrack, 0);
 hmsActions.setVolume(peer.audioTrack, 100); 
 // here we should probably use something between 0-100
 hmsActions.setVolume(peer.audioTrack, 10); 
+
+// Get volume for audio Track
+const volumeByPeerID = hmsStore.getState(selectAudioVolumeByPeerID(peer.id));
+// Get volume for screenshare audio Track
+const screenshareVolumeByPeerID = hmsStore.getState(selectScreenshareAudioVolumeByPeerID(peer.id));
 ```
 
 
