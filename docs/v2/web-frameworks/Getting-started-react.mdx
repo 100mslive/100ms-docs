@@ -409,3 +409,21 @@ await hmsActions.removeTrack(trackId);
 ```
 
 > `removeTrack` removes the track only from the list of auxiliary tracks of the local peer. It doesn't remove/unpublish the `audioTrack`/ `videoTrack` of the local peer.
+
+### Audio Output Management
+
+Change the audio output device and volume using `hmsActions.setAudioOutputDevice("a-valid-MediaDeviceInfo-object-id")` and `hmsActions.setVolume(30)`.
+```js
+  /**
+   * Set the output volume of audio tracks(overall/particular audio track)
+   * @param value number between 0-100
+   * @param trackId string If undefined sets the overall volume(of every audio track in the room); If valid - set the volume of particular audio track
+   *
+   */
+  setVolume(value: number, trackId?: string): void;
+  /**
+   * Set the audio output(speaker) device
+   * @param deviceId string deviceId of the audio output device
+   */
+  setAudioOutputDevice(deviceId: string): void;
+```

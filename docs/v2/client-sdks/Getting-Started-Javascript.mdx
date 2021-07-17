@@ -223,10 +223,10 @@ localVideoTrack.addSink(videoElement);
 ## Adjust remote peer volume
 
 ```jsx
-const remotePeer = hms.getPeers().filter(peer => !peer.isLocal)[0];
+const remotePeer = hms.getPeers().filter((peer) => !peer.isLocal)[0];
 const remoteAudioTrack = remotePeer.audioTrack;
 //mute
-remoteAudioTrack.setVolume(0); 
+remoteAudioTrack.setVolume(0);
 //unmute
 remoteAudioTrack.setVolume(100);
 // here we should probably use something between 0-100
@@ -235,7 +235,6 @@ remoteAudioTrack.setVolume(100);
 // Get volume
 remoteAudioTrack.getVolume();
 ```
-
 
 ## Sharing screen
 
@@ -290,6 +289,7 @@ const previewListener = {
 };
 
 hms.preview(previewConfig, previewListener);
+hms.addAudioListener({ onAudioLevelUpdate: onAudioLevelUpdate });
 
 <video id="preview-video-id" autoplay muted></video>;
 ```
@@ -338,3 +338,50 @@ await hms.removeTrack(trackId);
 ```
 
 > `removeTrack` removes the track only from the list of auxiliary tracks of the local peer. It doesn't remove/unpublish the `audioTrack`/ `videoTrack` of the local peer.
+
+### Managing Audio Ouput
+
+To customize the audio output device and volume, AudioOutputManager could be used.
+
+<Tabs id="audio-output-manager" items={['Usage', 'Interface']} />
+
+<Tab  id="audio-output-manager-0">
+
+```jsx
+const audioOutput = hms.getAudioOutput();
+audioOutput.setDevice('a-device-id'); // deviceId of a valid MediaDeviceInfo
+const device = audioOutput.getDevice();
+
+audioOutput.setVolume(95);
+const volume = audioOutput.getVolume();
+```
+
+</Tab>
+<Tab  id="audio-output-manager-1">
+
+```jsx
+interface AudioOutputManager {
+    /**
+     * Get the currently used audio output device(speaker).
+     */
+    getDevice(): MediaDeviceInfo | undefined;
+    /**
+     * Set a particular speaker as audio output destination.
+     * @param deviceId A valid MediaDeviceInfo object's deviceId
+     */
+    setDevice(deviceId: string): MediaDeviceInfo | undefined;
+    /**
+     * Get the overall output volume of the room. Returns number between 0-100.
+     */
+    getVolume(): number;
+    /**
+     * Set the overall output volume of the room.
+     * @param value A number between 0-100.
+     */
+    setVolume(value: number): void;
+}
+```
+
+</Tab>
+
+> To set the output volume of a particular audio track[HMSAudioTrack], use `track.setVolume(95);` and use `track.getVolume();` to retrieve the current value.
