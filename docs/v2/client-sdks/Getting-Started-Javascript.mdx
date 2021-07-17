@@ -338,3 +338,50 @@ await hms.removeTrack(trackId);
 ```
 
 > `removeTrack` removes the track only from the list of auxiliary tracks of the local peer. It doesn't remove/unpublish the `audioTrack`/ `videoTrack` of the local peer.
+
+### Managing Audio Ouput
+
+To customize the audio output device and volume, AudioOutputManager could be used.
+
+<Tabs id="audio-output-manager" items={['Usage', 'Interface']} />{' '}
+
+<Tab id="audio-output-manager-0">
+    
+```js
+const audioOutput = hms.getAudioOutput();
+audioOutput.setDevice("a-device-id"); // deviceId of a valid MediaDeviceInfo
+const device = audioOutput.getDevice();
+
+audioOutput.setVolume(95);
+const volume = audioOutput.getVolume();
+```
+</Tab>
+
+<Tabs id="audio-output-manager-1">
+
+```ts
+interface AudioOutputManager {
+  /**
+   * Get the currently used audio output device(speaker).
+   */
+  getDevice(): MediaDeviceInfo | undefined;
+  /**
+   * Set a particular speaker as audio output destination.
+   * @param deviceId A valid MediaDeviceInfo object's deviceId
+   */
+  setDevice(deviceId: string): MediaDeviceInfo | undefined;
+  /**
+   * Get the overall output volume of the room. Returns number between 0-100.
+   */
+  getVolume(): number;
+  /**
+   * Set the overall output volume of the room.
+   * @param value A number between 0-100.
+   */
+  setVolume(value: number): void;
+}
+
+```
+</Tabs>
+
+> To set the output volume of a particular audio track[HMSAudioTrack], use `track.setVolume(95);` and use `track.getVolume();` to retrieve the current value.
