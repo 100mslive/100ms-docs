@@ -284,7 +284,7 @@ await hmsActions.leave();
 
 ## Advanced use cases
 
--   Showing a preview screen before joining
+### Showing a preview screen before joining
 
 ```jsx
 const previewConfig = {
@@ -302,7 +302,7 @@ hmsActions.preview(previewConfig);
 Calling `preview` will set the `localPeer`. You can subscribe to the `localPeer` update as mentioned [here](#listen-to-changes-in-peers-tracks-data)
 and [render](#render-video) the video track.
 
--   Changing mic/camera before/during the call
+### Changing mic/camera before/during the call
 
 ```js
 //Changing before the call
@@ -322,4 +322,23 @@ hmsActions.join(joinConfig);
 
 //Changing midway during the call
 hmsActions.setVideoSettings({deviceId:'default'});
+```
+
+### Audio Output Management
+
+Change the audio output device and volume using `hmsActions.setAudioOutputDevice("a-valid-MediaDeviceInfo-object-id")` and `hmsActions.setVolume(30)`.
+```js
+  /**
+   * Set the output volume of audio tracks(overall/particular audio track)
+   * @param value number between 0-100
+   * @param trackId string If undefined sets the overall volume(of every audio track in the room); If valid - set the volume of particular audio track
+   *
+   */
+  setVolume(value: number, trackId?: string): void;
+
+  /**
+   * Set the audio output(speaker) device
+   * @param deviceId string deviceId of the audio output device
+   */
+  setAudioOutputDevice(deviceId: string): void;
 ```
