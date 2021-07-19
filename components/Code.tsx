@@ -1,8 +1,4 @@
-import React, { PropsWithChildren } from 'react';
-
-interface Props {
-    id: string;
-}
+import React from 'react';
 
 export const CopyIcon = () => (
     <svg
@@ -20,29 +16,24 @@ export const CopyIcon = () => (
     </svg>
 );
 
-const Code: React.FC<PropsWithChildren<Props>> = ({ id, children }) => {
+const Code: React.FC = ({ children }) => {
+    const textRef = React.useRef(null);
     const copyFunction = () => {
-        const copyText = document.getElementById(id)!.textContent;
-        const textArea = document.createElement('textarea');
-        textArea.textContent = copyText;
-        document.body.append(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        textArea.remove();
-        if (!copy) {
-            setCopy(true);
-            setTimeout(() => {
-                setCopy(false);
-            }, 3000);
-        }
+        setCopy(true);
+        // @ts-ignore
+        navigator.clipboard.writeText(textRef.current.textContent);
+        setTimeout(() => {
+            setCopy(false);
+        }, 2000);
     };
     const [copy, setCopy] = React.useState(false);
     return (
-        <div id={id} className="code-block">
+        <div className="code-block">
             <button aria-label="Copy to Clipboard" onClick={() => copyFunction()} type="button">
                 <CopyIcon />
             </button>
-            {copy ? <span className="copied">Copied</span> : null} <div id={id}>{children}</div>
+            {copy ? <span className="copied">Copied</span> : null}{' '}
+            <div ref={textRef}>{children}</div>
             <style jsx>{`
                 .code-block {
                     position: relative;
