@@ -64,7 +64,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     role="button"
                     style={{ paddingTop: '8px', paddingLeft: '10px' }}
                     tabIndex={0}
-                    onKeyPress={() => toggleTheme()}
+                    onKeyPress={() => {}}
                     onClick={() => toggleTheme()}>
                     {isDark ? <SvgMoon /> : <SvgSun />}
                 </span>
