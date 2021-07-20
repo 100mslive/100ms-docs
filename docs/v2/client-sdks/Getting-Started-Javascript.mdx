@@ -317,23 +317,25 @@ hms.join(joinConfig, listener);
 localVideoTrack.setSettings({deviceId:'default'});
 ```
 
-### Setting virtual Background
+### Adding Plugins
+## Setting Virtual Background
 
 ```bash
 npm install @100mslive/hms-virtual-background
 ```
 
 ```jsx
-import HMSBackgroundProcessor from "@100mslive/hms-virtual-background"
+import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background"
 
-//Initialize a new Processor for Virtual Background, it accepts parameters as
-// 1) background : 'blur' -> to blur the background
-//                 'imgSource' -> image URL to replace the background
-//                  'default' -> to set back default background
-// 2) framerate : fps to run the process
-backgroundProcessor = new HMSBackgroundProcessor({background: 'blur'|'default'|imgSource, framerate: 30})
-hms.getLocalPeer().videoTrack.addProcessor(backgroundProcessor);
-hms.getLocalPeer().videoTrack.removeProcessor(backgroundProcessor);
+/*Initialize a new Plugin for Virtual Background
+** @param: background : 'blur' | 'imgSource' | 'None'
+**              'blur'    -> Set background to blur
+**            'imgSource' -> image URL, Set Background to image source
+**              'None'    -> Set background to None
+*/
+virtualBackgroundPlugin = new HMSVirtualBackgroundPlugin({background: 'blur'|'None'|imgSource})
+hms.getLocalPeer().videoTrack.addPlugin(virtualBackgroundPlugin);
+hms.getLocalPeer().videoTrack.removePlugin(virtualBackgroundPlugin);
 ```
 
 
