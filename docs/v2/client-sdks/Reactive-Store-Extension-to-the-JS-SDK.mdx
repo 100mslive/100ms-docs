@@ -40,10 +40,10 @@ npm install --save @100mslive/hms-video-store@latest
 import { HMSReactiveStore } from '@100mslive/hms-video-store';
 
 const hmsManager = new HMSReactiveStore();
-    
+
 // by default subscriber is notified about store changes post subscription only, this can be
 // changed to call it right after subscribing too using this function.
-hmsManager.triggerOnSubscribe();  // optional
+hmsManager.triggerOnSubscribe(); // optional
 
 const hmsActions = hmsManager.getHMSActions();
 const hmsStore = hmsManager.getStore();
@@ -142,6 +142,23 @@ const toggleAudio = () => {
     hmsActions.setLocalAudioEnabled(!isEnabled);
 };
 ```
+
+## Adjust remote peer volume
+
+```jsx
+//mute
+hmsActions.setVolume(peer.audioTrack, 0); 
+//unmute
+hmsActions.setVolume(peer.audioTrack, 100); 
+// here we should probably use something between 0-100
+hmsActions.setVolume(peer.audioTrack, 10); 
+
+// Get volume for audio Track
+const volumeByPeerID = hmsStore.getState(selectAudioVolumeByPeerID(peer.id));
+// Get volume for screenshare audio Track
+const screenshareVolumeByPeerID = hmsStore.getState(selectScreenshareAudioVolumeByPeerID(peer.id));
+```
+
 
 ## Show Current Speaker
 
@@ -267,11 +284,25 @@ await hmsActions.leave();
 
 ## Advanced use cases
 
-Showing a preview screen before joining
+### Showing a preview screen before joining
 
-[Please check this page.](/v2/100ms-v2/Basics)
+```jsx
+const previewConfig = {
+    userName: 'Erlich Bachmann', // If you choose to provide a name later, you can pass an empty string here
+    authToken: '<Auth token>', //This is the client-side token generated from your token service
+    settings: {
+        isAudioMuted: false,
+        isVideoMuted: false
+    }
+};
 
-Changing mic/camera before/during the call
+hmsActions.preview(previewConfig);
+```
+
+Calling `preview` will set the `localPeer`. You can subscribe to the `localPeer` update as mentioned [here](#listen-to-changes-in-peers-tracks-data)
+and [render](#render-video) the video track.
+
+### Changing mic/camera before/during the call
 
 ```js
 //Changing before the call
@@ -291,4 +322,23 @@ hmsActions.join(joinConfig);
 
 //Changing midway during the call
 hmsActions.setVideoSettings({deviceId:'default'});
+```
+
+### Audio Output Management
+
+Change the audio output device and volume using `hmsActions.setAudioOutputDevice("a-valid-MediaDeviceInfo-object-id")` and `hmsActions.setVolume(30)`.
+```js
+  /**
+   * Set the output volume of audio tracks(overall/particular audio track)
+   * @param value number between 0-100
+   * @param trackId string If undefined sets the overall volume(of every audio track in the room); If valid - set the volume of particular audio track
+   *
+   */
+  setVolume(value: number, trackId?: string): void;
+
+  /**
+   * Set the audio output(speaker) device
+   * @param deviceId string deviceId of the audio output device
+   */
+  setAudioOutputDevice(deviceId: string): void;
 ```
