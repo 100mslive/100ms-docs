@@ -75,7 +75,6 @@ def generate(room_id, user_id, role, expires=0):
     now = datetime.datetime.utcnow()
     exp  = now+ datetime.timedelta(seconds=expires)
     return jwt.encode(payload={
-                "app_id": app_id,
                 "access_key": app_access_key,
                 "type":"app",
                 "version":2,
@@ -113,7 +112,6 @@ private void generateHmsClientToken() {
     payload.put("access_key", <app_access_key>);
     payload.put("room_id", <room_id>);
     payload.put("user_id", <user_id>);
-    payload.put("app_id", <app_id>);
     payload.put("role", <role>);
     payload.put("type", "app");
     payload.put("version", 2);
@@ -135,7 +133,6 @@ payload = {
   access_key: <app_access_key> ,
   room_id: <room_id>,
   user_id: <user_id>,
-  app_id: <app_id>,
   role: <role>,
   type: "app",
   version: 2
@@ -156,7 +153,6 @@ use Firebase\JWT\JWT;
 
 $issuedAt   = new DateTimeImmutable();
 $expire     = $issuedAt->modify('+24 hours')->getTimestamp();
-$appId   = <app_id>;
 $accessKey = <access_key>;
 $version = 2;
 $type = "app";
@@ -167,7 +163,6 @@ $payload = [
     'iat'  => $issuedAt->getTimestamp(),         // Issued at: time when the token was generated
     'nbf'  => $issuedAt->getTimestamp(),         // Not before
     'exp'  => $expire,                           // Expire
-    'app_id' => $appId,
     'access_key' => $accessKey,
     'type' => $type,
     'version' => $version,

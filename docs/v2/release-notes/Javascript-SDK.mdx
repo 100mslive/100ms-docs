@@ -4,6 +4,55 @@ nav: 18
 description: Release Notes for 100ms JavaScript SDK
 ---
 
+## 0.0.88 - 2021-07-17
+
+#### Added
+- Added custom audio output management. [Refer Usage](../client-sdks/Getting-Started-Javascript#managing-audio-ouput)
+
+#### Fixed
+- Audio level update callback in preview. [Refer Usage](../client-sdks/Getting-Started-Javascript#showing-a-preview-screen-before-joining)
+- **Experimental** Automatic device change on plug/unplug. Use `track.setSettings` to override input devices. [Refer Usage](../client-sdks/Getting-Started-Javascript#changing-mic-camera-before-during-the-call). Use audio output manager(`hms.getAudioOutput().setDevice()`) to override output devices. [Refer Usage](../client-sdks/Getting-Started-Javascript#managing-audio-ouput)
+
+
+## 0.0.79 - 2021-07-14
+
+#### Added
+- Adjust remote peer volume locally
+- Add HMSPeer, HMSTrack objects to HMSSpeaker for use in `onAudioLevelUpdate` callback.
+```ts
+interface HMSSpeaker {
+    peer: HMSPeer;
+    track: HMSTrack;
+    audioLevel: number;
+}
+``` 
+- Add HMSPolicy to HMSPeer.
+
+#### Fixed
+- Analytics
+
+
+## 0.0.73 - 2021-07-08
+
+#### Added
+- Preview method to enable showing preview UI. [Refer Usage](../client-sdks/Getting-Started-Javascript#showing-a-preview-screen-before-joining)
+- Audio in screen-share
+
+#### Fixed
+- Analytics
+
+## 0.0.63 - 2021-07-02
+
+#### Added
+- Enable OpusDtx
+- Replace HMSPeer with HMSLocalPeer and HMSRemotePeer
+
+#### Fixed
+- Black tiles in Safari - Correctly queue messages when data channel not open
+- Retry Join Init API fetch failure and throw terminal error on retry failure
+- Silent Audio
+- Import problem in Angular - Replace Bowser with ua-parser-js
+
 ## 0.0.38 - 2021-06-24
 
 #### Added

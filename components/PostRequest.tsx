@@ -24,6 +24,7 @@ const PostRequest: React.FC<Props> = ({ title, desp, url, children }) => (
                 border-radius: 12px;
                 background-color: var(--token_property);
                 margin-right: 1rem;
+                color: var(--accents1);
             }
             .title {
                 font-size: 20px;
