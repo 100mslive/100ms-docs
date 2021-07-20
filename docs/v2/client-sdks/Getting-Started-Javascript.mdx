@@ -342,6 +342,14 @@ Call setBackground from the plugin to Update the Background Again Later if requi
 virtualBackgroundPlugin.setBackground(background: string);
 
 /**
+Note : Optional Call
+*Init can be used to show a loader Icon for background selector component during the Plugin Loading stage
+*if init hasn't be already called, the first background change will take a perceivable amount of time.
+* ex:- virtualBackgroundPlugin.init().then(() => console.log("background can be changed now"))
+*/
+virtualBackgroundPlugin.init();
+
+/**
 Add/Remove Plugin To videoTrack
 */
 hms.getLocalPeer().videoTrack.addPlugin(virtualBackgroundPlugin);
