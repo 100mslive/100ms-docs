@@ -317,57 +317,6 @@ hms.join(joinConfig, listener);
 localVideoTrack.setSettings({deviceId:'default'});
 ```
 
-### Adding Virtual Background Plugin
-
-```bash
-npm install @100mslive/hms-virtual-background
-```
-
-```jsx
-import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background"
-
-/*
-Currently it has supports on Chrome/Firefox/Edge browser and M-web
-For an Enhanced Virtual Background Plugin performance enable simd in browser:
-1) Chrome -> Go to chrome://flags/ in browser, search for simd and enable WebAssembly SIMD support and Restart
-2) Firefox -> Go to about:config in browser, search for simd, set javascript.options.wasm_simd = true and Restart
-
-Initialize a new Plugin for Virtual Background
-** @param: background : 'blur' | 'imgSource' | 'None'
-**              'blur'    -> Set background to blur
-**            'imgSource' -> image URL, Set Background to image source
-**              'None'    -> Set to None/default background
-*/
-virtualBackgroundPlugin = new HMSVirtualBackgroundPlugin({background: 'blur'|'None'|imgSource})
-
-/**
-Call setBackground from the plugin to Update the Background Again Later if required
-Can be called multiple times with different background options/images
-@param: background, same as above
-*/
-virtualBackgroundPlugin.setBackground(background: string);
-
-/**
-Note : Optional Call
-*Init can be used to show a loader Icon for background selector component during the Plugin Loading stage
-*if init hasn't be already called, the first background change will take a perceivable amount of time.
-* ex:- virtualBackgroundPlugin.init().then(() => console.log("background can be changed now"))
-*/
-virtualBackgroundPlugin.init();
-
-/**
-Call to Add Plugin To videoTrack. It will attach the plugin to the Video Track
-*/
-hms.getLocalPeer().videoTrack.addPlugin(virtualBackgroundPlugin);
-
-/**
-Call to remove Plugin from videoTrack, It will remove the plugin instance completely
-from the videoTrack. You have to call addPlugin API again to attach the plugin
-*/
-hms.getLocalPeer().videoTrack.removePlugin(virtualBackgroundPlugin);
-```
-
-
 ### Adding / removing auxiliary tracks
 
 To add an auxiliary track\(canvas capture, electron screen-share, etc...\), you can use the addTrack method provided by the SDK. This method adds the track to the local peer's list of auxiliary tracks and publishes it to make it available to remote peers.
