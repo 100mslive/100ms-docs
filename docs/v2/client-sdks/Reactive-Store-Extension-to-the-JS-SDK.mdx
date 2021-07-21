@@ -160,7 +160,10 @@ const screenshareVolumeByPeerID = hmsStore.getState(selectScreenshareAudioVolume
 ```
 
 
-## Show Current Speaker
+## Show Current Speaker and Audio levels
+
+We also expose audio level for all peers which is a number between 0-100. This can be used to display the current speaker as well as individual
+audio levels for each peer on the UI.
 
 ```js
 const onSpeakerUpdate = (speaker, prevSpeaker) => {
@@ -169,9 +172,14 @@ const onSpeakerUpdate = (speaker, prevSpeaker) => {
 
 hmsStore.subscribe(onSpeakerUpdate, selectDominantSpeaker);
 
-// audio level for a peer(0-100)
-const peer = hmsStore.getState(selectLocalPeer);
-hmsStore.getState(selectPeerAudioByID(peer.id));
+// current speaker - peer with highest audio level
+console.log(hmsStore.getState(selectDominantSpeaker));
+
+// getting audio level for a particular peer
+console.log(hmsStore.getState(selectPeerAudioByID(peer.id)));
+
+// getting audio level for a particular track
+console.log(hmsStore.getState(selectTrackAudioByID(track.id)));
 ```
 
 ## Notifications
