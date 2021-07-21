@@ -24,47 +24,97 @@ For an Enhanced Virtual Background Plugin performance enable simd in browser
 npm install @100mslive/hms-virtual-background
 ```
 
-### Imports
-Import Plugin, modules & instantiate 100ms Reactive Store
+### Add and Remove Plugin
 
-```jsx
+<Tabs id="plugin-code" items={['Store', 'Sdk', 'React']} />
+
+<Tab id='plugin-code-0'>
+
+```javascript
+import {hmsActions, hmsStore} from "@100mslive/hms-video-store";
 import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background"
-import { HMSReactiveStore } from '@100mslive/hms-video-store';
-const hmsManager = new HMSReactiveStore();
-const hmsActions = hmsManager.getHMSActions();
-```
 
-### Initialize Plugin
+/*
+    Initialize Plugin
+    @param: background : 'blur' | 'imgSource' | 'None'
 
-Create a new Plugin for Virtual Background. It accepts string as a parameter
-
-```jsx
-/**
-   @param: background : 'blur' | 'imgSource' | 'None'
-
-  **          'blur'     -> Set background to blur
-  **         'imgSource' -> image URL, Set Background to image source
-  **          'None'     -> Set to None/default background
+            'blur'     -> Set background to blur
+           'imgSource' -> image URL or base64, Set Background to image source
+            'None'     -> Set to None/default background
 */
 
 virtualBackgroundPlugin = new HMSVirtualBackgroundPlugin({background: 'blur'|'None'|imgSource})
-```
 
-### Add Plugin
-
-Call to Add Plugin To videoTrack. It will attach the plugin to the Video Track
-
-```jsx
+/*
+    Add Plugin
+    Call to Add Plugin To videoTrack. It will attach the plugin to the Video Track
+*/
 hmsActions.addPlugin(virtualBackgroundPlugin);
-```
 
-### Remove Plugin
-
-Call to remove Plugin from videoTrack, It will remove the plugin instance completely
-
-```jsx
+/*
+   Remove Plugin
+   Call to remove Plugin from videoTrack, It will remove the plugin instance completely
+*/
 hmsActions.removePlugin(virtualBackgroundPlugin);
+
+/*
+ Selector to know the current plugins and if Virtual Background is part of it
+*/
+const videoTrack = hmsStore.getState(selectLocalVideoTrack)
+const plugins =  videoTrack.getPlugins();
+const isVBApplied = plugins.includes(virtualBackgroundPlugin.getName())
+if(isVBApplied){
+    console.log("Virtual Background Plugin is Attached")
+}else{
+    console.log("Virtual Background Plugin is Not Attached")
+}
+
 ```
+</Tab>
+
+<Tab id='plugin-code-1'>
+
+```javascript
+import {HMSSdk} from "@100mslive/hms-video";
+import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background"
+
+/*
+    Initialize Plugin
+    @param: background : 'blur' | 'imgSource' | 'None'
+
+            'blur'     -> Set background to blur
+           'imgSource' -> image URL or base64, Set Background to image source
+            'None'     -> Set to None/default background
+*/
+virtualBackgroundPlugin = new HMSVirtualBackgroundPlugin({background: 'blur'|'None'|imgSource})
+
+/*
+    Add Plugin
+    Call to Add Plugin To videoTrack. It will attach the plugin to the Video Track
+*/
+HMSSdk.localPeer?.videoTrack?.addPlugin(virtualBackgroundPlugin);
+
+/*
+   Remove Plugin
+   Call to remove Plugin from videoTrack, It will remove the plugin instance completely
+*/
+HMSSdk.localPeer?.videoTrack?.removePlugin(virtualBackgroundPlugin);
+
+/*
+ Selector to know the current plugins and if Virtual Background is part of it
+*/
+const videoTrack = HMSSdk.localPeer?.videoTrack?
+const plugins =  videoTrack.getPlugins();
+const isVBApplied = plugins.includes(virtualBackgroundPlugin.getName())
+if(isVBApplied){
+    console.log("Virtual Background Plugin is Attached")
+}else{
+    console.log("Virtual Background Plugin is Not Attached")
+}
+```
+</Tab>
+
+
 
 ## Advance Methods
 
@@ -79,6 +129,8 @@ It accepts string as a parameter
 */
 virtualBackgroundPlugin.setBackground(background: string);
 ```
+
+
 
 ### Optional
 
