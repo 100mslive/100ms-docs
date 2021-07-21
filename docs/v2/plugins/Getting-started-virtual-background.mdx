@@ -28,12 +28,12 @@ npm install @100mslive/hms-virtual-background
 
 ### Add and Remove Plugin
 
-<Tabs id="plugin-code" items={['Store', 'Sdk', 'React']} />
+<Tabs id="plugin-code" items={['Store', 'React', 'Sdk']} />
 
 <Tab id='plugin-code-0'>
 
 ```javascript
-import {hmsActions, hmsStore} from "@100mslive/hms-video-store";
+import {hmsActions, hmsStore} from "./hms";
 import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background"
 
 //Initialize Plugin
@@ -41,12 +41,12 @@ import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background"
      //  'blur'     -> Set background to blur
      // 'imgSource' -> image URL or base64, Set Background to image source
      //  'None'     -> Set to None/default background
-virtualBackground = new HMSVirtualBackgroundPlugin({background: 'blur'|'None'|imgSource})
+const virtualBackground = new HMSVirtualBackgroundPlugin({background: 'blur'|'None'|imgSource})
 
-// Add Plugin: This will Apply the Virtual Background effect to the local video
+// This will Apply the Virtual Background effect to the local video
 hmsActions.addPluginToVideoTrack(virtualBackground);
 
-//Remove Plugin: This will remove the Virtual Background effect from the local Video
+//This will remove the Virtual Background effect from the local Video
 hmsActions.removePluginFromVideoTrack(virtualBackground);
 
 //Selector to know the current plugins and if Virtual Background is part of it
@@ -65,7 +65,38 @@ if(isVBApplied){
 <Tab id='plugin-code-1'>
 
 ```javascript
-import {HMSSdk} from "@100mslive/hms-video";
+import {useHMSStore, useHMSActions} from '@100mslive/hms-video-react';
+import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background"
+import React, { useRef, useEffect } from 'react';
+
+//Initialize Plugin
+// background : {'blur' | 'imgSource' | 'None'}
+  //  'blur'     -> Set background to blur
+  // 'imgSource' -> image URL or base64, Set Background to image source
+  //  'None'     -> Set to None/default background
+const virtualBackground = new HMSVirtualBackgroundPlugin({background: 'blur'|'None'|imgSource})
+
+function VirtualBackground() {
+     const hmsActions = useHMSActions();
+     const [showBackground, setShowBackground] = useState(false);
+
+     useEffect(() => {
+       if (showBackground) {
+           await hmsActions.addPluginToVideoTrack(virtualBackground);
+         } else {
+           await hmsActions.removePluginFromVideoTrack(virtualBackground);
+         }
+       },[showBackground, hmsActions]);
+
+     return(<Button onClick={() => setShowBackground(!showBackground)}/>)
+}
+export default VirtualBackground;
+```
+</Tab>
+
+<Tab id='plugin-code-2'>
+
+```javascript
 import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background"
 
 //Initialize Plugin
@@ -75,14 +106,14 @@ import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background"
      //  'None'     -> Set to None/default background
 virtualBackground = new HMSVirtualBackgroundPlugin({background: 'blur'|'None'|imgSource})
 
-// Add Plugin: This will Apply the Virtual Background effect to the local video
+// This will Apply the Virtual Background effect to the local video
 hms.getLocalPeer().videoTrack?.addPlugin(virtualBackground);
 
-//Remove Plugin: This will remove the Virtual Background effect from the local Video
+// This will remove the Virtual Background effect from the local Video
 hms.getLocalPeer().videoTrack?.removePlugin(virtualBackground);
 
-//Selector to know the current plugins and if Virtual Background is part of it
-const videoTrack = hms.getLocalPeer().videoTrack?
+//To know the current plugins and if Virtual Background is part of it
+const videoTrack = hms.getLocalPeer().videoTrack
 const plugins =  videoTrack?.getPlugins();
 const isVBApplied = plugins.includes(virtualBackground.getName())
 if(isVBApplied){
@@ -92,48 +123,6 @@ if(isVBApplied){
 }
 ```
 </Tab>
-
-<Tab id='plugin-code-2'>
-
-```javascript
-import {useHMSStore, useHMSActions} from '@100mslive/hms-video-react';
-import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background"
-import React, { useRef, useEffect } from 'react';
-
-function VirtualBackground(props) {
-     const videoRef = useRef(null);
-     const hmsActions = useHMSActions();
-     const videoTrack = useHMSStore(selectCameraStreamByPeerID(props.peer.id));
-
-     //Initialize Plugin
-     // background : {'blur' | 'imgSource' | 'None'}
-          //  'blur'     -> Set background to blur
-          // 'imgSource' -> image URL or base64, Set Background to image source
-          //  'None'     -> Set to None/default background
-     virtualBackground = new HMSVirtualBackgroundPlugin({background: 'blur'|'None'|imgSource})
-
-     useEffect(() => {
-      (async () => {
-       if (videoRef.current && videoTrack) {
-         if (videoTrack.enabled) {
-           await hmsActions.addPluginToVideoTrack(virtualBackground);
-         } else {
-           await hmsActions.removePluginFromVideoTrack(virtualBackground);
-         }
-       }
-      })();
-     //eslint-disable-next-line react-hooks/exhaustive-deps
-     }, [videoTrack?.id, videoTrack?.enabled, videoTrack?.deviceID, videoTrack?.plugins]);
-
-     //Rendering logic
-     return <video ref={videoRef} autoPlay muted></video>;
-}
-
-export default VirtualBackground;
-
-```
-</Tab>
-
 
 ## Advance Methods
 
