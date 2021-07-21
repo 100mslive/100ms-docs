@@ -9,58 +9,85 @@ This guide provides an overview of virtual background plugin usage with 100ms
 
 ## Supported Devices
 
-Our current plugin version supports Chrome, Firefox and edge browser and M-Web
+Our current plugin version supports Chrome, Firefox, edge browser and M-Web
 
-## Basic Concepts
+For an Enhanced Virtual Background Plugin performance enable simd in browser
 
-Plugins are maintained at localPeer videoTrack level.
-One can use videoTrack instance to Add and Remove Plugin
+-   `Chrome` -> Go to chrome://flags/ in browser, search for simd and enable WebAssembly SIMD support and Restart
+-   `Firefox` -> Go to about:config in browser, search for simd, set javascript.options.wasm_simd = true and Restart
 
 ## Usage
+
+### Installation
 
 ```bash
 npm install @100mslive/hms-virtual-background
 ```
 
+### Imports
+Import Plugin, modules & instantiate 100ms Reactive Store
+
 ```jsx
 import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background"
+import { HMSReactiveStore } from '@100mslive/hms-video-store';
+const hmsManager = new HMSReactiveStore();
+const hmsActions = hmsManager.getHMSActions();
+```
 
-/*
-For an Enhanced Virtual Background Plugin performance enable simd in browser:
-1) Chrome -> Go to chrome://flags/ in browser, search for simd and enable WebAssembly SIMD support and Restart
-2) Firefox -> Go to about:config in browser, search for simd, set javascript.options.wasm_simd = true and Restart
+### Initialize Plugin
 
-Initialize a new Plugin for Virtual Background
-** @param: background : 'blur' | 'imgSource' | 'None'
-**              'blur'    -> Set background to blur
-**            'imgSource' -> image URL, Set Background to image source
-**              'None'    -> Set to None/default background
-*/
-virtualBackgroundPlugin = new HMSVirtualBackgroundPlugin({background: 'blur'|'None'|imgSource})
+Create a new Plugin for Virtual Background. It accepts string as a parameter
 
+```jsx
 /**
+   @param: background : 'blur' | 'imgSource' | 'None'
+
+  **          'blur'     -> Set background to blur
+  **         'imgSource' -> image URL, Set Background to image source
+  **          'None'     -> Set to None/default background
+*/
+
+virtualBackgroundPlugin = new HMSVirtualBackgroundPlugin({background: 'blur'|'None'|imgSource})
+```
+
+### Add Plugin
+
+Call to Add Plugin To videoTrack. It will attach the plugin to the Video Track
+
+```jsx
+hmsActions.addPlugin(virtualBackgroundPlugin);
+```
+
+### Remove Plugin
+
+Call to remove Plugin from videoTrack, It will remove the plugin instance completely
+
+```jsx
+hmsActions.removePlugin(virtualBackgroundPlugin);
+```
+
+## Advance Methods
+
+### Change Background
+
 Call setBackground from the plugin to Update the Background Again Later if required
-Can be called multiple times with different background options/images
+It accepts string as a parameter
+
+```jsx
+/**
 @param: background, same as above
 */
 virtualBackgroundPlugin.setBackground(background: string);
+```
 
+### Optional
+
+Init can be used to show a loader Icon for background selector component during the Plugin Loading stage
+if init hasn't be already called, the first background change will take a perceivable amount of time.
+
+```jsx
 /**
-Note : Optional Call
-*Init can be used to show a loader Icon for background selector component during the Plugin Loading stage
-*if init hasn't be already called, the first background change will take a perceivable amount of time.
-* ex:- virtualBackgroundPlugin.init().then(() => console.log("background can be changed now"))
+ex:- virtualBackgroundPlugin.init().then(() => console.log("background can be changed now"))
 */
 virtualBackgroundPlugin.init();
-
-/**
-Call to Add Plugin To videoTrack. It will attach the plugin to the Video Track
-*/
-hms.getLocalPeer().videoTrack.addPlugin(virtualBackgroundPlugin);
-
-/**
-Call to remove Plugin from videoTrack, It will remove the plugin instance completely
-from the videoTrack. You have to call addPlugin API again to attach the plugin
-*/
-hms.getLocalPeer().videoTrack.removePlugin(virtualBackgroundPlugin);
 ```
