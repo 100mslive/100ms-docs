@@ -105,6 +105,7 @@ const DocLayout: React.FC<Props> = ({
                     .content-wrapper {
                         width: 100%;
                         display: flex;
+                        justify-content: space-between;
                     }
                     .mobile-menu {
                         display: none;

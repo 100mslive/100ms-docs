@@ -1,0 +1,246 @@
+---
+title: HMSSdk
+nav: 8
+---
+
+## Implements
+
+- `HMSInterface`
+
+## Constructors
+
+### constructor
+
+• **new HMSSdk**()
+
+## Methods
+
+### addAudioListener
+
+▸ **addAudioListener**(`audioListener`): `void`
+
+#### Parameters
+
+| Name            | Type                                                       |
+| :-------------- | :--------------------------------------------------------- |
+| `audioListener` | [`HMSAudioListener`](/js-docs/interfaces/hmsaudiolistener) |
+
+#### Returns
+
+`void`
+
+---
+
+### addTrack
+
+▸ **addTrack**(`track`, `source?`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name    | Type               | Default value | Description                                                         |
+| :------ | :----------------- | :------------ | :------------------------------------------------------------------ |
+| `track` | `MediaStreamTrack` | `undefined`   | (https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack) |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+HMSInterface.addTrack
+
+---
+
+### createRoom
+
+▸ **createRoom**(): [`HMSRoom`](/js-docs/interfaces/hmsroom)
+
+#### Returns
+
+[`HMSRoom`](/js-docs/interfaces/hmsroom)
+
+---
+
+### getLocalPeer
+
+▸ **getLocalPeer**(): [`HMSLocalPeer`](/js-docs/classes/hmslocalpeer)
+
+#### Returns
+
+[`HMSLocalPeer`](/js-docs/classes/hmslocalpeer)
+
+#### Implementation of
+
+HMSInterface.getLocalPeer
+
+---
+
+### getPeers
+
+▸ **getPeers**(): ([`HMSLocalPeer`](/js-docs/classes/hmslocalpeer) \| [`HMSRemotePeer`](/js-docs/classes/hmsremotepeer))[]
+
+#### Returns
+
+([`HMSLocalPeer`](/js-docs/classes/hmslocalpeer) \| [`HMSRemotePeer`](/js-docs/classes/hmsremotepeer))[]
+
+#### Implementation of
+
+HMSInterface.getPeers
+
+---
+
+### join
+
+▸ **join**(`config`, `listener`): `void`
+
+#### Parameters
+
+| Name       | Type                                                         |
+| :--------- | :----------------------------------------------------------- |
+| `config`   | [`HMSConfig`](/js-docs/interfaces/hmsconfig)                 |
+| `listener` | [`HMSUpdateListener`](/js-docs/interfaces/hmsupdatelistener) |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+HMSInterface.join
+
+---
+
+### leave
+
+▸ **leave**(): `Promise`<`void`\>
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+HMSInterface.leave
+
+---
+
+### removeTrack
+
+▸ **removeTrack**(`trackId`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name      | Type     |
+| :-------- | :------- |
+| `trackId` | `string` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+HMSInterface.removeTrack
+
+---
+
+### sendMessage
+
+▸ **sendMessage**(`type`, `message`, `receiver?`): `default`
+
+#### Parameters
+
+| Name        | Type     |
+| :---------- | :------- |
+| `type`      | `string` |
+| `message`   | `string` |
+| `receiver?` | `string` |
+
+#### Returns
+
+`default`
+
+#### Implementation of
+
+HMSInterface.sendMessage
+
+---
+
+### setAnalyticsLevel
+
+▸ **setAnalyticsLevel**(`level`): `void`
+
+#### Parameters
+
+| Name    | Type                                                    |
+| :------ | :------------------------------------------------------ |
+| `level` | [`HMSAnalyticsLevel`](/js-docs/enums/hmsanalyticslevel) |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+HMSInterface.setAnalyticsLevel
+
+---
+
+### setLogLevel
+
+▸ **setLogLevel**(`level`): `void`
+
+#### Parameters
+
+| Name    | Type                                        |
+| :------ | :------------------------------------------ |
+| `level` | [`HMSLogLevel`](/js-docs/enums/hmsloglevel) |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+HMSInterface.setLogLevel
+
+---
+
+### startScreenShare
+
+▸ **startScreenShare**(`onStop`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name     | Type         |
+| :------- | :----------- |
+| `onStop` | () => `void` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+HMSInterface.startScreenShare
+
+---
+
+### stopScreenShare
+
+▸ **stopScreenShare**(): `Promise`<`void`\>
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+HMSInterface.stopScreenShare
+rns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+HMSInterface.stopScreenShare
