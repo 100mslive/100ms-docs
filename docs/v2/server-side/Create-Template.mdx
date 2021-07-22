@@ -242,15 +242,30 @@ Authenticated routes - send management token as bearer token.
 
 ### Listing all templates
 
-URL: `https://prod-policy.100ms.live/policy/v1/policies`
+<PostRequest
+    get={true}
+    title="Listing all templates"
+    desp="This endpoint is used to Listing all templates"
+    url="https://prod-policy.100ms.live/policy/v1/policies"
+/>
 
-method: `GET`
+<Tabs items={['Request', 'Response']} id="list" />
 
-headers: Authorization :  Bearer `<Server Side Token>`
 
-response
+<div id='list-0'>
 
-200 OK
+### Headers
+
+| media type                     | type     | response type                |
+| ------------------------------ | -------- | ---------------------------- |
+| Authorization <br/> (REQUIRED) | `string` | Bearer `<Server Side Token>` |
+    
+</div>
+
+<div id='list-1'>
+
+
+<Response res="200: OK" />
 
 ```json
 {
@@ -1165,17 +1180,38 @@ response
 }
 ```
 
+</div>
+
+
 ### Getting template info
 
-URL: `https://prod-policy.100ms.live/policy/v1/policies?name=<template name>`
 
-method: `GET`
+<PostRequest
+    get={true}
+    title="Getting template info"
+    desp="This endpoint is used to Getting template info"
+    url="https://prod-policy.100ms.live/policy/v1/policies?name=<template name>"
+/>
 
-headers: Authorization :  Bearer `<Server Side Token>`
+<Tabs items={['Request', 'Response']} id="name" />
 
-response
 
-```jsx
+<div id='name-0'>
+
+### Headers
+
+| media type                     | type     | response type                |
+| ------------------------------ | -------- | ---------------------------- |
+| Authorization <br/> (REQUIRED) | `string` | Bearer `<Server Side Token>` |
+
+    
+</div>
+
+<div id='name-1'>
+
+<Response res="200: OK" />
+
+```json
 {
     "data": [
         {
@@ -1327,6 +1363,9 @@ response
     ]
 }
 ```
+
+</div>
+
 
 ### Sample Template JSONs
 
