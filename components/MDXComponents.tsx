@@ -7,6 +7,7 @@ import Note from './Note';
 import PostRequest from './PostRequest';
 import Response from './Response';
 import Codesandbox from './Codesandbox';
+import ScrollCode from './ScrollCode'
 
 const CodeCustom = (props: any) => <Code>{props.children}</Code>;
 
@@ -29,6 +30,7 @@ const MDXComponents = {
     Code,
     Tab,
     Tabs,
+    ScrollCode,
     Codesandbox
 };
 

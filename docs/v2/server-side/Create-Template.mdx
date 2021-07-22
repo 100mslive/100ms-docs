@@ -47,6 +47,8 @@ From dashboard, you can add, modify, delete roles of a template. You can use the
 
 ### Template JSON structure
 
+<ScrollCode>
+
 ```json
 
         {
@@ -197,6 +199,9 @@ From dashboard, you can add, modify, delete roles of a template. You can use the
    
 ```
 
+</ScrollCode>
+
+
 ### Registering/updating template on policy server
 
 <PostRequest
@@ -208,7 +213,7 @@ From dashboard, you can add, modify, delete roles of a template. You can use the
 <Tabs items={['Request', 'Response']} id="temp" />
 
 
-<div id='temp-0'>
+<Tab id='temp-0'>
 
 ### Headers
 
@@ -226,9 +231,9 @@ Authenticated routes - send management token as bearer token.
 
 > Set Template - /policy - send json template {"template" : {}} - will give error if Customer field does not match with token.
     
-</div>
+</Tab>
 
-<div id='temp-1'>
+<Tab id='temp-1'>
 
 
 <Response res="200: OK" />
@@ -237,7 +242,7 @@ Authenticated routes - send management token as bearer token.
 {}
 ```
 
-</div>
+</Tab>
 
 
 ### Listing all templates
@@ -252,7 +257,7 @@ Authenticated routes - send management token as bearer token.
 <Tabs items={['Request', 'Response']} id="list" />
 
 
-<div id='list-0'>
+<Tab id='list-0'>
 
 ### Headers
 
@@ -260,12 +265,15 @@ Authenticated routes - send management token as bearer token.
 | ------------------------------ | -------- | ---------------------------- |
 | Authorization <br/> (REQUIRED) | `string` | Bearer `<Server Side Token>` |
     
-</div>
+</Tab>
 
-<div id='list-1'>
+<Tab id='list-1'>
 
 
 <Response res="200: OK" />
+
+
+<div className='scroll-code'>
 
 ```json
 {
@@ -1180,7 +1188,12 @@ Authenticated routes - send management token as bearer token.
 }
 ```
 
+<div className='scroll-fade' />
+
 </div>
+
+
+</Tab>
 
 
 ### Getting template info
@@ -1196,7 +1209,7 @@ Authenticated routes - send management token as bearer token.
 <Tabs items={['Request', 'Response']} id="name" />
 
 
-<div id='name-0'>
+<Tab id='name-0'>
 
 ### Headers
 
@@ -1205,11 +1218,13 @@ Authenticated routes - send management token as bearer token.
 | Authorization <br/> (REQUIRED) | `string` | Bearer `<Server Side Token>` |
 
     
-</div>
+</Tab>
 
-<div id='name-1'>
+<Tab id='name-1'>
 
 <Response res="200: OK" />
+
+<div className='scroll-code'>
 
 ```json
 {
@@ -1364,15 +1379,20 @@ Authenticated routes - send management token as bearer token.
 }
 ```
 
+<div className='scroll-fade' />
+
 </div>
+
+</Tab>
 
 
 ### Sample Template JSONs
 
 - Online Classroom  - video: 720p (HD), screen: 1080p (HD)
 
-```jsx
+<ScrollCode>
 
+```json
         {
             "name": <name of the app>,
             "customer": <your customer id>,
@@ -1474,9 +1494,13 @@ Authenticated routes - send management token as bearer token.
    
 ```
 
+</ScrollCode>
+
 - Audio only room
 
-```jsx
+<ScrollCode>
+
+```json
 {
             "name": <template name>,
             "customer": <your customer id>,
@@ -1544,10 +1568,15 @@ Authenticated routes - send management token as bearer token.
             }
         }
 ```
+</ScrollCode>
+
 
 - Virtual events room - video: 480p (SD),
 
-```jsx
+<ScrollCode>
+
+
+```json
 {
             "name": "events_eventapp_6c872704-f40c-4564-a76e-7777b54cfbc7",
             "customer": "60ed5003f9a1132ecd0d2a61",
@@ -1694,6 +1723,9 @@ Authenticated routes - send management token as bearer token.
             }
         }
 ```
+
+</ScrollCode>
+
 
 ## Using template in create room APIs
 
