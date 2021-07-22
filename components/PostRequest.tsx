@@ -4,12 +4,13 @@ interface Props {
     title: string;
     desp: string;
     url: string;
+    get?: boolean
 }
 
-const PostRequest: React.FC<Props> = ({ title, desp, url, children }) => (
+const PostRequest: React.FC<Props> = ({ title, desp, url, get  , children }) => (
     <div className="post-ctx">
         <div className="head">
-            <span className="badge">POST</span>
+            <span className="badge">{get ? 'GET': 'POST'}</span>
             <span className="title">{title}</span>
         </div>
         <code>{url}</code>

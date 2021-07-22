@@ -1,0 +1,1661 @@
+---
+title: Create Template
+nav: 5.25
+---
+
+## Introduction
+
+Templates determine behaviour of roles in a particular room.  They give you flexibility to determine behaviour of different roles on different devices. 
+
+The template you set while creating room is available to in the callback of `init` API while joining the room. You can determine person's behaviour in the room based on parameters set while creating the template. 
+
+## Components of a template
+
+A template contains the roles that the template should have. Roles contains properties of a role which any joining peer can take.
+
+- `name`: `<template name>`
+- `customer`: `<your customer id>`.
+- `roles` : array of roles in the template.
+
+Components of a role:
+
+- `name` : name of the role
+- `publishParams` : publish parameters
+    - `allowed` :array containing - audio/video/screen showing which to allow and which to not.
+    - `audio` : Audio parameters - bitrate & codec.
+    - `video` : video parameters - bitrate, codec, framerate, width & height.
+    - `screen` : screen parameters - bitrate, codec, framerate, width & height.
+
+<Image width={1726} height={564} alt="Create Template" src="/docs/v2/template-1.png" />
+
+
+- `SubscribeParams`
+    - `subscribeToRoles` : array of roles to subscribe to.
+    - `maxSubsBitRate` : max subscription bitrate
+
+## Getting templates on dashboard
+
+To get template from dashboard, visit - [https://dashboard.100ms.live/templates](https://dashboard.100ms.live/templates)
+
+From dashboard, you can add, modify, delete roles of a template. You can use the template from dashboard for creating rooms in Create Room API section.
+
+
+<Image width={2344} height={1990} alt="Create Template" src="/docs/v2/template-2.png" />
+
+
+## Creating templates using REST API
+
+### Template JSON structure
+
+```json
+
+        {
+            "name": <name for your template>,
+            "customer": <customer id>,
+            "roles": {
+                "admin": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 1000,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 720,
+                                "width": 960
+                            }
+                        },
+                        
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxSubsBitRate": 8000,
+                            "subscribeToRoles": [
+                                "host",
+                                "guest",
+                                "admin"
+                            ]
+                        },
+                        
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                    }
+                ],
+                "guest": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 1000,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 720,
+                                "width": 960
+                            }
+                        },
+                       
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxSubsBitRate": 8000,
+                            "subscribeToRoles": [
+                                "host",
+                                "guest",
+                                "admin"
+                            ]
+                        },
+                       
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                       
+                    }
+                ],
+                "host": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 1000,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 720,
+                                "width": 960
+                            }
+                        },
+                        
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxSubsBitRate": 8000,
+                            "subscribeToRoles": [
+                                "host",
+                                "guest",
+                                "admin"
+                            ]
+                        },
+                        
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        
+                    }
+                ]
+            }
+        }
+   
+```
+
+### Registering/updating template on policy server
+
+<PostRequest
+    title="Registering/updating template on policy server"
+    desp="This endpoint is used to registering/updating template on policy server."
+    url="https://prod-policy.100ms.live/policy/v1/policy"
+/>
+
+<Tabs items={['Request', 'Response']} id="temp" />
+
+
+<div id='temp-0'>
+
+### Headers
+
+| media type                     | type     | response type                |
+| ------------------------------ | -------- | ---------------------------- |
+| Authorization <br/> (REQUIRED) | `string` | Bearer `<Server Side Token>` |
+
+
+| params   | type              | description |
+|----------|-------------------|-------------|
+| template | `<template_json>` |             |
+
+
+Authenticated routes - send management token as bearer token.
+
+> Set Template - /policy - send json template {"template" : {}} - will give error if Customer field does not match with token.
+    
+</div>
+
+<div id='temp-1'>
+
+
+<Response res="200: OK" />
+
+```json
+{}
+```
+
+</div>
+
+
+### Listing all templates
+
+URL: `https://prod-policy.100ms.live/policy/v1/policies`
+
+method: `GET`
+
+headers: Authorization :  Bearer `<Server Side Token>`
+
+response
+
+200 OK
+
+```json
+{
+    "data": [
+        {
+            "name": "<template name>",
+            "customer": "customer_id",
+            "roles": {
+                "role3": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "bitRate": 1024,
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 512,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {
+                            "type": "platform",
+                            "value": "web"
+                        }
+                    },
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "bitRate": 1024,
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 512,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {
+                            "type": "platform",
+                            "value": "mobile"
+                        }
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxDisplayTiles": 20,
+                            "maxSubsBitRate": 5000
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "generalPermissions",
+                        "value": {
+                            "askToUnmute": null,
+                            "endRoom": false,
+                            "mute": null,
+                            "remove": [],
+                            "startRecording": false
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "internalPlugins",
+                        "value": {
+                            "privateMessage": [],
+                            "screenshare": []
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ],
+                "role4": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "bitRate": 1024,
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 512,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {
+                            "type": "platform",
+                            "value": "web"
+                        }
+                    },
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "bitRate": 1024,
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 512,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {
+                            "type": "platform",
+                            "value": "mobile"
+                        }
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxDisplayTiles": 20,
+                            "maxSubsBitRate": 5000
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "generalPermissions",
+                        "value": {
+                            "askToUnmute": null,
+                            "endRoom": false,
+                            "mute": null,
+                            "remove": [],
+                            "startRecording": false
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "internalPlugins",
+                        "value": {
+                            "privateMessage": [],
+                            "screenshare": []
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ],
+                "role5": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "bitRate": 1024,
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 512,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {
+                            "type": "platform",
+                            "value": "web"
+                        }
+                    },
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "bitRate": 1024,
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 512,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {
+                            "type": "platform",
+                            "value": "mobile"
+                        }
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxDisplayTiles": 20,
+                            "maxSubsBitRate": 5000
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "generalPermissions",
+                        "value": {
+                            "askToUnmute": null,
+                            "endRoom": false,
+                            "mute": null,
+                            "remove": [],
+                            "startRecording": false
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "internalPlugins",
+                        "value": {
+                            "privateMessage": [],
+                            "screenshare": []
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ],
+                "role6": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "bitRate": 1024,
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 512,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {
+                            "type": "platform",
+                            "value": "web"
+                        }
+                    },
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "bitRate": 1024,
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 512,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {
+                            "type": "platform",
+                            "value": "mobile"
+                        }
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxDisplayTiles": 20,
+                            "maxSubsBitRate": 5000
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "generalPermissions",
+                        "value": {
+                            "askToUnmute": null,
+                            "endRoom": false,
+                            "mute": null,
+                            "remove": [],
+                            "startRecording": false
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "internalPlugins",
+                        "value": {
+                            "privateMessage": [],
+                            "screenshare": []
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ],
+                "role7": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "bitRate": 1024,
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 512,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {
+                            "type": "platform",
+                            "value": "web"
+                        }
+                    },
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "bitRate": 1024,
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 512,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {
+                            "type": "platform",
+                            "value": "mobile"
+                        }
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxDisplayTiles": 20,
+                            "maxSubsBitRate": 5000
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "generalPermissions",
+                        "value": {
+                            "askToUnmute": null,
+                            "endRoom": false,
+                            "mute": null,
+                            "remove": [],
+                            "startRecording": false
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "internalPlugins",
+                        "value": {
+                            "privateMessage": [],
+                            "screenshare": []
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ],
+                "student": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "bitRate": 1024,
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 512,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {
+                            "type": "platform",
+                            "value": "web"
+                        }
+                    },
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "bitRate": 1024,
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 512,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {
+                            "type": "platform",
+                            "value": "mobile"
+                        }
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxDisplayTiles": 20,
+                            "maxSubsBitRate": 5000
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "generalPermissions",
+                        "value": {
+                            "askToUnmute": [],
+                            "endRoom": true,
+                            "mute": [],
+                            "remove": [],
+                            "startRecording": true
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "internalPlugins",
+                        "value": {
+                            "privateMessage": [],
+                            "screenshare": []
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ],
+                "teacher": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "bitRate": 1024,
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 512,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {
+                            "type": "platform",
+                            "value": "web"
+                        }
+                    },
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "bitRate": 1024,
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 512,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {
+                            "type": "platform",
+                            "value": "mobile"
+                        }
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxDisplayTiles": 20,
+                            "maxSubsBitRate": 5000
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "generalPermissions",
+                        "value": {
+                            "askToUnmute": [],
+                            "endRoom": true,
+                            "mute": [],
+                            "remove": [],
+                            "startRecording": true
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "internalPlugins",
+                        "value": {
+                            "privateMessage": [],
+                            "screenshare": []
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ]
+            }
+        },
+        {
+            "name": "<template name>",
+            "customer": "<customer_id>",
+            "roles": {
+                "student": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "bitRate": 1024,
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 512,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {
+                            "type": "platform",
+                            "value": "web"
+                        }
+                    },
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "bitRate": 1024,
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 512,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {
+                            "type": "platform",
+                            "value": "mobile"
+                        }
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxDisplayTiles": 20,
+                            "maxSubsBitRate": 5000,
+                            "subscribeToRoles": [
+                                "teacher",
+                                "student"
+                            ]
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "generalPermissions",
+                        "value": {
+                            "askToUnmute": [],
+                            "endRoom": true,
+                            "mute": [],
+                            "remove": [],
+                            "startRecording": true
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "internalPlugins",
+                        "value": {
+                            "privateMessage": [],
+                            "screenshare": []
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ],
+                "teacher": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "bitRate": 1024,
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 512,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {
+                            "type": "platform",
+                            "value": "web"
+                        }
+                    },
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "bitRate": 1024,
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 512,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {
+                            "type": "platform",
+                            "value": "mobile"
+                        }
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxDisplayTiles": 20,
+                            "maxSubsBitRate": 5000,
+                            "subscribeToRoles": [
+                                "teacher",
+                                "student"
+                            ]
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "generalPermissions",
+                        "value": {
+                            "askToUnmute": [],
+                            "endRoom": true,
+                            "mute": [],
+                            "remove": [],
+                            "startRecording": true
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "internalPlugins",
+                        "value": {
+                            "privateMessage": [],
+                            "screenshare": [
+                                "Start",
+                                "Invite",
+                                "Collaborate"
+                            ]
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ]
+            }
+        }
+    ]
+}
+```
+
+### Getting template info
+
+URL: `https://prod-policy.100ms.live/policy/v1/policies?name=<template name>`
+
+method: `GET`
+
+headers: Authorization :  Bearer `<Server Side Token>`
+
+response
+
+```jsx
+{
+    "data": [
+        {
+            "name": <template_name>,
+            "customer": <your customer id>,
+            "roles": {
+                "admin": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 1000,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 720,
+                                "width": 960
+                            }
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxSubsBitRate": 8000,
+                            "subscribeToRoles": [
+                                "host",
+                                "guest",
+                                "admin"
+                            ]
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ],
+                "guest": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 1000,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 720,
+                                "width": 960
+                            }
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxSubsBitRate": 8000,
+                            "subscribeToRoles": [
+                                "host",
+                                "guest",
+                                "admin"
+                            ]
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ],
+                "host": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 1000,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 720,
+                                "width": 960
+                            }
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxSubsBitRate": 8000,
+                            "subscribeToRoles": [
+                                "host",
+                                "guest",
+                                "admin"
+                            ]
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ]
+            }
+        }
+    ]
+}
+```
+
+### Sample Template JSONs
+
+- Online Classroom  - video: 720p (HD), screen: 1080p (HD)
+
+```jsx
+
+        {
+            "name": <name of the app>,
+            "customer": <your customer id>,
+            "default": true,
+            "roles": {
+                "student": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 1000,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 720,
+                                "width": 960
+                            }
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxSubsBitRate": 8000,
+                            "subscribeToRoles": [
+                                "teacher",
+                                "student"
+                            ]
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ],
+                "teacher": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video",
+                                "screen"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                            "screen": {
+                                "codec": "vp8",
+                                "frameRate": 10,
+                                "height": 1080,
+                                "width": 1920
+                            },
+                            "video": {
+                                "bitRate": 1000,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 720,
+                                "width": 960
+                            }
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxSubsBitRate": 8000,
+                            "subscribeToRoles": [
+                                "teacher",
+                                "student"
+                            ]
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ]
+            }
+        }
+   
+```
+
+- Audio only room
+
+```jsx
+{
+            "name": <template name>,
+            "customer": <your customer id>,
+            "roles": {
+                "listener": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                          
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxSubsBitRate": 8000,
+                            "subscribeToRoles": [
+                                "speaker"
+                            ]
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ],
+                "speaker": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                     
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxSubsBitRate": 8000,
+                            "subscribeToRoles": [
+                                "speaker"
+                            ]
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ]
+            }
+        }
+```
+
+- Virtual events room - video: 480p (SD),
+
+```jsx
+{
+            "name": "events_eventapp_6c872704-f40c-4564-a76e-7777b54cfbc7",
+            "customer": "60ed5003f9a1132ecd0d2a61",
+            "roles": {
+                "audioonlystage": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                           
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxSubsBitRate": 8000,
+                            "subscribeToRoles": [
+                                "audioonlystage",
+                                "stage"
+                            ]
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ],
+                "backstage": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                           
+                            "video": {
+                                "bitRate": 650,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxSubsBitRate": 5200,
+                            "subscribeToRoles": [
+                                "audioonlystage",
+                                "backstage",
+                                "stage"
+                            ]
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ],
+                "stage": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [
+                                "audio",
+                                "video"
+                            ],
+                            "audio": {
+                                "bitRate": 32,
+                                "codec": "opus"
+                            },
+                           
+                            "video": {
+                                "bitRate": 650,
+                                "codec": "vp8",
+                                "frameRate": 30,
+                                "height": 480,
+                                "width": 640
+                            }
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxSubsBitRate": 5200,
+                            "subscribeToRoles": [
+                                "audioonlystage",
+                                "stage"
+                            ]
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ],
+                "viewer": [
+                    {
+                        "type": "publishParams",
+                        "value": {
+                            "allowed": [],
+                         
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "subscribeParams",
+                        "value": {
+                            "maxSubsBitRate": 8000,
+                            "subscribeToRoles": [
+                                "audioonlystage",
+                                "stage"
+                            ]
+                        },
+                        "filter": {}
+                    },
+                    {
+                        "type": "priority",
+                        "value": 1,
+                        "filter": {}
+                    }
+                ]
+            }
+        }
+```
+
+## Using template in create room APIs
+
+As explained in the next section, use name of the created template in "template" parameter of create room API.
