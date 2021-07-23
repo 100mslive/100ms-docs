@@ -38,16 +38,6 @@ const Code: React.FC = ({ children }) => {
                 .code-block {
                     position: relative;
                 }
-                button {
-                    z-index: 35;
-                    top: 15px;
-                    right: 20px;
-                    position: absolute;
-                    border: none;
-                    outline: none;
-                    background-color: transparent;
-                    cursor: pointer;
-                }
                 button:hover {
                     opacity: 0.8;
                 }
