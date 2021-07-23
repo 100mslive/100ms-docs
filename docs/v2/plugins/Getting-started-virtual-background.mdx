@@ -9,6 +9,9 @@ Virtual Backgrounds are fairly use in video conferencing space. It will give use
 insert custom backgrounds or blurring.
 This guide provides an overview of virtual background plugin usage with 100ms
 
+<Image width={640} height={360} alt="VirtualBackground" src="/docs/v2/sample-vb.gif" />
+
+
 ## Usage
 
 ### Installation
@@ -49,7 +52,7 @@ hmsActions.removePluginFromVideoTrack(virtualBackground);
 
 ```javascript
 //Selector to know the current plugins and if Virtual Background is part of it
-const videoTrack = hmsStore.getState(selectLocalVideoTrack)
+const videoTrack = hmsStore.getState(selectLocalVideoTrackID)
 const plugins =  videoTrack.getPlugins();
 const isVBApplied = plugins.includes(virtualBackground.getName())
 if(isVBApplied){
@@ -141,6 +144,8 @@ if(isVBApplied){
 
 Call setBackground from the plugin to update the background again later if required
 It accepts string as a parameter
+Image will get fit to the video by maintaining the aspect ratio
+16:9 aspect ratio is preferred else we are cropping the image to fit in background
 
 ```jsx
 // background: same as above
