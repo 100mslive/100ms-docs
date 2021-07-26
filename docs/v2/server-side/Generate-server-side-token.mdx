@@ -101,10 +101,16 @@ private void generateHmsServerToken() {
 ```ruby
 require 'jwt'
 
+now = Time.now
+exp = now + 86400
+
 payload = {
   access_key: <app_access_key> ,
   type: "management",
-  version: 2
+  version: 2,
+  iat: now.to_i,
+  nbf: now.to_i,
+  exp: exp.to_i
 }
 
 secret = <app_secret>
