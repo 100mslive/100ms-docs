@@ -1,0 +1,37 @@
+---
+title: Get Template
+nav: 5.5
+---
+
+## Introduction
+
+Templates determine behaviour of roles in a particular room. They give you flexibility to determine behaviour of different roles on different devices.
+
+The template you set while creating room is available to in the callback of init API while joining the room. You can determine person's behaviour in the room based on parameters set while creating the template.
+
+
+## Get Template(s)
+
+You can get template at [Templates section in Dashboard](https://dashboard.100ms.live/templates). You can create new roles or modify previously created roles of a template.
+
+<Image width={3584} height={2600} alt="Create a room" src="/docs/v2/create-role.png" />
+
+Roles have following properties:
+
+**Publish strategies:**
+
+-   **Can Publish Video** - when on, participant can join the room with video on. When off, participant joins the room with video off and can't turn it on during the call.
+-   **Can Publish Audio** - when on, participant can join the room with audio on. When off, participant joins the room with audio off and can't turn it on during the call.
+-   **Can Publish Screenshare** - when on, participant can't share their screen during the call.
+-   **Video Quality** - If you're allowing a participant to publish their video, you can choose from `720p`, `480p`, `360p`, and `240p`
+-   **Screenshare Quality**- If you're allowing a participant to publish their video, you can choose from `720p`, and `1080p`
+
+**Subscribe strategies:**
+
+You can determine who can see whom by configuring `subscribe to` properties.
+
+## Create a New Template
+
+You can create a new template by adding a new app by clicking on `Add a new App` on dashboard.
+
+<Image width={3584} height={1000} alt="Create a room" src="/docs/v2/create-template.png" /> 
