@@ -26,12 +26,22 @@ const Code: React.FC = ({ children }) => {
             setCopy(false);
         }, 2000);
     };
+    const [hovered, setHovered] = React.useState(false);
     const [copy, setCopy] = React.useState(false);
+    const onEnter = () => {
+        setHovered(true);
+    };
+    const onExit = () => {
+        setHovered(false);
+        setCopy(false);
+    };
     return (
-        <div className="code-block">
-            <button aria-label="Copy to Clipboard" onClick={() => copyFunction()} type="button">
-                <CopyIcon />
-            </button>
+        <div className="code-block" onMouseEnter={onEnter} onMouseLeave={onExit}>
+            {hovered ? (
+                <button aria-label="Copy to Clipboard" onClick={() => copyFunction()} type="button">
+                    <CopyIcon />
+                </button>
+            ) : null}
             {copy ? <span className="copied">Copied</span> : null}{' '}
             <div ref={textRef}>{children}</div>
             <style jsx>{`
