@@ -32,6 +32,7 @@ Now you wanna add docs in section
 
 -   Create .mdx files in `v2/vue-sdk/file-name.mdx`
 -   Avoid decimal numbers (eg: `v-1.3.2.mdx`) in filename (doesn't cause any loss)
+-   Avoid adding `ampersand` / `&` in filenames as it breaks Sitemaps generation
 -   It's important to add `FrontMatter` to the MDX File on top
 
 ### FrontMatter
@@ -136,15 +137,15 @@ Super easy just get the `id`
 
 ## ✅ Do's
 
-- Use Emojis 😅😂🚀✅🙂🎉😇🌟🥵
-- Maintain the Header Order (H1 , H2 , H3 ...)
-- Use Language Attributes in Code Blocks for Syntax Highlight
-- Use https://tableconvert.com/ to create Markdown Tables
+-   Use Emojis 😅😂🚀✅🙂🎉😇🌟🥵
+-   Maintain the Header Order (H1 , H2 , H3 ...)
+-   Use Language Attributes in Code Blocks for Syntax Highlight
+-   Use https://tableconvert.com/ to create Markdown Tables
 
-## ❌ Don't 
+## ❌ Don't
 
-- Don't use Bold in Header (eg: **  ## Don't ** )
-- Dont't Keep the File Names with Decimals (eg: Don't android-v2.0.0.mdx) instead keep it as `title` in frontMatter
+-   Don't use Bold in Header (eg: ** ## Don't ** )
+-   Dont't Keep the File Names with Decimals (eg: Don't android-v2.0.0.mdx) instead keep it as `title` in frontMatter
 
 ## 🎨 Customization
 
