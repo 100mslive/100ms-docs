@@ -154,6 +154,8 @@ You need a new auth token everytime you want to join a call. Here's a retrofit i
 
 ```
 
+[Link in  sample repo.](https://github.com/100mslive/hello-world-android/blob/main/app/src/main/java/com/example/myvideocallapp/api/HmsAuthTokenApi.kt)
+
 This is a HTTP POST call with a header called "subdomain", a JSON body with the format we'll see in TokenRequestWithCode and the server will respond with a TokenResponse, which we'll see shortly as well. The API url for requesting auth tokens is `https://prod-in.100ms.live/hmsapi/get-token`
 
 In this example, the retrofit api call is made with a coroutine suspend function but it could be made with RxJava or whatever asynchronous call mechanism you prefer.
