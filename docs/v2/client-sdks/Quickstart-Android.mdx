@@ -224,6 +224,12 @@ Advanced:
 You can also create links for specific roles, such as teachers or students each with their own privileges like being able to show video or not. Roles are yours to create and define! Their link handling a bit different too. [todo link to the second way of parsing links].
 If you're already dealing with roles, please go here [todo make a link] to see how to parse those links for ids.
 
+#### Creating the video call activity
+
+Create a new activity with File -> New -> Activity (might need to scroll down to see it) -> Blank Activity.
+Name it the VideoCallActivity.
+
+
 #### Creating an HMSConfig instance
 
 The username is whatever the user wants to called in the chat. You can ask this in the login screen.
@@ -251,6 +257,9 @@ The main ones you need to know about to get up and running are:
 2. `onPeerUpdate` which lets you know when someone else has joined the room.
 
 `onPeerUpdate` also gives you a `HMSPeer` object from which you can get the remote person's audio and video.
+
+// on join you can show the recyclerview.
+// onPeerUpdate you can add people to the screen.
 
 ```kotlin
       val hmsUpdateListener = object: HMSUpdateListener{
