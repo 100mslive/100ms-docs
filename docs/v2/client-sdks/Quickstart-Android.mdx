@@ -340,13 +340,17 @@ There are only three that we need to pay attention to for a barebones app:
 ```kotlin
 
     override fun onError(error: HMSException) { Log.d(TAG, "Error $error") }
+
     override fun onJoin(room: HMSRoom) { _roomState.postValue(getCurrentRoomState()) }
+    
     override fun onTrackUpdate(type: HMSTrackUpdate, track: HMSTrack, peer: HMSPeer) {
         _roomState.postValue(getCurrentRoomState())
     }
+    
     override fun onPeerUpdate(type: HMSPeerUpdate, peer: HMSPeer) {
         _roomState.postValue(getCurrentRoomState())
     }
+    // Advanced features
     override fun onMessageReceived(message: HMSMessage) {}
     override fun onRoleChangeRequest(request: HMSRoleChangeRequest) {}
     override fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) {}
