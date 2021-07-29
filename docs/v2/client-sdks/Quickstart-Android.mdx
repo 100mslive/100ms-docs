@@ -23,7 +23,9 @@ Here's an overview of what you'd do to get video conferencing working end to end
     - Everyone who opens the link (from the app built with the SDK) joins the same video chat.
 
 You can see the simplest android app repo that does this [here](https://github.com/100mslive/hello-world-android/).
-Or see one with all the advanced features that 100ms has to offer, [here](https://github.com/100mslive/100ms-android)
+Or see one with all the advanced features that 100ms has to offer [here](https://github.com/100mslive/100ms-android).
+
+If you were looking for an audio and video preview after the login but before the video call, 100ms provides an API for that too. It's called the preview API and you'll find more info about it here [todo add link].
 
 ## Supported Android API Levels
 
@@ -101,7 +103,7 @@ You'll need a 100ms account to create video rooms for you to join with the app.
 
 [Sign up](https://dashboard.100ms.live/register) for an account. Be sure to create a video conferencing room and take note of the url. 
 
-This is what we'll call the video call url.
+This is what we'll call the video call url and it should look something like this. https://yourname.app.100ms.live/preview/snippy-purple-mouse
 <!-- [todo add video here] -->
 <!-- ![](/docs/v2/getting-started-android/new-project-type.png) -->
 
@@ -114,12 +116,12 @@ val hmsSDK = HMSSDK
     .build()
 ```
 
-Advanced configurations can be seen at: [todo api reference]
+Advanced configurations can be seen at: [todo api reference].
 
 ## Joining a video call
 
 To join a video chat you need to call the `join` method on HMSSDK. This method takes two parameters.
-1. The HMSConfig (which contains username and authentication token as required parameters though advanced ones exist)
+1. The HMSConfig (which contains username and authentication token as required parameters though advanced ones exist).
 2. The HMSUpdateListeners which let you know when people join or leave or other things happen in the video chat.
 
 It would look like:
@@ -133,13 +135,18 @@ It would look like:
 Let's see how to get instances of these objects.
 
 #### Getting the HMSConfig ready
+
+The only required fields in HMSConfig are username and authToken.
+
 Username:
 This can be whatever the user decides. Take it in a login form.
-<!-- Currently working on this section -->
+
 Auth Token:
+A new auth token should be requested each time a call is joined.
 
-You need a new auth token everytime you want to join a call. Here's a retrofit interface for how to request one.
+The auth token API call is a HTTP POST call with a header called "subdomain", a JSON body with the format we'll see in `TokenRequestWithCode` and the server will respond with a `TokenResponse`, which we'll see shortly as well. The API url for requesting auth tokens is `https://prod-in.100ms.live/hmsapi/get-token`
 
+Here's a retrofit interface for how to request one.
 
 ```kotlin
 
@@ -159,23 +166,20 @@ You need a new auth token everytime you want to join a call. Here's a retrofit i
 
 [Link in  sample repo.](https://github.com/100mslive/hello-world-android/blob/main/app/src/main/java/com/example/myvideocallapp/api/HmsAuthTokenApi.kt)
 
-This is a HTTP POST call with a header called "subdomain", a JSON body with the format we'll see in TokenRequestWithCode and the server will respond with a TokenResponse, which we'll see shortly as well. The API url for requesting auth tokens is `https://prod-in.100ms.live/hmsapi/get-token`
 
-In this example, the retrofit api call is made with a coroutine suspend function but it could be made with RxJava or whatever asynchronous call mechanism you prefer.
+In this example, the retrofit api call is made off the main thread with a coroutine `suspend` function but it could be made with RxJava or whatever asynchronous call mechanism you prefer.
 
-Subdomain is the subdomain of the video call joining link which you got from the dashboard.
+#### Subdomain
+'Subdomain' is the subdomain of the video call joining link which you got from the dashboard. The value should be passed as a header in the API request with the key set to "subdomain".
 
-For example if the link is https://aniket.app.100ms.live/meeting/correct-horse-battery
+For example if the link is https://myname.app.100ms.live/meeting/correct-horse-battery
 
-Then the subdomain is: "aniket.app.100ms.live". Here's an easy function to extract the subdomain.
+Then the subdomain is: "myname.app.100ms.live". Here's an easy way to extract the subdomain.
 
 ```kotlin
-    private fun getSubdomainForMeetingUrl( meetingUrl : String ) : String {
-        return java.net.URI(meetingUrl).host
-    }
+    val meetingUrl = https://myname.app.100ms.live/meeting/correct-horse-battery
+    val subDomain = java.net.URI(meetingUrl).host
 ```
-
-As seen above it's passed as a header to the auth token request.
 
 The body of the request is a TokenRequestWithCode which is a class that looks like:
 
@@ -188,10 +192,10 @@ The body of the request is a TokenRequestWithCode which is a class that looks li
 
 Where code is the meeting code. Meeting codes are determined from the video call joining links which you get from the dashboard.
 
-For example if the link is: https://aniket.app.100ms.live/meeting/correct-horse-battery
+For example if the link is: https://yourname.app.100ms.live/meeting/correct-horse-battery
 
 Then the code is the string "correct-horse-battery".
-Here's an easy function to extract that part of the url:
+Here's an easy function to extract it from the url:
 
 ```kotlin
     private fun getCodeFromMeetingUrl(meetingUrl: String) : String {
@@ -215,20 +219,10 @@ TokenResponse looks like:
 
 Which means the server responds with a JSON object with the token key set to the token value.
 
-
-[todo remove this link https://www.notion.so/100ms/Room-Links-Create-room-from-Dashboard-3778aba899c347a8aba0bf6dc70ad948#236875b9fe0d4b94ba2211e34c2f3946]
-
-
 Advanced:
 
-You can also create links for specific roles, such as teachers or students each with their own privileges like being able to show video or not. Roles are yours to create and define! Their link handling a bit different too. [todo link to the second way of parsing links].
-If you're already dealing with roles, please go here [todo make a link] to see how to parse those links for ids.
-
-#### Creating the video call activity
-
-Create a new activity with File -> New -> Activity (might need to scroll down to see it) -> Blank Activity.
-Name it the VideoCallActivity.
-
+The same room can have multiple links. On the [dashboard.100ms.live](dashboard) once you sign up you can define roles such as teachers or students each with their own privileges like being able to show video or not. Roles are yours to create and define!
+One link can be given to students to join with their privileges and another to teachers to join with theirs.
 
 #### Creating an HMSConfig instance
 
@@ -245,6 +239,68 @@ val config = HMSConfig(
 
 username is the name that the user wants to be displayed while in the room.
 authToken, is token retrieved from an auth token API call, this must be made each time the HMSConfig is created to join a room.
+
+### Joining a Room
+
+Requesting permissions:
+
+Before you join a room, you'll need to add the following permissions to your manifest.
+
+```xml
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+```
+
+Since they're 'dangerous' level permissions, you'll have to request them at runtime as well.
+
+[Here's](https://developer.android.com/training/permissions/requesting#allow-system-manage-request-code) the relevant Google guide for it.
+
+With the username and authtoken retrieved, an HMSConfig instance can be created. Together with a new instance of the HMSUpdateListener interface you're ready to join a call.
+
+### What Happens On Join
+
+#### Audio
+The SDK will automatically connect everyone's audio including streaming yours when join succeeds. Nothing more is required for audio.
+
+#### Video
+The video of participants is being sent over the network as well, but you need to render it to the screen.
+
+We're going to use an [AndroidViewModel](https://developer.android.com/reference/android/arch/lifecycle/AndroidViewModel) to:
+1. Receive the auth token that we got earlier.
+2. Create an instance of `HMSSdk`.
+3. Make a join call with the `HMSSdk` object.
+4. Construct and listen to the `HMSUpdateListener` instance to keep track of people joining and leaving.
+
+
+Each item on the screen will represent a video track.
+
+We're going to show all videos in a grid recyclerview. The main components of which are:
+
+1. The Recyclerview.
+2. The adapter which contains the peers (people) `HMSPeer` and their video tracks `HMSVideoTrack` specifically.
+
+
+#### Audio calls only.
+If you wanted only an audio call with no indication of who's there, it's enough to just call join with a default implementation of the interface.
+
+So you might do:
+
+```kotlin
+
+            hmsSdk.join(
+                HMSConfig("name", authToken),
+                object : HMSUpdateListener {
+                    override fun onError(error: HMSException) {}
+                    override fun onJoin(room: HMSRoom) {}
+                    override fun onMessageReceived(message: HMSMessage) {}
+                    override fun onPeerUpdate(type: HMSPeerUpdate, peer: HMSPeer) {}
+                    override fun onRoleChangeRequest(request: HMSRoleChangeRequest) {}
+                    override fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) {}
+                    override fun onTrackUpdate(type: HMSTrackUpdate,track: HMSTrack,peer: HMSPeer) {}
+                }
+            )
+
+```
 
 
 ## Add event listeners
