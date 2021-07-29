@@ -110,7 +110,7 @@ const listener = {
     onReconnected() {
         // This is called when the connection reestablishment completed susccessfully
     },
-    onDeviceChange(deviceMap: HMSDeviceManager): void {
+    onDeviceChange(deviceMap: DeviceMap): void {
         // This is called once after join is called and everytime a device is either added or removed
         // The deviceMap contains a map of all the devices connected
     },
@@ -168,7 +168,7 @@ interface HMSMessage {
     message: string;
 }
 
-interface HMSDeviceManager {
+interface DeviceMap {
     audioInput: InputDeviceInfo[];
     audioOutput: MediaDeviceInfo[];
     videoInput: InputDeviceInfo[];
@@ -198,6 +198,9 @@ enum HMSPeerUpdate {
     PEER_LEFT = 1,
     BECAME_DOMINANT_SPEAKER = 4,
     RESIGNED_DOMINANT_SPEAKER = 5,
+    STARTED_SPEAKING = 6,
+    STOPPED_SPEAKING = 7,
+    ROLE_UPDATED = 8
 }
 
 //this is the enum for type parameter in onTrackUpdate
@@ -311,7 +314,7 @@ const previewListener = {
         // this will be called if there were any errors accessing user's camera or mic
         // or if there is network disconnection
     },
-    onDeviceChange(deviceMap: HMSDeviceManager): void {
+    onDeviceChange(deviceMap: DeviceMap): void {
         // This is called once after preview is called and everytime a device is either added or removed
         // The deviceMap contains a map of all the devices connected
     }
