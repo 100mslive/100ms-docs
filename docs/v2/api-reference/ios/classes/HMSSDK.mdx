@@ -1,0 +1,113 @@
+---
+title: HMSSDK
+nav: 22
+---
+
+**CLASS**
+```swift
+@objcMembers public class HMSSDK: NSObject
+```
+The public interface of 100ms SDK. Create an instance of HMSSDK to start using the SDK.
+**Key Concepts**
+**Room** - A room represents a real-time audio, video session, the basic building block of the 100mslive Video SDK
+**Track** - A track represents either the audio or video that makes up a stream
+**Peer** - A peer represents all participants connected to a room. Peers can be "local" or "remote"
+**Broadcast** - A local peer can send any message/data to all remote peers in the room
+HMSSDK has other methods which the client app can use to get more info about the Room, Peer and Tracks
+## Properties
+### localPeer
+```swift
+public var localPeer: HMSLocalPeer?
+```
+Returns the local peer, which contains the local tracks
+### remotePeers
+```swift
+public var remotePeers: [HMSRemotePeer]?
+```
+Returns all remote peers in the room
+### roles
+```swift
+public var roles: [HMSRole]
+```
+Returns all roles in the room
+### room
+```swift
+public var room: HMSRoom?
+```
+Returns the room which was joined
+### trackSettings
+```swift
+public var trackSettings: HMSTrackSettings = HMSTrackSettings()
+```
+to set a track settings different from default
+### analyticsLevel
+```swift
+public var analyticsLevel: HMSAnalyticsEventLevel = .error
+```
+set the analytical level
+### logLevel
+```swift
+public var logLevel: HMSLogLevel = .error
+```
+set the logging level
+### logger
+```swift
+public weak var logger: HMSLogger?
+```
+## Methods
+### join(config:delegate:)
+```swift
+public func join(config: HMSConfig, delegate: HMSUpdateListener)
+```
+To join a room created, clients need to create a HMSConfig instance and use that instance to call `join` method of HMSSDK
+Use the HMSConfig and HMSUpdateListener instances to call `join` method on the instance of HMSSDK.
+Once Join succeeds, all the callbacks keep coming on every change in the room and the app can react accordingly
+- Parameters:
+  - config: the config object instance which contains joining information
+  - delegate: the update listener object which will receive all callbacks
+#### Parameters
+| Name | Description |
+| ---- | ----------- |
+| config | the config object instance which contains joining information |
+| delegate | the update listener object which will receive all callbacks |
+### leave()
+```swift
+public func leave()
+```
+Call the `leave` method on the HMSSDK instance to leave a room
+### preview(config:delegate:)
+```swift
+public func preview(config: HMSConfig, delegate: HMSPreviewListener)
+```
+### send(message:)
+```swift
+public func send(message: HMSMessage)
+```
+### add(delegate:)
+```swift
+public func add(delegate: HMSUpdateListener)
+```
+### remove(delegate:)
+```swift
+public func remove(delegate: HMSUpdateListener)
+```
+### changeRole(for:to:force:)
+```swift
+public func changeRole(for peer:HMSRemotePeer, to role: HMSRole, force: Bool = false)
+```
+### accept(changeRole:)
+```swift
+public func accept(changeRole request: HMSRoleChangeRequest)
+```
+### build(block:)
+```swift
+public static func build(block: ((HMSSDK) -> Void)? = nil) -> HMSSDK
+```
+this will instantiate an HMSSDK object
+- Parameter block: pass a block with different settings as required
+- Returns: an instance of HMSSDK object
+#### Parameters
+| Name | Description |
+| ---- | ----------- |
+| block | pass a block with different settings as required |
+ent settings as required |

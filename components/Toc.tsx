@@ -32,6 +32,7 @@ const TocContainer = ({ toc }: TocProps) => (
                 height: calc(100vh - 80px);
                 overflow-y: auto;
                 max-width: 250px;
+                margin-right: 40px;
             }
             .head {
                 font-weight: bold;
