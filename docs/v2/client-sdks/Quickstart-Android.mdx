@@ -278,29 +278,103 @@ We're going to show all videos in a grid recyclerview. The main components of wh
 
 1. The Recyclerview.
 2. The adapter which contains the peers (people) `HMSPeer` and their video tracks `HMSVideoTrack` specifically.
+3. The `PeerViewHolder` which will bind the items from the adapter into the video and text of each person's tile.
 
+Separately we need to get information about our peers and their tracks to the adapter. This will come from the update listeners in the viewmodel.
 
-#### Audio calls only.
-If you wanted only an audio call with no indication of who's there, it's enough to just call join with a default implementation of the interface.
+Let's take a look at how to gather the list of information to display and then go into the recyclerview details.
 
-So you might do:
+Since peers can have multiple video tracks, such as their own video plus a screen share, what we're going to need is a list of items of type `TrackPeerMap` which will look like this.
 
 ```kotlin
 
-            hmsSdk.join(
-                HMSConfig("name", authToken),
-                object : HMSUpdateListener {
-                    override fun onError(error: HMSException) {}
-                    override fun onJoin(room: HMSRoom) {}
-                    override fun onMessageReceived(message: HMSMessage) {}
-                    override fun onPeerUpdate(type: HMSPeerUpdate, peer: HMSPeer) {}
-                    override fun onRoleChangeRequest(request: HMSRoleChangeRequest) {}
-                    override fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) {}
-                    override fun onTrackUpdate(type: HMSTrackUpdate,track: HMSTrack,peer: HMSPeer) {}
-                }
-            )
+data class TrackPeerMap(
+    val videoTrack: HMSVideoTrack?,
+    val peer: HMSPeer
+)
+```
+
+We need a list of these in a LiveData that we'll update as people come and go and start and stop screenshares.
+
+```kotlin
+    private val _roomState = MutableLiveData<List<TrackPeerMap>>(emptyList())
+    val roomState: LiveData<List<TrackPeerMap>> = _roomState
+```
+
+We'll have the AndroidViewModel implement HMSUpdateListener, create the hmsSDK and call join on it.
+
+```kotlin
+
+class VideoCallVm(authToken: String?, application: Application) : AndroidViewModel(application),
+    HMSUpdateListener {
+
+    private val _roomState = MutableLiveData<List<TrackPeerMap>>(emptyList())
+    val roomState: LiveData<List<TrackPeerMap>> = _roomState
+
+    private val TAG = "VideoCallVm"
+
+    private val hmsSdk = HMSSDK
+        .Builder(application)
+        .build()
+
+    init {
+        if (authToken != null) {
+            Log.d(TAG, "Joining with $authToken")
+            hmsSdk.join(HMSConfig("name", authToken), this)
+        } else {
+            Log.e(TAG, "There was an error since the auth token was null.")
+        }
+    }
+
+...
+```
+
+And since the viewmodel implements the listener it'll have to override the methods.
+
+There are only three that we need to pay attention to for a barebones app:
+
+1. onJoin - which notifies you when joining the room suceeded.
+2. onTrackUpate - which is called when a video/audio/screenshare track is added to a peer or they mute/unmute.
+3. onPeerUpdate - which notifies when a person joins or leaves the chat and more.
+
+```kotlin
+
+    override fun onError(error: HMSException) { Log.d(TAG, "Error $error") }
+    override fun onJoin(room: HMSRoom) { _roomState.postValue(getCurrentRoomState()) }
+    override fun onTrackUpdate(type: HMSTrackUpdate, track: HMSTrack, peer: HMSPeer) {
+        _roomState.postValue(getCurrentRoomState())
+    }
+    override fun onPeerUpdate(type: HMSPeerUpdate, peer: HMSPeer) {
+        _roomState.postValue(getCurrentRoomState())
+    }
+    override fun onMessageReceived(message: HMSMessage) {}
+    override fun onRoleChangeRequest(request: HMSRoleChangeRequest) {}
+    override fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) {}
 
 ```
+
+The function `getCurrentRoomState` that all of those listeners is calling always does the same thing. It requests a list of active peers from the sdk and puts them in a TrackPeerMap that we saw before.
+
+Anyone with a screenshare will get two tiles. One for their own video and one for the screenshare. Here it is.
+
+```kotlin
+
+
+    private fun getCurrentRoomState(): List<TrackPeerMap> {
+        // Convert all the peers into a map of them and their tracks.
+        val trackAndPeerMap = hmsSdk.getPeers().flatMap {
+            val screenShare = it.auxiliaryTracks.find { auxTrack -> auxTrack is HMSVideoTrack }
+            if (screenShare is HMSVideoTrack) {
+                listOf(TrackPeerMap(it.videoTrack, it), TrackPeerMap(screenShare, it))
+            } else {
+                listOf(TrackPeerMap(it.videoTrack, it))
+            }
+        }
+
+        return trackAndPeerMap
+    }
+```
+
 
 
 ## Add event listeners
