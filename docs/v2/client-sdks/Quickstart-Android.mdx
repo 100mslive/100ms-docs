@@ -7,20 +7,22 @@ nav: 10
 
 Welcome to 100ms!
 
-100ms makes an SDK (for android, ios and web) to abstract away the complexities of video conferencing. It helps  you to build your own video conferencing app.
+100ms makes an SDK (for android, ios and web) to abstract away the complexities of video conferencing. It helps you embed video conferencing into your own app.
 
 Note: This is the guide for joining rooms without roles. For the meeting links created from the dashboard and not a custom server implementation.
 
-## How it works end to end
+## Sample App End to End
 
-This guide will help you create your own stunning video/audio conferencing app.
+This guide will help you create your own stunning video/audio conferencing app from scratch. 
 
-Here's an overview of what you'd do to get video conferencing working end to end.
+Here's an overview of what you'd do to get video conferencing working end to end in an app from scratch.
 
 1. Add the SDK to your app.
 2. Build out the login and video room activities.
 3. Sign up for your own dashboard @ [100ms](https://dashboard.100ms.live/register) to create meeting links.
     - Everyone who opens the link (from the app built with the SDK) joins the same video chat.
+
+
 
 You can see the simplest android app repo that does this [here](https://github.com/100mslive/hello-world-android/).
 Or see one with all the advanced features that 100ms has to offer [here](https://github.com/100mslive/100ms-android).
@@ -289,7 +291,7 @@ Relevant sections are highlighted.
 
 The code is for the entire AndroidViewModel for video calls, named VideoCallVm.
 
-```kotlin{2-5}
+```kotlin{2-5}:VideoCallVm.kt
 
 data class TrackPeerMap(
     val videoTrack: HMSVideoTrack?,
@@ -354,7 +356,7 @@ class VideoCallVm(authToken: String?, application: Application) : AndroidViewMod
 
 We need a list of these in a LiveData that we'll update as people come and go and start and stop screenshares.
 
-```kotlin{10-11}
+```kotlin{10-11}:VideoCallVm.kt
 
 data class TrackPeerMap(
     val videoTrack: HMSVideoTrack?,
@@ -418,7 +420,7 @@ class VideoCallVm(authToken: String?, application: Application) : AndroidViewMod
 ```
 We'll have the AndroidViewModel implement HMSUpdateListener, create the hmsSDK and call join on it.
 
-```kotlin{8,15-17,22}
+```kotlin{8,15-17,22}:VideoCallVm.kt
 
 data class TrackPeerMap(
     val videoTrack: HMSVideoTrack?,
@@ -496,7 +498,7 @@ The rest are advanced cases which we can ignore in a quick start such as:
 6. onRoomUpdate - being notified when the SDK mutes the room on incoming regular phone calls.
 7. onError - if something went wrong during the chat.
 
-```kotlin{28-38}
+```kotlin{28-38}:VideoCallVm.kt
 
 data class TrackPeerMap(
     val videoTrack: HMSVideoTrack?,
@@ -563,7 +565,7 @@ The function `getCurrentRoomState` that all of those listeners is calling always
 
 Anyone with a screenshare will get two tiles. One for their own video and one for the screenshare. Here it is.
 
-```kotlin{47-59}
+```kotlin{47-59}:VideoCallVm.kt
 
 data class TrackPeerMap(
     val videoTrack: HMSVideoTrack?,
@@ -667,14 +669,15 @@ Here's the layout for the holder named `layout_peer_item.xml`.
         tools:text="Name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
 ```
 
 Here's the `PeerViewHolder.kt`
 
-For initialization 
+The `webrtc.org.SurfaceViewRenderer` would work better with the hardware scaler enabled and the scaling type set to `SCALE_ASPECT_FIT`. Other scale types can be explored [here](https://chromium.googlesource.com/external/webrtc/trunk/talk/+/cdd35e557b600d1f7dbe9c99531a42adf194f973/app/webrtc/java/android/org/webrtc/RendererCommon.java#38).
 
-```kotlin
 
+```kotlin{7-12}:PeerViewHolder.kt
 
 class PeerViewHolder(view: View, private val getItem: (Int) -> TrackPeerMap) :
     RecyclerView.ViewHolder(view) {
@@ -698,17 +701,68 @@ class PeerViewHolder(view: View, private val getItem: (Int) -> TrackPeerMap) :
         }
     }
 
+    fun stopSurfaceView() {
+        itemView.findViewById<SurfaceViewRenderer>(R.id.videoSurfaceView).apply {
+
+            if (sinkAdded && adapterPosition != -1) {
+                getItem(adapterPosition).videoTrack?.removeSink(this)
+            }
+            release()
+            sinkAdded = false
+        }
+    }
+
     fun bind(peer: TrackPeerMap) {
         if (!sinkAdded) {
             itemView.findViewById<SurfaceViewRenderer>(R.id.videoSurfaceView).apply {
-                peer.videoTrack?.let {
+                peer.videoTrack?.let { hmsVideoTrack ->
                     sinkAdded = true
-                    it.addSink(this)
+                    hmsVideoTrack.addSink(this)
                 }
             }
         }
 
         itemView.findViewById<TextView>(R.id.peerName).text = peer.peer.name
+    }
+
+}
+```
+
+`startSurfaceView` and the corresponding `stopSurfaceView` are the calls that initialize the SurfaceView to play video. These are only required when there is actually a video to play.
+The user might have turned the video off.
+
+The adapter will decide when to call these, based on whether the holder is visible or not.
+
+##### Playing the peer's video
+
+`startSurfaceView`
+
+Each time the video is going to be bound to the `SurfaceView` the init method has to be called with the `SharedEglContext.context` context only. Creating a new context here will cause the video to fail to display.
+
+The `HMSVideoTrack` from the `TrackPeerMap` to call its addSink method with the SurfaceView as the argument to show the video. [todo mark this as important.]
+
+```kotlin{14-22}:PeerViewHolder.kt
+
+class PeerViewHolder(view: View, private val getItem: (Int) -> TrackPeerMap) :
+    RecyclerView.ViewHolder(view) {
+    private val TAG = PeerViewHolder::class.java.simpleName
+    private var sinkAdded = false
+
+    init {
+        itemView.findViewById<SurfaceViewRenderer>(R.id.videoSurfaceView).apply {
+            setEnableHardwareScaler(true)
+            setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FIT)
+        }
+    }
+
+    fun startSurfaceView() {
+        itemView.findViewById<SurfaceViewRenderer>(R.id.videoSurfaceView).apply {
+            init(SharedEglContext.context, null)
+            getItem(adapterPosition).videoTrack?.let {
+                sinkAdded = true
+                it.addSink(this)
+            }
+        }
     }
 
     fun stopSurfaceView() {
@@ -721,8 +775,83 @@ class PeerViewHolder(view: View, private val getItem: (Int) -> TrackPeerMap) :
             sinkAdded = false
         }
     }
+
+    fun bind(peer: TrackPeerMap) {
+        if (!sinkAdded) {
+            itemView.findViewById<SurfaceViewRenderer>(R.id.videoSurfaceView).apply {
+                peer.videoTrack?.let { hmsVideoTrack ->
+                    sinkAdded = true
+                    hmsVideoTrack.addSink(this)
+                }
+            }
+        }
+
+        itemView.findViewById<TextView>(R.id.peerName).text = peer.peer.name
+    }
+
 }
 ```
+
+##### Stopping the video when it's removed
+
+`stopSurfaceView`
+
+Each time the ViewHolder is removed from the screen, for eg if a peer leaves the call. The video output has to be removed from the sink and the SurfaceView released. `release()` is the corresponding closing call to `init` on the SurfaceView.
+
+If an HMSVideoTrack was bound to this SurfaceView, `removeSink` has to be called on it.
+
+```kotlin{24-33}:PeerViewHolder.kt
+
+class PeerViewHolder(view: View, private val getItem: (Int) -> TrackPeerMap) :
+    RecyclerView.ViewHolder(view) {
+    private val TAG = PeerViewHolder::class.java.simpleName
+    private var sinkAdded = false
+
+    init {
+        itemView.findViewById<SurfaceViewRenderer>(R.id.videoSurfaceView).apply {
+            setEnableHardwareScaler(true)
+            setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FIT)
+        }
+    }
+
+    fun startSurfaceView() {
+        itemView.findViewById<SurfaceViewRenderer>(R.id.videoSurfaceView).apply {
+            init(SharedEglContext.context, null)
+            getItem(adapterPosition).videoTrack?.let {
+                sinkAdded = true
+                it.addSink(this)
+            }
+        }
+    }
+
+    fun stopSurfaceView() {
+        itemView.findViewById<SurfaceViewRenderer>(R.id.videoSurfaceView).apply {
+
+            if (sinkAdded && adapterPosition != -1) {
+                getItem(adapterPosition).videoTrack?.removeSink(this)
+            }
+            release()
+            sinkAdded = false
+        }
+    }
+
+    fun bind(peer: TrackPeerMap) {
+        if (!sinkAdded) {
+            itemView.findViewById<SurfaceViewRenderer>(R.id.videoSurfaceView).apply {
+                peer.videoTrack?.let { hmsVideoTrack ->
+                    sinkAdded = true
+                    hmsVideoTrack.addSink(this)
+                }
+            }
+        }
+
+        itemView.findViewById<TextView>(R.id.peerName).text = peer.peer.name
+    }
+
+}
+```
+
+
 
 1. The Recyclerview.
 2. The adapter which contains the peers (people) `HMSPeer` and their video tracks `HMSVideoTrack` specifically.
