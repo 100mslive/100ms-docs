@@ -268,6 +268,10 @@ The video of participants is being sent over the network as well, but you need t
 What we're going for is for a view like this:
 [todo add a video call grid with at least three participants]
 
+This mainly involves four classes. The ViewModel which is responsible for getting all the data and keeping it upto date, the activity which sends data from the viewmodel to the recyclerview adapter, the recyclerview adapter itself and viewholder for each item.
+
+#### The ViewModel.
+
 We're going to use an [AndroidViewModel](https://developer.android.com/reference/android/arch/lifecycle/AndroidViewModel) to:
 1. Receive the auth token that we got earlier.
 2. Create an instance of `HMSSdk`.
@@ -275,21 +279,15 @@ We're going to use an [AndroidViewModel](https://developer.android.com/reference
 4. Construct and listen to the `HMSUpdateListener` instance to keep track of people joining and leaving.
 
 
-Each item on the screen will represent a video track.
+Each item on the screen will represent a video track (the person's video or a screenshare).
 
-We're going to show all videos in a grid recyclerview. The main components of which are:
-
-1. The Recyclerview.
-2. The adapter which contains the peers (people) `HMSPeer` and their video tracks `HMSVideoTrack` specifically.
-3. The `PeerViewHolder` which will bind the items from the adapter into the video and text of each person's tile.
-
-Separately we need to get information about our peers and their tracks to the adapter. This will come from the update listeners in the viewmodel.
-
-Let's take a look at how to gather the list of information to display and then go into the recyclerview details.
+We're going to show all videos in a grid recyclerview.
 
 Since peers can have multiple video tracks, such as their own video plus a screen share, what we're going to need is a list of items of type `TrackPeerMap` which will look like this.
 
-Relevant sections are highlighted. The code is for the entire AndroidViewModel for video calls, named VideoCallVm.
+Relevant sections are highlighted.
+
+The code is for the entire AndroidViewModel for video calls, named VideoCallVm.
 
 ```kotlin{2-5}
 
@@ -491,7 +489,7 @@ There are only three that we need to pay attention to for a barebones app:
 2. onTrackUpate - which is called when a video/audio/screenshare track is added to a peer or they mute/unmute.
 3. onPeerUpdate - which notifies when a person joins or leaves the chat and more.
 
-The rest are advaced cases which we can ignore in a quick start such as:
+The rest are advanced cases which we can ignore in a quick start such as:
 
 4. onMessageReceived - diplaying a chat.
 5. onRoleChangeRequest - working with custom roles.
@@ -627,3 +625,105 @@ class VideoCallVm(authToken: String?, application: Application) : AndroidViewMod
     }
 }
 ```
+
+#### The PeerViewHolder
+
+Since we're showing all these items on a RecyclerView, we need to define a RecyclerView.ViewHolder which will show the UI per item.
+
+Now lets create the PeerViewHolder. This is the RecyclerView.ViewHolder which will render each person's video tile for the RecyclerView.
+
+It's important to note what we're using to render the view is a SurfaceViewRenderer and not the one within Android. This one is from `org.webrtc.SurfaceViewRenderer`. We got this from the import we added earlier for `implementation 'org.webrtc:google-webrtc:1.0.32006'`.
+
+Here's the layout for the holder named `layout_peer_item.xml`.
+
+
+```xml{5}:layout_peer_item.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <org.webrtc.SurfaceViewRenderer
+        android:id="@+id/videoSurfaceView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/peerName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/cardview_shadow_start_color"
+        android:gravity="center"
+        android:padding="5dp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/videoSurfaceView"
+        app:layout_constraintLeft_toLeftOf="@id/videoSurfaceView"
+        app:layout_constraintRight_toRightOf="@id/videoSurfaceView"
+        tools:text="Name" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+```
+
+Here's the `PeerViewHolder.kt`
+
+For initialization 
+
+```kotlin
+
+
+class PeerViewHolder(view: View, private val getItem: (Int) -> TrackPeerMap) :
+    RecyclerView.ViewHolder(view) {
+    private val TAG = PeerViewHolder::class.java.simpleName
+    private var sinkAdded = false
+
+    init {
+        itemView.findViewById<SurfaceViewRenderer>(R.id.videoSurfaceView).apply {
+            setEnableHardwareScaler(true)
+            setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FIT)
+        }
+    }
+
+    fun startSurfaceView() {
+        itemView.findViewById<SurfaceViewRenderer>(R.id.videoSurfaceView).apply {
+            init(SharedEglContext.context, null)
+            getItem(adapterPosition).videoTrack?.let {
+                sinkAdded = true
+                it.addSink(this)
+            }
+        }
+    }
+
+    fun bind(peer: TrackPeerMap) {
+        if (!sinkAdded) {
+            itemView.findViewById<SurfaceViewRenderer>(R.id.videoSurfaceView).apply {
+                peer.videoTrack?.let {
+                    sinkAdded = true
+                    it.addSink(this)
+                }
+            }
+        }
+
+        itemView.findViewById<TextView>(R.id.peerName).text = peer.peer.name
+    }
+
+    fun stopSurfaceView() {
+        itemView.findViewById<SurfaceViewRenderer>(R.id.videoSurfaceView).apply {
+
+            if (sinkAdded && adapterPosition != -1) {
+                getItem(adapterPosition).videoTrack?.removeSink(this)
+            }
+            release()
+            sinkAdded = false
+        }
+    }
+}
+```
+
+1. The Recyclerview.
+2. The adapter which contains the peers (people) `HMSPeer` and their video tracks `HMSVideoTrack` specifically.
+3. The `PeerViewHolder` which will bind the items from the adapter into the video and text of each person's tile.
