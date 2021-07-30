@@ -632,6 +632,16 @@ class VideoCallVm(authToken: String?, application: Application) : AndroidViewMod
 }
 ```
 
+#### Displaying the Data
+
+The ViewHolder got all the data and will keep it updated.
+
+To display it, we'll need:
+
+1. The Recyclerview.
+2. The [adapter](#the-peeradapter) which contains the peers (people) `HMSPeer` and their video tracks `HMSVideoTrack` specifically.
+3. The [`PeerViewHolder`](the-peerviewholder) which will bind the items from the adapter into the video and text of each person's tile.
+
 #### The PeerViewHolder
 
 Since we're showing all these items on a RecyclerView, we need to define a RecyclerView.ViewHolder which will show the UI per item.
@@ -855,8 +865,214 @@ class PeerViewHolder(view: View, private val getItem: (Int) -> TrackPeerMap) :
 }
 ```
 
+#### The PeerAdapter
+
+The PeerAdapter is a standard ListAdapter.
+
+##### Notifying changes when peers change
+Its DiffUtil callback will simplify only updating the list when something has changed.
+
+```kotlin{2,4-16}:PeerAdapter.kt
+
+class PeerAdapter : ListAdapter<TrackPeerMap, PeerViewHolder>(DIFFUTIL_CALLBACK) {
+
+    companion object {
+        val DIFFUTIL_CALLBACK = object : DiffUtil.ItemCallback<TrackPeerMap>() {
+            override fun areItemsTheSame(
+                oldItem: TrackPeerMap,
+                newItem: TrackPeerMap
+            ) = oldItem.peer.peerID == newItem.peer.peerID
+
+            override fun areContentsTheSame(
+                oldItem: TrackPeerMap,
+                newItem: TrackPeerMap
+            ) = oldItem == newItem
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeerViewHolder {
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.layout_peer_item, parent, false)
+        return PeerViewHolder(view, ::getItem)
+    }
+
+    override fun onBindViewHolder(holder: PeerViewHolder, position: Int) {
+        getItem(position)?.let { holder.bind(it) }
+    }
+
+    override fun onViewAttachedToWindow(holder: PeerViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        holder.startSurfaceView()
+    }
+
+    override fun onViewDetachedFromWindow(holder: PeerViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+        holder.stopSurfaceView()
+    }
+
+    override fun onViewRecycled(holder: PeerViewHolder) {
+        super.onViewRecycled(holder)
+        holder.stopSurfaceView()
+    }
+}
+```
+
+##### Starting and Stopping SurfaceView Videos
+
+The adapter knows when the views have been removed from the windows so we let it control the initialization and cleanup of the SurfaceViews. These are standard Adapter methods.
+
+```kotlin{28-41}:PeerAdapter.kt
+
+class PeerAdapter : ListAdapter<TrackPeerMap, PeerViewHolder>(DIFFUTIL_CALLBACK) {
+
+    companion object {
+        val DIFFUTIL_CALLBACK = object : DiffUtil.ItemCallback<TrackPeerMap>() {
+            override fun areItemsTheSame(
+                oldItem: TrackPeerMap,
+                newItem: TrackPeerMap
+            ) = oldItem.peer.peerID == newItem.peer.peerID
+
+            override fun areContentsTheSame(
+                oldItem: TrackPeerMap,
+                newItem: TrackPeerMap
+            ) = oldItem == newItem
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeerViewHolder {
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.layout_peer_item, parent, false)
+        return PeerViewHolder(view, ::getItem)
+    }
+
+    override fun onBindViewHolder(holder: PeerViewHolder, position: Int) {
+        getItem(position)?.let { holder.bind(it) }
+    }
+
+    override fun onViewAttachedToWindow(holder: PeerViewHolder) {
+        super.onViewAttachedToWindow(holder)
+        holder.startSurfaceView()
+    }
+
+    override fun onViewDetachedFromWindow(holder: PeerViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+        holder.stopSurfaceView()
+    }
+
+    override fun onViewRecycled(holder: PeerViewHolder) {
+        super.onViewRecycled(holder)
+        holder.stopSurfaceView()
+    }
+}
+```
+
+#### Activity for Video Calls
+
+The activity creates an instance of the PeerAdapter and the ViewModel. The auth token was taken from the login activity on the earlier screen and passed forward in a bundle.
+
+The Activity takes the auth token out of the bundle and uses it to initialize the ViewModel.
+
+```kotlin{11-19}:VideoCallActivity.kt
+
+const val BUNDLE_AUTH_TOKEN = "100ms-auth-token-bundle-key"
+
+class VideoCallActivity : AppCompatActivity() {
+    private val TAG = VideoCallActivity::class.java.simpleName
+    private val peerAdapter = PeerAdapter()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_video_call)
+        val key = intent?.extras?.getString(BUNDLE_AUTH_TOKEN)
+
+        val vm: VideoCallVm by viewModels {
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                    return VideoCallVm(key, application) as T
+                }
+            }
+        }
+
+        findViewById<RecyclerView>(R.id.recyclerView).apply {
+            layoutManager = GridLayoutManager(this@VideoCallActivity, 2)
+            adapter = peerAdapter
+        }
+
+        vm.videoCallParticipants.observe(this, {
+            peerAdapter.submitList(it)
+        })
+    }
+}
+```
+
+The recyclerview for the video call participants is initialized with a GridAdapter that's set to show two people per row and the adapter is set to the `PeerAdapter.kt`.
 
 
-1. The Recyclerview.
-2. The adapter which contains the peers (people) `HMSPeer` and their video tracks `HMSVideoTrack` specifically.
-3. The `PeerViewHolder` which will bind the items from the adapter into the video and text of each person's tile.
+```kotlin{21-24}:VideoCallActivity.kt
+
+const val BUNDLE_AUTH_TOKEN = "100ms-auth-token-bundle-key"
+
+class VideoCallActivity : AppCompatActivity() {
+    private val TAG = VideoCallActivity::class.java.simpleName
+    private val peerAdapter = PeerAdapter()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_video_call)
+        val key = intent?.extras?.getString(BUNDLE_AUTH_TOKEN)
+
+        val vm: VideoCallVm by viewModels {
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                    return VideoCallVm(key, application) as T
+                }
+            }
+        }
+
+        findViewById<RecyclerView>(R.id.recyclerView).apply {
+            layoutManager = GridLayoutManager(this@VideoCallActivity, 2)
+            adapter = peerAdapter
+        }
+
+        vm.videoCallParticipants.observe(this, {
+            peerAdapter.submitList(it)
+        })
+    }
+}
+```
+
+
+The videoCallParticipants list is observed and any changes sent to the ListAdapter's `submitList`.
+
+```kotlin{26-29}:VideoCallActivity.kt
+
+const val BUNDLE_AUTH_TOKEN = "100ms-auth-token-bundle-key"
+
+class VideoCallActivity : AppCompatActivity() {
+    private val TAG = VideoCallActivity::class.java.simpleName
+    private val peerAdapter = PeerAdapter()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_video_call)
+        val key = intent?.extras?.getString(BUNDLE_AUTH_TOKEN)
+
+        val vm: VideoCallVm by viewModels {
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                    return VideoCallVm(key, application) as T
+                }
+            }
+        }
+
+        findViewById<RecyclerView>(R.id.recyclerView).apply {
+            layoutManager = GridLayoutManager(this@VideoCallActivity, 2)
+            adapter = peerAdapter
+        }
+
+        vm.videoCallParticipants.observe(this, {
+            peerAdapter.submitList(it)
+        })
+    }
+}
+```
