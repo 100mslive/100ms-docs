@@ -273,6 +273,22 @@ hms.startScreenshare(onStop);
 hms.stopScreensare();
 ```
 
+## Sending and receiving messages
+
+You can broadcase a message from local peer to all remote peers in the room.
+
+When you(the local peer) receives a message from others(any remote peer), func `onMessageReceived(message: HMSMessage)` of HMSUpdateListener is invoked.
+
+```js
+const message = "Hello World!"
+sdk.sendMessage(HMSMessageType.CHAT, message)
+
+function onMessage(msg) {
+    const sender = msg.sender; // peer id of sender
+    const message = msg.message; // string message sent by remote
+}
+```
+
 ## Leave
 
 ```jsx

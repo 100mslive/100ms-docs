@@ -183,6 +183,9 @@ console.log(hmsStore.getState(selectTrackAudioByID(track.id)));
 
 ## Notifications
 
+Notifications can be used to display toast to user about activities happening in the room, such as peer join/leave or
+new messages. It can also be used to know about any mid call sdk level error.
+
 <Tabs id="notif" items={['Code', 'Interface']} />
 
 <Tab id='notif-0' >
@@ -210,11 +213,11 @@ const unsub = hmsNotifications.onNotification((notification) => {
         case HMSNotificationTypes.ERROR:
             console.log("[Error]", notification.data);
             break;
-        case HMSNotificationTypes.RECONNECTED:
-            console.log('[Reconnected]');
-            break;
         case HMSNotificationTypes.RECONNECTING:
             console.log('[Reconnecting]', notification.data);
+            break;
+        case HMSNotificationTypes.RECONNECTED:
+            console.log('[Reconnected]');
             break;
         default:
             break;
