@@ -39,9 +39,9 @@ If you were looking for an audio and video preview after the login but before th
 
 ## Building the app
 
-### Adding the SDK
+## Adding the SDK
 
-#### 1. Add dependency to 100ms lib
+### 1. Add dependency to 100ms lib
 
 -   Add the JitPack repository to your build file. Add it in your root `build.gradle` at the end of repositories of `allprojects`:
 
@@ -112,6 +112,18 @@ You'll need a 100ms account to create video rooms for you to join with the app.
 This is what we'll call the video call url and it should look something like this. https://yourname.app.100ms.live/preview/snippy-purple-mouse
 <!-- [todo add video here] -->
 <!-- ![](/docs/v2/getting-started-android/new-project-type.png) -->
+
+## Login
+
+This will be divided into a `LoginActivity` and a `LoginViewModel`
+
+### LoginViewModel
+
+Building the LoginViewModel
+
+
+
+
 
 ## Create and instantiate 100ms SDK
 
@@ -972,13 +984,15 @@ The activity creates an instance of the PeerAdapter and the ViewModel. The auth 
 
 The Activity takes the auth token out of the bundle and uses it to initialize the ViewModel.
 
-```kotlin{11-19}:VideoCallActivity.kt
+```kotlin{13-21}:VideoCallActivity.kt
 
 const val BUNDLE_AUTH_TOKEN = "100ms-auth-token-bundle-key"
+const val BUNDLE_NAME = "100ms-user-name-bundle-key"
 
 class VideoCallActivity : AppCompatActivity() {
     private val TAG = VideoCallActivity::class.java.simpleName
     private val peerAdapter = PeerAdapter()
+    private val NUM_PEERS_PER_ROW = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -994,7 +1008,7 @@ class VideoCallActivity : AppCompatActivity() {
         }
 
         findViewById<RecyclerView>(R.id.recyclerView).apply {
-            layoutManager = GridLayoutManager(this@VideoCallActivity, 2)
+            layoutManager = GridLayoutManager(this@VideoCallActivity, NUM_PEERS_PER_ROW)
             adapter = peerAdapter
         }
 
@@ -1008,13 +1022,15 @@ class VideoCallActivity : AppCompatActivity() {
 The recyclerview for the video call participants is initialized with a GridAdapter that's set to show two people per row and the adapter is set to the `PeerAdapter.kt`.
 
 
-```kotlin{21-24}:VideoCallActivity.kt
+```kotlin{23-26}:VideoCallActivity.kt
 
 const val BUNDLE_AUTH_TOKEN = "100ms-auth-token-bundle-key"
+const val BUNDLE_NAME = "100ms-user-name-bundle-key"
 
 class VideoCallActivity : AppCompatActivity() {
     private val TAG = VideoCallActivity::class.java.simpleName
     private val peerAdapter = PeerAdapter()
+    private val NUM_PEERS_PER_ROW = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -1030,7 +1046,7 @@ class VideoCallActivity : AppCompatActivity() {
         }
 
         findViewById<RecyclerView>(R.id.recyclerView).apply {
-            layoutManager = GridLayoutManager(this@VideoCallActivity, 2)
+            layoutManager = GridLayoutManager(this@VideoCallActivity, NUM_PEERS_PER_ROW)
             adapter = peerAdapter
         }
 
@@ -1044,13 +1060,15 @@ class VideoCallActivity : AppCompatActivity() {
 
 The videoCallParticipants list is observed and any changes sent to the ListAdapter's `submitList`.
 
-```kotlin{26-29}:VideoCallActivity.kt
+```kotlin{28-30}:VideoCallActivity.kt
 
 const val BUNDLE_AUTH_TOKEN = "100ms-auth-token-bundle-key"
+const val BUNDLE_NAME = "100ms-user-name-bundle-key"
 
 class VideoCallActivity : AppCompatActivity() {
     private val TAG = VideoCallActivity::class.java.simpleName
     private val peerAdapter = PeerAdapter()
+    private val NUM_PEERS_PER_ROW = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -1066,7 +1084,7 @@ class VideoCallActivity : AppCompatActivity() {
         }
 
         findViewById<RecyclerView>(R.id.recyclerView).apply {
-            layoutManager = GridLayoutManager(this@VideoCallActivity, 2)
+            layoutManager = GridLayoutManager(this@VideoCallActivity, NUM_PEERS_PER_ROW)
             adapter = peerAdapter
         }
 
