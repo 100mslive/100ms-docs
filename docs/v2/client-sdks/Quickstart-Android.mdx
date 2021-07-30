@@ -265,6 +265,9 @@ The SDK will automatically connect everyone's audio including streaming yours wh
 #### Video
 The video of participants is being sent over the network as well, but you need to render it to the screen.
 
+What we're going for is for a view like this:
+[todo add a video call grid with at least three participants]
+
 We're going to use an [AndroidViewModel](https://developer.android.com/reference/android/arch/lifecycle/AndroidViewModel) to:
 1. Receive the auth token that we got earlier.
 2. Create an instance of `HMSSdk`.
@@ -285,6 +288,8 @@ Separately we need to get information about our peers and their tracks to the ad
 Let's take a look at how to gather the list of information to display and then go into the recyclerview details.
 
 Since peers can have multiple video tracks, such as their own video plus a screen share, what we're going to need is a list of items of type `TrackPeerMap` which will look like this.
+
+Relevant sections are highlighted. The code is for the entire AndroidViewModel for video calls, named VideoCallVm.
 
 ```kotlin{2-5}
 
@@ -560,10 +565,54 @@ The function `getCurrentRoomState` that all of those listeners is calling always
 
 Anyone with a screenshare will get two tiles. One for their own video and one for the screenshare. Here it is.
 
-```kotlin
+```kotlin{47-59}
 
+data class TrackPeerMap(
+    val videoTrack: HMSVideoTrack?,
+    val peer: HMSPeer
+)
 
-    private fun getCurrentRoomState(): List<TrackPeerMap> {
+class VideoCallVm(authToken: String?, application: Application) : AndroidViewModel(application),
+    HMSUpdateListener {
+
+    private val _videoCallParticipants = MutableLiveData<List<TrackPeerMap>>(emptyList())
+    val videoCallParticipants: LiveData<List<TrackPeerMap>> = _videoCallParticipants
+
+    private val TAG = "VideoCallVm"
+
+    private val hmsSdk = HMSSDK
+        .Builder(application)
+        .build()
+
+    init {
+        if (authToken != null) {
+            Log.d(TAG, "Joining with $authToken")
+            hmsSdk.join(HMSConfig("name", authToken), this)
+        } else {
+            Log.e(TAG, "There was an error since the auth token was null.")
+        }
+    }
+
+    override fun onJoin(room: HMSRoom) {
+        _videoCallParticipants.postValue(getCurrentParticipants())
+    }
+
+    override fun onTrackUpdate(type: HMSTrackUpdate, track: HMSTrack, peer: HMSPeer) {
+        _videoCallParticipants.postValue(getCurrentParticipants())
+    }
+
+    override fun onPeerUpdate(type: HMSPeerUpdate, peer: HMSPeer) {
+        _videoCallParticipants.postValue(getCurrentParticipants())
+    }
+
+    override fun onMessageReceived(message: HMSMessage) {}
+    override fun onRoleChangeRequest(request: HMSRoleChangeRequest) {}
+    override fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) {}
+    override fun onError(error: HMSException) {
+        Log.d(TAG, "Error $error")
+    }
+
+    private fun getCurrentParticipants(): List<TrackPeerMap> {
         // Convert all the peers into a map of them and their tracks.
         val trackAndPeerMap = hmsSdk.getPeers().flatMap {
             val screenShare = it.auxiliaryTracks.find { auxTrack -> auxTrack is HMSVideoTrack }
@@ -576,4 +625,5 @@ Anyone with a screenshare will get two tiles. One for their own video and one fo
 
         return trackAndPeerMap
     }
+}
 ```
