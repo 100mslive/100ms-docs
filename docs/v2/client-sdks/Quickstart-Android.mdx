@@ -314,7 +314,8 @@ data class TrackPeerMap(
     val peer: HMSPeer
 )
 
-class VideoCallVm(authToken: String?, application: Application) : AndroidViewModel(application),
+class VideoCallVm(name: String?, authToken: String?, application: Application) :
+    AndroidViewModel(application),
     HMSUpdateListener {
 
     private val _videoCallParticipants = MutableLiveData<List<TrackPeerMap>>(emptyList())
@@ -327,11 +328,11 @@ class VideoCallVm(authToken: String?, application: Application) : AndroidViewMod
         .build()
 
     init {
-        if (authToken != null) {
+        if (authToken != null && name != null) {
             Log.d(TAG, "Joining with $authToken")
-            hmsSdk.join(HMSConfig("name", authToken), this)
+            hmsSdk.join(HMSConfig(name, authToken), this)
         } else {
-            Log.e(TAG, "There was an error since the auth token was null.")
+            Log.e(TAG, "Neither auth token nor name can be null.")
         }
     }
 
@@ -372,14 +373,15 @@ class VideoCallVm(authToken: String?, application: Application) : AndroidViewMod
 
 We need a list of these in a LiveData that we'll update as people come and go and start and stop screenshares.
 
-```kotlin{10-11}:VideoCallVm.kt
+```kotlin{11-12}:VideoCallVm.kt
 
 data class TrackPeerMap(
     val videoTrack: HMSVideoTrack?,
     val peer: HMSPeer
 )
 
-class VideoCallVm(authToken: String?, application: Application) : AndroidViewModel(application),
+class VideoCallVm(name: String?, authToken: String?, application: Application) :
+    AndroidViewModel(application),
     HMSUpdateListener {
 
     private val _videoCallParticipants = MutableLiveData<List<TrackPeerMap>>(emptyList())
@@ -392,11 +394,11 @@ class VideoCallVm(authToken: String?, application: Application) : AndroidViewMod
         .build()
 
     init {
-        if (authToken != null) {
+        if (authToken != null && name != null) {
             Log.d(TAG, "Joining with $authToken")
-            hmsSdk.join(HMSConfig("name", authToken), this)
+            hmsSdk.join(HMSConfig(name, authToken), this)
         } else {
-            Log.e(TAG, "There was an error since the auth token was null.")
+            Log.e(TAG, "Neither auth token nor name can be null.")
         }
     }
 
@@ -436,14 +438,15 @@ class VideoCallVm(authToken: String?, application: Application) : AndroidViewMod
 ```
 We'll have the AndroidViewModel implement HMSUpdateListener, create the hmsSDK and call join on it.
 
-```kotlin{8,15-17,22}:VideoCallVm.kt
+```kotlin{9,16-18,23}:VideoCallVm.kt
 
 data class TrackPeerMap(
     val videoTrack: HMSVideoTrack?,
     val peer: HMSPeer
 )
 
-class VideoCallVm(authToken: String?, application: Application) : AndroidViewModel(application),
+class VideoCallVm(name: String?, authToken: String?, application: Application) :
+    AndroidViewModel(application),
     HMSUpdateListener {
 
     private val _videoCallParticipants = MutableLiveData<List<TrackPeerMap>>(emptyList())
@@ -456,11 +459,11 @@ class VideoCallVm(authToken: String?, application: Application) : AndroidViewMod
         .build()
 
     init {
-        if (authToken != null) {
+        if (authToken != null && name != null) {
             Log.d(TAG, "Joining with $authToken")
-            hmsSdk.join(HMSConfig("name", authToken), this)
+            hmsSdk.join(HMSConfig(name, authToken), this)
         } else {
-            Log.e(TAG, "There was an error since the auth token was null.")
+            Log.e(TAG, "Neither auth token nor name can be null.")
         }
     }
 
@@ -514,14 +517,15 @@ The rest are advanced cases which we can ignore in a quick start such as:
 6. onRoomUpdate - being notified when the SDK mutes the room on incoming regular phone calls.
 7. onError - if something went wrong during the chat.
 
-```kotlin{28-38}:VideoCallVm.kt
+```kotlin{29-39}:VideoCallVm.kt
 
 data class TrackPeerMap(
     val videoTrack: HMSVideoTrack?,
     val peer: HMSPeer
 )
 
-class VideoCallVm(authToken: String?, application: Application) : AndroidViewModel(application),
+class VideoCallVm(name: String?, authToken: String?, application: Application) :
+    AndroidViewModel(application),
     HMSUpdateListener {
 
     private val _videoCallParticipants = MutableLiveData<List<TrackPeerMap>>(emptyList())
@@ -534,11 +538,11 @@ class VideoCallVm(authToken: String?, application: Application) : AndroidViewMod
         .build()
 
     init {
-        if (authToken != null) {
+        if (authToken != null && name != null) {
             Log.d(TAG, "Joining with $authToken")
-            hmsSdk.join(HMSConfig("name", authToken), this)
+            hmsSdk.join(HMSConfig(name, authToken), this)
         } else {
-            Log.e(TAG, "There was an error since the auth token was null.")
+            Log.e(TAG, "Neither auth token nor name can be null.")
         }
     }
 
@@ -581,14 +585,15 @@ The function `getCurrentRoomState` that all of those listeners is calling always
 
 Anyone with a screenshare will get two tiles. One for their own video and one for the screenshare. Here it is.
 
-```kotlin{47-59}:VideoCallVm.kt
+```kotlin{48-60}:VideoCallVm.kt
 
 data class TrackPeerMap(
     val videoTrack: HMSVideoTrack?,
     val peer: HMSPeer
 )
 
-class VideoCallVm(authToken: String?, application: Application) : AndroidViewModel(application),
+class VideoCallVm(name: String?, authToken: String?, application: Application) :
+    AndroidViewModel(application),
     HMSUpdateListener {
 
     private val _videoCallParticipants = MutableLiveData<List<TrackPeerMap>>(emptyList())
@@ -601,11 +606,11 @@ class VideoCallVm(authToken: String?, application: Application) : AndroidViewMod
         .build()
 
     init {
-        if (authToken != null) {
+        if (authToken != null && name != null) {
             Log.d(TAG, "Joining with $authToken")
-            hmsSdk.join(HMSConfig("name", authToken), this)
+            hmsSdk.join(HMSConfig(name, authToken), this)
         } else {
-            Log.e(TAG, "There was an error since the auth token was null.")
+            Log.e(TAG, "Neither auth token nor name can be null.")
         }
     }
 
@@ -982,9 +987,9 @@ class PeerAdapter : ListAdapter<TrackPeerMap, PeerViewHolder>(DIFFUTIL_CALLBACK)
 
 The activity creates an instance of the PeerAdapter and the ViewModel. The auth token was taken from the login activity on the earlier screen and passed forward in a bundle.
 
-The Activity takes the auth token out of the bundle and uses it to initialize the ViewModel.
+The Activity takes the auth token and name out of the bundle and uses them to initialize the ViewModel.
 
-```kotlin{13-21}:VideoCallActivity.kt
+```kotlin{13-22}:VideoCallActivity.kt
 
 const val BUNDLE_AUTH_TOKEN = "100ms-auth-token-bundle-key"
 const val BUNDLE_NAME = "100ms-user-name-bundle-key"
@@ -997,12 +1002,13 @@ class VideoCallActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_call)
-        val key = intent?.extras?.getString(BUNDLE_AUTH_TOKEN)
+        val authToken = intent?.extras?.getString(BUNDLE_AUTH_TOKEN)
+        val name = intent?.extras?.getString(BUNDLE_NAME)
 
         val vm: VideoCallVm by viewModels {
             object : ViewModelProvider.Factory {
                 override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                    return VideoCallVm(key, application) as T
+                    return VideoCallVm(name, authToken, application) as T
                 }
             }
         }
@@ -1022,7 +1028,7 @@ class VideoCallActivity : AppCompatActivity() {
 The recyclerview for the video call participants is initialized with a GridAdapter that's set to show two people per row and the adapter is set to the `PeerAdapter.kt`.
 
 
-```kotlin{23-26}:VideoCallActivity.kt
+```kotlin{24-27}:VideoCallActivity.kt
 
 const val BUNDLE_AUTH_TOKEN = "100ms-auth-token-bundle-key"
 const val BUNDLE_NAME = "100ms-user-name-bundle-key"
@@ -1035,12 +1041,13 @@ class VideoCallActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_call)
-        val key = intent?.extras?.getString(BUNDLE_AUTH_TOKEN)
+        val authToken = intent?.extras?.getString(BUNDLE_AUTH_TOKEN)
+        val name = intent?.extras?.getString(BUNDLE_NAME)
 
         val vm: VideoCallVm by viewModels {
             object : ViewModelProvider.Factory {
                 override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                    return VideoCallVm(key, application) as T
+                    return VideoCallVm(name, authToken, application) as T
                 }
             }
         }
@@ -1060,7 +1067,7 @@ class VideoCallActivity : AppCompatActivity() {
 
 The videoCallParticipants list is observed and any changes sent to the ListAdapter's `submitList`.
 
-```kotlin{28-30}:VideoCallActivity.kt
+```kotlin{29-31}:VideoCallActivity.kt
 
 const val BUNDLE_AUTH_TOKEN = "100ms-auth-token-bundle-key"
 const val BUNDLE_NAME = "100ms-user-name-bundle-key"
@@ -1073,12 +1080,13 @@ class VideoCallActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video_call)
-        val key = intent?.extras?.getString(BUNDLE_AUTH_TOKEN)
+        val authToken = intent?.extras?.getString(BUNDLE_AUTH_TOKEN)
+        val name = intent?.extras?.getString(BUNDLE_NAME)
 
         val vm: VideoCallVm by viewModels {
             object : ViewModelProvider.Factory {
                 override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                    return VideoCallVm(key, application) as T
+                    return VideoCallVm(name, authToken, application) as T
                 }
             }
         }
