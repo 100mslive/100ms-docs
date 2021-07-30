@@ -286,30 +286,18 @@ Let's take a look at how to gather the list of information to display and then g
 
 Since peers can have multiple video tracks, such as their own video plus a screen share, what we're going to need is a list of items of type `TrackPeerMap` which will look like this.
 
-```kotlin
+```kotlin{2-5}
 
 data class TrackPeerMap(
     val videoTrack: HMSVideoTrack?,
     val peer: HMSPeer
 )
-```
-
-We need a list of these in a LiveData that we'll update as people come and go and start and stop screenshares.
-
-```kotlin
-    private val _roomState = MutableLiveData<List<TrackPeerMap>>(emptyList())
-    val roomState: LiveData<List<TrackPeerMap>> = _roomState
-```
-
-We'll have the AndroidViewModel implement HMSUpdateListener, create the hmsSDK and call join on it.
-
-```kotlin
 
 class VideoCallVm(authToken: String?, application: Application) : AndroidViewModel(application),
     HMSUpdateListener {
 
-    private val _roomState = MutableLiveData<List<TrackPeerMap>>(emptyList())
-    val roomState: LiveData<List<TrackPeerMap>> = _roomState
+    private val _videoCallParticipants = MutableLiveData<List<TrackPeerMap>>(emptyList())
+    val videoCallParticipants: LiveData<List<TrackPeerMap>> = _videoCallParticipants
 
     private val TAG = "VideoCallVm"
 
@@ -326,7 +314,168 @@ class VideoCallVm(authToken: String?, application: Application) : AndroidViewMod
         }
     }
 
-...
+    override fun onJoin(room: HMSRoom) {
+        _videoCallParticipants.postValue(getCurrentParticipants())
+    }
+
+    override fun onTrackUpdate(type: HMSTrackUpdate, track: HMSTrack, peer: HMSPeer) {
+        _videoCallParticipants.postValue(getCurrentParticipants())
+    }
+
+    override fun onPeerUpdate(type: HMSPeerUpdate, peer: HMSPeer) {
+        _videoCallParticipants.postValue(getCurrentParticipants())
+    }
+
+    override fun onMessageReceived(message: HMSMessage) {}
+    override fun onRoleChangeRequest(request: HMSRoleChangeRequest) {}
+    override fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) {}
+    override fun onError(error: HMSException) {
+        Log.d(TAG, "Error $error")
+    }
+
+    private fun getCurrentParticipants(): List<TrackPeerMap> {
+        // Convert all the peers into a map of them and their tracks.
+        val trackAndPeerMap = hmsSdk.getPeers().flatMap {
+            val screenShare = it.auxiliaryTracks.find { auxTrack -> auxTrack is HMSVideoTrack }
+            if (screenShare is HMSVideoTrack) {
+                listOf(TrackPeerMap(it.videoTrack, it), TrackPeerMap(screenShare, it))
+            } else {
+                listOf(TrackPeerMap(it.videoTrack, it))
+            }
+        }
+
+        return trackAndPeerMap
+    }
+}
+```
+
+We need a list of these in a LiveData that we'll update as people come and go and start and stop screenshares.
+
+```kotlin{10-11}
+
+data class TrackPeerMap(
+    val videoTrack: HMSVideoTrack?,
+    val peer: HMSPeer
+)
+
+class VideoCallVm(authToken: String?, application: Application) : AndroidViewModel(application),
+    HMSUpdateListener {
+
+    private val _videoCallParticipants = MutableLiveData<List<TrackPeerMap>>(emptyList())
+    val videoCallParticipants: LiveData<List<TrackPeerMap>> = _videoCallParticipants
+
+    private val TAG = "VideoCallVm"
+
+    private val hmsSdk = HMSSDK
+        .Builder(application)
+        .build()
+
+    init {
+        if (authToken != null) {
+            Log.d(TAG, "Joining with $authToken")
+            hmsSdk.join(HMSConfig("name", authToken), this)
+        } else {
+            Log.e(TAG, "There was an error since the auth token was null.")
+        }
+    }
+
+    override fun onJoin(room: HMSRoom) {
+        _videoCallParticipants.postValue(getCurrentParticipants())
+    }
+
+    override fun onTrackUpdate(type: HMSTrackUpdate, track: HMSTrack, peer: HMSPeer) {
+        _videoCallParticipants.postValue(getCurrentParticipants())
+    }
+
+    override fun onPeerUpdate(type: HMSPeerUpdate, peer: HMSPeer) {
+        _videoCallParticipants.postValue(getCurrentParticipants())
+    }
+
+    override fun onMessageReceived(message: HMSMessage) {}
+    override fun onRoleChangeRequest(request: HMSRoleChangeRequest) {}
+    override fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) {}
+    override fun onError(error: HMSException) {
+        Log.d(TAG, "Error $error")
+    }
+
+    private fun getCurrentParticipants(): List<TrackPeerMap> {
+        // Convert all the peers into a map of them and their tracks.
+        val trackAndPeerMap = hmsSdk.getPeers().flatMap {
+            val screenShare = it.auxiliaryTracks.find { auxTrack -> auxTrack is HMSVideoTrack }
+            if (screenShare is HMSVideoTrack) {
+                listOf(TrackPeerMap(it.videoTrack, it), TrackPeerMap(screenShare, it))
+            } else {
+                listOf(TrackPeerMap(it.videoTrack, it))
+            }
+        }
+
+        return trackAndPeerMap
+    }
+}
+```
+We'll have the AndroidViewModel implement HMSUpdateListener, create the hmsSDK and call join on it.
+
+```kotlin{8,15-17,22}
+
+data class TrackPeerMap(
+    val videoTrack: HMSVideoTrack?,
+    val peer: HMSPeer
+)
+
+class VideoCallVm(authToken: String?, application: Application) : AndroidViewModel(application),
+    HMSUpdateListener {
+
+    private val _videoCallParticipants = MutableLiveData<List<TrackPeerMap>>(emptyList())
+    val videoCallParticipants: LiveData<List<TrackPeerMap>> = _videoCallParticipants
+
+    private val TAG = "VideoCallVm"
+
+    private val hmsSdk = HMSSDK
+        .Builder(application)
+        .build()
+
+    init {
+        if (authToken != null) {
+            Log.d(TAG, "Joining with $authToken")
+            hmsSdk.join(HMSConfig("name", authToken), this)
+        } else {
+            Log.e(TAG, "There was an error since the auth token was null.")
+        }
+    }
+
+    override fun onJoin(room: HMSRoom) {
+        _videoCallParticipants.postValue(getCurrentParticipants())
+    }
+
+    override fun onTrackUpdate(type: HMSTrackUpdate, track: HMSTrack, peer: HMSPeer) {
+        _videoCallParticipants.postValue(getCurrentParticipants())
+    }
+
+    override fun onPeerUpdate(type: HMSPeerUpdate, peer: HMSPeer) {
+        _videoCallParticipants.postValue(getCurrentParticipants())
+    }
+
+    override fun onMessageReceived(message: HMSMessage) {}
+    override fun onRoleChangeRequest(request: HMSRoleChangeRequest) {}
+    override fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) {}
+    override fun onError(error: HMSException) {
+        Log.d(TAG, "Error $error")
+    }
+
+    private fun getCurrentParticipants(): List<TrackPeerMap> {
+        // Convert all the peers into a map of them and their tracks.
+        val trackAndPeerMap = hmsSdk.getPeers().flatMap {
+            val screenShare = it.auxiliaryTracks.find { auxTrack -> auxTrack is HMSVideoTrack }
+            if (screenShare is HMSVideoTrack) {
+                listOf(TrackPeerMap(it.videoTrack, it), TrackPeerMap(screenShare, it))
+            } else {
+                listOf(TrackPeerMap(it.videoTrack, it))
+            }
+        }
+
+        return trackAndPeerMap
+    }
+}
 ```
 
 And since the viewmodel implements the listener it'll have to override the methods.
@@ -337,24 +486,74 @@ There are only three that we need to pay attention to for a barebones app:
 2. onTrackUpate - which is called when a video/audio/screenshare track is added to a peer or they mute/unmute.
 3. onPeerUpdate - which notifies when a person joins or leaves the chat and more.
 
-```kotlin
+The rest are advaced cases which we can ignore in a quick start such as:
 
-    override fun onError(error: HMSException) { Log.d(TAG, "Error $error") }
+4. onMessageReceived - diplaying a chat.
+5. onRoleChangeRequest - working with custom roles.
+6. onRoomUpdate - being notified when the SDK mutes the room on incoming regular phone calls.
+7. onError - if something went wrong during the chat.
 
-    override fun onJoin(room: HMSRoom) { _roomState.postValue(getCurrentRoomState()) }
-    
+```kotlin{28-38}
+
+data class TrackPeerMap(
+    val videoTrack: HMSVideoTrack?,
+    val peer: HMSPeer
+)
+
+class VideoCallVm(authToken: String?, application: Application) : AndroidViewModel(application),
+    HMSUpdateListener {
+
+    private val _videoCallParticipants = MutableLiveData<List<TrackPeerMap>>(emptyList())
+    val videoCallParticipants: LiveData<List<TrackPeerMap>> = _videoCallParticipants
+
+    private val TAG = "VideoCallVm"
+
+    private val hmsSdk = HMSSDK
+        .Builder(application)
+        .build()
+
+    init {
+        if (authToken != null) {
+            Log.d(TAG, "Joining with $authToken")
+            hmsSdk.join(HMSConfig("name", authToken), this)
+        } else {
+            Log.e(TAG, "There was an error since the auth token was null.")
+        }
+    }
+
+    override fun onJoin(room: HMSRoom) {
+        _videoCallParticipants.postValue(getCurrentParticipants())
+    }
+
     override fun onTrackUpdate(type: HMSTrackUpdate, track: HMSTrack, peer: HMSPeer) {
-        _roomState.postValue(getCurrentRoomState())
+        _videoCallParticipants.postValue(getCurrentParticipants())
     }
-    
+
     override fun onPeerUpdate(type: HMSPeerUpdate, peer: HMSPeer) {
-        _roomState.postValue(getCurrentRoomState())
+        _videoCallParticipants.postValue(getCurrentParticipants())
     }
-    // Advanced features
+
     override fun onMessageReceived(message: HMSMessage) {}
     override fun onRoleChangeRequest(request: HMSRoleChangeRequest) {}
     override fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) {}
+    override fun onError(error: HMSException) {
+        Log.d(TAG, "Error $error")
+    }
 
+    private fun getCurrentParticipants(): List<TrackPeerMap> {
+        // Convert all the peers into a map of them and their tracks.
+        val trackAndPeerMap = hmsSdk.getPeers().flatMap {
+            val screenShare = it.auxiliaryTracks.find { auxTrack -> auxTrack is HMSVideoTrack }
+            if (screenShare is HMSVideoTrack) {
+                listOf(TrackPeerMap(it.videoTrack, it), TrackPeerMap(screenShare, it))
+            } else {
+                listOf(TrackPeerMap(it.videoTrack, it))
+            }
+        }
+
+        return trackAndPeerMap
+    }
+}
 ```
 
 The function `getCurrentRoomState` that all of those listeners is calling always does the same thing. It requests a list of active peers from the sdk and puts them in a TrackPeerMap that we saw before.
@@ -378,68 +577,3 @@ Anyone with a screenshare will get two tiles. One for their own video and one fo
         return trackAndPeerMap
     }
 ```
-
-
-
-## Add event listeners
-
-100ms SDK provides callbacks to the client app about any change or update happening in the room after a user has joined by implementing `HMSUpdateListener` . These updates can be used to render the video on screen or to display other info regarding the room.
-
-The main ones you need to know about to get up and running are:
-
-1. `onJoin` which lets you know when you've joined the room.
-2. `onPeerUpdate` which lets you know when someone else has joined the room.
-
-`onPeerUpdate` also gives you a `HMSPeer` object from which you can get the remote person's audio and video.
-
-// on join you can show the recyclerview.
-// onPeerUpdate you can add people to the screen.
-
-```kotlin
-      val hmsUpdateListener = object: HMSUpdateListener{
-
-        override fun onJoin(room: HMSRoom) {
-          // This will be called on a successful JOIN of the room by the user
-          // This is the point where applications can stop showing its loading state
-        }
-
-        override fun onPeerUpdate(type: HMSPeerUpdate, peer: HMSPeer) {
-          // This will be called whenever there is an update on an existing peer
-          // or a new peer got added/existing peer is removed.
-          // This callback can be used to keep a track of all the peers in the room
-        }
-
-        override fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) {
-          // This is called when there is a change in any property of the Room
-        }
-
-        override fun onTrackUpdate(type: HMSTrackUpdate, track: HMSTrack, peer: HMSPeer) {
-          // This is called when there are updates on an existing track
-          // or a new track got added/existing track is removed
-          // This callback can be used to render the video on screen whenever a track gets added
-        }
-
-        override fun onMessageReceived(message: HMSMessage) {
-          // This is called when there is a new broadcast message from any other peer in the room
-          // This can be used to implement chat is the room
-        }
-
-        override fun onError(error: HMSException) {
-          // This will be called when there is an error in the system
-          // and SDK has already retried to fix the error
-        }
-
-        override fun onReconnecting(error: HMSException) {
-          // This is called when connection reestablishment starts
-          // This can be used to show a loading notification in the UI
-          // Parameter error: the error from the action that failed and caused the connection reestablishment
-        }
-
-        override fun onReconnected() {
-          // This is called when the connection reestablishment completed susccessfully
-        }
-
-      }
-```
-
-# STILL IN PROGRESS
