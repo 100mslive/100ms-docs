@@ -1,0 +1,53 @@
+---
+title: Short Guide - Android
+nav: 10
+---
+
+## Overview
+
+In this overview the major steps involved in creating a demo project with the 100ms SDK will be laid out. Each section will be explained in more detail further ahead.
+
+To use the 100ms SDK in your app in production (but not for this quickstart) you'll need to set up your server to authenticate user requests. For the purposes of this quickstart you can rely on the 100ms dashboard. Sign up for the 100ms Dashboard [here](todo add link).
+
+From either the dashboard or your own server once implemented, you'll generate a video call link.
+
+On the Android app, you add the sdk dependencies, create a login token to authenticate the user, create an instance of the `HMSSDK`, see a preview (optional) of the user's audio video with the 100ms `hmssdk.preview`, then call `hmssdk.join` with the video call link to join the call.
+
+The join method takes an interface called `HMSUpdateListener` which lets you know when peers join and leave the call, mute/unmute their audio and video and lots more.
+
+The `HMSUpdateListener` has a callback which will be called when people join or leave `onPeerUpdate(type: HMSPeerUpdate, peer: HMSPeer)`. `HMSPeer` is object that represents a person in the call.
+
+To see the person's video you need to create an instance of `org.webrtc.SurfaceViewRenderer` which can be taken from the library `implementation 'org.webrtc:google-webrtc:1.0.32006'`.
+
+
+Dashboard is how you can quickly try it out creating a video conferencing room and joining it but in production your own server will generate the joining links and manage user authentication. This method will stop working after 10k minutes of video calls and you'll need to setup your own server after.
+
+You could choose to just use the dashboard and 100ms authentication management as well.
+
+Here's the [server](todo add link) way and below is how you can login relying on the 100ms auth.
+
+## Login
+
+### Request
+
+Here's how to get an auth token with 100ms's demo authentication
+    1. Sign up to the dashboard.
+    2. Get your video call link should look like `https://myname.app.100ms.live/meeting/correct-horse-battery`
+    3. Send an http post request to `https://prod-in.100ms.live/hmsapi/get-token`
+    4. With the header "subdomain" set to myname.app.100ms.live if your link was `https://myname.app.100ms.live/meeting/correct-horse-battery`
+    5. For a link of the type `https://myname.app.100ms.live/meeting/correct-horse-battery` The body is json with the format `{"code": "correct-horse-battery", "user_id":"your-customer-id" }` the user_id can be any random string as well and you can create it with `UUID.randomUUID().toString(),`.
+
+### Response
+
+The 100ms server will respond with an auth token in the following json response format `{"token":"some-token-string"}`.
+
+### 
+call preview
+
+call join,
+    hmsconfig created with the params username auth token
+    hmsupdate listener and the things to listen to in it.
+
+explain the track/peer method and provide a link into the other guide.
+explain the surfaceview binding and provide a link into the other guide.
+
