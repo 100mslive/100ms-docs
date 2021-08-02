@@ -41,6 +41,7 @@ const Pagination: React.FC<Props> = ({ prev, next }) => (
         </a>
         <style jsx>{`
             .pag-ctx {
+                width: 100%;
                 margin: 50px 0;
                 display: flex;
                 justify-content: space-between;
