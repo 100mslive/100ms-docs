@@ -26,17 +26,31 @@ For the purposes of this quickstart you can rely on only the 100ms dashboard. Si
 From either the dashboard, or your own server once implemented, you'll generate a video call link.
 
 ### From adding sdk depdency to joining calls
-On the Android app:
-1. Add the sdk dependencies
-2. Create a login token to authenticate the user
+On the Android app (click the arrow to expand for details):
+<details>
+<summary>Add the sdk dependencies</summary>
+
+#### Add the JitPack repository to your root `settings.gradle` at the end of the `respositories` closure:
+
+```json{7}:settings.gradle
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        jcenter() // Warning: this repository is going to shut down soon
+        maven { url 'https://jitpack.io' }
+    }
+}
+rootProject.name = "MyVideoCallApp"
+include ':app'
+
+```
+</details>
+<details><summary>Create a login token to authenticate the user</summary></details>
 3. Create an instance of the `HMSSDK
     * Show an optional of the user's audio video with the 100ms `hmssdk.preview`
 4. Call `hmssdk.join` with the video call link to join the call.
-
-<details>
-<summary>Expand</summary>
-somoe giant text
-</details>
 
 ### How to get audio and video
 The audio for every person who joins the call is played by the SDK automatically when you have joined.
