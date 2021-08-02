@@ -1,47 +1,67 @@
 ---
 title: HMSDataSource
-nav: 5
 ---
 
 **CLASS**
+
 ```swift
 public class HMSDataSource
 ```
+
 ## Properties
+
 ### hms
+
 ```swift
 public var hms: HMSSDK?
 ```
+
 ### sections
+
 ```swift
 public var sections = [HMSSection]()
 ```
+
 ### allModels
+
 ```swift
 public var allModels: [HMSViewModel]
 ```
+
 ### delegate
+
 ```swift
 public weak var delegate: HMSDataSourceDelegate?
 ```
+
 ### sortComparator
+
 ```swift
 public var sortComparator: ((HMSViewModel, HMSViewModel) -> Bool)?
 ```
+
 ### filter
+
 ```swift
 public var filter: ((HMSViewModel) -> Bool)?
 ```
+
 ### sectionProducer
+
 ```swift
 public var sectionProducer: ((HMSViewModel) -> HMSSection.SectionIdentifier)?
 ```
+
 ## Methods
+
 ### init()
+
 ```swift
 public init()
 ```
+
 ### reload()
+
 ```swift
 public func reload()
 ```
