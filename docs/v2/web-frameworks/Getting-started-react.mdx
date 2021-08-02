@@ -181,12 +181,14 @@ interface HMSStore {
 interface HMSPeer {
     id: HMSPeerID;
     name: string;
-    role?: string;
+    roleName?: HMSRoleName;
     isLocal: boolean;
     isStarred?: boolean;
     videoTrack?: HMSTrackID;
     audioTrack?: HMSTrackID;
     auxiliaryTracks: HMSTrackID[];
+    customerUserId?: string;
+    customerDescription?: string;
 }
 
 interface HMSTrack {
@@ -400,7 +402,7 @@ function RemotePeer({ peer }) {
     const [newRole, setNewRole] = React.useState(peer.roleName);
     const [force, setForce] = React.useState(false);
 
-    const onRoleChange = () => {
+    const handleClick = () => {
         hmsActions.changeRole(peer.id, newRole, force);
     };
 
@@ -418,7 +420,7 @@ function RemotePeer({ peer }) {
                     </option>
                 ))}
             </select>
-            <button onClick={onRoleChange}>Change role</button>
+            <button onClick={handleClick}>Change role</button>
         </>
     );
 }
@@ -465,19 +467,6 @@ interface HMSRoleChangeRequest {
     requestedBy: HMSPeer;
     role: HMSRole;
     token: string;
-}
-
-interface HMSPeer {
-    id: HMSPeerID;
-    name: string;
-    roleName?: HMSRoleName;
-    isLocal: boolean;
-    isStarred?: boolean;
-    videoTrack?: HMSTrackID;
-    audioTrack?: HMSTrackID;
-    auxiliaryTracks: HMSTrackID[];
-    customerUserId?: string;
-    customerDescription?: string;
 }
 ```
 
@@ -577,7 +566,7 @@ function Preview(props) {
         if (localPeer?.videoTrack && videoElementRef.current) {
             hmsActions.attachVideo(localPeer.videoTrack, videoElementRef.current);
         }
-    }, [localPeer?.videoTrack, hmsActions, videoElementRef.current]);
+    }, [localPeer?.videoTrack, hmsActions]);
 
     return localPeer?.videoTrack ? (
         <video ref={videoElementRef} autoPlay muted />
