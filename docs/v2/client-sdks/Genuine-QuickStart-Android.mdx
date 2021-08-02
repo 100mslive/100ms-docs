@@ -61,10 +61,10 @@ dependencies {
 ```
 
 </details>
-<details><summary>Create a login token to authenticate the user</summary></details>
-3. Create an instance of the `HMSSDK
-    * Show an optional of the user's audio video with the 100ms `hmssdk.preview`
-4. Call `hmssdk.join` with the video call link to join the call.
+2. [Create a login token to authenticate the user](#login).
+3. [Create an instance of the `HMSSDK`](#instantiate-hmssdk).
+    * Show an optional of the user's audio video with the 100ms `hmssdk.preview`.
+4. [Call `hmssdk.join` with the video call link to join the call](#join-a-video-call).
 
 ### How to get audio and video
 The audio for every person who joins the call is played by the SDK automatically when you have joined.
@@ -96,8 +96,75 @@ Here's how to get an auth token with 100ms's demo authentication
 
 The 100ms server will respond with an auth token in the following json response format `{"token":"some-token-string"}`.
 
-### 
-call preview
+## Instantiate HMSSDK
+
+The HMSSdk can be instantiated like so:
+<Tabs id="code-gen" items={['Kotlin', 'Java']} />
+
+<Tab id='code-gen-0'>
+
+```kotlin
+    val hmsSdk = HMSSDK
+        .Builder(application)
+        .build()
+```
+</Tab>
+
+<Tab id='code-gen-1'>
+
+```java
+    HMSSDK hmssdk = new HMSSDK
+                        .Builder(application)
+                        .build();
+```
+</Tab>
+
+## Get a Preview (optional)
+
+## Join a Video Call
+
+<Tabs id="code-gen" items={['Kotlin', 'Java']} />
+
+<Tab id='code-gen-0'>
+
+```kotlin
+
+val config = HMSConfig("user display name", authToken)
+
+hmsSdk.join(config, MyHmsUpdateListener())
+
+class MyHmsUpdateListener : HMSUpdateListener { 
+    override fun onJoin(room: HMSRoom) {}
+    override fun onTrackUpdate(type: HMSTrackUpdate, track: HMSTrack, peer: HMSPeer) {}
+    override fun onPeerUpdate(type: HMSPeerUpdate, peer: HMSPeer) {}
+    override fun onMessageReceived(message: HMSMessage) {}
+    override fun onRoleChangeRequest(request: HMSRoleChangeRequest) {}
+    override fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) {}
+    override fun onError(error: HMSException) {}
+}
+```
+</Tab>
+
+<Tab id='code-gen-1'>
+```java
+
+    HMSConfig config = new HMSConfig("user display name", authToken);
+    hmsSdk.join(config, new MyHmsUpdateListener());
+
+    class MyHmsUpdateListener implements HMSUpdateListener {
+        @Override public void onJoin(@NonNull HMSRoom hmsRoom) {}
+        @Override public void onMessageReceived(@NonNull HMSMessage hmsMessage) {}
+        @Override public void onPeerUpdate(@NonNull HMSPeerUpdate hmsPeerUpdate, @NonNull HMSPeer hmsPeer) {}
+        @Override public void onReconnected() {}
+        @Override public void onReconnecting(@NonNull HMSException e) {}
+        @Override public void onRoleChangeRequest(@NonNull HMSRoleChangeRequest hmsRoleChangeRequest) {}
+        @Override public void onRoomUpdate(@NonNull HMSRoomUpdate hmsRoomUpdate, @NonNull HMSRoom hmsRoom) {}
+        @Override public void onTrackUpdate(@NonNull HMSTrackUpdate hmsTrackUpdate, @NonNull HMSTrack hmsTrack, @NonNull HMSPeer hmsPeer) {}
+        @Override public void onError(@NonNull HMSException e) {}
+    }
+
+<Tab/>
+
 
 call join,
     hmsconfig created with the params username auth token
