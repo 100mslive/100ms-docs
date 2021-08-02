@@ -99,9 +99,9 @@ The 100ms server will respond with an auth token in the following json response 
 ## Instantiate HMSSDK
 
 The HMSSdk can be instantiated like so:
-<Tabs id="code-gen" items={['Kotlin', 'Java']} />
+<Tabs id="instanstiate-hmssdk" items={['Kotlin', 'Java']} />
 
-<Tab id='code-gen-0'>
+<Tab id='instanstiate-hmssdk-0'>
 
 ```kotlin
     val hmsSdk = HMSSDK
@@ -110,7 +110,7 @@ The HMSSdk can be instantiated like so:
 ```
 </Tab>
 
-<Tab id='code-gen-1'>
+<Tab id='instanstiate-hmssdk-1'>
 
 ```java
     HMSSDK hmssdk = new HMSSDK
@@ -119,13 +119,14 @@ The HMSSdk can be instantiated like so:
 ```
 </Tab>
 
+
 ## Get a Preview (optional)
 
 ## Join a Video Call
 
-<Tabs id="code-gen" items={['Kotlin', 'Java']} />
+<Tabs id="join-call" items={['Kotlin', 'Java']} />
 
-<Tab id='code-gen-0'>
+<Tab id='join-call-0'>
 
 ```kotlin
 
@@ -145,25 +146,28 @@ class MyHmsUpdateListener : HMSUpdateListener {
 ```
 </Tab>
 
-<Tab id='code-gen-1'>
+<Tab id='join-call-1'>
+
 ```java
 
-    HMSConfig config = new HMSConfig("user display name", authToken);
-    hmsSdk.join(config, new MyHmsUpdateListener());
+HMSConfig config = new HMSConfig("user display name", authToken);
+hmsSdk.join(config, new MyHmsUpdateListener());
 
-    class MyHmsUpdateListener implements HMSUpdateListener {
-        @Override public void onJoin(@NonNull HMSRoom hmsRoom) {}
-        @Override public void onMessageReceived(@NonNull HMSMessage hmsMessage) {}
-        @Override public void onPeerUpdate(@NonNull HMSPeerUpdate hmsPeerUpdate, @NonNull HMSPeer hmsPeer) {}
-        @Override public void onReconnected() {}
-        @Override public void onReconnecting(@NonNull HMSException e) {}
-        @Override public void onRoleChangeRequest(@NonNull HMSRoleChangeRequest hmsRoleChangeRequest) {}
-        @Override public void onRoomUpdate(@NonNull HMSRoomUpdate hmsRoomUpdate, @NonNull HMSRoom hmsRoom) {}
-        @Override public void onTrackUpdate(@NonNull HMSTrackUpdate hmsTrackUpdate, @NonNull HMSTrack hmsTrack, @NonNull HMSPeer hmsPeer) {}
-        @Override public void onError(@NonNull HMSException e) {}
-    }
+class MyHmsUpdateListener implements HMSUpdateListener {
+    @Override public void onJoin(@NonNull HMSRoom hmsRoom) {}
+    @Override public void onMessageReceived(@NonNull HMSMessage hmsMessage) {}
+    @Override public void onPeerUpdate(@NonNull HMSPeerUpdate hmsPeerUpdate, @NonNull HMSPeer hmsPeer) {}
+    @Override public void onReconnected() {}
+    @Override public void onReconnecting(@NonNull HMSException e) {}
+    @Override public void onRoleChangeRequest(@NonNull HMSRoleChangeRequest hmsRoleChangeRequest) {}
+    @Override public void onRoomUpdate(@NonNull HMSRoomUpdate hmsRoomUpdate, @NonNull HMSRoom hmsRoom) {}
+    @Override public void onTrackUpdate(@NonNull HMSTrackUpdate hmsTrackUpdate, @NonNull HMSTrack hmsTrack, @NonNull HMSPeer hmsPeer) {}
+    @Override public void onError(@NonNull HMSException e) {}
+}
 
-<Tab/>
+```
+
+</Tab>
 
 
 call join,
