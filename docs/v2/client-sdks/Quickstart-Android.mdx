@@ -113,54 +113,19 @@ This is what we'll call the video call url and it should look something like thi
 <!-- [todo add video here] -->
 <!-- ![](/docs/v2/getting-started-android/new-project-type.png) -->
 
-## Login
+## Login Summary
 
 This will be divided into a `LoginActivity` and a `LoginViewModel`
 
-### LoginViewModel
+The LoginActivity will need to take a name for the user to join with and the url of the meeting they're joining.
 
-Building the LoginViewModel
+The LoginViewModel will create an auth token for this user with an API call and send it ahead to the VideoCallActivity bundled in an intent.
 
+Let's take a look at the API calls to get an auth token.
 
+### Auth Token
 
-
-
-## Create and instantiate 100ms SDK
-
-To use the SDK methods, create an instance via the builder. Here's the simplest way.
-```kotlin
-val hmsSDK = HMSSDK
-    .Builder(application) // pass the application context
-    .build()
-```
-
-Advanced configurations can be seen at: [todo api reference].
-
-## Joining a video call
-
-To join a video chat you need to call the `join` method on HMSSDK. This method takes two parameters.
-1. The HMSConfig (which contains username and authentication token as required parameters though advanced ones exist).
-2. The HMSUpdateListeners which let you know when people join or leave or other things happen in the video chat.
-
-It would look like:
-
-```kotlin
-
-    hmsSDK.join(hmsConfig, hmsUpdateListeners)
-
-```
-
-Let's see how to get instances of these objects.
-
-#### Getting the HMSConfig ready
-
-The only required fields in HMSConfig are username and authToken.
-
-Username:
-This can be whatever the user decides. Take it in a login form.
-
-Auth Token:
-A new auth token should be requested each time a call is joined.
+A single auth token is valid for one call. After you leave a call, you'll need to get a new auth token to connect.
 
 The auth token API call is a HTTP POST call with a header called "subdomain", a JSON body with the format we'll see in `TokenRequestWithCode` and the server will respond with a `TokenResponse`, which we'll see shortly as well. The API url for requesting auth tokens is `https://prod-in.100ms.live/hmsapi/get-token`
 
@@ -242,6 +207,76 @@ Advanced:
 The same room can have multiple links. On the [dashboard.100ms.live](dashboard) once you sign up you can define roles such as teachers or students each with their own privileges like being able to show video or not. Roles are yours to create and define!
 One link can be given to students to join with their privileges and another to teachers to join with theirs.
 
+
+## Login
+
+Now we're ready to login.
+
+The Login Activity will call authenticate with the url for the meeting. The LoginViewModel will get the auth token with an api call.
+
+```kotlin{11,19-29}:LoginViewModel.kt
+
+class LoginViewModel : ViewModel() {
+    private val TAG = "LoginViewModel"
+
+    val authToken = MutableLiveData<String?>(null)
+    val error = MutableLiveData<String?>(null)
+
+    fun authenticate(url: String) {
+        viewModelScope.launch {
+            try {
+                val token = getAuthToken(url) // then launch the other activity.
+                authToken.postValue(token)
+            } catch (e: Exception) {
+                error.postValue(e.message)
+                Log.d(TAG, "An error occurred while getting the auth token $e")
+            }
+        }
+    }
+
+    private suspend fun getAuthToken(url : String) : String = withContext(Dispatchers.IO) {
+        val subdomain = getSubdomainForMeetingUrl(url)
+        val tokenRequest = TokenRequestWithCode(url)
+
+        val token = NetworkingClient()
+            .providesRetrofit()
+            .create(HmsAuthTokenApi::class.java)
+            .getAuthToken(subdomain, tokenRequest)
+        Log.d("AuthToken", "Token is ${token.token}")
+        return@withContext token.token
+    }
+
+    private fun getSubdomainForMeetingUrl(meetingUrl : String ) : String {
+        return URI(meetingUrl).host
+    }
+}
+```
+
+
+## Joining a video call
+
+To join a video chat you need to call the `join` method on HMSSDK. This method takes two parameters.
+1. The HMSConfig (which contains username and authentication token as required parameters though advanced ones exist).
+2. The HMSUpdateListeners which let you know when people join or leave or other things happen in the video chat.
+
+It would look like:
+
+```kotlin
+
+    hmsSDK.join(hmsConfig, hmsUpdateListeners)
+
+```
+
+Let's see how to get instances of these objects.
+
+#### Getting the HMSConfig ready
+
+The only required fields in HMSConfig are username and authToken.
+
+Username:
+This can be whatever the user decides. Take it in a login form.
+
+</change>
 #### Creating an HMSConfig instance
 
 The username is whatever the user wants to called in the chat. You can ask this in the login screen.
