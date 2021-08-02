@@ -123,7 +123,19 @@ The HMSSdk can be instantiated like so:
 
 ## Get a Preview (optional)
 
+TODO
+
 ## Join a Video Call
+
+To join a video call, call the `join` method of `hmssdk` with the config and appropriate listeners.
+
+The main ones to know are:
+
+`onJoin` - called when the join was successful and you have entered the room. Note, audio will be automatically connected, video requires some work on your side.
+
+`onPeerUpdate` - called when a person joines or leaves the call and when their audio/video is muted/unmuted.
+
+`onTrackUpdate` - usually when a person joins the call, the listener will first call `onPeerUpdate` for their joining and subsequently call `onTrackUpdate` with their actual video track. It's essential that this callback be listened to as well or you may have peers without video.
 
 <Tabs id="join-call" items={['Kotlin', 'Java']} />
 
@@ -170,11 +182,35 @@ class MyHmsUpdateListener implements HMSUpdateListener {
 
 </Tab>
 
+### Showing Videos
 
-call join,
-    hmsconfig created with the params username auth token
-    hmsupdate listener and the things to listen to in it.
+A peer represents one person in the video call.
 
-explain the track/peer method and provide a link into the other guide.
-explain the surfaceview binding and provide a link into the other guide.
+Thier video track can be seen in `hmsPeer.videoTrack` for the person's video and `val screenShareVideoTrack = hmsPeer.auxiliaryTracks.find { it is HMSVideoTrack }` for screenshares. i.e the auxilliary tracks is list of tracks, one of which can be a screenshare if they have chosen to share their screen.
+
+You would want a recyclerview of participants in the video call. 
+
+The best way to represent video call participants in an adapter for display is a class that has both the track and the peer as members. It could be called a TrackPeerPair.
+See a more thourough example of this in the guide here (todo add link).
+
+Your layout xml for a peer video would need to have an `org.webrtc.SurfaceViewRenderer` 
+
+```xml
+
+<org.webrtc.SurfaceViewRenderer
+        android:id="@+id/videoSurfaceView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+```
+
+This will need to be initialized when added to the window and released when it's removed, along with calling `hmsPeer.videoTrack?.addSink(surfaceViewRenderer)` to start showing videos.
+See a more thourough example of this in the guide here (todo add link).
+
+### Listening to Updates Effectively
+
+Each time there's a an onJoin, onPeerUpdate, or onTrackUpdate, you can simply add all the peers from `hmsSdk.getPeers()` into the adapter after you put them into a TrackPeerPair.
+
+
 
