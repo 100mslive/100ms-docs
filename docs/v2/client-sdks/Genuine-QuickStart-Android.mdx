@@ -7,22 +7,49 @@ nav: 10
 
 In this overview the major steps involved in creating a demo project with the 100ms SDK will be laid out. Each section will be explained in more detail further ahead.
 
-To use the 100ms SDK in your app in production (but not for this quickstart) you'll need to set up your server to authenticate user requests. For the purposes of this quickstart you can rely on the 100ms dashboard. Sign up for the 100ms Dashboard [here](todo add link).
+Jump to a section you're interested in or read top down to get the overview.
 
-From either the dashboard or your own server once implemented, you'll generate a video call link.
+[Getting the video call joining link](getting-the-video-call-joining-link)
 
-On the Android app, you add the sdk dependencies, create a login token to authenticate the user, create an instance of the `HMSSDK`, see a preview (optional) of the user's audio video with the 100ms `hmssdk.preview`, then call `hmssdk.join` with the video call link to join the call.
+[How to render audio/video](#how-to-get-audio-and-video)
+
+[Adding SDK dependency to joining calls](from-adding-sdk-depdency-to-joining-calls)
+
+[Know when people join or leave](#how-you-know-when-people-join-or-leave)
+
+### Getting the video call joining link
+
+The [100ms Dashboard](https://dashboard.100ms.live/register) is how you can quickly try out creating a video conferencing call link and joining it. For production use cases though your own server will generate the joining links and manage user authentication. Direct use of the dashboard will stop working after 10k minutes of video calls and you'll need to setup your own server after.
+
+For the purposes of this quickstart you can rely on only the 100ms dashboard. Sign up for the 100ms Dashboard [here](https://dashboard.100ms.live/register).
+
+From either the dashboard, or your own server once implemented, you'll generate a video call link.
+
+### From adding sdk depdency to joining calls
+On the Android app:
+1. Add the sdk dependencies
+2. Create a login token to authenticate the user
+3. Create an instance of the `HMSSDK
+    * Show an optional of the user's audio video with the 100ms `hmssdk.preview`
+4. Call `hmssdk.join` with the video call link to join the call.
+
+<details>
+<summary>Expand</summary>
+somoe giant text
+</details>
+
+### How to get audio and video
+The audio for every person who joins the call is played by the SDK automatically when you have joined.
+
+To see the person's video you need to create an instance of `org.webrtc.SurfaceViewRenderer` which can be taken from the library `implementation 'org.webrtc:google-webrtc:1.0.32006'`.
+
+
+### How you know when people join or leave
 
 The join method takes an interface called `HMSUpdateListener` which lets you know when peers join and leave the call, mute/unmute their audio and video and lots more.
 
 The `HMSUpdateListener` has a callback which will be called when people join or leave `onPeerUpdate(type: HMSPeerUpdate, peer: HMSPeer)`. `HMSPeer` is object that represents a person in the call.
 
-To see the person's video you need to create an instance of `org.webrtc.SurfaceViewRenderer` which can be taken from the library `implementation 'org.webrtc:google-webrtc:1.0.32006'`.
-
-
-Dashboard is how you can quickly try it out creating a video conferencing room and joining it but in production your own server will generate the joining links and manage user authentication. This method will stop working after 10k minutes of video calls and you'll need to setup your own server after.
-
-You could choose to just use the dashboard and 100ms authentication management as well.
 
 Here's the [server](todo add link) way and below is how you can login relying on the 100ms auth.
 
