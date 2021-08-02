@@ -8,9 +8,11 @@ description: Release Notes for 100ms JavaScript SDK
 
 #### Added
 
--   Changing roles mid-call [Refer Usage](../client-sdks/Getting-Started-JavaScript#changing-roles-mid-call)
--   BREAKING CHANGE: The interface of `HMSPeer` has been modified for users using the JavaScript SDK without the [Reactive Store](../client-sdks/Reactive-Store-JavaScriptx).
--   BREAKING CHANGE: For users of the [Reactive Store](../client-sdks/Reactive-Store-JavaScriptx), the `HMSPeer` interface has been modified. Use `peer.roleName` instead of `peer.role` to obtain the name of a peer's role.
+-   Changing roles mid-call. Refer Usage
+    -   [JavaScript SDK](../client-sdks/Getting-Started-Javascript#managing-roles)
+    -   [Reactive Store](../client-sdks/Reactive-Store-Extension-to-the-JS-SDK#managing-roles)
+    -   [React SDK](../web-frameworks/Getting-started-react#managing-roles)
+-   BREAKING CHANGE: The interface of `HMSPeer` has been modified for users using the JavaScript SDK without the [Reactive Store](../client-sdks/Reactive-Store-Extension-to-the-JS-SDK).
 
 ```jsx
 // Before
@@ -60,6 +62,8 @@ export interface PublishParams {
     allowed: string[];
 }
 ```
+
+-   BREAKING CHANGE: For users of the [Reactive Store](../client-sdks/Reactive-Store-Extension-to-the-JS-SDK) and [React SDK](../web-frameworks/Getting-started-react), the `HMSPeer` interface has been modified. Use `peer.roleName` instead of `peer.role` to obtain the name of a peer's role.
 
 #### Fixed
 

@@ -181,12 +181,14 @@ interface HMSStore {
 interface HMSPeer {
     id: HMSPeerID;
     name: string;
-    role?: string;
+    roleName?: HMSRoleName;
     isLocal: boolean;
     isStarred?: boolean;
     videoTrack?: HMSTrackID;
     audioTrack?: HMSTrackID;
     auxiliaryTracks: HMSTrackID[];
+    customerUserId?: string;
+    customerDescription?: string;
 }
 
 interface HMSTrack {
@@ -231,33 +233,29 @@ To render the video of a peer, you can get the peer's video from the data store 
 Remember to call `detachVideo` when the video is not being rendered
 
 ```jsx
-import {
-  useHMSStore,
-  useHMSActions,
-  selectCameraStreamByPeerID,
-} from '@100mslive/hms-video-react';
+import { useHMSStore, useHMSActions, selectCameraStreamByPeerID } from '@100mslive/hms-video-react';
 import React, { useRef, useEffect } from 'react';
 
 function VideoTile(props) {
-  const videoRef = useRef(null);
-  const hmsActions = useHMSActions();
-  // Render camera track. To render screenShare track, use the selectScreenShareByPeerId selector
-  const videoTrack = useHMSStore(selectCameraStreamByPeerID(props.peer.id));
-  useEffect(() => {
-    (async () => {
-      if (videoRef.current && videoTrack) {
-        if (videoTrack.enabled) {
-          await hmsActions.attachVideo(videoTrack.id, videoRef.current);
-        } else {
-          await hmsActions.detachVideo(videoTrack.id, videoRef.current);
-        }
-      }
-    })();
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [videoTrack?.id, videoTrack?.enabled, videoTrack?.deviceID]);
+    const videoRef = useRef(null);
+    const hmsActions = useHMSActions();
+    // Render camera track. To render screenShare track, use the selectScreenShareByPeerId selector
+    const videoTrack = useHMSStore(selectCameraStreamByPeerID(props.peer.id));
+    useEffect(() => {
+        (async () => {
+            if (videoRef.current && videoTrack) {
+                if (videoTrack.enabled) {
+                    await hmsActions.attachVideo(videoTrack.id, videoRef.current);
+                } else {
+                    await hmsActions.detachVideo(videoTrack.id, videoRef.current);
+                }
+            }
+        })();
+        //eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [videoTrack?.id, videoTrack?.enabled, videoTrack?.deviceID]);
 
-  //Rendering logic
-  return <video ref={videoRef} autoPlay muted></video>;
+    //Rendering logic
+    return <video ref={videoRef} autoPlay muted></video>;
 }
 
 export default VideoTile;
@@ -276,11 +274,11 @@ hmsActions.setLocalAudioEnabled(true);
 
 ```jsx
 //mute
-hmsActions.setVolume(peer.audioTrack, 0); 
+hmsActions.setVolume(peer.audioTrack, 0);
 //unmute
-hmsActions.setVolume(peer.audioTrack, 100); 
+hmsActions.setVolume(peer.audioTrack, 100);
 // here we should probably use something between 0-100
-hmsActions.setVolume(peer.audioTrack, 10); 
+hmsActions.setVolume(peer.audioTrack, 10);
 
 // Get volume for audio Track
 const volumeByPeerID = useHMSStore(selectAudioVolumeByPeerID(peer.id));
@@ -387,6 +385,107 @@ hmsActions.setScreenShareEnabled(true);
 hmsActions.leave();
 ```
 
+## Managing roles
+
+Read about roles in the JavaScript section of the [documentation](../client-sdks/Getting-Started-Javascript#managing-roles)
+
+### Changing roles mid-call
+
+Changing a role involves selecting a remote peer and the name of the new role. You can get a list of the remote peers using the `selectRemotePeers` selector and the list of available roles using `selectAvailableRoleNames` selector.
+Refer to the Reactive Store [documentation](../client-sdks/Reactive-Store-Extension-to-the-JS-SDK#fetching-role-related-information) for more information about selectors.
+
+```jsx
+import { selectAvailableRoleNames, useHMSStore, useHMSActions } from '@100mslive/hms-video-store';
+
+function RemotePeer({ peer }) {
+    const roleNames = hmsStore.getState(selectAvailableRoleNames);
+    const [newRole, setNewRole] = React.useState(peer.roleName);
+    const [force, setForce] = React.useState(false);
+
+    const handleClick = () => {
+        hmsActions.changeRole(peer.id, newRole, force);
+    };
+
+    const handleSelectInput = (event) => {
+        setNewRole(event.target.value);
+    };
+
+    return (
+        <>
+            <VideoTile peer={peer} />
+            <select value={newRole} onChange={handleSelectInput}>
+                {roleNames.map((roleName) => (
+                    <option key={roleName} value={roleName}>
+                        {roleName}
+                    </option>
+                ))}
+            </select>
+            <button onClick={handleClick}>Change role</button>
+        </>
+    );
+}
+```
+
+### Showing a dialog on incoming role change requests
+
+If a user receives a role-change request from another peer, you can fetch that request using `selectRoleChangeRequest` selector and show it to the user.
+
+> **Note**: In case of a forced role-change the user will not receive a request.
+
+<Tabs id="role-change" items={['Code', 'Interface']} />
+
+<Tab id="role-change-0">
+
+```jsx
+import { selectRoleChangeRequest, useHMSStore } from '@100mslive/hms-video-store';
+
+function Conference() {
+    const roleChangeRequest = useHMSStore(selectRoleChangeRequest);
+    // ...
+    return (
+        <>
+            <Room />
+            {roleChangeRequest && (
+                <Dialog>
+                    <p>
+                        {roleChangeRequest.peer.name} has requested a role change to{' '}
+                        {roleChangeRequest.role.name}.
+                    </p>
+                </Dialog>
+            )}
+        </>
+    );
+}
+```
+
+</Tab>
+
+<Tab id="role-change-1">
+
+```jsx
+interface HMSRoleChangeRequest {
+    requestedBy: HMSPeer;
+    role: HMSRole;
+    token: string;
+}
+```
+
+</Tab>
+
+> Refer to the JavaScript [documentation](../client-sdks/Getting-Started-Javascript#changing-roles-mid-call) for more information about the `HMSRole` interface
+
+### Accepting or rejecting a role change request
+
+In case of a non-forced role change, the user will have the option to either accept or reject the role change.
+
+```jsx
+hmsActions.acceptChangeRole(roleChangeRequest);
+// or
+hmsActions.rejectChangeRole(roleChangeRequest);
+```
+
+Either of those actions will set the `roleChangeRequest` to `null` and will result in the dismissal of the `Dialog` in the previous code example.
+
 ## Advanced use cases
 
 ### Adding / removing auxiliary tracks
@@ -413,6 +512,7 @@ await hmsActions.removeTrack(trackId);
 ### Audio Output Management
 
 Change the audio output device and volume using `hmsActions.setAudioOutputDevice("a-valid-MediaDeviceInfo-object-id")` and `hmsActions.setVolume(30)`.
+
 ```js
   /**
    * Set the output volume of audio tracks(overall/particular audio track)
@@ -427,3 +527,77 @@ Change the audio output device and volume using `hmsActions.setAudioOutputDevice
    */
   setAudioOutputDevice(deviceId: string): void;
 ```
+
+### Showing a preview screen before joining
+
+<Tabs id="preview" items={['Code', 'Interface']} />
+
+<Tab id="preview-0">
+
+```jsx
+import { HMSConfig } from '@100mslive/hms-video';
+import {
+    useHMSStore,
+    selectLocalPeer,
+    useHMSActions,
+    selectIsLocalAudioEnabed,
+    selectIsLocalVideoEnabled
+} from '100mslive/hms-video-store';
+
+function Preview(props) {
+    const config: HMSConfig = props.config;
+    const localPeer = useHMSStore(selectLocalPeer);
+    const hmsActions = useHMSActions();
+
+    const isLocalAudioEnabled = useHMSStore(selectIsLocalAudioEnabled);
+    const isLocalVideoEnabled = useHMSStore(selectIsLocalVideoEnabled);
+
+    const videoElementRef = React.useRef(null);
+
+    React.useEffect(() => {
+        /**
+         * config contains the userName and the authToken for the room
+         * Refer the interface for more information
+         */
+        hmsActions.preview(config);
+    }, [config, hmsActions]);
+
+    React.useEffect(() => {
+        if (localPeer?.videoTrack && videoElementRef.current) {
+            hmsActions.attachVideo(localPeer.videoTrack, videoElementRef.current);
+        }
+    }, [localPeer?.videoTrack, hmsActions]);
+
+    return localPeer?.videoTrack ? (
+        <video ref={videoElementRef} autoPlay muted />
+    ) : (
+        <div>Loading...</div>
+    );
+}
+```
+
+</Tab>
+
+<Tab id="preview-1">
+
+```jsx
+interface HMSConfig {
+    userName: string;
+    authToken: string;
+    metaData?: string;
+    audioSinkElementId?: string;
+    initEndpoint?: string;
+    settings?: InitialSettings;
+    autoVideoSubscribe?: boolean;
+}
+
+interface InitialSettings {
+    isAudioMuted: boolean;
+    isVideoMuted: boolean;
+    audioInputDeviceId: string;
+    audioOutputDeviceId: string;
+    videoDeviceId: string;
+}
+```
+
+</Tab>
