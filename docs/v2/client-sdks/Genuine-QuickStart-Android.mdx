@@ -30,7 +30,11 @@ On the Android app (click the arrow to expand for details):
 <details>
 <summary>Add the sdk dependencies</summary>
 
-#### Add the JitPack repository to your root `settings.gradle` at the end of the `respositories` closure:
+#### Add the SDK 
+
+- Add the JitPack repository to your root `settings.gradle` at the end of the `respositories` closure:
+
+You can open it easily in Android Studio by double tapping shift and typing `settings.gradle`.
 
 ```json{7}:settings.gradle
 dependencyResolutionManagement {
@@ -46,6 +50,16 @@ rootProject.name = "MyVideoCallApp"
 include ':app'
 
 ```
+
+- Add the 100ms sdk dependency to your app-level `build.gradle` [![](https://jitpack.io/v/100mslive/android-sdk.svg)](https://jitpack.io/#100mslive/android-sdk)
+
+```json
+dependencies {
+        // See the version in the jitpack badge above.
+		implementation 'com.github.100mslive:android-sdk:x.x.x' 
+	}
+```
+
 </details>
 <details><summary>Create a login token to authenticate the user</summary></details>
 3. Create an instance of the `HMSSDK
