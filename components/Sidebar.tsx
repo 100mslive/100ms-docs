@@ -22,19 +22,26 @@ interface Props {
 const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const router = useRouter();
     const menuItem = [
-        { id: 1, name: 'REACT', icon: <ReactIcon /> },
-        { id: 2, name: 'ANDROID', icon: <AndroidIcon /> },
-        { id: 3, name: 'IOS', icon: <IosIcon /> },
-        { id: 4, name: 'JAVASCRIPT', icon: <JavascriptIcon /> },
-        { id: 5, name: 'SERVER-SIDE', icon: <ServerIcon /> }
+        { link: '/react/v2/home/intro', name: 'REACT', icon: <ReactIcon /> },
+        { link: '/android/v2/home/intro', name: 'ANDROID', icon: <AndroidIcon /> },
+        { link: '/ios/v2/home/intro', name: 'IOS', icon: <IosIcon /> },
+        { link: '/javascript/v2/home/intro', name: 'JAVASCRIPT', icon: <JavascriptIcon /> },
+        { link: '/server-side/v2/home/intro', name: 'SERVER-SIDE', icon: <ServerIcon /> }
     ];
-    const [tech, setTech] = React.useState(menuItem[0]);
+    // @ts-ignore
+    let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === router.query.slug[0]);
+    indexOf = indexOf === -1 ? 0 : indexOf;
+    const [tech, setTech] = React.useState(menuItem[indexOf]);
+    const changeTech = (s) => {
+        setTech(s);
+        router.push(s.link, undefined, { shallow: true });
+    };
     return (
         <div className="ctx">
             {/* Sidebar Version Section */}
             <section className="menu-container">
                 <div className="menu-title">TECHNOLOGY</div>
-                <Listbox value={tech} onChange={setTech}>
+                <Listbox value={tech} onChange={changeTech}>
                     <Listbox.Button className="dropdown">
                         <div style={{ display: 'flex ', alignItems: 'center' }}>
                             {tech.icon} <span style={{ marginLeft: '1rem' }}>{tech.name}</span>
@@ -44,7 +51,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     <Listbox.Options className="dropdown-options">
                         {menuItem.map((m) => (
                             <Listbox.Option
-                                key={m.id}
+                                key={m.link}
                                 value={m}
                                 className={({ active }) =>
                                     `${

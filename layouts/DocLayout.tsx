@@ -5,6 +5,7 @@ import Toc, { TocItem } from '@/components/Toc';
 import { PaginationType } from '@/lib/getPagination';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import { NextSeo } from 'next-seo';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 type NavRoute = {
@@ -54,6 +55,20 @@ const DocLayout: React.FC<Props> = ({
     const [modal, setModal] = React.useState(false);
     const menuState = { menu, setMenu };
     useLockBodyScroll(modal);
+    const router = useRouter();
+    let newNav;
+    // if 3 levels of directory
+    // @ts-ignore
+    if (router.query.slug[0] !== 'v1' && router.query.slug[0] !== 'v2') {
+        // TODO: remove this ^ not needed if `v1` & `v2` docs are replaced
+        // @ts-ignore
+        if (router.query.slug?.length > 3) {
+            // @ts-ignore
+            newNav = nav[router.query.slug[1]];
+        }
+    } else {
+        newNav = nav;
+    }
     return (
         <>
             <div className="page">
@@ -66,7 +81,7 @@ const DocLayout: React.FC<Props> = ({
                     currentDocSlug={currentDocSlug}
                 />
                 <div className="ctx">
-                    <Sidebar menu={menu} nav={nav} />
+                    <Sidebar menu={menu} nav={newNav} />
                     <div className="content-wrapper">
                         <article>
                             <h1>{frontMatter.title}</h1>
