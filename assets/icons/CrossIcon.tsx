@@ -12,7 +12,7 @@ const CrossIcon = () => (
         strokeLinejoin="round"
         fill="none"
         shapeRendering="geometricPrecision"
-        style={{ color: 'var(--foreground)' }}>
+        style={{ color: 'var(--gray12)' }}>
         <path d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z" />
     </svg>
 );

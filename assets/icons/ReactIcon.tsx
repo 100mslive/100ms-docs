@@ -11,7 +11,7 @@ function ReactIcon(props: React.SVGProps<SVGSVGElement>) {
             strokeMiterlimit={2}
             width={24}
             height={24}
-            style={{ fill: 'var(--foreground)', marginRight: '1rem' }}
+            style={{ fill: 'var(--gray12)', marginRight: '1rem' }}
             {...props}>
             <g transform="translate(.002 -.002) scale(2.75453)">
                 <circle cx={64} cy={64} r={11.4} />

@@ -79,11 +79,13 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     height: calc(100vh - 80px);
                     min-width: 298px;
                     overflow-y: scroll;
-                    top: ${menu ? '10px' : '80px'};
+                    padding-top: 20px;
+                    top: ${menu ? '10px' : '60px'};
                     left: 0;
                     position: ${menu ? 'absolute' : 'sticky'};
-                    background: var(--background);
+                    background: var(--gray1);
                     z-index: 40;
+                    border-right: 1px solid var(--gray6);
                 }
                 ::-webkit-scrollbar {
                     width: 0px;
@@ -92,38 +94,34 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     outline: 0px;
                 }
                 .menu-container {
-                    padding-left: 10px;
                     margin: 10px 0;
                 }
                 .menu-item {
-                    border-radius: 5px;
                     cursor: pointer;
                     padding: 8px 0;
-                    padding-left: 10px;
                     margin: 5px 0;
-                    color: var(--accents8);
-                    font-weight: 600;
-                    font-size: 14px;
+                    color: var(--gray12);
+                    font-weight: 400;
+                    font-size: 13px;
                     display: flex;
                     align-items: center;
+                    padding-left: 20px;
                 }
 
                 a {
                     text-decoration: none;
                 }
                 .active-link {
-                    color: var(--success-light);
-                    background-color: var(--offset);
+                    color: var(--gray12);
+                    background-color: var(--blue6);
                 }
                 .menu-item:hover {
-                    color: var(--success-light);
-                    background-color: var(--offset);
+                    background-color: var(--blue5);
                 }
                 .menu-title {
-                    padding-left: 10px;
-                    opacity: 0.6;
-                    font-weight: bold;
-                    font-size: 14px;
+                    padding-left: 20px;
+                    font-weight: 700;
+                    font-size: 15px;
                 }
                 @media screen and (max-width: 1000px) {
                     .ctx {

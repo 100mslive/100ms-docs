@@ -12,7 +12,7 @@ const PostRequest: React.FC<Props> = ({ title, desp, url, children }) => (
             <span className="badge">POST</span>
             <span className="title">{title}</span>
         </div>
-        <code>{url}</code>
+        <code style={{ display: 'inline-block' }}>{url}</code>
         <p>{desp}</p>
         {children}
         <style jsx>{`
@@ -24,7 +24,7 @@ const PostRequest: React.FC<Props> = ({ title, desp, url, children }) => (
                 border-radius: 12px;
                 background-color: var(--token_property);
                 margin-right: 1rem;
-                color: var(--accents1);
+                color: var(--gray4);
             }
             .title {
                 font-size: 20px;

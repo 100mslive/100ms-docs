@@ -31,7 +31,7 @@ const CodeEditor = () => (
         <style jsx>{`
             .editor {
                 border-radius: 5px;
-                border: 1px solid var(--accents2);
+                border: 1px solid var(--gray5);
             }
             .live-editor {
                 padding-top: 2rem;
@@ -41,15 +41,15 @@ const CodeEditor = () => (
                 position: relative;
                 padding: 2rem 1.5rem;
                 min-height: 200px;
-                border-top: 1px solid var(--accents2);
+                border-top: 1px solid var(--gray5);
             }
             .badge {
                 opacity: 0.8;
                 top: 0;
                 left: 0;
                 position: absolute;
-                border-right: 1px solid var(--accents2);
-                border-bottom: 1px solid var(--accents2);
+                border-right: 1px solid var(--gray5);
+                border-bottom: 1px solid var(--gray5);
                 padding: 5px;
             }
         `}</style>
