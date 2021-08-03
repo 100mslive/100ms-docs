@@ -7,7 +7,7 @@ function JavascriptIcon(props: React.SVGProps<SVGSVGElement>) {
             viewBox="0 0 128 128"
             width={20}
             height={20}
-            style={{ fill: 'var(--gray12)', marginRight: '1rem' }}
+            style={{ fill: 'var(--gray12)' }}
             {...props}>
             <path fill="" d="M1.408 1.408h125.184v125.185H1.408z" />
             <path

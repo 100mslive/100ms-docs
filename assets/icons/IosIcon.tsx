@@ -9,7 +9,6 @@ function IosIcon(props: React.SVGProps<SVGSVGElement>) {
             clipRule="evenodd"
             strokeLinejoin="round"
             strokeMiterlimit={2}
-            style={{ marginRight: '1rem' }}
             width={24}
             height={24}
             {...props}>

@@ -12,7 +12,7 @@ function ServerIcon(props: React.SVGProps<SVGSVGElement>) {
             strokeLinejoin="round"
             fill="none"
             shapeRendering="geometricPrecision"
-            style={{ marginRight: '1rem', marginLeft: '0.1rem', stroke: 'var(--gray12)' }}
+            style={{ stroke: 'var(--gray12)' }}
             {...props}>
             <rect x={2} y={2} width={20} height={8} rx={2} ry={2} />
             <rect x={2} y={14} width={20} height={8} rx={2} ry={2} />

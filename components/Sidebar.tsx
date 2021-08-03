@@ -7,6 +7,7 @@ import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
 import ServerIcon from '@/assets/icons/ServerIcon';
+import { Listbox } from '@headlessui/react';
 
 type NavRoute = {
     url: string;
@@ -20,37 +21,43 @@ interface Props {
 
 const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const router = useRouter();
+    const menuItem = [
+        { id: 1, name: 'REACT', icon: <ReactIcon /> },
+        { id: 2, name: 'ANDROID', icon: <AndroidIcon /> },
+        { id: 3, name: 'IOS', icon: <IosIcon /> },
+        { id: 4, name: 'JAVASCRIPT', icon: <JavascriptIcon /> },
+        { id: 5, name: 'SERVER-SIDE', icon: <ServerIcon /> }
+    ];
+    const [tech, setTech] = React.useState(menuItem[0]);
     return (
         <div className="ctx">
             {/* Sidebar Version Section */}
             <section className="menu-container">
                 <div className="menu-title">TECHNOLOGY</div>
-
-                <Link href="/react">
-                    <div className="menu-item">
-                        <ReactIcon /> REACT
-                    </div>
-                </Link>
-                <Link href="/javascript">
-                    <div className="menu-item">
-                        <JavascriptIcon /> JAVASCRIPT
-                    </div>
-                </Link>
-                <Link href="/android">
-                    <div className="menu-item">
-                        <AndroidIcon /> ANDROID
-                    </div>
-                </Link>
-                <Link href="/ios">
-                    <div className="menu-item">
-                        <IosIcon /> iOS
-                    </div>
-                </Link>
-                <Link href="/server-side">
-                    <div className="menu-item">
-                        <ServerIcon /> SERVER-SIDE
-                    </div>
-                </Link>
+                <Listbox value={tech} onChange={setTech}>
+                    <Listbox.Button className="dropdown">
+                        <div style={{ display: 'flex ', alignItems: 'center' }}>
+                            {tech.icon} <span style={{ marginLeft: '1rem' }}>{tech.name}</span>
+                        </div>
+                        <ChevronDown />{' '}
+                    </Listbox.Button>
+                    <Listbox.Options className="dropdown-options">
+                        {menuItem.map((m) => (
+                            <Listbox.Option
+                                key={m.id}
+                                value={m}
+                                className={({ active }) =>
+                                    `${
+                                        active
+                                            ? 'dropdown-option dropdown-option-active'
+                                            : 'dropdown-option'
+                                    }`
+                                }>
+                                {m.icon} <span style={{ marginLeft: '1rem' }}>{m.name}</span>
+                            </Listbox.Option>
+                        ))}
+                    </Listbox.Options>
+                </Listbox>
             </section>
 
             {/* Sidebar Menu Section */}
@@ -140,3 +147,19 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
 };
 
 export default Sidebar;
+
+const ChevronDown = () => (
+    <svg
+        viewBox="0 0 24 24"
+        width="24"
+        height="24"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+        shapeRendering="geometricPrecision"
+        style={{ color: 'var(--gray10)' }}>
+        <path d="M6 9l6 6 6-6" />
+    </svg>
+);
