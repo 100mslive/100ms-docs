@@ -39,31 +39,21 @@ to decide colors
     --blue6: hsl(212 77.4% 23.1%);
     --blue11: hsl(210 100% 66.1%);
 
-    --code: #79ffe1;
-    --border: #333;
-    --link: #3291ff;
-    --code_title: #e4e4e7;
-    --token_code_class: #fafafa;
-    --token_regex_imp_var: #eab308;
-    --token_func_cn: #ec4899;
-    --token_attr_key: #3b82f6;
-    --token_oper_string: #eab308;
-    --token_selector: #a855f7;
-    --token_property: #22c55e;
-    --token_punctuation: #d4d4d8;
+    --cyan11: hsl(186 100% 42.2%);
+
+    --token_code_class: var(--gray12);
+    --token_regex_imp_var: var(--blue11);
+    --token_func_cn: var(--blue11);
+    --token_attr_key: var(--blue11);
+    --token_oper_string: var(--blue11);
+    --token_selector: var(--cyan11);
+    --token_property: var(--cyan11);
+    --token_punctuation: var(--gray10);
     --token_deleted: rgba(232, 74, 95, 0.5);
     --token_inserted: rgba(38, 166, 155, 0.5);
-    --token_comment: #d4d4d8;
-    --code_line_marker: rgba(20, 20, 20, 1);
-    --success-lighter: #d3e5ff;
-    --success-light: #3291ff;
-    --success: #0070f3;
-    --error-lighter: #f7d4d6;
-    --error-light: #ff1a1a;
-    --error: #e00;
-    --error-dark: #c50000;
-    --warning-lighter: #ffefcf;
-    --warning-light: #f7b955;
+    --token_comment: var(--gray10);
+
+    --success: var(--blue11);
     --warning: #f5a623;
 }
 
@@ -87,31 +77,9 @@ to decide colors
     --blue6: hsl(209 81.2% 84.5%);
     --blue11: hsl(211 100% 43.2%);
 
-    --code: #f81ce5;
-    --border: #eaeaea;
-    --link: #0070f3;
-    --code_title: #27272a;
-    --token_code_class: #27272a;
-    --token_regex_imp_var: #eab308;
-    --token_func_cn: #ec4899;
-    --token_attr_key: #3b82f6;
-    --token_oper_string: #eab308;
-    --token_selector: #a855f7;
-    --token_property: #22c55e;
-    --token_punctuation: #3f3f46;
-    --token_deleted: rgba(232, 74, 95, 0.5);
-    --token_inserted: rgba(38, 166, 155, 0.5);
-    --token_comment: #3f3f46;
-    --code_line_marker: rgba(230, 230, 230, 1);
-    --success-lighter: #d3e5ff;
-    --success-light: #3291ff;
-    --success: #0070f3;
-    --error-lighter: #f7d4d6;
-    --error-light: #ff1a1a;
-    --error: #e00;
-    --error-dark: #c50000;
-    --warning-lighter: #ffefcf;
-    --warning-light: #f7b955;
+    --cyan11: hsl(192 85% 31%);
+
+    --success: var(--blue11);
     --warning: #f5a623;
 }
 
@@ -210,7 +178,7 @@ a:hover {
 }
 
 a:focus {
-    outline-color: var(--colors-blue8);
+    outline-color: var(--blue6);
     outline-width: 2px;
     outline-style: solid;
     outline-offset: 2px;
@@ -240,7 +208,7 @@ li {
 ul li:before {
     content: '–';
     display: inline-block;
-    color: var(--gray10text-underline-offset);
+    color: var(--gray10);
     position: absolute;
     margin-left: -0.9375rem;
 }
@@ -378,7 +346,7 @@ blockquote {
     background-color: var(--gray4);
     border-radius: 5px;
     margin: 1.5rem 0;
-    border: 1px solid var(--border);
+    border: 1px solid var(--gray6);
     overflow-x: auto;
 }
 
@@ -572,7 +540,7 @@ input {
 
 /* Reamark Code Header / Title */
 .remark-code-title {
-    color: var(--code_title);
+    color: var(--gray10);
     padding: 5px 10px;
     border: 0.5px solid var(--gray5);
     border-top-left-radius: 5px;
@@ -593,7 +561,7 @@ input {
     margin-left: -1rem;
     padding-left: 1rem;
     border-left: 0.3rem solid var(--code);
-    background-color: var(--code_line_marker);
+    background-color: var(--gray3);
 }
 
 /* Git Diff Syntax Highlight */
