@@ -199,8 +199,6 @@ A peer's video track is in `hmsPeer.videoTrack`. ScreenShares can be found in  `
 You would want a RecyclerView of participants in the video call. 
 The adapter data should be a list of class that has both the peer and the track to display. Call it a TrackPeerPair.
 
-See a more thorough example of this in the guide here (todo add link).
-
 Your layout xml for a peer video would need to have an `org.webrtc.SurfaceViewRenderer` 
 
 ```xml
@@ -213,14 +211,10 @@ Your layout xml for a peer video would need to have an `org.webrtc.SurfaceViewRe
  app:layout_constraintTop_toTopOf="parent" />
 ```
 Initialize this when it's added to the window. Release it when it's removed. Call `hmsPeer.videoTrack?.addSink(surfaceViewRenderer)` to start showing videos.
-See a more thorough example of this in the guide here (todo add link).
+
 ### Listening to Updates Effectively
 
 Each time there's a an onJoin, onPeerUpdate, or onTrackUpdate, you can add all the peers from `hmsSdk.getPeers()` into the adapter. You'd need to map them into TrackPeerPair's.
-
-## Further Reading
-
-Take a look at the guide for more detailed instructions. (todo add link for guide).
 
 ## Glossary
 
