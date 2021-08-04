@@ -43,27 +43,36 @@ If you were looking for an audio and video preview after the login but before th
 
 ### 1. Add dependency to 100ms lib
 
--   Add the JitPack repository to your build file. Add it in your root `build.gradle` at the end of repositories of `allprojects`:
+- Add the JitPack repository to your root `settings.gradle` at the end of the `respositories` closure:
 
-```json
-allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+You can open it in Android Studio by double tapping shift and typing `settings.gradle`.
+
+```json{7}:settings.gradle
+dependencyResolutionManagement {
+ repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+ repositories {
+ google()
+ mavenCentral()
+ jcenter() // Warning: this repository is going to shut down soon
+ maven { url 'https://jitpack.io' }
+    }
+}
+rootProject.name = "MyVideoCallApp"
+include ':app'
+
 ```
-[todo mention that it needs to be added to settings.gradle instead]
 
--   Add the 100ms sdk dependency to your app-level `gradle` [![](https://jitpack.io/v/100mslive/android-sdk.svg)](https://jitpack.io/#100mslive/android-sdk)
+- Add the 100ms sdk dependency to your app-level `build.gradle` [![](https://jitpack.io/v/100mslive/android-sdk.svg)](https://jitpack.io/#100mslive/android-sdk).
 
-```json
+You'll also need the webrtc dependency for the `org.webrtc.SurfaceViewRenderer` that's required to display people's videos.
+
+```json{3,4}:build.gradle
 dependencies {
-        // See the version in the jitpack badge above.
-		implementation 'com.github.100mslive:android-sdk:x.x.x' 
-	}
+ // See the version in the jitpack badge above.
+ implementation 'com.github.100mslive:android-sdk:x.x.x' 
+ implementation 'org.webrtc:google-webrtc:1.0.32006'
+    }
 ```
-
 ### 2. Add other dependencies
 
 Add all the following libraries in your app-level Gradle file as dependencies.
