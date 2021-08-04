@@ -1,0 +1,360 @@
+---
+title: Building Audio Room with 100ms
+devTime: 30mins
+author: Deepankar Bhade
+date: 2-8-2021
+image: /guides/audio-room.png
+tags:
+    - react
+    - javascript
+    - audio-room
+---
+
+<Text id='0'>
+
+## Prerequisites
+
+To follow this tutorial, you must have a basic understanding of the rudimentary principles of React. [React Docs](https://reactjs.org/) is a great way to start learning react.
+
+## Getting Started
+
+We will be using [Tailwind CSS](https://tailwindcss.com/) for styling you can refer to their docs [here](https://tailwindcss.com/docs).
+
+I have created a Starter-Template which is based on [CRA + Tailwind Guide](https://tailwindcss.com/docs/guides/create-react-app#install-and-configure-craco). You can clone it with the follwing script.
+
+```bash
+git clone https://github.com/100mslive/100ms-zoom-clone-react zoom-clone
+```
+
+</Text>
+
+<Text id='1' toc='Creating Account'>
+
+## Create account on 100ms
+
+If you're using 100ms for the 1st time and don't have an account here then follow this section otherwise [Skip to this Section](#token-generation).
+
+You will have to create an account at [Dashboard of 100ms](https://dashboard.100ms.live/)
+
+After you have created your account you have to Confirm your Email , check the promotions tab in your Mail Box if you can't find it.
+
+Then login again and you would see this Section. Fill it out
+
+After that's done you would be asked to choose a template we will choose "Video Conferencing" for now then click on "Set up App"
+
+After you're App is set click on "Go to Dashboard" or [Go Here](https://dashboard.100ms.live/dashboard)
+
+</Text>
+
+<View id="1" img="/guides/register.png" />
+
+<Text id='2' toc='Getting Token Endpoint'>
+
+## Get Token Endpoint
+
+Any service calling 100ms' REST APIs need to authenticate using a management token. You can generate Tokens via `Token Generation endpoint` that is provided by 100ms.
+
+After you're done with creating an account head over to the developer section of [100ms Dashboard](https://dashboard.100ms.live/developer). You will find all `Access Credentials` here including `Token Endpoint`.
+
+## Creating Room
+
+Now to get `room_id` get over to [Room in Dashboard](https://dashboard.100ms.live/rooms) and click on "Create Room" , While creating a room you can specify it's name, roles or enable recording.
+
+You will now see "Room Details" section and we have a `room_id` created.
+
+</Text>
+
+<View id="2" img="/guides/secret.png" />
+
+<Text id='3' toc='Generating Token' >
+
+## Generate Token
+
+Now that we have got our `Token Endpoint` and `room_id` we can now generate our own Token.
+
+We will create a file `getToken.js` in the 'src' folder. Here the `getToken` function takes `room_id` as an argument and makes a `POST` request to the Endpoint and returns token.
+
+> Make sure to replace `<YOUR_TOKEN_ENPOINT>` with your TOKEN ENDPOINT from Dashboard.
+
+To know the limitations to Token Generation Endpoint you can read our [docs](https://docs.100ms.live/v2/server-side/100ms-quickstart-app-server#limitations-to-token-generation-endpoint).
+
+</Text>
+
+<View id='3' code>
+
+```jsx
+const endPoint = '<YOUR_TOKEN_ENPOINT>';
+
+export default async function getToken(room_id) {
+    const response = await fetch(`${endPoint}api/token`, {
+        method: 'POST',
+        body: JSON.stringify({
+            user_id: '5fc62c5872909272bf9995e1', // User ID assigned by you (different from 100ms' assigned id)
+            role: 'host', //host, teacher, guest, student
+            type: 'app',
+            room_id
+        })
+    });
+
+    const { token } = await response.json();
+
+    return token;
+}
+```
+
+</View>
+
+<Text id='4' toc='Instantiate 100ms Client'>
+
+## Data Store
+
+`@100mslive/hms-video-react` provides us a flux based reactive data store layer over 100ms core SDK.This makes state management super easy.
+
+It's core features:
+
+-   **Store** - The reactive store for reading data using selectors. The store acts as a single source of truth for any data related to the room.
+-   **Actions** - The actions interface for dispatching actions which in turn may reach out to server and update the store.
+-   **Selectors** - These are small functions used to get or subscribe to a portion of the store.
+
+## Instantiate 100ms Client
+
+To harness the power of this Data Store we will 1st create a `<Conference />` component and wrap it around `<HMSRoomProvider />`.
+
+</Text>
+
+<View id='4' preview='/guides/audio-room.png'>
+
+```jsx
+import { HMSRoomProvider, useHMSStore } from '@100mslive/hms-video-react';
+import './index.css';
+
+const Conference = () => {
+    return <div>Main Code Here</div>;
+};
+
+export default function App() {
+    return (
+        <div className="w-full h-screen flex items-center flex-col bg-gray-900 text-white">
+            <HMSRoomProvider>
+                <Conference />
+            </HMSRoomProvider>
+        </div>
+    );
+}
+```
+
+</View>
+
+<Text id='5' toc='Join / Room Screen'>
+
+## Join / Room Screen
+
+There's 2 conditions we will be handling in the `<Conference />` component
+
+1. User has't joined the room -> `<Join />`
+2. User has joined the room -> `<Room />`
+
+Create a folder called 'components' and create 2files in it `Join.jsx` & `Room.jsx`
+
+We will keep the `Room.jsx` simple for now as we will be focusing on `Join.jsx`
+
+</Text>
+
+<View id='5' code>
+
+```jsx
+import React, { useState } from 'react';
+
+const Join = () => {
+    const room_id = `<YOUR_ROOM_ID>`;
+    const [userName, setUserName] = useState('Deepankar');
+    const [room, setRoom] = useState(room_id);
+    return (
+        <div className="mt-10">
+            <h1 className="text-3xl font-bold text-gray-200">Join Section</h1>
+            <div className="mt-4">
+                <input
+                    type="text"
+                    className="my-5"
+                    placeholder="Your name"
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)}
+                />
+                <button
+                    type="button"
+                    className="py-2 px-4   text-base font-semibold shadow-md rounded-lg">
+                    Join
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export default Join;
+```
+
+</View>
+
+<Text id='6' toc='Render Join Component'>
+
+## Render Join
+
+We will render `<Join />` when user hasn't joined the room and `<Room />` when joined.
+
+So if the user has joined the room we will use the function `selectIsConnectedToRoom` this would return if the peer is connected to the room.
+
+You can read more about getting peer's state in our [docs](https://docs.100ms.live/v2/web-frameworks/Getting-started-react#get-peers-states).
+
+The value of `isConnected` would false because we haven't joined the room.
+
+Now if you start your dev server by running `yarn start` or `npm run start` you should be able see this in your browser.
+
+</Text>
+
+<View id='6' code>
+
+```jsx{1-3,7-9}
+import {
+  HMSRoomProvider,
+  useHMSStore,
+  selectIsConnectedToRoom,
+} from '@100mslive/hms-video-react';
+import Join from './components/Join';
+import Room from './components/Room';
+import './index.css';
+
+const Conference = () => {
+  // is the peer connected
+  const isConnected = useHMSStore(selectIsConnectedToRoom);
+  return <>{isConnected ? <Room /> : <Join />}</>;
+};
+
+export default function App() {
+  return (
+    <div className='w-full min-h-screen flex items-center flex-col bg-gray-900 text-white'>
+      <HMSRoomProvider>
+        <Conference />
+      </HMSRoomProvider>
+    </div>
+  );
+}
+```
+
+</View>
+
+<Text id='7' toc='Join Audio Room'>
+
+## Join Room
+
+To join a room we need to call the function `hmsActions.join()` which takes a config as an argument.
+
+As showm below the config needs an `authToken` that we will generate using `getToken()` function we made before , `room_id` and `username` can be derived from their respective states.
+
+You can read more about it in our [docs](https://docs.100ms.live/v2/web-frameworks/Getting-started-react#provide-joining-configuration-and-join-a-room).
+
+When the user clickes on "Join" we should generate an `authToken` and call `hmsAction.join()` function.
+
+Let's create a function "joinRoom" in `Join.jsx`
+
+</Text>
+
+<View id='7' code>
+
+```jsx{2-3,10-25,31-33}
+import React, { useState } from 'react';
+import { useHMSActions } from '@100mslive/hms-video-react';
+import getToken from '../getToken';
+
+const Join = () => {
+  const room_id = `<YOUR_ROOM_ID>`;
+  const [userName, setUserName] = useState('Deepankar');
+  const [room, setRoom] = useState(room_id);
+  const hmsActions = useHMSActions();
+  const joinRoom = () => {
+    getToken(room_id)
+      .then((token) => {
+        hmsActions.join({
+          authToken: token,
+          userName,
+          settings: {
+            isAudioMuted: true,
+            isVideoMuted: true,
+          },
+        });
+      })
+      .catch((error) => {
+        console.log('Token API Error', error);
+      });
+  };
+  return (
+    <div className='mt-10'>
+      <h1 className='text-3xl font-bold text-gray-200'>Join Section</h1>
+      <div className='mt-4'>
+          <input
+            type='text'
+            className='my-5'
+            placeholder='Your name'
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+        <button
+          type='button'
+          className='py-2 px-4   text-base font-semibold shadow-md rounded-lg'
+          onClick={() => joinRoom()}
+        >
+          Join
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Join;
+```
+
+</View>
+
+<Text id='8' toc='Adding Controls'>
+
+## Controls
+
+To know the states of Peer's Audio/Video is enabled we will used another selector function `selectIsLocalAudioEnabled`.
+
+To toggle audio and video we will use `hmsActions.setLocalAudioEnabled()` refer it's docs [here](https://docs.100ms.live/v2/web-frameworks/Getting-started-react#muting-unmuting).
+
+Leaving Room is very simple we just call `hmsActions.leave()` function.
+
+We will create a new component `Controls.jsx`
+
+</Text>
+
+<View id='8' code>
+
+```jsx
+import { selectIsLocalAudioEnabled, useHMSActions, useHMSStore } from '@100mslive/hms-video-react';
+import React from 'react';
+
+const Controls = () => {
+    const isLocalAudioEnabled = useHMSStore(selectIsLocalAudioEnabled);
+    const hmsActions = useHMSActions();
+    const toggleAudio = async () => {
+        await hmsActions.setLocalAudioEnabled(!isLocalAudioEnabled);
+    };
+    const leaveRoom = () => {
+        hmsActions.leave();
+    };
+
+    return (
+        <div className="relative">
+            <button onClick={toggleAudio} className="p-2 rounded mx-2">
+                {isLocalAudioEnabled ? 'Mic ON' : 'Mic Off'}
+            </button>
+            <button onClick={() => leaveRoom()} className="p-2  rounded mx-2 bg-red-500">
+                Leave Room
+            </button>
+        </div>
+    );
+};
+```
+
+</View>

@@ -98,6 +98,10 @@ const DocLayout: React.FC<Props> = ({
                     </div>
                 </div>
                 <style jsx>{`
+                    html {
+                        scroll-behavior: smooth !important;
+                        scroll-padding-top: 120px !important;
+                    }
                     .page {
                         max-width: 1600px;
                         margin: 0 auto;
