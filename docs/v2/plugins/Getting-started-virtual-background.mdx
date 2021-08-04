@@ -36,7 +36,7 @@ import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background"
 // Create plugin
 // background : {'blur' | 'imgSource' | 'None'}
      //  'blur'     -> Set background to blur
-     // 'imgSource' -> image url , base64 or HTMLImageElement, set background to imgSource
+     // 'imgSource' -> base64 or HTMLImageElement, set background to imgSource
      //  'none'     -> Set to none/default background
 const virtualBackground = new HMSVirtualBackgroundPlugin({background: 'blur'|'none'|imgSource})
 ```
@@ -53,7 +53,7 @@ hmsActions.removePluginFromVideoTrack(virtualBackground);
 ```javascript
 //Selector to know the current plugins and if Virtual Background is part of it
 const videoTrack = hmsStore.getState(selectLocalVideoTrackID)
-const plugins =  videoTrack.getPlugins();
+const plugins =  videoTrack.plugins;
 const isVBApplied = plugins.includes(virtualBackground.getName())
 if(isVBApplied){
     console.log("virtual background effect is applied to the local video")
@@ -76,7 +76,7 @@ import React, { useRef, useEffect } from 'react';
 // Create plugin
 // background : {'blur' | 'imgSource' | 'None'}
      //  'blur'     -> Set background to blur
-     // 'imgSource' -> image url , base64 or HTMLImageElement, set background to imgSource
+     // 'imgSource' -> base64 or HTMLImageElement, set background to imgSource
      //  'None'     -> Set to None/default background
 const virtualBackground = new HMSVirtualBackgroundPlugin({background: 'blur'|'none'|imgSource})
 ```
@@ -110,7 +110,7 @@ import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background"
 // Create plugin
 // background : {'blur' | 'imgSource' | 'None'}
      //  'blur'     -> Set background to blur
-     // 'imgSource' -> image url , base64 or HTMLImageElement, set background to imgSource
+     // 'imgSource' -> base64 or HTMLImageElement, set background to imgSource
      //  'None'     -> Set to None/default background
 const virtualBackground = new HMSVirtualBackgroundPlugin({background: 'blur'|'none'|imgSource})
 ```
@@ -166,6 +166,16 @@ virtualBackground.init();
 ## Supported Devices
 
 Our current plugin version supports chrome, firefox and edge browsers
+isSupported Api can be used to check if the browser is supported or not
+It will return True/False based on browser.
+
+```jsx
+if(virtualBackground.isSupported()){
+    console.log("Platform is supported");
+}else{
+    console.log("Platform not supported")
+}
+```
 
 ## Tips For Better User Experience
 
