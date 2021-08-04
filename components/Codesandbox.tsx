@@ -16,7 +16,7 @@ export default function Codesandbox({ id, tests }) {
             </LazyLoad>
             <style jsx>{`
                 div {
-                    border: 1px solid var(--accents2);
+                    border: 1px solid var(--gray5);
                     border-radius: 5px;
                     margin-bottom: 2rem;
                     overflow: hidden;

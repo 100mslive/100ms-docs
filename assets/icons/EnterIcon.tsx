@@ -11,7 +11,7 @@ const EnterIcon = () => (
         strokeLinejoin="round"
         fill="none"
         shapeRendering="geometricPrecision"
-        style={{ color: 'var(--foreground)' }}>
+        style={{ color: 'var(--gray12)' }}>
         <path d="M9 10l-5 5 5 5" />
         <path d="M20 4v7a4 4 0 01-4 4H4" />
     </svg>

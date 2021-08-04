@@ -5,7 +5,7 @@ interface Props {
 }
 
 const Note: React.FC<Props> = ({ type = 'success', children }) => {
-    const resolveColor = () => `var(--${type}-light)`;
+    const resolveColor = () => `var(--${type})`;
     return (
         <div>
             {children}
@@ -15,7 +15,7 @@ const Note: React.FC<Props> = ({ type = 'success', children }) => {
                     padding-left: 20px;
                     margin: 20px 0;
                     border-radius: 5px;
-                    border 1px solid var(--accents2);
+                    border 1px solid var(--gray5);
                     border-left: 5px solid ${resolveColor()};
                 }
             `}</style>

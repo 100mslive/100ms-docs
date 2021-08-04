@@ -7,6 +7,8 @@ import Note from './Note';
 import PostRequest from './PostRequest';
 import Response from './Response';
 import Codesandbox from './Codesandbox';
+import Text from './Text';
+import View from './View';
 
 const CodeCustom = (props: any) => <Code>{props.children}</Code>;
 
@@ -29,7 +31,9 @@ const MDXComponents = {
     Code,
     Tab,
     Tabs,
-    Codesandbox
+    Codesandbox,
+    Text,
+    View
 };
 
 export default MDXComponents;

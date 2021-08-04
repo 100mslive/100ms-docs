@@ -65,21 +65,21 @@ const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
                     left: 50%;
                     transform: translate(-50%, 0%);
                     border-radius: 5px;
-                    border: 1px solid var(--accents2);
-                    background-color: var(--background);
+                    border: 1px solid var(--gray5);
+                    background-color: var(--gray1);
                     z-index: 10;
                 }
                 .input-wrapper {
                     padding: 1rem;
                     display: flex;
                     align-items: center;
-                    border-bottom: 1px solid var(--accents2);
+                    border-bottom: 1px solid var(--gray5);
                 }
                 .esc {
-                    color: var(--accents5);
+                    color: var(--gray8);
                     border-radius: 5px;
                     padding: 0 8px;
-                    border: 1px solid var(--accents3);
+                    border: 1px solid var(--gray6);
                 }
                 input {
                     width: 100%;
@@ -99,7 +99,7 @@ const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
                     justify-content: space-between;
                     align-items: center;
                     opacity: 0.4;
-                    background-color: var(--offset);
+                    background-color: var(--gray3);
                 }
                 .res-box div {
                     display: flex;
