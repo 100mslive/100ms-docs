@@ -12,7 +12,7 @@ function SvgSun(props: React.SVGProps<SVGSVGElement>) {
             strokeLinejoin="round"
             fill="none"
             shapeRendering="geometricPrecision"
-            style={{ color: 'var(--foreground)' }}
+            style={{ color: 'var(--gray12)' }}
             {...props}>
             <circle cx="12" cy="12" r="5" />
             <path d="M12 1v2" />

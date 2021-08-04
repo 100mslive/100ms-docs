@@ -52,7 +52,7 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
             ))}
             <style jsx>{`
                 .tab-ctx {
-                    border-bottom: 0.5px solid var(--accents2);
+                    border-bottom: 0.5px solid var(--gray5);
                 }
                 button {
                     background: none;
@@ -62,7 +62,7 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
                     margin-right: 1rem;
                 }
                 .tab-active {
-                    border-bottom: 2px solid var(--foreground);
+                    border-bottom: 2px solid var(--gray12);
                 }
             `}</style>
         </div>

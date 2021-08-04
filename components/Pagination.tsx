@@ -41,15 +41,17 @@ const Pagination: React.FC<Props> = ({ prev, next }) => (
         </a>
         <style jsx>{`
             .pag-ctx {
+                width: 100%;
                 margin: 50px 0;
                 display: flex;
+                flex-wrap: wrap;
                 justify-content: space-between;
             }
             a {
                 text-decoration: none;
             }
             span:hover {
-                background-color: var(--accents1);
+                background-color: var(--gray4);
                 border-radius: 5px;
             }
             span {

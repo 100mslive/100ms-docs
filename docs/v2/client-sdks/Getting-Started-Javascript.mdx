@@ -109,6 +109,14 @@ const listener = {
     },
     onReconnected() {
         // This is called when the connection reestablishment completed susccessfully
+    },
+    onDeviceChange(deviceMap: DeviceMap): void {
+        // This is called once after join is called and everytime a device is either added or removed
+        // The deviceMap contains a map of all the devices connected
+    },
+    onRoleChangeRequest(request: HMSRoleChangeRequest): void {
+        // This is called when a role change request is received from another user
+        // Refer to the section involving changing roles mid-call below for more details
     }
 };
 
@@ -159,6 +167,22 @@ interface HMSMessage {
     type: HMSMessageType;
     message: string;
 }
+
+interface DeviceMap {
+    audioInput: InputDeviceInfo[];
+    audioOutput: MediaDeviceInfo[];
+    videoInput: InputDeviceInfo[];
+}
+
+/**
+ * This interface represents the role change request that is
+ * sent to the users of the SDK.
+ */
+interface HMSRoleChangeRequest {
+    requestedBy: HMSPeer;
+    role: HMSRole;
+    token: string;
+}
 ```
 
 </Tab>
@@ -173,6 +197,7 @@ enum HMSPeerUpdate {
     PEER_LEFT = 1,
     BECAME_DOMINANT_SPEAKER = 4,
     RESIGNED_DOMINANT_SPEAKER = 5,
+    ROLE_UPDATED = 8
 }
 
 //this is the enum for type parameter in onTrackUpdate
@@ -254,6 +279,105 @@ hms.stopScreensare();
 hms.leave();
 ```
 
+## Managing roles
+
+Roles define the permissions and the parameters for video, audio and screen of the users in the room.
+
+The role of a user is attached to the `HMSPeer` object. Refer `HMSRole` interface in the next secion.
+
+### Changing roles mid-call
+
+In order to change the role of a remote peer during the call, you can use the `changeRole` method provided by the SDK.
+
+#### Initiating a role-change request
+
+<Tabs id="role-change" items={['Usage', 'Interface']} />
+
+<Tab id="role-change-0">
+
+```jsx
+const roles: HMSRole[] = hms.getRoles(); // this returns a list of roles in the room
+const peers = hms.getPeers();
+
+// later in your code
+/**
+ * forPeer - HMSRemotePeer - The user whose role must be changed
+ * newRole - String - The name of the new role
+ * [force] - boolean - If true, the role change will be forced. false by default.
+ */
+hms.changeRole(forPeer, newRole, force);
+```
+
+</Tab>
+
+<Tab id="role-change-1">
+
+```jsx
+interface HMSRole {
+    name: string;
+    publishParams: PublishParams;
+    subscribeParams: {
+        subscribeToRoles: string[],
+        maxSubsBitRate: number
+    };
+    permissions: {
+        endRoom: boolean,
+        removeOthers: boolean,
+        stopPresentation: boolean,
+        muteAll: boolean,
+        askToUnmute: boolean,
+        muteSelective: boolean,
+        changeRole: boolean
+    };
+    priority: number;
+}
+
+interface PublishParams {
+    audio: {
+        bitRate: number,
+        codec: string
+    };
+    video: {
+        bitRate: number,
+        codec: string,
+        frameRate: number,
+        width: number,
+        height: number
+    };
+    screen: {
+        bitRate: number,
+        codec: string,
+        frameRate: number,
+        width: number,
+        height: number
+    };
+    allowed: string[];
+}
+```
+
+</Tab>
+
+> The SDK will throw an error if the user requesting the role change does not have permission to change roles. You can check if the user has permission to change role by checking `localPeer.permissions.changeRole`
+
+#### Accepting a role-change request
+
+A user will receive role-change requests via the [`listener`](#provide-joining-configuration-add-listeners-and-join-a-room) passed to `join` method.
+
+In order to accept the request, call the `acceptRoleChange` method, passing the incoming request.
+
+```jsx
+/**
+ * request: HMSRoleChangeRequest - The role change request to be accepted
+ */
+hms.acceptChangeRole(request);
+```
+
+On successful role change, the `onPeerUpdate` event will be fired for all the users connected to the room. The type of update would be `HMSPeerUpdate.ROLE_UPDATED` and the updated peer would also be passed to this callback.
+
+> If the role change was forced, the user will not receive the request. Instead, `onPeerUpdate` will be fired for all the connected users and with modified role for the user concerned.
+
+> In case of unforced change, the user can choose to reject the role change request by ignoring the `onRoleChangeRequest` event i.e. take no action when the event is fired.
+
 ## Advanced use cases
 
 ### Showing a preview screen before joining
@@ -285,6 +409,10 @@ const previewListener = {
     onError(exception) {
         // this will be called if there were any errors accessing user's camera or mic
         // or if there is network disconnection
+    },
+    onDeviceChange(deviceMap: DeviceMap): void {
+        // This is called once after preview is called and everytime a device is either added or removed
+        // The deviceMap contains a map of all the devices connected
     }
 };
 

@@ -92,16 +92,17 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     display: flex;
                     align-items: center;
                     width: 100%;
-                    height: 4rem;
+                    height: 3rem;
                     z-index: 50;
                     position: sticky;
                     margin: 0 auto;
                     top: 0;
                     padding: 0.5rem;
-                    background-color: var(--background);
+                    background-color: var(--gray1);
+                    border-bottom: 1px solid var(--gray6);
                 }
                 .res-ctx {
-                    background-color: var(--offsetBg);
+                    background-color: var(--gray2);
                     border-bottom-right-radius: 5px;
                     border-bottom-left-radius: 5px;
                     padding: 1rem 2rem;
@@ -119,7 +120,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    background-color: var(--offset);
+                    background-color: var(--gray3);
                     opacity: 0.6;
                 }
                 .res-box span {
@@ -140,7 +141,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 .logo-ctx {
                     display: flex;
                     align-items: center;
-                    color: var(--foreground);
+                    color: var(--gray12);
                     font-size: 24px;
                 }
                 .logo-ctx img {
@@ -161,9 +162,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     border-radius: 5px;
                     width: 100%;
                     cursor: pointer;
-                    border-bottom: 1px solid var(--accents2);
                     border-bottom-width: 1px;
-                    padding-bottom: 1rem;
                 }
                 .search-btn span {
                     margin-left: 1rem;
@@ -172,7 +171,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     margin-left: 1rem;
                     border-radius: 5px;
                     padding: 0 8px;
-                    border: 1px solid var(--accents3);
+                    border: 1px solid var(--gray6);
                 }
                 .search-btn:hover {
                     opacity: 1;
@@ -184,7 +183,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 .company span {
                     font-size: 1rem;
                     font-weight: 500;
-                    color: var(--accents6);
+                    color: var(--gray9);
                 }
                 .menu-btn {
                     display: none;

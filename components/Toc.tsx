@@ -32,10 +32,12 @@ const TocContainer = ({ toc }: TocProps) => (
                 height: calc(100vh - 80px);
                 overflow-y: auto;
                 max-width: 250px;
+                margin-right: 40px;
+                padding-left: 10px;
             }
             .head {
                 font-weight: bold;
-                color: var(--accents7);
+                color: var(--gray12);
                 text-transform: uppercase;
             }
             a {
@@ -45,7 +47,7 @@ const TocContainer = ({ toc }: TocProps) => (
             .text {
                 font-size: 14px;
                 margin: 0.5rem 0;
-                color: var(--accents5);
+                color: var(--gray11);
             }
             .child {
                 margin-left: 1rem;
@@ -54,7 +56,7 @@ const TocContainer = ({ toc }: TocProps) => (
                 width: 0px;
             }
             ::-webkit-scrollbar-thumb {
-                outline: 0px solid var(--accents4);
+                outline: 0px solid var(--gray7);
             }
             @media screen and (max-width: 1250px) {
                 .toc-ctx {

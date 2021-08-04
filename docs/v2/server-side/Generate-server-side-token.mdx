@@ -56,7 +56,6 @@ import jwt
 import uuid
 import datetime
 
-customer_id = "5f74558a7ef1723ded60a127"
 app_secret = "g-fRy7V2844qw_17KZ3igkx8jUz3UW5v0MKD7pJCa4wMKJWniY7irfFx38ewAZup2QtAwu5IIVCv5Vkn1Y5QVjukd0JSByTzatvTaphHnctSIHDqXNp0b-lSoxpePZpFnnd-9bTe0QTWsCGEhjra9Yncc-MbJ1J7gl_nIkfGzpM="
 app_access_key = "5f74558a7ef1723ded60a129"
 
@@ -102,10 +101,16 @@ private void generateHmsServerToken() {
 ```ruby
 require 'jwt'
 
+now = Time.now
+exp = now + 86400
+
 payload = {
   access_key: <app_access_key> ,
   type: "management",
-  version: 2
+  version: 2,
+  iat: now.to_i,
+  nbf: now.to_i,
+  exp: exp.to_i
 }
 
 secret = <app_secret>
@@ -129,7 +134,6 @@ $payload = [
     'type' => 'management',
     'version' => 2
     'iat'  => $issuedAt->getTimestamp(),         // Issued at: time when the token was generated
-    'iss'  => $serverName,                       // Issuer
     'nbf'  => $issuedAt->getTimestamp(),         // Not before
     'exp'  => $expire,                           // Expire
 ];
