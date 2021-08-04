@@ -18,6 +18,7 @@ Jump to a section you're interested in or read top down to get the overview.
 - [Getting the video call joining link](#getting-the-video-call-joining-link)
 - [Add the sdk dependencies](#add-sdk-dependencies).
 - [Create a login token to authenticate the user](#login).
+- [Add permissions](#permissions)
 - [Create an instance of the `HMSSDK`](#instantiate-hmssdk).
  * Show an optional of the user's audio video with the 100ms `hmssdk.preview`.
 - [Call `hmssdk.join` with the video call link to join the call](#join-a-video-call).
@@ -91,6 +92,19 @@ Here's how to get an auth token with 100ms's demo authentication
 #### Response
 
 The 100ms server will respond with an auth token like this `{"token":"some-token-string"}`.
+
+### Permissions
+
+Camera, Recording Audio and Internet permissions are required. Add them to your manifest.
+
+```xml
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+```
+
+You will also need to request Camera and Record Audio permissions at runtime before you join a call or display a preview. Please follow [Android Documentation](https://developer.android.com/training/permissions/requesting#request-permission) for runtime permissions.
+
 ### Instantiate HMSSDK
 
 Instantiate the HMSSDK like this:
