@@ -79,12 +79,20 @@ import {hmsActions, hmsStore} from "./hms";
 
 ```javascript
 // This will apply the virtual background effect to the local video
-hmsActions.addPluginToVideoTrack(virtualBackground);
+try{
+    hmsActions.addPluginToVideoTrack(virtualBackground);
+}catch(err){
+    console.log("failed to add Plugin", err);
+}
 ```
 
 ```javascript
 //This will remove the virtual background effect from the local video
-hmsActions.removePluginFromVideoTrack(virtualBackground);
+try{
+    hmsActions.removePluginFromVideoTrack(virtualBackground);
+}catch(err){
+    console.log("failed to remove Plugin", err);
+}
 ```
 
 ```javascript
@@ -103,7 +111,7 @@ if(isVBApplied){
 <Tab id='plugin-code-1'>
 
 ```javascript
-//Import modules and plugin
+//Import modules
 import {useHMSStore, useHMSActions} from '@100mslive/hms-video-react';
 import React, { useRef, useEffect } from 'react';
 ```
@@ -115,9 +123,17 @@ function VirtualBackground() {
 
      useEffect(() => {
        if (showBackground) {
-           await hmsActions.addPluginToVideoTrack(virtualBackground);
+           try{
+            await hmsActions.addPluginToVideoTrack(virtualBackground);
+           }catch(err){
+             console.log("failed to add Plugin", err);
+           }
          } else {
-           await hmsActions.removePluginFromVideoTrack(virtualBackground);
+            try{
+            await hmsActions.removePluginFromVideoTrack(virtualBackground);
+            }catch(err){
+               console.log("failed to remove Plugin", err);
+            }
          }
        },[showBackground, hmsActions]);
 
@@ -131,12 +147,20 @@ export default VirtualBackground;
 
 ```javascript
 // This will apply the virtual background effect to the local video
-hms.getLocalPeer().videoTrack?.addPlugin(virtualBackground);
+try{
+    hms.getLocalPeer().videoTrack?.addPlugin(virtualBackground);
+}catch(err){
+    console.log("failed to add Plugin", err);
+}
 ```
 
 ```javascript
 // This will remove the virtual background effect from the local video
-hms.getLocalPeer().videoTrack?.removePlugin(virtualBackground);
+try{
+    hms.getLocalPeer().videoTrack?.removePlugin(virtualBackground);
+}catch(err){
+    console.log("failed to remove Plugin", err);
+}
 ```
 
 ```javascript
