@@ -5,22 +5,22 @@ nav: 12
 
 ## Introduction
 
-Virtual Backgrounds are fairly use in video conferencing space. It will give user the flexibility to
-insert custom backgrounds or blurring.
-This guide provides an overview of virtual background plugin usage with 100ms
+Virtual background plugin helps in customising one’s background. The customising options are blurring the background or replacing it with a static image.
+This guide provides an overview of usage of the virtual background plugin of 100ms.
 
 
 <Image width={640} height={480} alt="VirtualBackground" src="/docs/v2/sample2-vb.png" />
 
 ## Supported Devices
 
-Our current plugin version supports Chrome, Firefox and Edge browsers
+Virtual background is currently supported on Chrome, Firefox, Brave and Edge browsers.
 
 ## Basic Concepts
 
--   `blur` - It blurs the background of your video. It helps in maintaining privacy during video calls
--   `none` - It can be used to reset virtual background changes
--   `loadTime` - Time taken by the plugin to load model for the first time
+-   `blur background` - This is an action where the background of the video is blurred. No external image is used/required.
+-   'image background' - This is where the plugin will replace the video background with the image provided by user.
+-   `none background` - It can be used to reset virtual background changes
+-   `plugin load time` - The time taken by the plugin to load the model. This is in the range of 1-4 seconds for first time load. Subsequent loads take less than 100ms.
 -   `simd` - Enabling simd in browser helps in parallel processing and optimized performance
 
 ## Pre-requisites
@@ -35,11 +35,11 @@ npm install --save @100mslive/hms-virtual-background@latest
 
 ```jsx
 import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background";
-// Create plugin
+
 // background : {'blur' | 'imgSource' | 'none'}
-     //  'blur'     -> Set background to blur
-     // 'imgSource' -> HTMLImageElement, set background to imgSource
-     //  'none'     -> Set to none/default background
+//  'blur'     -> Set background to blur
+// 'imgSource' -> HTMLImageElement, set background to imgSource
+//  'none'     -> Set to none/default background
 const virtualBackground = new HMSVirtualBackgroundPlugin({background: 'blur'|'none'|imgSource});
 ```
 
@@ -56,10 +56,11 @@ if(virtualBackground.isSupported()){
 }
 ```
 
-### Init(Optional)
+## Init(Optional)
 
-Init can be used to show a loader icon for background selector component during the plugin loading stage
-if init hasn't be already called, the first background change will take a perceivable amount of time.
+Init is used to load the model for virtual background for the first time. It takes on an average 3-4 seconds
+Calling init is handled internally by sdk if not done by user.
+Init can also be used by user to show a loader icon for background selector component during the plugin loading stage
 
 ```jsx
 //ex:- virtualBackground.init().then(() => console.log("background can be changed now"))
@@ -98,7 +99,7 @@ try{
 ```javascript
 //Selector to know the current plugins and if Virtual Background is part of it
 const videoTrackID = hmsStore.getState(selectLocalVideoTrackID);
-const videoTrack = hmsStore.getState(selectTrackByID(videoTrackID))
+const videoTrack = hmsStore.getState(selectTrackByID(videoTrackID));
 const plugins =  videoTrack.plugins;
 const isVBApplied = plugins.includes(virtualBackground.getName());
 if(isVBApplied){
@@ -113,7 +114,7 @@ if(isVBApplied){
 
 ```javascript
 //Import modules
-import { selectLocalVideoTrackID, selectTrackByID, useHMSStore, useHMSActions} from '@100mslive/hms-video-react';
+import { selectLocalVideoTrackID, selectTrackByID, useHMSStore, useHMSActions } from '@100mslive/hms-video-react';
 import React, { useRef, useEffect } from 'react';
 ```
 
@@ -123,20 +124,27 @@ function VirtualBackground() {
      const [showBackground, setShowBackground] = useState(false);
 
      useEffect(() => {
-       if (showBackground) {
+       if(showBackground)
+       {
            try{
-            await hmsActions.addPluginToVideoTrack(virtualBackground);
-           }catch(err){
-             console.log("failed to add Plugin", err);
+                await hmsActions.addPluginToVideoTrack(virtualBackground);
            }
-         } else {
-            try{
-            await hmsActions.removePluginFromVideoTrack(virtualBackground);
-            }catch(err){
-               console.log("failed to remove Plugin", err);
-            }
-         }
-       },[showBackground, hmsActions]);
+           catch(err)
+           {
+                console.log("failed to add Plugin", err);
+           }
+       }
+       else
+       {
+           try{
+                await hmsActions.removePluginFromVideoTrack(virtualBackground);
+           }
+           catch(err)
+           {
+                console.log("failed to remove Plugin", err);
+           }
+       }
+     },[showBackground, hmsActions]);
 
      return(<Button onClick={() => setShowBackground(!showBackground)}/>)
 }
@@ -149,12 +157,15 @@ export default VirtualBackground;
 
 function checkIfPluginPresent(){
     const videoTrackID = useHMSStore(selectLocalVideoTrackID);
-    const videoTrack = useHMSStore(selectTrackByID(videoTrackID))
+    const videoTrack = useHMSStore(selectTrackByID(videoTrackID));
     const plugins =  videoTrack.plugins;
     const isVBApplied = plugins.includes(virtualBackground.getName());
-    if(isVBApplied){
+    if(isVBApplied)
+    {
         console.log("virtual background effect is applied to the local video");
-    }else{
+    }
+    else
+    {
         console.log("virtual background effect is removed from the local video");
     }
 }
@@ -205,7 +216,6 @@ Image will get fit to the video by maintaining the aspect ratio.
 Input aspect ratio of the background image is preferred else we are cropping the image to fit in background
 
 ```jsx
-// background: same as above
 virtualBackground.setBackground(background: string|HTMLImageElement);
 ```
 
@@ -213,6 +223,7 @@ virtualBackground.setBackground(background: string|HTMLImageElement);
 
 For an enhanced virtual background plugin performance enable simd in browser
 
--  `Chrome` -> Open chrome://flags/ in browser, search for simd, enable WebAssembly SIMD support and restart
--  `Firefox`-> Open about:config in browser, search for simd, set javascript.options.wasm_simd=true and restart
--  `Edge` -> Open about:flags in browser, search for simd, enable WebAssembly SIMD support and restart
+-  `Chrome` -> Open `chrome://flags/` in browser, search for simd, enable WebAssembly SIMD support and restart.
+-  `Firefox`-> Open `about:config` in browser, search for simd, set javascript.options.wasm_simd=true and restart.
+-  `Edge`   -> Open `about:flags` in browser, search for simd, enable WebAssembly SIMD support and restart.
+-  `Brave`  -> Open `about:flags` in browser, search for simd, enable WebAssembly SIMD support and restart.
