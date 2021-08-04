@@ -12,34 +12,71 @@ This guide provides an overview of virtual background plugin usage with 100ms
 
 <Image width={640} height={480} alt="VirtualBackground" src="/docs/v2/sample2-vb.png" />
 
-## Usage
+## Supported Devices
 
-### Installation
+Our current plugin version supports Chrome, Firefox and Edge browsers
+
+## Basic Concepts
+
+-   `blur` - It blurs the background of your video. It helps in maintaining privacy during video calls
+-   `none` - It can be used to reset virtual background changes
+-   `loadTime` - Time taken by the plugin to load model for the first time
+-   `simd` - Enabling simd in browser helps in parallel processing and optimized performance
+
+## Pre-requisites
+
+**Get the 100ms VirtualBackground Package**
 
 ```bash
-npm install @100mslive/hms-virtual-background
+npm install --save @100mslive/hms-virtual-background@latest
 ```
 
-### Add and Remove Plugin
+## Import plugin & instantiate VirtualBackground
 
-<Tabs id="plugin-code" items={['Store', 'React', 'Sdk']} />
+```jsx
+import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background";
+// Create plugin
+// background : {'blur' | 'imgSource' | 'none'}
+     //  'blur'     -> Set background to blur
+     // 'imgSource' -> base64 or HTMLImageElement, set background to imgSource
+     //  'none'     -> Set to none/default background
+const virtualBackground = new HMSVirtualBackgroundPlugin({background: 'blur'|'none'|imgSource});
+```
+
+## Check if plugin is supported
+
+isSupported can be used to check if the browser is supported or not
+It will return True/False based on browser.
+
+```jsx
+if(virtualBackground.isSupported()){
+    console.log("Platform is supported");
+}else{
+    console.log("Platform not supported");
+}
+```
+
+### Init(Optional)
+
+Init can be used to show a loader icon for background selector component during the plugin loading stage
+if init hasn't be already called, the first background change will take a perceivable amount of time.
+
+```jsx
+//ex:- virtualBackground.init().then(() => console.log("background can be changed now"))
+virtualBackground.init();
+```
+
+## Add and Remove Plugin
+
+<Tabs id="plugin-code" items={['Store', 'React', 'SDK']} />
 
 <Tab id='plugin-code-0'>
 
 ```javascript
-//Import modules and plugin
+//Import modules
 import {hmsActions, hmsStore} from "./hms";
-import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background"
 ```
 
-```javascript
-// Create plugin
-// background : {'blur' | 'imgSource' | 'None'}
-     //  'blur'     -> Set background to blur
-     // 'imgSource' -> base64 or HTMLImageElement, set background to imgSource
-     //  'none'     -> Set to none/default background
-const virtualBackground = new HMSVirtualBackgroundPlugin({background: 'blur'|'none'|imgSource})
-```
 ```javascript
 // This will apply the virtual background effect to the local video
 hmsActions.addPluginToVideoTrack(virtualBackground);
@@ -52,13 +89,13 @@ hmsActions.removePluginFromVideoTrack(virtualBackground);
 
 ```javascript
 //Selector to know the current plugins and if Virtual Background is part of it
-const videoTrack = hmsStore.getState(selectLocalVideoTrackID)
+const videoTrack = hmsStore.getState(selectLocalVideoTrackID);
 const plugins =  videoTrack.plugins;
-const isVBApplied = plugins.includes(virtualBackground.getName())
+const isVBApplied = plugins.includes(virtualBackground.getName());
 if(isVBApplied){
-    console.log("virtual background effect is applied to the local video")
+    console.log("virtual background effect is applied to the local video");
 }else{
-    console.log("virtual background effect is removed from the local video")
+    console.log("virtual background effect is removed from the local video");
 }
 ```
 </Tab>
@@ -68,17 +105,7 @@ if(isVBApplied){
 ```javascript
 //Import modules and plugin
 import {useHMSStore, useHMSActions} from '@100mslive/hms-video-react';
-import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background"
 import React, { useRef, useEffect } from 'react';
-```
-
-```javascript
-// Create plugin
-// background : {'blur' | 'imgSource' | 'None'}
-     //  'blur'     -> Set background to blur
-     // 'imgSource' -> base64 or HTMLImageElement, set background to imgSource
-     //  'None'     -> Set to None/default background
-const virtualBackground = new HMSVirtualBackgroundPlugin({background: 'blur'|'none'|imgSource})
 ```
 
 ```javascript
@@ -103,19 +130,6 @@ export default VirtualBackground;
 <Tab id='plugin-code-2'>
 
 ```javascript
-//Import plugin
-import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background"
-```
-```javascript
-// Create plugin
-// background : {'blur' | 'imgSource' | 'None'}
-     //  'blur'     -> Set background to blur
-     // 'imgSource' -> base64 or HTMLImageElement, set background to imgSource
-     //  'None'     -> Set to None/default background
-const virtualBackground = new HMSVirtualBackgroundPlugin({background: 'blur'|'none'|imgSource})
-```
-
-```javascript
 // This will apply the virtual background effect to the local video
 hms.getLocalPeer().videoTrack?.addPlugin(virtualBackground);
 ```
@@ -127,20 +141,18 @@ hms.getLocalPeer().videoTrack?.removePlugin(virtualBackground);
 
 ```javascript
 //To know the current plugins and if virtual background is part of it
-const videoTrack = hms.getLocalPeer().videoTrack
+const videoTrack = hms.getLocalPeer().videoTrack;
 const plugins =  videoTrack?.getPlugins();
-const isVBApplied = plugins.includes(virtualBackground.getName())
+const isVBApplied = plugins.includes(virtualBackground.getName());
 if(isVBApplied){
-    console.log("virtual background effect is applied to the local video")
+    console.log("virtual background effect is applied to the local video");
 }else{
-    console.log("virtual background effect is removed from the local video")
+    console.log("virtual background effect is removed from the local video");
 }
 ```
 </Tab>
 
-## Advance Methods
-
-### Change Background
+## Change Background
 
 Call setBackground from the plugin to update the background again later if required
 It accepts string|HTMLImageElement as a parameter
@@ -153,33 +165,10 @@ Input aspect ratio of the background image is preferred else we are cropping the
 virtualBackground.setBackground(background: string|HTMLImageElement);
 ```
 
-### Init(Optional)
-
-Init can be used to show a loader icon for background selector component during the plugin loading stage
-if init hasn't be already called, the first background change will take a perceivable amount of time.
-
-```jsx
-//ex:- virtualBackground.init().then(() => console.log("background can be changed now"))
-virtualBackground.init();
-```
-
-## Supported Devices
-
-Our current plugin version supports chrome, firefox and edge browsers
-isSupported Api can be used to check if the browser is supported or not
-It will return True/False based on browser.
-
-```jsx
-if(virtualBackground.isSupported()){
-    console.log("Platform is supported");
-}else{
-    console.log("Platform not supported")
-}
-```
-
-## Tips For Better User Experience
+## Recommendations For Better User Experience
 
 For an enhanced virtual background plugin performance enable simd in browser
 
 -  `Chrome` -> Open chrome://flags/ in browser, search for simd, enable WebAssembly SIMD support and restart
 -  `Firefox`-> Open about:config in browser, search for simd, set javascript.options.wasm_simd=true and restart
+-  `Edge` -> Open about:flags in browser, search for simd, enable WebAssembly SIMD support and restart
