@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Text = ({ id, code, img, children, toc }) => (
+const Text = ({ id, children, toc }) => (
     <>
         <div id={`text-${id}`} className="text-guide guide-page" data-toc={toc}>
             {children}

@@ -10,7 +10,11 @@ const View = ({ id, code, img, children, preview }) => (
         </div>
         {/* Mobile */}
         <div className="mob">
-            {img ? <img width={600} src={img} alt="Code Block" /> : null}
+            {img ? (
+                <div style={{ maxWidth: '550px' }}>
+                    <img width="100%" src={img} alt="Code Block" />
+                </div>
+            ) : null}
             {code ? <>{children}</> : null}
         </div>
         <style jsx>{`
@@ -61,17 +65,28 @@ const TabsComp = ({ preview, children }) => {
         <div>
             <button
                 type="button"
-                className={`px-2 py-1 round  ${!tab ? 'border border-gray-400' : ''}`}
+                className={`px-2 py-1 round  ${!tab ? 'active' : ''}`}
                 onClick={() => setTab(false)}>
-                Code
+                See Code
             </button>
             <button
                 type="button"
-                className={`px-2 py-1 round  ${tab ? 'border border-gray-400' : ''}`}
+                className={`px-2 py-1 round  ${tab ? 'active' : ''}`}
                 onClick={() => setTab(true)}>
-                Preview
+                See Preview
             </button>
             {!tab ? children : <img width={600} src={preview} alt="Code Block" />}
+            <style jsx>{`
+                button {
+                    outline: none;
+                    background: transparent;
+                    border: 1px solid var(--gray5);
+                }
+                .active {
+                    border: 1px solid var(--blue5);
+                    background: var(--blue3);
+                }
+            `}</style>
         </div>
     );
 };

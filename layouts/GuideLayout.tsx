@@ -17,6 +17,7 @@ const GuideLayout = ({ frontMatter, children }) => {
         for (let i = 0; i <= c; i++) {
             const el = document.getElementById(`text-${i}`);
             if (el) {
+                // @ts-ignore
                 tocList.push(el.dataset.toc);
                 el.style.display = 'none';
             }
@@ -25,8 +26,8 @@ const GuideLayout = ({ frontMatter, children }) => {
     };
     React.useEffect(() => {
         if (window.innerWidth > 999) {
-            hideAllViews(count);
             const count = document.querySelectorAll('.guide-page').length;
+            hideAllViews(count);
             getAllToc(count);
             window.addEventListener('scroll', () => {
                 for (let i = count - 1; i >= 0; i--) {
@@ -79,9 +80,9 @@ const GuideLayout = ({ frontMatter, children }) => {
                         </span>
                     </div>
                 </div>
-                <div className="mt-6 flex space-x-2">
+                <div className={s['badge-ctx']}>
                     {frontMatter.tags.map((d) => (
-                        <span key={d} className="px-2 py-1 border border-gray-700 rounded text-sm">
+                        <span key={d} className={s.badge}>
                             {d}
                         </span>
                     ))}
@@ -142,7 +143,8 @@ const ClockIcon = () => (
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"
-        shapeRendering="geometricPrecision">
+        shapeRendering="geometricPrecision"
+        style={{ marginRight: '1rem' }}>
         <circle cx="12" cy="12" r="10" />
         <path d="M12 6v6l4 2" />
     </svg>
@@ -158,7 +160,8 @@ const DevIcon = () => (
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"
-        shapeRendering="geometricPrecision">
+        shapeRendering="geometricPrecision"
+        style={{ margin: '0 1rem' }}>
         <path d="M4 17l6-6-6-6" />
         <path d="M12 19h8" />
     </svg>

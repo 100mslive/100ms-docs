@@ -2,16 +2,13 @@ import hydrate from 'next-mdx-remote/hydrate';
 import MDXComponents from '@/components/MDXComponents';
 import React from 'react';
 import { getFiles, getFileBySlug } from '@/lib/mdx';
+import GuideLayout from '@/layouts/GuideLayout';
 
 export default function Blog({ mdxSource, frontMatter }) {
     const content = hydrate(mdxSource, {
         components: MDXComponents
     });
-    return (
-        <div>
-            <h1>Hello World</h1>
-        </div>
-    );
+    return <GuideLayout frontMatter={frontMatter}>{content}</GuideLayout>;
 }
 
 export async function getStaticPaths() {
