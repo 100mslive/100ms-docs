@@ -74,7 +74,7 @@ virtualBackground.init();
 
 ```javascript
 //Import modules
-import {hmsActions, hmsStore} from "./hms";
+import {hmsActions, hmsStore, selectLocalVideoTrackID, selectTrackByID } from "./hms";
 ```
 
 ```javascript
@@ -97,7 +97,8 @@ try{
 
 ```javascript
 //Selector to know the current plugins and if Virtual Background is part of it
-const videoTrack = hmsStore.getState(selectLocalVideoTrackID);
+const videoTrackID = hmsStore.getState(selectLocalVideoTrackID);
+const videoTrack = hmsStore.getState(selectTrackByID(videoTrackID))
 const plugins =  videoTrack.plugins;
 const isVBApplied = plugins.includes(virtualBackground.getName());
 if(isVBApplied){
@@ -112,7 +113,7 @@ if(isVBApplied){
 
 ```javascript
 //Import modules
-import {useHMSStore, useHMSActions} from '@100mslive/hms-video-react';
+import { selectLocalVideoTrackID, selectTrackByID, useHMSStore, useHMSActions} from '@100mslive/hms-video-react';
 import React, { useRef, useEffect } from 'react';
 ```
 
@@ -139,7 +140,26 @@ function VirtualBackground() {
 
      return(<Button onClick={() => setShowBackground(!showBackground)}/>)
 }
+
 export default VirtualBackground;
+```
+
+```javascript
+//Selector to know the current plugins and if Virtual Background is part of it
+
+function checkIfPluginPresent(){
+    const videoTrackID = useHMSStore(selectLocalVideoTrackID);
+    const videoTrack = useHMSStore(selectTrackByID(videoTrackID))
+    const plugins =  videoTrack.plugins;
+    const isVBApplied = plugins.includes(virtualBackground.getName());
+    if(isVBApplied){
+        console.log("virtual background effect is applied to the local video");
+    }else{
+        console.log("virtual background effect is removed from the local video");
+    }
+}
+
+export default checkIfPluginPresent
 ```
 </Tab>
 
