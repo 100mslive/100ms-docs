@@ -144,11 +144,11 @@ Before we proceed we need to obtain a room id and a token. In case you are not s
 
 <Text id='10'>
 
-### Get Auth Token
+### Join Room
 
-Before we proceed we need to obtain a room id and a token. In case you are not sure how to do this here is a quick guide:
+Alright with the token and room id we are ready to proceed.
 
-[Token Setup Guide](/guide/get-token)
+Add `joinRoom()` function with room id and token you obtained in previous steps. Then call `joinRoom()` from `viewDidLoad()`
 
 </Text>
 
@@ -258,8 +258,9 @@ Build and run the app. Congratulations you have an a/v call running!
 </Text>
 
 <Text id='15' toc='Cleanup'>
-    
-### Cleanup
+ 
+<h3> Cleanup </h3>
+
 
 A peer can decide to stop publishing any of his tracks at any time (most frequent case is start/stop screen share), also peer may choose to leave a room. In any of these events we want to remove the corresponding video view to release resources.
 
@@ -286,7 +287,7 @@ class ViewController: UIViewController {
 
 <Text id='16'>
     
-Next we want to add a map entry as a last step in our `addVideoView` function
+Next we want to add a map entry as a last step in our `addVideoView`  function
 
 </Text>
 
@@ -415,7 +416,7 @@ hmsSDK.leave()
 
 <Text id='22' toc='Ways to go from here'>
     
-### Ways to go from here
+<h3> Ways to go from here </h3>
 
 Checkout complete project code on github:  [https://github.com/100mslive/100ms-ios-sdk/tree/main/BasicExample](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example)
 
