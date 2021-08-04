@@ -49,12 +49,9 @@ isSupported can be used to check if the browser is supported or not.
 It will return True/False based on browser.
 
 ```jsx
-if(virtualBackground.isSupported())
-{
+if(virtualBackground.isSupported()){
     console.log("Platform is supported");
-}
-else
-{
+}else{
     console.log("Platform not supported");
 }
 ```
@@ -87,24 +84,18 @@ import {hmsActions, hmsStore, selectLocalVideoTrackID, selectTrackByID } from ".
 
 ```javascript
 // This will apply the virtual background effect to the local video
-try
-{
+try{
     await hmsActions.addPluginToVideoTrack(virtualBackground);
-}
-catch(err)
-{
+}catch(err){
     console.log("failed to add Plugin", err);
 }
 ```
 
 ```javascript
 //This will remove the virtual background effect from the local video
-try
-{
+try{
     await hmsActions.removePluginFromVideoTrack(virtualBackground);
-}
-catch(err)
-{
+}catch(err){
     console.log("failed to remove Plugin", err);
 }
 ```
@@ -115,12 +106,9 @@ const videoTrackID = hmsStore.getState(selectLocalVideoTrackID);
 const videoTrack = hmsStore.getState(selectTrackByID(videoTrackID));
 const plugins =  videoTrack.plugins;
 const isVBApplied = plugins.includes(virtualBackground.getName());
-if(isVBApplied)
-{
+if(isVBApplied){
     console.log("virtual background effect is applied to the local video");
-}
-else
-{
+}else{
     console.log("virtual background effect is removed from the local video");
 }
 ```
@@ -140,23 +128,16 @@ function VirtualBackground() {
      const [showBackground, setShowBackground] = useState(false);
 
      useEffect(() => {
-       if(showBackground)
-       {
+       if(showBackground){
            try{
                 await hmsActions.addPluginToVideoTrack(virtualBackground);
-           }
-           catch(err)
-           {
+           }catch(err){
                 console.log("failed to add Plugin", err);
            }
-       }
-       else
-       {
+       }else{
            try{
                 await hmsActions.removePluginFromVideoTrack(virtualBackground);
-           }
-           catch(err)
-           {
+           }catch(err){
                 console.log("failed to remove Plugin", err);
            }
        }
@@ -176,12 +157,9 @@ function checkIfPluginPresent(){
     const videoTrack = useHMSStore(selectTrackByID(videoTrackID));
     const plugins =  videoTrack.plugins;
     const isVBApplied = plugins.includes(virtualBackground.getName());
-    if(isVBApplied)
-    {
+    if(isVBApplied){
         console.log("virtual background effect is applied to the local video");
-    }
-    else
-    {
+    }else{
         console.log("virtual background effect is removed from the local video");
     }
 }
@@ -194,24 +172,18 @@ export default checkIfPluginPresent;
 
 ```javascript
 // This will apply the virtual background effect to the local video
-try
-{
+try{
     await hms.getLocalPeer().videoTrack?.addPlugin(virtualBackground);
-}
-catch(err)
-{
+}catch(err){
     console.log("failed to add Plugin", err);
 }
 ```
 
 ```javascript
 // This will remove the virtual background effect from the local video
-try
-{
+try{
     await hms.getLocalPeer().videoTrack?.removePlugin(virtualBackground);
-}
-catch(err)
-{
+}catch(err){
     console.log("failed to remove Plugin", err);
 }
 ```
@@ -222,12 +194,9 @@ const videoTrack = hms.getLocalPeer().videoTrack;
 const plugins =  videoTrack?.getPlugins();
 const isVBApplied = plugins.includes(virtualBackground.getName());
 
-if(isVBApplied)
-{
+if(isVBApplied){
     console.log("virtual background effect is applied to the local video");
-}
-else
-{
+}else{
     console.log("virtual background effect is removed from the local video");
 }
 ```
