@@ -17,9 +17,9 @@ Virtual background is currently supported on Chrome, Firefox, Brave and Edge bro
 
 ## Basic Concepts
 
--   `blur background` - This is an action where the background of the video is blurred. No external image is used/required.
--   'image background' - This is where the plugin will replace the video background with the image provided by user.
--   `none background` - It can be used to reset virtual background changes
+-   `blur background`  - This is an action where the background of the video is blurred. No external image is used/required.
+-   `image background` - This is where the plugin will replace the video background with the image provided by user.
+-   `none background`  - It can be used to reset virtual background changes
 -   `plugin load time` - The time taken by the plugin to load the model. This is in the range of 1-4 seconds for first time load. Subsequent loads take less than 100ms.
 -   `simd` - Enabling simd in browser helps in parallel processing and optimized performance
 
@@ -49,22 +49,29 @@ isSupported can be used to check if the browser is supported or not.
 It will return True/False based on browser.
 
 ```jsx
-if(virtualBackground.isSupported()){
+if(virtualBackground.isSupported())
+{
     console.log("Platform is supported");
-}else{
+}
+else
+{
     console.log("Platform not supported");
 }
 ```
 
 ## Init(Optional)
 
-Init is used to load the model for virtual background for the first time. It takes on an average 3-4 seconds
+Init is used to load the model for virtual background for the first time. It takes on an average 3-4 seconds.
 Calling init is handled internally by sdk if not done by user.
+
+```jsx
+virtualBackground.init();
+```
+
 Init can also be used by user to show a loader icon for background selector component during the plugin loading stage
 
 ```jsx
-//ex:- virtualBackground.init().then(() => console.log("background can be changed now"))
-virtualBackground.init();
+virtualBackground.init().then(() => console.log("background can be changed now"))
 ```
 
 ## Add and Remove Plugin
@@ -80,18 +87,24 @@ import {hmsActions, hmsStore, selectLocalVideoTrackID, selectTrackByID } from ".
 
 ```javascript
 // This will apply the virtual background effect to the local video
-try{
-    hmsActions.addPluginToVideoTrack(virtualBackground);
-}catch(err){
+try
+{
+    await hmsActions.addPluginToVideoTrack(virtualBackground);
+}
+catch(err)
+{
     console.log("failed to add Plugin", err);
 }
 ```
 
 ```javascript
 //This will remove the virtual background effect from the local video
-try{
-    hmsActions.removePluginFromVideoTrack(virtualBackground);
-}catch(err){
+try
+{
+    await hmsActions.removePluginFromVideoTrack(virtualBackground);
+}
+catch(err)
+{
     console.log("failed to remove Plugin", err);
 }
 ```
@@ -102,9 +115,12 @@ const videoTrackID = hmsStore.getState(selectLocalVideoTrackID);
 const videoTrack = hmsStore.getState(selectTrackByID(videoTrackID));
 const plugins =  videoTrack.plugins;
 const isVBApplied = plugins.includes(virtualBackground.getName());
-if(isVBApplied){
+if(isVBApplied)
+{
     console.log("virtual background effect is applied to the local video");
-}else{
+}
+else
+{
     console.log("virtual background effect is removed from the local video");
 }
 ```
@@ -178,18 +194,24 @@ export default checkIfPluginPresent;
 
 ```javascript
 // This will apply the virtual background effect to the local video
-try{
-    hms.getLocalPeer().videoTrack?.addPlugin(virtualBackground);
-}catch(err){
+try
+{
+    await hms.getLocalPeer().videoTrack?.addPlugin(virtualBackground);
+}
+catch(err)
+{
     console.log("failed to add Plugin", err);
 }
 ```
 
 ```javascript
 // This will remove the virtual background effect from the local video
-try{
-    hms.getLocalPeer().videoTrack?.removePlugin(virtualBackground);
-}catch(err){
+try
+{
+    await hms.getLocalPeer().videoTrack?.removePlugin(virtualBackground);
+}
+catch(err)
+{
     console.log("failed to remove Plugin", err);
 }
 ```
@@ -199,9 +221,13 @@ try{
 const videoTrack = hms.getLocalPeer().videoTrack;
 const plugins =  videoTrack?.getPlugins();
 const isVBApplied = plugins.includes(virtualBackground.getName());
-if(isVBApplied){
+
+if(isVBApplied)
+{
     console.log("virtual background effect is applied to the local video");
-}else{
+}
+else
+{
     console.log("virtual background effect is removed from the local video");
 }
 ```
