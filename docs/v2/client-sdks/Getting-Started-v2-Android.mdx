@@ -97,7 +97,7 @@ The 100ms server will respond with an auth token like this `{"token":"some-token
 
 Camera, Recording Audio and Internet permissions are required. Add them to your manifest.
 
-```xml
+```xml:AndroidManifest.xml
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -229,6 +229,12 @@ Initialize this when it's added to the window. Release it when it's removed. Cal
 ### Listening to Updates Effectively
 
 Each time there's a an onJoin, onPeerUpdate, or onTrackUpdate, you can add all the peers from `hmsSdk.getPeers()` into the adapter. You'd need to map them into TrackPeerPair's.
+
+## Where to go from here
+
+Checkout the [simple version](https://github.com/100mslive/hello-world-android/) of the project.
+
+Also a full featured [advanced version](https://github.com/100mslive/100ms-android/).
 
 ## Glossary
 
