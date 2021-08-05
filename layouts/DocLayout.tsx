@@ -81,7 +81,9 @@ const DocLayout: React.FC<Props> = ({
                     currentDocSlug={currentDocSlug}
                 />
                 <div className="ctx">
-                    <Sidebar menu={menu} nav={newNav} />
+                    <div style={{ borderRight: '1px solid var(--gray6)' }}>
+                        <Sidebar menu={menu} nav={newNav} />
+                    </div>
                     <div className="content-wrapper">
                         <article>
                             <h1>{frontMatter.title}</h1>
