@@ -1,0 +1,22 @@
+---
+title: Preview
+nav: 9
+---
+
+Preview screen is a frequently used UX element which allows users to check if their input devices are working properly and set the initial state (mute/unmute) of their audio and video tracks before joining. 100ms SDKs provide an easy-to-use API to back this feature. Additionally, the SDK will try to establish a connection to 100ms server to verify there are no network issues and that the auth credentials are valid so that if everything is in order the subsequent room join is instant.
+
+To invoke this API, call `preview` with `HMSConfig` and `HMSPreviewListener` as params.
+
+```kotlin
+hmsSDK.preview(config, hmsPreviewListener)
+```
+
+You would need the same config object that you would pass to [join API](Join).
+
+`HMSPreviewListener` has one callback:
+
+```kotlin
+fun onPreview(room: HMSRoom, localTracks: Array<HMSTrack>)
+```
+
+Which is called when SDK has passed all its pre-flight checks and established the connection to 100ms server. This will pass an array of local audio/video tracks that you can display to the user (see [Render Video](Render-Video) and [Mute](Mute) sections for more details).
