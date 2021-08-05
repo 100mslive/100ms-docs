@@ -73,7 +73,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 <section className="menu-container" key={`${key}-${index}`}>
                     <div className="menu-title">{key.replace(/-/g, ' ').toUpperCase()}</div>
                     {Object.entries(children).map(([_, route]) => (
-                        <Link href={route.url} key={`${route.url}-${index}`}>
+                        <Link href={route.url || ''} key={`${route.url}-${index}`}>
                             <div
                                 className={`menu-item ${
                                     route.url === router.asPath ? 'active-link' : ''
