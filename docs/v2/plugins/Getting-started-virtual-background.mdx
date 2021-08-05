@@ -42,8 +42,8 @@ This accepts background as a parameter, It can be of 3 types:
 - `none` - String - This will remove the background effect from the video
 
 ```jsx
-// background : {'blur' | 'image' | 'none'}
-const virtualBackground = new HMSVirtualBackgroundPlugin({background: 'blur' | image | 'none'});
+// background : {'blur' | image | 'none'}
+const virtualBackground = new HMSVirtualBackgroundPlugin(background : {'blur' | image | 'none'});
 ```
 
 ## Check if plugin is supported
@@ -219,7 +219,7 @@ Input aspect ratio of the background image is preferred else we are cropping the
 ```jsx
 // background parameter is explained in Instantiate Virtual Background section
 try{
-    virtualBackground.setBackground(background : {'blur' | 'image' | 'none'});
+    virtualBackground.setBackground(background : {'blur' | image | 'none'});
 }catch(err){
     console.log("Failed to update background", err);
 }
