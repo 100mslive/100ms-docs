@@ -3,7 +3,7 @@ title: Preview
 nav: 5
 ---
 
-Preview screen is a frequently used UX element which allows user to check if their input devices are working properly and set the initial state (mute/unmute) of their audio and video tracks before joining. 100ms SDK provides an easy to use API to back this feature. Additionally SDK will try to establish a connection to 100ms server to verify there are no network issues and that the auth credentials are valid so that if everything is in order the subsequent room join is pretty much instant.
+Preview screen is a frequently used UX element which allows users to check if their input devices are working properly and set the initial state (mute/unmute) of their audio and video tracks before joining. 100ms SDKs provide an easy-to-use API to back this feature. Additionally, the SDK will try to establish a connection to 100ms server to verify there are no network issues and that the auth credentials are valid so that if everything is in order the subsequent room join is instant.
 
 To invoke this API call
 
@@ -11,7 +11,7 @@ To invoke this API call
 hmsSDK.preview(config: config, delegate: previewDelegate)
 ```
 
-You would need same config object that you would pass to [join API](Join). The `previewDelegate` is an object conforming to `HMSPreviewListener` protocol that has two callbacks:
+You would need the same config object that you would pass to [join API](Join). The `previewDelegate` is an object conforming to `HMSPreviewListener` protocol that has two callbacks:
 
 ```swift
 func onPreview(room: HMSRoom, localTracks: [HMSTrack])
