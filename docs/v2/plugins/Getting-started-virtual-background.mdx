@@ -37,10 +37,10 @@ import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background";
 
 ## Instantiate Virtual Background
 
-This accepts background as a parameter, It can be of 3 types -
-`blur` - String - This will set the background to blur
-`image` - HTMLImageElement - This will replace the background to the imgSource provide
-`none` - String - This will remove the background effect from the video
+This accepts background as a parameter, It can be of 3 types:
+- `blur` - String - This will set the background to blur
+- `image` - HTMLImageElement - This will replace the background to the imgSource provide
+- `none` - String - This will remove the background effect from the video
 
 ```jsx
 // background : {'blur' | 'image' | 'none'}
@@ -62,10 +62,11 @@ if(virtualBackground.isSupported()){
 
 ## Init(Optional)
 
-Init is used to load the model for virtual background for the first time. It takes on an average 4-5 seconds.
+Init is used to load the model of virtual background for the first time.
+It takes on an average 4-5 seconds.
 Calling init is handled internally by SDK if not done by user, in this case addPlugin call will
-take 4-5 seconds for the first time and then 100-200ms in the consecutive calls
-Check Add and Remove Plugin section for addPlugin API usage
+take 4-5 seconds for the first time and then 100-200ms in the consecutive calls.
+*Check Add and Remove Plugin section for addPlugin API usage*
 
 ```jsx
 virtualBackground.init();
@@ -229,7 +230,7 @@ try{
 
 For an enhanced virtual background plugin performance enable simd in browser
 
--  `Chrome` -> Open `chrome://flags/` in browser, search for simd, enable WebAssembly SIMD support and restart.
--  `Firefox`-> Open `about:config` in browser, search for simd, set javascript.options.wasm_simd=true and restart.
--  `Edge`   -> Open `about:flags` in browser, search for simd, enable WebAssembly SIMD support and restart.
--  `Brave`  -> Open `about:flags` in browser, search for simd, enable WebAssembly SIMD support and restart.
+-  `Chrome` - Open `chrome://flags/` in browser, search for simd, enable WebAssembly SIMD support and restart.
+-  `Firefox`- Open `about:config` in browser, search for simd, set javascript.options.wasm_simd=true and restart.
+-  `Edge`   - Open `about:flags` in browser, search for simd, enable WebAssembly SIMD support and restart.
+-  `Brave`  - Open `about:flags` in browser, search for simd, enable WebAssembly SIMD support and restart.
