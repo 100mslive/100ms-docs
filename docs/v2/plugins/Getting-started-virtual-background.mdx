@@ -8,8 +8,7 @@ nav: 12
 Virtual background plugin helps in customising one’s background. The customising options are blurring the background or replacing it with a static image.
 This guide provides an overview of usage of the virtual background plugin of 100ms.
 
-
-<Image width={640} height={480} alt="VirtualBackground" src="/docs/v2/sample2-vb.png" />
+![VirtualBackground](/docs/v2/virtual.gif)
 
 ## Supported Devices
 
@@ -19,7 +18,7 @@ Virtual background is currently supported on Chrome, Firefox, Brave and Edge bro
 
 -   `blur background`  - This is an action where the background of the video is blurred. No external image is used/required.
 -   `image background` - This is where the plugin will replace the video background with the image provided by user.
--   `plugin load time` - The time taken by the plugin to load the model. This is in the range of 1-4 seconds for first time load. Subsequent loads take less than 100ms.
+-   `plugin load time` - The time taken by plugin to load model. This is in the range of 3-5 secs for first time. Subsequent loads take less than 100ms.
 
 ## Pre-requisites
 
@@ -62,11 +61,11 @@ if(virtualBackground.isSupported()){
 
 ## Init(Optional)
 
-Init is used to load the model of virtual background for the first time.
-It takes on an average 4-5 seconds.
+Init is used to load model of virtual background for the first time.
+It takes on an average 3-5 secs.<br/>
 Calling init is handled internally by SDK if not done by user, in this case addPlugin call will
-take 4-5 seconds for the first time and then 100-200ms in the consecutive calls.
-*Check Add and Remove Plugin section for addPlugin API usage*
+take 3-5 secs for the first time and then less than 100ms in the Subsequent calls.
+Check [this section](#add-and-remove-plugin) for addPlugin API usage
 
 ```jsx
 virtualBackground.init();
