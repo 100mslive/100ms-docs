@@ -5,6 +5,8 @@ import CrossIcon from '@/assets/icons/CrossIcon';
 import MenuIcon from '@/assets/icons/MenuIcon';
 import React from 'react';
 import useKeyPress from '@/lib/useKeyPress';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -21,6 +23,7 @@ interface Props {
 const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocSlug }) => {
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
+    const router = useRouter();
     React.useEffect(() => {
         if (escPressed) {
             setModal(false);
@@ -47,6 +50,8 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
         // update the state
         setIsDark(!isDark);
     };
+    // @ts-ignore
+    const currentTech = router.query.slug[0] === 'api-references' ? router.query.slug[1] : 'react';
     return (
         <div className="ctx">
             <div className="head-left">
@@ -70,12 +75,23 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 </span>
             </div>
 
-            <div className="search-ctx">
-                <button onClick={() => setModal(true)} type="button" className="search-btn">
-                    <SearchIcon />
-                    <span>Quick search for anything</span>
-                    <span className="hot-key">/</span>
-                </button>
+            <div className="head-right">
+                <div className="search-ctx">
+                    <button onClick={() => setModal(true)} type="button" className="search-btn">
+                        <SearchIcon />
+                        <span>Quick search for anything</span>
+                        <span className="hot-key">/</span>
+                    </button>
+                </div>
+
+                <div className="nav-links">
+                    <Link href={`/${currentTech}/`}>Docs</Link>
+                    <span style={{ marginRight: '1rem' }} />
+                    {/* @ts-ignore */}
+                    <Link href={`/api-references/${router.query.slug[0]}/v2/home/content`}>
+                        API References
+                    </Link>
+                </div>
             </div>
 
             {modal ? (
@@ -112,6 +128,10 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 .res-box:hover {
                     opacity: 1;
                 }
+                .nav-links {
+                    display: flex;
+                    align-items: center;
+                }
                 .res-box {
                     margin: 0.5rem 0;
                     border-radius: 5px;
@@ -138,6 +158,13 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     align-items: center;
                     width: 400px;
                 }
+                .head-right {
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                    justify-content: space-between;
+                    padding-right: 2rem;
+                }
                 .logo-ctx {
                     display: flex;
                     align-items: center;
@@ -149,7 +176,6 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     margin-right: 1rem;
                 }
                 .search-ctx {
-                    width: 100%;
                     position: relative;
                     padding: 0 1rem;
                 }
@@ -160,7 +186,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     align-items: center;
                     border: none;
                     border-radius: 5px;
-                    width: 100%;
+
                     cursor: pointer;
                     border-bottom-width: 1px;
                 }
@@ -203,7 +229,11 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     .head-left {
                         width: unset;
                     }
+                    .head-right {
+                        display: none;
+                    }
                     .menu-btn {
+                        margin-top: 0.5rem;
                         display: block;
                     }
                 }
