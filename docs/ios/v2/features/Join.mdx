@@ -3,9 +3,16 @@ title: Join Room
 nav: 1
 ---
 
-A user can interact with participants of a room only after _joining_ the room. 
-When user indicates that they want to _join_ the room, at the moment in code path the app should have following -
-1. Room ID 
+Joining a room is one of the most basic functionalities so we at 100ms have built an easy, developer friendly API to get you started.
+
+
+A user can interact with participants of a room only after _joining_ the room.
+
+When user indicates that they want to _join_ the room, app should have -
+1. User Name, the name which should be displayed to other peers in the room
+2. User ID, a unique identifier for the user. Usually a [UUID string](https://developer.apple.com/documentation/foundation/uuid/1779712-uuidstring).
+3. Room ID, the room identifier which would have been generated & passed to your app from backend
+ 
 To join a room - 
 1. Create an instance of the 100ms iOS SDK using the `build` class function of `HMSSDK` class
 2. 
