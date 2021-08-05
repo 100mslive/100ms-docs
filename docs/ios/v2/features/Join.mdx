@@ -44,4 +44,14 @@ let config = HMSConfig(userName: "My good name",
 hmsSDK.join(config: config, delegate: self)
 ```
 
-4. No step 4. That's it.
+That's it. You have joined a room successfully. 🥳
+
+Now, let's take a look at the signature of the Join API
+```swift
+func join(config: HMSConfig, delegate: HMSUpdateListener)
+```
+As evident, `join` accepts 2 arguments - 
+- `config`: an object of type `HMSConfig` class, the room configuration object which encapsulates user & token data
+- `delegate`: a class conforming to `HMSUpdateListener` protocol. 
+
+The methods of `HMSUpdateListener` are invoked to notify updates happening in the room like a peer joins/leaves, a track got muted/unmutes, etc.
