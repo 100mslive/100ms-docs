@@ -25,11 +25,11 @@ Any application built using 100ms' SDK has 2 components.
 - `Role` A role defines who can a peer see/hear, the quality at which they publish their video, whether they have permissions to publish video/screenshare, mute someone, change someone's role.
 eg. b-owner in the following screenshot can publish video at 720p, screenshare at 1080p and subscribes to b-guest and b-owner
 
-<Image width={1520} height={1520} alt="Roles" src="/docs/v2/roles.png" />
+![Roles](/docs/v2/roles.png)
 
 - `Template` A template is a collection of roles, room settings, recording and RTMP settings (if used), that is used by the SDK to decide which geography to connect to, which tracks to return to the client, whether to turn on recording when a room is created etc. Each room is associated with a template. eg. small_classroom_template
 
-<Image width={1520} height={1520} alt="Templates" src="/docs/v2/templates.png" />
+![Templates](/docs/v2/templates.png)
 
 
 ## What are the steps to build a live app with 100ms?
@@ -38,3 +38,8 @@ eg. b-owner in the following screenshot can publish video at 720p, screenshare a
 2. **Create a room using the above template:** You can do this using the dashboard or our API
 3. **Integrate client SDK and join the above room:** You'll need to generate a token for each peer that connects to a room. You can generate it using the endpoint we make for you or you can deploy your own server
 4. **[Optional] Receive events:** Create a webhook endpoint to receive server-side notifications about room usage (peer joining/leaving) or recording, RTMP out starting/ending
+
+## Where should I start?
+
+### Quickstart
+If you just want to see 100ms' SDKs in action in under 5 minutes, run one our quickstart [app](./guides/quickstart)
