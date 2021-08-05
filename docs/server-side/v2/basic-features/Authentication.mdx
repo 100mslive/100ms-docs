@@ -165,13 +165,13 @@ $issuedAt   = new DateTimeImmutable();
 $expire     = $issuedAt->modify('+24 hours')->getTimestamp();
 
 $payload = [
-    'access_key' => $app_access_key,            // Your App Access Key
+    'access_key' => $app_access_key,
     'type' => 'management',
     'version' => 2,
     'jti' =>  Uuid::uuid4()->toString(),
-    'iat'  => $issuedAt->getTimestamp(),         // Issued at: time when the token was generated
-    'nbf'  => $issuedAt->getTimestamp(),         // Not before
-    'exp'  => $expire,                           // Expire
+    'iat'  => $issuedAt->getTimestamp(),
+    'nbf'  => $issuedAt->getTimestamp(),
+    'exp'  => $expire,
 ];
 
 $token = JWT::encode($payload, $app_secret, 'HS256');
@@ -361,9 +361,9 @@ $roomId    = "<room_id>";
 $userId    = "<user_id>";
 
 $payload = [
-    'iat'  => $issuedAt->getTimestamp(),         // Issued at: time when the token was generated
-    'nbf'  => $issuedAt->getTimestamp(),         // Not before
-    'exp'  => $expire,                           // Expire
+    'iat'  => $issuedAt->getTimestamp(),
+    'nbf'  => $issuedAt->getTimestamp(),
+    'exp'  => $expire,
     'access_key' => $accessKey,
     'type' => "app",
     'jti' =>  Uuid::uuid4()->toString()
