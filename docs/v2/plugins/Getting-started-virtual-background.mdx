@@ -84,7 +84,7 @@ virtualBackground.init().then(() => console.log("background can be changed now")
 <Tab id='plugin-code-0'>
 
 ```javascript
-//Import modules
+// Import modules
 import {hmsActions, hmsStore, selectLocalVideoTrackID, selectTrackByID } from "./hms";
 ```
 
@@ -98,7 +98,7 @@ try{
 ```
 
 ```javascript
-//This will remove the virtual background effect from the local video
+// This will remove the virtual background effect from the local video
 try{
     await hmsActions.removePluginFromVideoTrack(virtualBackground);
 }catch(err){
@@ -107,7 +107,7 @@ try{
 ```
 
 ```javascript
-//To know the current plugins and if Virtual Background is part of it
+// To know the current plugins and if Virtual Background is part of it
 const videoTrackID = hmsStore.getState(selectLocalVideoTrackID);
 const videoTrack = hmsStore.getState(selectTrackByID(videoTrackID));
 const plugins =  videoTrack.plugins;
@@ -123,7 +123,7 @@ if(isVBApplied){
 <Tab id='plugin-code-1'>
 
 ```javascript
-//Import modules
+// Import modules
 import { selectLocalVideoTrackID, selectTrackByID, useHMSStore, useHMSActions } from '@100mslive/hms-video-react';
 import React, { useRef, useEffect } from 'react';
 ```
@@ -156,7 +156,7 @@ export default VirtualBackground;
 ```
 
 ```javascript
-//To know the current plugins and if Virtual Background is part of it
+// To know the current plugins and if Virtual Background is part of it
 
 function checkIfPluginPresent(){
     const videoTrackID = useHMSStore(selectLocalVideoTrackID);
@@ -218,7 +218,11 @@ Input aspect ratio of the background image is preferred else we are cropping the
 
 ```jsx
 // background parameter is explained in Instantiate Virtual Background section
-virtualBackground.setBackground(background : {'blur' | 'image' | 'none'});
+try{
+    virtualBackground.setBackground(background : {'blur' | 'image' | 'none'});
+}catch(err){
+    console.log("Failed to update background", err);
+}
 ```
 
 ## Recommendations For Better User Experience
