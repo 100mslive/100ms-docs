@@ -55,3 +55,9 @@ As evident, `join` accepts 2 arguments -
 - `delegate`: a class conforming to `HMSUpdateListener` protocol. 
 
 The methods of `HMSUpdateListener` are invoked to notify updates happening in the room like a peer joins/leaves, a track got muted/unmutes, etc.
+
+After calling `join` your app will be provided an update from the 100ms SDK.
+
+✅ If successful, the `func on(join room: HMSRoom)` method of `HMSUpdateListener` will be invoked with information about the room encapsulated in the `HMSRoom` object. 
+
+❌ If failure, the `func on(error: HMSError)` method will be invoked with exact failure reason. 
