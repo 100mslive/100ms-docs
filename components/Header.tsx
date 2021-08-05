@@ -6,6 +6,7 @@ import MenuIcon from '@/assets/icons/MenuIcon';
 import React from 'react';
 import useKeyPress from '@/lib/useKeyPress';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -22,6 +23,7 @@ interface Props {
 const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocSlug }) => {
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
+    const router = useRouter();
     React.useEffect(() => {
         if (escPressed) {
             setModal(false);
@@ -81,7 +83,10 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 </div>
 
                 <div className="nav-links">
-                    <Link href="/api-references">API References</Link>
+                    {/* @ts-ignore */}
+                    <Link href={`/api-references/${router.query.slug[0]}/v2/home/content`}>
+                        API References
+                    </Link>
                 </div>
             </div>
 
