@@ -19,9 +19,7 @@ Virtual background is currently supported on Chrome, Firefox, Brave and Edge bro
 
 -   `blur background`  - This is an action where the background of the video is blurred. No external image is used/required.
 -   `image background` - This is where the plugin will replace the video background with the image provided by user.
--   `none background`  - It can be used to reset virtual background changes
 -   `plugin load time` - The time taken by the plugin to load the model. This is in the range of 1-4 seconds for first time load. Subsequent loads take less than 100ms.
--   `simd` - Enabling simd in browser helps in parallel processing and optimized performance
 
 ## Pre-requisites
 
@@ -31,16 +29,22 @@ Virtual background is currently supported on Chrome, Firefox, Brave and Edge bro
 npm install --save @100mslive/hms-virtual-background@latest
 ```
 
-## Import plugin & instantiate VirtualBackground
+## Import plugin
 
 ```jsx
 import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background";
+```
 
-// background : {'blur' | 'imgSource' | 'none'}
-//  'blur'     -> Set background to blur
-// 'imgSource' -> HTMLImageElement, set background to imgSource
-//  'none'     -> Set to none/default background
-const virtualBackground = new HMSVirtualBackgroundPlugin({background: 'blur'|'none'|imgSource});
+## Instantiate Virtual Background
+
+This accepts background as a parameter, It can be of 3 types -
+`blur` - String - This will set the background to blur
+`image` - HTMLImageElement - This will replace the background to the imgSource provide
+`none` - String - This will remove the background effect from the video
+
+```jsx
+// background : {'blur' | 'image' | 'none'}
+const virtualBackground = new HMSVirtualBackgroundPlugin({background: 'blur' | image | 'none'});
 ```
 
 ## Check if plugin is supported
@@ -58,8 +62,10 @@ if(virtualBackground.isSupported()){
 
 ## Init(Optional)
 
-Init is used to load the model for virtual background for the first time. It takes on an average 3-4 seconds.
-Calling init is handled internally by sdk if not done by user.
+Init is used to load the model for virtual background for the first time. It takes on an average 4-5 seconds.
+Calling init is handled internally by SDK if not done by user, in this case addPlugin call will
+take 4-5 seconds for the first time and then 100-200ms in the consecutive calls
+Check Add and Remove Plugin section for addPlugin API usage
 
 ```jsx
 virtualBackground.init();
@@ -189,7 +195,7 @@ try{
 ```
 
 ```javascript
-//To know the current plugins and if virtual background is part of it
+// To know the current plugins and if virtual background is part of it
 const videoTrack = hms.getLocalPeer().videoTrack;
 const plugins =  videoTrack?.getPlugins();
 const isVBApplied = plugins.includes(virtualBackground.getName());
@@ -211,7 +217,8 @@ Image will get fit to the video by maintaining the aspect ratio.
 Input aspect ratio of the background image is preferred else we are cropping the image to fit in background
 
 ```jsx
-virtualBackground.setBackground(background: string|HTMLImageElement);
+// background parameter is explained in Instantiate Virtual Background section
+virtualBackground.setBackground(background : {'blur' | 'image' | 'none'});
 ```
 
 ## Recommendations For Better User Experience
