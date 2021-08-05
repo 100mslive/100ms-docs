@@ -1,6 +1,64 @@
 ---
 title: Release Notes
 nav: 14
+description: Release Notes for 100ms iOS SDK
 ---
 
-# TODO
+## 0.0.9 - 2021-08-05
+- Fixed individual track publish settings not respected during change role
+- Fixed wrong track source coming for trackRemoved update
+- Fixed button states not updating properly during role change in sample app
+
+## 0.0.8 - 2021-07-26
+- HMSVideoView will auto pick the best fitting simulcast layer
+- Sample app will not show role change options if user does not have necessary permissions
+
+## 0.0.7 - 2021-07-16
+- Added simulcast support
+- Added support for forced change role
+- HMSSpeaker now has a reference to HMSPeer instead of id
+
+## 0.0.6 - 2021-07-09
+- Added capability to change role mid-call
+- Passing HMSRole object to peers
+- SDK checks for appropriate permissions before trying to publish audio & video
+- Corrected parsing of roles that do not subscribe to other roles
+
+## 0.0.5 - 2021-07-02
+- Automatic video track switch off in bad network conditions.
+- Preview API added to the SDK, added preview screen to the sample app.
+
+## 0.0.4 - 2021-06-25
+
+-   Added Media Interruption Handling
+-   Optimized network usage
+-   Updated background to foreground transitions
+-   Improved Error logging
+
+## 0.0.3 - 2021-06-22
+
+-   Removed private modules to fix installing failure
+
+## 0.0.2 - 2021-06-16
+
+-   Added Reconnection for reliability in bad network conditions
+-   Handled network provider \(WiFi to Mobile Data\) transitions mid-call
+-   Upgraded Data Source which apps can use to easily create customized views
+-   Added descriptive Error Codes
+-   Added Analytics to track SDK performance
+-   Added default handing to app background/foreground transitions
+-   Handled joining meetings in different roles
+-   Multiple Sample App enhancements
+
+## 0.0.1 - 2021-06-04
+
+-   Simplified SDK interfaces that can power a fully-featured video conferencing application
+    -   `join`
+    -   `leave`
+    -   `listeners` for tracks/peers/other data
+-   Features not covered in this release
+    -   Handling network disconnections \(disconnect from wi-fi to 4g ends the call\)
+    -   Handling subscription network degradations
+    -   Handling second order publish network degradations
+    -   Detailed analytics
+    -   Recording
