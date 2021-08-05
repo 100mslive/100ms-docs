@@ -338,7 +338,7 @@ def generateAppToken(room_id, user_id, role)
     token = JWT.encode(payload, $app_secret, 'HS256')
 end
 
-puts generateAppToken "<room_id>" "<user_id>" "<role>"
+puts generateAppToken "<room_id>", "<user_id>", "<role>"
 
 ```
 
@@ -356,8 +356,6 @@ $issuedAt  = new DateTimeImmutable();
 $expire    = $issuedAt->modify('+24 hours')->getTimestamp();
 $accessKey = "<app_access_key>";
 $secret = "<app_secret>";
-$version   = 2;
-$type      = "app";
 $role      = "<role>";
 $roomId    = "<room_id>";
 $userId    = "<user_id>";
