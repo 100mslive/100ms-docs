@@ -432,3 +432,9 @@ Change the audio output device and volume using `hmsActions.setAudioOutputDevice
    */
   setAudioOutputDevice(deviceId: string): void;
 ```
+
+### Handling Autoplay
+ 
+Autoplay error will be thrown by browser if something is played without any user interaction. The sdk throws an error with code `3008`. This can be handled in [Notifications](../client-sdks/Reactive-Store-Extension-to-the-JS-SDK#notifications)
+
+Unblock browser autoplay by calling `await hmsActions.unblockAudio()`

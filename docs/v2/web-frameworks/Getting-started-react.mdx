@@ -526,7 +526,19 @@ Change the audio output device and volume using `hmsActions.setAudioOutputDevice
    * @param deviceId string deviceId of the audio output device
    */
   setAudioOutputDevice(deviceId: string): void;
+  /**
+    * This is to be called only after autoplay error is received
+    * on some UI interaction
+    */
+   unblockAutoplay() : Promsie<void>;
 ```
+
+### Handling Autoplay
+ 
+Autoplay error will be thrown by browser if something is played without any user interaction. The sdk throws an error with code `3008`. This can be handled in [Notifications](../web-frameworks/Getting-started-react#notifications)
+
+Unblock browser autoplay by calling `await hmsActions.unblockAudio()` on some UI interaction (eg: button click)
+
 
 ### Showing a preview screen before joining
 

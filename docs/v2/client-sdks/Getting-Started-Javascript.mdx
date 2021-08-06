@@ -507,9 +507,25 @@ interface AudioOutputManager {
      * @param value A number between 0-100.
      */
     setVolume(value: number): void;
+    /**
+     * This is to be called only after autoplay error is received
+     * on some UI interaction
+     */
+    unblockAutoplay() : Promsie<void>;
 }
 ```
 
 </Tab>
 
 > To set the output volume of a particular audio track[HMSAudioTrack], use `track.setVolume(95);` and use `track.getVolume();` to retrieve the current value.
+
+
+### Handling Autoplay
+
+Most modern browsers don't allow audio to be played without any interaction. on Autoplay error, we throw an error in `onError` handler passed to join/preview with an error code `3008`.
+
+To unblock the autoplay error, use the following method on some UI interaction(eg: button click).
+
+```jsx
+await hms.getAudioOutput().unblockAutoplay()
+```
