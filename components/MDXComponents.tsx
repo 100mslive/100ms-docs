@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from 'next/image';
 import React from 'react';
+import Link from 'next/link';
 import { Tabs, Tab } from './Tabs';
 import Code from './Code';
 import Note from './Note';
@@ -20,6 +21,25 @@ const TableCustom = (props: any) => (
     </div>
 );
 
+const LinkCustom = (props) => {
+    const { href } = props;
+    const isInternalLink = href && (href.startsWith('/') || href.startsWith('#'));
+
+    if (isInternalLink) {
+        return (
+            <Link href={href}>
+                <a {...props}>{props.children}</a>
+            </Link>
+        );
+    }
+
+    return (
+        <a target="_blank" rel="noopener noreferrer" href={href}>
+            {props.children}
+        </a>
+    );
+};
+
 const MDXComponents = {
     Response,
     PostRequest,
@@ -33,7 +53,8 @@ const MDXComponents = {
     Tabs,
     Codesandbox,
     Text,
-    View
+    View,
+    a: LinkCustom
 };
 
 export default MDXComponents;
