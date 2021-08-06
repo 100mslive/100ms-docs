@@ -3,4 +3,65 @@ title: Render Video
 nav: 9
 ---
 
-# TODO
+At the very least for rendering video you'll need an instance of `org.webrtc.SurfaceViewRenderer` and a `HMSVideoTrack` instance from a peer.
+
+For the `SurfaceViewRenderer`, add the dependency `implementation 'org.webrtc:google-webrtc:1.0.32006'`.
+
+In xml layouts it would look like
+
+```xml
+    <org.webrtc.SurfaceViewRenderer
+        android:id="@+id/peerVideo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+```
+
+The peer's video is in `hmsPeer.videoTrack` and their ScreenShare video will be an instance of `HMSVideoTrack` in the list `hmsPeer.auxiliaryTracks`.
+
+You would get them like so:
+
+```kotlin
+val hmsVideoTrack : HMSVideoTrack? = hmsPeer.videoTrack
+```
+
+### Getting and Preparing a SurfaceView
+
+Get an instance of the SurfaceView.
+
+```kotlin
+val surfaceView : SurfaceViewRenderer = findViewById(R.id.surface_view)
+```
+
+Set the scaling to whatever you prefer.
+```kotlin
+surfaceView.setEnableHardwareScaler(true)
+surfaceView.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FIT)
+```
+
+### Adding a video to the SurfaceView
+
+Each time you want to add a video to the surfaceview, it needs to be initialized again.
+
+```kotlin
+surfaceView.init(SharedEglContext.context, null)
+
+val hmsVideoTrack : HMSVideotrack = hmsPeer.videoTrack
+hmsVideoTrack?.addSink(surfaceView)
+```
+
+It's also important to remove it when done.
+
+> 💡 Only the SharedEglContext.context can be used. Creating a new context will result in a black screen.
+
+### Removing a video from the SurfaceView
+
+It's very important to remove the video when you're done showing it, or before you show a different video on the same SurfaceViewRenderer.
+
+```kotlin
+hmsVideoTrack.removeSink(this)
+surfaceView.release()
+```
+There is a limit to the number of `SharedEglContext`'s that can be bound per mobile device. It's normally high enough to easily accomodate all the videos that will reasonably fit on a screen. If the video's aren't released however, it becomes very easy to exceed this limit and the app will crash.
+
+Until you call `removeSink` the video is being streamed over the device's data so it's also important remove sinks.
