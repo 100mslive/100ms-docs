@@ -90,7 +90,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                                 {Object.keys(route).map((e) => (
                                     <Link key={route[e].title} href={route[e].url}>
                                         <div
-                                            className={`menu-item ${
+                                            className={`sub-menu-item ${
                                                 route[e].url === router.asPath ? 'active-link' : ''
                                             }`}>
                                             {route[e].title}
@@ -137,11 +137,21 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     padding-left: 20px;
                 }
                 .sub-title {
-                    padding-left: 20px;
+                    padding-left: 30px;
                     font-weight: 700;
                     font-size: 12px;
                     margin-top: 20px;
                     margin-bottom: 5px;
+                }
+                .sub-menu-item {
+                    cursor: pointer;
+                    padding: 8px 0;
+                    color: var(--gray11);
+                    font-weight: 400;
+                    font-size: 13px;
+                    display: flex;
+                    align-items: center;
+                    padding-left: 30px;
                 }
 
                 a {
@@ -152,6 +162,10 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     background-color: var(--blue6);
                 }
                 .menu-item:hover {
+                    background-color: var(--blue5);
+                }
+                }
+                .sub-menu-item:hover {
                     background-color: var(--blue5);
                 }
                 .menu-title {
