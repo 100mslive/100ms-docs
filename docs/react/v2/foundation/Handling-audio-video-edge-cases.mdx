@@ -1,6 +1,6 @@
 ---
 title: Handling audio-video edge cases
-nav: 4
+nav: 2.2
 ---
 
 ## Introduction
@@ -9,9 +9,9 @@ nav: 4
 
 There are 3 major issues of issues that can occur in a audio/video conference
 
-- Device capture failure
-- Network disconnection/Switching network
-- Network bandwidth limitation/large rooms
+-   Device capture failure
+-   Network disconnection/Switching network
+-   Network bandwidth limitation/large rooms
 
 ## Device failure
 
@@ -19,8 +19,7 @@ A common issue is a failure to capture mic/camera even though the user has all d
 
 The usual recourse in these exceptions is to prompt a user action - "Grant permission", "Please close any other app using microphone", "Switch to Safari"
 
-100ms' SDKs come with a [preview method]('./features/preview') that can be called before joining a room. This will test for device failures, network connectivity and throw errors with a recommended user action. 
-
+100ms' SDKs come with a [preview method]('./features/preview') that can be called before joining a room. This will test for device failures, network connectivity and throw errors with a recommended user action.
 
 ## Network disconnection/Switching networks
 
@@ -39,5 +38,3 @@ A common occurrence in large rooms, or constrained networks is dropped frames. T
 eg. In constrained scenarios, a host's screenshare is the most important video to prioritize and should NOT go below a certain resolution to avoid pixelation. We can drop other guests' videos but audio should not be dropped.
 
 Video to come
-
-
