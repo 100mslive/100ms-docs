@@ -529,3 +529,33 @@ To unblock the autoplay error, use the following method on some UI interaction(e
 ```jsx
 await hms.getAudioOutput().unblockAutoplay()
 ```
+
+### Setting Log Level
+
+To set log level for logging only errors and warnings in production, use hms.setLogLevel.
+
+<Tabs id="hms-log-level" items={['Usage', 'Interface']} />
+    
+<Tab  id="hms-log-level-0">
+    ```jsx
+        import { HMSLogLevel } from "@100mslive/hms-video";
+        
+        hms.setLogLevel(HMSLogLevel.WARN); // Log warnings and errors
+        hms.setLogLevel(HMSLogLevel.ERROR); // Log only errors
+    ```
+</Tab>
+
+<Tab  id="hms-log-level-1">
+
+```jsx
+enum HMSLogLevel {
+  VERBOSE,
+  DEBUG,
+  INFO,
+  WARN,
+  ERROR,
+  NONE,
+}
+```
+
+</Tab>
