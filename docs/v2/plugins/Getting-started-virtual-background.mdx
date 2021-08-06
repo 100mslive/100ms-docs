@@ -85,7 +85,7 @@ virtualBackground.init().then(() => console.log("background can be changed now")
 
 ```javascript
 // Import modules
-import {hmsActions, hmsStore, selectLocalVideoTrackID, selectTrackByID } from "./hms";
+import {hmsActions, hmsStore, selectIsLocalVideoPluginPresent } from "./hms";
 ```
 
 ```javascript
@@ -108,11 +108,10 @@ try{
 
 ```javascript
 // To know the current plugins and if Virtual Background is part of it
-const videoTrackID = hmsStore.getState(selectLocalVideoTrackID);
-const videoTrack = hmsStore.getState(selectTrackByID(videoTrackID));
-const plugins =  videoTrack.plugins;
-const isVBApplied = plugins.includes(virtualBackground.getName());
-if(isVBApplied){
+const isVBPresent = hmsStore.getState(
+    selectIsLocalVideoPluginPresent("@100mslive/hms-virtual-background")
+);
+if(isVBPresent){
     console.log("virtual background effect is applied to the local video");
 }else{
     console.log("virtual background effect is removed from the local video");
@@ -124,7 +123,7 @@ if(isVBApplied){
 
 ```javascript
 // Import modules
-import { selectLocalVideoTrackID, selectTrackByID, useHMSStore, useHMSActions } from '@100mslive/hms-video-react';
+import { selectIsLocalVideoPluginPresent, useHMSStore, useHMSActions } from '@100mslive/hms-video-react';
 import React, { useRef, useEffect } from 'react';
 ```
 
@@ -159,11 +158,10 @@ export default VirtualBackground;
 // To know the current plugins and if Virtual Background is part of it
 
 function checkIfPluginPresent(){
-    const videoTrackID = useHMSStore(selectLocalVideoTrackID);
-    const videoTrack = useHMSStore(selectTrackByID(videoTrackID));
-    const plugins =  videoTrack.plugins;
-    const isVBApplied = plugins.includes(virtualBackground.getName());
-    if(isVBApplied){
+    const isVBPresent = useHMSStore(
+        selectIsLocalVideoPluginPresent("@100mslive/hms-virtual-background")
+    );
+    if(isVBPresent){
         console.log("virtual background effect is applied to the local video");
     }else{
         console.log("virtual background effect is removed from the local video");
