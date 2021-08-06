@@ -34,7 +34,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const [tech, setTech] = React.useState(menuItem[indexOf]);
     const changeTech = (s) => {
         setTech(s);
-        router.push(s.link, undefined, { shallow: true });
+        router.push(s.link, undefined, { shallow: false });
     };
     return (
         <div className="ctx">
@@ -73,7 +73,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 <section className="menu-container" key={`${key}-${index}`}>
                     <div className="menu-title">{key.replace(/-/g, ' ').toUpperCase()}</div>
                     {Object.entries(children).map(([_, route]) => (
-                        <Link href={route.url} key={`${route.url}-${index}`}>
+                        <Link href={route.url || ''} key={`${route.url}-${index}`}>
                             <div
                                 className={`menu-item ${
                                     route.url === router.asPath ? 'active-link' : ''
@@ -93,13 +93,11 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     height: calc(100vh - 80px);
                     min-width: 298px;
                     overflow-y: scroll;
-                    padding-top: 20px;
-                    top: ${menu ? '10px' : '60px'};
+                    top: ${menu ? '10px' : '80px'};
                     left: 0;
                     position: ${menu ? 'absolute' : 'sticky'};
                     background: var(--gray1);
                     z-index: 40;
-                    border-right: 1px solid var(--gray6);
                 }
                 ::-webkit-scrollbar {
                     width: 0px;
@@ -113,7 +111,6 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 .menu-item {
                     cursor: pointer;
                     padding: 8px 0;
-                    margin: 5px 0;
                     color: var(--gray12);
                     font-weight: 400;
                     font-size: 13px;
@@ -136,6 +133,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     padding-left: 20px;
                     font-weight: 700;
                     font-size: 15px;
+                    margin: 5px 0;
                 }
                 @media screen and (max-width: 1000px) {
                     .ctx {
