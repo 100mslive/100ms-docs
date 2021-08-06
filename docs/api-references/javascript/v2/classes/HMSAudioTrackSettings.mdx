@@ -1,0 +1,81 @@
+---
+title: HMSAudioTrackSettings
+---
+
+## Implements
+
+- `IAnalyticsPropertiesProvider`
+
+## Constructors
+
+### constructor
+
+• **new HMSAudioTrackSettings**(`volume`, `codec`, `maxBitrate`, `deviceId`, `advanced`)
+
+#### Parameters
+
+| Name         | Type                        |
+| :----------- | :-------------------------- |
+| `volume`     | `number`                    |
+| `codec`      | `OPUS`                      |
+| `maxBitrate` | `number`                    |
+| `deviceId`   | `string`                    |
+| `advanced`   | `MediaTrackConstraintSet`[] |
+
+## Properties
+
+### advanced
+
+• `Readonly` **advanced**: `MediaTrackConstraintSet`[]
+
+---
+
+### codec
+
+• `Readonly` **codec**: `OPUS`
+
+---
+
+### deviceId
+
+• `Readonly` **deviceId**: `string`
+
+---
+
+### maxBitrate
+
+• `Readonly` **maxBitrate**: `number`
+
+---
+
+### volume
+
+• `Readonly` **volume**: `number`
+
+## Methods
+
+### toAnalyticsProperties
+
+▸ **toAnalyticsProperties**(): `Object`
+
+#### Returns
+
+`Object`
+| Name | Type |
+| :------ | :------ |
+| `audio_bitrate` | `number` |
+| `audio_codec` | `OPUS` |
+
+#### Implementation of
+
+IAnalyticsPropertiesProvider.toAnalyticsProperties
+
+---
+
+### toConstraints
+
+▸ **toConstraints**(): `MediaTrackConstraints`
+
+#### Returns
+
+`MediaTrackConstraints`

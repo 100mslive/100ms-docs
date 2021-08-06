@@ -1,0 +1,509 @@
+---
+title: HMSSDKActions
+---
+
+This class implements the IHMSActions interface for 100ms SDK. It connects with SDK
+and takes control of data management by letting every action pass through it. The
+passed in store is ensured to be the single source of truth reflecting current
+room related data at any point in time.
+**`privateremarks`**
+Things to keep in mind while updating store -
+
+1. Treat setState as an atomic operation, if an action results in multiple changes,
+   the changes should all happen within single setState function.
+2. While updating the state it's very important to not update the reference if
+   something is unchanged. Copy data in same reference object don't assign new
+   object.
+3. Mental Model(1) - Actions from backend -> Listeners of this class -> update store -> views update themselves
+   eg. for this - peer added, remote muted etc.
+4. Mental Model(2) - Actions from local -> View calls actions -> update store -> views update themselves
+   eg. local track enabled, join, leave etc.
+5. State is immutable, a new copy with new references is created when there is a change,
+   if you try to modify state outside of setState, there'll be an error.
+
+## Implements
+
+- [`IHMSActions`](/api-references/javascript/v2/interfaces/IHMSActions)
+
+## Constructors
+
+### constructor
+
+• **new HMSSDKActions**(`store`, `sdk`, `notificationManager`)
+
+#### Parameters
+
+| Name                  | Type                                                              |
+| :-------------------- | :---------------------------------------------------------------- |
+| `store`               | [`IHMSStore`](/api-references/javascript/v2/interfaces/IHMSStore) |
+| `sdk`                 | `HMSSdk`                                                          |
+| `notificationManager` | `HMSNotifications`                                                |
+
+## Methods
+
+### acceptChangeRole
+
+▸ **acceptChangeRole**(`request`): `void`
+Accept the role change request received
+
+#### Parameters
+
+| Name      | Type                                                                                    |
+| :-------- | :-------------------------------------------------------------------------------------- |
+| `request` | [`HMSRoleChangeRequest`](/api-references/javascript/v2/interfaces/HMSRoleChangeRequest) |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+---
+
+### addPluginToVideoTrack
+
+▸ **addPluginToVideoTrack**(`plugin`): `Promise`<`void`\>
+Add or remove a video plugin from/to the local peer video track. Eg. Virtual Background, Face Filters etc.
+Video plugins can be added/removed at any time after the join is successful.
+
+#### Parameters
+
+| Name     | Type             |
+| :------- | :--------------- |
+| `plugin` | `HMSVideoPlugin` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+---
+
+### addTrack
+
+▸ **addTrack**(`track`, `type?`): `Promise`<`void`\>
+You can use the addTrack method to add an auxiliary track(canvas capture, electron screen-share, etc...)
+This method adds the track to the local peer's list of auxiliary tracks and publishes it to make it available to remote peers.
+
+#### Parameters
+
+| Name    | Type               | Default value |
+| :------ | :----------------- | :------------ |
+| `track` | `MediaStreamTrack` | `undefined`   |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+---
+
+### attachVideo
+
+▸ **attachVideo**(`trackID`, `videoElement`): `Promise`<`void`\>
+If you're not using our Video Component you can use the below functions directly
+to add/remove video from an element for a track ID. The benefit of using this
+instead of removing the video yourself is that it'll also auto unsubscribe to
+the stream coming from server saving significant bandwidth for the user.
+
+#### Parameters
+
+| Name           | Type               |
+| :------------- | :----------------- |
+| `trackID`      | `string`           |
+| `videoElement` | `HTMLVideoElement` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+---
+
+### changeRole
+
+▸ **changeRole**(`forPeerId`, `toRole`, `force?`): `void`
+Request for a role change of a remote peer. Can be forced.
+
+#### Parameters
+
+| Name        | Type      | Default value |
+| :---------- | :-------- | :------------ |
+| `forPeerId` | `string`  | `undefined`   |
+| `toRole`    | `string`  | `undefined`   |
+| `force`     | `boolean` | `false`       |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+---
+
+### detachVideo
+
+▸ **detachVideo**(`trackID`, `videoElement`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name           | Type               |
+| :------------- | :----------------- |
+| `trackID`      | `string`           |
+| `videoElement` | `HTMLVideoElement` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+---
+
+### join
+
+▸ **join**(`config`): `void`
+join function can be used to join the room, if the room join is successful,
+current details of participants and track details are populated in the store.
+**`remarks`**
+If join is called while an earlier join is in progress for the room id, it
+is ignored
+
+#### Parameters
+
+| Name     | Type                                                              |
+| :------- | :---------------------------------------------------------------- |
+| `config` | [`HMSConfig`](/api-references/javascript/v2/interfaces/HMSConfig) |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+---
+
+### leave
+
+▸ **leave**(): `Promise`<`void`\>
+This function can be used to leave the room, if the call is repeated it's ignored.
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+---
+
+### preview
+
+▸ **preview**(`config`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name     | Type                                                              |
+| :------- | :---------------------------------------------------------------- |
+| `config` | [`HMSConfig`](/api-references/javascript/v2/interfaces/HMSConfig) |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+---
+
+### rejectChangeRole
+
+▸ **rejectChangeRole**(`request`): `void`
+**`privateremarks`**
+there is no corresponding sdk method for rejecting change role but as the store also maintains the full
+state of current pending requests, this method allows it to clean up when the request is rejected
+
+#### Parameters
+
+| Name      | Type                                                                                    |
+| :-------- | :-------------------------------------------------------------------------------------- |
+| `request` | [`HMSRoleChangeRequest`](/api-references/javascript/v2/interfaces/HMSRoleChangeRequest) |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+---
+
+### removePluginFromVideoTrack
+
+▸ **removePluginFromVideoTrack**(`plugin`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name     | Type             |
+| :------- | :--------------- |
+| `plugin` | `HMSVideoPlugin` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+---
+
+### removeTrack
+
+▸ **removeTrack**(`trackId`): `Promise`<`void`\>
+You can use the removeTrack method to remove an auxiliary track.
+This method removes the track from the local peer's list of auxiliary tracks and unpublishes it.
+
+#### Parameters
+
+| Name      | Type     |
+| :-------- | :------- |
+| `trackId` | `string` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+---
+
+### sendMessage
+
+▸ **sendMessage**(`message`): `void`
+Send a plain text message to all the other participants in the room.
+
+#### Parameters
+
+| Name      | Type     |
+| :-------- | :------- |
+| `message` | `string` |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+---
+
+### setAudioOutputDevice
+
+▸ **setAudioOutputDevice**(`deviceId`): `void`
+Set the audio output(speaker) device
+
+#### Parameters
+
+| Name       | Type     |
+| :--------- | :------- |
+| `deviceId` | `string` |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+---
+
+### setAudioSettings
+
+▸ **setAudioSettings**(`settings`): `Promise`<`void`\>
+Change settings of the local peer's audio track
+
+#### Parameters
+
+| Name       | Type                                                                                               |
+| :--------- | :------------------------------------------------------------------------------------------------- |
+| `settings` | `Partial`<[`HMSAudioTrackSettings`](/api-references/javascript/v2/classes/HMSAudioTrackSettings)\> |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+---
+
+### setEnabledTrack
+
+▸ **setEnabledTrack**(`trackID`, `enabled`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name      | Type      |
+| :-------- | :-------- |
+| `trackID` | `string`  |
+| `enabled` | `boolean` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+---
+
+### setLocalAudioEnabled
+
+▸ **setLocalAudioEnabled**(`enabled`): `Promise`<`void`\>
+These functions can be used to mute/unmute the local peer's audio and video
+
+#### Parameters
+
+| Name      | Type      |
+| :-------- | :-------- |
+| `enabled` | `boolean` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+---
+
+### setLocalVideoEnabled
+
+▸ **setLocalVideoEnabled**(`enabled`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name      | Type      |
+| :-------- | :-------- |
+| `enabled` | `boolean` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+---
+
+### setMessageRead
+
+▸ **setMessageRead**(`readStatus`, `messageId?`): `void`
+If just readStatus argument is passed, the function will set read flag of every message
+as the readStatus argument passed.
+If both readStatus and messageId argument is passed, then just read flag of message
+with passed messageId will be set as readStatus argument. if message with passed messageId is not
+found in store, no change in store will take place.
+
+#### Parameters
+
+| Name         | Type      |
+| :----------- | :-------- |
+| `readStatus` | `boolean` |
+| `messageId?` | `string`  |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+---
+
+### setPreferredLayer
+
+▸ **setPreferredLayer**(`trackId`, `layer`): `void`
+set the quality of the selected videoTrack
+
+#### Parameters
+
+| Name      | Type                                                                         |
+| :-------- | :--------------------------------------------------------------------------- |
+| `trackId` | `string`                                                                     |
+| `layer`   | [`HMSSimulcastLayer`](/api-references/javascript/v2/enums/HMSSimulcastLayer) |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+---
+
+### setScreenShareEnabled
+
+▸ **setScreenShareEnabled**(`enabled`): `Promise`<`void`\>
+If you want to enable screenshare for the local peer this class can be called.
+The store will be populated with the incoming track, and the subscriber(or
+react component if our hook is used) will be notified/rerendered
+
+#### Parameters
+
+| Name      | Type      |
+| :-------- | :-------- |
+| `enabled` | `boolean` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+---
+
+### setVideoSettings
+
+▸ **setVideoSettings**(`settings`): `Promise`<`void`\>
+Change settings of the local peer's video track
+
+#### Parameters
+
+| Name       | Type                                                                                               |
+| :--------- | :------------------------------------------------------------------------------------------------- |
+| `settings` | `Partial`<[`HMSVideoTrackSettings`](/api-references/javascript/v2/classes/HMSVideoTrackSettings)\> |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+---
+
+### setVolume
+
+▸ **setVolume**(`value`, `trackId?`): `void`
+Set the output volume of audio tracks(overall/particular audio track)
+
+#### Parameters
+
+| Name       | Type     |
+| :--------- | :------- |
+| `value`    | `number` |
+| `trackId?` | `string` |
+
+#### Returns
+
+`void`
+
+#### Implementation of
+
+---
+
+### unblockAudio
+
+▸ **unblockAudio**(): `Promise`<`void`\>
+Method to be called with some UI interaction after autoplay error is received
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Implementation of
+
+`Promise`<`void`\>
+
+#### Implementation of

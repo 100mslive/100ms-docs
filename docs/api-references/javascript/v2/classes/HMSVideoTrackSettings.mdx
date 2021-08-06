@@ -1,0 +1,99 @@
+---
+title: HMSVideoTrackSettings
+---
+
+## Implements
+
+- `IAnalyticsPropertiesProvider`
+
+## Constructors
+
+### constructor
+
+• **new HMSVideoTrackSettings**(`width`, `height`, `codec`, `maxFramerate`, `deviceId`, `advanced`, `maxBitrate?`)
+
+#### Parameters
+
+| Name           | Type                        |
+| :------------- | :-------------------------- |
+| `width`        | `number`                    |
+| `height`       | `number`                    |
+| `codec`        | `HMSVideoCodec`             |
+| `maxFramerate` | `number`                    |
+| `deviceId`     | `undefined` \| `string`     |
+| `advanced`     | `MediaTrackConstraintSet`[] |
+| `maxBitrate?`  | `number`                    |
+
+## Properties
+
+### advanced
+
+• `Readonly` **advanced**: `MediaTrackConstraintSet`[]
+
+---
+
+### codec
+
+• `Readonly` **codec**: `HMSVideoCodec`
+
+---
+
+### deviceId
+
+• `Optional` `Readonly` **deviceId**: `string`
+
+---
+
+### height
+
+• `Readonly` **height**: `number`
+
+---
+
+### maxBitrate
+
+• `Optional` `Readonly` **maxBitrate**: `number`
+
+---
+
+### maxFramerate
+
+• `Readonly` **maxFramerate**: `number`
+
+---
+
+### width
+
+• `Readonly` **width**: `number`
+
+## Methods
+
+### toAnalyticsProperties
+
+▸ **toAnalyticsProperties**(): `Object`
+
+#### Returns
+
+`Object`
+| Name | Type |
+| :------ | :------ |
+| `framerate` | `number` |
+| `height` | `number` |
+| `video_bitrate` | `undefined` \| `number` |
+| `video_codec` | `HMSVideoCodec` |
+| `width` | `number` |
+
+#### Implementation of
+
+IAnalyticsPropertiesProvider.toAnalyticsProperties
+
+---
+
+### toConstraints
+
+▸ **toConstraints**(): `MediaTrackConstraints`
+
+#### Returns
+
+`MediaTrackConstraints`
+s`

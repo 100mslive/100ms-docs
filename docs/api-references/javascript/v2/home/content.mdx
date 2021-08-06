@@ -1,4 +1,1112 @@
 ---
-title: Javascript API references
-nav: 1
+title: 100mslive/hms-video-store
 ---
+
+## Enumerations
+
+-   [HMSMessageType](/api-references/javascript/v2/enums/HMSMessageType)
+-   [HMSRoomState](/api-references/javascript/v2/enums/HMSRoomState)
+-   [HMSSimulcastLayer](/api-references/javascript/v2/enums/HMSSimulcastLayer)
+
+## Classes
+
+-   [HMSAudioTrackSettings](/api-references/javascript/v2/classes/HMSAudioTrackSettings)
+-   [HMSNotificationSeverity](/api-references/javascript/v2/classes/HMSNotificationSeverity)
+-   [HMSNotificationTypes](/api-references/javascript/v2/classes/HMSNotificationTypes)
+-   [HMSReactiveStore](/api-references/javascript/v2/classes/HMSReactiveStore)
+-   [HMSSDKActions](/api-references/javascript/v2/classes/HMSSDKActions)
+-   [HMSVideoTrackSettings](/api-references/javascript/v2/classes/HMSVideoTrackSettings)
+
+## Interfaces
+
+-   [HMSComponentsStyle](/api-references/javascript/v2/interfaces/HMSComponentsStyle)
+-   [HMSConfig](/api-references/javascript/v2/interfaces/HMSConfig)
+-   [HMSException](/api-references/javascript/v2/interfaces/HMSException)
+-   [HMSMediaSettings](/api-references/javascript/v2/interfaces/HMSMediaSettings)
+-   [HMSMessage](/api-references/javascript/v2/interfaces/HMSMessage)
+-   [HMSNotification](/api-references/javascript/v2/interfaces/HMSNotification)
+-   [HMSPeer](/api-references/javascript/v2/interfaces/HMSPeer)
+-   [HMSPeerWithMuteStatus](/api-references/javascript/v2/interfaces/HMSPeerWithMuteStatus)
+-   [HMSPublishAllowed](/api-references/javascript/v2/interfaces/HMSPublishAllowed)
+-   [HMSRole](/api-references/javascript/v2/interfaces/HMSRole)
+-   [HMSRoleChangeRequest](/api-references/javascript/v2/interfaces/HMSRoleChangeRequest)
+-   [HMSRoleChangeStoreRequest](/api-references/javascript/v2/interfaces/HMSRoleChangeStoreRequest)
+-   [HMSRoom](/api-references/javascript/v2/interfaces/HMSRoom)
+-   [HMSSpeaker](/api-references/javascript/v2/interfaces/HMSSpeaker)
+-   [HMSStore](/api-references/javascript/v2/interfaces/HMSStore)
+-   [HMSTrack](/api-references/javascript/v2/interfaces/HMSTrack)
+-   [IHMSActions](/api-references/javascript/v2/interfaces/IHMSActions)
+-   [IHMSNotifications](/api-references/javascript/v2/interfaces/IHMSNotifications)
+-   [IHMSStore](/api-references/javascript/v2/interfaces/IHMSStore)
+-   [SimulcastLayerDefinition](/api-references/javascript/v2/interfaces/SimulcastLayerDefinition)
+
+## Type aliases
+
+### DeviceMap
+
+Ƭ **DeviceMap**: `Omit`<`HMSDeviceManager`, `"outputDevice"`\>
+
+---
+
+### HMSMessageID
+
+Ƭ **HMSMessageID**: `string`
+
+---
+
+### HMSPeerID
+
+Ƭ **HMSPeerID**: `string`
+
+---
+
+### HMSRoleName
+
+Ƭ **HMSRoleName**: `string`
+
+---
+
+### HMSRoomID
+
+Ƭ **HMSRoomID**: `string`
+
+---
+
+### HMSSeverity
+
+Ƭ **HMSSeverity**: `"info"` \| `"error"` \| `"critical"`
+
+---
+
+### HMSTrackID
+
+Ƭ **HMSTrackID**: `string`
+
+---
+
+### HMSTrackSource
+
+Ƭ **HMSTrackSource**: `"regular"` \| `"screen"` \| `"plugin"`
+
+---
+
+### HMSTrackType
+
+Ƭ **HMSTrackType**: `"audio"` \| `"video"`
+
+---
+
+### IHMSStoreReadOnly
+
+Ƭ **IHMSStoreReadOnly**: `Omit`<[`IHMSStore`](/api-references/javascript/v2/interfaces/IHMSStore), `"setState"` \| `"namedSetState"` \| `"destroy"`\>
+HMS store can be used to subscribe to different parts of the store using selectors
+and get a callback when the value changes.
+
+## Variables
+
+### selectAvailableRoleNames
+
+• `Const` **selectAvailableRoleNames**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), `string`[], `fn`\>
+
+---
+
+### selectDegradedTracks
+
+• `Const` **selectDegradedTracks**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)[], `fn`\>
+Select tracks that have been degraded(receiving lower video quality/no video) due to bad network locally
+
+---
+
+### selectDominantSpeaker
+
+• `Const` **selectDominantSpeaker**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), `null` \| [`HMSPeer`](/api-references/javascript/v2/interfaces/HMSPeer), `fn`\>
+
+---
+
+### selectHMSMessages
+
+• `Const` **selectHMSMessages**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), [`HMSMessage`](/api-references/javascript/v2/interfaces/HMSMessage)[], `fn`\>
+
+---
+
+### selectHMSMessagesCount
+
+• `Const` **selectHMSMessagesCount**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), `number`, `fn`\>
+
+---
+
+### selectIsAllowedToPublish
+
+• `Const` **selectIsAllowedToPublish**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), [`HMSPublishAllowed`](/api-references/javascript/v2/interfaces/HMSPublishAllowed), `fn`\>
+use this selector to know what streams is the local peer allowed to publish from video, audio and screenshare.
+
+---
+
+### selectIsAllowedToSubscribe
+
+• `Const` **selectIsAllowedToSubscribe**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), `boolean`, `fn`\>
+use this selector to know if the local peer is allowed to subscribe to any other role
+
+---
+
+### selectIsConnectedToRoom
+
+• `Const` **selectIsConnectedToRoom**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), `undefined` \| `boolean`, `fn`\>
+
+---
+
+### selectIsInPreview
+
+• `Const` **selectIsInPreview**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), `boolean`, `fn`\>
+
+---
+
+### selectLocalAudioTrackID
+
+• `Const` **selectLocalAudioTrackID**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), `undefined` \| `string`, `fn`\>
+
+---
+
+### selectLocalPeer
+
+• `Const` **selectLocalPeer**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), [`HMSPeer`](/api-references/javascript/v2/interfaces/HMSPeer), `fn`\>
+
+---
+
+### selectLocalPeerID
+
+• `Const` **selectLocalPeerID**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), `string`, `fn`\>
+
+---
+
+### selectLocalPeerRole
+
+• `Const` **selectLocalPeerRole**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), `null` \| [`HMSRole`](/api-references/javascript/v2/interfaces/HMSRole), `fn`\>
+
+---
+
+### selectLocalVideoTrackID
+
+• `Const` **selectLocalVideoTrackID**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), `undefined` \| `string`, `fn`\>
+
+---
+
+### selectPeers
+
+• `Const` **selectPeers**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), [`HMSPeer`](/api-references/javascript/v2/interfaces/HMSPeer)[], `fn`\>
+
+---
+
+### selectPeersWithAudioStatus
+
+• `Const` **selectPeersWithAudioStatus**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), [`HMSPeerWithMuteStatus`](/api-references/javascript/v2/interfaces/HMSPeerWithMuteStatus)[], `fn`\>
+
+---
+
+### selectRemotePeers
+
+• `Const` **selectRemotePeers**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), [`HMSPeer`](/api-references/javascript/v2/interfaces/HMSPeer)[], `fn`\>
+
+---
+
+### selectRoleChangeRequest
+
+• `Const` **selectRoleChangeRequest**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), `null` \| [`HMSRoleChangeRequest`](/api-references/javascript/v2/interfaces/HMSRoleChangeRequest), `fn`\>
+
+---
+
+### selectRoomState
+
+• `Const` **selectRoomState**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), [`HMSRoomState`](/api-references/javascript/v2/enums/HMSRoomState), `fn`\>
+
+---
+
+### selectUnreadHMSMessagesCount
+
+• `Const` **selectUnreadHMSMessagesCount**: `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), `number`, `fn`\>
+
+## Functions
+
+### createDefaultStoreState
+
+▸ `Const` **createDefaultStoreState**(): [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)
+
+#### Returns
+
+[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)
+
+---
+
+### selectAudioTrackByPeerID
+
+▸ `Const` **selectAudioTrackByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+---
+
+### selectAudioTrackVolume
+
+▸ `Const` **selectAudioTrackVolume**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| `number`
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `undefined` \| `number`
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`undefined` \| `number`
+
+---
+
+### selectAudioVolumeByPeerID
+
+▸ `Const` **selectAudioVolumeByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| `number`
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `undefined` \| `number`
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`undefined` \| `number`
+
+---
+
+### selectAuxiliaryAudioByPeerID
+
+▸ `Const` **selectAuxiliaryAudioByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+---
+
+### selectAuxiliaryTracksByPeerID
+
+▸ `Const` **selectAuxiliaryTracksByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)[]
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)[]
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+[`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)[]
+
+---
+
+### selectCameraStreamByPeerID
+
+▸ `Const` **selectCameraStreamByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+---
+
+### selectDevices
+
+#### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+---
+
+### selectIsAudioLocallyMuted
+
+▸ `Const` **selectIsAudioLocallyMuted**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| `boolean`
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `undefined` \| `boolean`
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`undefined` \| `boolean`
+
+---
+
+### selectIsLocalAudioEnabled
+
+▸ `Const` **selectIsLocalAudioEnabled**(`store`): `boolean`
+
+#### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+`boolean`
+
+---
+
+### selectIsLocalScreenShared
+
+▸ `Const` **selectIsLocalScreenShared**(`store`): `boolean`
+
+#### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+`boolean`
+
+---
+
+### selectIsLocalVideoDisplayEnabled
+
+▸ `Const` **selectIsLocalVideoDisplayEnabled**(`store`): `undefined` \| `boolean`
+
+#### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+`undefined` \| `boolean`
+
+---
+
+### selectIsLocalVideoEnabled
+
+▸ `Const` **selectIsLocalVideoEnabled**(`store`): `boolean`
+
+#### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+`boolean`
+
+---
+
+### selectIsLocalVideoPluginPresent
+
+▸ `Const` **selectIsLocalVideoPluginPresent**(`pluginName`): `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), `boolean`, `fn`\>
+
+#### Parameters
+
+| Name         | Type     |
+| :----------- | :------- |
+| `pluginName` | `string` |
+
+#### Returns
+
+`OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), `boolean`, `fn`\>
+
+---
+
+### selectIsLocallyMutedByPeerID
+
+▸ `Const` **selectIsLocallyMutedByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| `boolean`
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `undefined` \| `boolean`
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`undefined` \| `boolean`
+
+---
+
+### selectIsPeerAudioEnabled
+
+▸ `Const` **selectIsPeerAudioEnabled**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `boolean`
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `boolean`
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`boolean`
+
+---
+
+### selectIsPeerVideoEnabled
+
+▸ `Const` **selectIsPeerVideoEnabled**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `boolean`
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `boolean`
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`boolean`
+
+---
+
+### selectIsScreenShareLocallyMutedByPeerID
+
+▸ `Const` **selectIsScreenShareLocallyMutedByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| `boolean`
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `undefined` \| `boolean`
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`undefined` \| `boolean`
+
+---
+
+### selectIsSomeoneScreenSharing
+
+▸ `Const` **selectIsSomeoneScreenSharing**(`store`): `boolean`
+
+#### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+`boolean`
+
+---
+
+### selectLocalMediaSettings
+
+▸ `Const` **selectLocalMediaSettings**(`store`): [`HMSMediaSettings`](/api-references/javascript/v2/interfaces/HMSMediaSettings)
+
+#### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+[`HMSMediaSettings`](/api-references/javascript/v2/interfaces/HMSMediaSettings)
+
+---
+
+### selectMessageIDsInOrder
+
+▸ `Const` **selectMessageIDsInOrder**(`store`): `string`[]
+
+#### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+`string`[]
+
+---
+
+### selectMessagesMap
+
+▸ `Const` **selectMessagesMap**(`store`): `Record`<`string`, [`HMSMessage`](/api-references/javascript/v2/interfaces/HMSMessage)\>
+
+#### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+`Record`<`string`, [`HMSMessage`](/api-references/javascript/v2/interfaces/HMSMessage)\>
+
+---
+
+### selectPeerAudioByID
+
+▸ `Const` **selectPeerAudioByID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `number`
+Selects audio level of audioTrack of a peer.
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `number`
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`number`
+
+---
+
+### selectPeerByID
+
+▸ `Const` **selectPeerByID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `null` \| [`HMSPeer`](/api-references/javascript/v2/interfaces/HMSPeer)
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `null` \| [`HMSPeer`](/api-references/javascript/v2/interfaces/HMSPeer)
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`null` \| [`HMSPeer`](/api-references/javascript/v2/interfaces/HMSPeer)
+
+---
+
+### selectPeerNameByID
+
+▸ `Const` **selectPeerNameByID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| `string`
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `undefined` \| `string`
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`undefined` \| `string`
+
+---
+
+### selectPeerScreenSharing
+
+▸ `Const` **selectPeerScreenSharing**(`store`): `undefined` \| [`HMSPeer`](/api-references/javascript/v2/interfaces/HMSPeer)
+
+#### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+`undefined` \| [`HMSPeer`](/api-references/javascript/v2/interfaces/HMSPeer)
+
+---
+
+### selectPeersMap
+
+▸ `Const` **selectPeersMap**(`store`): `Record`<`string`, [`HMSPeer`](/api-references/javascript/v2/interfaces/HMSPeer)\>
+
+#### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+`Record`<`string`, [`HMSPeer`](/api-references/javascript/v2/interfaces/HMSPeer)\>
+
+---
+
+### selectPeersScreenSharing
+
+▸ `Const` **selectPeersScreenSharing**(`store`): [`HMSPeer`](/api-references/javascript/v2/interfaces/HMSPeer)[]
+
+#### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+[`HMSPeer`](/api-references/javascript/v2/interfaces/HMSPeer)[]
+
+---
+
+### selectRoleByRoleName
+
+▸ `Const` **selectRoleByRoleName**(`roleName`): `OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), [`HMSRole`](/api-references/javascript/v2/interfaces/HMSRole), `fn`\>
+
+#### Parameters
+
+| Name       | Type     |
+| :--------- | :------- |
+| `roleName` | `string` |
+
+#### Returns
+
+`OutputSelector`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore), [`HMSRole`](/api-references/javascript/v2/interfaces/HMSRole), `fn`\>
+
+---
+
+### selectRolesMap
+
+▸ `Const` **selectRolesMap**(`store`): `Record`<`string`, [`HMSRole`](/api-references/javascript/v2/interfaces/HMSRole)\>
+
+#### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+`Record`<`string`, [`HMSRole`](/api-references/javascript/v2/interfaces/HMSRole)\>
+
+---
+
+### selectRoom
+
+▸ `Const` **selectRoom**(`store`): [`HMSRoom`](/api-references/javascript/v2/interfaces/HMSRoom)
+
+#### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+[`HMSRoom`](/api-references/javascript/v2/interfaces/HMSRoom)
+
+---
+
+### selectScreenShareAudioByPeerID
+
+▸ `Const` **selectScreenShareAudioByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+---
+
+### selectScreenShareByPeerID
+
+▸ `Const` **selectScreenShareByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+---
+
+### selectScreenshareAudioVolumeByPeerID
+
+▸ `Const` **selectScreenshareAudioVolumeByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| `number`
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `undefined` \| `number`
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`undefined` \| `number`
+
+---
+
+### selectSimulcastLayerByTrack
+
+▸ `Const` **selectSimulcastLayerByTrack**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| [`HMSSimulcastLayer`](/api-references/javascript/v2/enums/HMSSimulcastLayer)
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `undefined` \| [`HMSSimulcastLayer`](/api-references/javascript/v2/enums/HMSSimulcastLayer)
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`undefined` \| [`HMSSimulcastLayer`](/api-references/javascript/v2/enums/HMSSimulcastLayer)
+
+---
+
+### selectSpeakers
+
+▸ `Const` **selectSpeakers**(`store`): `Record`<`string`, [`HMSSpeaker`](/api-references/javascript/v2/interfaces/HMSSpeaker)\>
+
+#### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+`Record`<`string`, [`HMSSpeaker`](/api-references/javascript/v2/interfaces/HMSSpeaker)\>
+
+---
+
+### selectTrackAudioByID
+
+▸ `Const` **selectTrackAudioByID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `number`
+Selects audio level of a track
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `number`
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`number`
+
+---
+
+### selectTrackByID
+
+▸ `Const` **selectTrackByID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `null` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `null` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`null` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+---
+
+### selectTracksMap
+
+▸ `Const` **selectTracksMap**(`store`): `Record`<`string`, [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)\>
+
+#### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+`Record`<`string`, [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)\>
+
+---
+
+### selectVideoTrackByPeerID
+
+▸ `Const` **selectVideoTrackByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+▸ (`store`): `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+HMSTrack)
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`fn`
+
+▸ (`store`): `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)

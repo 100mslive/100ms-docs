@@ -1,0 +1,54 @@
+---
+title: IHMSStore
+---
+
+HMS Reactive store can be used to subscribe to different parts of the store using selectors
+and get a callback when the value changes.
+
+## Hierarchy
+
+- `StoreApi`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)\>
+  ↳ **`IHMSStore`**
+
+## Properties
+
+### destroy
+
+• **destroy**: `Destroy`
+
+#### Inherited from
+
+StoreApi.destroy
+
+---
+
+### getState
+
+• **getState**: `GetState`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)\>
+Get a part of store using a selector which is true at the current point of time
+
+#### Overrides
+
+StoreApi.getState
+
+---
+
+### setState
+
+• **setState**: `SetState`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)\>
+
+#### Inherited from
+
+StoreApi.setState
+
+---
+
+### subscribe
+
+• **subscribe**: `Subscribe`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)\>
+Subscribe to a part of store using selectors, whenever the subscribed part changes, the callback
+is notified with both the latest and previous value of the changed part
+
+#### Overrides
+
+StoreApi.subscribe
