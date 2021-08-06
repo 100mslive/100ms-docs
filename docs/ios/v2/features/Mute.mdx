@@ -1,6 +1,34 @@
 ---
 title: Mute / Unmute
-nav: 8
+nav: 9
 ---
 
-# TODO
+An user should be able to mute or unmute both audio & video as per their choice. 100ms SDK makes it simple to do just that in nifty way.
+
+1. First, get the reference to local peer using the convenience method `localPeer` on `HMSSDK` class
+2. Next, get the audio or video track of the local peer
+3. Now, set it's mute status to true or false.
+- When mute is true, local peer won't transmit any audio or video. 🤫🤐
+- When mute is false, local peer can speak & show the world whatever they want to. 🕺💃
+
+### Mute Audio 🙊
+```swift
+hmsSDK.localPeer?.localAudioTrack()?.setMute(true)
+```
+
+### Ummute Audio 🐵
+```swift
+hmsSDK.localPeer?.localAudioTrack()?.setMute(false)
+```
+
+### Mute Video 🙈
+```swift
+hmsSDK.localPeer?.localVideoTrack()?.setMute(true)
+```
+
+### Unmute Video 🐒
+```swift
+hmsSDK.localPeer?.localVideoTrack()?.setMute(false)
+```
+
+Note: Ensure that you call these functions from the main queue. 
