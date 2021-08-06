@@ -72,16 +72,34 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
             {Object.entries(nav).map(([key, children], index) => (
                 <section className="menu-container" key={`${key}-${index}`}>
                     <div className="menu-title">{key.replace(/-/g, ' ').toUpperCase()}</div>
-                    {Object.entries(children).map(([_, route]) => (
-                        <Link href={route.url || ''} key={`${route.url}-${index}`}>
-                            <div
-                                className={`menu-item ${
-                                    route.url === router.asPath ? 'active-link' : ''
-                                }`}>
-                                {route.title}
-                            </div>
-                        </Link>
-                    ))}
+                    {Object.entries(children).map(([k, route]) =>
+                        Object.prototype.hasOwnProperty.call(route, 'title') ? (
+                            <Link href={route.url || ''} key={`${route.url}-${index}`}>
+                                <div
+                                    className={`menu-item ${
+                                        route.url === router.asPath ? 'active-link' : ''
+                                    }`}>
+                                    {route.title}
+                                </div>
+                            </Link>
+                        ) : (
+                            <>
+                                <div className="sub-title">
+                                    {k.replace(/-/g, ' ').toUpperCase()}
+                                </div>
+                                {Object.keys(route).map((e) => (
+                                    <Link key={route[e].title} href={route[e].url}>
+                                        <div
+                                            className={`menu-item ${
+                                                route[e].url === router.asPath ? 'active-link' : ''
+                                            }`}>
+                                            {route[e].title}
+                                        </div>
+                                    </Link>
+                                ))}
+                            </>
+                        )
+                    )}
                 </section>
             ))}
             <style jsx>{`
@@ -111,12 +129,19 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 .menu-item {
                     cursor: pointer;
                     padding: 8px 0;
-                    color: var(--gray12);
+                    color: var(--gray11);
                     font-weight: 400;
                     font-size: 13px;
                     display: flex;
                     align-items: center;
                     padding-left: 20px;
+                }
+                .sub-title {
+                    padding-left: 20px;
+                    font-weight: 700;
+                    font-size: 12px;
+                    margin-top: 20px;
+                    margin-bottom: 5px;
                 }
 
                 a {
