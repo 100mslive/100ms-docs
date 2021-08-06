@@ -522,7 +522,7 @@ interface AudioOutputManager {
 
 ### Handling Autoplay
 
-Most modern browsers don't allow audio to be played without any interaction. When the browser throws an autoplay error, we throw an error in `onError` handler.
+Most modern browsers don't allow audio to be played without any interaction. When the browser throws an autoplay error, we throw an error in `onError` handler with an error code `3008`.
 
 To unblock the autoplay error, use the following method on some UI interaction(eg: button click).
 

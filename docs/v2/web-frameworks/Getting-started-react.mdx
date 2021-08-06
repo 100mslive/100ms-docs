@@ -535,9 +535,9 @@ Change the audio output device and volume using `hmsActions.setAudioOutputDevice
 
 ### Handling Autoplay
  
-Autoplay error will be thrown by browser if something is played without any user interaction. The sdk throws an error with code `3008` in the onError handler
+Autoplay error will be thrown by browser if something is played without any user interaction. The sdk throws an error with code `3008` in the `onError` handler passed to join/preview
 
-Unblock browser autoplay by calling `await hmsActions.unblockAudio()`
+Unblock browser autoplay by calling `await hmsActions.unblockAudio()` on some UI interaction (eg: button click)
 
 
 ### Showing a preview screen before joining
