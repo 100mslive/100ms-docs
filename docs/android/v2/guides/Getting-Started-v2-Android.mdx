@@ -27,13 +27,17 @@ Jump to a section you're interested in or read top down to get the overview.
 - [Listening to updates effectively](#listening-to-updates-effectively)
 <hr/>
 
+## Prerequisites
+
+Familiarity with Android Studio and the [fundamentals](https://developer.android.com/training/basics/firstapp) of android apps.
+
 ## Supported Android API Levels
 
 100ms' Android SDK supports Android API level 21 and higher. It is built for armeabi-v7a, arm64-v8a, x86, and x86_64 architectures.
 
 ### Getting the video call joining link
 
-To join a video call you need a token and a room id or a server that will translate the link into them. The [100ms Dashboard](https://dashboard.100ms.live/register) is one way to generate tokens. In production your own server will generate these and manage user authentication.
+To join a video call you need an authentication token and a room id. Or a server that will translate the link into them. The [100ms Dashboard](https://dashboard.100ms.live/register) is one way to generate these auth tokens. In production your own server will generate these and manage user authentication.
 
 Links created by the dashboard will stop working after 10k minutes of video calls. You'll need to setup your own server after.
 
@@ -43,7 +47,7 @@ From either the dashboard, or your own server once implemented, you need to gene
 
 > ⚙️ For Production
 >
->  With own server for authentication and link generation, the format of the link is up to you.
+>  With your own server for authentication and link generation, the format of the link is up to you.
 
 ### Add SDK dependencies
 
@@ -88,6 +92,11 @@ Here's how to get an auth token with 100ms's demo authentication
 3. Send an http post request to `https://prod-in.100ms.live/hmsapi/get-token`
 4. With the header "subdomain" set to `myname.app.100ms.live` if your link was `https://myname.app.100ms.live/meeting/correct-horse-battery`
 5. For a link of the type `https://myname.app.100ms.live/meeting/correct-horse-battery` The body is json with the format `{"code": "correct-horse-battery", "user_id":"your-customer-id" }` the user_id can be any random string as well and you can create it with `UUID.randomUUID().toString(),`.
+
+> ⚙️ For Production
+>
+> Maybe you won't use links at all. You will need to generate tokens on the backend, and rooms for users. Look up the [Token Setup Guide](/guide/get-token) here.
+
 
 #### Response
 
