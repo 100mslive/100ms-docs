@@ -12,7 +12,8 @@ This guide provides an overview of usage of the virtual background plugin of 100
 
 ## Supported Devices
 
-Virtual background is currently supported on Chrome, Firefox, Brave and Edge browsers.
+Virtual background is currently only supported on web in Chrome, Firefox, Brave and Edge browsers.<br/>
+We have not extended support for Mobile browsers in this release.
 
 ## Basic Concepts
 
@@ -108,8 +109,9 @@ try{
 
 ```javascript
 // To know the current plugins and if Virtual Background is part of it
+// getName api can be used to get the name of the plugin
 const isVBPresent = hmsStore.getState(
-    selectIsLocalVideoPluginPresent("@100mslive/hms-virtual-background")
+    selectIsLocalVideoPluginPresent(virtualBackground.getName())
 );
 if(isVBPresent){
     console.log("virtual background effect is applied to the local video");
@@ -156,10 +158,10 @@ export default VirtualBackground;
 
 ```javascript
 // To know the current plugins and if Virtual Background is part of it
-
 function checkIfPluginPresent(){
+// getName api can be used to get the name of the plugin
     const isVBPresent = useHMSStore(
-        selectIsLocalVideoPluginPresent("@100mslive/hms-virtual-background")
+        selectIsLocalVideoPluginPresent(virtualBackground.getName())
     );
     if(isVBPresent){
         console.log("virtual background effect is applied to the local video");
