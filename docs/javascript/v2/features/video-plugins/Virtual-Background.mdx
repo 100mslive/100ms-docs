@@ -39,9 +39,9 @@ import HMSVirtualBackgroundPlugin from '@100mslive/hms-virtual-background';
 
 This accepts background as a parameter, It can be of 3 types:
 
--   `blur` - String - This will set the background to blur
--   `image` - HTMLImageElement - This will replace the background to the imgSource provide
--   `none` - String - This will remove the background effect from the video
+`blur` - String - This will set the background to blur
+`image` - HTMLImageElement - This will replace the background to the image provide
+`none` - String - This will remove the background effect from the video
 
 ```jsx
 // background : {'blur' | image | 'none'}
@@ -92,18 +92,18 @@ import { hmsActions, hmsStore, selectIsLocalVideoPluginPresent } from './hms';
 
 ```javascript
 // This will apply the virtual background effect to the local video
-try {
+try{
     await hmsActions.addPluginToVideoTrack(virtualBackground);
-} catch (err) {
+}catch(err){
     console.log('failed to add Plugin', err);
 }
 ```
 
 ```javascript
 // This will remove the virtual background effect from the local video
-try {
+try{
     await hmsActions.removePluginFromVideoTrack(virtualBackground);
-} catch (err) {
+}catch(err){
     console.log('failed to remove Plugin', err);
 }
 ```
@@ -139,15 +139,15 @@ function VirtualBackground() {
     const [showBackground, setShowBackground] = useState(false);
     useEffect(() => {
         if (showBackground) {
-            try {
+            try{
                 await hmsActions.addPluginToVideoTrack(virtualBackground);
-            } catch (err) {
+            }catch(err){
                 console.log('failed to add Plugin', err);
             }
         } else {
-            try {
+            try{
                 await hmsActions.removePluginFromVideoTrack(virtualBackground);
-            } catch (err) {
+            }catch(err){
                 console.log('failed to remove Plugin', err);
             }
         }
@@ -177,18 +177,18 @@ export default checkIfPluginPresent;
 
 ```javascript
 // This will apply the virtual background effect to the local video
-try {
+try{
     await hms.getLocalPeer().videoTrack?.addPlugin(virtualBackground);
-} catch (err) {
+}catch(err){
     console.log('failed to add Plugin', err);
 }
 ```
 
 ```javascript
 // This will remove the virtual background effect from the local video
-try {
+try{
     await hms.getLocalPeer().videoTrack?.removePlugin(virtualBackground);
-} catch (err) {
+}catch(err){
     console.log('failed to remove Plugin', err);
 }
 ```
