@@ -80,33 +80,33 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
             {Object.entries(nav).map(([key, children], index) => (
                 <section className="menu-container" key={`${key}-${index}`}>
                     <div className="menu-title">{key.replace(/-/g, ' ').toUpperCase()}</div>
-                    {Object.entries(children).map(([k, route]) =>
-                        Object.prototype.hasOwnProperty.call(route, 'title') ? (
-                            <Link href={route.url || ''} key={`${route.url}-${index}`}>
-                                <div
-                                    className={`menu-item ${
-                                        route.url === router.asPath ? 'active-link' : ''
-                                    }`}>
-                                    {route.title}
-                                </div>
-                            </Link>
-                        ) : (
-                            <>
-                                <div className="sub-title">
-                                    {k.replace(/-/g, ' ').toUpperCase()}
-                                </div>
-                                {Object.keys(route).map((e) => (
-                                    <Link key={route[e].title} href={route[e].url}>
-                                        <div
-                                            className={`sub-menu-item ${
-                                                route[e].url === router.asPath ? 'active-link' : ''
-                                            }`}>
-                                            {route[e].title}
-                                        </div>
-                                    </Link>
-                                ))}
-                            </>
-                        )
+                    {Object.entries(children).map(
+                        ([_, route]) =>
+                            Object.prototype.hasOwnProperty.call(route, 'title') ? (
+                                <Link href={route.url || ''} key={`${route.url}-${index}`}>
+                                    <div
+                                        className={`menu-item ${
+                                            route.url === router.asPath ? 'active-link' : ''
+                                        }`}>
+                                        {route.title}
+                                    </div>
+                                </Link>
+                            ) : null
+                        // <>
+                        //     <div className="sub-title">
+                        //         {k.replace(/-/g, ' ').toUpperCase()}
+                        //     </div>
+                        //     {Object.keys(route).map((e) => (
+                        //         <Link key={route[e].title} href={route[e].url}>
+                        //             <div
+                        //                 className={`sub-menu-item ${
+                        //                     route[e].url === router.asPath ? 'active-link' : ''
+                        //                 }`}>
+                        //                 {route[e].title}
+                        //             </div>
+                        //         </Link>
+                        //     ))}
+                        // </>
                     )}
                 </section>
             ))}
