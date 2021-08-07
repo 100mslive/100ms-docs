@@ -10,6 +10,7 @@ import Response from './Response';
 import Codesandbox from './Codesandbox';
 import Text from './Text';
 import View from './View';
+import Common from './Common';
 
 const CodeCustom = (props: any) => <Code>{props.children}</Code>;
 
@@ -54,7 +55,8 @@ const MDXComponents = {
     Codesandbox,
     Text,
     View,
-    a: LinkCustom
+    a: LinkCustom,
+    Common
 };
 
 export default MDXComponents;
