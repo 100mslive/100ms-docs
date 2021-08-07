@@ -5,13 +5,24 @@ import React from 'react';
 import renderToString from 'next-mdx-remote/render-to-string';
 import mdxPrism from 'mdx-prism';
 import components from '@/components/MDXComponents';
-import Foundation from '../common/foundation.md';
 
-const Common = () => {
+import Foundation from '../common/foundation.md';
+import Role from '../common/role.md';
+
+const data = {
+    foundation: Foundation,
+    roles: Role
+};
+
+interface Props {
+    alias: keyof typeof data;
+}
+
+const Content = ({ alias }: Props) => {
     const [content, setContent] = React.useState('');
     React.useEffect(() => {
         const temp = async () => {
-            const mdxSource = await renderToString(Foundation, {
+            const mdxSource = await renderToString(data[alias], {
                 components,
                 // Optionally pass remark/rehype plugins
                 mdxOptions: {
@@ -26,4 +37,4 @@ const Common = () => {
     return <div dangerouslySetInnerHTML={{ __html: content }} />;
 };
 
-export default Common;
+export default Content;

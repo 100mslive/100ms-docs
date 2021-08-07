@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from 'next/image';
 import React from 'react';
@@ -10,7 +11,7 @@ import Response from './Response';
 import Codesandbox from './Codesandbox';
 import Text from './Text';
 import View from './View';
-import Common from './Common';
+import Content from './Content';
 
 const CodeCustom = (props: any) => <Code>{props.children}</Code>;
 
@@ -56,7 +57,7 @@ const MDXComponents = {
     Text,
     View,
     a: LinkCustom,
-    Common
+    Content
 };
 
 export default MDXComponents;
