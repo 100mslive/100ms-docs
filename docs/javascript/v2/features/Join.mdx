@@ -1,6 +1,46 @@
 ---
 title: Join Room
-nav: 3.1
+nav: 3.02
 ---
 
-# TODO
+To join an audio or video call, the user needs to join a `room`. All participants in a room can see/hear each other if they have turned their respective audio and video on. They can also chat.
+
+Server has send you the following to join a room:
+1. [A room id.](#a-room-id)
+2. [An auth token.](#an-auth-token)
+
+## A room id
+
+It can be created two ways.
+
+#### Your Custom Server
+Via your own server making calls to 100ms: [server-side API](/server-side/v2/basic-features/Room).
+
+#### Via 100ms dashboard
+
+Once [registered](https://dashboard.100ms.live/register) you can find and create rooms at https://dashboard.100ms.live/rooms.
+    
+## An auth token
+
+It can be created two ways.
+
+#### Your Custom Server
+Generate these via [server-side API](/server-side/v2/basic-features/Authentication).
+
+#### Via 100ms Dashboard
+1. Get the token endpoint from the developer page [here](https://dashboard.100ms.live/developer)
+2. Append api/token to the end of the token endpoint.
+
+Make a POST request to it with the following body:
+
+```json
+
+{   "user_id": "customer-id-or-name",
+    "role": "role-you-want-to-assign-eg-host",
+    "room_id": "the-room-id-from-step1-eg-610a1d0c4c4edd8024e535c0"
+}
+
+```
+
+The response will be of the form:
+`{"token": "some-token}`

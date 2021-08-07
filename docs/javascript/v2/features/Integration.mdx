@@ -1,0 +1,52 @@
+---
+title: Integrating The SDK
+nav: 3.01
+---
+
+### Installing our libraries
+
+You can use either npm or yarn to install the dependencies.
+
+<Tabs id="packages-install" items={['Javascript', 'React']} />
+
+<Tab id="packages-install-0">
+
+```bash
+npm install --save @100mslive/hms-video @100mslive/hms-video-store
+```
+
+</Tab>
+
+<Tab id="packages-install-1">
+
+```bash
+npm install --save @100mslive/hms-video @100mslive/hms-video-react
+```
+
+</Tab>
+
+## Setting up the sdk
+
+### Vanilla Javascript
+
+
+### React Hooks
+
+If you're planning to use our SDK with React, we also provide hms specific hooks as a wrapper over our javascript methods. These
+hooks make it even more convenient to access data and perform any action.
+
+
+## Debugging Tools
+
+We have designed our APIs and error messages with developer experience and ease of debugging in mind.
+
+We take this one step further by connecting our store to redux devtools extension if it is available. This gives you transparency and
+visibility into the whole room state sdk currently has while building your UI.
+We highly recommend installing [redux devtools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en)
+extension to visualize this state along with all the activities taking place in a single view. This makes it easier
+to understand when and how the UI should change. You can also use the powerful time travel feature of the redux devtools
+to recreate state changes for debugging specific issues.
+
+![Redux Devtools](/guides/redux-devtools.png)
+
+> Note that the integration is available even if you use our javascript sdk directly, react is not needed for this.
