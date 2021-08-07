@@ -34,7 +34,15 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const [tech, setTech] = React.useState(menuItem[indexOf]);
     const changeTech = (s) => {
         setTech(s);
-        router.push(s.link, undefined, { shallow: false });
+        // @ts-ignore
+        if (router.query.slug[0] === 'api-reference') {
+            // @ts-ignore
+            router.push(`/api-reference/${s.name.toLowerCase()}/v2/home/content`, undefined, {
+                shallow: false
+            });
+        } else {
+            router.push(s.link, undefined, { shallow: false });
+        }
     };
     return (
         <div className="ctx">

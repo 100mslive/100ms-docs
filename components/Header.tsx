@@ -52,6 +52,15 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
     };
     // @ts-ignore
     const currentTech = router.query.slug[0] === 'api-reference' ? router.query.slug[1] : 'react';
+    const routeAPIRef = () => {
+        // @ts-ignore
+        const routeLink = `/api-reference/${router.query.slug[0]}/v2/home/content`;
+        // @ts-ignore
+        if (router.query.slug[0] === 'api-reference') {
+            return router.asPath;
+        }
+        return routeLink;
+    };
     return (
         <div className="ctx">
             <div className="head-left">
@@ -88,9 +97,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     <Link href={`/${currentTech}/`}>Docs</Link>
                     <span style={{ marginRight: '1rem' }} />
                     {/* @ts-ignore */}
-                    <Link href={`/api-reference/${router.query.slug[0]}/v2/home/content`}>
-                        API Reference
-                    </Link>
+                    <Link href={routeAPIRef()}>API Reference</Link>
                 </div>
             </div>
 
