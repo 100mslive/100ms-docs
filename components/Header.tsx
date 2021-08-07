@@ -51,7 +51,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
         setIsDark(!isDark);
     };
     // @ts-ignore
-    const currentTech = router.query.slug[0] === 'api-references' ? router.query.slug[1] : 'react';
+    const currentTech = router.query.slug[0] === 'api-reference' ? router.query.slug[1] : 'react';
     return (
         <div className="ctx">
             <div className="head-left">
@@ -88,8 +88,8 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     <Link href={`/${currentTech}/`}>Docs</Link>
                     <span style={{ marginRight: '1rem' }} />
                     {/* @ts-ignore */}
-                    <Link href={`/api-references/${router.query.slug[0]}/v2/home/content`}>
-                        API References
+                    <Link href={`/api-reference/${router.query.slug[0]}/v2/home/content`}>
+                        API Reference
                     </Link>
                 </div>
             </div>
