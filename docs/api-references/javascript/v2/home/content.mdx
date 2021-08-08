@@ -4,41 +4,40 @@ title: 100mslive/hms-video-store
 
 ## Enumerations
 
--   [HMSMessageType](/api-references/javascript/v2/enums/HMSMessageType)
--   [HMSRoomState](/api-references/javascript/v2/enums/HMSRoomState)
--   [HMSSimulcastLayer](/api-references/javascript/v2/enums/HMSSimulcastLayer)
+- [HMSMessageType](/api-references/javascript/v2/enums/HMSMessageType)
+- [HMSNotificationSeverity](/api-references/javascript/v2/enums/HMSNotificationSeverity)
+- [HMSNotificationTypes](/api-references/javascript/v2/enums/HMSNotificationTypes)
+- [HMSRoomState](/api-references/javascript/v2/enums/HMSRoomState)
+- [HMSSimulcastLayer](/api-references/javascript/v2/enums/HMSSimulcastLayer)
 
 ## Classes
 
--   [HMSAudioTrackSettings](/api-references/javascript/v2/classes/HMSAudioTrackSettings)
--   [HMSNotificationSeverity](/api-references/javascript/v2/classes/HMSNotificationSeverity)
--   [HMSNotificationTypes](/api-references/javascript/v2/classes/HMSNotificationTypes)
--   [HMSReactiveStore](/api-references/javascript/v2/classes/HMSReactiveStore)
--   [HMSSDKActions](/api-references/javascript/v2/classes/HMSSDKActions)
--   [HMSVideoTrackSettings](/api-references/javascript/v2/classes/HMSVideoTrackSettings)
+- [HMSAudioTrackSettings](/api-references/javascript/v2/classes/HMSAudioTrackSettings)
+- [HMSReactiveStore](/api-references/javascript/v2/classes/HMSReactiveStore)
+- [HMSVideoTrackSettings](/api-references/javascript/v2/classes/HMSVideoTrackSettings)
 
 ## Interfaces
 
--   [HMSComponentsStyle](/api-references/javascript/v2/interfaces/HMSComponentsStyle)
--   [HMSConfig](/api-references/javascript/v2/interfaces/HMSConfig)
--   [HMSException](/api-references/javascript/v2/interfaces/HMSException)
--   [HMSMediaSettings](/api-references/javascript/v2/interfaces/HMSMediaSettings)
--   [HMSMessage](/api-references/javascript/v2/interfaces/HMSMessage)
--   [HMSNotification](/api-references/javascript/v2/interfaces/HMSNotification)
--   [HMSPeer](/api-references/javascript/v2/interfaces/HMSPeer)
--   [HMSPeerWithMuteStatus](/api-references/javascript/v2/interfaces/HMSPeerWithMuteStatus)
--   [HMSPublishAllowed](/api-references/javascript/v2/interfaces/HMSPublishAllowed)
--   [HMSRole](/api-references/javascript/v2/interfaces/HMSRole)
--   [HMSRoleChangeRequest](/api-references/javascript/v2/interfaces/HMSRoleChangeRequest)
--   [HMSRoleChangeStoreRequest](/api-references/javascript/v2/interfaces/HMSRoleChangeStoreRequest)
--   [HMSRoom](/api-references/javascript/v2/interfaces/HMSRoom)
--   [HMSSpeaker](/api-references/javascript/v2/interfaces/HMSSpeaker)
--   [HMSStore](/api-references/javascript/v2/interfaces/HMSStore)
--   [HMSTrack](/api-references/javascript/v2/interfaces/HMSTrack)
--   [IHMSActions](/api-references/javascript/v2/interfaces/IHMSActions)
--   [IHMSNotifications](/api-references/javascript/v2/interfaces/IHMSNotifications)
--   [IHMSStore](/api-references/javascript/v2/interfaces/IHMSStore)
--   [SimulcastLayerDefinition](/api-references/javascript/v2/interfaces/SimulcastLayerDefinition)
+- [HMSComponentsStyle](/api-references/javascript/v2/interfaces/HMSComponentsStyle)
+- [HMSConfig](/api-references/javascript/v2/interfaces/HMSConfig)
+- [HMSException](/api-references/javascript/v2/interfaces/HMSException)
+- [HMSMediaSettings](/api-references/javascript/v2/interfaces/HMSMediaSettings)
+- [HMSMessage](/api-references/javascript/v2/interfaces/HMSMessage)
+- [HMSNotification](/api-references/javascript/v2/interfaces/HMSNotification)
+- [HMSPeer](/api-references/javascript/v2/interfaces/HMSPeer)
+- [HMSPeerWithMuteStatus](/api-references/javascript/v2/interfaces/HMSPeerWithMuteStatus)
+- [HMSPublishAllowed](/api-references/javascript/v2/interfaces/HMSPublishAllowed)
+- [HMSRole](/api-references/javascript/v2/interfaces/HMSRole)
+- [HMSRoleChangeRequest](/api-references/javascript/v2/interfaces/HMSRoleChangeRequest)
+- [HMSRoleChangeStoreRequest](/api-references/javascript/v2/interfaces/HMSRoleChangeStoreRequest)
+- [HMSRoom](/api-references/javascript/v2/interfaces/HMSRoom)
+- [HMSSpeaker](/api-references/javascript/v2/interfaces/HMSSpeaker)
+- [HMSStore](/api-references/javascript/v2/interfaces/HMSStore)
+- [HMSTrack](/api-references/javascript/v2/interfaces/HMSTrack)
+- [IHMSActions](/api-references/javascript/v2/interfaces/IHMSActions)
+- [IHMSNotifications](/api-references/javascript/v2/interfaces/IHMSNotifications)
+- [IHMSStore](/api-references/javascript/v2/interfaces/IHMSStore)
+- [SimulcastLayerDefinition](/api-references/javascript/v2/interfaces/SimulcastLayerDefinition)
 
 ## Type aliases
 
@@ -72,12 +71,6 @@ title: 100mslive/hms-video-store
 
 ---
 
-### HMSSeverity
-
-Ƭ **HMSSeverity**: `"info"` \| `"error"` \| `"critical"`
-
----
-
 ### HMSTrackID
 
 Ƭ **HMSTrackID**: `string`
@@ -101,6 +94,34 @@ title: 100mslive/hms-video-store
 Ƭ **IHMSStoreReadOnly**: `Omit`<[`IHMSStore`](/api-references/javascript/v2/interfaces/IHMSStore), `"setState"` \| `"namedSetState"` \| `"destroy"`\>
 HMS store can be used to subscribe to different parts of the store using selectors
 and get a callback when the value changes.
+
+---
+
+### StoreSelector
+
+Ƭ **StoreSelector**<`T`\>: (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `T`
+
+#### Type parameters
+
+| Name | Description                               |
+| :--- | :---------------------------------------- |
+| `T`  | Part of the store that you wish to query. |
+
+#### Type declaration
+
+▸ (`store`): `T`
+StoreSelector is a function that takes in [HMSStore](/api-references/javascript/v2/interfaces/HMSStore) as argument
+and returns a part of the store that is queried using the selector.
+
+##### Parameters
+
+| Name    | Type                                                            |
+| :------ | :-------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
+
+##### Returns
+
+`T`
 
 ## Variables
 
@@ -227,19 +248,7 @@ use this selector to know if the local peer is allowed to subscribe to any other
 
 ## Functions
 
-### createDefaultStoreState
-
-▸ `Const` **createDefaultStoreState**(): [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)
-
-#### Returns
-
-[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)
-
----
-
 ### selectAudioTrackByPeerID
-
-▸ `Const` **selectAudioTrackByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
 
 #### Parameters
 
@@ -248,26 +257,11 @@ use this selector to know if the local peer is allowed to subscribe to any other
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-▸ (`store`): `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
 
 ---
 
 ### selectAudioTrackVolume
 
-▸ `Const` **selectAudioTrackVolume**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| `number`
-
 #### Parameters
 
 | Name  | Type     |
@@ -275,26 +269,11 @@ use this selector to know if the local peer is allowed to subscribe to any other
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-▸ (`store`): `undefined` \| `number`
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`undefined` \| `number`
 
 ---
 
 ### selectAudioVolumeByPeerID
 
-▸ `Const` **selectAudioVolumeByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| `number`
-
 #### Parameters
 
 | Name  | Type     |
@@ -302,26 +281,11 @@ use this selector to know if the local peer is allowed to subscribe to any other
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-▸ (`store`): `undefined` \| `number`
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`undefined` \| `number`
 
 ---
 
 ### selectAuxiliaryAudioByPeerID
 
-▸ `Const` **selectAuxiliaryAudioByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
-
 #### Parameters
 
 | Name  | Type     |
@@ -329,26 +293,11 @@ use this selector to know if the local peer is allowed to subscribe to any other
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-▸ (`store`): `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
 
 ---
 
 ### selectAuxiliaryTracksByPeerID
 
-▸ `Const` **selectAuxiliaryTracksByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)[]
-
 #### Parameters
 
 | Name  | Type     |
@@ -356,26 +305,11 @@ use this selector to know if the local peer is allowed to subscribe to any other
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-▸ (`store`): [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)[]
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-[`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)[]
 
 ---
 
 ### selectCameraStreamByPeerID
 
-▸ `Const` **selectCameraStreamByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
-
 #### Parameters
 
 | Name  | Type     |
@@ -383,19 +317,6 @@ use this selector to know if the local peer is allowed to subscribe to any other
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-▸ (`store`): `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
 
 ---
 
@@ -413,8 +334,6 @@ use this selector to know if the local peer is allowed to subscribe to any other
 
 ### selectIsAudioLocallyMuted
 
-▸ `Const` **selectIsAudioLocallyMuted**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| `boolean`
-
 #### Parameters
 
 | Name  | Type     |
@@ -422,19 +341,6 @@ use this selector to know if the local peer is allowed to subscribe to any other
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-▸ (`store`): `undefined` \| `boolean`
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`undefined` \| `boolean`
 
 ---
 
@@ -520,8 +426,6 @@ use this selector to know if the local peer is allowed to subscribe to any other
 
 ### selectIsLocallyMutedByPeerID
 
-▸ `Const` **selectIsLocallyMutedByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| `boolean`
-
 #### Parameters
 
 | Name  | Type     |
@@ -529,26 +433,11 @@ use this selector to know if the local peer is allowed to subscribe to any other
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-▸ (`store`): `undefined` \| `boolean`
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`undefined` \| `boolean`
 
 ---
 
 ### selectIsPeerAudioEnabled
 
-▸ `Const` **selectIsPeerAudioEnabled**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `boolean`
-
 #### Parameters
 
 | Name  | Type     |
@@ -556,26 +445,11 @@ use this selector to know if the local peer is allowed to subscribe to any other
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-▸ (`store`): `boolean`
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`boolean`
 
 ---
 
 ### selectIsPeerVideoEnabled
 
-▸ `Const` **selectIsPeerVideoEnabled**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `boolean`
-
 #### Parameters
 
 | Name  | Type     |
@@ -583,26 +457,11 @@ use this selector to know if the local peer is allowed to subscribe to any other
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-▸ (`store`): `boolean`
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`boolean`
 
 ---
 
 ### selectIsScreenShareLocallyMutedByPeerID
 
-▸ `Const` **selectIsScreenShareLocallyMutedByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| `boolean`
-
 #### Parameters
 
 | Name  | Type     |
@@ -610,19 +469,6 @@ use this selector to know if the local peer is allowed to subscribe to any other
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-▸ (`store`): `undefined` \| `boolean`
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`undefined` \| `boolean`
 
 ---
 
@@ -692,7 +538,6 @@ use this selector to know if the local peer is allowed to subscribe to any other
 
 ### selectPeerAudioByID
 
-▸ `Const` **selectPeerAudioByID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `number`
 Selects audio level of audioTrack of a peer.
 
 #### Parameters
@@ -703,24 +548,9 @@ Selects audio level of audioTrack of a peer.
 
 #### Returns
 
-`fn`
-▸ (`store`): `number`
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`number`
-
 ---
 
 ### selectPeerByID
-
-▸ `Const` **selectPeerByID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `null` \| [`HMSPeer`](/api-references/javascript/v2/interfaces/HMSPeer)
 
 #### Parameters
 
@@ -729,26 +559,11 @@ Selects audio level of audioTrack of a peer.
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-▸ (`store`): `null` \| [`HMSPeer`](/api-references/javascript/v2/interfaces/HMSPeer)
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`null` \| [`HMSPeer`](/api-references/javascript/v2/interfaces/HMSPeer)
 
 ---
 
 ### selectPeerNameByID
 
-▸ `Const` **selectPeerNameByID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| `string`
-
 #### Parameters
 
 | Name  | Type     |
@@ -756,19 +571,6 @@ Selects audio level of audioTrack of a peer.
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-▸ (`store`): `undefined` \| `string`
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`undefined` \| `string`
 
 ---
 
@@ -870,8 +672,6 @@ Selects audio level of audioTrack of a peer.
 
 ### selectScreenShareAudioByPeerID
 
-▸ `Const` **selectScreenShareAudioByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
-
 #### Parameters
 
 | Name  | Type     |
@@ -879,26 +679,11 @@ Selects audio level of audioTrack of a peer.
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-▸ (`store`): `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
 
 ---
 
 ### selectScreenShareByPeerID
 
-▸ `Const` **selectScreenShareByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
-
 #### Parameters
 
 | Name  | Type     |
@@ -906,26 +691,11 @@ Selects audio level of audioTrack of a peer.
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-▸ (`store`): `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
 
 ---
 
 ### selectScreenshareAudioVolumeByPeerID
 
-▸ `Const` **selectScreenshareAudioVolumeByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| `number`
-
 #### Parameters
 
 | Name  | Type     |
@@ -933,26 +703,11 @@ Selects audio level of audioTrack of a peer.
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-▸ (`store`): `undefined` \| `number`
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`undefined` \| `number`
 
 ---
 
 ### selectSimulcastLayerByTrack
 
-▸ `Const` **selectSimulcastLayerByTrack**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| [`HMSSimulcastLayer`](/api-references/javascript/v2/enums/HMSSimulcastLayer)
-
 #### Parameters
 
 | Name  | Type     |
@@ -960,19 +715,6 @@ Selects audio level of audioTrack of a peer.
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-▸ (`store`): `undefined` \| [`HMSSimulcastLayer`](/api-references/javascript/v2/enums/HMSSimulcastLayer)
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`undefined` \| [`HMSSimulcastLayer`](/api-references/javascript/v2/enums/HMSSimulcastLayer)
 
 ---
 
@@ -994,7 +736,6 @@ Selects audio level of audioTrack of a peer.
 
 ### selectTrackAudioByID
 
-▸ `Const` **selectTrackAudioByID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `number`
 Selects audio level of a track
 
 #### Parameters
@@ -1005,24 +746,9 @@ Selects audio level of a track
 
 #### Returns
 
-`fn`
-▸ (`store`): `number`
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`number`
-
 ---
 
 ### selectTrackByID
-
-▸ `Const` **selectTrackByID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `null` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
 
 #### Parameters
 
@@ -1031,19 +757,6 @@ Selects audio level of a track
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-▸ (`store`): `null` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`null` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
 
 ---
 
@@ -1065,8 +778,6 @@ Selects audio level of a track
 
 ### selectVideoTrackByPeerID
 
-▸ `Const` **selectVideoTrackByPeerID**(`id?`): (`store`: [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)) => `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
-
 #### Parameters
 
 | Name  | Type     |
@@ -1075,19 +786,7 @@ Selects audio level of a track
 
 #### Returns
 
-`fn`
-▸ (`store`): `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
-HMSTrack)
+elector)<`undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)\>
 
 #### Parameters
 
@@ -1096,17 +795,3 @@ HMSTrack)
 | `id?` | `string` |
 
 #### Returns
-
-`fn`
-
-▸ (`store`): `undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
-
-##### Parameters
-
-| Name    | Type                                                            |
-| :------ | :-------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore) |
-
-##### Returns
-
-`undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)
