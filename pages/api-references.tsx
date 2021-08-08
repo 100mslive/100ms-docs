@@ -18,9 +18,9 @@ const data = [
 
 const ApiRef = () => (
     <div className="page">
-        <h1>API References</h1>
+        <h1>API reference</h1>
         {data.map((d) => (
-            <Link href={`/api-references${d.link}`} key={d.link}>
+            <Link href={`/api-reference${d.link}`} key={d.link}>
                 {d.name}
             </Link>
         ))}

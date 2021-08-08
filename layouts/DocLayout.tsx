@@ -65,9 +65,9 @@ const DocLayout: React.FC<Props> = ({
         if (router.query.slug?.length > 3) {
             // @ts-ignore
             newNav = nav[router.query.slug[1]];
-            // ? Case for `api-references`
+            // ? Case for `api-reference`
             // @ts-ignore
-            if (router.query.slug[0] === 'api-references') {
+            if (router.query.slug[0] === 'api-reference') {
                 // object -> folder-> content
                 // @ts-ignore
                 newNav = nav[router.query.slug[1]][router.query.slug[2]];
