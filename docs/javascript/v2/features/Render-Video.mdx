@@ -26,6 +26,8 @@ import { hmsActions } from './hms';
 const peersContainer = document.getElementById('peers-container');
 
 function renderVideo(peer) {
+  // you can either get an existing video element or create a new onw.
+  // const videoElement = document.getElementByID(peer.id)
   const videoElement = document.createElement('video');
   videoElement.autoplay = true;
   videoElement.muted = true;
@@ -96,8 +98,9 @@ function Conference() {
 
 The videos will now be rendered & start playing on your screen. 🥳
 
+> In case you want to render local peer and remote peers separately, you can use the selectors - `selectLocalPeer` and `selectRemotePeers`.
 
-### Detach video to conserve bandwith
+### Detach video to conserve bandwith and cleanup elements
 
 You can call `detachVideo` on the `hmsActions` to unsubscribe a track and not fetch it's data. This can be done
 for example when a video goes out of view. This should also be called when the component is going to be unmounted

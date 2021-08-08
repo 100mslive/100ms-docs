@@ -55,9 +55,9 @@ It will return True/False based on browser.
 
 ```jsx
 if (virtualBackground.isSupported()) {
-    console.log('Platform is supported');
+  console.log('Platform is supported');
 } else {
-    console.log('Platform not supported');
+  console.log('Platform not supported');
 }
 ```
 
@@ -79,43 +79,29 @@ Init can also be used by user to show a loader icon for background selector comp
 virtualBackground.init().then(() => console.log('background can be changed now'));
 ```
 
-## Add and Remove Plugin
+## Start and Stop Virtual Background
 
-<Tabs id="plugin-code" items={['Store', 'React', 'SDK']} />
+<Tabs id="plugin-code" items={['Javascript', 'React']} />
 
 <Tab id='plugin-code-0'>
 
-```javascript
-// Import modules
-import { hmsActions, hmsStore, selectIsLocalVideoPluginPresent } from './hms';
-```
+```js
+import { hmsActions, hmsStore } from './hms';
+import { selectIsLocalVideoPluginPresent } from '@100mslive/hms-video-store';
 
-```javascript
-// This will apply the virtual background effect to the local video
-try {
-    await hmsActions.addPluginToVideoTrack(virtualBackground);
-} catch (err) {
-    console.log('failed to add Plugin', err);
-}
-```
-
-```javascript
-// This will remove the virtual background effect from the local video
-try {
-    await hmsActions.removePluginFromVideoTrack(virtualBackground);
-} catch (err) {
-    console.log('failed to remove Plugin', err);
-}
-```
-
-```javascript
-// To know the current plugins and if Virtual Background is part of it
-// getName api can be used to get the name of the plugin
-const isVBPresent = hmsStore.getState(selectIsLocalVideoPluginPresent(virtualBackground.getName()));
-if (isVBPresent) {
-    console.log('virtual background effect is applied to the local video');
-} else {
-    console.log('virtual background effect is removed from the local video');
+async function toggleVB() {
+  const showBackground = hmsStore.getState(selectIsLocalVideoPluginPresent(virtualBackground.getName()));
+  try {
+    if (!showBackground) {
+      // add virtual background
+      await hmsActions.addPluginToVideoTrack(virtualBackground);
+    } else {
+      // remove virtual background
+      await hmsActions.removePluginFromVideoTrack(virtualBackground);
+    }
+  } catch (err) {
+    console.log('virtual background failure - ', showBackground, err);
+  }
 }
 ```
 
@@ -123,85 +109,31 @@ if (isVBPresent) {
 
 <Tab id='plugin-code-1'>
 
-```javascript
-// Import modules
+```jsx
 import {
-    selectIsLocalVideoPluginPresent,
-    useHMSStore,
-    useHMSActions
+  useHMSStore,
+  useHMSActions,
+  selectIsLocalVideoPluginPresent
 } from '@100mslive/hms-video-react';
-import React, { useRef, useEffect } from 'react';
-```
 
-```javascript
 function VirtualBackground() {
-    const hmsActions = useHMSActions();
-    const [showBackground, setShowBackground] = useState(false);
-    useEffect(() => {
-        if (showBackground) {
-            try {
-                await hmsActions.addPluginToVideoTrack(virtualBackground);
-            } catch (err) {
-                console.log('failed to add Plugin', err);
-            }
-        } else {
-            try {
-                await hmsActions.removePluginFromVideoTrack(virtualBackground);
-            } catch (err) {
-                console.log('failed to remove Plugin', err);
-            }
-        }
-    }, [showBackground, hmsActions]);
-    return <Button onClick={() => setShowBackground(!showBackground)} />;
-}
-export default VirtualBackground;
-```
+  // to know if vb is currently added
+  const showBackground = useHMSStore(selectIsLocalVideoPluginPresent(virtualBackground.getName()));
+  const hmsActions = useHMSActions();
 
-```javascript
-// To know the current plugins and if Virtual Background is part of it
-function checkIfPluginPresent() {
-    // getName api can be used to get the name of the plugin
-    const isVBPresent = useHMSStore(selectIsLocalVideoPluginPresent(virtualBackground.getName()));
-    if (isVBPresent) {
-        console.log('virtual background effect is applied to the local video');
-    } else {
-        console.log('virtual background effect is removed from the local video');
+  const toggleVB = async() => {
+    try {
+      if (!showBackground) {
+        await hmsActions.addPluginToVideoTrack(virtualBackground);
+      } else {
+        await hmsActions.removePluginFromVideoTrack(virtualBackground);
+      }
+    } catch (err) {
+      console.log('virtual background failure - ', showBackground, err);
     }
-}
-export default checkIfPluginPresent;
-```
+  }
 
-</Tab>
-
-<Tab id='plugin-code-2'>
-
-```javascript
-// This will apply the virtual background effect to the local video
-try {
-    await hms.getLocalPeer().videoTrack?.addPlugin(virtualBackground);
-} catch (err) {
-    console.log('failed to add Plugin', err);
-}
-```
-
-```javascript
-// This will remove the virtual background effect from the local video
-try {
-    await hms.getLocalPeer().videoTrack?.removePlugin(virtualBackground);
-} catch (err) {
-    console.log('failed to remove Plugin', err);
-}
-```
-
-```javascript
-// To know the current plugins and if virtual background is part of it
-const videoTrack = hms.getLocalPeer().videoTrack;
-const plugins = videoTrack?.getPlugins();
-const isVBApplied = plugins.includes(virtualBackground.getName());
-if (isVBApplied) {
-    console.log('virtual background effect is applied to the local video');
-} else {
-    console.log('virtual background effect is removed from the local video');
+  return <Button onClick={toggleVB} />;
 }
 ```
 
@@ -209,17 +141,17 @@ if (isVBApplied) {
 
 ## Change Background
 
-Call setBackground from the plugin to update the background again later if required
+The function `setBackground` can be used to update the background again later.
 It accepts string or HTMLImageElement as a parameter
 Image will get fit to the video by maintaining the aspect ratio.
-Input aspect ratio of the background image is preferred else we are cropping the image to fit in background
+If the aspect ratio of the background image is not the same as the video, the image will be cropped to fit in the background.
 
 ```jsx
 // background parameter is explained in Instantiate Virtual Background section
 try{
-    virtualBackground.setBackground(background : {'blur' | image | 'none'});
+  virtualBackground.setBackground(background : {'blur' | image | 'none'});
 }catch(err){
-    console.log("Failed to update background", err);
+  console.log("Failed to update background", err);
 }
 ```
 
