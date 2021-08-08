@@ -6,11 +6,11 @@ import renderToString from 'next-mdx-remote/render-to-string';
 import mdxPrism from 'mdx-prism';
 import components from '@/components/MDXComponents';
 
-import Foundation from '../common/foundation.md';
+import Basics from '../common/basics.md';
 import Role from '../common/role.md';
 
 const data = {
-    foundation: Foundation,
+    basics: Basics,
     roles: Role
 };
 
