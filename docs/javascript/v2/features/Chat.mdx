@@ -12,7 +12,7 @@ What's a video call without being able to send messages to each other too? 100ms
 ```js
 hmsActions.sendMessage("hello everyone!"); // yes it's that simple 😉
 ```
-
+s
 ### Showing all the messages
 
 You can access all messages using the selector `selectHMSMessages`. 
@@ -61,10 +61,10 @@ function Chat() {
 interface HMSMessage {
   id: HMSMessageID;
   sender: HMSPeerID;
-  senderName?: string; // recorded at the time of message received
+  senderName?: string;
   time: Date;
   read: boolean;
-  type: HMSMessageType;
+  type: string;   // the default value is 'chat'
   message: string;
 }
 ```
