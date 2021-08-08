@@ -7,50 +7,62 @@ What's a video without being able to send messages to each other too? 100ms supp
 
 ### Sending Chat Messages
 
-With the HMSSDK instance call sendMessage to send a message.
+```js
+hmsActions.sendMessage("hello everyone!")
+```
 
-<Tabs id="chat" items={['Kotlin', 'Java']} />
+### Showing all the messages
+
+You can access all messages using the selector `selectHMSMessages`. 
+
+<Tabs id="chat" items={['Javascript', 'React']} />
 
 <Tab id='chat-0'>
 
-```kotlin
-hmsSDK.sendMessage("chat", "Hello there!")
+```js
+import { selectHMSMessages } from '@100mslive/hms-video-store';
+
+function renderMessages(messages) {
+    console.log("all messages - ", messages);
+}
+
+hmsStore.subscribe(renderMessages, selectHMSMessages);
 ```
+
 </Tab>
 
 <Tab id='chat-1'>
 
-```java
-hmssdk.sendMessage("chat","Hello there");
+```jsx
+import { Message } from './components';
+import { 
+    useHMSStore, 
+    selectMessages 
+} from '@100mslive/hms-video-react';
+
+function Chat() {
+  const messages = useHMSStore(selectMessages);
+
+  return <>
+    {
+        messages.map(msg => <Message key={msg.id} message={msg} />)
+    }
+  </>
+}
 ```
+
 </Tab>
 
-### Receiving Chat Messages
+### HMSMessage Interface
 
-When you called `hmsSdk.join(config, hmsUpdateListener)` to join a room, the `HMSUpdateListener` implementation that was passed in had the callback `fun onMessageReceived(message: HMSMessage)`.
-
-This where you'll receive new messages as `HMSMessage` during the call. It contains:
-
-```kotlin
-    data class HMSMessage(
-    val sender: HMSPeer,
-    val message: String,
-    val type: String,
-    val time: Date,
-    )
+```js
+interface HMSMessage {
+  id: HMSMessageID;
+  sender: HMSPeerID;
+  senderName?: string; // recorded at the time of message received
+  time: Date;
+  read: boolean;
+  type: HMSMessageType;
+  message: string;
+}
 ```
-
-Identifying Senders:
-
-The sender of a message is always contained in the `sender` field of HMSMessage. This lets you get the name and peer id for any message sender.
-
-Message Body:
-
-The body of the message is in `message` as a String.
-
-Time:
-
-The time the message was sent is contained in `time` as a Java Date.
-
-### Putting together a list of chat messages.
-The UI is completely up to you to decide! You'll also need to hold onto all the received messages if you want to display history.

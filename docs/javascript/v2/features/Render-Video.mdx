@@ -3,172 +3,106 @@ title: Render Video
 nav: 3.04
 ---
 
-At the very least for rendering video you'll need an instance of `org.webrtc.SurfaceViewRenderer` and a `HMSVideoTrack` instance from a peer.
+It all comes down to this. All the setup so far has been done so that we can show live streaming video in our beautiful apps.
 
-For the `SurfaceViewRenderer`, add the dependency `implementation 'org.webrtc:google-webrtc:1.0.32006'`.
+1. First, you need to get all the peers in the room. You can use the `selectPeers` selector for this.
 
-In xml layouts it would look like
+2. Next, you'll need to have a reference to a video element. You must add the attributes as present below.
 
-```xml
-    <org.webrtc.SurfaceViewRenderer
-        android:id="@+id/peerVideo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+```html
+<video autoplay muted playsinline/>
 ```
 
-The peer's video is in `hmsPeer.videoTrack` and their ScreenShare video will be an instance of `HMSVideoTrack` in the list `hmsPeer.auxiliaryTracks`.
+3. You can then iterate over all the peers, and call the `attachVideo` function in hmsActions to render the video.
 
-You would get them like so:
+<Tabs id="render" items={['Javascript', 'React']} />{' '}
 
-```kotlin
-val hmsVideoTrack : HMSVideoTrack? = hmsPeer.videoTrack
+<Tab id='render-0'>
+
+
+```js
+import { hmsActions } from './hms';
+
+const peersContainer = document.getElementById('peers-container');
+
+function renderVideo(peer) {
+  const videoElement = document.createElement('video');
+  videoElement.autoplay = true;
+  videoElement.muted = true;
+  videoElement.playsinline = true;
+
+  hmsActions.attachVideo(peer.videoTrack, videoElement);
+}
+
+function renderPeers(peers) {
+  peersContainer = document.getElementById("peers-container");
+  peersContainer.innerHTML = "";
+
+  peers.forEach((peer) => {
+    console.log(`rendering video for peer - ${peer.name}, roleName - ${peer.roleName}, isLocal- ${peer.isLocal}`);
+    peersContainer.append(renderVideo(peer));
+  });
+}
+
+// subscribe to the peers, so render is called whenever there is a change like peer join and leave
+hmsStore.subscribe(renderPeers, selectPeers);
 ```
 
-### Getting and Preparing a SurfaceView
+</Tab>
 
-Get an instance of the SurfaceView.
+<Tab  id='render-1'>
 
-```kotlin
-val surfaceView : SurfaceViewRenderer = findViewById(R.id.surface_view)
-```
+```jsx
+import { useRef, useEffect } from 'react';
+import {
+  useHMSStore,
+  useHMSActions,
+  selectPeers,
+  selectCameraStreamByPeerID
+} from '@100mslive/hms-video-react';
 
-Set the scaling to whatever you prefer. Aspect Fit is recommended for common use cases. See more scale types [here](https://chromium.googlesource.com/external/webrtc/trunk/talk/+/cdd35e557b600d1f7dbe9c99531a42adf194f973/app/webrtc/java/android/org/webrtc/RendererCommon.java#37).
-
-```kotlin
-surfaceView.setEnableHardwareScaler(true)
-surfaceView.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FIT)
-```
-
-### Adding a video to the SurfaceView
-
-Each time you want to add a video to the surfaceview, it needs to be initialized again.
-
-```kotlin
-surfaceView.init(SharedEglContext.context, null)
-
-val hmsVideoTrack : HMSVideotrack = hmsPeer.videoTrack
-hmsVideoTrack?.addSink(surfaceView)
-```
-
-It's also important to remove it when done.
-
-> 💡 Only the SharedEglContext.context can be used. Creating a new context will result in a black screen.
-
-### Removing a video from the SurfaceView
-
-It's very important to remove the video when you're done showing it, or before you show a different video on the same SurfaceViewRenderer.
-
-```kotlin
-hmsVideoTrack.removeSink(this)
-surfaceView.release()
-```
-There is a limit to the number of `SharedEglContext`'s that can be bound per mobile device. It's normally high enough to easily accomodate all the videos that will reasonably fit on a screen. If the video's aren't released however, it becomes very easy to exceed this limit and the app will crash.
-
-Until you call `removeSink` the video is being streamed over the device's data so it's also important remove sinks.
-
-### Special cases for videos in RecyclerViews
-
-If you're going to be using a RecyclerView to display multiple videos in a grid there are specific places where you should do these operations.
-
-Currently the best known way is in the ViewHolder to have a method for binding items, a method to start the surfaceview and a method to release the surfaceview along a boolean check.
-
-The Adapter calls bind item as usual but also stops the surfaceview when it binds. Two additional Adapter methods are overloaded. `onViewAttachedToWindow` and `onViewDetachedFromWindow` which will call SurfaceView binding and releasing respectively but while checking the `sinkAdded` property.
-
-`sinkAdded` keeps track of whether a track was rendered to a Peer's surface view or not. Since someone might have turned off their video but still be speaking and so a tile might be shown with no video.
-
-Complete source code is available [here](https://github.com/100mslive/hello-world-android).
-
-#### PeerViewHolder
-
-`init` Scaler types can be set here and don't need to be reset per `bind` call.
-
-`startSurfaceView` will init the `SurfaceViewRenderer` and binding the track if one exists, this also sets the `sinkAdded` to true.
-
-`stopSurfaceView` will release the `SurfaceViewRenderer` if there was a video attached and also remove the video sink.
-
-```kotlin:PeerViewHolder.kt
-class PeerViewHolder(view: View, private val getItem: (Int) -> TrackPeerMap) :
-    RecyclerView.ViewHolder(view) {
-    private val TAG = PeerViewHolder::class.java.simpleName
-    private var sinkAdded = false
-
-    init {
-        itemView.findViewById<SurfaceViewRenderer>(R.id.videoSurfaceView).apply {
-            setEnableHardwareScaler(true)
-            setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FIT)
-        }
+function VideoTile({peer}) {
+  const videoRef = useRef(null);
+  const hmsActions = useHMSActions();
+  // get the camera track to render
+  const videoTrack = useHMSStore(selectCameraStreamByPeerID(peer.id));
+  useEffect(() => {
+    if (videoRef.current && videoTrack) {
+      if (videoTrack.enabled) {
+        hmsActions.attachVideo(videoTrack.id, videoRef.current);
+      } else {
+        hmsActions.detachVideo(videoTrack.id, videoRef.current);
+      }
     }
+  }, [videoTrack, hmsActions]);
 
-    fun startSurfaceView() {
-        if (!sinkAdded) {
-            itemView.findViewById<SurfaceViewRenderer>(R.id.videoSurfaceView).apply {
+  return <video ref={videoRef} autoPlay muted playsinline></video>;
+}
 
-                getItem(adapterPosition).videoTrack?.let { hmsVideoTrack ->
-                    init(SharedEglContext.context, null)
-                    hmsVideoTrack.addSink(this)
-                    sinkAdded = true
-                }
-            }
-        }
-    }
 
-    fun stopSurfaceView() {
-        itemView.findViewById<SurfaceViewRenderer>(R.id.videoSurfaceView).apply {
+function Conference() {
+    const peers = useHMSStore(selectPeers);
 
-            if (sinkAdded && adapterPosition != -1) {
-                getItem(adapterPosition).videoTrack?.let {
-                    it.removeSink(this)
-                    release()
-                    sinkAdded = false
-                }
-            }
-        }
-    }
-
-    fun bind(peer: TrackPeerMap) {
-
-        if (!sinkAdded) {
-            itemView.findViewById<SurfaceViewRenderer>(R.id.videoSurfaceView).apply {
-                setEnableHardwareScaler(true)
-                setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FIT)
-                sinkAdded = false
-            }
-        }
-        itemView.findViewById<TextView>(R.id.peerName).text = peer.peer.name
-    }
-
+    return <>
+      {
+        peers.map(peer => <VideoTile key={peer.id} peer={peer}/>)
+      }
+    </>
 }
 ```
 
-#### PeerAdapter
+</Tab>
 
-The adapter stops the surface every time it binds. Starts it when the view is attached to the window, and stops it when the view is detached from the window. Also it passes its own getItem method to the PeerViewHolder in `onCreateViewHolder`.
 
-```kotlin:PeerAdapter.kt
+The videos will now be rendered & start playing on your screen. 🥳
 
-    override fun onBindViewHolder(holder: PeerViewHolder, position: Int) {
-        getItem(position)?.let {
-            holder.stopSurfaceView()
-            holder.bind(it)
-        }
-    }
 
-    override fun onViewAttachedToWindow(holder: PeerViewHolder) {
-        super.onViewAttachedToWindow(holder)
-        holder.startSurfaceView()
-    }
+### Detach video to conserve bandwith
 
-    override fun onViewDetachedFromWindow(holder: PeerViewHolder) {
-        super.onViewDetachedFromWindow(holder)
-        holder.stopSurfaceView()
-    }
+You can call `detachVideo` on the `hmsActions` to unsubscribe a track and not fetch it's data. This can be done
+for example when a video goes out of view. This should also be called when the component is going to be unmounted
+for proper cleanups of the video elements.
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeerViewHolder {
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.layout_peer_item, parent, false)
-        return PeerViewHolder(view, ::getItem)
-    }
-
+```js
+hmsActions.detachVideo(videoTrack.id, videoElement);
 ```
-

@@ -3,12 +3,29 @@ title: Device Changes
 nav: 3.07
 ---
 
-You're chatting away on your video call and, uh-oh, a phone call comes in! No worries, the 100ms SDK abstracts away handling this situation for you.
+Device changes include changes in audio/video input and audio output devices. Plugging a headset, or disconnecting your airpods mid call are
+some of the example of device changes. These are all taken care of by the SDK without requiring any code.
 
-When a telephonic voice call comes in and the user accepts the following happens.
-- All videos including your own are turned off.
-- You are muted.
+You may still want to allow users to see the currently selected devices and change them if required. We'll do this in three steps - 
 
-When the call ends the SDK will restore all videos, taking care not to unmute you if you had muted yourself before the call came in. Neither will it unmute all the peers if you had muted them from the app.
+1. Fetching all attached devices list from `hmsStore`.
+2. Fetching the currently selected devices from `hmsStore`.
+3. Calling `hmsActions` to change the device if required.
 
-No code required, this happens automatically for all calls!
+> Note that changing audio output device is available only in chromium based browsers.
+
+```js
+// {audioInput, audioOutput, videoInput}
+const devices = hmsStore.getState(selectDevices);
+
+// {audioInputDeviceId, audioOutputDeviceId, videoInputDeviceId}
+const selected = hmsStore.getState(selectLocalMediaSettings);
+
+const deviceId = 'default';
+// show user a settings component to manually choose device
+
+// call the corresponding method to change the device id
+hmsActions.setAudioSettings({deviceId});
+hmsActions.setVideoSettings({deviceId});
+hmsActions.setAudioOutputDevice(deviceId);
+```
