@@ -5,7 +5,7 @@ nav: 5.4
 
 Webhook is an HTTP(S) endpoint used for pushing the notifications to your application. It will be invoked by 100ms servers to notify events of your room.
 
-# Requirement
+# Requirements
 Webhook MUST implement `POST` HTTP method for receiving notifications. 100ms notifications are in JSON format so it should be handled accordingly. 
 
 Additionaly, you can specify headers which will be passed transparently to your webhook endpoint. This can be used for securing or tracing the origin of the request.
@@ -13,7 +13,7 @@ Additionaly, you can specify headers which will be passed transparently to your 
 # How to configure Webhook
 Webhook can be configured using [Developer](https://dashboard.100ms.live/developer) section of [100ms Dashboard](https://dashboard.100ms.live/)
 
-![Architecture](/docs/server-side/v2/dashboard-webhook-configuration.png)
+![Webhook](/docs/v2/dashboard-webhook-configuration.png)
 
 # Events
 Event is a JSON dictionary which has following keys.
@@ -49,8 +49,10 @@ Event is a JSON dictionary which has following keys.
 }
 ```
 
-### peer.join.success
+## peer.join.success
+This event will be send when any peer joins the room successfully
 
+### Attributes
 | Name      | Type         | Description                                    | Example                              |
 | --------- | ------------ | ---------------------------------------------- | ------------------------------------ |
 | room_id   | `string`     | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
@@ -60,8 +62,10 @@ Event is a JSON dictionary which has following keys.
 | user_id   | `string`     | User id assigned by the customer               | user.001                             |
 | session_id | `string`    | 100ms assigned id to identofy the session. A room can have multiple sessions | 5f9edc6bd238215aec7700df |
 
-### peer.leave.success
+## peer.leave.success
+This event will be send when peer leaves the room
 
+### Attributes
 | Name      | Type     | Description                                    | Example                              |
 | --------- | -------- | ---------------------------------------------- | ------------------------------------ |
 | room_id   | `string` | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
@@ -72,8 +76,10 @@ Event is a JSON dictionary which has following keys.
 | duration  | `number` | Duration the user spent in the room in seconds | 3600000                              |
 | session_id | `string`    | 100ms assigned id to identofy the session. A room can have multiple sessions | 5f9edc6bd238215aec7700df |
 
-### recording.success
+## recording.success
+This event will be send when final composed recording is generated and uploaded to the destination
 
+### Attributes
 | Name       | Type     | Description                                                                                    | Example                           |
 | ---------- | -------- | ---------------------------------------------------------------------------------------------- | --------------------------------- |
 | room_id    | `string` | 100ms assigned room id                                                                         | 5f9edc6ac238215aec2312df          |
