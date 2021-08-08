@@ -73,9 +73,9 @@ Then Follow the Steps in 1. to add docs to it.
 
 So you don't have to copy paste it again and again.
 
-1. Create a new file `test.md` and add your Markdown content.
-2. then open to `/components/Content.tsx`
-3. Makes sure to import it like this `import Role from '../common/role.md';`
+1. Create a new file `signup.md` and add your Markdown content.
+2. then open up the file `/components/Content.tsx`
+3. Makes sure to import it like this `import SignUp from '../common/signup.md';`
 
 4. Add it in the `data` which is just below it
 
@@ -83,14 +83,16 @@ So you don't have to copy paste it again and again.
 const data = {
     foundation: Foundation,
     // add below
-    roles: Role
+    signup: SignUp
 };
 ```
 
 5. Then open up any `.mdx` file to use this
 
+the value of `alias` prop is same as the key value of `data` object.
+
 ```jsx
-<Content alias="roles" />
+<Content alias="signup" />
 ```
 
 ## 🥵 Components
