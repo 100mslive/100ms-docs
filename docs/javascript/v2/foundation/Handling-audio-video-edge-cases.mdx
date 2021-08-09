@@ -1,0 +1,43 @@
+---
+title: Handling audio-video edge cases
+nav: 2.4
+---
+
+## Introduction
+
+100ms handles a lot of standard audio/video issues internally without the developer needing to handle it. There are callbacks to display UI notifications if needed.
+
+There are 3 major issues of issues that can occur in an audio/video conference
+
+- Device capture failure
+- Network disconnection/Switching network
+- Network bandwidth limitation/large rooms
+
+## Device failure
+
+A common issue is a failure to capture mic/camera even though the user has all devices connected. This can be caused due to how different OSs hanndle device capture APIs under the hood, permission not being granted, or the device being in use.
+
+The usual recourse in these exceptions is to prompt a user action - "Grant permission", "Please close any other app using microphone", "Switch to Safari"
+
+100ms' SDKs come with a [preview method]('./features/preview') that can be called before joining a room. This will test for device failures, network connectivity and throw errors with a recommended user action. 
+
+
+## Network disconnection/Switching networks
+
+Another common issue is minor network blips. Common causes are when a user moves from one room to another, or switches from wifi to data.
+
+100ms will send a notification within 10s of detecting such a disconnection and will automatically retry when connection is available upto 60s. After 60s, a terminal error is thrown to the client.
+
+Video to come
+
+## Network bandwidth limitation/large rooms
+
+A common occurrence in large rooms, or constrained networks is dropped frames. This results in robotic voices, frozen frames, pixelated screenshare or entire pieces of conversation that are lost.
+
+100ms will automatically prioritize connections if network limits are reached. This prioritization is done on roles defined by you on the dashboard.
+
+eg. In constrained scenarios, a host's screenshare is the most important video to prioritize and should NOT go below a certain resolution to avoid pixelation. We can drop other guests' videos but audio should not be dropped.
+
+Video to come
+
+
