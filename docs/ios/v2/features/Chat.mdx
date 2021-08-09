@@ -30,5 +30,17 @@ let message = HMSMessage(sender: "abc123", // local peer's peerID
 hmsSDK.send(message: message)  // use the `send` method on HMSSDK class instance
 ```
 
-
 ### Receive a Message 📬
+
+Whenever a peer in the sends you a message, 100ms SDK will invoke the `func on(message: HMSMessage)` method of `HMSUpdateListener`.
+
+The message object of type `HMSMessage` will be passed in the method invocation.
+
+```swift
+
+class MyClass: HMSUpdateListener {  
+   func on(message: HMSMessage) {
+      print("New message received", message.message)
+   }
+}
+```
