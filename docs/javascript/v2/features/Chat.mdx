@@ -1,0 +1,70 @@
+---
+title: Chat
+nav: 3.06
+---
+
+What's a video call without being able to send messages to each other too? 100ms supports chat for every video/audio room you create.
+
+![Chat](/guides/chat.png)
+
+### Sending Chat Messages
+
+```js
+hmsActions.sendMessage("hello everyone!"); // yes it's that simple 😉
+```
+
+### Showing all the messages
+
+You can access all messages using the selector `selectHMSMessages`. 
+
+<Tabs id="chat" items={['Javascript', 'React']} />
+
+<Tab id='chat-0'>
+
+```js
+import { selectHMSMessages } from '@100mslive/hms-video-store';
+
+function renderMessages(messages) {
+    console.log("all messages - ", messages);
+}
+
+hmsStore.subscribe(renderMessages, selectHMSMessages);
+```
+
+</Tab>
+
+<Tab id='chat-1'>
+
+```jsx
+import { Message } from './components';
+import { 
+    useHMSStore, 
+    selectMessages 
+} from '@100mslive/hms-video-react';
+
+function Chat() {
+  const messages = useHMSStore(selectMessages);
+
+  return <>
+    {
+        messages.map(msg => <Message key={msg.id} message={msg} />)
+    }
+  </>
+}
+```
+
+</Tab>
+
+### HMSMessage Interface
+
+```js
+interface HMSMessage {
+  id: HMSMessageID;
+  sender: HMSPeerID;
+  senderName?: string;
+  time: Date;
+  read: boolean;
+  type: string;   // the default value is 'chat'
+  message: string;
+}
+```
