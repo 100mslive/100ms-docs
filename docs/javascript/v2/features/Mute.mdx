@@ -1,5 +1,58 @@
 ---
-title: Mute
+title: Mute / Unmute
+nav: 3.05
 ---
 
-# TODO
+Mute is something that applies to both audio and video. When you mute audio, you can't be heard by other people. When you mute video, you will not be broadcasting your video to other people.
+
+```js
+hmsActions.setLocalVideoEnabled(false);
+hmsActions.setLocalAudioEnabled(true);
+```
+
+### Toggling current mute state
+
+1. Get current state
+2. Invert the state and set as new value
+
+<Tabs id="mute" items={['Javascript', 'React']} />
+
+<Tab id='mute-0'>
+
+```js
+function toggleAudio() {
+  const enabled = hmsStore.getState(selectIsLocalAudioEnabled);
+  hmsActions.setLocalAudioEnabled(!enabled);
+}
+
+function toggleVideo() {
+  const enabled = hmsStore.getState(selectIsLocalVideoEnabled);
+  hmsActions.setLocalVideoEnabled(!enabled);
+}
+```
+
+</Tab>
+
+<Tab id='mute-1'>
+
+```jsx
+function MyComponent() {
+  const audioEnabled = useHMSStore(selectIsLocalAudioEnabled);
+  const videoEnabled = useHMSStore(selectIsLocalVideoEnabled);
+  const hmsActions = useHMSActions();
+
+  function toggleAudio() {
+    hmsActions.setLocalAudioEnabled(!audioEnabled);
+  }
+
+  function toggleVideo() {
+    hmsActions.setLocalVideoEnabled(!videoEnabled);
+  }
+
+  return <
+        // toggle buttons for user
+  />;
+}
+```
+</Tab>
+

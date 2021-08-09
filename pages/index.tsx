@@ -1,3 +1,3 @@
 import redirect from '@/lib/redirect';
 
-export default redirect('/react/v2/home/intro');
+export default redirect('/javascript/v2/foundation/Basics');
