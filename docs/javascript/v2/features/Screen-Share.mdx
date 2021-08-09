@@ -1,35 +1,50 @@
 ---
 title: Screen Share
-nav: 3.4
+nav: 3.15
 ---
 
-To be able to share your screen, you should have screenshare enabled from the dashboard for your role.
+Screenshare involves sharing either the complete screen, a specific window or, a browser tab. 
+For a peer to share their screen, their role must have screenshare enabled in the dashboard.
+
 ![ScreenshareDashboard](/docs/v2/screenshare-dashboard.png)
 
-Once your role has permissions to share screen, do the following: 
+To start a screenshare:
 
-To start screenshare:
-```jsx
+```js
 try {
-  await hmsSDK.startScreenShare(onStop);
-} catch(error) {
-  // handle error here. Possible errors could be
-  // start screenshare being called twice for the same user
-  // system permission not given for screenshare(mac)
+  await hmsActions.setScreenShareEnabled(true);
+} catch (error) {
+  // an error will be thrown if user didn't give access to share screen
 }
-/* onStop is the callback called if user stops the screenshare
-  from the system prompt */
 ```
-
-Screenshare with audio:
- - This is currently supported only in chrome and only while sharing a tab
- - You can share audio from screenshare by selecting a tab that has an audio while sharing the screen. 
-   (Don't forget to check the checkbox at bottom left while doing this for the audio to be shared.)
-
-![ScreenshareAudio](/docs/v2/screenshare-audio.png)
 
 To stop the screenshare:
 
-```jsx
-hmsSDK.stopScreenShare();
+```js
+hmsActions.setScreenShareEnabled(false);
 ```
+
+
+### Useful Selectors
+
+```js
+// to know if someone is screensharing
+const screenshareOn = hmsStore.getState(selectIsSomeoneScreenSharing);
+
+// to get the HMSPeer object of the peer screensharing
+const presenter = hmsStore(selectPeerScreenSharing);
+
+// a boolean to know if the local peer is the one who is screensharing
+const amIScreenSharing = hmsStore(selectIsLocalScreenShared);
+
+// to get the screenshare video track, this can be used to call attachVideo for rendering
+const screenshareVideoTrack = hmsStore(selectScreenShareByPeerID(presenter.id));
+```
+
+
+### Screenshare with audio:
+
+We also give support of adding screenshare with audio in chromium based browsers. This only applies if checkbox at bottom left
+shown below is checked while sharing a browser tab.
+
+![ScreenshareAudio](/docs/v2/screenshare-audio.png)

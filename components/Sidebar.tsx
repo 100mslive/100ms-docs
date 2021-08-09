@@ -34,7 +34,15 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const [tech, setTech] = React.useState(menuItem[indexOf]);
     const changeTech = (s) => {
         setTech(s);
-        router.push(s.link, undefined, { shallow: false });
+        // @ts-ignore
+        if (router.query.slug[0] === 'api-reference') {
+            // @ts-ignore
+            router.push(`/api-reference/${s.name.toLowerCase()}/v2/home/content`, undefined, {
+                shallow: false
+            });
+        } else {
+            router.push(s.link, undefined, { shallow: false });
+        }
     };
     return (
         <div className="ctx">
@@ -72,16 +80,34 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
             {Object.entries(nav).map(([key, children], index) => (
                 <section className="menu-container" key={`${key}-${index}`}>
                     <div className="menu-title">{key.replace(/-/g, ' ').toUpperCase()}</div>
-                    {Object.entries(children).map(([_, route]) => (
-                        <Link href={route.url || ''} key={`${route.url}-${index}`}>
-                            <div
-                                className={`menu-item ${
-                                    route.url === router.asPath ? 'active-link' : ''
-                                }`}>
-                                {route.title}
-                            </div>
-                        </Link>
-                    ))}
+                    {Object.entries(children).map(
+                        ([_, route]) =>
+                            Object.prototype.hasOwnProperty.call(route, 'title') ? (
+                                <Link href={route.url || ''} key={`${route.url}-${index}`}>
+                                    <div
+                                        className={`menu-item ${
+                                            route.url === router.asPath ? 'active-link' : ''
+                                        }`}>
+                                        {route.title}
+                                    </div>
+                                </Link>
+                            ) : null
+                        // <>
+                        //     <div className="sub-title">
+                        //         {k.replace(/-/g, ' ').toUpperCase()}
+                        //     </div>
+                        //     {Object.keys(route).map((e) => (
+                        //         <Link key={route[e].title} href={route[e].url}>
+                        //             <div
+                        //                 className={`sub-menu-item ${
+                        //                     route[e].url === router.asPath ? 'active-link' : ''
+                        //                 }`}>
+                        //                 {route[e].title}
+                        //             </div>
+                        //         </Link>
+                        //     ))}
+                        // </>
+                    )}
                 </section>
             ))}
             <style jsx>{`
@@ -111,12 +137,29 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 .menu-item {
                     cursor: pointer;
                     padding: 8px 0;
-                    color: var(--gray12);
+                    color: var(--gray11);
                     font-weight: 400;
                     font-size: 13px;
                     display: flex;
                     align-items: center;
                     padding-left: 20px;
+                }
+                .sub-title {
+                    padding-left: 30px;
+                    font-weight: 700;
+                    font-size: 12px;
+                    margin-top: 20px;
+                    margin-bottom: 5px;
+                }
+                .sub-menu-item {
+                    cursor: pointer;
+                    padding: 8px 0;
+                    color: var(--gray11);
+                    font-weight: 400;
+                    font-size: 13px;
+                    display: flex;
+                    align-items: center;
+                    padding-left: 30px;
                 }
 
                 a {
@@ -127,6 +170,10 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     background-color: var(--blue6);
                 }
                 .menu-item:hover {
+                    background-color: var(--blue5);
+                }
+                }
+                .sub-menu-item:hover {
                     background-color: var(--blue5);
                 }
                 .menu-title {

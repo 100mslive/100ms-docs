@@ -1,0 +1,165 @@
+---
+title: Virtual Background
+nav: 5.01
+---
+
+## Introduction
+
+Virtual background plugin helps in customising one’s background. The customising options are blurring the background or replacing it with a static image.
+This guide provides an overview of usage of the virtual background plugin of 100ms.
+
+![VirtualBackground](/docs/v2/virtual.gif)
+
+## Supported Devices
+
+Virtual background is currently only supported on web in Chrome, Firefox, Brave and Edge browsers.<br/>
+We have not extended support for Mobile browsers in this release.
+
+## Basic Concepts
+
+-   `blur background` - This is an action where the background of the video is blurred. No external image is used/required.
+-   `image background` - This is where the plugin will replace the video background with the image provided by user.
+-   `plugin load time` - The time taken by plugin to load model. This is in the range of 3-5 secs for first time. Subsequent loads take less than 100ms.
+
+## Pre-requisites
+
+**Get the 100ms VirtualBackground Package**
+
+```bash
+npm install --save @100mslive/hms-virtual-background@latest
+```
+
+## Import plugin
+
+```jsx
+import HMSVirtualBackgroundPlugin from '@100mslive/hms-virtual-background';
+```
+
+## Instantiate Virtual Background
+
+This accepts background as a parameter, It can be of 3 types:
+
+`blur` - String - This will set the background to blur
+`image` - HTMLImageElement - This will replace the background to the image provide
+`none` - String - This will remove the background effect from the video
+
+```jsx
+// background : {'blur' | image | 'none'}
+const virtualBackground = new HMSVirtualBackgroundPlugin(background : {'blur' | image | 'none'});
+```
+
+## Check if plugin is supported
+
+isSupported can be used to check if the browser is supported or not.
+It will return True/False based on browser.
+
+```jsx
+if (virtualBackground.isSupported()) {
+  console.log('Platform is supported');
+} else {
+  console.log('Platform not supported');
+}
+```
+
+## Init(Optional)
+
+Init is used to load model of virtual background for the first time.
+It takes on an average 3-5 secs.<br/>
+Calling init is handled internally by SDK if not done by user, in this case addPlugin call will
+take 3-5 secs for the first time and then less than 100ms in the Subsequent calls.
+Check [this section](#add-and-remove-plugin) for addPlugin API usage
+
+```jsx
+virtualBackground.init();
+```
+
+Init can also be used by user to show a loader icon for background selector component during the plugin loading stage
+
+```jsx
+virtualBackground.init().then(() => console.log('background can be changed now'));
+```
+
+## Start and Stop Virtual Background
+
+<Tabs id="plugin-code" items={['Javascript', 'React']} />
+
+<Tab id='plugin-code-0'>
+
+```js
+import { hmsActions, hmsStore } from './hms';
+import { selectIsLocalVideoPluginPresent } from '@100mslive/hms-video-store';
+
+async function toggleVB() {
+  const showBackground = hmsStore.getState(selectIsLocalVideoPluginPresent(virtualBackground.getName()));
+  try {
+    if (!showBackground) {
+      // add virtual background
+      await hmsActions.addPluginToVideoTrack(virtualBackground);
+    } else {
+      // remove virtual background
+      await hmsActions.removePluginFromVideoTrack(virtualBackground);
+    }
+  } catch (err) {
+    console.log('virtual background failure - ', showBackground, err);
+  }
+}
+```
+
+</Tab>
+
+<Tab id='plugin-code-1'>
+
+```jsx
+import {
+  useHMSStore,
+  useHMSActions,
+  selectIsLocalVideoPluginPresent
+} from '@100mslive/hms-video-react';
+
+function VirtualBackground() {
+  // to know if vb is currently added
+  const showBackground = useHMSStore(selectIsLocalVideoPluginPresent(virtualBackground.getName()));
+  const hmsActions = useHMSActions();
+
+  const toggleVB = async() => {
+    try {
+      if (!showBackground) {
+        await hmsActions.addPluginToVideoTrack(virtualBackground);
+      } else {
+        await hmsActions.removePluginFromVideoTrack(virtualBackground);
+      }
+    } catch (err) {
+      console.log('virtual background failure - ', showBackground, err);
+    }
+  }
+
+  return <Button onClick={toggleVB} />;
+}
+```
+
+</Tab>
+
+## Change Background
+
+The function `setBackground` can be used to update the background again later.
+It accepts string or HTMLImageElement as a parameter
+Image will get fit to the video by maintaining the aspect ratio.
+If the aspect ratio of the background image is not the same as the video, the image will be cropped to fit in the background.
+
+```jsx
+// background parameter is explained in Instantiate Virtual Background section
+try{
+  virtualBackground.setBackground(background : {'blur' | image | 'none'});
+}catch(err){
+  console.log("Failed to update background", err);
+}
+```
+
+## Recommendations For Better User Experience
+
+For an enhanced virtual background plugin performance enable simd in browser
+
+-   `Chrome` - Open `chrome://flags/` in browser, search for simd, enable WebAssembly SIMD support and restart.
+-   `Firefox`- Open `about:config` in browser, search for simd, set javascript.options.wasm_simd=true and restart.
+-   `Edge` - Open `about:flags` in browser, search for simd, enable WebAssembly SIMD support and restart.
+-   `Brave` - Open `about:flags` in browser, search for simd, enable WebAssembly SIMD support and restart.
