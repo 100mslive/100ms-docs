@@ -4,40 +4,44 @@ title: 100mslive/hms-video-store
 
 ## Enumerations
 
--   [HMSMessageType](/api-references/javascript/v2/enums/HMSMessageType)
--   [HMSNotificationSeverity](/api-references/javascript/v2/enums/HMSNotificationSeverity)
--   [HMSNotificationTypes](/api-references/javascript/v2/enums/HMSNotificationTypes)
--   [HMSRoomState](/api-references/javascript/v2/enums/HMSRoomState)
--   [HMSSimulcastLayer](/api-references/javascript/v2/enums/HMSSimulcastLayer)
+- [HMSMessageType](/api-references/javascript/v2/enums/HMSMessageType)
+- [HMSNotificationSeverity](/api-references/javascript/v2/enums/HMSNotificationSeverity)
+- [HMSNotificationTypes](/api-references/javascript/v2/enums/HMSNotificationTypes)
+- [HMSRoomState](/api-references/javascript/v2/enums/HMSRoomState)
+- [HMSSimulcastLayer](/api-references/javascript/v2/enums/HMSSimulcastLayer)
 
 ## Classes
 
--   [HMSAudioTrackSettings](/api-references/javascript/v2/classes/HMSAudioTrackSettings)
--   [HMSReactiveStore](/api-references/javascript/v2/classes/HMSReactiveStore)
--   [HMSVideoTrackSettings](/api-references/javascript/v2/classes/HMSVideoTrackSettings)
+- [HMSAudioTrackSettings](/api-references/javascript/v2/classes/HMSAudioTrackSettings)
+- [HMSReactiveStore](/api-references/javascript/v2/classes/HMSReactiveStore)
+- [HMSVideoTrackSettings](/api-references/javascript/v2/classes/HMSVideoTrackSettings)
 
-## Interfaces
+## Core Interfaces
 
--   [HMSComponentsStyle](/api-references/javascript/v2/interfaces/HMSComponentsStyle)
--   [HMSConfig](/api-references/javascript/v2/interfaces/HMSConfig)
--   [HMSException](/api-references/javascript/v2/interfaces/HMSException)
--   [HMSMediaSettings](/api-references/javascript/v2/interfaces/HMSMediaSettings)
--   [HMSMessage](/api-references/javascript/v2/interfaces/HMSMessage)
--   [HMSNotification](/api-references/javascript/v2/interfaces/HMSNotification)
--   [HMSPeer](/api-references/javascript/v2/interfaces/HMSPeer)
--   [HMSPeerWithMuteStatus](/api-references/javascript/v2/interfaces/HMSPeerWithMuteStatus)
--   [HMSPublishAllowed](/api-references/javascript/v2/interfaces/HMSPublishAllowed)
--   [HMSRole](/api-references/javascript/v2/interfaces/HMSRole)
--   [HMSRoleChangeRequest](/api-references/javascript/v2/interfaces/HMSRoleChangeRequest)
--   [HMSRoleChangeStoreRequest](/api-references/javascript/v2/interfaces/HMSRoleChangeStoreRequest)
--   [HMSRoom](/api-references/javascript/v2/interfaces/HMSRoom)
--   [HMSSpeaker](/api-references/javascript/v2/interfaces/HMSSpeaker)
--   [HMSStore](/api-references/javascript/v2/interfaces/HMSStore)
--   [HMSTrack](/api-references/javascript/v2/interfaces/HMSTrack)
--   [IHMSActions](/api-references/javascript/v2/interfaces/IHMSActions)
--   [IHMSNotifications](/api-references/javascript/v2/interfaces/IHMSNotifications)
--   [IHMSStore](/api-references/javascript/v2/interfaces/IHMSStore)
--   [SimulcastLayerDefinition](/api-references/javascript/v2/interfaces/SimulcastLayerDefinition)
+- [HMSActions](/api-references/javascript/v2/interfaces/HMSActions)
+- [HMSNotifications](/api-references/javascript/v2/interfaces/HMSNotifications)
+- [HMSStoreWrapper](/api-references/javascript/v2/interfaces/HMSStoreWrapper)
+
+## Other Interfaces
+
+- [HMSComponentsStyle](/api-references/javascript/v2/interfaces/HMSComponentsStyle)
+- [HMSConfig](/api-references/javascript/v2/interfaces/HMSConfig)
+- [HMSException](/api-references/javascript/v2/interfaces/HMSException)
+- [HMSMediaSettings](/api-references/javascript/v2/interfaces/HMSMediaSettings)
+- [HMSMessage](/api-references/javascript/v2/interfaces/HMSMessage)
+- [HMSNotification](/api-references/javascript/v2/interfaces/HMSNotification)
+- [HMSPeer](/api-references/javascript/v2/interfaces/HMSPeer)
+- [HMSPeerWithMuteStatus](/api-references/javascript/v2/interfaces/HMSPeerWithMuteStatus)
+- [HMSPublishAllowed](/api-references/javascript/v2/interfaces/HMSPublishAllowed)
+- [HMSRole](/api-references/javascript/v2/interfaces/HMSRole)
+- [HMSRoleChangeRequest](/api-references/javascript/v2/interfaces/HMSRoleChangeRequest)
+- [HMSRoleChangeStoreRequest](/api-references/javascript/v2/interfaces/HMSRoleChangeStoreRequest)
+- [HMSRoom](/api-references/javascript/v2/interfaces/HMSRoom)
+- [HMSSpeaker](/api-references/javascript/v2/interfaces/HMSSpeaker)
+- [HMSStore](/api-references/javascript/v2/interfaces/HMSStore)
+- [HMSTrack](/api-references/javascript/v2/interfaces/HMSTrack)
+- [IHMSStore](/api-references/javascript/v2/interfaces/IHMSStore)
+- [SimulcastLayerDefinition](/api-references/javascript/v2/interfaces/SimulcastLayerDefinition)
 
 ## Type aliases
 
@@ -86,14 +90,6 @@ title: 100mslive/hms-video-store
 ### HMSTrackType
 
 Ƭ **HMSTrackType**: `"audio"` \| `"video"`
-
----
-
-### IHMSStoreReadOnly
-
-Ƭ **IHMSStoreReadOnly**: `Omit`<[`IHMSStore`](/api-references/javascript/v2/interfaces/IHMSStore), `"setState"` \| `"namedSetState"` \| `"destroy"`\>
-HMS store can be used to subscribe to different parts of the store using selectors
-and get a callback when the value changes.
 
 ## Variables
 
@@ -258,8 +254,8 @@ Select the primary audio track of a peer given a peer ID.
 Select the local audio volume of an audio track given a track ID.
 NOTE: **Volume** of a track is different from **Audio Level** of a track,
 
--   Audio Level measures the audio of a track and it comes from 100ms's servers.
--   Volume is how loud you hear the audio of a track, this is controlled by you at the client side.
+- Audio Level measures the audio of a track and it comes from 100ms's servers.
+- Volume is how loud you hear the audio of a track, this is controlled by you at the client side.
 
 #### Parameters
 
@@ -860,7 +856,7 @@ Select the primary video track of a peer given a peer ID.
 #### Returns
 
 `StoreSelector`<`undefined` \| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)\>
-id?`):`StoreSelector`<`undefined`\| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)\>
+?`):`StoreSelector`<`undefined`\| [`HMSTrack`](/api-references/javascript/v2/interfaces/HMSTrack)\>
 
 Select the primary video track of a peer given a peer ID.
 

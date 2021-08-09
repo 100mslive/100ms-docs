@@ -10,46 +10,49 @@ title: HMSReactiveStore
 
 #### Parameters
 
-| Name                | Type                                                                  |
-| :------------------ | :-------------------------------------------------------------------- |
-| `hmsStore?`         | [`IHMSStore`](/api-references/javascript/v2/interfaces/IHMSStore)     |
-| `hmsActions?`       | [`IHMSActions`](/api-references/javascript/v2/interfaces/IHMSActions) |
-| `hmsNotifications?` | `HMSNotifications`                                                    |
+| Name                | Type                                                                |
+| :------------------ | :------------------------------------------------------------------ |
+| `hmsStore?`         | [`IHMSStore`](/api-references/javascript/v2/interfaces/IHMSStore)   |
+| `hmsActions?`       | [`HMSActions`](/api-references/javascript/v2/interfaces/HMSActions) |
+| `hmsNotifications?` | `HMSNotifications`                                                  |
 
 ## Methods
 
 ### getHMSActions
 
-▸ **getHMSActions**(): [`IHMSActions`](/api-references/javascript/v2/interfaces/IHMSActions)
+▸ **getHMSActions**(): [`HMSActions`](/api-references/javascript/v2/interfaces/HMSActions)
 Any action which may modify the store or may need to talk to the SDK will happen
 through the IHMSActions instance returned by this
 
 #### Returns
 
-[`IHMSActions`](/api-references/javascript/v2/interfaces/IHMSActions)
+[`HMSActions`](/api-references/javascript/v2/interfaces/HMSActions)
 
 ---
 
 ### getNotifications
 
-▸ **getNotifications**(): [`IHMSNotifications`](/api-references/javascript/v2/interfaces/IHMSNotifications)
+▸ **getNotifications**(): [`HMSNotifications`](/api-references/javascript/v2/interfaces/HMSNotifications)
 This return notification handler function to which you can pass your callback to
 receive notifications like peer joined, peer left, etc. to show in your UI or use
 for analytics
 
 #### Returns
 
-[`IHMSNotifications`](/api-references/javascript/v2/interfaces/IHMSNotifications)
+[`HMSNotifications`](/api-references/javascript/v2/interfaces/HMSNotifications)
 
 ---
 
 ### getStore
 
+▸ **getStore**(): [`HMSStoreWrapper`](/api-references/javascript/v2/interfaces/HMSStoreWrapper)
 A reactive store which has a subscribe method you can use in combination with selectors
 to subscribe to a subset of the store. The store serves as a single source of truth for
 all data related to the corresponding HMS Room.
 
 #### Returns
+
+[`HMSStoreWrapper`](/api-references/javascript/v2/interfaces/HMSStoreWrapper)
 
 ---
 
@@ -64,33 +67,5 @@ This will be an irreversible change
 Note: you don't need this if you're using our react hooks, it takes care of this requirement.
 
 #### Returns
-
-`void`
-
----
-
-### createNewHMSStore
-
-▸ `Static` **createNewHMSStore**(): [`IHMSStore`](/api-references/javascript/v2/interfaces/IHMSStore)
-
-#### Returns
-
-[`IHMSStore`](/api-references/javascript/v2/interfaces/IHMSStore)
-
----
-
-### makeStoreTriggerOnSubscribe
-
-▸ `Static` **makeStoreTriggerOnSubscribe**(`store`): `void`
-
-#### Parameters
-
-| Name    | Type                                                              |
-| :------ | :---------------------------------------------------------------- |
-| `store` | [`IHMSStore`](/api-references/javascript/v2/interfaces/IHMSStore) |
-
-#### Returns
-
-`void`
 
 `void`

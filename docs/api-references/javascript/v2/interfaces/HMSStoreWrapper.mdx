@@ -1,26 +1,21 @@
 ---
-title: IHMSStore
+title: HMSStoreWrapper
 ---
 
-HMS Reactive store can be used to subscribe to different parts of the store using selectors
-and get a callback when the value changes.
+HMS store can be used to:
+
+- Get a part of the current store or state(getState)
+- Subscribe to different parts of the store using selectors and execute a callback when the value changes.
+  Both getState and subscribe use selectors to query a part the store.
+  Selectors are functions with HMSStore as an argument and returns a part of the store.
+  **StoreSelector** is a type alias for this type of function.
 
 ## Hierarchy
 
-- `StoreApi`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)\>
-  ↳ **`IHMSStore`**
+- `Omit`<[`IHMSStore`](/api-references/javascript/v2/interfaces/IHMSStore), `"setState"` \| `"namedSetState"` \| `"destroy"`\>
+  ↳ **`HMSStoreWrapper`**
 
 ## Properties
-
-### destroy
-
-• **destroy**: `Destroy`
-
-#### Inherited from
-
-StoreApi.destroy
-
----
 
 ### getState
 
@@ -28,19 +23,9 @@ StoreApi.destroy
 Get a part of store using a selector which is true at the current point of time.
 Usage: `store.getState(selectDominantSpeaker);`
 
-#### Overrides
-
-StoreApi.getState
-
----
-
-### setState
-
-• **setState**: `SetState`<[`HMSStore`](/api-references/javascript/v2/interfaces/HMSStore)\>
-
 #### Inherited from
 
-StoreApi.setState
+Omit.getState
 
 ---
 
@@ -58,7 +43,6 @@ const onSpeakerUpdate = (speaker, prevSpeaker) => {
 store.subscribe(onSpeakerUpdate, selectDominantSpeaker);
 ```
 
-#### Overrides
+#### Inherited from
 
-StoreApi.subscribe
-e
+Omit.subscribe
