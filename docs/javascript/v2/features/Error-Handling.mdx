@@ -1,13 +1,40 @@
 ---
 title: Error Handling
-nav: 11
+nav: 3.12
 ---
 
-When you make an API call to access an HMS SDK, the SDK may return error codes. ErrorCodes are returned when a problem that cannot be recovered without app intervention has occurred.
+When you make an API call to access an HMS SDK, the SDK may return error codes.
+ErrorCodes are usually returned when a problem that cannot be recovered without app intervention has occurred.
 
-These are returned as `HMSError` in the `func on(error: HMSError)` callback of the `HMSUpdateListner`.
+These are returned as `type='error'` through the [notifications interface](Notifications). The type of `notification.data` is `HMSException`.
 
-Following are the different error codes that are returned by the SDK . Before returning any error code, SDK retries the errors\(whichever is possible\).
+```js
+interface HMSException {
+  code: number;
+  action: string;
+  name: string;
+  message: string;
+  description: string;
+  isTerminal: boolean;
+  timestamp: Date;
+}
+```
+
+## Handling Autoplay Error
+
+![Device Change Settings](/guides/autoplay-error.png)
+
+Most browsers have a restriction on audio autoplay where audio autoplay is allowed only if the user has interacted with the page.
+If an autoplay error is received(code=3008), UI can show a popup or a notification with button. Once a user click has happened confirming an interaction point,
+unblockAudio can be called.
+
+```js
+await hmsActions.unblockAudio()
+```
+
+## Error Codes
+
+Following are the different error codes that are returned by the SDK. Before returning any error code, SDK retries the errors wherever possible.
 
 | **Error Code** | **Cause of the error**                                 | **Action to be taken**                                                                                     |
 | :------------- | :----------------------------------------------------- | :--------------------------------------------------------------------------------------------------------- |
