@@ -38,8 +38,6 @@ Event is a JSON dictionary which has following keys.
    "timestamp":"2021-08-08T07:04:15Z",
    "type":"peer.join.success",
    "data":{
-      "account_id":"60b8e13a6eb86d8101b57354",
-      "app_id":"60b8e13a6eb86d8101b57356",
       "joined_at":"2021-08-08T07:04:15.001380432Z",
       "peer_id":"83b869e1-9a4b-4037-84b2-913cf76e4392",
       "room_id":"60b8e13a6eb86d8101b57354",
@@ -73,7 +71,7 @@ This event will be send when peer leaves the room
 | left_at   | `string` | Timestamp when user left                       | 2020-11-11T17:32:17Z                 |
 | room_name | `string` | Room name assigned by you when creating room   | class-9-batch-2                      |
 | user_id   | `string` | User id assigned by customer                   | user.001                             |
-| duration  | `number` | Duration the user spent in the room in seconds | 3600000                              |
+| duration  | `number` | Duration the user spent in the room in seconds | 36000                                |
 | session_id | `string`    | 100ms assigned id to identofy the session. A room can have multiple sessions | 5f9edc6bd238215aec7700df |
 
 ## recording.success
@@ -85,7 +83,7 @@ This event will be send when final composed recording is generated and uploaded 
 | room_id    | `string` | 100ms assigned room id                                                                         | 5f9edc6ac238215aec2312df          |
 | room_name  | `string` | Room name assigned by you when creating room                                                   | class-9-batch-2                   |
 | location   | `string` | s3 URI of the recorded video                                                                   | s3://bucket/prefix/ac.mp4         |
-| url        | `string` | Presigned s3 URL for the recorded video, for download. Valid for 24 hours                      | https://s3-location/bucket/ac.mp4 |
+| URL        | `string` | Presigned s3 URL for the recorded video, for download. Valid for 24 hours                      | https://s3-location/bucket/ac.mp4 |
 | duration   | `number` | Duration the user spent in the room in seconds                                                 | 3600                           |
 | size       | `number` | Size of the recorded video (in bytes)                                                          | 10024                             |
-| session_id | `string` | 100ms assigned id identifying the session for the recording. A room can have multiple sessions | 5f9edc6bd238215aec7700df          |
+| session | `string` | 100ms assigned id identifying the session for the recording. A room can have multiple sessions | 5f9edc6bd238215aec7700df          |
