@@ -2,7 +2,6 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import React from 'react';
-import ReactIcon from '@/assets/icons/ReactIcon';
 import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
