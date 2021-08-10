@@ -25,13 +25,13 @@ Any application built using 100ms' SDK has 2 components.
 
 ## What are the steps to build a live app with 100ms?
 
-1. **Create a template:** Create a template and define roles, room settings - You can do this using the [dashboard](https://dashboard.100ms.live/templates) or by using our [APIs](/server-side/v2/basic-features/Template).
-2. **Create a room using the above template:** You can do this using the [dashboard](https://dashboard.100ms.live/rooms) or our [API](/server-side/v2/basic-features/Room).
-3. **Integrate client SDK and join the above room:** You'll need to generate a [token](./tokens) for each peer that connects to a room.
-4. **[Optional] Receive events:** Create a [webhook endpoint](/server-side/v2/advanced-features/Webhook) to receive server-side notifications about room usage (peer joining/leaving) or recording, RTMP out starting/ending.
+1. **Create a template:** Create a template and define roles, room settings - You can do this using the [dashboard](https://dashboard.100ms.live/templates).
+2. **Create a room using the above template:** You can do this using the [dashboard](https://dashboard.100ms.live/rooms) or our [API](/server-side/v2/features/room).
+3. **Integrate client SDK and join the above room:** You'll need to generate a [token](/server-side/v2/foundation/authentication-and-tokens) for each peer that connects to a room.
+4. **[Optional] Receive events:** Create a [webhook endpoint](/server-side/v2/features/webhook) to receive server-side notifications about room usage (peer joining/leaving) or recording, RTMP out starting/ending.
 
 ## Where should I start?
 
 ### Quickstart
 
-If you just want to see 100ms' SDKs in action in under 5 minutes, run one our quickstart [app](./guides/quickstart)
+If you just want to see 100ms' SDKs in action in under 5 minutes, run one our quickstart [app](/server-side/v2/guides/quickstart)

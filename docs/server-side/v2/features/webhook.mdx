@@ -1,6 +1,6 @@
 ---
 title: Webhook
-nav: 5.6
+nav: 4.6
 ---
 
 Webhook is an HTTP(S) endpoint used for pushing the notifications to your application. It will be invoked by 100ms servers to notify events of your room.
@@ -19,15 +19,15 @@ Webhook can be configured using [Developer](https://dashboard.100ms.live/develop
 Event is a JSON dictionary which has following keys.
 
 ### Event Attributes
-| Name      | Type         | Description                                                                                   | Example                              |
-| --------- | ------------ | --------------------------------------------------------------------------------------------- | ------------------------------------ |
-| version   | `string`     | Version of the event                                                                          | 2.0                                  |
-| id        | `string`     | Id of the event                                                                               | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| app_id    | `string`     | App ID from which this event is generated                                                     | 5ff5881b80b66969e1fb35f6             |
-| account_id| `string`     | App ID(Customer ID) from which this event is generated                                        | 5ff5881b80b66969e1fb35f4             |
-| timestamp | `timestamp`  | Timestamp of the event                                                                        | 2020-11-11T16:32:17Z                 |
-| type      | `string`     | Type of the event                                                                             | peer.join.success                    |
-| data      | `dict`       | Event data. Its keys will be different for different type of event. See the description below |                                      |
+| Name       | Type         | Description                                                                                   | Example                              |
+| :--------- | :----------- | :-------------------------------------------------------------------------------------------- | :----------------------------------- |
+| version    | `string`     | Version of the event                                                                          | 2.0                                  |
+| id         | `string`     | Id of the event                                                                               | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
+| app_id     | `string`     | App ID from which this event is generated                                                     | 5ff5881b80b66969e1fb35f6             |
+| account_id | `string`     | App ID(Customer ID) from which this event is generated                                        | 5ff5881b80b66969e1fb35f4             |
+| timestamp  | `timestamp`  | Timestamp of the event                                                                        | 2020-11-11T16:32:17Z                 |
+| type       | `string`     | Type of the event                                                                             | peer.join.success                    |
+| data       | `dict`       | Event data. Its keys will be different for different type of event. See the description below |                                      |
 
 ### Sample Event Payload
 ```json
@@ -52,7 +52,7 @@ This event will be send when any peer joins the room successfully
 
 #### Attributes
 | Name       | Type         | Description                                                                  | Example                              |
-| ---------- | ------------ | ---------------------------------------------------------------------------- | ------------------------------------ |
+| :--------- | :----------- | :--------------------------------------------------------------------------- | :----------------------------------- |
 | room_id    | `string`     | 100ms assigned room id                                                       | 5f9edc6ac238215aec2312df             |
 | peer_id    | `string`     | 100ms assigned id to identify the joining user                               | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | joined_at  | `timestamp`  | Timestamp when user joined                                                   | 2020-11-11T16:32:17Z                 |
@@ -65,7 +65,7 @@ This event will be send when peer leaves the room
 
 #### Attributes
 | Name       | Type     | Description                                                                  | Example                              |
-| ---------- | -------- | ---------------------------------------------------------------------------- | ------------------------------------ |
+| :--------- | :------- | :--------------------------------------------------------------------------- | :----------------------------------- |
 | room_id    | `string` | 100ms assigned room id                                                       | 5f9edc6ac238215aec2312df             |
 | peer_id    | `string` | 100ms assigned id to identify the joining user                               | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | left_at    | `string` | Timestamp when user left                                                     | 2020-11-11T17:32:17Z                 |
@@ -79,7 +79,7 @@ This event will be send when final composed recording is generated and uploaded 
 
 #### Attributes
 | Name       | Type     | Description                                                                                    | Example                           |
-| ---------- | -------- | ---------------------------------------------------------------------------------------------- | --------------------------------- |
+| :--------- | :------- | :--------------------------------------------------------------------------------------------- | :-------------------------------- |
 | room_id    | `string` | 100ms assigned room id                                                                         | 5f9edc6ac238215aec2312df          |
 | room_name  | `string` | Room name assigned by you when creating room                                                   | class-9-batch-2                   |
 | location   | `string` | s3 URI of the recorded video                                                                   | s3://bucket/prefix/ac.mp4         |
