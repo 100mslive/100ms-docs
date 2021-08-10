@@ -24,7 +24,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
         { link: '/android/v2/foundation/Basics', name: 'ANDROID', icon: <AndroidIcon /> },
         { link: '/ios/v2/foundation/Basics', name: 'IOS', icon: <IosIcon /> },
         { link: '/javascript/v2/foundation/Basics', name: 'JAVASCRIPT', icon: <JavascriptIcon /> },
-        { link: '/server-side/v2/foundation/Basics', name: 'SERVER-SIDE', icon: <ServerIcon /> }
+        { link: '/server-side/v2/foundation/basics', name: 'SERVER-SIDE', icon: <ServerIcon /> }
     ];
     // @ts-ignore
     let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === router.query.slug[0]);
