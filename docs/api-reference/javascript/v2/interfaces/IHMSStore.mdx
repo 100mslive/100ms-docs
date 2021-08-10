@@ -1,0 +1,64 @@
+---
+title: IHMSStore
+---
+
+HMS Reactive store can be used to subscribe to different parts of the store using selectors
+and get a callback when the value changes.
+
+## Hierarchy
+
+- `StoreApi`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\>
+  ↳ **`IHMSStore`**
+
+## Properties
+
+### destroy
+
+• **destroy**: `Destroy`
+
+#### Inherited from
+
+StoreApi.destroy
+
+---
+
+### getState
+
+• **getState**: `GetState`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\>
+Get a part of store using a selector which is true at the current point of time.
+Usage: `store.getState(selectDominantSpeaker);`
+
+#### Overrides
+
+StoreApi.getState
+
+---
+
+### setState
+
+• **setState**: `SetState`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\>
+
+#### Inherited from
+
+StoreApi.setState
+
+---
+
+### subscribe
+
+• **subscribe**: `Subscribe`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\>
+Subscribe to a part of store using selectors, whenever the subscribed part changes, the callback
+is called with both the latest and previous value of the changed part.
+Usage:
+
+```
+const onSpeakerUpdate = (speaker, prevSpeaker) => {
+ console.log("speaker changed from - ", prevSpeaker, ", to - ", speaker);
+}
+store.subscribe(onSpeakerUpdate, selectDominantSpeaker);
+```
+
+#### Overrides
+
+StoreApi.subscribe
+e
