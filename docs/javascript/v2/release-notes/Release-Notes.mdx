@@ -4,4 +4,338 @@ nav: 7.1
 description: Release Notes for 100ms Javascript SDK
 ---
 
-# TODO
+## Versions
+
+| Package                    | Version                                                                                                                                |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| @100mslive/hms-video       | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video)             |
+| @100mslive/hms-video-react | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-react.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-react) |
+| @100mslive/hms-video-store | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-store.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-store) |
+
+## 2021-08-07
+
+#### Versions
+
+-   Fix tracks not getting removed properly in Firefox in between role changes
+
+## 2021-08-06
+
+-   Fix black tile issue
+
+## 2021-08-06
+
+-   Export `HMSLogLevel` to set the HMSdk's log level.
+
+## 2021-08-05
+
+#### Added
+
+-   Autoplay handling added.
+    -   on autoplay error, the onError callback is called
+    -   unblockAutoplay method is provided to resolve the autoplay error
+    -   [JavaScript SDK](#)
+    -   [React SDK](#)
+    -   [Reactive Store]#)
+-   Audio/video state is preserved when setSettings is called.
+-   Device change handling improvements
+    -   Output device selection logic improved
+    -   Handled headphones with no microphone
+    -   Stereo headphones are handled correctly for input/output
+-   Handle virtual background on role change
+-   Cleanup video/audio elements to limit chrome 92 bug for mediaplayers
+
+#### Fixed
+
+-   Fix Settings component to show correct selected devices
+-   Fix video elements not detached when not in view
+
+## 2021-07-28
+
+#### Added
+
+-   Changing roles mid-call. Refer Usage
+    -   [JavaScript SDK](#)
+    -   [Reactive Store](#)
+    -   [React SDK](#)
+-   BREAKING CHANGE: The interface of `HMSPeer` has been modified for users using the JavaScript SDK without the [Reactive Store](#).
+
+```jsx
+// Before
+peer.role; // returns a string
+
+// After
+peer.role; // returns HMSRole
+
+interface HMSRole {
+    name: string;
+    publishParams: PublishParams;
+    subscribeParams: {
+        subscribeToRoles: string[],
+        maxSubsBitRate: number
+    };
+    permissions: {
+        endRoom: boolean,
+        removeOthers: boolean,
+        stopPresentation: boolean,
+        muteAll: boolean,
+        askToUnmute: boolean,
+        muteSelective: boolean,
+        changeRole: boolean
+    };
+    priority: number;
+}
+
+export interface PublishParams {
+    audio: {
+        bitRate: number,
+        codec: string
+    };
+    video: {
+        bitRate: number,
+        codec: string,
+        frameRate: number,
+        width: number,
+        height: number
+    };
+    screen: {
+        bitRate: number,
+        codec: string,
+        frameRate: number,
+        width: number,
+        height: number
+    };
+    allowed: string[];
+}
+```
+
+-   BREAKING CHANGE: For users of the [Reactive Store](#) and [React SDK](#), the `HMSPeer` interface has been modified. Use `peer.roleName` instead of `peer.role` to obtain the name of a peer's role.
+
+#### Fixed
+
+-   Improved automatic detection of input/output devices.
+-   Audio level update in Firefox due to wrong track ID.
+
+#### Known Issues
+
+-   Safari on Mac gives echo with some wired headphones
+-   With some bluetooth headphones(eg: OnePlus Bullets) with stereo output option, the default audioOutput doesn't work on windows.
+    (Quick Fix: Change device to another option of same device)
+
+## 2021-07-17
+
+#### Added
+
+-   Added custom audio output management. [Refer Usage](#)
+-   Added audio output device and volume control using `hmsActions.setAudioOutputDevice("a-valid-MediaDeviceInfo-object-id")` and `hmsActions.setVolume(30)`. [Refer Usage](#)
+-   Audio Level at preview could be fetched by `selectPeerAudioByID(localPeer.id)`.
+
+#### Fixed
+
+-   Audio level update callback in preview. [Refer Usage](#)
+-   **Experimental** Automatic device change on plug/unplug. Use `track.setSettings` to override input devices. [Refer Usage](#). Use audio output manager(`hms.getAudioOutput().setDevice()`) to override output devices. [Refer Usage](#)
+
+## 2021-07-14
+
+#### Versions
+
+| Package                    | Version |
+| -------------------------- | ------- |
+| @100mslive/hms-video       | 0.0.79  |
+| @100mslive/hms-video-react | 0.2.57  |
+
+#### Added
+
+-   Adjust remote peer volume locally
+-   Add HMSPeer, HMSTrack objects to HMSSpeaker for use in `onAudioLevelUpdate` callback.
+
+```ts
+interface HMSSpeaker {
+    peer: HMSPeer;
+    track: HMSTrack;
+    audioLevel: number;
+}
+```
+
+-   Add HMSPolicy to HMSPeer.
+
+#### Fixed
+
+-   Analytics
+
+## 2021-07-09
+
+#### Added
+
+-   New preview API.
+-   Screenshare with Audio
+
+#### Fixed
+
+-   Analytics
+
+## 2021-07-08
+
+#### Added
+
+-   Preview method to enable showing preview UI. [Refer Usage](#)
+-   Audio in screen-share
+
+#### Fixed
+
+-   Analytics
+
+## 2021-07-02
+
+#### Added
+
+-   Enable OpusDtx
+-   Replace HMSPeer with HMSLocalPeer and HMSRemotePeer
+-   Made @100mslive/hms-video as peer dependency. Install `@100mslive/hms-video` alongside `@100mslive/hms-video-react` to use 100ms web SDK in your app.
+
+For yarn,
+
+```
+yarn add @100mslive/hms-video @100mslive/hms-video-react
+```
+
+For npm,
+
+```
+npm i @100mslive/hms-video @100mslive/hms-video-react
+```
+
+-   Added transitionType property to hmsToast.
+
+#### Fixed
+
+-   Black tiles in Safari - Correctly queue messages when data channel not open
+-   Retry Join Init API fetch failure and throw terminal error on retry failure
+-   Silent Audio
+-   Import problem in Angular - Replace Bowser with ua-parser-js
+-   UI fixes in components.
+
+## 2021-06-24
+
+#### Added
+
+-   Connection Reestablishment Mechanism.
+-   On network switch, disconnection, Websocket signal, Publish and Subscribe ICE connections will be retried for reconnection
+-   onReconnecting - called when reconnection starts
+-   onReconnected - called when reconnection has succeeded
+-   onError - called when reconnection has failed
+    -   [Refer usage](#)
+-   Internal Bug fixes
+
+## 2021-06-21
+
+#### Added
+
+-   addTrack and removeTrack to add/remove auxiliary tracks to local peer. [See documentation](#).
+
+## 2021-06-17
+
+#### Added
+
+-   Notifications [See Documentation](#)
+
+## 2021-06-13
+
+#### Fixed
+
+-   Join with camera/microphone device failures.
+-   Join with camera/microphone failures.
+-   Preview shows correct error message.
+-   Start preview if either of camera/microphone is available.
+-   Stop preview when page goes into background.
+-   UI Fixes in modal, chat.
+
+## 2021-06-11
+
+#### Versions
+
+| Package                    | Version |
+| -------------------------- | ------- |
+| @100mslive/hms-video       | 0.0.26  |
+| @100mslive/hms-video-react | 0.2.14  |
+
+#### Added
+
+-   HMSPeer object will now have `customerUserId` property that stores the `userId` from [Client Token](#).
+
+#### Fixed
+
+-   Removed unsupported deviceId constraint in Safari.
+-   Use EventEmitter instead of EventTarget to support older versions of some browsers.
+-   `selectDominantSpeaker` replaces `selectDominantSpeakerName`. `selectDominantSpeaker` will return a `HMSPeer` object which contains customerUserId, name, role.
+-   More responsive UI for smaller screens.
+
+## 2021-06-10
+
+#### Added
+
+-   Handle device change on mid-call.
+
+#### Fixed
+
+-   Video tile going black when double/multiple clicked for unmute.
+-   Block on preview on camera/mic failure.
+
+## 2021-06-09
+
+#### Added
+
+-   Support for Firefox\(&gt;=60\).
+-   Shim and polyfills for cross browser compatibility.
+-   Exported `isSupported` method to check if browser and device are supported. `import { isSupported } from "@100mslive/hms-video";`
+
+#### Fixed
+
+-   Show dismissible warning for unsupported browsers in preview.
+-   Export MessageModal component.
+
+## 0.0.19 - 2021-06-02
+
+#### Added
+
+-   Error Codes - every error thrown from the SDK now will be of type HMSException, a wrapper over the native Error.
+
+```typescript
+interface HMSException {
+    code: number; // A code number denoting the type of error
+    name: string; // Name of the error
+    action: string; // What action caused the error
+    message: string; // Message related to the error
+    description: string; // Additional information and steps to recover from the error
+}
+```
+
+## 0.0.18 - 2021-06-02
+
+#### Fixed
+
+-   Screenshare permitted only when user's role is allowed to share screen.
+-   Improved screenshare quality by removing maxBitrate limit.
+
+## Alpha
+
+Our alpha release is here.
+
+Thanks for your patience :\).
+
+This release might still have bugs, some interfaces can change \(we will keep them to a minimum\)
+
+This release has
+
+-   Simplified SDK interfaces that can power a fully-featured video conferencing application
+    -   `join`
+    -   `leave`
+    -   `getPeers, getLocalPeer` for tracks/peers/other data
+-   Features not covered in this release
+    -   Handling network disconnections \(disconnect from wi-fi to 4g ends the call\)
+    -   Handling subscription network degradations
+    -   Handling second order publish network degradations
+    -   Detailed analytics
+    -   Recording
+-   Our sample app is currently a React edtech app to demonstrate how roles work, and also how our UI-components work. Documentation for these roles will be released soon
+-   Browser coverage is limited to latest versions of Chrome on desktop. We will improve this over the next few releases
+-   Please contact @akash goswami in your Slack channel if you have any questions
