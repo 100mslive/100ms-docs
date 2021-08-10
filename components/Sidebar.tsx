@@ -2,7 +2,6 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import React from 'react';
-import ReactIcon from '@/assets/icons/ReactIcon';
 import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
@@ -22,7 +21,6 @@ interface Props {
 const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const router = useRouter();
     const menuItem = [
-        { link: '/react/v2/foundation/Basics', name: 'REACT', icon: <ReactIcon /> },
         { link: '/android/v2/foundation/Basics', name: 'ANDROID', icon: <AndroidIcon /> },
         { link: '/ios/v2/foundation/Basics', name: 'IOS', icon: <IosIcon /> },
         { link: '/javascript/v2/foundation/Basics', name: 'JAVASCRIPT', icon: <JavascriptIcon /> },
