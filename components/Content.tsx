@@ -8,10 +8,12 @@ import components from '@/components/MDXComponents';
 
 import Basics from '../common/basics.md';
 import Role from '../common/role.md';
+import Network from '../common/network.md';
 
 const data = {
     basics: Basics,
-    roles: Role
+    roles: Role,
+    network: Network,
 };
 
 interface Props {
