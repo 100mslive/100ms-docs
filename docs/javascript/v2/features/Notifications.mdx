@@ -3,4 +3,204 @@ title: Notifications
 nav: 3.11
 ---
 
+## Initialize notifications
 
+Notifications can be used to display toast to user about activities happening in the room, such as peer join/leave or new messages.
+It can also be used to know about any mid call sdk level error.
+
+In order to subscribe for notifications we can use the hmsNotifications object created in the integration step.
+
+<Tabs id="notification-initialize" items={['Javascript', 'React']} />
+
+<Tab id="notification-initialize-0">
+
+```jsx
+import { hmsNotifications } from './hms';
+
+hmsNotifications.onNotification((notification) => {
+    if (!notification) {
+        return;
+    }
+
+    // This function will be called when a notification is received
+    console.log('notification type', notification.type);
+
+    // The data in notification depends on the notification type
+    console.log('data', notification.data);
+});
+```
+
+</Tab>
+
+<Tab id="notification-initialize-1">
+
+```jsx
+import { useHMSNotifications } from '@100mslive/hms-video-react';
+
+function Notification() {
+    const notification = useHMSNotifications();
+
+    useEffect(() => {
+        if (!notification) {
+            return;
+        }
+
+        // notification is a reactive object
+        // this function will run everytime there is a new notification
+        console.log('notification type', notification.type);
+
+        // The data in notification depends on the notification type
+        console.log('data', notification.data);
+    }, [notification]);
+
+    return <div>Notification: {notification?.type}</div>;
+}
+```
+
+</Tab>
+
+## Notification types
+
+The notification `type` is a string and can only take values from the list below.
+You can use it to check the type of the notification.
+
+Here is the list of all notification types:
+
+```jsx
+class HMSNotificationTypes {
+    static PEER_JOINED: string; // notification.data will be HMSPeer
+    static PEER_LEFT: string; // notification.data will be HMSPeer
+    static NEW_MESSAGE: string; // notification.data will be HMSMessage
+    static ERROR: string; // notification.data will be HMSException
+    static RECONNECTING: string; // User has lost connection to the server. The connection is being re-established
+    static RECONNECTED: string; // The connection has been re-established successfully.
+}
+```
+
+The data in notification depends on the notification type. You can use the `switch` construct to the handle the notification type.
+
+<Tabs id="notification-types" items={['Javascript', 'React']} />
+
+<Tab id="notification-types-0">
+
+```jsx{14-44}
+import { HMSReactiveStore } from '@100mslive/hms-video-store';
+
+const manager = new HMSReactiveStore();
+const hmsNotifications = manager.getNotifications();
+
+const unsubscribe = hmsNotifications.onNotification((notification) => {
+    if (!notification) {
+        return;
+    }
+
+    console.log('notification type', notification.type);
+    console.log('data', notification.data);
+
+    // you can use the following to show appropriate toast notifications for eg.
+    switch (notification.type) {
+        case HMSNotificationTypes.PEER_JOINED:
+            console.log(`${notification.data.name} joined`);
+            break;
+        case HMSNotificationTypes.PEER_LEFT:
+            console.log(`${notification.data.name} left`);
+            break;
+        case HMSNotificationTypes.NEW_MESSAGE:
+            console.log(
+                `${notification.data.message} received from ${notification.data.senderName}`
+            );
+            break;
+        case HMSNotificationTypes.ERROR:
+            console.log('[Error]', notification.data);
+            console.log('[Error Code]', notfication.data.code);
+            break;
+        case HMSNotificationTypes.RECONNECTING:
+            console.log('[Reconnecting]', notification.data);
+            break;
+        case HMSNotificationTypes.RECONNECTED:
+            console.log('[Reconnected]');
+            break;
+        default:
+            break;
+    }
+});
+```
+
+</Tab>
+
+<Tab id="notification-types-1">
+
+```jsx{14-44}
+import { useHMSNotifications } from '@100mslive/hms-video-react';
+
+function Notification() {
+    const notification = useHMSNotifications();
+
+    React.useEffect(() => {
+        if (!notification) {
+            return;
+        }
+
+        console.log('notification type', notification.type);
+        console.log('data', notification.data);
+
+        // you can use the following to show appropriate toast notifications for eg.
+        switch (notification.type) {
+            case HMSNotificationTypes.PEER_JOINED:
+                console.log(`${notification.data.name} joined`);
+                break;
+            case HMSNotificationTypes.PEER_LEFT:
+                console.log(`${notification.data.name} left`);
+                break;
+            case HMSNotificationTypes.NEW_MESSAGE:
+                console.log(
+                    `${notification.data.message} received from ${notification.data.senderName}`
+                );
+                break;
+            case HMSNotificationTypes.ERROR:
+                console.log('[Error]', notification.data);
+                console.log('[Error Code]', notfication.data.code);
+                break;
+            case HMSNotificationTypes.RECONNECTING:
+                console.log('[Reconnecting]', notification.data);
+                break;
+            case HMSNotificationTypes.RECONNECTED:
+                console.log('[Reconnected]');
+                break;
+            default:
+                break;
+        }
+    }, [notification]);
+
+    return <div>Notification: {notification?.type}</div>;
+}
+```
+
+</Tab>
+
+## Unsubscribing from notifications
+
+You can unsubscribe to the notifications by calling the method returned by the `hmsNotifications.onNotification` function.
+
+<Tabs id="notification-unsubscribe" items={['Javascript', 'React']} />
+
+<Tab id="notification-unsubscribe-0">
+
+```jsx
+const unsubscribe = hmsNotifications.onNotification((notification) => {
+    //...
+});
+
+unsubscribe();
+```
+
+</Tab>
+
+<Tab id="notification-unsubscribe-1">
+
+```jsx
+// No code is required to unsubscribe from notifications
+// Unmount the component that calls the `useHMSNotifications` hook
+```
+
+</Tab>
