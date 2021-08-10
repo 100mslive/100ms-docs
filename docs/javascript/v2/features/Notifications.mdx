@@ -8,21 +8,17 @@ nav: 3.11
 Notifications can be used to display toast to user about activities happening in the room, such as peer join/leave or new messages.
 It can also be used to know about any mid call sdk level error.
 
-In order to subscribe for notifications copy the following code into your application.
+In order to subscribe for notifications we can use the hmsNotifications object created in the integration step.
 
 <Tabs id="notification-initialize" items={['Javascript', 'React']} />
 
 <Tab id="notification-initialize-0">
 
 ```jsx
-import { HMSReactiveStore } from '@100mslive/hms-video-store';
+import { hmsNotifications } from './hms';
 
-const manager = new HMSReactiveStore();
-const hmsNotifications = manager.getNotifications();
-
-const unsubscribe = hmsNotifications.onNotification((notification) => {
+hmsNotifications.onNotification((notification) => {
     if (!notification) {
-        // notification will be null initially
         return;
     }
 
@@ -44,9 +40,8 @@ import { useHMSNotifications } from '@100mslive/hms-video-react';
 function Notification() {
     const notification = useHMSNotifications();
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!notification) {
-            // notification will be null initially
             return;
         }
 
@@ -66,28 +61,23 @@ function Notification() {
 
 ## Notification types
 
-The notification `type` is a string and can only take values from the list below. These constants are exported from the `100mslive/hms-video-store` package.
+The notification `type` is a string and can only take values from the list below.
 You can use it to check the type of the notification.
 
 Here is the list of all notification types:
 
 ```jsx
 class HMSNotificationTypes {
-    static PEER_JOINED: string; // A peer has joined the room
-    static PEER_LEFT: string; // A peer has left the room
-    static NEW_MESSAGE: string; // A new braodcast message has been received
-    static ERROR: string; // A sdk level error has occurred
+    static PEER_JOINED: string; // notification.data will be HMSPeer
+    static PEER_LEFT: string; // notification.data will be HMSPeer
+    static NEW_MESSAGE: string; // notification.data will be HMSMessage
+    static ERROR: string; // notification.data will be HMSException
     static RECONNECTING: string; // User has lost connection to the server. The connection is being re-established
     static RECONNECTED: string; // The connection has been re-established successfully.
-    static TRACK_ADDED: string; // A new track has been added to the room
-    static TRACK_REMOVED: string; // A track has been removed from the room
-    static TRACK_MUTED: string; // A track has been muted
-    static TRACK_UNMUTED: string; // A track has been unmuted
-    static ROLE_UPDATED: string; // A peer's role has been updated
 }
 ```
 
-The data in notification depends on the notification type. You can use the `switch` construct to the handle the notfication type.
+The data in notification depends on the notification type. You can use the `switch` construct to the handle the notification type.
 
 <Tabs id="notification-types" items={['Javascript', 'React']} />
 
@@ -129,11 +119,6 @@ const unsubscribe = hmsNotifications.onNotification((notification) => {
             break;
         case HMSNotificationTypes.RECONNECTED:
             console.log('[Reconnected]');
-            break;
-        case HMSNotificationTypes.ROLE_UPDATED:
-            if (notification.data.isLocal) {
-                console.log('Role has changed to ' + notification.data.roleName);
-            }
             break;
         default:
             break;
@@ -181,11 +166,6 @@ function Notification() {
                 break;
             case HMSNotificationTypes.RECONNECTED:
                 console.log('[Reconnected]');
-                break;
-            case HMSNotificationTypes.ROLE_UPDATED:
-                if (notification.data.isLocal) {
-                    console.log('Role has changed to ' + notification.data.roleName);
-                }
                 break;
             default:
                 break;
