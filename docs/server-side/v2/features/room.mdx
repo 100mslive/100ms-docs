@@ -3,16 +3,19 @@ title: Room
 nav: 4.2
 ---
 
+## Introduction
+
 Room is a virtual space which holds conferencing of the people. To allow users to join a 100ms video conferencing session inside your app, you first need to create a `room`.
 
-# Create Room
+## Create Room
+
 You can create room using either dashboard or API.
 
 ## Create Room using Dashboard
 
 You can create room on [100ms Dashboard](https://dashboard.100ms.live/create-room). While creating a room you can specify it's name, template, region and/or enable recording. 
 
-Room creation via dashboard is mostly helpful in doing quick POC or creating smaller number of rooms.
+Room creation via dashboard is helpful in doing quick POC or creating smaller number of rooms.
 
 
 <Image width={2168} height={1212} alt="Create a room" src="/docs/v2/create-a-room.png" />
@@ -78,14 +81,12 @@ tent-Type: application/json' -d '{"name": "test-room", "description": "This is a
 </Tab>
 
 ### Headers
-
 | Name                           | Value                        | Required |
 | :----------------------------- | :--------------------------- | :------- |
 | Content-type <br/>             | application/json             | Yes      |
 | Authorization <br/>            | Bearer `<management token>`  | Yes      |
 
 ### Body Paramters
-
 | Name                 | Type     | Description                                                                                                                                                                                                                                                                                                 | Required |
 | :------------------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | name <br/>           | `string` | A unique identifier you can assign to 100ms rooms. This is `case-insensitive`. Accepted characters are `a-z, A-Z, 0-9, and . - : _` If not provided, this is generated automatically. <br/><br/> **Note**: `createRoom` is called with the same room name, then the same room ID is returned                | No       |
@@ -133,7 +134,6 @@ tent-Type: application/json' -d '{"name": "test-room", "description": "This is a
 To know more about recording please visit [Recording](./recording)
 
 ### upload_info
-
 | Name        | Type     | Description                                                                                                                                                                                      | Required |
 | :---------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | type        | `string` | Upload Destination type. Currently, only `s3` is supported                                                                                                                                       | Yes      |
@@ -143,7 +143,6 @@ To know more about recording please visit [Recording](./recording)
 | credentials | `object` | Object of type `Credentials`. This is used to share AWS credentials to access the s3 bucket specified.                                                                                           | No       |
 
 ### Credentials
-
 | Name   | Type     | Description                                                                  | Required |
 | :----- | :------- | :--------------------------------------------------------------------------- | :------- |
 | key    | `string` | Access Key for the AWS account hosting the s3 bucket for recordings' storage | Yes      |
