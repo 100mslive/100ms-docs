@@ -51,7 +51,9 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
         setIsDark(!isDark);
     };
     // @ts-ignore
-    const currentTech = router.query.slug[0] === 'api-reference' ? router.query.slug[1] : router.query.slug[0];
+    const currentTech =
+        // @ts-ignore
+        router.query.slug[0] === 'api-reference' ? router.query.slug[1] : router.query.slug[0];
     const routeAPIRef = () => {
         // @ts-ignore
         const routeLink = `/api-reference/${router.query.slug[0]}/v2/home/content`;
@@ -61,6 +63,8 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
         }
         return routeLink;
     };
+    // @ts-ignore
+    const isApiRef = router.query.slug[0] === 'api-reference';
     return (
         <div className="ctx">
             <div className="head-left">
@@ -72,19 +76,21 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                         </p>
                     </div>
                 </a>
-                <span
-                    aria-label="theme-toggle-button"
-                    className="pointer"
-                    role="button"
-                    style={{ paddingTop: '8px', paddingLeft: '10px' }}
-                    tabIndex={0}
-                    onKeyPress={() => {}}
-                    onClick={() => toggleTheme()}>
-                    {isDark ? <SvgMoon /> : <SvgSun />}
-                </span>
             </div>
 
             <div className="head-right">
+                <div className="nav-links">
+                    <button className={!isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
+                        <Link href={`/${currentTech}/`}> Docs</Link>
+                    </button>
+
+                    <span style={{ marginRight: '1rem' }} />
+                    {/* @ts-ignore */}
+                    <button className={isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
+                        <Link href={routeAPIRef()}>API Reference</Link>
+                    </button>
+                </div>
+
                 <div className="search-ctx">
                     <button onClick={() => setModal(true)} type="button" className="search-btn">
                         <SearchIcon />
@@ -92,14 +98,18 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                         <span className="hot-key">/</span>
                     </button>
                 </div>
-
-                <div className="nav-links">
-                    <Link href={`/${currentTech}/`}>Docs</Link>
-                    <span style={{ marginRight: '1rem' }} />
-                    {/* @ts-ignore */}
-                    <Link href={routeAPIRef()}>API Reference</Link>
-                </div>
             </div>
+
+            <span
+                aria-label="theme-toggle-button"
+                className="pointer"
+                role="button"
+                style={{ paddingTop: '8px', paddingLeft: '10px', margin: '0 2rem 0 1rem' }}
+                tabIndex={0}
+                onKeyPress={() => {}}
+                onClick={() => toggleTheme()}>
+                {isDark ? <SvgMoon /> : <SvgSun />}
+            </span>
 
             {modal ? (
                 <SearchModal setModal={setModal} docs={docs} currentDocSlug={currentDocSlug} />
@@ -132,6 +142,11 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     z-index: 1000;
                     position: absolute;
                 }
+                .link-btn {
+                    background: var(--gray4);
+                    border-radius: 5px;
+                    padding: 5px 8px;
+                }
                 .res-box:hover {
                     opacity: 1;
                 }
@@ -153,8 +168,8 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 .res-box span {
                     margin-right: 1rem;
                 }
-                a {
-                    color: inherit;
+                button a {
+                    color: var(--gray11) !important;
                     text-decoration: none;
                 }
                 a:hover {
@@ -163,14 +178,13 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 .head-left {
                     display: flex;
                     align-items: center;
-                    width: 400px;
+                    width: 250px;
                 }
                 .head-right {
                     display: flex;
                     align-items: center;
                     width: 100%;
                     justify-content: space-between;
-                    padding-right: 2rem;
                 }
                 .logo-ctx {
                     display: flex;
@@ -183,8 +197,10 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     margin-right: 1rem;
                 }
                 .search-ctx {
+                    border-radius: 5px;
+                    background: var(--gray3);
                     position: relative;
-                    padding: 0 1rem;
+                    padding: 5px 12px;
                 }
                 .search-btn {
                     opacity: 0.6;

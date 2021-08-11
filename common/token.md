@@ -12,7 +12,7 @@ Then login again and you would see this Section. Fill it out
 
 After that's done you would be asked to choose a template we will choose "Video Conferencing" for now then click on "Set up App"
 
-![Tempalte](/guides/token/template.png)
+![Template](/guides/token/template.png)
 
 After you're App is set click on "Go to Dashboard" or [Go Here](https://dashboard.100ms.live/dashboard)
 
@@ -42,4 +42,4 @@ In the popup that shows up click on icon with a key shape next to the role you w
 
 ![Copy Token](/guides/token/copy-token.png)
 
- The token will be copied to your clipboard. Use this along with the `room_id` to proceed with the quickstart guide.
+The token will be copied to your clipboard. Use this along with the `room_id` to proceed with the quickstart guide.
