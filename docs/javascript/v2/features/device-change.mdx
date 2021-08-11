@@ -1,0 +1,35 @@
+---
+title: Device Changes
+nav: 3.07
+---
+
+Device changes include changes in audio/video input and audio output devices. Plugging a headset, or disconnecting your airpods mid call are
+some of the example of device changes. These are all taken care of by the SDK without requiring any code.
+
+## Manual Device Change
+
+![Device Change Settings](/guides/settings.png)
+
+You may still want to allow users to see the currently selected devices and change them if required. We'll do this in three steps - 
+
+1. Fetching all attached devices list from `hmsStore`.
+2. Fetching the currently selected devices from `hmsStore`.
+3. Calling `hmsActions` to change the device if required.
+
+> Note that changing audio output device is available only in chromium based browsers.
+
+```js
+// {audioInput, audioOutput, videoInput}
+const devices = hmsStore.getState(selectDevices);
+
+// {audioInputDeviceId, audioOutputDeviceId, videoInputDeviceId}
+const selected = hmsStore.getState(selectLocalMediaSettings);
+
+const deviceId = 'default';
+// show user a settings component to manually choose device
+
+// call the corresponding method to change the device id
+hmsActions.setAudioSettings({deviceId});
+hmsActions.setVideoSettings({deviceId});
+hmsActions.setAudioOutputDevice(deviceId);
+```

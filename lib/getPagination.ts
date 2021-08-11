@@ -16,7 +16,8 @@ const getPagination = (list: PaginationType[], slug: string[]): {
     if (idx === len - 1) {
         return {
             previousPost: list[idx - 1],
-            nextPost: list[0]
+            // @ts-ignore
+            nextPost: null
         };
     }
     // if it's the 1st post

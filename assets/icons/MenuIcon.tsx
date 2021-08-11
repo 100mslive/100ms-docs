@@ -11,7 +11,7 @@ const MenuIcon = () => (
         strokeLinejoin="round"
         fill="none"
         shapeRendering="geometricPrecision"
-        style={{ color: 'var(--foreground)' }}>
+        style={{ color: 'var(--gray12)' }}>
         <path d="M3 12h18" />
         <path d="M3 6h18" />
         <path d="M3 18h18" />

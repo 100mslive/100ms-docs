@@ -1,0 +1,46 @@
+---
+title: Recording
+nav: 4.3
+---
+
+## Introduction
+
+Recording can be used to save audio/video calls for offline viewing. 100ms supports both individual and composite recordings.
+
+## Types of recording
+
+### Individual recording
+Audio and video of each peer is provided as a seperate mp4 file. These files are be used for offline review or in implementating custom composition.
+
+### Composite recording
+Audio and video of all peers is composed as per their joining/leaving the meeting and provided as a single mp4. This file can be used for offline viewing of the meeting.
+
+## How to enable recording
+
+### Using Dashboard
+Recording can be enabled when creating a room
+<Image width={2168} height={1212} alt="Enable recording when creating a room" src="/docs/v2/create-a-room.png" />
+
+### Using API
+- [See detailed API](/server-side/v2/features/room)
+
+### Uploading destination configuration
+By default recordings will be uploaded to 100ms storage and a presigned URL for the same will be provided to customers via a webhook. The presigned url will expire in 12hours.
+Customers can also configure the recordings to be stored in thier cloud storage. Following are the configurations for the same.
+
+| Name        | Type     | Description                                                                                                                                                                                      | Required |
+| :---------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| type        | `string` | Upload Destination type. Currently, only `s3` is supported                                                                                                                                       | Yes      |
+| location    | `string` | Name of the AWS s3 bucket in which you want to store all recordings                                                                                                                              | Yes      |
+| prefix      | `string` | Upload prefix path                                                                                                                                                                               | No       |
+| options     | `object` | Options to be used for uploading i.e. region, ACLs etc                                                                                                                                           | No       |
+| credentials | `object` | Object of type `Credentials`. This is used to share AWS credentials to access the s3 bucket specified. Leave this blank if you are using an `IAM role` to provide 100ms access to your s3 bucket | No       |
+
+Where `credentials` is
+
+| Name   | Type     | Description                                                                  | Required |
+| :----- | :------- | :--------------------------------------------------------------------------- | :------- |
+| key    | `string` | Access Key for the AWS account hosting the s3 bucket for recordings' storage | Yes      |
+| secret | `string` | Secret for the AWS account hosting the s3 bucket for recordings' storage     | Yes      |
+
+Recording mp4 will be placed at - `s3://location/prefix/<room_id>/<start_date>/<session_id>/`

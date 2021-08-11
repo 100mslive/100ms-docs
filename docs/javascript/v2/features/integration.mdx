@@ -1,0 +1,142 @@
+---
+title: Integrating The SDK
+nav: 3.01
+---
+
+## Installing our libraries
+
+You can use either npm or yarn to install the dependencies. Please install the respective libraries depending on whether
+you're planning to use with react or other framework/plain javascript.
+
+<Tabs id="packages-install" items={['Javascript', 'React']} />
+
+<Tab id="packages-install-0">
+
+```bash
+npm install --save @100mslive/hms-video @100mslive/hms-video-store
+```
+
+</Tab>
+
+<Tab id="packages-install-1">
+
+```bash
+npm install --save @100mslive/hms-video @100mslive/hms-video-react
+```
+
+</Tab>
+
+## Setting up the sdk
+
+Our core SDK can be used with plain Javascript or any UI framework. We also provide a convenient hooks based interface
+in case you're planning to integrate our SDK in a React app. Please follow the appropriate section below.
+
+### Javascript
+
+There are three entities which we need to be familiar of -
+
+* `hmsStore` - this contains the complete state of the room at any given time. This includes for example, participant details,
+messages and track states.
+* `hmsActions` - this is used to perform any action such as joining, muting and sending a message.
+* `hmsNotifications` - this can be used to get notified on peer join/leave and new messages in order to show toast notifications to
+the user.
+
+Let's create a `hms.js` file where we initialize and export the above entities, so they can be used as required. We'll assume that
+this setup is in place in other sections of the documentation.
+
+<Tabs id="store" items={['Setup and Export', 'Import and use']} />{' '}
+
+<Tab id='store-0'>
+
+```js:hms.js
+import { HMSReactiveStore } from '@100mslive/hms-video-store';
+
+const hms = new HMSReactiveStore();
+
+// by default subscriber is notified about store changes post subscription only, this can be
+// changed to call it right after subscribing too using this function.
+hmsManager.triggerOnSubscribe(); // optional, recommended
+
+const hmsActions = hms.getHMSActions();
+const hmsStore = hms.getStore();
+const hmsNotifications = hms.getNotifications();
+
+export { hmsActions, hmsStore, hmsNotifications };
+```
+
+</Tab>
+
+<Tab  id='store-1'>
+
+```js:some_other_file.js
+import { hmsActions, hmsStore, hmsNotifications } from './hms';
+```
+
+</Tab>
+
+### React Hooks
+
+If you're planning to use our SDK with React, we provide three friendly hooks as a wrapper over our plain javascript interface.
+You can wrap your UI in `HMSRoomProvider` and these hooks will become available to all the UI components. We'll learn more about these hooks,
+and their use as we navigate through further sections.
+
+<Tabs id="react" items={['Wrap In Provider', 'Use hooks']} />{' '}
+
+<Tab id='react-0'>
+
+```jsx:app.jsx
+import { HMSRoomProvider } from '@100mslive/hms-video-react';
+
+export function App() {
+  return (
+    <HMSRoomProvider>
+      <MyApp />
+    </HMSRoomProvider>
+  );
+}
+
+```
+</Tab>
+
+<Tab  id='react-1'>
+
+
+```jsx:component.jsx
+import {
+  useHMSStore,
+  useHMSActions,
+  useHMSNotifications
+} from '@100mslive/hms-video-react';
+
+export function MyComponent() {
+  const hmsStore = useHMSStore();
+  const hmsActions = useHMSActions();
+  const hmsNotifications = useHMSNotifications();
+
+  return </>;
+}
+```
+
+</Tab>
+
+## Debugging Tools
+
+We believe that debugging is an important aspect of a developer first SDK.
+We have designed our APIs and error messages with developer experience and ease of debugging in mind. We hope that
+you'll have a delightful experience walking through the features and integrating our sdk in your app. Our core sdk
+is written in Typescript, so all the typings are included with the SDK and are guaranteed to be true. This means that,
+even if you use javascript, editors will be able to give a significantly improved experience in terms of intellisense.
+
+We take the debugging experience one step further by connecting our store to redux devtools extension out of box. This gives you transparency and
+visibility into the whole room state while building your UI.
+We highly recommend installing the [devtools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en)
+extension to visualize this state along with all the activities taking place in a single view. This makes it easier
+to understand when and how the UI should change. You can use the time travel feature of the redux devtools
+to recreate state changes for debugging specific issues as well.
+
+![Redux Devtools](/guides/redux-devtools.png)
+
+We also give a ready to use UI without writing any code which can be accessed
+from the [dashboard account](https://dashboard.100ms.live). The code for this sample is open sourced [here](https://github.com/100mslive/100ms-web-v2).
+You can either start with this codebase or write your own, and use it for testing your webapp
+in the initial phase of development.

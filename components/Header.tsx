@@ -5,6 +5,8 @@ import CrossIcon from '@/assets/icons/CrossIcon';
 import MenuIcon from '@/assets/icons/MenuIcon';
 import React from 'react';
 import useKeyPress from '@/lib/useKeyPress';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -21,6 +23,7 @@ interface Props {
 const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocSlug }) => {
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
+    const router = useRouter();
     React.useEffect(() => {
         if (escPressed) {
             setModal(false);
@@ -47,6 +50,17 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
         // update the state
         setIsDark(!isDark);
     };
+    // @ts-ignore
+    const currentTech = router.query.slug[0] === 'api-reference' ? router.query.slug[1] : 'react';
+    const routeAPIRef = () => {
+        // @ts-ignore
+        const routeLink = `/api-reference/${router.query.slug[0]}/v2/home/content`;
+        // @ts-ignore
+        if (router.query.slug[0] === 'api-reference') {
+            return router.asPath;
+        }
+        return routeLink;
+    };
     return (
         <div className="ctx">
             <div className="head-left">
@@ -70,12 +84,21 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 </span>
             </div>
 
-            <div className="search-ctx">
-                <button onClick={() => setModal(true)} type="button" className="search-btn">
-                    <SearchIcon />
-                    <span>Quick search for anything</span>
-                    <span className="hot-key">/</span>
-                </button>
+            <div className="head-right">
+                <div className="search-ctx">
+                    <button onClick={() => setModal(true)} type="button" className="search-btn">
+                        <SearchIcon />
+                        <span>Quick search for anything</span>
+                        <span className="hot-key">/</span>
+                    </button>
+                </div>
+
+                <div className="nav-links">
+                    <Link href={`/${currentTech}/`}>Docs</Link>
+                    <span style={{ marginRight: '1rem' }} />
+                    {/* @ts-ignore */}
+                    <Link href={routeAPIRef()}>API Reference</Link>
+                </div>
             </div>
 
             {modal ? (
@@ -92,16 +115,17 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     display: flex;
                     align-items: center;
                     width: 100%;
-                    height: 4rem;
+                    height: 3rem;
                     z-index: 50;
                     position: sticky;
                     margin: 0 auto;
                     top: 0;
                     padding: 0.5rem;
-                    background-color: var(--background);
+                    background-color: var(--gray1);
+                    border-bottom: 1px solid var(--gray6);
                 }
                 .res-ctx {
-                    background-color: var(--offsetBg);
+                    background-color: var(--gray2);
                     border-bottom-right-radius: 5px;
                     border-bottom-left-radius: 5px;
                     padding: 1rem 2rem;
@@ -111,6 +135,10 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 .res-box:hover {
                     opacity: 1;
                 }
+                .nav-links {
+                    display: flex;
+                    align-items: center;
+                }
                 .res-box {
                     margin: 0.5rem 0;
                     border-radius: 5px;
@@ -119,7 +147,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    background-color: var(--offset);
+                    background-color: var(--gray3);
                     opacity: 0.6;
                 }
                 .res-box span {
@@ -137,10 +165,17 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     align-items: center;
                     width: 400px;
                 }
+                .head-right {
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                    justify-content: space-between;
+                    padding-right: 2rem;
+                }
                 .logo-ctx {
                     display: flex;
                     align-items: center;
-                    color: var(--foreground);
+                    color: var(--gray12);
                     font-size: 24px;
                 }
                 .logo-ctx img {
@@ -148,7 +183,6 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     margin-right: 1rem;
                 }
                 .search-ctx {
-                    width: 100%;
                     position: relative;
                     padding: 0 1rem;
                 }
@@ -159,11 +193,9 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     align-items: center;
                     border: none;
                     border-radius: 5px;
-                    width: 100%;
+
                     cursor: pointer;
-                    border-bottom: 1px solid var(--accents2);
                     border-bottom-width: 1px;
-                    padding-bottom: 1rem;
                 }
                 .search-btn span {
                     margin-left: 1rem;
@@ -172,7 +204,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     margin-left: 1rem;
                     border-radius: 5px;
                     padding: 0 8px;
-                    border: 1px solid var(--accents3);
+                    border: 1px solid var(--gray6);
                 }
                 .search-btn:hover {
                     opacity: 1;
@@ -184,7 +216,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 .company span {
                     font-size: 1rem;
                     font-weight: 500;
-                    color: var(--accents6);
+                    color: var(--gray9);
                 }
                 .menu-btn {
                     display: none;
@@ -204,7 +236,11 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     .head-left {
                         width: unset;
                     }
+                    .head-right {
+                        display: none;
+                    }
                     .menu-btn {
+                        margin-top: 0.5rem;
                         display: block;
                     }
                 }

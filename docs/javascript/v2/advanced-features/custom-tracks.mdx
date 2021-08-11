@@ -1,0 +1,41 @@
+---
+title: Add custom tracks
+nav: 4.10
+---
+
+You can also add custom video or audio tracks to the sdk which will be published to others. Possible use cases -
+* a synthetic track which doesn't use camera
+* screenshare with custom-built annotations in an electron app.
+* audio track from a source other than microphone
+
+
+To add a custom/auxiliary track, you need to get hold of a MediaStreamTrack object and add it using the `addTrack` method on `hmsActions`.
+
+```js
+/**
+ * track: MediaStreamTrack - Track to be added
+ * source?: 'regular' | 'screen' | 'plugin' - Source of track - default: 'regular'
+ */
+await hmsActions.addTrack(track, source);
+
+// to remove the track
+await hmsActions.removeTrack(trackId);
+```
+
+
+## Accessing custom/auxiliary tracks
+
+```js
+// if you have hold of the peer object, it'll have ids of all the auxiliary tracks
+console.log(peer.auxiliaryTracks);
+
+// all auxiliary tracks
+hmsStore.getState(selectAuxiliaryTracksByPeerID);
+
+// audio auxiliary track
+hmsStore.getState(selectAuxiliaryAudioByPeerID);
+
+// track with source as screenshare
+hmsStore.getState(selectScreenShareByPeerID);
+hmsStore.getState(selectScreenShareAudioByPeerID);
+```

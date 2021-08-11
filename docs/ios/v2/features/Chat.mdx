@@ -1,0 +1,45 @@
+---
+title: Chat
+nav: 3.5
+---
+
+Often, you'll want to chat with your peers in the room. Send them a link, a funny message or an emoji. 😁
+
+100ms SDK makes it simple to build a fully fledged Real Time Chat Room with `HMSMessage` APIs.
+
+Now, there are 2 parts of messaging. You can _send_ a message & you can _receive_ a message. Let's take a look at them step wise.
+
+### Send a Message 📩
+
+1. First, create an object of `HMSMessage`. Let's take a look at the initializer of `HMSMessage`.
+```swift
+HMSMessage(sender: String, time: String, type: String, message: String)
+```
+- `sender` is the local peer's peerID
+- `time` is the current time in String format
+- `type` should be set to `chat` string value
+- `message` contains the chat message which peer wants to send. Can be a JSON string as well.
+
+2. Now, that you have message object created, use the `send` method of `HMSSDK` to broadcast your chat message.
+```swift
+let message = HMSMessage(sender: "abc123", // local peer's peerID
+                           time: "\(Date())", // current date in string format
+                           type: "chat", // specify "chat" as string value
+                        message: "Hello, how are you?") // the chat message to be sent  
+
+hmsSDK.send(message: message)  // use the `send` method on HMSSDK class instance
+```
+
+### Receive a Message 📬
+
+Whenever a peer in the sends you a message, 100ms SDK will invoke the `func on(message: HMSMessage)` method of `HMSUpdateListener`.
+
+The message object of type `HMSMessage` will be passed in the method invocation.
+
+```swift
+class MyClass: HMSUpdateListener {  
+   func on(message: HMSMessage) {
+      print("New message received", message.message)
+   }
+}
+```

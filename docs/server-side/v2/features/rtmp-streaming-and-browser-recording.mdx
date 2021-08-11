@@ -1,0 +1,116 @@
+---
+title: RTMP Streaming & Browser Recording
+nav: 4.4
+---
+
+## Introduction
+
+RTMP Streaming can be used to live stream your video conferencing apps to platforms like Facebook, YouTube, Twitch, etc.
+Browser Recording can be used to record your video conferencing apps to a file, for subsequent access.
+You can start wither RTMP Streaming or Browser Recording or both for any room
+
+## Pre-requisites
+
+1. Management token
+
+- [Click here to see how to generate management token](/server-side/v2/foundation/authentication-and-tokens)
+
+2. Single click meeting url to directly enter a room
+
+## APIs
+
+### Start Streaming/Recording
+<PostRequest
+    desp="This endpoint is used to start live streaming/recording"
+    url="https://prod-in2.100ms.live/api/v2/beam"
+/>
+
+<Tabs items={['Request', 'Response']} id="start" />
+
+<div id="start-0">
+
+#### Headers
+
+| Name                           | Value                        | Required |
+| :----------------------------- | :--------------------------- | :------- |
+| Content-type <br/>             | application/json             | Yes      |
+| Authorization <br/>            | Bearer `<management token>`  | Yes      |
+
+#### Body Parameters
+
+| Name              | Type     | Description                                                                                                                                                                                                                                                                                                 | Required |
+| :---------------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| operation <br/>   | `string` | Must be "start"                                                                                                                                                                                                                                                                                             | Yes      |
+| room_id <br/>     | `string` | The room id of the room which we need to start streaming/recording                                                                                                                                                                                                                                          | Yes      |
+| meeting_url <br/> | `string` | Single click meeting url which we need to start streaming/recording                                                                                                                                                                                                                                         | Yes      |
+| rtmp_url <br/>    | `string` | The RTMP output url to which the meeting will be streamed. <br/> Required when RTMP streaming needs to be started. <br/> Supports `rtmp://` & `rtmps://`                                                                                                                                                    | No       |
+| record <br/>      | `bool`   | Flag to enable browser recording                                                                                                                                                                                                                                                                            | No       |
+
+#### cURL
+
+```bash
+curl 
+    --location \
+    --request POST 'https://prod-in2.100ms.live/api/v2/beam' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer {xxxxx.yyyyy.zzzzz}' \
+    --data-raw '{
+        "operation": "start",
+        "room_id": "{room_id}",
+        "meeting_url": "{meeting_url}",
+        "rtmp_url": "{rtmp_url}",
+        "record": {true/false}
+    }'
+```
+
+</div>
+
+<Tab id="start-1">
+    <Response res="200: OK" resText="Beam has started successfully" />
+</Tab>
+
+---
+
+### Stop Streaming/Recording
+<PostRequest
+    desp="This endpoint is used to stop live streaming/recording"
+    url="https://prod-in2.100ms.live/api/v2/beam"
+/>
+
+<Tabs items={['Request', 'Response']} id="stop" />
+
+<div id="stop-0">
+
+#### Headers
+
+| Name                           | Value                        | Required |
+| :----------------------------- | :--------------------------- | :------- |
+| Content-type <br/>             | application/json             | Yes      |
+| Authorization <br/>            | Bearer `<management token>`  | Yes      |
+
+#### Body Paramters
+
+| Name              | Type     | Description                                                           | Required |
+| :---------------- | :------- | :-------------------------------------------------------------------- | :------- |
+| operation <br/>   | `string` | Must be "stop"                                                        | Yes      |
+| room_id <br/>     | `string` | The room id of the room for which we need to stop streaming/recording | Yes      |
+
+#### cURL
+
+```bash
+curl 
+    --location \
+    --request POST 'https://prod-in2.100ms.live/api/v2/beam' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer {xxxxx.yyyyy.zzzzz}' \
+    --data-raw '{
+        "operation": "stop",
+        "room_id": "{room_id}",
+    }'
+```
+
+</div>
+
+<Tab id="stop-1">
+    <Response res="200: OK" resText="Beam has stopped successfully" />
+</Tab>
