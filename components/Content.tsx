@@ -9,12 +9,12 @@ import components from '@/components/MDXComponents';
 import Basics from '../common/basics.md';
 import Network from '../common/network.md';
 import Token from '../common/token.md';
-import Roles from '../common/roles.md';
+import TemplatesRoles from '../common/templates-and-roles.md';
 import SecurityTokens from '../common/security-tokens.md';
 
 const data = {
     basics: Basics,
-    roles: Roles,
+    templatesAndRoles: TemplatesRoles,
     network: Network,
     token : Token,
     securityAndTokens: SecurityTokens,
