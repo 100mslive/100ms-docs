@@ -1,8 +1,6 @@
 ## Creating Account in 100ms
 
-If you're using 100ms for the 1st time and don't have an account here then follow this section otherwise [Skip to this Section](#token-generation).
-
-You will have to create an account at [Dashboard of 100ms](https://dashboard.100ms.live/)
+Create an account at [Dashboard of 100ms](https://dashboard.100ms.live/)
 
 ![Create Account](/guides/token/create-account.png)
 
