@@ -2,13 +2,13 @@
 
 100ms is a cloud platform that allows developers to add video and audio conferencing to Web, Android and iOS applications.
 
-The platform provides REST APIs, SDKs, and a dashboard that make it simple to capture, distribute, record, and render live interactive audio, video.
+The platform provides REST APIs, SDKs, and a dashboard that makes it simple to capture, distribute, record, and render live interactive audio, video.
 
 Any application built using 100ms' SDK has 2 components.
 
 -   **Client:** Use 100ms android, iOS, Web SDKs to manage connections, room states, render audio/video.
 
--   **Server:** Use 100ms' APIs or dashboard to create rooms, setup room templates, trigger recording RTMP out, access events.
+-   **Server:** Use 100ms' APIs or dashboard to create rooms, setup room templates, trigger recording or RTMP streaming, access events.
 
 ![Architecture](/docs/v2/arch.png)
 
@@ -18,7 +18,7 @@ Any application built using 100ms' SDK has 2 components.
 -   `Peer` A peer is the object returned by 100ms SDKs that contains all information about a user - name, role, video track etc.
 -   `Track` A track represents either the audio or video that a peer is publishing
 -   `Role` A role defines who can a peer see/hear, the quality at which they publish their video, whether they have permissions to publish video/screenshare, mute someone, change someone's role.
--   `Template` A template is a collection of roles, room settings, recording and RTMP settings (if used), that is used by the SDK to decide which geography to connect to, which tracks to return to the client, whether to turn on recording when a room is created etc. Each room is associated with a template.
+-   `Template` A template is a collection of roles, room settings, recording and RTMP settings (if used), that are used by the SDK to decide which geography to connect to, which tracks to return to the client, whether to turn on recording when a room is created, etc. Each room is associated with a template.
 -   `Recording` Recording is used to save audio/video calls for offline viewing. 100ms supports both individual and composite recordings.
 -   `RTMP` RTMP streaming is used to live stream your video conferencing apps to platforms like Facebook, YouTube, Twitch, etc.
 -   `Webhooks` Webhook is an HTTP(S) endpoint used for pushing the notifications to your application. It will be invoked by 100ms servers to notify events of your room.
