@@ -22,38 +22,26 @@ After you're App is set click on "Go to Dashboard" or [Go Here](https://dashboar
 
 ## Token Generation
 
-Any service calling 100ms' REST APIs need to authenticate using a management token. You can generate Tokens via `Token Generation endpoint` that is provided by 100ms.
-
-### Token Endpoint
-
-After you're done with creating an account head over to the developer section of [100ms Dashboard](https://dashboard.100ms.live/developer). You will find all `Access Credentials` here including `Token Endpoint`.
-
-![Credentials](/guides/token/credential.png)
+Any client connecting calling 100ms' service needs to authenticate using an auth token. In production you would have your own servers generating the tokens (see more [here](/server-side/v2/foundation/authentication-and-tokens)), but for a quick start you can use the dashboard to create a token for you. The token will expire in 24hrs and should not be hardcoded into a production app.
 
 ### Creating Room
 
-Now to get `room_id` get over to [Room in Dashboard](https://dashboard.100ms.live/rooms) and click on "Create Room" , While creating a room you can specify it's name, roles or enable recording.
+To create a token you first need to create a room. Go over to [Room in Dashboard](https://dashboard.100ms.live/rooms) and click on "Create Room" , While creating a room you can specify it's name, roles or enable recording.
 
 ![Create Room](/guides/token/create-room.png)
 
-You will now see "Room Details" section and we have a `room_id` created.
+You will now see "Room Details" section and we have a `room_id` created, copy it somewhere.
 
 ![Room Id](/guides/token/room-id.png)
 
-### Generating Token
+### Getting a Temporary Token
 
-Now that we have got our `Token Endpoint` and `room_id` we can now generate our own Token.
+To get a temporary token click on "Join room" button.
 
-Replace `{Token Endpoint}` and `{room_id}` placeholders with your endpoint and roomId in the curl request below and then run the curl request in the terminal:
+![Join Room](/guides/token/join-room.png)
 
-```bash
-curl --request POST '{endpoint}/api/token' \
---header 'Content-Type: application/json' \
---data-raw '{"user_id": "JohnDoe1", "role": "host", "room_id":"{room_id}"}'
+In the popup that shows up click on icon with a key shape next to the role you want to join as.
 
-#Example
+![Copy Token](/guides/token/copy-token.png)
 
-curl --request POST 'https://prod-in.100ms.live/hmsapi/johndoe.app.100ms.live/api/token' \
---header 'Content-Type: application/json' \
---data-raw '{"user_id": "JohnDoe1", "role": "host", "room_id":"60f534a3533226920b256128"}'
-```
+ The token will be copied to your clipboard. Use this along with the `room_id` to proceed with the quickstart guide.
