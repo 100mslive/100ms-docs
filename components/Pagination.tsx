@@ -1,5 +1,6 @@
 import { PaginationType } from '@/lib/getPagination';
 import React from 'react';
+import Link from 'next/link';
 
 interface Props {
     prev: PaginationType;
@@ -27,18 +28,21 @@ const NextIcon = () => (
 
 const Pagination: React.FC<Props> = ({ prev, next }) => (
     <div className="pag-ctx">
-        <a href={prev.url}>
-            <span>
+        <Link href={prev.url}>
+            <a>
                 <PrevIcon />
                 {prev.title}
-            </span>
-        </a>
-        <a href={next.url}>
-            <span>
-                {next.title}
-                <NextIcon />
-            </span>
-        </a>
+            </a>
+        </Link>
+        {next !== null ? (
+            <Link href={next.url}>
+                <a>
+                    {next.title}
+                    <NextIcon />
+                </a>
+            </Link>
+        ) : null}
+
         <style jsx>{`
             .pag-ctx {
                 width: 100%;
@@ -47,14 +51,12 @@ const Pagination: React.FC<Props> = ({ prev, next }) => (
                 flex-wrap: wrap;
                 justify-content: space-between;
             }
-            a {
-                text-decoration: none;
-            }
-            span:hover {
+            a:hover {
                 background-color: var(--gray4);
                 border-radius: 5px;
             }
-            span {
+            a {
+                text-decoration: none;
                 padding: 5px;
                 display: inline-flex;
                 vertical-align: middle;
