@@ -31,7 +31,7 @@ You can add or modify templates on [100ms Dashboard](https://dashboard.100ms.liv
 
 ## Create Room using API
 
-You can also create room using API. This provides a more scalable of creating room.
+You can also create room using API. This provides a more scalable way of creating room.
 
 <PostRequest
     title="Create Room API"
@@ -87,13 +87,13 @@ tent-Type: application/json' -d '{"name": "test-room", "description": "This is a
 | Authorization <br/>            | Bearer `<management token>`  | Yes      |
 
 ### Body Paramters
-| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                 | Required |
-| :------------------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name <br/>           | `string` | A unique identifier you can assign to 100ms rooms. This is `case-insensitive`. Accepted characters are `a-z, A-Z, 0-9, and . - : _` If not provided, this is generated automatically. <br/><br/> **Note**: `createRoom` is called with the same room name, then the same room ID is returned                | No       |
-| description <br/>    | `string` | A string to describe your room's usage - eg. "9PM English Class Batch 2"                                                                                                                                                                                                                                    | No       |
-| template <br/>       | `string` | [Template](./templates-and-roles) of the room. You can get template name from room details section on dashboard                                                                                                                                                                                                        | No       |
-| recording_info <br/> | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings.                                                                                                                                                                           | No       |
-| region <br/>         | `string` | Region in which you want to create room - `in` - India region, `us` - US region or `auto` which stands for automatic region selection which happens also in case this parameter is not provided                                                                                                             | No       |
+| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                  | Required |
+| :------------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| name <br/>           | `string` | A unique identifier you can assign to 100ms rooms. This is `case-insensitive`. Accepted characters are `a-z, A-Z, 0-9, and . - : _` If not provided, this is generated automatically. <br/><br/> **Note**: If `create Room` is called with an existing room name, then the corresponding room ID is returned | No       |
+| description <br/>    | `string` | A string to describe your room's usage. E.g. "9PM English Class Batch 2"                                                                                                                                                                                                                                     | No       |
+| template <br/>       | `string` | [Template](./templates-and-roles) of the room. You can get template name from room details section on dashboard                                                                                                                                                                                              | No       |
+| recording_info <br/> | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings.                                                                                                                                                                            | No       |
+| region <br/>         | `string` | Region in which you want to create room - `in` - India region, `us` - US region or `auto` which stands for automatic region selection which happens also in case this parameter is not provided                                                                                                              | No       |
 
 
 <Tab id="req-1">
@@ -129,7 +129,7 @@ tent-Type: application/json' -d '{"name": "test-room", "description": "This is a
 | Name        | Type      | Description                                                                                                                                                                                     | Required |
 | :---------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | enabled     | `boolean` | Enable recording. Disabled by default                                                                                                                                                           | No       |
-| upload_info | `object`  | object of type `upload_info`. This object contains information on recordings storage location. If you want to store recording with 100ms, and not use your own s3, don't add this to the object | No       |
+| upload_info | `object`  | Object of type `upload_info`. This object contains information on recordings storage location. If you want to store recording with 100ms, and not use your own s3, don't add this to the object | No       |
 
 To know more about recording please visit [Recording](./recording)
 
