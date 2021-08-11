@@ -23,7 +23,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const menuItem = [
         { link: '/android/v2/foundation/Basics', name: 'ANDROID', icon: <AndroidIcon /> },
         { link: '/ios/v2/foundation/Basics', name: 'IOS', icon: <IosIcon /> },
-        { link: '/javascript/v2/foundation/Basics', name: 'JAVASCRIPT', icon: <JavascriptIcon /> },
+        { link: '/javascript/v2/foundation/basics', name: 'JAVASCRIPT', icon: <JavascriptIcon /> },
         { link: '/server-side/v2/foundation/basics', name: 'SERVER-SIDE', icon: <ServerIcon /> }
     ];
     // @ts-ignore
