@@ -1,0 +1,53 @@
+---
+title: Screen Share
+nav: 3.15
+---
+
+Screenshare involves sharing either the complete screen, a specific window or, a browser tab. 
+For a peer to share their screen, their role must have screenshare enabled in the dashboard.
+
+![ScreenshareDashboard](/docs/v2/screenshare-dashboard.png)
+
+To start a screenshare:
+
+```js
+try {
+  await hmsActions.setScreenShareEnabled(true);
+} catch (error) {
+  // an error will be thrown if user didn't give access to share screen
+}
+```
+
+To stop the screenshare:
+
+```js
+hmsActions.setScreenShareEnabled(false);
+```
+
+
+## Useful Selectors
+
+```js
+// to know if someone is screensharing
+const screenshareOn = hmsStore.getState(selectIsSomeoneScreenSharing);
+
+// to get the HMSPeer object of the peer screensharing, will select  first if multiple screenshares
+const presenter = hmsStore(selectPeerScreenSharing);
+
+// to get the HMSPeer object of all the peers screensharing
+const presenter = hmsStore(selectPeersScreenSharing);
+
+// a boolean to know if the local peer is the one who is screensharing
+const amIScreenSharing = hmsStore(selectIsLocalScreenShared);
+
+// to get the screenshare video track, this can be used to call attachVideo for rendering
+const screenshareVideoTrack = hmsStore(selectScreenShareByPeerID(presenter.id));
+```
+
+
+## Screenshare with audio:
+
+We also give support of adding screenshare with audio in chromium based browsers. This only applies if checkbox at bottom left
+shown below is checked while sharing a browser tab.
+
+![ScreenshareAudio](/docs/v2/screenshare-audio.png)

@@ -7,13 +7,18 @@ import mdxPrism from 'mdx-prism';
 import components from '@/components/MDXComponents';
 
 import Basics from '../common/basics.md';
-import Role from '../common/role.md';
 import Network from '../common/network.md';
+import Token from '../common/token.md';
+import TemplatesRoles from '../common/templates-and-roles.md';
+import SecurityTokens from '../common/security-tokens.md';
 
 const data = {
     basics: Basics,
-    roles: Role,
+    templatesAndRoles: TemplatesRoles,
     network: Network,
+    token : Token,
+    securityAndTokens: SecurityTokens,
+    
 };
 
 interface Props {

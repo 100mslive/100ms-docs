@@ -1,0 +1,111 @@
+---
+title: Render Video
+nav: 3.04
+---
+
+It all comes down to this. All the setup so far has been done so that we can show live streaming video in our beautiful apps.
+
+1. First, you need to get all the peers in the room. You can use the `selectPeers` selector for this.
+
+2. Next, you'll need to have a reference to a video element. You must add the attributes as present below.
+
+```html
+<video autoplay muted playsinline/>
+```
+
+3. You can then iterate over all the peers, and call the `attachVideo` function in hmsActions to render the video.
+
+<Tabs id="render" items={['Javascript', 'React']} />{' '}
+
+<Tab id='render-0'>
+
+
+```js
+import { hmsActions } from './hms';
+
+const peersContainer = document.getElementById('peers-container');
+
+function renderVideo(peer) {
+  // you can either get an existing video element or create a new onw.
+  // const videoElement = document.getElementByID(peer.id)
+  const videoElement = document.createElement('video');
+  videoElement.autoplay = true;
+  videoElement.muted = true;
+  videoElement.playsinline = true;
+
+  hmsActions.attachVideo(peer.videoTrack, videoElement);
+}
+
+function renderPeers(peers) {
+  peersContainer = document.getElementById("peers-container");
+  peersContainer.innerHTML = "";
+
+  peers.forEach((peer) => {
+    console.log(`rendering video for peer - ${peer.name}, roleName - ${peer.roleName}, isLocal- ${peer.isLocal}`);
+    peersContainer.append(renderVideo(peer));
+  });
+}
+
+// subscribe to the peers, so render is called whenever there is a change like peer join and leave
+hmsStore.subscribe(renderPeers, selectPeers);
+```
+
+</Tab>
+
+<Tab  id='render-1'>
+
+```jsx
+import { useRef, useEffect } from 'react';
+import {
+  useHMSStore,
+  useHMSActions,
+  selectPeers,
+  selectCameraStreamByPeerID
+} from '@100mslive/hms-video-react';
+
+function VideoTile({peer}) {
+  const videoRef = useRef(null);
+  const hmsActions = useHMSActions();
+  // get the camera track to render
+  const videoTrack = useHMSStore(selectCameraStreamByPeerID(peer.id));
+  useEffect(() => {
+    if (videoRef.current && videoTrack) {
+      if (videoTrack.enabled) {
+        hmsActions.attachVideo(videoTrack.id, videoRef.current);
+      } else {
+        hmsActions.detachVideo(videoTrack.id, videoRef.current);
+      }
+    }
+  }, [videoTrack, hmsActions]);
+
+  return <video ref={videoRef} autoPlay muted playsinline></video>;
+}
+
+
+function Conference() {
+    const peers = useHMSStore(selectPeers);
+
+    return <>
+      {
+        peers.map(peer => <VideoTile key={peer.id} peer={peer}/>)
+      }
+    </>
+}
+```
+
+</Tab>
+
+
+The videos will now be rendered & start playing on your screen. 🥳
+
+> In case you want to render local peer and remote peers separately, you can use the selectors - `selectLocalPeer` and `selectRemotePeers`.
+
+## Detach video to conserve bandwith and cleanup elements
+
+You can call `detachVideo` on the `hmsActions` to unsubscribe a track and not fetch it's data. This can be done
+for example when a video goes out of view. This should also be called when the component is going to be unmounted
+for proper cleanups of the video elements.
+
+```js
+hmsActions.detachVideo(videoTrack.id, videoElement);
+```
