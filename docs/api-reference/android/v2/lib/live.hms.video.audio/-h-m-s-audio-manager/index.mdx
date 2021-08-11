@@ -1,0 +1,42 @@
+//[lib](../../../index)/[live.hms.video.audio](../index)/[HMSAudioManager](index)
+
+# HMSAudioManager
+
+[androidJvm]\
+open class [HMSAudioManager](index)
+
+HMSAudioManager manages all audio related parts of the HMS demo.
+
+## Constructors
+
+|                                         |                                                                                                                                                                                                                                                                              |
+| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [HMSAudioManager](-h-m-s-audio-manager) | [androidJvm]<br />@[MainThread](https://developer.android.com/reference/kotlin/androidx/annotation/MainThread.html)()<br />open fun [HMSAudioManager](-h-m-s-audio-manager)(context: [Context](https://developer.android.com/reference/kotlin/android/content/Context.html)) |
+
+## Types
+
+| Name                                              | Summary                                                                                                                                      |
+| ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| [AudioDevice](-audio-device/index)                | [androidJvm]<br />enum [AudioDevice](-audio-device/index)<br />AudioDevice is the names of possible audio devices that we currently support. |
+| [AudioManagerEvents](-audio-manager-events/index) | [androidJvm]<br />interface [AudioManagerEvents](-audio-manager-events/index)<br />Selected audio device change event.                       |
+| [AudioManagerState](-audio-manager-state/index)   | [androidJvm]<br />enum [AudioManagerState](-audio-manager-state/index)<br />AudioManager state.                                              |
+
+## Functions
+
+| Name                                                                 | Summary                                                                                                                                                                                                                                                                                               |
+| -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [addAudioFocusChangeCallback](add-audio-focus-change-callback)       | [androidJvm]<br />open fun [addAudioFocusChangeCallback](add-audio-focus-change-callback)(callback: AudioManagerFocusChangeCallbacks)                                                                                                                                                                 |
+| [removeAudioFocusChangeCallback](remove-audio-focus-change-callback) | [androidJvm]<br />open fun [removeAudioFocusChangeCallback](remove-audio-focus-change-callback)(callback: AudioManagerFocusChangeCallbacks)                                                                                                                                                           |
+| [selectAudioDevice](select-audio-device)                             | [androidJvm]<br />@[MainThread](https://developer.android.com/reference/kotlin/androidx/annotation/MainThread.html)()<br />open fun [selectAudioDevice](select-audio-device)(device: [HMSAudioManager.AudioDevice](-audio-device/index))<br />Changes selection of the currently active audio device. |
+| [start](start)                                                       | [androidJvm]<br />@[MainThread](https://developer.android.com/reference/kotlin/androidx/annotation/MainThread.html)()<br />open fun [start](start)(audioManagerEvents: [HMSAudioManager.AudioManagerEvents](-audio-manager-events/index))                                                             |
+| [stop](stop)                                                         | [androidJvm]<br />@[MainThread](https://developer.android.com/reference/kotlin/androidx/annotation/MainThread.html)()<br />open fun [stop](stop)()                                                                                                                                                    |
+| [updateAudioDeviceState](update-audio-device-state)                  | [androidJvm]<br />@[MainThread](https://developer.android.com/reference/kotlin/androidx/annotation/MainThread.html)()<br />open fun [updateAudioDeviceState](update-audio-device-state)()<br />Updates list of possible audio devices and make new device selection.                                  |
+
+## Properties
+
+| Name                                         | Summary                                                                                                                                                                                        |
+| -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [audioDevices](audio-devices)                | [androidJvm]<br />private open val [audioDevices](audio-devices): [Set](https://developer.android.com/reference/kotlin/java/util/Set.html)<[HMSAudioManager.AudioDevice](-audio-device/index)> |
+| [defaultAudioDevice](default-audio-device)   | [androidJvm]<br />private open var [defaultAudioDevice](default-audio-device): [HMSAudioManager.AudioDevice](-audio-device/index)                                                              |
+| [isStarted](is-started)                      | [androidJvm]<br />private open val [isStarted](is-started): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)                                                 |
+| [selectedAudioDevice](selected-audio-device) | [androidJvm]<br />private open val [selectedAudioDevice](selected-audio-device): [HMSAudioManager.AudioDevice](-audio-device/index)                                                            |

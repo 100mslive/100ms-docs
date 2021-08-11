@@ -25,7 +25,13 @@ const TableCustom = (props: any) => (
 
 const LinkCustom = (props) => {
     const { href } = props;
-    const isInternalLink = href && (href.startsWith('/') || href.startsWith('#'));
+    const isInternalLink =
+        href &&
+        (href.startsWith('/') ||
+            href.startsWith('#') ||
+            href.startsWith('../lib') ||
+            href.startsWith('.') ||
+            href.startsWith('index'));
 
     if (isInternalLink) {
         return (

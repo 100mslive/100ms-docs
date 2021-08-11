@@ -1,0 +1,41 @@
+//[lib](../../../index)/[live.hms.video.media.tracks](../index)/[HMSVideoTrack](index)
+
+# HMSVideoTrack
+
+[androidJvm]\
+open class [HMSVideoTrack](index)(**stream**: [HMSMediaStream](../../live.hms.video.media.streams/-h-m-s-media-stream/index), **nativeTrack**: VideoTrack, **source**: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)) : [HMSTrack](../-h-m-s-track/index)
+
+A type of [HMSTrack](../-h-m-s-track/index) holding only video
+
+## Constructors
+
+|                                     |                                                                                                                                                                                                                                                                      |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [HMSVideoTrack](-h-m-s-video-track) | [androidJvm]<br />fun [HMSVideoTrack](-h-m-s-video-track)(stream: [HMSMediaStream](../../live.hms.video.media.streams/-h-m-s-media-stream/index), nativeTrack: VideoTrack, source: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)) |
+
+## Functions
+
+| Name                             | Summary                                                                                                                                                                                                                                               |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [addSink](add-sink)              | [androidJvm]<br />open fun [addSink](add-sink)(sink: VideoSink)<br />Takes in a view on which the video needs to be rendered                                                                                                                          |
+| [equals](../-h-m-s-track/equals) | [androidJvm]<br />open operator override fun [equals](../-h-m-s-track/equals)(other: [Any](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html)?): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html) |
+| [removeSink](remove-sink)        | [androidJvm]<br />open fun [removeSink](remove-sink)(sink: VideoSink)<br />Takes in a view that needs to be removed from rendering                                                                                                                    |
+| [toString](to-string)            | [androidJvm]<br />open override fun [toString](to-string)(): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)                                                                                                         |
+
+## Properties
+
+| Name                                                      | Summary                                                                                                                                                                                                                                                                                 |
+| --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [description](index#731814938%2FProperties%2F-1973928616) | [androidJvm]<br />var [description](index#731814938%2FProperties%2F-1973928616): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)<br />A description if any that has been set for this track by the app                                                 |
+| [isDegraded](is-degraded)                                 | [androidJvm]<br />open var [isDegraded](is-degraded): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html) = false<br />true - if this track has been degraded due to network issues false - no degradation applied on this track                         |
+| [isMute](index#-1267651007%2FProperties%2F-1973928616)    | [androidJvm]<br />var [isMute](index#-1267651007%2FProperties%2F-1973928616): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html) = false<br />true - if this track is muted, otherwise false                                                            |
+| [source](index#1451021193%2FProperties%2F-1973928616)     | [androidJvm]<br />var [source](index#1451021193%2FProperties%2F-1973928616): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)<br />Specifies the source of this track Regular - from default camera/mic Screen - from screenshare Publign - from plugin |
+| [trackId](index#1244010512%2FProperties%2F-1973928616)    | [androidJvm]<br />val [trackId](index#1244010512%2FProperties%2F-1973928616): [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html)<br />The trackID of this track                                                                                           |
+| [type](type)                                              | [androidJvm]<br />open override val [type](type): [HMSTrackType](../-h-m-s-track-type/index)<br />This specifies the type of track, either one of [HMSTrackType](../-h-m-s-track-type/index)                                                                                            |
+
+## Inheritors
+
+| Name                                                      |
+| --------------------------------------------------------- |
+| [HMSLocalVideoTrack](../-h-m-s-local-video-track/index)   |
+| [HMSRemoteVideoTrack](../-h-m-s-remote-video-track/index) |
