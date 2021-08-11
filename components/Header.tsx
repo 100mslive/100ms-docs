@@ -51,7 +51,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
         setIsDark(!isDark);
     };
     // @ts-ignore
-    const currentTech = router.query.slug[0] === 'api-reference' ? router.query.slug[1] : 'react';
+    const currentTech = router.query.slug[0] === 'api-reference' ? router.query.slug[1] : router.query.slug[0];
     const routeAPIRef = () => {
         // @ts-ignore
         const routeLink = `/api-reference/${router.query.slug[0]}/v2/home/content`;
