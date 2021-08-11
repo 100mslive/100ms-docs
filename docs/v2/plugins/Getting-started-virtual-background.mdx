@@ -84,12 +84,12 @@ virtualBackground.init().then(() => console.log("background can be changed now")
 
 <Tab id='plugin-code-0'>
 
-```javascript
+```js
 // Import modules
 import {hmsActions, hmsStore, selectIsLocalVideoPluginPresent } from "./hms";
 ```
 
-```javascript
+```js
 // This will apply the virtual background effect to the local video
 try{
     await hmsActions.addPluginToVideoTrack(virtualBackground);
@@ -98,7 +98,7 @@ try{
 }
 ```
 
-```javascript
+```js
 // This will remove the virtual background effect from the local video
 try{
     await hmsActions.removePluginFromVideoTrack(virtualBackground);
@@ -107,7 +107,7 @@ try{
 }
 ```
 
-```javascript
+```js
 // To know the current plugins and if Virtual Background is part of it
 // getName api can be used to get the name of the plugin
 const isVBPresent = hmsStore.getState(
@@ -123,13 +123,13 @@ if(isVBPresent){
 
 <Tab id='plugin-code-1'>
 
-```javascript
+```js
 // Import modules
 import { selectIsLocalVideoPluginPresent, useHMSStore, useHMSActions } from '@100mslive/hms-video-react';
 import React, { useRef, useEffect } from 'react';
 ```
 
-```javascript
+```js
 function VirtualBackground() {
      const hmsActions = useHMSActions();
      const [showBackground, setShowBackground] = useState(false);
@@ -156,7 +156,7 @@ function VirtualBackground() {
 export default VirtualBackground;
 ```
 
-```javascript
+```js
 // To know the current plugins and if Virtual Background is part of it
 function checkIfPluginPresent(){
 // getName api can be used to get the name of the plugin
@@ -176,7 +176,7 @@ export default checkIfPluginPresent;
 
 <Tab id='plugin-code-2'>
 
-```javascript
+```js
 // This will apply the virtual background effect to the local video
 try{
     await hms.getLocalPeer().videoTrack?.addPlugin(virtualBackground);
@@ -185,7 +185,7 @@ try{
 }
 ```
 
-```javascript
+```js
 // This will remove the virtual background effect from the local video
 try{
     await hms.getLocalPeer().videoTrack?.removePlugin(virtualBackground);
@@ -194,7 +194,7 @@ try{
 }
 ```
 
-```javascript
+```js
 // To know the current plugins and if virtual background is part of it
 const videoTrack = hms.getLocalPeer().videoTrack;
 const plugins =  videoTrack?.getPlugins();
