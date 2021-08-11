@@ -1,8 +1,3 @@
----
-title: Templates and Roles
-nav: 4.1
----
-
 ## Introduction
 
 Template is the blueprint of the room. It defines the settings of the room along with the behavior of users who are part of it.
@@ -11,7 +6,7 @@ Each template will be identified by its id. E.g. `default_videoconf_7e450ffc-8ef
 
 **Note**: As of now templates have only roles section which will be extended in future 
 
-<Image src="/docs/v2/template.png" width={745} height={813} />
+![Template](/docs/v2/template.png)
 
 ## Roles
 Role is a collection of permissions that allows you to perform certain set of operations while being part of the room. It has the following attributes
