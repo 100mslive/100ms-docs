@@ -31,7 +31,8 @@ const LinkCustom = (props) => {
             href.startsWith('#') ||
             href.startsWith('../lib') ||
             href.startsWith('.') ||
-            href.startsWith('index'));
+            href.startsWith('index') ||
+            href.startsWith('-'));
 
     if (isInternalLink) {
         return (
