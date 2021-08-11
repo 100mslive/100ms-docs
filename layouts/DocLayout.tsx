@@ -46,9 +46,13 @@ const DocLayout: React.FC<Props> = ({
     currentDocSlug
 }) => {
     const SEO = {
-        title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`,
+        title: `${
+            frontMatter.title || '100ms Docs'
+        } | 100ms - Video conferencing infrastructure for a video-first world`,
         openGraph: {
-            title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`
+            title: `${
+                frontMatter.title || '100ms Docs'
+            } | 100ms - Video conferencing infrastructure for a video-first world`
         }
     };
     const [menu, setMenu] = React.useState(false);
