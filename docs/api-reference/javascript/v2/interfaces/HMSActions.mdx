@@ -128,6 +128,25 @@ Request for a role change of a remote peer. Can be forced.
 
 ---
 
+### endRoom
+
+▸ **endRoom**(`lock`, `reason`): `void`
+If you have required permissions, you can end the room. That means everyone will be kicked out.
+If lock is passed as true, the room cannot be used further.
+
+#### Parameters
+
+| Name     | Type      |
+| :------- | :-------- |
+| `lock`   | `boolean` |
+| `reason` | `string`  |
+
+#### Returns
+
+`void`
+
+---
+
 ### join
 
 ▸ **join**(`config`): `void`
@@ -235,9 +254,9 @@ Send a plain text message to all the other participants in the room.
 
 #### Parameters
 
-| Name      | Type     | Description                 |
-| :-------- | :------- | :-------------------------- |
-| `message` | `string` | string message to broadcast |
+| Name      | Type                                                                                     | Description                 |
+| :-------- | :--------------------------------------------------------------------------------------- | :-------------------------- |
+| `message` | `string` \| [`HMSMessageInput`](/api-reference/javascript/v2/interfaces/HMSMessageInput) | string message to broadcast |
 
 #### Returns
 
@@ -330,6 +349,31 @@ These functions can be used to mute/unmute the local peer's audio and video
 
 ---
 
+### setLogLevel
+
+▸ **setLogLevel**(`level`): `void`
+Set the type of logs from the SDK you want to be logged in the browser console.
+Note that HMSLogLevel is decremental meaning,
+HMSLogLevel.VERBOSE(0) - will log every message from SDK.
+HMSLogLevel.DEBUG(1) - will log messages that are helpful in debugging, important info, warnings and errors.
+HMSLogLevel.INFO(2) - will log important info, warnings and errors.
+HMSLogLevel.WARN(3) - will log warnings and errors.
+HMSLogLevel.ERROR(4) - will log only errors.
+HMSLogLevel.NONE(5) - won't log anything.
+Usage: `hmsActions.setLogLevel(4)` or `hmsActions.setLogLevel(HMSlogLevel.ERROR)`.
+
+#### Parameters
+
+| Name    | Type          |
+| :------ | :------------ |
+| `level` | `HMSLogLevel` |
+
+#### Returns
+
+`void`
+
+---
+
 ### setMessageRead
 
 ▸ **setMessageRead**(`readStatus`, `messageId?`): `void`
@@ -363,6 +407,25 @@ set the quality of the selected videoTrack
 | :-------- | :-------------------------------------------------------------------------- |
 | `trackId` | `string`                                                                    |
 | `layer`   | [`HMSSimulcastLayer`](/api-reference/javascript/v2/enums/HMSSimulcastLayer) |
+
+#### Returns
+
+`void`
+
+---
+
+### setRemoteTrackEnabled
+
+▸ **setRemoteTrackEnabled**(`forRemoteTrackID`, `enabled`): `void`
+Change track state a remote peer's track
+This can be used to mute/unmute a remote peer's track
+
+#### Parameters
+
+| Name               | Type                   | Description                                                                                    |
+| :----------------- | :--------------------- | :--------------------------------------------------------------------------------------------- |
+| `forRemoteTrackID` | `string` \| `string`[] | The track ID or array of track IDs for which you want to change the state                      |
+| `enabled`          | `boolean`              | `true` if you wish to enable(unmute) the track, `false` if you wish to disable(mute) the track |
 
 #### Returns
 
@@ -432,7 +495,12 @@ Method to be called with some UI interaction after autoplay error is received
 #### Returns
 
 `Promise`<`void`\>
-Audio
+
+`void`
+
+---
+
+### unblockAudio
 
 ▸ **unblockAudio**(): `Promise`<`void`\>
 

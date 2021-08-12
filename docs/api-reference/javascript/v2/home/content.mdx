@@ -23,11 +23,13 @@ title: 100mslive/hms-video-store
 ## Other Interfaces
 
 - [HMSAudioTrackSettings](/api-reference/javascript/v2/interfaces/HMSAudioTrackSettings)
+- [HMSChangeTrackStateRequest](/api-reference/javascript/v2/interfaces/HMSChangeTrackStateRequest)
 - [HMSComponentsStyle](/api-reference/javascript/v2/interfaces/HMSComponentsStyle)
 - [HMSConfig](/api-reference/javascript/v2/interfaces/HMSConfig)
 - [HMSException](/api-reference/javascript/v2/interfaces/HMSException)
 - [HMSMediaSettings](/api-reference/javascript/v2/interfaces/HMSMediaSettings)
 - [HMSMessage](/api-reference/javascript/v2/interfaces/HMSMessage)
+- [HMSMessageInput](/api-reference/javascript/v2/interfaces/HMSMessageInput)
 - [HMSNotification](/api-reference/javascript/v2/interfaces/HMSNotification)
 - [HMSPeer](/api-reference/javascript/v2/interfaces/HMSPeer)
 - [HMSPeerWithMuteStatus](/api-reference/javascript/v2/interfaces/HMSPeerWithMuteStatus)
@@ -100,6 +102,18 @@ Select an array of names of available roles in the room.
 
 ---
 
+### selectBroadcastMessages
+
+• `Const` **selectBroadcastMessages**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)[], `fn`\>
+
+---
+
+### selectBroadcastMessagesUnreadCount
+
+• `Const` **selectBroadcastMessagesUnreadCount**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `number`, `fn`\>
+
+---
+
 ### selectDegradedTracks
 
 • `Const` **selectDegradedTracks**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), [`HMSTrack`](/api-reference/javascript/v2/interfaces/HMSTrack)[], `fn`\>
@@ -157,12 +171,6 @@ Select a boolean denoting whether the room is in Preview state.
 
 ---
 
-### selectLocalAudioTrackID
-
-• `Const` **selectLocalAudioTrackID**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| `string`, `fn`\>
-
----
-
 ### selectLocalPeer
 
 • `Const` **selectLocalPeer**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer), `fn`\>
@@ -184,12 +192,6 @@ Select the [HMSRole](/api-reference/javascript/v2/interfaces/HMSRole) object of 
 
 ---
 
-### selectLocalVideoTrackID
-
-• `Const` **selectLocalVideoTrackID**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| `string`, `fn`\>
-
----
-
 ### selectPeers
 
 • `Const` **selectPeers**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[], `fn`\>
@@ -200,6 +202,13 @@ Select an array of peers(remote peers and your local peer) present in the room.
 ### selectPeersWithAudioStatus
 
 • `Const` **selectPeersWithAudioStatus**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), [`HMSPeerWithMuteStatus`](/api-reference/javascript/v2/interfaces/HMSPeerWithMuteStatus)[], `fn`\>
+
+---
+
+### selectPermissions
+
+• `Const` **selectPermissions**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| { `askToUnmute`: `boolean` ; `changeRole`: `boolean` ; `endRoom`: `boolean` ; `muteAll`: `boolean` ; `muteSelective`: `boolean` ; `removeOthers`: `boolean` ; `stopPresentation`: `boolean` }, `fn`\>
+Select the permissions which determine what actions the local peer can do.
 
 ---
 
@@ -214,6 +223,12 @@ Select remote peers(other users you're connected with via the internet) present 
 
 • `Const` **selectRoleChangeRequest**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `null` \| [`HMSRoleChangeRequest`](/api-reference/javascript/v2/interfaces/HMSRoleChangeRequest), `fn`\>
 Select the role change request received for your local peer.
+
+---
+
+### selectRoomStarted
+
+• `Const` **selectRoomStarted**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `boolean`, `fn`\>
 
 ---
 
@@ -589,6 +604,70 @@ Select IDs of messages you've sent or received sorted chronologically.
 
 ---
 
+### selectMessagesByPeerID
+
+▸ `Const` **selectMessagesByPeerID**(`id?`): `StoreSelector`<`undefined` \| [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)[]\>
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`StoreSelector`<`undefined` \| [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)[]\>
+
+---
+
+### selectMessagesByRole
+
+▸ `Const` **selectMessagesByRole**(`id?`): `StoreSelector`<`undefined` \| [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)[]\>
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`StoreSelector`<`undefined` \| [`HMSMessage`](/api-reference/javascript/v2/interfaces/HMSMessage)[]\>
+
+---
+
+### selectMessagesUnreadCountByPeerID
+
+▸ `Const` **selectMessagesUnreadCountByPeerID**(`id?`): `StoreSelector`<`number`\>
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`StoreSelector`<`number`\>
+
+---
+
+### selectMessagesUnreadCountByRole
+
+▸ `Const` **selectMessagesUnreadCountByRole**(`id?`): `StoreSelector`<`number`\>
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`StoreSelector`<`number`\>
+
+---
+
 ### selectPeerAudioByID
 
 ▸ `Const` **selectPeerAudioByID**(`id?`): `StoreSelector`<`number`\>
@@ -856,7 +935,7 @@ Select the primary video track of a peer given a peer ID.
 #### Returns
 
 `StoreSelector`<`undefined` \| [`HMSTrack`](/api-reference/javascript/v2/interfaces/HMSTrack)\>
-id?`):`StoreSelector`<`undefined`\| [`HMSTrack`](/api-reference/javascript/v2/interfaces/HMSTrack)\>
+nst`**selectVideoTrackByPeerID**(`id?`):`StoreSelector`<`undefined`\| [`HMSTrack`](/api-reference/javascript/v2/interfaces/HMSTrack)\>
 
 Select the primary video track of a peer given a peer ID.
 
