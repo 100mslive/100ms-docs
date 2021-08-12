@@ -29,9 +29,7 @@ description: Release Notes for 100ms JavaScript SDK
 - Autoplay handling added.
   - on autoplay error, the onError callback is called
   - unblockAutoplay method is provided to resolve the autoplay error
-  - [JavaScript SDK](../client-sdks/Getting-Started-Javascript#handling-autoplay)
-  - [React SDK](../web-frameworks/Getting-started-react#handling-autoplay)
-  - [Reactive Store](../client-sdks/Reactive-Store-Extension-to-the-JS-SDK#handling-autoplay)
+  - [Refer Usage](/javascript/v2/features/error-handling#handling-autoplay-error)
 - Audio/video state is preserved when setSettings is called.
 - Device change handling improvements
    -  Output device selection logic improved
@@ -59,9 +57,7 @@ description: Release Notes for 100ms JavaScript SDK
 -   Autoplay handling added.
     -   on autoplay error, the onError callback is called
     -   unblockAutoplay method is provided to resolve the autoplay error
-    -   [JavaScript SDK](#)
-    -   [React SDK](#)
-    -   [Reactive Store]#)
+    -   [Refer Usage](/javascript/v2/features/error-handling#handling-autoplay-error)
 -   Audio/video state is preserved when setSettings is called.
 -   Device change handling improvements
     -   Output device selection logic improved
@@ -79,10 +75,7 @@ description: Release Notes for 100ms JavaScript SDK
 
 #### Added
 
--   Changing roles mid-call. Refer Usage
-    -   [JavaScript SDK](#)
-    -   [Reactive Store](#)
-    -   [React SDK](#)
+-   Changing roles mid-call. [Refer Usage](/javascript/v2/features/change-tole)
 -   BREAKING CHANGE: The interface of `HMSPeer` has been modified for users using the JavaScript SDK without the [Reactive Store](#).
 
 ```jsx
@@ -151,14 +144,14 @@ export interface PublishParams {
 
 #### Added
 
--   Added custom audio output management. [Refer Usage](#)
+-   Added custom audio output management. [Refer Usage](/javascript/v2/advanced-features/volume-control)
 -   Added audio output device and volume control using `hmsActions.setAudioOutputDevice("a-valid-MediaDeviceInfo-object-id")` and `hmsActions.setVolume(30)`. [Refer Usage](#)
 -   Audio Level at preview could be fetched by `selectPeerAudioByID(localPeer.id)`.
 
 #### Fixed
 
--   Audio level update callback in preview. [Refer Usage](#)
--   **Experimental** Automatic device change on plug/unplug. Use `track.setSettings` to override input devices. [Refer Usage](#). Use audio output manager(`hms.getAudioOutput().setDevice()`) to override output devices. [Refer Usage](#)
+-   Audio level update callback in preview. [Refer Usage](/javascript/v2/advanced-features/audio-level)
+-   **Experimental** Automatic device change on plug/unplug. Use `track.setSettings` to override input devices. [Refer Usage](/javascript/v2/features/device-change). Use audio output manager(`hms.getAudioOutput().setDevice()`) to override output devices. [Refer Usage](/javascript/v2/features/device-change)
 
 ## 2021-07-14
 
@@ -203,7 +196,7 @@ interface HMSSpeaker {
 
 #### Added
 
--   Preview method to enable showing preview UI. [Refer Usage](#)
+-   Preview method to enable showing preview UI. [Refer Usage](/javascript/v2/features/preview)
 -   Audio in screen-share
 
 #### Fixed
@@ -249,20 +242,20 @@ npm i @100mslive/hms-video @100mslive/hms-video-react
 -   onReconnecting - called when reconnection starts
 -   onReconnected - called when reconnection has succeeded
 -   onError - called when reconnection has failed
-    -   [Refer usage](#)
+    -   [Refer usage](/javascript/v2/features/notifications#notification-types)
 -   Internal Bug fixes
 
 ## 2021-06-21
 
 #### Added
 
--   addTrack and removeTrack to add/remove auxiliary tracks to local peer. [See documentation](#).
+-   addTrack and removeTrack to add/remove auxiliary tracks to local peer. [See documentation](/javascript/v2/advanced-features/custom-tracks).
 
 ## 2021-06-17
 
 #### Added
 
--   Notifications [See Documentation](#)
+-   Notifications [See Documentation](/javascript/v2/features/notifications)
 
 ## 2021-06-13
 
@@ -286,7 +279,7 @@ npm i @100mslive/hms-video @100mslive/hms-video-react
 
 #### Added
 
--   HMSPeer object will now have `customerUserId` property that stores the `userId` from [Client Token](#).
+-   HMSPeer object will now have `customerUserId` property that stores the `userId` from [Client Token](/javascript/v2/foundation/security-and-tokens).
 
 #### Fixed
 
