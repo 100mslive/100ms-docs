@@ -34,7 +34,7 @@ function changeRole(forPeerId : string, toRoleName: string, force: boolean) {
 ```
 
 The `force` parameter in `changeRole`, when false, is a polite request: "Would you like to change your role from listener to speaker?" which can be ignored by the other party. 
-The way it works is the other party will first receive a request which they can accept or reject.
+The way it works is the other party will first receive a [request](/api-reference/javascript/v2/interfaces/HMSRoleChangeRequest) which they can accept or reject.
 
 ```js
 function handleRoleChangeRequest(request) {
