@@ -228,20 +228,15 @@ function Peer({ peer }) {
   const hmsActions = useHMSActions();
   const videoTrack = useHMSStore(selectVideoTrackByPeerID(peer.id));
 
-  useEffect(() => {
-    const ref = videoRef.current;
-    const trackId = videoTrack.id;
-
-    if (ref && trackId) {
-      hmsActions.attachVideo(trackId, ref);
-    }
-
-    return () => {
-      if (ref) {
-        hmsActions.detachVideo(trackId, ref);
+   useEffect(() => {
+    if (videoRef.current && videoTrack) {
+      if (videoTrack.enabled) {
+        hmsActions.attachVideo(videoTrack.id, videoRef.current);
+      } else {
+        hmsActions.detachVideo(videoTrack.id, videoRef.current);
       }
-    };
-  }, [videoTrack.id, hmsActions]);
+    }
+  }, [videoTrack, hmsActions]);
 
   return (
     <div className="peer-container">
