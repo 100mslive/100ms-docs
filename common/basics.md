@@ -31,7 +31,3 @@ Any application built using 100ms' SDK has 2 components.
 4. **[Optional] Receive events:** Create a [webhook endpoint](/server-side/v2/features/webhook) to receive server-side notifications about room usage (peer joining/leaving) or recording, RTMP out starting/ending.
 
 ## Where should I start?
-
-### Quickstart
-
-If you just want to see 100ms' SDKs in action in under 5 minutes, run one our quickstart [app](/server-side/v2/guides/quickstart)

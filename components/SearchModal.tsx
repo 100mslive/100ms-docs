@@ -61,7 +61,7 @@ const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
                     max-width: 600px;
                     width: 100%;
                     position: absolute;
-                    top: 200px;
+                    top: 150px;
                     left: 50%;
                     transform: translate(-50%, 0%);
                     border-radius: 5px;
@@ -94,7 +94,7 @@ const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
                 .res-box {
                     margin: 0.5rem 0;
                     padding: 0.25rem 2rem;
-                    height: 50px;
+                    height: 70px;
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
