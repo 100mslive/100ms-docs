@@ -14,7 +14,7 @@ A common issue is a failure to capture mic/camera even though the user has all d
 
 The usual recourse in these exceptions is to prompt a user action - "Grant permission", "Please close any other app using microphone", "Switch to Safari"
 
-100ms' SDKs come with a [preview method](../features/preview) that can be called before joining a room. This will test for device failures, network connectivity and throw errors with a recommended user action.
+100ms' SDKs come with a [preview method](../features/Preview) that can be called before joining a room. This will test for device failures, network connectivity and throw errors with a recommended user action.
 
 ## Network disconnection/Switching networks
 
