@@ -171,7 +171,7 @@ Let us next add a way to show a tile for every participant in the room. We'll ne
 At any point in time we can get a list of peers with:
 
 ```jsx
-import { useHMSStore, selectPeers } from '@100mslive/hms-video-store';
+import { useHMSStore, selectPeers } from '@100mslive/hms-video-react';
 
 function Component() {}
   const peers = useHMSStore(selectPeers);
@@ -285,7 +285,7 @@ We can do this by subscribing to the store with the `selectIsConnectedToRoom` se
 ```jsx:script.jsx
 import {
   selectIsConnectedToRoom,
-} from "@100mslive/hms-video-store";
+} from "@100mslive/hms-video-react";
 
 function onConnection(isConnected) {
   if (isConnected) {
@@ -318,7 +318,7 @@ Let's add 2 buttons on the bottom of the page and call the methods on `hmsAction
 import {
   selectIsLocalAudioEnabled,
   selectIsLocalVideoEnabled,
-} from "@100mslive/hms-video-store";
+} from "@100mslive/hms-video-react";
 
 const muteAud = document.getElementById("mute-aud");
 const muteVid = document.getElementById("mute-vid");
