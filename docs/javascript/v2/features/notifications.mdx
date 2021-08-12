@@ -64,21 +64,8 @@ function Notification() {
 
 ## Notification types
 
-The notification `type` is a string and can only take values from the list below.
+The notification `type` is a string and can only take values from the [list here](/api-reference/javascript/v2/enums/HMSNotificationTypes).
 You can use it to check the type of the notification.
-
-Here is the list of all notification types:
-
-```jsx
-class HMSNotificationTypes {
-    static PEER_JOINED: string; // notification.data will be HMSPeer
-    static PEER_LEFT: string; // notification.data will be HMSPeer
-    static NEW_MESSAGE: string; // notification.data will be HMSMessage
-    static ERROR: string; // notification.data will be HMSException
-    static RECONNECTING: string; // User has lost connection to the server. The connection is being re-established
-    static RECONNECTED: string; // The connection has been re-established successfully.
-}
-```
 
 The data in notification depends on the notification type. You can use the `switch` construct to the handle the notification type.
 

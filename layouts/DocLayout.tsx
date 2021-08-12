@@ -46,9 +46,13 @@ const DocLayout: React.FC<Props> = ({
     currentDocSlug
 }) => {
     const SEO = {
-        title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`,
+        title: `${
+            frontMatter.title || '100ms Docs'
+        } | 100ms - Video conferencing infrastructure for a video-first world`,
         openGraph: {
-            title: `${frontMatter.title} | 100ms - Video conferencing infrastructure for a video-first world`
+            title: `${
+                frontMatter.title || '100ms Docs'
+            } | 100ms - Video conferencing infrastructure for a video-first world`
         }
     };
     const [menu, setMenu] = React.useState(false);
@@ -58,6 +62,7 @@ const DocLayout: React.FC<Props> = ({
     const router = useRouter();
     let newNav;
     // if 3 levels of directory
+    let showPagination = true;
     // @ts-ignore
     if (router.query.slug[0] !== 'v1' && router.query.slug[0] !== 'v2') {
         // TODO: remove this ^ not needed if `v1` & `v2` docs are replaced
@@ -68,6 +73,11 @@ const DocLayout: React.FC<Props> = ({
             // ? Case for `api-reference`
             // @ts-ignore
             if (router.query.slug[0] === 'api-reference') {
+                // Don't show Pagination for Android
+                // @ts-ignore
+                if (router.query.slug[1] === 'android') {
+                    showPagination = false;
+                }
                 // object -> folder-> content
                 // @ts-ignore
                 newNav = nav[router.query.slug[1]][router.query.slug[2]];
@@ -76,6 +86,7 @@ const DocLayout: React.FC<Props> = ({
     } else {
         newNav = nav;
     }
+
     return (
         <>
             <div className="page">
@@ -96,7 +107,7 @@ const DocLayout: React.FC<Props> = ({
                             <h1>{frontMatter.title}</h1>
                             {children}
                             <hr />
-                            {pagination.previousPost && (
+                            {pagination.previousPost && showPagination && (
                                 <Pagination
                                     next={pagination.nextPost}
                                     prev={pagination.previousPost}

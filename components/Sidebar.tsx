@@ -21,13 +21,18 @@ interface Props {
 const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const router = useRouter();
     const menuItem = [
-        { link: '/android/v2/foundation/Basics', name: 'ANDROID', icon: <AndroidIcon /> },
-        { link: '/ios/v2/foundation/Basics', name: 'IOS', icon: <IosIcon /> },
-        { link: '/javascript/v2/foundation/basics', name: 'JAVASCRIPT', icon: <JavascriptIcon /> },
-        { link: '/server-side/v2/foundation/basics', name: 'SERVER-SIDE', icon: <ServerIcon /> }
+        { link: '/android/v2/foundation/Basics', name: 'Android', icon: <AndroidIcon /> },
+        { link: '/ios/v2/foundation/Basics', name: 'iOS', icon: <IosIcon /> },
+        { link: '/javascript/v2/foundation/basics', name: 'JavaScript', icon: <JavascriptIcon /> },
+        { link: '/server-side/v2/foundation/basics', name: 'Server-Side', icon: <ServerIcon /> }
     ];
     // @ts-ignore
     let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === router.query.slug[0]);
+    // @ts-ignore
+    if (router.query.slug[0] === 'api-reference') {
+        // @ts-ignore
+        indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === router.query.slug[1]);
+    }
     indexOf = indexOf === -1 ? 0 : indexOf;
     const [tech, setTech] = React.useState(menuItem[indexOf]);
     const changeTech = (s) => {

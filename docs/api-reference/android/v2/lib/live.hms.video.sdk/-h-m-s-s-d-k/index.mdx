@@ -1,0 +1,39 @@
+/[lib](/api-reference/android/v2/home/content)/[live.hms.video.sdk](../index)/[HMSSDK](index)
+
+# HMSSDK
+
+[androidJvm]\
+class [HMSSDK](index)
+
+## Types
+
+| Name                      | Summary                                                                                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Builder](-builder/index) | [androidJvm]<br />class [Builder](-builder/index)(**context**: [Context](https://developer.android.com/reference/kotlin/android/content/Context.html)) |
+
+## Functions
+
+| Name                                         | Summary                                                                                                                                                                                                                                                                                                   |
+| -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [acceptChangeRole](accept-change-role)       | [androidJvm]<br />fun [acceptChangeRole](accept-change-role)(request: [HMSRoleChangeRequest](../../live.hms.video.sdk.models/-h-m-s-role-change-request/index))                                                                                                                                           |
+| [addAudioObserver](add-audio-observer)       | [androidJvm]<br />fun [addAudioObserver](add-audio-observer)(observer: [HMSAudioListener](../-h-m-s-audio-listener/index))                                                                                                                                                                                |
+| [changeRole](change-role)                    | [androidJvm]<br />fun [changeRole](change-role)(forPeer: [HMSRemotePeer](../../live.hms.video.sdk.models/-h-m-s-remote-peer/index), toRole: [HMSRole](../../live.hms.video.sdk.models.role/-h-m-s-role/index), force: [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html)) |
+| [getLocalPeer](get-local-peer)               | [androidJvm]<br />fun [getLocalPeer](get-local-peer)(): [HMSLocalPeer](../../live.hms.video.sdk.models/-h-m-s-local-peer/index)?                                                                                                                                                                          |
+| [getPeers](get-peers)                        | [androidJvm]<br />fun [getPeers](get-peers)(): [Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html)<[HMSPeer](../../live.hms.video.sdk.models/-h-m-s-peer/index)>                                                                                                               |
+| [getRemotePeers](get-remote-peers)           | [androidJvm]<br />fun [getRemotePeers](get-remote-peers)(): [Array](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html)<[HMSRemotePeer](../../live.hms.video.sdk.models/-h-m-s-remote-peer/index)>                                                                                     |
+| [getRoles](get-roles)                        | [androidJvm]<br />fun [getRoles](get-roles)(): [List](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html)<[HMSRole](../../live.hms.video.sdk.models.role/-h-m-s-role/index)>                                                                                                |
+| [join](join)                                 | [androidJvm]<br />fun [join](join)(config: [HMSConfig](../../live.hms.video.sdk.models/-h-m-s-config/index), hmsUpdateListener: [HMSUpdateListener](../-h-m-s-update-listener/index))                                                                                                                     |
+| [leave](leave)                               | [androidJvm]<br />fun [leave](leave)()                                                                                                                                                                                                                                                                    |
+| [preview](preview)                           | [androidJvm]<br />fun [preview](preview)(config: [HMSConfig](../../live.hms.video.sdk.models/-h-m-s-config/index), listener: [HMSPreviewListener](../-h-m-s-preview-listener/index))                                                                                                                      |
+| [removeAudioObserver](remove-audio-observer) | [androidJvm]<br />fun [removeAudioObserver](remove-audio-observer)()                                                                                                                                                                                                                                      |
+| [sendMessage](send-message)                  | [androidJvm]<br />fun [sendMessage](send-message)(type: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html), message: [String](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html))                                                                      |
+
+## Properties
+
+| Name                                            | Summary                                                                                                                                                   |
+| ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [applicationContext](application-context)       | [androidJvm]<br />val [applicationContext](application-context): [Context](https://developer.android.com/reference/kotlin/android/content/Context.html)   |
+| [hmsLogLevel](hms-log-level)                    | [androidJvm]<br />val [hmsLogLevel](hms-log-level): [HMSLogger.LogLevel](../../live.hms.video.utils/-h-m-s-logger/-log-level/index)                       |
+| [hmsSettings](hms-settings)                     | [androidJvm]<br />val [hmsSettings](hms-settings): HMSTrackSettings                                                                                       |
+| [hmsWebRtcLogLevel](hms-web-rtc-log-level)      | [androidJvm]<br />val [hmsWebRtcLogLevel](hms-web-rtc-log-level): [HMSLogger.LogLevel](../../live.hms.video.utils/-h-m-s-logger/-log-level/index)         |
+| [shouldSkipPIIEvents](should-skip-p-i-i-events) | [androidJvm]<br />val [shouldSkipPIIEvents](should-skip-p-i-i-events): [Boolean](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html) |
