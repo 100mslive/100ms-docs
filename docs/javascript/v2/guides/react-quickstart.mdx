@@ -186,8 +186,8 @@ We can use "selectors" that return a slice of the state to get the data piece we
 The `hmsStore` is also reactive, which means any component using the HMSStore hook will re-render when the slice of the state, it listens to, changes.
 This allows us to write [declarative](https://en.wikipedia.org/wiki/Declarative_programming) code.
 
-Let us now create a `Conference` component that will render a list of peers.
-We'll subscribe to the `peers` state and render the tiles whenever something related to the peers changes.
+Let us now create a `Conference` component that will render a list of peers. We'll get the peers from store and render them.
+Our component will get rerendered if this list of peers changes.
 
 ```jsx:src/Conference.jsx
 import { selectPeers, useHMSStore } from "@100mslive/hms-video-react";
