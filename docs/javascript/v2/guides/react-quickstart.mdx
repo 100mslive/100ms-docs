@@ -5,14 +5,14 @@ nav: 2.3
 
 ## Getting started
 
-Hello there! In this guide, we'll build a video conferencing application using the 100ms JavaScript SDK. This guide doesn't make any assumptions related to
-the framework or library choices. In case you plan to use React, do check our React quickstart as well.
+Hello there! In this guide, we'll build a video conferencing application using our React SDK. We'll be using functional
+components with the powerful hooks provided by our SDK and build an app where you can have video call with your friends.
 
 TL;DR - You can find the link to the complete example over [here](https://codesandbox.io/s/happy-meddling-syndrome-q4ukf).
 
 ### Prerequisites
 
-To get started you must be familiar with [React](https://reactjs.org/).
+To get started you should be familar with basics of [React](https://reactjs.org/).
 
 ### Installing the dependencies
 
@@ -26,7 +26,7 @@ Let us start with initializing the libraries. We need to wrap the entire applica
 
 This will let us use the hooks for state and actions.
 
-```jsx:src/index.js
+```jsx:src/index.jsx
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import { HMSRoomProvider } from "@100mslive/hms-video-react";
@@ -66,12 +66,12 @@ The config object must be passed the following fields:
 
 For our application, let us collect both of these fields from the user using a form. Let's create a `JoinForm` component and add it to the application.
 
-```jsx:src/JoinForm.js
-import React from "react";
+```jsx:src/JoinForm.jsx
+import { useState } from "react";
 
 function JoinForm() {
   const hmsActions = useHMSActions();
-  const [inputValues, setInputValues] = React.useState({
+  const [inputValues, setInputValues] = useState({
     name: "",
     token: ""
   });
@@ -124,7 +124,7 @@ export default JoinForm;
 
 Let's add this form to our `<App>` component.
 
-```jsx:src/App.js
+```jsx:src/App.jsx
 export default function App() {
     return (
         <div className="App">
@@ -144,11 +144,11 @@ Before we go ahead with adding video, let us add a way to leave the room as well
 
 We'll set up the `leave` method to be called whenever the user closes the window or refreshes the tab.
 
-```jsx{2-8}:src/App.js
+```jsx{2-8}:src/App.jsx
 export default function App() {
   const hmsActions = useHMSActions();
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.onunload = () => {
       hmsActions.leave();
     };
@@ -189,7 +189,7 @@ This allows us to write [declarative](https://en.wikipedia.org/wiki/Declarative_
 Let us now create a `Conference` component that will render a list of peers.
 We'll subscribe to the `peers` state and render the tiles whenever something related to the peers changes.
 
-```jsx:src/Conference.js
+```jsx:src/Conference.jsx
 import { selectPeers, useHMSStore } from "@100mslive/hms-video-react";
 import React from "react";
 import Peer from "./Peer";
@@ -215,20 +215,20 @@ export default Conference;
 For each peer, we'll render a `<video>` element and a `<div>` element with their name.
 In order to render the video, we need to call `attachVideo` method of `hmsActions`, which accepts a trackId and a DOM element.
 
-```jsx:src/Peer.js
+```jsx:src/Peer.jsx
 import {
   selectVideoTrackByPeerID,
   useHMSActions,
   useHMSStore
 } from "@100mslive/hms-video-react";
-import React from "react";
+import { useRef, useEffect } from "react";
 
 function Peer({ peer }) {
-  const videoRef = React.useRef(null);
+  const videoRef = useRef(null);
   const hmsActions = useHMSActions();
   const videoTrack = useHMSStore(selectVideoTrackByPeerID(peer.id));
 
-  React.useEffect(() => {
+  useEffect(() => {
     const ref = videoRef.current;
     const trackId = videoTrack.id;
 
@@ -282,7 +282,7 @@ Right now, our join form shows even after we have joined the room. We need a way
 
 We can do this by subscribing to the store with the `selectIsConnectedToRoom` selector.
 
-```jsx:script.js
+```jsx:script.jsx
 import {
   selectIsConnectedToRoom,
 } from "@100mslive/hms-video-store";
@@ -314,7 +314,7 @@ Let's add 2 buttons on the bottom of the page and call the methods on `hmsAction
 
 <Tab id="mute-unmute-0">
 
-```jsx:script.js
+```jsx:script.jsx
 import {
   selectIsLocalAudioEnabled,
   selectIsLocalVideoEnabled,
@@ -359,7 +359,7 @@ If you try it out now, you may notice that turning off the video makes the tile 
 This is due to a change in video track requiring a call to attach again. To fix it let's
 call our `renderPeers` function whenever we change the state of the local video.
 
-```jsx{8}:script.js
+```jsx{8}:script.jsx
 muteVid.addEventListener("click", () => {
   const videoEnabled = hmsStore.getState(selectIsLocalVideoEnabled);
 
@@ -382,7 +382,7 @@ When looping over the peer list we can use this property to decide whether to mi
 
 <Tab id="mirror-0" >
 
-```jsx{10,28}:script.js
+```jsx{10,28}:script.jsx
 function renderPeers(peers) {
   peersContainer.innerHTML = "";
 
