@@ -1,0 +1,135 @@
+---
+title: End Room
+nav: 7
+---
+
+Done with talking and it's time to end the call for everyone not just yourself? You may be looking to end the room.
+
+### Permissions
+
+Can't let just anyone end a call. First you need to create a [role](../foundation/templates-and-roles) with the permissions to end a room.
+
+The permission to end a room is called `PermissionsParams.endRoom` and you should check for that within the `HMSRole` of the peer to see if they have it.
+
+Here's how to check whether the local peer has the permission to end the room:
+
+<Tabs id="endroom" items={['Kotlin', 'Java 8', 'Java 7']} />
+
+<Tab id='endroom-0'>
+
+```kotlin
+fun isAllowedToEndMeeting(): Boolean {
+    return hmsSDK.getLocalPeer()?.hmsRole?.permission?.endRoom == true
+}
+```
+
+</Tab>
+
+<Tab id='endroom-1'>
+
+```java
+private boolean hasEndRoomPermissions() {
+    return Optional.ofNullable(hmsSdk.getLocalPeer())
+            .map(HMSPeer::getHmsRole)
+            .map(HMSRole::getPermission)
+            .map(PermissionsParams::getEndRoom)
+            .orElse(false);
+}
+```
+</Tab>
+
+<Tab id='endroom-2'>
+
+```java
+private boolean hasEndRoomPermissions() {
+    HMSLocalPeer peer = hmsSdk.getLocalPeer();
+    if(peer != null) {
+        HMSRole role = peer.getHmsRole();
+        if(role != null) {
+            PermissionsParams permissions = role.getPermission();
+            if(permissions != null) {
+                return permissions.getEndRoom();
+            }
+        }
+    }
+    return false;
+}
+```
+</Tab>
+
+### Ending the Room
+
+Once you're sure the peer has the permissions to end the room they can call for the room to end when they're ready with `hmsSdk.endRoom`.
+
+`endRoom` takes three parameters.
+
+message: The message you want to show people when they are forced to leave. This is a good place to thank them for joining the call and informing them that it has ended.
+
+lock: Whether you want to prevent anyone from rejoining the room. If false, they will be allowed to enter the room again if the client called `join`. If this is false, they will not able to join this room again.
+
+hmsActionResultListener: These are the callbacks that let you know whether the room was ended successfully or not. If the room could be closed, `onSuccess` will be called. For any errors `onError` will be called with the appropriate `HMSException`.
+
+> 💡 After calling endRoom the local peer needs to dispose of the video calling UI as well.
+
+<Tabs id="endroomcall" items={['Kotlin', 'Java']} />
+
+<Tab id='endroomcall-0'>
+
+```kotlin
+val message = "Closing time. Thanks for coming!"
+val lock = false
+
+hmsSDK.endRoom(message, lock, object : HMSActionResultListener{
+    override fun onError(error: HMSException) {
+    }
+
+    override fun onSuccess() {
+    }
+})
+```
+</Tab>
+
+<Tab id='endroomcall-1'>
+
+
+```java
+String message = "Closing time. Thanks for coming!";
+boolean lock = false;
+
+hmsSdk.endRoom(message, lock, new HMSActionResultListener() {
+    @Override
+    public void onSuccess() {
+        
+    }
+
+    @Override
+    public void onError(@NonNull HMSException e) {
+
+    }
+});
+```
+</Tab>
+
+### How to handle an end room callback
+
+Once the peer with adequate permissions calls `endRoom`, all other peers in the room will receive a callback in `HMSUpdateListener.onRemovedFromRoom`.
+
+The `onRemovedFromRoom` callback has a single parameter called `HMSRemovedFromRoom` with the following structure.
+
+```kotlin
+data class HMSRemovedFromRoom(
+    val reason : String,
+    val peerWhoRemoved : HMSRemotePeer?,
+    val roomWasEnded : Boolean
+)
+```
+
+> 💡 This is the same callback that will be triggered if a peer was [removed from a room](Remove-Peer) as well. Except that `roomEnded` will be true when the entire room was ended.
+
+reason: The string message detailing why the room was ended.
+
+peerWhoRemoved: The details of the peer who called `endRoom`.
+
+roomWasEnded: True if the entire room was ended. False if only the receiving peer was removed.
+
+Clients should read this callback and show the appropriate UI.

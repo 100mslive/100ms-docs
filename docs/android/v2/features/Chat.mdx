@@ -5,24 +5,163 @@ nav: 8
 
 What's a video without being able to send messages to each other too? 100ms supports chat for every video/audio room you create.
 
+You can see an example of every way of sending messages and interpreting messages in the advanced [sample app](https://github.com/100mslive/100ms-android/).
+
+### Addressing messages
+
+* [Broadcast messages](#sending-broadcast-messages) can be sent to Everyone in the chat `hmssdk.sendBroadcastMessage`.
+
+* [Direct messages](#sending-direct-messages) let you send message to a specific person `hmssdk.sendDirectMessage`.
+
+* [Group messages](#sending-group-messages) let you send a message to everyone with a particular `HMSRole`. Such as all `hosts` or all `teachers` or all `students` `hmsSdk.sendGroupMessage`
+
 ### Sending Chat Messages
 
-With the HMSSDK instance call sendMessage to send a message.
+#### Sending Broadcast Messages
 
-<Tabs id="chat" items={['Kotlin', 'Java']} />
+You want to let everyone in the chat know something? Call `sendBroadcastMessage` on the instance of `HMSSDK` to a send a broadcast.
 
-<Tab id='chat-0'>
+The text of the message, its type and a listener for whther the message reached the server or not are the parameters.
+
+> 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error. It does not convey whether the message was delivered to or read by the recipient.
+> also it's important to make a new callback per message because it will only contain the results of that particular call for sending a message.
+
+<Tabs id="broadcastmsg" items={['Kotlin', 'Java']} />
+
+<Tab id='broadcastmsg-0'>
 
 ```kotlin
-hmsSDK.sendMessage("chat", "Hello there!")
+hmssdk.sendBroadcastMessage(textMessage, HMSMessageType.CHAT, object : HMSMessageResultListener {
+      override fun onError(error: HMSException) {
+      }
+
+      override fun onSuccess(hmsMessage: HMSMessage) {
+      }
+})
 ```
 </Tab>
 
-<Tab id='chat-1'>
+<Tab id='broadcastmsg-1'>
 
 ```java
-hmssdk.sendMessage("chat", "Hello there");
+
+hmssdk.sendBroadcastMessage(textMessage, HMSMessageType.CHAT,
+    new HMSMessageResultListener() {
+        @Override
+        public void onSuccess(@NonNull HMSMessage hmsMessage) {
+            
+        }
+
+        @Override
+        public void onError(@NonNull HMSException e) {
+
+        }
+    }
+);
 ```
+</Tab>
+
+#### Sending Direct Messages
+
+Got secrets to share? Send a message directly to a single person in the chat with a direct message. Call `sendDirectMessage` on an instance of `HMSSDK`.
+
+The text of the message, its type and a listener for whther the message reached the server or not are the parameters.
+
+> 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error. It does not convey whether the message was delivered to or read by the recipient.
+> also it's important to make a new callback per message because it will only contain the results of that particular call for sending a message.
+
+<Tabs id="directmsg" items={['Kotlin', 'Java']} />
+
+<Tab id='directmsg-0'>
+
+```kotlin
+fun sendDirectMessage(textMessage : String, recipient : HMSPeer) {
+    hmssdk.sendDirectMessage(textMessage, HMSMessageType.CHAT, recipient, 
+        object : HMSMessageResultListener {
+            override fun onError(error: HMSException) {
+            }
+
+            override fun onSuccess(hmsMessage: HMSMessage) {
+            }
+            })
+}
+```
+
+</Tab>
+
+<Tab id='directmsg-1'>
+
+```java
+    private void sendDirectMessage(String textMessage, HMSPeer recipient ) {
+        hmsSdk.sendDirectMessage(textMessage, HMSMessageType.CHAT, recipient, 
+            new HMSMessageResultListener() {
+                    @Override
+                    public void onSuccess(@NonNull HMSMessage hmsMessage) {
+                        
+                    }
+
+                    @Override
+                    public void onError(@NonNull HMSException e) {
+
+                    }
+        }); 
+    }
+```
+
+</Tab>
+
+
+#### Sending Group Messages
+
+Got secrets to share? Send a message directly to a single person in the chat with a direct message. Call `sendDirectMessage` on an instance of `HMSSDK`.
+
+The text of the message, its type and a listener for whther the message reached the server or not are the parameters.
+
+> 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error. It does not convey whether the message was delivered to or read by the recipient.
+> also it's important to make a new callback per message because it will only contain the results of that particular call for sending a message.
+
+<Tabs id="groupmsg" items={['Kotlin', 'Java']} />
+
+<Tab id='groupmsg-0'>
+
+```kotlin
+
+private fun sendGroupMessage(textMessage: String, recipients : List<HMSRole> ) {
+    hmssdk.sendGroupMessage(message.message, HMSMessageType.CHAT, recipients, object : HMSMessageResultListener {
+      override fun onError(error: HMSException) {
+      }
+
+      override fun onSuccess(hmsMessage: HMSMessage) {
+      }
+
+    })
+  }
+
+```
+
+</Tab>
+
+<Tab id='groupmsg-1'>
+
+```java
+
+private void sendGroupMessage(String textMessage, List<HMSRole> recipients) {
+    hmsSdk.sendGroupMessage(textMessage, HMSMessageType.CHAT, recipients, 
+            new HMSMessageResultListener() {
+                @Override
+                public void onSuccess(@NonNull HMSMessage hmsMessage) {
+                    
+                }
+    
+                @Override
+                public void onError(@NonNull HMSException e) {
+    
+                }
+    });
+}
+
+```
+
 </Tab>
 
 ### Receiving Chat Messages
@@ -32,13 +171,24 @@ When you called `hmsSdk.join(config, hmsUpdateListener)` to join a room, the `HM
 This where you'll receive new messages as `HMSMessage` during the call. It contains:
 
 ```kotlin
-    data class HMSMessage(
-    val sender: HMSPeer,
-    val message: String,
-    val type: String,
-    val time: Date,
-    )
+
+data class HMSMessage internal constructor(
+  val message: String,
+  val type: String,
+  val recipient: HMSMessageRecipient = HMSMessageRecipient(),
+  var serverReceiveTime: Date,
+  var sender: HMSPeer
+)
 ```
+message: Content of the text message or the text description of the raw message.
+
+type: Type of message sent. Default value is `HMSMessageType.CHAT`.
+
+recipient: The intended recipient(s) of this message as a `HMSMessageRecipient`.
+
+serverReceiveTime: timestamp of when the messaging server receives this message. Update the time in your own messages when this comes back from the server in `HMSUpdateListener.onMessageReceived` for accurate ordering of your own messages.
+
+sender: The [HMSPeer] who is sending this message.
 
 Identifying Senders:
 
@@ -54,3 +204,57 @@ The time the message was sent is contained in `time` as a Java Date.
 
 ### Putting together a list of chat messages.
 The UI is completely up to you to decide! You'll also need to hold onto all the received messages if you want to display history.
+
+#### Identifying who the message was for
+
+The HMSMessageRecipient contained in the `recipient` field of `HMSMessage` lets you know who the message was for.
+
+The `HMSMessageRecipient` contains:
+```kotlin
+class HMSMessageRecipient internal constructor(
+    var recipientPeer: HMSPeer? = null,
+    var recipientRoles: List<HMSRole> = mutableListOf(),
+    var recipientType: HMSMessageRecipientType : HMSMessageRecipientType
+)
+```
+
+recipientPeer: Only contains a peer when a specific single peer is being direct messaged.
+
+recipientRoles: Only contains values when a group message is being sent to or many roles.
+
+recipientType: Will be `HMSMessageRecipientType.BROADCAST` for a message being sent to everyone. If this is true, the other two field will be null, empty respectively.
+
+`HMSMessageRecipientType.PEER` will be set when it's a direct message.
+
+`HMSMessageRecipientType.ROLES` will be set when it's a message to one or many roles.
+
+A good way to map this to your own app is a class like Recipient. You could choose to copy this file into your code for the mapping.
+
+
+```kotlin{17-23}:RecipientMapping.kt
+
+sealed class Recipient {
+    
+    object Everyone : Recipient() {
+        override fun toString(): String = "Everyone"
+    }
+    
+    data class Role(val role : HMSRole) : Recipient() {
+        override fun toString(): String =
+            role.name
+    }
+    
+    data class Peer(val peer : HMSPeer) : Recipient() {
+        override fun toString(): String = peer.name
+    }
+
+    companion object {
+        fun toRecipient(message : HMSMessageRecipient) : Recipient =
+            when(message.recipientType) {
+                HMSMessageRecipientType.BROADCAST -> Everyone
+                HMSMessageRecipientType.PEER -> Peer(message.recipientPeer!!)
+                HMSMessageRecipientType.ROLES -> Role(message.recipientRoles.firstOrNull()!!)
+        }
+    }
+}
+```

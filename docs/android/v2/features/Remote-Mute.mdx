@@ -1,0 +1,262 @@
+---
+title: Remote Mute
+nav: 11
+---
+
+You're running a room and decide that someone who's currently talking shouldn't be talking.
+
+You'd prefer they'd stay mute. Or perhaps you want their video turned off as well as their audio. You're looking for a remote mute.
+
+Muting can apply to both audio and video.
+
+##### Unmuting
+
+You may also decide that you want to let someone else speak who was currently muted. Or may want to ask someone to turn on their video.
+
+You can request people to unmute themselves as well.
+
+### Permissions
+
+Can't let just anyone mute others. First you need to create a [role](../foundation/templates-and-roles) with the permissions to mute others and also to ask them to unmute.
+
+The permission to mute others is within  `PermissionsParams` `muteSelective` and you should check for that within the `HMSRole` of the peer to see if they have it.
+
+Similarly the permission to unmute other peers is within `PermissionsParams` `askToUnmute`.
+
+Here's how to check whether the local peer has the permission to mute or unmute others:
+
+<Tabs id="muteunmute" items={['Kotlin', 'Java 8', 'Java 7']} />
+
+<Tab id='muteunmute-0'>
+
+```kotlin
+fun isAllowedToMuteOthers(): Boolean {
+    return hmsSDK.getLocalPeer()?.hmsRole?.permission?.muteSelective == true
+}
+
+fun isAllowedToUnMuteOthers(): Boolean {
+    return hmsSDK.getLocalPeer()?.hmsRole?.permission?.askToUnmute == true
+}
+
+```
+
+</Tab>
+
+<Tab id='muteunmute-1'>
+
+```java
+private boolean hasMutePermissions() {
+    return Optional.ofNullable(hmsSdk.getLocalPeer())
+            .map(HMSPeer::getHmsRole)
+            .map(HMSRole::getPermission)
+            .map(PermissionsParams::getMuteSelective)
+            .orElse(false);
+}
+
+private boolean hasUnMutePermissions() {
+    return Optional.ofNullable(hmsSdk.getLocalPeer())
+            .map(HMSPeer::getHmsRole)
+            .map(HMSRole::getPermission)
+            .map(PermissionsParams::getAskToUnmute)
+            .orElse(false);
+}
+
+```
+
+</Tab>
+
+<Tab id='muteunmute-2'>
+
+```java
+
+private boolean hasMutePermissions() {
+    HMSLocalPeer peer = hmsSdk.getLocalPeer();
+    if(peer != null) {
+        HMSRole role = peer.getHmsRole();
+        if(role != null) {
+            PermissionsParams permissions = role.getPermission();
+            if(permissions != null) {
+                return permissions.getMuteSelective();
+            }
+        }
+    }
+    return false;
+}
+
+private boolean hasUnMutePermissions() {
+    HMSLocalPeer peer = hmsSdk.getLocalPeer();
+    if(peer != null) {
+        HMSRole role = peer.getHmsRole();
+        if(role != null) {
+            PermissionsParams permissions = role.getPermission();
+            if(permissions != null) {
+                return permissions.getAskToUnmute();
+            }
+        }
+    }
+    return false;
+}
+```
+
+</Tab>
+
+### Muting/Unmuting
+
+Once you have checked that the caller has permissions to mute another peer's audio or video, call for it with `hmsSdk.changeTrackState`.
+
+To mute audio:
+
+Get the audio track of the peer whom you want to mute. If their audio track is not null pass it as the first parameter to `hmsSdk.changeTrackState`.
+
+The second parameter is a boolean for muting. If true, the track will be muted. If false the track will be requested to unmute.
+
+Finally a callback for whether changeTrackState suceeded or failed is the third parameter of an instance of `HMSActionResultListener`.
+
+<Tabs id="audiomuteunmutecall" items={['Kotlin', 'Java']} />
+
+<Tab id='audiomuteunmutecall-0'>
+
+```kotlin
+
+fun changeAudioState(hmsRemotePeer: HMSRemotePeer, mute : Boolean) {
+    val track = hmsRemotePeer.audioTrack
+    if(track != null) {
+        hmsSdk.changeTrackState(track, mute, object : HMSActionResultListener {
+            override fun onError(error: HMSException) {
+            }
+
+            override fun onSuccess() {
+            }
+
+        })
+    }
+}
+```
+
+</Tab>
+
+<Tab id='audiomuteunmutecall-1'>
+
+```java
+
+public void changeAudioState(HMSRemotePeer hmsRemotePeer, Boolean mute) {
+        HMSRemoteAudioTrack track = hmsRemotePeer.getAudioTrack();
+        if(track != null) {
+            hmsSdk.changeTrackState(track, mute, new HMSActionResultListener() {
+                @Override
+                public void onSuccess() {
+                    
+                }
+
+                @Override
+                public void onError(@NonNull HMSException e) {
+
+                }
+            });
+        }
+    }
+```
+
+</Tab>
+
+Similarly the video track can be muted or unmuted.
+
+
+<Tabs id="videomuteunmutecall" items={['Kotlin', 'Java']} />
+
+<Tab id='videomuteunmutecall-0'>
+
+```kotlin
+
+fun changeAudioState(hmsRemotePeer: HMSRemotePeer, mute : Boolean) {
+    val track = hmsRemotePeer.videoTrack
+    if(track != null) {
+        hmsSdk.changeTrackState(track, mute, object : HMSActionResultListener {
+            override fun onError(error: HMSException) {
+            }
+
+            override fun onSuccess() {
+            }
+
+        })
+    }
+}
+```
+
+</Tab>
+
+<Tab id='videomuteunmutecall-1'>
+
+```java
+
+public void changeAudioState(HMSRemotePeer hmsRemotePeer, Boolean mute) {
+        HMSRemoteVideoTrack track = hmsRemotePeer.getVideoTrack();
+        if(track != null) {
+            hmsSdk.changeTrackState(track, mute, new HMSActionResultListener() {
+                @Override
+                public void onSuccess() {
+                    
+                }
+
+                @Override
+                public void onError(@NonNull HMSException e) {
+
+                }
+            });
+        }
+    }
+```
+
+</Tab>
+
+### Handling a mute callback
+
+Mute callbacks are automatically applied to the receiver. No action is required.
+
+### Handling an unmute callback
+Unmute callbacks are received in the target peer's `HMSUpdateListener.onChangeTrackStateRequest`.
+
+The target peer will receive an object of `HMSChangeTrackStateRequest`.
+
+Here's its structure.
+
+```kotlin
+data class HMSChangeTrackStateRequest(
+    val track : HMSTrack,
+    val requestedBy : HMSPeer,
+    val mute : Boolean)
+```
+
+This contains information on which track is requested for unmuting. Check the track type and inform the user as appropriate.
+
+<Tabs id="trackcheck" items={['Kotlin', 'Java']} />
+
+<Tab id='trackcheck-0'>
+
+```kotlin
+fun checkTrack(someTrack : HMSTrack) {
+    if(someTrack.type == HMSTrackType.AUDIO) {
+        
+    } else if (someTrack.type == HMSTrackType.VIDEO) {
+        
+    }
+}
+```
+
+</Tab>
+
+<Tab id='trackcheck-1'>
+
+```java
+public void checkTrack(HMSTrack track) {
+    if( track.getType() == HMSTrackType.AUDIO) {
+
+    } else if (track.getType() == HMSTrackType.VIDEO) {
+        
+    }
+}
+```
+
+</Tab>
+
+Hold onto the information here, show a dialog to the user to ask if they want to accept the change and then apply the settings locally. The same as in a regular user [Mute/Unmute](Mute).
