@@ -1,0 +1,132 @@
+---
+title: Remove Peer
+nav: 11
+---
+
+Someone's overstayed their welcome and now you need to remove a peer from the chat. Just call `hmsSdk.removePeerRequest`.
+
+### Permissions
+
+Can't let just anyone remove others from the call. First you need to create a [role](../foundation/templates-and-roles) with the permissions to remove others.
+
+In the SDK, the permission to mute others is within  `PermissionsParams` `removeOthers` and you should check for that within the `HMSRole` of the peer to see if they have it.
+
+Here's how to check whether the local peer has the permission to end the room:
+
+<Tabs id="removepeerperm" items={['Kotlin', 'Java 8', 'Java 7']} />
+
+<Tab id='removepeerperm-0'>
+
+```kotlin
+fun isAllowedToRemovePeer(): Boolean {
+    return hmsSDK.getLocalPeer()?.hmsRole?.permission?.removeOthers == true
+}
+```
+
+</Tab>
+
+<Tab id='removepeerperm-1'>
+
+```java
+private boolean isAllowedToRemovePeer() {
+    return Optional.ofNullable(hmsSdk.getLocalPeer())
+            .map(HMSPeer::getHmsRole)
+            .map(HMSRole::getPermission)
+            .map(PermissionsParams::getRemoveOthers)
+            .orElse(false);
+}
+```
+</Tab>
+
+<Tab id='endroom-2'>
+
+```java
+private boolean isAllowedToRemovePeer() {
+    HMSLocalPeer peer = hmsSdk.getLocalPeer();
+    if(peer != null) {
+        HMSRole role = peer.getHmsRole();
+        if(role != null) {
+            PermissionsParams permissions = role.getPermission();
+            if(permissions != null) {
+                return permissions.getRemoveOthers();
+            }
+        }
+    }
+    return false;
+}
+```
+</Tab>
+
+### Removing a peer
+
+Once the permissions are checked to ensure the caller has the permission to remove a peer, remove them by calling `hmsSdk.removePeerRequest`.
+
+The parameters are:
+
+peer: is the `HMSRemotePeer` that you'd like to be removed from the call.
+
+reason: is the string that should be conveyed to them as the reason for being removed.
+
+hmsActionResultListener: is the listener that will convey the success or error of the server accepting the request.
+
+
+<Tabs id="removepeer" items={['Kotlin', 'Java']} />
+
+<Tab id='removepeer-0'>
+
+```kotlin
+fun requestPeerLeave(peer: HMSRemotePeer, reason: String) {
+    hmsSDK.removePeerRequest(peer, reason,
+         object : HMSActionResultListener{
+            override fun onError(error: HMSException) {
+            }
+
+            override fun onSuccess() {
+            }
+    })
+  }
+
+```
+
+</Tab>
+
+<Tab id='removepeer-1'>
+
+```java
+public void requestPeerLeave(HMSRemotePeer peer, String reason) {
+    hmsSdk.removePeerRequest(peer, reason, new HMSActionResultListener() {
+        @Override
+        public void onSuccess() {
+            
+        }
+
+        @Override
+        public void onError(@NonNull HMSException e) {
+
+        }
+    });
+}
+```
+</Tab>
+
+### Handling the remove peer callback
+
+On the target of the `removePeerRequest` they will receive a call in `HMSUpdateListener` of `onRemovedFromRoom(notification : HMSRemovedFromRoom)`.
+
+The `HMSRemovedFromRoom` object which is passed into the callback has the structure:
+
+```kotlin
+data class HMSRemovedFromRoom(
+    val reason : String,
+    val peerWhoRemoved : HMSRemotePeer?,
+    val roomWasEnded : Boolean
+)
+```
+
+reason: Is the string that the caller of `removePeerRequest` sent as the reason they were being removed from the room.
+
+peerWhoRemoved: Is an `HMSRemotePeer` instance containing the details of the person who called `removePeerRequest`. This can be used to show the name of the person who removed them.
+
+roomWasEnded: This will be false if the peer was removed. If true, it indicates that the peer was not removed, but the entire room was ended. See [End Room](End-Room) for details.
+
+When this callback is received, the UI should be cleaned up from the client side. The video call would be ended from the SDK once this callback is sent.
