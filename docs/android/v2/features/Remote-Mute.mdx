@@ -25,17 +25,21 @@ Similarly the permission to unmute other peers is within `PermissionsParams` `as
 
 Here's how to check whether the local peer has the permission to mute or unmute others:
 
-<Tabs id="muteunmute" items={['Kotlin', 'Java 8', 'Java 7']} />
+<Tabs id="muteunmute" items={['Kotlin', 'Java']} />
 
 <Tab id='muteunmute-0'>
 
 ```kotlin
 fun isAllowedToMuteOthers(): Boolean {
-    return hmsSDK.getLocalPeer()?.hmsRole?.permission?.muteSelective == true
+    return hmsSDK.getLocalPeer()!!
+                .hmsRole.permission
+                .muteSelective
 }
 
 fun isAllowedToUnMuteOthers(): Boolean {
-    return hmsSDK.getLocalPeer()?.hmsRole?.permission?.askToUnmute == true
+    return hmsSDK.getLocalPeer()!!
+                .hmsRole.permission
+                .askToUnmute
 }
 
 ```
@@ -46,59 +50,22 @@ fun isAllowedToUnMuteOthers(): Boolean {
 
 ```java
 private boolean hasMutePermissions() {
-    return Optional.ofNullable(hmsSdk.getLocalPeer())
-            .map(HMSPeer::getHmsRole)
-            .map(HMSRole::getPermission)
-            .map(PermissionsParams::getMuteSelective)
-            .orElse(false);
+    return hmsSdk.getLocalPeer()
+                .getHmsRole().getPermission()
+                .getMuteSelective()
 }
 
 private boolean hasUnMutePermissions() {
-    return Optional.ofNullable(hmsSdk.getLocalPeer())
-            .map(HMSPeer::getHmsRole)
-            .map(HMSRole::getPermission)
-            .map(PermissionsParams::getAskToUnmute)
-            .orElse(false);
+    return hmsSdk.getLocalPeer()
+                .getHmsRole().getPermission()
+                .getAskToUnmute()
 }
 
 ```
 
 </Tab>
 
-<Tab id='muteunmute-2'>
-
-```java
-
-private boolean hasMutePermissions() {
-    HMSLocalPeer peer = hmsSdk.getLocalPeer();
-    if(peer != null) {
-        HMSRole role = peer.getHmsRole();
-        if(role != null) {
-            PermissionsParams permissions = role.getPermission();
-            if(permissions != null) {
-                return permissions.getMuteSelective();
-            }
-        }
-    }
-    return false;
-}
-
-private boolean hasUnMutePermissions() {
-    HMSLocalPeer peer = hmsSdk.getLocalPeer();
-    if(peer != null) {
-        HMSRole role = peer.getHmsRole();
-        if(role != null) {
-            PermissionsParams permissions = role.getPermission();
-            if(permissions != null) {
-                return permissions.getAskToUnmute();
-            }
-        }
-    }
-    return false;
-}
-```
-
-</Tab>
+`hmsSdk.getLocalPeer()` will only return null if you're neither in a preview nor in a meeting. Since you likely won't need to check for permissions there assuming you won't get null is reasonable.
 
 ### Muting/Unmuting
 
