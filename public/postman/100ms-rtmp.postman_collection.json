@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "7757f25a-466a-4502-9746-5c99f960e269",
+		"name": "100ms RTMP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Start Live Streaming",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "xxxxx.yyyyy.zzzzz",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"operation\": \"start\",\n    \"room_id\": <rooom_id>,\n    \"meeting_url\": <meeting_url>,\n    \"rtmp_url\": <rtmp_url>\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://prod-in2.100ms.live/api/v2/beam",
+					"protocol": "https",
+					"host": [
+						"prod-in2",
+						"100ms",
+						"live"
+					],
+					"path": [
+						"api",
+						"v2",
+						"beam"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Start Browser Recording",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "xxxxx.yyyyy.zzzzz",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"operation\": \"start\",\n    \"room_id\": <rooom_id>,\n    \"meeting_url\": <meeting_url>,\n    \"record\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://prod-in2.100ms.live/api/v2/beam",
+					"protocol": "https",
+					"host": [
+						"prod-in2",
+						"100ms",
+						"live"
+					],
+					"path": [
+						"api",
+						"v2",
+						"beam"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stop Streaming / Recording",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "xxxxx.yyyyy.zzzzz",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"operation\": \"stop\",\n    \"room_id\": <rooom_id>\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://prod-in2.100ms.live/api/v2/beam",
+					"protocol": "https",
+					"host": [
+						"prod-in2",
+						"100ms",
+						"live"
+					],
+					"path": [
+						"api",
+						"v2",
+						"beam"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
