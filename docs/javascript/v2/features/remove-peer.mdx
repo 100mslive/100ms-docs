@@ -1,0 +1,41 @@
+---
+title: Remove Peer
+nav: 3.14
+---
+
+Someone's overstayed their welcome and now you need to remove a peer from the chat. Just call `hmsActions.removePeer`.
+
+### Permissions
+
+Can't let just anyone remove others from the call. First you need to create a [role](../foundation/templates-and-roles) with the permissions to remove others.
+
+In the SDK, the permission to mute others from the room `removeOthers` and you should check for that within the [HMSRole.permissions](../../../api-reference/javascript/v2/interfaces/HMSRole#permissions) of the peer to see if they have it.
+
+Use the [selectPermissions](../../../api-reference/javascript/v2/home/content#select-permissions) selector to check whether the local peer has the permission to remove others.
+
+### Removing a peer
+
+Once the permissions are checked to ensure the caller has the permission to remove a peer, remove them by calling `hmsActions.removePeer`.
+
+The parameters are:
+
+-   peerID: is the ID of the `HMSRemotePeer` that you'd like to be removed from the call.
+
+-   reason: is the string that should be conveyed to them as the reason for being removed.
+
+> 🚧 If the local peer doesn't have the required `removeOthers` permission, the `hmsActions.removePeer` call will throw an [HMSException error](error-handling).
+
+```js
+try {
+    await hmsActions.removePeer(peer.id, 'Good bye');
+} catch (error) {
+    // Permission denied or invalid peer ID or not connected to room
+    console.error(error);
+}
+```
+
+### Handling the remove peer notification
+
+Once the peer with adequate permissions calls `removePeer` for the local peer, the local peer will receive a [notification](notifications) with type `REMOVED_FROM_ROOM` with a [HMSLeaveRoomRequest](../../../api-reference/javascript/v2/interfaces/HMSLeaveRoomRequest) object as the data.
+
+The SDK automatically calls leave and performs necessary clean ups 2 seconds from the moment this notification is sent, clients should show the appropriate UI(show a toast, redirect to a 'good-bye' page) within this period.

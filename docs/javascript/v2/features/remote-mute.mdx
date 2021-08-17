@@ -19,7 +19,7 @@ You can request people to unmute themselves as well.
 
 Can't let just anyone mute others. First you need to create a [role](../foundation/templates-and-roles) with the permissions to mute others and also to ask them to unmute.
 
-The permission to mute others is `mute` and you should check for that within the the [HMSRole.permissions](../../../api-reference/javascript/v2/interfaces/HMSRole#permissions) of the peer to see if they have it.
+The permission to mute others is `mute` and you should check for that within the [HMSRole.permissions](../../../api-reference/javascript/v2/interfaces/HMSRole#permissions) of the peer to see if they have it.
 
 Similarly the permission to unmute other peers is `unmute`.
 
@@ -33,6 +33,8 @@ Once you have checked that the caller has permissions to mute another peer's aud
 
 -   `remoteTrackID`: The track ID or array of track IDs of the tracks you want to mute/unmute.
 -   `enabled`: `true` if you wish to enable(`unmute` permission is required) the track, `false` if you wish to disable(`mute` permission is required) the track
+
+> 🚧 If the local peer doesn't have the required `mute`/`unmute` permission, the `hmsActions.setRemoteTrackEnabled` call will throw an [HMSException error](error-handling).
 
 ```js
 try {
