@@ -18,7 +18,7 @@ in case you're creating multiple rooms please create new instance per room.
 
 ### acceptChangeRole
 
-▸ **acceptChangeRole**(`request`): `void`
+▸ **acceptChangeRole**(`request`): `Promise`<`void`\>
 Accept the role change request received
 
 #### Parameters
@@ -29,7 +29,7 @@ Accept the role change request received
 
 #### Returns
 
-`void`
+`Promise`<`void`\>
 
 ---
 
@@ -95,7 +95,7 @@ the stream coming from server saving significant bandwidth for the user.
 
 ### changeRole
 
-▸ **changeRole**(`forPeerId`, `toRole`, `force?`): `void`
+▸ **changeRole**(`forPeerId`, `toRole`, `force?`): `Promise`<`void`\>
 Request for a role change of a remote peer. Can be forced.
 
 #### Parameters
@@ -108,7 +108,7 @@ Request for a role change of a remote peer. Can be forced.
 
 #### Returns
 
-`void`
+`Promise`<`void`\>
 
 ---
 
@@ -132,7 +132,7 @@ Request for a role change of a remote peer. Can be forced.
 
 ### endRoom
 
-▸ **endRoom**(`lock`, `reason`): `void`
+▸ **endRoom**(`lock`, `reason`): `Promise`<`void`\>
 If you have the **endRoom** permission, you can end the room. That means everyone will be kicked out.
 If lock is passed as true, the room cannot be used further.
 
@@ -145,7 +145,7 @@ If lock is passed as true, the room cannot be used further.
 
 #### Returns
 
-`void`
+`Promise`<`void`\>
 
 ---
 
@@ -216,7 +216,7 @@ Reject pending role change request
 
 ### removePeer
 
-▸ **removePeer**(`peerID`, `reason`): `void`
+▸ **removePeer**(`peerID`, `reason`): `Promise`<`void`\>
 If you have **removeOthers** permission, you can remove a peer from the room.
 
 #### Parameters
@@ -228,7 +228,7 @@ If you have **removeOthers** permission, you can remove a peer from the room.
 
 #### Returns
 
-`void`
+`Promise`<`void`\>
 
 ---
 
@@ -430,13 +430,14 @@ These functions can be used to mute/unmute the local peer's audio and video
 ▸ **setLogLevel**(`level`): `void`
 Set the type of logs from the SDK you want to be logged in the browser console.
 Note that HMSLogLevel is decremental meaning,
-HMSLogLevel.VERBOSE(0) - will log every message from SDK.
-HMSLogLevel.DEBUG(1) - will log messages that are helpful in debugging, important info, warnings and errors.
-HMSLogLevel.INFO(2) - will log important info, warnings and errors.
-HMSLogLevel.WARN(3) - will log warnings and errors.
-HMSLogLevel.ERROR(4) - will log only errors.
-HMSLogLevel.NONE(5) - won't log anything.
-Usage: `hmsActions.setLogLevel(4)` or `hmsActions.setLogLevel(HMSlogLevel.ERROR)`.
+
+- HMSLogLevel.VERBOSE(0) - will log every message from SDK.
+- HMSLogLevel.DEBUG(1) - will log messages that are helpful in debugging, important info, warnings and errors.
+- HMSLogLevel.INFO(2) - will log important info, warnings and errors.
+- HMSLogLevel.WARN(3) - will log warnings and errors.
+- HMSLogLevel.ERROR(4) - will log only errors.
+- HMSLogLevel.NONE(5) - won't log anything.
+  Usage: `hmsActions.setLogLevel(4)` or `hmsActions.setLogLevel(HMSlogLevel.ERROR)`.
 
 #### Parameters
 
@@ -492,7 +493,7 @@ set the quality of the selected videoTrack
 
 ### setRemoteTrackEnabled
 
-▸ **setRemoteTrackEnabled**(`forRemoteTrackID`, `enabled`): `void`
+▸ **setRemoteTrackEnabled**(`forRemoteTrackID`, `enabled`): `Promise`<`void`\>
 Change track state a remote peer's track
 This can be used to mute/unmute a remote peer's track
 
@@ -505,7 +506,7 @@ This can be used to mute/unmute a remote peer's track
 
 #### Returns
 
-`void`
+`Promise`<`void`\>
 
 ---
 
