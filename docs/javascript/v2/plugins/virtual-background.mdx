@@ -68,7 +68,7 @@ if (virtualBackground.isSupported()) {
 Init is used to load model of virtual background for the first time.
 It takes on an average 3-5 seconds.<br/>
 Calling init is handled internally by SDK if not done by user, in this case addPlugin call will
-take 3-5 seconds for the first time and then less than 100 milliseconds in the Subsequent calls.
+take 3-5 seconds for the first time and then less than 100 milliseconds in the subsequent calls.
 Check [this section](#start-and-stop-virtual-background) for addPlugin API usage
 
 ```jsx
@@ -97,7 +97,7 @@ async function toggleVB() {
   const showBackground = hmsStore.getState(selectIsLocalVideoPluginPresent(virtualBackground.getName()));
   try {
     if (!showBackground) {
-      //Recommended value
+      // Recommended value
       const pluginFrameRate = 15;
       // add virtual background
       await hmsActions.addPluginToVideoTrack(virtualBackground, pluginFrameRate);
@@ -129,7 +129,7 @@ function VirtualBackground() {
   const toggleVB = async() => {
     try {
       if (!showBackground) {
-        //Recommended value
+        // Recommended value
         const pluginFrameRate = 15;
         await hmsActions.addPluginToVideoTrack(virtualBackground, pluginFrameRate);
       } else {
