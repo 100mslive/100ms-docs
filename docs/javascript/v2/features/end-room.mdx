@@ -1,6 +1,6 @@
 ---
 title: End Room
-nav: 3.13
+nav: 3.15
 ---
 
 Done with talking and it's time to end the call for everyone not just yourself? You may be looking to end the room.
@@ -25,6 +25,8 @@ Once you're sure the peer has the permissions to end the room they can call for 
 
 > 💡 After calling endRoom the local peer needs to dispose of the video calling UI as well.
 
+> 🚧 If the local peer doesn't have the required `endRoom` permission, the `hmsActions.endRoom` call will throw an [HMSException error](../features/error-handling).
+
 <Tabs id="endroomcall" items={['JavaScript', 'React']} />
 
 <Tab id='endroomcall-0'>
@@ -35,7 +37,12 @@ function renderEndRoomButton(permissions) {
 
     if (permissions.endRoom) {
         endRoomButton.addEventListener('click', function () {
-            hmsActions.endRoom(lock, 'Reason goes here');
+            try {
+                await hmsActions.endRoom(lock, 'Reason goes here');
+            } catch (error) {
+                // Permission denied or not connected to room
+                console.error(error);
+            }
         });
         endRoomButton.style.display = 'inline-block';
     } else {
@@ -56,9 +63,16 @@ function EndRoomButton() {
     const permissions = useHMSStore(selectPermissions);
     const hmsActions = useHMSActions();
 
-    return permissions.endRoom ? (
-        <button onClick={() => hmsActions.endRoom(lock, 'Reason goes here')}>End Room</button>
-    ) : null;
+    const endRoom = () => {
+        try {
+            await hmsActions.endRoom(lock, 'Reason goes here');
+        } catch (error) {
+            // Permission denied or not connected to room
+            console.error(error);
+        }
+    };
+
+    return permissions.endRoom ? <button onClick={endRoom}>End Room</button> : null;
 }
 ```
 
