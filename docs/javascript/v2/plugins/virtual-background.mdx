@@ -90,6 +90,8 @@ virtualBackground.init().then(() => console.log('background can be changed now')
 
 <Tab id='plugin-code-0'>
 
+Check [this section](#set-Plugin-FrameRate) for pluginFrameRate usage
+
 ```js
 import { hmsActions, hmsStore } from './hms';
 import { selectIsLocalVideoPluginPresent } from '@100mslive/hms-video-store';
@@ -99,7 +101,6 @@ async function toggleVB() {
   try {
     if (!showBackground) {
       // add virtual background
-      // Check [this section](#set-Plugin-FrameRate) for pluginFrameRate usage
       await hmsActions.addPluginToVideoTrack(virtualBackground, pluginFrameRate);
     } else {
       // remove virtual background
