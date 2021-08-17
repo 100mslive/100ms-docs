@@ -13,6 +13,22 @@ description: Release Notes for 100ms JavaScript SDK
 | @100mslive/hms-video-store | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-store.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-store) |
 
 
+## 2021-08-16
+Released: `@100mslive/hms-video@0.0.148`, `@100mslive/hms-video-store@0.2.22`, `@100mslive/hms-video-react@0.3.32`.
+
+#### Added
+- Mute/unmute remote peers. [Refer Usage](/api-reference/javascript/v2/interfaces/HMSActions#set-remote-track-enabled)
+- Remove peer from room. [Refer Usage](/api-reference/javascript/v2/interfaces/HMSActions#remove-peer)
+- End room. [Refer Usage](/api-reference/javascript/v2/interfaces/HMSActions#remove-peer)
+- Private Messages to peers/roles. 
+    - [Direct Message to Peer](/api-reference/javascript/v2/interfaces/HMSActions#send-direct-message)
+    - [Group Message to Role](/api-reference/javascript/v2/interfaces/HMSActions#send-group-message)
+    - [Broadcast Message to everyone in the room](/api-reference/javascript/v2/interfaces/HMSActions#send-broadcast-message)
+
+#### Breaking Change
+- **sendMessage is now deprecated**, please use sendBroadcastMessage, sendGroupMessage and sendDirectMessage for messaging. [Refer Usage](/api-reference/javascript/v2/interfaces/HMSActions#send-broadcast-message)
+
+
 ## 0.0.128 - 2021-08-07
 - Fix tracks not getting removed properly in Firefox in between role changes
 
