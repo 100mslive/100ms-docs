@@ -81,16 +81,19 @@ virtualBackground.init().then(() => console.log('background can be changed now')
 
 ## Set Plugin FrameRate(Optional)
 
-'pluginFrameRate' parameter can be used to set the output Frame rate of Virtual Background plugin
+`pluginFrameRate`- Int - It can be used to set the output frame rate of virtual background plugin<br/>
+ It is the rate at which the plugin is expected to process the video frames. If not set, virtual background will run on
+ input frame rate. The user can specify this based on device type and CPU usage.
+ **Range: 0 <= pluginFrameRate <= inputFrameRate**
 
 
 ## Start and Stop Virtual Background
 
+Check [this section](#set-plugin-frame-rate-optional) for `pluginFrameRate` usage
+
 <Tabs id="plugin-code" items={['JavaScript', 'React']} />
 
 <Tab id='plugin-code-0'>
-
-Check [this section](#set-Plugin-FrameRate) for pluginFrameRate usage
 
 ```js
 import { hmsActions, hmsStore } from './hms';
