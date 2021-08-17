@@ -13,15 +13,15 @@ In the SDK, the permission to mute others is within  `PermissionsParams` `remove
 
 Here's how to check whether the local peer has the permission to end the room:
 
-<Tabs id="removepeerperm" items={['Kotlin', 'Java']} />
+<Tabs id="removepeerperm" items={['Kotlin', 'Java 8', 'Java 7']} />
 
 <Tab id='removepeerperm-0'>
 
 ```kotlin
 fun isAllowedToRemovePeer(): Boolean {
     return hmsSDK.getLocalPeer()!!
-                .hmsRole.permission
-                .removeOthers
+                .hmsRole.permission?
+                .removeOthers == true
 }
 ```
 
@@ -31,9 +31,31 @@ fun isAllowedToRemovePeer(): Boolean {
 
 ```java
 private boolean isAllowedToRemovePeer() {
-    return hmsSdk.getLocalPeer()
-                .getHmsRole().getPermission()
-                .getRemoveOthers();
+    return Optional.ofNullable(hmsSdk.getLocalPeer())
+            .map(HMSPeer::getHmsRole)
+            .map(HMSRole::getPermission)
+            .map(PermissionsParams::getRemoveOthers)
+            .orElse(false);
+}
+```
+</Tab>
+
+
+<Tab id='endroom-2'>
+
+```java
+private boolean isAllowedToRemovePeer() {
+    HMSLocalPeer peer = hmsSdk.getLocalPeer();
+    if(peer != null) {
+        HMSRole role = peer.getHmsRole();
+        if(role != null) {
+            PermissionsParams permissions = role.getPermission();
+            if(permissions != null) {
+                return permissions.getRemoveOthers();
+            }
+        }
+    }
+    return false;
 }
 ```
 </Tab>
