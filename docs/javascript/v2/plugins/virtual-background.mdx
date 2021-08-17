@@ -116,6 +116,8 @@ async function toggleVB() {
 
 <Tab id='plugin-code-1'>
 
+Check [this section](#set-Plugin-FrameRate) for pluginFrameRate usage
+
 ```jsx
 import {
   useHMSStore,
@@ -130,7 +132,6 @@ function VirtualBackground() {
   const toggleVB = async() => {
     try {
       if (!showBackground) {
-        // Check [this section](#set-Plugin-FrameRate) for pluginFrameRate usage
         await hmsActions.addPluginToVideoTrack(virtualBackground, pluginFrameRate);
       } else {
         await hmsActions.removePluginFromVideoTrack(virtualBackground);
