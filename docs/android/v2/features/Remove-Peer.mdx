@@ -20,8 +20,8 @@ Here's how to check whether the local peer has the permission to end the room:
 ```kotlin
 fun isAllowedToRemovePeer(): Boolean {
     return hmsSDK.getLocalPeer()!!
-                .hmsRole.permission
-                .removeOthers
+                .hmsRole.permission?
+                .removeOthers == true
 }
 ```
 
