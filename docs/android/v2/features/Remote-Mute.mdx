@@ -53,7 +53,7 @@ private boolean hasMutePermissions() {
     return Optional.ofNullable(hmsSdk.getLocalPeer())
             .map(HMSPeer::getHmsRole)
             .map(HMSRole::getPermission)
-            .map(PermissionsParams::getMuteSelective)
+            .map(PermissionsParams::getMute)
             .orElse(false);
 }
 
@@ -61,7 +61,7 @@ private boolean hasUnMutePermissions() {
     return Optional.ofNullable(hmsSdk.getLocalPeer())
             .map(HMSPeer::getHmsRole)
             .map(HMSRole::getPermission)
-            .map(PermissionsParams::getAskToUnmute)
+            .map(PermissionsParams::getUnmute)
             .orElse(false);
 }
 
@@ -143,7 +143,7 @@ private boolean hasMutePermissions() {
         if(role != null) {
             PermissionsParams permissions = role.getPermission();
             if(permissions != null) {
-                return permissions.getMuteSelective();
+                return permissions.getMute();
             }
         }
     }
@@ -157,7 +157,7 @@ private boolean hasUnMutePermissions() {
         if(role != null) {
             PermissionsParams permissions = role.getPermission();
             if(permissions != null) {
-                return permissions.getAskToUnmute();
+                return permissions.getUnmute();
             }
         }
     }
