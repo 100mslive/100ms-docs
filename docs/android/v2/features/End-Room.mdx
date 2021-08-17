@@ -20,22 +20,47 @@ Here's how to check whether the local peer has the permission to end the room:
 ```kotlin
 fun isAllowedToEndMeeting(): Boolean {
     return hmsSDK.getLocalPeer()!!
-                .hmsRole.permission
-                .endRoom
+                .hmsRole.permission?
+                .endRoom == true
 }
+
 ```
 
 </Tab>
 
 <Tab id='endroom-1'>
 
+
+ ```java
+ private boolean hasEndRoomPermissions() {
+    return Optional.ofNullable(hmsSdk.getLocalPeer())
+            .map(HMSPeer::getHmsRole)
+            .map(HMSRole::getPermission)
+            .map(PermissionsParams::getEndRoom)
+            .orElse(false);
+ }
+ ```
+
+ </Tab>
+ 
+<Tab id='endroom-2'>
+
 ```java
 private boolean hasEndRoomPermissions() {
-    return hmsSdk.getLocalPeer()
-                .getHmsRole().getPermission()
-                .getEndRoom();
+    HMSLocalPeer peer = hmsSdk.getLocalPeer();
+    if(peer != null) {
+        HMSRole role = peer.getHmsRole();
+        if(role != null) {
+            PermissionsParams permissions = role.getPermission();
+            if(permissions != null) {
+                return permissions.getEndRoom();
+            }
+        }
+    }
+    return false;
 }
 ```
+
 </Tab>
 
 `hmsSdk.getLocalPeer()` will only return null if you're neither in a preview nor in a meeting. Since you likely won't need to check for permissions there assuming you won't get null is reasonable.
