@@ -79,6 +79,11 @@ Init can also be used by user to show a loader icon for background selector comp
 virtualBackground.init().then(() => console.log('background can be changed now'));
 ```
 
+## Set Plugin FrameRate(Optional)
+
+'pluginFrameRate' parameter can be used to set the output Frame rate of Virtual Background plugin
+
+
 ## Start and Stop Virtual Background
 
 <Tabs id="plugin-code" items={['JavaScript', 'React']} />
@@ -94,7 +99,8 @@ async function toggleVB() {
   try {
     if (!showBackground) {
       // add virtual background
-      await hmsActions.addPluginToVideoTrack(virtualBackground);
+      // Check [this section](#set-Plugin-FrameRate) for pluginFrameRate usage
+      await hmsActions.addPluginToVideoTrack(virtualBackground, pluginFrameRate);
     } else {
       // remove virtual background
       await hmsActions.removePluginFromVideoTrack(virtualBackground);
@@ -117,14 +123,14 @@ import {
 } from '@100mslive/hms-video-react';
 
 function VirtualBackground() {
-  // to know if vb is currently added
   const showBackground = useHMSStore(selectIsLocalVideoPluginPresent(virtualBackground.getName()));
   const hmsActions = useHMSActions();
 
   const toggleVB = async() => {
     try {
       if (!showBackground) {
-        await hmsActions.addPluginToVideoTrack(virtualBackground);
+        // Check [this section](#set-Plugin-FrameRate) for pluginFrameRate usage
+        await hmsActions.addPluginToVideoTrack(virtualBackground, pluginFrameRate);
       } else {
         await hmsActions.removePluginFromVideoTrack(virtualBackground);
       }
