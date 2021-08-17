@@ -19,9 +19,9 @@ You can request people to unmute themselves as well.
 
 Can't let just anyone mute others. First you need to create a [role](../foundation/templates-and-roles) with the permissions to mute others and also to ask them to unmute.
 
-The permission to mute others is within  `PermissionsParams` `muteSelective` and you should check for that within the `HMSRole` of the peer to see if they have it.
+The permission to mute others is within  `PermissionsParams` `mute` and you should check for that within the `HMSRole` of the peer to see if they have it.
 
-Similarly the permission to unmute other peers is within `PermissionsParams` `askToUnmute`.
+Similarly the permission to unmute other peers is within `PermissionsParams` `unmute`.
 
 Here's how to check whether the local peer has the permission to mute or unmute others:
 
@@ -33,13 +33,13 @@ Here's how to check whether the local peer has the permission to mute or unmute 
 fun isAllowedToMuteOthers(): Boolean {
     return hmsSDK.getLocalPeer()!!
                 .hmsRole.permission
-                .muteSelective
+                .mute
 }
 
 fun isAllowedToUnMuteOthers(): Boolean {
     return hmsSDK.getLocalPeer()!!
                 .hmsRole.permission
-                .askToUnmute
+                .unmute
 }
 
 ```
@@ -52,13 +52,13 @@ fun isAllowedToUnMuteOthers(): Boolean {
 private boolean hasMutePermissions() {
     return hmsSdk.getLocalPeer()
                 .getHmsRole().getPermission()
-                .getMuteSelective()
+                .getMute();
 }
 
 private boolean hasUnMutePermissions() {
     return hmsSdk.getLocalPeer()
                 .getHmsRole().getPermission()
-                .getAskToUnmute()
+                .getUnmute();
 }
 
 ```
