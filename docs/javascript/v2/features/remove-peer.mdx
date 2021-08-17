@@ -38,4 +38,4 @@ try {
 
 Once the peer with adequate permissions calls `removePeer` for the local peer, the local peer will receive a [notification](notifications) with type `REMOVED_FROM_ROOM` with a [HMSLeaveRoomRequest](../../../api-reference/javascript/v2/interfaces/HMSLeaveRoomRequest) object as the data.
 
-The SDK automatically calls leave and performs necessary clean ups 2 seconds from the moment this notification is sent, clients should show the appropriate UI(show a toast, redirect to a 'good-bye' page) within this period.
+The SDK automatically calls leave and performs necessary clean ups immediately after this notification is sent, clients should show the appropriate UI(show a dialog, redirect to a 'good-bye' page) on receiving this notification.
