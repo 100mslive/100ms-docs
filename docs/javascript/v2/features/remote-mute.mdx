@@ -1,0 +1,114 @@
+---
+title: Remote Mute
+nav: 3.13
+---
+
+You're running a room and decide that someone who's currently talking shouldn't be talking.
+
+You'd prefer they'd stay mute. Or perhaps you want their video turned off as well as their audio. You're looking for a remote mute.
+
+Muting can apply to both audio and video.
+
+##### Unmuting
+
+You may also decide that you want to let someone else speak who was currently muted. Or may want to ask someone to turn on their video.
+
+You can request people to unmute themselves as well.
+
+### Permissions
+
+Can't let just anyone mute others. First you need to create a [role](../foundation/templates-and-roles) with the permissions to mute others and also to ask them to unmute.
+
+The permission to mute others is `mute` and you should check for that within the the [HMSRole.permissions](../../../api-reference/javascript/v2/interfaces/HMSRole#permissions) of the peer to see if they have it.
+
+Similarly the permission to unmute other peers is `unmute`.
+
+Use the [selectPermissions](../../../api-reference/javascript/v2/home/content#select-permissions) selector to check whether the local peer has the permission to mute or unmute others.
+
+### Muting/Unmuting
+
+Once you have checked that the caller has permissions to mute another peer's audio or video, call for it with `hmsActions.setRemoteTrackEnabled`.
+
+`setRemoteTrackEnabled` takes two parameters
+
+-   `remoteTrackID`: The track ID or array of track IDs of the tracks you want to mute/unmute.
+-   `enabled`: `true` if you wish to enable(`unmute` permission is required) the track, `false` if you wish to disable(`mute` permission is required) the track
+
+```js
+try {
+    await hmsActions.setRemoteTrackEnabled(peer.audioTrack, true);
+} catch (error) {
+    // Permission denied or invalid track ID or not connected to room
+    console.error(error);
+}
+```
+
+### Handling a mute/unmute request
+
+Once the peer with adequate permissions calls `setRemoteTrackEnabled`, the local peer will receive a [notification](notifications) with type `CHANGE_TRACK_STATE_REQUEST` with a [HMSChangeTrackStateRequest](../../../api-reference/javascript/v2/interfaces/HMSChangeTrackStateRequest) object as the data.
+
+-   Mute requests are automatically applied to the receiver by the SDK. No action is required.
+
+-   For unmute request, hold onto the information from the `HMSChangeTrackStateRequest` object, show a dialog to the user to ask if they want to accept the change and then apply the settings locally. The same as in a regular user [Mute/Unmute](mute).
+
+<Tabs id="remotemutehandle" items={['JavaScript', 'React']} />
+
+<Tab id='remotemutehandle-0'>
+
+```js
+hmsNotifications.onNotification((notification) => {
+    if (!notification) {
+        return;
+    }
+
+    switch (notification.type) {
+        // ...Other notification type cases
+        case 'CHANGE_TRACK_STATE_REQUEST':
+            // Unmute Request
+            if (notification.data.enabled) {
+                // Ask for consent using dialog or any other appropriate UI
+                await hmsActions.setEnabledTrack(notification.data.track.id, enabled);
+            } else {
+                // Mute Request
+                // Show toast to user
+            }
+            break;
+    }
+});
+```
+
+</Tab>
+
+<Tab id='remotemutehandle-1'>
+
+```jsx
+import { useHMSNotifications } from '@100mslive/hms-video-react';
+
+function Notification() {
+    const notification = useHMSNotifications();
+
+    useEffect(() => {
+        if (!notification) {
+            return;
+        }
+
+        switch (notification.type) {
+            // ...Other notification type cases
+            case 'CHANGE_TRACK_STATE_REQUEST':
+                // Unmute Request
+                if (notification.data.enabled) {
+                    // Ask for consent using dialog or any other appropriate UI
+                    await hmsActions.setEnabledTrack(track.id, enabled);
+                } else {
+                    // Mute Request
+                    // Show toast to user
+                }
+                break;
+        }
+    }, [notification]);
+
+    return <div>Notification: {notification?.type}</div>;
+}
+```
+
+</Tab>
