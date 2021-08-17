@@ -49,17 +49,17 @@ You can start either RTMP Streaming or Browser Recording or both for any room
 #### cURL
 
 ```bash
-curl 
+curl \
     --location \
     --request POST 'https://prod-in2.100ms.live/api/v2/beam' \
     --header 'Content-Type: application/json' \
-    --header 'Authorization: Bearer {xxxxx.yyyyy.zzzzz}' \
+    --header 'Authorization: Bearer <management_token>' \
     --data-raw '{
         "operation": "start",
-        "room_id": "{room_id}",
-        "meeting_url": "{meeting_url}",
-        "rtmp_url": "{rtmp_url}",
-        "record": {true/false}
+        "room_id": <rooom_id>,
+        "meeting_url": <meeting_url>,
+        "rtmp_url": <rtmp_url>,
+        "record": true
     }'
 ```
 
@@ -98,14 +98,14 @@ curl
 #### cURL
 
 ```bash
-curl 
+curl \
     --location \
     --request POST 'https://prod-in2.100ms.live/api/v2/beam' \
     --header 'Content-Type: application/json' \
-    --header 'Authorization: Bearer {xxxxx.yyyyy.zzzzz}' \
+    --header 'Authorization: Bearer <management_token>' \
     --data-raw '{
         "operation": "stop",
-        "room_id": "{room_id}",
+        "room_id": <rooom_id>
     }'
 ```
 
@@ -114,3 +114,7 @@ curl
 <Tab id="stop-1">
     <Response res="200: OK" resText="Beam has stopped successfully" />
 </Tab>
+
+## Postman Collection
+
+<DownloadCollection type='rtmp' />
