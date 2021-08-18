@@ -67,15 +67,13 @@ private boolean hasEndRoomPermissions() {
 
 ### Ending the Room
 
-Once you're sure the peer has the permissions to end the room they can call for the room to end when they're ready with `hmsSdk.endRoom`.
+Once you're sure the peer has the permissions to end the room, they can end it by calling `hmsSdk.endRoom`.
 
 `endRoom` takes three parameters.
 
-message: The message you want to show people when they are forced to leave. This is a good place to thank them for joining the call and informing them that it has ended.
-
-lock: Whether you want to prevent anyone from rejoining the room. If false, they will be allowed to enter the room again if the client called `join`. If this is false, they will not able to join this room again.
-
-hmsActionResultListener: These are the callbacks that let you know whether the room was ended successfully or not. If the room could be closed, `onSuccess` will be called. For any errors `onError` will be called with the appropriate `HMSException`.
+1. *message*: The String message you want to show people when they are forced to leave. This is a good place to thank them for joining the call and informing them that it has ended.
+2. *lock*: A Boolean for whether you want to prevent anyone from rejoining the room. If false, they will be allowed to enter the room again if the client called `join`. If this is true, they will not able to join this room again.
+3. *hmsActionResultListener*: These are the callbacks that let you know whether the room was ended successfully or not. If the room could be closed, `onSuccess` will be called. For any errors `onError` will be called with the appropriate `HMSException`.
 
 > 💡 After calling endRoom the local peer needs to dispose of the video calling UI as well.
 
