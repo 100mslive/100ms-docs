@@ -1,10 +1,11 @@
 ## Introduction
 
 Template is the blueprint of the room. It defines the settings of the room along with the behavior of users who are part of it.
-Room will inherit the properties from a template that you have specified while creating it. If you have not specified any template then it will pick the default template.
+Room will inherit the properties from a template that you have specified while creating it. If you have not specified any template then it will pick the default template. 
 Each template will be identified by its id. E.g. `default_videoconf_7e450ffc-8ef1-4572-ab28-b32474107b89`
 
-**Note**: As of now templates have only roles section which will be extended in future
+Users can see or modify the templates by visiting [Templates](https://dashboard.100ms.live/templates)
+
 
 ![Template](/docs/v2/template.png)
 
@@ -36,7 +37,11 @@ Whether the role is allowed to do screen share or not
 
 ### Video quality
 
-Quality of the video track which is going to be published by the role. Currently, 4 video qualities `720p`, `480p`, `360p` and `240p` are predefined and the user can select one out of these values.
+Quality of the video track which is going to be published by the role. Currently, 4 video qualities `720p`, `480p`, `360p` and `240p` are predefined and the user can select one out of these values. This option will be visible only if the **Can share video** is enabled.
+
+### Screenshare quality
+
+Quality of the screen which is going to be shared by the role. Currently, 2 video qualities `720p` and `1080p` are predefined and the user can select one out of these values. This option will be visible only if the **Can share screen** is enabled.
 
 ## Subscribe Strategies
 
@@ -54,4 +59,18 @@ Permissions will contain a list of additional privileges that this role will hav
 
 With this permission, user will be able to change the role of the other participant's who are present in the room
 
-> You can modify an existing template to create a new template.
+### Can mute any participant
+With this permission, user will be able to mute any participant's audio and/or video.
+
+### Can ask participant to unmute
+With this permission, user will be able to ask any participant to unmute their audio and/or video.
+
+### Can remove participant from the room
+With this permission, user will be able to remove any participant from the current session of the room.
+
+### Can end current session of the room
+With this permission, user will be able to end the current session of the room.
+
+**Note**
+* As of now templates have only roles section which will be extended in future
+* You can modify an existing template to create a new template. 

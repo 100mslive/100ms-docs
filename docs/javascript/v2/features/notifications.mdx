@@ -1,12 +1,11 @@
 ---
 title: Notifications
-nav: 3.11
+nav: 3.09
 ---
 
 ![Join Notification](/guides/notification-join.png)
 
 ![Poor Connection Notification](/guides/notification-internet.png)
-
 
 Notifications can be used to display toast to user about activities happening in the room, such as peer join/leave or new messages.
 It can also be used to know about any mid call sdk level error.
@@ -64,21 +63,8 @@ function Notification() {
 
 ## Notification types
 
-The notification `type` is a string and can only take values from the list below.
+The notification `type` is a string and can only take values from the [list here](/api-reference/javascript/v2/enums/HMSNotificationTypes).
 You can use it to check the type of the notification.
-
-Here is the list of all notification types:
-
-```jsx
-class HMSNotificationTypes {
-    static PEER_JOINED: string; // notification.data will be HMSPeer
-    static PEER_LEFT: string; // notification.data will be HMSPeer
-    static NEW_MESSAGE: string; // notification.data will be HMSMessage
-    static ERROR: string; // notification.data will be HMSException
-    static RECONNECTING: string; // User has lost connection to the server. The connection is being re-established
-    static RECONNECTED: string; // The connection has been re-established successfully.
-}
-```
 
 The data in notification depends on the notification type. You can use the `switch` construct to the handle the notification type.
 
@@ -208,11 +194,9 @@ unsubscribe();
 
 </Tab>
 
-
 ## Ideas
 
 You can create notifications with buttons in them, to make it easier for the end user to respond to those notifications.
 For e.g. -
 
 ![Screenshare Notification](/guides/notification-screen.png)
-

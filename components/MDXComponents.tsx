@@ -12,6 +12,7 @@ import Codesandbox from './Codesandbox';
 import Text from './Text';
 import View from './View';
 import Content from './Content';
+import DownloadCollection from './DownloadCollection';
 
 const CodeCustom = (props: any) => <Code>{props.children}</Code>;
 
@@ -64,7 +65,8 @@ const MDXComponents = {
     Text,
     View,
     a: LinkCustom,
-    Content
+    Content,
+    DownloadCollection
 };
 
 export default MDXComponents;

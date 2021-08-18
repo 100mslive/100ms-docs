@@ -1,11 +1,11 @@
 ---
 title: Change Role
-nav: 3.20
+nav: 3.12
 ---
 
 ![Role Change](/guides/role-change.png)
 
-Role is a powerful concept that takes a lot of complexity away in handling permissions and supporting features like breakout rooms. [Learn more about roles here.](../foundation/Roles-and-tempates)
+Role is a powerful concept that takes a lot of complexity away in handling permissions and supporting features like breakout rooms. [Learn more about roles here.](../foundation/templates-and-roles)
 
 Every peer is associated with a role. The `HMSRole` object can be used to know the following:
 
@@ -16,9 +16,10 @@ Every peer is associated with a role. The `HMSRole` object can be used to know t
 In certain scenarios you may want to change someone's role. Imagine an audio room with 2 roles "speaker" and "listener". Only someone with a "speaker" role can publish audio to the room while "listener" can only subscribe. Now at some point "speaker" may decide to nominate some "listener" to become a "speaker". This is where the `changeRole` API comes in.
 
 To invoke the api you will need 3 things.
-- `remotePeerId`: The remote peer ID whose role you want to change.
-- `toRoleName`: The target role name. 
-- `force`: Whether you want to change their role without asking them or give them a chance to accept/reject.
+
+-   `remotePeerId`: The remote peer ID whose role you want to change.
+-   `toRoleName`: The target role name.
+-   `force`: Whether you want to change their role without asking them or give them a chance to accept/reject.
 
 All the peers that are in the current room are accessible via `selectPeers` selector.
 
@@ -28,20 +29,20 @@ selector to get the full role object for a role name which will have the role's 
 Once you have all you can invoke:
 
 ```ts
-function changeRole(forPeerId : string, toRoleName: string, force: boolean) {
-    hmsActions.changeRole(forPeerId, toRoleName, force)
+function changeRole(forPeerId: string, toRoleName: string, force: boolean) {
+    hmsActions.changeRole(forPeerId, toRoleName, force);
 }
 ```
 
-The `force` parameter in `changeRole`, when false, is a polite request: "Would you like to change your role from listener to speaker?" which can be ignored by the other party. 
-The way it works is the other party will first receive a request which they can accept or reject.
+The `force` parameter in `changeRole`, when false, is a polite request: "Would you like to change your role from listener to speaker?" which can be ignored by the other party.
+The way it works is the other party will first receive a [request](/api-reference/javascript/v2/interfaces/HMSRoleChangeRequest) which they can accept or reject.
 
 ```js
 function handleRoleChangeRequest(request) {
     if (!request) {
         return;
     }
-    console.log(`${request.requestedBy.name} requested role change to - ${request.role.name}`)
+    console.log(`${request.requestedBy.name} requested role change to - ${request.role.name}`);
     // decide what to do with the request
     const accept = shouldAccept(request);
     if (accept) {
@@ -56,8 +57,8 @@ hmsStore.subscribe(handleRoleChangeRequest, selectRoleChangeRequest);
 
 If the request is accepted, the `peer.roleName` field in the store will update for all peers which should update their UI as well.
 
-Imagine that the newly nominated speaker is not behaving nicely and we want to move him back to listener without a prompt. 
-This is where the `force` parameter comes in. When it is set to `true` the other party will not receive a confirmation `roleChangeRequest` 
+Imagine that the newly nominated speaker is not behaving nicely and we want to move him back to listener without a prompt.
+This is where the `force` parameter comes in. When it is set to `true` the other party will not receive a confirmation `roleChangeRequest`
 but instead will straight away receive a new set of updated permissions and stop publishing.
 
 ![Listener Role](/guides/role-listener.png)

@@ -1,0 +1,79 @@
+---
+title: Remove Peer
+nav: 3.14
+---
+
+Someone's overstayed their welcome and now you need to remove a peer from the chat. Just call `hmsActions.removePeer`.
+
+![Remove Peer](/guides/remove-peer.png)
+
+### Removing a peer
+
+Use the [`selectPermissions`](../../../api-reference/javascript/v2/home/content#select-permissions) selector to check whether the local peer has the `removeOthers` permission and then call [`hmsActions.removePeer`](../../../api-reference/javascript/v2/interfaces/HMSActions#remove-peer) to end the room with `peerID` of the `HMSRemotePeer` that you'd like to be removed from the call and the `reason`.
+
+```js
+try {
+    await hmsActions.removePeer(peer.id, 'Good bye');
+} catch (error) {
+    // Permission denied or invalid peer ID or not connected to room
+    console.error(error);
+}
+```
+
+> 🚧 If the local peer doesn't have the required `removeOthers` permission, the `hmsActions.removePeer` call will throw an [HMSException error](error-handling).
+
+### Handling the remove peer notification
+
+Once the peer with adequate permissions calls `removePeer` for the local peer, the local peer will receive a [notification](notifications) with type `REMOVED_FROM_ROOM` with a [HMSLeaveRoomRequest](../../../api-reference/javascript/v2/interfaces/HMSLeaveRoomRequest) object as the data.
+
+The SDK automatically calls leave and performs necessary clean ups immediately after this notification is sent, clients should show the appropriate UI(show a dialog, redirect to a 'good-bye' page) on receiving this notification.
+
+<Tabs id="removepeerhandle" items={['JavaScript', 'React']} />
+
+<Tab id='removepeerhandle-0'>
+
+```js
+hmsNotifications.onNotification((notification) => {
+    if (!notification) {
+        return;
+    }
+
+    switch (notification.type) {
+        // ...Other notification type cases
+        case 'REMOVED_FROM_ROOM':
+            // Redirect or Show toast to user
+            toast('Reason: ', notification.data.reason);
+            break;
+    }
+});
+```
+
+</Tab>
+
+<Tab id='removepeerhandle-1'>
+
+```jsx
+import { useHMSNotifications } from '@100mslive/hms-video-react';
+
+function Notification() {
+    const notification = useHMSNotifications();
+
+    useEffect(() => {
+        if (!notification) {
+            return;
+        }
+
+        switch (notification.type) {
+            // ...Other notification type cases
+            case 'REMOVED_FROM_ROOM':
+                // Redirect or Show toast to user
+                toast('Reason: ', notification.data.reason);
+                break;
+        }
+    }, [notification]);
+
+    return <div>Notification: {notification?.type}</div>;
+}
+```
+
+</Tab>

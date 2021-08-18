@@ -1,0 +1,55 @@
+---
+title: Remove Peer
+nav: 3.94
+---
+
+Someone's overstayed their welcome and now you need to remove a peer from the chat. Just call `hmsSdk.removePeerRequest`.
+
+
+### Permissions
+
+Can't let just anyone remove others from the room. First you need to create a [role](../foundation/templates-and-roles) with the permissions to end a room.
+
+The permission to end a room is called `removeOthers` and you should check for that within the `permissions` property of `HMSRole` of the peer to see if they have it.
+
+### Removing a peer
+
+Once the permissions are checked to ensure the caller has the permission to remove a peer, remove them by calling `hmsSdk.removePeer`.
+
+The parameters are:
+
+peer: The `HMSRemotePeer` that you'd like to be removed from the room.
+
+reason: Optional message you want to pass along the peer being removed
+
+completion handler: Let you know whether the remove operation executed successfully or not. 
+
+
+```swift
+hmssdk.removePeer(targetPeer, reason: "You are violating the community rules.") { success, error in
+}
+```
+
+### Handling the remove peer callback
+
+The target peer of the `removePeer` will receive a callback in `HMSUpdateListener` of `onRemovedFromRoom(notification : HMSRemovedFromRoom)`.
+
+The `HMSRemovedFromRoom` object which is passed into the callback has the structure:
+
+```swift
+class HMSRemovedFromRoomNotification {
+    public let requestedBy: HMSPeer
+    public let reason: String
+    public let roomEnded: Bool
+}
+```
+
+> 💡 This is the same callback that will be triggered if a room was [ended](End-Room) as well. Except that `roomEnded` will be false.
+
+reason: The string message detailing why the peer is being removed.
+
+requestedBy: The details of the peer who called `removePeer`.
+
+roomEnded: True if the entire room was ended. False if only the receiving peer was removed.
+
+Clients should read this callback and show the appropriate UI.

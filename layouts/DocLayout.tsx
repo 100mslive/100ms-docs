@@ -3,6 +3,7 @@ import Pagination from '@/components/Pagination';
 import Sidebar from '@/components/Sidebar';
 import Toc, { TocItem } from '@/components/Toc';
 import { PaginationType } from '@/lib/getPagination';
+import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
@@ -86,6 +87,10 @@ const DocLayout: React.FC<Props> = ({
     } else {
         newNav = nav;
     }
+
+    setTimeout(() => {
+        scrollToUrlHash(router.asPath)
+    }, 500)
 
     return (
         <>

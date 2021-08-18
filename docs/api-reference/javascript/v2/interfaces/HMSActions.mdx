@@ -18,7 +18,7 @@ in case you're creating multiple rooms please create new instance per room.
 
 ### acceptChangeRole
 
-▸ **acceptChangeRole**(`request`): `void`
+▸ **acceptChangeRole**(`request`): `Promise`<`void`\>
 Accept the role change request received
 
 #### Parameters
@@ -29,22 +29,24 @@ Accept the role change request received
 
 #### Returns
 
-`void`
+`Promise`<`void`\>
 
 ---
 
 ### addPluginToVideoTrack
 
-▸ **addPluginToVideoTrack**(`plugin`): `Promise`<`void`\>
+▸ **addPluginToVideoTrack**(`plugin`, `pluginFrameRate?`): `Promise`<`void`\>
 Add or remove a video plugin from/to the local peer video track. Eg. Virtual Background, Face Filters etc.
 Video plugins can be added/removed at any time after the join is successful.
+pluginFrameRate is the rate at which the output plugin will do processing
 **`see`** HMSVideoPlugin
 
 #### Parameters
 
-| Name     | Type             | Description    |
-| :------- | :--------------- | :------------- |
-| `plugin` | `HMSVideoPlugin` | HMSVideoPlugin |
+| Name               | Type             | Description    |
+| :----------------- | :--------------- | :------------- |
+| `plugin`           | `HMSVideoPlugin` | HMSVideoPlugin |
+| `pluginFrameRate?` | `number`         | number         |
 
 #### Returns
 
@@ -93,7 +95,7 @@ the stream coming from server saving significant bandwidth for the user.
 
 ### changeRole
 
-▸ **changeRole**(`forPeerId`, `toRole`, `force?`): `void`
+▸ **changeRole**(`forPeerId`, `toRole`, `force?`): `Promise`<`void`\>
 Request for a role change of a remote peer. Can be forced.
 
 #### Parameters
@@ -106,7 +108,7 @@ Request for a role change of a remote peer. Can be forced.
 
 #### Returns
 
-`void`
+`Promise`<`void`\>
 
 ---
 
@@ -121,6 +123,25 @@ Request for a role change of a remote peer. Can be forced.
 | :------------- | :----------------- |
 | `trackID`      | `string`           |
 | `videoElement` | `HTMLVideoElement` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### endRoom
+
+▸ **endRoom**(`lock`, `reason`): `Promise`<`void`\>
+If you have the **endRoom** permission, you can end the room. That means everyone will be kicked out.
+If lock is passed as true, the room cannot be used further.
+
+#### Parameters
+
+| Name     | Type      |
+| :------- | :-------- |
+| `lock`   | `boolean` |
+| `reason` | `string`  |
 
 #### Returns
 
@@ -193,6 +214,24 @@ Reject pending role change request
 
 ---
 
+### removePeer
+
+▸ **removePeer**(`peerID`, `reason`): `Promise`<`void`\>
+If you have **removeOthers** permission, you can remove a peer from the room.
+
+#### Parameters
+
+| Name     | Type     | Description                                                                                                                                                                                     |
+| :------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `peerID` | `string` | peerID of the peer to be removed from the remove                                                                                                                                                |
+| `reason` | `string` | a string explaining why the peer is removed from the room. This string could be used to notify the user before they're removed from the room using the `REMOVED_FROM_ROOM` type of notification |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
 ### removePluginFromVideoTrack
 
 ▸ **removePluginFromVideoTrack**(`plugin`): `Promise`<`void`\>
@@ -228,9 +267,65 @@ This method removes the track from the local peer's list of auxiliary tracks and
 
 ---
 
+### sendBroadcastMessage
+
+▸ **sendBroadcastMessage**(`message`, `type?`): `Promise`<`void`\>
+Send a plain text message to all the other participants in the room.
+
+#### Parameters
+
+| Name      | Type     | Description                                                       |
+| :-------- | :------- | :---------------------------------------------------------------- |
+| `message` | `string` | string message to broadcast                                       |
+| `type?`   | `string` | type of message eg: image, video etc. - optional defaults to chat |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### sendDirectMessage
+
+▸ **sendDirectMessage**(`message`, `peerID`, `type?`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name      | Type     | Description                                                       |
+| :-------- | :------- | :---------------------------------------------------------------- |
+| `message` | `string` |                                                                   |
+| `peerID`  | `string` | id of the peer to which message has to be sent                    |
+| `type?`   | `string` | type of message eg: image, video etc. - optional defaults to chat |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### sendGroupMessage
+
+▸ **sendGroupMessage**(`message`, `roles`, `type?`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name      | Type       | Description                                                       |
+| :-------- | :--------- | :---------------------------------------------------------------- |
+| `message` | `string`   | string message to send                                            |
+| `roles`   | `string`[] | roles to which to send the message                                |
+| `type?`   | `string`   | type of message eg: image, video etc. - optional defaults to chat |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
 ### sendMessage
 
 ▸ **sendMessage**(`message`): `void`
+**`deprecated`** The method should not be used
+**`see`** sendBroadcastMessage
 Send a plain text message to all the other participants in the room.
 
 #### Parameters
@@ -330,6 +425,32 @@ These functions can be used to mute/unmute the local peer's audio and video
 
 ---
 
+### setLogLevel
+
+▸ **setLogLevel**(`level`): `void`
+Set the type of logs from the SDK you want to be logged in the browser console.
+Note that HMSLogLevel is decremental meaning,
+
+- HMSLogLevel.VERBOSE(0) - will log every message from SDK.
+- HMSLogLevel.DEBUG(1) - will log messages that are helpful in debugging, important info, warnings and errors.
+- HMSLogLevel.INFO(2) - will log important info, warnings and errors.
+- HMSLogLevel.WARN(3) - will log warnings and errors.
+- HMSLogLevel.ERROR(4) - will log only errors.
+- HMSLogLevel.NONE(5) - won't log anything.
+  Usage: `hmsActions.setLogLevel(4)` or `hmsActions.setLogLevel(HMSlogLevel.ERROR)`.
+
+#### Parameters
+
+| Name    | Type          |
+| :------ | :------------ |
+| `level` | `HMSLogLevel` |
+
+#### Returns
+
+`void`
+
+---
+
 ### setMessageRead
 
 ▸ **setMessageRead**(`readStatus`, `messageId?`): `void`
@@ -367,6 +488,25 @@ set the quality of the selected videoTrack
 #### Returns
 
 `void`
+
+---
+
+### setRemoteTrackEnabled
+
+▸ **setRemoteTrackEnabled**(`forRemoteTrackID`, `enabled`): `Promise`<`void`\>
+Change track state a remote peer's track
+This can be used to mute/unmute a remote peer's track
+
+#### Parameters
+
+| Name               | Type                   | Description                                                                                                                                  |
+| :----------------- | :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------- |
+| `forRemoteTrackID` | `string` \| `string`[] | The track ID or array of track IDs for which you want to change the state                                                                    |
+| `enabled`          | `boolean`              | `true` if you wish to enable(unmute permission is required) the track, `false` if you wish to disable(mute permission is required) the track |
+
+#### Returns
+
+`Promise`<`void`\>
 
 ---
 
@@ -432,7 +572,15 @@ Method to be called with some UI interaction after autoplay error is received
 #### Returns
 
 `Promise`<`void`\>
-Audio
+lar audio track |
+
+#### Returns
+
+`void`
+
+---
+
+### unblockAudio
 
 ▸ **unblockAudio**(): `Promise`<`void`\>
 
