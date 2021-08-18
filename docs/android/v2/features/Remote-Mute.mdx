@@ -81,11 +81,13 @@ Once you have checked that the caller has permissions to mute another peer's aud
 
 To mute audio:
 
-Get the audio track of the peer whom you want to mute. If their audio track is not null pass it as the first parameter to `hmsSdk.changeTrackState`.
+`hmsSdk.changeTrackState` takes three parameters:
 
-The second parameter is a boolean for muting. If true, the track will be muted. If false the track will be requested to unmute.
+hmsTrack: The `HMSTrack` that should be muted or unmuted. Can be audio or video.
 
-Finally a callback for whether changeTrackState suceeded or failed is the third parameter of an instance of `HMSActionResultListener`.
+mute: A `Boolean` where true indicates that it should be muted. false indicates that it should be unmuted.
+
+hmsActionResultListener: A `HMSActionResultListener` instance which will receive `onSuccess` if the server acknowledges the the request as valid. `onError` if there was an exception along with the `HMSException` for it.
 
 <Tabs id="audiomuteunmutecall" items={['Kotlin', 'Java 8', 'Java 7']} />
 
