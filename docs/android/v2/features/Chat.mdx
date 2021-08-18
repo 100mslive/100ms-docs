@@ -210,15 +210,12 @@ data class HMSMessage internal constructor(
   var sender: HMSPeer
 )
 ```
-message: Content of the text message or the text description of the raw message.
 
-type: Type of message sent. Default value is `HMSMessageType.CHAT`.
-
-recipient: The intended recipient(s) of this message as a `HMSMessageRecipient`.
-
-serverReceiveTime: timestamp of when the messaging server receives this message. Update the time in your own messages when this comes back from the server in `HMSUpdateListener.onMessageReceived` for accurate ordering of your own messages.
-
-sender: The [HMSPeer] who is sending this message.
+* message: Content of the text message or the text description of the raw message.
+* type: Type of message sent. Default value is `HMSMessageType.CHAT`.
+* recipient: The intended recipient(s) of this message as a `HMSMessageRecipient`.
+* serverReceiveTime: timestamp of when the messaging server receives this message. Update the time in your own messages when this comes back from the server in `HMSUpdateListener.onMessageReceived` for accurate ordering of your own messages.
+* sender: The `HMSPeer` who is sending this message.
 
 Identifying Senders:
 
