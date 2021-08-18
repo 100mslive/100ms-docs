@@ -5,27 +5,13 @@ nav: 3.15
 
 Done with talking and it's time to end the call for everyone not just yourself? You may be looking to end the room.
 
-### Permissions
-
-Can't let just anyone end a call. First you need to create a [role](../foundation/templates-and-roles) with the permissions to end a room.
-
-The permission to end a room is called `endRoom` and you should check for that within the [HMSRole.permissions](../../../api-reference/javascript/v2/interfaces/HMSRole#permissions) of the peer to see if they have it.
-
-Use the [selectPermissions](../../../api-reference/javascript/v2/home/content#select-permissions) selector to check whether the local peer has the permission to end the room.
+![End Room](/guides/end-room.png)
 
 ### Ending the Room
 
-Once you're sure the peer has the permissions to end the room they can call for the room to end when they're ready with `hmsActions.endRoom`.
+Use the [selectPermissions](../../../api-reference/javascript/v2/home/content#select-permissions) selector to check whether the local peer has the `endRoom` permission to end the room.
 
-`endRoom` takes two parameters.
-
--   `lock`: Whether you want to prevent anyone from rejoining the room. If false, they will be allowed to enter the room again if the client called `join`. If this is false, they will not able to join this room again.
-
--   `reason`: The message you want to show people when they are forced to leave. This is a good place to thank them for joining the call and informing them that it has ended.
-
-> 💡 After calling endRoom the local peer needs to dispose of the video calling UI as well.
-
-> 🚧 If the local peer doesn't have the required `endRoom` permission, the `hmsActions.endRoom` call will throw an [HMSException error](error-handling).
+Once you're sure the peer has the permissions to end the room they can call for the room to end when they're ready with [`hmsActions.endRoom`](../../../api-reference/javascript/v2/interfaces/HMSActions#end-room).
 
 <Tabs id="endroomcall" items={['JavaScript', 'React']} />
 
@@ -78,8 +64,62 @@ function EndRoomButton() {
 
 </Tab>
 
+> 💡 After calling endRoom the local peer needs to dispose of the video calling UI as well.
+
+> 🚧 If the local peer doesn't have the required `endRoom` permission, the `hmsActions.endRoom` call will throw an [HMSException error](error-handling).
+
 ### Handling end room by a remote peer
 
 Once the peer with adequate permissions calls `endRoom`, all other peers in the room will receive a [notification](../features/notifications) with type `ROOM_ENDED` with a [HMSLeaveRoomRequest](../../../api-reference/javascript/v2/interfaces/HMSLeaveRoomRequest) object as the data.
 
 The SDK automatically calls leave and performs necessary clean ups 2 seconds from the moment this notification is sent, clients should show the appropriate UI(show a toast, redirect to a 'good-bye' page) within this period.
+
+<Tabs id="endroomhandle" items={['JavaScript', 'React']} />
+
+<Tab id='endroomhandle-0'>
+
+```js
+hmsNotifications.onNotification((notification) => {
+    if (!notification) {
+        return;
+    }
+
+    switch (notification.type) {
+        // ...Other notification type cases
+        case 'ROOM_ENDED':
+            // Redirect or Show toast to user
+            toast(notification.data.reason);
+            break;
+    }
+});
+```
+
+</Tab>
+
+<Tab id='endroomhandle-1'>
+
+```jsx
+import { useHMSNotifications } from '@100mslive/hms-video-react';
+
+function Notification() {
+    const notification = useHMSNotifications();
+
+    useEffect(() => {
+        if (!notification) {
+            return;
+        }
+
+        switch (notification.type) {
+            // ...Other notification type cases
+            case 'ROOM_ENDED':
+                // Redirect or Show toast to user
+                toast(notification.data.reason);
+                break;
+        }
+    }, [notification]);
+
+    return <div>Notification: {notification?.type}</div>;
+}
+```
+
+</Tab>
