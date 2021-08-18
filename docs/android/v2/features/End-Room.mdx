@@ -3,11 +3,11 @@ title: End Room
 nav: 7
 ---
 
-Done with talking and it's time to end the call for everyone not just yourself? You may be looking to end the room.
+Done with talking and it's time to end the video call room for everyone not just yourself? You may be looking to end the room.
 
 ### Permissions
 
-Can't let just anyone end a call. First you need to create a [role](../foundation/templates-and-roles) with the permissions to end a room.
+Can't let just anyone end the video call room. First you need to create a [role](../foundation/templates-and-roles) with the permissions to end a room.
 
 The permission to end a room is called `PermissionsParams.endRoom` and you should check for that within the `HMSRole` of the peer to see if they have it.
 
@@ -71,11 +71,11 @@ Once you're sure the peer has the permissions to end the room, they can end it b
 
 `endRoom` takes three parameters.
 
-1. *message*: The String message you want to show people when they are forced to leave. This is a good place to thank them for joining the call and informing them that it has ended.
+1. *message*: The String message you want to show people when they are forced to leave. This is a good place to thank them for joining the room and informing them that it has ended.
 2. *lock*: A Boolean for whether you want to prevent anyone from rejoining the room. If false, they will be allowed to enter the room again if the client called `join`. If this is true, they will NOT able to join this room again.
 3. *hmsActionResultListener*: These are the callbacks that let you know whether the room was ended successfully or not. If the room could be closed, `onSuccess` will be called. For any errors `onError` will be called with the appropriate `HMSException`.
 
-> 💡 After calling endRoom the video calling UI should be disposed of as well since only the other peers will get the `onPeerRemoved` callback. The caller has to rely on the `onSuccess` callback for `endRoom` to decide when to terminate the call UI locally.
+> 💡 After calling endRoom the video calling UI should be disposed of as well since only the other peers will get the `onPeerRemoved` callback. The caller has to rely on the `onSuccess` callback for `endRoom` to decide when to terminate the meeting room UI locally.
 
 <Tabs id="endroomcall" items={['Kotlin', 'Java']} />
 
