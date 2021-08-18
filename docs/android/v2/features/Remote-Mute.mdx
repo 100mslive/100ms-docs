@@ -71,6 +71,41 @@ private boolean hasUnMutePermissions() {
 
 </Tab>
 
+<Tab id='muteunmute-2'>
+
+```java
+
+private boolean hasMutePermissions() {
+    HMSLocalPeer peer = hmsSdk.getLocalPeer();
+    if (peer != null) {
+        HMSRole role = peer.getHmsRole();
+        if (role != null) {
+            PermissionsParams permissions = role.getPermission();
+            if (permissions != null) {
+                return permissions.getMute();
+            }
+        }
+    }
+    return false;
+}
+
+private boolean hasUnMutePermissions() {
+    HMSLocalPeer peer = hmsSdk.getLocalPeer();
+    if (peer != null) {
+        HMSRole role = peer.getHmsRole();
+        if (role != null) {
+            PermissionsParams permissions = role.getPermission();
+            if (permissions != null) {
+                return permissions.getUnmute();
+            }
+        }
+    }
+    return false;
+}
+
+```
+
+</Tab>
 
 
 `hmsSdk.getLocalPeer()` will not return null as long as you're in a preview or in a meeting. Since you likely won't need to check for permissions if you're not in one it would be ok.
