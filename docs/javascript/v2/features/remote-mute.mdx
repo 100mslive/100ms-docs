@@ -1,40 +1,15 @@
 ---
-title: Remote Mute
+title: Remote Mute/Unmute
 nav: 3.13
 ---
 
-You're running a room and decide that someone who's currently talking shouldn't be talking.
+You're running a room and decide that someone who's currently talking shouldn't be talking or perhaps you want their video turned off as well. You're looking for a remote mute/unmute in this case.
 
-You'd prefer they'd stay mute. Or perhaps you want their video turned off as well as their audio. You're looking for a remote mute.
-
-Muting can apply to both audio and video.
-
-##### Unmuting
-
-You may also decide that you want to let someone else speak who was currently muted. Or may want to ask someone to turn on their video.
-
-You can request people to unmute themselves as well.
-
-### Permissions
-
-Can't let just anyone mute others. First you need to create a [role](../foundation/templates-and-roles) with the permissions to mute others and also to ask them to unmute.
-
-The permission to mute others is `mute` and you should check for that within the [HMSRole.permissions](../../../api-reference/javascript/v2/interfaces/HMSRole#permissions) of the peer to see if they have it.
-
-Similarly the permission to unmute other peers is `unmute`.
-
-Use the [selectPermissions](../../../api-reference/javascript/v2/home/content#select-permissions) selector to check whether the local peer has the permission to mute or unmute others.
+![Remote Mute](/guides/remote-mute.gif)
 
 ### Muting/Unmuting
 
-Once you have checked that the caller has permissions to mute another peer's audio or video, call for it with `hmsActions.setRemoteTrackEnabled`.
-
-`setRemoteTrackEnabled` takes two parameters
-
--   `remoteTrackID`: The track ID or array of track IDs of the tracks you want to mute/unmute.
--   `enabled`: `true` if you wish to enable(`unmute` permission is required) the track, `false` if you wish to disable(`mute` permission is required) the track
-
-> 🚧 If the local peer doesn't have the required `mute`/`unmute` permission, the `hmsActions.setRemoteTrackEnabled` call will throw an [HMSException error](error-handling).
+Use the [selectPermissions](../../../api-reference/javascript/v2/home/content#select-permissions) selector to check whether the local peer has the permission to `mute` or `unmute` others and then call `hmsActions.setRemoteTrackEnabled`(../../../api-reference/javascript/v2/interfaces/HMSActions#set-remote-track-enabled) with the `trackID` of the track you want to mute/unmute and `enable`(`true` for unmuting, `false` for muting).
 
 ```js
 try {
@@ -44,6 +19,8 @@ try {
     console.error(error);
 }
 ```
+
+> 🚧 If the local peer doesn't have the required `mute`/`unmute` permission, the `hmsActions.setRemoteTrackEnabled` call will throw an [HMSException error](error-handling).
 
 ### Handling a mute/unmute request
 
@@ -114,3 +91,5 @@ function Notification() {
 ```
 
 </Tab>
+
+![Remote Unmute Request](/guides/remote-unmute.png)
