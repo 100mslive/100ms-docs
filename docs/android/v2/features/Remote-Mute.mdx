@@ -30,6 +30,7 @@ Here's how to check whether the local peer has the permission to mute or unmute 
 <Tab id='muteunmute-0'>
 
 ```kotlin
+
 fun isAllowedToMuteOthers(): Boolean {
     return hmsSDK.getLocalPeer()!!
                 .hmsRole.permission?
@@ -49,6 +50,7 @@ fun isAllowedToUnMuteOthers(): Boolean {
 <Tab id='muteunmute-1'>
 
 ```java
+
 private boolean hasMutePermissions() {
     return Optional.ofNullable(hmsSdk.getLocalPeer())
             .map(HMSPeer::getHmsRole)
@@ -132,7 +134,7 @@ public void changeAudioState(HMSRemotePeer hmsRemotePeer, Boolean mute) {
 
 </Tab>
 
-<Tab id='muteunmute-2'>
+<Tab id='audiomuteunmutecall-2'>
 
 ```java
 
