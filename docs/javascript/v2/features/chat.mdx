@@ -41,8 +41,15 @@ You can access all messages using the selector `selectHMSMessages`.
 <Tab id='chat-0'>
 
 ```js
-import { selectHMSMessages, selectMessagesByRole, selectMessagesByPeerID, selectBroadcastMessages,  selectBroadcastMessagesUnreadCount,
-  selectMessagesUnreadCountByRole, selectMessagesUnreadCountByPeerID, selectUnreadHMSMessagesCount
+import {
+  selectHMSMessages,
+  selectMessagesByRole,
+  selectMessagesByPeerID,
+  selectBroadcastMessages,
+  selectBroadcastMessagesUnreadCount,
+  selectMessagesUnreadCountByRole,
+  selectMessagesUnreadCountByPeerID,
+  selectUnreadHMSMessagesCount,
 } from '@100mslive/hms-video-store';
 
 function renderMessages(messages) {
@@ -51,7 +58,7 @@ function renderMessages(messages) {
 
 hmsStore.subscribe(renderMessages, selectHMSMessages); // get all messages
 hmsStore.subscribe(renderMessages, selectMessagesByRole('role1')); //get messages by role
-hmsStore.subscribe(renderMessages, selectMessagesByPeerID('selectPeer.id')); // get messages by peer
+hmsStore.subscribe(renderMessages, selectMessagesByPeerID(selectPeer.id)); // get messages by peer
 hmsStore.subscribe(renderMessages, selectBroadcastMessages); // get only broadcast messages
 
 // You can get unread counts by the following selectors
@@ -61,7 +68,7 @@ function unreadCount(count) {
 hmsStore.subscribe(unreadCount, selectUnreadHMSMessagesCount); // all messages unread count
 hmsStore.subscribe(unreadCount, selectBroadcastMessagesUnreadCount); // broadcast unread count
 hmsStore.subscribe(unreadCount, selectMessagesUnreadCountByRole('role1')); // role unread count 
-hmsStore.subscribe(unreadCount, selectMessagesUnreadCountByPeerID('selectPeer.id)); // peer unread count
+hmsStore.subscribe(unreadCount, selectMessagesUnreadCountByPeerID(selectPeer.id)); // peer unread count
 
 ```
 
@@ -71,10 +78,15 @@ hmsStore.subscribe(unreadCount, selectMessagesUnreadCountByPeerID('selectPeer.id
 
 ```jsx
 import { Message } from './components';
-import { 
-  useHMSStore, 
-  selectHMSMessages, selectMessagesByRole, selectMessagesByPeerID, selectBroadcastMessages,  selectBroadcastMessagesUnreadCount,
-  selectMessagesUnreadCountByRole, selectMessagesUnreadCountByPeerID, selectUnreadHMSMessagesCount
+import {
+  selectHMSMessages,
+  selectMessagesByRole,
+  selectMessagesByPeerID,
+  selectBroadcastMessages,
+  selectBroadcastMessagesUnreadCount,
+  selectMessagesUnreadCountByRole,
+  selectMessagesUnreadCountByPeerID,
+  selectUnreadHMSMessagesCount,
 } from '@100mslive/hms-video-react';
 
 function Chat() {
@@ -86,7 +98,7 @@ function Chat() {
   const allMessagesUnreadCount = useHMSStore(selectUnreadHMSMessagesCount);
   const broadcastUnreadCount = useHMSStore(selectBroadcastMessagesUnreadCount);
   const groupMessagesByRoleUnreadCount = useHMSStore(selectMessagesUnreadCountByRole('role1'));
-  const directMessagesUnreadCount = useHMSStore(selectMessagesUnreadCountByPeerID('selectPeer.id'));
+  const directMessagesUnreadCount = useHMSStore(selectMessagesUnreadCountByPeerID(selectPeer.id));
 
   return <>
     {
