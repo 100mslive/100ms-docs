@@ -5,33 +5,44 @@ nav: 8
 
 What's a video without being able to send messages to each other too? 100ms supports chat for every video/audio room you create.
 
-You can see an example of every way of sending messages and interpreting messages in the advanced [sample app](https://github.com/100mslive/100ms-android/).
+You can see an example of every type of message (of the types below) being sent and displayed in the advanced [sample app](https://github.com/100mslive/100ms-android/).
 
 ### Addressing messages
 
-* [Broadcast messages](#sending-broadcast-messages) can be sent to Everyone in the chat `hmssdk.sendBroadcastMessage`.
+* [Broadcast messages](#sending-broadcast-messages) are sent to Everyone in the chat `hmssdk.sendBroadcastMessage`.
 
-* [Direct messages](#sending-direct-messages) let you send message to a specific person `hmssdk.sendDirectMessage`.
+* [Direct messages](#sending-direct-messages) are sent to a specific person `hmssdk.sendDirectMessage`.
 
-* [Group messages](#sending-group-messages) let you send a message to everyone with a particular `HMSRole`. Such as all `hosts` or all `teachers` or all `students` `hmsSdk.sendGroupMessage`
+* [Group messages](#sending-group-messages) are sent to everyone with a particular `HMSRole`. Such as all `hosts` or all `teachers` or all `students` `hmsSdk.sendGroupMessage`.
+    * Learn more about [roles](../foundation/templates-and-roles) and how to create them on the backend.
 
 ### Sending Chat Messages
 
 #### Sending Broadcast Messages
 
-You want to let everyone in the chat know something? Call `sendBroadcastMessage` on the instance of `HMSSDK` to a send a broadcast.
+Want to let everyone in the chat know something? Call `sendBroadcastMessage` on the instance of `HMSSDK` to a send a broadcast.
 
-The text of the message, its type and a listener for whther the message reached the server or not are the parameters.
+The parameters are:
 
-> 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error. It does not convey whether the message was delivered to or read by the recipient.
-> also it's important to make a new callback per message because it will only contain the results of that particular call for sending a message.
+1. *textMessage*: The text of the message.
+2. *type*: The type of the message, default is `HMSMessageType.CHAT`.
+3. *hmsMessageResultListener*: An instance of `HMSMessageResultListener`.
+    - `onSuccess` will be called when the server receives the request. The `onSuccess` contains a `HMSMessage` which has the updated `serverReceiveTime` a date containing the server timestamp.
+    - `onError` will be called with an instane of `HMSException` detailing what went wrong.
+
+> 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error.
+>
+>It does not convey whether the message was delivered to or read by the recipient.
+>
+>Also it's important to make a new callback per message because it will only contain the results of that particular call for sending a message.
 
 <Tabs id="broadcastmsg" items={['Kotlin', 'Java']} />
 
 <Tab id='broadcastmsg-0'>
 
 ```kotlin
-hmssdk.sendBroadcastMessage(textMessage, HMSMessageType.CHAT, object : HMSMessageResultListener {
+hmssdk.sendBroadcastMessage(textMessage, HMSMessageType.CHAT,
+    object : HMSMessageResultListener {
       override fun onError(error: HMSException) {
       }
 
@@ -44,7 +55,6 @@ hmssdk.sendBroadcastMessage(textMessage, HMSMessageType.CHAT, object : HMSMessag
 <Tab id='broadcastmsg-1'>
 
 ```java
-
 hmssdk.sendBroadcastMessage(textMessage, HMSMessageType.CHAT,
     new HMSMessageResultListener() {
         @Override
@@ -65,10 +75,20 @@ hmssdk.sendBroadcastMessage(textMessage, HMSMessageType.CHAT,
 
 Got secrets to share? Send a message directly to a single person in the chat with a direct message. Call `sendDirectMessage` on an instance of `HMSSDK`.
 
-The text of the message, its type and a listener for whther the message reached the server or not are the parameters.
+The parameters are:
 
-> 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error. It does not convey whether the message was delivered to or read by the recipient.
-> also it's important to make a new callback per message because it will only contain the results of that particular call for sending a message.
+1. *textMessage*: The text of the message.
+2. *type*: The type of the message, default is `HMSMessageType.CHAT`.
+3. *peerTo*: The `HMSPeer` instance who should receive message.
+4. *hmsMessageResultListener*: An instance of `HMSMessageResultListener`.
+    - `onSuccess` will be called when the server receives the request. The `onSuccess` contains a `HMSMessage` which has the updated `serverReceiveTime` a date containing the server timestamp.
+    - `onError` will be called with an instane of `HMSException` detailing what went wrong.
+
+> 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error.
+>
+>It does not convey whether the message was delivered to or read by the recipient.
+>
+>Also it's important to make a new callback per message because it will only contain the results of that particular call for sending a message.
 
 <Tabs id="directmsg" items={['Kotlin', 'Java']} />
 
@@ -113,12 +133,22 @@ fun sendDirectMessage(textMessage : String, recipient : HMSPeer) {
 
 #### Sending Group Messages
 
-Got secrets to share? Send a message directly to a single person in the chat with a direct message. Call `sendDirectMessage` on an instance of `HMSSDK`.
+Need to call attention to all the hosts? All the teachers? All the developers? Call `sendGroupMessage` on an instance of `HMSSDK`.
 
-The text of the message, its type and a listener for whther the message reached the server or not are the parameters.
+The parameters are:
 
-> 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error. It does not convey whether the message was delivered to or read by the recipient.
-> also it's important to make a new callback per message because it will only contain the results of that particular call for sending a message.
+1. *textMessage*: The text of the message.
+2. *type*: The type of the message, default is `HMSMessageType.CHAT`.
+3. *hmsRolesTo*: The `List<HMSRoles>` of all [roles](../foundation/templates-and-roles) which should receive the message.
+4. *hmsMessageResultListener*: An instance of `HMSMessageResultListener`.
+    - `onSuccess` will be called when the server receives the request. The `onSuccess` contains a `HMSMessage` which has the updated `serverReceiveTime` a date containing the server timestamp.
+    - `onError` will be called with an instane of `HMSException` detailing what went wrong.
+
+> 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error.
+>
+>It does not convey whether the message was delivered to or read by the recipient.
+>
+>Also it's important to make a new callback per message because it will only contain the results of that particular call for sending a message.
 
 <Tabs id="groupmsg" items={['Kotlin', 'Java']} />
 
@@ -180,15 +210,12 @@ data class HMSMessage internal constructor(
   var sender: HMSPeer
 )
 ```
-message: Content of the text message or the text description of the raw message.
 
-type: Type of message sent. Default value is `HMSMessageType.CHAT`.
-
-recipient: The intended recipient(s) of this message as a `HMSMessageRecipient`.
-
-serverReceiveTime: timestamp of when the messaging server receives this message. Update the time in your own messages when this comes back from the server in `HMSUpdateListener.onMessageReceived` for accurate ordering of your own messages.
-
-sender: The [HMSPeer] who is sending this message.
+* message: Content of the text message or the text description of the raw message.
+* type: Type of message sent. Default value is `HMSMessageType.CHAT`.
+* recipient: The intended recipient(s) of this message as a `HMSMessageRecipient`.
+* serverReceiveTime: timestamp of when the messaging server receives this message. Update the time in your own messages when this comes back from the server in `HMSUpdateListener.onMessageReceived` for accurate ordering of your own messages.
+* sender: The `HMSPeer` who is sending this message.
 
 Identifying Senders:
 
@@ -220,15 +247,15 @@ class HMSMessageRecipient internal constructor(
 
 recipientPeer: Only contains a peer when a specific single peer is being direct messaged.
 
-recipientRoles: Only contains values when a group message is being sent to or many roles.
+recipientRoles: Only contains values when a group message is being sent to many roles.
 
-recipientType: Will be `HMSMessageRecipientType.BROADCAST` for a message being sent to everyone. If this is true, the other two field will be null, empty respectively.
+recipientType: Will be `HMSMessageRecipientType.BROADCAST` for a message being sent to everyone. If this is true, the other two fields will be null and empty respectively.
 
 `HMSMessageRecipientType.PEER` will be set when it's a direct message.
 
 `HMSMessageRecipientType.ROLES` will be set when it's a message to one or many roles.
 
-A good way to map this to your own app is a class like Recipient. You could choose to copy this file into your code for the mapping.
+A good way to map this to your own app is a class like `Recipient` below. You could choose to copy this file into your code for the mapping.
 
 
 ```kotlin{17-23}:RecipientMapping.kt
@@ -256,5 +283,19 @@ sealed class Recipient {
                 HMSMessageRecipientType.ROLES -> Role(message.recipientRoles.firstOrNull()!!)
         }
     }
+}
+```
+
+So that if you need to convert the message to your own class you can set the recipient like:
+
+```kotlin{7}
+override fun onMessageReceived(message: HMSMessage) {
+    ChatMessage(
+        message.sender.name,
+        message.serverReceiveTime,
+        message.message,
+        false,
+        recipient = Recipient.toRecipient(message.recipient)
+    )
 }
 ```

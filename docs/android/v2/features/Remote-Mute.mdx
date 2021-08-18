@@ -30,6 +30,7 @@ Here's how to check whether the local peer has the permission to mute or unmute 
 <Tab id='muteunmute-0'>
 
 ```kotlin
+
 fun isAllowedToMuteOthers(): Boolean {
     return hmsSDK.getLocalPeer()!!
                 .hmsRole.permission?
@@ -49,6 +50,7 @@ fun isAllowedToUnMuteOthers(): Boolean {
 <Tab id='muteunmute-1'>
 
 ```java
+
 private boolean hasMutePermissions() {
     return Optional.ofNullable(hmsSdk.getLocalPeer())
             .map(HMSPeer::getHmsRole)
@@ -69,9 +71,44 @@ private boolean hasUnMutePermissions() {
 
 </Tab>
 
+<Tab id='muteunmute-2'>
+
+```java
+
+private boolean hasMutePermissions() {
+    HMSLocalPeer peer = hmsSdk.getLocalPeer();
+    if (peer != null) {
+        HMSRole role = peer.getHmsRole();
+        if (role != null) {
+            PermissionsParams permissions = role.getPermission();
+            if (permissions != null) {
+                return permissions.getMute();
+            }
+        }
+    }
+    return false;
+}
+
+private boolean hasUnMutePermissions() {
+    HMSLocalPeer peer = hmsSdk.getLocalPeer();
+    if (peer != null) {
+        HMSRole role = peer.getHmsRole();
+        if (role != null) {
+            PermissionsParams permissions = role.getPermission();
+            if (permissions != null) {
+                return permissions.getUnmute();
+            }
+        }
+    }
+    return false;
+}
+
+```
+
+</Tab>
 
 
-`hmsSdk.getLocalPeer()` will only return null if you're neither in a preview nor in a meeting. Since you likely won't need to check for permissions there assuming you won't get null is reasonable.
+`hmsSdk.getLocalPeer()` will not return null as long as you're in a preview or in a meeting. Since you likely won't need to check for permissions if you're not in one it would be ok.
 
 ### Muting/Unmuting
 
@@ -79,11 +116,13 @@ Once you have checked that the caller has permissions to mute another peer's aud
 
 To mute audio:
 
-Get the audio track of the peer whom you want to mute. If their audio track is not null pass it as the first parameter to `hmsSdk.changeTrackState`.
+`hmsSdk.changeTrackState` takes three parameters:
 
-The second parameter is a boolean for muting. If true, the track will be muted. If false the track will be requested to unmute.
+hmsTrack: The `HMSTrack` that should be muted or unmuted. Can be audio or video.
 
-Finally a callback for whether changeTrackState suceeded or failed is the third parameter of an instance of `HMSActionResultListener`.
+mute: A `Boolean` where true indicates that it should be muted. false indicates that it should be unmuted.
+
+hmsActionResultListener: A `HMSActionResultListener` instance which will receive `onSuccess` if the server acknowledges the the request as valid. `onError` if there was an exception along with the `HMSException` for it.
 
 <Tabs id="audiomuteunmutecall" items={['Kotlin', 'Java 8', 'Java 7']} />
 
@@ -132,7 +171,7 @@ public void changeAudioState(HMSRemotePeer hmsRemotePeer, Boolean mute) {
 
 </Tab>
 
-<Tab id='muteunmute-2'>
+<Tab id='audiomuteunmutecall-2'>
 
 ```java
 
@@ -242,10 +281,10 @@ This contains information on which track is requested for unmuting. Check the tr
 <Tab id='trackcheck-0'>
 
 ```kotlin
-fun checkTrack(someTrack : HMSTrack) {
-    if(someTrack.type == HMSTrackType.AUDIO) {
+fun checkTrack(track : HMSTrack) {
+    if(track.type == HMSTrackType.AUDIO) {
         
-    } else if (someTrack.type == HMSTrackType.VIDEO) {
+    } else if (track.type == HMSTrackType.VIDEO) {
         
     }
 }

@@ -41,7 +41,7 @@ private boolean isAllowedToRemovePeer() {
 </Tab>
 
 
-<Tab id='endroom-2'>
+<Tab id='removepeerperm-2'>
 
 ```java
 private boolean isAllowedToRemovePeer() {
@@ -60,7 +60,7 @@ private boolean isAllowedToRemovePeer() {
 ```
 </Tab>
 
-`hmsSdk.getLocalPeer()` will only return null if you're neither in a preview nor in a meeting. Since you likely won't need to check for permissions there assuming you won't get null is reasonable.
+`hmsSdk.getLocalPeer()` will not return null as long as you're in a preview or in a meeting. Since you likely won't need to check for permissions if you're not in one it would be ok.
 
 ### Removing a peer
 
@@ -116,7 +116,7 @@ public void requestPeerLeave(HMSRemotePeer peer, String reason) {
 
 ### Handling the remove peer callback
 
-On the target of the `removePeerRequest` they will receive a call in `HMSUpdateListener` of `onRemovedFromRoom(notification : HMSRemovedFromRoom)`.
+The target of the `removePeerRequest` will receive a call in `HMSUpdateListener` of `onRemovedFromRoom(notification : HMSRemovedFromRoom)`.
 
 The `HMSRemovedFromRoom` object which is passed into the callback has the structure:
 
