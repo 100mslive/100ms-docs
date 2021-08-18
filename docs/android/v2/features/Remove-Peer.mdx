@@ -9,7 +9,7 @@ Someone's overstayed their welcome and now you need to remove a peer from the ch
 
 Can't let just anyone remove others from the call. First you need to create a [role](../foundation/templates-and-roles) with the permissions to remove others.
 
-In the SDK, the permission to mute others is within  `PermissionsParams` `removeOthers` and you should check for that within the `HMSRole` of the peer to see if they have it.
+In the SDK, the permission to remove others from the room is within `PermissionsParams` `removeOthers` and you should check for that within the `HMSRole` of the peer to see if they have it.
 
 Here's how to check whether the local peer has the permission to end the room:
 
@@ -38,8 +38,8 @@ private boolean isAllowedToRemovePeer() {
             .orElse(false);
 }
 ```
-</Tab>
 
+</Tab>
 
 <Tab id='removepeerperm-2'>
 
@@ -58,6 +58,7 @@ private boolean isAllowedToRemovePeer() {
     return false;
 }
 ```
+
 </Tab>
 
 `hmsSdk.getLocalPeer()` will not return null as long as you're in a preview or in a meeting. Since you likely won't need to check for permissions if you're not in one it would be ok.
@@ -73,7 +74,6 @@ peer: is the `HMSRemotePeer` that you'd like to be removed from the call.
 reason: is the string that should be conveyed to them as the reason for being removed.
 
 hmsActionResultListener: is the listener that will convey the success or error of the server accepting the request.
-
 
 <Tabs id="removepeer" items={['Kotlin', 'Java']} />
 
@@ -102,7 +102,7 @@ public void requestPeerLeave(HMSRemotePeer peer, String reason) {
     hmsSdk.removePeerRequest(peer, reason, new HMSActionResultListener() {
         @Override
         public void onSuccess() {
-            
+
         }
 
         @Override
@@ -112,6 +112,7 @@ public void requestPeerLeave(HMSRemotePeer peer, String reason) {
     });
 }
 ```
+
 </Tab>
 
 ### Handling the remove peer callback
