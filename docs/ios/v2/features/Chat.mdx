@@ -5,7 +5,7 @@ nav: 3.5
 
 What's a video without being able to send messages to each other too? 100ms supports chat for every video/audio room you create.
 
-You can see an example of every way of sending messages and interpreting messages in the advanced [sample app](https://github.com/100mslive/100ms-android/).
+You can see an example of every way of sending messages and interpreting messages in the advanced [sample app](https://github.com/100mslive/100ms-ios-sdk).
 
 ### Addressing messages
 
@@ -33,7 +33,6 @@ hmssdk.sendBroadcastMessage(type: "chat", message: "") { message, error in
 }
 ```
 
-
 #### Sending Direct Messages
 
 Got secrets to share? Send a message directly to a single person in the chat with a direct message. Call `sendDirectMessage` on an instance of `HMSSDK`.
@@ -51,9 +50,9 @@ hmssdk.sendDirectMessage(type: "chat", message: "", peer: recipientPeer) { messa
 
 #### Sending Group Messages
 
-Got secrets to share? Send a message directly to a single person in the chat with a direct message. Call `sendGroupMessage` on an instance of `HMSSDK`.
+Want to share with a group? Send a message directly to a group in the chat with a group message. Call `sendGroupMessage` on an instance of `HMSSDK`.
 
-The text of the message, its type and a listener for whther the message reached the server or not are the parameters.
+The text of the message, its type and a listener for whether the message reached the server or not are the parameters.
 
 > 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error. It does not convey whether the message was delivered to or read by the recipient.
 > also it's important to make a new callback per message because it will only contain the results of that particular call for sending a message.
@@ -77,29 +76,23 @@ public class HMSMessage {
     public var sender: HMSPeer?
     public var recipient: HMSMessageRecipient
     public let time: Date
-    
+}    
 ```
-message: Content of the text message or the text description of the raw message.
+`message`: Content of the text message or the text description of the raw message.
 
-type: Type of message sent. Default value is `chat`.
+`type`: Type of message sent. Default value is `chat`.
 
-recipient: The intended recipient(s) of this message as a `HMSMessageRecipient`.
+`recipient`: The intended recipient(s) of this message as a `HMSMessageRecipient`.
 
-serverReceiveTime: timestamp of when the messaging server receives this message. Update the time in your own messages when this comes back from the server in `on(message:)` for accurate ordering of your own messages.
+`time`: Timestamp of when the messaging server receives this message. Update the time in your own messages when this comes back from the server in `on(message:)` for accurate ordering of your own messages.
 
-sender: The `HMSPeer` who is sending this message.
+`sender`: The `HMSPeer` who is sending this message.
 
-Identifying Senders:
+Identifying Senders: The sender of a message is always contained in the `sender` field of HMSMessage. This lets you get the name and peer id for any message sender.
 
-The sender of a message is always contained in the `sender` field of HMSMessage. This lets you get the name and peer id for any message sender.
+Message Body: The body of the message is in `message` as a String.
 
-Message Body:
-
-The body of the message is in `message` as a String.
-
-Time:
-
-The time the message was sent is contained in `time`.
+Time: The time the message was sent is contained in `time`.
 
 #### Identifying who the message was for
 
@@ -111,13 +104,14 @@ public class HMSMessageRecipient {
     public let type: HMSMessageRecipientType
     public let peerRecipient: HMSPeer?
     public let rolesRecipient: [HMSRole]?
+}
 ```
 
-peerRecipient: Only contains a peer when a specific single peer is being direct messaged.
+`peerRecipient`: Only contains a peer when a specific single peer is being direct messaged.
 
-rolesRecipient: Only contains values when a group message is being sent to one or many roles.
+`rolesRecipient`: Only contains values when a group message is being sent to one or many roles.
 
-type: Will be `broadcast` for a message being sent to everyone. If this is true, the other two field will be null, empty respectively.
+`type`: Will be `broadcast` for a message being sent to everyone. If this is true, the other two field will be null, empty respectively.
 
 `peer` will be set when it's a direct message.
 
