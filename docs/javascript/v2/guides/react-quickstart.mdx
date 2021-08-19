@@ -259,8 +259,131 @@ export default Peer;
 
 > Note that `height` and `width` CSS properties need to be set on the `<video>` element to render the peer's video.
 
+## Changing UI based on connection state
+
+Right now, our join form shows even after we have joined the room. We need a way to know the connection state of the room and hide the form after we've connected.
+
+We can do this with `selectIsConnectedToRoom` selector.
+
+```jsx{5,8,13,17,22-26}:src/App.jsx
+import "./styles.css";
+import JoinForm from "./JoinForm";
+import Conference from "./Conference";
+import { useEffect } from "react";
+import {
+  selectIsConnectedToRoom,
+  useHMSActions,
+  useHMSStore
+} from "@100mslive/hms-video-react";
+
+export default function App() {
+  const isConnected = useHMSStore(selectIsConnectedToRoom);
+  const hmsActions = useHMSActions();
+
+  useEffect(() => {
+    window.onunload = () => {
+      if (isConnected) {
+        hmsActions.leave();
+      }
+    };
+  }, [hmsActions, isConnected]);
+
+  return (
+    <div className="App">
+      <Header />
+      {isConnected ? (
+        <Conference />
+      ) : (
+        <JoinForm />
+      )}
+    </div>
+  );
+}
+
+```
+
+## Muting/unmuting local tracks
+
+Right now we are publishing both audio and video feed of the user whenever they join the room.
+We may want to allow the user to mute/unmute their own tracks - both audio and video.
+
+Let's add 2 buttons on the bottom of the page and call the methods on `hmsActions` to mute/unmute the local tracks.
+
+```jsx:src/Footer.jsx
+import {
+  selectIsLocalAudioEnabled,
+  selectIsLocalVideoEnabled,
+  useHMSActions,
+  useHMSStore
+} from "@100mslive/hms-video-react";
+
+function Footer() {
+  const videoEnabled = useHMSStore(selectIsLocalVideoEnabled);
+  const audioEnabled = useHMSStore(selectIsLocalAudioEnabled);
+  const hmsActions = useHMSActions();
+
+  const toggleAudio = () => {
+    hmsActions.setLocalAudioEnabled(!audioEnabled);
+  };
+
+  const toggleVideo = () => {
+    hmsActions.setLocalVideoEnabled(!videoEnabled);
+  };
+
+  return (
+    <div className="control-bar">
+      <button className="btn-control" onClick={toggleAudio}>
+        {audioEnabled ? "Mute" : "Unmute"}
+      </button>
+      <button className="btn-control" onClick={toggleVideo}>
+        {videoEnabled ? "Hide" : "Unhide"}
+      </button>
+    </div>
+  );
+}
+
+export default Footer;
+```
+
+We fetch the current state of the local audio and video and toggle them whenever the buttons are clicked.
+
+![Mute/Unmute](/guides/mute-unmute.gif)
+
+And finally let's add this component to the `<App>` component to render the buttons only when we are connected to the room.
+
+```jsx{1,19-22}:src/App.js
+import Footer from './Footer';
+
+export default function App() {
+  const isConnected = useHMSStore(selectIsConnectedToRoom);
+  const hmsActions = useHMSActions();
+
+  useEffect(() => {
+    window.onunload = () => {
+      if (isConnected) {
+        hmsActions.leave();
+      }
+    };
+  }, [hmsActions, isConnected]);
+
+  return (
+    <div className="App">
+      <Header />
+      {isConnected ? (
+        <>
+          <Conference />
+          <Footer />
+        </>
+      ) : (
+        <JoinForm />
+      )}
+    </div>
+  );
+}
+```
+
 That wraps it up for this guide. We hope you had fun.
-There are plenty of cool stuff which can be done with our SDK, be sure to check the [features section](#) for more information. -->
+There are plenty of cool stuff which can be done with our SDK, be sure to check the [features section](/javascript/v2/features/integration) for more information. -->
 
 Here's the complete example.
 
