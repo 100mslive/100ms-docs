@@ -13,7 +13,7 @@ Each `HMSPeer` instance has a `role` property which returns an `HMSRole` instanc
 In certain scenarios you may want to change someone's role. Imagine an audio room with 2 roles "speaker" and "listener". Only someone with a "speaker" role can publish audio to the room while "listener" can only subscribe. Now at some point "speaker" may decide to nominate some "listener" to become a "speaker". This is where the `changeRole` API comes in.
 
 To invoke the api you will need 3 things.
-- `remotePeer`: An instance of `HMSRemotePeer` of the peer who's role you want to change.
+- `remotePeer`: An instance of `HMSPeer` of the peer who's role you want to change.
 - `toRole`: The `HMSRole` instance for the target role. 
 - `force`: Whether you want to change their role without asking them or give them a chance to accept/reject.
 
@@ -24,7 +24,7 @@ A list of all available roles in the current room can be accessed via the `getRo
 Once you have all you can invoke:
 
 ```kotlin
-fun changeRole(remotePeer : HMSRemotePeer, toRole: HMSRole, force: Boolean) {
+fun changeRole(remotePeer : HMSPeer, toRole: HMSRole, force: Boolean) {
     hmsSDK.changeRole(remotePeer, toRole, force)
 }
 ```
