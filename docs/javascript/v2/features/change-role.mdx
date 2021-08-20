@@ -11,7 +11,7 @@ Every peer is associated with a role. The `HMSRole` object can be used to know t
 
 1. Check what this role is allowed to publish. i.e can it send video (and at what resolution)? can it send audio? can it share screen? This can be discovered by using `selectIsAllowedToPublish` to display the UI appropriately.
 2. Check which other roles can this role subscribe to. This is internally taken care of by the 100ms infra and sdk, and your UI will only get tracks as per allowed subscriptions. `role.subscribeParams` can be used to get details.
-3. Check what actions this role can perform. i.e can it change someone else's current role, end meeting, remove someone from the room. This can be discovered by using the `selectLocalPeerPermissions` selector.
+3. Check what actions this role can perform. i.e can it change someone else's current role, end meeting, remove someone from the room. This can be discovered by using the `selectPermissions` selector.
 
 In certain scenarios you may want to change someone's role. Imagine an audio room with 2 roles "speaker" and "listener". Only someone with a "speaker" role can publish audio to the room while "listener" can only subscribe. Now at some point "speaker" may decide to nominate some "listener" to become a "speaker". This is where the `changeRole` API comes in.
 
