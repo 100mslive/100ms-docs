@@ -195,8 +195,9 @@ function renderPeers(peers) {
   peers.forEach((peer) => {
     const video = h("video", {
       class: "peer-video",
-      autoPlay: true,
-      muted: true
+      autoplay: true,
+      muted: true,
+      playsinline: true,
     });
 
     hmsActions.attachVideo(peer.videoTrack, video);
