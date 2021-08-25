@@ -41,11 +41,23 @@ const DocLayout: React.FC<Props> = ({
     frontMatter,
     nav,
     children,
-    toc,
+    // toc,
     pagination,
     allDocs,
     currentDocSlug
 }) => {
+    const finalToc = [];
+    if (typeof window !== 'undefined') {
+        const list = document.querySelectorAll('h2,h3');
+        list.forEach((e) => {
+            finalToc.push({
+                // @ts-ignore
+                slug: e.id,
+                // @ts-ignore
+                title: e.innerText
+            });
+        });
+    }
     const SEO = {
         title: `${
             frontMatter.title || '100ms Docs'
@@ -89,8 +101,8 @@ const DocLayout: React.FC<Props> = ({
     }
 
     setTimeout(() => {
-        scrollToUrlHash(router.asPath)
-    }, 500)
+        scrollToUrlHash(router.asPath);
+    }, 500);
 
     return (
         <>
@@ -119,7 +131,7 @@ const DocLayout: React.FC<Props> = ({
                                 />
                             )}
                         </article>
-                        {toc.length > 0 ? <Toc toc={toc} /> : null}
+                        {finalToc.length > 0 ? <Toc toc={finalToc} /> : null}
                     </div>
                 </div>
                 <style jsx>{`
