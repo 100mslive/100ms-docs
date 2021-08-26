@@ -1,13 +1,13 @@
 ---
-title: Twitter Spaces clone in React
+title: Clubhouse clone in React
 nav: 2.4
 ---
 
 ## Getting Started
 
-In this guide we will be building Twitter Spaces clone in React and using 100ms React SDKs by which you can have audio chats with your friends.
+In this guide we will be building Clubhouse clone in React and using 100ms React SDKs by which you can have audio chats with your friends.
 
-Our Twitter Spaces clone will have the following features:
+Our Clubhouse clone will have the following features:
 
 -   Audio Call
 -   Chats
@@ -19,10 +19,10 @@ To follow this tutorial, you must have a basic understanding of the rudimentary 
 
 ### Setting up Project
 
-I have created a starter project based on [CRA + Tailwind](https://tailwindcss.com/docs/guides/create-react-app). To make things easier and helps us focus on adding the core functionality i already have created all UI React Components.So you don't need to create any new components.
+I have created a starter project based on [CRA + Tailwind](https://tailwindcss.com/docs/guides/create-react-app). To make things easier and to help us focus on adding the core functionality i already created all UI React Components we will be using in the project.
 
 ```bash
-git clone <GIT_REPO_URL> twitter-spaces-clone
+git clone <GIT_REPO_URL> clubhouse-clone
 ```
 
 Now that you have cloned the repo you might see a couple of folders , a brief explanation of them:
@@ -40,15 +40,66 @@ All dependencies that we will be using are already added to the project's `packa
 
 ### Access Credentials
 
-We will be needing `token_endpoint` & `room_id` from 100ms Dashboard.
+We will be needing `token_endpoint` & `room_id` from 100ms Dashboar to get these credentials you 1st need to create an account at [100ms Dashboard](https://dashboard.100ms.live/) after your account is setup head over to the [Developer Section](https://dashboard.100ms.live/developer). You can find your `token_endpoint` there.
 
-// TODO: Getting Tokens and Adding it to env vars
+![Developer Section](/guides/token/credential.png)
 
 ### Creating Roles
 
-// TODO: Creating Mod,Listener,Speaker Roles
+Before we create a room we will create a custom app , you can find it [here](https://dashboard.100ms.live/dashboard).
+Click on "Add a new App", you will be asked to choose a template choose "Create your Own".
+
+![Create Custom App](/guides/clubhouse/create-custom.png)
+
+Now click on "Create Roles" button this will open a modal were we can create our custom roles.
+
+We will be having 3 roles in our application.
+
+-   `listener`: only able to listen others and can't unmute
+-   `speaker`: able to listen and speak (unmute/mute)
+-   `moderator`: able to listen and speaker , and able change other's role, muting.
+
+We will create listener's role 1st , we uncheck all publish strategies and then click on save.
+
+![Listener role](/guides/clubhouse/listener-role.png)
+
+Now we will create `speaker` role click on "Add a new role" we will uncheck `Can share video` & `Can share screen` we will keep `Can share audio` checked.
+
+For the `moderator` role we will do the same as `speaker` and also modify it's permissions by checking `Can change any participant's role` & `Can mute any participant` in the permissions sections.
+
+Now that our roles are setup we will move on to our next step by clicking 'Set up App'. You should see your custom app being created.
+
+![Custom App Created](/guides/clubhouse/custom-app.png)
+
+## Creating Room
+
+In the last step we created our custom app and setup custom roles , in this step we will create a `room_id`.
+
+To create a room head over to [Create Room](https://dashboard.100ms.live/create-room) page in 100ms Dashboard click on "Create Room" make sure to select the Custom App that you created in the last step. Fill out Room Name and click "Create Room". After creating you will be routed to Room Details were you can find your `room_id`
+
+![Create Room](/guides/clubhouse/create-room.png)
+
+Awesome now that we have `token_endpoint` and `room_id` we will add it in our app.
+
+```bash
+cp example.env .env
+```
+
+Add the `token_endpoint` and `room_id` to this `.env` file.
+
+```bash:.env
+REACT_APP_TOKEN_ENDPOINT=<YOUR-TOKEN-ENDPOINT>
+REACT_APP_ROOM_ID=<YOUR-ROOM-ID>
+```
 
 Now we can start building our project.
+
+## Terminology
+
+-   `Room`: A room is the basic object that 100ms SDKs return on successful connection. This contains references to peers, tracks and everything you need to render a live a/v app
+-   `Peer`: A peer is the object returned by 100ms SDKs that contains all information about a user - name, role, video track etc.
+-   `Track`: A track represents either the audio or video that a peer is publishing
+-   `Role`: A role defines who can a peer see/hear, the quality at which they publish their video, whether they have permissions to publish video/screenshare, mute someone, change someone's role.
 
 ## Initializing the SDK
 
@@ -62,7 +113,7 @@ Now we can start building our project.
 
 -   **useHMSActions** - provides core methods to alter the state of a room `join`, `leave` , `setScreenShareEnabled` etc.
 -   **useHMStore** - provides a read-only data store to access the state-tree of the room eg. `peers` , `dominantSpeaker` etc.
--   **useHMSNotifications** - provides notifications to let you know when an event occurs eg: `PEER_JOINED`, PEER_LEFT`, NEW_MESSAGE`, `ERROR` .
+-   **useHMSNotifications** - provides notifications to let you know when an event occurs eg: `PEER_JOINED`, `PEER_LEFT`, `NEW_MESSAGE`, `ERROR` .
 
 The `hmsStore` is also reactive, which means any component using the HMSStore hook will re-render when the slice of the state, it listens to, changes. This allows us to write [declarative](https://en.wikipedia.org/wiki/Declarative_programming) code.
 
@@ -105,7 +156,7 @@ export default App;
 
 Now if we start the server with `yarn start` we should be able to see `<Join />` being rendered because we haven't joined the room yet.
 
-![Join Screen](/guides/twitter-spaces/join.png)
+![Join Screen](/guides/clubhouse/join.png)
 
 ## Joining Room
 
@@ -166,7 +217,7 @@ export default Join;
 
 Now if we click on Join our token would be generated after which it will call `hmsActions.joinRoom()` which will join us in the Room making `isConnected` to `true` and hence rendering `<Room />` component.
 
-![Joining a Room](/guides/twitter-spaces/join-room.gif)
+![Joining a Room](/guides/clubhouse/join-room.gif)
 
 ## Rendering Peers
 
@@ -204,7 +255,7 @@ export default Room;
 
 Now if you try to join from different tabs you should see all Peer's tiles being rendered with their info.
 
-![Rendering Peer's Tiles](/guides/twitter-spaces/tile.gif)
+![Rendering Peer's Tiles](/guides/clubhouse/tile.gif)
 
 ## Audio Controls and Leave Room
 
@@ -251,14 +302,14 @@ export default Footer;
 
 Nown on click the Audio Button you should get a prompt to "Allow Microphone" after accepting it the button's color should change to blue based on the `isLocalAudioEnabled` variable.
 
-![Leave Room](/guides/twitter-spaces/leave.gif)
+![Leave Room](/guides/clubhouse/leave.gif)
 
 ## Audio Levels and Audio Status
 
 You might have observed this when we toggle our Audio Status to unmute our Audio status on the Tiles remains muted.
 So how can we let other people know about our Audio Status. For this we will be using the `selectIsPeerAudioEnabled` selector function which takes Peer's `id` as an argument this returns us the audio status of the specific peer.
 
-You should have observed this in Zoom , Meet , Twitter Spaces that when someone is speaking his/her Tile gets highlighted based on the intensity of the speaker's audio. You can retrieve the audio level of the peer using `selectPeerAudioByID` selector.
+You should have observed this in Zoom , Meet , Clubhouse Spaces that when someone is speaking his/her Tile gets highlighted based on the intensity of the speaker's audio. You can retrieve the audio level of the peer using `selectPeerAudioByID` selector.
 
 ```jsx{5,8-9,12-14}:/components/User/User.jsx
 import React from 'react';
@@ -286,7 +337,7 @@ const User = ({ peer }) => {
 export default User;
 ```
 
-![Audio Levels](/guides/twitter-spaces/level.gif)
+![Audio Levels](/guides/clubhouse/level.gif)
 
 ## Change Roles
 
@@ -373,7 +424,7 @@ export default User;
 
 if you have joined with the "moderator" role you should abe able to change roles of "listeners" and "speakers"
 
-![Change Roles](/guides/twitter-spaces/role.gif)
+![Change Roles](/guides/clubhouse/role.gif)
 
 ## Send messages
 
@@ -456,4 +507,4 @@ const Room = () => {
 export default Room;
 ```
 
-![Add Chat](/guides/twitter-spaces/chat.gif)
+![Add Chat](/guides/clubhouse/chat.gif)
