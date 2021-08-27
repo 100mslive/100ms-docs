@@ -10,10 +10,12 @@ Each `HMSPeer` instance has a `role` property which returns an `HMSRole` instanc
 1. Check what this role is allowed to publish. i.e can it send video (and at what resolution)? can it send audio? can it share screen? Who can this role subscribe to? (eg: student can only see the teacher's video) This is can be discovered by checking `publishSettings` and `subscribeSettings` properties.
 2. Check what actions this role can perform. i.e can it change someone else's current role, end meeting, remove someone from the room. This is can be discovered by checking the `permissions` property.
 
+> 💡 Anyone with the role change permission can change anyone's role. Including their own role. As of version 2.0.9 of the Android SDK.
+
 In certain scenarios you may want to change someone's role. Imagine an audio room with 2 roles "speaker" and "listener". Only someone with a "speaker" role can publish audio to the room while "listener" can only subscribe. Now at some point "speaker" may decide to nominate some "listener" to become a "speaker". This is where the `changeRole` API comes in.
 
 To invoke the api you will need 3 things.
-- `remotePeer`: An instance of `HMSRemotePeer` of the peer who's role you want to change.
+- `peer`: An instance of `HMSPeer` of the peer who's role you want to change.
 - `toRole`: The `HMSRole` instance for the target role. 
 - `force`: Whether you want to change their role without asking them or give them a chance to accept/reject.
 
@@ -24,8 +26,8 @@ A list of all available roles in the current room can be accessed via the `getRo
 Once you have all you can invoke:
 
 ```kotlin
-fun changeRole(remotePeer : HMSRemotePeer, toRole: HMSRole, force: Boolean) {
-    hmsSDK.changeRole(remotePeer, toRole, force)
+fun changeRole(peer : HMSPeer, toRole: HMSRole, force: Boolean) {
+    hmsSDK.changeRole(peer, toRole, force)
 }
 ```
 

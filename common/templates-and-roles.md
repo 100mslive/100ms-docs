@@ -72,5 +72,6 @@ With this permission, user will be able to remove any participant from the curre
 With this permission, user will be able to end the current session of the room.
 
 **Note**
-* As of now templates have only roles section which will be extended in future
-* You can modify an existing template to create a new template. 
+
+- As of now templates have only roles section which will be extended in future
+- You can modify an existing template to create a new template. 
