@@ -33,3 +33,12 @@ hmsActions.setAudioSettings({deviceId});
 hmsActions.setVideoSettings({deviceId});
 hmsActions.setAudioOutputDevice(deviceId);
 ```
+
+## Remember manually selected devices
+
+We support an additional boolean in join config which can be passed in to let sdk use the localstorage to remember
+manual device selections for future room [join](./join).
+
+```js
+hmsActions.join({...joinConfig, rememberDeviceSelection: true});
+```

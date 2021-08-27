@@ -30,7 +30,8 @@ const config = {
         isAudioMuted: true,
         isVideoMuted: false
     },
-    metaData: JSON.stringify({city: 'Winterfell', knowledge: 'nothing'})
+    metaData: JSON.stringify({city: 'Winterfell', knowledge: 'nothing'}),
+    rememberDeviceSelection: true  // remember manual device change
 };
 
 hmsActions.join(config);
@@ -52,9 +53,10 @@ function Join() {
     authToken: '<Auth token>', // client-side token generated from your token service
     settings: {
         isAudioMuted: true,
-        isVideoMuted: false
+        isVideoMuted: false,
     },
-    metaData: JSON.stringify({city: 'Winterfell', knowledge: 'nothing'})
+    metaData: JSON.stringify({city: 'Winterfell', knowledge: 'nothing'}),
+    rememberDeviceSelection: true  // remember manual device change
   };
 
   function onJoinClick() {

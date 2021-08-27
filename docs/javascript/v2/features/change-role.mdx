@@ -13,13 +13,14 @@ Every peer is associated with a role. The `HMSRole` object can be used to know t
 2. Check which other roles can this role subscribe to. This is internally taken care of by the 100ms infra and sdk, and your UI will only get tracks as per allowed subscriptions. `role.subscribeParams` can be used to get details.
 3. Check what actions this role can perform. i.e can it change someone else's current role, end meeting, remove someone from the room. This can be discovered by using the `selectPermissions` selector.
 
-In certain scenarios you may want to change someone's role. Imagine an audio room with 2 roles "speaker" and "listener". Only someone with a "speaker" role can publish audio to the room while "listener" can only subscribe. Now at some point "speaker" may decide to nominate some "listener" to become a "speaker". This is where the `changeRole` API comes in.
+In certain scenarios you may want to change your or someone else's role. Imagine an audio room with 2 roles "speaker" and "listener". Only someone with a "speaker" role can publish audio to the room while "listener" can only subscribe.
+Now at some point "speaker" may decide to nominate some "listener" to become a "speaker". This is where the `changeRole` API comes in.
 
 To invoke the api you will need 3 things.
 
--   `remotePeerId`: The remote peer ID whose role you want to change.
+-   `peerId`: The peer ID whose role you want to change, this can be for either of local or remote peer.
 -   `toRoleName`: The target role name.
--   `force`: Whether you want to change their role without asking them or give them a chance to accept/reject.
+-   `force`: Whether you want to change the role without asking through a request or give the peer a chance to accept/reject.
 
 All the peers that are in the current room are accessible via `selectPeers` selector.
 
