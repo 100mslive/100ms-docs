@@ -65,8 +65,9 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
     };
     // @ts-ignore
     const isApiRef = router.query.slug[0] === 'api-reference';
-    // @ts-ignore
-    const isServerSide = router.query.slug[0] === 'server-side';
+    const isNonApiRef =
+        // @ts-ignore
+        router.query.slug[0] === 'server-side' || router.query.slug[0] === 'flutter';
     return (
         <div className="ctx">
             <div className="head-left">
@@ -88,7 +89,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
 
                     <span style={{ marginRight: '1rem' }} />
                     {/* @ts-ignore */}
-                    {isServerSide ? null : (
+                    {isNonApiRef ? null : (
                         <button className={isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
                             <Link href={routeAPIRef()}>API Reference</Link>
                         </button>
