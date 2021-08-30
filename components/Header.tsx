@@ -65,8 +65,10 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
     };
     // @ts-ignore
     const isApiRef = router.query.slug[0] === 'api-reference';
-    // @ts-ignore
-    const isServerSide = router.query.slug[0] === 'server-side';
+
+    const isServerSide =
+        // @ts-ignore
+        router.query.slug[0] === 'server-side' || router.query.slug[0] === 'react-native';
     return (
         <div className="ctx">
             <div className="head-left">
