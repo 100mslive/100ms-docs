@@ -1,0 +1,40 @@
+---
+title: Building apps with 100ms a Developer bliss
+nav: 2.5
+---
+
+While building applications you're gonna hit a lot of errors luckily 100ms SDKs are packed with rich features that help you debug faster.
+
+## Would tell you what's wrong
+
+You're building your app and none of the functionality works and then you check the console.
+
+![](/docs/hmsdevx/provider.png)
+
+As you can see i haven't wrapped my root component with `HMSRoomProvider` the error message tells me exactly what my issue it and that's the beauty less time spent on solving such bugs.
+
+---
+
+Another example where it can extemely helpful even if the actually 'bug' comes from 100ms Dashboard.
+
+You're adding screenshare functionality and when you click on it nothing happens and why is that? and then you see this in the console.
+
+![](/docs/hmsdevx/ss.png)
+
+Here my mistake was i joined with the "role" as "guest" which doesn't have screenshare permission (which you set up on 100ms Dashboard) which is not exactly a bug but it still would tell you.
+
+## Fully typed API
+
+Since all our Web SDKs are written in typescript you will get the amazing Intellisense / Autocompletion. When types don't match it would give you the red curly line which will help you avoid future production bugs.
+
+![](/docs/hmsdevx/provider.png)
+
+In this example the `sendBroadcastMessage` takes and arg in `string` but i am trying to pass a `number`.
+
+## Hardly need to refer Docs
+
+The coolest thing about 100ms SDKs you will hardly need to visit [100ms Docs](https://docs.100ms.live/) after sometime and the reason for it you will get function params and return types along with an explanation.
+
+![](/docs/hmsdevx/chat-api.png)
+
+Here i get to know everything i need to use `sendBroadcastMessage` function.
