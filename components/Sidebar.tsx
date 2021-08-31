@@ -6,6 +6,7 @@ import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
 import ServerIcon from '@/assets/icons/ServerIcon';
+import FlutterIcon from '@/assets/FlutterIcon';
 import { Listbox } from '@headlessui/react';
 import ReactIcon from '@/assets/icons/ReactIcon';
 
@@ -26,6 +27,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
         { link: '/ios/v2/foundation/Basics', name: 'iOS', icon: <IosIcon /> },
         { link: '/javascript/v2/foundation/basics', name: 'JavaScript', icon: <JavascriptIcon /> },
         { link: '/react-native/v2/foundation/basics', name: 'React Native', icon: <ReactIcon /> },
+        { link: '/flutter/v2/foundation/basics', name: 'Flutter', icon: <FlutterIcon /> },
         { link: '/server-side/v2/foundation/basics', name: 'Server-Side', icon: <ServerIcon /> }
     ];
     // @ts-ignore

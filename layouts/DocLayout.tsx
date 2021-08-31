@@ -89,8 +89,8 @@ const DocLayout: React.FC<Props> = ({
     }
 
     setTimeout(() => {
-        scrollToUrlHash(router.asPath)
-    }, 500)
+        scrollToUrlHash(router.asPath);
+    }, 500);
 
     return (
         <>

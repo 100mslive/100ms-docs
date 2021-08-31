@@ -21,6 +21,10 @@ const Post = () => {
                 </li>
                 <li>
                     {' '}
+                    <a href="/flutter">Flutter</a>
+                </li>
+                <li>
+                    {' '}
                     <a href="/server-side">Server-Side</a>
                 </li>
             </ul>
