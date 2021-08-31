@@ -73,10 +73,7 @@ The data in notification depends on the notification type. You can use the `swit
 <Tab id="notification-types-0">
 
 ```jsx{14-44}
-import { HMSReactiveStore } from '@100mslive/hms-video-store';
-
-const manager = new HMSReactiveStore();
-const hmsNotifications = manager.getNotifications();
+import { hmsNotifications } from './hms';
 
 const unsubscribe = hmsNotifications.onNotification((notification) => {
     if (!notification) {

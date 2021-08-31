@@ -1,0 +1,50 @@
+---
+title: Debugging
+nav: 4.01
+---
+
+[![Debugging](https://imgs.xkcd.com/comics/debugging.png)](https://xkcd.com/1722/)
+
+No code ever runs in the first go. When things go wrong, debugging becomes an important aspect for a developer first SDK.
+We have designed our APIs and error messages with developer experience and ease of debugging in mind. We hope that
+you'll have a delightful experience walking through the features and integrating our sdk in your app.
+
+## Console Logs
+
+In case of any issues, we print error or warning logs in console to help with faster debugging.
+
+![types](/guides/role-error.png)
+
+> The [log level](../features/log-level) can be configured to control sdk logging.
+
+## Fully Typed API
+
+Since our Web SDK is written in TypeScript, you will get the amazing Intellisense / Autocompletion out of box.
+This means that even if you use JavaScript, editors will be able to give a significantly improved experience.
+
+![types](/guides/chat-types.png)
+
+## Redux Devtools Integration
+
+We take the debugging experience one step further by connecting our store to
+[redux devtools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en) extension by default. This gives you transparency and
+visibility into the whole room state while building your UI.
+
+![Redux Devtools](/guides/redux-devtools.png)
+
+We highly recommend installing the [devtools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en)
+extension to visualize this state along with all the activities taking place in a single view. This makes it easier
+to understand when and how the UI should change. You can use the time travel feature of the redux devtools
+to recreate state changes for debugging specific issues as well.
+
+## Feature Rich Sample App
+
+We also give a ready to use UI without writing any code which can be accessed
+from the [dashboard account](https://dashboard.100ms.live). The code for this sample is open sourced [here](https://github.com/100mslive/100ms-web).
+You can either start with this codebase or write your own, and use it for testing your webapp
+in the initial phase of development.
+
+
+## Error Codes
+
+Do check the detailed page for listening to and handling errors [here](../features/error-handling).
