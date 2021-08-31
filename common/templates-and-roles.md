@@ -52,7 +52,7 @@ Subscribe strategies will be used to determine what all roles, this role can sub
 You can select all the roles of the template which this role will subscribe
 
 ### Subscribe Degradation
-When this flag is turned on, video tracks of remote participants will be muted or unmuted automatically depending on the network condition. Video tracks won't be unumted automatically if participants have explicitly muted their video tracks.
+When this flag is turned on, one or more remote video tracks will be muted automatically depending on the network conditions. Such tracks will be marked as `degraded`. When network conditions improves the `degraded` tracks will automatically be unmuted.
 
 ## Permissions
 
