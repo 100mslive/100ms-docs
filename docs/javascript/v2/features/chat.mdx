@@ -9,32 +9,31 @@ What's a video call without being able to send messages to each other too? 100ms
 
 ## Sending Chat Messages
 
-There are multiple types of messages that can be sent - Broadcast, Group, Direct Messages
-
 ### Broadcast Message:
-This will be received by everyone in the room  
+This will be received by everyone in the room.
 
 ```js
 hmsActions.sendBroadcastMessage("hello everyone!"); // yes it's that simple 😉
 ```
 
 ### Group Message:
-At the moment, we support sending messages across roles.
+This will be received by every peer who is part of the passed in roles.
 
 ```js
-hmsActions.sendGroupMessage("hello everyone!", ['role1', 'role2']); // yes it's that simple 😉
+hmsActions.sendGroupMessage("hi folks!", ['moderator', 'host']);
 ```
 
 ### Direct Message:
-This will be received by selected peer in the room 
+This will only be received by the peer whom the message was sent to.
 
 ```js
-hmsActions.sendDirectMessage("hello everyone!", selectPeer.id); // yes it's that simple 😉
+hmsActions.sendDirectMessage("keep this message a secret!", peer.id);
 ```
 
-## Showing all the messages
+## Showing the messages
 
-You can access all messages using the selector `selectHMSMessages`. 
+The selector `selectHMSMessages` can be used to get all the messages. There are few other selectors to help with selecting
+more specific messages.
 
 <Tabs id="chat" items={['JavaScript', 'React']} />
 
@@ -43,13 +42,9 @@ You can access all messages using the selector `selectHMSMessages`.
 ```js
 import {
   selectHMSMessages,
-  selectMessagesByRole,
-  selectMessagesByPeerID,
   selectBroadcastMessages,
-  selectBroadcastMessagesUnreadCount,
-  selectMessagesUnreadCountByRole,
-  selectMessagesUnreadCountByPeerID,
-  selectUnreadHMSMessagesCount,
+  selectMessagesByRole,
+  selectMessagesByPeerID
 } from '@100mslive/hms-video-store';
 
 function renderMessages(messages) {
@@ -57,19 +52,9 @@ function renderMessages(messages) {
 }
 
 hmsStore.subscribe(renderMessages, selectHMSMessages); // get all messages
-hmsStore.subscribe(renderMessages, selectMessagesByRole('role1')); //get messages by role
-hmsStore.subscribe(renderMessages, selectMessagesByPeerID(selectPeer.id)); // get messages by peer
-hmsStore.subscribe(renderMessages, selectBroadcastMessages); // get only broadcast messages
-
-// You can get unread counts by the following selectors
-function unreadCount(count) {
-  console.log('unreadcount - ', count);
-}
-hmsStore.subscribe(unreadCount, selectUnreadHMSMessagesCount); // all messages unread count
-hmsStore.subscribe(unreadCount, selectBroadcastMessagesUnreadCount); // broadcast unread count
-hmsStore.subscribe(unreadCount, selectMessagesUnreadCountByRole('role1')); // role unread count 
-hmsStore.subscribe(unreadCount, selectMessagesUnreadCountByPeerID(selectPeer.id)); // peer unread count
-
+hmsStore.subscribe(renderMessages, selectBroadcastMessages); // get all broadcasted messages
+hmsStore.subscribe(renderMessages, selectMessagesByRole('host')); // get conversation with the host role
+hmsStore.subscribe(renderMessages, selectMessagesByPeerID(peer.id)); // get private conversation with peer
 ```
 
 </Tab>
@@ -80,25 +65,17 @@ hmsStore.subscribe(unreadCount, selectMessagesUnreadCountByPeerID(selectPeer.id)
 import { Message } from './components';
 import {
   selectHMSMessages,
-  selectMessagesByRole,
-  selectMessagesByPeerID,
   selectBroadcastMessages,
-  selectBroadcastMessagesUnreadCount,
-  selectMessagesUnreadCountByRole,
-  selectMessagesUnreadCountByPeerID,
-  selectUnreadHMSMessagesCount,
+  selectMessagesByRole,
+  selectMessagesByPeerID
 } from '@100mslive/hms-video-react';
 
 function Chat() {
   // use only the selectors that are required for the corresponding UI
-  const allMessages = useHMSStore(selectMessages);
-  const brodacastMessages = useHMSStore(selectBroadcastMessages);
-  const groupMessagesByRole = useHMSStore(selectMessagesByRole('role1'));
-  const directMessages = useHMSStore(selectMessagesByPeerID('selectPeer.id'));
-  const allMessagesUnreadCount = useHMSStore(selectUnreadHMSMessagesCount);
-  const broadcastUnreadCount = useHMSStore(selectBroadcastMessagesUnreadCount);
-  const groupMessagesByRoleUnreadCount = useHMSStore(selectMessagesUnreadCountByRole('role1'));
-  const directMessagesUnreadCount = useHMSStore(selectMessagesUnreadCountByPeerID(selectPeer.id));
+  const allMessages = useHMSStore(selectMessages); // get all messages
+  const brodacastMessages = useHMSStore(selectBroadcastMessages); // get all broadcasted messages
+  const groupMessagesByRole = useHMSStore(selectMessagesByRole('host')); // get conversation with the host role
+  const directMessages = useHMSStore(selectMessagesByPeerID(peer.id)); // get private conversation with peer
 
   return <>
     {
@@ -111,3 +88,14 @@ function Chat() {
 </Tab>
 
 Refer [API Reference for **HMSMessage Interface**](/api-reference/javascript/v2/interfaces/HMSMessage).
+
+## Marking a message as read
+
+We also have a boolean `read` field with every message which can be optionally used to track whether the user
+has seen the message. You can set the read status for a message with the following interface.
+
+```js
+const readStatus = true;                         // true/false
+hmsActions.setMessageRead(readStatus);           // set status for all messages
+hmsActions.setMessageRead(readStatus, msg.id);   // set status for a specific message
+```
