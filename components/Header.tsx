@@ -56,6 +56,10 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
         router.query.slug[0] === 'api-reference' ? router.query.slug[1] : router.query.slug[0];
     const routeAPIRef = () => {
         // @ts-ignore
+        if (router.query.slug[0] === 'react-native') {
+            return `/api-reference/react-native/v2/index.html`;
+        }
+        // @ts-ignore
         const routeLink = `/api-reference/${router.query.slug[0]}/v2/home/content`;
         // @ts-ignore
         if (router.query.slug[0] === 'api-reference') {
@@ -65,9 +69,11 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
     };
     // @ts-ignore
     const isApiRef = router.query.slug[0] === 'api-reference';
+
     const isNonApiRef =
         // @ts-ignore
-        router.query.slug[0] === 'server-side' || router.query.slug[0] === 'flutter';
+        router.query.slug[0] === 'server-side';
+
     return (
         <div className="ctx">
             <div className="head-left">

@@ -8,6 +8,7 @@ import IosIcon from '@/assets/icons/IosIcon';
 import ServerIcon from '@/assets/icons/ServerIcon';
 import FlutterIcon from '@/assets/FlutterIcon';
 import { Listbox } from '@headlessui/react';
+import ReactIcon from '@/assets/icons/ReactIcon';
 
 type NavRoute = {
     url: string;
@@ -25,6 +26,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
         { link: '/android/v2/foundation/Basics', name: 'Android', icon: <AndroidIcon /> },
         { link: '/ios/v2/foundation/Basics', name: 'iOS', icon: <IosIcon /> },
         { link: '/javascript/v2/foundation/basics', name: 'JavaScript', icon: <JavascriptIcon /> },
+        { link: '/react-native/v2/foundation/basics', name: 'React Native', icon: <ReactIcon /> },
         { link: '/flutter/v2/foundation/basics', name: 'Flutter', icon: <FlutterIcon /> },
         { link: '/server-side/v2/foundation/basics', name: 'Server-Side', icon: <ServerIcon /> }
     ];
@@ -190,7 +192,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 @media screen and (max-width: 1000px) {
                     .ctx {
                         display: ${menu ? 'flex' : 'none'};
-                        height: calc(100vh - 10px);
+                        top:20px;
                     }
                     :global(.page) {
                         height: ${menu ? '100vh !important' : ''};
