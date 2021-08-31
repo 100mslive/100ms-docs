@@ -5,38 +5,60 @@ nav: 3.12
 
 ![Role Change](/guides/role-change.png)
 
+## Introduction
+
 Role is a powerful concept that takes a lot of complexity away in handling permissions and supporting features like breakout rooms. [Learn more about roles here.](../foundation/templates-and-roles)
 
-Every peer is associated with a role. The `HMSRole` object can be used to know the following:
+Every peer is associated with a role. The [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole) object can be used to know the following:
 
 1. Check what this role is allowed to publish. i.e can it send video (and at what resolution)? can it send audio? can it share screen? This can be discovered by using `selectIsAllowedToPublish` to display the UI appropriately.
 2. Check which other roles can this role subscribe to. This is internally taken care of by the 100ms infra and sdk, and your UI will only get tracks as per allowed subscriptions. `role.subscribeParams` can be used to get details.
-3. Check what actions this role can perform. i.e can it change someone else's current role, end meeting, remove someone from the room. This can be discovered by using the `selectPermissions` selector.
+3. Check what actions this role can perform. i.e can it change someone else's current role, mute others, end meeting, remove someone from the room. This can be discovered by using the `selectPermissions` selector.
 
-In certain scenarios you may want to change your or someone else's role. Imagine an audio room with 2 roles "speaker" and "listener". Only someone with a "speaker" role can publish audio to the room while "listener" can only subscribe.
+### Example
+
+Imagine an audio room with 2 roles "speaker" and "listener". Only someone with a "speaker" role can publish audio to the room while "listener" can only subscribe.
 Now at some point "speaker" may decide to nominate some "listener" to become a "speaker". This is where the `changeRole` API comes in.
 
-To invoke the api you will need 3 things.
+## Know Thy Permissions
 
--   `peerId`: The peer ID whose role you want to change, this can be for either of local or remote peer.
--   `toRoleName`: The target role name.
--   `force`: Whether you want to change the role without asking through a request or give the peer a chance to accept/reject.
+The below selectors can be used to know what the local peer is allowed to publish, and the permissions they have. To know about all the
+permissions please check [`selectPermissions'`](../../../api-reference/javascript/v2/home/content#select-permissions) api reference.
 
-All the peers that are in the current room are accessible via `selectPeers` selector.
-
-A list of all available role names in the current room can be accessed via the `selectAvailableRoleNames` selector. You can further use the `selectRoleByRoleName`
-selector to get the full role object for a role name which will have the role's permissions and what they're allowed to do.
-
-Once you have all you can invoke:
-
-```ts
-function changeRole(forPeerId: string, toRoleName: string, force: boolean) {
-    hmsActions.changeRole(forPeerId, toRoleName, force);
-}
+```js
+const role = hmsStore.getState(selectLocalPeerRole);
+const permissions = hsmStore.getState(selectPermissions);
+console.log("can I end room - ", permissions.endRoom);
+console.log("can I end change role - ", permissions.changeRole);
+const { video, audio, screen } = hmsStore.getState(selectIsAllowedToPublish);
 ```
+
+## Change Role API
+
+If the local peer has permissions to change role(`permissions.changeRole`), they can change either their or someone else's role using
+the below interface.
+
+```js
+hmsActions.changeRole(forPeerId, toRoleName, force);
+```
+
+-   `forPeerId`: The peer ID whose role needs to be changed, the peer can be either of local or remote.
+-   `toRoleName`: The target role name.
+-   `force`(optional): The other peer gets a request by default to accept a role change, by setting force to true, the role can be changed
+                        without requesting for approval.
+
+> 💡 A list of all available role names in the current room can be accessed via the `selectAvailableRoleNames` selector. Further the `selectRoleByRoleName`
+selector can be used to get the full [HMSRole](/api-reference/javascript/v2/interfaces/HMSRole) object for a role name.
+
+### Handling a Role Change Request
 
 The `force` parameter in `changeRole`, when false, is a polite request: "Would you like to change your role from listener to speaker?" which can be ignored by the other party.
 The way it works is the other party will first receive a [request](/api-reference/javascript/v2/interfaces/HMSRoleChangeRequest) which they can accept or reject.
+
+
+<Tabs id="roleChange" items={['Javascript', 'React']} />{' '}
+
+<Tab id='roleChange-0'>
 
 ```js
 function handleRoleChangeRequest(request) {
@@ -44,7 +66,7 @@ function handleRoleChangeRequest(request) {
         return;
     }
     console.log(`${request.requestedBy.name} requested role change to - ${request.role.name}`);
-    // decide what to do with the request
+    // shouldAccept can for example present a pop up to the user for deciding how to act on the request
     const accept = shouldAccept(request);
     if (accept) {
         hmsActions.acceptChangeRole(request);
@@ -56,10 +78,61 @@ function handleRoleChangeRequest(request) {
 hmsStore.subscribe(handleRoleChangeRequest, selectRoleChangeRequest);
 ```
 
-If the request is accepted, the `peer.roleName` field in the store will update for all peers which should update their UI as well.
+</Tab>
+
+<Tab  id='roleChange-1'>
+
+```jsx
+function handleRoleChangeRequest(request) {
+    const request = useHMSStore(selectRoleChangeRequest);
+    const hmsActions = useHMSActions();
+
+    useEffect(() => {
+        console.log(`${request.requestedBy.name} requested role change to - ${request.role.name}`);
+        // shouldAccept can for example present a pop up to the user for deciding how to act on the request
+        const accept = shouldAccept(request);
+        if (accept) {
+            hmsActions.acceptChangeRole(request);
+        } else {
+            hmsActions.rejectChangeRole(request);
+        }
+    }, [request, hmsActions])
+
+    return null;
+}
+```
+
+</Tab>
+
+If the request is accepted, the `peer.roleName` field in the store will update re rendering a declarative UI as required.
+
+### Forced Role Change
 
 Imagine that the newly nominated speaker is not behaving nicely and we want to move him back to listener without a prompt.
 This is where the `force` parameter comes in. When it is set to `true` the other party will not receive a confirmation `roleChangeRequest`
 but instead will straight away receive a new set of updated permissions and stop publishing.
 
 ![Listener Role](/guides/role-listener.png)
+
+
+## Ideas
+
+### Breakout Rooms/Groups
+
+You can have multiple roles which act as breakout rooms subscribing only to peers within the role. A peer can join another breakout room
+or group easily using the change role API.
+
+### Waiting Room
+
+You can create a specific role for a waiting room which doesn't subscribe to anyone else. When someone joins waiting room,
+hosts get a notification, and they can let the person join by changing their role to attendees.
+
+### Audio Rooms
+
+An audio room can be designed with moderators, speakers and listeners where a moderator can promote a listener to speaker
+and vice versa.
+
+### Classroom
+
+Roles can be created for muted-student(not allowed to unmute), student-spotlight(publishes higher quality video),
+student-screen(allowed to screenshare), prefect(can mute others) etc. to create an enriching feature rich classroom experience.
