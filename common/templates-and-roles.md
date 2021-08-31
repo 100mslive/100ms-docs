@@ -62,7 +62,6 @@ Permissions will contain a list of additional privileges that this role will hav
 
 With this permission, user will be able to change the role of the other participant's who are present in the room
 
-
 ### Can mute any participant
 With this permission, user will be able to mute any participant's audio and/or video.
 
