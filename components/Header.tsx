@@ -60,6 +60,10 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
             return `/api-reference/react-native/v2/index.html`;
         }
         // @ts-ignore
+        if (router.query.slug[0] === 'flutter') {
+            return `/api-reference/flutter/v2/hmssdk_flutter-library.html`;
+        }
+        // @ts-ignore
         const routeLink = `/api-reference/${router.query.slug[0]}/v2/home/content`;
         // @ts-ignore
         if (router.query.slug[0] === 'api-reference') {
