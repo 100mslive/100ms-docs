@@ -1,0 +1,137 @@
+---
+title: Noise Suppression
+nav: 7.1
+---
+
+## Introduction
+Noise always rears its ugly head while live streaming outside, on site, or in any untreated setting. Sounds can ruin anyone's listening or watching experience, whether it's from passing cars, construction noise, or mechanical whirs.
+Noise suppression plugin helps in customising one’s background sound.
+This guide provides an overview of usage of the noise suppression plugin of 100ms.
+
+
+## Supported Devices
+
+Noise suppression is currently only supported on web in Chrome, Firefox, Brave and Edge browsers.<br/>
+
+
+## Pre-requisites
+
+**Get the 100ms NoiseSupression Package**
+
+```bash
+npm install --save @100mslive/hms-noise-suppression
+```
+
+## Import plugin
+
+```jsx
+import HMSNoiseSuppressionPlugin from '@100mslive/hms-noise-suppression';
+```
+
+## Instantiate Noise Suppression
+
+```jsx
+const noiseSuppression = new new HMSNoiseSuppressionPlugin();
+```
+
+## Interfaces
+
+### Check if plugin is supported
+
+isSupported can be used to check if the browser is supported or not.
+It will return True/False based on browser.
+
+```jsx
+if (noiseSuppression.isSupported()) {
+  console.log('Platform is supported');
+} else {
+  console.log('Platform not supported');
+}
+```
+
+### Init(Optional)
+
+Init is used to load model of noise suppression for the first time.
+It takes on an average 160 milliseconds.<br/>
+Calling init is handled internally by SDK if not done by user, in this case addPlugin call will
+take around 160  milliseconds for the first time and then 1-2 milliseconds in the subsequent calls.
+Check [this section](#start-and-stop-noise-suppression) for addPlugin API usage
+
+```jsx
+noiseSuppression.init();
+```
+
+
+### Start and Stop Noise Suppression
+
+<Tabs id="plugin-code" items={['JavaScript', 'React']} />
+
+<Tab id='plugin-code-0'>
+
+```js
+import { hmsActions, hmsStore } from './hms';
+import { selectIsLocalAudioPluginPresent } from '@100mslive/hms-video-store';
+
+async function toggleNoiseSuppresion() {
+  const isNoiseSupression = hmsStore.getState(selectIsLocalAudioPluginPresent(noiseSuppression.getName()));
+  try {
+    if (!isNoiseSupression) {
+      // add noise suppression
+      await hmsActions.addPluginToAudioTrack(noiseSuppression);
+    } else {
+      // remove noise suppression
+      await hmsActions.removePluginFromAudioTrack(noiseSuppression);
+    }
+  } catch (err) {
+    console.log('noise suppression failure - ', isNoiseSupression, err);
+  }
+}
+```
+
+</Tab>
+
+<Tab id='plugin-code-1'>
+
+```jsx
+import {
+  useHMSStore,
+  useHMSActions,
+  selectIsLocalAudioPluginPresent
+} from '@100mslive/hms-video-react';
+
+function NoiseSupression() {
+  const isNoiseSupression = useHMSStore(selectIsLocalAudioPluginPresent(noiseSuppression.getName());
+  const hmsActions = useHMSActions();
+
+  const toggleNoiseSuppresion = async() => {
+   try {
+    if (!isNoiseSupression) {
+      // add noise suppression
+      await hmsActions.addPluginToAudioTrack(noiseSuppression);
+    } else {
+      // remove noise suppression
+      await hmsActions.removePluginFromAudioTrack(noiseSuppression);
+    }
+  } catch (err) {
+    console.log('noise suppression failure - ', isNoiseSupression, err);
+  }
+
+  return <Button onClick={toggleVB} />;
+}
+```
+
+</Tab>
+
+### Set noise suppression
+
+The function `setNoiseSuppression` can be used to enable/disable noise suppression.
+It accepts boolean as a parameter
+
+```jsx
+try{
+  noiseSuppression.setNoiseSuppression(true|false);
+}catch(err){
+  console.log("Failed to suppress noise", err);
+}
+```
+
