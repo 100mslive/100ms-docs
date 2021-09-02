@@ -31,7 +31,7 @@ import HMSNoiseSuppressionPlugin from '@100mslive/hms-noise-suppression';
 ## Instantiate Noise Suppression 
 
 ```jsx
-const noiseSuppression = new HMSNoiseSuppressionPlugin();
+const noiseSuppressionPlugin = new HMSNoiseSuppressionPlugin();
 ```
 
 ## Interfaces
@@ -42,17 +42,12 @@ isSupported can be used to check if the browser is supported or not.
 It will return True/False based on browser.
 
 ```jsx
-if (noiseSuppression.isSupported()) {
+if (noiseSuppressionPlugin.isSupported()) {
   console.log('Platform is supported');
 } else {
   console.log('Platform not supported');
 }
 ```
-
-```jsx
-noiseSuppression.init();
-```
-
 
 ### Start and Stop Background Noise Suppression
 
@@ -65,14 +60,14 @@ import { hmsActions, hmsStore } from './hms';
 import { selectIsLocalAudioPluginPresent } from '@100mslive/hms-video-store';
 
 async function toggleNoiseSuppression() {
-  const isNoiseSupressed = hmsStore.getState(selectIsLocalAudioPluginPresent(noiseSuppression.getName()));
+  const isNoiseSupressed = hmsStore.getState(selectIsLocalAudioPluginPresent(noiseSuppressionPlugin.getName()));
   try {
     if (!isNoiseSupressed) {
       // add background noise suppression
-      await hmsActions.addPluginToAudioTrack(noiseSuppression);
+      await hmsActions.addPluginToAudioTrack(noiseSuppressionPlugin);
     } else {
       // remove background noise suppression
-      await hmsActions.removePluginFromAudioTrack(noiseSuppression);
+      await hmsActions.removePluginFromAudioTrack(noiseSuppressionPlugin);
     }
   } catch (err) {
     console.log('noise suppression failure - ', isNoiseSupressed, err);
@@ -92,17 +87,17 @@ import {
 } from '@100mslive/hms-video-react';
 
 function NoiseSupression() {
-  const isNoiseSupressed = useHMSStore(selectIsLocalAudioPluginPresent(noiseSuppression.getName());
+  const isNoiseSupressed = useHMSStore(selectIsLocalAudioPluginPresent(noiseSuppressionPlugin.getName());
   const hmsActions = useHMSActions();
 
   const toggleNoiseSuppresion = async() => {
    try {
     if (!isNoiseSupressed) {
       // add background noise suppression
-      await hmsActions.addPluginToAudioTrack(noiseSuppression);
+      await hmsActions.addPluginToAudioTrack(noiseSuppressionPlugin);
     } else {
       // remove background noise suppression
-      await hmsActions.removePluginFromAudioTrack(noiseSuppression);
+      await hmsActions.removePluginFromAudioTrack(noiseSuppressionPlugin);
     }
   } catch (err) {
     console.log('noise suppression failure - ', isNoiseSupressed, err);
@@ -121,7 +116,7 @@ It accepts boolean as a parameter.
 
 ```jsx
 try{
-  noiseSuppression.setNoiseSuppression(true); // true/false
+  noiseSuppressionPlugin.setEnabled(true); // true/false
 }catch(err){
   console.log("Failed to suppress noise", err);
 }
