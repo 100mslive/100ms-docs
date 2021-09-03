@@ -57,7 +57,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
     const routeAPIRef = () => {
         // @ts-ignore
         if (router.query.slug[0] === 'react-native') {
-            return `/api-reference/react-native/v2/index.html`;
+            return `/api-reference/react-native/v2/modules.html`;
         }
         // @ts-ignore
         if (router.query.slug[0] === 'flutter') {
