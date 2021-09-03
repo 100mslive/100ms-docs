@@ -26,7 +26,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
         { link: '/android/v2/foundation/Basics', name: 'Android', icon: <AndroidIcon /> },
         { link: '/ios/v2/foundation/Basics', name: 'iOS', icon: <IosIcon /> },
         { link: '/javascript/v2/foundation/basics', name: 'JavaScript', icon: <JavascriptIcon /> },
-        { link: '/react-native/v2/foundation/basics', name: 'React Native', icon: <ReactIcon /> },
+        { link: '/react-native/v2/foundation/basics', name: 'React-Native', icon: <ReactIcon /> },
         { link: '/flutter/v2/foundation/basics', name: 'Flutter', icon: <FlutterIcon /> },
         { link: '/server-side/v2/foundation/basics', name: 'Server-Side', icon: <ServerIcon /> }
     ];
