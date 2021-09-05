@@ -1,3 +1,4 @@
+import HeadBanner from '@/components/HeadBanner';
 import Header from '@/components/Header';
 import Pagination from '@/components/Pagination';
 import Sidebar from '@/components/Sidebar';
@@ -91,6 +92,7 @@ const DocLayout: React.FC<Props> = ({
     }, 500);
     return (
         <>
+            <HeadBanner />
             <div className="page">
                 <NextSeo {...SEO} />
                 <Header
