@@ -3,6 +3,8 @@ import SearchIcon from '@/assets/icons/SearchIcon';
 import useSearch from '@/lib/useSearch';
 import EnterIcon from '@/assets/icons/EnterIcon';
 import useClickOutside from '@/lib/useClickOutside';
+import Link from 'next/link';
+import useKeyPress from '@/lib/useKeyPress';
 
 interface Props {
     docs: { url: string; title: string; description: string; nav: number; content: string }[];
@@ -11,6 +13,7 @@ interface Props {
 }
 
 const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
+    const paletteTrack = React.useRef(-1);
     const [search, setSearch] = React.useState('');
     const ref = React.useRef();
     const inputRef = React.useRef();
@@ -25,6 +28,55 @@ const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
         folder: currentDocSlug,
         docs
     });
+    // reset if result is 0
+    if (res.length === 0) {
+        paletteTrack.current = -1;
+    }
+    const downKeyPressed = useKeyPress('ArrowDown');
+    const upKeyPressed = useKeyPress('ArrowUp');
+    if (downKeyPressed) {
+        // reset to top
+        if (paletteTrack.current >= res.length - 1) {
+            paletteTrack.current = 0;
+            const last = document.getElementById(`res-box-${res.length - 1}`);
+            if (last) {
+                last.style.backgroundColor = 'var(--gray3)';
+            }
+        } else {
+            paletteTrack.current += 1;
+        }
+        const ele = document.getElementById(`res-box-${paletteTrack.current}`);
+        if (ele) {
+            ele.style.backgroundColor = 'var(--gray8)';
+            ele.focus();
+        }
+        const prev = document.getElementById(`res-box-${paletteTrack.current - 1}`);
+        if (prev) {
+            prev.style.backgroundColor = 'var(--gray3)';
+        }
+    }
+    if (upKeyPressed) {
+        // on top
+        if (paletteTrack.current === 0) {
+            paletteTrack.current = res.length - 1;
+            const top = document.getElementById(`res-box-0`);
+            if (top) {
+                top.style.backgroundColor = 'var(--gray3)';
+            }
+        } else {
+            paletteTrack.current -= 1;
+        }
+
+        const ele = document.getElementById(`res-box-${paletteTrack.current}`);
+        if (ele) {
+            ele.style.backgroundColor = 'var(--gray8)';
+            ele.focus();
+        }
+        const prev = document.getElementById(`res-box-${paletteTrack.current + 1}`);
+        if (prev) {
+            prev.style.backgroundColor = 'var(--gray3)';
+        }
+    }
     return (
         // @ts-ignore
         <div className="search-modal" ref={ref}>
@@ -42,17 +94,17 @@ const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
             </div>
             {res.length > 0 ? (
                 <div className="res-ctx">
-                    {res.map((e) => (
-                        <a href={e.url} key={e.url}>
-                            <div className="res-box">
+                    {res.map((e, i) => (
+                        <Link href={e.url} key={e.url}>
+                            <a id={`res-box-${i}`} className="res-box">
                                 <div>
                                     <span>{e.title}</span>
                                     <span className="slug">{e.url}</span>
                                 </div>
 
                                 <EnterIcon />
-                            </div>
-                        </a>
+                            </a>
+                        </Link>
                     ))}
                 </div>
             ) : null}
