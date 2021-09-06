@@ -60,9 +60,9 @@ import { hmsActions, hmsStore } from './hms';
 import { selectIsLocalAudioPluginPresent } from '@100mslive/hms-video-store';
 
 async function toggleNoiseSuppression() {
-  const isNoiseSupressed = hmsStore.getState(selectIsLocalAudioPluginPresent(noiseSuppressionPlugin.getName()));
+  const isNoiseSuppressed = hmsStore.getState(selectIsLocalAudioPluginPresent(noiseSuppressionPlugin.getName()));
   try {
-    if (!isNoiseSupressed) {
+    if (!isNoiseSuppressed) {
       // add background noise suppression
       await hmsActions.addPluginToAudioTrack(noiseSuppressionPlugin);
     } else {
@@ -70,7 +70,7 @@ async function toggleNoiseSuppression() {
       await hmsActions.removePluginFromAudioTrack(noiseSuppressionPlugin);
     }
   } catch (err) {
-    console.log('noise suppression failure - ', isNoiseSupressed, err);
+    console.log('noise suppression failure - ', isNoiseSuppressed, err);
   }
 }
 ```
