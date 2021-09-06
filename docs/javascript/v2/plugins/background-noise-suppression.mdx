@@ -86,13 +86,13 @@ import {
   selectIsLocalAudioPluginPresent
 } from '@100mslive/hms-video-react';
 
-function NoiseSupression() {
-  const isNoiseSupressed = useHMSStore(selectIsLocalAudioPluginPresent(noiseSuppressionPlugin.getName());
+function NoiseSuppression() {
+  const isNoiseSuppressed = useHMSStore(selectIsLocalAudioPluginPresent(noiseSuppressionPlugin.getName());
   const hmsActions = useHMSActions();
 
-  const toggleNoiseSuppresion = async() => {
+  const toggleNoiseSuppression = async() => {
    try {
-    if (!isNoiseSupressed) {
+    if (!isNoiseSuppressed) {
       // add background noise suppression
       await hmsActions.addPluginToAudioTrack(noiseSuppressionPlugin);
     } else {
@@ -100,10 +100,10 @@ function NoiseSupression() {
       await hmsActions.removePluginFromAudioTrack(noiseSuppressionPlugin);
     }
   } catch (err) {
-    console.log('noise suppression failure - ', isNoiseSupressed, err);
+    console.log('noise suppression failure - ', isNoiseSuppressed, err);
   }
 
-  return <Button onClick={toggleNoiseSuppresion} />;
+  return <Button onClick={toggleNoiseSuppression} />;
 }
 ```
 
@@ -111,7 +111,7 @@ function NoiseSupression() {
 
 ### Set background noise suppression
 
-The function `setNoiseSuppression` can be used to enable/disable background noise suppression without removing the plugin from audiotrack.
+The function `setEnabled` can be used to enable/disable background noise suppression without removing the plugin from audio track.
 It accepts boolean as a parameter.
 
 ```jsx
