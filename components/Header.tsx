@@ -56,6 +56,14 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
         router.query.slug[0] === 'api-reference' ? router.query.slug[1] : router.query.slug[0];
     const routeAPIRef = () => {
         // @ts-ignore
+        if (router.query.slug[0] === 'react-native') {
+            return `/api-reference/react-native/v2/modules.html`;
+        }
+        // @ts-ignore
+        if (router.query.slug[0] === 'flutter') {
+            return `/api-reference/flutter/v2/hmssdk_flutter-library.html`;
+        }
+        // @ts-ignore
         const routeLink = `/api-reference/${router.query.slug[0]}/v2/home/content`;
         // @ts-ignore
         if (router.query.slug[0] === 'api-reference') {
@@ -65,8 +73,11 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
     };
     // @ts-ignore
     const isApiRef = router.query.slug[0] === 'api-reference';
-    // @ts-ignore
-    const isServerSide = router.query.slug[0] === 'server-side';
+
+    const isNonApiRef =
+        // @ts-ignore
+        router.query.slug[0] === 'server-side';
+
     return (
         <div className="ctx">
             <div className="head-left">
@@ -88,7 +99,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
 
                     <span style={{ marginRight: '1rem' }} />
                     {/* @ts-ignore */}
-                    {isServerSide ? null : (
+                    {isNonApiRef ? null : (
                         <button className={isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
                             <Link href={routeAPIRef()}>API Reference</Link>
                         </button>

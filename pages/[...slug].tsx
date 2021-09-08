@@ -14,7 +14,7 @@ import { useRouter } from 'next/router';
 import DocLayout from '@/layouts/DocLayout';
 import getPagination from '@/lib/getPagination';
 
-const DocSlugs = ({ toc, source, allDocs, nav, frontMatter }) => {
+const DocSlugs = ({ source, allDocs, nav, frontMatter }) => {
     const {
         query: { slug }
     } = useRouter();
@@ -27,7 +27,6 @@ const DocSlugs = ({ toc, source, allDocs, nav, frontMatter }) => {
         <DocLayout
             frontMatter={frontMatter}
             nav={nav[currentDocSlug]}
-            toc={toc}
             pagination={pagination}
             allDocs={allDocs}
             currentDocSlug={currentDocSlug}>

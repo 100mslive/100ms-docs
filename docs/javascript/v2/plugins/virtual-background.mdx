@@ -94,9 +94,9 @@ import { hmsActions, hmsStore } from './hms';
 import { selectIsLocalVideoPluginPresent } from '@100mslive/hms-video-store';
 
 async function toggleVB() {
-  const showBackground = hmsStore.getState(selectIsLocalVideoPluginPresent(virtualBackground.getName()));
+  const isVirtualBackgroundEnabled = hmsStore.getState(selectIsLocalVideoPluginPresent(virtualBackground.getName()));
   try {
-    if (!showBackground) {
+    if (!isVirtualBackgroundEnabled) {
       // Recommended value
       const pluginFrameRate = 15;
       // add virtual background
@@ -106,7 +106,7 @@ async function toggleVB() {
       await hmsActions.removePluginFromVideoTrack(virtualBackground);
     }
   } catch (err) {
-    console.log('virtual background failure - ', showBackground, err);
+    console.log('virtual background failure - ', isVirtualBackgroundEnabled, err);
   }
 }
 ```
@@ -123,12 +123,12 @@ import {
 } from '@100mslive/hms-video-react';
 
 function VirtualBackground() {
-  const showBackground = useHMSStore(selectIsLocalVideoPluginPresent(virtualBackground.getName()));
+  const isVirtualBackgroundEnabled = useHMSStore(selectIsLocalVideoPluginPresent(virtualBackground.getName()));
   const hmsActions = useHMSActions();
 
   const toggleVB = async() => {
     try {
-      if (!showBackground) {
+      if (!isVirtualBackgroundEnabled) {
         // Recommended value
         const pluginFrameRate = 15;
         await hmsActions.addPluginToVideoTrack(virtualBackground, pluginFrameRate);
@@ -136,7 +136,7 @@ function VirtualBackground() {
         await hmsActions.removePluginFromVideoTrack(virtualBackground);
       }
     } catch (err) {
-      console.log('virtual background failure - ', showBackground, err);
+      console.log('virtual background failure - ', isVirtualBackgroundEnabled, err);
     }
   }
 

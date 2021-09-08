@@ -48,6 +48,17 @@ if (noiseSuppressionPlugin.isSupported()) {
   console.log('Platform not supported');
 }
 ```
+### Init(Optional)
+
+Init is used to load model of background noise suppression for the first time.
+It takes on an average 52 milliseconds.<br/>
+Calling init is handled internally by SDK if not done by user, in this case addPlugin call will
+take around 52  milliseconds for the first time and then less than 1 milliseconds in the subsequent calls.
+Check [this section](#start-and-stop-noise-suppression) for addPlugin API usage
+
+```jsx
+noiseSuppressionPlugin.init();
+```
 
 ### Start and Stop Background Noise Suppression
 

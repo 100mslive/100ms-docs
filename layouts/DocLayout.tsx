@@ -1,7 +1,9 @@
+import HeadBanner from '@/components/HeadBanner';
 import Header from '@/components/Header';
 import Pagination from '@/components/Pagination';
+import SegmentAnalytics from '@/components/SegmentAnalytics';
 import Sidebar from '@/components/Sidebar';
-import Toc, { TocItem } from '@/components/Toc';
+import Toc from '@/components/Toc';
 import { PaginationType } from '@/lib/getPagination';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
@@ -28,7 +30,6 @@ interface Props {
         nav: number;
     };
     nav: Record<string, Record<string, NavRoute>>;
-    toc: TocItem[];
     pagination: {
         previousPost: PaginationType;
         nextPost: PaginationType;
@@ -41,7 +42,6 @@ const DocLayout: React.FC<Props> = ({
     frontMatter,
     nav,
     children,
-    toc,
     pagination,
     allDocs,
     currentDocSlug
@@ -89,11 +89,12 @@ const DocLayout: React.FC<Props> = ({
     }
 
     setTimeout(() => {
-        scrollToUrlHash(router.asPath)
-    }, 500)
-
+        scrollToUrlHash(router.asPath);
+    }, 500);
     return (
         <>
+            <SegmentAnalytics title={frontMatter.title} />
+            <HeadBanner />
             <div className="page">
                 <NextSeo {...SEO} />
                 <Header
@@ -119,7 +120,7 @@ const DocLayout: React.FC<Props> = ({
                                 />
                             )}
                         </article>
-                        {toc.length > 0 ? <Toc toc={toc} /> : null}
+                        <Toc />
                     </div>
                 </div>
                 <style jsx>{`
