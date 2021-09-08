@@ -1,6 +1,7 @@
 import HeadBanner from '@/components/HeadBanner';
 import Header from '@/components/Header';
 import Pagination from '@/components/Pagination';
+import SegmentAnalytics from '@/components/SegmentAnalytics';
 import Sidebar from '@/components/Sidebar';
 import Toc from '@/components/Toc';
 import { PaginationType } from '@/lib/getPagination';
@@ -92,6 +93,7 @@ const DocLayout: React.FC<Props> = ({
     }, 500);
     return (
         <>
+            <SegmentAnalytics title={frontMatter.title} />
             <HeadBanner />
             <div className="page">
                 <NextSeo {...SEO} />
