@@ -22,7 +22,8 @@ const TocContainer = () => {
     }, []);
     return (
         <div className="toc-ctx">
-            <p className="head">On This Page</p>
+            {toc.length !== 0 ? <p className="head">On This Page</p> : null}
+
             {toc.map((item) =>
                 item.title !== '' ? (
                     <span className={`text ${item.depth === 3 ? 'child' : ''}`} key={item.slug}>
