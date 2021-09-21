@@ -98,7 +98,7 @@ All the above actions are available on ` hmsActions.audioPlaylist`and `hmsAction
 
 Once a audio/video playlist item is played, a track will be obtained and added to `peer.auxiliaryTracks`;
 
-## Accessing Audio/Video Playlist tracks
+## Accessing Audio/Video Playlist information
 
 <Tabs id="playlist" items={['JavaScript', 'React']} />{' '}
 
@@ -132,6 +132,17 @@ const videoVolume = hmsStore.getState(selectVideoPlaylist.volume);
 const audioProgress = hmsStore.getState(selectAudioPlaylist.progress);
 const videoProgress = hmsStore.getState(selectVideoPlaylist.progress);
 
+// Accessing Tracks for playlist
+const videoTrack = hmsStore.getState(
+  selectVideoPlaylistVideoTrackByPeerID(peer.id),
+);
+const videoPlaylistAudioTrack = hmsStore.getState(
+  selectVideoPlaylistAudioTrackByPeerID(peer.id),
+);
+const audioPlaylistAudioTrack = hmsStore.getState(
+  selectAudioPlaylistTrackByPeerID(peer.id),
+);
+
 ```
 
 </Tab>
@@ -149,6 +160,15 @@ function Playlist() {
   const videoVolume = useHMSStore(selectVideoPlaylist.volume);
   const audioProgress = useHMSStore(selectAudioPlaylist.progress);
   const videoProgress = useHMSStore(selectVideoPlaylist.progress);
+  const videoTrack = useHMSStore(
+    selectVideoPlaylistVideoTrackByPeerID(peer.id),
+  );
+  const videoPlaylistAudioTrack = useHMSStore(
+    selectVideoPlaylistAudioTrackByPeerID(peer.id),
+  );
+  const audioPlaylistAudioTrack = useHMSStore(
+    selectAudioPlaylistTrackByPeerID(peer.id),
+  );
 
   setList() {
     // audioListItems, videoListItems should have HMSPlaylistItem interface
