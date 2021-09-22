@@ -37,11 +37,13 @@ Whether the role is allowed to do screen share or not
 
 ### Video quality
 
-Quality of the video track which is going to be published by the role. Currently, 4 video qualities `720p`, `480p`, `360p` and `240p` are predefined and the user can select one out of these values. This option will be visible only if the **Can share video** is enabled.
+Quality of the video track to be published by the role. Currently, 5 video qualities `720p`, `480p`, `360p`, `240p` and `120p` are predefined and the user can select one of these values. This option will be visible only if the **Can share video** is enabled.
+
+For 1:1 calls higher video qualities (`720p`, `480p`) can be used. For rooms with large number of participants (>5) it is recommended to use `360p` or `240p`.
 
 ### Screenshare quality
 
-Quality of the screen which is going to be shared by the role. Currently, 2 video qualities `720p` and `1080p` are predefined and the user can select one out of these values. This option will be visible only if the **Can share screen** is enabled.
+Quality of the screen to be shared by the role. Currently, 2 video qualities `1080p` and `720p` are predefined and the user can select one of these values. This option will be visible only if the **Can share screen** is enabled.
 
 ## Subscribe Strategies
 
