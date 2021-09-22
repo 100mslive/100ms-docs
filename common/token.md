@@ -24,7 +24,7 @@ Any client connecting calling 100ms' service needs to authenticate using an auth
 
 ### Creating Room
 
-To create a token you first need to create a room. Go over to [Room in Dashboard](https://dashboard.100ms.live/rooms) and click on "Create Room" , While creating a room you can specify it's name, roles or enable recording.
+To create a token you first need to create a room. Go over to [Room in Dashboard](https://dashboard.100ms.live/rooms) and click on "Create Room" , While creating a room you can specify it's name, roles or enable SFU recording.
 
 ![Create Room](/guides/token/create-room.png)
 
