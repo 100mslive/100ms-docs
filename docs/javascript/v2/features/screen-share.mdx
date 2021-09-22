@@ -18,6 +18,18 @@ try {
 }
 ```
 
+## AudioOnly Screenshare
+
+To start audio only screenshare, you can pass a boolean as second argument. it defaults to false
+
+```js
+try {
+    await hmsActions.setScreenShareEnabled(true, true);
+} catch (error) {
+    // an error will be thrown if user didn't give access to share screen
+}
+```
+
 To stop the screenshare:
 
 ```js
@@ -41,6 +53,11 @@ const amIScreenSharing = hmsStore(selectIsLocalScreenShared);
 
 // to get the screenshare video track, this can be used to call attachVideo for rendering
 const screenshareVideoTrack = hmsStore(selectScreenShareByPeerID(presenter.id));
+
+// Get the peer who is sharing audio only screenshare
+const peer = hmsStore.getState(selectPeerSharingAudio);
+// Get the audio track of audio Only screenshare
+const audioTrack = hmsStore.getState(selectScreenShareAudioByPeerID(peer?.id));
 ```
 
 Find more [here](/api-reference/javascript/v2/home/content#functions).
