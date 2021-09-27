@@ -1,0 +1,183 @@
+---
+title: Playlist - Audio/Video
+nav: 5.04
+---
+
+You can play list of hosted audio/video files and share across the room.
+
+-   You can play/pause
+-   You can play next/previous
+-   You can control the set volume
+-   You can seek to a position
+
+Add list of items in the following format:
+
+```js
+interface HMSPlaylistItem<T> {
+    name: string;
+    metadata?: T;
+    id: string;
+    url: string;
+    type: HMSPlaylistType;
+    /**
+     * duration in seconds
+     */
+    duration?: number;
+}
+```
+
+You can then the set the playlist on the sdk with the following:
+
+```js
+hmsActions.audioPlaylist.setList(list: HMSPlaylistItem[]);
+```
+
+## Actions on Playlist
+
+```js
+interface IHMSPlaylistActions {
+    /**
+     * Play audio/video passing url and type
+     * @param {string} id - id of playlist item
+     */
+    play(id: string): Promise<void>;
+
+    /**
+     * Pause audio/video passing url and type
+     * @param {string} id - id of playlist item
+     */
+    pause(id: string): Promise<void>;
+
+    /**
+     * PlayNext audio/video passing type
+     */
+    playNext(): Promise<void>;
+
+    /**
+     * PlayPrevious audio/video passing type
+     */
+    playPrevious(): Promise<void>;
+
+    /**
+     * seek audio/video passing seekValue and type - this is relative to current position
+     * @param {number} seekValue - number in seconds to move forwards(pass negative values to move backwards)
+     */
+    seek(seekValue: number): void;
+
+    /**
+     * seek audio/video passing seekValue and type - seekValue will be absolute
+     * @param {number} seekValue - value in seconds of absolute position in the playlist item duration
+     */
+    seekTo(seekValue: number): void;
+
+    /**
+     * set audio/video volume passing volume and type
+     * @param {number} volume - number between 0-100
+     */
+    setVolume(volume: number): void;
+
+    /**
+     * pass list and type to set audio/video playlist
+     * @param {HMSPlaylistItem[]} - list of playlist items
+     */
+    setList<T>(list: HMSPlaylistItem<T>[]): void;
+
+    /**
+     * Stop the current playback and remove the tracks
+     */
+    stop(): Promise<void>;
+
+    /**
+     * Get current time of the current playing item
+     */
+    getCurrentTime(): number;
+}
+```
+
+All the above actions are available on ` hmsActions.audioPlaylist`and `hmsActions.videoPlaylist` after successfully joining the room.
+
+Once a audio/video playlist item is played, a track will be obtained and added to `peer.auxiliaryTracks`;
+
+## Accessing Audio/Video Playlist information
+
+<Tabs id="playlist" items={['JavaScript', 'React']} />{' '}
+
+<Tab id='playlist-0'>
+
+```js:playlist.js
+import { hmsActions, hmsStore } from './hms';
+
+// audioListItems, videoListItems should have HMSPlaylistItem interface
+hmsActions.audioPlaylist.setList(audioListItems);
+hmsActions.videoPlaylist.setList(videoListItems);
+
+
+// Accessing playlist list
+const audioList = hmsStore.getState(selectAudioPlaylist.list);
+const videoList = hmsStore.getState(selectVideoPlaylist.list);
+
+// Accessing current selectedItem
+const selectedAudio = hmsStore.getState(selectAudioPlaylist.selectedItem);
+const selectedVideo = hmsStore.getState(selectVideoPlaylist.selectedItem);
+
+// Accessing current selection - { id, hasNext, hasPrevious }
+const audioSelection = hmsStore.getState(selectAudioPlaylist.selection);
+const videoSelection = hmsStore.getState(selectVideoPlaylist.selection);
+
+// Accessing current volume
+const audioVolume = hmsStore.getState(selectAudioPlaylist.volume);
+const videoVolume = hmsStore.getState(selectVideoPlaylist.volume);
+
+// Accessing current progress - value between 0-100
+const audioProgress = hmsStore.getState(selectAudioPlaylist.progress);
+const videoProgress = hmsStore.getState(selectVideoPlaylist.progress);
+
+// Accessing Tracks for playlist
+const videoTrack = hmsStore.getState(
+  selectVideoPlaylistVideoTrackByPeerID(peer.id),
+);
+const videoPlaylistAudioTrack = hmsStore.getState(
+  selectVideoPlaylistAudioTrackByPeerID(peer.id),
+);
+const audioPlaylistAudioTrack = hmsStore.getState(
+  selectAudioPlaylistTrackByPeerID(peer.id),
+);
+
+```
+
+</Tab>
+
+<Tab  id='playlist-1'>
+
+```jsx:playlist.jsx
+import { useHMSActions, useHMSStore } from '@100mslive/hms-video-react';
+
+function Playlist() {
+  const hmsActions = useHMSActions();
+  const audioList = useHMSStore(selectAudioPlaylist.list);
+  const videoList = useHMSStore(selectVideoPlaylist.list);
+  const audioVolume = useHMSStore(selectAudioPlaylist.volume);
+  const videoVolume = useHMSStore(selectVideoPlaylist.volume);
+  const audioProgress = useHMSStore(selectAudioPlaylist.progress);
+  const videoProgress = useHMSStore(selectVideoPlaylist.progress);
+  const videoTrack = useHMSStore(
+    selectVideoPlaylistVideoTrackByPeerID(peer.id),
+  );
+  const videoPlaylistAudioTrack = useHMSStore(
+    selectVideoPlaylistAudioTrackByPeerID(peer.id),
+  );
+  const audioPlaylistAudioTrack = useHMSStore(
+    selectAudioPlaylistTrackByPeerID(peer.id),
+  );
+
+  setList() {
+    // audioListItems, videoListItems should have HMSPlaylistItem interface
+    hmsActions.audioPlaylist.setList(audioListItems);
+    hmsActions.videoPlaylist.setList(videoListItems);
+  }
+
+  return </>;
+}
+```
+
+</Tab>
