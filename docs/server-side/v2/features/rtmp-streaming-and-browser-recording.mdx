@@ -38,13 +38,17 @@ You can start either RTMP Streaming or Browser Recording or both for any room
 
 #### Body Parameters
 
-| Name              | Type     | Description                                                                                                                                                                                                                                                                                                 | Required |
-| :---------------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| operation <br/>   | `string` | Must be "start"                                                                                                                                                                                                                                                                                             | Yes      |
-| room_id <br/>     | `string` | The room id of the room which we need to start streaming/recording                                                                                                                                                                                                                                          | Yes      |
-| meeting_url <br/> | `string` | Single click meeting url which we need to start streaming/recording                                                                                                                                                                                                                                         | Yes      |
-| rtmp_url <br/>    | `string` | The RTMP output url to which the meeting will be streamed. <br/> Required when RTMP streaming needs to be started. <br/> Supports `rtmp://` & `rtmps://`                                                                                                                                                    | No       |
-| record <br/>      | `bool`   | Flag to enable browser recording                                                                                                                                                                                                                                                                            | No       |
+| Name              | Type     | Description                                                                                                                                                | Required |
+| :---------------- | :------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| operation <br/>   | `string` | Must be "start"                                                                                                                                            | Yes      |
+| room_id <br/>     | `string` | The room id of the room which we need to start streaming/recording                                                                                         | Yes      |
+| meeting_url <br/> | `string` | Single click meeting url which we need to start streaming/recording (see below for more details)                                                           | Yes      |
+| rtmp_url <br/>    | `string` | The RTMP output url to which the meeting will be streamed. <br/> Required when RTMP streaming needs to be started. <br/> Supports `rtmp://` & `rtmps://`   | No       |
+| record <br/>      | `bool`   | Flag to enable browser recording                                                                                                                           | No       |
+
+##### meeting_url
+
+This is a url which lands into the meeting directly. If you are using 100ms apps then this will be like - `https://<domain>.app.100ms.live/preview/<room_id>/<role>?token=beam_recording`. Example - `https://myname.app.100ms.live/preview/61101349d0f56e684b608c08/beam?token=beam_recording`
 
 #### cURL
 
