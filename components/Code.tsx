@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from '@iconify/react';
 
 export const CopyIcon = () => (
     <svg
@@ -42,7 +43,11 @@ const Code: React.FC = ({ children }) => {
                     <CopyIcon />
                 </button>
             ) : null}
-            {copy ? <span className="copied">Copied</span> : null}{' '}
+            {copy ? 
+            <div className="copied">
+            <Icon icon="mdi:check"  width="25px" height="25px" /> </div>
+            : null
+            }{' '}
             <div ref={textRef}>{children}</div>
             <style jsx>{`
                 .code-block {
@@ -63,12 +68,13 @@ const Code: React.FC = ({ children }) => {
                 }
                 .copied {
                     z-index: 45;
+                    width: 25px;
+                    height: 25px;
                     padding: 5px;
-                    font-size: 12px;
                     border: 1px solid var(--gray6);
                     background: var(--gray1);
                     border-radius: 5px;
-                    top: 50px;
+                    top: 10px;
                     right: 10px;
                     position: absolute;
                 }
