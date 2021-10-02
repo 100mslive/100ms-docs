@@ -3,7 +3,11 @@
     <img src="public/logo.svg" alt="Logo" width="200" >
 </p>
 
+[![Discord](https://img.shields.io/discord/843749923060711464?label=Join%20on%20Discord)](https://100ms.live/discord)
+
 <br />
+
+> If you're here to contribute do check out our [Contributing Guidelines](CONTRIBUTING.md) & our [Code of Conduct](CODE_OF_CONDUCT.md)
 
 ## 🚀 Getting Started
 

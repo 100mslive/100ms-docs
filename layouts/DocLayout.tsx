@@ -8,6 +8,7 @@ import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import React from 'react';
+import EditFile from '@/components/EditFile';
 
 type NavRoute = {
     url: string;
@@ -85,7 +86,6 @@ const DocLayout: React.FC<Props> = ({
     } else {
         newNav = nav;
     }
-
     setTimeout(() => {
         scrollToUrlHash(router.asPath);
     }, 500);
@@ -115,6 +115,7 @@ const DocLayout: React.FC<Props> = ({
                                     prev={pagination.previousPost}
                                 />
                             )}
+                            <EditFile slug={router.asPath} />
                         </article>
                         <Toc />
                     </div>
