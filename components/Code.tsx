@@ -1,5 +1,4 @@
 import React from 'react';
-import { Icon } from '@iconify/react';
 
 export const CopyIcon = () => (
     <svg
@@ -16,7 +15,20 @@ export const CopyIcon = () => (
         <path d="M8 17.929H6c-1.105 0-2-.912-2-2.036V5.036C4 3.91 4.895 3 6 3h8c1.105 0 2 .911 2 2.036v1.866m-6 .17h8c1.105 0 2 .91 2 2.035v10.857C20 21.09 19.105 22 18 22h-8c-1.105 0-2-.911-2-2.036V9.107c0-1.124.895-2.036 2-2.036z" />
     </svg>
 );
-
+export const Check = () => (
+    <svg 
+        width="24" 
+        height="24" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        strokeWidth="2" 
+        strokeLinecap="round" 
+        strokeLinejoin="round" 
+        className="feather feather-check">
+        <polyline points="20 6 9 17 4 12" />
+    </svg>
+)
 const Code: React.FC = ({ children }) => {
     const textRef = React.useRef(null);
     const copyFunction = () => {
@@ -44,8 +56,9 @@ const Code: React.FC = ({ children }) => {
                 </button>
             ) : null}
             {copy ? 
-            <div className="copied">
-            <Icon icon="mdi:check"  width="25px" height="25px" /> </div>
+                <div className="copied">
+                    <Check /> 
+                </div>
             : null
             }{' '}
             <div ref={textRef}>{children}</div>
