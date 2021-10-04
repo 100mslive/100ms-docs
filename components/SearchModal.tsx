@@ -47,7 +47,7 @@ const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
         }
         const ele = document.getElementById(`res-box-${paletteTrack.current}`);
         if (ele) {
-            ele.style.backgroundColor = 'var(--gray8)';
+            ele.style.backgroundColor = 'var(--gray6)';
             ele.focus();
         }
         const prev = document.getElementById(`res-box-${paletteTrack.current - 1}`);
@@ -69,7 +69,7 @@ const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
 
         const ele = document.getElementById(`res-box-${paletteTrack.current}`);
         if (ele) {
-            ele.style.backgroundColor = 'var(--gray8)';
+            ele.style.backgroundColor = 'var(--gray6)';
             ele.focus();
         }
         const prev = document.getElementById(`res-box-${paletteTrack.current + 1}`);
@@ -150,7 +150,6 @@ const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    opacity: 0.4;
                     background-color: var(--gray3);
                 }
                 .res-box div {
