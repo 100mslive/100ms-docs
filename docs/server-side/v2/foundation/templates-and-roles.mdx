@@ -4,3 +4,107 @@ nav: 2.2
 ---
 
 <Content alias="templatesAndRoles" />
+
+# Interact with Templates via API
+
+You will need a [management token](authentication-and-tokens) as bearer token for your requests.
+
+## Create Templates using API
+
+You can also create template using API. This provides a more scalable way of creating and managing template.
+
+<PostRequest
+    title="Create Template API"
+    desp="This endpoint is used to create Template. "
+    url="https://qa-policy.100ms.live/api/v1/templates"
+/>
+
+<Tabs items={['Request', 'Response']} id="req" />
+
+<Tab id="req-0">
+
+```bash
+curl https://qa-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer  <management_token>' -X POST -H 'Content-Type: application/json' -d '{"name": "test-template", "roles": <map_of_roles> , "default": false }'
+```
+</Tab>
+<Tab id="req-1">
+
+<Response res="200: OK" />
+
+```json
+{
+   "id":"61101349d0f56e684b608c08",
+   "name":"test-template"
+}
+```
+</Tab>
+
+### Headers
+| Name                 | Value                        | Required |
+| :------------------- | :--------------------------- | :------- |
+| Content-type <br/>   | application/json             | Yes      |
+| Authorization <br/>  | Bearer `<management token>`  | Yes      |
+
+### Body Paramters
+| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Required |
+| :------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| name <br/>           | `string` | A unique identifier you can assign to 100ms rooms. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Note**: <br/><br/> (1) If `create Template` is called with an existing room name, then the corresponding template ID is returned <br/><br/>  | No       |
+| default <br/>           | `boolean` | whether this is default template for customer. Default template for a customer is used when no template is provided in create room api. | No      |
+| roles <br/>           | `object` | Map of roles object {role_name:role_object}  | No       |
+
+
+---
+
+### role_object
+| Name        | Type      | Description                                                                                                                                                                                     | Required |
+| :---------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| publishParams     | `object` | Publish Parameters                                                                                                                              | No       |
+| subscribeParams | `object`  | Subscribe Params | No       |
+
+| permissions | `object`  | Permissions | No       |
+| priority | `int` | Priority | No |
+
+
+## Modify Template
+
+This API can be used to modify a template
+
+<PostRequest
+    title="Modify Template API"
+    desp="This endpoint is used to modify a Template. "
+    url="https://qa-policy.100ms.live/api/v1/templates"
+/>
+
+<Tabs items={['Request', 'Response']} id="dis" />
+
+<Tab id="dis-0">
+
+```bash
+curl https://qa-policy.100ms.live/api/v1/templates?id=<id> -H 'Authorization: Bearer  <management_token>' -X POST -H 'Content-Type: application/json' -d '{"name": "test-room", "default": "false"}'
+```
+</Tab>
+
+<Tab id="dis-1">
+
+<Response res="200: OK" />
+
+```json
+{
+   "id":"61101349d0f56e684b608c08",
+   "name":"test-room",
+   
+}
+```
+</Tab>
+
+### Headers
+| Name                 | Value                        | Required |
+| :------------------- | :--------------------------- | :------- |
+| Content-type <br/>   | application/json             | Yes      |
+| Authorization <br/>  | Bearer `<management token>`  | Yes      |
+
+### Body Paramters
+| Name                 | Type     | Description                                                       | Required |
+| :------------------- | :------- | :---------------------------------------------------------------- | :------- |
+| roles <br/>           | `object` | Role Object                   | No      |
+| default <br/>         | `bool`   | Default tempalte or not  | No      |
