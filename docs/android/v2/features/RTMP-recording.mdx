@@ -1,0 +1,62 @@
+---
+title: RTMP / Recording
+nav: 13
+---
+
+Want to preserve your video call for posterity in a recording? Or live stream it out to millions of viewers on twitch or youtube or whatever gives you an RTMP injest URL?
+
+Turn on RTMP streaming or recording!
+
+In 100ms, recording and streaming is usually achieved by having a bot join your room and stream what it sees and hears to a file (recording) or to an rtmp injest url (streaming).
+
+To start recording, streaming or both, create an instance of `HMSRecordingConfig`.
+
+`HMSRecordingConfig` takes the following:
+1. **meetingUrl**: *String*. The url the 100ms bot user will open to join your room. It must allow access without any user level interaction.
+2. **rtmpUrls**: *List<String\>*. If streaming is required, this has to be one or more RTMP Injest Urls where the stream should go. If only recording, this can be an empty list.
+3. **record**: *Boolean*. If recording is required, set true. If recording is not required, set false. This value has no effect on streaming.
+
+* If both rtmpUrls and record = true are provided, both streaming and recording will begin.
+* If only rtmpUrls are provided, only streaming will begin.
+* If only record true is provided, only recording will begin.
+
+If either one is started, the other can't be started without first stopping whatever is running.
+Eg: Only streaming is started. Recording can't be started unless streaming is stopped first.
+
+If both are required, they have to be started together by providing both RTMP Injest Urls and recording = true.
+
+<Tabs id="streamingrecording" items={['Kotlin', 'Java']} />
+
+<Tab id='streamingrecording-0'>
+
+```kotlin
+hmsSdk.startRtmpOrRecording(hmsRecordingConfig, object : HMSActionResultListener {
+
+    override fun onSuccess() {
+        // started successfully
+    }
+
+    override fun onError(error: HMSException) {
+        // an error occurred
+    }
+ }
+)
+```
+</Tab>
+
+<Tab id='streamingrecording-1'>
+
+```java
+hmsSdk.startRtmpOrRecording(hmsRecordingConfig, new HMSActionResultListener() {
+    @Override
+    public void onSuccess() {
+        // started successfully
+    }
+
+    @Override
+    public void onError(@NonNull HMSException e) {
+        // an error occurred
+    }
+});
+```
+</Tab>
