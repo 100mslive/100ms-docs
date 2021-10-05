@@ -112,9 +112,19 @@ private boolean hasUnMutePermissions() {
 
 ### Muting/Unmuting
 
+There are two APIs for muting/unmuting. `changeTrackState` is the overloaded function which handles both.
+
+* One which only works on a single track (audio/video) for a single peer at a time. `changeTrackState(forRemoteTrack: HMSTrack, mute: Boolean, hmsActionResultListener: HMSActionResultListener)` 
+* One which can mute multiple tracks for multiple peers. Either by their role, or track source or track type or any combination of the above. `changeTrackState(mute: Boolean, type : HMSTrackType?, source : String?, roles : List<HMSRole>?, hmsActionResultListener: HMSActionResultListener)`
+
+For single peer/track look at [single peer /track](#single-peer-or-track).
+
+For multiple peer/track muting simultaneously look at [Multiple peers or tracks](#multiple-peers-or-tracks)
+
+#### Single Peer or Track
 Once you have checked that the caller has permissions to mute another peer's audio or video, call for it with `hmsSdk.changeTrackState`.
 
-To mute audio:
+To mute audio for a single peer or track:
 
 `hmsSdk.changeTrackState` takes three parameters:
 
@@ -215,7 +225,7 @@ Similarly the video track can be muted or unmuted.
 
 ```kotlin
 
-fun changeAudioState(hmsRemotePeer: HMSRemotePeer, mute : Boolean) {
+fun changeVideoState(hmsRemotePeer: HMSRemotePeer, mute : Boolean) {
     val track = hmsRemotePeer.videoTrack
     if(track != null) {
         hmsSdk.changeTrackState(track, mute, object : HMSActionResultListener {
@@ -236,7 +246,7 @@ fun changeAudioState(hmsRemotePeer: HMSRemotePeer, mute : Boolean) {
 
 ```java
 
-public void changeAudioState(HMSRemotePeer hmsRemotePeer, Boolean mute) {
+public void changeVideoState(HMSRemotePeer hmsRemotePeer, Boolean mute) {
         HMSRemoteVideoTrack track = hmsRemotePeer.getVideoTrack();
         if(track != null) {
             hmsSdk.changeTrackState(track, mute, new HMSActionResultListener() {
@@ -307,3 +317,138 @@ public void checkTrack(HMSTrack track) {
 </Tab>
 
 Hold onto the information here, show a dialog to the user to ask if they want to accept the change and then apply the settings locally. The same as in a regular user [Mute/Unmute](Mute).
+
+#### Multiple Peers or Tracks
+Once you have checked that the caller has permissions to mute another peer's audio or video, call for it with `hmsSdk.changeTrackState`.
+
+To mute audio for a multiple peers or tracks:
+
+`hmsSdk.changeTrackState` takes five parameters:
+
+* **mute**: *Boolean* true if the track needs to be muted, false otherwise
+* **type** *HMSTrackType** optional, the HMSTrackType which should be affected. If this and **source** are specified, it is considered an AND operation. If null, all track sources are affected.
+* **source** *Source* optional, the [HMSTrackSource] which should be affected. If this and [type] are specified, it is considered an AND operation. If null, all track sources are affected.
+* **roles** *List<HMSRole/>* optional, a list of roles, may have a single item in a list, whose tracks should be affected. If null, all roles are affected.
+* **hmsActionResultListener** *HMSActionResultListener* the callback that would be called by SDK in case of a success or failure.
+
+Here's an example of how you would check if the caller was allowed to mute peers and then call for a mute/unmute on all peers in the chat.
+
+<Tabs id="multimute" items={['Kotlin', 'Java']} />
+
+<Tab id='multimute-0'>
+
+```kotlin
+
+  fun remoteMute(mute: Boolean, roles: List<String>?) {
+    if (isAllowedToMutePeers()) {
+      val selectedRoles = if (roles == null) null else {
+        hmsSdk.getRoles().filter { roles.contains(it.name) }
+      }
+      hmsSdk.changeTrackState(
+          mute,
+          null,
+          null,
+          selectedRoles,
+          object: HMSActionResultListener {
+
+        override fun onSuccess() {
+          // Remote mute suceeded
+        }
+
+        override fun onError(error: HMSException) {
+          // Error
+        }
+
+      })
+    }
+  }
+```
+
+</Tab>
+
+<Tab id='multimute-1'>
+
+```java
+private void remoteMute(boolean mute, List<String> hmsRoleNames) {
+        List<HMSRole> selectedRoles = new ArrayList<>();
+        if(hmsRoleNames != null) {
+            selectedRoles = new ArrayList<>();
+            for( HMSRole role : hmsSdk.getRoles()) {
+                if(hmsRoleNames.contains(role.getName())) {
+                    selectedRoles.add(role);
+                }
+            }
+        }
+        hmsSdk.changeTrackState(
+                mute,
+                null,
+                null,
+                selectedRoles,
+                new HMSActionResultListener() {
+                    @Override
+                    public void onSuccess() {
+                        // Change track state succeeded.
+                    }
+
+                    @Override
+                    public void onError(@NonNull HMSException e) {
+                        // Change track state failed.
+                    }
+                }
+        );
+    }
+```
+
+</Tab>
+
+This can be further narrowed by specifying only those tracks of type Audio like so:
+
+Note that HMSTrackSource.REGULAR is the peer's own audio and video as opposed to one provided by screenshare or a plugin.
+
+<Tabs id="multimuteoptions" items={['Kotlin', 'Java']} />
+
+<Tab id='multimuteoptions-0'>
+
+```kotlin
+hmsSdk.changeTrackState(
+            true,
+            HMSTrackType.AUDIO,
+            HMSTrackSource.REGULAR,
+            emptyList(),
+            object : HMSActionResultListener {
+                override fun onSuccess() {
+
+                }
+                
+                override fun onError(error: HMSException) {
+                    
+                }
+            }
+        )
+```
+
+</Tab>
+
+<Tab id='multimuteoptions-1'>
+
+```java
+        hmsSdk.changeTrackState(
+                true,
+                HMSTrackType.AUDIO,
+                HMSTrackSource.REGULAR,
+                Collections.emptyList(),
+                new HMSActionResultListener() {
+                    @Override
+                    public void onSuccess() {
+                        
+                    }
+
+                    @Override
+                    public void onError(@NonNull HMSException e) {
+
+                    }
+                }
+        );
+```
+
+</Tab>

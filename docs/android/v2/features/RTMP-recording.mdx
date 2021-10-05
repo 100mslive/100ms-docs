@@ -26,6 +26,8 @@ Eg: Only streaming is started. Recording can't be started unless streaming is st
 
 If both are required, they have to be started together by providing both RTMP Injest Urls and recording = true.
 
+The result of the action is sent in the callback for `HMSActionResultListener`. Any attempt to start streaming/recording may be successful in which case `onSuccess` will be called. Or may fail with an error which will be sent in `onError(error: HMSException)`.
+
 <Tabs id="streamingrecording" items={['Kotlin', 'Java']} />
 
 <Tab id='streamingrecording-0'>
@@ -70,6 +72,8 @@ hmsSdk.startRtmpOrRecording(hmsRecordingConfig, new HMSActionResultListener() {
 To stop streaming AND recording. It is not currently possible to stop just one, whatever is running will be stopped.
 
 Here's how to stop both:
+
+The `stopRtmpAndRecording` only takes a single parameter, a callback for `HMSActionResultListener`. Any attempt to stop streaming/recording may be successful in which case `onSuccess` will be called. Or may fail with an error which will be sent in `onError(error: HMSException)`.
 
 <Tabs id="stopstreamingrecording" items={['Kotlin', 'Java']} />
 
