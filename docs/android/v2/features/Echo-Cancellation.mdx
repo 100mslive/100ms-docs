@@ -1,0 +1,64 @@
+---
+title: Echo Cancellation
+nav: 14
+---
+
+The 100ms Android SDK automatically applies the best known settings to cancel echos from devices. However some android devices have issues with their hardware echo cancellation and benefit from relying only on software for it.
+
+While we continually update the SDK with the latest known devices which have the issue, you may run into one we haven't tested with yet.
+
+If you find that a certain device echos when it joins a meeting despite this, turning off its hardware echo cancellation can solve the problem since software echo cancellation doesn't kick in if the hardware one is enabled.
+
+Echo cancellation settings can only be applied before a meeting a joined. The 100ms Android SDK provides a way to turn this off in the builder function.
+
+> 💡 Note this option must selectively be turned on for devices based on their [models](https://developer.android.com/reference/android/os/Build) disabling hardware echo cancellation for all devices will result in other devices echoing which didn't before.
+
+<Tabs id="echocancellation" items={['Kotlin', 'Java']} />
+
+<Tab id='echocancellation-0'>
+
+```kotlin
+ val faultyHardwareCancellationModels: HashSet<String> =
+    hashSetOf("phone 1", "phone 2") // Get this from Build.MODEL for the device.
+
+ private val useHardwareEchoCancellation = faultyHardwareCancellationModels
+                                            .contains(Build.MODEL)
+
+ private val hmsTrackSettings = HMSTrackSettings.Builder()
+    .audio(
+        HMSAudioTrackSettings.Builder()
+        .setUseHardwareAcousticEchoCanceler(useHardwareEchoCancellation).build()
+    )
+    .build()
+
+  val hmsSDK = HMSSDK
+    .Builder(application)
+    .setTrackSettings(hmsTrackSettings) // SDK uses HW echo cancellation, if nothing is set in builder
+    .build()
+```
+
+</Tab>
+
+<Tab id='echocancellation-1'>
+
+```java
+ private HashSet<String> faultyHardwareCancellationModels =  new HashSet<String>(){{
+     add("phone 1"); // Get this from Build.MODEL for the device.
+     add("phone 2"); // Get this from Build.MODEL for the device.
+ }};
+
+ private boolean useHardwareEchoCancellation = faultyHardwareCancellationModels
+        .contains(Build.MODEL);
+
+ HMSTrackSettings hmsTrackSettings = new HMSTrackSettings.Builder()
+    .audio(new HMSAudioTrackSettings.Builder()
+        .setUseHardwareAcousticEchoCanceler(useHardwareEchoCancellation).build()
+    )
+ .build();
+
+ HMSSDK hmssdk = new HMSSDK.Builder(application)
+    .setTrackSettings(hmsTrackSettings)
+    .build();
+```
+
+</Tab>
