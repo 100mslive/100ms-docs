@@ -9,6 +9,7 @@ Turn on RTMP streaming or recording!
 
 In 100ms, recording and streaming is usually achieved by having a bot join your room and stream what it sees and hears to a file (recording) or to an rtmp injest url (streaming).
 
+# Starting streaming / recording
 To start recording, streaming or both, create an instance of `HMSRecordingConfig`.
 
 `HMSRecordingConfig` takes the following:
@@ -42,6 +43,7 @@ hmsSdk.startRtmpOrRecording(hmsRecordingConfig, object : HMSActionResultListener
  }
 )
 ```
+
 </Tab>
 
 <Tab id='streamingrecording-1'>
@@ -59,4 +61,51 @@ hmsSdk.startRtmpOrRecording(hmsRecordingConfig, new HMSActionResultListener() {
     }
 });
 ```
+
+</Tab>
+
+
+# Stopping streaming / recording
+
+To stop streaming AND recording. It is not currently possible to stop just one, whatever is running will be stopped.
+
+Here's how to stop both:
+
+<Tabs id="stopstreamingrecording" items={['Kotlin', 'Java']} />
+
+<Tab id='stopstreamingrecording-0'>
+
+```kotlin
+hmsSdk.stopRtmpAndRecording(object : HMSActionResultListener {
+
+    override fun onSuccess() {
+        // Stop succeeded.
+    }
+
+    override fun onError(error: HMSException) {
+        // Error while stopping.
+    }
+    
+})
+
+```
+
+</Tab>
+
+<Tab id='stopstreamingrecording-1'>
+
+```java
+hmsSdk.stopRtmpAndRecording(new HMSActionResultListener() {
+    @Override
+    public void onSuccess() {
+        // Stop succeeded.
+    }
+
+    @Override
+    public void onError(@NonNull HMSException e) {
+        // Error while stopping.
+    }
+});
+```
+
 </Tab>
