@@ -7,7 +7,7 @@ The 100ms Android SDK automatically applies the best known settings to cancel ec
 
 While we continually update the SDK with the latest known devices which have the issue, you may run into one we haven't tested with yet.
 
-If you find that a certain device echos when it joins a meeting despite this, turning off its hardware echo cancellation can solve the problem since software echo cancellation doesn't kick in if the hardware one is enabled.
+If you find that a certain device echos when it joins a meeting despite this, turning off its hardware echo cancellation may solve the problem. This is because if hardware echo cancellation is supported by the device, the SDK prefers hardware over software.
 
 Echo cancellation settings can only be applied before a meeting a joined. The 100ms Android SDK provides a way to turn this off in the builder function.
 
@@ -21,7 +21,7 @@ Echo cancellation settings can only be applied before a meeting a joined. The 10
  val faultyHardwareCancellationModels: HashSet<String> =
     hashSetOf("phone 1", "phone 2") // Get this from Build.MODEL for the device.
 
- private val useHardwareEchoCancellation = faultyHardwareCancellationModels
+ private val useHardwareEchoCancellation = !faultyHardwareCancellationModels
                                             .contains(Build.MODEL)
 
  private val hmsTrackSettings = HMSTrackSettings.Builder()
@@ -47,7 +47,7 @@ Echo cancellation settings can only be applied before a meeting a joined. The 10
      add("phone 2"); // Get this from Build.MODEL for the device.
  }};
 
- private boolean useHardwareEchoCancellation = faultyHardwareCancellationModels
+ private boolean useHardwareEchoCancellation = !faultyHardwareCancellationModels
         .contains(Build.MODEL);
 
  HMSTrackSettings hmsTrackSettings = new HMSTrackSettings.Builder()
