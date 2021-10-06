@@ -21,7 +21,7 @@ Echo cancellation settings can only be applied before a meeting a joined. The 10
  val faultyHardwareCancellationModels: HashSet<String> =
     hashSetOf("phone 1", "phone 2") // Get this from Build.MODEL for the device.
 
- private val useHardwareEchoCancellation = faultyHardwareCancellationModels
+ private val useHardwareEchoCancellation = !faultyHardwareCancellationModels
                                             .contains(Build.MODEL)
 
  private val hmsTrackSettings = HMSTrackSettings.Builder()
@@ -47,7 +47,7 @@ Echo cancellation settings can only be applied before a meeting a joined. The 10
      add("phone 2"); // Get this from Build.MODEL for the device.
  }};
 
- private boolean useHardwareEchoCancellation = faultyHardwareCancellationModels
+ private boolean useHardwareEchoCancellation = !faultyHardwareCancellationModels
         .contains(Build.MODEL);
 
  HMSTrackSettings hmsTrackSettings = new HMSTrackSettings.Builder()
