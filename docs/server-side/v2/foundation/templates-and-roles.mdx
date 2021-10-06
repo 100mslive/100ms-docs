@@ -24,7 +24,7 @@ You can also create template using API. This provides a more scalable way of cre
 <Tab id="req-0">
 
 ```bash
-curl https://qa-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer  <management_token>' -X POST -H 'Content-Type: application/json' -d '{"name": "test-template", "roles": <map_of_roles> , "default": false }'
+curl https://qa-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer <management_token>' -X POST -H 'Content-Type: application/json' -d '{ "name": "test-amit9", "default": true, "roles": { "student": { "name": "student", "publishParams": { "allowed": [ "screen", "audio" ], "audio": { "bitRate": 45, "codec": "opus" }, "video": { "bitRate": 250, "codec": "vp8", "frameRate": 30, "width": 480, "height": 270 }, "screen": { "codec": "vp8", "frameRate": 10, "width": 1920, "height": 1086 }, "videoSimulcastLayers": {}, "screenSimulcastLayers": {} }, "subscribeParams": { "subscribeToRoles": [ "teacher", "student" ], "maxSubsBitRate": 2000, "subscribeDegradation": {} }, "permissions": {}, "priority": 1 } }, "settings": { "region": "eu", "subscribeDegradation": {}, "screenSimulcastLayers": {}, "videoSimulcastLayers": {} } }'
 ```
 </Tab>
 <Tab id="req-1">
@@ -33,8 +33,57 @@ curl https://qa-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer  <m
 
 ```json
 {
-   "id":"61101349d0f56e684b608c08",
-   "name":"test-template"
+    "_id": "6157462fba65e77a89f811a5",
+    "key": "6157462ff8a0bc58efaff9b2:test-amit9",
+    "name": "test-amit9",
+    "customer": "6157462ff8a0bc58efaff9b2",
+    "default": true,
+    "roles": {
+        "student": {
+            "name": "student",
+            "publishParams": {
+                "allowed": [
+                    "screen",
+                    "audio"
+                ],
+                "audio": {
+                    "bitRate": 45,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 250,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 480,
+                    "height": 270
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1086
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": [
+                    "teacher",
+                    "student"
+                ],
+                "maxSubsBitRate": 2000,
+                "subscribeDegradation": {}
+            },
+            "permissions": {},
+            "priority": 1
+        }
+    },
+    "settings": {
+        "region": "eu",
+        "subscribeDegradation": {},
+        "screenSimulcastLayers": {},
+        "videoSimulcastLayers": {}
+    }
 }
 ```
 </Tab>
@@ -48,7 +97,7 @@ curl https://qa-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer  <m
 ### Body Paramters
 | Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Required |
 | :------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
-| name <br/>           | `string` | A unique identifier you can assign to 100ms rooms. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Note**: <br/><br/> (1) If `create Template` is called with an existing room name, then the corresponding template ID is returned <br/><br/>  | No       |
+| name <br/>           | `string` | A unique identifier you can assign to 100ms rooms. Accepted characters are `a-z, A-Z, 0-9, and . - : _`.  | Yes       |
 | default <br/>           | `boolean` | whether this is default template for customer. Default template for a customer is used when no template is provided in create room api. | No      |
 | roles <br/>           | `object` | Map of roles object {role_name:role_object}  | No       |
 
@@ -60,7 +109,6 @@ curl https://qa-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer  <m
 | :---------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | publishParams     | `object` | Publish Parameters                                                                                                                              | No       |
 | subscribeParams | `object`  | Subscribe Params | No       |
-
 | permissions | `object`  | Permissions | No       |
 | priority | `int` | Priority | No |
 
@@ -71,28 +119,75 @@ This API can be used to modify a template
 
 <PostRequest
     title="Modify Template API"
-    desp="This endpoint is used to modify a Template. "
-    url="https://qa-policy.100ms.live/api/v1/templates"
+    desp="This endpoint is used to create Template. "
+    url="https://qa-policy.100ms.live/api/v1/templates/<id>"
 />
 
-<Tabs items={['Request', 'Response']} id="dis" />
+<Tabs items={['Request', 'Response']} id="req" />
 
-<Tab id="dis-0">
+<Tab id="req-0">
 
 ```bash
-curl https://qa-policy.100ms.live/api/v1/templates?id=<id> -H 'Authorization: Bearer  <management_token>' -X POST -H 'Content-Type: application/json' -d '{"name": "test-room", "default": "false"}'
+curl https://qa-policy.100ms.live/api/v1/templates/<id> -H 'Authorization: Bearer <management_token>' -X POST -H 'Content-Type: application/json' -d '{ "name": "test-amit9", "default": true, "roles": { "student": { "name": "student", "publishParams": { "allowed": [ "screen", "audio" ], "audio": { "bitRate": 45, "codec": "opus" }, "video": { "bitRate": 250, "codec": "vp8", "frameRate": 30, "width": 480, "height": 270 }, "screen": { "codec": "vp8", "frameRate": 10, "width": 1920, "height": 1086 }, "videoSimulcastLayers": {}, "screenSimulcastLayers": {} }, "subscribeParams": { "subscribeToRoles": [ "teacher", "student" ], "maxSubsBitRate": 2000, "subscribeDegradation": {} }, "permissions": {}, "priority": 1 } }, "settings": { "region": "eu", "subscribeDegradation": {}, "screenSimulcastLayers": {}, "videoSimulcastLayers": {} } }'
 ```
 </Tab>
-
-<Tab id="dis-1">
+<Tab id="req-1">
 
 <Response res="200: OK" />
 
 ```json
 {
-   "id":"61101349d0f56e684b608c08",
-   "name":"test-room",
-   
+    "_id": "6157462fba65e77a89f811a5",
+    "key": "6157462ff8a0bc58efaff9b2:test-amit9",
+    "name": "test-amit9",
+    "customer": "6157462ff8a0bc58efaff9b2",
+    "default": true,
+    "roles": {
+        "student": {
+            "name": "student",
+            "publishParams": {
+                "allowed": [
+                    "screen",
+                    "audio"
+                ],
+                "audio": {
+                    "bitRate": 45,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 250,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 480,
+                    "height": 270
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1086
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": [
+                    "teacher",
+                    "student"
+                ],
+                "maxSubsBitRate": 2000,
+                "subscribeDegradation": {}
+            },
+            "permissions": {},
+            "priority": 1
+        }
+    },
+    "settings": {
+        "region": "eu",
+        "subscribeDegradation": {},
+        "screenSimulcastLayers": {},
+        "videoSimulcastLayers": {}
+    }
 }
 ```
 </Tab>
@@ -104,7 +199,370 @@ curl https://qa-policy.100ms.live/api/v1/templates?id=<id> -H 'Authorization: Be
 | Authorization <br/>  | Bearer `<management token>`  | Yes      |
 
 ### Body Paramters
-| Name                 | Type     | Description                                                       | Required |
-| :------------------- | :------- | :---------------------------------------------------------------- | :------- |
-| roles <br/>           | `object` | Role Object                   | No      |
-| default <br/>         | `bool`   | Default tempalte or not  | No      |
+| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Required |
+| :------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| name <br/>           | `string` | A unique identifier you can assign to 100ms rooms. Accepted characters are `a-z, A-Z, 0-9, and . - : _`.  | Yes       |
+| default <br/>           | `boolean` | whether this is default template for customer. Default template for a customer is used when no template is provided in create room api. | No      |
+| roles <br/>           | `object` | Map of roles object {role_name:role_object}  | No       |
+
+## Modify Role
+
+This API can be used to modify a role
+
+<PostRequest
+    title="Modify Role API"
+    desp="This endpoint is used to modify Role. "
+    url="https://qa-policy.100ms.live/api/v1/templates/<id>/roles/<roleName>"
+/>
+
+<Tabs items={['Request', 'Response']} id="req" />
+
+<Tab id="req-0">
+
+```bash
+curl https://qa-policy.100ms.live/api/v1/templates/<id>/roles/<roleName> -H 'Authorization: Bearer <management_token>' -X POST -H 'Content-Type: application/json' -d '{ "name": "student", "publishParams": { "allowed": [ "screen", "audio" ], "audio": { "bitRate": 45, "codec": "opus" }, "video": { "bitRate": 250, "codec": "vp8", "frameRate": 30, "width": 480, "height": 270 }, "screen": { "codec": "vp8", "frameRate": 10, "width": 1920, "height": 1086 }, "videoSimulcastLayers": {}, "screenSimulcastLayers": {} }, "subscribeParams": { "subscribeToRoles": [ "teacher", "student" ], "maxSubsBitRate": 2000, "subscribeDegradation": {} }, "permissions": {}, "priority": 1 } }, "settings": { "region": "eu", "subscribeDegradation": {}, "screenSimulcastLayers": {}, "videoSimulcastLayers": {} }'
+```
+</Tab>
+<Tab id="req-1">
+
+<Response res="200: OK" />
+
+```json
+{
+    "_id": "6157462fba65e77a89f811a5",
+    "key": "6157462ff8a0bc58efaff9b2:test-amit9",
+    "name": "test-amit9",
+    "customer": "6157462ff8a0bc58efaff9b2",
+    "default": true,
+    "roles": {
+        "student": {
+            "name": "student",
+            "publishParams": {
+                "allowed": [
+                    "screen",
+                    "audio"
+                ],
+                "audio": {
+                    "bitRate": 45,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 250,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 480,
+                    "height": 270
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1086
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": [
+                    "teacher",
+                    "student"
+                ],
+                "maxSubsBitRate": 2000,
+                "subscribeDegradation": {}
+            },
+            "permissions": {},
+            "priority": 1
+        }
+    },
+    "settings": {
+        "region": "eu",
+        "subscribeDegradation": {},
+        "screenSimulcastLayers": {},
+        "videoSimulcastLayers": {}
+    }
+}
+```
+</Tab>
+
+### Headers
+| Name                 | Value                        | Required |
+| :------------------- | :--------------------------- | :------- |
+| Content-type <br/>   | application/json             | Yes      |
+| Authorization <br/>  | Bearer `<management token>`  | Yes      |
+
+### Body Paramters
+| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Required |
+| :------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| role_object <br/>           | `object` | Role Object  | Yes       |
+
+
+## Delete Role
+
+This API can be used to modify a role
+
+<PostRequest
+    title="Delete Role API"
+    desp="This endpoint is used to modify Role. "
+    url="https://qa-policy.100ms.live/api/v1/templates/<id>/roles/<roleName>"
+/>
+
+<Tabs items={['Request', 'Response']} id="req" />
+
+<Tab id="req-0">
+
+```bash
+curl https://qa-policy.100ms.live/api/v1/templates/<id>/roles/<roleName> -H 'Authorization: Bearer <management_token>' -X DELETE -H 'Content-Type: application/json'
+```
+</Tab>
+<Tab id="req-1">
+
+<Response res="200: OK" />
+
+```json
+{
+    "_id": "6157462fba65e77a89f811a5",
+    "key": "6157462ff8a0bc58efaff9b2:test-amit9",
+    "name": "test-amit9",
+    "customer": "6157462ff8a0bc58efaff9b2",
+    "default": true,
+    "roles": {
+        "student": {
+            "name": "student",
+            "publishParams": {
+                "allowed": [
+                    "screen",
+                    "audio"
+                ],
+                "audio": {
+                    "bitRate": 45,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 250,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 480,
+                    "height": 270
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1086
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": [
+                    "teacher",
+                    "student"
+                ],
+                "maxSubsBitRate": 2000,
+                "subscribeDegradation": {}
+            },
+            "permissions": {},
+            "priority": 1
+        }
+    },
+    "settings": {
+        "region": "eu",
+        "subscribeDegradation": {},
+        "screenSimulcastLayers": {},
+        "videoSimulcastLayers": {}
+    }
+}
+```
+</Tab>
+
+### Headers
+| Name                 | Value                        | Required |
+| :------------------- | :--------------------------- | :------- |
+| Content-type <br/>   | application/json             | Yes      |
+| Authorization <br/>  | Bearer `<management token>`  | Yes      |
+
+## Modify Settings
+
+This API can be used to modify settings
+
+<PostRequest
+    title="Modify Role API"
+    desp="This endpoint is used to modify Role. "
+    url="https://qa-policy.100ms.live/api/v1/templates/<id>/settings"
+/>
+
+<Tabs items={['Request', 'Response']} id="req" />
+
+<Tab id="req-0">
+
+```bash
+curl https://qa-policy.100ms.live/api/v1/templates/<id>/roles/<roleName> -H 'Authorization: Bearer <management_token>' -X POST -H 'Content-Type: application/json' -d '{ "name": "student", "publishParams": { "allowed": [ "screen", "audio" ], "audio": { "bitRate": 45, "codec": "opus" }, "video": { "bitRate": 250, "codec": "vp8", "frameRate": 30, "width": 480, "height": 270 }, "screen": { "codec": "vp8", "frameRate": 10, "width": 1920, "height": 1086 }, "videoSimulcastLayers": {}, "screenSimulcastLayers": {} }, "subscribeParams": { "subscribeToRoles": [ "teacher", "student" ], "maxSubsBitRate": 2000, "subscribeDegradation": {} }, "permissions": {}, "priority": 1 } }, "settings": { "region": "eu", "subscribeDegradation": {}, "screenSimulcastLayers": {}, "videoSimulcastLayers": {} }'
+```
+</Tab>
+<Tab id="req-1">
+
+<Response res="200: OK" />
+
+```json
+{
+    "_id": "6157462fba65e77a89f811a5",
+    "key": "6157462ff8a0bc58efaff9b2:test-amit9",
+    "name": "test-amit9",
+    "customer": "6157462ff8a0bc58efaff9b2",
+    "default": true,
+    "roles": {
+        "student": {
+            "name": "student",
+            "publishParams": {
+                "allowed": [
+                    "screen",
+                    "audio"
+                ],
+                "audio": {
+                    "bitRate": 45,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 250,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 480,
+                    "height": 270
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1086
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": [
+                    "teacher",
+                    "student"
+                ],
+                "maxSubsBitRate": 2000,
+                "subscribeDegradation": {}
+            },
+            "permissions": {},
+            "priority": 1
+        }
+    },
+    "settings": {
+        "region": "eu",
+        "subscribeDegradation": {},
+        "screenSimulcastLayers": {},
+        "videoSimulcastLayers": {}
+    }
+}
+```
+</Tab>
+
+### Headers
+| Name                 | Value                        | Required |
+| :------------------- | :--------------------------- | :------- |
+| Content-type <br/>   | application/json             | Yes      |
+| Authorization <br/>  | Bearer `<management token>`  | Yes      |
+
+### Body Paramters
+| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Required |
+| :------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| role_object <br/>           | `object` | Role Object  | Yes       |
+
+
+
+## Get Template
+
+This API can be used to modify a role
+
+<PostRequest
+    title="Modify Role API"
+    desp="This endpoint is used to modify Role. "
+    url="https://qa-policy.100ms.live/api/v1/templates/<id>"
+/>
+
+<Tabs items={['Request', 'Response']} id="req" />
+
+<Tab id="req-0">
+
+```bash
+curl https://qa-policy.100ms.live/api/v1/templates/<id>/roles/<roleName> -H 'Authorization: Bearer <management_token>' -X POST -H 'Content-Type: application/json' -d '{ "name": "student", "publishParams": { "allowed": [ "screen", "audio" ], "audio": { "bitRate": 45, "codec": "opus" }, "video": { "bitRate": 250, "codec": "vp8", "frameRate": 30, "width": 480, "height": 270 }, "screen": { "codec": "vp8", "frameRate": 10, "width": 1920, "height": 1086 }, "videoSimulcastLayers": {}, "screenSimulcastLayers": {} }, "subscribeParams": { "subscribeToRoles": [ "teacher", "student" ], "maxSubsBitRate": 2000, "subscribeDegradation": {} }, "permissions": {}, "priority": 1 } }, "settings": { "region": "eu", "subscribeDegradation": {}, "screenSimulcastLayers": {}, "videoSimulcastLayers": {} }'
+```
+</Tab>
+<Tab id="req-1">
+
+<Response res="200: OK" />
+
+```json
+{
+    "_id": "6157462fba65e77a89f811a5",
+    "key": "6157462ff8a0bc58efaff9b2:test-amit9",
+    "name": "test-amit9",
+    "customer": "6157462ff8a0bc58efaff9b2",
+    "default": true,
+    "roles": {
+        "student": {
+            "name": "student",
+            "publishParams": {
+                "allowed": [
+                    "screen",
+                    "audio"
+                ],
+                "audio": {
+                    "bitRate": 45,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 250,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 480,
+                    "height": 270
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1086
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": [
+                    "teacher",
+                    "student"
+                ],
+                "maxSubsBitRate": 2000,
+                "subscribeDegradation": {}
+            },
+            "permissions": {},
+            "priority": 1
+        }
+    },
+    "settings": {
+        "region": "eu",
+        "subscribeDegradation": {},
+        "screenSimulcastLayers": {},
+        "videoSimulcastLayers": {}
+    }
+}
+```
+</Tab>
+
+### Headers
+| Name                 | Value                        | Required |
+| :------------------- | :--------------------------- | :------- |
+| Content-type <br/>   | application/json             | Yes      |
+| Authorization <br/>  | Bearer `<management token>`  | Yes      |
+
+### Body Paramters
+| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Required |
+| :------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| role_object <br/>           | `object` | Role Object  | Yes       |
+
+
+
+
