@@ -7,7 +7,7 @@ The 100ms Android SDK automatically applies the best known settings to cancel ec
 
 While we continually update the SDK with the latest known devices which have the issue, you may run into one we haven't tested with yet.
 
-If you find that a certain device echos when it joins a meeting despite this, turning off its hardware echo cancellation can solve the problem since software echo cancellation doesn't kick in if the hardware one is enabled.
+If you find that a certain device echos when it joins a meeting despite this, turning off its hardware echo cancellation may solve the problem. This is because if the SDK detects hardware echo cancellation is supported by the device, it prefers hardware over software, even if the hardware happens to be faulty.
 
 Echo cancellation settings can only be applied before a meeting a joined. The 100ms Android SDK provides a way to turn this off in the builder function.
 
