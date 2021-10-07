@@ -5,11 +5,14 @@ nav: 3.13
 
 You're running a room and decide that someone who's currently talking shouldn't be talking, or perhaps you want their video turned off. You're looking for a remote mute/unmute in this case.
 
-### Muting/Unmuting
+## Muting/Unmuting
 
 Use the [selectPermissions](./change-role#know-thy-permissions) selector to check whether the local peer has the
-permission to `mute` or `unmute` others and
-then call [`hmsActions.setRemoteTrackEnabled`](../../../api-reference/javascript/v2/interfaces/HMSActions#set-remote-track-enabled)
+permission to `mute` or `unmute` others and then call one of the APIs below.
+
+1. Muting Single Track
+
+To mute a single track, call [`hmsActions.setRemoteTrackEnabled`](../../../api-reference/javascript/v2/interfaces/HMSActions#set-remote-track-enabled)
 with the `trackID` of the track you want to mute/unmute and `enable`(`true` for unmuting, `false` for muting).
 
 ```js
@@ -21,15 +24,41 @@ try {
 }
 ```
 
-> 🚧 If the local peer doesn't have the required `mute`/`unmute` permission, the `hmsActions.setRemoteTrackEnabled` call will throw an [HMSException error](error-handling).
+2. Muting Multiple Tracks
 
-### Handling a mute/unmute request
+You can use this API to mute mute/unmute multiple peers at the same time either by their roles, track source, track type
+ or any combination of the above. Note that this API always excludes
+the local peer from the operation and applies only to remote peers.
 
-Once the peer with adequate permissions calls `setRemoteTrackEnabled`, the local peer will receive a [notification](notifications) with type `CHANGE_TRACK_STATE_REQUEST` with a [HMSChangeTrackStateRequest](../../../api-reference/javascript/v2/interfaces/HMSChangeTrackStateRequest) object as the data.
+```js
+try {
+    const options = {
+        enabled: false,                 // false to mute, true to unmute
+        roles: ["student", "parents"],  // optional, array of roles to mute, mutes everyone if not passed
+        type: "audio",                  // optional, audio/video, mutes both if not passed
+        source: "regular",              // optional, mutes all sources(regular, screen etc.) if not passed
+    }
+    await hmsActions.setRemoteTracksEnabled(options);
+} catch (error) {
+    // Permission denied or invalid track ID or not connected to room
+    console.error(error);
+}
+```
+
+> 🚧 If the local peer doesn't have the required `mute`/`unmute` permission, the actions will throw an [HMSException error](error-handling).
+
+## Handling a mute/unmute request
+
+![Remote Unmute Request](/guides/remote-unmute.png)
+
+Once the peer with adequate permissions calls `setRemoteTrackEnabled`, the local peer will receive a [notification](notifications).
+In case of single track mute it will be of type `CHANGE_TRACK_STATE_REQUEST` with a
+[HMSChangeTrackStateRequest](../../../api-reference/javascript/v2/interfaces/HMSChangeTrackStateRequest) object as the data.
 
 -   Mute requests are automatically applied to the receiver by the SDK. No action is required.
 
--   For unmute request, hold onto the information from the `HMSChangeTrackStateRequest` object, show a dialog to the user to ask if they want to accept the change and then apply the settings locally. The same as in a regular user [Mute/Unmute](mute).
+-   For unmute request, use the information in `notification.data` to show a dialog to the user to ask if they want to accept
+the change and then apply the settings locally. The same as in a regular user [Mute/Unmute](mute).
 
 <Tabs id="remotemutehandle" items={['JavaScript', 'React']} />
 
@@ -42,17 +71,30 @@ hmsNotifications.onNotification((notification) => {
     }
 
     switch (notification.type) {
-        // ...Other notification type cases
-        case 'CHANGE_TRACK_STATE_REQUEST':
-            // Unmute Request
-            if (notification.data.enabled) {
-                // Ask for consent using dialog or any other appropriate UI
-                await hmsActions.setEnabledTrack(notification.data.track.id, enabled);
-            } else {
-                // Mute Request
-                // Show toast to user
-            }
-            break;
+    // For Single Track Remote Mute
+    case HMSNotificationTypes.CHANGE_TRACK_STATE_REQUEST:
+        const { requestedBy, track, enabled } = notification.data;
+        // Unmute Request
+        if (enabled) {
+            // Ask for consent using dialog or any other appropriate UI
+            await hmsActions.setEnabledTrack(track.id, enabled);
+        } else {
+            // Mute Request
+            // Show toast to user
+        }
+        break;
+    // For bulk remote mute, notification will contain all the tracks which will be impacted by this request
+    case HMSNotificationTypes.CHANGE_MULTI_TRACK_STATE_REQUEST:
+        const { requestedBy, tracks, type, source, enabled } = notification.data;
+        // Unmute Request
+        if (enabled) {
+            // Ask for consent using dialog or any other appropriate UI
+            tracks.forEach(async (track) => await hmsActions.setEnabledTrack(track.id, enabled))
+        } else {
+            // Mute Request
+            // Show toast to user
+        }
+        break;
     }
 });
 ```
@@ -73,17 +115,30 @@ function Notification() {
         }
 
         switch (notification.type) {
-            // ...Other notification type cases
-            case 'CHANGE_TRACK_STATE_REQUEST':
-                // Unmute Request
-                if (notification.data.enabled) {
-                    // Ask for consent using dialog or any other appropriate UI
-                    await hmsActions.setEnabledTrack(track.id, enabled);
-                } else {
-                    // Mute Request
-                    // Show toast to user
-                }
-                break;
+        // For Single Track Remote Mute
+        case HMSNotificationTypes.CHANGE_TRACK_STATE_REQUEST:
+            const { requestedBy, track, enabled } = notification.data;
+            // Unmute Request
+            if (enabled) {
+                // Ask for consent using dialog or any other appropriate UI
+                await hmsActions.setEnabledTrack(track.id, enabled);
+            } else {
+                // Mute Request
+                // Show toast to user
+            }
+            break;
+        // For bulk remote mute, notification will contain all the tracks which will be impacted by this request
+        case HMSNotificationTypes.CHANGE_MULTI_TRACK_STATE_REQUEST:
+            const { requestedBy, tracks, type, source, enabled } = notification.data;
+            // Unmute Request
+            if (enabled) {
+                // Ask for consent using dialog or any other appropriate UI
+                tracks.forEach(async (track) => await hmsActions.setEnabledTrack(track.id, enabled))
+            } else {
+                // Mute Request
+                // Show toast to user
+            }
+            break;
         }
     }, [notification]);
 
@@ -92,5 +147,3 @@ function Notification() {
 ```
 
 </Tab>
-
-![Remote Unmute Request](/guides/remote-unmute.png)
