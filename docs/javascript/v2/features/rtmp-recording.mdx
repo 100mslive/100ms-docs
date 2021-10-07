@@ -1,0 +1,73 @@
+---
+title: RTMP Streaming / Recording
+nav: 3.35
+---
+
+Want to preserve your video call for posterity in a recording?
+Or live stream it out to millions of viewers on twitch, wowza, facebook, youtube or whatever gives you an RTMP ingest URL?
+
+Turn on RTMP streaming or recording!
+
+In 100ms, recording and streaming is usually achieved by having a bot join your room
+and stream what it sees and hears to a file (recording) or to an rtmp ingest url (streaming).
+It's also possible to start streaming and recording from [server side APIs](/server-side/v2/features/rtmp-streaming-and-browser-recording).
+
+>There is another type
+ of SFU based recording as well which allows for all the tracks to be recorded individually, you can find more details about it
+ [here](/server-side/v2/features/recording).
+
+
+## Starting and Stopping streaming / recording
+
+These are the options which need to be passed to start rtmp or recording -
+1. **meetingUrl**: *string*. The url the 100ms bot user will open to join your room. It must allow access without any user level interaction.
+2. **rtmpUrls**: *string[]*. Optional, if streaming is required, this has to be one or more RTMP Ingest Urls where the stream should go.
+3. **record**: *bool*. Optional, If recording is required this can be set as true. This value has no effect on streaming.
+
+
+* If both rtmpUrls and record = true are provided, both streaming and recording will begin.
+* If only rtmpUrls are provided, only streaming will begin.
+* If only record true is provided, only recording will begin.
+
+If either one is started, the other can't be started without first stopping whatever is running.
+Eg: Only streaming is started. Recording can't be started unless streaming is stopped first.
+
+If both are required, they have to be started together by providing both RTMP Ingest Urls and recording = true.
+
+```js
+async start() {
+    const params = {
+        meetingUrl: "",
+        rtmpUrls: "",
+        record: true
+    };
+    try {
+        await hmsActions.startRTMPOrRecording(params);
+    } catch(err) {
+        console.error("failed to start rtmp/recording", err);
+    }
+}
+
+async stop() {
+    try {
+        await hmsActions.stopRTMPAndRecording();
+    } catch (err) {
+        console.error("failed to stop rtmp/recording", err);
+    }
+}
+
+```
+
+## Current Recording/RTMP State
+
+As it is with everything else in the 100ms web world, we've selectors to tell us about the current state of the room,
+whether recording or streaming is already going on and if recording is happening, which type of recording is currently running.
+
+```js
+const recordingState = hmsStore.getState(selectRecordingState);
+const rtmpState = hmsStore.getState(selectRTMPState);
+
+console.log("is sfu recording going on - ", recordingState.server.running);
+console.log("is browser recording going on - ", recordingState.browser.running);
+console.log("is streaming going on - ", rtmpState.running);
+```
