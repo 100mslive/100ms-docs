@@ -1,61 +1,57 @@
----
-title: HMSMessage
----
-
 **CLASS**
 
-```swift
-@objcMembers public class HMSMessage: NSObject, Codable
-```
+# `HMSMessage`
 
-A local peer can send any message/data to all remote peers in the room
+```swift
+@objcMembers public class HMSMessage: NSObject
+```
 
 ## Properties
-
-### sender
-
-```swift
-public let sender: String
-```
-
-### receiver
+### `message`
 
 ```swift
-public let receiver: String?
+public let message: String
 ```
 
-peerID, optional, default is nil in which case broadcast will be sent to all
-
-### time
-
-```swift
-public let time: String
-```
-
-### type
+### `type`
 
 ```swift
 public let type: String
 ```
 
-default is Chat Type
-
-### message
+### `sender`
 
 ```swift
-public let message: String?
+public var sender: HMSPeer?
 ```
 
-string
-
-## Methods
-
-### init(sender:receiver:time:type:message:)
+### `recipient`
 
 ```swift
-public init(sender: String,
-            receiver: String? = nil,
-            time: String,
-            type: String,
-            message: String)
+public var recipient: HMSMessageRecipient
+```
+
+### `time`
+
+```swift
+public let time: Date
+```
+
+## Methods
+### `init(message:type:)`
+
+```swift
+public init(message: String, type: String = "chat")
+```
+
+### `init(message:type:peerRecipient:)`
+
+```swift
+public init(message: String, type: String = "chat", peerRecipient: HMSPeer)
+```
+
+### `init(message:type:rolesRecipient:)`
+
+```swift
+public init(message: String, type: String = "chat", rolesRecipient: [HMSRole])
 ```

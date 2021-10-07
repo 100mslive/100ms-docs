@@ -1,32 +1,27 @@
----
-title: HMSDataSource
----
-
 **EXTENSION**
 
+# `HMSDataSource`
 ```swift
 extension HMSDataSource: HMSUpdateListener
 ```
 
 ## Methods
-
-### on(join:)
+### `on(join:)`
 
 ```swift
 public func on(join room: HMSRoom)
 ```
 
 initializes data source with current peers & tracks in the room
-
--   Parameter room: the room which the user joined
+- Parameter room: the room which the user joined
 
 #### Parameters
 
-| Name | Description                    |
-| ---- | ------------------------------ |
+| Name | Description |
+| ---- | ----------- |
 | room | the room which the user joined |
 
-### on(room:update:)
+### `on(room:update:)`
 
 ```swift
 public func on(room: HMSRoom, update: HMSRoomUpdate)
@@ -34,12 +29,12 @@ public func on(room: HMSRoom, update: HMSRoomUpdate)
 
 #### Parameters
 
-| Name   | Description                                                               |
-| ------ | ------------------------------------------------------------------------- |
-| room   | the room which was joined                                                 |
+| Name | Description |
+| ---- | ----------- |
+| room | the room which was joined |
 | update | the triggered update type. Should be used to perform different UI Actions |
 
-### on(peer:update:)
+### `on(peer:update:)`
 
 ```swift
 public func on(peer: HMSPeer, update: HMSPeerUpdate)
@@ -47,12 +42,12 @@ public func on(peer: HMSPeer, update: HMSPeerUpdate)
 
 #### Parameters
 
-| Name   | Description                                                               |
-| ------ | ------------------------------------------------------------------------- |
-| peer   | the peer who joined/left or was updated                                   |
+| Name | Description |
+| ---- | ----------- |
+| peer | the peer who joined/left or was updated |
 | update | the triggered update type. Should be used to perform different UI Actions |
 
-### on(track:update:for:)
+### `on(track:update:for:)`
 
 ```swift
 public func on(track: HMSTrack, update: HMSTrackUpdate, for peer: HMSPeer)
@@ -60,13 +55,13 @@ public func on(track: HMSTrack, update: HMSTrackUpdate, for peer: HMSPeer)
 
 #### Parameters
 
-| Name   | Description                                            |
-| ------ | ------------------------------------------------------ |
-| track  | the track which was added, removed or updated          |
-| update | the triggered update type                              |
-| peer   | the peer for which track was added, removed or updated |
+| Name | Description |
+| ---- | ----------- |
+| track | the track which was added, removed or updated |
+| update | the triggered update type |
+| peer | the peer for which track was added, removed or updated |
 
-### on(updated:)
+### `on(updated:)`
 
 ```swift
 public func on(updated speakers: [HMSSpeaker])
@@ -74,11 +69,11 @@ public func on(updated speakers: [HMSSpeaker])
 
 #### Parameters
 
-| Name     | Description          |
-| -------- | -------------------- |
+| Name | Description |
+| ---- | ----------- |
 | speakers | the list of speakers |
 
-### on(error:)
+### `on(error:)`
 
 ```swift
 public func on(error: HMSError)
@@ -86,11 +81,11 @@ public func on(error: HMSError)
 
 #### Parameters
 
-| Name  | Description            |
-| ----- | ---------------------- |
+| Name | Description |
+| ---- | ----------- |
 | error | the error that occured |
 
-### on(message:)
+### `on(message:)`
 
 ```swift
 public func on(message: HMSMessage)
@@ -98,17 +93,17 @@ public func on(message: HMSMessage)
 
 #### Parameters
 
-| Name    | Description                    |
-| ------- | ------------------------------ |
+| Name | Description |
+| ---- | ----------- |
 | message | the received broadcast message |
 
-### onReconnecting()
+### `onReconnecting()`
 
 ```swift
 public func onReconnecting()
 ```
 
-### onReconnected()
+### `onReconnected()`
 
 ```swift
 public func onReconnected()

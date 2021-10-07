@@ -11,8 +11,7 @@ title: HMSConfig
 To join a room created, clients need to create a HMSConfig instance and use that instance to call `join` method of HMSSDK
 
 ## Properties
-
-### userName
+### `userName`
 
 ```swift
 public let userName: String
@@ -20,19 +19,19 @@ public let userName: String
 
 the name that the user wants to be displayed while in the room
 
-### userID
+### `userID`
 
 ```swift
 public let userID: String
 ```
 
-### roomID
+### `roomID`
 
 ```swift
-public let roomID: String
+public let roomID: String?
 ```
 
-### authToken
+### `authToken`
 
 ```swift
 public let authToken: String
@@ -40,13 +39,13 @@ public let authToken: String
 
 the auth token to be used
 
-### shouldSkipPIIEvents
+### `shouldSkipPIIEvents`
 
 ```swift
 public let shouldSkipPIIEvents: Bool
 ```
 
-### metaData
+### `metaData`
 
 ```swift
 public let metaData: String?
@@ -54,7 +53,7 @@ public let metaData: String?
 
 any json string or metadata that can be passed while joining
 
-### endpoint
+### `endpoint`
 
 ```swift
 public let endpoint: String?
@@ -63,13 +62,12 @@ public let endpoint: String?
 to override the default endpoint (advanced)
 
 ## Methods
-
-### init(userName:userID:roomID:authToken:shouldSkipPIIEvents:metaData:endpoint:)
+### `init(userName:userID:roomID:authToken:shouldSkipPIIEvents:metaData:endpoint:)`
 
 ```swift
 public init(userName: String = "iOS User",
-            userID: String,
-            roomID: String,
+            userID: String = UUID().uuidString,
+            roomID: String? = nil,
             authToken: String,
             shouldSkipPIIEvents: Bool = false,
             metaData: String? = nil,

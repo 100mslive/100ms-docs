@@ -1,8 +1,6 @@
----
-title: HMSRoom
----
-
 **CLASS**
+
+# `HMSRoom`
 
 ```swift
 @objcMembers public class HMSRoom: NSObject
@@ -11,27 +9,44 @@ title: HMSRoom
 A room represents a real-time audio, video session, the basic building block of the 100ms SDK
 
 ## Properties
-
-### id
+### `name`
 
 ```swift
-public let id: String
+public internal(set) var name: String?
 ```
 
-### name
+### `roomID`
 
 ```swift
-public let name: String
+public internal(set) var roomID: String?
 ```
 
-### metaData
+### `metaData`
 
 ```swift
-public let metaData: String?
+public internal(set) var metaData: String?
 ```
 
-### peers
+### `peers`
 
 ```swift
-public var peers = [HMSPeer]()
+public internal(set) var peers = [HMSPeer]()
+```
+
+### `browserRecordingState`
+
+```swift
+public internal(set) var browserRecordingState: HMSBrowserRecordingState
+```
+
+### `serverRecordingState`
+
+```swift
+public internal(set) var serverRecordingState: HMSServerRecordingState
+```
+
+### `rtmpStreamingState`
+
+```swift
+public internal(set) var rtmpStreamingState: HMSRTMPStreamingState
 ```

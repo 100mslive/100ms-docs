@@ -1,8 +1,6 @@
----
-title: HMSPeer
----
-
 **CLASS**
+
+# `HMSPeer`
 
 ```swift
 @objcMembers public class HMSPeer: NSObject
@@ -11,57 +9,56 @@ title: HMSPeer
 A peer represents all participants connected to a room. Peers can be "local" or "remote"
 
 ## Properties
-
-### peerID
+### `peerID`
 
 ```swift
 public let peerID: String
 ```
 
-### name
-
-```swift
-public var name: String
-```
-
-### isLocal
-
-```swift
-public let isLocal: Bool
-```
-
-### role
-
-```swift
-public var role: HMSRole?
-```
-
-### customerUserID
+### `customerUserID`
 
 ```swift
 public let customerUserID: String?
 ```
 
-### customerDescription
+### `isLocal`
 
 ```swift
-public var customerDescription: String?
+public let isLocal: Bool
 ```
 
-### audioTrack
+### `name`
 
 ```swift
-public var audioTrack: HMSAudioTrack?
+public internal(set) var name: String
 ```
 
-### videoTrack
+### `role`
 
 ```swift
-public var videoTrack: HMSVideoTrack?
+public internal(set) var role: HMSRole?
 ```
 
-### auxiliaryTracks
+### `customerDescription`
 
 ```swift
-public var auxiliaryTracks: [HMSTrack]?
+public internal(set) var customerDescription: String?
+```
+
+### `audioTrack`
+
+```swift
+public internal(set) var audioTrack: HMSAudioTrack?
+```
+
+### `videoTrack`
+
+```swift
+public internal(set) var videoTrack: HMSVideoTrack?
+```
+
+### `auxiliaryTracks`
+
+```swift
+public private(set) var auxiliaryTracks: [HMSTrack]?
 ```
