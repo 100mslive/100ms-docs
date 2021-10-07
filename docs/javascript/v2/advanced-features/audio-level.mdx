@@ -6,22 +6,27 @@ nav: 5.01
 ![Show Audio Level](/guides/audio-levels.png)
 
 You can also show audio levels in your UI corresponding to every peer so it's easier to see who is speaking currently.
-You can retrieve the speaker object for any peer which will contain peerID,
-trackID and their audioLevel using `selectSpeakerByPeerID` selector.
+You can retrieve all the speaker object which will contain peerID,
+trackID and their audioLevel using `selectSpeakers` selector. You can fetch audio level for a particular peer using `selectPeerAudioByID` 
+and for a particular track using `selectTrackAudioByID` selector.
 
 You can also fetch the current active speaker using the `selectDominantSpeaker` selector.
 
 ```js
 import {
-  selectSpeakerByPeerID,
+  selectPeerAudioByID,
   selectDominantSpeaker,
+  selectSpeakers,
 } from '@100mslive/hms-video-store';
 
-function updateAudioLevel(speaker) {
-    console.log(`audio level for peer - ${speaker.peerID}, track - ${speaker.trackID} is ${speaker.audioLevel}`)
+const peerId = "..";
+function updateAudioLevel(audioLevel) {
+    console.log(`audio level for peer - ${peerID} is ${speaker.audioLevel}`)
 }
 
-hmsStore.subscribe(updateAudioLevel, selectSpeakerByPeerID('<Peer ID>'));
+hmsStore.subscribe(updateAudioLevel, selectPeerAudioByID(peerId));
+
+console.log("all speakers", hmsStore.getState(selectSpeakers));
 
 function activeSpeaker(peer, prevPeer) {
     console.log(`previous active speaker - ${prevPeer.name} with role - ${prevPeer.roleName}`)
