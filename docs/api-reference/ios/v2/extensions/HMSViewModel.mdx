@@ -1,41 +1,48 @@
+---
+title: HMSViewModel
+nav: 65
+---
+
 **EXTENSION**
 
-# `HMSViewModel`
 ```swift
 extension HMSViewModel: Hashable
 ```
 
 ## Methods
-### `hash(into:)`
+
+### hash(into:)
 
 ```swift
 public func hash(into hasher: inout Hasher)
 ```
 
 Use `identifier` to find a unique view model object
-- Parameter hasher: the hasher object
+
+-   Parameter hasher: the hasher object
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
+| Name   | Description       |
+| ------ | ----------------- |
 | hasher | the hasher object |
 
-### `==(_:_:)`
+### ==(_:_:)
 
 ```swift
 public static func == (lhs: HMSViewModel, rhs: HMSViewModel) -> Bool
 ```
 
 resolves comparing of 2 view model objects by differentiating based on unique `identifier`
-- Parameters:
-  - lhs: the first view model to compare
-  - rhs: the second view model to compare
-- Returns: a Boolean stating whether compared view model objects are same or different
+
+-   Parameters:
+    -   lhs: the first view model to compare
+    -   rhs: the second view model to compare
+-   Returns: a Boolean stating whether compared view model objects are same or different
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
-| lhs | the first view model to compare |
-| rhs | the second view model to compare |
+| Name | Description                      |
+| ---- | -------------------------------- |
+| lhs  | the first view model to compare  |
+| rhs  | the second view model to compare |

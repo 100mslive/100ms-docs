@@ -1,27 +1,25 @@
-**CLASS**
+---
+title: HMSSDK
+nav: 29
+---
 
-# `HMSSDK`
+**CLASS**
 
 ```swift
 @objcMembers public class HMSSDK: NSObject
 ```
 
 The public interface of 100ms SDK. Create an instance of HMSSDK to start using the SDK.
-
 **Key Concepts**
-
 **Room** - A room represents a real-time audio, video session, the basic building block of the 100mslive Video SDK
-
 **Track** - A track represents either the audio or video that makes up a stream
-
 **Peer** - A peer represents all participants connected to a room. Peers can be "local" or "remote"
-
 **Broadcast** - A local peer can send any message/data to all remote peers in the room
-
 HMSSDK has other methods which the client app can use to get more info about the Room, Peer and Tracks
 
 ## Properties
-### `localPeer`
+
+### localPeer
 
 ```swift
 public var localPeer: HMSLocalPeer?
@@ -29,7 +27,7 @@ public var localPeer: HMSLocalPeer?
 
 Returns the local peer, which contains the local tracks.
 
-### `remotePeers`
+### remotePeers
 
 ```swift
 public var remotePeers: [HMSRemotePeer]?
@@ -37,7 +35,7 @@ public var remotePeers: [HMSRemotePeer]?
 
 Returns all remote peers in the room.
 
-### `roles`
+### roles
 
 ```swift
 public var roles: [HMSRole]
@@ -45,7 +43,7 @@ public var roles: [HMSRole]
 
 Returns all roles in the room.
 
-### `room`
+### room
 
 ```swift
 public var room: HMSRoom?
@@ -53,7 +51,7 @@ public var room: HMSRoom?
 
 Returns the room which was joined.
 
-### `trackSettings`
+### trackSettings
 
 ```swift
 public var trackSettings: HMSTrackSettings = HMSTrackSettings()
@@ -61,7 +59,7 @@ public var trackSettings: HMSTrackSettings = HMSTrackSettings()
 
 Use to override track settings coming from role policy
 
-### `analyticsLevel`
+### analyticsLevel
 
 ```swift
 public var analyticsLevel: HMSAnalyticsEventLevel = .error
@@ -69,7 +67,7 @@ public var analyticsLevel: HMSAnalyticsEventLevel = .error
 
 Sets the verbosity of analytics events
 
-### `logger`
+### logger
 
 ```swift
 public weak var logger: HMSLogger?
@@ -78,59 +76,63 @@ public weak var logger: HMSLogger?
 Sets the logger instance to use for piping logs
 
 ## Methods
-### `build(block:)`
+
+### build(block:)
 
 ```swift
 public static func build(block: ((HMSSDK) -> Void)? = nil) -> HMSSDK
 ```
 
 this will instantiate an HMSSDK object
-- Parameter block: pass a block with different settings as required
-- Returns: an instance of HMSSDK object
+
+-   Parameter block: pass a block with different settings as required
+-   Returns: an instance of HMSSDK object
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
+| Name  | Description                                      |
+| ----- | ------------------------------------------------ |
 | block | pass a block with different settings as required |
 
-### `preview(config:delegate:)`
+### preview(config:delegate:)
 
 ```swift
 public func preview(config: HMSConfig, delegate: HMSPreviewListener)
 ```
 
 Begin a preview so that the local peer's audio and video can be displayed to them before they join the room.
-- Parameters:
-  - config: The config object instance which contains joining information.
-  - delegate: The update listener object which will receive all callbacks.
+
+-   Parameters:
+    -   config: The config object instance which contains joining information.
+    -   delegate: The update listener object which will receive all callbacks.
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
-| config | The config object instance which contains joining information. |
-| delegate | The update listener object which will receive all callbacks. |
+| Name     | Description                                                    |
+| -------- | -------------------------------------------------------------- |
+| config   | The config object instance which contains joining information. |
+| delegate | The update listener object which will receive all callbacks.   |
 
-### `preview(role:completion:)`
+### preview(role:completion:)
 
 ```swift
 public func preview(role: HMSRole, completion: (([HMSTrack]?, HMSError?) -> Void))
 ```
 
 Call this preview API any time after joining in case you need to show a preview for a certain role. i.e before doing/accepting a role change request.
-- Parameters:
-  - role: The role that would be used for checking which tracks would be required.
-  - completion: The completion handler to be invoked when tracks are fetched or in case of an error.
+
+-   Parameters:
+    -   role: The role that would be used for checking which tracks would be required.
+    -   completion: The completion handler to be invoked when tracks are fetched or in case of an error.
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
-| role | The role that would be used for checking which tracks would be required. |
+| Name       | Description                                                                          |
+| ---------- | ------------------------------------------------------------------------------------ |
+| role       | The role that would be used for checking which tracks would be required.             |
 | completion | The completion handler to be invoked when tracks are fetched or in case of an error. |
 
-### `cancelPreview()`
+### cancelPreview()
 
 ```swift
 public func cancelPreview()
@@ -138,147 +140,154 @@ public func cancelPreview()
 
 Call this API in case the tracks obtained via preview(role:) API are no longer needed. There is no need to call this if role change happened. Call this if user has decided not to change role to release camera/mic.
 
-### `join(config:delegate:)`
+### join(config:delegate:)
 
 ```swift
 public func join(config: HMSConfig, delegate: HMSUpdateListener)
 ```
 
 Join the room.
-- Parameters:
-  - config: The config object instance which contains joining information.
-  - delegate: The update listener object which will receive all callbacks,
+
+-   Parameters:
+    -   config: The config object instance which contains joining information.
+    -   delegate: The update listener object which will receive all callbacks,
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
-| config | The config object instance which contains joining information. |
-| delegate | The update listener object which will receive all callbacks, |
+| Name     | Description                                                    |
+| -------- | -------------------------------------------------------------- |
+| config   | The config object instance which contains joining information. |
+| delegate | The update listener object which will receive all callbacks,   |
 
-### `leave(_:)`
+### leave(\_:)
 
 ```swift
 public func leave(_ completion: ((Bool, HMSError?) -> Void)? = nil)
 ```
 
 Call the `leave` method on the HMSSDK instance to leave the current room.
-- Parameters:
-  - completion: The completion handler to be invoked when the request succeeds or fails with an error.
+
+-   Parameters:
+    -   completion: The completion handler to be invoked when the request succeeds or fails with an error.
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
+| Name       | Description                                                                            |
+| ---------- | -------------------------------------------------------------------------------------- |
 | completion | The completion handler to be invoked when the request succeeds or fails with an error. |
 
-### `sendBroadcastMessage(type:message:completion:)`
+### sendBroadcastMessage(type:message:completion:)
 
 ```swift
 public func sendBroadcastMessage(type: String = "chat", message: String, completion: ((HMSMessage?, HMSError?) -> Void)? = nil)
 ```
 
 Sends a message to everyone in the room.
-- Parameters:
-  - type: The type of message
-  - message: Content of the message.
-  - completion: The completion handler to be invoked when message was sent, or when error happened during sending
+
+-   Parameters:
+    -   type: The type of message
+    -   message: Content of the message.
+    -   completion: The completion handler to be invoked when message was sent, or when error happened during sending
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
-| type | The type of message |
-| message | Content of the message. |
+| Name       | Description                                                                                       |
+| ---------- | ------------------------------------------------------------------------------------------------- |
+| type       | The type of message                                                                               |
+| message    | Content of the message.                                                                           |
 | completion | The completion handler to be invoked when message was sent, or when error happened during sending |
 
-### `sendGroupMessage(type:message:roles:completion:)`
+### sendGroupMessage(type:message:roles:completion:)
 
 ```swift
 public func sendGroupMessage(type: String = "chat", message: String, roles: [HMSRole], completion: ((HMSMessage?, HMSError?) -> Void)? = nil)
 ```
 
 Sends a message to the specified roles defined. All peers that belong to the specified roles will receive the message.
-- Parameters:
-  - type: The type of message
-  - message: Content of the message.
-  - roles: The list of roles to whom this message is directed.
-  - completion: The completion handler to be invoked when message was sent, or when error happened during sending
+
+-   Parameters:
+    -   type: The type of message
+    -   message: Content of the message.
+    -   roles: The list of roles to whom this message is directed.
+    -   completion: The completion handler to be invoked when message was sent, or when error happened during sending
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
-| type | The type of message |
-| message | Content of the message. |
-| roles | The list of roles to whom this message is directed. |
+| Name       | Description                                                                                       |
+| ---------- | ------------------------------------------------------------------------------------------------- |
+| type       | The type of message                                                                               |
+| message    | Content of the message.                                                                           |
+| roles      | The list of roles to whom this message is directed.                                               |
 | completion | The completion handler to be invoked when message was sent, or when error happened during sending |
 
-### `sendDirectMessage(type:message:peer:completion:)`
+### sendDirectMessage(type:message:peer:completion:)
 
 ```swift
 public func sendDirectMessage(type: String = "chat", message: String, peer: HMSPeer, completion: ((HMSMessage?, HMSError?) -> Void)? = nil)
 ```
 
 Sends a direct message to the specified peer only.
-- Parameters:
-  - type: The type of message.
-  - message: Content of the message.
-  - peer: The peer to whom this message is directed.
-  - completion: The completion handler to be invoked when message was sent, or when error happened during sending
+
+-   Parameters:
+    -   type: The type of message.
+    -   message: Content of the message.
+    -   peer: The peer to whom this message is directed.
+    -   completion: The completion handler to be invoked when message was sent, or when error happened during sending
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
-| type | The type of message. |
-| message | Content of the message. |
-| peer | The peer to whom this message is directed. |
+| Name       | Description                                                                                       |
+| ---------- | ------------------------------------------------------------------------------------------------- |
+| type       | The type of message.                                                                              |
+| message    | Content of the message.                                                                           |
+| peer       | The peer to whom this message is directed.                                                        |
 | completion | The completion handler to be invoked when message was sent, or when error happened during sending |
 
-### `changeRole(for:to:force:completion:)`
+### changeRole(for:to:force:completion:)
 
 ```swift
 public func changeRole(for peer: HMSPeer, to role: HMSRole, force: Bool = false, completion: ((Bool, HMSError?) -> Void)? = nil)
 ```
 
 Requests a change of role for specified peer.
-- Parameters:
-  - peer: The peer whose role should be changed.
-  - role: The target role.
-  - force: False if the peer should be prompted to accept the new role. true if their role should be changed without a prompt.
-  - completion: The completion handler to be invoked when the request succeeds or fails with an error.
+
+-   Parameters:
+    -   peer: The peer whose role should be changed.
+    -   role: The target role.
+    -   force: False if the peer should be prompted to accept the new role. true if their role should be changed without a prompt.
+    -   completion: The completion handler to be invoked when the request succeeds or fails with an error.
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
-| peer | The peer whose role should be changed. |
-| role | The target role. |
-| force | False if the peer should be prompted to accept the new role. true if their role should be changed without a prompt. |
-| completion | The completion handler to be invoked when the request succeeds or fails with an error. |
+| Name       | Description                                                                                                         |
+| ---------- | ------------------------------------------------------------------------------------------------------------------- |
+| peer       | The peer whose role should be changed.                                                                              |
+| role       | The target role.                                                                                                    |
+| force      | False if the peer should be prompted to accept the new role. true if their role should be changed without a prompt. |
+| completion | The completion handler to be invoked when the request succeeds or fails with an error.                              |
 
-### `changeRolesOfAllPeers(to:limitToRoles:completion:)`
+### changeRolesOfAllPeers(to:limitToRoles:completion:)
 
 ```swift
 public func changeRolesOfAllPeers(to role: HMSRole, limitToRoles:[HMSRole]? = nil, completion: ((Bool, HMSError?) -> Void)? = nil)
 ```
 
 Requests a change of role for all peers except for the local peer.
-- Parameters:
-  - role: The target role.
-  - limitToRoles: If specified, only peers currently belonging to roles in the array will be changed to the new role.
-  - completion: The completion handler to be invoked when the request succeeds or fails with an error.
+
+-   Parameters:
+    -   role: The target role.
+    -   limitToRoles: If specified, only peers currently belonging to roles in the array will be changed to the new role.
+    -   completion: The completion handler to be invoked when the request succeeds or fails with an error.
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
-| role | The target role. |
+| Name         | Description                                                                                         |
+| ------------ | --------------------------------------------------------------------------------------------------- |
+| role         | The target role.                                                                                    |
 | limitToRoles | If specified, only peers currently belonging to roles in the array will be changed to the new role. |
-| completion | The completion handler to be invoked when the request succeeds or fails with an error. |
+| completion   | The completion handler to be invoked when the request succeeds or fails with an error.              |
 
-### `accept(changeRole:completion:)`
+### accept(changeRole:completion:)
 
 ```swift
 public func accept(changeRole request: HMSRoleChangeRequest, completion: ((Bool, HMSError?) -> Void)? = nil)
@@ -286,38 +295,40 @@ public func accept(changeRole request: HMSRoleChangeRequest, completion: ((Bool,
 
 Call to accept the role change request sent to the current peer.
 Once this method is called, the peer's role will be changed to the requested one.
-- Parameters:
-  - request The request that the SDK had sent to this peer (in HMSUpdateListener.onRoleChangeRequest).
-  - completion: The completion handler to be invoked when the request succeeds or fails with an error.
+
+-   Parameters:
+    -   request The request that the SDK had sent to this peer (in HMSUpdateListener.onRoleChangeRequest).
+    -   completion: The completion handler to be invoked when the request succeeds or fails with an error.
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
-| request The request that the SDK had sent to this peer (in HMSUpdateListener.onRoleChangeRequest). |  |
-| completion | The completion handler to be invoked when the request succeeds or fails with an error. |
+| Name                                                                                               | Description                                                                            |
+| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| request The request that the SDK had sent to this peer (in HMSUpdateListener.onRoleChangeRequest). |                                                                                        |
+| completion                                                                                         | The completion handler to be invoked when the request succeeds or fails with an error. |
 
-### `changeTrackState(for:mute:completion:)`
+### changeTrackState(for:mute:completion:)
 
 ```swift
 public func changeTrackState(for remoteTrack: HMSTrack, mute: Bool, completion: ((Bool, HMSError?) -> Void)? = nil)
 ```
 
 To change the mute status of a remote HMSTrack.
-- Parameters:
-  - remoteTrack: The HMSTrack whose mute status needs to be changed.
-  - mute: True if the track needs to be muted, false otherwise.
-  - completion: The completion handler to be invoked when the request succeeds or fails with an error.
+
+-   Parameters:
+    -   remoteTrack: The HMSTrack whose mute status needs to be changed.
+    -   mute: True if the track needs to be muted, false otherwise.
+    -   completion: The completion handler to be invoked when the request succeeds or fails with an error.
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
-| remoteTrack | The HMSTrack whose mute status needs to be changed. |
-| mute | True if the track needs to be muted, false otherwise. |
-| completion | The completion handler to be invoked when the request succeeds or fails with an error. |
+| Name        | Description                                                                            |
+| ----------- | -------------------------------------------------------------------------------------- |
+| remoteTrack | The HMSTrack whose mute status needs to be changed.                                    |
+| mute        | True if the track needs to be muted, false otherwise.                                  |
+| completion  | The completion handler to be invoked when the request succeeds or fails with an error. |
 
-### `changeTrackState(mute:for:source:roles:completion:)`
+### changeTrackState(mute:for:source:roles:completion:)
 
 ```swift
 public func changeTrackState(mute: Bool, for trackKind: HMSTrackKind? = nil, source: String? = nil, roles: [HMSRole]? = nil, completion: ((Bool, HMSError?) -> Void)? = nil)
@@ -325,134 +336,147 @@ public func changeTrackState(mute: Bool, for trackKind: HMSTrackKind? = nil, sou
 
 To change the mute status of multiple tracks of specific kinds for every peer or for peers with certain roles.
 Call changeTrackState(mute: true) to mute everybody's audio and video.
-- Parameters:
-  - mute: True if the track needs to be muted, false otherwise.
-  - trackKind: Pass an array of HMSTrackKind for change to apply to specific kind of tracks. Passing nil means all track kinds will be changed.
-  - source: Pass a HMSTrackSource for change to apply to specific track source. Passing nil means all track sources will be changed.
-  - roles: Pass an array of HMSRole for change to apply to specific roles. Passing nil means all roles will be changed.
-  - completion: The completion handler to be invoked when the request succeeds or fails with an error.
+
+-   Parameters:
+    -   mute: True if the track needs to be muted, false otherwise.
+    -   trackKind: Pass an array of HMSTrackKind for change to apply to specific kind of tracks. Passing nil means all track kinds will be changed.
+    -   source: Pass a HMSTrackSource for change to apply to specific track source. Passing nil means all track sources will be changed.
+    -   roles: Pass an array of HMSRole for change to apply to specific roles. Passing nil means all roles will be changed.
+    -   completion: The completion handler to be invoked when the request succeeds or fails with an error.
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
-| mute | True if the track needs to be muted, false otherwise. |
-| trackKind | Pass an array of HMSTrackKind for change to apply to specific kind of tracks. Passing nil means all track kinds will be changed. |
-| source | Pass a HMSTrackSource for change to apply to specific track source. Passing nil means all track sources will be changed. |
-| roles | Pass an array of HMSRole for change to apply to specific roles. Passing nil means all roles will be changed. |
-| completion | The completion handler to be invoked when the request succeeds or fails with an error. |
+| Name       | Description                                                                                                                      |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| mute       | True if the track needs to be muted, false otherwise.                                                                            |
+| trackKind  | Pass an array of HMSTrackKind for change to apply to specific kind of tracks. Passing nil means all track kinds will be changed. |
+| source     | Pass a HMSTrackSource for change to apply to specific track source. Passing nil means all track sources will be changed.         |
+| roles      | Pass an array of HMSRole for change to apply to specific roles. Passing nil means all roles will be changed.                     |
+| completion | The completion handler to be invoked when the request succeeds or fails with an error.                                           |
 
-### `removePeer(_:reason:completion:)`
+### removePeer(\_:reason:completion:)
 
 ```swift
 public func removePeer(_ peer: HMSPeer, reason: String, completion: ((Bool, HMSError?) -> Void)? = nil)
 ```
 
 Removes the specified peer from the current room.
-- Parameters:
-  - peer: The peer to remove
-  - reason: The reason for removing can be passed on to the peer.
-  - completion: The completion handler to be invoked when the request succeeds or fails with an error.
+
+-   Parameters:
+    -   peer: The peer to remove
+    -   reason: The reason for removing can be passed on to the peer.
+    -   completion: The completion handler to be invoked when the request succeeds or fails with an error.
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
-| peer | The peer to remove |
-| reason | The reason for removing can be passed on to the peer. |
+| Name       | Description                                                                            |
+| ---------- | -------------------------------------------------------------------------------------- |
+| peer       | The peer to remove                                                                     |
+| reason     | The reason for removing can be passed on to the peer.                                  |
 | completion | The completion handler to be invoked when the request succeeds or fails with an error. |
 
-### `endRoom(lock:reason:completion:)`
+### endRoom(lock:reason:completion:)
 
 ```swift
 public func endRoom(lock: Bool, reason: String, completion: ((Bool, HMSError?) -> Void)? = nil)
 ```
 
 End the room and make all participants leave.
-- Parameters:
-  - lock: Whether rejoining the room should be disabled till the room is unlocked.
-  - reason: The reason for ending the room can be passed on to other peers.
-  - completion: The completion handler to be invoked when the request succeeds or fails with an error.
+
+-   Parameters:
+    -   lock: Whether rejoining the room should be disabled till the room is unlocked.
+    -   reason: The reason for ending the room can be passed on to other peers.
+    -   completion: The completion handler to be invoked when the request succeeds or fails with an error.
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
-| lock | Whether rejoining the room should be disabled till the room is unlocked. |
-| reason | The reason for ending the room can be passed on to other peers. |
+| Name       | Description                                                                            |
+| ---------- | -------------------------------------------------------------------------------------- |
+| lock       | Whether rejoining the room should be disabled till the room is unlocked.               |
+| reason     | The reason for ending the room can be passed on to other peers.                        |
 | completion | The completion handler to be invoked when the request succeeds or fails with an error. |
 
-### `startRTMPOrRecording(config:completion:)`
+### startRTMPOrRecording(config:completion:)
 
 ```swift
 public func startRTMPOrRecording(config: HMSRTMPConfig, completion: ((Bool, HMSError?) -> Void)? = nil)
 ```
 
 Start RTMP stream and/or room recording.
-- Parameters:
-  - config: RTMP/Recording parameters
-  - completion: The completion handler to be invoked when the request succeeds or fails with an error.
+
+-   Parameters:
+    -   config: RTMP/Recording parameters
+    -   completion: The completion handler to be invoked when the request succeeds or fails with an error.
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
-| config | RTMP/Recording parameters |
+| Name       | Description                                                                            |
+| ---------- | -------------------------------------------------------------------------------------- |
+| config     | RTMP/Recording parameters                                                              |
 | completion | The completion handler to be invoked when the request succeeds or fails with an error. |
 
-### `stopRTMPAndRecording(completion:)`
+### stopRTMPAndRecording(completion:)
 
 ```swift
 public func stopRTMPAndRecording(completion: ((Bool, HMSError?) -> Void)? = nil)
 ```
 
 Stop RTMP stream and room recording.
-- Parameters:
-  - completion: The completion handler to be invoked when the request succeeds or fails with an error.
+
+-   Parameters:
+    -   completion: The completion handler to be invoked when the request succeeds or fails with an error.
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
+| Name       | Description                                                                            |
+| ---------- | -------------------------------------------------------------------------------------- |
 | completion | The completion handler to be invoked when the request succeeds or fails with an error. |
 
-### `add(delegate:)`
+### add(delegate:)
 
 ```swift
 public func add(delegate: HMSUpdateListener)
 ```
 
 Adds another listener of SDK updates
-- Parameter delegate: the update listener object which will receive all callbacks
+
+-   Parameter delegate: the update listener object which will receive all callbacks
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
+| Name     | Description                                                 |
+| -------- | ----------------------------------------------------------- |
 | delegate | the update listener object which will receive all callbacks |
 
-### `remove(delegate:)`
+### remove(delegate:)
 
 ```swift
 public func remove(delegate: HMSUpdateListener)
 ```
 
 Removes the listener of SDK updates
-- Parameter delegate: the update listener to remove
+
+-   Parameter delegate: the update listener to remove
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
+| Name     | Description                   |
+| -------- | ----------------------------- |
 | delegate | the update listener to remove |
 
-### `prepareForExternalAudioPlayback()`
+### prepareForExternalAudioPlayback()
 
 ```swift
 public func prepareForExternalAudioPlayback()
 ```
 
-### `resumeAfterExternalAudioPlayback()`
+### resumeAfterExternalAudioPlayback()
+
+```swift
+public func resumeAfterExternalAudioPlayback()
+```
+
+# resumeAfterExternalAudioPlayback()
 
 ```swift
 public func resumeAfterExternalAudioPlayback()

@@ -1,6 +1,9 @@
-**PROTOCOL**
+---
+title: HMSUpdateListener
+nav: 70
+---
 
-# `HMSUpdateListener`
+**PROTOCOL**
 
 ```swift
 @objc public protocol HMSUpdateListener: AnyObject
@@ -10,7 +13,8 @@
 These updates can be used to render the video on screen or to display other info regarding the room.
 
 ## Methods
-### `on(join:)`
+
+### on(join:)
 
 ```swift
 @objc(onJoin:) func on(join room: HMSRoom)
@@ -18,33 +22,35 @@ These updates can be used to render the video on screen or to display other info
 
 This will be called on a successful JOIN of the room by the user
 This is the point where applications can stop showing its loading state
-- Parameter room: the room which was joined
+
+-   Parameter room: the room which was joined
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
+| Name | Description               |
+| ---- | ------------------------- |
 | room | the room which was joined |
 
-### `on(room:update:)`
+### on(room:update:)
 
 ```swift
 @objc(onRoom:update:) func on(room: HMSRoom, update: HMSRoomUpdate)
 ```
 
 This is called when there is a change in any property of the Room
-- Parameters:
-  - room: the room which was joined
-  - update: the triggered update type. Should be used to perform different UI Actions
+
+-   Parameters:
+    -   room: the room which was joined
+    -   update: the triggered update type. Should be used to perform different UI Actions
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
-| room | the room which was joined |
+| Name   | Description                                                               |
+| ------ | ------------------------------------------------------------------------- |
+| room   | the room which was joined                                                 |
 | update | the triggered update type. Should be used to perform different UI Actions |
 
-### `on(peer:update:)`
+### on(peer:update:)
 
 ```swift
 @objc(onPeer:update:) func on(peer: HMSPeer, update: HMSPeerUpdate)
@@ -53,18 +59,19 @@ This is called when there is a change in any property of the Room
 This will be called whenever there is an update on an existing peer
 or a new peer got added/existing peer is removed.
 This callback can be used to keep a track of all the peers in the room
-- Parameters:
-  - peer: the peer who joined/left or was updated
-  - update: the triggered update type. Should be used to perform different UI Actions
+
+-   Parameters:
+    -   peer: the peer who joined/left or was updated
+    -   update: the triggered update type. Should be used to perform different UI Actions
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
-| peer | the peer who joined/left or was updated |
+| Name   | Description                                                               |
+| ------ | ------------------------------------------------------------------------- |
+| peer   | the peer who joined/left or was updated                                   |
 | update | the triggered update type. Should be used to perform different UI Actions |
 
-### `on(track:update:for:)`
+### on(track:update:for:)
 
 ```swift
 @objc(onTrack:update:peer:) func on(track: HMSTrack, update: HMSTrackUpdate, for peer: HMSPeer)
@@ -73,20 +80,21 @@ This callback can be used to keep a track of all the peers in the room
 This is called when there are updates on an existing track
 or a new track got added/existing track is removed
 This callback can be used to render the video on screen whenever a track gets added
-- Parameters:
-  - track: the track which was added, removed or updated
-  - update: the triggered update type
-  - peer: the peer for which track was added, removed or updated
+
+-   Parameters:
+    -   track: the track which was added, removed or updated
+    -   update: the triggered update type
+    -   peer: the peer for which track was added, removed or updated
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
-| track | the track which was added, removed or updated |
-| update | the triggered update type |
-| peer | the peer for which track was added, removed or updated |
+| Name   | Description                                            |
+| ------ | ------------------------------------------------------ |
+| track  | the track which was added, removed or updated          |
+| update | the triggered update type                              |
+| peer   | the peer for which track was added, removed or updated |
 
-### `on(error:)`
+### on(error:)
 
 ```swift
 @objc(onError:) func on(error: HMSError)
@@ -94,15 +102,16 @@ This callback can be used to render the video on screen whenever a track gets ad
 
 This will be called when there is an error in the system
 and SDK has already retried to fix the error
-- Parameter error: the error that occured
+
+-   Parameter error: the error that occured
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
+| Name  | Description            |
+| ----- | ---------------------- |
 | error | the error that occured |
 
-### `on(message:)`
+### on(message:)
 
 ```swift
 @objc(onMessage:) func on(message: HMSMessage)
@@ -110,60 +119,64 @@ and SDK has already retried to fix the error
 
 This is called when there is a new broadcast message from any other peer in the room
 This can be used to implement chat is the room
-- Parameter message: the received broadcast message
+
+-   Parameter message: the received broadcast message
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
+| Name    | Description                    |
+| ------- | ------------------------------ |
 | message | the received broadcast message |
 
-### `on(roleChangeRequest:)`
+### on(roleChangeRequest:)
 
 ```swift
 @objc(roleChangeRequest:) optional func on(roleChangeRequest: HMSRoleChangeRequest)
 ```
 
 This is called when a role change request arrives
-- Parameter roleChangeRequest: the request for role change info
+
+-   Parameter roleChangeRequest: the request for role change info
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
+| Name              | Description                      |
+| ----------------- | -------------------------------- |
 | roleChangeRequest | the request for role change info |
 
-### `on(changeTrackStateRequest:)`
+### on(changeTrackStateRequest:)
 
 ```swift
 @objc(changeTrackStateRequest:) optional func on(changeTrackStateRequest: HMSChangeTrackStateRequest)
 ```
 
 This is called when a change track state request arrives
-- Parameter changeTrackStateRequest: the request for changing track state
+
+-   Parameter changeTrackStateRequest: the request for changing track state
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
+| Name                    | Description                          |
+| ----------------------- | ------------------------------------ |
 | changeTrackStateRequest | the request for changing track state |
 
-### `on(removedFromRoom:)`
+### on(removedFromRoom:)
 
 ```swift
 @objc(removedFromRoom:) optional func on(removedFromRoom notification: HMSRemovedFromRoomNotification)
 ```
 
 This is called when someone removes the local peer for the current room
-- Parameter notification: the notification containing reason for removing and the initiating peer
+
+-   Parameter notification: the notification containing reason for removing and the initiating peer
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
+| Name         | Description                                                             |
+| ------------ | ----------------------------------------------------------------------- |
 | notification | the notification containing reason for removing and the initiating peer |
 
-### `on(updated:)`
+### on(updated:)
 
 ```swift
 @objc(onUpdatedSpeakers:) func on(updated speakers: [HMSSpeaker])
@@ -172,22 +185,21 @@ This is called when someone removes the local peer for the current room
 This is called every 1 second with list of active speakers
 
 ## A HMSSpeaker object contains -
-   - peer: the peer who is speaking
-   - track: the track which is emitting audio
-   - level: a number within range 1-100 indicating the audio volume
 
-A peer who is not present in the list indicates that the peer is not speaking
-
-This can be used to highlight currently speaking peers in the room
-- Parameter speakers: the list of speakers
+-   peer: the peer who is speaking
+-   track: the track which is emitting audio
+-   level: a number within range 1-100 indicating the audio volume
+    A peer who is not present in the list indicates that the peer is not speaking
+    This can be used to highlight currently speaking peers in the room
+-   Parameter speakers: the list of speakers
 
 #### Parameters
 
-| Name | Description |
-| ---- | ----------- |
+| Name     | Description          |
+| -------- | -------------------- |
 | speakers | the list of speakers |
 
-### `onReconnecting()`
+### onReconnecting()
 
 ```swift
 @objc func onReconnecting()
@@ -195,10 +207,11 @@ This can be used to highlight currently speaking peers in the room
 
 This is called when SDK detects a network issue and is trying to recover
 
-### `onReconnected()`
+### onReconnected()
 
 ```swift
 @objc func onReconnected()
 ```
 
 This is called when SDK successfully recovered from a network issue
+a network issue

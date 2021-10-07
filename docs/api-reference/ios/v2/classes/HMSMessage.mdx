@@ -1,56 +1,61 @@
-**CLASS**
+---
+title: HMSMessage
+nav: 14
+---
 
-# `HMSMessage`
+**CLASS**
 
 ```swift
 @objcMembers public class HMSMessage: NSObject
 ```
 
 ## Properties
-### `message`
+
+### message
 
 ```swift
 public let message: String
 ```
 
-### `type`
+### type
 
 ```swift
 public let type: String
 ```
 
-### `sender`
+### sender
 
 ```swift
 public var sender: HMSPeer?
 ```
 
-### `recipient`
+### recipient
 
 ```swift
 public var recipient: HMSMessageRecipient
 ```
 
-### `time`
+### time
 
 ```swift
 public let time: Date
 ```
 
 ## Methods
-### `init(message:type:)`
+
+### init(message:type:)
 
 ```swift
 public init(message: String, type: String = "chat")
 ```
 
-### `init(message:type:peerRecipient:)`
+### init(message:type:peerRecipient:)
 
 ```swift
 public init(message: String, type: String = "chat", peerRecipient: HMSPeer)
 ```
 
-### `init(message:type:rolesRecipient:)`
+### init(message:type:rolesRecipient:)
 
 ```swift
 public init(message: String, type: String = "chat", rolesRecipient: [HMSRole])
