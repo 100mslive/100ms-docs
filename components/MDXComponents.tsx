@@ -7,6 +7,10 @@ import { Tabs, Tab } from './Tabs';
 import Code from './Code';
 import Note from './Note';
 import PostRequest from './PostRequest';
+import GetRequest from './GetRequest';
+
+import DeleteRequest from './DeleteRequest';
+
 import Response from './Response';
 import Codesandbox from './Codesandbox';
 import Text from './Text';
@@ -53,6 +57,8 @@ const LinkCustom = (props) => {
 const MDXComponents = {
     Response,
     PostRequest,
+    DeleteRequest,
+    GetRequest,
     Note,
     Image,
     blockquote: NoteCustom,
