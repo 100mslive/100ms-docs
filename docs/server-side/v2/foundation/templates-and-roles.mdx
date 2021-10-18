@@ -396,7 +396,7 @@ curl https://prod-policy.100ms.live/api/v1/templates/<id>/settings -H 'Authoriza
 | region <br/> | `string` | Region in which the room will be hosted by default ["in"/"us"/"eu"]. | No       |
 
 <GetRequest
-    title="Get Template API"
+    title="Get Templates API"
     desp="This endpoint is used to fetch a template. This API can be used to fetch a template. Instead of id, URL param name can be provided to fetch by name. Providing no URL params fetches all templates for the customer. You can provide start/limit params for pagination."
     url="https://prod-policy.100ms.live/api/v1/templates?id=<templateID>"
 />
@@ -472,12 +472,13 @@ curl https://prod-policy.100ms.live/api/v1/templates?id=<templateId> -H 'Authori
 
 #### URL Parameters
 
-| Name        | Type     | Description                                                                                                                        | Required |
-| :---------- | :------- | :--------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name <br/>  | `string` | Name of the template.                                                                                                              | No       |
-| id <br/>    | `string` | ID of the template.                                                                                                                | No       |
-| start <br/> | `string` | Returned dataset is sorted by decreasing order of IDs. Provide the ID of the last result set to start in reverse order from there. | No       |
-| limit <br/> | `int`    | Number of templates to return (max 20).                                                                                            | No       |
+| Name          | Type      | Description                                                                                                                        | Required |
+| :------------ | :-------- | :--------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| name <br/>    | `string`  | Name of the template.                                                                                                              | No       |
+| id <br/>      | `string`  | ID of the template.                                                                                                                | No       |
+| start <br/>   | `string`  | Returned dataset is sorted by decreasing order of IDs. Provide the ID of the last result set to start in reverse order from there. | No       |
+| limit <br/>   | `int`     | Number of templates to return (max 20).                                                                                            | No       |
+| default <br/> | `boolean` | Whether template is default or not.                                                                                                | No       |
 
 <GetRequest
     title="Get Role API"
