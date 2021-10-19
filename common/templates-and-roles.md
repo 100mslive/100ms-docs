@@ -9,13 +9,29 @@ Users can see or modify the templates by visiting [Templates](https://dashboard.
 
 ![Template](/docs/v2/template.png)
 
+## General Settings
+
+### Template ID
+
+ID of the template
+
+### Name
+
+Name of the template
+
+### Region
+
+This setting is used to determine the region where the rooms which are using this template will be hosted. Currently supported regions are `IN`, `US` and `EU`.
+
+### Default
+
+This flag indicates that whether this is the default template of customer. So if the customer doesn't specify any template while creating the room, this template will be used. At any time, customers will have only one default template.
+
 ## Roles
 
 Role is a collection of permissions that allows you to perform certain set of operations while being part of the room. It has the following attributes
 
-## General Settings
-
-### Name
+## Name
 
 Every role has a name that should be unique inside a template. This name will be used while generating app tokens and referencing inside a template.
 
@@ -37,13 +53,11 @@ Whether the role is allowed to do screen share or not
 
 ### Video quality
 
-Quality of the video track to be published by the role. Currently, 5 video qualities `720p`, `480p`, `360p`, `240p` and `120p` are predefined and the user can select one of these values. This option will be visible only if the **Can share video** is enabled.
-
-For 1:1 calls higher video qualities (`720p`, `480p`) can be used. For rooms with large number of participants (>5) it is recommended to use `360p` or `240p`.
+Quality of the video track which is going to be published by the role. Currently, 4 video qualities `720p`, `480p`, `360p` and `240p` are predefined and the user can select one out of these values. This option will be visible only if the **Can share video** is enabled.
 
 ### Screenshare quality
 
-Quality of the screen to be shared by the role. Currently, 2 video qualities `1080p` and `720p` are predefined and the user can select one of these values. This option will be visible only if the **Can share screen** is enabled.
+Quality of the screen which is going to be shared by the role. Currently, 2 video qualities `720p` and `1080p` are predefined and the user can select one out of these values. This option will be visible only if the **Can share screen** is enabled.
 
 ## Subscribe Strategies
 
