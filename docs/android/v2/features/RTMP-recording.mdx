@@ -9,7 +9,12 @@ Turn on RTMP streaming or recording!
 
 In 100ms, recording and streaming is usually achieved by having a bot join your room and stream what it sees and hears to a file (recording) or to an rtmp injest url (streaming).
 
-# Starting streaming / recording
+The topics covered in this doc are:
+1. [How to start streaming / recording.](#starting-streaming--recording)
+2. [How to stop streaming / recording.](#stopping-streaming--recording)
+3. [Checking the current status for streaming / recording.](#current-room-status)
+
+## Starting streaming / recording
 To start recording, streaming or both, create an instance of `HMSRecordingConfig`.
 
 `HMSRecordingConfig` takes the following:
@@ -67,7 +72,7 @@ hmsSdk.startRtmpOrRecording(hmsRecordingConfig, new HMSActionResultListener() {
 </Tab>
 
 
-# Stopping streaming / recording
+## Stopping streaming / recording
 
 To stop streaming AND recording. It is not currently possible to stop just one, whatever is running will be stopped.
 
@@ -113,3 +118,57 @@ hmsSdk.stopRtmpAndRecording(new HMSActionResultListener() {
 ```
 
 </Tab>
+
+## Current room status
+
+The current status for the room is always reflected in the HMSRoom object that is returned from the `HMSUpdateListener`.
+
+Here are the relevant properties inside the `HMSRoom` object which you can read to get the current recording/streaming status of the room.
+
+Each of them are objects which contain a boolean `running` which lets you know if it's active on the room right now and `error` which lets you know if there was an error.
+
+Apart from the rtmp stream and the browser recording, which are ones you can start and stop, there is also a serverRecording, which can be turned on for the room for archival purposes and which cannot currently be stopped if enabled for the room from the dashboard.
+
+1. **rtmpHMSRtmpStreamingState** an instance of `HMSRtmpStreamingState`, which looks like:
+
+```kotlin
+data class HMSRtmpStreamingState(
+    val running : Boolean,
+    val error : HMSException?
+)
+```
+
+This represents a livestream to one or more RTMP urls.
+
+2. **browserRecordingState** an instance of `HMSBrowserRecordingState`, which looks like:
+
+```kotlin
+data class HMSBrowserRecordingState(
+    val running : Boolean,
+    val error : HMSException?
+)
+```
+
+This represents the recording that can be requested to start.
+
+3. **serverRecordingState* an instance of `HMSServerRecordingState`, which looks like:
+
+```kotlin
+data class HMSServerRecordingState(
+    val running : Boolean,
+    val error : HMSException?
+)
+```
+
+This represents that the room was set to be recorded when it was created and all sessions within it will always be recorded for archival by the server.
+
+
+The room status should be checked in three places.
+
+1. In the `onJoin(room: HMSRoom)` callback in `HMSUpdateListener`
+    The properties mentioned above will be on the `HMSRoom` object.
+2. Whenever either of the start or stop recording functions is called, when their success or error callbacks are called, the values of the streaming and recording will be updated on the room object returned in onJoin.
+So saving an instance of the room received at that time is recommended.
+
+### Code sample
+Refer to the code example within the [100ms advanced sample app](https://github.com/100mslive/100ms-android/blob/c3e146fe1f46fe91dfb662c4512b34476f5080d3/app/src/main/java/live/hms/app2/ui/meeting/MeetingViewModel.kt#L417) for further information.
