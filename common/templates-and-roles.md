@@ -25,7 +25,7 @@ This setting is used to determine the region where the rooms which are using thi
 
 ### Default
 
-This flag indicates that whether this is the default template of customer. So if the customer doesn't specify any template while creating the room, this template will be used. At any time, customers will have only one default template.
+This flag indicates that whether this is the default template of customer. So if the customer doesn't specify any template while creating the room, this template will be used. At any time, customers can have only one default template.
 
 ## Roles
 
@@ -53,7 +53,7 @@ Whether the role is allowed to do screen share or not
 
 #### Video quality
 
-Quality of the video track which is going to be published by the role. Currently, 4 video qualities `720p`, `480p`, `360p` and `240p` are predefined and the user can select one out of these values. This option will be visible only if the **Can share video** is enabled.
+Quality of the video track which is going to be published by the role. Currently, 4 video qualities `1080p`,`720p`, `480p`, `360p`, `240p` and `120p` are predefined and the user can select one out of these values. This option will be visible only if the **Can share video** is enabled.
 
 #### Screenshare quality
 
