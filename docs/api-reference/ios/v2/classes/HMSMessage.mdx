@@ -1,35 +1,20 @@
 ---
 title: HMSMessage
+nav: 14
 ---
 
 **CLASS**
 
 ```swift
-@objcMembers public class HMSMessage: NSObject, Codable
+@objcMembers public class HMSMessage: NSObject
 ```
-
-A local peer can send any message/data to all remote peers in the room
 
 ## Properties
 
-### sender
+### message
 
 ```swift
-public let sender: String
-```
-
-### receiver
-
-```swift
-public let receiver: String?
-```
-
-peerID, optional, default is nil in which case broadcast will be sent to all
-
-### time
-
-```swift
-public let time: String
+public let message: String
 ```
 
 ### type
@@ -38,24 +23,40 @@ public let time: String
 public let type: String
 ```
 
-default is Chat Type
-
-### message
+### sender
 
 ```swift
-public let message: String?
+public var sender: HMSPeer?
 ```
 
-string
+### recipient
+
+```swift
+public var recipient: HMSMessageRecipient
+```
+
+### time
+
+```swift
+public let time: Date
+```
 
 ## Methods
 
-### init(sender:receiver:time:type:message:)
+### init(message:type:)
 
 ```swift
-public init(sender: String,
-            receiver: String? = nil,
-            time: String,
-            type: String,
-            message: String)
+public init(message: String, type: String = "chat")
+```
+
+### init(message:type:peerRecipient:)
+
+```swift
+public init(message: String, type: String = "chat", peerRecipient: HMSPeer)
+```
+
+### init(message:type:rolesRecipient:)
+
+```swift
+public init(message: String, type: String = "chat", rolesRecipient: [HMSRole])
 ```

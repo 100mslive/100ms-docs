@@ -3,6 +3,10 @@ title: React Native Quickstart Guide
 nav: 2.1
 ---
 
+<Content alias="basics" />
+
+# React Native QuickStart Guide
+
 ## Getting started
 
 Hello there! In this guide, we'll build a video conferencing application using our React Native SDK. We'll be using functional components with the powerful hooks provided by our SDK and build an app where you can have video call with your friends.
@@ -87,7 +91,7 @@ hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoin);
 To join a room 3 fields are required:
 
 -   `username`: The name of the user. This is the value that will be set on the peer object and be visible to everyone connected to the room.
--   `authToken`: A client-side token that is used to authenticate the user. You can read about how to generate this token [here](https://docs.100ms.live/react-native/guides/token).
+-   `authToken`: A client-side token that is used to authenticate the user. You can read about how to generate this token [here](https://docs.100ms.live/react-native/v2/guides/token).
 -   `userID`: A unique ID that will be used to identify user.
 -   `roomID` (optional): The ID of the room that you wanna join
 
@@ -114,7 +118,7 @@ hmsInstance.leave();
 
 ## Render video
 
-Let us next add a way to show a tile for every participant in the room. We use HmsView component to render video on screen. this component takes TrackId of HMSVideoTrack and renders the corresponding track.
+Let us next add a way to show a tile for every participant in the room. We use HmsView component to render video on screen. This component takes Sink, TrackId of HMSVideoTrack and renders the corresponding track. When sink is true the video will be visible and when it is false video would be removed. It is ios only prop for android it is handled by the package itself.
 
 ```js
 import { HmsView } from 'react-native-hms';
@@ -126,7 +130,7 @@ const styles = StyleSheet.create({
     }
 });
 
-<HmsView style={styles.hmsView} trackId={trackId} />;
+<HmsView sink={true} style={styles.hmsView} trackId={trackId} />;
 ```
 
 There are 2 types of Peers - a localPeer & remotePeers. To extract trackId from peers we can use following code snippet.
