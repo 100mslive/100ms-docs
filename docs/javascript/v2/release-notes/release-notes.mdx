@@ -12,17 +12,38 @@ description: Release Notes for 100ms JavaScript SDK
 | @100mslive/hms-video-react | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-react.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-react) |
 | @100mslive/hms-video-store | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-store.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-store) |
 
+## 2021-10-21
+
+Released: `@100mslive/hms-video@0.1.16`, `@100mslive/hms-video-store@0.2.71`, `@100mslive/hms-video-react@0.3.96`
+
+-   Support resolution changes for screenshare on role change
+-   Fix extra track getting added when joined with Audio/Video muted
+-   Fix `setVolume(0, trackId)` not working on IOS when it is called onTrackUpdate.
+-   Screenshare error codes - 3001 for user rejection, 3002 for OS level block.
+-   Fix a bug in mute all where it behaves in opposite way on a request from Android/iOS.
+-   Fix type error for `setRemoteTrackEnabled`
+-   Add peerId for all tracks
+-   Optimisations for tracksMap selector
+-   Add `HMSNotificationTypes.PEER_LIST` notification which gives peers already in room when joined
+-   Optimise video tile, participant list rerenders
+-   Add feedback component
+
+# Breaking Changes:
+
+-   ParticipantsInView component removed. Use UiSettings component instead
+
 ## 2021-10-08
 
 Released: `@100mslive/hms-video@0.1.1`, `@100mslive/hms-video-store@0.2.62`, `@100mslive/hms-video-react@0.3.88`
 
-- Single permission for audio and video
-- Bulk Remote mute per type, source and roles. Refer to [remote muting](/javascript/v2/features/remote-mute) section in the docs for more information.
-- Locally muting remote track on iOS Devices
-- Performance optimizations
+-   Single permission for audio and video
+-   Bulk Remote mute per type, source and roles. Refer to [remote muting](/javascript/v2/features/remote-mute) section in the docs for more information.
+-   Locally muting remote track on iOS Devices
+-   Performance optimizations
 
 #### Fixed
-- Role change takes video resolution into account as well now
+
+-   Role change takes video resolution into account as well now
 
 ## 2021-10-01
 
