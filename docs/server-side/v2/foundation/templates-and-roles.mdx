@@ -357,10 +357,10 @@ curl https://prod-policy.100ms.live/api/v1/templates/<id>/roles/<roleName> -H 'A
 
 #### Body Parameters
 
-| Name             | Type     | Description                                               | Required |
-| :--------------- | :------- | :-------------------------------------------------------- | :------- |
-| roleObject <br/> | `object` | Role object correspoding to the given role.               | Yes      |
-| name <br/>       | `string` | Providing a `name` renames the role to the provided name. | No       |
+| Name             | Type     | Description                                                                                                                     | Required |
+| :--------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| roleObject <br/> | `object` | Role object correspoding to the given role.                                                                                     | Yes      |
+| name <br/>       | `string` | Providing a `name` renames the role to the provided name. If role with same `name` already exists, it gives an overwrite error. | No       |
 
 <PostRequest
     title="Update Settings API"
@@ -637,12 +637,12 @@ curl https://prod-policy.100ms.live/api/v1/templates?id=<templateId> -H 'Authori
 
 #### Body Parameters
 
-| Name           | Type      | Description                                                                                                                                      | Required |
-| :------------- | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name <br/>     | `string`  | If you don't provide the `name`, earlier provided name is used. Providing the name of another template overrides that template.                  | No       |
-| default <br/>  | `boolean` | Whether this is default template for customer. Default template for a customer is used when no template is provided in create room API.          | No       |
-| roles <br/>    | `object`  | Modified map of `<roleName:roleObject>`. Since this is a POST request, you need to provide the whole roles object to modify/persist/override it. | Yes      |
-| settings <br/> | `object`  | Modified settings. Since this is a POST request, you need to provide the whole settings object to modify/persist/override it.                    | Yes      |
+| Name           | Type      | Description                                                                                                                                                            | Required |
+| :------------- | :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| name <br/>     | `string`  | If you don't provide the `name`, earlier provided name is used. Trying to modify a template's name to match another existing template's name produces overwrite error. | No       |
+| default <br/>  | `boolean` | Whether this is default template for customer. Default template for a customer is used when no template is provided in create room API.                                | No       |
+| roles <br/>    | `object`  | Modified map of `<roleName:roleObject>`. Since this is a POST request, you need to provide the whole roles object to modify/persist/override it.                       | Yes      |
+| settings <br/> | `object`  | Modified settings. Since this is a POST request, you need to provide the whole settings object to modify/persist/override it.                                          | Yes      |
 
 <DeleteRequest
     title="Delete Role API"
