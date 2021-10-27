@@ -15,6 +15,14 @@ It could be mute if the person tried to mute or unmute someone and immediately l
 
 ### Changed
 - `HMSChangeTrackStateRequest` is now sent even when peers are muted. Previously, if a remote peer requested a peer to mute, there would be no ChangeTrackStateRequest. This request can safely be ignored because the SDK already muted the peer but may be helpful in recognizing that the mute came externally.
+A check like the following is now required in your `onChangeTrackStateRequest`:
+
+```kotlin
+            if (details.track.isMute != details.mute) {
+              // Process ChangeTrackMuteRequest
+            }
+```
+
 - The way packet loss is measured for track degradation was changed.
 - HMSPeer's toString now includes `customerId` and `customerDescription`.
 
