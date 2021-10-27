@@ -4,6 +4,46 @@ nav: 4
 description: Release Notes for 100ms iOS SDK
 ---
 
+## 0.1.5 - 2021-10-21
+- Removed Xcode 13 requirement
+
+
+## 0.1.4 - 2021-10-13
+### Fixed
+- Fixed leave call not taking effect
+
+
+## 0.1.3 - 2021-10-11
+### Added
+- hmsPeerStateDidChange notification added for convenience
+### Changed
+- Deprecated init(userName:userID:roomID:) of HMSConfig as same parameters are coming in the auth token
+
+## 0.1.2 - 2021-09-30
+### Added
+-  preview(role:completion:) API added to support showing preview screen mid call
+
+
+## 0.1.1 - 2021-09-23
+### Added
+- changeRolesOfAllPeers API added to change roles of multiple peers at once
+- changeTrackState API variant added to mute/unmute multiple peers at once
+- startRTMPOrRecording and stopRTMPAndRecording APIs added to start/stop RTMP / browser recording
+### Changed
+- leave API now provides a completion handler that is called when leave operation has completed
+- HMSTrack source property type has been changed to String to allow custom track sources
+### Fixed
+- onReconnecting callback was not firing upon network disconnect
+
+
+## 0.0.12 - 2021-09-02
+### Added
+- Swift package manager support
+- Bitcode support
+### Changed
+- Moved to xcframework
+
+
 ## 0.0.11 - 2021-08-25
 ### Added
 - HMSVideoView now has a `mirror` property that controls mirroring of the video.

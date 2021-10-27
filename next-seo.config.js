@@ -10,7 +10,7 @@ export default {
         site_name: '100ms.live',
         images: [
             {
-                url: `https://100ms.live/images/meta-logo.png`,
+                url: `https://100ms.live/images/banner.png`,
                 alt: '100ms Banner'
             }
         ]

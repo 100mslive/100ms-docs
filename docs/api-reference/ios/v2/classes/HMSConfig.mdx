@@ -1,5 +1,6 @@
 ---
 title: HMSConfig
+nav: 7
 ---
 
 **CLASS**
@@ -29,7 +30,7 @@ public let userID: String
 ### roomID
 
 ```swift
-public let roomID: String
+public let roomID: String?
 ```
 
 ### authToken
@@ -68,8 +69,8 @@ to override the default endpoint (advanced)
 
 ```swift
 public init(userName: String = "iOS User",
-            userID: String,
-            roomID: String,
+            userID: String = UUID().uuidString,
+            roomID: String? = nil,
             authToken: String,
             shouldSkipPIIEvents: Bool = false,
             metaData: String? = nil,

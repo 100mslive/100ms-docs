@@ -5,8 +5,21 @@ nav: 3.03
 
 Leaving a room should be quick. Once a user wishes to end their interaction in the room, they can choose to leave the meeting. 👋
 
-We provide a simple, no fuss API to do exactly that. Invoke the leave method using `hmsActions`.
+We provide a simple, no fuss API to do exactly that. Invoke the leave method using `hmsActions`. You can use the current
+[room state](./join#getting-current-room-state) to render the UI accordingly post leave.
 
 ```jsx
 hmsActions.leave()
+```
+
+## Leave on Navigating Away
+
+If the user closes the tab without calling leave you might seem them as stuck for a few seconds for remote peers. This is
+because our server assumes that there might be a network issue and keeps a buffer waiting for the peer to rejoin. For this
+reason, it is important to call the leave api if we detect the user navigating away from the page. This includes, refreshing
+or closing the tab. We can set up leave to be called on window unload event.
+
+```js
+window.addEventListener('beforeunload', () => hmsActions.leave());
+window.addEventListener('onunload', () => hmsActions.leave());
 ```

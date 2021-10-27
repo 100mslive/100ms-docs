@@ -8,7 +8,7 @@ nav: 3.01
 You can use either npm or yarn to install the dependencies. Please install the respective libraries depending on whether
 you're planning to use with react or other framework/plain JavaScript.
 
-<Tabs id="packages-install" items={['JavaScript', 'React']} />
+<Tabs id="packages-install" items={['JavaScript', 'React', 'JavaScript(CDN)']} />
 
 <Tab id="packages-install-0">
 
@@ -22,6 +22,15 @@ npm install --save @100mslive/hms-video @100mslive/hms-video-store
 
 ```bash
 npm install --save @100mslive/hms-video @100mslive/hms-video-react
+```
+
+</Tab>
+
+<Tab id="packages-install-2">
+
+```
+https://cdn.skypack.dev/@100mslive/hms-video
+https://cdn.skypack.dev/@100mslive/hms-video-store
 ```
 
 </Tab>
@@ -55,7 +64,7 @@ const hms = new HMSReactiveStore();
 
 // by default subscriber is notified about store changes post subscription only, this can be
 // changed to call it right after subscribing too using this function.
-hmsManager.triggerOnSubscribe(); // optional, recommended
+hms.triggerOnSubscribe(); // optional, recommended
 
 const hmsActions = hms.getHMSActions();
 const hmsStore = hms.getStore();
@@ -119,24 +128,6 @@ export function MyComponent() {
 
 </Tab>
 
-## Debugging Tools
+## Debugging
 
-We believe that debugging is an important aspect of a developer first SDK.
-We have designed our APIs and error messages with developer experience and ease of debugging in mind. We hope that
-you'll have a delightful experience walking through the features and integrating our sdk in your app. Our core sdk
-is written in Typescript, so all the typings are included with the SDK and are guaranteed to be true. This means that,
-even if you use JavaScript, editors will be able to give a significantly improved experience in terms of intellisense.
-
-We take the debugging experience one step further by connecting our store to redux devtools extension out of box. This gives you transparency and
-visibility into the whole room state while building your UI.
-We highly recommend installing the [devtools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en)
-extension to visualize this state along with all the activities taking place in a single view. This makes it easier
-to understand when and how the UI should change. You can use the time travel feature of the redux devtools
-to recreate state changes for debugging specific issues as well.
-
-![Redux Devtools](/guides/redux-devtools.png)
-
-We also give a ready to use UI without writing any code which can be accessed
-from the [dashboard account](https://dashboard.100ms.live). The code for this sample is open sourced [here](https://github.com/100mslive/100ms-web).
-You can either start with this codebase or write your own, and use it for testing your webapp
-in the initial phase of development.
+Do checkout our debugging page [here](../debugging/debugging) for an easy debugging experience while integrating our sdk.
