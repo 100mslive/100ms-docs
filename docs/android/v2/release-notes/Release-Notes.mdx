@@ -3,6 +3,18 @@ title: Android SDK
 nav: 15
 description: Release Notes for 100ms Android SDK
 ---
+
+## 2.1.6 - 2021-10-28
+
+### Breaking Changes
+`requestedBy: HMSPeer` in `HMSChangeTrackStateRequest` is now nullable.
+It could be mute if the person tried to mute or unmute someone and immediately left the room.
+
+### Changed
+- `HMSChangeTrackStateRequest` is now sent even when peers are muted. Previously, if a remote peer requested a peer to mute, there would be no ChangeTrackStateRequest. This request can safely be ignored because the SDK already muted the peer but may be helpful in recognizing that the mute came externally.
+- The way packet loss is measured for track degradation was changed.
+- HMSPeer's toString now includes `customerId` and `customerDescription`.
+
 ## 2.1.5 - 2021-10-27
 
 ### Fixed
