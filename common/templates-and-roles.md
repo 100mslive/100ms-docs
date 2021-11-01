@@ -52,7 +52,7 @@ Whether the role is allowed to do screen share or not
 
 #### Video quality
 
-Quality of the video track which is going to be published by the role. Currently, 4 video qualities `720p`, `480p`, `360p` and `240p` are predefined and the user can select one out of these values. This option will be visible only if the **Can share video** is enabled.
+Quality of the video track which is going to be published by the role. Currently, 5 video qualities `1080p`, `720p`, `480p`, `360p` and `240p` are predefined and the user can select one out of these values. This option will be visible only if the **Can share video** is enabled.
 
 #### Screenshare quality
 
@@ -91,9 +91,5 @@ With this permission, user will be able to ask any participant to unmute their a
 With this permission, user will be able to remove any participant from the current session of the room.
 
 #### Can end current session of the room
-
-With this permission, user will be able to end the current session of the room.
-
-##### Can end current session of the room
 
 With this permission, user will be able to end the current session of the room.
