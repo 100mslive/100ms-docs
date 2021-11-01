@@ -95,9 +95,15 @@ Once a plugin implementation is ready, it can be added and removed from local pe
 ```js
 const myPlugin = new MyCustomPlugin();
 if (myPlugin.isSupported()) {
-    // myPlugin.init(); // optional, recommended if loader needs to be shown
-    hmsActions.addPluginToVideoTrack(myPlugin);
-    // hmsActions.removePluginFromVideoTrack(myPlugin);
+    // myPlugin.init(); // optional, recommended if plugin implements it, you can show a loader here in the UI
+    const isPluginAdded = hmsStore.getState(
+        selectIsLocalVideoPluginPresent(myPlugin.getName());
+    )
+    if (!isPluginAdded) {
+        hmsActions.addPluginToVideoTrack(myPlugin);
+    } else {
+        hmsActions.removePluginFromVideoTrack(myPlugin);
+    }
 }
 ```
 
