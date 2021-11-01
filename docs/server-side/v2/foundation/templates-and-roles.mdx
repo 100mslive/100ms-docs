@@ -11,15 +11,9 @@ Apart from the dashboard, a programmatic way to interact with templates is via A
 
 #### Common Headers For all APIs
 
-<<<<<<< HEAD
 | Name                | Value                       | Required |
 | :------------------ | :-------------------------- | :------- |
 | Authorization <br/> | Bearer `<management token>` | Yes      |
-=======
-| Name                 | Value                        | Required |
-| :------------------- | :--------------------------- | :------- |
-| Authorization <br/>  | Bearer `<management token>`  | Yes      |
->>>>>>> 84b420f (updated docs)
 
 <PostRequest
     title="Create Template API"
@@ -151,7 +145,6 @@ curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer <
 
 </Tab>
 
-<<<<<<< HEAD
 #### Body Parameters
 
 | Name           | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                   | Required |
@@ -215,67 +208,6 @@ curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer <
 | height | `int`   | Max height of the video track.<br/>Range: 90-720<br/>Default: 180  | No       |
 | width  | `int`   | Max width of the video track.<br/>Range: 160-1280<br/>Default: 320 | No       |
 | layers | `array` | See json below.                                                    | No       |
-=======
-
-
-#### Body Parameters
-| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Required |
-| :------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
- | name <br/>           | `string` | A unique identifier you can assign to 100ms temmplates. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Notes**: <br/> (1) If `create Template` is called with an existing template name, then that template will be overwritten.<br/> (2) Providing template name will be helpful if you want to modify/delete the template using name.    | No       |
-| default <br/>           | `boolean` | Whether this is default template for a customer. Default template for a customer is used when no template is provided in `create Room` api. | No      |
-| roles <br/>           | `object` | Map of `<roleName:roleObject>`. Some sane defaults are set for values that are not provided in the roles object.  | No       |
-| settings <br/>  | `object` | Global settings for this template. | No |
-
-#### roleObject
-| Name        | Type      | Description                                                                                                                                                                                     | Required |
-| :---------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| publishParams     | `object` | Publish parameters for this role.   | No       |
-| subscribeParams | `object`  | Subscribe parameters for this role. | No       |
-| permissions | `object`  | Permissions for this role. | No       |
-| priority | `int` | Priority for subscription/publishing.| No |
-
-#### publishParams
-| Name        | Type      | Description                                                                                                                                                                                     | Required |
-| :---------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| allowed     | `object` | Allowed tracks. Subset of [audio, video, screen]. | No       |
-| audio | `object`  | Audio publish parameters. | No       |
-| video | `object`  | Video publish parameters.     | No |
-| screen | `object` | Screenshare publish parameters. | No |
-| videoSimulcastLayers | `object`  | Video simulcast parameters (adding this enables video simulcast).      | No |
-| screenSimulcastLayers | `object` | Screenshare simulcast parameters (adding this enables screen simulcast). | No |
-
-#### audio
-| Name        | Type      | Description                                                                                                                                                                                     | Required |
-| :---------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| bitRate     | `int` | Audio Max bitrate of audio track in kbps.<br/> Range: 16-128<br/>Default: 32                                                                                                                      | No       |
-| codec | `string`  |  Codec for the audio track.<br/>Options: [opus] <br/>Default: opus | No       |
-
-#### video
-| Name        | Type      | Description                                                                                                                                                                                     | Required |
-| :---------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| bitRate     | `int` | Max bitrate of video track in kbps.<br/>Range: 50-2000<br/>Default: 256                                                                                                                       | No       |
-| codec | `string`  | Codec for the video track.<br/>Options: [vp8]<br/>Default: vp8 | No       |
-| FrameRate     | `int` | Max number of video frames per second.<br/>Range: 1-30<br/>Default: 25                                                                                                                       | No       |
-| height     | `int` | Height of the video track.<br/>Range: 90-720<br/>Default: 180                                                                                                                     | No       |
-| width     | `int` | Width of the video track.<br/>Range: 160-1280<br/>Default: 320                                                        | No       |
-
-
-#### screen
-| Name        | Type      | Description                                                                                                                                                                                     | Required |
-| :---------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| bitRate     | `int` | Max bitrate of screen track in kbps.<br/>Range: 500-5000<br/>Default: 1024                                                                                                                       | No       |
-| codec | `string`  | Codec for the screen track.<br/>Options: [vp8]<br/>Default: vp8 | No       |
-| frameRate     | `int` | Max number of screen frames per second<br/>Range: 1-10<br/>Default: 10                                                                                                                       | No       |
-| height     | `int` | Height of the screen track.<br/>Range: 270-1080<br/>Default: 720                                                                                                 | No       |
-| width     | `int` | Width of the screen track.<br/>Range: 480-1920<br/>Default: 1280                                                                                                                     | No       |
-
-#### videoSimulcastLayers
-| Name        | Type      | Description                                                                                                                                                                                     | Required |
-| :---------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| height     | `int` | Max height of the video track.<br/>Range: 90-720<br/>Default: 180                                                                                                                      | No       |
-| width | `int`  | Max width of the video track.<br/>Range: 160-1280<br/>Default: 320| No       |
-| layers     | `array` | See json below. | No |
->>>>>>> 84b420f (updated docs)
 
 ```json
 "layers": [
@@ -301,20 +233,12 @@ curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer <
 ```
 
 #### screenSimulcastLayers
-<<<<<<< HEAD
 
 | Name   | Type    | Description                                                      | Required |
 | :----- | :------ | :--------------------------------------------------------------- | :------- |
 | height | `int`   | Height of the screen track.<br/>Range: 270-1080<br/>Default: 720 | No       |
 | width  | `int`   | Width of the screen track.<br/>Range: 480-1920<br/>Default: 1280 | No       |
 | layers | `array` | See json below.                                                  | No       |
-=======
-| Name        | Type      | Description                                                                                                                                                                                     | Required |
-| :---------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| height     | `int` | Height of the screen track.<br/>Range: 270-1080<br/>Default: 720                                                                                                   | No       |
-| width | `int`  | Width of the screen track.<br/>Range: 480-1920<br/>Default: 1280 | No       |
-| layers     | `array` | See json below.  | No |
->>>>>>> 84b420f (updated docs)
 
 ```json
 "layers": [
@@ -339,7 +263,6 @@ curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer <
 ```
 
 #### subcribeParams
-<<<<<<< HEAD
 
 | Name                 | Type     | Description                                                              | Required |
 | :------------------- | :------- | :----------------------------------------------------------------------- | :------- |
@@ -375,41 +298,6 @@ curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer <
 | Name   | Type     | Description                                                          | Required |
 | :----- | :------- | :------------------------------------------------------------------- | :------- |
 | region | `string` | Region in which the room will be hosted by default ["in"/"us"/"eu"]. | No       |
-=======
-| Name        | Type      | Description                                                                                                                                                                                     | Required |
-| :---------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| maxSubsBitRate     | `int` | Maximum bitrate (in kbps) that can subscribed.                                                                     | No       |
-| subscribeToRoles | `array`  | List of roles which can be subscribed to. | No       |
-| subscribeDegradation     | `object` | Subscribe degradation parameters (adding this enables screen simulcast). | No |
-
-#### subscribeDegradation
-| Name        | Type      | Description                                                                                                                                                                                     | Required |
-| :---------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| packetLossThreshold   | `int` | Threshold for packet loss.<br/>Range: 1-100<br/>Default: 50                    | No       |
-| degradeGracePeriodSeconds| `int`  | Degrade grace period (in seconds).<br/>Range: 1-10<br/>Default: 1 | No       |
-| recoverGracePeriodSeconds     | `int` | Recover grace period (in seconds).<br/>Range: 1-10<br/>Default: 4 | No |
-
-
-#### permissions
-| Name        | Type      | Description                                                                                                                                                                                     | Required |
-| :---------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| endRoom | `boolean` | Permission to end room for all. | No |
-| lockRoom | `boolean` | Permission to lock a room. | No |
-| removeOthers | `boolean` | Permission to remove others from the room. | No |
-| mute | `boolean` | Permission to request others to mute them. | No |
-| muteForce | `boolean` | Permission to request others to mute by force. | No |
-| unmute | `boolean` | Permission to request others to unmute them. | No |
-| changeRole | `boolean` | Permission to request others to change their role. | No |
-| changeRoleForce | `boolean` | Permission to change others' role forcefully. | No |
-| rtmp | `boolean` | Permission to start/stop rtmp streaming. |  No |
-| recording | `boolean` | Permission to start/stop room recording. | No |
-
-
-#### settings
-| Name        | Type      | Description                                                                                                                                                                                     | Required |
-| :---------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| region | `string` | Region in which the room will be hosted by default ["in"/"us"/"eu"]. | No |
->>>>>>> 84b420f (updated docs)
 
 <PostRequest
     title="Create/Modify Role API"
@@ -464,20 +352,9 @@ curl https://prod-policy.100ms.live/api/v1/templates/<id>/roles/<roleName> -H 'A
     "priority": 1
 }
 ```
-<<<<<<< HEAD
-=======
-</Tab>
-
-#### Body Parameters
-| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Required |
-| :------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
-| roleObject <br/>           | `object` | Role object correspoding to the given role. | Yes       |
-| name <br/> | `string` | Providing a `name` renames the role to the provided name. | No |
->>>>>>> 84b420f (updated docs)
 
 </Tab>
 
-<<<<<<< HEAD
 #### Body Parameters
 
 | Name             | Type     | Description                                                                                                                     | Required |
@@ -485,8 +362,6 @@ curl https://prod-policy.100ms.live/api/v1/templates/<id>/roles/<roleName> -H 'A
 | roleObject <br/> | `object` | Role object correspoding to the given role.                                                                                     | Yes      |
 | name <br/>       | `string` | Providing a `name` renames the role to the provided name. If role with same `name` already exists, it gives an overwrite error. | No       |
 
-=======
->>>>>>> 84b420f (updated docs)
 <PostRequest
     title="Update Settings API"
     desp="This endpoint is used to update settings. "
@@ -511,7 +386,6 @@ curl https://prod-policy.100ms.live/api/v1/templates/<id>/settings -H 'Authoriza
     "region": "us"
 }
 ```
-<<<<<<< HEAD
 
 </Tab>
 
@@ -523,20 +397,6 @@ curl https://prod-policy.100ms.live/api/v1/templates/<id>/settings -H 'Authoriza
 
 <GetRequest
     title="Get Templates API"
-=======
-</Tab>
-
-
-#### Body Parameters
-| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Required |
-| :------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
-| region <br/>           | `string` | Region in which the room will be hosted by default ["in"/"us"/"eu"]. | No       |
-
-
-
-<GetRequest
-    title="Get Template API"
->>>>>>> 84b420f (updated docs)
     desp="This endpoint is used to fetch a template. This API can be used to fetch a template. Instead of id, URL param name can be provided to fetch by name. Providing no URL params fetches all templates for the customer. You can provide start/limit params for pagination."
     url="https://prod-policy.100ms.live/api/v1/templates?id=<templateID>"
 />
@@ -608,7 +468,6 @@ curl https://prod-policy.100ms.live/api/v1/templates?id=<templateId> -H 'Authori
 }
 ```
 
-<<<<<<< HEAD
 </Tab>
 
 #### URL Parameters
@@ -620,16 +479,6 @@ curl https://prod-policy.100ms.live/api/v1/templates?id=<templateId> -H 'Authori
 | start <br/>   | `string`  | Returned dataset is sorted by decreasing order of IDs. Provide the ID of the last result set to start in reverse order from there. | No       |
 | limit <br/>   | `int`     | Number of templates to return (max 20).                                                                                            | No       |
 | default <br/> | `boolean` | Whether template is default or not.                                                                                                | No       |
-=======
-#### URL Parameters
-| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Required |
-| :------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
-| name <br/>           | `string` | Name of the template. | No       |
-| id <br/>           | `string` | ID of the template. | No       |
-| start <br/>           | `string` | Returned dataset is sorted by decreasing order of IDs. Provide the ID of the last result set to start in reverse order from there. | No       |
-| limit <br/>           | `int` | Number of templates to return (max 20). | No       |
-
->>>>>>> 84b420f (updated docs)
 
 <GetRequest
     title="Get Role API"
@@ -684,13 +533,8 @@ curl https://prod-policy.100ms.live/api/v1/templates/<templateId>/roles/<roleNam
     "priority": 1
 }
 ```
-<<<<<<< HEAD
 
 </Tab>
-=======
-</Tab>
-
->>>>>>> 84b420f (updated docs)
 
 <GetRequest
     title="Get Settings API"
@@ -720,10 +564,7 @@ curl https://prod-policy.100ms.live/api/v1/templates/<templateId>/settings -H 'A
 }
 ```
 
-<<<<<<< HEAD
 </Tab>
-=======
->>>>>>> 84b420f (updated docs)
 
 <PostRequest
     title="Modify Template API"
@@ -791,7 +632,6 @@ curl https://prod-policy.100ms.live/api/v1/templates?id=<templateId> -H 'Authori
     }
 }
 ```
-<<<<<<< HEAD
 
 </Tab>
 
@@ -804,22 +644,6 @@ curl https://prod-policy.100ms.live/api/v1/templates?id=<templateId> -H 'Authori
 | roles <br/>    | `object`  | Modified map of `<roleName:roleObject>`. Since this is a POST request, you need to provide the whole roles object to modify/persist/override it.                       | Yes      |
 | settings <br/> | `object`  | Modified settings. Since this is a POST request, you need to provide the whole settings object to modify/persist/override it.                                          | Yes      |
 
-=======
-</Tab>
-
-
-#### Body Parameters
-
-| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Required |
-| :------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
-| name <br/>           | `string` | If you don't provide the `name`, earlier provided name is used. Providing the name of another template overrides that template.  | No       |
-| default <br/>           | `boolean` | Whether this is default template for customer. Default template for a customer is used when no template is provided in create room API. | No      |
-| roles <br/>           | `object` | Modified map of `<roleName:roleObject>`. Since this is a POST request, you need to provide the whole roles object to modify/persist/override it.  | Yes       |
-| settings <br/> | `object`| Modified settings. Since this is a POST request, you need to provide the whole settings object to modify/persist/override it. | Yes |
-
-
-
->>>>>>> 84b420f (updated docs)
 <DeleteRequest
     title="Delete Role API"
     desp="This endpoint is used to delete a role. Subsequent requests for deleting role which does not exist gives 404."
@@ -842,10 +666,7 @@ curl https://prod-policy.100ms.live/api/v1/templates/<id>/roles/<roleName> -H 'A
 ```json
 
 ```
-<<<<<<< HEAD
 
-=======
->>>>>>> 84b420f (updated docs)
 </Tab>
 
 <DeleteRequest
@@ -870,9 +691,5 @@ curl https://prod-policy.100ms.live/api/v1/templates?id=<id> -H 'Authorization: 
 ```json
 
 ```
-<<<<<<< HEAD
 
 </Tab>
-=======
-</Tab>
->>>>>>> 84b420f (updated docs)

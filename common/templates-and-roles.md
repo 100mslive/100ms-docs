@@ -2,9 +2,9 @@
 
 Template is the blueprint of the room. It defines the settings of the room along with the behavior of users who are part of it.
 Room will inherit the properties from a template that you have specified while creating it. If you have not specified any template then it will pick the default template.
-Each template will be identified by its id. E.g. `default_videoconf_7e450ffc-8ef1-4572-ab28-b32474107b89`
+Each template will be identified by its id or name. E.g. `default_videoconf_7e450ffc-8ef1-4572-ab28-b32474107b89`
 
-Users can see or modify the templates by visiting [Templates](https://dashboard.100ms.live/templates)
+Users can see or modify the templates by visiting [Templates on Dashboard](https://dashboard.100ms.live/templates) or via API(see below). After updating a template or some part of its like permissions, you need to rejoin or restart the session for the template updates to take place.
 
 ![Template](/docs/v2/template.png)
 
@@ -92,13 +92,8 @@ With this permission, user will be able to remove any participant from the curre
 
 #### Can end current session of the room
 
-<<<<<<< HEAD
-
 With this permission, user will be able to end the current session of the room.
 
 ##### Can end current session of the room
 
-=======
-
-> > > > > > > 84b420f (updated docs)
-> > > > > > > With this permission, user will be able to end the current session of the room.
+With this permission, user will be able to end the current session of the room.
