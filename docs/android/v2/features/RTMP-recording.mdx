@@ -12,7 +12,8 @@ In 100ms, recording and streaming is usually achieved by having a bot join your 
 The topics covered in this doc are:
 1. [How to start streaming / recording.](#starting-streaming-recording)
 2. [How to stop streaming / recording.](#stopping-streaming-recording)
-3. [Checking the current status for streaming / recording.](#current-room-status)
+3. [How to check the current status for streaming / recording.](#current-room-status)
+4. [When to check the current status](#when-to-check-for-room-status)
 
 ## Starting streaming / recording
 To start recording, streaming or both, create an instance of `HMSRecordingConfig`.
@@ -162,12 +163,16 @@ data class HMSServerRecordingState(
 
 This represents that the room was set to be recorded when it was created and all sessions within it will always be recorded for archival by the server.
 
+## When to check for room status
 
-The room status should be checked in three places.
+The room status should be checked in three places:
+1. `HMSUpdateListener`'s' `onJoin`
+2. When `hmsSdk.startRtmpOrRecording()` is called
+3. When `hmsSdk.stopRtmpAndRecording()` is called.
 
-1. In the `onJoin(room: HMSRoom)` callback in `HMSUpdateListener`
+- In the `onJoin(room: HMSRoom)` callback in `HMSUpdateListener`
     The properties mentioned above will be on the `HMSRoom` object.
-2. Whenever either of the start or stop recording functions is called, when their success or error callbacks are called, the values of the streaming and recording will be updated on the room object returned in onJoin.
+- Whenever either of the start or stop recording functions is called, when their success or error callbacks are called, the values of the streaming and recording will be updated on the room object returned in onJoin.
 So saving an instance of the room received at that time is recommended.
 
 ### Code sample
