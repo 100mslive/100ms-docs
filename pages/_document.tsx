@@ -47,6 +47,7 @@ class MyDocument extends Document {
           analytics.load('${process.env.NEXT_PUBLIC_SEGMENT_ID}');
           var url = new URL(window.location.href);
           analytics.track('page.viewed',{
+            title:document.title,
             path:window.location.hostname,
             pathname:window.location.pathname,
             href:window.location.href,
