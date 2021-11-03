@@ -3,6 +3,15 @@ title: Android SDK
 nav: 15
 description: Release Notes for 100ms Android SDK
 ---
+## 2.1.8 - 2021-11-03
+### Added
+* `getRoom` API to `HMSSDK` which will return a `HMSRoom` instance that the user has joined, `NULL` otherwise
+
+### Fixed
+* Crash fix - `IllegalArgumentException: Receiver not registered` on calling leave immediately after joining
+* `Already JOINED` HMSException will now be coming in `onError` of `HMSUpdateListener` instead of a throwing a fatal Exception
+* RTMP Recording fixes
+
 ## 2.1.7 - 2021-11-01
 
 ### Changed
