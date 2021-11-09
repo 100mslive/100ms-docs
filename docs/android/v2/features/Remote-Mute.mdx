@@ -270,6 +270,19 @@ public void changeVideoState(HMSRemotePeer hmsRemotePeer, Boolean mute) {
 
 Mute callbacks are automatically applied to the receiver. No action is required.
 
+However there will still be a callback to `onChangeTrackStateRequest` after the SDK mutes the user.
+
+If you're doing something when the user receives a request, such as showing them a dialog, a check of the type would help avoid showing it unnecessarily:
+
+```kotlin
+        override fun onChangeTrackStateRequest(details: HMSChangeTrackStateRequest) {
+            if (details.track.isMute != details.mute) {
+               // Handle HMSChangeTrackStateRequest
+            }
+        }
+```
+Without which, on a mute request the track will be muted and you'll still get a request on the caller side to mute.
+
 ### Handling an unmute callback
 Unmute callbacks are received in the target peer's `HMSUpdateListener.onChangeTrackStateRequest`.
 
