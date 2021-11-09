@@ -1,0 +1,548 @@
+---
+title: Templates API
+nav: 2.3
+---
+
+## Interact with Templates via API
+
+Apart from the dashboard, a programmatic way to interact with templates is via API. You will need a [management token](authentication-and-tokens) as a bearer token for your requests. After updating a template, you might need to rejoin or initiate a new session for the template updates to take place.
+
+### Common Headers For all APIs
+
+| Name                | Value                       | Required |
+| :------------------ | :-------------------------- | :------- |
+| Authorization <br/> | Bearer `<management token>` | Yes      |
+
+<PostRequest
+    title="Create Template API"
+    desp="This endpoint is used to create a template. A recommended way is to provide a list of roles with empty objects to get default values for various options corresponding to those roles, then update those roles by modifying them by create/modify role API."
+    url="https://prod-policy.100ms.live/api/v1/templates"
+/>
+
+<Tabs items={['Request', 'Response']} id="req" />
+
+<Tab id="req-0">
+
+```bash
+curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer <management_token>' -X POST -H 'Content-Type: application/json' -d '{ "name": "test-template", "default": true, "roles":{ "student": {}, "teacher": {}, "admin": {} } }'
+```
+
+</Tab>
+<Tab id="req-1">
+
+<Response res="200: OK" />
+
+```json
+{
+    "_id": "615e61b0ba65e77a89ba75c1",
+    "name": "test-template",
+    "customer": "60f7cc95f88117b9e47bf618",
+    "default": true,
+    "roles": {
+        "admin": {
+            "name": "admin",
+            "publishParams": {
+                "allowed": ["video", "screen", "audio"],
+                "audio": {
+                    "bitRate": 32,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 250,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 480,
+                    "height": 270
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": ["guest"],
+                "maxSubsBitRate": 3200,
+                "subscribeDegradation": {}
+            },
+            "permissions": {}
+        },
+        "student": {
+            "name": "student",
+            "publishParams": {
+                "allowed": ["video", "screen", "audio"],
+                "audio": {
+                    "bitRate": 32,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 250,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 480,
+                    "height": 270
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": ["guest"],
+                "maxSubsBitRate": 3200,
+                "subscribeDegradation": {}
+            },
+            "permissions": {}
+        },
+        "teacher": {
+            "name": "teacher",
+            "publishParams": {
+                "allowed": ["video", "screen", "audio"],
+                "audio": {
+                    "bitRate": 32,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 250,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 480,
+                    "height": 270
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": ["guest"],
+                "maxSubsBitRate": 3200,
+                "subscribeDegradation": {}
+            },
+            "permissions": {}
+        }
+    },
+    "settings": {
+        "subscribeDegradation": {},
+        "screenSimulcastLayers": {},
+        "videoSimulcastLayers": {}
+    }
+}
+```
+
+</Tab>
+
+### Body Parameters
+
+| Name           | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                   | Required |
+| :------------- | :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| name <br/>     | `string`  | A unique identifier you can assign to 100ms temmplates. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Notes**: <br/> (1) If `create Template` is called with an existing template name, then that template will be overwritten.<br/> (2) Providing template name will be helpful if you want to modify/delete the template using name. | No       |
+| default <br/>  | `boolean` | Whether this is default template for a customer. Default template for a customer is used when no template is provided in `create Room` api.                                                                                                                                                                                                                                                                   | No       |
+| roles <br/>    | `object`  | Map of `<roleName:roleObject>`. Some sane defaults are set for values that are not provided in the roles object.                                                                                                                                                                                                                                                                                              | No       |
+| settings <br/> | `object`  | Global settings for this template.                                                                                                                                                                                                                                                                                                                                                                            | No       |
+
+### roleObject
+
+| Name            | Type     | Description                           | Required |
+| :-------------- | :------- | :------------------------------------ | :------- |
+| publishParams   | `object` | Publish parameters for this role.     | No       |
+| subscribeParams | `object` | Subscribe parameters for this role.   | No       |
+| permissions     | `object` | Permissions for this role.            | No       |
+| priority        | `int`    | Priority for subscription/publishing. | No       |
+
+#### publishParams
+
+| Name                  | Type     | Description                                                              | Required |
+| :-------------------- | :------- | :----------------------------------------------------------------------- | :------- |
+| allowed               | `object` | Allowed tracks. Subset of [audio, video, screen].                        | No       |
+| audio                 | `object` | Audio publish parameters.                                                | No       |
+| video                 | `object` | Video publish parameters.                                                | No       |
+| screen                | `object` | Screenshare publish parameters.                                          | No       |
+| videoSimulcastLayers  | `object` | Video simulcast parameters (adding this enables video simulcast).        | No       |
+| screenSimulcastLayers | `object` | Screenshare simulcast parameters (adding this enables screen simulcast). | No       |
+
+### audio
+
+| Name    | Type     | Description                                                                  | Required |
+| :------ | :------- | :--------------------------------------------------------------------------- | :------- |
+| bitRate | `int`    | Audio Max bitrate of audio track in kbps.<br/> Range: 16-128<br/>Default: 32 | No       |
+| codec   | `string` | Codec for the audio track.<br/>Options: [opus] <br/>Default: opus            | No       |
+
+### video
+
+| Name      | Type     | Description                                                             | Required |
+| :-------- | :------- | :---------------------------------------------------------------------- | :------- |
+| bitRate   | `int`    | Max bitrate of video track in kbps.<br/>Range: 50-2000<br/>Default: 256 | No       |
+| codec     | `string` | Codec for the video track.<br/>Options: [vp8]<br/>Default: vp8          | No       |
+| FrameRate | `int`    | Max number of video frames per second.<br/>Range: 1-30<br/>Default: 25  | No       |
+| height    | `int`    | Height of the video track.<br/>Range: 90-720<br/>Default: 180           | No       |
+| width     | `int`    | Width of the video track.<br/>Range: 160-1280<br/>Default: 320          | No       |
+
+### screen
+
+| Name      | Type     | Description                                                                | Required |
+| :-------- | :------- | :------------------------------------------------------------------------- | :------- |
+| bitRate   | `int`    | Max bitrate of screen track in kbps.<br/>Range: 500-5000<br/>Default: 1024 | No       |
+| codec     | `string` | Codec for the screen track.<br/>Options: [vp8]<br/>Default: vp8            | No       |
+| frameRate | `int`    | Max number of screen frames per second<br/>Range: 1-10<br/>Default: 10     | No       |
+| height    | `int`    | Height of the screen track.<br/>Range: 270-1080<br/>Default: 720           | No       |
+| width     | `int`    | Width of the screen track.<br/>Range: 480-1920<br/>Default: 1280           | No       |
+
+### videoSimulcastLayers
+
+| Name   | Type    | Description                                                        | Required |
+| :----- | :------ | :----------------------------------------------------------------- | :------- |
+| height | `int`   | Max height of the video track.<br/>Range: 90-720<br/>Default: 180  | No       |
+| width  | `int`   | Max width of the video track.<br/>Range: 160-1280<br/>Default: 320 | No       |
+| layers | `array` | See json below.                                                    | No       |
+
+```json
+"layers": [
+  {
+    "rid": "f",
+    "scaleResolutionDownBy": 1.0,
+    "maxBitrate": 500,
+    "maxFramerate": 25
+  },
+  {
+    "rid": "h",
+    "scaleResolutionDownBy": 2.0,
+    "maxBitrate": 250,
+    "maxFramerate": 25
+  },
+  {
+    "rid": "q",
+    "scaleResolutionDownBy": 4.0,
+    "maxBitrate": 100,
+    "maxFramerate": 25
+  }
+]
+```
+
+### screenSimulcastLayers
+
+| Name   | Type    | Description                                                      | Required |
+| :----- | :------ | :--------------------------------------------------------------- | :------- |
+| height | `int`   | Height of the screen track.<br/>Range: 270-1080<br/>Default: 720 | No       |
+| width  | `int`   | Width of the screen track.<br/>Range: 480-1920<br/>Default: 1280 | No       |
+| layers | `array` | See json below.                                                  | No       |
+
+```json
+"layers": [
+  {
+    "rid": "f",
+    "scaleResolutionDownBy": 1.0,
+    "maxFramerate": 10
+  },
+  {
+    "rid": "h",
+    "scaleResolutionDownBy": 2.0,
+    "maxBitrate": 5000,
+    "maxFramerate": 10
+  },
+  {
+    "rid": "q",
+    "scaleResolutionDownBy": 4.0,
+    "maxBitrate": 1000,
+    "maxFramerate": 10
+  }
+]
+```
+
+#### subcribeParams
+
+| Name                 | Type     | Description                                                              | Required |
+| :------------------- | :------- | :----------------------------------------------------------------------- | :------- |
+| maxSubsBitRate       | `int`    | Maximum bitrate (in kbps) that can subscribed.                           | No       |
+| subscribeToRoles     | `array`  | List of roles which can be subscribed to.                                | No       |
+| subscribeDegradation | `object` | Subscribe degradation parameters (adding this enables screen simulcast). | No       |
+
+### subscribeDegradation
+
+| Name                      | Type  | Description                                                       | Required |
+| :------------------------ | :---- | :---------------------------------------------------------------- | :------- |
+| packetLossThreshold       | `int` | Threshold for packet loss.<br/>Range: 1-100<br/>Default: 50       | No       |
+| degradeGracePeriodSeconds | `int` | Degrade grace period (in seconds).<br/>Range: 1-10<br/>Default: 1 | No       |
+| recoverGracePeriodSeconds | `int` | Recover grace period (in seconds).<br/>Range: 1-10<br/>Default: 4 | No       |
+
+### permissions
+
+| Name            | Type      | Description                                        | Required |
+| :-------------- | :-------- | :------------------------------------------------- | :------- |
+| endRoom         | `boolean` | Permission to end room for all.                    | No       |
+| lockRoom        | `boolean` | Permission to lock a room.                         | No       |
+| removeOthers    | `boolean` | Permission to remove others from the room.         | No       |
+| mute            | `boolean` | Permission to request others to mute them.         | No       |
+| muteForce       | `boolean` | Permission to request others to mute by force.     | No       |
+| unmute          | `boolean` | Permission to request others to unmute them.       | No       |
+| changeRole      | `boolean` | Permission to request others to change their role. | No       |
+| changeRoleForce | `boolean` | Permission to change others' role forcefully.      | No       |
+| rtmp            | `boolean` | Permission to start/stop rtmp streaming.           | No       |
+| recording       | `boolean` | Permission to start/stop room recording.           | No       |
+
+### settings
+
+| Name   | Type     | Description                                                          | Required |
+| :----- | :------- | :------------------------------------------------------------------- | :------- |
+| region | `string` | Region in which the room will be hosted by default ["in"/"us"/"eu"]. | No       |
+
+<PostRequest
+    title="Update Settings API"
+    desp="This endpoint is used to update settings. "
+    url="https://prod-policy.100ms.live/api/v1/templates/<id>/setings>"
+/>
+
+<Tabs items={['Request', 'Response']} id="req2" />
+
+<Tab id="req2-0">
+
+```bash
+curl https://prod-policy.100ms.live/api/v1/templates/<id>/settings -H 'Authorization: Bearer <management_token>' -X POST -H 'Content-Type: application/json' -d '{ "region": "us" }'
+```
+
+</Tab>
+<Tab id="req2-1">
+
+<Response res="200: OK" />
+
+```json
+{
+    "region": "us"
+}
+```
+
+</Tab>
+
+#### Body Parameters
+
+| Name         | Type     | Description                                                          | Required |
+| :----------- | :------- | :------------------------------------------------------------------- | :------- |
+| region <br/> | `string` | Region in which the room will be hosted by default ["in"/"us"/"eu"]. | No       |
+
+<GetRequest
+    title="Get Template API"
+    desp="This endpoint is used to fetch a template. This API can be used to fetch a template. Instead of id, URL param name can be provided to fetch by name. Providing no URL params fetches all templates for the customer. You can provide start/limit params for pagination."
+    url="https://prod-policy.100ms.live/api/v1/templates?id=<templateID>"
+/>
+
+<Tabs items={['Request', 'Response']} id="req3" />
+
+<Tab id="req3-0">
+
+```bash
+curl https://prod-policy.100ms.live/api/v1/templates?id=<templateId> -H 'Authorization: Bearer <management_token>'
+```
+
+</Tab>
+<Tab id="req3-1">
+
+<Response res="200: OK" />
+
+```json
+{
+    "limit": 10,
+    "data": [
+        {
+            "_id": "615dbca1ba65e77a89a8e2b8",
+            "name": "test-amit10",
+            "customer": "60f7cc95f88117b9e47bf618",
+            "roles": {
+                "student": {
+                    "name": "student",
+                    "publishParams": {
+                        "allowed": ["screen", "audio"],
+                        "audio": {
+                            "bitRate": 42,
+                            "codec": "opus"
+                        },
+                        "video": {
+                            "bitRate": 250,
+                            "codec": "vp8",
+                            "frameRate": 30,
+                            "width": 480,
+                            "height": 270
+                        },
+                        "screen": {
+                            "codec": "vp8",
+                            "frameRate": 10,
+                            "width": 1920,
+                            "height": 1086
+                        },
+                        "videoSimulcastLayers": {},
+                        "screenSimulcastLayers": {}
+                    },
+                    "subscribeParams": {
+                        "subscribeToRoles": ["teacher", "student"],
+                        "maxSubsBitRate": 2000,
+                        "subscribeDegradation": {}
+                    },
+                    "permissions": {},
+                    "priority": 1
+                }
+            },
+            "settings": {
+                "region": "in",
+                "subscribeDegradation": {},
+                "screenSimulcastLayers": {},
+                "videoSimulcastLayers": {}
+            }
+        }
+    ],
+    "last": "615dbca1ba65e77a89a8e2b8"
+}
+```
+
+</Tab>
+
+#### URL Parameters
+
+| Name        | Type     | Description                                                                                                                        | Required |
+| :---------- | :------- | :--------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| name <br/>  | `string` | Name of the template.                                                                                                              | No       |
+| id <br/>    | `string` | ID of the template.                                                                                                                | No       |
+| start <br/> | `string` | Returned dataset is sorted by decreasing order of IDs. Provide the ID of the last result set to start in reverse order from there. | No       |
+| limit <br/> | `int`    | Number of templates to return (max 20).                                                                                            | No       |
+
+<DeleteRequest
+    title="Delete Template API"
+    desp="This endpoint is used to delete a template. Instead of an id URL parameter name can be provided. Subsequent delete requests on non-existing templates gives 404."
+    url="https://prod-policy.100ms.live/api/v1/templates?id=<templateID"
+/>
+
+<Tabs items={['Request', 'Response']} id="req8" />
+
+<Tab id="req8-0">
+
+```bash
+curl https://prod-policy.100ms.live/api/v1/templates?id=<id> -H 'Authorization: Bearer <management_token>' -X DELETE -H 'Content-Type: application/json'
+```
+
+</Tab>
+<Tab id="req8-1">
+
+<Response res="204: No Content" />
+
+```json
+
+```
+
+</Tab>
+
+<GetRequest
+    title="Get Settings API"
+    desp="This endpoint is used to fetch settings. "
+    url="https://prod-policy.100ms.live/api/v1/templates/<templateId>/settings"
+/>
+
+<Tabs items={['Request', 'Response']} id="req5" />
+
+<Tab id="req5-0">
+
+```bash
+curl https://prod-policy.100ms.live/api/v1/templates/<templateId>/settings -H 'Authorization: Bearer <management_token>'
+```
+
+</Tab>
+<Tab id="req5-1">
+
+<Response res="200: OK" />
+
+```json
+{
+    "region": "in",
+    "subscribeDegradation": {},
+    "screenSimulcastLayers": {},
+    "videoSimulcastLayers": {}
+}
+```
+
+</Tab>
+
+<PostRequest
+    title="Modify Template API"
+    desp="This endpoint is used to modify a Template. You can also use the URL parameter name instead of id to modify a template by name. Providing the same name as a previous template overrides that template. You need to provide all options for roles and settings which you want to apply."
+    url="https://prod-policy.100ms.live/api/v1/templates?id=<templateId>"
+/>
+
+<Tabs items={['Request', 'Response']} id="req6" />
+
+<Tab id="req6-0">
+
+```bash
+curl https://prod-policy.100ms.live/api/v1/templates?id=<templateId> -H 'Authorization: Bearer <management_token>' -X POST -H 'Content-Type: application/json' -d '{ "roles":{ "student":{ "name":"student", "publishParams":{ "allowed":[ "screen", "audio" ], "audio":{ "bitRate":42, "codec":"opus" }, "video":{ "bitRate":250, "codec":"vp8", "frameRate":30, "width":480, "height":270 }, "screen":{ "codec":"vp8", "frameRate":10, "width":1920, "height":1086 } }, "subscribeParams":{ "subscribeToRoles":[ "teacher", "student" ], "maxSubsBitRate":2000 }, "priority":1 } }, "settings":{ "region":"eu" } }'
+```
+
+</Tab>
+<Tab id="req6-1">
+
+<Response res="200: OK" />
+
+```json
+{
+    "_id": "615dbca1ba65e77a89a8e2b8",
+    "name": "test-amit10",
+    "customer": "60f7cc95f88117b9e47bf618",
+    "roles": {
+        "student": {
+            "name": "student",
+            "publishParams": {
+                "allowed": ["screen", "audio"],
+                "audio": {
+                    "bitRate": 42,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 250,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 480,
+                    "height": 270
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1086
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": ["teacher", "student"],
+                "maxSubsBitRate": 2000,
+                "subscribeDegradation": {}
+            },
+            "permissions": {},
+            "priority": 1
+        }
+    },
+    "settings": {
+        "region": "eu",
+        "subscribeDegradation": {},
+        "screenSimulcastLayers": {},
+        "videoSimulcastLayers": {}
+    }
+}
+```
+
+</Tab>
+
+#### Body Parameters
+
+| Name           | Type      | Description                                                                                                                                      | Required |
+| :------------- | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| name <br/>     | `string`  | If you don't provide the `name`, earlier provided name is used. Providing the name of another template overrides that template.                  | No       |
+| default <br/>  | `boolean` | Whether this is default template for customer. Default template for a customer is used when no template is provided in create room API.          | No       |
+| roles <br/>    | `object`  | Modified map of `<roleName:roleObject>`. Since this is a POST request, you need to provide the whole roles object to modify/persist/override it. | Yes      |
+| settings <br/> | `object`  | Modified settings. Since this is a POST request, you need to provide the whole settings object to modify/persist/override it.                    | Yes      |
