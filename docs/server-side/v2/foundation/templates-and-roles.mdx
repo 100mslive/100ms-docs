@@ -5,18 +5,20 @@ nav: 2.2
 
 <Content alias="templatesAndRoles" />
 
-# Interact with Templates via API
+## Interact with Templates via API
 
 Apart from the dashboard, a programmatic way to interact with templates is via API. You will need a [management token](authentication-and-tokens) as a bearer token for your requests. After updating a template, you might need to rejoin or initiate a new session for the template updates to take place.
 
-#### Common Headers For all APIs
+### Common Headers For all APIs
 
-| Name                | Value                       | Required |
-| :------------------ | :-------------------------- | :------- |
-| Authorization <br/> | Bearer `<management token>` | Yes      |
+| Name                | Value                         | Required |
+| :------------------ | :---------------------------- | :------- |
+| Authorization <br/> | Bearer `{{management token}}` | Yes      |
+
+### Create Template API
 
 <PostRequest
-    title="Create Template API"
+    title="/api/v1/templates"
     desp="This endpoint is used to create a template. A recommended way is to provide a list of roles with empty objects to get default values for various options corresponding to those roles, then update those roles by modifying them by create/modify role API."
     url="https://prod-policy.100ms.live/api/v1/templates"
 />
@@ -26,7 +28,7 @@ Apart from the dashboard, a programmatic way to interact with templates is via A
 <Tab id="req-0">
 
 ```bash
-curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer <management_token>' -X POST -H 'Content-Type: application/json' -d '{ "name": "test-template", "default": true, "roles":{ "student": {}, "teacher": {}, "admin": {} } }'
+curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer {{management_token}}' -X POST -H 'Content-Type: application/json' -d '{ "name": "test-template", "default": true, "roles":{ "student": {}, "teacher": {}, "admin": {} } }'
 ```
 
 </Tab>
@@ -140,7 +142,7 @@ curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer <
 | :------------- | :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
 | name <br/>     | `string`  | A unique identifier you can assign to 100ms temmplates. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Notes**: <br/> (1) If `create Template` is called with an existing template name, then that template will be overwritten.<br/> (2) Providing template name will be helpful if you want to modify/delete the template using name. | No       |
 | default <br/>  | `boolean` | Whether this is default template for a customer. Default template for a customer is used when no template is provided in `create Room` api.                                                                                                                                                                                                                                                                   | No       |
-| roles <br/>    | `object`  | Map of `<roleName:roleObject>`. Some sane defaults are set for values that are not provided in the roles object.                                                                                                                                                                                                                                                                                              | No       |
+| roles <br/>    | `object`  | Map of `{roleName:roleObject}`. Some sane defaults are set for values that are not provided in the roles object.                                                                                                                                                                                                                                                                                              | No       |
 | settings <br/> | `object`  | Global settings for this template.                                                                                                                                                                                                                                                                                                                                                                            | No       |
 
 #### roleObject
@@ -288,10 +290,12 @@ curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer <
 | :----- | :------- | :---------------------------------------------------------------------------------------------------------------------- | :------- |
 | region | `string` | Region in which the room will be hosted by default ["auto"/"in"/"us"/"eu"] - "auto" implies automatic region selection. | No       |
 
+### Create/Modify Role API
+
 <PostRequest
-    title="Create/Modify Role API"
+    title="/api/v1/templates/:id/roles/:name"
     desp="This endpoint is used to create/modify a role."
-    url="https://prod-policy.100ms.live/api/v1/templates/<id>/roles/<roleName>"
+    url="https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/roles/{{roleName}}"
 />
 
 <Tabs items={['Request', 'Response']} id="req1" />
@@ -299,7 +303,7 @@ curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer <
 <Tab id="req1-0">
 
 ```bash
-curl https://prod-policy.100ms.live/api/v1/templates/<id>/roles/<roleName> -H 'Authorization: Bearer <management_token>' -X POST -H 'Content-Type: application/json' -d '{ "name": "listener3", "publishParams": { "allowed": [ "video", "screen", "audio" ], "audio": { "bitRate": 40, "codec": "opus" }, "video": { "bitRate": 400, "codec": "vp8", "frameRate": 30, "width": 480, "height": 360 }, "screen": { "codec": "vp8", "frameRate": 10, "width": 1920, "height": 1080 } }, "subscribeParams": { "subscribeToRoles": [ "speaker", "moderator", "new-role-9880" ], "maxSubsBitRate": 3200, "subscribeDegradation": {} }, "permissions": {}, "priority": 1 }'
+curl https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/roles/{{roleName}} -H 'Authorization: Bearer {{management_token}}' -X POST -H 'Content-Type: application/json' -d '{ "name": "listener3", "publishParams": { "allowed": [ "video", "screen", "audio" ], "audio": { "bitRate": 40, "codec": "opus" }, "video": { "bitRate": 400, "codec": "vp8", "frameRate": 30, "width": 480, "height": 360 }, "screen": { "codec": "vp8", "frameRate": 10, "width": 1920, "height": 1080 } }, "subscribeParams": { "subscribeToRoles": [ "speaker", "moderator", "new-role-9880" ], "maxSubsBitRate": 3200, "subscribeDegradation": {} }, "permissions": {}, "priority": 1 }'
 ```
 
 </Tab>
@@ -349,10 +353,12 @@ curl https://prod-policy.100ms.live/api/v1/templates/<id>/roles/<roleName> -H 'A
 | roleObject <br/> | `object` | Role object correspoding to the given role.                                                                                     | Yes      |
 | name <br/>       | `string` | Providing a `name` renames the role to the provided name. If role with same `name` already exists, it gives an overwrite error. | No       |
 
+### Update Settings API
+
 <PostRequest
-    title="Update Settings API"
+    title="/api/v1/templates/:id/settings"
     desp="This endpoint is used to update settings. "
-    url="https://prod-policy.100ms.live/api/v1/templates/<id>/setings>"
+    url="https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/setings"
 />
 
 <Tabs items={['Request', 'Response']} id="req2" />
@@ -360,7 +366,7 @@ curl https://prod-policy.100ms.live/api/v1/templates/<id>/roles/<roleName> -H 'A
 <Tab id="req2-0">
 
 ```bash
-curl https://prod-policy.100ms.live/api/v1/templates/<id>/settings -H 'Authorization: Bearer <management_token>' -X POST -H 'Content-Type: application/json' -d '{ "region": "us" }'
+curl https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/settings -H 'Authorization: Bearer {{management_token}}' -X POST -H 'Content-Type: application/json' -d '{ "region": "us" }'
 ```
 
 </Tab>
@@ -382,10 +388,12 @@ curl https://prod-policy.100ms.live/api/v1/templates/<id>/settings -H 'Authoriza
 | :----------- | :------- | :------------------------------------------------------------------- | :------- |
 | region <br/> | `string` | Region in which the room will be hosted by default ["in"/"us"/"eu"]. | No       |
 
+### Get Templates API
+
 <GetRequest
-    title="Get Templates API"
+    title="/api/v1/templates?id=ID"
     desp="This endpoint is used to fetch a template. This API can be used to fetch a template. Instead of id, URL param name can be provided to fetch by name. Providing no URL params fetches all templates for the customer. You can provide start/limit params for pagination."
-    url="https://prod-policy.100ms.live/api/v1/templates?id=<templateID>"
+    url="https://prod-policy.100ms.live/api/v1/templates?id={{templateID}}"
 />
 
 <Tabs items={['Request', 'Response']} id="req3" />
@@ -393,7 +401,7 @@ curl https://prod-policy.100ms.live/api/v1/templates/<id>/settings -H 'Authoriza
 <Tab id="req3-0">
 
 ```bash
-curl https://prod-policy.100ms.live/api/v1/templates?id=<templateId> -H 'Authorization: Bearer <management_token>'
+curl https://prod-policy.100ms.live/api/v1/templates?id={{templateID}} -H 'Authorization: Bearer {{management_token}}'
 ```
 
 </Tab>
@@ -462,10 +470,12 @@ curl https://prod-policy.100ms.live/api/v1/templates?id=<templateId> -H 'Authori
 | limit <br/>   | `int`     | Number of templates to return (max 20).                                                                                            | No       |
 | default <br/> | `boolean` | Whether template is default or not.                                                                                                | No       |
 
+### Get Role API
+
 <GetRequest
-    title="Get Role API"
+    title="/api/v1/templates/:id/roles/:name"
     desp="This endpoint is used to fetch a role. "
-    url="https://prod-policy.100ms.live/api/v1/templates/<templateId>/roles/<roleName>"
+    url="https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/roles/{{roleName}}"
 />
 
 <Tabs items={['Request', 'Response']} id="req4" />
@@ -473,7 +483,7 @@ curl https://prod-policy.100ms.live/api/v1/templates?id=<templateId> -H 'Authori
 <Tab id="req4-0">
 
 ```bash
-curl https://prod-policy.100ms.live/api/v1/templates/<templateId>/roles/<roleName> -H 'Authorization: Bearer <management_token>'
+curl https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/roles/{{roleName}} -H 'Authorization: Bearer {{management_token}}'
 ```
 
 </Tab>
@@ -516,10 +526,12 @@ curl https://prod-policy.100ms.live/api/v1/templates/<templateId>/roles/<roleNam
 
 </Tab>
 
+### Get Settings API
+
 <GetRequest
-    title="Get Settings API"
+    title="/api/v1/settings/:id/settings"
     desp="This endpoint is used to fetch settings. "
-    url="https://prod-policy.100ms.live/api/v1/templates/<templateId>/settings"
+    url="https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/settings"
 />
 
 <Tabs items={['Request', 'Response']} id="req5" />
@@ -527,7 +539,7 @@ curl https://prod-policy.100ms.live/api/v1/templates/<templateId>/roles/<roleNam
 <Tab id="req5-0">
 
 ```bash
-curl https://prod-policy.100ms.live/api/v1/templates/<templateId>/settings -H 'Authorization: Bearer <management_token>'
+curl https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/settings -H 'Authorization: Bearer {{management_token}}'
 ```
 
 </Tab>
@@ -543,10 +555,12 @@ curl https://prod-policy.100ms.live/api/v1/templates/<templateId>/settings -H 'A
 
 </Tab>
 
+### Modify Template API
+
 <PostRequest
-    title="Modify Template API"
+    title="/api/v1/templates?id=ID"
     desp="This endpoint is used to modify a Template. You can also use the URL parameter name instead of id to modify a template by name. Providing the same name as a previous template overrides that template. You need to provide all options for roles and settings which you want to apply."
-    url="https://prod-policy.100ms.live/api/v1/templates?id=<templateId>"
+    url="https://prod-policy.100ms.live/api/v1/templates?id={{tempalateID}}"
 />
 
 <Tabs items={['Request', 'Response']} id="req6" />
@@ -554,7 +568,7 @@ curl https://prod-policy.100ms.live/api/v1/templates/<templateId>/settings -H 'A
 <Tab id="req6-0">
 
 ```bash
-curl https://prod-policy.100ms.live/api/v1/templates?id=<templateId> -H 'Authorization: Bearer <management_token>' -X POST -H 'Content-Type: application/json' -d '{ "roles":{ "student":{ "name":"student", "publishParams":{ "allowed":[ "screen", "audio" ], "audio":{ "bitRate":42, "codec":"opus" }, "video":{ "bitRate":250, "codec":"vp8", "frameRate":30, "width":480, "height":270 }, "screen":{ "codec":"vp8", "frameRate":10, "width":1920, "height":1086 } }, "subscribeParams":{ "subscribeToRoles":[ "teacher", "student" ], "maxSubsBitRate":2000 }, "priority":1 } }, "settings":{ "region":"eu" } }'
+curl https://prod-policy.100ms.live/api/v1/templates?id={{templateID}} -H 'Authorization: Bearer {{management_token}}' -X POST -H 'Content-Type: application/json' -d '{ "roles":{ "student":{ "name":"student", "publishParams":{ "allowed":[ "screen", "audio" ], "audio":{ "bitRate":42, "codec":"opus" }, "video":{ "bitRate":250, "codec":"vp8", "frameRate":30, "width":480, "height":270 }, "screen":{ "codec":"vp8", "frameRate":10, "width":1920, "height":1086 } }, "subscribeParams":{ "subscribeToRoles":[ "teacher", "student" ], "maxSubsBitRate":2000 }, "priority":1 } }, "settings":{ "region":"eu" } }'
 ```
 
 </Tab>
@@ -613,13 +627,15 @@ curl https://prod-policy.100ms.live/api/v1/templates?id=<templateId> -H 'Authori
 | :------------- | :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | name <br/>     | `string`  | If you don't provide the `name`, earlier provided name is used. Trying to modify a template's name to match another existing template's name produces overwrite error. | No       |
 | default <br/>  | `boolean` | Whether this is default template for customer. Default template for a customer is used when no template is provided in create room API.                                | No       |
-| roles <br/>    | `object`  | Modified map of `<roleName:roleObject>`. Since this is a POST request, you need to provide the whole roles object to modify/persist/override it.                       | Yes      |
+| roles <br/>    | `object`  | Modified map of `{roleName:roleObject}`. Since this is a POST request, you need to provide the whole roles object to modify/persist/override it.                       | Yes      |
 | settings <br/> | `object`  | Modified settings. Since this is a POST request, you need to provide the whole settings object to modify/persist/override it.                                          | Yes      |
 
+### Delete Role API
+
 <DeleteRequest
-    title="Delete Role API"
+    title="/api/v1/templates/:id/roles/:name"
     desp="This endpoint is used to delete a role. Subsequent requests for deleting role which does not exist gives 404."
-    url="https://prod-policy.100ms.live/api/v1/templates/<id>/roles/<roleName>"
+    url="https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/roles/{{roleName}}"
 />
 
 <Tabs items={['Request', 'Response']} id="req7" />
@@ -627,7 +643,7 @@ curl https://prod-policy.100ms.live/api/v1/templates?id=<templateId> -H 'Authori
 <Tab id="req7-0">
 
 ```bash
-curl https://prod-policy.100ms.live/api/v1/templates/<id>/roles/<roleName> -H 'Authorization: Bearer <management_token>' -X DELETE -H 'Content-Type: application/json'
+curl https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/roles/{{roleName}} -H 'Authorization: Bearer {{management_token}}' -X DELETE -H 'Content-Type: application/json'
 ```
 
 </Tab>

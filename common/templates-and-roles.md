@@ -32,13 +32,10 @@ Publish strategies will be used to determine the tracks and their quality which 
 
 Subscribe strategies will be used to determine what all roles, this role can subscribe to.
 
-### Subscribe to
-
-You can select all the roles of the template which this role will subscribe
-
-### Subscribe Degradation
-
-When this flag is turned on, one or more remote video tracks will be muted automatically when the network condition worsens. Such tracks will be marked as `degraded`. When the network condition improves, the `degraded` tracks will automatically be unmuted.
+| Strategy              | Description                                                                                                                                                                                                                                                      |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Subscribe to          | You can select all the roles of the template which this role will subscribe                                                                                                                                                                                      |
+| Subscribe Degradation | When this flag is turned on, one or more remote video tracks will be muted automatically when the network condition worsens. Such tracks will be marked as `degraded`. When the network condition improves, the `degraded` tracks will automatically be unmuted. |
 
 ### Permissions
 
