@@ -10,19 +10,53 @@ The concepts explained here are:
 
 ## Audio Level
 
-The audio level for every speaking peer is can be retrieved by registering an instance of `HMSAudioListener` in `hmsSDK.addAudioObserver`.
+The audio level for every speaking peer can be retrieved by registering an instance of `HMSAudioListener` in `hmsSDK.addAudioObserver` like so.
+
+
+<Tabs id="add-audio-observer" items={['Kotlin', 'Java']} />
+
+<Tab id='add-audio-observer-0'>
 
 ```kotlin
 hmsSDK.addAudioObserver(object : HMSAudioListener {
         override fun onAudioLevelUpdate(speakers: Array<HMSSpeaker>) {
           Log.v("TAG",
-            "onAudioLevelUpdate: speakers=${speakers.map { Pair(it.peer?.name, it.level) }}"
+                  "Active Speakers are: ${speakers.map { s -> "${s.peer?.name} ${s.level}" }}}"
           )
         }
       })
+
 ```
 
-Here's are the properties on the `HMSSpeaker` class:
+</Tab>
+
+<Tab id='add-audio-observer-1'>
+
+```java
+hmsSdk.addAudioObserver(new HMSAudioListener() {
+            @Override
+            public void onAudioLevelUpdate(@NonNull HMSSpeaker[] hmsSpeakers) {
+                StringBuilder allSpeakers = new StringBuilder("Active speakers are: ");
+                for( HMSSpeaker speaker : hmsSpeakers) {
+                  String name;
+                  if(speaker.getPeer() != null ) {
+                    name = speaker.getPeer().getName()
+                  } else {
+                    name = ""
+                  }
+                    allSpeakers.append(name)
+                        .append(" ")
+                        .append(speaker.getLevel())
+                        .append("\n");
+                }
+                Log.d("tag", allSpeakers.toString());
+            }
+        });
+```
+</Tab>
+
+
+Here are the properties on the `HMSSpeaker` class:
 
 - trackId : `String`. The track id of the audio track for this speaker.
 - level : `Int`. The level of the audio. It may vary from 0-100. A higher value indicates a higher speaking volume.
