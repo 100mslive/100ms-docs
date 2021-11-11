@@ -138,21 +138,21 @@ curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer {
 
 #### Body Parameters
 
-| Name           | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                   | Required |
-| :------------- | :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
-| name <br/>     | `string`  | A unique identifier you can assign to 100ms temmplates. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Notes**: <br/> (1) If `create Template` is called with an existing template name, then that template will be overwritten.<br/> (2) Providing template name will be helpful if you want to modify/delete the template using name. | No       |
-| default <br/>  | `boolean` | Whether this is default template for a customer. Default template for a customer is used when no template is provided in `create Room` api.                                                                                                                                                                                                                                                                   | No       |
-| roles <br/>    | `object`  | Map of `{roleName:roleObject}`. Some sane defaults are set for values that are not provided in the roles object.                                                                                                                                                                                                                                                                                              | No       |
-| settings <br/> | `object`  | Global settings for this template.                                                                                                                                                                                                                                                                                                                                                                            | No       |
+| Name           | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                 | Required |
+| :------------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| name <br/>     | `string`  | A unique identifier you can assign to 100ms temmplates. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Notes**: <br/>(1) If `create Template` is called with an existing template name, then that template will be overwritten.<br/>(2) Providing template name will be helpful if you want to modify/delete the template using name. | No       |
+| default <br/>  | `boolean` | Whether this is default template for a customer. Default template for a customer is used when no template is provided in `create Room` api.                                                                                                                                                                                                                                                                 | No       |
+| roles <br/>    | `object`  | Map of `{roleName:roleObject}`. Some sane defaults are set for values that are not provided in the roles object.                                                                                                                                                                                                                                                                                            | No       |
+| settings <br/> | `object`  | Global settings for this template.                                                                                                                                                                                                                                                                                                                                                                          | No       |
 
 #### roleObject
 
-| Name            | Type     | Description                           | Required |
-| :-------------- | :------- | :------------------------------------ | :------- |
-| publishParams   | `object` | Publish parameters for this role.     | No       |
-| subscribeParams | `object` | Subscribe parameters for this role.   | No       |
-| permissions     | `object` | Permissions for this role.            | No       |
-| priority        | `int`    | Priority for subscription/publishing. | No       |
+| Name            | Type     | Description                                                           | Required |
+| :-------------- | :------- | :-------------------------------------------------------------------- | :------- |
+| publishParams   | `object` | Publish parameters for this role.                                     | No       |
+| subscribeParams | `object` | Subscribe parameters for this role.                                   | No       |
+| permissions     | `object` | Permissions for this role.                                            | No       |
+| priority        | `int`    | Priority of the role for subscription/publishing.<br/>Range: `1`-`10` | No       |
 
 #### publishParams
 
@@ -167,10 +167,10 @@ curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer {
 
 #### audio
 
-| Name    | Type     | Description                                                                        | Required |
-| :------ | :------- | :--------------------------------------------------------------------------------- | :------- |
-| bitRate | `int`    | Audio Max bitrate of audio track in kbps.<br/> Range: `16`-`128`<br/>Default: `32` | No       |
-| codec   | `string` | Codec for the audio track.<br/>Options: [`opus`] <br/>Default: `opus`              | No       |
+| Name    | Type     | Description                                                                       | Required |
+| :------ | :------- | :-------------------------------------------------------------------------------- | :------- |
+| bitRate | `int`    | Audio Max bitrate of audio track in kbps.<br/>Range: `16`-`128`<br/>Default: `32` | No       |
+| codec   | `string` | Codec for the audio track.<br/>Options: [`opus`] <br/>Default: `opus`             | No       |
 
 #### video
 
@@ -188,7 +188,7 @@ curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer {
 | :-------- | :------- | :--------------------------------------------------------------------------- | :------- |
 | bitRate   | `int`    | Max bitrate of screen track in kbps.<br/>Range: `>=500` <br/>Default: `1024` | No       |
 | codec     | `string` | Codec for the screen track.<br/>Options: [`vp8`]<br/>Default: `vp8`          | No       |
-| frameRate | `int`    | Max number of screen frames per second<br/>Range: `1`-`10`<br/>Default: `10` | No       |
+| frameRate | `int`    | Max number of screen frames per second<br/>Range: `1`-`30`<br/>Default: `10` | No       |
 | height    | `int`    | Height of the screen track.<br/>Range: `270`-`1080`<br/>Default: `720`       | No       |
 | width     | `int`    | Width of the screen track.<br/>Range: `480`-`1920`<br/>Default: `1280`       | No       |
 
