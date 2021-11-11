@@ -5,16 +5,16 @@ nav: 12
 
 Android SDK provides support for sharing the entire screen of the device to the room.
 
-Please note that for a peer to share their screen, their role must have screenshare enabled in the dashboard.
+Please note that for a peer to share their screen, their role must have screenshare enabled in the dashboard. Also select the appropriate resolution that you desire the screenshare track should be of.
 
 ![ScreenshareDashboard](/docs/v2/screenshare-dashboard.png)
 
 ## How to start screenshare from the app
 To start screen share, app needs to call the `startScreenshare` method of `HMSSDK`, which takes in two parameters -
-    The first one is `HMSActionResultListener` which is the callback object needed to inform about `success`
-        or `failure`.
+    The first one is `HMSActionResultListener` which is a callback object needed to inform about `success`
+        or `failure` of the action
     The second one is a `Intent` which is the result data of MediaProjection permission activity;
-    the calling app must validate that result code is Activity.RESULT_OK before
+    the calling app must validate that result code is `Activity.RESULT_OK` before
     calling this method.
 
 Following is the snippet on how to use this:
@@ -57,7 +57,8 @@ SDK will also start a foreground service with a notification when screenshare is
 
 ## How to stop screenshare
 
-Application needs to call the `stopScreenshare` method of `HMSSDK` with an instance of `HMSActionResultListener`
+Application needs to call the `stopScreenshare` method of `HMSSDK` and pass an instance of `HMSActionResultListener` to listen to the callbacks.
+SDK also stops the foreground service on calling this method.
 
 <Tabs id="stopscreenshare" items={['Kotlin']} />
 
@@ -81,6 +82,6 @@ Application needs to call the `stopScreenshare` method of `HMSSDK` with an insta
 </Tab>
 
 Note :-
-    Stop screenshare shuold also be called from `onDestroy()` of the `activity`/ `fragment` that is
+    `stopScreenshare` should also be called from `onDestroy()` of the `activity`/ `fragment` that is
     starting the screenshare otherwise the foreground service will be running if even user kills the
     app from the Recents tab.
