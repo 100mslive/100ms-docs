@@ -1,6 +1,86 @@
 ---
-title: Screen Share
+title: Screen Share (Beta)
 nav: 12
 ---
 
-Can't share your screen from Android yet. We're always working on adding new features.
+Android SDK provides support for sharing the entire screen of the device to the room.
+
+Please note that for a peer to share their screen, their role must have screenshare enabled in the dashboard.
+
+![ScreenshareDashboard](/docs/v2/screenshare-dashboard.png)
+
+## How to start screenshare from the app
+To start screen share, app needs to call the `startScreenshare` method of `HMSSDK`, which takes in two parameters -
+    The first one is `HMSActionResultListener` which is the callback object needed to inform about `success`
+        or `failure`.
+    The second one is a `Intent` which is the result data of MediaProjection permission activity;
+    the calling app must validate that result code is Activity.RESULT_OK before
+    calling this method.
+
+Following is the snippet on how to use this:
+
+<Tabs id="startscreenshare" items={['Kotlin']} />
+
+<Tab id='startscreenshare-0'>
+
+```kotlin
+// Define a result Launcher
+  var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    if (result.resultCode == Activity.RESULT_OK) {
+      val mediaProjectionPermissionResultData: Intent? = result.data
+      // Pass this intent to hmsSDK
+      hmsSDK.startScreenshare(object : HMSActionResultListener {
+        override fun onError(error: HMSException) {
+          // an error occurred
+        }
+
+        override fun onSuccess() {
+          // started successfully
+        }
+
+      } ,mediaProjectionPermissionResultData)
+    }
+  }
+
+// Get the MEDIA_PROJECTION_SERVICE and launch the result launcher
+    val mediaProjectionManager: MediaProjectionManager? = requireContext().getSystemService(
+                Context.MEDIA_PROJECTION_SERVICE
+              ) as MediaProjectionManager
+    resultLauncher.launch(mediaProjectionManager?.createScreenCaptureIntent())
+
+```
+
+</Tab>
+
+It is important to note that screenshare will not work if the `resultCode` is NOT `Activity.RESULT_OK`.
+SDK will also start a foreground service with a notification when screenshare is started, which is mandated above Android 10.
+
+## How to stop screenshare
+
+Application needs to call the `stopScreenshare` method of `HMSSDK` with an instance of `HMSActionResultListener`
+
+<Tabs id="stopscreenshare" items={['Kotlin']} />
+
+<Tab id='stopscreenshare-0'>
+
+```kotlin
+
+      hmsSDK.stopScreenshare(object : HMSActionResultListener {
+        override fun onError(error: HMSException) {
+          // an error occurred
+        }
+
+        override fun onSuccess() {
+          // started successfully
+        }
+
+      } )
+
+```
+
+</Tab>
+
+Note :-
+    Stop screenshare shuold also be called from `onDestroy()` of the `activity`/ `fragment` that is
+    starting the screenshare otherwise the foreground service will be running if even user kills the
+    app from the Recents tab.
