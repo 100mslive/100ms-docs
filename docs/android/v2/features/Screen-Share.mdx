@@ -85,3 +85,11 @@ SDK also stops the foreground service on calling this method.
 >   `stopScreenshare` should also be called from `onDestroy()` of the `activity`/ `fragment` that is
     starting the screenshare otherwise the foreground service will be running if even user kills the
     app from the Recents tab.
+
+>   DONOT forget to add the permission for foreground service
+
+    ```kotlin
+
+        <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    ```
