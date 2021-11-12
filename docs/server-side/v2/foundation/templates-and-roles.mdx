@@ -156,14 +156,12 @@ curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer {
 
 #### publishParams
 
-| Name                  | Type     | Description                                                              | Required |
-| :-------------------- | :------- | :----------------------------------------------------------------------- | :------- |
-| allowed               | `array`  | Allowed tracks. Subarray of [`audio`, `video`, `screen`].                | No       |
-| audio                 | `object` | Audio publish parameters.                                                | No       |
-| video                 | `object` | Video publish parameters.                                                | No       |
-| screen                | `object` | Screenshare publish parameters.                                          | No       |
-| videoSimulcastLayers  | `object` | Video simulcast parameters (adding this enables video simulcast).        | No       |
-| screenSimulcastLayers | `object` | Screenshare simulcast parameters (adding this enables screen simulcast). | No       |
+| Name    | Type     | Description                                               | Required |
+| :------ | :------- | :-------------------------------------------------------- | :------- |
+| allowed | `array`  | Allowed tracks. Subarray of [`audio`, `video`, `screen`]. | No       |
+| audio   | `object` | Audio publish parameters.                                 | No       |
+| video   | `object` | Video publish parameters.                                 | No       |
+| screen  | `object` | Screenshare publish parameters.                           | No       |
 
 #### audio
 
@@ -191,67 +189,6 @@ curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer {
 | frameRate | `int`    | Max number of screen frames per second<br/>Range: `1`-`30`<br/>Default: `10` | No       |
 | height    | `int`    | Height of the screen track.<br/>Range: `270`-`1080`<br/>Default: `720`       | No       |
 | width     | `int`    | Width of the screen track.<br/>Range: `480`-`1920`<br/>Default: `1280`       | No       |
-
-#### videoSimulcastLayers
-
-| Name   | Type    | Description                    | Required |
-| :----- | :------ | :----------------------------- | :------- |
-| height | `int`   | Max height of the video track. | No       |
-| width  | `int`   | Max width of the video track.  | No       |
-| layers | `array` | See json below.                | No       |
-
-```json
-"layers": [
-  {
-    "rid": "f",
-    "scaleResolutionDownBy": 1.0,
-    "maxBitrate": 500,
-    "maxFramerate": 25
-  },
-  {
-    "rid": "h",
-    "scaleResolutionDownBy": 2.0,
-    "maxBitrate": 250,
-    "maxFramerate": 25
-  },
-  {
-    "rid": "q",
-    "scaleResolutionDownBy": 4.0,
-    "maxBitrate": 100,
-    "maxFramerate": 25
-  }
-]
-```
-
-#### screenSimulcastLayers
-
-| Name   | Type    | Description                 | Required |
-| :----- | :------ | :-------------------------- | :------- |
-| height | `int`   | Height of the screen track. | No       |
-| width  | `int`   | Width of the screen track.  | No       |
-| layers | `array` | See json below.             | No       |
-
-```json
-"layers": [
-  {
-    "rid": "f",
-    "scaleResolutionDownBy": 1.0,
-    "maxFramerate": 10
-  },
-  {
-    "rid": "h",
-    "scaleResolutionDownBy": 2.0,
-    "maxBitrate": 5000,
-    "maxFramerate": 10
-  },
-  {
-    "rid": "q",
-    "scaleResolutionDownBy": 4.0,
-    "maxBitrate": 1000,
-    "maxFramerate": 10
-  }
-]
-```
 
 #### subscribeParams
 
@@ -283,7 +220,7 @@ curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer {
 
 | Name   | Type     | Description                                                                                                                           | Required |
 | :----- | :------- | :------------------------------------------------------------------------------------------------------------------------------------ | :------- |
-| region | `string` | Region in which the room will be hosted by default. Possible values coudl be `in`, `us`, `eu` or `auto` (automatic region selection). | No       |
+| region | `string` | Region in which the room will be hosted by default. Possible values could be `in`, `us`, `eu` or `auto` (automatic region selection). | No       |
 
 ### Create/Modify Role API
 
@@ -621,7 +558,7 @@ curl https://prod-policy.100ms.live/api/v1/templates?id={{templateID}} -H 'Autho
 | Name           | Type      | Description                                                                                                                                                            | Required |
 | :------------- | :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | name <br/>     | `string`  | If you don't provide the `name`, earlier provided name is used. Trying to modify a template's name to match another existing template's name produces overwrite error. | No       |
-| default <br/>  | `boolean` | Whether this is default template for customer. Default template for a customer is used when no template is provided in create room API.                                | No       |
+| default <br/>  | `boolean` | Whether this is default template for customer. The default template for a customer is used when no template is provided in create room API.                            | No       |
 | roles <br/>    | `object`  | Modified map of `{roleName:roleObject}`. Since this is a POST request, you need to provide the whole roles object to modify/persist/override it.                       | Yes      |
 | settings <br/> | `object`  | Modified settings. Since this is a POST request, you need to provide the whole settings object to modify/persist/override it.                                          | Yes      |
 
