@@ -138,12 +138,12 @@ curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer {
 
 #### Body Parameters
 
-| Name           | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                 | Required |
-| :------------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name <br/>     | `string`  | A unique identifier you can assign to 100ms temmplates. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Notes**: <br/>(1) If `create Template` is called with an existing template name, then that template will be overwritten.<br/>(2) Providing template name will be helpful if you want to modify/delete the template using name. | No       |
-| default <br/>  | `boolean` | Whether this is default template for a customer. Default template for a customer is used when no template is provided in `create Room` api.                                                                                                                                                                                                                                                                 | No       |
-| roles <br/>    | `object`  | Map of `{roleName:roleObject}`. Some sane defaults are set for values that are not provided in the roles object.                                                                                                                                                                                                                                                                                            | No       |
-| settings <br/> | `object`  | Global settings for this template.                                                                                                                                                                                                                                                                                                                                                                          | No       |
+| Name           | Type      | Description                                                                                                                                                                                                                                                                                                                                                                                                | Required |
+| :------------- | :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| name <br/>     | `string`  | A unique identifier you can assign to 100ms templates. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Notes**: <br/>(1) If `create Template` is called with an existing template name, then that template will be overwritten.<br/>(2) Providing template name will be helpful if you want to modify/delete the template using name. | No       |
+| default <br/>  | `boolean` | Whether this is default template for a customer. Default template for a customer is used when no template is provided in `create Room` api.                                                                                                                                                                                                                                                                | No       |
+| roles <br/>    | `object`  | Map of `{roleName:roleObject}`. Some sane defaults are set for values that are not provided in the roles object.                                                                                                                                                                                                                                                                                           | No       |
+| settings <br/> | `object`  | Global settings for this template.                                                                                                                                                                                                                                                                                                                                                                         | No       |
 
 #### roleObject
 
@@ -410,7 +410,7 @@ curl https://prod-policy.100ms.live/api/v1/templates?id={{templateID}} -H 'Autho
     "data": [
         {
             "_id": "615dbca1ba65e77a89a8e2b8",
-            "name": "test-amit10",
+            "name": "test-template10",
             "customer": "60f7cc95f88117b9e47bf618",
             "roles": {
                 "student": {
@@ -574,7 +574,7 @@ curl https://prod-policy.100ms.live/api/v1/templates?id={{templateID}} -H 'Autho
 ```json
 {
     "_id": "615dbca1ba65e77a89a8e2b8",
-    "name": "test-amit10",
+    "name": "test-template10",
     "customer": "60f7cc95f88117b9e47bf618",
     "roles": {
         "student": {
