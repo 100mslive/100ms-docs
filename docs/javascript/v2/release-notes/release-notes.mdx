@@ -12,12 +12,31 @@ description: Release Notes for 100ms JavaScript SDK
 | @100mslive/hms-video-react | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-react.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-react) |
 | @100mslive/hms-video-store | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-store.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-store) |
 
+## 2021-11-12
+
+Released: `@100mslive/hms-video@0.1.32`, `@100mslive/hms-video-store@0.2.79`, `@100mslive/hms-video-react@0.3.105`
+
+Added:
+
+-   Support to play next item from audio/video playlist after current track ended
+-   Support for setting playbackrate on audio/video playlist
+-   `selectPeerSharingAudioPlaylist` selector to get peer who is sharing audioplaylist
+-   `selectPeersByRole(role: string)` selector to get peers by role
+
+Fixed:
+
+-   Not able to change respective devices when audio/video is muted
+-   Devicelist empty if permissions are denied while joining and enabled later on unmuting.
+-   Retry getusermedia when it fails with overconstrainedError.
+-   Type errors for selectors
+-   Role changes not persisent when the role change event occurs when a peer is reconnecting
+
 ## 2021-10-25
 
 Released: `@100mslive/hms-video@0.1.18`, `@100mslive/hms-video-react@0.3.97`
 
-- Fix an issue in VideoTile react component leading to blank tile
-- Fix unsuccesful tracks publish in case of user toggling video in preview
+-   Fix an issue in VideoTile react component leading to blank tile
+-   Fix unsuccesful tracks publish in case of user toggling video in preview
 
 ## 2021-10-21
 
