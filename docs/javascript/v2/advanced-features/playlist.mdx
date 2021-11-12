@@ -169,6 +169,7 @@ function Playlist() {
   const audioPlaylistAudioTrack = useHMSStore(
     selectAudioPlaylistTrackByPeerID(peer.id),
   );
+  const peerSharingAudioPlaylist = useHMSStore(selectPeerSharingAudioPlaylist);
 
   setList() {
     // audioListItems, videoListItems should have HMSPlaylistItem interface
@@ -181,3 +182,16 @@ function Playlist() {
 ```
 
 </Tab>
+
+# Playing Next item in the playlist
+
+By default, when the current item ends, the next item is played automatically. if you wish to control what you play next,
+you can do the following.
+
+```
+hmsActions.audioPlaylist.setIsAutoplayOn(false);
+hmsActions.videoPlaylist.setIsAutoplayOn(false);
+```
+
+And you will get a notification of type `HMSNotificationTypes.PLAYLIST_TRACK_ENDED` when current track ends. You can then play the next track.
+The notification also contains the playlist item that has ended.
