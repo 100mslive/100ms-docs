@@ -13,16 +13,20 @@ You can create room using either dashboard or API.
 
 ## Create Room using Dashboard
 
-You can create room on [100ms Dashboard](https://dashboard.100ms.live/create-room). While creating a room you can specify it's name, template, region and/or enable SFU recording. 
+You can create room on [100ms Dashboard](https://dashboard.100ms.live/create-room). While creating a room you can specify it's name, template, region and/or enable SFU recording.
 
 Room creation via dashboard is helpful in doing quick POC or creating smaller number of rooms.
-
 
 <Image width={2168} height={1083} alt="Create a room" src="/docs/v2/create-a-room.png" />
 
 You can add or modify templates on [100ms Dashboard](https://dashboard.100ms.live/templates).
 
-<Image width={2168} height={1139} alt="Room details on dashboard" src="/docs/v2/role-dashboard.png" />
+<Image
+    width={2168}
+    height={1139}
+    alt="Room details on dashboard"
+    src="/docs/v2/role-dashboard.png"
+/>
 
 ## Create Room using API
 
@@ -41,6 +45,7 @@ You can also create room using API. This provides a more scalable way of creatin
 ```bash
 curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <management_token>' -X POST -H 'Content-Type: application/json' -d '{"name": "test-room", "description": "This is a test room", "recording_info": {"enabled": true, "upload_info": {"type": "s3", "location": "test-bucket", "prefix": "test-prefix", "options": {"region": "ap-south-1"}, "credentials": {"key": "aws-access-key", "secret": "aws-secret-key"}}}}'
 ```
+
 </Tab>
 <Tab id="req-1">
 
@@ -48,51 +53,55 @@ curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <manage
 
 ```json
 {
-   "id":"61101349d0f56e684b608c08",
-   "name":"test-room",
-   "description":"This is a test room",
-   "active":true,
-   "recording_info":{
-      "enabled":true,
-      "upload_info":{
-         "type":"s3",
-         "location":"test-bucket",
-         "prefix":"test-prefix",
-         "credentials":{
-            "key":"aws-access-key",
-            "secret":"aws-secret-key"
-         },
-         "options":{
-            "region":"ap-south-1"
-         }
-      }
-   },
-   "user":"60b8e13a6eb86d8101b57353",
-   "customer":"60b8e13a6eb86d8101b57354",
-   "created_at":"2021-08-08T17:24:25.682362823Z",
-   "updated_at":"0001-01-01T00:00:00Z"
+    "id": "61101349d0f56e684b608c08",
+    "name": "test-room",
+    "description": "This is a test room",
+    "active": true,
+    "recording_info": {
+        "enabled": true,
+        "upload_info": {
+            "type": "s3",
+            "location": "test-bucket",
+            "prefix": "test-prefix",
+            "credentials": {
+                "key": "aws-access-key",
+                "secret": "aws-secret-key"
+            },
+            "options": {
+                "region": "ap-south-1"
+            }
+        }
+    },
+    "user": "60b8e13a6eb86d8101b57353",
+    "customer": "60b8e13a6eb86d8101b57354",
+    "created_at": "2021-08-08T17:24:25.682362823Z",
+    "updated_at": "0001-01-01T00:00:00Z"
 }
 ```
+
 </Tab>
 
 ### Headers
-| Name                 | Value                        | Required |
-| :------------------- | :--------------------------- | :------- |
-| Content-type <br/>   | application/json             | Yes      |
-| Authorization <br/>  | Bearer `<management token>`  | Yes      |
+
+| Name                | Value                       | Required |
+| :------------------ | :-------------------------- | :------- |
+| Content-type <br/>  | application/json            | Yes      |
+| Authorization <br/> | Bearer `<management token>` | Yes      |
 
 ### Body Paramters
-| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Required |
-| :------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
-| name <br/>           | `string` | A unique identifier you can assign to 100ms rooms. This is `case-insensitive`. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Note**: <br/><br/> (1) If `create Room` is called with an existing room name, then the corresponding room ID is returned <br/><br/> (2) Providing room name will be helpful if you want to disable the room later (disable room API requires room name)        | No       |
-| description <br/>    | `string` | A string to describe your room's usage. E.g. "9PM English Class Batch 2"                                                                                                                                                                                                                                                                                                                                                                                            | No       |
-| template <br/>       | `string` | [Template](./templates-and-roles) of the room. You can get template name from room details section on dashboard                                                                                                                                                                                                                                                                                                                                                     | No       |
-| recording_info <br/> | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings.                                                                                                                                                                                                                                                                                                                                   | No       |
-| region <br/>         | `string` | Region in which you want to create room. <br/><br/> `in` - India <br/><br/> `us` - United States <br/><br/>  `eu` - European Union <br/><br/>  `auto` Automatic region selection (default, and in case this parameter is not provided)                                                                                                                                                                                                                              | No       |
+
+| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Required |
+| :------------------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| name <br/>           | `string` | A unique identifier you can assign to 100ms rooms. This is `case-insensitive`. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Note**: <br/><br/> (1) If `create Room` is called with an existing room name, then the corresponding room ID is returned <br/><br/> (2) Providing room name will be helpful if you want to disable the room later (disable room API requires room name) | No       |
+| description <br/>    | `string` | A string to describe your room's usage. E.g. "9PM English Class Batch 2"                                                                                                                                                                                                                                                                                                                                                                                    | No       |
+| template <br/>       | `string` | [Template](../foundation/templates-and-roles) of the room. You can get template name from room details section on dashboard                                                                                                                                                                                                                                                                                                                                 | No       |
+| recording_info <br/> | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings.                                                                                                                                                                                                                                                                                                                           | No       |
+| region <br/>         | `string` | Region in which you want to create room. <br/><br/> `in` - India <br/><br/> `us` - United States <br/><br/> `eu` - European Union <br/><br/> `auto` Automatic region selection (default, and in case this parameter is not provided)                                                                                                                                                                                                                        | No       |
 
 ---
 
 ### recording_info
+
 | Name        | Type      | Description                                                                                                                                                                                     | Required |
 | :---------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | enabled     | `boolean` | Enable SFU recording. Disabled by default                                                                                                                                                       | No       |
@@ -101,6 +110,7 @@ curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <manage
 To know more about recording please visit [Recording](./recording)
 
 ### upload_info
+
 | Name        | Type     | Description                                                                                            | Required |
 | :---------- | :------- | :----------------------------------------------------------------------------------------------------- | :------- |
 | type        | `string` | Upload Destination type. Currently, only `s3` is supported                                             | Yes      |
@@ -110,15 +120,17 @@ To know more about recording please visit [Recording](./recording)
 | credentials | `object` | Object of type `Credentials`. This is used to share AWS credentials to access the s3 bucket specified. | No       |
 
 ### Options
-| Name   | Type     | Description                                                                                                               | Required |
-| :----- | :------- | :------------------------------------------------------------------------------------------------------------------------ | :------- |
-| region | `string` | Region of the AWS account hosting the s3 bucket for storing recordings. If not provided it is assumed to be `ap-south-1`  | No       |
+
+| Name   | Type     | Description                                                                                                              | Required |
+| :----- | :------- | :----------------------------------------------------------------------------------------------------------------------- | :------- |
+| region | `string` | Region of the AWS account hosting the s3 bucket for storing recordings. If not provided it is assumed to be `ap-south-1` | No       |
 
 ### Credentials
-| Name   | Type     | Description                                                                  | Required |
-| :----- | :------- | :--------------------------------------------------------------------------- | :------- |
-| key    | `string` | Access Key for the AWS account hosting the s3 bucket for storing recordings  | Yes      |
-| secret | `string` | Secret for the AWS account hosting the s3 bucket for storing recordings      | Yes      |
+
+| Name   | Type     | Description                                                                 | Required |
+| :----- | :------- | :-------------------------------------------------------------------------- | :------- |
+| key    | `string` | Access Key for the AWS account hosting the s3 bucket for storing recordings | Yes      |
+| secret | `string` | Secret for the AWS account hosting the s3 bucket for storing recordings     | Yes      |
 
 ## Disable Room
 
@@ -137,6 +149,7 @@ This API can be used to disable a room from further use
 ```bash
 curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <management_token>' -X POST -H 'Content-Type: application/json' -d '{"name": "test-room", "active": false}'
 ```
+
 </Tab>
 
 <Tab id="dis-1">
@@ -145,41 +158,44 @@ curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <manage
 
 ```json
 {
-   "id":"61101349d0f56e684b608c08",
-   "name":"test-room",
-   "description":"This is a test room",
-   "active":false,
-   "recording_info":{
-      "enabled":true,
-      "upload_info":{
-         "type":"s3",
-         "location":"test-bucket",
-         "prefix":"test-prefix",
-         "credentials":{
-            "key":"aws-access-key",
-            "secret":"aws-secret-key"
-         },
-         "options":{
-            "region":"ap-south-1"
-         }
-      }
-   },
-   "user":"60b8e13a6eb86d8101b57353",
-   "customer":"60b8e13a6eb86d8101b57354",
-   "created_at":"2021-08-08T17:24:25.682362823Z",
-   "updated_at":"0001-01-01T00:00:00Z"
+    "id": "61101349d0f56e684b608c08",
+    "name": "test-room",
+    "description": "This is a test room",
+    "active": false,
+    "recording_info": {
+        "enabled": true,
+        "upload_info": {
+            "type": "s3",
+            "location": "test-bucket",
+            "prefix": "test-prefix",
+            "credentials": {
+                "key": "aws-access-key",
+                "secret": "aws-secret-key"
+            },
+            "options": {
+                "region": "ap-south-1"
+            }
+        }
+    },
+    "user": "60b8e13a6eb86d8101b57353",
+    "customer": "60b8e13a6eb86d8101b57354",
+    "created_at": "2021-08-08T17:24:25.682362823Z",
+    "updated_at": "0001-01-01T00:00:00Z"
 }
 ```
+
 </Tab>
 
 ### Headers
-| Name                 | Value                        | Required |
-| :------------------- | :--------------------------- | :------- |
-| Content-type <br/>   | application/json             | Yes      |
-| Authorization <br/>  | Bearer `<management token>`  | Yes      |
+
+| Name                | Value                       | Required |
+| :------------------ | :-------------------------- | :------- |
+| Content-type <br/>  | application/json            | Yes      |
+| Authorization <br/> | Bearer `<management token>` | Yes      |
 
 ### Body Paramters
-| Name                 | Type     | Description                                                       | Required |
-| :------------------- | :------- | :---------------------------------------------------------------- | :------- |
-| name <br/>           | `string` | Room name as given during creation of the room                    | Yes      |
-| active <br/>         | `bool`   | Flag to indicate disabling of the room, should be set to `false`  | Yes      |
+
+| Name         | Type     | Description                                                      | Required |
+| :----------- | :------- | :--------------------------------------------------------------- | :------- |
+| name <br/>   | `string` | Room name as given during creation of the room                   | Yes      |
+| active <br/> | `bool`   | Flag to indicate disabling of the room, should be set to `false` | Yes      |
