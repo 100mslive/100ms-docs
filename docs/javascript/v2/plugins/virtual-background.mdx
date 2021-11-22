@@ -20,6 +20,8 @@ We have not extended support for Mobile browsers in this release.
 -   `blur background` - This is an action where the background of the video is blurred. No external image is used/required.
 -   `image background` - This is where the plugin will replace the video background with the image provided by user.
 -   `plugin load time` - The time taken by plugin to load model. This is in the range of 3-5 seconds for first time. Subsequent loads take less than 100 milliseconds.
+-   `image sharpening` - This is an action where the user video is sharpened, thus improving the overall quality. This will use a little additional resources (cpu/memory/battery).
+
 
 ## Pre-requisites
 
@@ -37,17 +39,22 @@ import HMSVirtualBackgroundPlugin from '@100mslive/hms-virtual-background';
 
 ## Instantiate Virtual Background
 
-This accepts background as a parameter, It can be of 3 types:
+This accepts 2 parameters as input
 
--  `blur` - String - This will set the background to blur
--  `image` - HTMLImageElement - This will replace the background to the image provide
--  `none` - String - This will remove the background effect from the video
+1. background, it can be of 3 types:
 
-```jsx
-// background : {'blur' | image | 'none'}
-const virtualBackground = new HMSVirtualBackgroundPlugin(background : {'blur' | image | 'none'});
+-   `blur` - String - This will set the background to blur
+-   `image` - HTMLImageElement - This will replace the background to the image provide
+-   `none` - String - This will remove the background effect from the video
+
+2. enableSharpening (optional), it is of boolean type (default: false)
+
+```js
+const virtualBackground = new HMSVirtualBackgroundPlugin({
+  background : 'none'  // 'blur' | image | 'none',
+  enableSharpening : false // boolean
+})
 ```
-
 ## Interfaces
 
 ### Check if plugin is supported
