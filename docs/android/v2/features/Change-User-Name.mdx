@@ -3,7 +3,7 @@ title: Change User Name
 nav: 15.0
 ---
 
-Any peer can change their own name before or after joining a room. Before joining, the name would have to be specified in `HMSConfig` that is passed to the join method.
+Any peer can change their own name before or after joining a room. Before joining, the name would have to be specified in `HMSConfig` that is passed to the join method. This document shows how the name can be changed after joining.
 
 ## Responding to name changes
 
@@ -39,7 +39,7 @@ hmsSdk.changeName(newName, object : HMSActionResultListener {
 
 ```java
 String newName = "Ashwini Shetty";
-hmsSdk.changeMetadata(newName, new HMSActionResultListener() {
+hmsSdk.changeName(newName, new HMSActionResultListener() {
     @Override
     public void onSuccess() {
 
