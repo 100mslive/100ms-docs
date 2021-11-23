@@ -10,23 +10,21 @@ This section show tell you how to:
 2. [Respond to when a remote peer changes its metadata](#responding-to-updates).
 3. [How to set a peer's metadata](#updating-metadata).
 
-The `HMSPeer` object prior to 2.2.1 contained `customerDescription` a read-only string whose value wouldn't change throughout a call.
-
-This has been replaced with `metadata`. The value is initially assigned as before, but now can be changed by the peer who owns it.
+The `HMSPeer` object prior to 2.2.1 contained `customerDescription` a read-only string whose value wouldn't change throughout a call. This has been replaced with `metadata`. The value is initially assigned as before but now can be changed by the peer who owns it.
 
 Any peer can change the metadata for themselves. Currently one peer cannot change another peer's metadata.
 
-To change their own metadata value, the peer should call `changeMetadata` on their `HMSSdk` instance.
+To change their own metadata value the peer should call `changeMetadata` on their `HMSSdk` instance.
 
-The data may be any arbitrary string, it cannot be changed to null.
+The data may be any arbitrary string though it cannot be changed to null.
 
 ## Reading metadata
 
-To read metadata read the `metadata` value on any `HMSPeer` instance.
+To read metadata, read the `metadata` value on any `HMSPeer` instance.
 
 ## Responding to updates
 
-Whenever a remote peer's metadata is updated a callback will be received in `onPeerUpdate(update : HMSPeerUpdate, peer : HMSPeer)` of `HMSUpdateListener` where the `update` will be of type `HMSPeerUpdate.METADATA_CHANGED`.
+Whenever a remote peer's metadata is updated a callback will be received in `onPeerUpdate(update : HMSPeerUpdate, peer : HMSPeer)` of `HMSUpdateListener` where the `update` value will be of type `HMSPeerUpdate.METADATA_CHANGED`.
 
 When this callback is received the UI for that peer should be updated as well.
 
