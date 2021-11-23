@@ -8,7 +8,7 @@ Looking for persistent state that can be set on a peer and updated anytime, for 
 This section will tell you how to:
 1. [Read Peer Metadata](#reading-metadata)
 2. [Respond to when a remote peer changes its metadata.](#responding-to-updates)
-3. [How to set a peer's metadata.](#setting-metadata)
+3. [How to set a peer's metadata.](#updating-metadata)
 
 The `HMSPeer` object prior to 2.2.1 contained `customerDescription` a read-only string whose value wouldn't change throughout a call.
 
@@ -30,7 +30,7 @@ Whenever a remote peer's metadata is updated a callback will be received in `onP
 
 When this callback is received the UI for that peer should be updated as well.
 
-## Setting Metadata
+## Updating Metadata
 
 Here is how a peer can set their own metadata to a random string. In this case the string is stringified json.
 
