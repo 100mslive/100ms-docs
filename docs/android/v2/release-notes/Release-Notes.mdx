@@ -4,6 +4,22 @@ nav: 15
 description: Release Notes for 100ms Android SDK
 ---
 ## 2.2.0 - 2021-11-19
+### Added
+* `changeMetadata` API to change the `metadata` in `HMSPeer`. This change will be updated to all and will be persistent
+
+### Fixed
+* `HMSRoomUpdate` will be trigerred for the local peer who initiated a start or stop Recording
+* The room's Recording status will be checked upon reconnection of a peer
+* Screenshare cannot be unpublished while in reconnection mode
+* `setVolume()` API on `RemoteAudioTrack` can now take in value from 0.0 to 10.0
+
+### Fixed
+* Analytic fixes
+* Fix issue in self role change which was calling `roleChange` twice
+* Remove token from URL Params
+
+
+## 2.2.0 - 2021-11-19
 ### Fixed
 * Analytic fixes
 * Fix issue in self role change which was calling `roleChange` twice
