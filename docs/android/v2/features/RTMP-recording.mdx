@@ -165,15 +165,15 @@ This represents that the room was set to be recorded when it was created and all
 
 ## When to check for room status
 
-The room status should be checked in three places:
-1. `HMSUpdateListener`'s' `onJoin`
-2. When `hmsSdk.startRtmpOrRecording()` is called
-3. When `hmsSdk.stopRtmpAndRecording()` is called.
+As of SDK version 2.2.2, the room status can be checked when any of the three events of type `HMSRoomUpdate` in `HMSUpdateListener` appear:
+* `HMSRoomUpdate.SERVER_RECORDING_STATE_UPDATED,`
+* `HMSRoomUpdate.RTMP_STREAMING_STATE_UPDATED`
+* `HMSRoomUpdate.BROWSER_RECORDING_STATE_UPDATED`
 
-- In the `onJoin(room: HMSRoom)` callback in `HMSUpdateListener`
-    The properties mentioned above will be on the `HMSRoom` object.
-- Whenever either of the start or stop recording functions is called, when their success or error callbacks are called, the values of the streaming and recording will be updated on the room object returned in onJoin.
+The properties mentioned above will be on the `HMSRoom` object.
+
+- The values of the streaming and recording will be updated on the room object returned in onJoin.
 So saving an instance of the room received at that time is recommended.
 
 ### Code sample
-Refer to the code example within the [100ms advanced sample app](https://github.com/100mslive/100ms-android/blob/c3e146fe1f46fe91dfb662c4512b34476f5080d3/app/src/main/java/live/hms/app2/ui/meeting/MeetingViewModel.kt#L417) for further information.
+Refer to the code example within the [100ms advanced sample app](https://github.com/100mslive/100ms-android/blob/0ebfc6527bafbda7236d5245dedb5fefb262bfcc/app/src/main/java/live/hms/app2/ui/meeting/MeetingViewModel.kt#L295) for further information.

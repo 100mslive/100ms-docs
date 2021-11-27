@@ -19,9 +19,9 @@ Apart from the dashboard, a programmatic way to interact with templates is via A
 ### Create Template API
 
 <PostRequest
-    title="/api/v1/templates"
+    title="/policy/v1/templates"
     desp="This endpoint is used to create a template. A recommended way is to provide a list of roles with empty objects to get default values for various options corresponding to those roles, then update those roles by modifying them by create/modify role API."
-    url="https://prod-policy.100ms.live/api/v1/templates"
+    url="https://prod-policy.100ms.live/policy/v1/templates"
 />
 
 <Tabs items={['Request', 'Response']} id="req" />
@@ -29,7 +29,7 @@ Apart from the dashboard, a programmatic way to interact with templates is via A
 <Tab id="req-0">
 
 ```bash
-curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer {{management_token}}' -X POST -H 'Content-Type: application/json' -d '{ "name": "test-template", "default": true, "roles":{ "student": {}, "teacher": {}, "admin": {} } }'
+curl 'https://prod-policy.100ms.live/policy/v1/templates' -H 'Authorization: Bearer {{management_token}}' -X POST -H 'Content-Type: application/json' -d '{ "name": "test-template", "default": true, "roles":{ "student": {}, "teacher": {}, "admin": {} } }'
 ```
 
 </Tab>
@@ -175,11 +175,11 @@ curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer {
 
 | Name      | Type     | Description                                                                   | Required |
 | :-------- | :------- | :---------------------------------------------------------------------------- | :------- |
-| bitRate   | `int`    | Max bitrate of video track in kbps.<br/>Range: `50`-`2000`<br/>Default: `256` | No       |
+| bitRate   | `int`    | Max bitrate of video track in kbps.<br/>Range: `30`-`2000`<br/>Default: `256` | No       |
 | codec     | `string` | Codec for the video track.<br/>Options: [`vp8`]<br/>Default: `vp8`            | No       |
 | frameRate | `int`    | Max number of video frames per second.<br/>Range: `1`-`30`<br/>Default: `25`  | No       |
-| height    | `int`    | Height of the video track.<br/>Range: `90`-`1080`<br/>Default: `180`          | No       |
-| width     | `int`    | Width of the video track.<br/>Range: `90`-`1920`<br/>Default: `320`           | No       |
+| height    | `int`    | Height of the video track.<br/>Range: `50`-`1080`<br/>Default: `180`          | No       |
+| width     | `int`    | Width of the video track.<br/>Range: `50`-`1920`<br/>Default: `320`           | No       |
 
 #### screen
 
@@ -226,9 +226,9 @@ curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer {
 ### Create/Modify Role API
 
 <PostRequest
-    title="/api/v1/templates/:id/roles/:name"
+    title="/policy/v1/templates/:id/roles/:name"
     desp="This endpoint is used to create/modify a role."
-    url="https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/roles/{{roleName}}"
+    url="https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/roles/{{roleName}}"
 />
 
 <Tabs items={['Request', 'Response']} id="req1" />
@@ -236,7 +236,7 @@ curl https://prod-policy.100ms.live/api/v1/templates -H 'Authorization: Bearer {
 <Tab id="req1-0">
 
 ```bash
-curl https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/roles/{{roleName}} -H 'Authorization: Bearer {{management_token}}' -X POST -H 'Content-Type: application/json' -d '{ "name": "listener3", "publishParams": { "allowed": [ "video", "screen", "audio" ], "audio": { "bitRate": 40, "codec": "opus" }, "video": { "bitRate": 400, "codec": "vp8", "frameRate": 30, "width": 480, "height": 360 }, "screen": { "codec": "vp8", "frameRate": 10, "width": 1920, "height": 1080 } }, "subscribeParams": { "subscribeToRoles": [ "speaker", "moderator", "new-role-9880" ], "maxSubsBitRate": 3200, "subscribeDegradation": {} }, "permissions": {}, "priority": 1 }'
+curl 'https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/roles/{{roleName}}' -H 'Authorization: Bearer {{management_token}}' -X POST -H 'Content-Type: application/json' -d '{ "name": "listener3", "publishParams": { "allowed": [ "video", "screen", "audio" ], "audio": { "bitRate": 40, "codec": "opus" }, "video": { "bitRate": 400, "codec": "vp8", "frameRate": 30, "width": 480, "height": 360 }, "screen": { "codec": "vp8", "frameRate": 10, "width": 1920, "height": 1080 } }, "subscribeParams": { "subscribeToRoles": [ "speaker", "moderator", "new-role-9880" ], "maxSubsBitRate": 3200, "subscribeDegradation": {} }, "permissions": {}, "priority": 1 }'
 ```
 
 </Tab>
@@ -289,9 +289,9 @@ curl https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/roles/{{role
 ### Update Settings API
 
 <PostRequest
-    title="/api/v1/templates/:id/settings"
+    title="/policy/v1/templates/:id/settings"
     desp="This endpoint is used to update settings. "
-    url="https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/setings"
+    url="https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/setings"
 />
 
 <Tabs items={['Request', 'Response']} id="req2" />
@@ -299,7 +299,7 @@ curl https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/roles/{{role
 <Tab id="req2-0">
 
 ```bash
-curl https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/settings -H 'Authorization: Bearer {{management_token}}' -X POST -H 'Content-Type: application/json' -d '{ "region": "us" }'
+curl 'https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/settings' -H 'Authorization: Bearer {{management_token}}' -X POST -H 'Content-Type: application/json' -d '{ "region": "us" }'
 ```
 
 </Tab>
@@ -324,9 +324,9 @@ curl https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/settings -H 
 ### Get Templates API
 
 <GetRequest
-    title="/api/v1/templates?id=ID"
+    title="/policy/v1/templates?id=ID"
     desp="This endpoint is used to fetch a template. This API can be used to fetch a template. Instead of id, URL param name can be provided to fetch by name. Providing no URL params fetches all templates for the customer. You can provide start/limit params for pagination."
-    url="https://prod-policy.100ms.live/api/v1/templates?id={{templateID}}"
+    url="https://prod-policy.100ms.live/policy/v1/templates?id={{templateID}}"
 />
 
 <Tabs items={['Request', 'Response']} id="req3" />
@@ -334,7 +334,7 @@ curl https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/settings -H 
 <Tab id="req3-0">
 
 ```bash
-curl https://prod-policy.100ms.live/api/v1/templates?id={{templateID}} -H 'Authorization: Bearer {{management_token}}'
+curl 'https://prod-policy.100ms.live/policy/v1/templates?id={{templateID}}' -H 'Authorization: Bearer {{management_token}}'
 ```
 
 </Tab>
@@ -406,9 +406,9 @@ curl https://prod-policy.100ms.live/api/v1/templates?id={{templateID}} -H 'Autho
 ### Get Role API
 
 <GetRequest
-    title="/api/v1/templates/:id/roles/:name"
+    title="/policy/v1/templates/:id/roles/:name"
     desp="This endpoint is used to fetch a role. "
-    url="https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/roles/{{roleName}}"
+    url="https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/roles/{{roleName}}"
 />
 
 <Tabs items={['Request', 'Response']} id="req4" />
@@ -416,7 +416,7 @@ curl https://prod-policy.100ms.live/api/v1/templates?id={{templateID}} -H 'Autho
 <Tab id="req4-0">
 
 ```bash
-curl https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/roles/{{roleName}} -H 'Authorization: Bearer {{management_token}}'
+curl 'https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/roles/{{roleName}}' -H 'Authorization: Bearer {{management_token}}'
 ```
 
 </Tab>
@@ -462,9 +462,9 @@ curl https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/roles/{{role
 ### Get Settings API
 
 <GetRequest
-    title="/api/v1/templates/:id/settings"
+    title="/policy/v1/templates/:id/settings"
     desp="This endpoint is used to fetch settings. "
-    url="https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/settings"
+    url="https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/settings"
 />
 
 <Tabs items={['Request', 'Response']} id="req5" />
@@ -472,7 +472,7 @@ curl https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/roles/{{role
 <Tab id="req5-0">
 
 ```bash
-curl https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/settings -H 'Authorization: Bearer {{management_token}}'
+curl 'https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/settings' -H 'Authorization: Bearer {{management_token}}'
 ```
 
 </Tab>
@@ -491,9 +491,9 @@ curl https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/settings -H 
 ### Modify Template API
 
 <PostRequest
-    title="/api/v1/templates?id=ID"
+    title="/policy/v1/templates?id=ID"
     desp="This endpoint is used to modify a Template. You can also use the URL parameter name instead of id to modify a template by name. Providing the same name as a previous template overrides that template. You need to provide all options for roles and settings which you want to apply."
-    url="https://prod-policy.100ms.live/api/v1/templates?id={{tempalateID}}"
+    url="https://prod-policy.100ms.live/policy/v1/templates?id={{tempalateID}}"
 />
 
 <Tabs items={['Request', 'Response']} id="req6" />
@@ -501,7 +501,7 @@ curl https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/settings -H 
 <Tab id="req6-0">
 
 ```bash
-curl https://prod-policy.100ms.live/api/v1/templates?id={{templateID}} -H 'Authorization: Bearer {{management_token}}' -X POST -H 'Content-Type: application/json' -d '{ "roles":{ "student":{ "name":"student", "publishParams":{ "allowed":[ "screen", "audio" ], "audio":{ "bitRate":42, "codec":"opus" }, "video":{ "bitRate":250, "codec":"vp8", "frameRate":30, "width":480, "height":270 }, "screen":{ "codec":"vp8", "frameRate":10, "width":1920, "height":1086 } }, "subscribeParams":{ "subscribeToRoles":[ "teacher", "student" ], "maxSubsBitRate":2000 }, "priority":1 } }, "settings":{ "region":"eu" } }'
+curl 'https://prod-policy.100ms.live/policy/v1/templates?id={{templateID}}' -H 'Authorization: Bearer {{management_token}}' -X POST -H 'Content-Type: application/json' -d '{ "roles":{ "student":{ "name":"student", "publishParams":{ "allowed":[ "screen", "audio" ], "audio":{ "bitRate":42, "codec":"opus" }, "video":{ "bitRate":250, "codec":"vp8", "frameRate":30, "width":480, "height":270 }, "screen":{ "codec":"vp8", "frameRate":10, "width":1920, "height":1086 } }, "subscribeParams":{ "subscribeToRoles":[ "teacher", "student" ], "maxSubsBitRate":2000 }, "priority":1 } }, "settings":{ "region":"eu" } }'
 ```
 
 </Tab>
@@ -566,9 +566,9 @@ curl https://prod-policy.100ms.live/api/v1/templates?id={{templateID}} -H 'Autho
 ### Delete Role API
 
 <DeleteRequest
-    title="/api/v1/templates/:id/roles/:name"
+    title="/policy/v1/templates/:id/roles/:name"
     desp="This endpoint is used to delete a role. Subsequent requests for deleting role which does not exist gives 404."
-    url="https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/roles/{{roleName}}"
+    url="https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/roles/{{roleName}}"
 />
 
 <Tabs items={['Request', 'Response']} id="req7" />
@@ -576,7 +576,7 @@ curl https://prod-policy.100ms.live/api/v1/templates?id={{templateID}} -H 'Autho
 <Tab id="req7-0">
 
 ```bash
-curl https://prod-policy.100ms.live/api/v1/templates/{{templateID}}/roles/{{roleName}} -H 'Authorization: Bearer {{management_token}}' -X DELETE -H 'Content-Type: application/json'
+curl 'https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/roles/{{roleName}}' -H 'Authorization: Bearer {{management_token}}' -X DELETE -H 'Content-Type: application/json'
 ```
 
 </Tab>

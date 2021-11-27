@@ -4,6 +4,19 @@ nav: 4
 description: Release Notes for 100ms iOS SDK
 ---
 
+## 0.2.1 - 2021-11-18
+### Breaking Change
+- `requestedBy` field has been made optional for HMSChangeTrackStateRequest, HMSRemovedFromRoomNotification, HMSRoleChangeRequest. It will be nil if request can originated from the REST API.
+-  `customerUserDescription` field has been renamed to `metadata` in HMSPeer
+
+
+## 0.1.6 - 2021-10-29
+### Changed
+- HMSLocalVideoTrack settings property is now properly reflecting cameraFacing state
+- Calling leave in preview mode no longer returns an error
+- Calling setMute on local video track stops camera access
+- Calling setMute on local tracks will now result in on(track: HMSTrack, update: HMSTrackUpdate, for peer: HMSPeer) callback fired for those tracks
+
 ## 0.1.5 - 2021-10-21
 - Removed Xcode 13 requirement
 
