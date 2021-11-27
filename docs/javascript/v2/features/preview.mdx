@@ -15,4 +15,32 @@ To invoke this API call
 hmsActions.preview(config)
 ```
 
-You would need the same config object that you would pass to [join API](/javascript/v2/features/join). The interface to render video, mute/unmute etc. remains the same.
+You would need the same config object that you would pass to [join API](./join). The interface to render video, mute/unmute etc. remains the same.
+
+
+> Note that if you use preview, there is no need of maintaining any state on your side for settings(device id, audio, video on). Selections
+during preview will be moved across to the join call.
+
+## Post Preview call
+
+Once you have made the preview call, these things will happen -
+
+* SDK will connect with the 100ms backend to ensure that the token is correct and fetch the permissions for the role.
+* One peer for the local peer will be added to the store, accessible via `selectLocalPeer` selector.
+* Permission prompt will be given to the user for camera/mic if permissions are not there
+* Audio, Video tracks will be created as per the role permissions.
+* The video can be rendered [similarly as post join](./render-video).
+* [Audio Level](../advanced-features/audio-level) will start reflecting for the microphone, this can be used to verify that
+the microphone is working properly.
+* User will be able to see and modify input/output [devices](./device-change).
+
+
+## When you do join
+
+When join is done after the preview call, changes done by the user during preview such as changing device or muting their
+tracks will be carry forwarded when user enters the room.
+
+## Limitations
+
+* You can't preview and join with two different roles, in case you do need to do this, you can call leave and wait on the promise
+to resolve before calling join.

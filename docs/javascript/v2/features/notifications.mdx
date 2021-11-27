@@ -106,6 +106,8 @@ const unsubscribe = hmsNotifications.onNotification((notification) => {
         case HMSNotificationTypes.RECONNECTED:
             console.log('[Reconnected]');
             break;
+        case HMSNotificationTypes.NAME_UPDATED:
+            console.log('peer update their name, new peer=', notification.data);
         default:
             break;
     }
