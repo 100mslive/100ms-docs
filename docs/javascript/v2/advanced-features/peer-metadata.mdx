@@ -28,7 +28,7 @@ hand function for the local peer.
 async function toggleRaiseHand() {
     const localPeerId = hmsStore.getState(selectLocalPeerID);
     const metadata = hmsStore.getState(selectPeerMetadata(localPeerId));
-    const newMetadata = { ...metadata, isHandRaise: !metadata.isHandRaised };
+    const newMetadata = { ...metadata, isHandRaised: !metadata.isHandRaised };
     await hmsActions.changeMetadata(newMetadata);
 }
 ```
@@ -43,7 +43,7 @@ object as notification data.
 hmsNotifications.onNotification((notification) => {
     switch (notification.type) {
         case HMSNotificationTypes.METADATA_UPDATED:
-            const peer = notification.data.isLocal;
+            const peer = notification.data;
             const { isHandRaised } = hmsStore.getState(selectPeerMetadata(peer.id))
             if (isHandRaised && !peer.isLocal) {
                 toast(`${peer.name} raised their hand.`)
