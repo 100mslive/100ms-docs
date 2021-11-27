@@ -1,0 +1,60 @@
+---
+title: Peer Metadata update / Change Name
+nav: 5.02
+---
+
+Looking for persistent state that can be set on a peer and updated anytime, for everyone in the room? Peer metadata it is.
+Metadata can be set initially in the `HMSConfig` object that's passed into the join method and update post join by
+following the API below. You can imagine metadata as a persistent object attached to the peer which has more details about
+them.
+
+We'll explain the API using an example of implementing raise hand. For this, we'll use the below interface for metadata -
+
+```ts
+interface CustomMetadata {
+    isHandRaised: boolean
+}
+```
+
+
+## Getting and Setting metadata
+
+Note that `peer.metadata` is a string, it can be used to keep a jsonified string. The string will be converted properly
+to a json object however if you use the selector described below.
+This can be achieved by calling `hmsActions.changeMetadata(metadata)`, the below example shows implementing a toggle raise
+hand function for the local peer.
+
+```js
+async function toggleRaiseHand() {
+    const localPeerId = hmsStore.getState(selectLocalPeerID);
+    const metadata = hmsStore.getState(selectPeerMetadata(localPeerId));
+    const newMetadata = { ...metadata, isHandRaise: !metadata.isHandRaised };
+    await hmsActions.changeMetadata(newMetadata);
+}
+```
+
+## Peer Metadata update Notification
+
+Once the metadata is updated, all the peers will receive a notification
+with type `METADATA_UPDATED` and [HMSPeer](../../../api-reference/javascript/v2/interfaces/HMSPeer)
+object as notification data.
+
+```js
+hmsNotifications.onNotification((notification) => {
+    switch (notification.type) {
+        case HMSNotificationTypes.METADATA_UPDATED:
+            const peer = notification.data.isLocal;
+            const { isHandRaised } = hmsStore.getState(selectPeerMetadata(peer.id))
+            if (isHandRaised && !peer.isLocal) {
+                toast(`${peer.name} raised their hand.`)
+            }
+            break;
+    }
+});
+```
+
+## Ideas
+
+* Implementing raise hand
+* Multiplayer games like chess, scribble, quizzes etc.
+* Store extra information such as profile picture for every peer which can be updated mid call
