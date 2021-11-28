@@ -3,8 +3,11 @@ title: Frequently Asked
 nav: 4.02
 ---
 
-## What does HMS stand for in the sdk name?
-Hundred(100) ms.
+This page lists down frequently asked questions. If you want to add a new question or edit an older one, feel free to
+[send us a PR](https://github.com/100mslive/100ms-docs/blob/main/docs/javascript/v2/debugging/faq.mdx).
+
+## What does HMS stand for in the SDK name?
+Hundred(100) ms 😊
 
 ## Can I listen to webhooks on server side?
 Yes, please check [webhooks](/server-side/v2/foundation/webhook).
@@ -23,7 +26,7 @@ You can use a viewer role which doesn't have any publish permissions.
 You can append a query param in the end of the url for the custom role - `<custom_role_url>?token=beam_recording`. This
 will tell the webapp to skip preview screen and join directly.
 
-## YouTube dashboard shows that the video bitrate is less than the recommended bitrate when using RTMP Out?
+## Why does YouTube dashboard shows that the video bitrate is less than the recommended bitrate when using RTMP Out?
 You can safely ignore this, this will happen if there is no activity happening on the url being streamed. For e.g., there is nobody in
 the room with their video turned on.
 
@@ -33,7 +36,7 @@ Not yet, but we're working on this.
 ## How do I join an API created room from dashboard webapp?
 You won't see the join room button on the dashboard, but it's possible to form an url which you can use. The format is
 `https://<subdomain>.app.100ms.live/preview/<room_id>/<role>`, e.g. `https://myroomlink.app.100ms.live/preview/123456/teacher`.
-All of these, the subdomain, room_id and role can be seen from the dashboard.
+All of these, the subdomain, room_id and role are available on the dashboard.
 
 ## Do I need to do anything to handle poor internet connection?
 Not much, just turn on a flag in dashboard, and show a proper UI when a video gets degraded/unsubscribed.
@@ -54,13 +57,16 @@ guide is with vanilla js and doesn't assume any framework.
 ## I want to suggest a new feature.
 Awesome, we're always on the lookout for new ideas and feature. Please reach out to use over [discord](https://100ms.live/discord).
 
+## I'm facing an issue, how do I reach out?
+Please see [reaching out](../debugging/debugging#reaching-out).
+
 ## Can I create room using API?
-[Yes][/server-side/v2/features/room].
+[Yes](/server-side/v2/features/room).
 
 ## Can I disable a room?
 [Yes](/server-side/v2/features/room#disable-room). You can also do this while ending the room using the [sdk](../features/end-room).
 
-## Is it possible to create and manage roles using API?
+## Is it possible to create and manage roles using APIs?
 [Yes](/server-side/v2/foundation/templates-and-roles).
 
 ## Does the SDK remembers input/output device selection for future joins?
@@ -78,9 +84,6 @@ This can be done using [roles](https://www.youtube.com/watch?v=aO0KA2w03io).
 ## Can I locally mute a remote audio track?
 [Yes](../advanced-features/volume-control).
 
-## I need help/have a feature in mind, how do I reach out?
-Please see [reaching out](../debugging/debugging#reaching-out).
-
 ## Can I process video before sending over to others in the room?
 Yes, you can write [custom video plugins](../plugins/custom-video-plugins).
 
@@ -88,9 +91,9 @@ Yes, you can write [custom video plugins](../plugins/custom-video-plugins).
 Please follow [setting log level](../features/log-level).
 
 ## How do I debug blank video tile while rendering?
-No video is subscribed by default, start with making sure attach video is being called for the correct track and video
+Start with making sure that attach video is being called for the correct track and video
 element. Also ensure that there is no bug leading to detach call just after or around the same time as attach. These calls
-when done will also show up in the redux devtools [extension](../debugging/debugging). Some things we have seen in past -
+when done will also show up in the redux devtools [extension](../debugging/debugging#redux-devtools-integration). Some things we have seen in the past -
 * [React] Calling detach as a cleanup function of the same useEffect which calls attach and has video track as dependency. Instead of this
   please have a separate useEffect with no dependencies to call detach on component unmount.
 * [React] Not using the [key](https://reactjs.org/docs/lists-and-keys.html) field properly while rendering the list of components displaying
