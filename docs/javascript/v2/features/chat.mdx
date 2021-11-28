@@ -20,7 +20,7 @@ hmsActions.sendBroadcastMessage("hello everyone!"); // yes it's that simple 😉
 This will be received by every peer who is part of the passed in roles.
 
 ```js
-hmsActions.sendGroupMessage("hi folks!", ['moderator', 'host']);
+hmsActions.sendGroupMessage("hi folks!", ["moderator", "host"]);
 ```
 
 ### Direct Message:
@@ -99,3 +99,27 @@ const readStatus = true;                         // true/false
 hmsActions.setMessageRead(readStatus);           // set status for all messages
 hmsActions.setMessageRead(readStatus, msg.id);   // set status for a specific message
 ```
+
+## Custom Events
+
+It's also possible to utilise the above system for sending custom messages across the room. All the above methods
+take `type` as an optional last param. The `type` is `chat` by default but can be changed to any valid string. This can
+be used to differentiate between different types of messages. For e.g.
+
+```
+// broadcast a message to the whole room
+hmsActions.sendBroadcastMessage("START", "GAME_EVENT");
+hmsActions.sendBroadcastMessage("🚀", "EMOJI_REACTION");
+
+// Send a message to role groups
+hmsActions.sendGroupMessage("🔥", ["stage", "backstage"], "EMOJI_REACTION");
+
+// Send a message to a specific peer
+hmsActions.sendDirectMessage("❤️", peer.id, "EMOJI_REACTION");
+```
+
+Do note that the messages are not persistent and won't be available to a person joining the room after the event
+was sent. So even though the above is good for emoji reactions,
+if you're looking for implementing something like raise hand do checkout our documentation for [peer metadata](../features/peer-metadata).
+
+> In case you want to send large information in a structured way than a simple string will allow, you can always send a stringified JSON object.
