@@ -1,0 +1,154 @@
+---
+title: Getting Started - Virtual Background
+nav: 12
+---
+
+## Introduction
+
+Virtual background plugin helps in customising one’s background. The customising options is replacing the background with a static image.
+This guide provides an overview of usage of the virtual background plugin of 100ms.
+
+![VirtualBackground](/docs/v2/vb.gif)
+
+## Supported Android API Levels
+
+Virtual background is currently support all android os with API level 16 and higher. It is built for armeabi-v7a, arm64-v8a, x86, and x86_64 architectures.
+
+## Prerequisites
+
+Familiarity with Android Studio and the [fundamentals](https://developer.android.com/training/basics/firstapp) of android apps.
+
+## Basic Concepts
+
+-   `image background` - This is where the plugin will replace the video background with the image provided by user.
+
+### Add dependency
+
+-   Add the 100ms VirtualBackground and sdk dependency to your app-level `build.gradle` [![](https://jitpack.io/v/100mslive/android-sdk.svg)](https://jitpack.io/#100mslive/android-sdk).
+
+```json{3,4}:build.gradle
+dependencies {
+ // See the version in the jitpack badge above.
+ implementation 'com.github.100mslive:android-sdk-virtual-background:x.x.x'
+ implementation 'com.github.100mslive:android-sdk:x.x.x'
+    }
+```
+### Instantiate HMSVirtualBackground
+
+Instantiate the HMSVirtualBackground like this:
+
+- `imageBitmap` - Bitmap- Convert the background image you want to replace your background to corresponding bitmap.
+                This will replace the background to the imageBitmap provide
+
+<Tabs id="instanstiate-HMSVirtualBackground" items={['Kotlin', 'Java']} />
+
+<Tab id='instanstiate-HMSVirtualBackground-0'>
+
+```kotlin
+      val hmsSdk = HMSSDK
+              .Builder(application)
+              .build()
+      val virtualBackground = HMSVirtualBackground(hmsSdk, imageBitmap)
+```
+
+</Tab>
+
+<Tab id='instanstiate-HMSVirtualBackground-1'>
+
+```java
+   HMSSDK hmssdk = new HMSSDK
+                           .Builder(application)
+                           .build();
+   val virtualBackground = new HMSVirtualBackground(hmssdk, imageBitmap)
+```
+</Tab>
+
+## Check if plugin is supported
+
+isSupported can be used to check if the API level is supported or not.
+It will return True/False based on browser.
+
+```kotlin
+if(virtualBackground.isSupported()){
+    console.log("Device is supported");
+}else{
+    console.log("Device not supported");
+}
+```
+
+## Init(Optional)
+
+Init is used to load model of virtual background for the first time.
+It takes on an average 300-500 ms.<br/>
+Calling init is handled internally by SDK if not done by user, in this case addPlugin call will
+take 300-500 ms for the first time and then less than 10ms in the Subsequent calls.
+Check [this section](#add-and-remove-plugin) for addPlugin API usage
+
+```kotlin
+try{
+   virtualBackground.init();
+}catch(err){
+   console.log("failed to init Plugin", err);
+}
+```
+
+## Add and Remove Plugin
+
+<Tabs id="plugin-code" items={['Kotlin', 'Java']} />
+
+<Tab id='plugin-code-0'>
+
+```kotlin
+// This will apply the virtual background effect to the local video
+try{
+    hmssdk.addPlugin(virtualBackground, pluginFrameRate);
+}catch(err){
+    console.log("failed to add Plugin", err);
+}
+
+// This will remove the virtual background effect from the local video
+try{
+    hmssdk.removePlugin(virtualBackground);
+}catch(err){
+    console.log("failed to remove Plugin", err);
+}
+```
+</Tab>
+
+<Tab id='plugin-code-1'>
+
+```Java
+// This will apply the virtual background effect to the local video
+try{
+    hmssdk.addPlugin(virtualBackground, pluginFrameRate);
+}catch(err){
+    console.log("failed to add Plugin", err);
+}
+
+// This will remove the virtual background effect from the local video
+try{
+    hmssdk.removePlugin(virtualBackground);
+}catch(err){
+    console.log("failed to remove Plugin", err);
+}
+```
+
+</Tab>
+
+
+## Change Background
+
+Call setBackground from the plugin to update the background again later if required
+It accepts imageBitmap as a parameter
+
+Image will get fit to the video by maintaining the aspect ratio.
+Input aspect ratio of the background image is preferred else we are cropping the image to fit in background
+
+```kotlin
+// background parameter is explained in Instantiate Virtual Background section
+try{
+    virtualBackground.setBackground(imageBitmap);
+}catch(err){
+    console.log("Failed to update background", err);
+}
+```
