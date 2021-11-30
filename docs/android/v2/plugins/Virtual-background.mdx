@@ -104,9 +104,9 @@ if(virtualBackground.isSupported()){
 ### Init(Optional)
 
 Init is used to load the machine learning model of virtual background for the first time.
-It takes on an average 300-500 ms.<br/>
+It takes on an average 50-200 ms.<br/>
 Calling init is handled internally by SDK if not done by user, in this case addPlugin call will
-take 300-500 ms for the first time and then less than 10ms in the subsequent calls.
+take 50-200 ms for the first time and then less than 10ms in the subsequent calls.
 Check [this section](#add-plugin) for addPlugin API usage
 
 <Tabs id="Init" items={['Kotlin', 'Java']} />
@@ -137,10 +137,13 @@ try{
 ### Change Background
 
 Call `setBackground` on the `HMSVirtualBackground` instance to update the background again later if required.
-It accepts imageBitmap as a parameter
+It accepts imageBitmap or String as a parameter
 
-Image will be fit to the video by maintaining the aspect ratio.
-Input aspect ratio of the background image is preferred else we are cropping the image to fit in background
+-  `imageBitmap`- Bitmap - A background image bitmap you want to replace your background to.
+-  `none` - String - This will remove the background effect from the video
+
+Image will get fit to the video by maintaining the aspect ratio.
+If the aspect ratio of the background image is not the same as the video, the image will be cropped to fit in the background.
 
 <Tabs id="Change-Background" items={['Kotlin', 'Java']} />
 
@@ -149,7 +152,7 @@ Input aspect ratio of the background image is preferred else we are cropping the
 ```kotlin
 // imageBitmap parameter is explained in Instantiate Virtual Background section
 try{
-    virtualBackground.setBackground(imageBitmap);
+    virtualBackground.setBackground(imageBitmap | "none");
 }catch(err){
     console.log("Failed to update background", err);
 }
@@ -202,7 +205,6 @@ try{
 }catch(err){
     console.log("failed to add Plugin", err);
 }
-
 ```
 </Tab>
 
