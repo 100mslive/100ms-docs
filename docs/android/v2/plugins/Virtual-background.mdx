@@ -5,14 +5,22 @@ nav: 12
 
 ## Introduction
 
-Virtual background plugin helps in customising one’s background i.e. replacing the background with a static image.
-This guide provides an overview of usage of the virtual background plugin of 100ms.
+Virtual Background plugin helps in customising one’s background i.e. replacing the background with a static image.
+This guide provides an overview of usage of the Virtual Background plugin of 100ms.
+
+<div style={{textAlign: 'center'}}>
 
 ![VirtualBackground](/docs/v2/vb.jpg)
 
-## Supported Android API Levels
+</div>
 
-Min api version for the virtual background plugin is 21. Same as the min api version core sdk for 100ms. The lowest SDK version it can work with is 21. It is built for armeabi-v7a, arm64-v8a, x86, and x86_64 architectures.
+
+
+## Supported Devices/Versions
+
+-   Minimum Android api level required to support Virtual Background plugin is 21, same as that required for 100ms SDK
+-   Minimum 100ms SDK version it can work with is 21
+-   Virtual background plugin is built for armeabi-v7a, arm64-v8a, x86 and x86_64 architectures
 
 ## Prerequisites
 
@@ -25,7 +33,7 @@ Familiarity with Android Studio and the [fundamentals](https://developer.android
 
 ## Add dependency
 
--   Add the 100ms Virtual Background plugin and sdk dependency to your app-level `build.gradle` [![](https://jitpack.io/v/100mslive/android-sdk.svg)](https://jitpack.io/#100mslive/android-sdk).
+-   Adding the Virtual Background plugin and sdk dependency to your app-level `build.gradle` [![](https://jitpack.io/v/100mslive/android-sdk.svg)](https://jitpack.io/#100mslive/android-sdk).
 
 ```json{3,4}:build.gradle
 dependencies {
@@ -45,10 +53,10 @@ Instantiate the 100ms Virtual Background plugin like this:
 <Tab id='instanstiate-VirtualBackground-0'>
 
 ```kotlin
-      val hmsSdk = HMSSDK
-              .Builder(application)
-              .build()
-      val virtualBackground = HMSVirtualBackground(hmsSdk, imageBitmap)
+    val hmsSdk = HMSSDK
+          .Builder(application)
+          .build()
+    val virtualBackground = HMSVirtualBackground(hmsSdk, imageBitmap)
 ```
 
 </Tab>
@@ -56,19 +64,19 @@ Instantiate the 100ms Virtual Background plugin like this:
 <Tab id='instanstiate-VirtualBackground-1'>
 
 ```java
-   HMSSDK hmssdk = new HMSSDK
+    HMSSDK hmsSdk = new HMSSDK
                            .Builder(application)
                            .build();
-   HMSVirtualBackground virtualBackground = new HMSVirtualBackground(hmssdk, imageBitmap)
+    HMSVirtualBackground virtualBackground = new HMSVirtualBackground(hmsSdk, imageBitmap)
 ```
 </Tab>
 
-That's it. You have instanstiated virtual background plugin successfully. 🥳
+That's it. You have instantiated Virtual Background plugin successfully. 🥳
 
 Now let's take a look at the signature of the HMSVirtualBackground.
 
 `HMSVirtualBackground` accepts 2 arguments -
--   `hmssdk`: an object of type `HMSSDK` class
+-   `hmsSdk`: an object of type `HMSSDK` class
 -   `imageBitmap`: A background image bitmap you want to replace your background to.
 
 ### Check if plugin is supported
@@ -103,7 +111,7 @@ if(virtualBackground.isSupported()){
 
 ### Init(Optional)
 
-Init is used to load the machine learning model of virtual background for the first time.
+Init is used to load the machine learning model of Virtual Background for the first time.
 It takes on an average 50-200 ms.<br/>
 Calling init is handled internally by SDK if not done by user, in this case addPlugin call will
 take 50-200 ms for the first time and then less than 10ms in the subsequent calls.
@@ -173,11 +181,11 @@ try{
 
 ### Tuning pluginFrameRate(Optional)
 
-`pluginFrameRate` - pluginFrameRate helps in controlling the performance and experience of Virtual background plugin.
+`pluginFrameRate` - pluginFrameRate helps in controlling the performance and experience of Virtual Background plugin.
 pluginFrameRate translates to the number of frames for which background is detected. Higher value will use more resources
-(cpu/memory/battery), while making the virtual background experience smooth. Lower value will be generous on resources,
- while lowering the virtual background smoothness. Recommended value is 15. Values higher than this will not significantly
- improve virtual background smoothness but will be heavy on resources. For lower end devices value can be in the range of 7-10.
+(cpu/memory/battery), while making the Virtual Background experience smooth. Lower value will be generous on resources,
+ while lowering the Virtual Background smoothness. Recommended value is 15. Values higher than this will not significantly
+ improve Virtual Background smoothness but will be heavy on resources. For lower end devices value can be in the range of 7-10.
 
 ## Add Plugin
 
@@ -186,9 +194,9 @@ pluginFrameRate translates to the number of frames for which background is detec
 <Tab id='plugin-code-0'>
 
 ```kotlin
-// This will apply the virtual background effect to the local video
+// This will apply the Virtual Background effect to the local video
 try{
-    hmssdk.addPlugin(virtualBackground, pluginFrameRate);
+    hmsSdk.addPlugin(virtualBackground, pluginFrameRate);
 }catch(err){
     console.log("failed to add Plugin", err);
 }
@@ -198,9 +206,9 @@ try{
 <Tab id='plugin-code-1'>
 
 ```Java
-// This will apply the virtual background effect to the local video
+// This will apply the Virtual Background effect to the local video
 try{
-    hmssdk.addPlugin(virtualBackground, pluginFrameRate);
+    hmsSdk.addPlugin(virtualBackground, pluginFrameRate);
 }catch(err){
     console.log("failed to add Plugin", err);
 }
@@ -214,9 +222,9 @@ try{
 <Tab id='plugin-code-0'>
 
 ```kotlin
-// This will remove the virtual background effect from the local video
+// This will remove the Virtual Background effect from the local video
 try{
-    hmssdk.removePlugin(virtualBackground);
+    hmsSdk.removePlugin(virtualBackground);
 }catch(err){
     console.log("failed to remove Plugin", err);
 }
@@ -226,9 +234,9 @@ try{
 <Tab id='plugin-code-1'>
 
 ```Java
-// This will remove the virtual background effect from the local video
+// This will remove the Virtual Background effect from the local video
 try{
-    hmssdk.removePlugin(virtualBackground);
+    hmsSdk.removePlugin(virtualBackground);
 }catch(err){
     console.log("failed to remove Plugin", err);
 }
