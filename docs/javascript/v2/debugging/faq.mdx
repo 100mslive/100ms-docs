@@ -16,6 +16,31 @@ Yes, please check [webhooks](/server-side/v2/foundation/webhook).
 We have two types of recordings available, [SFU](/server-side/v2/features/recording) and [Browser](/server-side/v2/features/rtmp-streaming-and-browser-recording).
 You can also start the latter from the [SDK](../features/rtmp-recording).
 
+## How do I debug blank video tile while rendering?
+Start with making sure that attach video is being called for the correct track and video
+element. Also ensure that there is no bug leading to detach call just after or around the same time as attach. These calls
+when done will also show up in the redux devtools [extension](../debugging/debugging#redux-devtools-integration). Some things we have seen in the past -
+* [React] Calling detach as a cleanup function of the same useEffect which calls attach and has video track as dependency. Instead of this
+please have a separate useEffect with no dependencies to call detach on component unmount.
+* [React] Not using the [key](https://reactjs.org/docs/lists-and-keys.html) field properly while rendering the list of components displaying
+the track. This should ideally be the `trackId` or `peerId-trackType`, where track type is video or screen.
+* [Angular] Not using the [trackBy](https://angular.io/api/core/TrackByFunction) field properly while rendering the list of components displaying
+the track. This should ideally be the `trackId` or `peerId-trackType`, where track type is video or screen.
+
+## Why is the video not autoplaying on page load?
+For the video to autoplay please make sure these fields are set on the video element - `autoplay`, `muted`, `playsinline`. Please check
+the docs for [render video](../features/render-video) for more details.
+
+## (Angular) Why is video not autoplaying even though is set as true?
+Angular 2+ is sometimes not able to translate the `muted` field correctly. Instead of setting the muted and autoplay property as
+`<video muted>` doing `<video [muted]="true">` should work.
+Please check this [stackoverflow answer](https://stackoverflow.com/questions/48856562/chrome-android-video-autoplay-inside-angular-2-component) for more details.
+
+## How do I debug no audio coming in the room?
+If your webapp doesn't require a user click to join the room, you might run into autoplay issues. Browsers don't allow
+a website to play audio if user hasn't interacted with the page till that point in time. Fortunately, we have inbuilt support
+to detect and resolve this given in more details [here](../features/error-handling#handling-autoplay-error).
+
 ## Is it possible to do RTMP out, live stream a room to YouTube, Twitch, Wowza?
 Yes, you can achieve it both from [server-side APIs](/server-side/v2/features/rtmp-streaming-and-browser-recording) or [SDK](../features/rtmp-recording).
 
@@ -96,20 +121,3 @@ Yes, you can write [custom video plugins](../plugins/custom-video-plugins).
 
 ## How to disable console logs if I'm using the web SDK?
 Please follow [setting log level](../features/log-level).
-
-## How do I debug blank video tile while rendering?
-Start with making sure that attach video is being called for the correct track and video
-element. Also ensure that there is no bug leading to detach call just after or around the same time as attach. These calls
-when done will also show up in the redux devtools [extension](../debugging/debugging#redux-devtools-integration). Some things we have seen in the past -
-* [React] Calling detach as a cleanup function of the same useEffect which calls attach and has video track as dependency. Instead of this
-  please have a separate useEffect with no dependencies to call detach on component unmount.
-* [React] Not using the [key](https://reactjs.org/docs/lists-and-keys.html) field properly while rendering the list of components displaying
-  the track. This should ideally be the `trackId` or `peerId-trackType`, where track type is video or screen.
-* [Angular] Not using the [trackBy](https://angular.io/api/core/TrackByFunction) field properly while rendering the list of components displaying
-the track. This should ideally be the `trackId` or `peerId-trackType`, where track type is video or screen.
-
-## How do I debug no audio coming in the room?
-If your webapp doesn't require a user click to join the room, you might run into autoplay issues. Browsers don't allow
-a website to play audio if user hasn't interacted with the page till that point in time. Fortunately, we have inbuilt support
-to detect and resolve this given in more details [here](../features/error-handling#handling-autoplay-error).
-
