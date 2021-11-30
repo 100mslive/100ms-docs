@@ -34,7 +34,7 @@ dependencies {
  implementation 'com.github.100mslive:android-sdk:x.x.x'
     }
 ```
-##Interfaces
+## Interfaces
 
 ### Instantiate VirtualBackground
 
@@ -65,16 +65,20 @@ Instantiate the 100ms Virtual Background plugin like this:
 
 That's it. You have instanstiate virtual background plugin successfully. 🥳
 
-Now, let's take a look at the signature of the Join API
+Now, let's take a look at the signature of the HMSVirtualBackground
 
 As evident, `HMSVirtualBackground` accepts 2 arguments -
 -   `hmssdk`: an object of type `HMSSDK` class
 -   `imageBitmap`: A background image bitmap you want to replace your background to.
 
-## Check if plugin is supported
+### Check if plugin is supported
 
 isSupported can be used to check if the API level of device is supported or not.
 It will return True/False based on API Level.
+
+<Tabs id="Check-plugin-support" items={['Kotlin', 'Java']} />
+
+<Tab id='Check-plugin-support-0'>
 
 ```kotlin
 if(virtualBackground.isSupported()){
@@ -83,14 +87,31 @@ if(virtualBackground.isSupported()){
     console.log("Device not supported");
 }
 ```
+</Tab>
 
-## Init(Optional)
+<Tab id='Check-plugin-support-1'>
+
+```java
+if(virtualBackground.isSupported()){
+    console.log("Device is supported");
+}else{
+    console.log("Device not supported");
+}
+```
+</Tab>
+
+
+### Init(Optional)
 
 Init is used to load model of virtual background for the first time.
 It takes on an average 300-500 ms.<br/>
 Calling init is handled internally by SDK if not done by user, in this case addPlugin call will
 take 300-500 ms for the first time and then less than 10ms in the subsequent calls.
 Check [this section](#add-and-remove-plugin) for addPlugin API usage
+
+<Tabs id="Init" items={['Kotlin', 'Java']} />
+
+<Tab id='Init-0'>
 
 ```kotlin
 try{
@@ -99,6 +120,54 @@ try{
    console.log("failed to init Plugin", err);
 }
 ```
+</Tab>
+
+<Tab id='Init-1'>
+
+```java
+try{
+   virtualBackground.init();
+}catch(err){
+   console.log("failed to init Plugin", err);
+}
+```
+</Tab>
+
+
+### Change Background
+
+Call setBackground from the plugin to update the background again later if required
+It accepts imageBitmap as a parameter
+
+Image will get fit to the video by maintaining the aspect ratio.
+Input aspect ratio of the background image is preferred else we are cropping the image to fit in background
+
+<Tabs id="Change-Background" items={['Kotlin', 'Java']} />
+
+<Tab id='Change-Background-0'>
+
+```kotlin
+// imageBitmap parameter is explained in Instantiate Virtual Background section
+try{
+    virtualBackground.setBackground(imageBitmap);
+}catch(err){
+    console.log("Failed to update background", err);
+}
+```
+</Tab>
+
+<Tab id='Change-Background-1'>
+
+```java
+// imageBitmap parameter is explained in Instantiate Virtual Background section
+try{
+    virtualBackground.setBackground(imageBitmap);
+}catch(err){
+    console.log("Failed to update background", err);
+}
+```
+</Tab>
+
 
 ## Add Plugin
 
@@ -113,8 +182,6 @@ try{
 }catch(err){
     console.log("failed to add Plugin", err);
 }
-
-
 ```
 </Tab>
 
@@ -158,20 +225,3 @@ try{
 }
 ```
 </Tab>
-
-## Change Background
-
-Call setBackground from the plugin to update the background again later if required
-It accepts imageBitmap as a parameter
-
-Image will get fit to the video by maintaining the aspect ratio.
-Input aspect ratio of the background image is preferred else we are cropping the image to fit in background
-
-```kotlin
-// imageBitmap parameter is explained in Instantiate Virtual Background section
-try{
-    virtualBackground.setBackground(imageBitmap);
-}catch(err){
-    console.log("Failed to update background", err);
-}
-```
