@@ -65,7 +65,7 @@ Instantiate the 100ms Virtual Background plugin like this:
 
 That's it. You have instanstiated virtual background plugin successfully. 🥳
 
-Now, let's take a look at the signature of the HMSVirtualBackground
+Now let's take a look at the signature of the HMSVirtualBackground.
 
 `HMSVirtualBackground` accepts 2 arguments -
 -   `hmssdk`: an object of type `HMSSDK` class
@@ -136,10 +136,10 @@ try{
 
 ### Change Background
 
-Call setBackground from the plugin to update the background again later if required
+Call `setBackground` on the `HMSVirtualBackground` instance to update the background again later if required.
 It accepts imageBitmap as a parameter
 
-Image will get fit to the video by maintaining the aspect ratio.
+Image will be fit to the video by maintaining the aspect ratio.
 Input aspect ratio of the background image is preferred else we are cropping the image to fit in background
 
 <Tabs id="Change-Background" items={['Kotlin', 'Java']} />
@@ -155,6 +155,14 @@ try{
 }
 ```
 </Tab>
+
+### Tuning pluginFrameRate(Optional)
+
+`pluginFrameRate` - pluginFrameRate helps in controlling the performance and experience of Virtual background plugin.
+pluginFrameRate translates to the number of frames for which background is detected. Higher value will use more resources
+(cpu/memory/battery), while making the virtual background experience smooth. Lower value will be generous on resources,
+ while lowering the virtual background smoothness. Recommended value is 15. Values higher than this will not significantly
+ improve virtual background smoothness but will be heavy on resources. For lower end devices value can be in the range of 7-10.
 
 <Tab id='Change-Background-1'>
 
