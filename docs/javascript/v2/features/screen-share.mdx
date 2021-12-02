@@ -43,16 +43,16 @@ hmsActions.setScreenShareEnabled(false);
 const screenshareOn = hmsStore.getState(selectIsSomeoneScreenSharing);
 
 // to get the HMSPeer object of the peer screensharing, will select  first if multiple screenshares
-const presenter = hmsStore(selectPeerScreenSharing);
+const presenter = hmsStore.getState(selectPeerScreenSharing);
 
 // to get the HMSPeer object of all the peers screensharing
-const presenters = hmsStore(selectPeersScreenSharing);
+const presenters = hmsStore.getState(selectPeersScreenSharing);
 
 // a boolean to know if the local peer is the one who is screensharing
-const amIScreenSharing = hmsStore(selectIsLocalScreenShared);
+const amIScreenSharing = hmsStore.getState(selectIsLocalScreenShared);
 
 // to get the screenshare video track, this can be used to call attachVideo for rendering
-const screenshareVideoTrack = hmsStore(selectScreenShareByPeerID(presenter.id));
+const screenshareVideoTrack = hmsStore.getState(selectScreenShareByPeerID(presenter.id));
 
 // Get the peer who is sharing audio only screenshare
 const peer = hmsStore.getState(selectPeerSharingAudio);
