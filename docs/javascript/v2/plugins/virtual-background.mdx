@@ -42,6 +42,7 @@ This accepts background as a parameter, It can be of 3 types:
 -  `blur` - String - This will set the background to blur
 -  `image` - HTMLImageElement - This will replace the background to the image provide
 -  `none` - String - This will remove the background effect from the video
+-  `gifURL` - String - This is the URL of the gif with which the background will be replaces
 
 ```jsx
 // background : {'blur' | image | 'none'}
@@ -149,14 +150,14 @@ function VirtualBackground() {
 ### Change Background
 
 The function `setBackground` can be used to update the background again later.
-It accepts string or HTMLImageElement as a parameter
-Image will get fit to the video by maintaining the aspect ratio.
-If the aspect ratio of the background image is not the same as the video, the image will be cropped to fit in the background.
+It accepts (string or HTMLImageElement or HTMLVideoElement) as a parameter
+Image/Video passed will get fit to the camera video by maintaining the aspect ratio.
+If the aspect ratio of the background passed is not the same as the video, the image will be cropped to fit in the background.
 
 ```jsx
 // background parameter is explained in Instantiate Virtual Background section
 try{
-  virtualBackground.setBackground(background : {'blur' | image | 'none'});
+  virtualBackground.setBackground(background : {'blur' | image | video | gifURL | 'none'});
 }catch(err){
   console.log("Failed to update background", err);
 }
