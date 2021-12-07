@@ -40,13 +40,14 @@ import HMSVirtualBackgroundPlugin from '@100mslive/hms-virtual-background';
 This accepts background as a parameter, It can be of 3 types:
 
 -  `blur` - String - This will set the background to blur
--  `image` - HTMLImageElement - This will replace the background to the image provide
+-  `image` - HTMLImageElement - This will replace the background to the image provided
+-  'video' - HTMLVideoElement - This will replace the background to the video provided
 -  `none` - String - This will remove the background effect from the video
--  `gifURL` - String - This is the URL of the gif with which the background will be replaces
+-  `gifURL` - String - This is the URL of the gif with which the background will be replaced
 
 ```jsx
-// background : {'blur' | image | 'none'}
-const virtualBackground = new HMSVirtualBackgroundPlugin(background : {'blur' | image | 'none'});
+// background : {'blur' | image | video | gifURL | 'none'}
+const virtualBackground = new HMSVirtualBackgroundPlugin(background : {'blur' | image | video | gifURL | 'none'});
 ```
 
 ## Interfaces
@@ -150,8 +151,8 @@ function VirtualBackground() {
 ### Change Background
 
 The function `setBackground` can be used to update the background again later.
-It accepts (string or HTMLImageElement or HTMLVideoElement) as a parameter
-Image/Video passed will get fit to the camera video by maintaining the aspect ratio.
+It accepts string or HTMLImageElement or HTMLVideoElement as a parameter
+Image/Video/Gif passed will get fit to the camera video by maintaining the aspect ratio.
 If the aspect ratio of the background passed is not the same as the video, the image will be cropped to fit in the background.
 
 ```jsx
