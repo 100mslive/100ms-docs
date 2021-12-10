@@ -85,6 +85,9 @@ const unsubscribe = hmsNotifications.onNotification((notification) => {
 
     // you can use the following to show appropriate toast notifications for eg.
     switch (notification.type) {
+        case HMSNotificationTypes.PEER_LIST:
+            console.log(`${notification.data} are the peers in the room`); // received right after join
+            break;
         case HMSNotificationTypes.PEER_JOINED:
             console.log(`${notification.data.name} joined`);
             break;
@@ -107,7 +110,24 @@ const unsubscribe = hmsNotifications.onNotification((notification) => {
             console.log('[Reconnected]');
             break;
         case HMSNotificationTypes.NAME_UPDATED:
-            console.log('peer update their name, new peer=', notification.data);
+        case HMSNotificationTypes.METADATA_UPDATED:
+            console.log('peer updated, new peer=', notification.data);
+        case HMSNotificationTypes.TRACK_DEGRADED:
+            console.log(`track ${notification.data} degraded due to poor network`)
+        case HMSNotificationTypes.TRACK_RESTORED:
+            console.log(`track ${notification.data} recovered`)
+        case HMSNotificationTypes.ROOM_ENDED:
+            console.log(`room ended, reason - ${notification.data.reason}`)
+        case HMSNotificationTypes.REMOVED_FROM_ROOM:
+            console.log(`removed from room, reason - ${notification.data.reason}`)
+        case HMSNotificationTypes.TRACK_RESTORED:
+            console.log(`track ${notification.data} recovered`)
+        case HMSNotificationTypes.TRACK_RESTORED:
+            console.log(`track ${notification.data} recovered`)
+        case HMSNotificationTypes.DEVICE_CHANGE_UPDATE:
+            console.log(`device changed - ${notification.data}`)
+        case HMSNotificationTypes.ROLE_UPDATED:
+            console.log(`role updated, new peer - ${notification.data}`)
         default:
             break;
     }
