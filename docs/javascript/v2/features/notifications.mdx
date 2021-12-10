@@ -112,7 +112,7 @@ const unsubscribe = hmsNotifications.onNotification((notification) => {
         case HMSNotificationTypes.NAME_UPDATED:
         case HMSNotificationTypes.METADATA_UPDATED:
         case HMSNotificationTypes.ROLE_UPDATED:
-            console.log('peer updated(${notification.type}), new peer=', notification.data);
+            console.log(`peer updated(${notification.type}), new peer=`, notification.data);
             break;
         case HMSNotificationTypes.TRACK_DEGRADED:
             console.log(`track - ${notification.data} degraded due to poor network`);
@@ -179,7 +179,7 @@ function Notification() {
             case HMSNotificationTypes.NAME_UPDATED:
             case HMSNotificationTypes.METADATA_UPDATED:
             case HMSNotificationTypes.ROLE_UPDATED:
-                console.log('peer updated(${notification.type}), new peer=', notification.data);
+                console.log(`peer updated(${notification.type}), new peer=`, notification.data);
                 break;
             case HMSNotificationTypes.TRACK_DEGRADED:
                 console.log(`track - ${notification.data} degraded due to poor network`);
