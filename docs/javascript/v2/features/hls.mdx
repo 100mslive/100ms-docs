@@ -13,14 +13,33 @@ on YouTube, Twitch etc., please have a look at our RTMP streaming docs [here](./
 
 ## Starting HLS
 
+To start HLS, you'll need to pass in a meeting URL. The 100ms bot will open this URL to join your room, so
+it must allow access without any user level interaction. In the future, it'll be possible to start HLS for multiple such URLs for the same room.
+For this purpose, the API supports taking in an array, although currently only the first element of the array will be respected. To distinguish between
+multiple urls, an additional field `metadata` can be optionally passed. The `meetingURL` and `metadata` are clubbed together to form what we'll call
+a `HLSMeetingURLVariant`.
 
+You can call `hmsActions.startHLSStreaming` with a `hlsConfig` having an array of such variants.
+
+```js
+async startHLS() {
+    const params = {
+        variants: {meetingURL: "", metadata: "landscape"}
+    };
+    try {
+        await hmsActions.startHLSStreaming(params);
+    } catch (err) {
+        console.error("failed to start hls", err);
+    }
+}
+````
 
 ## Stopping HLS
 
-You can call `hmsActions.stopHLSStreaming` to stop HLS Streaming.
+You can call `hmsActions.stopHLSStreaming` to stop HLS Streaming which will stop all the variants.
 
 ```js
-async stop() {
+async stopHLS() {
     try {
         await hmsActions.stopHLSStreaming();
     } catch (err) {
