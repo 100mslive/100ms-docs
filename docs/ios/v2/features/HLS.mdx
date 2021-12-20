@@ -59,13 +59,11 @@ The object contains a boolean `running` which lets you know if it's active on th
 
 This represents a livestream to one or more HLS urls.
 
-The room status should be checked in following three places -
+The room status should be checked in following two places -
 
 1. In the `onJoin(room: HMSRoom)` callback of `HMSUpdateListener`
     The properties mentioned above will be on the `HMSRoom` object.
-2. Whenever either of the start or stop recording functions is called, when their success or error callbacks are called, the values of the streaming and recording will be updated on the room object returned in onJoin.
-So saving an instance of the room received at that time is recommended.
-3. In the `on(room: HMSRoom, update: HMSRoomUpdate)` callback of `HMSUpdateListener`.
+2. In the `on(room: HMSRoom, update: HMSRoomUpdate)` callback of `HMSUpdateListener`.
     The `HMSRoomUpdate` type will be `hlsStreamingStateUpdated`.
 
 
