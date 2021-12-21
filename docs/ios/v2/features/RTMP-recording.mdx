@@ -51,7 +51,6 @@ The `stopRTMPAndRecording` only has a completion handler. When attempt to stop i
 
 ```swift
 hmsSDK?.stopRTMPAndRecording() { didStop, error in
-    print(didStart, error)           
 }
 ```
 
@@ -106,13 +105,11 @@ This represents the recording that can be requested to start.
 This represents that the room was set to be recorded when it was created and all sessions within it will always be recorded for archival by the server.
 
 
-The room status should be checked in following three places -
+The room status should be checked in following two places -
 
 1. In the `onJoin(room: HMSRoom)` callback of `HMSUpdateListener`
     The properties mentioned above will be on the `HMSRoom` object.
-2. Whenever either of the start or stop recording functions is called, when their success or error callbacks are called, the values of the streaming and recording will be updated on the room object returned in onJoin.
-So saving an instance of the room received at that time is recommended.
-3. In the `on(room: HMSRoom, update: HMSRoomUpdate)` callback of `HMSUpdateListener`.
+2. In the `on(room: HMSRoom, update: HMSRoomUpdate)` callback of `HMSUpdateListener`.
     The `HMSRoomUpdate` type will be `browserRecordingStateUpdated`, `serverRecordingStateUpdated` or `rtmpStreamingStateUpdated`.
 
 ### Code sample

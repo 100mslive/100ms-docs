@@ -53,11 +53,11 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     };
     const aliasMenu = [
         {
-            title: 'Room',
+            title: 'Room APIs',
             url: '/server-side/v2/features/room'
         },
         {
-            title: 'Webhook',
+            title: 'Webhooks',
             url: '/server-side/v2/foundation/webhook'
         },
         {
