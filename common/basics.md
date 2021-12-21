@@ -28,6 +28,6 @@ Any application built using 100ms' SDK has 2 components.
 1. **Create a template:** Create a template and define roles, room settings - You can do this using the [dashboard](https://dashboard.100ms.live/templates).
 2. **Create a room using the above template:** You can do this using the [dashboard](https://dashboard.100ms.live/rooms) or our [API](/server-side/v2/features/room).
 3. **Integrate client SDK and join the above room:** You'll need to generate a [token](/server-side/v2/foundation/authentication-and-tokens) for each peer that connects to a room.
-4. **[Optional] Receive events:** Create a [webhook endpoint](/server-side/v2/features/webhook) to receive server-side notifications about room usage (peer joining/leaving) or recording, RTMP out starting/ending.
+4. **[Optional] Receive events:** Create a [webhook endpoint](/server-side/v2/foundation/webhook) to receive server-side notifications about room usage (peer joining/leaving) or recording, RTMP out starting/ending.
 
 ## Where should I start?
