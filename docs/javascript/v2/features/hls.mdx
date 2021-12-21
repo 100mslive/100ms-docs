@@ -73,13 +73,74 @@ hmsStore.subscribe(updateHLSState, selectHLSState);
 
 ```jsx
 function HLSState() {
-  const hlsState = useHMSStore(selectHLSState);
-  console.log("is hls streaming going on - ", hlsState.running);
-  if (hlsState.running) {
-    console.log("hls url - ", hlsState.variants[0]?.url)
-  }
+    const hlsState = useHMSStore(selectHLSState);
+    console.log("is hls streaming going on - ", hlsState.running);
+    if (hlsState.running) {
+        console.log("hls url - ", hlsState.variants[0]?.url)
+    }
+    return null;
+}
+```
 
-  return null;
+</Tab>
+
+## Displaying HLS Stream
+
+Not all browsers support HLS [natively](https://caniuse.com/?search=hls), however you can use players like [hls.js](https://github.com/video-dev/hls.js/) or
+[Shaka Player](https://github.com/google/shaka-player). In case you need more UI side customisations you can go with something like
+[videojs](https://videojs.com/) which internally uses `hls.js` for the hls piece.
+
+Here is a simple example of using `hls.js` to play the hls url given by the SDK. Make sure you've installed the library(`npm i hls.js`) before using this code.
+
+<Tabs id="hlsview" items={['JavaScript', 'React']} />{' '}
+
+<Tab id='hlsview-0'>
+
+```js
+import Hls from "hls.js";
+
+function renderHLS({hlsUrl}) {
+    const video = document.getElementById('video');
+    const browserHasNativeHLSSupport = videoRef.current.canPlayType("application/vnd.apple.mpegurl");
+    if (Hls.isSupported()) {
+        let hls = new Hls();
+        hls.loadSource(hlsUrl);
+        hls.attachMedia(video);
+    }
+    // hls.js is not supported on iOS Safari, but as the browser has native support for playing HLS,
+    // we can use the video element directly.
+    else if (browserHasNativeHLSSupport) {
+        video.src = hlsUrl;
+    }
+}
+```
+
+</Tab>
+
+<Tab  id='hlsview-1'>
+
+```jsx
+import Hls from "hls.js";
+
+function HLSView({hlsUrl}) {
+    const videoRef = useRef(null);
+    useEffect(() => {
+        if (videoRef.current && hlsUrl) {
+            const browserHasNativeHLSSupport = videoRef.current.canPlayType("application/vnd.apple.mpegurl");
+            if (Hls.isSupported()) {
+                let hls = new Hls();
+                hls.loadSource(hlsUrl);
+                hls.attachMedia(videoRef.current);
+            }
+            // hls.js is not supported on iOS Safari, but as the browser has native support for playing HLS,
+            // we can use the video element directly.
+            else if (browserHasNativeHLSSupport) {
+                videoRef.current.src = hlsUrl;
+            }
+        }
+    }, [hlsUrl]);
+
+    return <video ref={videoRef} autoPlay controls></video>
 }
 ```
 
