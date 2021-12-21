@@ -5,6 +5,7 @@ nav: 13.2
 
 HLS Streaming allows for scaling to millions of viewers in near real time. You can give a link of your
 webapp which will be converted to a HLS feed by our server and can be played across devices for consumption.
+
 Behind the scenes, this will be achieved by having a bot join your room and stream what it sees and hears. Once the feed is ready, the server will give a url which can be played using any HLS Player.
 
 > Note that the media server serving the content in this case is owned by 100ms. If you're looking for a way to stream
@@ -14,6 +15,7 @@ on YouTube, Twitch etc., please have a look at our RTMP streaming docs [here](./
 
 To start HLS you'll need to pass in a meeting URL. The 100ms bot will open this URL to join your room, so
 it must allow access without any user level interaction. In the future it'll be possible to start HLS for multiple such URLs for the same room.
+
 For this purpose the API supports taking in an array, although currently only the first element of the array will be used. To distinguish between multiple urls an additional field `metadata` can be optionally passed. The `meetingURL` and `metadata` are clubbed together to form what we'll call a `variant`.
 
 You can call `hmsSDK.startHLSStreaming` with a `HMSHLSConfig` having an array of such variants.
