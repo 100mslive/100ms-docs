@@ -9,7 +9,7 @@ Please note that for a peer to share their screen, their role must have screensh
 
 ![ScreenshareDashboard](/docs/v2/screenshare-dashboard.png)
 
-## How to start screenshare from the app
+## How to start screenshare from the app (without a custom notification)
 To start screen share, app needs to call the `startScreenshare` method of `HMSSDK`, which takes in two parameters -
     The first one is `HMSActionResultListener` which is a callback object needed to inform about `success`
         or `failure` of the action
@@ -42,7 +42,7 @@ Following is the snippet on how to use this:
     }
   }
 
-// Get the MEDIA_PROJECTION_SERVICE and launch the result launcher
+    // Get the MEDIA_PROJECTION_SERVICE and launch the result launcher
     val mediaProjectionManager: MediaProjectionManager? = requireContext().getSystemService(
                 Context.MEDIA_PROJECTION_SERVICE
               ) as MediaProjectionManager
@@ -52,8 +52,48 @@ Following is the snippet on how to use this:
 
 </Tab>
 
+
 It is important to note that screenshare will not work if the `resultCode` is NOT `Activity.RESULT_OK`.
 SDK will also start a foreground service with a notification when screenshare is started, which is mandated above Android 10.
+
+## How to add a custom notification
+
+To take a look at how this is implemented in our sample app, click [here](https://github.com/100mslive/100ms-android/blob/3590777bf0a3677cb9b5001034ea9ed7087f9d90/app/src/main/java/live/hms/app2/ui/meeting/MeetingViewModel.kt#L860).
+
+`hmssdk.startScreenShare` also takes an optional third parameter of type notification. See how to build a custom notification in the android docs [here](https://developer.android.com/training/notify-user/build-notification).
+
+It could look something like this:
+Since this is a standard Android notification the full range of customization is available.
+
+```kotlin
+
+  fun startScreenshare(mediaProjectionPermissionResultData: Intent?, actionListener: HMSActionResultListener) {
+    // Without custom notification
+    // hmsSDK.startScreenshare(actionListener ,mediaProjectionPermissionResultData)
+
+    // With custom notification
+    val notification = NotificationCompat.Builder(getApplication(), "ScreenCapture channel")
+      .setContentText("Screenshare running for roomId: ${hmsRoom?.roomId}")
+      .setSmallIcon(R.drawable.arrow_up_float)
+      .build()
+
+    hmsSDK.startScreenshare(actionListener, mediaProjectionPermissionResultData, notification)
+  }
+
+```
+
+### How to stop the screenshare and dissmiss the foreground notification from the notification.
+
+To stop the screenshare, create a custom notification and add the following action to it. The image could be anything, but the action has to be gotten from the HMSScreenCaptureService.
+This will create a "STOP SCREENSHARE" button on the intent.
+
+This pending intent could be passed anywhere you'd like, including on tap of the notification itself.
+```kotlin
+val notification = NotificationCompat.Builder(getApplication(), "ScreenCapture channel")
+      .addAction(R.drawable.ic_menu_close_clear_cancel, "Stop Screenshare", HMSScreenCaptureService.getStopScreenSharePendingIntent(getApplication()))
+      .build()
+
+```
 
 ## How to stop screenshare
 
@@ -88,8 +128,8 @@ SDK also stops the foreground service on calling this method.
 
 >   DONOT forget to add the permission for foreground service
 
-    ```kotlin
+```kotlin
 
-        <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
-    ```
+```
