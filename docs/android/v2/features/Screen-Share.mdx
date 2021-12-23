@@ -58,10 +58,12 @@ SDK will also start a foreground service with a notification when screenshare is
 
 ## How to add a custom notification
 
+To take a look at how this is implemented in our sample app, click [here](https://github.com/100mslive/100ms-android/blob/3590777bf0a3677cb9b5001034ea9ed7087f9d90/app/src/main/java/live/hms/app2/ui/meeting/MeetingViewModel.kt#L860).
+
 `hmssdk.startScreenShare` also takes an optional third parameter of type notification. See how to build a custom notification in the android docs [here](https://developer.android.com/training/notify-user/build-notification).
 
 It could look something like this:
-Since this is a standard Android notification the full range of customization is available. Look at android docs on creating notifications.
+Since this is a standard Android notification the full range of customization is available.
 
 ```kotlin
 
@@ -126,8 +128,8 @@ SDK also stops the foreground service on calling this method.
 
 >   DONOT forget to add the permission for foreground service
 
-    ```kotlin
+```kotlin
 
-        <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
-    ```
+```
