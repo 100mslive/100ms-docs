@@ -64,6 +64,10 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
             return `/api-reference/flutter/v2/hmssdk_flutter-library.html`;
         }
         // @ts-ignore
+        if (router.query.slug[0] === 'android') {
+            return `/api-reference/android/v2/index.html`;
+        }
+        // @ts-ignore
         const routeLink = `/api-reference/${router.query.slug[0]}/v2/home/content`;
         // @ts-ignore
         if (router.query.slug[0] === 'api-reference') {
