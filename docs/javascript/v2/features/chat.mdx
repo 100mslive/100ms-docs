@@ -100,13 +100,18 @@ hmsActions.setMessageRead(readStatus);           // set status for all messages
 hmsActions.setMessageRead(readStatus, msg.id);   // set status for a specific message
 ```
 
+## Message Notification
+
+When a peer receives a message they'll get a [notification](./notifications) with type `HMSNotificationTypes.NEW_MESSAGE`. 
+The `HMSMessage` object will be present in `notification.data`.
+
 ## Custom Events
 
 It's also possible to utilise the above system for sending custom messages across the room. All the above methods
 take `type` as an optional last param. The `type` is `chat` by default but can be changed to any valid string. This can
 be used to differentiate between different types of messages. For e.g.
 
-```
+```js
 // broadcast a message to the whole room
 hmsActions.sendBroadcastMessage("START", "GAME_EVENT");
 hmsActions.sendBroadcastMessage("🚀", "EMOJI_REACTION");
@@ -116,6 +121,7 @@ hmsActions.sendGroupMessage("🔥", ["stage", "backstage"], "EMOJI_REACTION");
 
 // Send a message to a specific peer
 hmsActions.sendDirectMessage("❤️", peer.id, "EMOJI_REACTION");
+hmsActions.sendDirectMessage("STOP_SCREENSHARE", peer.id, "MODERATOR_EVENT");
 ```
 
 Do note that the messages are not persistent and won't be available to a person joining the room after the event
