@@ -14,6 +14,11 @@ description: Release Notes for 100ms Android SDK
 * Send the local Screenshare Track to app in `onTrackUpdate`
 * Added new analytics event `videopresence.failed` for cases where SDK cannot find a camera to capture
 
+### Changed
+* Device permission denied errors are not terminal errors anymore.
+  Clients will get a `onJoin` or `onPreview` callback even if audio or video tracks cannot be created by the SDK due to some issues in the capture device.
+  `onError` callbacks will also be called along with the above callbacks
+
 ## 2.2.4 - 2021-12-20
 ### Fixed
 * RTMP updates are fired once server notifies
