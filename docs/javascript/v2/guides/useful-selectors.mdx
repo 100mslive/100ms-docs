@@ -128,8 +128,8 @@ const videoOn = useHMSStore(selectIsLocalVideoEnabled);
 <Tab id='rm-0'>
 
 ```js
-const audioOn = hmsStore.getState(selectIsPeerAudioEnabled);
-const videoOn = hmsStore.getState(selectIsPeerVideoEnabled);
+const audioOn = hmsStore.getState(selectIsPeerAudioEnabled(peerId));
+const videoOn = hmsStore.getState(selectIsPeerVideoEnabled(peerId));
 ```
 
 </Tab>
@@ -137,8 +137,30 @@ const videoOn = hmsStore.getState(selectIsPeerVideoEnabled);
 <Tab id='rm-1'>
 
 ```jsx
-const audioOn = useHMSStore(selectIsPeerAudioEnabled);
-const videoOn = useHMSStore(selectIsPeerVideoEnabled);
+const audioOn = useHMSStore(selectIsPeerAudioEnabled(peerId));
+const videoOn = useHMSStore(selectIsPeerVideoEnabled(peerId));
+```
+
+</Tab>
+
+## How do I get the video stream of a user?
+
+You can get video stream of a user using `selectCameraStreamByPeer` it returns [HMSTrack](/api-reference/javascript/v2/interfaces/HMSTrack) which you can use to call [attach/detach](/javascript/v2/features/render-video) actions.
+
+<Tabs id="cam" items={['Javascript', 'React']} />
+
+<Tab id='cam-0'>
+
+```js
+const videoTrack = hmsStore.getState(selectCameraStreamByPeer(peerId));
+```
+
+</Tab>
+
+<Tab id='cam-1'>
+
+```jsx
+const videoTrack = useHMSStore(selectCameraStreamByPeer(peerId));
 ```
 
 </Tab>
