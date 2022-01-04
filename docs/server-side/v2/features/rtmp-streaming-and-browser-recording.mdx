@@ -5,7 +5,7 @@ nav: 4.4
 
 ## Introduction
 
-RTMP Streaming can be used to live stream your video conferencing apps to platforms like YouTube, Twitch, MUX, etc.
+RTMP Streaming can be used to live stream your video conferencing apps to platforms like YouTube, Twitch, Facebook, MUX, etc.
 Browser Recording can be used to record your video conferencing apps to a file, for subsequent access.
 You can start either RTMP Streaming or Browser Recording or both for any room
 
@@ -40,13 +40,13 @@ You can start either RTMP Streaming or Browser Recording or both for any room
 
 #### Body Parameters
 
-| Name              | Type     | Description                                                                                                                                                  | Required |
-| :---------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| operation <br/>   | `string` | Must be "start"                                                                                                                                              | Yes      |
-| room_id <br/>     | `string` | The room id of the room which we need to start streaming/recording                                                                                           | Yes      |
-| meeting_url <br/> | `string` | Single click meeting url which we need to start streaming/recording (see below for more details)                                                             | Yes      |
-| rtmp_urls <br/>   | `array`  | List of RTMP output urls to which the meeting will be streamed. <br/> Required when RTMP streaming needs to be started. <br/> Supports upto 3 `rtmp://` urls | No       |
-| record <br/>      | `bool`   | Flag to enable browser recording                                                                                                                             | No       |
+| Name              | Type     | Description                                                                                                                                                               | Required |
+| :---------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| operation <br/>   | `string` | Must be "start"                                                                                                                                                           | Yes      |
+| room_id <br/>     | `string` | The room id of the room which we need to start streaming/recording                                                                                                        | Yes      |
+| meeting_url <br/> | `string` | Single click meeting url which we need to start streaming/recording (see below for more details)                                                                          | Yes      |
+| rtmp_urls <br/>   | `array`  | List of RTMP output urls to which the meeting will be streamed. <br/> Required when RTMP streaming needs to be started. <br/> Supports upto 3 `rtmp://` / `rtmps://` urls | No       |
+| record <br/>      | `bool`   | Flag to enable browser recording                                                                                                                                          | No       |
 
 ##### meeting_url
 
