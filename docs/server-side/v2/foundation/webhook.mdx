@@ -94,7 +94,7 @@ This event will be send when peer leaves the room
 | session_id | `string`     | 100ms assigned id to identify the session          | 5f9edc6bd238215aec7700df             |
 | peer_id    | `string`     | 100ms assigned id to identify the joining user     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id    | `string`     | User id assigned by the customer                   | user.001                             |
-| left_at    | `string`     | Timestamp when user left                           | 2020-11-11T17:32:17Z                 |
+| left_at    | `timestamp`  | Timestamp when user left                           | 2020-11-11T17:32:17Z                 |
 | duration   | `number`     | Duration the user spent in the room in seconds     | 36000                                |
 
 #### Sample `peer.leave.success` event
@@ -167,7 +167,7 @@ This event will be sent when the peer leave fails. This can occur when,
 | room_id    | `string`     | 100ms assigned room id                             | 5f9edc6ac238215aec2312df             |
 | peer_id    | `string`     | 100ms assigned id to identify the joining user     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id    | `string`     | User id assigned by the customer                   | user.001                             |
-| left_at    | `string`     | Timestamp when user left                           | 2020-11-11T17:32:17Z                 |
+| left_at    | `timestamp`  | Timestamp when user left                           | 2020-11-11T17:32:17Z                 |
 | duration   | `number`     | Duration the user spent in the room in seconds     | 36000                                |
 
 #### Sample `peer.leave.failure` event
@@ -269,10 +269,10 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
 | peer_id            | `string`     | 100ms assigned id to identify the joining user     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | session_id         | `string`     | 100ms assigned id to identify the session          | 5f9edc6bd238215aec7700df             |
 | metadata_id        | `string`     | Webhook metadata ID                                | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp | `string`     | Webhook message creation timestamp                 | 2020-11-11T17:32:17Z                 |
+| metadata_timestamp | `timestamp`  | Webhook message creation timestamp                 | 2020-11-11T17:32:17Z                 |
 | start_delay        | `number`     | Time taken by beam to start recording              | 12                                   |
 | state_name         | `string`     | Beam state identifier                              | Started                              |
-| state_timestamp    | `string`     | Timestamp at which beam state changed              | 2020-11-11T17:32:18Z                 |
+| state_timestamp    | `timestamp`  | Timestamp at which beam state changed              | 2020-11-11T17:32:18Z                 |
 
 #### Sample `beam.started.success` event
 ```json
@@ -309,9 +309,9 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
 | peer_id            | `string`     | 100ms assigned id to identify the joining user     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | session_id         | `string`     | 100ms assigned id to identify the session          | 5f9edc6bd238215aec7700df             |
 | metadata_id        | `string`     | Webhook metadata ID                                | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp | `string`     | Webhook message creation timestamp                 | 2020-11-11T17:32:17Z                 |
+| metadata_timestamp | `timestamp`  | Webhook message creation timestamp                 | 2020-11-11T17:32:17Z                 |
 | state_name         | `string`     | Beam state identifier                              | Started                              |
-| state_timestamp    | `string`     | Timestamp at which beam state changed              | 2020-11-11T17:32:18Z                 |
+| state_timestamp    | `timestamp`  | Timestamp at which beam state changed              | 2020-11-11T17:32:18Z                 |
 | duration           | `number`     | Duration of RTMP streaming / recording in seconds  | 12                                   |
 
 #### Sample `beam.stopped.success` event
@@ -347,12 +347,12 @@ This event is sent when beam successfully records the room and uploads the video
 | room_id            | `string`     | 100ms assigned room id                             | 5f9edc6ac238215aec2312df             |
 | peer_id            | `string`     | 100ms assigned id to identify the joining user     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | metadata_id        | `string`     | Webhook metadata ID                                | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp | `string`     | Webhook message creation timestamp                 | 2020-11-11T17:32:17Z                 |
-| created_at         | `string`     | Beam recording file when created                   | 2020-11-11T17:12:17Z                 |
+| metadata_timestamp | `timestamp`  | Webhook message creation timestamp                 | 2020-11-11T17:32:17Z                 |
+| created_at         | `timestamp`  | Beam recording file when created                   | 2020-11-11T17:12:17Z                 |
 | duration           | `number`     | Duration of beam recording (seconds)               | 79                                   |
 | location           | `string`     | HTTPS url to recorded session file on S3 bucket    | https://s3-loc/bucket/beam/ac.mp4    |
-| started_at         | `string`     | Beam recording started at                          | 2020-11-11T17:12:27Z                 |
-| stopped_at         | `string`     | Beam recording stopped at                          | 2020-11-11T17:32:15Z                 |
+| started_at         | `timestamp`  | Beam recording started at                          | 2020-11-11T17:12:27Z                 |
+| stopped_at         | `timestamp`  | Beam recording stopped at                          | 2020-11-11T17:32:15Z                 |
 
 #### Sample `beam.recording.success` event
 ```json
@@ -400,9 +400,9 @@ This event will be sent when there are failures in RTMP streaming and/or browser
 | error_message      | `string`     | Beam error message (description)                   | Failed to resolve hostname           |
 | error_type         | `string`     | Beam error type                                    | BeamFailed                           |
 | metadata_id        | `string`     | Webhook metadata ID                                | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp | `string`     | Webhook message creation timestamp                 | 2020-11-11T17:32:17Z                 |
+| metadata_timestamp | `timestamp`  | Webhook message creation timestamp                 | 2020-11-11T17:32:17Z                 |
 | state_name         | `string`     | Beam state identifier                              | Started                              |
-| state_timestamp    | `string`     | Timestamp at which beam state changed              | 2020-11-11T17:32:18Z                 |
+| state_timestamp    | `timestamp`  | Timestamp at which beam state changed              | 2020-11-11T17:32:18Z                 |
 | duration           | `number`     | Duration of RTMP streaming / recording in seconds  | 12                                   |
 | meeting_url        | `string`     | meeting_url provided at rtmp start                 | https://app.100ms.live/room_id       |
 | rtmp               | `array`      | List of RTMP objects provided at rtmp  start       | [{"url": "http://test.com"}]         |
@@ -450,12 +450,12 @@ This event is sent when hls streaming is successfully triggered
 | peer_id            | `string`     | 100ms assigned id to identify the joining user     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | session_id         | `string`     | 100ms assigned id to identify the session          | 5f9edc6bd238215aec7700df             |
 | metadata_id        | `string`     | Webhook metadata ID                                | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp | `string`     | Webhook message creation timestamp                 | 2020-11-11T17:32:17Z                 |
+| metadata_timestamp | `timestamp`  | Webhook message creation timestamp                 | 2020-11-11T17:32:17Z                 |
 | start_delay        | `number`     | Time taken by beam to start recording              | 12                                   |
 | state_name         | `string`     | Beam state identifier                              | Started                              |
-| state_timestamp    | `string`     | Timestamp at which beam state changed              | 2020-11-11T17:32:18Z                 |
+| state_timestamp    | `timestamp`  | Timestamp at which beam state changed              | 2020-11-11T17:32:18Z                 |
 | url                | `string`     | HLS live streaming url                             | https://100ms-live.m3u8              |
-| started_at         | `string`     | Timestamp at which hls started                     | 2020-11-11T17:32:18Z                 |
+| started_at         | `timestamp`  | Timestamp at which hls started                     | 2020-11-11T17:32:18Z                 |
 
 #### Sample `hls.started.success` event
 ```json
@@ -494,14 +494,14 @@ This event is sent when hls streaming is successfully stopped
 | peer_id            | `string`     | 100ms assigned id to identify the joining user     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | session_id         | `string`     | 100ms assigned id to identify the session          | 5f9edc6bd238215aec7700df             |
 | metadata_id        | `string`     | Webhook metadata ID                                | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp | `string`     | Webhook message creation timestamp                 | 2020-11-11T17:32:17Z                 |
+| metadata_timestamp | `timestamp`  | Webhook message creation timestamp                 | 2020-11-11T17:32:17Z                 |
 | start_delay        | `number`     | Time taken by beam to start recording              | 12                                   |
 | state_name         | `string`     | Beam state identifier                              | Started                              |
-| state_timestamp    | `string`     | Timestamp at which beam state changed              | 2020-11-11T17:32:18Z                 |
+| state_timestamp    | `timestamp`  | Timestamp at which beam state changed              | 2020-11-11T17:32:18Z                 |
 | url                | `string`     | HLS live streaming url                             | https://100ms-live.m3u8              |
 | duration           | `number`     | Duration of HLS streaming in seconds               | 12                                   |
-| started_at         | `string`     | Timestamp at which hls started                     | 2020-11-11T17:32:18Z                 |
-| stopped_at         | `string`     | Timestamp at which hls stopped                     | 2020-11-11T17:32:18Z                 |
+| started_at         | `timestamp`  | Timestamp at which hls started                     | 2020-11-11T17:32:18Z                 |
+| stopped_at         | `timestamp`  | Timestamp at which hls stopped                     | 2020-11-11T17:32:18Z                 |
 
 #### Sample `hls.stopped.success` event
 ```json
@@ -547,9 +547,9 @@ This event will be sent when there are failures in RTMP streaming and/or browser
 | error_message      | `string`     | Beam error message (description)                   | Failed to resolve hostname           |
 | error_type         | `string`     | Beam error type                                    | BeamFailed                           |
 | metadata_id        | `string`     | Webhook metadata ID                                | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp | `string`     | Webhook message creation timestamp                 | 2020-11-11T17:32:17Z                 |
+| metadata_timestamp | `timestamp`  | Webhook message creation timestamp                 | 2020-11-11T17:32:17Z                 |
 | state_name         | `string`     | Beam state identifier                              | Started                              |
-| state_timestamp    | `string`     | Timestamp at which beam state changed              | 2020-11-11T17:32:18Z                 |
+| state_timestamp    | `timestamp`  | Timestamp at which beam state changed              | 2020-11-11T17:32:18Z                 |
 | duration           | `number`     | Duration of RTMP streaming / recording in seconds  | 12                                   |
 
 #### Sample `hls.failure` event
