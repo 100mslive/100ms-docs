@@ -47,6 +47,14 @@ You can start either RTMP Streaming or Browser Recording or both for any room
 | meeting_url <br/> | `string` | Single click meeting url which we need to start streaming/recording (see below for more details)                                                                          | Yes      |
 | rtmp_urls <br/>   | `array`  | List of RTMP output urls to which the meeting will be streamed. <br/> Required when RTMP streaming needs to be started. <br/> Supports upto 3 `rtmp://` / `rtmps://` urls | No       |
 | record <br/>      | `bool`   | Flag to enable browser recording                                                                                                                                          | No       |
+| resolution <br/>  | `object` | Video resolution for streaming/recording                                                                                                                                  | No       |
+
+##### resolution
+
+| Name              | Type     | Description                                                                                                | Required |
+| :---------------- | :------- | :--------------------------------------------------------------------------------------------------------- | :------- |
+| width <br/>       | `int`    | Width of the video. <br/> Range: `480`-`1280`. If height>720 then max width=720. <br/>Default: `1280`      | Yes      |
+| height <br/>      | `int`    | Height of the video. <br/> Range: `480`-`1280`. If width>720 then max height=720. <br/>Default: `720`      | Yes      |
 
 ##### meeting_url
 
