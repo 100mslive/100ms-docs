@@ -49,16 +49,16 @@ You can start either RTMP Streaming or Browser Recording or both for any room
 | record <br/>      | `bool`   | Flag to enable browser recording                                                                                                                                          | No       |
 | resolution <br/>  | `object` | Video resolution for streaming/recording                                                                                                                                  | No       |
 
+##### meeting_url
+
+This is a url which lands into the meeting directly. If you are using 100ms apps then this will be like - `https://<domain>.app.100ms.live/preview/<room_id>/<role>?token=beam_recording`. Example - `https://myname.app.100ms.live/preview/61101349d0f56e684b608c08/beam?token=beam_recording`
+
 ##### resolution
 
 | Name              | Type     | Description                                                                                                | Required |
 | :---------------- | :------- | :--------------------------------------------------------------------------------------------------------- | :------- |
 | width <br/>       | `int`    | Width of the video. <br/> Range: `480`-`1280`. If height>720 then max width=720. <br/>Default: `1280`      | Yes      |
 | height <br/>      | `int`    | Height of the video. <br/> Range: `480`-`1280`. If width>720 then max height=720. <br/>Default: `720`      | Yes      |
-
-##### meeting_url
-
-This is a url which lands into the meeting directly. If you are using 100ms apps then this will be like - `https://<domain>.app.100ms.live/preview/<room_id>/<role>?token=beam_recording`. Example - `https://myname.app.100ms.live/preview/61101349d0f56e684b608c08/beam?token=beam_recording`
 
 #### cURL
 
@@ -73,7 +73,8 @@ curl \
         "room_id": <rooom_id>,
         "meeting_url": <meeting_url>,
         "rtmp_urls": [<rtmp_url_1>, <rtmp_url_2>],
-        "record": true
+        "record": true,
+        "resolution" : {"width": 1280, "height": 720}
     }'
 ```
 
