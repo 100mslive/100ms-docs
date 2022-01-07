@@ -42,6 +42,12 @@ The HLS stream will be a adaptive stream and have a latency of 8-10 seconds as c
 | Name              | Type     | Description                                                                                  | Required |
 | :---------------- | :------- | :------------------------------------------------------------------------------------------- | :------- |
 | room_id <br/>     | `string` | The room id of the room which we need to start streaming                                     | Yes      |
+| variants <br/>    | `array`  | List of objects of type `variants`                                                           | Yes      |
+
+##### variants
+
+| Name              | Type     | Description                                                                                  | Required |
+| :---------------- | :------- | :------------------------------------------------------------------------------------------- | :------- |
 | meeting_url <br/> | `string` | Single click meeting url which we need to start streaming (see below for more details)       | Yes      |
 
 ##### meeting_url
@@ -58,14 +64,14 @@ curl \
     --header 'Authorization: Bearer <management_token>' \
     --data-raw '{
         "room_id": <room_id>,
-        "meeting_url": <meeting_url>
+        "variants": [{"meeting_url": <meeting_url>}]
     }'
 ```
 
 </div>
 
 <Tab id="start-1">
-    <Response res="200: OK" resText="Beam has started successfully" />
+    <Response res="200: OK" resText="Hls streaming is starting" />
 </Tab>
 
 ---
@@ -109,7 +115,7 @@ curl \
 </div>
 
 <Tab id="stop-1">
-    <Response res="200: OK" resText="Beam has stopped successfully" />
+    <Response res="200: OK" resText="Hls streaming is stopping" />
 </Tab>
 
 ## Postman Collection
