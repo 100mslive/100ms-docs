@@ -127,10 +127,13 @@ To know more about recording please visit [Recording](./recording)
 
 ### Credentials
 
-| Name   | Type     | Description                                                                 | Required |
-| :----- | :------- | :-------------------------------------------------------------------------- | :------- |
-| key    | `string` | Access Key for the AWS account hosting the s3 bucket for storing recordings | Yes      |
-| secret | `string` | Secret for the AWS account hosting the s3 bucket for storing recordings     | Yes      |
+| Name   | Type     | Description                                                                            | Required |
+| :----- | :------- | :------------------------------------------------------------------------------------- | :------- |
+| key    | `string` | `access key ID` for the AWS account hosting the s3 bucket for storing recordings       | Yes      |
+| secret | `string` | `secret access key` for the AWS account hosting the s3 bucket for storing recordings   | Yes      |
+
+The access keys should have read(GetObject) and write(PutObject) permissions for the s3 bucket.
+For more details check - https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html
 
 ## Disable Room
 

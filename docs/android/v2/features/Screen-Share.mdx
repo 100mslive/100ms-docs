@@ -50,8 +50,6 @@ Following is the snippet on how to use this:
 
 ```
 
-</Tab>
-
 
 It is important to note that screenshare will not work if the `resultCode` is NOT `Activity.RESULT_OK`.
 SDK will also start a foreground service with a notification when screenshare is started, which is mandated above Android 10.
@@ -82,7 +80,29 @@ Since this is a standard Android notification the full range of customization is
 
 ```
 
-### How to stop the screenshare and dissmiss the foreground notification from the notification.
+
+</Tab>
+
+
+## How to get Screen Share Status
+
+Application needs to call the `isScreenShareActive` method of `HMSSDK`.
+
+This method returns a `Boolean` which will be true inscase ScreenShare is currently active and being used, and False for inactive state.
+
+<Tabs id="screensharestatus" items={["Kotlin"]} />
+
+<Tab id='screensharestatus-0'>
+
+```kotlin
+
+  hmsSDK.isScreenShareActive()
+
+```
+
+</Tab>
+
+## How to stop the screenshare and dissmiss the foreground notification from the notification.
 
 To stop the screenshare, create a custom notification and add the following action to it. The image could be anything, but the action has to be gotten from the HMSScreenCaptureService.
 This will create a "STOP SCREENSHARE" button on the intent.
