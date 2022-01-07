@@ -12,21 +12,38 @@ description: Release Notes for 100ms JavaScript SDK
 | @100mslive/hms-video-react | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-react.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-react) |
 | @100mslive/hms-video-store | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-store.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-store) |
 
+## 2022-01-07
+
+Released: `@100mslive/hms-video@0.1.40`, `@100mslive/hms-video-store@0.2.86`, `@100mslive/hms-video-react@0.3.114`
+
+Added:
+
+-   server errors are marked as terminal, SDK will automatically leave and give a terminal error
+
+Fixed:
+
+-   process is not defined error when using with CRA5, webpack5 or with react-scripts@5
+-   update recording/streaming status when they are actually started
+
+### Breaking:
+
+-   requestedBy is now optional in HMSRoleChangeRequest, HMSChangeTrackStateRequest, HMSChangeMultiTrackStateRequest
+
 ## 2021-12-21
 
 Released: `@100mslive/hms-video@0.1.39`, `@100mslive/hms-video-store@0.2.85`, `@100mslive/hms-video-react@0.3.113`
 
 Added:
 
-- [HLS streaming](../features/hls) for streaming a room to a large number of viewers
-- Support for Multiple [video plugins](../plugins/custom-video-plugin)
-- `startedAt` field in room to know since when the call is running
-- An additional boolean `showTileForAllPeers` in VideoList component to show peers with no tiles.
+-   [HLS streaming](../features/hls) for streaming a room to a large number of viewers
+-   Support for Multiple [video plugins](../plugins/custom-video-plugin)
+-   `startedAt` field in room to know since when the call is running
+-   An additional boolean `showTileForAllPeers` in VideoList component to show peers with no tiles.
 
 Fixed:
 
-- Type in custom events not getting passed for direct messages
-- Camera selection showing wrong device in some cases
+-   Type in custom events not getting passed for direct messages
+-   Camera selection showing wrong device in some cases
 
 ## 2021-12-10
 
