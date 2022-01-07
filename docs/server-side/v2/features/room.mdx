@@ -199,3 +199,41 @@ curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <manage
 | :----------- | :------- | :--------------------------------------------------------------- | :------- |
 | name <br/>   | `string` | Room name as given during creation of the room                   | Yes      |
 | active <br/> | `bool`   | Flag to indicate disabling of the room, should be set to `false` | Yes      |
+
+## End Room
+
+This API can be used to end a currently running room
+
+<PostRequest
+    title="End Room API"
+    desp="This endpoint is used to end a room"
+    url="https://prod-in2.100ms.live/islb/api/v2/room/end"
+/>
+
+<Tabs items={['Request', 'Response']} id="dis" />
+
+<Tab id="end-0">
+
+```bash
+curl https://prod-in2.100ms.live/islb/api/v2/room/end -H 'Authorization: Bearer  <management_token>' -X POST -H 'Content-Type: application/json' -d '{"id": "61101349d0f56e684b608c08", "reason": "meeting over"}'
+```
+
+</Tab>
+
+<Tab id="end-1">
+    <Response res="200: OK" />
+</Tab>
+
+### Headers
+
+| Name                | Value                       | Required |
+| :------------------ | :-------------------------- | :------- |
+| Content-type <br/>  | application/json            | Yes      |
+| Authorization <br/> | Bearer `<management token>` | Yes      |
+
+### Body Paramters
+
+| Name         | Type     | Description                         | Required |
+| :----------- | :------- | :---------------------------------- | :------- |
+| id <br/>     | `string` | Room id of the room to be ended     | Yes      |
+| reason <br/> | `string` | Reason for ending the room          | Yes      |
