@@ -2,10 +2,11 @@
 import React from 'react'
 
 import rtmp from '../public/postman/100ms-rtmp.postman_collection.json'
-
+import hls from '../public/postman/100ms-hls.postman_collection.json'
 
 const collections = {
   rtmp,
+  hls,
 }
 
 interface Props {
