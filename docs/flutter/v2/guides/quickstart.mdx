@@ -123,7 +123,9 @@ These are some listener's callback functions:
 > 💡 It's essential that this callback is listened to or you may have peers without video.
 
 ```dart
+HMSConfig config = HMSConfig(userId: this.userId, authToken: this.authToken);
 _meeting = HMSMeeting();
+_meeting.build()
 _meeting.joinMeeting(config: this.config);
 _meeting.addMeetingListener(listener);
 
@@ -174,7 +176,7 @@ The `HMSUpdateListener` has a callback to notify about people joining or leaving
 ### How to render audio and video
 
 The SDK plays the audio for every person who joins the call. Audio will begin playing when join succeeds.
-To see the person's video you need to create an instance of HMSVideoView with height and width in arguments.
+To render the person's video you need to create an instance of HMSVideoView.
 
 ### Showing Videos
 
