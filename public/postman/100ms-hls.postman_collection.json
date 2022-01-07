@@ -1,0 +1,97 @@
+{
+	"info": {
+		"_postman_id": "86117d91-b227-4d0b-847d-d8bbd9139958",
+		"name": "100ms HLS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Start HLS Streaming",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "xxxxx.yyyyy.zzzzz",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"room_id\": <room_id>,\n    \"meeting_url\": <meeting_url>\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://prod-in2.100ms.live/islb/api/v2/room/hls/start",
+					"protocol": "https",
+					"host": [
+						"prod-in2",
+						"100ms",
+						"live"
+					],
+					"path": [
+						"islb",
+						"api",
+						"v2",
+						"room",
+						"hls",
+						"start"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Stop HLS Streaming",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "xxxxx.yyyyy.zzzzz",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"room_id\": <room_id>\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://prod-in2.100ms.live/islb/api/v2/room/hls/stop",
+					"protocol": "https",
+					"host": [
+						"prod-in2",
+						"100ms",
+						"live"
+					],
+					"path": [
+						"islb",
+						"api",
+						"v2",
+						"room",
+						"hls",
+						"stop"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

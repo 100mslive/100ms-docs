@@ -1,0 +1,117 @@
+---
+title: HLS Streaming
+nav: 4.5
+---
+
+## Introduction
+
+HLS Streaming can be used to live stream your video conferencing apps in a cost effective way.
+The HLS stream will be a adaptive stream and have a latency of 8-10 seconds as compared to live.
+
+## Pre-requisites
+
+1. Management token
+
+- [Click here to see how to generate management token](/server-side/v2/foundation/authentication-and-tokens)
+
+2. Single click meeting url to directly enter a room
+
+3. 100ms SDK logs should be logged to console for the webapp url provided above. The SDK logs will be analysed to detect any room join failures and retries will be attemped to fix the same. If SDK logs are not enabled then the server will stop recording/streaming and return error (after fixed number of retries).
+
+## APIs
+
+### Start Streaming
+<PostRequest
+    desp="This endpoint is used to start hls streaming"
+    url="https://prod-in2.100ms.live/islb/api/v2/room/hls/start"
+/>
+
+<Tabs items={['Request', 'Response']} id="start" />
+
+<div id="start-0">
+
+#### Headers
+
+| Name                           | Value                        | Required |
+| :----------------------------- | :--------------------------- | :------- |
+| Content-type <br/>             | application/json             | Yes      |
+| Authorization <br/>            | Bearer `<management token>`  | Yes      |
+
+#### Body Parameters
+
+| Name              | Type     | Description                                                                                  | Required |
+| :---------------- | :------- | :------------------------------------------------------------------------------------------- | :------- |
+| room_id <br/>     | `string` | The room id of the room which we need to start streaming                                     | Yes      |
+| meeting_url <br/> | `string` | Single click meeting url which we need to start streaming (see below for more details)       | Yes      |
+
+##### meeting_url
+
+This is a url which lands into the meeting directly. If you are using 100ms apps then this will be like - `https://<domain>.app.100ms.live/preview/<room_id>/<role>?token=beam_recording`. Example - `https://myname.app.100ms.live/preview/61101349d0f56e684b608c08/beam?token=beam_recording`
+
+#### cURL
+
+```bash
+curl \
+    --location \
+    --request POST 'https://prod-in2.100ms.live/islb/api/v2/room/hls/start' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer <management_token>' \
+    --data-raw '{
+        "room_id": <room_id>,
+        "meeting_url": <meeting_url>
+    }'
+```
+
+</div>
+
+<Tab id="start-1">
+    <Response res="200: OK" resText="Beam has started successfully" />
+</Tab>
+
+---
+
+### Stop Streaming
+<PostRequest
+    desp="This endpoint is used to stop hls streaming"
+    url="https://prod-in2.100ms.live/islb/api/v2/room/hls/stop"
+/>
+
+<Tabs items={['Request', 'Response']} id="stop" />
+
+<div id="stop-0">
+
+#### Headers
+
+| Name                           | Value                        | Required |
+| :----------------------------- | :--------------------------- | :------- |
+| Content-type <br/>             | application/json             | Yes      |
+| Authorization <br/>            | Bearer `<management token>`  | Yes      |
+
+#### Body Paramters
+
+| Name              | Type     | Description                                                           | Required |
+| :---------------- | :------- | :-------------------------------------------------------------------- | :------- |
+| room_id <br/>     | `string` | The room id of the room for which we need to stop streaming           | Yes      |
+
+#### cURL
+
+```bash
+curl \
+    --location \
+    --request POST 'https://prod-in2.100ms.live/islb/api/v2/room/hls/stop' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer <management_token>' \
+    --data-raw '{
+        "room_id": <room_id>
+    }'
+```
+
+</div>
+
+<Tab id="stop-1">
+    <Response res="200: OK" resText="Beam has stopped successfully" />
+</Tab>
+
+## Postman Collection
+
+<DownloadCollection type='hls' />
