@@ -28,6 +28,9 @@ await hmsActions.removeTrack(trackId);
 // if you have hold of the peer object, it'll have ids of all the auxiliary tracks
 console.log(peer.auxiliaryTracks);
 
+// to get the track from a track id you can do this
+track = hmsStore.getState(selectTrackByID(trackId))
+
 // all auxiliary tracks
 hmsStore.getState(selectAuxiliaryTracksByPeerID(peer.id));
 
