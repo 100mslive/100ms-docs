@@ -9,12 +9,12 @@ description: Release Notes for 100ms Android SDK
 * Added `isTerminal` property in `HMSException` - Use this property to determine whether peer can continue in the room or not
 * Added analytics to collect info about `could not find FRONT camera` issue
 * Added analytics events for phone call interruptions
+* Queue-ing analytics events which maybe getting missed as websocket not present
 
 ### Fixed
 * Bug fix - All Remote peers get muted for local peer if the local peer receives a phone call at a moment when there is no one else in the room
 * `onReconnection` will not be send continuously & will be sent only in the start. It was being sent continously while SDK was retrying.
 * NPE crash fix in `OnPeerUpdateManager` and `SDKStore.getRoom`
-* Fixed Analytics Events not going when websocket connection fails to connect on join - on some occasion
 
 ## 2.2.5 - 2021-12-29
 ### Fixed
