@@ -15,22 +15,28 @@ Here's how to check whether the local peer has the permission to end the room:
 
 
 ```dart
-Future<bool> isAllowedToEndMeeting() async{
+Future<bool> isAllowedToEndRoom() async{
     return (await hmsSDK.getLocalPeer()).role.permission?.endRoom;
 }
 ```
 
-`hmsSdk.getLocalPeer()` will not return null as long as you're in a preview or in a meeting. Since you likely won't need to check for permissions if you're not in one it would be ok.
+`hmsSdk.getLocalPeer()` will not return null as long as you're in a preview or in a room. Since you likely won't need to check for permissions if you're not in one it would be ok.
 
 ### Ending the Room
 
-Once you're sure the peer has the permissions to end the room, they can end it by calling `meeting.endRoom`.
+Once you're sure the peer has the permissions to end the room, they can end it by calling `hmsSDK.endRoom(reason: "Some reason to end room", lock: false)`.
 
-`endRoom` takes one parameters.
-
+```dart
+void endRoom(
+      {required bool lock,
+      required String reason,
+      HMSActionResultListener? hmsActionResultListener}) async {}
+```
+`endRoom` takes the following parameters -
 
 *lock*: A Boolean for whether you want to prevent anyone from rejoining the room. If false, they will be allowed to enter the room again if the client called `join`. If this is true, they will NOT able to join this room again.
-
+*reason*: reason String is the text that is passed describing why the room is being ended.
+*hmsActionResultListener*:  It's the callback that would be called by SDK in case of a success or failure of `endRoom` operation
 
 > 💡 After calling endRoom the video calling UI should be disposed of as well since only the other peers will get the `onPeerRemoved` callback. The caller has to rely on the `onSuccess` callback for `endRoom` to decide when to terminate the meeting room UI locally.
 
@@ -42,11 +48,11 @@ Once the peer with adequate permissions calls `endRoom`, all other peers in the 
 The `onRemovedFromRoom` callback has a single parameter called `HMSRemovedFromRoom` with the following structure.
 
 ```dart
-class HMSRemovedFromRoom(
-    val reason : String,
-    val peerWhoRemoved : HMSPeer?,
-    val roomWasEnded : Boolean
-)
+class HMSPeerRemovedFromPeer {
+  String reason;
+  bool roomWasEnded;
+  HMSPeer? peerWhoRemoved;
+}
 ```
 
 > 💡 This is the same callback that will be triggered if a peer was [removed from a room](Remove-Peer) as well. Except that `roomEnded` will be true when the entire room was ended.

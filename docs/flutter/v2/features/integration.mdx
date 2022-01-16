@@ -34,9 +34,23 @@ flutter run
 Camera, Recording Audio and Internet permissions are required. Add them to your AndroidManifest.xml.
 
 ```xml
-<uses-permission android:name="android.permission.CAMERA" />
-<uses-permission android:name="android.permission.RECORD_AUDIO" />
-<uses-permission android:name="android.permission.INTERNET" />
+<uses-feature android:name="android.hardware.camera"/>
+
+<uses-feature android:name="android.hardware.camera.autofocus"/>
+
+<uses-permission android:name="android.permission.CAMERA"/>
+
+<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+
+<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+
+<uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
+<uses-permission android:name="android.permission.BLUETOOTH"/>
+
+<uses-permission android:name="android.permission.INTERNET"/>
+
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 ```
 
 You will also need to request Camera and Record Audio permissions at runtime before you join a call or display a preview. Please follow [Android Documentation](https://developer.android.com/training/permissions/requesting#request-permission) for runtime permissions.
@@ -71,3 +85,20 @@ You will also need to request Camera and Record Audio permissions at runtime bef
 ## Debugging Tools
  
 You can use [Android Studio](https://developer.android.com/studio), [VS Code](https://code.visualstudio.com/) & [Xcode](https://developer.apple.com/xcode/) to develop application with 100ms.
+
+## Proguard configuration
+
+### 100ms Android SDK 2.1.2 or higher
+
+If using 100ms Android SDK version 2.1.2 and higher proguard configuration is bundled inside it. No additional code is required.
+
+### Prior to Android SDK version 2.1.2
+Prior to Android SDK version 2.1.2, the following configuration was needed in release builds.
+
+Add it to your proguard-rules.pro
+
+```kotlin
+# 100ms proguard rules
+-keep class org.webrtc.** { *; }
+-keep class live.hms.video.** { *; }
+```
