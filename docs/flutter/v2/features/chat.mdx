@@ -1,6 +1,6 @@
 ---
 title: Chat
-nav: 7
+nav: 9
 ---
 
 What's a video call without being able to send messages to each other too? 100ms supports chat for every video/audio room you create.
@@ -9,11 +9,11 @@ You can see an example of every type of message (of the types below) being sent 
 
 ### Addressing messages
 
-* [Broadcast messages](#sending-broadcast-messages) are sent to Everyone in the chat `meeting.sendBroadcastMessage`.
+* [Broadcast messages](#sending-broadcast-messages) are sent to Everyone in the chat `hmsSDK.sendBroadcastMessage`.
 
-* [Direct messages](#sending-direct-messages) are sent to a specific person `meeting.sendDirectMessage`.
+* [Direct messages](#sending-direct-messages) are sent to a specific person `hmsSDK.sendDirectMessage`.
 
-* [Group messages](#sending-group-messages) are sent to everyone with a particular `HMSRole`. Such as all `hosts` or all `teachers` or all `students` `meeting.sendGroupMessage`.
+* [Group messages](#sending-group-messages) are sent to everyone with a particular `HMSRole`. Such as all `hosts` or all `teachers` or all `students` `hmsSDK.sendGroupMessage`.
     * Learn more about [roles](../foundation/templates-and-roles) and how to create them on the backend.
 
 ## Sending Chat Messages
@@ -21,12 +21,11 @@ You can see an example of every type of message (of the types below) being sent 
 
 ### Sending Broadcast Messages
 
-Want to let everyone in the chat know something? Call `sendBroadcastMessage` on the instance of `HMSMeeting` to send a broadcast.
+Want to let everyone in the chat know something? Call `sendBroadcastMessage` on the instance of `HMSSDK` to send a broadcast.
 
 The parameters are:
 
 1. *message*: The text of the message.
-
 
 
 > 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error.
@@ -36,16 +35,13 @@ The parameters are:
 >Also it's important to make a new callback per message because it will only contain the results of that particular call for sending a message.
 
 
-
-
 ```dart
-HMSMeeting meeting = new HMSMeeting();
-meeting.sendMessage("Hi");
+hmsSDK.sendBroadcastMessage("Hi");
 ```
 
 #### Sending Direct Messages
 
-Got secrets to share? Send a message directly to a single person in the chat with a direct message. Call `sendDirectMessage` on an instance of `HMSMeeting`.
+Got secrets to share? Send a message directly to a single person in the chat with a direct message. Call `sendDirectMessage` on an instance of `HMSSDK`.
 
 The parameters are:
 
@@ -62,14 +58,13 @@ The parameters are:
 
 
 ```dart
-HMSMeeting meeting = new HMSMeeting();
-meeting.sendDirectMessage(String message,String peerId);
+hmsSDK.sendDirectMessage(String message, HMSPeer peer);
 ```
 
 
 #### Sending Group Messages
 
-Need to call attention to all the hosts? All the teachers? All the developers? Call `sendGroupMessage` on an instance of `HMSMeeting`.
+Need to call attention to all the hosts? All the teachers? All the developers? Call `sendGroupMessage` on an instance of `HMSSDK`.
 
 The parameters are:
 
@@ -84,13 +79,12 @@ The parameters are:
 >Also it's important to make a new callback per message because it will only contain the results of that particular call for sending a message.
 
 ```dart
-HMSMeeting meeting = new Meeting();
-meeting.sendGroupMessage(String message,String roleName);
+hmsSDK.sendGroupMessage(String message, String roleName);
 ```
 
 ### Receiving Chat Messages
 
-When you called `meeting.join(config)` to join a room, the `HMSUpdateListener` implementation that was passed in had the callback `fun onMessageReceived(message: HMSMessage)`.
+When you called `hmsSDK.join(config)` to join a room, the `HMSUpdateListener` implementation that was passed in had the callback `void onMessage({required HMSMessage message});`.
 
 This where you'll receive new messages as `HMSMessage` during the call. It contains:
 

@@ -1,6 +1,6 @@
 ---
 title: Screen Share (Beta)
-nav: 12
+nav: 15
 ---
 
 Flutter SDK provides support for sharing the entire screen of the device to the room.
@@ -9,7 +9,7 @@ Please note that for a peer to share their screen, their role must have screensh
 
 ## How to start screenshare from the app
 
-To start screen share, app needs to call the `startScreenshare` method of `HMSMeeting`.
+To start screen share, app needs to call the `startScreenshare` method of `HMSSDK`.
 
 Following is the snippet on how to use this:
 
@@ -18,9 +18,7 @@ Following is the snippet on how to use this:
 <Tab id='startscreenshare-0'>
 
 ```dart
-
-  hmsMeeting.startScreenShare()
-
+hmsSDK.startScreenShare();
 ```
 
 you also need to pass the intent from android native side to HMS SDK in the following way :
@@ -29,22 +27,17 @@ you also need to pass the intent from android native side to HMS SDK in the foll
 In your app's `MainActivity` add -
 
 ```kotlin
-
 import live.hms.hmssdk_flutter.HmssdkFlutterPlugin
-
 ```
 
 ```kotlin
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == Constants.SCREEN_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK){
-            HmssdkFlutterPlugin.hmssdkFlutterPlugin?.requestScreenShare(data)
-        }
-
+    if (requestCode == Constants.SCREEN_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+        HmssdkFlutterPlugin.hmssdkFlutterPlugin?.requestScreenShare(data)
     }
-
+}
 ```
 
 </Tab>
@@ -60,16 +53,14 @@ This method returns a `Boolean` which will be true inscase ScreenShare is curren
 <Tab id='screensharestatus-0'>
 
 ```dart
-
-  hmsMeeting.isScreenShareActive()
-
+hmsSDK.isScreenShareActive();
 ```
 
 </Tab>
 
 ## How to stop screenshare
 
-To stop the screenshare, you need to invoke `stopscreenShare` method of `HmsMeeting`
+To stop the screenshare, you need to invoke `stopscreenShare` method of `HMSSDK`
 
 Following is the snippet on how to use this:
 
@@ -78,9 +69,7 @@ Following is the snippet on how to use this:
 <Tab id='stopscreenshare-0'>
 
 ```dart
-
-  hmsMeeting.stopScreenShare()
-
+hmsSDK.stopScreenShare();
 ```
 
 </Tab>
@@ -88,7 +77,5 @@ Following is the snippet on how to use this:
 > DONOT forget to add the permission for foreground service in AndroidManifest.xml
 
 ```kotlin
-
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 ```

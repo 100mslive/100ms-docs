@@ -24,16 +24,15 @@ An instance of `HMSPeer` of the peer who's role you want to change and the `HMSR
 
 All the peers that are in the current room are accessible via peers property of `HMSRoom` instance that you can get via room property of HMSSDK instance after successful room join. 
 
-A list of all available roles in the current room can be accessed via `getRoles` method of `HMSMeeting`
+A list of all available roles in the current room can be accessed via `getRoles` method of `HMSSDK`
 
 Once you have both you can invoke.
 
 ```dart 
-HMSMeeting meeting = new HMSMeeting();
-meeting.changeRole(peerId,roleName,forceChange);
+hmsSDK.changeRole(peerId,roleName,forceChange);
 ```
 
-`peerId`: id of the peer.
+`peer`: the HMSPeer object of the peer.
 
 `roleName`: name of the role.
 
@@ -61,7 +60,7 @@ callback in HMSUpdateListener. At which point the app can choose to show a promp
 If the user accepts, app should call
 
  ```dart
-meeting.acceptRoleChangerequest();
+hmsSDK.acceptRoleChangeRequest();
  ```
 
  with the same request which it received in `onRoleChangeRequest` which completes the `changeRole` loop. Both parties will receive a `roleUpdated` callback so that they both can do necessary UI updates. Now the user actually becomes a speaker and the audio publishing will start automatically.
