@@ -1,0 +1,105 @@
+---
+title: Call Stats
+nav: 3.97
+---
+
+Sometimes you need a way to capture certain metrics related to a call. This may be helpful if you want to tailor the experience to your users or debug issues. Typical metrics of interest are audio/video bitrate, round trip time, total consumed bandwidth and packet loss. 100ms SDK provides this data via dedicated delegate callbacks found in `HMSUpdateListener`. These will be called with a fixed interval of one second after a room has been joined. You can get stats on a per track basis ( `on(remoteAudioStats:track:peer)`) or as an overall summary (`on(rtcStats:)`) 
+
+Here is the full list of callbacks:
+
+```swift
+/// This is called when stats have been collected for a local audio track.
+optional func on(localAudioStats: HMSLocalAudioStats, track: HMSLocalAudioTrack, peer: HMSPeer)
+
+/// This is called when stats have been collected for a local video track.
+optional func on(localVideoStats: HMSLocalVideoStats, track: HMSLocalVideoTrack, peer: HMSPeer)
+
+/// This is called when stats have been collected for a remote audio track.
+optional func on(remoteAudioStats: HMSRemoteAudioStats, track: HMSRemoteAudioTrack, peer: HMSPeer)
+
+/// This is called when stats have been collected for a remote video track.
+optional func on(remoteVideoStats: HMSRemoteVideoStats, track: HMSRemoteVideoTrack, peer: HMSPeer)
+
+/// This is called when stats have been collected for the current session
+optional func on(rtcStats: HMSRTCStatsReport)
+```
+
+## HMSRTCStatsReport
+
+This class will contain the combined stats for the room.
+
+```swift
+class HMSRTCStats {
+	var bytesSent: UInt64
+	var bytesReceived: UInt64
+	var packetsReceived: UInt64
+	var packetsLost: UInt64
+	var bitrateSent: Double
+	var bitrateReceived: Double
+}
+
+class HMSRTCStatsReport {
+	// Combined audio + video values
+	var combined: HMSRTCStats
+	// Summary of all audio tracks
+	var audio: HMSRTCStats
+	// Summary of all video tracks
+	var video: HMSRTCStats
+}
+```
+
+## HMSLocalAudioStats
+
+This class contains stats related to local audio track.
+
+```swift
+class HMSLocalAudioStats {
+	var roundTripTime: Double
+	var bytesSent: UInt64
+	var bitrate: Double
+}
+```
+
+## HMSLocalVideoStats
+
+This class contains stats related to local video track.
+
+```swift
+class HMSLocalVideoStats {
+	var roundTripTime: Double
+	var bytesSent: UInt64
+	var bitrate: Double
+	var resolution: HMSVideoResolution
+	var frameRate: Double
+}
+```
+
+## HMSRemoteAudioStats
+
+This class contains stats related to remote audio track.
+
+```swift
+class HMSRemoteAudioStats {
+	var jitter: Double
+	var bytesReceived: UInt64
+	var bitrate: Double
+	var packetsReceived: UInt64
+	var packetsLost: UInt64
+}
+```
+
+## HMSRemoteVideoStats
+
+This class contains stats related to remote video track.
+
+```swift
+class HMSRemoteVideoStats {
+	var jitter: Double
+	var bytesReceived: UInt64
+	var bitrate: Double
+	var packetsReceived: UInt64
+	var packetsLost: UInt64
+	var resolution: HMSVideoResolution
+	var frameRate: Double
+}
+```
