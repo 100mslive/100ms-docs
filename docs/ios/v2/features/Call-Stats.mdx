@@ -8,19 +8,19 @@ Sometimes you need a way to capture certain metrics related to a call. This may 
 Here is the full list of callbacks:
 
 ```swift
-/// This is called when stats have been collected for a local audio track.
+/// This callback provides stats for a local audio track.
 optional func on(localAudioStats: HMSLocalAudioStats, track: HMSLocalAudioTrack, peer: HMSPeer)
 
-/// This is called when stats have been collected for a local video track.
+/// This callback provides stats for a local video track.
 optional func on(localVideoStats: HMSLocalVideoStats, track: HMSLocalVideoTrack, peer: HMSPeer)
 
-/// This is called when stats have been collected for a remote audio track.
+/// This callback provides stats for a remote audio track.
 optional func on(remoteAudioStats: HMSRemoteAudioStats, track: HMSRemoteAudioTrack, peer: HMSPeer)
 
-/// This is called when stats have been collected for a remote video track.
+/// This callback provides stats for a remote video track.
 optional func on(remoteVideoStats: HMSRemoteVideoStats, track: HMSRemoteVideoTrack, peer: HMSPeer)
 
-/// This is called when stats have been collected for the current session
+/// This callback provides combined stats for the session.
 optional func on(rtcStats: HMSRTCStatsReport)
 ```
 
@@ -30,12 +30,20 @@ This class will contain the combined stats for the room.
 
 ```swift
 class HMSRTCStats {
+	// Total bytes sent in the current session.
 	var bytesSent: UInt64
+	// Total bytes received in the current session.
 	var bytesReceived: UInt64
+	// Total packets received in the current session.
 	var packetsReceived: UInt64
+	// Total packets lost in the current session.
 	var packetsLost: UInt64
+	// Total outgoing bitrate observed since previous report.
 	var bitrateSent: Double
+	// Total incoming bitrate observed since previous report in Kb/s.
 	var bitrateReceived: Double
+	// Average round trip time observed since previous report in Kb/s.
+	var roundTripTime: Double
 }
 
 class HMSRTCStatsReport {
@@ -54,8 +62,11 @@ This class contains stats related to local audio track.
 
 ```swift
 class HMSLocalAudioStats {
+	// Round trip time observed since previous report.
 	var roundTripTime: Double
+	// Total bytes sent by this track in the current session.
 	var bytesSent: UInt64
+	// Outgoing bitrate of this track observed since previous report in Kb/s.
 	var bitrate: Double
 }
 ```
@@ -66,10 +77,15 @@ This class contains stats related to local video track.
 
 ```swift
 class HMSLocalVideoStats {
+	// Round trip time observed since previous report.
 	var roundTripTime: Double
+	// Total bytes sent by this track in the current session.
 	var bytesSent: UInt64
+	// Outgoing bitrate of this track observed since previous report in Kb/s.
 	var bitrate: Double
+	// Resolution of video frames being sent.
 	var resolution: HMSVideoResolution
+	// Frame rate of video frames being sent (FPS).
 	var frameRate: Double
 }
 ```
@@ -80,10 +96,15 @@ This class contains stats related to remote audio track.
 
 ```swift
 class HMSRemoteAudioStats {
+	// Packet Jitter measured in seconds for this track. Calculated as defined in section 6.4.1. of RFC3550.
 	var jitter: Double
+	// Total bytes received by this track in the current session.
 	var bytesReceived: UInt64
+	// Incoming bitrate of this track observed since previous report in Kb/s.
 	var bitrate: Double
+	// Total packets received by this track in the current session.
 	var packetsReceived: UInt64
+	// Total packets lost by this track in the current session.
 	var packetsLost: UInt64
 }
 ```
@@ -94,12 +115,19 @@ This class contains stats related to remote video track.
 
 ```swift
 class HMSRemoteVideoStats {
+	// Packet Jitter measured in seconds for this track. Calculated as defined in section 6.4.1. of RFC3550.
 	var jitter: Double
+	// Total bytes received by this track in the current session.
 	var bytesReceived: UInt64
+	// Incoming bitrate of this track observed since previous report in Kb/s.
 	var bitrate: Double
+	// Total packets received by this track in the current session.
 	var packetsReceived: UInt64
+	// Total packets lost by this track in the current session.
 	var packetsLost: UInt64
+	// Resolution of video frames being received.
 	var resolution: HMSVideoResolution
+	// Frame rate of video frames being received (FPS).
 	var frameRate: Double
 }
 ```
