@@ -89,8 +89,8 @@ Now let's take a look at the signature of the HMSVirtualBackground.
 
 ### Check if plugin is supported
 
-`HMSVirtualBackground.isSupported` can be used to check if the API level of device is supported or not.
-It will return True/False based on API Level.
+`HMSVirtualBackground.isSupported` can be used to check if the API level/Resolution of device is supported or not.
+It will return True/False based on these parameters.
 
 <Tabs id="Check-plugin-support" items={['Kotlin', 'Java']} />
 
@@ -98,9 +98,9 @@ It will return True/False based on API Level.
 
 ```kotlin
 if(virtualBackground.isSupported()){
-    console.log("Device is supported");
+    console.log("Device/Resolution is supported");
 }else{
-    console.log("Device not supported");
+    console.log("Device/Resolution is not supported, check Supported Devices/Versions/Resolutions section");
 }
 ```
 </Tab>
@@ -109,9 +109,9 @@ if(virtualBackground.isSupported()){
 
 ```java
 if(virtualBackground.isSupported()){
-    console.log("Device is supported");
+    console.log("Device/Resolution is supported");
 }else{
-    console.log("Device not supported");
+    console.log("Device/Resolution is not supported, check Supported Devices/Versions/Resolutions sections");
 }
 ```
 </Tab>
@@ -156,10 +156,13 @@ Call `setBackground` on the `HMSVirtualBackground` instance to update the backgr
 It accepts imageBitmap or String as a parameter
 
 -  `imageBitmap`- Bitmap - A background image bitmap you want to replace your background to.
--  `none` - String - This will remove the background effect from the video
+-  `None` - String - This will remove the background effect from the video
 
 Image will get fit to the video by maintaining the aspect ratio.
 If the aspect ratio of the background image is not the same as the video, the image will be cropped to fit in the background.
+
+It will return `true` if background is set properly otherwise returns `false`. In case of `false` value `virtualBackground` plugin sets
+background to `None` itself.
 
 <Tabs id="Change-Background" items={['Kotlin', 'Java']} />
 
@@ -167,10 +170,12 @@ If the aspect ratio of the background image is not the same as the video, the im
 
 ```kotlin
 // imageBitmap parameter is explained in Instantiate Virtual Background section
-try{
-    virtualBackground.setBackground(imageBitmap | "none");
-}catch(err){
-    console.log("Failed to update background", err);
+
+var isSet = virtualBackground.setBackground(imageBitmap | "None");
+if(isSet)
+   console.log("Background is applied successfully")
+}else{
+    console.log("Failed to update background, try sending a valid bitmap");
 }
 ```
 </Tab>
@@ -179,10 +184,11 @@ try{
 
 ```java
 // imageBitmap parameter is explained in Instantiate Virtual Background section
-try{
-    virtualBackground.setBackground(imageBitmap | "none");
-}catch(err){
-    console.log("Failed to update background", err);
+var isSet = virtualBackground.setBackground(imageBitmap | "None");
+if(isSet)
+   console.log("Background is applied successfully")
+}else{
+    console.log("Failed to update background, try sending a valid bitmap");
 }
 ```
 </Tab>
@@ -197,17 +203,27 @@ pluginFrameRate translates to the number of frames for which background is detec
 
 ## Add Plugin
 
+To add Virtual background plugin app needs to call `addPlugin` method of `HMSSDK` which takes in 3 parameters - The first
+one is `virtualBackground` instance of the plugin, The second one is `HMSActionResultListener` which is a callback object
+needed to inform about success or failure of the action and the third one is `pluginFrameRate` an optional parameter
+Check [this section](#tuning-plugin-frame-rate-optional) for its usage
+
 <Tabs id="plugin-code" items={['Kotlin', 'Java']} />
 
 <Tab id='plugin-code-0'>
 
 ```kotlin
 // This will apply the Virtual Background effect to the local video
-try{
-    hmsSdk.addPlugin(virtualBackground, pluginFrameRate);
-}catch(err){
-    console.log("failed to add Plugin", err);
-}
+hmsSdk.addPlugin(virtualBackground, object : HMSActionResultListener {
+       override fun onError(error: HMSException) {
+         // an error occurred
+       }
+
+       override fun onSuccess() {
+         // added successfully
+       }
+      },
+      pluginFrameRate)
 ```
 </Tab>
 
@@ -215,38 +231,56 @@ try{
 
 ```Java
 // This will apply the Virtual Background effect to the local video
-try{
-    hmsSdk.addPlugin(virtualBackground, pluginFrameRate);
-}catch(err){
-    console.log("failed to add Plugin", err);
-}
+hmsSdk.addPlugin(virtualBackground, object : HMSActionResultListener {
+       override fun onError(error: HMSException) {
+         // an error occurred
+       }
+
+       override fun onSuccess() {
+         // added successfully
+       }
+     },
+     pluginFrameRate)
 ```
 </Tab>
 
 ## Remove Plugin
 
+To remove Virtual background plugin app needs to call `removePlugin` method of `HMSSDK` which takes in 2 parameters - The first
+one is `virtualBackground` instance of the plugin and the second one is `HMSActionResultListener` which is a callback object
+needed to inform about success or failure of the action
+
 <Tabs id="plugin-code" items={['Kotlin', 'Java']} />
 
 <Tab id='plugin-code-0'>
 
 ```kotlin
 // This will remove the Virtual Background effect from the local video
-try{
-    hmsSdk.removePlugin(virtualBackground);
-}catch(err){
-    console.log("failed to remove Plugin", err);
-}
+hmsSdk.removePlugin(virtualBackground, object : HMSActionResultListener {
+       override fun onError(error: HMSException) {
+         // an error occurred
+       }
+
+       override fun onSuccess() {
+         // removed successfully
+       }
+     }
+    )
 ```
 </Tab>
 
 <Tab id='plugin-code-1'>
 
 ```Java
-// This will remove the Virtual Background effect from the local video
-try{
-    hmsSdk.removePlugin(virtualBackground);
-}catch(err){
-    console.log("failed to remove Plugin", err);
-}
+hmsSdk.removePlugin(virtualBackground, object : HMSActionResultListener {
+       override fun onError(error: HMSException) {
+         // an error occurred
+       }
+
+       override fun onSuccess() {
+         // removed successfully
+       }
+     }
+    )
 ```
 </Tab>
