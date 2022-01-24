@@ -130,7 +130,7 @@ Check [this section](#add-plugin) for addPlugin API usage
 try{
    virtualBackgroundPlugin.init();
 }catch(err){
-   console.log("failed to init Plugin", err);
+    // failed to init Plugin
 }
 ```
 </Tab>
@@ -141,7 +141,7 @@ try{
 try{
    virtualBackgroundPlugin.init();
 }catch(err){
-   console.log("failed to init Plugin", err);
+   // failed to init Plugin
 }
 ```
 </Tab>
@@ -165,13 +165,13 @@ If the aspect ratio of the background image is not the same as the video, the im
 //Use this function to get imageBitmap from a JPG/PNG Image
 fun getBitmapFromAsset(context: Context, filename: String): Bitmap? {
   val assetManager = context.assets
-  val istr: InputStream
+  val instr: InputStream
   var bitmap: Bitmap? = null
   try {
-    istr = assetManager.open(filename)
+    instr = assetManager.open(filename)
     bitmap = BitmapFactory.decodeStream(istr)
   } catch (e: IOException) {
-    HMSLogger.e("videoPlugin", e.message + "error reading virtual background image")
+    // error reading virtual background image
   }
   return bitmap
 }
@@ -189,21 +189,21 @@ virtualBackgroundPlugin.setBackground(imageBitmap);
 ```java
 //Use this function to get imageBitmap from a JPG/PNG Image
 fun getBitmapFromAsset(context: Context, filename: String): Bitmap? {
-  val assetManager = context.assets
-  val istr: InputStream
-  var bitmap: Bitmap? = null
+  AssetManager assetManager = context.assets;
+  InputStream instr;
+  Bitmap bitmap;
   try {
-    istr = assetManager.open(filename)
+    instr = assetManager.open(filename)
     bitmap = BitmapFactory.decodeStream(istr)
   } catch (e: IOException) {
-    HMSLogger.e("videoPlugin", e.message + "error reading virtual background image")
+     // error reading virtual background image
   }
   return bitmap
 }
 ```
 ```java
 //BACKGROUND_FILE_PATH is the background image file location
-val imageBitmap = getBitmapFromAsset(context, BACKGROUND_FILE_PATH)
+Bitmap imageBitmap = getBitmapFromAsset(context, BACKGROUND_FILE_PATH)
 //To set background as imageBitmap, Use
 virtualBackgroundPlugin.setBackground(imageBitmap);
 ```
@@ -251,11 +251,12 @@ hmsSdk.addPlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
 // This will apply the Virtual Background effect to the local video
 // pluginFrameRate is an optional parameter
 hmsSdk.addPlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
-       override fun onError(error: HMSException) {
+       @Override
+       public void onError(error: HMSException) {
          // an error occurred
        }
-
-       override fun onSuccess() {
+       @Override
+       public void onSuccess() {
          // added successfully
        }
      },
@@ -274,30 +275,34 @@ To remove the virtual background plugin the app needs to call `removePlugin` met
 <Tab id='plugin-code-0'>
 
 ```kotlin
-// This will remove the Virtual Background effect from the local video
+// This will apply the Virtual Background effect to the local video
+// pluginFrameRate is an optional parameter
 hmsSdk.removePlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
        override fun onError(error: HMSException) {
          // an error occurred
        }
 
        override fun onSuccess() {
-         // removed successfully
+         // added successfully
        }
-     }
-    )
+      })
+
 ```
 </Tab>
 
 <Tab id='plugin-code-1'>
 
 ```Java
+// This will apply the Virtual Background effect to the local video
+// pluginFrameRate is an optional parameter
 hmsSdk.removePlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
-       override fun onError(error: HMSException) {
+       @Override
+       public void onError(error: HMSException) {
          // an error occurred
        }
-
-       override fun onSuccess() {
-         // removed successfully
+       @Override
+       public void onSuccess() {
+         // added successfully
        }
      }
     )
