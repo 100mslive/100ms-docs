@@ -17,17 +17,17 @@ This guide provides an overview of usage of the Virtual Background plugin of 100
 ## Supported Devices/Versions/Resolutions
 
 -   Minimum Android api level required to support Virtual Background plugin is 21, same as that required to use 100ms SDK
--   Minimum 100ms SDK version it can work with is `2.2.7`
+-   Minimum 100ms SDK version it can work with is `2.2.8`
 -   Virtual background plugin is built for armeabi-v7a, arm64-v8a, x86 and x86_64 architectures
 -   Maximum supported resolution for this feature is 480p
 -   We recommend that you use this feature on a high performance device for smooth experience
 
 ## Size Increase Per Architecture
 
--   `x86_64` - 15 MB
--   `x86` - 14 MB
--   `arm64-v8a` - 14.5 MB
--   `armeabi-v7a` - 11 MB
+-   `x86_64` - 9.2 MB
+-   `x86` - 9.5 MB
+-   `arm64-v8a` - 7.6 MB
+-   `armeabi-v7a` - 5 MB
 
 ## Common Terms
 
@@ -37,13 +37,13 @@ This guide provides an overview of usage of the Virtual Background plugin of 100
 
 ## Add dependency
 
--   Adding the Virtual Background plugin and sdk dependency to your app-level `build.gradle` [![](https://jitpack.io/v/100mslive/android-sdk.svg)](https://jitpack.io/#100mslive/android-sdk).
+-   Adding the Virtual Background plugin and sdk dependency to your app-level `build.gradle`.
 
 ```json{3,4}:build.gradle
 dependencies {
  // See the latest version in the jitpack badge above.
- implementation 'com.github.100mslive:android-sdk-virtual-background:x.x.x'
- implementation 'com.github.100mslive:android-sdk:x.x.x'
+  implementation 'com.github.100mslive.android-sdk:lib:2.2.8'
+  implementation 'com.github.100mslive.android-sdk:virtualBackground:2.2.8'
     }
 ```
 
@@ -72,7 +72,7 @@ val virtualBackgroundPlugin = HMSVirtualBackground(hmsSdk, imageBitmap)
 HMSSDK hmsSdk = new HMSSDK
                        .Builder(application)
                        .build();
-HMSVirtualBackground virtualBackgroundPlugin = new HMSVirtualBackground(hmsSdk, imageBitmap)
+HMSVirtualBackground virtualBackgroundPlugin = new HMSVirtualBackground(hmsSdk, imageBitmap);
 ```
 
 </Tab>
@@ -131,7 +131,7 @@ Check [this section](#add-plugin) for addPlugin API usage
 
 ```kotlin
 try{
-   virtualBackgroundPlugin.init();
+   virtualBackgroundPlugin.init()
 }catch(err){
     // failed to init Plugin
 }
@@ -185,7 +185,7 @@ fun getBitmapFromAsset(context: Context, filename: String): Bitmap? {
 //BACKGROUND_FILE_PATH is the background image file location
 val imageBitmap = getBitmapFromAsset(context, BACKGROUND_FILE_PATH)
 //To set background as imageBitmap, Use
-virtualBackgroundPlugin.setBackground(imageBitmap);
+virtualBackgroundPlugin.setBackground(imageBitmap)
 ```
 
 </Tab>
@@ -194,23 +194,23 @@ virtualBackgroundPlugin.setBackground(imageBitmap);
 
 ```java
 //Use this function to get imageBitmap from a JPG/PNG Image
-fun getBitmapFromAsset(context: Context, filename: String): Bitmap? {
+Bitmap getBitmapFromAsset(context: Context, filename: String) {
   AssetManager assetManager = context.assets;
   InputStream instr;
   Bitmap bitmap;
   try {
-    instr = assetManager.open(filename)
-    bitmap = BitmapFactory.decodeStream(istr)
+    instr = assetManager.open(filename);
+    bitmap = BitmapFactory.decodeStream(istr);
   } catch (e: IOException) {
      // error reading virtual background image
   }
-  return bitmap
+  return bitmap;
 }
 ```
 
 ```java
 //BACKGROUND_FILE_PATH is the background image file location
-Bitmap imageBitmap = getBitmapFromAsset(context, BACKGROUND_FILE_PATH)
+Bitmap imageBitmap = getBitmapFromAsset(context, BACKGROUND_FILE_PATH);
 //To set background as imageBitmap, Use
 virtualBackgroundPlugin.setBackground(imageBitmap);
 ```
@@ -260,7 +260,7 @@ hmsSdk.addPlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
 ```Java
 // This will apply the Virtual Background effect to the local video
 // pluginFrameRate is an optional parameter
-hmsSdk.addPlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
+hmsSdk.addPlugin(virtualBackgroundPlugin, new HMSActionResultListener {
        @Override
        public void onError(error: HMSException) {
          // an error occurred
@@ -306,7 +306,7 @@ hmsSdk.removePlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
 
 ```Java
 //This will remove the virtual background effect from the video
-hmsSdk.removePlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
+hmsSdk.removePlugin(virtualBackgroundPlugin, new HMSActionResultListener {
        @Override
        public void onError(error: HMSException) {
          // an error occurred
