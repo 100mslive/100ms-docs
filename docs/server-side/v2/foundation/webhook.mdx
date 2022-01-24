@@ -26,26 +26,29 @@ Event is a JSON dictionary which has following keys.
 | version    | `string`     | Version of the event                                                   | 2.0                                  |
 | id         | `string`     | Id of the event                                                        | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | app_id     | `string`     | App ID from which this event is generated                              | 5ff5881b80b66969e1fb35f6             |
-| account_id | `string`     | App ID(Customer ID) from which this event is generated                 | 5ff5881b80b66969e1fb35f4             |
+| account_id | `string`     | Customer ID from which this event is generated                         | 5ff5881b80b66969e1fb35f4             |
 | timestamp  | `timestamp`  | Timestamp of the event                                                 | 2020-11-11T16:32:17Z                 |
 | type       | `string`     | Type of the event                                                      | peer.join.success                    |
-| data       | `dict`       | Event data. Its keys will be different for different type of event.    | < See the description below >        |
+| data       | `dict`       | Event data. Its keys will be different for different type of event.    | < See description below >            |
 
 ### Sample Event Payload
 ```json
 {
-   "version":"2.0",
-   "id":"6c75de35-b778-4fb0-88ae-114c28dc285f",
-   "account_id":"60b8e13a6eb86d8101b57354",
-   "timestamp":"2021-08-08T07:04:15Z",
-   "type":"peer.join.success",
-   "data":{
-      "joined_at":"2021-08-08T07:04:15.001380432Z",
-      "peer_id":"83b869e1-9a4b-4037-84b2-913cf76e4392",
-      "room_id":"60b8e13a6eb86d8101b57354",
-      "session_id":"610f81ee870dde099a249948",
-      "user_id":"test-user"
-   }
+  "version":"2.0",
+  "id":"6c75de35-b778-4fb0-88ae-114c28dc285f",
+  "account_id":"60b8e13a6eb86d8101b57354",
+  "timestamp":"2021-08-08T07:04:15Z",
+  "type":"peer.join.success",
+  "data":{
+    "joined_at":"2021-08-08T07:04:15.001380432Z",
+    "peer_id":"83b869e1-9a4b-4037-84b2-913cf76e4392",
+    "role":"host",
+    "room_id":"60b8e13a6eb86d8101b57354",
+    "room_name":"test room",
+    "session_id":"610f81ee870dde099a249948",
+    "user_id":"user.001",
+    "user_name":"test user"
+  }
 }
 ```
 
@@ -57,11 +60,13 @@ This event will be send when any peer joins the room successfully
 #### Attributes
 | Name       | Type         | Description                                        | Example                              |
 | :--------- | :----------- | :------------------------------------------------- | :----------------------------------- |
-| app_id     | `string`     | App ID from which this event is generated          | 5ff5881b80b66969e1fb35f6             |
 | room_id    | `string`     | 100ms assigned room id                             | 5f9edc6ac238215aec2312df             |
+| room_name  | `string`     | Room name provided when creating the room          | Test Room                            |
 | session_id | `string`     | 100ms assigned id to identify the session          | 5f9edc6bd238215aec7700df             |
 | peer_id    | `string`     | 100ms assigned id to identify the joining user     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id    | `string`     | User id assigned by the customer                   | user.001                             |
+| user_name  | `string`     | User name of the joining user                      | Test user                            |
+| role       | `string`     | Role of the joining user                           | host                                 |
 | joined_at  | `timestamp`  | Timestamp when user joined                         | 2020-11-11T16:32:17Z                 |
 
 #### Sample `peer.join.success` event
@@ -73,12 +78,14 @@ This event will be send when any peer joins the room successfully
   "timestamp": "2021-11-30T12:58:49Z",
   "type": "peer.join.success",
   "data": {
-    "app_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "joined_at": "2021-11-30T12:58:49.97291247Z",
     "peer_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "role": "xxxxxxxx",
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "room_name": "xxxxxxxxxx",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
-    "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx"
+    "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "user_name": "xxxxxxxx"
   }
 }
 ```
@@ -89,11 +96,13 @@ This event will be send when peer leaves the room
 #### Attributes
 | Name       | Type         | Description                                        | Example                              |
 | :--------- | :----------- | :------------------------------------------------- | :----------------------------------- |
-| app_id     | `string`     | App ID from which this event is generated          | 5ff5881b80b66969e1fb35f6             |
 | room_id    | `string`     | 100ms assigned room id                             | 5f9edc6ac238215aec2312df             |
+| room_name  | `string`     | Room name provided when creating the room          | Test Room                            |
 | session_id | `string`     | 100ms assigned id to identify the session          | 5f9edc6bd238215aec7700df             |
 | peer_id    | `string`     | 100ms assigned id to identify the joining user     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id    | `string`     | User id assigned by the customer                   | user.001                             |
+| user_name  | `string`     | User name of the user                              | Test user                            |
+| role       | `string`     | Role of the user                                   | host                                 |
 | left_at    | `timestamp`  | Timestamp when user left                           | 2020-11-11T17:32:17Z                 |
 | duration   | `number`     | Duration the user spent in the room in seconds     | 36000                                |
 
@@ -106,13 +115,15 @@ This event will be send when peer leaves the room
   "timestamp": "2021-11-30T12:58:58Z",
   "type": "peer.leave.success",
   "data": {
-    "app_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "duration": 40,
     "left_at": "2021-11-30T12:58:58.500451704Z",
     "peer_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "role": "xxxxxxxx",
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "room_name": "xxxxxxxxxx",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
-    "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx"
+    "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "user_name": "xxxxxxxx"
   }
 }
 ```
@@ -127,10 +138,12 @@ This event will be sent when a peer fails to join a room. This can occur when,
 #### Attributes
 | Name       | Type         | Description                                        | Example                              |
 | :--------- | :----------- | :------------------------------------------------- | :----------------------------------- |
-| app_id     | `string`     | App ID from which this event is generated          | 5ff5881b80b66969e1fb35f6             |
 | room_id    | `string`     | 100ms assigned room id                             | 5f9edc6ac238215aec2312df             |
+| room_name  | `string`     | Room name provided when creating the room          | Test Room                            |
 | peer_id    | `string`     | 100ms assigned id to identify the joining user     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id    | `string`     | User id assigned by the customer                   | user.001                             |
+| user_name  | `string`     | User name of the user                              | Test user                            |
+| role       | `string`     | Role of the user                                   | host                                 |
 | joined_at  | `timestamp`  | Timestamp when user joined                         | 2020-11-11T16:32:17Z                 |
 
 #### Sample `peer.join.failure` event
@@ -142,11 +155,13 @@ This event will be sent when a peer fails to join a room. This can occur when,
   "timestamp":"2021-11-25T09:10:35Z",
   "type":"peer.join.failure",
   "data":{
-    "app_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "joined_at":"0001-01-01T00:00:00Z",
     "peer_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "role": "xxxxxxxx",
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
-    "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx"
+    "room_name": "xxxxxxxxxx",
+    "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "user_name": "xxxxxxxx"
   }
 }
 ```
@@ -163,10 +178,12 @@ This event will be sent when the peer leave fails. This can occur when,
 #### Attributes
 | Name       | Type         | Description                                        | Example                              |
 | :--------- | :----------- | :------------------------------------------------- | :----------------------------------- |
-| app_id     | `string`     | App ID from which this event is generated          | 5ff5881b80b66969e1fb35f6             |
 | room_id    | `string`     | 100ms assigned room id                             | 5f9edc6ac238215aec2312df             |
+| room_name  | `string`     | Room name provided when creating the room          | Test Room                            |
 | peer_id    | `string`     | 100ms assigned id to identify the joining user     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id    | `string`     | User id assigned by the customer                   | user.001                             |
+| user_name  | `string`     | User name of the user                              | Test user                            |
+| role       | `string`     | Role of the user                                   | host                                 |
 | left_at    | `timestamp`  | Timestamp when user left                           | 2020-11-11T17:32:17Z                 |
 | duration   | `number`     | Duration the user spent in the room in seconds     | 36000                                |
 
@@ -179,12 +196,14 @@ This event will be sent when the peer leave fails. This can occur when,
   "timestamp": "2021-11-30T12:55:51Z",
   "type": "peer.leave.failure",
   "data": {
-    "app_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "duration": 0,
     "left_at": "0001-01-01T00:00:00Z",
     "peer_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "role": "xxxxxxxx",
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
-    "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx"
+    "room_name": "xxxxxxxxxx",
+    "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "user_name": "xxxxxxxx"
   }
 }
 ```
@@ -199,7 +218,7 @@ This event will be send when final composed recording is generated and uploaded 
 | :--------- | :----------- | :--------------------------------------------------------------------------- | :----------------------------------- |
 | room_id    | `string`     | 100ms assigned room id                                                       | 5f9edc6ac238215aec2312df             |
 | room_name  | `string`     | Room name assigned by you when creating room                                 | class-9-batch-2                      |
-| session    | `string`     | 100ms assigned id to identify the session                                    | 5f9edc6bd238215aec7700df             |
+| session_id | `string`     | 100ms assigned id to identify the session                                    | 5f9edc6bd238215aec7700df             |
 | location   | `string`     | s3 URI of the recorded video                                                 | s3://bucket/prefix/ac.mp4            |
 | URL        | `string`     | Presigned s3 URL for the recorded video, for download. Valid for 24 hours    | https://s3-location/bucket/ac.mp4    |
 | duration   | `number`     | Duration the user spent in the room in seconds                               | 3600                                 |
@@ -215,13 +234,13 @@ This event will be send when final composed recording is generated and uploaded 
   "timestamp": "2021-11-30T20:12:35Z",
   "type": "recording.success",
   "data": {
-    "location": "s3://<file bucket address>.mp4",
     "URL": "https://<file access URL>?<signature>",
     "duration": 351,
-    "size": 13933649,
+    "location": "s3://<file bucket address>.mp4",
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "room_name": "TestRoom1",
-    "session": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "size": 13933649
   }
 }
 ```
