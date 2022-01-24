@@ -14,7 +14,6 @@ This guide provides an overview of usage of the Virtual Background plugin of 100
 
 </div>
 
-
 ## Supported Devices/Versions/Resolutions
 
 -   Minimum Android api level required to support Virtual Background plugin is 21, same as that required to use 100ms SDK
@@ -25,10 +24,10 @@ This guide provides an overview of usage of the Virtual Background plugin of 100
 
 ## Size Increase Per Architecture
 
-- `x86_64` - 15 MB
--  `x86`   - 14 MB
--  `arm64-v8a` - 14.5 MB
--  `armeabi-v7a` - 11 MB
+-   `x86_64` - 15 MB
+-   `x86` - 14 MB
+-   `arm64-v8a` - 14.5 MB
+-   `armeabi-v7a` - 11 MB
 
 ## Common Terms
 
@@ -47,6 +46,7 @@ dependencies {
  implementation 'com.github.100mslive:android-sdk:x.x.x'
     }
 ```
+
 ## How to Integrate Virtual Background
 
 ### Instantiate VirtualBackgroundPlugin
@@ -74,6 +74,7 @@ HMSSDK hmsSdk = new HMSSDK
                        .build();
 HMSVirtualBackground virtualBackgroundPlugin = new HMSVirtualBackground(hmsSdk, imageBitmap)
 ```
+
 </Tab>
 
 That's it. You have instantiated Virtual Background plugin successfully. 🥳
@@ -81,6 +82,7 @@ That's it. You have instantiated Virtual Background plugin successfully. 🥳
 Now let's take a look at the method signature of HMSVirtualBackground.
 
 `HMSVirtualBackground` accepts 2 argument -
+
 -   `hmsSdk`: the `HMSSDK` instance you have used to join the room
 -   `imageBitmap`- Bitmap - The image that the background will be replaced with.
 
@@ -101,6 +103,7 @@ if(virtualBackgroundPlugin.isSupported()){
     // Device/Resolution is not supported, check Supported Devices/Versions/Resolutions section
 }
 ```
+
 </Tab>
 
 <Tab id='Check-plugin-support-1'>
@@ -112,8 +115,8 @@ if(virtualBackgroundPlugin.isSupported()){
    // Device/Resolution is not supported, check Supported Devices/Versions/Resolutions section
 }
 ```
-</Tab>
 
+</Tab>
 
 ### Init(Optional)
 
@@ -133,6 +136,7 @@ try{
     // failed to init Plugin
 }
 ```
+
 </Tab>
 
 <Tab id='Init-1'>
@@ -144,15 +148,15 @@ try{
    // failed to init Plugin
 }
 ```
-</Tab>
 
+</Tab>
 
 ### Change Background
 
 Call `setBackground` on the `HMSVirtualBackground` instance to update the background again later if required.
 It accepts imageBitmap as a parameter
 
--  `imageBitmap`- Bitmap - The image that the background will be replaced with.
+-   `imageBitmap`- Bitmap - The image that the background will be replaced with.
 
 Image will be scaled to fit to the video. Scaling will maintain image aspect ratio.
 If the aspect ratio of the background image is not the same as the video, the image will be cropped to fit in the background.
@@ -176,12 +180,14 @@ fun getBitmapFromAsset(context: Context, filename: String): Bitmap? {
   return bitmap
 }
 ```
+
 ```kotlin
 //BACKGROUND_FILE_PATH is the background image file location
 val imageBitmap = getBitmapFromAsset(context, BACKGROUND_FILE_PATH)
 //To set background as imageBitmap, Use
 virtualBackgroundPlugin.setBackground(imageBitmap);
 ```
+
 </Tab>
 
 <Tab id='Change-Background-1'>
@@ -201,12 +207,14 @@ fun getBitmapFromAsset(context: Context, filename: String): Bitmap? {
   return bitmap
 }
 ```
+
 ```java
 //BACKGROUND_FILE_PATH is the background image file location
 Bitmap imageBitmap = getBitmapFromAsset(context, BACKGROUND_FILE_PATH)
 //To set background as imageBitmap, Use
 virtualBackgroundPlugin.setBackground(imageBitmap);
 ```
+
 </Tab>
 
 ### Tuning pluginFrameRate(Optional)
@@ -214,16 +222,17 @@ virtualBackgroundPlugin.setBackground(imageBitmap);
 `pluginFrameRate` - pluginFrameRate helps in controlling the performance and experience of Virtual Background plugin.
 pluginFrameRate translates to the number of frames for which background is detected. Higher value will use more resources
 (cpu/memory/battery), while making the Virtual Background experience smooth. Lower value will be generous on resources,
- while lowering the Virtual Background smoothness. Recommended value is 15. Values higher than this will not significantly
- improve Virtual Background smoothness but will be heavy on resources. For lower end devices value can be in the range of 7-10.
+while lowering the Virtual Background smoothness. Recommended value is 15. Values higher than this will not significantly
+improve Virtual Background smoothness but will be heavy on resources. For lower end devices value can be in the range of 7-10.
 
 ## Add Plugin
 
 To add Virtual background plugin app needs to call `addPlugin` method of `HMSSDK` which takes in 3 parameters -
-1. `virtualBackgroundPlugin`:  An instance of the plugin.
+
+1. `virtualBackgroundPlugin`: An instance of the plugin.
 2. `HMSActionResultListener`: A callback for success or failure of adding the virtual background.
 3. `pluginFrameRate`: An optional parameter for how many frames per second the virtual background image replacement should be updated.
- `Default=15` if not set by user
+   `Default=15` if not set by user
 
 <Tabs id="plugin-code" items={['Kotlin', 'Java']} />
 
@@ -243,6 +252,7 @@ hmsSdk.addPlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
       },
       pluginFrameRate)
 ```
+
 </Tab>
 
 <Tab id='plugin-code-1'>
@@ -262,17 +272,19 @@ hmsSdk.addPlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
      },
      pluginFrameRate)
 ```
+
 </Tab>
 
 ## Remove Plugin
 
 To remove the virtual background plugin the app needs to call `removePlugin` method of `HMSSDK` which takes in 2 parameters.
+
 1. `virtualBackgroundPlugin`: An instance of the plugin.
 2. `HMSActionResultListener`: A callback for success or failure of adding the virtual background.
 
-<Tabs id="plugin-code" items={['Kotlin', 'Java']} />
+<Tabs id="remove-plugin" items={['Kotlin', 'Java']} />
 
-<Tab id='plugin-code-0'>
+<Tab id='remove-plugin-0'>
 
 ```kotlin
 // This will apply the Virtual Background effect to the local video
@@ -288,9 +300,10 @@ hmsSdk.removePlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
       })
 
 ```
+
 </Tab>
 
-<Tab id='plugin-code-1'>
+<Tab id='remove-plugin-1'>
 
 ```Java
 hmsSdk.removePlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
@@ -305,4 +318,5 @@ hmsSdk.removePlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
      }
     )
 ```
+
 </Tab>
