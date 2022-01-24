@@ -234,9 +234,9 @@ To add Virtual background plugin app needs to call `addPlugin` method of `HMSSDK
 3. `pluginFrameRate`: An optional parameter for how many frames per second the virtual background image replacement should be updated.
    `Default=15` if not set by user
 
-<Tabs id="plugin-code" items={['Kotlin', 'Java']} />
+<Tabs id="add-plugin" items={['Kotlin', 'Java']} />
 
-<Tab id='plugin-code-0'>
+<Tab id='add-plugin-0'>
 
 ```kotlin
 // This will apply the Virtual Background effect to the local video
@@ -255,7 +255,7 @@ hmsSdk.addPlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
 
 </Tab>
 
-<Tab id='plugin-code-1'>
+<Tab id='add-plugin-1'>
 
 ```Java
 // This will apply the Virtual Background effect to the local video
@@ -287,8 +287,7 @@ To remove the virtual background plugin the app needs to call `removePlugin` met
 <Tab id='remove-plugin-0'>
 
 ```kotlin
-// This will apply the Virtual Background effect to the local video
-// pluginFrameRate is an optional parameter
+//This will remove the virtual background effect from the video
 hmsSdk.removePlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
        override fun onError(error: HMSException) {
          // an error occurred
@@ -306,6 +305,7 @@ hmsSdk.removePlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
 <Tab id='remove-plugin-1'>
 
 ```Java
+//This will remove the virtual background effect from the video
 hmsSdk.removePlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
        @Override
        public void onError(error: HMSException) {
