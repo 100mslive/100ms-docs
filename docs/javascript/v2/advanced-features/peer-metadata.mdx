@@ -1,6 +1,6 @@
 ---
 title: Peer Metadata
-nav: 5.02
+nav: 5.03
 ---
 
 Looking for persistent state that can be set on a peer and updated anytime, for everyone in the room? Peer metadata it is.
@@ -12,10 +12,9 @@ We'll explain the API using an example of implementing raise hand. For this, we'
 
 ```ts
 interface CustomMetadata {
-    isHandRaised: boolean
+    isHandRaised: boolean;
 }
 ```
-
 
 ## Getting and Setting metadata
 
@@ -44,9 +43,9 @@ hmsNotifications.onNotification((notification) => {
     switch (notification.type) {
         case HMSNotificationTypes.METADATA_UPDATED:
             const peer = notification.data;
-            const { isHandRaised } = hmsStore.getState(selectPeerMetadata(peer.id))
+            const { isHandRaised } = hmsStore.getState(selectPeerMetadata(peer.id));
             if (isHandRaised && !peer.isLocal) {
-                toast(`${peer.name} raised their hand.`)
+                toast(`${peer.name} raised their hand.`);
             }
             break;
     }
@@ -55,6 +54,6 @@ hmsNotifications.onNotification((notification) => {
 
 ## Ideas
 
-* Implementing raise hand
-* Multiplayer games like chess, scribble, quizzes etc.
-* Store extra information such as profile picture for every peer which can be updated mid call
+-   Implementing raise hand
+-   Multiplayer games like chess, scribble, quizzes etc.
+-   Store extra information such as profile picture for every peer which can be updated mid call

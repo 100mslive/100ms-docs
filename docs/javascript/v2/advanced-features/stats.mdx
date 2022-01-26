@@ -1,0 +1,86 @@
+---
+title: Stats
+nav: 5.06
+---
+
+After setting up a video conferencing application, you'd want metrics to measure the call quality - what caused choppy audio, lost video frames, or who had a bad network. `getStats` has got your back. With `getStats` you could get statistics for the whole session and individual tracks of all the peers in the room.
+
+![Stats On Tile](/docs/v2/stats-tile.png)
+
+## Initialization
+
+```jsx
+const hmsStats = hms.getStats();
+```
+
+This initializes the SDK to collect stats from WebRTC every 1 second and stores it in a Redux store called `HMSStatsStore`. This is similar to `HMSStore` in terms of retrieving data from the store.
+
+If you have Redux Devtools installed(which is highly recommended), you could open the HMSStatsStore to get a quick sense of the quality of the call by looking at the bitrate, packets lost, jitter, etc...
+
+![Stats Redux Store](/docs/v2/stats-redux-store.png)
+
+## Retrieving data from HMSStatsStore
+
+Retrieving data is similar to how you do it with HMSStore. You have getState and subscribe methods and a bunch of useful selectors under selectHMSStats.
+
+### Global Level Stats for Local Peer
+
+Use the `selectHMSStats.localPeerStats` selector to get the global level stats about the whole session from the local peer's perspective.
+
+```jsx
+import { selectHMSStats } from '@100mslive/hms-video-store';
+
+const renderLocalPeerStats = (localPeerStats) => {
+    if (!localPeerStats) return;
+
+    console.log('Publish Bitrate', localPeerStats.publish?.bitrate);
+    console.log('Subscribe Bitrate', localPeerStats.subscribe?.bitrate);
+    console.log('Total Bytes Sent', localPeerStats.publish?.bytesSent);
+    console.log('Total Bytes Received', localPeerStats.subscribe?.bytesReceived);
+    console.log('Total Packets Lost', localPeerStats.subscribe?.packetsLost);
+    console.log('Total Jitter', localPeerStats.subscribe?.jitter);
+};
+
+hmsStats.subscribe(renderLocalPeerStats, selectHMSStats.localPeerStats);
+```
+
+### Individual Track Stats
+
+Use the `selectHMSStats.trackStatsByID` selector to get an individual track's stats.
+
+```jsx
+import { selectHMSStats } from '@100mslive/hms-video-store';
+
+const renderTrackStats = (trackStats) => {
+    if (!trackStats) return;
+    console.log('Stat Type', trackStats.type); // 'outbound-rtp' for local tracks, 'inbound-rtp' for remote tracks
+    console.log('Track Type', trackStats.kind); // 'video' | 'audio'
+    console.log('Bitrate', trackStats.bitrate);
+    console.log('Packets Lost', trackStats.packetsLost);
+    console.log('Packets Lost Rate', trackStats.packetsLostRate);
+    console.log('Jitter', trackStats.jitter);
+
+    const isLocal = trackStats.type.includes('outbound');
+    if (isLocal) {
+        console.log('Bytes Sent', trackStats.bytesSent);
+    } else {
+        console.log('Bytes Received', trackStats.bytesReceived);
+    }
+
+    if (trackStats.kind === 'video') {
+        console.log('Frame Width', trackStats.frameWidth);
+        console.log('Frame Height', trackStats.frameHeight);
+        console.log('Framerate', trackStats.framesPerSecond);
+
+        if (isLocal) {
+            console.log('Quality Limitation Reason', trackStats.qualityLimitationReason);
+        }
+    }
+};
+
+hmsStats.subscribe(renderTrackStats, selectHMSStats.trackStatsByID('some-track-id'));
+```
+
+You could also use `selectHMSStats.localAudioTrackStats` and `selectHMSStats.localVideoTrackStats` to get stats of local audio track and local video track respectively.
+
+For list of other stats-related selectors, look at `selectHMSStats`.

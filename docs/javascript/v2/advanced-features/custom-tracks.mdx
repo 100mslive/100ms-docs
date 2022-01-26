@@ -1,6 +1,6 @@
 ---
 title: Add custom tracks
-nav: 5.03
+nav: 5.05
 ---
 
 You can also add custom video or audio tracks to the sdk which will be published to others. Possible use cases -
@@ -29,7 +29,7 @@ await hmsActions.removeTrack(trackId);
 console.log(peer.auxiliaryTracks);
 
 // to get the track from a track id you can do this
-track = hmsStore.getState(selectTrackByID(trackId))
+track = hmsStore.getState(selectTrackByID(trackId));
 
 // all auxiliary tracks
 hmsStore.getState(selectAuxiliaryTracksByPeerID(peer.id));
