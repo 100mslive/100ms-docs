@@ -1,0 +1,25 @@
+# Screen Share 
+Android provides support for sharing the entire screen of the device to the room. Please note that for a peer to share their screen, 
+their role must have screenshare enabled in the dashboard. Also select the appropriate resolution that you desire the screenshare track should be of.
+
+## How to start screenshare from the app
+To start screen share, app needs to call the `startScreenshare` method of `HMSSDK`.
+Following is the snippet on how to use this:
+```js
+// hms instance acquired from build method
+hmsInstance?.startScreenshare();
+```
+## How to stop screenshare from the app
+To start screen share, application needs to call the `stopScreenshare` method of `HMSSDK`.
+Following is the snippet on how to use this:
+```js
+// hms instance acquired from build method
+await hmsInstance?.stopScreenshare();
+```
+## How to get Screen Share Status
+Application needs to call the `isScreenShared` method of `HMSSDK`. This method returns a Boolean which will be true 
+inscase ScreenShare is currently active and being used, and False for inactive state.
+```js
+// hms instance acquired from build method
+hmsInstance?.isScreenShared()
+```
