@@ -18,11 +18,27 @@ title: HMSReactiveStore
 
 ## Methods
 
+### getActions
+
+▸ **getActions**(): [`HMSActions`](/api-reference/javascript/v2/interfaces/HMSActions)
+
+Any action which may modify the store or may need to talk to the SDK will happen
+through the IHMSActions instance returned by this
+
+#### Returns
+
+[`HMSActions`](/api-reference/javascript/v2/interfaces/HMSActions)
+
+---
+
 ### getHMSActions
 
 ▸ **getHMSActions**(): [`HMSActions`](/api-reference/javascript/v2/interfaces/HMSActions)
+
 Any action which may modify the store or may need to talk to the SDK will happen
 through the IHMSActions instance returned by this
+
+**`deprecated`** use getActions
 
 #### Returns
 
@@ -33,6 +49,7 @@ through the IHMSActions instance returned by this
 ### getNotifications
 
 ▸ **getNotifications**(): [`HMSNotifications`](/api-reference/javascript/v2/interfaces/HMSNotifications)
+
 This return notification handler function to which you can pass your callback to
 receive notifications like peer joined, peer left, etc. to show in your UI or use
 for analytics
@@ -43,9 +60,22 @@ for analytics
 
 ---
 
+### getStats
+
+▸ **getStats**(): [`HMSStatsStoreWrapper`](/api-reference/javascript/v2/interfaces/HMSStatsStoreWrapper)
+
+**`alpha`**
+
+#### Returns
+
+[`HMSStatsStoreWrapper`](/api-reference/javascript/v2/interfaces/HMSStatsStoreWrapper)
+
+---
+
 ### getStore
 
 ▸ **getStore**(): [`HMSStoreWrapper`](/api-reference/javascript/v2/interfaces/HMSStoreWrapper)
+
 A reactive store which has a subscribe method you can use in combination with selectors
 to subscribe to a subset of the store. The store serves as a single source of truth for
 all data related to the corresponding HMS Room.
@@ -59,11 +89,13 @@ all data related to the corresponding HMS Room.
 ### triggerOnSubscribe
 
 ▸ **triggerOnSubscribe**(): `void`
+
 By default store.subscribe does not call the handler with the current state at time of subscription,
 this behaviour can be modified by calling this function. What it means is that instead of calling the
 handler only for changes which happen post subscription we'll also call it exactly once at the time
 of subscription with the current state. This behaviour is similar to that of BehaviourSubject in rxjs.
 This will be an irreversible change
+
 Note: you don't need this if you're using our react hooks, it takes care of this requirement.
 
 #### Returns
