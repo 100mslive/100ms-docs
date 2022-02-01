@@ -1,0 +1,59 @@
+---
+title: Joining with Preview
+nav: 2.3
+---
+
+## Attaching Preview and Error Listeners
+It is important to attach preview listener and error listener before calling the preview 
+function in order to get updates if preview got executed successfully or if it failed.
+
+```dart
+import 'package:hmssdk_flutter/hmssdk_flutter.dart';
+
+class HMSSDKInteractor {
+  late HMSSDK hmsSDK;
+
+  HMSSDKInteractor() {
+    hmsSDK = HMSSDK();    // save this hms instance
+    hmsSDK.build();       
+  } 
+
+  void addPreviewListener(HMSPreviewListener listener) {
+    hmsSDK.addPreviewListener(listener: listener);
+  }
+  
+  void addUpdateListener(HMSUpdateListener listener) {
+    hmsSDK.addUpdateListener(listener: listener);
+  }
+
+}
+```
+
+## Calling Preview and Join functions
+Preview screen is a frequently used UX element which allows users to check if their input devices are working properly and set the initial state 
+(mute/unmute) of their audio and video tracks before joining. Once the listeners are attached we can call the preview function. After the preview 
+function is called we have to wait for the preview or error callback before calling the join function.
+
+```dart
+import 'package:hmssdk_flutter/hmssdk_flutter.dart';
+
+Class preview implements HMSUpdateListener, HMSActionResultListener{
+  void preview(HMSConfig config){
+    hmsInstance.preview(config);
+  }
+}
+
+  @override
+  void onError({required HMSException error}) {
+    // this callback will be triggered if preview or join functions fails
+  }
+
+void onPreviewListener(HMSPreviewListener listener) {
+// this callback will be triggered if preview is successful and then only we should call join
+    hmsSDK.join(config: this.config);
+  }
+
+void onUpdateListener(HMSUpdateListener listener) {
+    hmsSDK.addUpdateListener(listener: listener);
+  }
+```
