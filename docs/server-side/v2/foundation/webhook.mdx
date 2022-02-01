@@ -66,6 +66,7 @@ This event will be send when any peer joins the room successfully
 | peer_id    | `string`     | 100ms assigned id to identify the joining user     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id    | `string`     | User id assigned by the customer                   | user.001                             |
 | user_name  | `string`     | User name of the joining user                      | Test user                            |
+| user_data  | `string`     | User data of the joining user                      | {"isHandRaised":true}                |
 | role       | `string`     | Role of the joining user                           | host                                 |
 | joined_at  | `timestamp`  | Timestamp when user joined                         | 2020-11-11T16:32:17Z                 |
 
@@ -85,7 +86,8 @@ This event will be send when any peer joins the room successfully
     "room_name": "xxxxxxxxxx",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
-    "user_name": "xxxxxxxx"
+    "user_name": "xxxxxxxx",
+    "user_data": ""
   }
 }
 ```
@@ -102,6 +104,7 @@ This event will be send when peer leaves the room
 | peer_id    | `string`     | 100ms assigned id to identify the joining user     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id    | `string`     | User id assigned by the customer                   | user.001                             |
 | user_name  | `string`     | User name of the user                              | Test user                            |
+| user_data  | `string`     | User data of the user                              | {"isHandRaised":true}                |
 | role       | `string`     | Role of the user                                   | host                                 |
 | left_at    | `timestamp`  | Timestamp when user left                           | 2020-11-11T17:32:17Z                 |
 | duration   | `number`     | Duration the user spent in the room in seconds     | 36000                                |
@@ -123,7 +126,8 @@ This event will be send when peer leaves the room
     "room_name": "xxxxxxxxxx",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
-    "user_name": "xxxxxxxx"
+    "user_name": "xxxxxxxx",
+    "user_data": ""
   }
 }
 ```
@@ -143,6 +147,7 @@ This event will be sent when a peer fails to join a room. This can occur when,
 | peer_id    | `string`     | 100ms assigned id to identify the joining user     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id    | `string`     | User id assigned by the customer                   | user.001                             |
 | user_name  | `string`     | User name of the user                              | Test user                            |
+| user_data  | `string`     | User data of the user                              | {"isHandRaised":true}                |
 | role       | `string`     | Role of the user                                   | host                                 |
 | joined_at  | `timestamp`  | Timestamp when user joined                         | 2020-11-11T16:32:17Z                 |
 
@@ -161,7 +166,8 @@ This event will be sent when a peer fails to join a room. This can occur when,
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "room_name": "xxxxxxxxxx",
     "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
-    "user_name": "xxxxxxxx"
+    "user_name": "xxxxxxxx",
+    "user_data": ""
   }
 }
 ```
@@ -183,6 +189,7 @@ This event will be sent when the peer leave fails. This can occur when,
 | peer_id    | `string`     | 100ms assigned id to identify the joining user     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id    | `string`     | User id assigned by the customer                   | user.001                             |
 | user_name  | `string`     | User name of the user                              | Test user                            |
+| user_data  | `string`     | User data of the user                              | {"isHandRaised":true}                |
 | role       | `string`     | Role of the user                                   | host                                 |
 | left_at    | `timestamp`  | Timestamp when user left                           | 2020-11-11T17:32:17Z                 |
 | duration   | `number`     | Duration the user spent in the room in seconds     | 36000                                |
@@ -203,7 +210,51 @@ This event will be sent when the peer leave fails. This can occur when,
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "room_name": "xxxxxxxxxx",
     "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
-    "user_name": "xxxxxxxx"
+    "user_name": "xxxxxxxx",
+    "user_data": ""
+  }
+}
+```
+
+## Room Events
+
+### room.end.success
+This event will be sent when room end is called and the it is successfull
+
+#### Attributes
+| Name       | Type         | Description                                        | Example                              |
+| :--------- | :----------- | :------------------------------------------------- | :----------------------------------- |
+| room_id    | `string`     | 100ms assigned room id                             | 5f9edc6ac238215aec2312df             |
+| room_name  | `string`     | Room name provided when creating the room          | Test Room                            |
+| session_id | `string`     | 100ms assigned id to identify the session          | 5f9edc6bd238215aec7700df             |
+| peer_id    | `string`     | 100ms assigned id to identify the joining user     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
+| user_id    | `string`     | User id assigned by the customer                   | user.001                             |
+| user_name  | `string`     | User name of the user                              | Test user                            |
+| role       | `string`     | Role of the user                                   | host                                 |
+| lock_room  | bool         | Flag to indicate if the room was lock              | false                                |
+| reason     | `string`     | Reason specified with end room call                | End Room by admin                    |
+| source     | `string`     | Source of end room api call                        | peer                                 |
+
+#### Sample `room.end.success` event
+```json
+{
+  "version":"2.0",
+  "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "account_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+  "timestamp":"2021-11-25T09:10:35Z",
+  "type":"room.end.success",
+  "data":{
+    "joined_at":"0001-01-01T00:00:00Z",
+    "peer_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "role": "xxxxxxxx",
+    "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "room_name": "xxxxxxxxxx",
+    "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "user_name": "xxxxxxxx",
+    "lock_room": false,
+    "reason": "xxxxxxxxxxxxxxxx",
+    "source": "peer"
   }
 }
 ```
