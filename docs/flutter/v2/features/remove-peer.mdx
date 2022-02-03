@@ -15,23 +15,30 @@ Here's how to check whether the local peer has the permission to end the room:
 
 ```dart
 bool isAllowedToRemovePeer() async{
-  return (await meeting.getLocalPeer()).role.permission!.removeOthers;
+  return (await hmsSDK.getLocalPeer()).role.permission!.removeOthers;
 }
 ```
 
-`meeting.getLocalPeer()` will not return null as long as you're in a preview or in a meeting. Since you likely won't need to check for permissions if you're not in one it would be ok.
+`hmsSDK.getLocalPeer()` will not return null as long as you're in a preview or in a meeting room. Since you likely won't need to check for permissions if you're not in one it would be ok.
 
 ### Removing a peer
 
-Once the permissions are checked to ensure the caller has the permission to remove a peer, remove them by calling `meeting.removePeer`.
+Once the permissions are checked to ensure the caller has the permission to remove a peer, remove them by calling `hmsSDK.removePeer`.
 
 The parameters are:
 
-peerId: is the `HMSRemotePeer` id that you'd like to be removed from the video call room.
+peer: is the `HMSRemotePeer` that you'd like to be removed from the video call room.
 
 
 ```dart
-meeting.removePeer(peerId);
+void removePeer(
+      {required HMSPeer peer,
+      required String reason,
+      HMSActionResultListener? hmsActionResultListener}) async {}
+```
+
+```dart
+hmsSDK.removePeer(peer: peerToRemove, reason: "Some good reason to remove the peer")
 ```
 
 ### Handling the remove peer callback

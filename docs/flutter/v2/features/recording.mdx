@@ -32,11 +32,12 @@ Eg: Only streaming is started. Recording can't be started unless streaming is st
 
 If both are required, they have to be started together by providing both RTMP Injest Urls and recording = true.
 
-The result of the action is sent as `HMSException` if it is successfull then it will be null otherwise it is not.
-
+[hmsActionResultListener] is the callback that would be called by SDK in case of a success or failure.
 
 ```dart
-Future<HMSException?> startRtmpOrRecording(HMSRecordingConfig hmsRecordingConfig) async{}
+  void startRtmpOrRecording(
+      {required HMSRecordingConfig hmsRecordingConfig,
+      HMSActionResultListener? hmsActionResultListener}) async {}
 ```
 
 
@@ -48,9 +49,11 @@ Here's how to stop both:
 
 The result of the action is sent as `HMSException` if it is successfull then it will be null otherwise it is not.
 
+[hmsActionResultListener] is the callback that would be called by SDK in case of a success or failure.
 
 ```dart
-Future<HMSException?> stopRtmpAndRecording() async { }
+void stopRtmpAndRecording(
+      {HMSActionResultListener? hmsActionResultListener}) async
 ```
 
 
@@ -104,12 +107,10 @@ This represents that the room was set to be recorded when it was created and all
 
 The room status should be checked in three places:
 1. `onJoin` callback of `HMSUpdateListener` 
-2. When `hmsMeeting.startRtmpOrRecording()` is called
-3. When `hmsMeeting.stopRtmpAndRecording()` is called.
+2. When `hmsSDK.startRtmpOrRecording()` is called
+3. When `hmsSDK.stopRtmpAndRecording()` is called.
 
 - In the `onJoin(room: HMSRoom)` callback in `HMSUpdateListener`
     The properties mentioned above will be on the `HMSRoom` object.
 - Whenever either of the start or stop recording functions is called, when their success or error callbacks are called, the values of the streaming and recording will be updated on the room object returned in onJoin.
 So saving an instance of the room received at that time is recommended.
-
-

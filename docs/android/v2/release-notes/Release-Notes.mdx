@@ -3,6 +3,37 @@ title: Android SDK
 nav: 15
 description: Release Notes for 100ms Android SDK
 ---
+## 2.2.8 - 2022-01-24
+### Added
+* Added APIs to support of `Virtual Background`
+* Use the following dependency along with main 100ms SDK dependency to support VB plugin
+    ```
+        implementation 'com.github.100mslive.android-sdk:virtualBackground:2.2.8'
+    ```
+
+### Changed
+* Gradle Dependency to add core 100ms SDK features has changed to following
+    ```
+        implementation 'com.github.100mslive.android-sdk:lib:x.x.x'
+    ```
+
+## 2.2.7 - 2022-01-18
+### Changed
+* Downgrading `androidx.core:core-ktx` to `1.6.0` to support apps with compile sdk version < 31. 
+
+## 2.2.6 - 2022-01-14
+### Added
+* Added analytics to collect whether device is using h/w or s/w AEC
+* Added `isTerminal` property in `HMSException` - Use this property to determine whether peer can continue in the room or not
+* Added analytics to collect info about `could not find FRONT camera` issue
+* Added analytics events for phone call interruptions
+* Queue-ing analytics events which maybe getting missed as websocket not present
+
+### Fixed
+* Bug fix - All Remote peers get muted for local peer if the local peer receives a phone call at a moment when there is no one else in the room
+* `onReconnection` will not be send continuously & will be sent only in the start. It was being sent continously while SDK was retrying.
+* NPE crash fix in `OnPeerUpdateManager` and `SDKStore.getRoom`
+
 ## 2.2.5 - 2021-12-29
 ### Fixed
 * OOM Crash due to printing of `SDKStore` object in `HMSSpeaker`

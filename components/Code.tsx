@@ -73,30 +73,21 @@ const Code: React.FC = ({ children }) => {
                 .code-block {
                     position: relative;
                 }
-                button {
-                    z-index: 35;
-                    top: 15px;
-                    right: 20px;
-                    position: absolute;
-                    border: none;
-                    outline: none;
-                    background-color: transparent;
-                    cursor: pointer;
-                }
                 button:hover {
                     opacity: 0.8;
                 }
                 .copied {
                     z-index: 45;
+                    outline: none;
+                    cursor: pointer;
                     width: 25px;
                     height: 25px;
                     padding: 5px;
                     border: 1px solid var(--gray3);
                     background: var(--gray1);
                     border-radius: 5px;
-                    top: 10px;
-                    right: 10px;
-                    position: absolute;
+                    position: fixed;
+                    margin: 10px 0 0 clamp(150px, 690px, 80vw);
                 }
             `}</style>
         </div>
