@@ -10,7 +10,7 @@ Any application built using 100ms' SDK has 2 components.
 
 -   **Server:** Use 100ms' APIs or dashboard to create rooms, setup room templates, trigger recording or RTMP streaming, access events.
 
-![Architecture](/docs/v2/arch.png)
+![Architecture](/docs/docs/v2/arch.png)
 
 ## Basic Concepts
 
