@@ -9,6 +9,7 @@ import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import React from 'react';
 import EditFile from '@/components/EditFile';
+import SegmentAnalytics from '@/components/SegmentAnalytics'
 
 type NavRoute = {
     url: string;
@@ -93,6 +94,7 @@ const DocLayout: React.FC<Props> = ({
         <>
             <div className="page">
                 <NextSeo {...SEO} />
+                <SegmentAnalytics options={{}} title={frontMatter.title} />
                 <Header
                     modal={modal}
                     setModal={setModal}

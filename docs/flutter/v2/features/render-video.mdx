@@ -1,6 +1,6 @@
 ---
 title: Render Video
-nav: 3.2
+nav: 5
 ---
 
 It all comes down to this. All the setup so far has been done so that we can show live streaming videos in our beautiful app.
@@ -10,7 +10,7 @@ To render video you will use HMSVideoView. To use it we will need few things:
 1. HMSTrack: `HMSVideoView` will render video using trackId from HMSTrack.
 2. `HMSVideoView` will use viewSize to get height and width of rendered video. If not passed, it will take whatever size is available to the widget.
 
-## How to get HMSTrack
+## How to get HMSTrack 
 
 HMSTrack is used to render video in HMSVideoView.
 
@@ -34,29 +34,16 @@ Now, you can pass video track to `HMSVideoView ` to get you live video on screen
 
 ## Render Video
 
-To Render video you need track and size(optional).
+To Render video you need the video track.
 
-For example - HMSVideoView with `HMSTrack` and `Size`
+For example - HMSVideoView with `HMSTrack`
 
 ```dart
 ///  This will render video with trackId present in track and it will have height = 50 and width = 50
 
-HMSVideoView(
-  track: track,
-  viewSize: Size(50,50),
-);
+HMSVideoView(track: track);
 ```
 
-For example - HMSVideoView with only `HMSTrack`
-
-```dart
-///  This will render video with trackId present in track and it will have height and width available to it
-
-HMSVideoView(
-  track: track,
-  viewSize: Size(50,50),
-);
-```
 
 ## Detach video to conserve bandwidth and cleanup elements
 

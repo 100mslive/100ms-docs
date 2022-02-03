@@ -84,9 +84,15 @@ The 100ms server will respond with an auth token like this `{"token":"some-token
 Camera, Recording Audio and Internet permissions are required. Add them to your AndroidManifest.xml.
 
 ```xml
-<uses-permission android:name="android.permission.CAMERA" />
-<uses-permission android:name="android.permission.RECORD_AUDIO" />
-<uses-permission android:name="android.permission.INTERNET" />
+<uses-feature android:name="android.hardware.camera"/>
+<uses-feature android:name="android.hardware.camera.autofocus"/>
+<uses-permission android:name="android.permission.CAMERA"/>
+<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+<uses-permission android:name="android.permission.RECORD_AUDIO"/>
+<uses-permission android:name="android.permission.BLUETOOTH"/>
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 ```
 
 You will also need to request Camera and Record Audio permissions at runtime before you join a call or display a preview. Please follow [Android Documentation](https://developer.android.com/training/permissions/requesting#request-permission) for runtime permissions.
@@ -108,7 +114,7 @@ Add following permissions in iOS Info.plist file
 
 ### Join a Video Call
 
-To join a video call, call join method on HMSMeeting with the config settings. To listen the updates, call addMeetingListener on HMSMeeting.
+To join a video call, call join method on HMSSDK with the config settings. To listen the updates, call addMeetingListener on HMSSDK.
 
 These are some listener's callback functions:
 
@@ -123,42 +129,92 @@ These are some listener's callback functions:
 > 💡 It's essential that this callback is listened to or you may have peers without video.
 
 ```dart
-_meeting = HMSMeeting();
-_meeting.joinMeeting(config: this.config);
-_meeting.addMeetingListener(listener);
+HMSConfig config = HMSConfig(userName: this.userName, authToken: this.authToken);
+hmsSDK = HMSSDK();
+hmsSDK.build()
+hmsSDK.join(config: this.config);
+hmsSDK.addMeetingListener(listener);
+```
 
-class AppUpdateListener extends HMSUpdateListener {
+```dart
+/// 100ms SDK provides callbacks to the client app about any change or update happening in the room after a user has joined by implementing HMSUpdateListener.
+/// These updates can be used to render the video on screen or to display other info regarding the room.
+abstract class HMSUpdateListener {
 
-  @override
-  void onJoin({required HMSRoom room}) {}
+  /// This will be called on a successful JOIN of the room by the user
+  ///
+  /// This is the point where applications can stop showing its loading state
+  /// [room]: the room which was joined
+  void onJoin({required HMSRoom room});
 
-  @override
-  void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) {}
+  /// This is called when there is a change in any property of the Room
+  ///
+  ///  [room]: the room which was joined
+  ///  [update]: the triggered update type. Should be used to perform different UI Actions
+  void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update});
 
-  @override
-  void onTrackUpdate({required HMSTrack track, required HMSTrackUpdate trackUpdate, required HMSPeer peer}) {}
+  /// This will be called whenever there is an update on an existing peer
+  /// or a new peer got added/existing peer is removed.
+  ///
+  /// This callback can be used to keep a track of all the peers in the room
+  /// [peer]: the peer who joined/left or was updated
+  /// [update]: the triggered update type. Should be used to perform different UI Actions
+  void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update});
 
-  @override
-  void onMessage({required HMSMessage message}) {}
+  /// This is called when there are updates on an existing track
+  /// or a new track got added/existing track is removed
+  ///
+  /// This callback can be used to render the video on screen whenever a track gets added
+  ///  [track]: the track which was added, removed or updated
+  ///  [trackUpdate]: the triggered update type
+  ///  [peer]: the peer for which track was added, removed or updated
+  void onTrackUpdate({required HMSTrack track, required HMSTrackUpdate trackUpdate, required HMSPeer peer});
 
-  @override
-  void onUpdateSpeakers({required List<HMSSpeaker> updateSpeakers}) {}
+  /// This will be called when there is an error in the system
+  /// and SDK has already retried to fix the error
+  /// [error]: the error that occurred
+  void onError({required HMSException error});
 
-  @override
-  void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest}) {}
+  /// This is called when there is a new broadcast message from any other peer in the room
+  ///
+  /// This can be used to implement chat is the room
+  /// [message]: the received broadcast message
+  void onMessage({required HMSMessage message});
 
-  @override
-  void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {}
+  /// This is called when someone asks for change or role
+  ///
+  /// for eg. admin can ask a peer to become host from guest.
+  /// this triggers this call on peer's app
+  void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest});
 
-  @override
-  void onReconnected() {}
+  /// This is called every 1 second with list of active speakers
+  ///
+  /// ## A HMSSpeaker object contains -
+  ///    - peerId: the peer identifier of HMSPeer who is speaking
+  ///    - trackId: the track identifier of HMSTrack which is emitting audio
+  ///    - audioLevel: a number within range 1-100 indicating the audio volume
+  ///
+  /// A peer who is not present in the list indicates that the peer is not speaking
+  ///
+  /// This can be used to highlight currently speaking peers in the room
+  /// [speakers] the list of speakers
+  void onUpdateSpeakers({required List<HMSSpeaker> updateSpeakers});
 
-  @override
-  void onReconnecting() {}
+  ///when network or some other error happens it will be called
+  void onReconnecting();
 
-  @override
-  void onError({required HMSError error}) {}
+  ///when you are back in the room after reconnection
+  void onReconnected();
+
+  ///when someone requests for track change of yours be it video or audio this will be triggered
+  /// [hmsTrackChangeRequest] request instance consisting of all the required info about track change
+  void onChangeTrackStateRequest({required HMSTrackChangeRequest hmsTrackChangeRequest});
+
+  ///when someone kicks you out or when someone ends the room at that time it is triggered
+  /// [hmsPeerRemovedFromPeer] it consists info about who removed you and why.
+  void onRemovedFromRoom({required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer});
 }
+
 ```
 
 ### How you know when people join or leave
@@ -174,7 +230,7 @@ The `HMSUpdateListener` has a callback to notify about people joining or leaving
 ### How to render audio and video
 
 The SDK plays the audio for every person who joins the call. Audio will begin playing when join succeeds.
-To see the person's video you need to create an instance of HMSVideoView with height and width in arguments.
+To render the person's video you need to create an instance of HMSVideoView.
 
 ### Showing Videos
 
@@ -189,36 +245,36 @@ peer.auxiliaryTracks
 
 ### Mute/UnMute Audio
 
-You can mute/unmute audio by calling switchAudio on HMSMeeting. `isOn` is state variable. If `isOn` is true then audio will unmute and if its false then audio will mute.
+You can mute/unmute audio by calling switchAudio on HMSSDK. `isOn` is state variable. If `isOn` is true then audio will unmute and if its false then audio will mute.
 
 ```dart
 
 /// audio unmute
-_meeting.switchAudio(isOn: true);
+hmsSDK.switchAudio(isOn: true);
 
 /// audio mute
-_meeting.switchAudio(isOn: false);
+hmsSDK.switchAudio(isOn: false);
 ```
 
 ### Mute/UnMute Video
 
-You can mute/unmute video by calling switchVideo on HMSMeeting. `isOn` is state variable. If `isOn` is true then video will turn on and if its false then video will turn off.
+You can mute/unmute video by calling switchVideo on HMSSDK. `isOn` is state variable. If `isOn` is true then video will turn on and if its false then video will turn off.
 
 ```dart
 
 /// video on
-_meeting.switchVideo(isOn: true);
+hmsSDK.switchVideo(isOn: true);
 
 /// video off
-_meeting.switchVideo(isOn: false);
+hmsSDK.switchVideo(isOn: false);
 ```
 
 ### Leave a video call
 
-To leave a video call, just call leave on HMSMeeting.
+To leave a video call, just call leave on HMSSDK.
 
 ```dart
-_meeting.leaveMeeting();
+hmsSDK.leave();
 ```
 
 ## Where to go from here

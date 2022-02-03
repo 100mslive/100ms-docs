@@ -7,7 +7,8 @@ and get a callback when the value changes.
 
 ## Hierarchy
 
-- `StoreApi`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\>
+- `IStore`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\>
+
   ↳ **`IHMSStore`**
 
 ## Properties
@@ -18,19 +19,21 @@ and get a callback when the value changes.
 
 #### Inherited from
 
-StoreApi.destroy
+IStore.destroy
 
 ---
 
 ### getState
 
 • **getState**: `GetState`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\>
+
 Get a part of store using a selector which is true at the current point of time.
+
 Usage: `store.getState(selectDominantSpeaker);`
 
-#### Overrides
+#### Inherited from
 
-StoreApi.getState
+IStore.getState
 
 ---
 
@@ -40,15 +43,17 @@ StoreApi.getState
 
 #### Inherited from
 
-StoreApi.setState
+IStore.setState
 
 ---
 
 ### subscribe
 
 • **subscribe**: `Subscribe`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\>
+
 Subscribe to a part of store using selectors, whenever the subscribed part changes, the callback
 is called with both the latest and previous value of the changed part.
+
 Usage:
 
 ```
@@ -58,7 +63,6 @@ const onSpeakerUpdate = (speaker, prevSpeaker) => {
 store.subscribe(onSpeakerUpdate, selectDominantSpeaker);
 ```
 
-#### Overrides
+#### Inherited from
 
-StoreApi.subscribe
-e
+IStore.subscribe

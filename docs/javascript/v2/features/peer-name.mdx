@@ -1,0 +1,15 @@
+---
+title: Change User Name
+nav: 3.07
+---
+
+Any peer can change their own name before or after joining a room.
+Before joining, the name would have to be specified in `HMSConfig` that is passed to the join method.
+After joining, name can be changed with this call to hmsActions -
+
+```
+await hmsActions.changeName(newName);
+```
+
+The store will update on the remote side, and as a result corresponding UI will also be updated automatically.
+A notification of type `HMSNotificationTypes.NAME_UPDATED` will also be sent in case a toast needs to be presented.

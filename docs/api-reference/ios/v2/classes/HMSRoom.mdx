@@ -1,5 +1,6 @@
 ---
 title: HMSRoom
+nav: 28
 ---
 
 **CLASS**
@@ -12,26 +13,44 @@ A room represents a real-time audio, video session, the basic building block of 
 
 ## Properties
 
-### id
-
-```swift
-public let id: String
-```
-
 ### name
 
 ```swift
-public let name: String
+public internal(set) var name: String?
+```
+
+### roomID
+
+```swift
+public internal(set) var roomID: String?
 ```
 
 ### metaData
 
 ```swift
-public let metaData: String?
+public internal(set) var metaData: String?
 ```
 
 ### peers
 
 ```swift
-public var peers = [HMSPeer]()
+public internal(set) var peers = [HMSPeer]()
+```
+
+### browserRecordingState
+
+```swift
+public internal(set) var browserRecordingState: HMSBrowserRecordingState
+```
+
+### serverRecordingState
+
+```swift
+public internal(set) var serverRecordingState: HMSServerRecordingState
+```
+
+### rtmpStreamingState
+
+```swift
+public internal(set) var rtmpStreamingState: HMSRTMPStreamingState
 ```

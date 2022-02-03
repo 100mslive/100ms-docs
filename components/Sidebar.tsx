@@ -51,6 +51,24 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
             router.push(s.link, undefined, { shallow: false });
         }
     };
+    const aliasMenu = [
+        {
+            title: 'Room APIs',
+            url: '/server-side/v2/features/room'
+        },
+        {
+            title: 'Webhooks',
+            url: '/server-side/v2/foundation/webhook'
+        },
+        {
+            title: 'SFU Recording',
+            url: '/server-side/v2/features/recording'
+        },
+        {
+            title: 'Simulcast',
+            url: '/server-side/v2/features/simulcast'
+        }
+    ];
     return (
         <div className="ctx">
             {/* Sidebar Version Section */}
@@ -81,40 +99,37 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     </Listbox.Options>
                 </Listbox>
             </section>
-
             {/* Sidebar Menu Section */}
-
             {Object.entries(nav).map(([key, children], index) => (
                 <section className="menu-container" key={`${key}-${index}`}>
                     <div className="menu-title">{key.replace(/-/g, ' ').toUpperCase()}</div>
-                    {Object.entries(children).map(
-                        ([_, route]) =>
-                            Object.prototype.hasOwnProperty.call(route, 'title') ? (
-                                <Link href={route.url || ''} key={`${route.url}-${index}`}>
+                    {Object.entries(children).map(([_, route]) =>
+                        Object.prototype.hasOwnProperty.call(route, 'title') ? (
+                            <Link href={route.url || ''} key={`${route.url}-${index}`}>
+                                <div
+                                    className={`menu-item ${
+                                        route.url === router.asPath ? 'active-link' : ''
+                                    }`}>
+                                    {route.title}
+                                </div>
+                            </Link>
+                        ) : null
+                    )}
+                    {/* @ts-ignore */}
+                    {key === 'features' && router.query.slug[0] !== 'server-side' ? (
+                        <>
+                            {aliasMenu.map((a) => (
+                                <Link href={a.url} key={a.url}>
                                     <div
                                         className={`menu-item ${
-                                            route.url === router.asPath ? 'active-link' : ''
+                                            a.url === router.asPath ? 'active-link' : ''
                                         }`}>
-                                        {route.title}
+                                        {a.title}
                                     </div>
                                 </Link>
-                            ) : null
-                        // <>
-                        //     <div className="sub-title">
-                        //         {k.replace(/-/g, ' ').toUpperCase()}
-                        //     </div>
-                        //     {Object.keys(route).map((e) => (
-                        //         <Link key={route[e].title} href={route[e].url}>
-                        //             <div
-                        //                 className={`sub-menu-item ${
-                        //                     route[e].url === router.asPath ? 'active-link' : ''
-                        //                 }`}>
-                        //                 {route[e].title}
-                        //             </div>
-                        //         </Link>
-                        //     ))}
-                        // </>
-                    )}
+                            ))}
+                        </>
+                    ) : null}
                 </section>
             ))}
             <style jsx>{`

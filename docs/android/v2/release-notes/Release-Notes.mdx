@@ -1,76 +1,268 @@
 ---
 title: Android SDK
-nav: 12
+nav: 15
 description: Release Notes for 100ms Android SDK
 ---
 
-## Latest Versions
+## 2.2.8 - 2022-01-24
 
-| Module                    | Version                                                                                                                                |
-| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| Android SDK - 2.2.5       | [![](https://jitpack.io/v/100mslive/android-sdk.svg)](https://jitpack.io/#100mslive/android-sdk)            |
+### Added
+
+-   Added APIs to support of `Virtual Background`
+-   Use the following dependency along with main 100ms SDK dependency to support VB plugin
+    ```
+        implementation 'com.github.100mslive.android-sdk:virtualBackground:2.2.8'
+    ```
+
+### Changed
+
+-   Gradle Dependency to add core 100ms SDK features has changed to following
+    ```
+        implementation 'com.github.100mslive.android-sdk:lib:x.x.x'
+    ```
+
+## 2.2.7 - 2022-01-18
+
+### Changed
+
+-   Downgrading `androidx.core:core-ktx` to `1.6.0` to support apps with compile sdk version < 31.
+
+## 2.2.6 - 2022-01-14
+
+### Added
+
+-   Added analytics to collect whether device is using h/w or s/w AEC
+-   Added `isTerminal` property in `HMSException` - Use this property to determine whether peer can continue in the room or not
+-   Added analytics to collect info about `could not find FRONT camera` issue
+-   Added analytics events for phone call interruptions
+-   Queue-ing analytics events which maybe getting missed as websocket not present
+
+### Fixed
+
+-   Bug fix - All Remote peers get muted for local peer if the local peer receives a phone call at a moment when there is no one else in the room
+-   `onReconnection` will not be send continuously & will be sent only in the start. It was being sent continously while SDK was retrying.
+-   NPE crash fix in `OnPeerUpdateManager` and `SDKStore.getRoom`
+
+## 2.2.5 - 2021-12-29
+
+### Fixed
+
+-   OOM Crash due to printing of `SDKStore` object in `HMSSpeaker`
+-   Clear local track mute status when the sdk is cleared
+-   Fix for `java.lang.IllegalStateException: No camera device found for FRONT` crash - Now the peer will be able to join the room but with no videoTrack
+
+### Added
+
+-   An optional `HMSActionResultListener` is added to `switchCamera` API - errors will be sent back to app if some errors come up
+-   Send the local Screenshare Track to app in `onTrackUpdate`
+-   Added new analytics event `videopresence.failed` for cases where SDK cannot find a camera to capture
+
+### Changed
+
+-   Device permission denied errors are not terminal errors anymore.
+    Clients will get a `onJoin` or `onPreview` callback even if audio or video tracks cannot be created by the SDK due to some issues in the capture device.
+    `onError` callbacks will also be called along with the above callbacks
+
+## 2.2.4 - 2021-12-20
+
+### Fixed
+
+-   RTMP updates are fired once server notifies
+-   `switchCamera` API does not need a Coroutine scope to be called from
+
+### Added
+
+-   APIs to start/stop HLS Streaming (beta version)
+-   `HLS_STREAMING_STATE_UPDATED` enum in `HMSRoomUpdate` to notify changes about HLS streaming status in `HMSRoom`
+-   Beta version of `getStats()` API
+-   `startScreenShare` API now take an optional `Notification` from app which can be used to stop the screenshare
+
+## 2.2.3 - 2021-12-03
+
+### Fixed
+
+-   `UninitializedPropertyException` crash while calling `acceptChangeRole` due to socket not getting initialized
+-   Permission Errors are non terminal now
+
+### Added
+
+-   Subscribe Degradation events being sent to analytics
+
+## 2.2.2 - 2021-11-25
+
+### Added
+
+-   `changeMetadata` API to change the `metadata` in `HMSPeer`. This change will be updated to all and will be persistent
+
+### Fixed
+
+-   `HMSRoomUpdate` will be trigerred for the local peer who initiated a start or stop Recording
+-   The room's Recording status will be checked upon reconnection of a peer
+-   Screenshare cannot be unpublished while in reconnection mode
+-   `setVolume()` API on `RemoteAudioTrack` can now take in value from 0.0 to 10.0
+
+### Fixed
+
+-   Analytic fixes
+-   Fix issue in self role change which was calling `roleChange` twice
+-   Remove token from URL Params
+
+## 2.2.0 - 2021-11-19
+
+### Fixed
+
+-   Analytic fixes
+-   Fix issue in self role change which was calling `roleChange` twice
+-   Remove token from URL Params
+
+### Added
+
+-   Add Audio Recording errors to Analytics
+-   Add more instrumentation tests
+
+## 2.1.9 - 2021-11-11
+
+### Added
+
+-   Beta version of `screenshare` API
+-   `Leave` API now takes in an optional parameter to return `success` and `error` callbacks
+
+### Fixed
+
+-   `Class cast exception` crash fix if End Room API was called by server where `requested_by` peer is null
+
+## 2.1.8 - 2021-11-03
+
+### Added
+
+-   `getRoom` API to `HMSSDK` which will return a `HMSRoom` instance that the user has joined, `NULL` otherwise
+
+### Fixed
+
+-   Crash fix - `IllegalArgumentException: Receiver not registered` on calling leave immediately after joining
+-   `Already JOINED` HMSException will now be coming in `onError` of `HMSUpdateListener` instead of a throwing a fatal Exception
+-   RTMP Recording fixes
+
+## 2.1.7 - 2021-11-01
+
+### Changed
+
+The timeouts for all websocket operations on the server have been increased from 5 seconds to 11 seconds.
+
+If a join was failing before for lack of feedback, it has a larger margin within which to succeed now.
+
+## 2.1.6 - 2021-10-28
+
+### Breaking Changes
+
+`requestedBy: HMSPeer` in `HMSChangeTrackStateRequest` is now nullable.
+It could be mute if the person tried to mute or unmute someone and immediately left the room.
+
+### Fixed
+
+-   Check for Role change of remote peers after reconnection
+-   Return correct value of isPlaybackAllowed
+-   HMSTrack is null for local peer in HMSSpeaker
+-   `onSuccess` callback for the `acceptChangeRequest` method was never being called. This will now be called appropriately.
+    This request can safely be ignored because the SDK already muted the peer but may be helpful in recognizing that the mute came externally.
+    A check like the following is now required in your `onChangeTrackStateRequest`:
+
+```kotlin
+            if (details.track.isMute != details.mute) {
+              // Process ChangeTrackMuteRequest
+            }
+```
+
+### Added
+
+-   Added `customerId` and `description` to HMSPeer's tostring().
+-   `HMSChangeTrackStateRequest` is now sent even when peers are muted. Previously, if a remote peer requested a peer to mute, there would be no ChangeTrackStateRequest
+-   The way packet loss is measured for track degradation is changed
+
+## 2.1.5 - 2021-10-27
+
+### Fixed
+
+-   Crash fix for "MediaStream has been disposed" - that could happen when multiple peers leave and join a large room
+
+## 2.1.4 - 2021-10-18
+
+### Fixed
+
+-   Videos send by Pixel 3 device are distorted
+-   UninitializedPropertyAccessException crash fix on leave
+-   Using subscribe degradation as set on the local peer's role
+
+### Added
+
+-   `HMSTrack` obj in `HMSSpeaker`
 
 ## 2.1.3 - 2021-10-04
 
 ### Fixed
-- Reconnection improvements - reconnection time has reduced
-- Analytics fix
+
+-   Reconnection improvements - reconnection time has reduced
+-   Analytics fix
 
 ### Added
-- Ability to start/stop a RTMP Streaming or Recording
-- Ability to change the mute status of one or many remote HMSTrack for all peers of a particular role, or all tracks of a particular source, type or source AND type.
-- Ability to use either software or hardware acoustic echo cancellation from the application layer
+
+-   Ability to start/stop a RTMP Streaming or Recording
+-   Ability to change the mute status of one or many remote HMSTrack for all peers of a particular role, or all tracks of a particular source, type or source AND type.
+-   Ability to use either software or hardware acoustic echo cancellation from the application layer
 
 ### Updated
-- Updated to latest m94 release of webrtc
+
+-   Updated to latest m94 release of webrtc
 
 ## 2.1.2 - 2021-09-20
 
 ### Fixed
-- Donot degrade videos on reconnection
-- SendTrack updates after reconnection if a new peer joins while SDK is reconnection
-- Muting new tracks that are getting added when SDK mutes all remote tracks on interruption
+
+-   Donot degrade videos on reconnection
+-   SendTrack updates after reconnection if a new peer joins while SDK is reconnection
+-   Muting new tracks that are getting added when SDK mutes all remote tracks on interruption
 
 ## 2.1.1 - 2021-09-10
 
 ### Fixed
 
-- SDK Reconnection on network disconnection improvement
-- NPE Crash fix on preview screen in case of SDK reconnection
-- Fix: onPreview getting was called twice incase of SDK reconnection
-
+-   SDK Reconnection on network disconnection improvement
+-   NPE Crash fix on preview screen in case of SDK reconnection
+-   Fix: onPreview getting was called twice incase of SDK reconnection
 
 ## 2.1.0 - 2021-09-03
 
 ### Fixed
 
-- Subscribe Degradation improvements
-- sendBroadcast API now accepts any type of HMSMessageType
-- Concurrent modification Exception Crash fix
+-   Subscribe Degradation improvements
+-   sendBroadcast API now accepts any type of HMSMessageType
+-   Concurrent modification Exception Crash fix
 
 ## 2.0.9 - 2021-08-27
 
 ### Added
 
-- Support for self role change
+-   Support for self role change
 
 ### Changed
-- Updated webrtc lib to latest
-- Bug fix(can reuse the same instance of hmsSDK to rejoin a room)
-- Few memory leak
-- IMP --> With this release no need to add any dependancy to webrtc library. Anyone migrating from previous versions, PLEASE REMOVE the webrtc dependancy from your app's build.gradle
+
+-   Updated webrtc lib to latest
+-   Bug fix(can reuse the same instance of hmsSDK to rejoin a room)
+-   Few memory leak
+-   IMP --> With this release no need to add any dependancy to webrtc library. Anyone migrating from previous versions, PLEASE REMOVE the webrtc dependancy from your app's build.gradle
 
 ## 2.0.8 - 2021-08-17
 
 ### Added
 
--  Sending private and group messages APIs
--  Remove peer from a room API
--  Remote mute peer API
--  End room API
+-   Sending private and group messages APIs
+-   Remove peer from a room API
+-   Remote mute peer API
+-   End room API
 
 ### Changed
--  send(message:) API renamed to sendBroadcastMessage
+
+-   send(message:) API renamed to sendBroadcastMessage
 
 ## 2.0.7 - 2021-08-06
 

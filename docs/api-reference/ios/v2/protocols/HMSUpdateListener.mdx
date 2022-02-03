@@ -1,5 +1,6 @@
 ---
 title: HMSUpdateListener
+nav: 70
 ---
 
 **PROTOCOL**
@@ -143,6 +144,38 @@ This is called when a role change request arrives
 | ----------------- | -------------------------------- |
 | roleChangeRequest | the request for role change info |
 
+### on(changeTrackStateRequest:)
+
+```swift
+@objc(changeTrackStateRequest:) optional func on(changeTrackStateRequest: HMSChangeTrackStateRequest)
+```
+
+This is called when a change track state request arrives
+
+-   Parameter changeTrackStateRequest: the request for changing track state
+
+#### Parameters
+
+| Name                    | Description                          |
+| ----------------------- | ------------------------------------ |
+| changeTrackStateRequest | the request for changing track state |
+
+### on(removedFromRoom:)
+
+```swift
+@objc(removedFromRoom:) optional func on(removedFromRoom notification: HMSRemovedFromRoomNotification)
+```
+
+This is called when someone removes the local peer for the current room
+
+-   Parameter notification: the notification containing reason for removing and the initiating peer
+
+#### Parameters
+
+| Name         | Description                                                             |
+| ------------ | ----------------------------------------------------------------------- |
+| notification | the notification containing reason for removing and the initiating peer |
+
 ### on(updated:)
 
 ```swift
@@ -153,8 +186,8 @@ This is called every 1 second with list of active speakers
 
 ## A HMSSpeaker object contains -
 
--   HMSPeer: the peer who is speaking
--   trackID: the track identifier which is emitting audio
+-   peer: the peer who is speaking
+-   track: the track which is emitting audio
 -   level: a number within range 1-100 indicating the audio volume
     A peer who is not present in the list indicates that the peer is not speaking
     This can be used to highlight currently speaking peers in the room
@@ -172,14 +205,13 @@ This is called every 1 second with list of active speakers
 @objc func onReconnecting()
 ```
 
+This is called when SDK detects a network issue and is trying to recover
+
 ### onReconnected()
 
 ```swift
 @objc func onReconnected()
 ```
 
-ed()
-
-```
-
-```
+This is called when SDK successfully recovered from a network issue
+a network issue
