@@ -114,7 +114,7 @@ Add following permissions in iOS Info.plist file
 
 ### Join a Video Call
 
-To join a video call, call join method on HMSSDK with the config settings. To listen the updates, call addMeetingListener on HMSSDK.
+To join a video call, call join method on HMSSDK with the config settings. To listen the updates, call addUpdateListener on HMSSDK.
 
 These are some listener's callback functions:
 
@@ -133,7 +133,7 @@ HMSConfig config = HMSConfig(userName: this.userName, authToken: this.authToken)
 hmsSDK = HMSSDK();
 hmsSDK.build()
 hmsSDK.join(config: this.config);
-hmsSDK.addMeetingListener(listener);
+hmsSDK.addUpdateListener(listener);
 ```
 
 ```dart
