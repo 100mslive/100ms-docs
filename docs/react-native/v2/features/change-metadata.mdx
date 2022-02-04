@@ -1,0 +1,53 @@
+---
+title: Peer Metadata Update
+nav: 3.8
+---
+Looking for persistent state that can be set on a peer and updated anytime, for everyone in the room? Peer metadata is it.
+
+Metadata can be set initially in the HMSConfig object that's passed into the join method.
+
+This section will show you how to:
+
+1. Read Peer Metadata.
+2. Respond to when a remote peer changes its metadata.
+3. How to set a peer's metadata.
+
+The `HMSPeer` object prior to 2.2.1 contained `customerDescription` a read-only string whose value wouldn't change throughout a call. 
+This has been replaced with `metadata`. The value is initially assigned as before but now can be changed by the peer who owns it.
+
+Any peer can change the metadata for themselves. Currently one peer cannot change another peer's metadata.
+
+To change their own metadata value the peer should call `changeMetadata` on their `HMSSdk` instance.
+
+The data may be any arbitrary string though it cannot be changed to null.
+
+## Reading metadata
+To read metadata, read the metadata value on any HMSPeer instance.
+```js
+hmsInstance?.localPeer?.metadata // local or remote peer
+```
+
+## Responding to updates
+Whenever a remote peer's metadata is updated a callback will be received in `onPeerUpdate` where the update value will be of type `HMSPeerUpdate.METADATA_CHANGED`.
+
+## Updating Metadata
+Here is how a peer can set their own metadata to a random string. In this case the string is stringified json
+```js
+const parsedMetadata = JSON.parse(hmsInstance?.localPeer?.metadata)
+
+// Raise Hand
+hmsInstance?.changeMetadata(
+  JSON.stringify({
+    ...parsedMetadata,
+    isHandRaised: true,
+  }),
+);
+
+// BRB
+hmsInstance?.changeMetadata(
+  JSON.stringify({
+    ...parsedMetadata,
+    isBRBOn: true,
+  }),
+);
+```
