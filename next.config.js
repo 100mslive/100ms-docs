@@ -24,15 +24,6 @@
         });
 
         return config;
-    },
-    async redirects () {
-        return [
-          {
-            source: '/about',
-            destination: '/docs',
-            permanent: true,
-          },
-        ]
     }
 };
 
