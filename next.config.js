@@ -30,7 +30,7 @@
             { 
                 "source": "/:path((?!docs/).*)",
                 "destination": `${process.env.NEXT_PUBLIC_HMS_WEBSITE_DOMAIN || ''}/docs/:path*`, 
-                "permanent": false,
+                "permanent": true,
                 "basePath": false
             }
         ]
