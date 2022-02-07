@@ -22,6 +22,7 @@ export async function getFileBySlug(type: string ,slug) {
   const mdxSource = await renderToString(content, {
     components: MDXComponents,
     mdxOptions: {
+      remarkPlugins: [],
       rehypePlugins: [mdxPrism],
     },
   });
