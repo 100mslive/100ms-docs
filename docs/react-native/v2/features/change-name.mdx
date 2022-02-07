@@ -1,0 +1,21 @@
+---
+title: Change User Name
+nav: 3.994
+---
+
+Any peer can change their own name before or after joining a room. Before joining, the name would have to be specified in `HMSConfig` that is passed 
+to the join method. This document shows how the name can be changed after joining.
+
+## Responding to name changes
+Whenever a remote peer's name is changed a callback will be received in `onPeerUpdate` where the update will be of type `HMSPeerUpdate.NAME_CHANGED`.
+When this callback is received the UI for that peer should be updated as well.
+
+## Changing the name
+The peer who wants to change their name should call the following method on an HMSSdk instance.
+
+```js
+const newName: string = "new name"
+
+// hms instance acquired by build method
+hmsInstance.changeName(newName);
+```
