@@ -6,7 +6,6 @@ import readingTime from 'reading-time';
 import renderToString from 'next-mdx-remote/render-to-string';
 import MDXComponents from '@/components/MDXComponents';
 
-
 const root = process.cwd();
 
 export async function getFiles(type: string) {
@@ -23,7 +22,6 @@ export async function getFileBySlug(type: string ,slug) {
   const mdxSource = await renderToString(content, {
     components: MDXComponents,
     mdxOptions: {
-      remarkPlugins: [],
       rehypePlugins: [mdxPrism],
     },
   });

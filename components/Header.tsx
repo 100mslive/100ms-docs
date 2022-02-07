@@ -87,7 +87,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
             <div className="head-left">
                 <a href="/">
                     <div className="logo-ctx">
-                        <img width={36} src="/docs/logo.svg" alt="100ms Logo" />
+                        <img width={36} src="/logo.svg" alt="100ms Logo" />
                         <p className="company">
                             100ms<span>.docs</span>
                         </p>

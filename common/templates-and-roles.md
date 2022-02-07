@@ -6,7 +6,7 @@ Each template will be identified by its id or name. E.g. `default_videoconf_7e45
 
 Users can see or modify the templates by visiting [Templates on Dashboard](https://dashboard.100ms.live/templates) or via API(see below). After updating a template or some part of its like permissions, you need to rejoin or restart the session for the template updates to take place.
 
-![Template](/docs/docs/v2/template.png)
+![Template](/docs/v2/template.png)
 
 ## Roles
 
