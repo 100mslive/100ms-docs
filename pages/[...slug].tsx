@@ -13,7 +13,6 @@ import withTableofContents from '@/lib/withTableofContents';
 import { useRouter } from 'next/router';
 import DocLayout from '@/layouts/DocLayout';
 import getPagination from '@/lib/getPagination';
-import imagePlugin from '@/lib/image';
 
 const DocSlugs = ({ source, allDocs, nav, frontMatter }) => {
     const {
@@ -71,7 +70,6 @@ export const getStaticProps = async ({ params }) => {
             remarkPlugins: [
                 require('@/lib/remark-code-header'),
                 require('@fec/remark-a11y-emoji'),
-                imagePlugin,
                 withTableofContents(toc)
             ],
             rehypePlugins: [mdxPrism]
