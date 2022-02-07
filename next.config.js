@@ -1,7 +1,7 @@
 /**
  * @type {import('next').NextConfig}
  */
-const nextConfig = {
+ const nextConfig = {
     basePath: '/docs',
     webpack: (config, { isServer, dev }) => {
         // Fixes npm packages that depend on `fs` module

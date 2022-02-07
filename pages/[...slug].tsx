@@ -71,8 +71,8 @@ export const getStaticProps = async ({ params }) => {
             remarkPlugins: [
                 require('@/lib/remark-code-header'),
                 require('@fec/remark-a11y-emoji'),
-                imagePlugin,
-                withTableofContents(toc)
+                withTableofContents(toc),
+                imagePlugin
             ],
             rehypePlugins: [mdxPrism]
         },
