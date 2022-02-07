@@ -1,4 +1,8 @@
-module.exports = {
+/**
+ * @type {import('next').NextConfig}
+ */
+const nextConfig = {
+    basePath: '/docs',
     webpack: (config, { isServer, dev }) => {
         // Fixes npm packages that depend on `fs` module
         if (!isServer) {
@@ -6,7 +10,6 @@ module.exports = {
                 fs: 'empty'
             };
         }
-
         if (!dev && !isServer) {
             Object.assign(config.resolve.alias, {
                 react: 'preact/compat',
@@ -23,3 +26,5 @@ module.exports = {
         return config;
     }
 };
+
+module.exports = nextConfig;
