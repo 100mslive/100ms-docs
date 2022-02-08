@@ -85,7 +85,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
     return (
         <div className="ctx">
             <div className="head-left">
-                <a href="/">
+                <a href="/docs/javascript/v2/foundation/basics">
                     <div className="logo-ctx">
                         <img width={36} src="/docs/logo.svg" alt="100ms Logo" />
                         <p className="company">
@@ -98,9 +98,8 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
             <div className="head-right">
                 <div className="nav-links">
                     <button className={!isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
-                        <Link href={`${currentTech}/`}> Docs</Link>
+                        <Link href={`/${currentTech}/`}> Docs</Link>
                     </button>
-
                     <span style={{ marginRight: '1rem' }} />
                     {/* @ts-ignore */}
                     {isNonApiRef ? null : (
