@@ -28,7 +28,7 @@
     async redirects () {
         return [
             { 
-                "source": "/:path((?!docs/).*)",
+                "source": "/:path((?!docs).*)",
                 "destination": `${process.env.NEXT_PUBLIC_HMS_WEBSITE_DOMAIN || ''}/docs/:path*`, 
                 "permanent": true,
                 "basePath": false
