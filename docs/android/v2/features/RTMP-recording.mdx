@@ -124,44 +124,83 @@ hmsSdk.stopRtmpAndRecording(new HMSActionResultListener() {
 
 The current status for the room is always reflected in the `HMSRoom` object that is returned from the `HMSUpdateListener`.
 
-Here are the relevant properties inside the `HMSRoom` object which you can read to get the current recording/streaming status of the room namely: `rtmpHMSRtmpStreamingState`, `browserRecordingState` and `serverRecordingState`.
+Here are the relevant properties inside the `HMSRoom` object which you can read to get the current recording/streaming status of the room namely: `rtmpHMSRtmpStreamingState`, `browserRecordingState`, `serverRecordingState`, `hlsStreamingState`.
 
-Each of them are objects which contain a boolean `running` which lets you know if it's active on the room right now and `error` which lets you know if there was an error.
+Each of them (except HLS) are objects which contain a boolean `running` which lets you know if it's active on the room right now and `error` which lets you know the details of an error if one occured, and `startedAt` which contains a [UNIX epoch](https://www.epochconverter.com/) timestamp of when the stream began.
 
-Apart from the rtmp stream and the browser recording, which are ones you can start and stop, there is also a serverRecording, which can be turned on for the room for archival purposes and which cannot currently be stopped if enabled for the room from the dashboard.
+Apart from the rtmp stream and the browser recording, which are ones you can start and stop, there is also a serverRecording, which can be turned on for the room for archival purposes and which cannot currently be stopped if enabled for the room from the dashboard. HLS streaming can be started as well.
 
 1. **rtmpHMSRtmpStreamingState** an instance of `HMSRtmpStreamingState`, which looks like:
 
 ```kotlin
 data class HMSRtmpStreamingState(
     val running : Boolean,
-    val error : HMSException?
+    val error : RtmpError?,
+    val startedAt: Long?,
+    val stoppedAt: Long?
 )
 ```
 
 This represents a livestream to one or more RTMP urls.
+
+`startedAt` is the unix epoch timestamp of when this recording was started.
+
+`stoppedAt` is the unix epoch timestamp of when the recording was ended.
+
+Both may be present and this means the recording was started at some point and stopped at a later date. If the recording is then restarted, it's possible for the `stoppedAt` to be before the `startedAt`.
+
+Error is of the following form and may contain an error code or message if one occured.
+
+```kotlin
+data class RtmpError(
+  val code : String?,
+  val message: String?
+)
+```
 
 2. **browserRecordingState** an instance of `HMSBrowserRecordingState`, which looks like:
 
 ```kotlin
 data class HMSBrowserRecordingState(
     val running : Boolean,
-    val error : HMSException?
+    val error : RecordingError?,
+    val startedAt: Long?,
+    val stoppedAt: Long?
 )
 ```
 
 This represents the recording that can be requested to start.
+
+`startedAt` is the unix epoch timestamp of when this recording was started.
+
+`stoppedAt` is the unix epoch timestamp of when the recording was ended.
+
+Both may be present and this means the recording was started at some point and stopped at a later date. If the recording is then restarted, it's possible for the `stoppedAt` to be before the `startedAt`.
+
+Error is of the following type and may contain an error code or message if present.
+
+```kotlin
+data class RecordingError(
+  val code : String?,
+  val message: String?
+)
+```
 
 3. **serverRecordingState** an instance of `HMSServerRecordingState`, which looks like:
 
 ```kotlin
 data class HMSServerRecordingState(
     val running : Boolean,
-    val error : HMSException?
+    val error : HMSException?,
+    val startedAt: Long?
 )
 ```
 
 This represents that the room was set to be recorded when it was created and all sessions within it will always be recorded for archival by the server.
+
+`startedAt` is the unix epoch timestamp of when this recording was started. However server-side has a special case for recording. It is considered started when the current room's session has begun. A session is defined as the time from which the room goes from zero peers in it, to one, until the time at which the room contains no peers. (note: beam bots which join for recording will leave after a timeout if no other peers are present.)
+
+Because the server side recording always begins when there's someone in the room the room creation time and this recording type's start time will be the same. Also there can't be a `stoppedAt` since that would mean the room has ended.
 
 ## When to check for room status
 
