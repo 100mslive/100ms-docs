@@ -3,6 +3,24 @@ title: Android SDK
 nav: 15
 description: Release Notes for 100ms Android SDK
 ---
+## 2.2.9 - 2022-02-08
+### Added
+* Local track updates like mute/unmute will be send as well via `onTrackUpdate`
+* Added `startedAt` and `stoppedAt` field for `Browser` and `SFU` recording
+
+### Changed
+* Upgraded kotlin version to `1.6.10`
+* Upgraded webrtc version to `m97`
+* `customerUserID` can be null
+
+### Fixed
+* Crash Fix when joining without mic permission
+* Stop screenshare on calling `leave()` API if screenshare is going on
+* Potential fix for `ClassCastException` on accesing `localPeer` while publishing
+* Fix for `HMSException: Network connection lost` crash when connection failed while joining
+* Improved time taken for YUV conversion for virtual background
+* Fixed background image overlay
+
 
 ## 2.2.8 - 2022-01-24
 
