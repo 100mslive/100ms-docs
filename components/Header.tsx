@@ -98,7 +98,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
             <div className="head-right">
                 <div className="nav-links">
                     <button className={!isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
-                        <Link href={`/${currentTech}/`}> Docs</Link>
+                        <Link href={`/docs/${currentTech}/`}> Docs</Link>
                     </button>
                     <span style={{ marginRight: '1rem' }} />
                     {/* @ts-ignore */}
