@@ -124,7 +124,7 @@ hmsSdk.stopRtmpAndRecording(new HMSActionResultListener() {
 
 The current status for the room is always reflected in the `HMSRoom` object that is returned from the `HMSUpdateListener`.
 
-Here are the relevant properties inside the `HMSRoom` object which you can read to get the current recording/streaming status of the room namely: `rtmpHMSRtmpStreamingState`, `browserRecordingState`, `serverRecordingState`, `hlsStreamingState`.
+Here are the relevant properties inside the `HMSRoom` object which you can read to get the current recording/streaming status of the room namely: `rtmpHMSRtmpStreamingState`, `browserRecordingState`, `serverRecordingState` and `hlsStreamingState`.
 
 Each of them (except HLS) are objects which contain a boolean `running` which lets you know if it's active on the room right now and `error` which lets you know the details of an error if one occured, and `startedAt` which contains a [UNIX epoch](https://www.epochconverter.com/) timestamp of when the stream began.
 
