@@ -3,7 +3,7 @@ title: Useful Selectors
 nav: 2.6
 ---
 
-Here's a list of useful Selector hooks that you might want to use while building your application. Before using these make sure you have initialized the SDK, you can refer to this [guide](/javascript/v2/guides/javascript-quickstart#initializing-the-sdk).
+Here's a list of useful Selector hooks that you might want to use while building your application. Before using these make sure you have initialized the SDK, you can refer to this [guide](/docs/javascript/v2/guides/javascript-quickstart#initializing-the-sdk).
 
 Selector functions would fetch you information from the state at any point in time, it can be anything ranging from "how many people are in the room?" to "is my audio on or not?". The answer to all these questions is the store.
 
@@ -75,7 +75,7 @@ const peers = useHMSStore(selectPeers);
 
 ## What is my current state of room?
 
-What if you fail to join the room? How do you know if the user is reconnecting? This is where `selectRoomState` comes in handy, it returns you the current state of your room. You can refer to the [ENUMS](/api-reference/javascript/v2/enums/HMSRoomState) types for reference.
+What if you fail to join the room? How do you know if the user is reconnecting? This is where `selectRoomState` comes in handy, it returns you the current state of your room. You can refer to the [ENUMS](/docs/api-reference/javascript/v2/enums/HMSRoomState) types for reference.
 
 <Tabs id="roomState" items={['Javascript', 'React']} />
 
@@ -145,7 +145,7 @@ const videoOn = useHMSStore(selectIsPeerVideoEnabled(peerId));
 
 ## How do I get the video stream of a user?
 
-You can get video stream of a user using `selectCameraStreamByPeer` it returns [HMSTrack](/api-reference/javascript/v2/interfaces/HMSTrack) which you can use to call [attach/detach](/javascript/v2/features/render-video) actions.
+You can get video stream of a user using `selectCameraStreamByPeer` it returns [HMSTrack](/docs/api-reference/javascript/v2/interfaces/HMSTrack) which you can use to call [attach/detach](/docs/javascript/v2/features/render-video) actions.
 
 <Tabs id="cam" items={['Javascript', 'React']} />
 
