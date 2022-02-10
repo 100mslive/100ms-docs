@@ -10,7 +10,7 @@ Any application built using 100ms' SDK has 2 components.
 
 -   **Server:** Use 100ms' APIs or dashboard to create rooms, setup room templates, trigger recording or RTMP streaming, access events.
 
-![Architecture](/docs/v2/arch.png)
+![Architecture](/docs/docs/v2/arch.png)
 
 ## Basic Concepts
 
@@ -26,8 +26,8 @@ Any application built using 100ms' SDK has 2 components.
 ## What are the steps to build a live app with 100ms?
 
 1. **Create a template:** Create a template and define roles, room settings - You can do this using the [dashboard](https://dashboard.100ms.live/templates).
-2. **Create a room using the above template:** You can do this using the [dashboard](https://dashboard.100ms.live/rooms) or our [API](/server-side/v2/features/room).
-3. **Integrate client SDK and join the above room:** You'll need to generate a [token](/server-side/v2/foundation/authentication-and-tokens) for each peer that connects to a room.
-4. **[Optional] Receive events:** Create a [webhook endpoint](/server-side/v2/foundation/webhook) to receive server-side notifications about room usage (peer joining/leaving) or recording, RTMP out starting/ending.
+2. **Create a room using the above template:** You can do this using the [dashboard](https://dashboard.100ms.live/rooms) or our [API](/docs/server-side/v2/features/room).
+3. **Integrate client SDK and join the above room:** You'll need to generate a [token](/docs/server-side/v2/foundation/authentication-and-tokens) for each peer that connects to a room.
+4. **[Optional] Receive events:** Create a [webhook endpoint](/docs/server-side/v2/foundation/webhook) to receive server-side notifications about room usage (peer joining/leaving) or recording, RTMP out starting/ending.
 
 ## Where should I start?

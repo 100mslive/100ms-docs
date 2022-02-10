@@ -21,29 +21,29 @@ are 4 mandatory fields described in the schema below.
 
 ```ts
 enum HMSPlaylistType {
-  audio = 'audio',
-  video = 'video',
+    audio = 'audio',
+    video = 'video'
 }
 
 interface HMSPlaylistItem<T> {
-  /**
-   * uniquely identifies a playlist item
-   */
-  id: string;
-  name: string;
-  type: HMSPlaylistType;
-  /**
-   * the url to play from, local files are not supported currently.
-   */
-  url: string;
-  /**
-   * any additional info, for eg. composer, musician etc.
-   */
-  metadata?: T;
-  /**
-   * duration in seconds
-   */
-  duration?: number;
+    /**
+     * uniquely identifies a playlist item
+     */
+    id: string;
+    name: string;
+    type: HMSPlaylistType;
+    /**
+     * the url to play from, local files are not supported currently.
+     */
+    url: string;
+    /**
+     * any additional info, for eg. composer, musician etc.
+     */
+    metadata?: T;
+    /**
+     * duration in seconds
+     */
+    duration?: number;
 }
 ```
 
@@ -64,63 +64,62 @@ Do note that these will work only if you have already joined the room.
 
 ```ts
 export interface IHMSPlaylistActions {
-  /**
-   * Plays the item whose id is passed.
-   * @param {string} id - the id as given while initialising the list
-   */
-  play(id: string): Promise<void>;
-  /**
-   * Pauses the current playing item
-   */
-  pause(): Promise<void>;
-  /**
-   * Plays the next item in the queue(order decided by original array)
-   */
-  playNext(): Promise<void>;
-  /**
-   * Plays the previous item in the queue(order decided by original array)
-   */
-  playPrevious(): Promise<void>;
-  /**
-   * seek forward or backward relative to current position
-   * @param {number} seekValue - number in seconds to move forward(pass negative values to move backwards)
-   */
-  seek(seekValue: number): void;
-  /**
-   * seek to a specific position - seekValue will be absolute
-   * @param {number} seekValue - value in seconds of the absolute position in the playlist item duration
-   */
-  seekTo(seekValue: number): void;
-  /**
-   * set volume passing volume
-   * @param {number} volume - number between 0-100
-   */
-  setVolume(volume: number): void;
-  /**
-   * pass list of playlist items to set playlist
-   * @param {HMSPlaylistItem[]} - list of playlist items
-   */
-  setList<T>(list: HMSPlaylistItem<T>[]): void;
-  /**
-   * Stop the current playback and unpublish the tracks.
-   */
-  stop(): Promise<void>;
-  /**
-   * set whether to autoplay next item in playlist after the current one ends. You can disable this
-   * if you want to implement any custom ordering or shuffling on your side. By default sdk will play the next
-   * item in the queue once the current ends.
-   * @param {boolean} autoplay
-   */
-  setIsAutoplayOn(autoplay: boolean): void;
-  /**
-   * Control the playback speed - 1.0 being normal, less than 1.0 will play it slowly
-   * and more than 1.0 will play it faster.
-   * @param playbackRate - value from 0.25 and 2.0
-   */
-  setPlaybackRate(playbackRate: number): void;
+    /**
+     * Plays the item whose id is passed.
+     * @param {string} id - the id as given while initialising the list
+     */
+    play(id: string): Promise<void>;
+    /**
+     * Pauses the current playing item
+     */
+    pause(): Promise<void>;
+    /**
+     * Plays the next item in the queue(order decided by original array)
+     */
+    playNext(): Promise<void>;
+    /**
+     * Plays the previous item in the queue(order decided by original array)
+     */
+    playPrevious(): Promise<void>;
+    /**
+     * seek forward or backward relative to current position
+     * @param {number} seekValue - number in seconds to move forward(pass negative values to move backwards)
+     */
+    seek(seekValue: number): void;
+    /**
+     * seek to a specific position - seekValue will be absolute
+     * @param {number} seekValue - value in seconds of the absolute position in the playlist item duration
+     */
+    seekTo(seekValue: number): void;
+    /**
+     * set volume passing volume
+     * @param {number} volume - number between 0-100
+     */
+    setVolume(volume: number): void;
+    /**
+     * pass list of playlist items to set playlist
+     * @param {HMSPlaylistItem[]} - list of playlist items
+     */
+    setList<T>(list: HMSPlaylistItem<T>[]): void;
+    /**
+     * Stop the current playback and unpublish the tracks.
+     */
+    stop(): Promise<void>;
+    /**
+     * set whether to autoplay next item in playlist after the current one ends. You can disable this
+     * if you want to implement any custom ordering or shuffling on your side. By default sdk will play the next
+     * item in the queue once the current ends.
+     * @param {boolean} autoplay
+     */
+    setIsAutoplayOn(autoplay: boolean): void;
+    /**
+     * Control the playback speed - 1.0 being normal, less than 1.0 will play it slowly
+     * and more than 1.0 will play it faster.
+     * @param playbackRate - value from 0.25 and 2.0
+     */
+    setPlaybackRate(playbackRate: number): void;
 }
 ```
-
 
 ## Accessing Audio/Video Playlist information
 
@@ -234,20 +233,21 @@ hmsActions.videoPlaylist.setIsAutoplayOn(false);
 You can then listen to a notification of type `HMSNotificationTypes.PLAYLIST_TRACK_ENDED` when current track ends and play the next track.
 The notification also contains the playlist item that has ended.
 
-<Note type='success'>
-  If you're also using SDKs of any other platform do note that the playlist tracks will come with source as "audioplaylist"/"videoplaylist".
+<Note type="success">
+    If you're also using SDKs of any other platform do note that the playlist tracks will come with
+    source as "audioplaylist"/"videoplaylist".
 </Note>
 
 ## Ideas
 
-* Play background music for everyone in the room from a playlist.
-* Allow for teachers to play educations videos for students from a pre selected list and without worrying
+-   Play background music for everyone in the room from a playlist.
+-   Allow for teachers to play educations videos for students from a pre selected list and without worrying
     about screenshare etc.
-* Watch videos together with friends, with some help from the [Chat API](./chat), controls like play/pause can also
+-   Watch videos together with friends, with some help from the [Chat API](/javascript/v2/features/chat), controls like play/pause can also
     be shared between the peers.
-* Play videos from mobile web browsers which don't support screenshare.
+-   Play videos from mobile web browsers which don't support screenshare.
 
 ## Limitations
 
-* Playing from local file is not yet supported.
-* No custom encoders/decoders, only file formats supported by native audio and video tags will work.
+-   Playing from local file is not yet supported.
+-   No custom encoders/decoders, only file formats supported by native audio and video tags will work.
