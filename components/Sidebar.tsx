@@ -93,11 +93,11 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
         {
             title: 'SFU Recording',
             url: '/server-side/v2/features/recording'
-        },
-        {
-            title: 'Simulcast',
-            url: '/server-side/v2/features/simulcast'
         }
+        // {
+        //     title: 'Simulcast',
+        //     url: '/docs/server-side/v2/features/simulcast'
+        // }
     ];
     return (
         <div className="ctx">
