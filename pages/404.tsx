@@ -2,13 +2,13 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-const Post = () => {
+const NotFound = () => {
     const router = useRouter();
 
     return (
         <div className="page">
+            <h1>404 not found</h1>
             <p>{router.asPath} does not exist</p>
-            <h1>Our Docs has been moved:</h1>
             <p>Refer these Links:</p>
             <ul>
                 <li>
@@ -38,4 +38,4 @@ const Post = () => {
     );
 };
 
-export default Post;
+export default NotFound;
