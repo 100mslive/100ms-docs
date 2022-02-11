@@ -1,6 +1,6 @@
 ---
 title: Session
-nav: 4.2
+nav: 4.25
 ---
 
 ## Introduction
@@ -22,7 +22,7 @@ You can query session data using API.
 <Tab id="req-0">
 
 ```bash
-curl --location --request GET 'https://api.100ms.live/v2/sessions?url_param1=param1_value&url_params2=param2_value' -H 'Authorization: Bearer {{management_token}}'
+curl --location --request GET 'https://api.100ms.live/v2/sessions?room_id=61652b404e556e35f2179759' -H 'Authorization: Bearer {{management_token}}'
 ```
 
 </Tab>
@@ -88,13 +88,23 @@ curl --location --request GET 'https://api.100ms.live/v2/sessions?url_param1=par
 
 ### URL Parameters
 
-| Name          | Type     | Description                                                                                             | Required |
-| :------------ | :------- | :------------------------------------------------------------------------------------------------------ | :------- |
-| id <br/>      | `string` | ID of the session if known.                                                                             | No       |
-| room_id <br/> | `string` | Room ID of the session if known.                                                                        | No       |
-| active <br/>  | `bool`   | Session is currently going on or not.                                                                   | No       |
-| before <br/>  | `time`   | Timestamp before(inclusive) which session is created in RFC3339 format e.g. `2022-02-09T05:53:23.375Z`. | No       |
-| after <br/>   | `time`   | Timestamp after(inclusive) which session is created in RFC3339 format e.g. `2022-02-09T05:53:23.375Z`.  | No       |
+| Name          | Type     | Description                                                                                                             | Required |
+| :------------ | :------- | :---------------------------------------------------------------------------------------------------------------------- | :------- |
+| id <br/>      | `string` | ID of the session if known.                                                                                             | No       |
+| room_id <br/> | `string` | Room ID of the session if known.                                                                                        | No       |
+| active <br/>  | `bool`   | Session is currently going on or not.                                                                                   | No       |
+| before <br/>  | `time`   | Timestamp before(inclusive) which session is created in RFC3339 format e.g. `2022-02-09T05:53:23.375Z`.                 | No       |
+| after <br/>   | `time`   | Timestamp after(inclusive) which session is created in RFC3339 format e.g. `2022-02-09T05:53:23.375Z`.                  | No       |
+| limit <br/>   | `int`    | Number of sessions returned by response. Range `10`-`20`                                                                | No       |
+| start <br/>   | `string` | ID of the session after which to start the response. Sessions are returned in decreasing IDs or `created_at` timestamp. | No       |
+
+### Response
+
+| Name        | Type       | Description                                                                                                                      | Required |
+| :---------- | :--------- | :------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| limit <br/> | `int`      | Number of sessions the API tried to find. If returned array has lesser number of results, only those number were found.          | No       |
+| data <br/>  | `array`    | Array of sessions or `null` if no session was found.                                                                             | No       |
+| last <br/>  | `ObjectID` | Sessions are returned in decreasing IDs or `created_at` timestamp. Last represent the earliest session returned by the response. | No       |
 
 ### How to calculate session duration
 
