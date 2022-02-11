@@ -11,7 +11,7 @@ Session is a single continuous call in a [room](room). To allow users to join a 
 
 You can query session data using API.
 
-<PostRequest
+<GetRequest
     title="Get Session API"
     desp="This endpoint is used to get sessions. "
     url="https://api.100ms.live/v2/sessions"
@@ -22,7 +22,7 @@ You can query session data using API.
 <Tab id="req-0">
 
 ```bash
-curl --location --request GET 'https://prod-in2.100ms.live/v2/sessions?url_param1=param1_value&url_params2=param2_value' -H 'Authorization: Bearer {{management_token}}'
+curl --location --request GET 'https://api.100ms.live/v2/sessions?url_param1=param1_value&url_params2=param2_value' -H 'Authorization: Bearer {{management_token}}'
 ```
 
 </Tab>
@@ -84,22 +84,21 @@ curl --location --request GET 'https://prod-in2.100ms.live/v2/sessions?url_param
 
 | Name                | Value                       | Required |
 | :------------------ | :-------------------------- | :------- |
-| Content-type <br/>  | application/json            | Yes      |
 | Authorization <br/> | Bearer `<management token>` | Yes      |
 
 ### URL Parameters
 
-| Name          | Type     | Description                                            | Required |
-| :------------ | :------- | :----------------------------------------------------- | :------- |
-| id <br/>      | `string` | ID of the session if known.                            | No       |
-| room_id <br/> | `string` | Room ID of the session if known.                       | No       |
-| active <br/>  | `bool`   | Session is currently going on or not.                  | No       |
-| before <br/>  | `time`   | Timestamp before (inclusive) which session is created. | No       |
-| after <br/>   | `time`   | Timestamp before(inclusive) which session is created.  | No       |
+| Name          | Type     | Description                                                                                             | Required |
+| :------------ | :------- | :------------------------------------------------------------------------------------------------------ | :------- |
+| id <br/>      | `string` | ID of the session if known.                                                                             | No       |
+| room_id <br/> | `string` | Room ID of the session if known.                                                                        | No       |
+| active <br/>  | `bool`   | Session is currently going on or not.                                                                   | No       |
+| before <br/>  | `time`   | Timestamp before(inclusive) which session is created in RFC3339 format e.g. `2022-02-09T05:53:23.375Z`. | No       |
+| after <br/>   | `time`   | Timestamp after(inclusive) which session is created in RFC3339 format e.g. `2022-02-09T05:53:23.375Z`.  | No       |
 
-### Derived values.
+### How to calculate session duration
 
-You can calculate additional information from session data using given information. Redundant information like peer duration/ session duration is not provided since they can be calculated from provided response. You can calculate `peer duration` by subtracting joined_at timestamp from left_at. Similarly you can calculate `session duration` by adding all peers' duration.
+You can calculate additional information from session data using given information. Redundant information like peer duration/ session duration is not provided since they can be calculated from provided response. You can calculate `peer duration` by subtracting `joined_at` timestamp from `left_at` for a given peer. Similarly you can calculate `session duration` by adding all peers' duration.
 
 ## Postman Collection
 
