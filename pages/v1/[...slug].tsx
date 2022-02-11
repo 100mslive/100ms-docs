@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 const Post = () => {
@@ -11,21 +12,19 @@ const Post = () => {
             <p>Refer these Links:</p>
             <ul>
                 <li>
-                    <a href="/javascript">Javascript</a>
+                    <Link href="/javascript">Javascript</Link>
                 </li>
                 <li>
-                    <a href="/android">Android</a>
+                    <Link href="/android">Android</Link>
                 </li>
                 <li>
-                    <a href="/ios">iOS</a>
+                    <Link href="/ios">iOS</Link>
                 </li>
                 <li>
-                    {' '}
-                    <a href="/flutter">Flutter</a>
+                    <Link href="/flutter">Flutter</Link>
                 </li>
                 <li>
-                    {' '}
-                    <a href="/server-side">Server-Side</a>
+                    <Link href="/server-side">Server-Side</Link>
                 </li>
             </ul>
             <style jsx>{`
