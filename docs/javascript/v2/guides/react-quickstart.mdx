@@ -32,7 +32,7 @@ This will let us use the hooks for state and actions.
 ```jsx:src/index.js
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
-import { HMSRoomProvider } from "@100mslive/hms-video-react";
+import { HMSRoomProvider } from "@100mslive/react-sdk";
 
 import App from "./App";
 
@@ -71,7 +71,7 @@ For our application, let us collect both of these fields from the user using a f
 
 ```jsx:src/JoinForm.jsx
 import { useState } from "react";
-import { useHMSActions } from "@100mslive/hms-video-react";
+import { useHMSActions } from "@100mslive/react-sdk";
 
 function JoinForm() {
   const hmsActions = useHMSActions();
@@ -177,7 +177,7 @@ Let us next add a way to show a tile for every participant in the room. We'll ne
 At any point in time we can get a list of peers with:
 
 ```jsx
-import { useHMSStore, selectPeers } from '@100mslive/hms-video-react';
+import { useHMSStore, selectPeers } from '@100mslive/react-sdk';
 
 function Component() {
     const peers = useHMSStore(selectPeers);
@@ -196,7 +196,7 @@ Let us now create a `Conference` component that will render a list of peers. We'
 Our component will get rerendered if this list of peers changes.
 
 ```jsx:src/Conference.jsx
-import { selectPeers, useHMSStore } from "@100mslive/hms-video-react";
+import { selectPeers, useHMSStore } from "@100mslive/react-sdk";
 import React from "react";
 import Peer from "./Peer";
 
@@ -265,7 +265,7 @@ import {
   selectIsConnectedToRoom,
   useHMSActions,
   useHMSStore
-} from "@100mslive/hms-video-react";
+} from "@100mslive/react-sdk";
 
 export default function App() {
   const isConnected = useHMSStore(selectIsConnectedToRoom);
