@@ -3,6 +3,7 @@ title: HMSLocalTrackStats
 ---
 
 Extends RTCOutboundRtpStreamStats
+Ref: https://www.w3.org/TR/webrtc-stats/#dom-rtcoutboundrtpstreamstats
 
 ## Hierarchy
 
@@ -11,6 +12,8 @@ Extends RTCOutboundRtpStreamStats
 - `MissingOutboundStats`
 
   ↳ **`HMSLocalTrackStats`**
+
+  ↳↳ [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)
 
 ## Properties
 
@@ -181,6 +184,17 @@ MissingOutboundStats.qpSum
 #### Inherited from
 
 MissingOutboundStats.qualityLimitationReason
+
+---
+
+### remote
+
+• `Optional` **remote**: `RTCRemoteInboundRtpStreamStats` & { `packetsLostRate?`: `number` }
+
+Stats perceived by the server(SFU) while receiving the local track sent by the peer
+Ref:
+https://www.w3.org/TR/webrtc-stats/#dom-rtcstatstype-remote-inbound-rtp
+https://www.w3.org/TR/webrtc-stats/#dom-rtcremoteinboundrtpstreamstats
 
 ---
 
