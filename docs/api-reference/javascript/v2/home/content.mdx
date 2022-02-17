@@ -339,7 +339,12 @@ Select the track ID of your local peer's primary video track
 
 ### selectPeerCount
 
-• **selectPeerCount**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `number`, (`res`: [`HMSRoom`](/api-reference/javascript/v2/interfaces/HMSRoom)) => `number`\>
+• **selectPeerCount**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `number`, (`res1`: `undefined` \| `boolean`, `res2`: [`HMSRoom`](/api-reference/javascript/v2/interfaces/HMSRoom)) => `number`\>
+
+selectPeerCount gives the number of peers Inside the room. This doesn't count the local peer if
+they're still in preview and haven't yet joined the room. Note that this will not necessarily equal the
+number of peers received through selectPeers, it's possible to know total number of people in the room
+without having details of everyone depending on dashboard settings.
 
 ---
 
@@ -395,7 +400,7 @@ Select an array of peers who are currently sharing their screen.
 
 ### selectPermissions
 
-• **selectPermissions**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| { `changeRole`: `boolean` ; `endRoom`: `boolean` ; `mute`: `boolean` ; `recording`: `boolean` ; `removeOthers`: `boolean` ; `rtmp`: `boolean` ; `unmute`: `boolean` }, (`res`: `null` \| [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)) => `undefined` \| { `changeRole`: `boolean` ; `endRoom`: `boolean` ; `mute`: `boolean` ; `recording`: `boolean` ; `removeOthers`: `boolean` ; `rtmp`: `boolean` ; `unmute`: `boolean` }\>
+• **selectPermissions**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| { `changeRole`: `boolean` ; `endRoom`: `boolean` ; `mute`: `boolean` ; `recording`: `boolean` ; `removeOthers`: `boolean` ; `streaming`: `boolean` ; `unmute`: `boolean` }, (`res`: `null` \| [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)) => `undefined` \| { `changeRole`: `boolean` ; `endRoom`: `boolean` ; `mute`: `boolean` ; `recording`: `boolean` ; `removeOthers`: `boolean` ; `streaming`: `boolean` ; `unmute`: `boolean` }\>
 
 Select the permissions which determine what actions the local peer can do.
 
