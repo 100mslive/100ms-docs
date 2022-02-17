@@ -21,9 +21,36 @@ Audio and video of all peers is composed as per their joining/leaving the meetin
 
 ### Using Dashboard
 
-SFU Recording can be enabled when creating a room
+There are two ways to enable SFU recording for a room.
 
-![Enable recording when creating a room](/docs/v2/create-a-room.png)
+#### First way (recommended)
+
+This requires two steps-
+1. Provide upload info in the template and enable the SFU recording.
+
+![Enable recording from a template](/docs/v2/recording.png)
+
+2. Choose `Auto` for recording while creating a room.
+
+![Choose auto recording while creating a room](/docs/v2/create-a-room-recording-auto.png)
+
+    Note:
+    Choosing `Auto` for recording will make room's recording settings depends on template.
+    That means - 
+    - Enabling/Disabling SFU recording in template will also enable/disable it for the room.
+    - Changes made in upload settings in template, will also be reflected for the room.
+
+#### Second way
+
+Another way to enable SFU recording for a room is to choose `Enabled` for recording settings while creating it.
+
+![Enable recording when creating a room](/docs/v2/create-a-room-recording-enabled.png)
+
+    Note:
+    Choosing `Enabled/Disabled` explicitly for recording while creating a room, will make the recording settings in room not depend on template.
+    That means-
+    - Enabling/Disabling SFU recording in template will have no effect this template.
+    - Room will have its own upload info. By default, they will be uploaded to 100ms storage. More on this below.
 
 ### Using API
 

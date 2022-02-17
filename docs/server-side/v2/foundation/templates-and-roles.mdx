@@ -219,9 +219,41 @@ curl 'https://prod-policy.100ms.live/policy/v1/templates' -H 'Authorization: Bea
 
 #### settings
 
-| Name   | Type     | Description                                                                                                                           | Required |
-| :----- | :------- | :------------------------------------------------------------------------------------------------------------------------------------ | :------- |
-| region | `string` | Region in which the room will be hosted by default. Possible values could be `in`, `us`, `eu` or `auto` (automatic region selection). | No       |
+| Name      | Type     | Description                                                                                                                           | Required |
+| :-------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| region    | `string` | Region in which the room will be hosted by default. Possible values could be `in`, `us`, `eu` or `auto` (automatic region selection). | No       |
+| recording | `object` | Object of type `recording`. This object contains information for enabling recording/setting storage location for recordings.          | No       |
+
+### recording
+
+| Name    | Type      | Description                                                                                                                                                                                | Required |
+| :------ | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| enabled | `boolean` | Enable the SFU recording for its rooms. Disabled by default.                                                                                                                               | No       |
+| upload  | `object`  | Object of type `upload`. This object contains information on recordings storage location. If you want to store recording with 100ms, and not use your own s3, don't add this to the object | No       |
+
+### upload
+
+| Name        | Type     | Description                                                                                            | Required |
+| :---------- | :------- | :----------------------------------------------------------------------------------------------------- | :------- |
+| type        | `string` | Upload Destination type. Currently, only s3 is supported.                                              | Yes      |
+| location    | `string` | Name of the AWS s3 bucket in which you want to store all recordings                                    | Yes      |
+| prefix      | `string` | Upload prefix path                                                                                     | Yes      |
+| options     | `object` | Additional configurations of type Options to be used for uploading                                     | No       |
+| credentials | `object` | Object of type `Credentials`. This is used to share AWS credentials to access the s3 bucket specified. | No       |
+
+### options
+
+| Name   | Type     | Description                                                                                                              | Required |
+| :----- | :------- | :----------------------------------------------------------------------------------------------------------------------- | :------- |
+| region | `string` | Region of the AWS account hosting the s3 bucket for storing recordings. If not provided it is assumed to be `ap-south-1` | No       |
+
+### Credentials
+
+| Name   | Type     | Description                                                                          | Required |
+| :----- | :------- | :----------------------------------------------------------------------------------- | :------- |
+| key    | `string` | `access key ID` for the AWS account hosting the s3 bucket for storing recordings     | Yes      |
+| secret | `string` | `secret access key` for the AWS account hosting the s3 bucket for storing recordings | Yes      |
+
 
 ### Create/Modify Role API
 

@@ -16,6 +16,10 @@ Role is a collection of permissions that allows you to perform certain set of op
 
 Every role has a name that should be unique inside a template. This name will be used while generating app tokens and referencing inside a template.
 
+### Priority
+
+Priority will determine the order in which the roles will be degraded. A lower number represents a higher priority.
+
 ### Publish Strategies
 
 Publish strategies will be used to determine the tracks and their quality which can be published by this role.
