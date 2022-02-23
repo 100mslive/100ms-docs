@@ -3,10 +3,12 @@ import React from 'react';
 
 import rtmp from '../public/postman/100ms-rtmp.postman_collection.json';
 import rooms from '../public/postman/100ms-rooms.postman_collection.json';
+import rooms_new from '../public/postman/100ms-rooms-new.postman_collection.json';
 
 const collections = {
     rtmp,
-    rooms
+    rooms,
+    rooms_new
 };
 
 interface Props {
