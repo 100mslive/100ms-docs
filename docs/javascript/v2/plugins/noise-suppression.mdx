@@ -43,10 +43,13 @@ npm install --save @100mslive/hms-noise-suppression
 import HMSNoiseSuppressionPlugin from '@100mslive/hms-noise-suppression';
 ```
 
-## Instantiate Noise Suppression 
+## Instantiate Noise Suppression
+
+This accepts durationInMs as a parameter
+- `durationInMs` - (optional)It maps to the audio samples bufferSize we need to process, by default we are using 80ms equivalent to bufferSize=4096
 
 ```jsx
-const noiseSuppressionPlugin = new HMSNoiseSuppressionPlugin();
+const noiseSuppressionPlugin = new HMSNoiseSuppressionPlugin(durationInMs);
 ```
 
 ## Interfaces
