@@ -30,7 +30,7 @@ You can also create room using API. This provides a more scalable way of creatin
 <PostRequest
     title="Create Room API"
     desp="This endpoint is used to create Room. "
-    url="https://prod-in2.100ms.live/api/v2/rooms"
+    url="https://api.100ms.live/v2/rooms"
 />
 
 <Tabs items={['Request', 'Response']} id="req" />
@@ -38,7 +38,7 @@ You can also create room using API. This provides a more scalable way of creatin
 <Tab id="req-0">
 
 ```bash
-curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <management_token>' -X POST -H 'Content-Type: application/json' -d '{"name": "test-room", "description": "This is a test room", "recording_info": {"enabled": true, "upload_info": {"type": "s3", "location": "test-bucket", "prefix": "test-prefix", "options": {"region": "ap-south-1"}, "credentials": {"key": "aws-access-key", "secret": "aws-secret-key"}}}}'
+curl https://api.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <management_token>' -X POST -H 'Content-Type: application/json' -d '{"name": "test-room", "description": "This is a test room", "recording": {"enabled": true, "upload": {"type": "s3", "location": "test-bucket", "prefix": "test-prefix", "options": {"region": "ap-south-1"}, "credentials": {"key": "aws-access-key", "secret": "aws-secret-key"}}}}'
 ```
 
 </Tab>
@@ -51,10 +51,10 @@ curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <manage
     "id": "61101349d0f56e684b608c08",
     "name": "test-room",
     "description": "This is a test room",
-    "active": true,
-    "recording_info": {
+    "enabled": true,
+    "recording": {
         "enabled": true,
-        "upload_info": {
+        "upload": {
             "type": "s3",
             "location": "test-bucket",
             "prefix": "test-prefix",
@@ -67,8 +67,7 @@ curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <manage
             }
         }
     },
-    "user": "60b8e13a6eb86d8101b57353",
-    "customer": "60b8e13a6eb86d8101b57354",
+    "customer_id": "60b8e13a6eb86d8101b57354",
     "created_at": "2021-08-08T17:24:25.682362823Z",
     "updated_at": "0001-01-01T00:00:00Z"
 }
@@ -85,17 +84,17 @@ curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <manage
 
 ### Body Paramters
 
-| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Required |
-| :------------------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name <br/>           | `string` | A unique identifier you can assign to 100ms rooms. This is `case-insensitive`. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Note**: <br/><br/> (1) If `create Room` is called with an existing room name, then the corresponding room ID is returned <br/><br/> (2) Providing room name will be helpful if you want to disable the room later (disable room API requires room name) | No       |
-| description <br/>    | `string` | A string to describe your room's usage. E.g. "9PM English Class Batch 2"                                                                                                                                                                                                                                                                                                                                                                                    | No       |
-| template <br/>       | `string` | [Template](../foundation/templates-and-roles) of the room. You can get template name from room details section on dashboard                                                                                                                                                                                                                                                                                                                                 | No       |
-| recording_info <br/> | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings.                                                                                                                                                                                                                                                                                                                           | No       |
-| region <br/>         | `string` | Region in which you want to create room. <br/><br/> `in` - India <br/><br/> `us` - United States <br/><br/> `eu` - European Union <br/><br/> `auto` Automatic region selection (default, and in case this parameter is not provided)                                                                                                                                                                                                                        | No       |
+| Name              | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Required |
+| :---------------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| name <br/>        | `string` | A unique identifier you can assign to 100ms rooms. This is `case-insensitive`. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Note**: <br/><br/> (1) If `create Room` is called with an existing room name, then the corresponding room ID is returned <br/><br/> (2) Providing room name will be helpful if you want to disable the room later (disable room API requires room name) | No       |
+| description <br/> | `string` | A string to describe your room's usage. E.g. "9PM English Class Batch 2"                                                                                                                                                                                                                                                                                                                                                                                    | No       |
+| template_id <br/> | `string` | [Template](../foundation/templates-and-roles) of the room. You can get template ID from room details section on dashboard                                                                                                                                                                                                                                                                                                                                   | No       |
+| recorrding <br/>  | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings.                                                                                                                                                                                                                                                                                                                           | No       |
+| region <br/>      | `string` | Region in which you want to create room. <br/><br/> `in` - India <br/><br/> `us` - United States <br/><br/> `eu` - European Union <br/><br/> `auto` Automatic region selection (default, and in case this parameter is not provided)                                                                                                                                                                                                                        | No       |
 
 ---
 
-### recording_info
+### recording
 
 | Name        | Type      | Description                                                                                                                                                                                     | Required |
 | :---------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
@@ -109,7 +108,7 @@ curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <manage
 
 To know more about recording please visit [Recording](./recording)
 
-### upload_info
+### upload
 
 | Name        | Type     | Description                                                                                            | Required |
 | :---------- | :------- | :----------------------------------------------------------------------------------------------------- | :------- |
@@ -137,12 +136,12 @@ For more details check - https://docs.aws.amazon.com/IAM/latest/UserGuide/id_cre
 
 ## Disable Room
 
-This API can be used to disable a room from further use
+This API can be used to disable a room from further use. Provide all parameters since this is a POST request.
 
 <PostRequest
     title="Disable Room API"
     desp="This endpoint is used to disable a Room. "
-    url="https://prod-in2.100ms.live/api/v2/rooms"
+    url="https://api.100ms.live/api/v2/rooms"
 />
 
 <Tabs items={['Request', 'Response']} id="dis" />
@@ -150,7 +149,7 @@ This API can be used to disable a room from further use
 <Tab id="dis-0">
 
 ```bash
-curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <management_token>' -X POST -H 'Content-Type: application/json' -d '{"name": "test-room", "active": false}'
+curl https://api.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <management_token>' -X POST -H 'Content-Type: application/json' -d '{"name": "test-room", "enabled": false}'
 ```
 
 </Tab>
@@ -164,7 +163,7 @@ curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <manage
     "id": "61101349d0f56e684b608c08",
     "name": "test-room",
     "description": "This is a test room",
-    "active": false,
+    "enabled": false,
     "recording_info": {
         "enabled": true,
         "upload_info": {
@@ -180,7 +179,6 @@ curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <manage
             }
         }
     },
-    "user": "60b8e13a6eb86d8101b57353",
     "customer": "60b8e13a6eb86d8101b57354",
     "created_at": "2021-08-08T17:24:25.682362823Z",
     "updated_at": "0001-01-01T00:00:00Z"
@@ -198,7 +196,94 @@ curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <manage
 
 ### Body Paramters
 
-| Name         | Type     | Description                                                      | Required |
-| :----------- | :------- | :--------------------------------------------------------------- | :------- |
-| name <br/>   | `string` | Room name as given during creation of the room                   | Yes      |
-| active <br/> | `bool`   | Flag to indicate disabling of the room, should be set to `false` | Yes      |
+| Name          | Type     | Description                                                      | Required |
+| :------------ | :------- | :--------------------------------------------------------------- | :------- |
+| name <br/>    | `string` | Room name as given during creation of the room                   | Yes      |
+| enabled <br/> | `bool`   | Flag to indicate disabling of the room, should be set to `false` | Yes      |
+
+## Get Room Data using API
+
+You can query room data using API.
+
+<GetRequest
+    title="Get Room API"
+    desp="This endpoint is used to get rooms. "
+    url="https://api.100ms.live/v2/rooms"
+/>
+
+<Tabs items={['Request', 'Response']} id="req" />
+
+<Tab id="req-0">
+
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/rooms?enabled=true' -H 'Authorization: Bearer {{management_token}}'
+```
+
+</Tab>
+<Tab id="req-1">
+
+<Response res="200: OK" />
+
+```json
+{
+    "limit": 10,
+    "data": [
+        {
+            "id": "62153c9d4c24a61350dadbc4",
+            "name": "gfxhjh",
+            "enabled": true,
+            "description": "This is a dummy description",
+            "customer_id": "61386d433ab16014b061e9ca",
+            "recording": {
+                "enabled": false
+            },
+            "template_id": "615297d65095aca9b1be85ac",
+            "region": "in",
+            "created_at": "2022-02-22T19:42:21.877Z",
+            "updated_at": "0001-01-01T00:00:00Z"
+        },
+        {
+            "id": "621513d24c24a61350dadbc3",
+            "name": "be03d295-480f-440d-871f-6ec5961d6f31",
+            "enabled": true,
+            "description": "This is a dummy description",
+            "customer_id": "6202498dfee9f9c2b7e0ecf3",
+            "recording": {
+                "enabled": false
+            },
+            "template_id": "621513d136e26606b78f9c44",
+            "region": "in",
+            "created_at": "2022-02-22T16:48:18.055Z",
+            "updated_at": "0001-01-01T00:00:00Z"
+        }
+    ],
+    "last": "6205e9376d83bc36e6e761e1"
+}
+```
+
+</Tab>
+
+### Headers
+
+| Name                | Value                       | Required |
+| :------------------ | :-------------------------- | :------- |
+| Authorization <br/> | Bearer `<management token>` | Yes      |
+
+### URL Parameters
+
+| Name          | Type     | Description                                                                                                       | Required |
+| :------------ | :------- | :---------------------------------------------------------------------------------------------------------------- | :------- |
+| id <br/>      | `string` | ID of the room if known.                                                                                          | No       |
+| enabled <br/> | `bool`   | Room is disabled or not.                                                                                          | No       |
+| before <br/>  | `time`   | Timestamp before(inclusive) which room is created in RFC3339 format e.g. `2022-02-09T05:53:23.375Z`.              | No       |
+| after <br/>   | `time`   | Timestamp after(inclusive) which room is created in RFC3339 format e.g. `2022-02-09T05:53:23.375Z`.               | No       |
+| limit <br/>   | `int`    | Number of rooms returned by response. Range `10`-`20`                                                             | No       |
+| start <br/>   | `string` | ID of the room after which to start the response. Rooms are returned in decreasing IDs or `created_at` timestamp. | No       |
+
+### Response
+
+| Name        | Type       | Description                                                                                                                | Required |
+| :---------- | :--------- | :------------------------------------------------------------------------------------------------------------------------- | :------- |
+| limit <br/> | `int`      | Number of rooms the API tried to find. If returned array has lesser number of results, only those number were found.       | No       |
+| data <br/>  | `array`    | Array of rooms or `null` if no room was found.                                                                             | No       |
+| last <br/>  | `ObjectID` | Rooms are returned in decreasing IDs or `created_at` timestamp. Last represent the earliest room returned by the response. | No       |
