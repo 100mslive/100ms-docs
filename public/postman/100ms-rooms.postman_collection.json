@@ -1,12 +1,12 @@
 {
 	"info": {
 		"_postman_id": "ce829845-37e6-4e60-aa68-0e02cd947186",
-		"name": "Session Details APIs",
+		"name": "Session APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get Sessions",
+			"name": "Get sessions",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -22,7 +22,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer {{TOKEN}}",
+						"value": "",
 						"type": "text",
 						"disabled": true
 					}
@@ -41,7 +41,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Sessions By ID",
+			"name": "Get sessions by id",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -85,7 +85,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Sessions By Room",
+			"name": "Get sessions by room_id",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -101,7 +101,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "{{AUTH_TOKEN}}",
+						"value": "",
 						"type": "text",
 						"disabled": true
 					}
@@ -126,7 +126,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Sessions By active",
+			"name": "Get sessions by active",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -142,7 +142,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "{{AUTH_TOKEN}}",
+						"value": "",
 						"type": "text",
 						"disabled": true
 					}
@@ -171,7 +171,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Sessions in a range",
+			"name": "Get sessions in timerange",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -187,7 +187,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "{{AUTH_TOKEN}}",
+						"value": "",
 						"type": "text",
 						"disabled": true
 					}
@@ -210,33 +210,6 @@
 							"key": "before",
 							"value": "2022-02-09T05:53:23.375Z"
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Login using email password",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"email\": \"{{EMAIL}}\",\n    \"password\": \"{{PASSWORD}}\",\n    \"expiry\": 8640000\n}"
-				},
-				"url": {
-					"raw": "{{HOST}}/api/v2/auth/login",
-					"host": [
-						"{{HOST}}"
-					],
-					"path": [
-						"api",
-						"v2",
-						"auth",
-						"login"
 					]
 				}
 			},

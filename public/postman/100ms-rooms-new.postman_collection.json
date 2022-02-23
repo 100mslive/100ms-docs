@@ -1,12 +1,12 @@
 {
 	"info": {
 		"_postman_id": "07e0cd52-7fa3-4075-94c4-6c3da18b8896",
-		"name": "New Room APIs",
+		"name": "Room APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get Rooms",
+			"name": "Get rooms",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -22,7 +22,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer {{TOKEN}}",
+						"value": "",
 						"type": "text",
 						"disabled": true
 					}
@@ -41,7 +41,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Rooms By ID",
+			"name": "Get rooms by id",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -57,7 +57,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "{{AUTH_TOKEN}}",
+						"value": "",
 						"type": "text",
 						"disabled": true
 					}
@@ -82,7 +82,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Rooms By enabled",
+			"name": "Get rooms by enabled",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -98,7 +98,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "{{AUTH_TOKEN}}",
+						"value": "",
 						"type": "text",
 						"disabled": true
 					}
@@ -123,7 +123,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Rooms in a range",
+			"name": "Get rooms in timerange",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -139,7 +139,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "{{AUTH_TOKEN}}",
+						"value": "",
 						"type": "text",
 						"disabled": true
 					}
@@ -168,7 +168,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Rooms by name",
+			"name": "Get rooms by name",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -202,7 +202,7 @@
 			"response": []
 		},
 		{
-			"name": "Create Room",
+			"name": "Create room",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -234,10 +234,7 @@
 			"response": []
 		},
 		{
-			"name": "Disable Room",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
+			"name": "Disable room",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -249,11 +246,11 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "PATCH",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"SDKJF\",\n    \"enabled\": false\n}"
+					"raw": "{\n    \"enabled\": false\n}"
 				},
 				"url": {
 					"raw": "{{HOST}}/v2/rooms?id=620356d36f71d0bacbec6faf",
