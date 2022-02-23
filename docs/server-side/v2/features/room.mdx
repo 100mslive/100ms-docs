@@ -89,17 +89,17 @@ curl https://api.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <management_
 | name <br/>        | `string` | A unique identifier you can assign to 100ms rooms. This is `case-insensitive`. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Note**: <br/><br/> (1) If `create Room` is called with an existing room name, then the corresponding room ID is returned <br/><br/> (2) Providing room name will be helpful if you want to disable the room later (disable room API requires room name) | No       |
 | description <br/> | `string` | A string to describe your room's usage. E.g. "9PM English Class Batch 2"                                                                                                                                                                                                                                                                                                                                                                                    | No       |
 | template_id <br/> | `string` | [Template](../foundation/templates-and-roles) of the room. You can get template ID from room details section on dashboard                                                                                                                                                                                                                                                                                                                                   | No       |
-| recorrding <br/>  | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings.                                                                                                                                                                                                                                                                                                                           | No       |
+| recorrding <br/>  | `object` | Object of type `recording`. This object contains information for enabling recording/setting storage location for recordings.                                                                                                                                                                                                                                                                                                                                | No       |
 | region <br/>      | `string` | Region in which you want to create room. <br/><br/> `in` - India <br/><br/> `us` - United States <br/><br/> `eu` - European Union <br/><br/> `auto` Automatic region selection (default, and in case this parameter is not provided)                                                                                                                                                                                                                        | No       |
 
 ---
 
 ### recording
 
-| Name        | Type      | Description                                                                                                                                                                                     | Required |
-| :---------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| enabled     | `boolean` | Enable SFU recording. Disabled by default                                                                                                                                                       | No       |
-| upload_info | `object`  | Object of type `upload_info`. This object contains information on recordings storage location. If you want to store recording with 100ms, and not use your own s3, don't add this to the object | No       |
+| Name    | Type      | Description                                                                                                                                                                                | Required |
+| :------ | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| enabled | `boolean` | Enable SFU recording. Disabled by default                                                                                                                                                  | No       |
+| upload  | `object`  | Object of type `upload`. This object contains information on recordings storage location. If you want to store recording with 100ms, and not use your own s3, don't add this to the object | No       |
 
 `recording_info` in room acts as an atomic property. Following describes the way `recording_info` depends on recording settings defined in a template.
 
@@ -164,9 +164,9 @@ curl https://api.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <management_
     "name": "test-room",
     "description": "This is a test room",
     "enabled": false,
-    "recording_info": {
+    "recording": {
         "enabled": true,
-        "upload_info": {
+        "upload": {
             "type": "s3",
             "location": "test-bucket",
             "prefix": "test-prefix",
