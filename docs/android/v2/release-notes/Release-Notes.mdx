@@ -3,6 +3,22 @@ title: Android SDK
 nav: 15
 description: Release Notes for 100ms Android SDK
 ---
+## 2.3.0 - 2022-02-23
+### Added
+* `HlsRecordingConfig` to `HMSHLSConfig` object
+* `onPeerUpdate` and `onRoomUpdate` callbacks in 'HMSPreviewListener' to get info about the room at Preview screen
+*  Server will send a timeout error if a peer stays on preview page for too along
+*  Calling `preview` API again without a `leave` call would result in an error
+
+### Changed
+* Synced leave function
+* Make `leave` API call to server sync instead of async
+
+### Fixed
+* Socket is now cancelled instead of close, which was causing queued messages to be processed after
+  teardown leading to crashes and `Failed to set remote offer sdp: Called in wrong state: closed` error
+* NPE in `sendMessage` API
+
 ## 2.2.9 - 2022-02-08
 ### Added
 * Local track updates like mute/unmute will be send as well via `onTrackUpdate`
