@@ -1,12 +1,12 @@
 ---
-title: Background Noise Suppression
+title: Noise Suppression
 nav: 7.1
 ---
 
 ## Introduction
 Noise always rears its ugly head while live streaming outside, on site, or in any untreated setting. Sounds can ruin anyone's listening or watching experience, whether it's from passing cars, construction noise, or mechanical whirs.
-Noise suppression plugin helps in eliminating one’s background sound.
-This guide provides an overview of usage of the background noise suppression plugin of 100ms and below is the demo of it.
+Noise suppression plugin helps in eliminating one’s background sound. It works well in removing babble noise, car noise and street noise.
+This guide provides an overview of usage of the noise suppression plugin of 100ms and below is the demo of it.
 
 ### Original audio
 
@@ -23,10 +23,11 @@ This guide provides an overview of usage of the background noise suppression plu
 <br/>
 <br/>
 
-## Supported Devices
+## Supported Devices/SampleRate
 
-Background noise suppression is currently only supported on web in Chrome, Firefox, Brave and Edge browsers.
-
+-   Noise suppression is currently only supported on web in Chrome, Firefox, Brave and Edge browsers.
+-   Noise suppression is currently not supported for bluetooth devices.
+-   Maximum supported sampleRate for this feature is 48KHz and minimum supported sampleRate is 44.1KHz.
 
 ## Pre-requisites
 
@@ -53,13 +54,16 @@ const noiseSuppressionPlugin = new HMSNoiseSuppressionPlugin();
 ### Check if plugin is supported
 
 isSupported can be used to check if the browser is supported or not.
+This accepts sampling rate as a parameter
+- `sampleRate` - Number of audio samples taken per second
+
 It will return True/False based on browser.
 
 ```jsx
-if (noiseSuppressionPlugin.isSupported()) {
-  console.log('Platform is supported');
+if (noiseSuppressionPlugin.isSupported(sampleRate)) {
+  console.log('Platform/sampleRate is supported');
 } else {
-  console.log('Platform not supported');
+  console.log('Platform/sampleRate is not supported');
 }
 ```
 ### Init(Optional)
