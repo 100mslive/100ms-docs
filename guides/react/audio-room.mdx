@@ -104,7 +104,7 @@ export default async function getToken(room_id) {
 
 ## Data Store
 
-`@100mslive/hms-video-react` provides us a flux based reactive data store layer over 100ms core SDK.This makes state management super easy.
+`@100mslive/react-sdk` provides us a flux based reactive data store layer over 100ms core SDK.This makes state management super easy.
 
 It's core features:
 
@@ -121,7 +121,7 @@ To harness the power of this Data Store we will 1st create a `<Conference />` co
 <View id='4' preview='/guides/audio-room.png'>
 
 ```jsx
-import { HMSRoomProvider, useHMSStore } from '@100mslive/hms-video-react';
+import { HMSRoomProvider, useHMSStore } from '@100mslive/react-sdk';
 import './index.css';
 
 const Conference = () => {
@@ -214,7 +214,7 @@ import {
   HMSRoomProvider,
   useHMSStore,
   selectIsConnectedToRoom,
-} from '@100mslive/hms-video-react';
+} from '@100mslive/react-sdk';
 import Join from './components/Join';
 import Room from './components/Room';
 import './index.css';
@@ -258,7 +258,7 @@ Let's create a function "joinRoom" in `Join.jsx`
 
 ```jsx{2-3,10-25,31-33}
 import React, { useState } from 'react';
-import { useHMSActions } from '@100mslive/hms-video-react';
+import { useHMSActions } from '@100mslive/react-sdk';
 import getToken from '../getToken';
 
 const Join = () => {
@@ -327,7 +327,7 @@ We will create a new component `Controls.jsx`
 <View id='8' code>
 
 ```jsx
-import { selectIsLocalAudioEnabled, useHMSActions, useHMSStore } from '@100mslive/hms-video-react';
+import { selectIsLocalAudioEnabled, useHMSActions, useHMSStore } from '@100mslive/react-sdk';
 import React from 'react';
 
 const Controls = () => {
