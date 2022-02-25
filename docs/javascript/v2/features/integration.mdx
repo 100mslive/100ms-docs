@@ -21,7 +21,10 @@ npm install --save @100mslive/hms-video @100mslive/hms-video-store
 <Tab id="packages-install-1">
 
 ```bash
-npm install --save @100mslive/hms-video @100mslive/hms-video-react
+## npm
+npm install --save @100mslive/react-sdk@latest
+## yarn
+yarn add @100mslive/react-sdk@latest
 ```
 
 </Tab>
@@ -44,11 +47,11 @@ in case you're planning to integrate our SDK in a React app. Please follow the a
 
 There are three entities which we need to be familiar of -
 
-* `hmsStore` - this contains the complete state of the room at any given time. This includes for example, participant details,
-messages and track states.
-* `hmsActions` - this is used to perform any action such as joining, muting and sending a message.
-* `hmsNotifications` - this can be used to get notified on peer join/leave and new messages in order to show toast notifications to
-the user.
+-   `hmsStore` - this contains the complete state of the room at any given time. This includes for example, participant details,
+    messages and track states.
+-   `hmsActions` - this is used to perform any action such as joining, muting and sending a message.
+-   `hmsNotifications` - this can be used to get notified on peer join/leave and new messages in order to show toast notifications to
+    the user.
 
 Let's create a `hms.js` file where we initialize and export the above entities, so they can be used as required. We'll assume that
 this setup is in place in other sections of the documentation.
@@ -94,7 +97,7 @@ and their use as we navigate through further sections.
 <Tab id='react-0'>
 
 ```jsx:app.jsx
-import { HMSRoomProvider } from '@100mslive/hms-video-react';
+import { HMSRoomProvider } from '@100mslive/react-sdk';
 
 export function App() {
   return (
@@ -105,17 +108,17 @@ export function App() {
 }
 
 ```
+
 </Tab>
 
 <Tab  id='react-1'>
-
 
 ```jsx:component.jsx
 import {
   useHMSStore,
   useHMSActions,
   useHMSNotifications
-} from '@100mslive/hms-video-react';
+} from '@100mslive/react-sdk';
 
 export function MyComponent() {
   const hmsStore = useHMSStore();

@@ -222,17 +222,19 @@ For each peer, we'll render a `<video>` element and a `<div>` element with their
 
 To render the video, we need to call `attachVideo` method of `hmsActions`, which accepts a `trackId` and a DOM element.
 
-But we have abstracted this implementation inside `useVideo` hook for ease. This hook will return a `ref` given a video `trackId`. The returned `ref` can be used to set on a video element meant to display the video. The hook will take care of attaching and detaching video, and will automatically detach when the video goes out of view to save on bandwidth.
+But we have abstracted this implementation inside `useVideo` hook for ease. This hook will return an object videoRef given a video `trackId`. The returned `videoRef` can be used to set on a video element meant to display the video. The hook will take care of attaching and detaching video, and will automatically detach when the video goes out of view to save on bandwidth.
 
 ```jsx:src/Peer.jsx
 import { useVideo } from "@100mslive/react-sdk";
 
 function Peer({ peer }) {
-  const ref = useVideo(peer.videoTrack);
+  const { videoRef } = useVideo({
+    trackId: peer.videoTrack
+  });
   return (
     <div className="peer-container">
       <video
-        ref={ref}
+        ref={videoRef}
         className={`peer-video ${peer.isLocal ? "local" : ""}`}
         autoPlay
         muted
