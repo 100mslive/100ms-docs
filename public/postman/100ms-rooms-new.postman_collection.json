@@ -1,275 +1,495 @@
 {
 	"info": {
 		"_postman_id": "07e0cd52-7fa3-4075-94c4-6c3da18b8896",
-		"name": "Room APIs",
+		"name": "100ms APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Get rooms",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "{{HOST}}/v2/rooms",
-					"host": [
-						"{{HOST}}"
-					],
-					"path": [
-						"v2",
-						"rooms"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get rooms by id",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "{{HOST}}/v2/rooms?id=620356d36f71d0bacbec6faf",
-					"host": [
-						"{{HOST}}"
-					],
-					"path": [
-						"v2",
-						"rooms"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "620356d36f71d0bacbec6faf"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get rooms by enabled",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "{{HOST}}/v2/rooms?enabled=false",
-					"host": [
-						"{{HOST}}"
-					],
-					"path": [
-						"v2",
-						"rooms"
-					],
-					"query": [
-						{
-							"key": "enabled",
-							"value": "false"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get rooms in timerange",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "{{HOST}}/v2/rooms?after=2022-02-09T05:32:19.825Z&before=2022-02-09T05:53:23.375Z",
-					"host": [
-						"{{HOST}}"
-					],
-					"path": [
-						"v2",
-						"rooms"
-					],
-					"query": [
-						{
-							"key": "after",
-							"value": "2022-02-09T05:32:19.825Z"
+			"name": "Room APIs",
+			"item": [
+				{
+					"name": "Get rooms",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
 						},
-						{
-							"key": "before",
-							"value": "2022-02-09T05:53:23.375Z"
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/v2/rooms",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"v2",
+								"rooms"
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "Get rooms by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/v2/rooms?id=620356d36f71d0bacbec6faf",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"v2",
+								"rooms"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "620356d36f71d0bacbec6faf"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get rooms by enabled",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/v2/rooms?enabled=false",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"v2",
+								"rooms"
+							],
+							"query": [
+								{
+									"key": "enabled",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get rooms in timerange",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/v2/rooms?after=2022-02-09T05:32:19.825Z&before=2022-02-09T05:53:23.375Z",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"v2",
+								"rooms"
+							],
+							"query": [
+								{
+									"key": "after",
+									"value": "2022-02-09T05:32:19.825Z"
+								},
+								{
+									"key": "before",
+									"value": "2022-02-09T05:53:23.375Z"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get rooms by name",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/v2/rooms?name=test-room",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"v2",
+								"rooms"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "test-room"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create room",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test-room\",\n    \"customer\": \"60b4a3906eb86d8101b5725e\"\n}"
+						},
+						"url": {
+							"raw": "{{HOST}}/v2/rooms",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"v2",
+								"rooms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Disable room",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"enabled\": false\n}"
+						},
+						"url": {
+							"raw": "{{HOST}}/v2/rooms?id=620356d36f71d0bacbec6faf",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"v2",
+								"rooms"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "620356d36f71d0bacbec6faf"
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Get rooms by name",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
+			"name": "Session APIs",
+			"item": [
+				{
+					"name": "Get sessions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/v2/sessions",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"v2",
+								"sessions"
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{HOST}}/v2/rooms?name=test-room",
-					"host": [
-						"{{HOST}}"
-					],
-					"path": [
-						"v2",
-						"rooms"
-					],
-					"query": [
-						{
-							"key": "name",
-							"value": "test-room"
+				{
+					"name": "Get sessions by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{AUTH_TOKEN}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://qa-in2.100ms.live/v2/sessions?id=620356d36f71d0bacbec6faf",
+							"protocol": "https",
+							"host": [
+								"qa-in2",
+								"100ms",
+								"live"
+							],
+							"path": [
+								"v2",
+								"sessions"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "620356d36f71d0bacbec6faf"
+								}
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "Get sessions by room_id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/v2/sessions?room_id=60f2848b42a997a1ff49c5ca",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"v2",
+								"sessions"
+							],
+							"query": [
+								{
+									"key": "room_id",
+									"value": "60f2848b42a997a1ff49c5ca"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get sessions by active",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/v2/sessions?room_id=60f2848b42a997a1ff49c5ca&active=false",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"v2",
+								"sessions"
+							],
+							"query": [
+								{
+									"key": "room_id",
+									"value": "60f2848b42a997a1ff49c5ca"
+								},
+								{
+									"key": "active",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get sessions in timerange",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}/v2/sessions?after=2022-02-09T05:32:19.825Z&before=2022-02-09T05:53:23.375Z",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"v2",
+								"sessions"
+							],
+							"query": [
+								{
+									"key": "after",
+									"value": "2022-02-09T05:32:19.825Z"
+								},
+								{
+									"key": "before",
+									"value": "2022-02-09T05:53:23.375Z"
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create room",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"test-room\",\n    \"customer\": \"60b4a3906eb86d8101b5725e\"\n}"
-				},
-				"url": {
-					"raw": "{{HOST}}/v2/rooms",
-					"host": [
-						"{{HOST}}"
-					],
-					"path": [
-						"v2",
-						"rooms"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Disable room",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"enabled\": false\n}"
-				},
-				"url": {
-					"raw": "{{HOST}}/v2/rooms?id=620356d36f71d0bacbec6faf",
-					"host": [
-						"{{HOST}}"
-					],
-					"path": [
-						"v2",
-						"rooms"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "620356d36f71d0bacbec6faf"
-						}
-					]
-				}
-			},
-			"response": []
+			]
 		}
 	]
 }
