@@ -21,11 +21,17 @@ a `variant`.
 
 You can call `hmsActions.startHLSStreaming` with a `hlsConfig` having an array of such variants.
 
+Additionally you can also start recording by passing in the recording field with two optional fields - 
+1. `singleFilePerLayer`: if the final output should be one file or one file per hls layer, false by default
+2. `hlsVod`: if video on demand needs to be turned on, false by default
+
 ```js
 async startHLS() {
     const params = {
         variants: [{meetingURL: "", metadata: "landscape"}]
     };
+    params.recording = {}; // if you want to enable recording as well
+    params.recording = {singleFilePerLayer: false, hlsVod: false}; // to configure recording options
     try {
         await hmsActions.startHLSStreaming(params);
     } catch (err) {
