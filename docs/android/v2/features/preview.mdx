@@ -13,10 +13,27 @@ hmsSDK.preview(config, hmsPreviewListener)
 
 You would need the same config object that you would pass to [join API](Join).
 
-`HMSPreviewListener` has one callback:
+`HMSPreviewListener` has three callbacks:
 
 ```kotlin
 fun onPreview(room: HMSRoom, localTracks: Array<HMSTrack>)
 ```
-
 Which is called when SDK has passed all its pre-flight checks and established the connection to 100ms server. This will pass an array of local audio/video tracks that you can display to the user (see [Render Video](Render-Video) and [Mute](Mute) sections for more details).
+
+
+```kotlin
+fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) 
+```
+This is called when room data is updated, such as room-name changed or if peer-count changes.
+
+`type` -  it contains the type of `HMSRoomUpdate` occurred
+
+
+```kotlin
+fun onPeerUpdate(type: HMSPeerUpdate, peer: HMSPeer)
+```
+This is called when `Peer` information is updated, such as `PEER_JOINED` or `PEER_LEFT` etc.
+
+`type` -  it contains the type of `HMSPeerUpdate` occurred
+
+
