@@ -1,5 +1,6 @@
 ---
 title: HMSPeer
+nav: 17
 ---
 
 **CLASS**
@@ -18,10 +19,10 @@ A peer represents all participants connected to a room. Peers can be "local" or 
 public let peerID: String
 ```
 
-### name
+### customerUserID
 
 ```swift
-public var name: String
+public let customerUserID: String?
 ```
 
 ### isLocal
@@ -30,38 +31,38 @@ public var name: String
 public let isLocal: Bool
 ```
 
+### name
+
+```swift
+public internal(set) var name: String
+```
+
 ### role
 
 ```swift
-public var role: HMSRole?
-```
-
-### customerUserID
-
-```swift
-public let customerUserID: String?
+public internal(set) var role: HMSRole?
 ```
 
 ### customerDescription
 
 ```swift
-public var customerDescription: String?
+public internal(set) var customerDescription: String?
 ```
 
 ### audioTrack
 
 ```swift
-public var audioTrack: HMSAudioTrack?
+public internal(set) var audioTrack: HMSAudioTrack?
 ```
 
 ### videoTrack
 
 ```swift
-public var videoTrack: HMSVideoTrack?
+public internal(set) var videoTrack: HMSVideoTrack?
 ```
 
 ### auxiliaryTracks
 
 ```swift
-public var auxiliaryTracks: [HMSTrack]?
+public private(set) var auxiliaryTracks: [HMSTrack]?
 ```

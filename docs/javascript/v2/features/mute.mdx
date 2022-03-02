@@ -6,8 +6,8 @@ nav: 3.05
 Mute is something that applies to both audio and video. When you mute audio, you can't be heard by other people. When you mute video, you will not be broadcasting your video to other people.
 
 ```js
-hmsActions.setLocalVideoEnabled(false);
-hmsActions.setLocalAudioEnabled(true);
+await hmsActions.setLocalVideoEnabled(false);
+await hmsActions.setLocalAudioEnabled(true);
 ```
 
 ## Toggling current mute state
@@ -20,14 +20,14 @@ hmsActions.setLocalAudioEnabled(true);
 <Tab id='mute-0'>
 
 ```js
-function toggleAudio() {
-  const enabled = hmsStore.getState(selectIsLocalAudioEnabled);
-  hmsActions.setLocalAudioEnabled(!enabled);
+async function toggleAudio() {
+    const enabled = hmsStore.getState(selectIsLocalAudioEnabled);
+    await hmsActions.setLocalAudioEnabled(!enabled);
 }
 
-function toggleVideo() {
-  const enabled = hmsStore.getState(selectIsLocalVideoEnabled);
-  hmsActions.setLocalVideoEnabled(!enabled);
+async function toggleVideo() {
+    const enabled = hmsStore.getState(selectIsLocalVideoEnabled);
+    await hmsActions.setLocalVideoEnabled(!enabled);
 }
 ```
 
@@ -41,12 +41,12 @@ function MyComponent() {
   const videoEnabled = useHMSStore(selectIsLocalVideoEnabled);
   const hmsActions = useHMSActions();
 
-  function toggleAudio() {
-    hmsActions.setLocalAudioEnabled(!audioEnabled);
+  async function toggleAudio() {
+    await hmsActions.setLocalAudioEnabled(!audioEnabled);
   }
 
-  function toggleVideo() {
-    hmsActions.setLocalVideoEnabled(!videoEnabled);
+  async function toggleVideo() {
+    await hmsActions.setLocalVideoEnabled(!videoEnabled);
   }
 
   return <
@@ -54,5 +54,5 @@ function MyComponent() {
   />;
 }
 ```
-</Tab>
 
+</Tab>

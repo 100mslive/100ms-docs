@@ -17,7 +17,7 @@ We have not extended support for Mobile browsers in this release.
 
 ## Basic Concepts
 
--   `blur background`  - This is an action where the background of the video is blurred. No external image is used/required.
+-   `blur background` - This is an action where the background of the video is blurred. No external image is used/required.
 -   `image background` - This is where the plugin will replace the video background with the image provided by user.
 -   `plugin load time` - The time taken by plugin to load model. This is in the range of 3-5 secs for first time. Subsequent loads take less than 100ms.
 
@@ -32,15 +32,16 @@ npm install --save @100mslive/hms-virtual-background@latest
 ## Import plugin
 
 ```jsx
-import HMSVirtualBackgroundPlugin from "@100mslive/hms-virtual-background";
+import HMSVirtualBackgroundPlugin from '@100mslive/hms-virtual-background';
 ```
 
 ## Instantiate Virtual Background
 
 This accepts background as a parameter, It can be of 3 types:
-- `blur` - String - This will set the background to blur
-- `image` - HTMLImageElement - This will replace the background to the imgSource provide
-- `none` - String - This will remove the background effect from the video
+
+-   `blur` - String - This will set the background to blur
+-   `image` - HTMLImageElement - This will replace the background to the imgSource provide
+-   `none` - String - This will remove the background effect from the video
 
 ```jsx
 // background : {'blur' | image | 'none'}
@@ -53,10 +54,10 @@ isSupported can be used to check if the browser is supported or not.
 It will return True/False based on browser.
 
 ```jsx
-if(virtualBackground.isSupported()){
-    console.log("Platform is supported");
-}else{
-    console.log("Platform not supported");
+if (virtualBackground.isSupported()) {
+    console.log('Platform is supported');
+} else {
+    console.log('Platform not supported');
 }
 ```
 
@@ -75,7 +76,7 @@ virtualBackground.init();
 Init can also be used by user to show a loader icon for background selector component during the plugin loading stage
 
 ```jsx
-virtualBackground.init().then(() => console.log("background can be changed now"))
+virtualBackground.init().then(() => console.log('background can be changed now'));
 ```
 
 ## Add and Remove Plugin
@@ -86,71 +87,70 @@ virtualBackground.init().then(() => console.log("background can be changed now")
 
 ```js
 // Import modules
-import {hmsActions, hmsStore, selectIsLocalVideoPluginPresent } from "./hms";
+import { hmsActions, hmsStore, selectIsLocalVideoPluginPresent } from './hms';
 ```
 
 ```js
 // This will apply the virtual background effect to the local video
-try{
+try {
     await hmsActions.addPluginToVideoTrack(virtualBackground);
-}catch(err){
-    console.log("failed to add Plugin", err);
+} catch (err) {
+    console.log('failed to add Plugin', err);
 }
 ```
 
 ```js
 // This will remove the virtual background effect from the local video
-try{
+try {
     await hmsActions.removePluginFromVideoTrack(virtualBackground);
-}catch(err){
-    console.log("failed to remove Plugin", err);
+} catch (err) {
+    console.log('failed to remove Plugin', err);
 }
 ```
 
 ```js
 // To know the current plugins and if Virtual Background is part of it
 // getName api can be used to get the name of the plugin
-const isVBPresent = hmsStore.getState(
-    selectIsLocalVideoPluginPresent(virtualBackground.getName())
-);
-if(isVBPresent){
-    console.log("virtual background effect is applied to the local video");
-}else{
-    console.log("virtual background effect is removed from the local video");
+const isVBPresent = hmsStore.getState(selectIsLocalVideoPluginPresent(virtualBackground.getName()));
+if (isVBPresent) {
+    console.log('virtual background effect is applied to the local video');
+} else {
+    console.log('virtual background effect is removed from the local video');
 }
 ```
+
 </Tab>
 
 <Tab id='plugin-code-1'>
 
 ```js
 // Import modules
-import { selectIsLocalVideoPluginPresent, useHMSStore, useHMSActions } from '@100mslive/hms-video-react';
+import { selectIsLocalVideoPluginPresent, useHMSStore, useHMSActions } from '@100mslive/react-sdk';
 import React, { useRef, useEffect } from 'react';
 ```
 
 ```js
 function VirtualBackground() {
-     const hmsActions = useHMSActions();
-     const [showBackground, setShowBackground] = useState(false);
+    const hmsActions = useHMSActions();
+    const [showBackground, setShowBackground] = useState(false);
 
-     useEffect(() => {
-       if(showBackground){
-           try{
+    useEffect(() => {
+        if (showBackground) {
+            try {
                 await hmsActions.addPluginToVideoTrack(virtualBackground);
-           }catch(err){
-                console.log("failed to add Plugin", err);
-           }
-       }else{
-           try{
+            } catch (err) {
+                console.log('failed to add Plugin', err);
+            }
+        } else {
+            try {
                 await hmsActions.removePluginFromVideoTrack(virtualBackground);
-           }catch(err){
-                console.log("failed to remove Plugin", err);
-           }
-       }
-     },[showBackground, hmsActions]);
+            } catch (err) {
+                console.log('failed to remove Plugin', err);
+            }
+        }
+    }, [showBackground, hmsActions]);
 
-     return(<Button onClick={() => setShowBackground(!showBackground)}/>)
+    return <Button onClick={() => setShowBackground(!showBackground)} />;
 }
 
 export default VirtualBackground;
@@ -158,54 +158,54 @@ export default VirtualBackground;
 
 ```js
 // To know the current plugins and if Virtual Background is part of it
-function checkIfPluginPresent(){
-// getName api can be used to get the name of the plugin
-    const isVBPresent = useHMSStore(
-        selectIsLocalVideoPluginPresent(virtualBackground.getName())
-    );
-    if(isVBPresent){
-        console.log("virtual background effect is applied to the local video");
-    }else{
-        console.log("virtual background effect is removed from the local video");
+function checkIfPluginPresent() {
+    // getName api can be used to get the name of the plugin
+    const isVBPresent = useHMSStore(selectIsLocalVideoPluginPresent(virtualBackground.getName()));
+    if (isVBPresent) {
+        console.log('virtual background effect is applied to the local video');
+    } else {
+        console.log('virtual background effect is removed from the local video');
     }
 }
 
 export default checkIfPluginPresent;
 ```
+
 </Tab>
 
 <Tab id='plugin-code-2'>
 
 ```js
 // This will apply the virtual background effect to the local video
-try{
+try {
     await hms.getLocalPeer().videoTrack?.addPlugin(virtualBackground);
-}catch(err){
-    console.log("failed to add Plugin", err);
+} catch (err) {
+    console.log('failed to add Plugin', err);
 }
 ```
 
 ```js
 // This will remove the virtual background effect from the local video
-try{
+try {
     await hms.getLocalPeer().videoTrack?.removePlugin(virtualBackground);
-}catch(err){
-    console.log("failed to remove Plugin", err);
+} catch (err) {
+    console.log('failed to remove Plugin', err);
 }
 ```
 
 ```js
 // To know the current plugins and if virtual background is part of it
 const videoTrack = hms.getLocalPeer().videoTrack;
-const plugins =  videoTrack?.getPlugins();
+const plugins = videoTrack?.getPlugins();
 const isVBApplied = plugins.includes(virtualBackground.getName());
 
-if(isVBApplied){
-    console.log("virtual background effect is applied to the local video");
-}else{
-    console.log("virtual background effect is removed from the local video");
+if (isVBApplied) {
+    console.log('virtual background effect is applied to the local video');
+} else {
+    console.log('virtual background effect is removed from the local video');
 }
 ```
+
 </Tab>
 
 ## Change Background
@@ -229,7 +229,7 @@ try{
 
 For an enhanced virtual background plugin performance enable simd in browser
 
--  `Chrome` - Open `chrome://flags/` in browser, search for simd, enable WebAssembly SIMD support and restart.
--  `Firefox`- Open `about:config` in browser, search for simd, set javascript.options.wasm_simd=true and restart.
--  `Edge`   - Open `about:flags` in browser, search for simd, enable WebAssembly SIMD support and restart.
--  `Brave`  - Open `about:flags` in browser, search for simd, enable WebAssembly SIMD support and restart.
+-   `Chrome` - Open `chrome://flags/` in browser, search for simd, enable WebAssembly SIMD support and restart.
+-   `Firefox`- Open `about:config` in browser, search for simd, set javascript.options.wasm_simd=true and restart.
+-   `Edge` - Open `about:flags` in browser, search for simd, enable WebAssembly SIMD support and restart.
+-   `Brave` - Open `about:flags` in browser, search for simd, enable WebAssembly SIMD support and restart.

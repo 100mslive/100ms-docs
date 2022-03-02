@@ -1,6 +1,5 @@
 import Header from '@/components/Header';
 import Pagination from '@/components/Pagination';
-import SegmentAnalytics from '@/components/SegmentAnalytics';
 import Sidebar from '@/components/Sidebar';
 import Toc from '@/components/Toc';
 import { PaginationType } from '@/lib/getPagination';
@@ -9,6 +8,8 @@ import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import React from 'react';
+import EditFile from '@/components/EditFile';
+import SegmentAnalytics from '@/components/SegmentAnalytics'
 
 type NavRoute = {
     url: string;
@@ -86,15 +87,14 @@ const DocLayout: React.FC<Props> = ({
     } else {
         newNav = nav;
     }
-
     setTimeout(() => {
         scrollToUrlHash(router.asPath);
     }, 500);
     return (
         <>
-            <SegmentAnalytics title={frontMatter.title} />
             <div className="page">
                 <NextSeo {...SEO} />
+                <SegmentAnalytics options={{}} title={frontMatter.title} />
                 <Header
                     modal={modal}
                     setModal={setModal}
@@ -117,6 +117,7 @@ const DocLayout: React.FC<Props> = ({
                                     prev={pagination.previousPost}
                                 />
                             )}
+                            <EditFile slug={router.asPath} />
                         </article>
                         <Toc />
                     </div>

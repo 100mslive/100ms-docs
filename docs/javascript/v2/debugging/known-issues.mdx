@@ -1,11 +1,16 @@
 ---
 title: Known Issues
-nav: 4.02
+nav: 4.05
 ---
 
 We'll list any issues related to our sdk or browsers/devices here along with any possible workarounds.
 
-1. Audio routing issues in iOS Safari. The audio is sometimes routed to the phone speaker when an earphone is connected.
+1. In iOS Safari, the audio is at times routed to the phone earpiece instead of the speaker. For the end user, this appears as if
+   the volume is too low. This is an issue in Safari 15, please track the [webkit bug](https://bugs.webkit.org/show_bug.cgi?id=230902) for more info. We recommend
+   showing a prompt for using earphones to the user till this is fixed by Safari.
 
 2. If there is no audio in the room for a while iOS Safari can take away autoplay permission requiring a user interaction
-to play future audio. Check our section on handling autoplay errors [here](../features/error-handling#handling-autoplay-error).
+   to play future audio. Check our section on handling autoplay errors [here](../features/error-handling#handling-autoplay-error).
+
+3. Controlling the volume of audio elements is not supported by iOS. So, [locally setting remote peer volume](../advanced-features/volume-control) won't work in iOS.
+   However, `hmsActions.setVolume(0, trackId)` and `hmsActions.setVolume(100, trackId)` will mute and unmute audio respectively.

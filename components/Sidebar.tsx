@@ -23,12 +23,42 @@ interface Props {
 const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const router = useRouter();
     const menuItem = [
-        { link: '/android/v2/foundation/Basics', name: 'Android', icon: <AndroidIcon /> },
-        { link: '/ios/v2/foundation/Basics', name: 'iOS', icon: <IosIcon /> },
-        { link: '/javascript/v2/foundation/basics', name: 'JavaScript', icon: <JavascriptIcon /> },
-        { link: '/react-native/v2/foundation/basics', name: 'React-Native', icon: <ReactIcon /> },
-        { link: '/flutter/v2/foundation/basics', name: 'Flutter', icon: <FlutterIcon /> },
-        { link: '/server-side/v2/foundation/basics', name: 'Server-Side', icon: <ServerIcon /> }
+        {
+            link: '/android/v2/foundation/Basics',
+            name: 'Android',
+            icon: <AndroidIcon />,
+            apiRef: '/api-reference/android/v2/index.html'
+        },
+        {
+            link: '/ios/v2/foundation/Basics',
+            name: 'iOS',
+            icon: <IosIcon />,
+            apiRef: '/api-reference/ios/v2/home/content'
+        },
+        {
+            link: '/javascript/v2/foundation/basics',
+            name: 'JavaScript',
+            icon: <JavascriptIcon />,
+            apiRef: '/api-reference/javascript/v2/home/content'
+        },
+        {
+            link: '/react-native/v2/foundation/basics',
+            name: 'React-Native',
+            icon: <ReactIcon />,
+            apiRef: '/api-reference/react-native/v2/modules.html'
+        },
+        {
+            link: '/flutter/v2/foundation/basics',
+            name: 'Flutter',
+            icon: <FlutterIcon />,
+            apiRef: '/api-reference/flutter/v2/hmssdk_flutter-library.html'
+        },
+        {
+            link: '/server-side/v2/foundation/basics',
+            name: 'Server-Side',
+            icon: <ServerIcon />,
+            apiRef: '/server-side/v2/foundation/basics'
+        }
     ];
     // @ts-ignore
     let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === router.query.slug[0]);
@@ -44,13 +74,31 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
         // @ts-ignore
         if (router.query.slug[0] === 'api-reference') {
             // @ts-ignore
-            router.push(`/api-reference/${s.name.toLowerCase()}/v2/home/content`, undefined, {
+            router.push(s.apiRef, undefined, {
                 shallow: false
             });
         } else {
             router.push(s.link, undefined, { shallow: false });
         }
     };
+    const aliasMenu = [
+        {
+            title: 'Room APIs',
+            url: '/server-side/v2/features/room'
+        },
+        {
+            title: 'Webhooks',
+            url: '/server-side/v2/foundation/webhook'
+        },
+        {
+            title: 'SFU Recording',
+            url: '/server-side/v2/features/recording'
+        }
+        // {
+        //     title: 'Simulcast',
+        //     url: '/docs/server-side/v2/features/simulcast'
+        // }
+    ];
     return (
         <div className="ctx">
             {/* Sidebar Version Section */}
@@ -81,40 +129,37 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     </Listbox.Options>
                 </Listbox>
             </section>
-
             {/* Sidebar Menu Section */}
-
             {Object.entries(nav).map(([key, children], index) => (
                 <section className="menu-container" key={`${key}-${index}`}>
                     <div className="menu-title">{key.replace(/-/g, ' ').toUpperCase()}</div>
-                    {Object.entries(children).map(
-                        ([_, route]) =>
-                            Object.prototype.hasOwnProperty.call(route, 'title') ? (
-                                <Link href={route.url || ''} key={`${route.url}-${index}`}>
+                    {Object.entries(children).map(([_, route]) =>
+                        Object.prototype.hasOwnProperty.call(route, 'title') ? (
+                            <Link href={route.url || ''} key={`${route.url}-${index}`}>
+                                <div
+                                    className={`menu-item ${
+                                        route.url === router.asPath ? 'active-link' : ''
+                                    }`}>
+                                    {route.title}
+                                </div>
+                            </Link>
+                        ) : null
+                    )}
+                    {/* @ts-ignore */}
+                    {key === 'features' && router.query.slug[0] !== 'server-side' ? (
+                        <>
+                            {aliasMenu.map((a) => (
+                                <Link href={a.url} key={a.url}>
                                     <div
                                         className={`menu-item ${
-                                            route.url === router.asPath ? 'active-link' : ''
+                                            a.url === router.asPath ? 'active-link' : ''
                                         }`}>
-                                        {route.title}
+                                        {a.title}
                                     </div>
                                 </Link>
-                            ) : null
-                        // <>
-                        //     <div className="sub-title">
-                        //         {k.replace(/-/g, ' ').toUpperCase()}
-                        //     </div>
-                        //     {Object.keys(route).map((e) => (
-                        //         <Link key={route[e].title} href={route[e].url}>
-                        //             <div
-                        //                 className={`sub-menu-item ${
-                        //                     route[e].url === router.asPath ? 'active-link' : ''
-                        //                 }`}>
-                        //                 {route[e].title}
-                        //             </div>
-                        //         </Link>
-                        //     ))}
-                        // </>
-                    )}
+                            ))}
+                        </>
+                    ) : null}
                 </section>
             ))}
             <style jsx>{`

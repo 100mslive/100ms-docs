@@ -8,44 +8,252 @@ description: Release Notes for 100ms JavaScript SDK
 
 | Package                    | Version                                                                                                                                |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| @100mslive/hms-video       | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video)             |
 | @100mslive/hms-video-react | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-react.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-react) |
 | @100mslive/hms-video-store | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-store.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-store) |
+| @100mslive/react-sdk       | [![npm version](https://badge.fury.io/js/%40100mslive%2Freact-sdk.svg)](https://badge.fury.io/js/%40100mslive%2Freact-sdk)             |
+
+## 2022-02-24
+
+Released: `@100mslive/hms-video-store@0.2.90`, `@100mslive/react-sdk@0.0.7`, `@100mslive/hms-video-react@0.3.119`
+
+Added:
+
+-   PeerList in preview
+-   HLS recording status will be available
+
+Breaking(react-sdk):
+
+-   input/output interfaces of `useVideo` has been changed. check [react quickstart](../guides/react-quickstart) for reference.
+
+## 2022-02-04
+
+Released: `@100mslive/hms-video-store@0.2.89`, `@100mslive/react-sdk@0.0.6`, `@100mslive/hms-video-react@0.3.116`
+
+Added:
+
+-   startedAt fields for rtmp and recording
+-   A exception will be thrown when preview/join is called if there is no WebRTC support now(for e.g. disable via an extension)
+-   APIs to get WebRTC Stats for the call
+-   A new `@100mslive/react-sdk` beta package for primitive hooks to build React UI components
+-   A new disconnecting room state which happens from the moment leave is clicked till it's successful
+
+Fixed:
+
+-   Fix for wrong video mute state in a corner case after high frequency updates
+-   Fix for vb-background video overlaying
+-   VB not enabling in firefox if turned on in muted state
+-   Fixes related to device settings remembering in muted state
+-   Distorted audio when both noise suppression and virtual background are on
+
+## 2022-01-14
+
+Released: `@100mslive/hms-video@0.1.41`, `@100mslive/hms-video-store@0.2.87`, `@100mslive/hms-video-react@0.3.115`
+
+Added:
+
+-   Terminal error for insecure contexts(http://)
+
+Fixed:
+
+-   Type errors in few selectors
+-   iOS video getting stuck when custom plugins are enabled.
+-   Preview audio level failing.
+
+## 2022-01-07
+
+Released: `@100mslive/hms-video@0.1.40`, `@100mslive/hms-video-store@0.2.86`, `@100mslive/hms-video-react@0.3.114`
+
+Added:
+
+-   server errors are marked as terminal, SDK will automatically leave and give a terminal error
+
+Fixed:
+
+-   process is not defined error when using with CRA5, webpack5 or with react-scripts@5
+-   update recording/streaming status when they are actually started
+
+### Breaking:
+
+-   requestedBy is now optional in HMSRoleChangeRequest, HMSChangeTrackStateRequest, HMSChangeMultiTrackStateRequest
+
+## 2021-12-21
+
+Released: `@100mslive/hms-video@0.1.39`, `@100mslive/hms-video-store@0.2.85`, `@100mslive/hms-video-react@0.3.113`
+
+Added:
+
+-   [HLS streaming](../features/hls) for streaming a room to a large number of viewers
+-   Support for Multiple [video plugins](../plugins/custom-video-plugin)
+-   `startedAt` field in room to know since when the call is running
+-   An additional boolean `showTileForAllPeers` in VideoList component to show peers with no tiles.
+
+Fixed:
+
+-   Type in custom events not getting passed for direct messages
+-   Camera selection showing wrong device in some cases
+
+## 2021-12-10
+
+Released: `@100mslive/hms-video@0.1.37`, `@100mslive/hms-video-store@0.2.83`, `@100mslive/hms-video-react@0.3.112`
+
+Added:
+
+-   Support for Multiple Audio Plugins(alpha)
+-   Notification when user updates peer info(name or metadata)
+
+Fixed:
+
+-   Throw proper error with error code and description for firefox when network is blocked/disconnected.
+-   Resolve preview promise correctly.
+    (You can directly await the preview promise and perform the necessary actions after that.)
+-   Device change with audio plugins
+
+> Add `@100mslive/hms-video-react` or `@100mslive/hms-video-store` as a sole dependency for using 100ms. They include the core sdk.
+
+## 2021-11-26
+
+Released: `@100mslive/hms-video@0.1.36`, `@100mslive/hms-video-store@0.2.82`, `@100mslive/hms-video-react@0.3.111`
+
+Added:
+
+-   [Change Name](../features/peer-name) post Joining the room
+-   [Change Metadata](../advanced-features/peer-metadata) post Joining the room
+-   Notifications for track [degraded and restored](../features/sub-degradation)
+
+### Breaking Changes
+
+-   `peer.customerDescription` is now renamed to `peer.metadata`
+
+## 2021-11-12
+
+Released: `@100mslive/hms-video@0.1.32`, `@100mslive/hms-video-store@0.2.79`, `@100mslive/hms-video-react@0.3.105`
+
+Added:
+
+-   Support to play next item from audio/video playlist after current track ended
+-   Support for setting playbackrate on audio/video playlist
+-   `selectPeerSharingAudioPlaylist` selector to get peer who is sharing audioplaylist
+-   `selectPeersByRole(role: string)` selector to get peers by role
+
+Fixed:
+
+-   Not able to change respective devices when audio/video is muted
+-   Devicelist empty if permissions are denied while joining and enabled later on unmuting.
+-   Retry getusermedia when it fails with overconstrainedError.
+-   Type errors for selectors
+-   Role changes not persisent when the role change event occurs when a peer is reconnecting
+
+## 2021-10-25
+
+Released: `@100mslive/hms-video@0.1.18`, `@100mslive/hms-video-react@0.3.97`
+
+-   Fix an issue in VideoTile react component leading to blank tile
+-   Fix unsuccesful tracks publish in case of user toggling video in preview
+
+## 2021-10-21
+
+Released: `@100mslive/hms-video@0.1.16`, `@100mslive/hms-video-store@0.2.71`, `@100mslive/hms-video-react@0.3.96`
+
+-   Support resolution changes for screenshare on role change
+-   Fix extra track getting added when joined with Audio/Video muted
+-   Fix `setVolume(0, trackId)` not working on IOS when it is called on `onTrackUpdate`.
+-   Screenshare error codes - 3001 for user rejection, 3002 for OS level block.
+-   Fix a bug in mute all where it behaves in opposite way on a request from Android/iOS.
+-   Fix type error for `setRemoteTracksEnabled`
+-   Add peerId for all tracks
+-   Optimisations for tracksMap selector
+-   Add `HMSNotificationTypes.PEER_LIST` notification which gives peers already in room when joined
+-   Optimise video tile, participant list rerenders
+-   Add feedback component
+
+# Breaking Changes:
+
+-   ParticipantsInView component removed. Use UiSettings component instead
+
+## 2021-10-08
+
+Released: `@100mslive/hms-video@0.1.1`, `@100mslive/hms-video-store@0.2.62`, `@100mslive/hms-video-react@0.3.88`
+
+-   Single permission for audio and video
+-   Bulk Remote mute per type, source and roles. Refer to [remote muting](/javascript/v2/features/remote-mute) section in the docs for more information.
+-   Locally muting remote track on iOS Devices
+-   Performance optimizations
+
+#### Fixed
+
+-   Role change takes video resolution into account as well now
+
+## 2021-10-01
+
+Released: `@100mslive/hms-video@0.0.204`, `@100mslive/hms-video-store@0.2.57`, `@100mslive/hms-video-react@0.3.81`
+
+-   Support for starting/stopping rtmp/recording
+-   Add bitrate capping for playlist tracks
+    -   AudioTrack - 64kbps
+    -   VideoTrack - 1mbps
+-   Fix addSink issue in videoTrack.
+    Sometimes, addSink not sending correct data to backend, which leads to black tile
+
+### Breaking:
+
+-   onPeerUpdate is called with HMSPeer[] for initial peer list instead of calling onPeerUdpate for each peer
+
+### Experiemental:
+
+-   Add/remove sink for audio element with feature flag.
+-   Join before publish with feature flag
+
+## 2021-09-17
+
+Released: `@100mslive/hms-video@0.0.185`, `@100mslive/hms-video-store@0.2.43`, `@100mslive/hms-video-react@0.3.64`
+
+### Added
+
+-   Support for Audio/Video Playlist from remote urls
+-   Support for AudioOnly screenshare
 
 ## 2021-08-27
+
 Released: `@100mslive/hms-video@0.0.173`, `@100mslive/hms-video-store@0.2.34`, `@100mslive/hms-video-react@0.3.54`
 
 #### Added
-- Memorization of manual device selection. [Refer Usage](../features/device-change)
-- Self role change. [Refer Usage](../features/change-role)
+
+-   Memorization of manual device selection. [Refer Usage](../features/device-change)
+-   Self role change. [Refer Usage](../features/change-role)
 
 #### Fixed
-- Autoplay error on ios safari
+
+-   Autoplay error on ios safari
 
 ## 2021-08-16
+
 Released: `@100mslive/hms-video@0.0.148`, `@100mslive/hms-video-store@0.2.22`, `@100mslive/hms-video-react@0.3.32`.
 
 #### Added
-- Mute/unmute remote peers. [Refer Usage](/api-reference/javascript/v2/interfaces/HMSActions#set-remote-track-enabled)
-- Remove peer from room. [Refer Usage](/api-reference/javascript/v2/interfaces/HMSActions#remove-peer)
-- End room. [Refer Usage](/api-reference/javascript/v2/interfaces/HMSActions#remove-peer)
-- Private Messages to peers/roles. 
-    - [Direct Message to Peer](/api-reference/javascript/v2/interfaces/HMSActions#send-direct-message)
-    - [Group Message to Role](/api-reference/javascript/v2/interfaces/HMSActions#send-group-message)
-    - [Broadcast Message to everyone in the room](/api-reference/javascript/v2/interfaces/HMSActions#send-broadcast-message)
+
+-   Mute/unmute remote peers. [Refer Usage](/api-reference/javascript/v2/interfaces/HMSActions#set-remote-track-enabled)
+-   Remove peer from room. [Refer Usage](/api-reference/javascript/v2/interfaces/HMSActions#remove-peer)
+-   End room. [Refer Usage](/api-reference/javascript/v2/interfaces/HMSActions#remove-peer)
+-   Private Messages to peers/roles.
+    -   [Direct Message to Peer](/api-reference/javascript/v2/interfaces/HMSActions#send-direct-message)
+    -   [Group Message to Role](/api-reference/javascript/v2/interfaces/HMSActions#send-group-message)
+    -   [Broadcast Message to everyone in the room](/api-reference/javascript/v2/interfaces/HMSActions#send-broadcast-message)
 
 #### Breaking Change
-- **sendMessage is now deprecated**, please use sendBroadcastMessage, sendGroupMessage and sendDirectMessage for messaging. [Refer Usage](/api-reference/javascript/v2/interfaces/HMSActions#send-broadcast-message)
 
+-   **sendMessage is now deprecated**, please use sendBroadcastMessage, sendGroupMessage and sendDirectMessage for messaging. [Refer Usage](/api-reference/javascript/v2/interfaces/HMSActions#send-broadcast-message)
 
 ## 0.0.128 - 2021-08-07
-- Fix tracks not getting removed properly in Firefox in between role changes
+
+-   Fix tracks not getting removed properly in Firefox in between role changes
 
 ## 0.0.127 - 2021-08-06
-- Fix black tile issue
+
+-   Fix black tile issue
 
 ## 0.0.124 - 2021-08-06
-- Export `HMSLogLevel` to set the HMSdk's log level.
+
+-   Export `HMSLogLevel` to set the HMSdk's log level.
 
 ## 0.0.123 - 2021-08-05
 
@@ -72,7 +280,7 @@ Released: `@100mslive/hms-video@0.0.148`, `@100mslive/hms-video-store@0.2.22`, `
 
 #### Added
 
--   Changing roles mid-call. [Refer Usage](/javascript/v2/features/change-tole)
+-   Changing roles mid-call. [Refer Usage](/javascript/v2/features/change-role)
 -   BREAKING CHANGE: The interface of `HMSPeer` has been modified for users using the JavaScript SDK without the [Reactive Store](#).
 
 ```jsx

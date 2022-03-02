@@ -1,3 +1,3 @@
 import redirect from '@/lib/redirect';
 
-export default redirect('/flutter/v2/foundation/basics');
+export default redirect('/docs/flutter/v2/foundation/basics');

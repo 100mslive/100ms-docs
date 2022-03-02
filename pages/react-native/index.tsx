@@ -1,3 +1,3 @@
 import redirect from '@/lib/redirect';
 
-export default redirect('/react-native/v2/foundation/basics');
+export default redirect('/docs/react-native/v2/foundation/basics');
