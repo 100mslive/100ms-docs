@@ -135,7 +135,7 @@ Apart from the rtmp stream and the browser recording, which are ones you can sta
 ```kotlin
 data class HMSRtmpStreamingState(
     val running : Boolean,
-    val error : RtmpError?,
+    val error : HMSException?,
     val startedAt: Long?,
     val stoppedAt: Long?
 )
@@ -149,21 +149,12 @@ This represents a livestream to one or more RTMP urls.
 
 Both may be present and this means the recording was started at some point and stopped at a later date. If the recording is then restarted, it's possible for the `stoppedAt` to be before the `startedAt`.
 
-Error is of the following form and may contain an error code or message if one occured.
-
-```kotlin
-data class RtmpError(
-  val code : String?,
-  val message: String?
-)
-```
-
 2. **browserRecordingState** an instance of `HMSBrowserRecordingState`, which looks like:
 
 ```kotlin
 data class HMSBrowserRecordingState(
     val running : Boolean,
-    val error : RecordingError?,
+    val error : HMSException?,
     val startedAt: Long?,
     val stoppedAt: Long?
 )
@@ -176,15 +167,6 @@ This represents the recording that can be requested to start.
 `stoppedAt` is the unix epoch timestamp of when the recording was ended.
 
 Both may be present and this means the recording was started at some point and stopped at a later date. If the recording is then restarted, it's possible for the `stoppedAt` to be before the `startedAt`.
-
-Error is of the following type and may contain an error code or message if present.
-
-```kotlin
-data class RecordingError(
-  val code : String?,
-  val message: String?
-)
-```
 
 3. **serverRecordingState** an instance of `HMSServerRecordingState`, which looks like:
 
