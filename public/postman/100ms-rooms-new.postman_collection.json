@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "07e0cd52-7fa3-4075-94c4-6c3da18b8896",
-		"name": "100ms APIs",
+		"_postman_id": "3818208f-1b85-4f24-b70f-0fdbe7898c9c",
+		"name": "100ms APIs Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -66,19 +66,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{HOST}}/v2/rooms?id=620356d36f71d0bacbec6faf",
+							"raw": "{{HOST}}/v2/rooms/620356d36f71d0bacbec6faf",
 							"host": [
 								"{{HOST}}"
 							],
 							"path": [
 								"v2",
-								"rooms"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "620356d36f71d0bacbec6faf"
-								}
+								"rooms",
+								"620356d36f71d0bacbec6faf"
 							]
 						}
 					},
@@ -485,6 +480,63 @@
 									"value": "2022-02-09T05:53:23.375Z"
 								}
 							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Meetings API",
+			"item": [
+				{
+					"name": "End Session",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "HLS Start",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "HLS Stop",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"room_id\": \"<room id>\",\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": ""
 						}
 					},
 					"response": []
