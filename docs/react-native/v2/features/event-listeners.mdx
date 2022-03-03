@@ -180,4 +180,66 @@ const onChangeTrackStateRequest = (data: HMSChangeTrackStateRequest) => {
   // triggered when someone requests a unmute for local peer. We can get data.requestedBy.name, data.trackType
   // You can show a modal allowing user to accept or decline the role change request whenever this is triggered.
 };
+
+hmsInstance?.addEventListener(
+  HMSUpdateListenerActions.ON_LOCAL_AUDIO_STATS,
+  onChangeLocalAudioStats,
+);
+
+const onChangeLocalAudioStats = (data: {
+  localAudioStats: HMSLocalAudioStats;
+  track: HMSLocalAudioTrack;
+  peer: HMSPeer;
+}) => {
+  // This contains stats related to local audio track.
+};
+
+hmsInstance?.addEventListener(
+  HMSUpdateListenerActions.ON_LOCAL_VIDEO_STATS,
+  onChangeLocalVideoStats,
+);
+
+const onChangeLocalVideoStats = (data: {
+  localVideoStats: HMSLocalVideoStats;
+  track: HMSLocalVideoTrack;
+  peer: HMSPeer;
+}) => {
+  // This contains stats related to local video track.
+};
+
+hmsInstance?.addEventListener(
+  HMSUpdateListenerActions.ON_RTC_STATS,
+  onChangeRtcStats,
+);
+
+const onChangeRtcStats = (data: {rtcStats: HMSRTCStatsReport}) => {
+  // This will contain the combined stats for the room.
+};
+
+
+hmsInstance?.addEventListener(
+  HMSUpdateListenerActions.ON_REMOTE_AUDIO_STATS,
+  onChangeRemoteAudioStats,
+);
+
+const onChangeRemoteAudioStats = (data: {
+  remoteAudioStats: HMSRemoteAudioStats;
+  track: HMSRemoteAudioTrack;
+  peer: HMSPeer;
+}) => {
+  // This contains stats related to remote audio track.
+};
+
+hmsInstance?.addEventListener(
+  HMSUpdateListenerActions.ON_REMOTE_VIDEO_STATS,
+  onChangeRemoteVideoStats,
+);
+
+const onChangeRemoteVideoStats = (data: {
+  remoteVideoStats: HMSRemoteVideoStats;
+  track: HMSRemoteVideoTrack;
+  peer: HMSPeer;
+}) => {
+  // This contains stats related to remote video track.
+};
 ```
