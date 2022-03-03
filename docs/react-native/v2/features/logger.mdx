@@ -3,7 +3,7 @@ title: Logging
 nav: 3.97
 ---
 
-HMSLogger is a logging api that lets you see all the other api logs as they are called. Instead of logging the values on your app in each and every function you can easily monitor and debug via these logs.
+HMSLogger is a logging api that lets you see all the other api logs as they are called. Instead of logging the values on your app in each and every function you can easily monitor and debug via these logs. By default all the logs are disabled. You need to call `updateLogLevel` to enable logs.
 
 ```js
 import { HMSLogger, HMSLogLevel } from '@100mslive/react-native-hms';
@@ -16,6 +16,11 @@ logger.updateLogLevel(HMSLogLevel.VERBOSE, true);
 build.setLogger(logger);
 ```
 
+## Update Log level
+```js
+logger.updateLogLevel(HMSLogLevel.VERBOSE, false);
+logger.updateLogLevel(HMSLogLevel.WARNING, true);
+```
 
 ## HMSLogLevel
 
@@ -26,3 +31,16 @@ HMSLogLevel.VERBOSE
 HMSLogLevel.WARNING
 HMSLogLevel.ERROR
 ```
+
+## HMSLogLevel.VERBOSE
+Verbose will display basic logs from the sdk in the console
+
+## HMSLogLevel.WARNING
+Warnings will be displayed on screen with a yellow background. These alerts are known as YellowBoxes. Click on the alerts to show more information or to dismiss them.
+
+## HMSLogLevel.ERROR
+In-app errors are displayed in a full screen alert with a red background inside your app. This screen is known as a RedBox. 
+
+## Example
+
+![HMSLogger Example](/docs/v2/hmsLoggerExample.png)
