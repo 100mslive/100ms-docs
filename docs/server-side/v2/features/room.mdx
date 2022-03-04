@@ -293,13 +293,13 @@ To know more about recording please visit [Recording](./recording)
 | options     | `object` | Additional configurations of type `Options` to be used for uploading                                   | No       |
 | credentials | `object` | Object of type `Credentials`. This is used to share AWS credentials to access the s3 bucket specified. | No       |
 
-### Options
+### options
 
 | Name   | Type     | Description                                                                                                              | Required |
 | :----- | :------- | :----------------------------------------------------------------------------------------------------------------------- | :------- |
 | region | `string` | Region of the AWS account hosting the s3 bucket for storing recordings. If not provided it is assumed to be `ap-south-1` | No       |
 
-### Credentials
+### credentials
 
 | Name   | Type     | Description                                                                          | Required |
 | :----- | :------- | :----------------------------------------------------------------------------------- | :------- |
@@ -308,6 +308,17 @@ To know more about recording please visit [Recording](./recording)
 
 The access keys should have read(GetObject) and write(PutObject) permissions for the s3 bucket.
 For more details check - https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html
+
+### Error messages in Create Room API
+
+| Message                                                            | Error Code | Description               |
+| :----------------------------------------------------------------- | :--------- | :------------------------ |
+| Error: accepted characters in name are a-z, A-Z, 0-9, and . - : \_ | 400        | invalid name              |
+| Request body contains badly-formed JSON (at position 16)           | 400        | invalid post body         |
+| Error: provide either id or name, not both                         | 400        | both name and id provided |
+| Error: region not supported                                        | 400        | invalid region            |
+| Error: template not found                                          | 400        | invalid template_id       |
+| Error: Internal server error                                       | 500        | server error              |
 
 ## Disable Room
 
