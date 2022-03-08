@@ -29,6 +29,33 @@ hmsSDK.startHLSStreaming(config: config) { didStart, error in
 }
 ````
 
+### Optional HLS Recording
+Optionally to record the HLS stream you may specify an `HMSHLSRecordingConfig` within the `HMSHLSConfig`.
+
+Here's what the `HMSHlsRecordingConfig` looks like
+
+```swif
+
+class HMSHLSRecordingConfig {
+    let singleFilePerLayer: Bool
+    let enableVOD: Bool
+}
+
+```
+
+1. `singleFilePerLayer` if the desired end result is a mp4 file per HLS layer, false by default.
+2. `enableVOD` if the desired end result is a zip of m3u8 and all the chunks, false by default.
+
+Here's an example of how to create a recording config:
+
+
+```swift
+// Optional recording config
+let recordConfig = HMSHLSRecordingConfig(singleFilePerLayer: true, enableVOD: false)
+let config = HMSHLSConfig(variants: [variant], recording: recordConfig)
+```
+
+
 ## Stopping HLS
 
 You can call `hmsSDK.stopHLSStreaming` to stop HLS Streaming which will stop all the variants.
