@@ -659,19 +659,20 @@ This event will be sent when there are failures in RTMP streaming and/or browser
 This event will be sent when hls recordings are successfull and uploaded to the storage
 
 #### Attributes
-| Name                   | Type         | Description                                                                  | Example                              |
-| :--------------------- | :----------- | :--------------------------------------------------------------------------- | :----------------------------------- |
-| beam_id                | `string`     | Unique beam id                                                               | 61d3def54b616982bd80ed83             |
-| room_id                | `string`     | 100ms assigned room id                                                       | 5f9edc6ac238215aec2312df             |
-| peer_id                | `string`     | 100ms assigned id to identify the joining user                               | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| metadata_id            | `string`     | Webhook metadata ID                                                          | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp     | `timestamp`  | Webhook message creation timestamp                                           | 2020-11-11T17:32:17Z                 |
-| duration               | `number`     | Duration of RTMP streaming / recording in seconds                            | 12                                   |
-| meeting_url            | `string`     | meeting_url provided at hls start                                            | "https://app.100ms.live/room_id"     |
-| created_at             | `timestamp`  | Timestamp at which recording was created                                     | 2020-11-11T17:12:17Z                 |
-| started_at             | `timestamp`  | Timestamp at which hls started                                               | 2020-11-11T17:32:18Z                 |
-| stopped_at             | `timestamp`  | Timestamp at which hls stopped                                               | 2020-11-11T17:32:18Z                 |
-| recording_single_files | `array`      | List of recording details per layer. layer="0" is the highest quality layer  | < see below >                        |
+| Name                                | Type         | Description                                                                  | Example                              |
+| :---------------------              | :----------- | :--------------------------------------------------------------------------- | :----------------------------------- |
+| beam_id                             | `string`     | Unique beam id                                                               | 61d3def54b616982bd80ed83             |
+| room_id                             | `string`     | 100ms assigned room id                                                       | 5f9edc6ac238215aec2312df             |
+| peer_id                             | `string`     | 100ms assigned id to identify the joining user                               | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
+| metadata_id                         | `string`     | Webhook metadata ID                                                          | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
+| metadata_timestamp                  | `timestamp`  | Webhook message creation timestamp                                           | 2020-11-11T17:32:17Z                 |
+| duration                            | `number`     | Duration of RTMP streaming / recording in seconds                            | 12                                   |
+| meeting_url                         | `string`     | meeting_url provided at hls start                                            | "https://app.100ms.live/room_id"     |
+| created_at                          | `timestamp`  | Timestamp at which recording was created                                     | 2020-11-11T17:12:17Z                 |
+| started_at                          | `timestamp`  | Timestamp at which hls started                                               | 2020-11-11T17:32:18Z                 |
+| stopped_at                          | `timestamp`  | Timestamp at which hls stopped                                               | 2020-11-11T17:32:18Z                 |
+| recording_single_files              | `array`      | List of recording details per layer. layer="0" is the highest quality layer  | < see below >
+| recording_hls_vod_playlist_location | `string`     | Pre signed url for hls vod playlist url                                      | < see below > |
 
 #### Sample `hls.recording.success` event
 ```json
@@ -689,6 +690,7 @@ This event will be sent when hls recordings are successfull and uploaded to the 
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "duration": 56,
     "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
+    "recording_hls_vod_playlist_location" : "https://<hls-vod-access-url>?<signature>",
     "recording_single_files": [
       {
         "layer": "0",
