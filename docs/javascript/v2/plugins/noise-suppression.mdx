@@ -4,8 +4,8 @@ nav: 7.1
 ---
 
 ## Introduction
-Noise always rears its ugly head while live streaming outside, on site, or in any untreated setting. Sounds can ruin anyone's listening or watching experience, whether it's from passing cars, construction noise, or mechanical whirs.
-Noise suppression plugin helps in eliminating one’s background sound. This deep learning model is trained for removing babble noise, car noise and street noise.
+Background noise always rears its ugly head while live streaming outside, on site, or in any untreated setting. Sounds can ruin anyone's listening or watching experience, whether it's from passing cars, construction noise, or mechanical whirs.
+Noise suppression plugin helps in eliminating one’s background sound. This is trained for removing babble noise, car noise and street noise.
 This guide provides an overview of usage of the noise suppression plugin of 100ms and below is the demo of it.
 
 ### Original audio
@@ -26,7 +26,6 @@ This guide provides an overview of usage of the noise suppression plugin of 100m
 ## Supported Devices/SampleRate
 
 -   Noise suppression is currently only supported on web in Chrome, Firefox, Brave and Edge browsers.
--   Noise suppression is currently not supported for bluetooth devices.
 -   Maximum supported sampleRate for this feature is 48KHz and minimum supported sampleRate is 44.1KHz.
 
 ## Pre-requisites
@@ -56,32 +55,37 @@ const noiseSuppressionPlugin = new HMSNoiseSuppressionPlugin(durationInMs);
 
 ### Check if plugin is supported
 
-isSupported can be used to check if the browser is supported or not.
-This accepts sampling rate as a parameter
-- `sampleRate` - Number of audio samples taken per second
-
-It will return True/False based on browser.
+validateAudioPluginSupport can be used to check if the browser/ input device is supported or not.
+This accepts plugin instance as a parameter
+It will return True in case of plugin is supported and return error message if it is not.
 
 ```jsx
-if (noiseSuppressionPlugin.isSupported(sampleRate)) {
-  console.log('Platform/sampleRate is supported');
-} else {
-  console.log('Platform/sampleRate is not supported');
-}
+import { hmsActions } from './hms';
+
+const pluginSupport = hmsActions.validateAudioPluginSupport(
+        noiseSuppressionPlugin
+      );
+if (pluginSupport.isSupported) {
+      console.log('Plugin is supported');
+} else{
+      console.log('Plugin is not supported');
+      const err = pluginSupport.errMsg;
+      console.error(err);
+ }
 ```
 ### Init(Optional)
 
 Init is used to load model of background noise suppression for the first time.
-It takes on an average 52 milliseconds.<br/>
+It takes on an average ..50.. milliseconds.<br/>
 Calling init is handled internally by SDK if not done by user, in this case addPlugin call will
-take around 52  milliseconds for the first time and then less than 1 milliseconds in the subsequent calls.
+take around 50 milliseconds for the first time and then less than 1 milliseconds in the subsequent calls.
 Check [this section](#start-and-stop-noise-suppression) for addPlugin API usage
 
 ```jsx
 noiseSuppressionPlugin.init();
 ```
 
-### Start and Stop Background Noise Suppression
+### Add and Remove Background Noise Suppression
 
 <Tabs id="plugin-code" items={['JavaScript', 'React']} />
 
@@ -141,7 +145,7 @@ function NoiseSuppression() {
 
 </Tab>
 
-### Set background noise suppression
+### Enable/disable background noise suppression
 
 The function `setEnabled` can be used to enable/disable background noise suppression without removing the plugin from audio track.
 It accepts boolean as a parameter.
