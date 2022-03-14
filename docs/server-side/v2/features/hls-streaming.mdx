@@ -60,6 +60,7 @@ This is a url which lands into the meeting directly. If you are using 100ms apps
 | Name                         | Type     | Description                                                                       | Required |
 | :--------------------------- | :------- | :-------------------------------------------------------------------------------- | :------- |
 | single_file_per_layer <br/>  | `bool`   | Get one recording file each for each hls layer                                    | No       |
+| hls_vod               <br/>  | `bool`   | Get hls vod playlist                                                              | No       |
 
 #### cURL
 
@@ -72,7 +73,7 @@ curl \
     --data-raw '{
         "room_id": <room_id>,
         "variants": [{"meeting_url": <meeting_url>}],
-        "recording": {"single_file_per_layer": <true|false>}
+        "recording": {"single_file_per_layer": <true|false>,"hls_vod": <true|false>}
     }'
 ```
 
@@ -134,6 +135,7 @@ Customers can also configure the recordings to be stored in their cloud storage.
 [Create Room](/server-side/v2/features/room)
 
 Recording mp4 will be placed at - `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/file-recording/Rec-<room_id>-<epoch>-<layer>.mp4`. Example `s3://test-bucket/test-prefix/hls/61101349d0f56e684b608c08/20210721/1626898422000/file-recording/Rec-61101349d0f56e684b608c08-1626898422000-0.mp4`
+Recording vod playlist will be placed at - `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/hls-vod/Rec-<room_id>-<epoch>.zip`. Example `s3://test-bucket/test-prefix/hls/61101349d0f56e684b608c08/20210721/1626898422000/hls-vod/Rec-61101349d0f56e684b608c08-1626898422000.zip`
 
 ## Postman Collection
 
