@@ -108,6 +108,7 @@ This event will be send when peer leaves the room
 | role       | `string`     | Role of the user                                   | host                                 |
 | left_at    | `timestamp`  | Timestamp when user left                           | 2020-11-11T17:32:17Z                 |
 | duration   | `number`     | Duration the user spent in the room in seconds     | 36000                                |
+| reason     | `string`     | User leave reason                                  | client request                       |
 
 #### Sample `peer.leave.success` event
 ```json
@@ -131,6 +132,20 @@ This event will be send when peer leaves the room
   }
 }
 ```
+
+### Peer Leave Reason
+
+1. `client request`
+2. `peer kicked`
+3. `websocket closed`
+4. `ice connection state closed`
+
+Note:
+
+1. In case of peer is kicked / room is ended
+    - Client itself initiates a peer leave on receiving the signal. In these cases, reason will be `client request`
+    - Also, server starts a timer for the same. If peer leave is not received from client before the timer ends, the server then kicks the peer itself. In such cases, reason will be `peer kicked`
+2. All other reasons except `client request` and `peer kicked` denote that the peer has left unexpectedly.
 
 ### peer.join.failure
 This event will be sent when a peer fails to join a room. This can occur when,
