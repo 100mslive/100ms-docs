@@ -57,6 +57,11 @@ Accept the role change request received
 
 ▸ **addPluginToAudioTrack**(`plugin`): `Promise`<`void`\>
 
+Add or remove a audio plugin from/to the local peer audio track. Eg. gain filter, noise suppression etc.
+Audio plugins can be added/removed at any time after the join is successful.
+
+**`see`** HMSAudioPlugin
+
 #### Parameters
 
 | Name     | Type             |
@@ -81,10 +86,10 @@ pluginFrameRate is the rate at which the output plugin will do processing
 
 #### Parameters
 
-| Name               | Type             | Description    |
-| :----------------- | :--------------- | :------------- |
-| `plugin`           | `HMSVideoPlugin` | HMSVideoPlugin |
-| `pluginFrameRate?` | `number`         | number         |
+| Name               | Type             |
+| :----------------- | :--------------- |
+| `plugin`           | `HMSVideoPlugin` |
+| `pluginFrameRate?` | `number`         |
 
 #### Returns
 
@@ -138,9 +143,8 @@ the stream coming from server saving significant bandwidth for the user.
 
 ▸ **changeMetadata**(`metadata`): `Promise`<`void`\>
 
-If you want to update the metadata of peer.
-
-**`beta`**
+If you want to update the metadata of local peer. If an object is passed, it should be serializable using
+JSON.stringify.
 
 #### Parameters
 
@@ -159,8 +163,6 @@ If you want to update the metadata of peer.
 ▸ **changeName**(`name`): `Promise`<`void`\>
 
 If you want to update the name of peer.
-
-**`beta`**
 
 #### Parameters
 
@@ -230,6 +232,29 @@ If lock is passed as true, the room cannot be used further.
 #### Returns
 
 `Promise`<`void`\>
+
+---
+
+### ignoreMessageTypes
+
+▸ **ignoreMessageTypes**(`msgTypes`, `replace?`): `void`
+
+ignore messages with this type for storing in store. You can use this to have a clear segregation between
+chat messages(you would want to persist for the duration of the call) and one off custom events(emoji reactions,
+stop screenshare, moderator messages, etc.). You can also use this to store messages on your own side if some additional
+processing is required(the default type is "chat").
+Notifications for the ignored messages will still be sent, it'll only not be put in the store.
+
+#### Parameters
+
+| Name       | Type       | Description                                                                                                                                                                                 |
+| :--------- | :--------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `msgTypes` | `string`[] | list of messages types to ignore for storing                                                                                                                                                |
+| `replace?` | `boolean`  | (default is false) whether to replace the list of ignored messages. Types are appended to the existing list by default so you can call this method from different places and all will hold. |
+
+#### Returns
+
+`void`
 
 ---
 
@@ -324,6 +349,8 @@ If you have **removeOthers** permission, you can remove a peer from the room.
 ### removePluginFromAudioTrack
 
 ▸ **removePluginFromAudioTrack**(`plugin`): `Promise`<`void`\>
+
+**`see`** addPluginToAudioTrack
 
 #### Parameters
 
@@ -552,7 +579,7 @@ Note that HMSLogLevel is decremental meaning,
 - HMSLogLevel.INFO(2) - will log important info, warnings and errors.
 - HMSLogLevel.WARN(3) - will log warnings and errors.
 - HMSLogLevel.ERROR(4) - will log only errors.
-- HMSLogLevel.NONE(5) - won't log anything.
+- HMSLogLevel.NONE(5) - won't log anything(Not recommended).
 
 Usage: `hmsActions.setLogLevel(4)` or `hmsActions.setLogLevel(HMSlogLevel.ERROR)`.
 
@@ -595,7 +622,9 @@ found in store, no change in store will take place.
 
 ▸ **setPreferredLayer**(`trackId`, `layer`): `void`
 
-set the quality of the selected videoTrack
+set the quality of the selected videoTrack for simulcast.
+
+**`alpha`**
 
 #### Parameters
 
@@ -650,7 +679,7 @@ Use this to mute/unmute multipe tracks by source, role or type
 
 ### setScreenShareEnabled
 
-▸ **setScreenShareEnabled**(`enabled`, `audioOnly?`): `Promise`<`void`\>
+▸ **setScreenShareEnabled**(`enabled`, `config?`): `Promise`<`void`\>
 
 If you want to enable screenshare for the local peer this class can be called.
 The store will be populated with the incoming track, and the subscriber(or
@@ -658,10 +687,10 @@ react component if our hook is used) will be notified/rerendered
 
 #### Parameters
 
-| Name         | Type      | Description                                    |
-| :----------- | :-------- | :--------------------------------------------- |
-| `enabled`    | `boolean` | boolean                                        |
-| `audioOnly?` | `boolean` | boolean To publish only audio from screenshare |
+| Name      | Type                                                               | Description                                                                                |
+| :-------- | :----------------------------------------------------------------- | :----------------------------------------------------------------------------------------- |
+| `enabled` | `boolean`                                                          | boolean                                                                                    |
+| `config?` | `boolean` \| { `audioOnly?`: `boolean` ; `videoOnly?`: `boolean` } | it can also be boolean to ensure backward compatibility where it stands for audioOnly flag |
 
 #### Returns
 
@@ -714,9 +743,9 @@ If you want to start HLS streaming.
 
 #### Parameters
 
-| Name     | Type        |
-| :------- | :---------- |
-| `params` | `HLSConfig` |
+| Name     | Type                                                             |
+| :------- | :--------------------------------------------------------------- |
+| `params` | [`HLSConfig`](/api-reference/javascript/v2/interfaces/HLSConfig) |
 
 #### Returns
 
@@ -750,9 +779,9 @@ If you want to stop HLS streaming. The passed in arguments is not considered at 
 
 #### Parameters
 
-| Name      | Type        |
-| :-------- | :---------- |
-| `params?` | `HLSConfig` |
+| Name      | Type                                                             |
+| :-------- | :--------------------------------------------------------------- |
+| `params?` | [`HLSConfig`](/api-reference/javascript/v2/interfaces/HLSConfig) |
 
 #### Returns
 
