@@ -3,6 +3,17 @@ title: Android SDK
 nav: 15
 description: Release Notes for 100ms Android SDK
 ---
+## 2.3.3 - 2022-03-17
+### Fixed
+* `Leave` not finishing if SDK is in reconnection state. Hence all `join` calls after that was getting queued up if called on the same HMSSDK instance
+* Improved subscribe degradation so that new add sinks are handled properly when SDK is already in degraded state
+* Crash fix on starting/stopping HLS where `HlsStartRecording` was null
+
+
+### Added
+* Added Hls Recording to initial PeerList
+* Ignore `room-state` updates after joining
+
 ## 2.3.2 - 2022-03-14
 ### Fixed
 * ERROR Analytics events not being sent
