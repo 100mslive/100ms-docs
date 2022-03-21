@@ -1,0 +1,150 @@
+---
+title: Call Stats
+nav: 13.3
+---
+
+Sometimes you need a way to capture certain metrics related to a call. This may be helpful if you want to tailor the experience to your users or debug issues. Typical metrics of interest are audio/video bitrate, round trip time, total consumed bandwidth and packet loss. 100ms SDK provides this data via dedicated delegate callbacks found in `HMSUpdateListener`. These will be called with a fixed interval of one second after a room has been joined. You can get stats on a per track basis ( `fun onRemoteAudioStats(audioStats: HMSRemoteAudioStats, hmsTrack: HMSTrack?, hmsPeer: HMSPeer?)`) or as an overall summary (`fun onRTCStats(rtcStats: HMSRTCStatsReport)`) 
+
+Here is the full list of callbacks:
+
+```kotlin
+/// This callback provides stats for a local audio track.
+fun onLocalAudioStats(audioStats: HMSLocalAudioStats, hmsTrack: HMSTrack?, hmsPeer: HMSPeer?)
+
+/// This callback provides stats for a local video track.
+fun onLocalVideoStats(videoStats: HMSLocalVideoStats, hmsTrack: HMSTrack?, hmsPeer: HMSPeer?)
+
+/// This callback provides stats for a remote audio track.
+fun onRemoteAudioStats(audioStats: HMSRemoteAudioStats, hmsTrack: HMSTrack?, hmsPeer: HMSPeer?)
+
+/// This callback provides stats for a remote video track.
+fun onRemoteVideoStats(videoStats: HMSRemoteVideoStats, hmsTrack: HMSTrack?, hmsPeer: HMSPeer?)
+
+/// This callback provides combined stats for the session.
+fun onRTCStats(rtcStats: HMSRTCStatsReport)
+```
+
+## HMSRTCStatsReport
+
+This class will contain the combined stats for the room.
+
+```kotlin
+class HMSRTCStats {
+	// Total bytes sent in the current session.
+	val bytesSent: Long
+	// Total bytes received in the current session.
+	val bytesReceived: Long
+	// Total packets received in the current session.
+	val packetsReceived: Long
+	// Total packets lost in the current session.
+	val packetsLost: Long
+	// Total outgoing bitrate observed since previous report.
+	val bitrateSent: Double
+	// Total incoming bitrate observed since previous report in Kb/s.
+	val bitrateReceived: Double
+	// Average round trip time observed since previous report in Kb/s.
+	val roundTripTime: Double
+}
+
+class HMSRTCStatsReport {
+	// Combined audio + video values
+	var combined: HMSRTCStats
+	// Summary of all audio tracks
+	var audio: HMSRTCStats
+	// Summary of all video tracks
+	var video: HMSRTCStats
+}
+```
+
+## HMSLocalAudioStats
+
+This class contains stats related to local audio track.
+
+```kotlin
+data class HMSLocalAudioStats(
+	// Round trip time observed since previous report.
+	var roundTripTime: Double?,
+	// Total bytes sent by this track in the current session.
+	var bytesSent: Long?,
+	// Outgoing bitrate of this track observed since previous report in Kb/s.
+	var bitrate: Double?
+) : HMSStats.HMSLocalStats()
+```
+
+## HMSLocalVideoStats
+
+This class contains stats related to local video track.
+
+```kotlin
+data class HMSLocalVideoStats(
+	// Round trip time observed since previous report.
+	var roundTripTime: Double?,
+	// Total bytes sent by this track in the current session.
+	var bytesSent: Long?,
+	// Outgoing bitrate of this track observed since previous report in Kb/s.
+	var bitrate: Double?,
+	// Resolution of video frames being sent.
+	var resolution: HMSVideoResolution?,
+	// Frame rate of video frames being sent (FPS).
+	var frameRate: Double?
+) : HMSStats.HMSLocalStats()
+
+data class HMSVideoResolution(
+  var width: Int,
+  var height: Int,
+)
+
+```
+
+## HMSRemoteAudioStats
+
+This class contains stats related to remote audio track.
+
+```kotlin
+data class HMSRemoteAudioStats(
+	// Packet Jitter measured in seconds for this track. Calculated as defined in section 6.4.1. of RFC3550.
+	val jitter: Double?,
+	// Total bytes received by this track in the current session.
+	val bytesReceived: Long?,
+	// Incoming bitrate of this track observed since previous report in Kb/s.
+	val bitrate: Double?,
+	// Total packets received by this track in the current session.
+	val packetsReceived: Long?,
+	// Total packets lost by this track in the current session.
+	val packetsLost: Int,
+ ) : HMSStats.HMSRemoteStats()
+```
+
+## HMSRemoteVideoStats
+
+This class contains stats related to remote video track.
+
+```kotlin
+data class HMSRemoteVideoStats(
+	// Packet Jitter measured in seconds for this track. Calculated as defined in section 6.4.1. of RFC3550.
+	val jitter: Double?,
+	// Total bytes received by this track in the current session.
+	val bytesReceived: Long?,
+	// Incoming bitrate of this track observed since previous report in Kb/s.
+	val bitrate: Double?,
+	// Total packets received by this track in the current session.
+	val packetsReceived: Long?,
+	// Total packets lost by this track in the current session.
+	val packetsLost: Int?
+	// Resolution of video frames being received.
+	val resolution: HMSVideoResolution?
+	// Frame rate of video frames being received (FPS).
+	val frameRate: Double?
+ ) : HMSStats.HMSRemoteStats()
+```
+
+## Hierarchy
+
+Here's the hierarchy for the sealed classes for stats
+```kotlin
+sealed class HMSStats {
+    sealed class HMSLocalStats : HMSStats()
+
+    sealed class HMSRemoteStats : HMSStats()
+}
+```
