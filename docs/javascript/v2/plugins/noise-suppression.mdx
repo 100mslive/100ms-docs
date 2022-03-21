@@ -39,7 +39,7 @@ npm install --save @100mslive/hms-noise-suppression
 ## Import plugin
 
 ```jsx
-import HMSNoiseSuppressionPlugin from '@100mslive/hms-noise-suppression';
+import { HMSNoiseSuppressionPlugin } from '@100mslive/hms-noise-suppression';
 ```
 
 ## Instantiate Noise Suppression
@@ -62,17 +62,16 @@ It will return True in case of plugin is supported and return error message if i
 ```jsx
 import { hmsActions } from './hms';
 
-const pluginSupport = hmsActions.validateAudioPluginSupport(
-        noiseSuppressionPlugin
-      );
-if (pluginSupport.isSupported) {
-      console.log('Plugin is supported');
-} else{
-      console.log('Plugin is not supported');
-      const err = pluginSupport.errMsg;
-      console.error(err);
- }
+const pluginSupport = hmsActions.validateAudioPluginSupport(noiseSuppressionPlugin);
+if (pluginSupport.isSupported){
+     console.log('Plugin is supported');
+}
+else{
+     const err = pluginSupport.errMsg;
+     console.error(err);
+}
 ```
+
 ### Init(Optional)
 
 Init is used to load model of background noise suppression for the first time.
@@ -151,9 +150,9 @@ The function `setEnabled` can be used to enable/disable background noise suppres
 It accepts boolean as a parameter.
 
 ```jsx
-try{
+try {
   noiseSuppressionPlugin.setEnabled(true); // true/false
-}catch(err){
+} catch (err) {
   console.log("Failed to suppress noise", err);
 }
 ```
