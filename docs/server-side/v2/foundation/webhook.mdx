@@ -108,6 +108,21 @@ This event will be send when peer leaves the room
 | role       | `string`     | Role of the user                                   | host                                 |
 | left_at    | `timestamp`  | Timestamp when user left                           | 2020-11-11T17:32:17Z                 |
 | duration   | `number`     | Duration the user spent in the room in seconds     | 36000                                |
+| reason     | `string`     | Reason for the peer leaving, see more details below | client request                       |
+
+#### Peer Leave Reason
+
+1. `client request`
+2. `peer kicked`
+3. `websocket closed`
+4. `ice connection state closed`
+
+Note:
+
+1. In case of peer is kicked / room is ended
+    - Client itself initiates a peer leave on receiving the signal. In these cases, reason will be `client request`
+    - Also, server starts a timer for the same. If peer leave is not received from client before the timer ends, the server then kicks the peer itself. In such cases, reason will be `peer kicked`
+2. All other reasons except `client request` and `peer kicked` denote that the peer has left unexpectedly.
 
 #### Sample `peer.leave.success` event
 ```json
@@ -659,19 +674,21 @@ This event will be sent when there are failures in RTMP streaming and/or browser
 This event will be sent when hls recordings are successfull and uploaded to the storage
 
 #### Attributes
-| Name                   | Type         | Description                                                                  | Example                              |
-| :--------------------- | :----------- | :--------------------------------------------------------------------------- | :----------------------------------- |
-| beam_id                | `string`     | Unique beam id                                                               | 61d3def54b616982bd80ed83             |
-| room_id                | `string`     | 100ms assigned room id                                                       | 5f9edc6ac238215aec2312df             |
-| peer_id                | `string`     | 100ms assigned id to identify the joining user                               | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| metadata_id            | `string`     | Webhook metadata ID                                                          | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp     | `timestamp`  | Webhook message creation timestamp                                           | 2020-11-11T17:32:17Z                 |
-| duration               | `number`     | Duration of RTMP streaming / recording in seconds                            | 12                                   |
-| meeting_url            | `string`     | meeting_url provided at hls start                                            | "https://app.100ms.live/room_id"     |
-| created_at             | `timestamp`  | Timestamp at which recording was created                                     | 2020-11-11T17:12:17Z                 |
-| started_at             | `timestamp`  | Timestamp at which hls started                                               | 2020-11-11T17:32:18Z                 |
-| stopped_at             | `timestamp`  | Timestamp at which hls stopped                                               | 2020-11-11T17:32:18Z                 |
-| recording_single_files | `array`      | List of recording details per layer. layer="0" is the highest quality layer  | < see below >                        |
+| Name                                | Type         | Description                                                                  | Example                              |
+| :---------------------------------- | :----------- | :--------------------------------------------------------------------------- | :----------------------------------- |
+| beam_id                             | `string`     | Unique beam id                                                               | 61d3def54b616982bd80ed83             |
+| room_id                             | `string`     | 100ms assigned room id                                                       | 5f9edc6ac238215aec2312df             |
+| peer_id                             | `string`     | 100ms assigned id to identify the joining user                               | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
+| metadata_id                         | `string`     | Webhook metadata ID                                                          | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
+| metadata_timestamp                  | `timestamp`  | Webhook message creation timestamp                                           | 2020-11-11T17:32:17Z                 |
+| duration                            | `number`     | Duration of RTMP streaming / recording in seconds                            | 12                                   |
+| meeting_url                         | `string`     | meeting_url provided at hls start                                            | "https://app.100ms.live/room_id"     |
+| created_at                          | `timestamp`  | Timestamp at which recording was created                                     | 2020-11-11T17:12:17Z                 |
+| started_at                          | `timestamp`  | Timestamp at which hls started                                               | 2020-11-11T17:32:18Z                 |
+| stopped_at                          | `timestamp`  | Timestamp at which hls stopped                                               | 2020-11-11T17:32:18Z                 |
+| recording_single_files              | `array`      | List of recording details per layer. layer="0" is the highest quality layer  | < see below >                        |
+| recording_hls_vod_playlist_location | `string`     | Pre signed url for hls vod playlist url                                      | < see below >                        |
+| recording_thumbnails                | `array`      | List of thumbnails generated                                                 | < see below >                        |
 
 #### Sample `hls.recording.success` event
 ```json
@@ -689,6 +706,7 @@ This event will be sent when hls recordings are successfull and uploaded to the 
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "duration": 56,
     "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
+    "recording_hls_vod_playlist_location": "https://<hls-vod-access-url>?<signature>",
     "recording_single_files": [
       {
         "layer": "0",
@@ -708,9 +726,18 @@ This event will be sent when hls recordings are successfull and uploaded to the 
       {
         "layer": "3",
         "location": "s3://<file-3-bucket-address>.mp4",
-        "presigned_url": "https://<file-3-access-url>?<signature3>"
+        "presigned_url": "https://<file-3-access-url>?<signature-3>"
       }
-    ],    
+    ],
+    "recording_thumbnails": [
+      {
+        "width": 1280,
+        "height": 720,
+        "offset": 60,
+        "location": "s3://<thumbnail-file-bucket-address>.png",
+        "url": "https://<thumbnail-access-url>?<signature3>"
+      }
+    ],
     "created_at": "2021-11-30T12:59:57.672493658Z",
     "started_at": "2021-11-30T12:59:57.797972469Z",
     "stopped_at": "2021-11-30T12:59:57.797972469Z"
