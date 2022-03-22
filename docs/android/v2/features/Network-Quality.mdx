@@ -1,0 +1,107 @@
+---
+title: Network Quality
+nav: 13.4
+---
+
+Video/Audio conferencing is by nature a data intensive operation. The 100ms SDK attempts to stabilize connections especially if subscribe degradation is turned on in the template but it's possible for really bad connections that users will still have problems.
+
+It can be helpful to measure a user's connection speed before joining a room in order to set expectations or decide to have them join with video off etc.
+
+The 100ms SDK provides a way to measure the user's downlink speed in the preview screen.
+
+> ⚠️ The downlink speed is measured by having the user download a file (1mb as of this writing) after the websocket connection is established during a preview.
+
+The download will be continued for at most a fixed number of seconds (eg: 10 seconds) and the speed during that interval is calculated. The entire file may not be downloaded if it exceeds the timeout.
+
+DNS time is not counted in this, only throughput is measured. 
+
+## Requesting/Reading a Network Quality Update in Preview
+When creating an `HMSConfig` object to request a preview, set the `captureNetworkQualityInPreview` to `true` to measure the user's downlink network quality.
+
+When available, the information will be returned in `onPeerUpdate` of the `HMSPreviewListener` in the update type `HMSPeerUpdate.NETWORK_QUALITY_UPDATED`. It can be retrieved out of the `HMSPeer` object's `networkQuality` property.
+
+<Tabs id="network-quality-preview" items={['Kotlin', 'Java']} />
+
+<Tab id='network-quality-preview-0'>
+
+```kotlin
+fun requestPreviewWithNetworkQuality(hmsSdk: HMSSDK,
+      authToken : String, metadata: String) {
+
+    val requestNetworkQuality = true
+
+    val hmsPreviewListener = object : HMSPreviewListener {
+        override fun onPeerUpdate(type: HMSPeerUpdate, peer: HMSPeer) {
+            if(type == HMSPeerUpdate.NETWORK_QUALITY_UPDATED)
+                println("NetworkQuality is ${peer.networkQuality?.downlinkQuality}")
+        }
+
+        override fun onPreview(room: HMSRoom, localTracks: Array<HMSTrack>) {}
+        override fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) {}
+        override fun onError(error: HMSException) {}
+    }
+
+    val config = HMSConfig(
+        "Aniket",
+        authToken,
+        metadata,
+        requestNetworkQuality
+        )
+
+
+    hmsSdk.preview(config, hmsPreviewListener)
+}
+```
+</Tab>
+
+<Tab id='network-quality-preview-1'>
+
+```java
+
+void requestPreviewWithNetworkQuality(HMSSDK hmsSdk,
+                                        String authToken,
+                                        String metadata) {
+    Boolean requestNetworkQuality = true;
+
+    HMSPreviewListener hmsPreviewListener = new HMSPreviewListener() {
+        @Override
+        public void onPeerUpdate(@NonNull HMSPeerUpdate type, @NonNull HMSPeer hmsPeer) {
+            if (type == HMSPeerUpdate.NETWORK_QUALITY_UPDATED)
+                Log.d(TAG, "NetworkQuality is ${peer.networkQuality?.downlinkQuality}");
+        }
+
+        @Override public void onPreview(@NonNull HMSRoom hmsRoom, @NonNull HMSTrack[] hmsTracks) {}
+        @Override public void onRoomUpdate(@NonNull HMSRoomUpdate hmsRoomUpdate, @NonNull HMSRoom hmsRoom) {}
+        @Override public void onError(@NonNull HMSException e) {}
+
+    };
+
+    HMSConfig config = new HMSConfig(
+            "Aniket",
+            authToken,
+            metadata,
+            requestNetworkQuality
+    );
+
+    hmsSdk.preview(config, hmsPreviewListener);
+}
+```
+
+</Tab>
+
+Here's the class definition of `HMSNetworkQuality`, which is a property on the `HMSPeer`.
+
+```kotlin
+data class HMSNetworkQuality(
+    val downlinkQuality: Int
+)
+```
+
+## Interpreting the Values
+`peer.networkQuality?.downlinkQuality` will be a value between 0 and 5.
+- 0 -> Very bad network or network check failure
+- 1 -> Poor network
+- 2 -> Bad network
+- 3 -> Average
+- 4 -> Good
+- 5 -> Best
