@@ -53,6 +53,33 @@ hmsNotifications.onNotification((notification) => {
 });
 ```
 
+## Updating Remote Peer Metadata
+
+Say if a guest has raised hand, host might want to lower their hand after a while. We
+don't have a direct method available to do this currently but it can be done using
+[custom events](../features/chat#custom-events). The host can send a message to the peer
+who raised their hand, and the peer can lower their hand on getting the message.
+
+```js
+const LOWER_HAND = "LOWER_HAND";
+// don't save messages with this type in store
+hmsActions.ignoreMessageTypes([LOWER_HAND]);
+
+// host can send a custom message to the peer who has raised hand
+hmsActions.sendDirectMessage('', peerIdWithRaisedHand, LOWER_HAND);
+
+// the peer on receiving the event can lower their hand
+hmsNotifications.onNotification(notification => {
+  const msg = notification.data;
+  if (msg && msg.type === LOWER_HAND) {
+    const localPeerId = hmsStore.getState(selectLocalPeerID);
+    const metadata = hmsStore.getState(selectPeerMetadata(localPeerId));
+    const newMetadata = { ...metadata, isHandRaised: false };
+    hmsActions.changeMetadata(newMetadata);
+  }
+}, HMSNotificationTypes.NEW_MESSAGE);
+```
+
 ## Ideas
 
 * Implementing raise hand
