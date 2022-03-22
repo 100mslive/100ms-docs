@@ -207,6 +207,74 @@ function Notification() {
 
 </Tab>
 
+## Listening to specific notifications
+
+You can pass a single notification or array of notifications from one of `HMSNotificationTypes`.
+
+<Tabs id="notification-types" items={['JavaScript', 'React']} />
+
+<Tab id="notification-types-0">
+
+```jsx{14-44}
+import { hmsNotifications } from './hms';
+
+const unsubscribe = hmsNotifications.onNotification((notification) => {
+    if (!notification) {
+        return;
+    }
+
+    console.log('notification type', notification.type);
+    console.log('data', notification.data);
+}, HMSNotificationTypes.PEER_JOINED);
+
+const unsubscribePeerNotifications = hmsNotifications.onNotification((notification) => {
+    if (!notification) {
+        return;
+    }
+    // this will be called when one of HMSNotificationTypes.PEER_JOINED, HMSNotificationTypes.PEER_LEFT is arrived
+    console.log('notification type', notification.type);
+    console.log('data', notification.data);
+}, [HMSNotificationTypes.PEER_JOINED, HMSNotificationTypes.PEER_LEFT]);
+```
+
+</Tab>
+
+<Tab id="notification-types-1">
+
+```jsx{14-44}
+import { useHMSNotifications } from '@100mslive/react-sdk';
+
+function Notification() {
+    const notification = useHMSNotifications(HMSNotificationTypes.PEER_JOINED);
+    const peerNotification = useHMSNotifications(HMSNotificationTypes.PEER_JOINED);
+
+
+    React.useEffect(() => {
+        if (!notification) {
+            return;
+        }
+
+        console.log('notification type', notification.type);
+        console.log('data', notification.data);
+
+    }, [notification]);
+
+    React.useEffect(() => {
+        if (!peerNotification) {
+            return;
+        }
+        // add a switch case or if/else depending on number of types passed in useHMSNotifications
+        console.log('notification type', notification.type);
+        console.log('data', notification.data);
+
+    }, [peerNotification]);
+
+    return <div>Notification: {notification?.type}</div>;
+}
+```
+
+</Tab>
+
 ## Unsubscribing from notifications
 
 You can unsubscribe to the notifications by calling the method returned by the `hmsNotifications.onNotification` function.
