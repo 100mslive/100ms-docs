@@ -1,0 +1,45 @@
+---
+title: Peer Connection Quality
+nav: 5.06
+---
+
+You can get a score of current user's connection quality when in preview, post join connection quality will be available for all peers.
+The score ranges from 1-5, 5 being the hightest(good network health) and 1 being the lowest(bad network health).
+-1 indicates the sdk is not able to determine the network health within reasonable time.
+
+## Getting peer connection quality
+
+Below is the interface for connection quality.
+
+```ts
+export interface HMSConnectionQuality {
+    peerID: string;
+    downlinkScore: number;
+}
+```
+
+<Tabs id="connection-quality" items={['JavaScript', 'React']} />{' '}
+
+<Tab id='connection-quality-js'>
+
+```js
+hmsStore.subscribe((connectionQuality) => {
+    if (connectionQuality) {
+        const score = connectionQuality.downlinkScore;
+        // show some UI based on the score.
+    }
+}, selectConnectionQualityByPeerID(peerId));
+```
+
+</Tab>
+
+<Tab id='connection-quality-jsx'>
+
+```jsx
+const downlinkScore = useHMSStore(selectConnectionQualityByPeerID(peerId))?.downlinkScore;
+
+// use the score to show some UI
+```
+
+</Tab>
+</Tabs>
