@@ -52,11 +52,11 @@ class HMSRTCStats {
 
 class HMSRTCStatsReport {
 	// Combined audio + video values
-	var combined: HMSRTCStats
+	val combined: HMSRTCStats
 	// Summary of all audio tracks
-	var audio: HMSRTCStats
+	val audio: HMSRTCStats
 	// Summary of all video tracks
-	var video: HMSRTCStats
+	val video: HMSRTCStats
 }
 ```
 
@@ -67,11 +67,11 @@ This class contains stats related to local audio track.
 ```kotlin
 data class HMSLocalAudioStats(
 	// Round trip time observed since previous report.
-	var roundTripTime: Double?,
+	val roundTripTime: Double?,
 	// Total bytes sent by this track in the current session.
-	var bytesSent: Long?,
+	val bytesSent: Long?,
 	// Outgoing bitrate of this track observed since previous report in Kb/s.
-	var bitrate: Double?
+	val bitrate: Double?
 ) : HMSStats.HMSLocalStats()
 ```
 
@@ -82,15 +82,15 @@ This class contains stats related to local video track.
 ```kotlin
 data class HMSLocalVideoStats(
 	// Round trip time observed since previous report.
-	var roundTripTime: Double?,
+	val roundTripTime: Double?,
 	// Total bytes sent by this track in the current session.
-	var bytesSent: Long?,
+	val bytesSent: Long?,
 	// Outgoing bitrate of this track observed since previous report in Kb/s.
-	var bitrate: Double?,
+	val bitrate: Double?,
 	// Resolution of video frames being sent.
-	var resolution: HMSVideoResolution?,
+	val resolution: HMSVideoResolution?,
 	// Frame rate of video frames being sent (FPS).
-	var frameRate: Double?
+	val frameRate: Double?
 ) : HMSStats.HMSLocalStats()
 
 data class HMSVideoResolution(
