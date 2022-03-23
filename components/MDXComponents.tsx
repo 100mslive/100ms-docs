@@ -17,6 +17,7 @@ import Text from './Text';
 import View from './View';
 import Content from './Content';
 import DownloadCollection from './DownloadCollection';
+import APILink from './APILink';
 
 const CodeCustom = (props: any) => <Code>{props.children}</Code>;
 
@@ -72,7 +73,8 @@ const MDXComponents = {
     View,
     a: LinkCustom,
     Content,
-    DownloadCollection
+    DownloadCollection,
+    APILink
 };
 
 export default MDXComponents;
