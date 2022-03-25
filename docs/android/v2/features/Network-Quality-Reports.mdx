@@ -98,9 +98,18 @@ data class HMSNetworkQuality(
 
 ## Interpreting the Values
 `peer.networkQuality?.downlinkQuality` will be a value between 0 and 5.
-- 0 -> Very bad network or network check failure
+- -1,0 -> Very bad network or network check failure
 - 1 -> Poor network
 - 2 -> Bad network
 - 3 -> Average
 - 4 -> Good
 - 5 -> Best
+
+
+## When Are Callbacks Sent
+
+A three second timer is started just when preview is called. If this expires before the speed test completes, it will send an update of -1 network in `onPeerUpdate` for the local peer.
+
+The speed test only begins after the websocket is established and measures throughput only, excluding time taken for DNS. If your DNS is taking excessively long to resolve you might notice an initial -1 followed by a subsequent 5 score for your network.
+
+If a join or leave call is made to the sdk all timeouts and speed tests are cancelled.
