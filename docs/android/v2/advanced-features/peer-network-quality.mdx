@@ -42,12 +42,19 @@ It could look something like this:
 
 ```java
     
-    @Override
-    void onPeerUpdate(HMSPeerUpdate type, HMSPeer hmsPeer) {
-        if (type == HMSPeerUpdate.NETWORK_QUALITY_UPDATED) {
-            int quality = hmsPeer.getNetworkQuality().getDownlinkQuality();
-        }
-    }  
+@Override
+void onPeerUpdate(HMSPeerUpdate type, HMSPeer hmsPeer) {
+    switch (type) {
+        case NETWORK_QUALITY_UPDATED:
+            HMSNetworkQuality quality = peer.getNetworkQuality();
+            
+            if(quality != null) {
+                int networkQuality = quality.getDownlinkQuality();
+            }
+            break;
+        // ....
+    }
+}  
 
 ```
 
