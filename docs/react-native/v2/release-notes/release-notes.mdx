@@ -3,6 +3,16 @@ title: Release Notes
 nav: 4.1
 ---
 
+## 0.9.2 - 2022-03-28
+- Added `hlsRecordingConfig?: HMSHLSRecordingConfig` to allow HLS Recording 
+- Added `hlsRecordingState?: HMSHLSRecordingState` to `HMSRoom` for fetching the HLS Recording state of the room
+- Added `sender: HMSPeer` & `recipient: HMSMessageRecipient` properties on `HMSMessage`
+- Added promise to `startScreenshare` API so that clients can perform an action when screen share from an android mobile device
+- Fixed an issue where muting audio/video of a remote peer does not work
+- Updated to Native Android SDK 2.3.4 & Native iOS SDK 0.2.8
+
+
+
 ## 0.9.1 - 2022-03-02
 - Added room update & peer update callbacks on Preview. So before joining the room, you can know the peers already in the room & current room state like recording/streaming, etc
 - Added RTC Call Stats to show info about packet loss, bitrate, jitter, fps, resolution, etc for video tracks
