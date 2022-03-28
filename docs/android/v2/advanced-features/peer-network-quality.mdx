@@ -18,13 +18,37 @@ of HMSUpdateListener where the update value will be of type `HMSPeerUpdate.NETWO
 
 
 It could look something like this:
+
+<Tabs id="peer-quality_update" items={['Kotlin', 'Java']} />
+
+<Tab id='peer-quality_update-0'>
+
+
 ```kotlin
     override fun onPeerUpdate(type: HMSPeerUpdate, hmsPeer: HMSPeer) {
         when (type) {
             HMSPeerUpdate.NETWORK_QUALITY_UPDATED -> {
-                // values can be accessed using hmsPeer.networkQuality?.downlinkQuality            
+                // values can be accessed using hmsPeer.networkQuality?.downlinkQuality    
+                val quality = hmsPeer.networkQuality?.downlinkQuality        
             }
         }
     }      
 
 ```
+
+</Tab>
+
+<Tab id='peer-quality_update-1'>
+
+```java
+    
+    @Override
+    void onPeerUpdate(HMSPeerUpdate type, HMSPeer hmsPeer) {
+        if (type == HMSPeerUpdate.NETWORK_QUALITY_UPDATED) {
+            int quality = hmsPeer.getNetworkQuality().getDownlinkQuality();
+        }
+    }  
+
+```
+
+</Tab>
