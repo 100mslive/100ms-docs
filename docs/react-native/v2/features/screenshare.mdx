@@ -8,6 +8,14 @@ their role must have screenshare enabled in the dashboard. Also select the appro
 
 ![ScreenshareDashboard](/docs/v2/screenshare-dashboard.png)
 
+## Adding activity to AndroidManifest.xml
+Add `HmsScreenshareActivity` to manifest located at `android/app/src/main/AndroidManifest.xml`.
+```js
+<activity
+  android:name="com.reactnativehmssdk.HmsScreenshareActivity"
+  android:label="@string/app_name" />
+```
+
 ## How to start screenshare from the app
 To start screen share, app needs to call the `startScreenshare` method of `HMSSDK`.
 Following is the snippet on how to use this:
