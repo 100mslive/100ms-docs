@@ -10,7 +10,7 @@ The network quality for every peer can be retrieved by registering an instance o
 
 ## Reading Network Quality Information
 
-whenever peer network quality changes an update will be fired to `onPeerUpdate(update : HMSPeerUpdate, peer : HMSPeer)`
+Whenever peer network quality changes an update will be fired to `onPeerUpdate(update : HMSPeerUpdate, peer : HMSPeer)`
 of HMSUpdateListener where the update value will be of type `HMSPeerUpdate.NETWORK_QUALITY_UPDATED`.
 
 
@@ -25,14 +25,14 @@ It could look something like this:
 
 
 ```kotlin
-    override fun onPeerUpdate(type: HMSPeerUpdate, hmsPeer: HMSPeer) {
-        when (type) {
-            HMSPeerUpdate.NETWORK_QUALITY_UPDATED -> {
-                // values can be accessed using hmsPeer.networkQuality?.downlinkQuality    
-                val quality = hmsPeer.networkQuality?.downlinkQuality        
-            }
+override fun onPeerUpdate(type: HMSPeerUpdate, hmsPeer: HMSPeer) {
+    when (type) {
+        HMSPeerUpdate.NETWORK_QUALITY_UPDATED -> {
+            // values can be accessed using hmsPeer.networkQuality?.downlinkQuality    
+            val quality = hmsPeer.networkQuality?.downlinkQuality        
         }
-    }      
+    }
+}
 
 ```
 
