@@ -3,18 +3,27 @@ title: Peer Connection Quality
 nav: 5.06
 ---
 
-You can get a score of current user's connection quality when in preview, post join connection quality will be available for all peers.
-The score ranges from 1-5, 5 being the hightest(good network health) and 1 being the lowest(bad network health).
--1 indicates the sdk is not able to determine the network health within reasonable time.
+Video/Audio conferencing is by nature a data intensive operation. 
+Our SDK attempts to stabilize connections especially if subscribe degradation 
+is turned on in the template but it's possible for really bad connections that users will still have problems.
+
+It can be helpful to measure a user's connection speed before joining a room in order to set expectations or 
+decide to have them join with video off etc. Letting the participants know of each other's connection
+status is also a great value addition.
+
+Once you have joined the room, you can get a network quality score for all the peers including yourself.
+You can also get current user's connection quality score when in preview.
+The score ranges from -1 to 5, 5 being the hightest(Good Network) and 0 being the lowest(No Network).
+-1 indicates an undefined state that is either the score hasn't yet been determined or it couldn't be determined.
 
 ## Getting peer connection quality
 
 Below is the interface for connection quality.
 
 ```ts
-export interface HMSConnectionQuality {
+interface HMSConnectionQuality {
     peerID: string;
-    downlinkScore: number;
+    downlinkQuality: number;
 }
 ```
 
@@ -25,8 +34,8 @@ export interface HMSConnectionQuality {
 ```js
 hmsStore.subscribe((connectionQuality) => {
     if (connectionQuality) {
-        const score = connectionQuality.downlinkScore;
-        // show some UI based on the score.
+        const quality = connectionQuality.downlinkQuality;
+        // use the score to show some UI!
     }
 }, selectConnectionQualityByPeerID(peerId));
 ```
@@ -36,9 +45,41 @@ hmsStore.subscribe((connectionQuality) => {
 <Tab id='connection-quality-jsx'>
 
 ```jsx
-const downlinkScore = useHMSStore(selectConnectionQualityByPeerID(peerId))?.downlinkScore;
+const downlinkQuality = useHMSStore(selectConnectionQualityByPeerID(peerId))?.downlinkQuality;
 
-// use the score to show some UI
+// use the score to show some UI!
 ```
 
 </Tab>
+
+
+## Receiving Connection Quality Score in Preview
+
+To receive the score in [preview](../features/preview) as well, you can 
+pass in the `captureNetworkQualityInPreview` flag as true in preview config
+while calling preview. The interface to get the quality score stays same as above
+which is for post joining the room.
+
+> ⚠️ The downlink speed is measured by having the user download a file (1mb as of this writing) after the websocket connection is established during a preview.
+> The download will be continued for at most a fixed number of seconds (eg: 10 seconds) and the speed during that interval is calculated. The entire file may not be downloaded if it exceeds the timeout.
+
+```js
+actions.preview({..., captureNetworkQualityInPreview: true})
+```
+
+
+## Score Interpretation
+
+The networkQuality score will be a number between -1 and 5.
+
+- -1 -> Undefined - yet to be determined or not enough data to determine
+- 0 -> Disconnected or error in measuring score(in preview)
+- 1 -> Very Bad Connection
+- 2 -> Bad Connection
+- 3 -> Moderate Connection
+- 4 -> Good Connection
+- 5 -> Excellent Connection
+
+
+> 0 score in preview could also mean a failure in measuring the network due to firewall
+block if the internet otherwise looks good.
