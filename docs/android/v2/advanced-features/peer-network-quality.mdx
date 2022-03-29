@@ -1,0 +1,61 @@
+---
+title: Show Network Quality For Peers
+nav: 8.03
+---
+
+## Network Quality Information
+
+The network quality for every peer can be retrieved by registering an instance of `HmsUpdateListener` in `hmsSDK`.
+
+
+## Reading Network Quality Information
+
+Whenever peer network quality changes an update will be fired to `onPeerUpdate(update : HMSPeerUpdate, peer : HMSPeer)`
+of HMSUpdateListener where the update value will be of type `HMSPeerUpdate.NETWORK_QUALITY_UPDATED`.
+
+
+> 💡The`HMSPeer` object represents a person in the call.
+
+
+It could look something like this:
+
+<Tabs id="peer-quality_update" items={['Kotlin', 'Java']} />
+
+<Tab id='peer-quality_update-0'>
+
+
+```kotlin
+override fun onPeerUpdate(type: HMSPeerUpdate, hmsPeer: HMSPeer) {
+    when (type) {
+        HMSPeerUpdate.NETWORK_QUALITY_UPDATED -> {
+            // values can be accessed using hmsPeer.networkQuality?.downlinkQuality    
+            val quality = hmsPeer.networkQuality?.downlinkQuality        
+        }
+    }
+}
+
+```
+
+</Tab>
+
+<Tab id='peer-quality_update-1'>
+
+```java
+    
+@Override
+void onPeerUpdate(HMSPeerUpdate type, HMSPeer hmsPeer) {
+    switch (type) {
+        case NETWORK_QUALITY_UPDATED:
+            HMSNetworkQuality quality = peer.getNetworkQuality();
+            
+            if(quality != null) {
+                int networkQuality = quality.getDownlinkQuality();
+            }
+            break;
+        // ....
+    }
+}  
+
+```
+
+</Tab>

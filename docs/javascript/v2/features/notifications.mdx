@@ -20,10 +20,6 @@ In order to subscribe for notifications we can use the hmsNotifications object c
 import { hmsNotifications } from './hms';
 
 hmsNotifications.onNotification((notification) => {
-    if (!notification) {
-        return;
-    }
-
     // This function will be called when a notification is received
     console.log('notification type', notification.type);
 
@@ -76,10 +72,6 @@ The data in notification depends on the notification type. You can use the `swit
 import { hmsNotifications } from './hms';
 
 const unsubscribe = hmsNotifications.onNotification((notification) => {
-    if (!notification) {
-        return;
-    }
-
     console.log('notification type', notification.type);
     console.log('data', notification.data);
 
@@ -219,10 +211,6 @@ You can pass a single notification or array of notifications from one of `HMSNot
 import { hmsNotifications } from './hms';
 
 const unsubscribe = hmsNotifications.onNotification((notification) => {
-    if (!notification) {
-        return;
-    }
-
     console.log('notification type', notification.type);
     console.log('data', notification.data);
 }, HMSNotificationTypes.PEER_JOINED);
@@ -246,8 +234,7 @@ import { useHMSNotifications } from '@100mslive/react-sdk';
 
 function Notification() {
     const notification = useHMSNotifications(HMSNotificationTypes.PEER_JOINED);
-    const peerNotification = useHMSNotifications(HMSNotificationTypes.PEER_JOINED);
-
+    const peerNotification = useHMSNotifications([HMSNotificationTypes.PEER_JOINED, HMSNotificationTypes.PEER_LEFT]);
 
     React.useEffect(() => {
         if (!notification) {
@@ -263,10 +250,8 @@ function Notification() {
         if (!peerNotification) {
             return;
         }
-        // add a switch case or if/else depending on number of types passed in useHMSNotifications
         console.log('notification type', notification.type);
         console.log('data', notification.data);
-
     }, [peerNotification]);
 
     return <div>Notification: {notification?.type}</div>;
