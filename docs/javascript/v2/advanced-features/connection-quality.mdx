@@ -29,7 +29,7 @@ interface HMSConnectionQuality {
 
 <Tabs id="connection-quality" items={['JavaScript', 'React']} />
 
-<Tab id='connection-quality-js'>
+<Tab id='connection-quality-0'>
 
 ```js
 hmsStore.subscribe((connectionQuality) => {
@@ -42,12 +42,15 @@ hmsStore.subscribe((connectionQuality) => {
 
 </Tab>
 
-<Tab id='connection-quality-jsx'>
+<Tab id='connection-quality-1'>
 
 ```jsx
-const downlinkQuality = useHMSStore(selectConnectionQualityByPeerID(peerId))?.downlinkQuality;
 
-// use the score to show some UI!
+function ConnectionQuality(peerId) {
+    const downlinkQuality = useHMSStore(selectConnectionQualityByPeerID(peerId))?.downlinkQuality;
+    // use the score to show some UI!
+    return <span>downlinkQuality</span>;
+}
 ```
 
 </Tab>
