@@ -382,10 +382,16 @@ curl https://api.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <management_
 
 ### Body Parameters
 
-| Name          | Type     | Description                                                      | Required |
-| :------------ | :------- | :--------------------------------------------------------------- | :------- |
-| name <br/>    | `string` | Room name as given during creation of the room                   | Yes      |
-| enabled <br/> | `bool`   | Flag to indicate disabling of the room, should be set to `false` | Yes      |
+| Name          | Type   | Description                                                      | Required |
+| :------------ | :----- | :--------------------------------------------------------------- | :------- |
+| enabled <br/> | `bool` | Flag to indicate disabling of the room, should be set to `false` | Yes      |
+
+### URL Parameters
+
+| Name       | Type     | Description                | Required |
+| :--------- | :------- | :------------------------- | :------- |
+| id <br/>   | `string` | ID of the room if known.   | No       |
+| name <br/> | `string` | Name of the room if known. | No       |
 
 ## Get Room Data using API
 
