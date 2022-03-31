@@ -14,3 +14,6 @@ We'll list any issues related to our sdk or browsers/devices here along with any
 
 3. Controlling the volume of audio elements is not supported by iOS. So, [locally setting remote peer volume](../advanced-features/volume-control) won't work in iOS.
    However, `hmsActions.setVolume(0, trackId)` and `hmsActions.setVolume(100, trackId)` will mute and unmute audio respectively.
+
+4. Mac Safari has an issue playing canvas stream in video. This will result in video playlist not visible to the peer who is playing it in safari. This is happening
+   since Safari 15.2. Please track [this](https://bugs.webkit.org/show_bug.cgi?id=181663) and [this](https://bugs.webkit.org/show_bug.cgi?id=230621).

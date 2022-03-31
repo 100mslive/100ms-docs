@@ -3,6 +3,15 @@ title: Android SDK
 nav: 15
 description: Release Notes for 100ms Android SDK
 ---
+## 2.3.4 - 2022-03-28
+### Fixed
+* HLS recording status wasn't always updated when stopped.
+* Rare crash when cameras are unavailable and it seemed to the app like none exist.
+
+### Added
+* Network Quality in preview. [Network quality](../features/Network-Quality-Reports) reports can now be requested at the preview screen. Use the returned value to determine if you should suggest people's internet is too slow to join with video etc.
+* Network Quality during calls. [Peer Network Quality](../advanced-features/peer-network-quality) updates are now received during the call. Use this to show how strong any peer's internet is during the call.
+
 ## 2.3.3 - 2022-03-17
 ### Fixed
 * `Leave` not finishing if SDK is in reconnection state. Hence all `join` calls after that was getting queued up if called on the same HMSSDK instance
