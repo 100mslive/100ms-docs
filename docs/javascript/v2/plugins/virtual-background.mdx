@@ -56,14 +56,19 @@ const virtualBackground = new HMSVirtualBackgroundPlugin(background : {'blur' | 
 
 ### Check if plugin is supported
 
-isSupported can be used to check if the browser is supported or not.
-It will return True/False based on browser.
+validateVideoPluginSupport can be used to check if the browser/input device is supported or not.
+It will return True in case of plugin is supported and return error message if it is not.
 
 ```jsx
-if (virtualBackground.isSupported()) {
+
+import { hmsActions } from './hms';
+
+const pluginSupport = hmsActions.validateVideoPluginSupport(virtualBackground);
+if (pluginSupport.isSupported) {
     console.log('Platform is supported');
 } else {
-    console.log('Platform not supported');
+    const err = pluginSupport.errMsg;
+    console.error(err);
 }
 ```
 
