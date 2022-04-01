@@ -68,6 +68,6 @@ Room state settings control the strategy of sending room state updates sent to o
 | Setting                           | Description                                                                                                       |
 | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
 | Room-state Message Interval (in seconds)    | Room-state data will be sent over a regular interval of these many seconds.  Consequently, the room state displayed on the preview screen will refresh accordingly. This value must be a multiple of 5, between 5 and 3600 seconds, both inclusive.                                   |
-| Send Peer List in Room-state                | Enabling this will send peer-list data of the room. If disabled, only the peer count is sent.                   |
+| Send Peer List in Room-state                | Enabling this will send peer-list info of the room. If disabled, only the peer count is sent.                   |
 | Enable Room-State                           | If enabled, room-state data will be sent to the preview screen. If disabled, no such room-state data will be sent.|
 | Roles with room-state permission           | This is the list of all the roles which will get the room-state data. You can also individually toggle these settings in the Roles tab under the Permissions section.                               |
