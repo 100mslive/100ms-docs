@@ -61,7 +61,7 @@ As the name suggests, Advanced Settings section contains more settings and contr
 
 ### Room State
 
-Room state settings control the behaviour of room state shown to the user on the preview screen.
+Room state settings control the strategy of sending room state updates sent to our client SDK consumers.
 
 
 
