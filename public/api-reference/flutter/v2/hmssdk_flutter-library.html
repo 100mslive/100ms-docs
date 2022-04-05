@@ -4,9 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="generator" content="made with love by dartdoc 5.0.1">
-  <meta name="description" content="hmssdk_flutter API docs, for the Dart programming language.">
-  <title>hmssdk_flutter - Dart API docs</title>
+  <meta name="description" content="hmssdk_flutter library API docs, for the Dart programming language.">
+  <title>hmssdk_flutter library - Dart API</title>
 
 
   
@@ -14,15 +13,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   
-  <link rel="stylesheet" href="static-assets/github.css?v1">
-  <link rel="stylesheet" href="static-assets/styles.css?v1">
-  <link rel="icon" href="static-assets/favicon.png?v1">
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
 
   
 </head>
 
 
-<body data-base-href=""
+<body data-base-href="../"
       data-using-base-href="false">
 
 <div id="overlay-under-drawer"></div>
@@ -30,7 +29,8 @@
 <header id="title">
   <button id="sidenav-left-toggle" type="button">&nbsp;</button>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
-    <li><a href="https://www.100ms.live/">hmssdk_flutter package</a></li>
+    <li><a href="../index.html">hmssdk_flutter</a></li>
+    <li class="self-crumb">hmssdk_flutter library</li>
   </ol>
   <div class="self-name">hmssdk_flutter</div>
   <form class="search navbar-right" role="search">
@@ -42,325 +42,709 @@
 
 
   <div id="dartdoc-main-content" class="main-content">
-      
-<section class="desc markdown">
-  <a href="https://100ms.live/">
-<img src="https://github.com/100mslive/100ms-flutter/blob/develop/100ms.gif" height="256/"> 
-<img src="https://github.com/100mslive/100ms-flutter/blob/develop/100ms.svg" title="100ms logo" float="center" height="256">
-</a>
-<p><a href="https://pub.dev/packages/hmssdk_flutter"><img src="https://img.shields.io/pub/v/hmssdk_flutter" alt="Pub Version"></a>
-<a href="https://www.100ms.live/"><img src="https://img.shields.io/github/license/100mslive/100ms-flutter" alt="License"></a>
-<a href="https://docs.100ms.live/flutter/v2/foundation/basics"><img src="https://img.shields.io/badge/Read-Documentation-blue" alt="Documentation"></a>
-<a href="https://100ms.live/discord"><img src="https://img.shields.io/discord/843749923060711464?label=Join%20on%20Discord" alt="Discord"></a>
-<a href="https://appdistribution.firebase.dev/i/b623e5310929ab70"><img src="https://img.shields.io/badge/Download%20Android-Firebase-green" alt="Firebase"></a>
-<a href="https://testflight.apple.com/join/Uhzebmut"><img src="https://img.shields.io/badge/Download%20iOS-TestFlight-blue" alt="TestFlight"></a>
-<a href="https://github.com/100mslive/100ms-flutter/projects/1"><img src="https://img.shields.io/github/commit-activity/m/100mslive/100ms-flutter.svg" alt="Activity"></a>
-<a href="https://dashboard.100ms.live/register"><img src="https://img.shields.io/badge/Contact-Know%20More-blue" alt="Register"></a></p>
-<h1 id="100ms-flutter-sdk-">100ms Flutter SDK 🎉</h1>
-<p>Here you will find everything you need to build experiences with video using 100ms iOS/Android SDK. Dive into our SDKs, quick starts, add real-time video, voice, and screen sharing to your web and mobile applications.</p>
-<p>📲 Download the Sample iOS app here: <a href="https://testflight.apple.com/join/Uhzebmut">https://testflight.apple.com/join/Uhzebmut</a></p>
-<p>🤖 Download the Sample Android app here: <a href="https://appdistribution.firebase.dev/i/b623e5310929ab70">https://appdistribution.firebase.dev/i/b623e5310929ab70</a></p>
-<h2 id="-how-to-run-the-sample-app">🏃‍♀️ How to run the Sample App</h2>
-<p>The Example app can be found <a href="https://github.com/100mslive/100ms-flutter/tree/main/example">here</a>.</p>
-<ol>
-<li>In project root, run <code>flutter pub get</code></li>
-<li>Change directory to <code>example</code> folder, run <code>flutter packages pub run build_runner build --delete-conflicting-outputs</code></li>
-<li>Run either <code>flutter build ios</code> OR <code>flutter build apk</code></li>
-<li>Finally, <code>flutter run</code></li>
-</ol>
-<h2 id="-setup-guide">🚂 Setup Guide</h2>
-<ol>
-<li>
-<p>Sign up on <a href="https://dashboard.100ms.live/register">https://dashboard.100ms.live/register</a> &amp; visit the Developer tab to access your credentials.</p>
-</li>
-<li>
-<p>Get familiarized with <a href="https://docs.100ms.live/flutter/foundation/security-and-tokens">Tokens &amp; Security here</a></p>
-</li>
-<li>
-<p>Complete the steps in <a href="https://docs.100ms.live/flutter/guides/token">Auth Token Quick Start Guide</a></p>
-</li>
-<li>
-<p>Get the HMSSDK via <a href="https://pub.dev/packages/hmssdk_flutter">pub.dev</a>. Add the <code>hmssdk_flutter</code> to your pubspec.yaml</p>
-</li>
-</ol>
-<h2 id="-pre-requisites">☝️ Pre-requisites</h2>
-<ul>
-<li>Support for Android API level 24 or higher</li>
-<li>Support for Java 8</li>
-<li>Support for iOS 10 or higher</li>
-<li>Xcode 12 or higher</li>
-</ul>
-<h2 id="-supported-devices">📱 Supported Devices</h2>
-<p>The Android SDK supports Android API level 21 and higher. It is built for armeabi-v7a, arm64-v8a, x86, and x86_64 architectures.</p>
-<p>iPhone &amp; iPads with iOS version 10 or higher.</p>
-<h2 id="android-permissions">Android Permissions</h2>
-<p>Add following permissions in Android AndroidManifest.xml file</p>
-<pre class="language-xml"><code class="language-xml">&lt;uses-feature android:name="android.hardware.camera"/&gt;
+      <div>
+<h1><span class="kind-library">hmssdk_flutter</span> library 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+ 
+</h1></div>
 
-&lt;uses-feature android:name="android.hardware.camera.autofocus"/&gt;
-
-&lt;uses-permission android:name="android.permission.CAMERA"/&gt;
-
-&lt;uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/&gt;
-
-&lt;uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/&gt;
-
-&lt;uses-permission android:name="android.permission.RECORD_AUDIO"/&gt;
-
-&lt;uses-permission android:name="android.permission.BLUETOOTH"/&gt;
-
-&lt;uses-permission android:name="android.permission.INTERNET"/&gt;
-
-&lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/&gt;
-</code></pre>
-<h2 id="ios-permissions">iOS Permissions</h2>
-<p>Add following permissions in iOS Info.plist file</p>
-<pre class="language-xml"><code class="language-xml">&lt;key&gt;NSMicrophoneUsageDescription&lt;/key&gt;
-&lt;string&gt;{YourAppName} wants to use your microphone&lt;/string&gt;
-
-&lt;key&gt;NSCameraUsageDescription&lt;/key&gt;
-&lt;string&gt;{YourAppName} wants to use your camera&lt;/string&gt;
-
-&lt;key&gt;NSLocalNetworkUsageDescription&lt;/key&gt;
-&lt;string&gt;{YourAppName} App wants to use your local network&lt;/string&gt;
-</code></pre>
-<h2 id="-key-concepts">🧐 Key Concepts</h2>
-<ul>
-<li><code>Room</code> - A room represents real-time audio, video session, the basic building block of the 100mslive Video SDK</li>
-<li><code>Track</code> - A track represents either the audio or video that makes up a stream</li>
-<li><code>Peer</code> - A peer represents all participants connected to a room. Peers can be "local" or "remote"</li>
-<li><code>Broadcast</code> - A local peer can send any message/data to all remote peers in the room</li>
-</ul>
-<h2 id="generating-auth-token">Generating Auth Token</h2>
-<p>Auth Token is used in HMSConfig instance to setup configuration.
-So you need to make an HTTP request. you can use any package we are using <code>http</code> package.
-  You will get your token endpoint at your 100ms dashboard and append <code>api/token</code> to that endpoint and make an http post request.</p>
-<p>Example:</p>
-<pre class="language-dart"><code class="language-dart">  http.Response response = await http.post(Uri.parse(Constant.getTokenURL),
-          body: {'room_id': room, 'user_id': user, 'role': Constant.defaultRole});
-</code></pre>
-<p>after generating token parse it using json.</p>
-<pre class="language-dart"><code class="language-dart">  var body = json.decode(response.body);
-  String token = body['token'];
-</code></pre>
-<p>You will need this token later explained below.</p>
-<h2 id="-setup-event-listeners">♻️ Setup event listeners</h2>
-<p>100ms SDK provides callbacks to the client app about any change or update happening in the room after a user has joined by implementing <code>HMSUpdateListener</code>. These updates can be used to render the video on screen or to display other info regarding the room.</p>
-<pre class="language-dart"><code class="language-dart">
-/// 100ms SDK provides callbacks to the client app about any change or update happening in the room after a user has joined by implementing HMSUpdateListener.
-/// These updates can be used to render the video on screen or to display other info regarding the room.
-abstract class HMSUpdateListener {
-
-  /// This will be called on a successful JOIN of the room by the user
-  ///
-  /// This is the point where applications can stop showing its loading state
-  /// [room]: the room which was joined
-  void onJoin({required HMSRoom room});
-
-  /// This is called when there is a change in any property of the Room
-  ///
-  ///  [room]: the room which was joined
-  ///  [update]: the triggered update type. Should be used to perform different UI Actions
-  void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update});
-
-  /// This will be called whenever there is an update on an existing peer
-  /// or a new peer got added/existing peer is removed.
-  ///
-  /// This callback can be used to keep a track of all the peers in the room
-  /// [peer]: the peer who joined/left or was updated
-  /// [update]: the triggered update type. Should be used to perform different UI Actions
-  void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update});
-
-  /// This is called when there are updates on an existing track
-  /// or a new track got added/existing track is removed
-  ///
-  /// This callback can be used to render the video on screen whenever a track gets added
-  ///  [track]: the track which was added, removed or updated
-  ///  [trackUpdate]: the triggered update type
-  ///  [peer]: the peer for which track was added, removed or updated
-  void onTrackUpdate({required HMSTrack track, required HMSTrackUpdate trackUpdate, required HMSPeer peer});
-
-  /// This will be called when there is an error in the system
-  /// and SDK has already retried to fix the error
-  /// [error]: the error that occurred
-  void onError({required HMSException error});
-
-  /// This is called when there is a new broadcast message from any other peer in the room
-  ///
-  /// This can be used to implement chat is the room
-  /// [message]: the received broadcast message
-  void onMessage({required HMSMessage message});
-
-  /// This is called when someone asks for change or role
-  ///
-  /// for eg. admin can ask a peer to become host from guest.
-  /// this triggers this call on peer's app
-  void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest});
-
-  /// This is called every 1 second with list of active speakers
-  ///
-  /// ## A HMSSpeaker object contains -
-  ///    - peerId: the peer identifier of HMSPeer who is speaking
-  ///    - trackId: the track identifier of HMSTrack which is emitting audio
-  ///    - audioLevel: a number within range 1-100 indicating the audio volume
-  ///
-  /// A peer who is not present in the list indicates that the peer is not speaking
-  ///
-  /// This can be used to highlight currently speaking peers in the room
-  /// [speakers] the list of speakers
-  void onUpdateSpeakers({required List&lt;HMSSpeaker&gt; updateSpeakers});
-
-  ///when network or some other error happens it will be called
-  void onReconnecting();
-
-  ///when you are back in the room after reconnection
-  void onReconnected();
-
-  ///when someone requests for track change of yours be it video or audio this will be triggered
-  /// [hmsTrackChangeRequest] request instance consisting of all the required info about track change
-  void onChangeTrackStateRequest({required HMSTrackChangeRequest hmsTrackChangeRequest});
-
-  ///when someone kicks you out or when someone ends the room at that time it is triggered
-  /// [hmsPeerRemovedFromPeer] it consists info about who removed you and why.
-  void onRemovedFromRoom({required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer});
-}
-
-</code></pre>
-<h2 id="-how-to-listen-to-track-peer-and-room-updates">🤔 How to listen to Track, Peer and Room updates?</h2>
-<p>The HMS SDK sends updates to the application about any change in HMSPeer , HMSTrack or HMSRoom via the callbacks in HMSUpdateListener.
-Application need to listen to the corresponding updates in onPeerUpdate , onTrackUpdate or onRoomUpdate</p>
-<p>The following are the different types of updates that are emitted by the SDK -</p>
-<pre class="language-dart"><code class="language-dart">HMSPeerUpdate
-  HMSPeerUpdate.peerJoined: A new peer joins the room
-  HMSPeerUpdate.peerLeft: An existing peer leaves the room
-  HMSPeerUpdate.roleUpdated
-  HMSPeerUpdate.metadataChanged
-  HMSPeerUpdate.nameChanged
-
-HMSTrackUpdate
-  HMSTrackUpdate.trackAdded: A new track is added by a remote peer
-  HMSTrackUpdate.trackRemoved: An existing track is removed from a remote peer
-  HMSTrackUpdate.trackMuted: An existing track of a remote peer is muted
-  HMSTrackUpdate.trackUnMuted: An existing track of a remote peer is unmuted
-  HMSTrackUpdate.trackDegraded
-  HMSTrackUpdate.trackRestored
-
-HMSRoomUpdate
-  HMSRoomUpdate.roomMuted
-  HMSRoomUpdate.roomUnmuted
-  HMSRoomUpdate.serverRecordingStateUpdated
-  HMSRoomUpdate.browserRecordingStateUpdated
-  HMSRoomUpdate.rtmpStreamingStateUpdated
-  HMSRoomUpdate.hlsStreamingStateUpdated
-</code></pre>
-<h2 id="-how-to-know-the-type-and-source-of-track">🛤 How to know the type and source of Track?</h2>
-<p>HMSTrack contain a field called source which denotes the source of the Track. 
-Source can have the following values - regular (normal), screen (for screenshare)and plugin (for plugins)</p>
-<p>To know the type of track, check the value of type which would be one of the enum values - AUDIO or VIDEO</p>
-<h2 id="-provide-joining-configuration">🤝 Provide joining configuration</h2>
-<p>To join a room created by following the steps described in the above section, clients need to create a <code>HMSConfig</code> instance and use that instance to call <code>join</code> method of <code>HMSSDK</code></p>
-<pre class="language-dart"><code class="language-dart">// Create a new HMSConfig
-HMSConfig config = HMSConfig(authToken: token,
-                            userName: userName);
-</code></pre>
-<p><code>token</code>:  follow the above step 1 to generate token.
- <code>userName</code>: your name using which you want to join the room.</p>
-<h2 id="-join-a-room">🙏 Join a room</h2>
-<p>Use the HMSConfig and HMSUpdateListener instances to call the join method on the instance of HMSSDK created above.
-Once Join succeeds, all the callbacks keep coming on every change in the room and the app can react accordingly</p>
-<pre class="language-dart"><code class="language-dart">HMSSDK hmsSDK = HMSSDK()
-hmsSDK.build()
-hmsSDK.joinMeeting(config: this.config);
-</code></pre>
-<h2 id="-leave-room">👋 Leave Room</h2>
-<p>Call the leave method on the HMSSDK instance</p>
-<pre class="language-dart"><code class="language-dart">hmsSDK.leave() // to leave a room
-</code></pre>
-<h2 id="-muteunmute-local-audio">🙊 Mute/Unmute Local Audio</h2>
-<pre class="language-dart"><code class="language-dart">// Turn on
-hmsSDK.switchAudio(isOn: true)
-
-// Turn off  
-hmsSDK.switchAudio(isOn: false)
-</code></pre>
-<h2 id="-muteunmute-local-video">🙈 Mute/Unmute Local Video</h2>
-<pre class="language-dart"><code class="language-dart">hmsSDK.startCapturing()
-
-hmsSDK.stopCapturing()
-
-hmsSDK.switchCamera()
-</code></pre>
-<h2 id="-hmstracks-explained">🛤 HMSTracks Explained</h2>
-<p><code>HMSTrack</code> is the super-class of all the tracks that are used inside <code>HMSSDK</code>. Its hierarchy looks like this -</p>
-<pre class="language-dart"><code class="language-dart">HMSTrack
-    - AudioTrack
-        - LocalAudioTrack
-        - RemoteAudioTrack
-    - VideoTrack
-        - LocalVideoTrack
-        - RemoteVideoTrack
-</code></pre>
-<h2 id="-display-a-track">🎞 Display a Track</h2>
-<p>To display a video track, first get the <code>HMSVideoTrack</code> &amp; pass it on to <code>HMSVideoView</code> using <code>setVideoTrack</code> function. Ensure to attach the <code>HMSVideoView</code> to your UI hierarchy.</p>
-<pre class="language-dart"><code class="language-dart">HMSVideoView(track: videoTrack);
-</code></pre>
-<h2 id="change-a-role">Change a Role</h2>
-<p>To change role, you will provide the selected peer and new roleName from roles. If forceChange is true, the system will prompt user for the change. If forceChange is false, user will get a prompt to accept/reject the role.
-After changeRole is called, HMSUpdateListener's onRoleChangeRequest will be called on selected user's end.</p>
-<pre class="language-dart"><code class="language-dart"> hmsSDK.changeRole(peer: peer, roleName: roleName, forceChange: true);
-</code></pre>
-<h2 id="-chat-messaging">📨 Chat Messaging</h2>
-<p>You can send a chat or any other kind of message from local peer to all remote peers in the room.</p>
-<p>To send a message first create an instance of <code>HMSMessage</code> object.</p>
-<p>Add the information to be sent in the <code>message</code> property of <code>HMSMessage</code>.</p>
-<p>Then use the <code>void sendBroadcastMessage(message: String)</code> function on instance of HMSSDK.</p>
-<p>When you(the local peer) receives a message from others(any remote peer), <code>void onMessage({required HMSMessage message})</code> function of <code>HMSUpdateListener</code> is invoked.</p>
-<pre class="language-dart"><code class="language-dart">// following is an example implementation of chat messaging
-
-// to send a broadcast message
-String message = 'Hello World!'
-hmsSDK.sendBroadcastMessage(message);  // meeting is an instance of `HMSSDK` object
+    
 
 
-// receiving messages
-// the object conforming to `HMSUpdateListener` will be invoked with `on(message: HMSMessage)`, add your logic to update Chat UI within this listener
-void onMessage({required HMSMessage message}){
-    let messageReceived = message.message // extract message payload from `HMSMessage` object that is received
-    // update your Chat UI with the messageReceived
-}
-</code></pre>
-<p>🏃‍♀️ Checkout the sample implementation in the <a href="https://github.com/100mslive/100ms-flutter/tree/main/example">Example app folder</a>.</p>
-<h2 id="-preview">🎞 Preview</h2>
-<p>You can use our preview feature to unmute/mute audio/video before joining the room.</p>
-<p>You can implement your own preview listener using this <code>abstract class HMSPreviewListener</code></p>
-<pre class="language-dart"><code class="language-dart">abstract class HMSPreviewListener {
+    <section class="summary offset-anchor" id="classes">
+      <h2>Classes</h2>
 
-  //you will get all error updates here
-  void onError({required HMSException error});
-
-  //here you will get room instance where you are going to join and your own local tracks to render the video by checking the type of trackKind and then using the 
-  //above mentioned VideoView widget
-  void onPreview({required HMSRoom room, required List&lt;HMSTrack&gt; localTracks});
-}
-</code></pre>
-<p>📖 Read the Complete Documentation here: <a href="https://docs.100ms.live/flutter/v2/foundation/basics">https://docs.100ms.live/flutter/v2/foundation/basics</a></p>
-<p>📲 Download the Sample iOS app here: <a href="https://testflight.apple.com/join/Uhzebmut">https://testflight.apple.com/join/Uhzebmut</a></p>
-<p>🤖 Download the Sample Android app here: <a href="https://appdistribution.firebase.dev/i/b623e5310929ab70">https://appdistribution.firebase.dev/i/b623e5310929ab70</a></p>
-</section>
-
-
-      <section class="summary">
-          <h2>Libraries</h2>
-        <dl>
-          <dt id="hmssdk_flutter">
-  <span class="name"><a href="hmssdk_flutter/hmssdk_flutter-library.html">hmssdk_flutter</a></span> 
+      <dl>
+        <dt id="HMSActionResultListener">
+  <span class="name "><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a></span> 
 
 </dt>
-<dd> 
+<dd>
+   
 </dd>
 
-        </dl>
-      </section>
+        <dt id="HMSAudioSetting">
+  <span class="name "><a href="../hmssdk_flutter/HMSAudioSetting-class.html">HMSAudioSetting</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSAudioTrack">
+  <span class="name "><a href="../hmssdk_flutter/HMSAudioTrack-class.html">HMSAudioTrack</a></span> 
+
+</dt>
+<dd>
+  parent of all audio tracks 
+</dd>
+
+        <dt id="HMSAudioTrackSetting">
+  <span class="name "><a href="../hmssdk_flutter/HMSAudioTrackSetting-class.html">HMSAudioTrackSetting</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSConfig">
+  <span class="name "><a href="../hmssdk_flutter/HMSConfig-class.html">HMSConfig</a></span> 
+
+</dt>
+<dd>
+  HMSConfig contains joining information of a user to a room 
+</dd>
+
+        <dt id="HMSException">
+  <span class="name "><a href="../hmssdk_flutter/HMSException-class.html">HMSException</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSHLSConfig">
+  <span class="name "><a href="../hmssdk_flutter/HMSHLSConfig-class.html">HMSHLSConfig</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSHLSMeetingURLVariant">
+  <span class="name "><a href="../hmssdk_flutter/HMSHLSMeetingURLVariant-class.html">HMSHLSMeetingURLVariant</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSLocalAudioStats">
+  <span class="name "><a href="../hmssdk_flutter/HMSLocalAudioStats-class.html">HMSLocalAudioStats</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSLocalAudioTrack">
+  <span class="name "><a href="../hmssdk_flutter/HMSLocalAudioTrack-class.html">HMSLocalAudioTrack</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSLocalPeer">
+  <span class="name "><a href="../hmssdk_flutter/HMSLocalPeer-class.html">HMSLocalPeer</a></span> 
+
+</dt>
+<dd>
+  HMSLocalPeer instance of the localPeer means your instance in the room. 
+</dd>
+
+        <dt id="HMSLocalVideoStats">
+  <span class="name "><a href="../hmssdk_flutter/HMSLocalVideoStats-class.html">HMSLocalVideoStats</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSLocalVideoTrack">
+  <span class="name "><a href="../hmssdk_flutter/HMSLocalVideoTrack-class.html">HMSLocalVideoTrack</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSLog">
+  <span class="name "><a href="../hmssdk_flutter/HMSLog-class.html">HMSLog</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSLogListener">
+  <span class="name "><a href="../hmssdk_flutter/HMSLogListener-class.html">HMSLogListener</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSLogsUpdateListenerMethodResponse">
+  <span class="name "><a href="../hmssdk_flutter/HMSLogsUpdateListenerMethodResponse-class.html">HMSLogsUpdateListenerMethodResponse</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSMessage">
+  <span class="name "><a href="../hmssdk_flutter/HMSMessage-class.html">HMSMessage</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSMessageRecipient">
+  <span class="name "><a href="../hmssdk_flutter/HMSMessageRecipient-class.html">HMSMessageRecipient</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSMessageResultListener">
+  <span class="name "><a href="../hmssdk_flutter/HMSMessageResultListener-class.html">HMSMessageResultListener</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSNetworkQuality">
+  <span class="name "><a href="../hmssdk_flutter/HMSNetworkQuality-class.html">HMSNetworkQuality</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSNetworkUpdateListenerMethodResponse">
+  <span class="name "><a href="../hmssdk_flutter/HMSNetworkUpdateListenerMethodResponse-class.html">HMSNetworkUpdateListenerMethodResponse</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSPeer">
+  <span class="name "><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSPeerRemovedFromPeer">
+  <span class="name "><a href="../hmssdk_flutter/HMSPeerRemovedFromPeer-class.html">HMSPeerRemovedFromPeer</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSPermissions">
+  <span class="name "><a href="../hmssdk_flutter/HMSPermissions-class.html">HMSPermissions</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSPreviewListener">
+  <span class="name "><a href="../hmssdk_flutter/HMSPreviewListener-class.html">HMSPreviewListener</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSPreviewUpdateListenerMethodResponse">
+  <span class="name "><a href="../hmssdk_flutter/HMSPreviewUpdateListenerMethodResponse-class.html">HMSPreviewUpdateListenerMethodResponse</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSPublishSetting">
+  <span class="name "><a href="../hmssdk_flutter/HMSPublishSetting-class.html">HMSPublishSetting</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSRecordingConfig">
+  <span class="name "><a href="../hmssdk_flutter/HMSRecordingConfig-class.html">HMSRecordingConfig</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSRemoteAudioStats">
+  <span class="name "><a href="../hmssdk_flutter/HMSRemoteAudioStats-class.html">HMSRemoteAudioStats</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSRemoteAudioTrack">
+  <span class="name "><a href="../hmssdk_flutter/HMSRemoteAudioTrack-class.html">HMSRemoteAudioTrack</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSRemotePeer">
+  <span class="name "><a href="../hmssdk_flutter/HMSRemotePeer-class.html">HMSRemotePeer</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSRemoteVideoStats">
+  <span class="name "><a href="../hmssdk_flutter/HMSRemoteVideoStats-class.html">HMSRemoteVideoStats</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSRemoteVideoTrack">
+  <span class="name "><a href="../hmssdk_flutter/HMSRemoteVideoTrack-class.html">HMSRemoteVideoTrack</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSRole">
+  <span class="name "><a href="../hmssdk_flutter/HMSRole-class.html">HMSRole</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSRoleChangeRequest">
+  <span class="name "><a href="../hmssdk_flutter/HMSRoleChangeRequest-class.html">HMSRoleChangeRequest</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSRoom">
+  <span class="name "><a href="../hmssdk_flutter/HMSRoom-class.html">HMSRoom</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSRTCStats">
+  <span class="name "><a href="../hmssdk_flutter/HMSRTCStats-class.html">HMSRTCStats</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSRTCStatsReport">
+  <span class="name "><a href="../hmssdk_flutter/HMSRTCStatsReport-class.html">HMSRTCStatsReport</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSSDK">
+  <span class="name "><a href="../hmssdk_flutter/HMSSDK-class.html">HMSSDK</a></span> 
+
+</dt>
+<dd>
+  /// The public interface of 100ms SDK. Create an instance of HMSSDK to start using the SDK. <a href="../hmssdk_flutter/HMSSDK-class.html">[...]</a>
+</dd>
+
+        <dt id="HMSSimulCastSettings">
+  <span class="name "><a href="../hmssdk_flutter/HMSSimulCastSettings-class.html">HMSSimulCastSettings</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSSpeaker">
+  <span class="name "><a href="../hmssdk_flutter/HMSSpeaker-class.html">HMSSpeaker</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSSubscribeSettings">
+  <span class="name "><a href="../hmssdk_flutter/HMSSubscribeSettings-class.html">HMSSubscribeSettings</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSTrack">
+  <span class="name "><a href="../hmssdk_flutter/HMSTrack-class.html">HMSTrack</a></span> 
+
+</dt>
+<dd>
+  Parent of all tracks 
+</dd>
+
+        <dt id="HMSTrackChangeRequest">
+  <span class="name "><a href="../hmssdk_flutter/HMSTrackChangeRequest-class.html">HMSTrackChangeRequest</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSTrackSetting">
+  <span class="name "><a href="../hmssdk_flutter/HMSTrackSetting-class.html">HMSTrackSetting</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSUpdateListener">
+  <span class="name "><a href="../hmssdk_flutter/HMSUpdateListener-class.html">HMSUpdateListener</a></span> 
+
+</dt>
+<dd>
+  100ms SDK provides callbacks to the client app about any change or update happening in the room after a user has joined by implementing HMSUpdateListener.
+These updates can be used to render the video on screen or to display other info regarding the room. 
+</dd>
+
+        <dt id="HMSUpdateListenerMethodResponse">
+  <span class="name "><a href="../hmssdk_flutter/HMSUpdateListenerMethodResponse-class.html">HMSUpdateListenerMethodResponse</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSVideoResolution">
+  <span class="name "><a href="../hmssdk_flutter/HMSVideoResolution-class.html">HMSVideoResolution</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSVideoSetting">
+  <span class="name "><a href="../hmssdk_flutter/HMSVideoSetting-class.html">HMSVideoSetting</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSVideoTrack">
+  <span class="name "><a href="../hmssdk_flutter/HMSVideoTrack-class.html">HMSVideoTrack</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSVideoTrackSetting">
+  <span class="name "><a href="../hmssdk_flutter/HMSVideoTrackSetting-class.html">HMSVideoTrackSetting</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSVideoView">
+  <span class="name "><a href="../hmssdk_flutter/HMSVideoView-class.html">HMSVideoView</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="PlatformMethodResponse">
+  <span class="name "><a href="../hmssdk_flutter/PlatformMethodResponse-class.html">PlatformMethodResponse</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+      </dl>
+    </section>
+
+
+    <section class="summary offset-anchor" id="extensions">
+      <h2>Extensions</h2>
+
+      <dl>
+        <dt id="HMSCameraFacingValues">
+    <span class="name "><a href="../hmssdk_flutter/HMSCameraFacingValues.html">HMSCameraFacingValues</a></span> 
+
+</dt>
+<dd>
+    Camera facing 
+</dd>
+
+
+        <dt id="HMSCodecValues">
+    <span class="name "><a href="../hmssdk_flutter/HMSCodecValues.html">HMSCodecValues</a></span> 
+
+</dt>
+<dd>
+     
+</dd>
+
+
+        <dt id="HMSLogLevelValue">
+    <span class="name "><a href="../hmssdk_flutter/HMSLogLevelValue.html">HMSLogLevelValue</a></span> 
+
+</dt>
+<dd>
+     
+</dd>
+
+
+        <dt id="HMSMessageRecipientValues">
+    <span class="name "><a href="../hmssdk_flutter/HMSMessageRecipientValues.html">HMSMessageRecipientValues</a></span> 
+
+</dt>
+<dd>
+     
+</dd>
+
+
+        <dt id="HMSPeerUpdateValues">
+    <span class="name "><a href="../hmssdk_flutter/HMSPeerUpdateValues.html">HMSPeerUpdateValues</a></span> 
+
+</dt>
+<dd>
+     
+</dd>
+
+
+        <dt id="HMSPreviewUpdateListenerMethodValues">
+    <span class="name "><a href="../hmssdk_flutter/HMSPreviewUpdateListenerMethodValues.html">HMSPreviewUpdateListenerMethodValues</a></span> 
+
+</dt>
+<dd>
+     
+</dd>
+
+
+        <dt id="HMSRoomUpdateValues">
+    <span class="name "><a href="../hmssdk_flutter/HMSRoomUpdateValues.html">HMSRoomUpdateValues</a></span> 
+
+</dt>
+<dd>
+     
+</dd>
+
+
+        <dt id="HMSTrackKindValue">
+    <span class="name "><a href="../hmssdk_flutter/HMSTrackKindValue.html">HMSTrackKindValue</a></span> 
+
+</dt>
+<dd>
+    Type of track <code>AUDIO,VIDEO</code> 
+</dd>
+
+
+        <dt id="HMSTrackUpdateValues">
+    <span class="name "><a href="../hmssdk_flutter/HMSTrackUpdateValues.html">HMSTrackUpdateValues</a></span> 
+
+</dt>
+<dd>
+     
+</dd>
+
+
+        <dt id="HMSUpdateListenerMethodValues">
+    <span class="name "><a href="../hmssdk_flutter/HMSUpdateListenerMethodValues.html">HMSUpdateListenerMethodValues</a></span> 
+
+</dt>
+<dd>
+     
+</dd>
+
+
+        <dt id="HMSVideoCodecValues">
+    <span class="name "><a href="../hmssdk_flutter/HMSVideoCodecValues.html">HMSVideoCodecValues</a></span> 
+
+</dt>
+<dd>
+     
+</dd>
+
+
+        <dt id="PlatformMethodValues">
+    <span class="name "><a href="../hmssdk_flutter/PlatformMethodValues.html">PlatformMethodValues</a></span> 
+
+</dt>
+<dd>
+     
+</dd>
+
+
+        <dt id="ScalingTypeExtension">
+    <span class="name "><a href="../hmssdk_flutter/ScalingTypeExtension.html">ScalingTypeExtension</a></span> 
+
+</dt>
+<dd>
+     
+</dd>
+
+
+      </dl>
+    </section>
+
+
+
+
+    <section class="summary offset-anchor" id="enums">
+      <h2>Enums</h2>
+
+      <dl>
+        <dt id="HMSActionResultListenerMethod">
+  <span class="name "><a href="../hmssdk_flutter/HMSActionResultListenerMethod.html">HMSActionResultListenerMethod</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSCameraFacing">
+  <span class="name "><a href="../hmssdk_flutter/HMSCameraFacing.html">HMSCameraFacing</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSCodec">
+  <span class="name "><a href="../hmssdk_flutter/HMSCodec.html">HMSCodec</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSLogLevel">
+  <span class="name "><a href="../hmssdk_flutter/HMSLogLevel.html">HMSLogLevel</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSMessageRecipientType">
+  <span class="name "><a href="../hmssdk_flutter/HMSMessageRecipientType.html">HMSMessageRecipientType</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSPeerUpdate">
+  <span class="name "><a href="../hmssdk_flutter/HMSPeerUpdate.html">HMSPeerUpdate</a></span> 
+
+</dt>
+<dd>
+  PeerUpdates in a room. 
+</dd>
+
+        <dt id="HMSPreviewUpdateListenerMethod">
+  <span class="name "><a href="../hmssdk_flutter/HMSPreviewUpdateListenerMethod.html">HMSPreviewUpdateListenerMethod</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSRoomUpdate">
+  <span class="name "><a href="../hmssdk_flutter/HMSRoomUpdate.html">HMSRoomUpdate</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSTrackKind">
+  <span class="name "><a href="../hmssdk_flutter/HMSTrackKind.html">HMSTrackKind</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSTrackUpdate">
+  <span class="name "><a href="../hmssdk_flutter/HMSTrackUpdate.html">HMSTrackUpdate</a></span> 
+
+</dt>
+<dd>
+  Track updates you will get when there is any change in the track 
+</dd>
+
+        <dt id="HMSUpdateListenerMethod">
+  <span class="name "><a href="../hmssdk_flutter/HMSUpdateListenerMethod.html">HMSUpdateListenerMethod</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="HMSVideoCodec">
+  <span class="name "><a href="../hmssdk_flutter/HMSVideoCodec.html">HMSVideoCodec</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+        <dt id="PlatformMethod">
+  <span class="name "><a href="../hmssdk_flutter/PlatformMethod.html">PlatformMethod</a></span> 
+
+</dt>
+<dd>
+  platformmethods to use to interact with specific platform 
+</dd>
+
+        <dt id="ScaleType">
+  <span class="name "><a href="../hmssdk_flutter/ScaleType.html">ScaleType</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+      </dl>
+    </section>
+
+
+    <section class="summary offset-anchor" id="exceptions">
+      <h2>Exceptions / Errors</h2>
+
+      <dl>
+        <dt id="HMSInSufficientDataException">
+  <span class="name "><a href="../hmssdk_flutter/HMSInSufficientDataException-class.html">HMSInSufficientDataException</a></span> 
+
+</dt>
+<dd>
+   
+</dd>
+
+      </dl>
+    </section>
 
   </div> <!-- /.main-content -->
 
@@ -372,20 +756,118 @@ void onMessage({required HMSMessage message}){
 </header>
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-  <li><a href="https://www.100ms.live/">hmssdk_flutter package</a></li>
+  <li><a href="../index.html">hmssdk_flutter</a></li>
+  <li class="self-crumb">hmssdk_flutter library</li>
 </ol>
 
 
-    <h5 class="hidden-xs"><span class="package-name">hmssdk_flutter</span> <span class="package-kind">package</span></h5>
+    <h5><span class="package-name">hmssdk_flutter</span> <span class="package-kind">package</span></h5>
     <ol>
       <li class="section-title">Libraries</li>
-      <li><a href="hmssdk_flutter/hmssdk_flutter-library.html">hmssdk_flutter</a></li>
+      <li><a href="../hmssdk_flutter/hmssdk_flutter-library.html">hmssdk_flutter</a></li>
 </ol>
 
   </div>
 
   <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
-  </div>
+    <h5>hmssdk_flutter library</h5>
+    <ol>
+  <li class="section-title"><a href="../hmssdk_flutter/hmssdk_flutter-library.html#classes">Classes</a></li>
+  <li><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a></li>
+  <li><a href="../hmssdk_flutter/HMSAudioSetting-class.html">HMSAudioSetting</a></li>
+  <li><a href="../hmssdk_flutter/HMSAudioTrack-class.html">HMSAudioTrack</a></li>
+  <li><a href="../hmssdk_flutter/HMSAudioTrackSetting-class.html">HMSAudioTrackSetting</a></li>
+  <li><a href="../hmssdk_flutter/HMSConfig-class.html">HMSConfig</a></li>
+  <li><a href="../hmssdk_flutter/HMSException-class.html">HMSException</a></li>
+  <li><a href="../hmssdk_flutter/HMSHLSConfig-class.html">HMSHLSConfig</a></li>
+  <li><a href="../hmssdk_flutter/HMSHLSMeetingURLVariant-class.html">HMSHLSMeetingURLVariant</a></li>
+  <li><a href="../hmssdk_flutter/HMSLocalAudioStats-class.html">HMSLocalAudioStats</a></li>
+  <li><a href="../hmssdk_flutter/HMSLocalAudioTrack-class.html">HMSLocalAudioTrack</a></li>
+  <li><a href="../hmssdk_flutter/HMSLocalPeer-class.html">HMSLocalPeer</a></li>
+  <li><a href="../hmssdk_flutter/HMSLocalVideoStats-class.html">HMSLocalVideoStats</a></li>
+  <li><a href="../hmssdk_flutter/HMSLocalVideoTrack-class.html">HMSLocalVideoTrack</a></li>
+  <li><a href="../hmssdk_flutter/HMSLog-class.html">HMSLog</a></li>
+  <li><a href="../hmssdk_flutter/HMSLogListener-class.html">HMSLogListener</a></li>
+  <li><a href="../hmssdk_flutter/HMSLogsUpdateListenerMethodResponse-class.html">HMSLogsUpdateListenerMethodResponse</a></li>
+  <li><a href="../hmssdk_flutter/HMSMessage-class.html">HMSMessage</a></li>
+  <li><a href="../hmssdk_flutter/HMSMessageRecipient-class.html">HMSMessageRecipient</a></li>
+  <li><a href="../hmssdk_flutter/HMSMessageResultListener-class.html">HMSMessageResultListener</a></li>
+  <li><a href="../hmssdk_flutter/HMSNetworkQuality-class.html">HMSNetworkQuality</a></li>
+  <li><a href="../hmssdk_flutter/HMSNetworkUpdateListenerMethodResponse-class.html">HMSNetworkUpdateListenerMethodResponse</a></li>
+  <li><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a></li>
+  <li><a href="../hmssdk_flutter/HMSPeerRemovedFromPeer-class.html">HMSPeerRemovedFromPeer</a></li>
+  <li><a href="../hmssdk_flutter/HMSPermissions-class.html">HMSPermissions</a></li>
+  <li><a href="../hmssdk_flutter/HMSPreviewListener-class.html">HMSPreviewListener</a></li>
+  <li><a href="../hmssdk_flutter/HMSPreviewUpdateListenerMethodResponse-class.html">HMSPreviewUpdateListenerMethodResponse</a></li>
+  <li><a href="../hmssdk_flutter/HMSPublishSetting-class.html">HMSPublishSetting</a></li>
+  <li><a href="../hmssdk_flutter/HMSRecordingConfig-class.html">HMSRecordingConfig</a></li>
+  <li><a href="../hmssdk_flutter/HMSRemoteAudioStats-class.html">HMSRemoteAudioStats</a></li>
+  <li><a href="../hmssdk_flutter/HMSRemoteAudioTrack-class.html">HMSRemoteAudioTrack</a></li>
+  <li><a href="../hmssdk_flutter/HMSRemotePeer-class.html">HMSRemotePeer</a></li>
+  <li><a href="../hmssdk_flutter/HMSRemoteVideoStats-class.html">HMSRemoteVideoStats</a></li>
+  <li><a href="../hmssdk_flutter/HMSRemoteVideoTrack-class.html">HMSRemoteVideoTrack</a></li>
+  <li><a href="../hmssdk_flutter/HMSRole-class.html">HMSRole</a></li>
+  <li><a href="../hmssdk_flutter/HMSRoleChangeRequest-class.html">HMSRoleChangeRequest</a></li>
+  <li><a href="../hmssdk_flutter/HMSRoom-class.html">HMSRoom</a></li>
+  <li><a href="../hmssdk_flutter/HMSRTCStats-class.html">HMSRTCStats</a></li>
+  <li><a href="../hmssdk_flutter/HMSRTCStatsReport-class.html">HMSRTCStatsReport</a></li>
+  <li><a href="../hmssdk_flutter/HMSSDK-class.html">HMSSDK</a></li>
+  <li><a href="../hmssdk_flutter/HMSSimulCastSettings-class.html">HMSSimulCastSettings</a></li>
+  <li><a href="../hmssdk_flutter/HMSSpeaker-class.html">HMSSpeaker</a></li>
+  <li><a href="../hmssdk_flutter/HMSSubscribeSettings-class.html">HMSSubscribeSettings</a></li>
+  <li><a href="../hmssdk_flutter/HMSTrack-class.html">HMSTrack</a></li>
+  <li><a href="../hmssdk_flutter/HMSTrackChangeRequest-class.html">HMSTrackChangeRequest</a></li>
+  <li><a href="../hmssdk_flutter/HMSTrackSetting-class.html">HMSTrackSetting</a></li>
+  <li><a href="../hmssdk_flutter/HMSUpdateListener-class.html">HMSUpdateListener</a></li>
+  <li><a href="../hmssdk_flutter/HMSUpdateListenerMethodResponse-class.html">HMSUpdateListenerMethodResponse</a></li>
+  <li><a href="../hmssdk_flutter/HMSVideoResolution-class.html">HMSVideoResolution</a></li>
+  <li><a href="../hmssdk_flutter/HMSVideoSetting-class.html">HMSVideoSetting</a></li>
+  <li><a href="../hmssdk_flutter/HMSVideoTrack-class.html">HMSVideoTrack</a></li>
+  <li><a href="../hmssdk_flutter/HMSVideoTrackSetting-class.html">HMSVideoTrackSetting</a></li>
+  <li><a href="../hmssdk_flutter/HMSVideoView-class.html">HMSVideoView</a></li>
+  <li><a href="../hmssdk_flutter/PlatformMethodResponse-class.html">PlatformMethodResponse</a></li>
+
+  <li class="section-title"><a href="../hmssdk_flutter/hmssdk_flutter-library.html#extensions">Extensions</a></li>
+  <li><a href="../hmssdk_flutter/HMSCameraFacingValues.html">HMSCameraFacingValues</a></li>
+  <li><a href="../hmssdk_flutter/HMSCodecValues.html">HMSCodecValues</a></li>
+  <li><a href="../hmssdk_flutter/HMSLogLevelValue.html">HMSLogLevelValue</a></li>
+  <li><a href="../hmssdk_flutter/HMSMessageRecipientValues.html">HMSMessageRecipientValues</a></li>
+  <li><a href="../hmssdk_flutter/HMSPeerUpdateValues.html">HMSPeerUpdateValues</a></li>
+  <li><a href="../hmssdk_flutter/HMSPreviewUpdateListenerMethodValues.html">HMSPreviewUpdateListenerMethodValues</a></li>
+  <li><a href="../hmssdk_flutter/HMSRoomUpdateValues.html">HMSRoomUpdateValues</a></li>
+  <li><a href="../hmssdk_flutter/HMSTrackKindValue.html">HMSTrackKindValue</a></li>
+  <li><a href="../hmssdk_flutter/HMSTrackUpdateValues.html">HMSTrackUpdateValues</a></li>
+  <li><a href="../hmssdk_flutter/HMSUpdateListenerMethodValues.html">HMSUpdateListenerMethodValues</a></li>
+  <li><a href="../hmssdk_flutter/HMSVideoCodecValues.html">HMSVideoCodecValues</a></li>
+  <li><a href="../hmssdk_flutter/PlatformMethodValues.html">PlatformMethodValues</a></li>
+  <li><a href="../hmssdk_flutter/ScalingTypeExtension.html">ScalingTypeExtension</a></li>
+
+
+
+
+
+  <li class="section-title"><a href="../hmssdk_flutter/hmssdk_flutter-library.html#enums">Enums</a></li>
+  <li><a href="../hmssdk_flutter/HMSActionResultListenerMethod.html">HMSActionResultListenerMethod</a></li>
+  <li><a href="../hmssdk_flutter/HMSCameraFacing.html">HMSCameraFacing</a></li>
+  <li><a href="../hmssdk_flutter/HMSCodec.html">HMSCodec</a></li>
+  <li><a href="../hmssdk_flutter/HMSLogLevel.html">HMSLogLevel</a></li>
+  <li><a href="../hmssdk_flutter/HMSMessageRecipientType.html">HMSMessageRecipientType</a></li>
+  <li><a href="../hmssdk_flutter/HMSPeerUpdate.html">HMSPeerUpdate</a></li>
+  <li><a href="../hmssdk_flutter/HMSPreviewUpdateListenerMethod.html">HMSPreviewUpdateListenerMethod</a></li>
+  <li><a href="../hmssdk_flutter/HMSRoomUpdate.html">HMSRoomUpdate</a></li>
+  <li><a href="../hmssdk_flutter/HMSTrackKind.html">HMSTrackKind</a></li>
+  <li><a href="../hmssdk_flutter/HMSTrackUpdate.html">HMSTrackUpdate</a></li>
+  <li><a href="../hmssdk_flutter/HMSUpdateListenerMethod.html">HMSUpdateListenerMethod</a></li>
+  <li><a href="../hmssdk_flutter/HMSVideoCodec.html">HMSVideoCodec</a></li>
+  <li><a href="../hmssdk_flutter/PlatformMethod.html">PlatformMethod</a></li>
+  <li><a href="../hmssdk_flutter/ScaleType.html">ScaleType</a></li>
+
+
+  <li class="section-title"><a href="../hmssdk_flutter/hmssdk_flutter-library.html#exceptions">Exceptions</a></li>
+  <li><a href="../hmssdk_flutter/HMSInSufficientDataException-class.html">HMSInSufficientDataException</a></li>
+</ol>
+
+  </div><!--/sidebar-offcanvas-right-->
 
 </main>
 
@@ -400,8 +882,8 @@ void onMessage({required HMSMessage message}){
 
 
 
-<script src="static-assets/highlight.pack.js?v1"></script>
-<script src="static-assets/script.js?v1"></script>
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/script.js?v1"></script>
 
 
 
