@@ -61,6 +61,12 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">factory HMSPublishSetting.fromMap(Map map) {
+  List&lt;String&gt; allowed;
+  if (map.containsKey(&#39;allowed&#39;)) {
+    allowed = map[&#39;allowed&#39;].cast&lt;String&gt;();
+  } else
+    allowed = [];
+
   HMSAudioSetting? audioSetting;
   if (map.containsKey(&#39;audio_setting&#39;))
     audioSetting = HMSAudioSetting.fromMap(map[&#39;audio_setting&#39;]);
@@ -86,6 +92,7 @@
   }
 
   return HMSPublishSetting(
+      allowed: allowed,
       audioSetting: audioSetting,
       videoSetting: videoSetting,
       screenSetting: screenSetting,
@@ -124,6 +131,7 @@
     <li class="section-title">
       <a href="../../hmssdk_flutter/HMSPublishSetting-class.html#instance-properties">Properties</a>
     </li>
+    <li><a href="../../hmssdk_flutter/HMSPublishSetting/allowed.html">allowed</a></li>
     <li><a href="../../hmssdk_flutter/HMSPublishSetting/audioSetting.html">audioSetting</a></li>
     <li><a href="../../hmssdk_flutter/HMSPublishSetting/audioSimulCast.html">audioSimulCast</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
@@ -155,7 +163,7 @@
 <footer>
   <span class="no-break">
     hmssdk_flutter
-      0.2.0
+      0.6.1
   </span>
 
   

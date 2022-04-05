@@ -52,7 +52,7 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="../../hmssdk_flutter/PlatformMethod-class.html">PlatformMethod</a></span>
+<span class="returntype"><a href="../../hmssdk_flutter/PlatformMethod.html">PlatformMethod</a></span>
 <span class="name ">getMethodFromName</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="getMethodFromName-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span></span></li>
 </ol>)
 
@@ -67,54 +67,165 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">static PlatformMethod getMethodFromName(String name) {
   switch (name) {
-    case &#39;join_meeting&#39;:
-      return PlatformMethod.joinMeeting;
-    case &#39;leave_meeting&#39;:
-      return PlatformMethod.leaveMeeting;
-    case &#39;on_leave_meeting&#39;:
-      return PlatformMethod.onLeaveMeeting;
+    case &#39;join&#39;:
+      return PlatformMethod.join;
+
+    case &#39;leave&#39;:
+      return PlatformMethod.leave;
+
+    case &#39;on_leave&#39;:
+      return PlatformMethod.onLeave;
+
     case &#39;on_join_room&#39;:
       return PlatformMethod.onJoinRoom;
+
     case &#39;on_update_room&#39;:
       return PlatformMethod.onUpdateRoom;
+
     case &#39;on_peer_update&#39;:
       return PlatformMethod.onPeerUpdate;
+
     case &#39;on_track_update&#39;:
       return PlatformMethod.onTrackUpdate;
+
     case &#39;on_error&#39;:
       return PlatformMethod.onError;
+
     case &#39;on_message&#39;:
       return PlatformMethod.onMessage;
+
     case &#39;on_update_speaker&#39;:
       return PlatformMethod.onUpdateSpeaker;
+
     case &#39;on_re_connecting&#39;:
       return PlatformMethod.onReconnecting;
+
     case &#39;on_re_connected&#39;:
       return PlatformMethod.onReconnected;
+
+    case &#39;on_re_connected&#39;:
+      return PlatformMethod.onReconnected;
+
     case &#39;switch_audio&#39;:
       return PlatformMethod.switchAudio;
+
     case &#39;switch_video&#39;:
       return PlatformMethod.switchVideo;
+
     case &#39;switch_camera&#39;:
       return PlatformMethod.switchCamera;
+
     case &#39;is_audio_mute&#39;:
       return PlatformMethod.isAudioMute;
+
     case &#39;is_video_mute&#39;:
       return PlatformMethod.isVideoMute;
+
     case &#39;stop_capturing&#39;:
       return PlatformMethod.stopCapturing;
+
     case &#39;start_capturing&#39;:
       return PlatformMethod.startCapturing;
-    case &#39;send_message&#39;:
-      return PlatformMethod.sendMessage;
-    case &#39;preview_video&#39;:
-      return PlatformMethod.previewVideo;
-    case &#39;accept_role_change&#39;:
-      return PlatformMethod.acceptRoleChange;
+
+    case &#39;send_broadcast_message&#39;:
+      return PlatformMethod.sendBroadcastMessage;
+
+    case &#39;send_direct_message&#39;:
+      return PlatformMethod.sendDirectMessage;
+
+    case &#39;send_group_message&#39;:
+      return PlatformMethod.sendGroupMessage;
+
+    case &#39;preview&#39;:
+      return PlatformMethod.preview;
+
+    case &#39;accept_change_role&#39;:
+      return PlatformMethod.acceptChangeRole;
+
     case &#39;change_role&#39;:
       return PlatformMethod.changeRole;
+
     case &#39;get_roles&#39;:
       return PlatformMethod.getRoles;
+
+    case &#39;on_change_track_state_request&#39;:
+      return PlatformMethod.changeTrackState;
+
+    case &#39;end_room&#39;:
+      return PlatformMethod.endRoom;
+
+    case &#39;remove_peer&#39;:
+      return PlatformMethod.removePeer;
+
+    case &#39;mute_all&#39;:
+      return PlatformMethod.muteAll;
+
+    case &#39;un_mute_all&#39;:
+      return PlatformMethod.unMuteAll;
+
+    case &#39;get_local_peer&#39;:
+      return PlatformMethod.getLocalPeer;
+
+    case &#39;get_remote_peers&#39;:
+      return PlatformMethod.getRemotePeers;
+
+    case &#39;get_peers&#39;:
+      return PlatformMethod.getPeers;
+
+    case &#39;start_hms_logger&#39;:
+      return PlatformMethod.startHMSLogger;
+
+    case &#39;remove_hms_logger&#39;:
+      return PlatformMethod.removeHMSLogger;
+
+    case &#39;change_track_state_for_role&#39;:
+      return PlatformMethod.changeTrackStateForRole;
+
+    case &#39;start_rtmp_or_recording&#39;:
+      return PlatformMethod.startRtmpOrRecording;
+
+    case &#39;stop_rtmp_and_recording&#39;:
+      return PlatformMethod.stopRtmpAndRecording;
+
+    case &#39;build&#39;:
+      return PlatformMethod.build;
+
+    case &quot;get_room&quot;:
+      return PlatformMethod.getRoom;
+
+    case &quot;update_hms_video_track_settings&quot;:
+      return PlatformMethod.updateHMSLocalVideoTrackSettings;
+
+    case &quot;change_metadata&quot;:
+      return PlatformMethod.changeMetadata;
+
+    case &quot;set_playback_allowed&quot;:
+      return PlatformMethod.setPlayBackAllowed;
+
+    case &quot;set_volume&quot;:
+      return PlatformMethod.setVolume;
+
+    case &quot;change_name&quot;:
+      return PlatformMethod.changeName;
+
+    case &quot;hls_stop_streaming&quot;:
+      return PlatformMethod.stopHlsStreaming;
+
+    case &quot;hls_start_streaming&quot;:
+      return PlatformMethod.startHlsStreaming;
+
+    case &quot;start_screen_share&quot;:
+      return PlatformMethod.startScreenShare;
+
+    case &quot;stop_screen_share&quot;:
+      return PlatformMethod.stopScreenShare;
+
+    case &#39;is_screen_share_active&#39;:
+      return PlatformMethod.isScreenShareActive;
+    case &quot;get_track_by_id&quot;:
+      return PlatformMethod.getTrackById;
+    case &quot;get_all_tracks&quot;:
+      return PlatformMethod.getAllTracks;
     default:
       return PlatformMethod.unknown;
   }
@@ -165,7 +276,7 @@
 <footer>
   <span class="no-break">
     hmssdk_flutter
-      0.2.0
+      0.6.1
   </span>
 
   

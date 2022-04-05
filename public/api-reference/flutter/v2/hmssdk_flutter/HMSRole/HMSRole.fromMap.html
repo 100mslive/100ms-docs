@@ -61,18 +61,27 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">factory HMSRole.fromMap(Map map) {
+  String name = map[&#39;name&#39;] as String;
+
+  HMSPublishSetting? publishSetting;
+  if (map[&#39;publish_settings&#39;] != null) {
+    publishSetting = HMSPublishSetting.fromMap(map[&#39;publish_settings&#39;]);
+  }
+
+  HMSSubscribeSettings? subscribeSettings;
+  if (map[&#39;subscribe_settings&#39;] != null) {
+    subscribeSettings =
+        HMSSubscribeSettings.fromMap(map[&#39;subscribe_settings&#39;]);
+  }
+
+  HMSPermissions permissions = HMSPermissions.fromMap(map[&#39;permissions&#39;]);
+
   return HMSRole(
-    name: map[&#39;name&#39;] as String,
-    publishSettings: map[&#39;publish_settings&#39;] != null
-        ? HMSPublishSetting.fromMap(map[&#39;publish_settings&#39;])
-        : null,
-    subscribeSettings: map[&#39;subscribe_settings&#39;] != null
-        ? HMSSubscribeSettings.fromMap(map[&#39;subscribe_settings&#39;])
-        : null,
+    name: name,
+    publishSettings: publishSetting,
+    subscribeSettings: subscribeSettings,
     priority: map[&#39;priority&#39;] as int,
-    permissions: map[&#39;permissions&#39;] != null
-        ? HMSPermissions.fromMap(map[&#39;permissions&#39;])
-        : null,
+    permissions: permissions,
     generalPermissions: map[&#39;general_permissions&#39;] ?? null,
     internalPlugins: map[&#39;internal_plugins&#39;] ?? null,
     externalPlugins: map[&#39;external_plugins&#39;] ?? null,
@@ -123,7 +132,7 @@
     <li class="section-title"><a href="../../hmssdk_flutter/HMSRole-class.html#instance-methods">Methods</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
     <li><a href="../../hmssdk_flutter/HMSRole/toMap.html">toMap</a></li>
-    <li><a href="../../hmssdk_flutter/HMSRole/toString.html">toString</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 
     <li class="section-title inherited"><a href="../../hmssdk_flutter/HMSRole-class.html#operators">Operators</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
@@ -143,7 +152,7 @@
 <footer>
   <span class="no-break">
     hmssdk_flutter
-      0.2.0
+      0.6.1
   </span>
 
   

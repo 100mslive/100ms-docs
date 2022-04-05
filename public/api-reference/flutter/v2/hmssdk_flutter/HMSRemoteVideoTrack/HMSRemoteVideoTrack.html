@@ -50,12 +50,12 @@
 </h1></div>
 
     <section class="multi-line-signature">
-      <span class="name ">HMSRemoteVideoTrack</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-setting">{<span>required</span> <span class="type-annotation"><a href="../../hmssdk_flutter/HMSVideoTrackSetting-class.html">HMSVideoTrackSetting</a></span> <span class="parameter-name">setting</span>, </span></li>
-<li><span class="parameter" id="-param-isDegraded"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">isDegraded</span>, </span></li>
-<li><span class="parameter" id="-param-kind"><span>required</span> <span class="type-annotation"><a href="../../hmssdk_flutter/HMSTrackKind-class.html">HMSTrackKind</a></span> <span class="parameter-name">kind</span>, </span></li>
-<li><span class="parameter" id="-param-source"><span>required</span> <span class="type-annotation"><a href="../../hmssdk_flutter/HMSTrackSource-class.html">HMSTrackSource</a></span> <span class="parameter-name">source</span>, </span></li>
+      <span class="name ">HMSRemoteVideoTrack</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-isDegraded">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">isDegraded</span>, </span></li>
+<li><span class="parameter" id="-param-kind"><span>required</span> <span class="type-annotation"><a href="../../hmssdk_flutter/HMSTrackKind.html">HMSTrackKind</a></span> <span class="parameter-name">kind</span>, </span></li>
+<li><span class="parameter" id="-param-source"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">source</span>, </span></li>
 <li><span class="parameter" id="-param-trackId"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">trackId</span>, </span></li>
-<li><span class="parameter" id="-param-trackDescription"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">trackDescription</span>}</span></li>
+<li><span class="parameter" id="-param-trackDescription"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">trackDescription</span>, </span></li>
+<li><span class="parameter" id="-param-isMute"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">isMute</span>}</span></li>
 </ol>)
     </section>
 
@@ -66,19 +66,21 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">HMSRemoteVideoTrack(
-    {required this.setting,
-    required bool isDegraded,
+    {required bool isDegraded,
     required HMSTrackKind kind,
-    required HMSTrackSource source,
+    required String source,
     required String trackId,
-    required String trackDescription})
+    required String trackDescription,
+    required bool isMute,
+    })
     : super(
-        isDegraded: isDegraded,
-        kind: kind,
-        source: source,
-        trackDescription: trackDescription,
-        trackId: trackId,
-      );</code></pre>
+          isDegraded: isDegraded,
+          kind: kind,
+          source: source,
+          trackDescription: trackDescription,
+          trackId: trackId,
+          isMute: isMute,
+          );</code></pre>
 </section>
 
 
@@ -104,23 +106,22 @@
 
     <li class="section-title"><a href="../../hmssdk_flutter/HMSRemoteVideoTrack-class.html#constructors">Constructors</a></li>
     <li><a href="../../hmssdk_flutter/HMSRemoteVideoTrack/HMSRemoteVideoTrack.html">HMSRemoteVideoTrack</a></li>
+    <li><a href="../../hmssdk_flutter/HMSRemoteVideoTrack/HMSRemoteVideoTrack.fromMap.html">fromMap</a></li>
 
 
-    <li class="section-title">
+    <li class="section-title inherited">
       <a href="../../hmssdk_flutter/HMSRemoteVideoTrack-class.html#instance-properties">Properties</a>
     </li>
     <li class="inherited"><a href="../../hmssdk_flutter/HMSTrack/hashCode.html">hashCode</a></li>
     <li class="inherited"><a href="../../hmssdk_flutter/HMSVideoTrack/isDegraded.html">isDegraded</a></li>
+    <li class="inherited"><a href="../../hmssdk_flutter/HMSTrack/isMute.html">isMute</a></li>
     <li class="inherited"><a href="../../hmssdk_flutter/HMSTrack/kind.html">kind</a></li>
-    <li class="inherited"><a href="../../hmssdk_flutter/HMSTrack/peer.html">peer</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
-    <li><a href="../../hmssdk_flutter/HMSRemoteVideoTrack/setting.html">setting</a></li>
     <li class="inherited"><a href="../../hmssdk_flutter/HMSTrack/source.html">source</a></li>
     <li class="inherited"><a href="../../hmssdk_flutter/HMSTrack/trackDescription.html">trackDescription</a></li>
     <li class="inherited"><a href="../../hmssdk_flutter/HMSTrack/trackId.html">trackId</a></li>
 
-    <li class="section-title"><a href="../../hmssdk_flutter/HMSRemoteVideoTrack-class.html#instance-methods">Methods</a></li>
-    <li><a href="../../hmssdk_flutter/HMSRemoteVideoTrack/isMute.html">isMute</a></li>
+    <li class="section-title inherited"><a href="../../hmssdk_flutter/HMSRemoteVideoTrack-class.html#instance-methods">Methods</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
     <li class="inherited"><a href="../../hmssdk_flutter/HMSTrack/toString.html">toString</a></li>
 
@@ -142,7 +143,7 @@
 <footer>
   <span class="no-break">
     hmssdk_flutter
-      0.2.0
+      0.6.1
   </span>
 
   

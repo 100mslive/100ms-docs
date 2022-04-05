@@ -52,7 +52,7 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="../../hmssdk_flutter/HMSCameraFacing-class.html">HMSCameraFacing</a></span>
+<span class="returntype"><a href="../../hmssdk_flutter/HMSCameraFacing.html">HMSCameraFacing</a></span>
 <span class="name ">getHMSCameraFacingFromName</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="getHMSCameraFacingFromName-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span></span></li>
 </ol>)
 
@@ -67,12 +67,14 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">static HMSCameraFacing getHMSCameraFacingFromName(String name) {
   switch (name) {
+
     &#47;&#47;&#47;front camera is being used
-    case &#39;kHMSCameraFacingFront&#39;:
-      return HMSCameraFacing.kHMSCameraFacingFront;
+    case &#39;front&#39;:
+      return HMSCameraFacing.FRONT;
+
     &#47;&#47;&#47;rear camera is being used
-    case &#39;kHMSCameraFacingBack&#39;:
-      return HMSCameraFacing.kHMSCameraFacingBack;
+    case &#39;back&#39;:
+      return HMSCameraFacing.BACK;
 
     default:
       return HMSCameraFacing.unknown;
@@ -124,7 +126,7 @@
 <footer>
   <span class="no-break">
     hmssdk_flutter
-      0.2.0
+      0.6.1
   </span>
 
   
