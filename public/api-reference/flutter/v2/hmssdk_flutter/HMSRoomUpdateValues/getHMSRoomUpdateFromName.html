@@ -52,7 +52,7 @@
     <section class="multi-line-signature">
       
 
-<span class="returntype"><a href="../../hmssdk_flutter/HMSRoomUpdate-class.html">HMSRoomUpdate</a></span>
+<span class="returntype"><a href="../../hmssdk_flutter/HMSRoomUpdate.html">HMSRoomUpdate</a></span>
 <span class="name ">getHMSRoomUpdateFromName</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="getHMSRoomUpdateFromName-param-name"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span></span></li>
 </ol>)
 
@@ -67,8 +67,32 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">static HMSRoomUpdate getHMSRoomUpdateFromName(String name) {
   switch (name) {
+    case &#39;room_muted&#39;:
+      return HMSRoomUpdate.roomMuted;
+
+    case &#39;room_unmuted&#39;:
+      return HMSRoomUpdate.roomUnmuted;
+
+    case &#39;server_recording_state_updated&#39;:
+      return HMSRoomUpdate.serverRecordingStateUpdated;
+
+    case &#39;browser_recording_state_updated&#39;:
+      return HMSRoomUpdate.browserRecordingStateUpdated;
+
+    case &#39;rtmp_streaming_state_updated&#39;:
+      return HMSRoomUpdate.rtmpStreamingStateUpdated;
+
+    case &#39;hls_streaming_state_updated&#39;:
+      return HMSRoomUpdate.hlsStreamingStateUpdated;
+
+    case &quot;room_name_updated&quot;:
+      return HMSRoomUpdate.RoomNameUpdated;
+
+    case &quot;room_peer_count_updated&quot;:
+      return HMSRoomUpdate.RoomPeerCountUpdated;
+
     default:
-      return HMSRoomUpdate.unknown;
+      return HMSRoomUpdate.defaultUpdate;
   }
 }</code></pre>
 </section>
@@ -117,7 +141,7 @@
 <footer>
   <span class="no-break">
     hmssdk_flutter
-      0.2.0
+      0.6.1
   </span>
 
   

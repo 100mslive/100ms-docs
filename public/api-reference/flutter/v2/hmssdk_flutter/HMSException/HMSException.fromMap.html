@@ -61,14 +61,20 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">factory HMSException.fromMap(Map map) {
-  print(1);
+  HMSExceptionCode? code;
+
+  if (map.containsKey(&#39;code&#39;)) {
+    code = HMSExceptionCode(errorCode: map[&#39;code&#39;].toString());
+  }
+
   return HMSException(
-    map[&#39;description&#39;],
-    map[&#39;message&#39;],
-    map[&#39;code&#39;],
-    map[&#39;action&#39;],
-    map[&#39;name&#39;],
-  );
+      id: map[&quot;id&quot;] ?? map[&#39;name&#39;] ?? &#39;&#39;,
+      code: code,
+      message: map[&#39;message&#39;],
+      action: map[&#39;action&#39;],
+      description: map[&#39;info&#39;] ?? map[&#39;description&#39;] ?? &#39;&#39;,
+      params: map[&#39;params&#39;],
+      isTerminal: map[&#39;isTerminal&#39;] ?? false);
 }</code></pre>
 </section>
 
@@ -102,16 +108,21 @@
       <a href="../../hmssdk_flutter/HMSException-class.html#instance-properties">Properties</a>
     </li>
     <li><a href="../../hmssdk_flutter/HMSException/action.html">action</a></li>
+    <li><a href="../../hmssdk_flutter/HMSException/analyticsRepresentation.html">analyticsRepresentation</a></li>
     <li><a href="../../hmssdk_flutter/HMSException/code.html">code</a></li>
     <li><a href="../../hmssdk_flutter/HMSException/description.html">description</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li><a href="../../hmssdk_flutter/HMSException/id.html">id</a></li>
+    <li><a href="../../hmssdk_flutter/HMSException/isTerminal.html">isTerminal</a></li>
+    <li><a href="../../hmssdk_flutter/HMSException/localizedDescription.html">localizedDescription</a></li>
     <li><a href="../../hmssdk_flutter/HMSException/message.html">message</a></li>
-    <li><a href="../../hmssdk_flutter/HMSException/name.html">name</a></li>
+    <li><a href="../../hmssdk_flutter/HMSException/params.html">params</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
 
     <li class="section-title"><a href="../../hmssdk_flutter/HMSException-class.html#instance-methods">Methods</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
-    <li><a href="../../hmssdk_flutter/HMSException/toString.html">toString</a></li>
+    <li><a href="../../hmssdk_flutter/HMSException/toMap.html">toMap</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
 
     <li class="section-title inherited"><a href="../../hmssdk_flutter/HMSException-class.html#operators">Operators</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
@@ -131,7 +142,7 @@
 <footer>
   <span class="no-break">
     hmssdk_flutter
-      0.2.0
+      0.6.1
   </span>
 
   

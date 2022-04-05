@@ -62,17 +62,10 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">factory HMSRoleChangeRequest.fromMap(Map map) {
   HMSPeer? requestedBy;
-  HMSRole suggestedRole;
+  HMSRole suggestedRole = HMSRole.fromMap(map[&#39;suggested_role&#39;]);
 
-  if (map.containsKey(&#39;requested_by&#39;)) {
+  if (map[&#39;requested_by&#39;] != null) {
     requestedBy = HMSPeer.fromMap(map[&#39;requested_by&#39;]);
-  } else {
-    throw HMSInSufficientDataException(message: &#39;No data found for Peer&#39;);
-  }
-  if (map.containsKey(&#39;suggested_role&#39;)) {
-    suggestedRole = HMSRole.fromMap(map[&#39;suggested_role&#39;]);
-  } else {
-    throw HMSInSufficientDataException(message: &#39;No data found for Role&#39;);
   }
 
   return HMSRoleChangeRequest(
@@ -136,7 +129,7 @@
 <footer>
   <span class="no-break">
     hmssdk_flutter
-      0.2.0
+      0.6.1
   </span>
 
   

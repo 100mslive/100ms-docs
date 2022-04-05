@@ -66,13 +66,14 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Map&lt;String, dynamic&gt; toMap() {
   return {
-    &#39;codec&#39;: HMSCodecValues.getValueFromHMSCodec(codec),
-    &#39;bit_rate&#39;: maxBitrate,
+    &#39;video_codec&#39;:
+        codec != null ? HMSCodecValues.getValueFromHMSCodec(codec!) : null,
+    &#39;max_bit_rate&#39;: maxBitrate,
     &#39;max_frame_rate&#39;: maxFrameRate,
-    &#39;track_description&#39;: trackDescription,
     &#39;resolution&#39;: resolution?.toMap(),
-    &#39;camera_facing&#39;:
-        HMSCameraFacingValues.getValueFromHMSCameraFacing(cameraFacing)
+    &#39;camera_facing&#39;: cameraFacing != null
+        ? HMSCameraFacingValues.getValueFromHMSCameraFacing(cameraFacing!)
+        : null
   };
 }</code></pre>
 </section>
@@ -113,7 +114,6 @@
     <li><a href="../../hmssdk_flutter/HMSVideoTrackSetting/maxFrameRate.html">maxFrameRate</a></li>
     <li><a href="../../hmssdk_flutter/HMSVideoTrackSetting/resolution.html">resolution</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
-    <li><a href="../../hmssdk_flutter/HMSVideoTrackSetting/trackDescription.html">trackDescription</a></li>
 
     <li class="section-title"><a href="../../hmssdk_flutter/HMSVideoTrackSetting-class.html#instance-methods">Methods</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
@@ -138,7 +138,7 @@
 <footer>
   <span class="no-break">
     hmssdk_flutter
-      0.2.0
+      0.6.1
   </span>
 
   

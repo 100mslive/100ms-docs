@@ -29,8 +29,8 @@
 <header id="title">
   <button id="sidenav-left-toggle" type="button">&nbsp;</button>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
-    <li><a href="../index.html">hmssdk_flutter</a></li>
-    <li><a href="../hmssdk_flutter/hmssdk_flutter-library.html">hmssdk_flutter</a></li>
+    
+  <li><a href="../hmssdk_flutter-library.html">hmssdk_flutter</a></li>
     <li class="self-crumb">HMSUpdateListener abstract class</li>
   </ol>
   <div class="self-name">HMSUpdateListener</div>
@@ -50,6 +50,10 @@
 </h1></div>
 
     
+<section class="desc markdown">
+  <p>100ms SDK provides callbacks to the client app about any change or update happening in the room after a user has joined by implementing HMSUpdateListener.
+These updates can be used to render the video on screen or to display other info regarding the room.</p>
+</section>
 
 
 
@@ -111,8 +115,21 @@
 
 </dd>
 
+        <dt id="onChangeTrackStateRequest" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSUpdateListener/onChangeTrackStateRequest.html">onChangeTrackStateRequest</a></span><span class="signature">(<wbr><span class="parameter" id="onChangeTrackStateRequest-param-hmsTrackChangeRequest">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSTrackChangeRequest-class.html">HMSTrackChangeRequest</a></span> <span class="parameter-name">hmsTrackChangeRequest</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  when someone requests for track change of yours be it video or audio this will be triggered <a href="../hmssdk_flutter/HMSUpdateListener/onChangeTrackStateRequest.html">[...]</a>
+  
+
+</dd>
+
         <dt id="onError" class="callable">
-  <span class="name"><a href="../hmssdk_flutter/HMSUpdateListener/onError.html">onError</a></span><span class="signature">(<wbr><span class="parameter" id="onError-param-error">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSError-class.html">HMSError</a></span> <span class="parameter-name">error</span>}</span>)
+  <span class="name"><a href="../hmssdk_flutter/HMSUpdateListener/onError.html">onError</a></span><span class="signature">(<wbr><span class="parameter" id="onError-param-error">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSException-class.html">HMSException</a></span> <span class="parameter-name">error</span>}</span>)
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -137,6 +154,32 @@
 
 </dd>
 
+        <dt id="onLocalAudioStats" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSUpdateListener/onLocalAudioStats.html">onLocalAudioStats</a></span><span class="signature">(<wbr><span class="parameter" id="onLocalAudioStats-param-hmsLocalAudioStats">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSLocalAudioStats-class.html">HMSLocalAudioStats</a></span> <span class="parameter-name">hmsLocalAudioStats</span>, </span><span class="parameter" id="onLocalAudioStats-param-track"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSLocalAudioTrack-class.html">HMSLocalAudioTrack</a></span> <span class="parameter-name">track</span>, </span><span class="parameter" id="onLocalAudioStats-param-peer"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a></span> <span class="parameter-name">peer</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+   
+  
+
+</dd>
+
+        <dt id="onLocalVideoStats" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSUpdateListener/onLocalVideoStats.html">onLocalVideoStats</a></span><span class="signature">(<wbr><span class="parameter" id="onLocalVideoStats-param-hmsLocalVideoStats">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSLocalVideoStats-class.html">HMSLocalVideoStats</a></span> <span class="parameter-name">hmsLocalVideoStats</span>, </span><span class="parameter" id="onLocalVideoStats-param-track"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSLocalVideoTrack-class.html">HMSLocalVideoTrack</a></span> <span class="parameter-name">track</span>, </span><span class="parameter" id="onLocalVideoStats-param-peer"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a></span> <span class="parameter-name">peer</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+   
+  
+
+</dd>
+
         <dt id="onMessage" class="callable">
   <span class="name"><a href="../hmssdk_flutter/HMSUpdateListener/onMessage.html">onMessage</a></span><span class="signature">(<wbr><span class="parameter" id="onMessage-param-message">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSMessage-class.html">HMSMessage</a></span> <span class="parameter-name">message</span>}</span>)
     <span class="returntype parameter">&#8594; void</span>
@@ -151,7 +194,7 @@
 </dd>
 
         <dt id="onPeerUpdate" class="callable">
-  <span class="name"><a href="../hmssdk_flutter/HMSUpdateListener/onPeerUpdate.html">onPeerUpdate</a></span><span class="signature">(<wbr><span class="parameter" id="onPeerUpdate-param-peer">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a></span> <span class="parameter-name">peer</span>, </span><span class="parameter" id="onPeerUpdate-param-update"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSPeerUpdate-class.html">HMSPeerUpdate</a></span> <span class="parameter-name">update</span>}</span>)
+  <span class="name"><a href="../hmssdk_flutter/HMSUpdateListener/onPeerUpdate.html">onPeerUpdate</a></span><span class="signature">(<wbr><span class="parameter" id="onPeerUpdate-param-peer">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a></span> <span class="parameter-name">peer</span>, </span><span class="parameter" id="onPeerUpdate-param-update"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSPeerUpdate.html">HMSPeerUpdate</a></span> <span class="parameter-name">update</span>}</span>)
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -190,6 +233,45 @@ or a new peer got added/existing peer is removed. <a href="../hmssdk_flutter/HMS
 
 </dd>
 
+        <dt id="onRemoteAudioStats" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSUpdateListener/onRemoteAudioStats.html">onRemoteAudioStats</a></span><span class="signature">(<wbr><span class="parameter" id="onRemoteAudioStats-param-hmsRemoteAudioStats">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSRemoteAudioStats-class.html">HMSRemoteAudioStats</a></span> <span class="parameter-name">hmsRemoteAudioStats</span>, </span><span class="parameter" id="onRemoteAudioStats-param-track"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSRemoteAudioTrack-class.html">HMSRemoteAudioTrack</a></span> <span class="parameter-name">track</span>, </span><span class="parameter" id="onRemoteAudioStats-param-peer"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a></span> <span class="parameter-name">peer</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+   
+  
+
+</dd>
+
+        <dt id="onRemoteVideoStats" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSUpdateListener/onRemoteVideoStats.html">onRemoteVideoStats</a></span><span class="signature">(<wbr><span class="parameter" id="onRemoteVideoStats-param-hmsRemoteVideoStats">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSRemoteVideoStats-class.html">HMSRemoteVideoStats</a></span> <span class="parameter-name">hmsRemoteVideoStats</span>, </span><span class="parameter" id="onRemoteVideoStats-param-track"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSRemoteVideoTrack-class.html">HMSRemoteVideoTrack</a></span> <span class="parameter-name">track</span>, </span><span class="parameter" id="onRemoteVideoStats-param-peer"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a></span> <span class="parameter-name">peer</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+   
+  
+
+</dd>
+
+        <dt id="onRemovedFromRoom" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSUpdateListener/onRemovedFromRoom.html">onRemovedFromRoom</a></span><span class="signature">(<wbr><span class="parameter" id="onRemovedFromRoom-param-hmsPeerRemovedFromPeer">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSPeerRemovedFromPeer-class.html">HMSPeerRemovedFromPeer</a></span> <span class="parameter-name">hmsPeerRemovedFromPeer</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  when someone kicks you out or when someone ends the room at that time it is triggered <a href="../hmssdk_flutter/HMSUpdateListener/onRemovedFromRoom.html">[...]</a>
+  
+
+</dd>
+
         <dt id="onRoleChangeRequest" class="callable">
   <span class="name"><a href="../hmssdk_flutter/HMSUpdateListener/onRoleChangeRequest.html">onRoleChangeRequest</a></span><span class="signature">(<wbr><span class="parameter" id="onRoleChangeRequest-param-roleChangeRequest">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSRoleChangeRequest-class.html">HMSRoleChangeRequest</a></span> <span class="parameter-name">roleChangeRequest</span>}</span>)
     <span class="returntype parameter">&#8594; void</span>
@@ -204,7 +286,7 @@ or a new peer got added/existing peer is removed. <a href="../hmssdk_flutter/HMS
 </dd>
 
         <dt id="onRoomUpdate" class="callable">
-  <span class="name"><a href="../hmssdk_flutter/HMSUpdateListener/onRoomUpdate.html">onRoomUpdate</a></span><span class="signature">(<wbr><span class="parameter" id="onRoomUpdate-param-room">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSRoom-class.html">HMSRoom</a></span> <span class="parameter-name">room</span>, </span><span class="parameter" id="onRoomUpdate-param-update"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSRoomUpdate-class.html">HMSRoomUpdate</a></span> <span class="parameter-name">update</span>}</span>)
+  <span class="name"><a href="../hmssdk_flutter/HMSUpdateListener/onRoomUpdate.html">onRoomUpdate</a></span><span class="signature">(<wbr><span class="parameter" id="onRoomUpdate-param-room">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSRoom-class.html">HMSRoom</a></span> <span class="parameter-name">room</span>, </span><span class="parameter" id="onRoomUpdate-param-update"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSRoomUpdate.html">HMSRoomUpdate</a></span> <span class="parameter-name">update</span>}</span>)
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -216,8 +298,21 @@ or a new peer got added/existing peer is removed. <a href="../hmssdk_flutter/HMS
 
 </dd>
 
+        <dt id="onRTCStats" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSUpdateListener/onRTCStats.html">onRTCStats</a></span><span class="signature">(<wbr><span class="parameter" id="onRTCStats-param-hmsrtcStatsReport">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSRTCStatsReport-class.html">HMSRTCStatsReport</a></span> <span class="parameter-name">hmsrtcStatsReport</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+   
+  
+
+</dd>
+
         <dt id="onTrackUpdate" class="callable">
-  <span class="name"><a href="../hmssdk_flutter/HMSUpdateListener/onTrackUpdate.html">onTrackUpdate</a></span><span class="signature">(<wbr><span class="parameter" id="onTrackUpdate-param-track">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSTrack-class.html">HMSTrack</a></span> <span class="parameter-name">track</span>, </span><span class="parameter" id="onTrackUpdate-param-trackUpdate"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSTrackUpdate-class.html">HMSTrackUpdate</a></span> <span class="parameter-name">trackUpdate</span>, </span><span class="parameter" id="onTrackUpdate-param-peer"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a></span> <span class="parameter-name">peer</span>}</span>)
+  <span class="name"><a href="../hmssdk_flutter/HMSUpdateListener/onTrackUpdate.html">onTrackUpdate</a></span><span class="signature">(<wbr><span class="parameter" id="onTrackUpdate-param-track">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSTrack-class.html">HMSTrack</a></span> <span class="parameter-name">track</span>, </span><span class="parameter" id="onTrackUpdate-param-trackUpdate"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSTrackUpdate.html">HMSTrackUpdate</a></span> <span class="parameter-name">trackUpdate</span>, </span><span class="parameter" id="onTrackUpdate-param-peer"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a></span> <span class="parameter-name">peer</span>}</span>)
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -291,8 +386,8 @@ or a new track got added/existing track is removed <a href="../hmssdk_flutter/HM
 </header>
 
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
-  <li><a href="../index.html">hmssdk_flutter</a></li>
-  <li><a href="../hmssdk_flutter/hmssdk_flutter-library.html">hmssdk_flutter</a></li>
+  
+<li><a href="../hmssdk_flutter-library.html">hmssdk_flutter</a></li>
   <li class="self-crumb">HMSUpdateListener abstract class</li>
 </ol>
 
@@ -300,32 +395,50 @@ or a new track got added/existing track is removed <a href="../hmssdk_flutter/HM
     <h5>hmssdk_flutter library</h5>
     <ol>
   <li class="section-title"><a href="../hmssdk_flutter/hmssdk_flutter-library.html#classes">Classes</a></li>
+  <li><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a></li>
   <li><a href="../hmssdk_flutter/HMSAudioSetting-class.html">HMSAudioSetting</a></li>
   <li><a href="../hmssdk_flutter/HMSAudioTrack-class.html">HMSAudioTrack</a></li>
   <li><a href="../hmssdk_flutter/HMSAudioTrackSetting-class.html">HMSAudioTrackSetting</a></li>
   <li><a href="../hmssdk_flutter/HMSConfig-class.html">HMSConfig</a></li>
-  <li><a href="../hmssdk_flutter/HMSError-class.html">HMSError</a></li>
-  <li><a href="../hmssdk_flutter/HMSErrorCode-class.html">HMSErrorCode</a></li>
   <li><a href="../hmssdk_flutter/HMSException-class.html">HMSException</a></li>
+  <li><a href="../hmssdk_flutter/HMSHLSConfig-class.html">HMSHLSConfig</a></li>
+  <li><a href="../hmssdk_flutter/HMSHLSMeetingURLVariant-class.html">HMSHLSMeetingURLVariant</a></li>
+  <li><a href="../hmssdk_flutter/HMSLocalAudioStats-class.html">HMSLocalAudioStats</a></li>
   <li><a href="../hmssdk_flutter/HMSLocalAudioTrack-class.html">HMSLocalAudioTrack</a></li>
   <li><a href="../hmssdk_flutter/HMSLocalPeer-class.html">HMSLocalPeer</a></li>
+  <li><a href="../hmssdk_flutter/HMSLocalVideoStats-class.html">HMSLocalVideoStats</a></li>
   <li><a href="../hmssdk_flutter/HMSLocalVideoTrack-class.html">HMSLocalVideoTrack</a></li>
-  <li><a href="../hmssdk_flutter/HMSMeeting-class.html">HMSMeeting</a></li>
+  <li><a href="../hmssdk_flutter/HMSLog-class.html">HMSLog</a></li>
+  <li><a href="../hmssdk_flutter/HMSLogListener-class.html">HMSLogListener</a></li>
+  <li><a href="../hmssdk_flutter/HMSLogsUpdateListenerMethodResponse-class.html">HMSLogsUpdateListenerMethodResponse</a></li>
   <li><a href="../hmssdk_flutter/HMSMessage-class.html">HMSMessage</a></li>
+  <li><a href="../hmssdk_flutter/HMSMessageRecipient-class.html">HMSMessageRecipient</a></li>
+  <li><a href="../hmssdk_flutter/HMSMessageResultListener-class.html">HMSMessageResultListener</a></li>
+  <li><a href="../hmssdk_flutter/HMSNetworkQuality-class.html">HMSNetworkQuality</a></li>
+  <li><a href="../hmssdk_flutter/HMSNetworkUpdateListenerMethodResponse-class.html">HMSNetworkUpdateListenerMethodResponse</a></li>
   <li><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a></li>
+  <li><a href="../hmssdk_flutter/HMSPeerRemovedFromPeer-class.html">HMSPeerRemovedFromPeer</a></li>
   <li><a href="../hmssdk_flutter/HMSPermissions-class.html">HMSPermissions</a></li>
   <li><a href="../hmssdk_flutter/HMSPreviewListener-class.html">HMSPreviewListener</a></li>
   <li><a href="../hmssdk_flutter/HMSPreviewUpdateListenerMethodResponse-class.html">HMSPreviewUpdateListenerMethodResponse</a></li>
   <li><a href="../hmssdk_flutter/HMSPublishSetting-class.html">HMSPublishSetting</a></li>
+  <li><a href="../hmssdk_flutter/HMSRecordingConfig-class.html">HMSRecordingConfig</a></li>
+  <li><a href="../hmssdk_flutter/HMSRemoteAudioStats-class.html">HMSRemoteAudioStats</a></li>
   <li><a href="../hmssdk_flutter/HMSRemoteAudioTrack-class.html">HMSRemoteAudioTrack</a></li>
+  <li><a href="../hmssdk_flutter/HMSRemotePeer-class.html">HMSRemotePeer</a></li>
+  <li><a href="../hmssdk_flutter/HMSRemoteVideoStats-class.html">HMSRemoteVideoStats</a></li>
   <li><a href="../hmssdk_flutter/HMSRemoteVideoTrack-class.html">HMSRemoteVideoTrack</a></li>
   <li><a href="../hmssdk_flutter/HMSRole-class.html">HMSRole</a></li>
   <li><a href="../hmssdk_flutter/HMSRoleChangeRequest-class.html">HMSRoleChangeRequest</a></li>
   <li><a href="../hmssdk_flutter/HMSRoom-class.html">HMSRoom</a></li>
+  <li><a href="../hmssdk_flutter/HMSRTCStats-class.html">HMSRTCStats</a></li>
+  <li><a href="../hmssdk_flutter/HMSRTCStatsReport-class.html">HMSRTCStatsReport</a></li>
+  <li><a href="../hmssdk_flutter/HMSSDK-class.html">HMSSDK</a></li>
   <li><a href="../hmssdk_flutter/HMSSimulCastSettings-class.html">HMSSimulCastSettings</a></li>
   <li><a href="../hmssdk_flutter/HMSSpeaker-class.html">HMSSpeaker</a></li>
   <li><a href="../hmssdk_flutter/HMSSubscribeSettings-class.html">HMSSubscribeSettings</a></li>
   <li><a href="../hmssdk_flutter/HMSTrack-class.html">HMSTrack</a></li>
+  <li><a href="../hmssdk_flutter/HMSTrackChangeRequest-class.html">HMSTrackChangeRequest</a></li>
   <li><a href="../hmssdk_flutter/HMSTrackSetting-class.html">HMSTrackSetting</a></li>
   <li><a href="../hmssdk_flutter/HMSUpdateListener-class.html">HMSUpdateListener</a></li>
   <li><a href="../hmssdk_flutter/HMSUpdateListenerMethodResponse-class.html">HMSUpdateListenerMethodResponse</a></li>
@@ -339,32 +452,37 @@ or a new track got added/existing track is removed <a href="../hmssdk_flutter/HM
   <li class="section-title"><a href="../hmssdk_flutter/hmssdk_flutter-library.html#extensions">Extensions</a></li>
   <li><a href="../hmssdk_flutter/HMSCameraFacingValues.html">HMSCameraFacingValues</a></li>
   <li><a href="../hmssdk_flutter/HMSCodecValues.html">HMSCodecValues</a></li>
+  <li><a href="../hmssdk_flutter/HMSLogLevelValue.html">HMSLogLevelValue</a></li>
+  <li><a href="../hmssdk_flutter/HMSMessageRecipientValues.html">HMSMessageRecipientValues</a></li>
   <li><a href="../hmssdk_flutter/HMSPeerUpdateValues.html">HMSPeerUpdateValues</a></li>
   <li><a href="../hmssdk_flutter/HMSPreviewUpdateListenerMethodValues.html">HMSPreviewUpdateListenerMethodValues</a></li>
   <li><a href="../hmssdk_flutter/HMSRoomUpdateValues.html">HMSRoomUpdateValues</a></li>
   <li><a href="../hmssdk_flutter/HMSTrackKindValue.html">HMSTrackKindValue</a></li>
-  <li><a href="../hmssdk_flutter/HMSTrackSourceValue.html">HMSTrackSourceValue</a></li>
   <li><a href="../hmssdk_flutter/HMSTrackUpdateValues.html">HMSTrackUpdateValues</a></li>
   <li><a href="../hmssdk_flutter/HMSUpdateListenerMethodValues.html">HMSUpdateListenerMethodValues</a></li>
   <li><a href="../hmssdk_flutter/HMSVideoCodecValues.html">HMSVideoCodecValues</a></li>
   <li><a href="../hmssdk_flutter/PlatformMethodValues.html">PlatformMethodValues</a></li>
+  <li><a href="../hmssdk_flutter/ScalingTypeExtension.html">ScalingTypeExtension</a></li>
 
 
 
 
 
   <li class="section-title"><a href="../hmssdk_flutter/hmssdk_flutter-library.html#enums">Enums</a></li>
-  <li><a href="../hmssdk_flutter/HMSCameraFacing-class.html">HMSCameraFacing</a></li>
-  <li><a href="../hmssdk_flutter/HMSCodec-class.html">HMSCodec</a></li>
-  <li><a href="../hmssdk_flutter/HMSPeerUpdate-class.html">HMSPeerUpdate</a></li>
-  <li><a href="../hmssdk_flutter/HMSPreviewUpdateListenerMethod-class.html">HMSPreviewUpdateListenerMethod</a></li>
-  <li><a href="../hmssdk_flutter/HMSRoomUpdate-class.html">HMSRoomUpdate</a></li>
-  <li><a href="../hmssdk_flutter/HMSTrackKind-class.html">HMSTrackKind</a></li>
-  <li><a href="../hmssdk_flutter/HMSTrackSource-class.html">HMSTrackSource</a></li>
-  <li><a href="../hmssdk_flutter/HMSTrackUpdate-class.html">HMSTrackUpdate</a></li>
-  <li><a href="../hmssdk_flutter/HMSUpdateListenerMethod-class.html">HMSUpdateListenerMethod</a></li>
-  <li><a href="../hmssdk_flutter/HMSVideoCodec-class.html">HMSVideoCodec</a></li>
-  <li><a href="../hmssdk_flutter/PlatformMethod-class.html">PlatformMethod</a></li>
+  <li><a href="../hmssdk_flutter/HMSActionResultListenerMethod.html">HMSActionResultListenerMethod</a></li>
+  <li><a href="../hmssdk_flutter/HMSCameraFacing.html">HMSCameraFacing</a></li>
+  <li><a href="../hmssdk_flutter/HMSCodec.html">HMSCodec</a></li>
+  <li><a href="../hmssdk_flutter/HMSLogLevel.html">HMSLogLevel</a></li>
+  <li><a href="../hmssdk_flutter/HMSMessageRecipientType.html">HMSMessageRecipientType</a></li>
+  <li><a href="../hmssdk_flutter/HMSPeerUpdate.html">HMSPeerUpdate</a></li>
+  <li><a href="../hmssdk_flutter/HMSPreviewUpdateListenerMethod.html">HMSPreviewUpdateListenerMethod</a></li>
+  <li><a href="../hmssdk_flutter/HMSRoomUpdate.html">HMSRoomUpdate</a></li>
+  <li><a href="../hmssdk_flutter/HMSTrackKind.html">HMSTrackKind</a></li>
+  <li><a href="../hmssdk_flutter/HMSTrackUpdate.html">HMSTrackUpdate</a></li>
+  <li><a href="../hmssdk_flutter/HMSUpdateListenerMethod.html">HMSUpdateListenerMethod</a></li>
+  <li><a href="../hmssdk_flutter/HMSVideoCodec.html">HMSVideoCodec</a></li>
+  <li><a href="../hmssdk_flutter/PlatformMethod.html">PlatformMethod</a></li>
+  <li><a href="../hmssdk_flutter/ScaleType.html">ScaleType</a></li>
 
 
   <li class="section-title"><a href="../hmssdk_flutter/hmssdk_flutter-library.html#exceptions">Exceptions</a></li>
@@ -388,14 +506,21 @@ or a new track got added/existing track is removed <a href="../hmssdk_flutter/HM
 
     <li class="section-title"><a href="../hmssdk_flutter/HMSUpdateListener-class.html#instance-methods">Methods</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li><a href="../hmssdk_flutter/HMSUpdateListener/onChangeTrackStateRequest.html">onChangeTrackStateRequest</a></li>
     <li><a href="../hmssdk_flutter/HMSUpdateListener/onError.html">onError</a></li>
     <li><a href="../hmssdk_flutter/HMSUpdateListener/onJoin.html">onJoin</a></li>
+    <li><a href="../hmssdk_flutter/HMSUpdateListener/onLocalAudioStats.html">onLocalAudioStats</a></li>
+    <li><a href="../hmssdk_flutter/HMSUpdateListener/onLocalVideoStats.html">onLocalVideoStats</a></li>
     <li><a href="../hmssdk_flutter/HMSUpdateListener/onMessage.html">onMessage</a></li>
     <li><a href="../hmssdk_flutter/HMSUpdateListener/onPeerUpdate.html">onPeerUpdate</a></li>
     <li><a href="../hmssdk_flutter/HMSUpdateListener/onReconnected.html">onReconnected</a></li>
     <li><a href="../hmssdk_flutter/HMSUpdateListener/onReconnecting.html">onReconnecting</a></li>
+    <li><a href="../hmssdk_flutter/HMSUpdateListener/onRemoteAudioStats.html">onRemoteAudioStats</a></li>
+    <li><a href="../hmssdk_flutter/HMSUpdateListener/onRemoteVideoStats.html">onRemoteVideoStats</a></li>
+    <li><a href="../hmssdk_flutter/HMSUpdateListener/onRemovedFromRoom.html">onRemovedFromRoom</a></li>
     <li><a href="../hmssdk_flutter/HMSUpdateListener/onRoleChangeRequest.html">onRoleChangeRequest</a></li>
     <li><a href="../hmssdk_flutter/HMSUpdateListener/onRoomUpdate.html">onRoomUpdate</a></li>
+    <li><a href="../hmssdk_flutter/HMSUpdateListener/onRTCStats.html">onRTCStats</a></li>
     <li><a href="../hmssdk_flutter/HMSUpdateListener/onTrackUpdate.html">onTrackUpdate</a></li>
     <li><a href="../hmssdk_flutter/HMSUpdateListener/onUpdateSpeakers.html">onUpdateSpeakers</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
@@ -415,7 +540,7 @@ or a new track got added/existing track is removed <a href="../hmssdk_flutter/HM
 <footer>
   <span class="no-break">
     hmssdk_flutter
-      0.2.0
+      0.6.1
   </span>
 
   

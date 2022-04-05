@@ -53,12 +53,13 @@
       <span class="name ">HMSPeer</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="-param-peerId">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">peerId</span>, </span></li>
 <li><span class="parameter" id="-param-name"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span></li>
 <li><span class="parameter" id="-param-isLocal"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">isLocal</span>, </span></li>
-<li><span class="parameter" id="-param-role"><span class="type-annotation"><a href="../../hmssdk_flutter/HMSRole-class.html">HMSRole</a>?</span> <span class="parameter-name">role</span>, </span></li>
+<li><span class="parameter" id="-param-role"><span>required</span> <span class="type-annotation"><a href="../../hmssdk_flutter/HMSRole-class.html">HMSRole</a></span> <span class="parameter-name">role</span>, </span></li>
 <li><span class="parameter" id="-param-customerUserId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">customerUserId</span>, </span></li>
-<li><span class="parameter" id="-param-customerDescription"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">customerDescription</span>, </span></li>
+<li><span class="parameter" id="-param-metadata"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">metadata</span>, </span></li>
 <li><span class="parameter" id="-param-audioTrack"><span class="type-annotation"><a href="../../hmssdk_flutter/HMSAudioTrack-class.html">HMSAudioTrack</a>?</span> <span class="parameter-name">audioTrack</span>, </span></li>
 <li><span class="parameter" id="-param-videoTrack"><span class="type-annotation"><a href="../../hmssdk_flutter/HMSVideoTrack-class.html">HMSVideoTrack</a>?</span> <span class="parameter-name">videoTrack</span>, </span></li>
-<li><span class="parameter" id="-param-auxiliaryTracks"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../hmssdk_flutter/HMSTrack-class.html">HMSTrack</a></span>&gt;</span>?</span> <span class="parameter-name">auxiliaryTracks</span>}</span></li>
+<li><span class="parameter" id="-param-auxiliaryTracks"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../hmssdk_flutter/HMSTrack-class.html">HMSTrack</a></span>&gt;</span>?</span> <span class="parameter-name">auxiliaryTracks</span>, </span></li>
+<li><span class="parameter" id="-param-networkQuality"><span class="type-annotation"><a href="../../hmssdk_flutter/HMSNetworkQuality-class.html">HMSNetworkQuality</a>?</span> <span class="parameter-name">networkQuality</span>}</span></li>
 </ol>)
     </section>
 
@@ -72,12 +73,13 @@
   required this.peerId,
   required this.name,
   required this.isLocal,
-  this.role,
+  required this.role,
   this.customerUserId,
-  this.customerDescription,
+  this.metadata,
   this.audioTrack,
   this.videoTrack,
   this.auxiliaryTracks,
+  this.networkQuality,
 });</code></pre>
 </section>
 
@@ -112,17 +114,20 @@
     </li>
     <li><a href="../../hmssdk_flutter/HMSPeer/audioTrack.html">audioTrack</a></li>
     <li><a href="../../hmssdk_flutter/HMSPeer/auxiliaryTracks.html">auxiliaryTracks</a></li>
-    <li><a href="../../hmssdk_flutter/HMSPeer/customerDescription.html">customerDescription</a></li>
     <li><a href="../../hmssdk_flutter/HMSPeer/customerUserId.html">customerUserId</a></li>
     <li><a href="../../hmssdk_flutter/HMSPeer/hashCode.html">hashCode</a></li>
     <li><a href="../../hmssdk_flutter/HMSPeer/isLocal.html">isLocal</a></li>
+    <li><a href="../../hmssdk_flutter/HMSPeer/metadata.html">metadata</a></li>
     <li><a href="../../hmssdk_flutter/HMSPeer/name.html">name</a></li>
+    <li><a href="../../hmssdk_flutter/HMSPeer/networkQuality.html">networkQuality</a></li>
     <li><a href="../../hmssdk_flutter/HMSPeer/peerId.html">peerId</a></li>
     <li><a href="../../hmssdk_flutter/HMSPeer/role.html">role</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
     <li><a href="../../hmssdk_flutter/HMSPeer/videoTrack.html">videoTrack</a></li>
 
     <li class="section-title"><a href="../../hmssdk_flutter/HMSPeer-class.html#instance-methods">Methods</a></li>
+    <li><a href="../../hmssdk_flutter/HMSPeer/getAllTracks.html">getAllTracks</a></li>
+    <li><a href="../../hmssdk_flutter/HMSPeer/getTrackById.html">getTrackById</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
     <li><a href="../../hmssdk_flutter/HMSPeer/toString.html">toString</a></li>
 
@@ -146,7 +151,7 @@
 <footer>
   <span class="no-break">
     hmssdk_flutter
-      0.2.0
+      0.6.1
   </span>
 
   

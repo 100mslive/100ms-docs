@@ -61,13 +61,16 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">factory HMSMessage.fromMap(Map map) {
-  print(map.toString());
+  Map messageMap = map;
+  HMSPeer sender = HMSPeer.fromMap(messageMap[&#39;sender&#39;]);
+  HMSMessageRecipient recipient =
+      HMSMessageRecipient.fromMap(messageMap[&#39;hms_message_recipient&#39;]);
   return HMSMessage(
-    sender: map[&#39;sender&#39;] as String,
-    message: map[&#39;message&#39;] as String,
-    type: map[&#39;type&#39;] as String,
-    time: map[&#39;time&#39;] as String,
-  );
+      sender: sender,
+      message: messageMap[&#39;message&#39;] as String,
+      type: messageMap[&#39;type&#39;] as String,
+      time: HMSDateExtension.convertDate(messageMap[&#39;time&#39;]),
+      hmsMessageRecipient: recipient);
 }</code></pre>
 </section>
 
@@ -101,6 +104,7 @@
       <a href="../../hmssdk_flutter/HMSMessage-class.html#instance-properties">Properties</a>
     </li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li><a href="../../hmssdk_flutter/HMSMessage/hmsMessageRecipient.html">hmsMessageRecipient</a></li>
     <li><a href="../../hmssdk_flutter/HMSMessage/message.html">message</a></li>
     <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
     <li><a href="../../hmssdk_flutter/HMSMessage/sender.html">sender</a></li>
@@ -130,7 +134,7 @@
 <footer>
   <span class="no-break">
     hmssdk_flutter
-      0.2.0
+      0.6.1
   </span>
 
   

@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the HMSSDK class from the hmssdk_flutter library, for the Dart programming language.">
+  <title>HMSSDK class - hmssdk_flutter library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../"
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    
+  <li><a href="../hmssdk_flutter-library.html">hmssdk_flutter</a></li>
+    <li class="self-crumb">HMSSDK class</li>
+  </ol>
+  <div class="self-name">HMSSDK</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-class">HMSSDK</span> class 
+    <a href="https://dart.dev/null-safety" class="feature feature-null-safety" title="Supports the null safety language feature.">Null safety</a>
+ 
+</h1></div>
+
+    
+<section class="desc markdown">
+  <p>/// The public interface of 100ms SDK. Create an instance of HMSSDK to start using the SDK.</p>
+<p><strong>Key Concepts</strong></p>
+<p><strong>Room</strong> - A room represents a real-time audio, video session, the basic building block of the 100mslive Video SDK</p>
+<p><strong>Track</strong> - A track represents either the audio or video that makes up a stream</p>
+<p><strong>Peer</strong> - A peer represents all participants connected to a room. Peers can be "local" or "remote"</p>
+<p><strong>Broadcast</strong> - A local peer can send any message/data to all remote peers in the room</p>
+<p>HMSSDK has other methods which the client app can use to get more info about the Room, Peer and Tracks</p>
+</section>
+
+
+    <section>
+      <dl class="dl-horizontal">
+
+
+        <dt>Mixed in types</dt>
+        <dd><ul class="comma-separated clazz-relationships">
+          <li><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver-class.html">WidgetsBindingObserver</a></li>
+        </ul></dd>
+
+
+
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="constructors">
+      <h2>Constructors</h2>
+
+      <dl class="constructor-summary-list">
+        <dt id="HMSSDK" class="callable">
+          <span class="name"><a href="../hmssdk_flutter/HMSSDK/HMSSDK.html">HMSSDK</a></span><span class="signature">(<span class="parameter" id="-param-hmsTrackSetting">{<span class="type-annotation"><a href="../hmssdk_flutter/HMSTrackSetting-class.html">HMSTrackSetting</a>?</span> <span class="parameter-name">hmsTrackSetting</span>}</span>)</span>
+        </dt>
+        <dd>
+           
+        </dd>
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="instance-properties">
+      <h2>Properties</h2>
+
+      <dl class="properties">
+        <dt id="hashCode" class="property inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> 
+
+</dt>
+<dd class="inherited">
+  The hash code for this object. <a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">[...]</a>
+  <div class="features">read-only, inherited</div>
+
+</dd>
+
+        <dt id="hmsTrackSetting" class="property">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/hmsTrackSetting.html">hmsTrackSetting</a></span>
+  <span class="signature">&#8596; <a href="../hmssdk_flutter/HMSTrackSetting-class.html">HMSTrackSetting</a>?</span> 
+
+</dt>
+<dd>
+  join meeting by passing HMSConfig instance to it. 
+  <div class="features">read / write</div>
+
+</dd>
+
+        <dt id="isLocalVideoOn" class="property">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/isLocalVideoOn.html">isLocalVideoOn</a></span>
+  <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> 
+
+</dt>
+<dd>
+   
+  <div class="features">read / write</div>
+
+</dd>
+
+        <dt id="previewState" class="property">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/previewState.html">previewState</a></span>
+  <span class="signature">&#8596; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> 
+
+</dt>
+<dd>
+   
+  <div class="features">read / write</div>
+
+</dd>
+
+        <dt id="runtimeType" class="property inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/Type-class.html">Type</a></span> 
+
+</dt>
+<dd class="inherited">
+  A representation of the runtime type of the object. 
+  <div class="features">read-only, inherited</div>
+
+</dd>
+
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor" id="instance-methods">
+      <h2>Methods</h2>
+      <dl class="callables">
+        <dt id="acceptChangeRole" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/acceptChangeRole.html">acceptChangeRole</a></span><span class="signature">(<wbr><span class="parameter" id="acceptChangeRole-param-hmsRoleChangeRequest">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSRoleChangeRequest-class.html">HMSRoleChangeRequest</a></span> <span class="parameter-name">hmsRoleChangeRequest</span>, </span><span class="parameter" id="acceptChangeRole-param-hmsActionResultListener"><span class="type-annotation"><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a>?</span> <span class="parameter-name">hmsActionResultListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  accept the change role request
+When a peer is requested to change their role (see <a href="../hmssdk_flutter/HMSSDK/changeRole.html">changeRole</a>) to accept the new role this has to be called. Once this method is called, the peer's role will be changed to the requested one. The HMSRoleChangeRequest that the SDK had sent to this peer (in HMSUpdateListener.onRoleChangeRequest) to inform them that a role change was requested.
+<code>hmsActionResultListener</code> - Listener that will return HMSActionResultListener.onSuccess if the role change request is successful else will call HMSActionResultListener.onException with the error received from server 
+  
+
+</dd>
+
+        <dt id="addLogListener" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/addLogListener.html">addLogListener</a></span><span class="signature">(<wbr><span class="parameter" id="addLogListener-param-hmsLogListener">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSLogListener-class.html">HMSLogListener</a></span> <span class="parameter-name">hmsLogListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+   
+  
+
+</dd>
+
+        <dt id="addPreviewListener" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/addPreviewListener.html">addPreviewListener</a></span><span class="signature">(<wbr><span class="parameter" id="addPreviewListener-param-listener">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSPreviewListener-class.html">HMSPreviewListener</a></span> <span class="parameter-name">listener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  add one or more previewListeners. 
+  
+
+</dd>
+
+        <dt id="addUpdateListener" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/addUpdateListener.html">addUpdateListener</a></span><span class="signature">(<wbr><span class="parameter" id="addUpdateListener-param-listener">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSUpdateListener-class.html">HMSUpdateListener</a></span> <span class="parameter-name">listener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  add MeetingListener it will add all the listeners. 
+  
+
+</dd>
+
+        <dt id="build" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/build.html">build</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  The build function should be called after creating an instance of the <a href="../hmssdk_flutter/HMSSDK-class.html">HMSSDK</a>.
+Await the result &amp; if true then create <a href="../hmssdk_flutter/HMSConfig-class.html">HMSConfig</a> object to join or preview a room. 
+  
+
+</dd>
+
+        <dt id="changeMetadata" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/changeMetadata.html">changeMetadata</a></span><span class="signature">(<wbr><span class="parameter" id="changeMetadata-param-metadata">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">metadata</span>, </span><span class="parameter" id="changeMetadata-param-hmsActionResultListener"><span class="type-annotation"><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a>?</span> <span class="parameter-name">hmsActionResultListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Change the metadata that appears inside <a href="../hmssdk_flutter/HMSPeer/metadata.html">HMSPeer.metadata</a>. This change is persistent and all peers joining after the change will still see these values.
+<code>metadata</code> is the string data to be set now
+<code>hmsActionResultListener</code> is callback whose <a href="../hmssdk_flutter/HMSActionResultListener/onSuccess.html">HMSActionResultListener.onSuccess</a> will be called when the the action completes successfully. 
+  
+
+</dd>
+
+        <dt id="changeName" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/changeName.html">changeName</a></span><span class="signature">(<wbr><span class="parameter" id="changeName-param-name">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">name</span>, </span><span class="parameter" id="changeName-param-hmsActionResultListener"><span class="type-annotation"><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a>?</span> <span class="parameter-name">hmsActionResultListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Method to change name of localPeer
+Change the name that appears inside <a href="../hmssdk_flutter/HMSPeer/name.html">HMSPeer.name</a> This change is persistent and all peers joining after the change will still see these values.
+<code>name</code> is the string which is to be set as the <a href="../hmssdk_flutter/HMSPeer/name.html">HMSPeer.name</a>
+<code>hmsActionResultListener</code> is the callback whose <a href="../hmssdk_flutter/HMSActionResultListener/onSuccess.html">HMSActionResultListener.onSuccess</a> will be called when the the action completes successfully. 
+  
+
+</dd>
+
+        <dt id="changeRole" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/changeRole.html">changeRole</a></span><span class="signature">(<wbr><span class="parameter" id="changeRole-param-forPeer">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a></span> <span class="parameter-name">forPeer</span>, </span><span class="parameter" id="changeRole-param-toRole"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSRole-class.html">HMSRole</a></span> <span class="parameter-name">toRole</span>, </span><span class="parameter" id="changeRole-param-force"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">force</span> = <span class="default-value">false</span>, </span><span class="parameter" id="changeRole-param-hmsActionResultListener"><span class="type-annotation"><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a>?</span> <span class="parameter-name">hmsActionResultListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Requests a change of HMSRole to a new role.
+The <code>peer</code> HMSPeer whose role should be requested to be changed.
+The <code>roleName</code> new role the HMSPeer would have if they accept or are forced to change to.
+Set <code>forceChange</code> to false if the peer should be requested to accept the new role (they can choose to deny). Set <code>forceChange</code> to true if their role should be changed without asking them.
+<code>hmsActionResultListener</code> - Listener that will return HMSActionResultListener.onSuccess if the role change request is successful else will call <a href="../hmssdk_flutter/HMSActionResultListener/onException.html">HMSActionResultListener.onException</a> with the error received from server 
+  
+
+</dd>
+
+        <dt id="changeTrackState" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/changeTrackState.html">changeTrackState</a></span><span class="signature">(<wbr><span class="parameter" id="changeTrackState-param-forRemoteTrack">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSTrack-class.html">HMSTrack</a></span> <span class="parameter-name">forRemoteTrack</span>, </span><span class="parameter" id="changeTrackState-param-mute"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">mute</span>, </span><span class="parameter" id="changeTrackState-param-hmsActionResultListener"><span class="type-annotation"><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a>?</span> <span class="parameter-name">hmsActionResultListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  To change the mute status of a single remote peer's track
+Set <code>mute</code> to true if the track needs to be muted, false otherwise.
+<code>hmsActionResultListener</code> - the callback that would be called by SDK in case of a success or failure. 
+  
+
+</dd>
+
+        <dt id="changeTrackStateForRole" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/changeTrackStateForRole.html">changeTrackStateForRole</a></span><span class="signature">(<wbr><span class="parameter" id="changeTrackStateForRole-param-mute">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">mute</span>, </span><span class="parameter" id="changeTrackStateForRole-param-kind"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSTrackKind.html">HMSTrackKind</a>?</span> <span class="parameter-name">kind</span>, </span><span class="parameter" id="changeTrackStateForRole-param-source"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">source</span>, </span><span class="parameter" id="changeTrackStateForRole-param-roles"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../hmssdk_flutter/HMSRole-class.html">HMSRole</a></span>&gt;</span>?</span> <span class="parameter-name">roles</span>, </span><span class="parameter" id="changeTrackStateForRole-param-hmsActionResultListener"><span class="type-annotation"><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a>?</span> <span class="parameter-name">hmsActionResultListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  To change the mute status of one or many remote HMSTrack for all peers of a particular role, or all tracks of a particular source, type or source AND type.
+Set <code>mute</code> true if the track needs to be muted, false otherwise
+<code>type</code> is the HMSTrackType which should be affected. If this and source are specified, it is considered an AND operation. If not specified, all track sources are affected.
+<code>source</code> is the HMSTrackSource which should be affected. If this and type are specified, it is considered an AND operation. If not specified, all track types are affected.
+<code>roles</code> is a list of roles, may have a single item in a list, whose tracks should be affected. If not specified, all roles are affected.
+<code>hmsActionResultListener</code> - the callback that would be called by SDK in case of a success or failure. 
+  
+
+</dd>
+
+        <dt id="didChangeAccessibilityFeatures" class="callable inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didChangeAccessibilityFeatures.html">didChangeAccessibilityFeatures</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Called when the system changes the set of currently active accessibility
+features. <a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didChangeAccessibilityFeatures.html">[...]</a>
+  <div class="features">inherited</div>
+
+</dd>
+
+        <dt id="didChangeAppLifecycleState" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/didChangeAppLifecycleState.html">didChangeAppLifecycleState</a></span><span class="signature">(<wbr><span class="parameter" id="didChangeAppLifecycleState-param-state"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/AppLifecycleState.html">AppLifecycleState</a></span> <span class="parameter-name">state</span></span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Called when the system puts the app in the background or returns
+the app to the foreground. <a href="../hmssdk_flutter/HMSSDK/didChangeAppLifecycleState.html">[...]</a>
+  <div class="features">override</div>
+
+</dd>
+
+        <dt id="didChangeLocales" class="callable inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didChangeLocales.html">didChangeLocales</a></span><span class="signature">(<wbr><span class="parameter" id="didChangeLocales-param-locales"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-ui/Locale-class.html">Locale</a></span>&gt;</span>?</span> <span class="parameter-name">locales</span></span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Called when the system tells the app that the user's locale has
+changed. For example, if the user changes the system language
+settings. <a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didChangeLocales.html">[...]</a>
+  <div class="features">inherited</div>
+
+</dd>
+
+        <dt id="didChangeMetrics" class="callable inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didChangeMetrics.html">didChangeMetrics</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Called when the application's dimensions change. For example,
+when a phone is rotated. <a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didChangeMetrics.html">[...]</a>
+  <div class="features">inherited</div>
+
+</dd>
+
+        <dt id="didChangePlatformBrightness" class="callable inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didChangePlatformBrightness.html">didChangePlatformBrightness</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Called when the platform brightness changes. <a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didChangePlatformBrightness.html">[...]</a>
+  <div class="features">inherited</div>
+
+</dd>
+
+        <dt id="didChangeTextScaleFactor" class="callable inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didChangeTextScaleFactor.html">didChangeTextScaleFactor</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Called when the platform's text scale factor changes. <a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didChangeTextScaleFactor.html">[...]</a>
+  <div class="features">inherited</div>
+
+</dd>
+
+        <dt id="didHaveMemoryPressure" class="callable inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didHaveMemoryPressure.html">didHaveMemoryPressure</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Called when the system is running low on memory. <a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didHaveMemoryPressure.html">[...]</a>
+  <div class="features">inherited</div>
+
+</dd>
+
+        <dt id="didPopRoute" class="callable inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didPopRoute.html">didPopRoute</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Called when the system tells the app to pop the current route.
+For example, on Android, this is called when the user presses
+the back button. <a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didPopRoute.html">[...]</a>
+  <div class="features">inherited</div>
+
+</dd>
+
+        <dt id="didPushRoute" class="callable inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didPushRoute.html">didPushRoute</a></span><span class="signature">(<wbr><span class="parameter" id="didPushRoute-param-route"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">route</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Called when the host tells the application to push a new route onto the
+navigator. <a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didPushRoute.html">[...]</a>
+  <div class="features">inherited</div>
+
+</dd>
+
+        <dt id="didPushRouteInformation" class="callable inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didPushRouteInformation.html">didPushRouteInformation</a></span><span class="signature">(<wbr><span class="parameter" id="didPushRouteInformation-param-routeInformation"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/RouteInformation-class.html">RouteInformation</a></span> <span class="parameter-name">routeInformation</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Called when the host tells the application to push a new
+<a href="https://api.flutter.dev/flutter/widgets/RouteInformation-class.html">RouteInformation</a> and a restoration state onto the router. <a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didPushRouteInformation.html">[...]</a>
+  <div class="features">inherited</div>
+
+</dd>
+
+        <dt id="endRoom" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/endRoom.html">endRoom</a></span><span class="signature">(<wbr><span class="parameter" id="endRoom-param-lock">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">lock</span>, </span><span class="parameter" id="endRoom-param-reason"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">reason</span>, </span><span class="parameter" id="endRoom-param-hmsActionResultListener"><span class="type-annotation"><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a>?</span> <span class="parameter-name">hmsActionResultListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Remove all the peers from the room &amp; end the room.
+<code>reason</code> is the reason why the room is being ended.
+<code>lock</code> bool is whether rejoining the room should be disabled for the foreseeable future.
+<code>hmsActionResultListener</code> is the callback that would be called by SDK in case of a success or failure 
+  
+
+</dd>
+
+        <dt id="getLocalPeer" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/getLocalPeer.html">getLocalPeer</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../hmssdk_flutter/HMSLocalPeer-class.html">HMSLocalPeer</a>?</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Returns an instance of the local peer if one existed. A local peer only exists during a preview and an active call. 
+  
+
+</dd>
+
+        <dt id="getPeers" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/getPeers.html">getPeers</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a></span>&gt;</span>?</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Returns all peers, remote and local. 
+  
+
+</dd>
+
+        <dt id="getRemotePeers" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/getRemotePeers.html">getRemotePeers</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a></span>&gt;</span>?</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Returns only remote peers. The peer's own instance will not be included in this. To get all peers including the local one consider getPeers or for only the local one consider getLocalPeer. 
+  
+
+</dd>
+
+        <dt id="getRoles" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/getRoles.html">getRoles</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../hmssdk_flutter/HMSRole-class.html">HMSRole</a></span>&gt;</span></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Returns all the <a href="../hmssdk_flutter/HMSRole-class.html">HMSRole</a> roles possible in the room 
+  
+
+</dd>
+
+        <dt id="getRoom" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/getRoom.html">getRoom</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../hmssdk_flutter/HMSRoom-class.html">HMSRoom</a>?</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Get the <code>HMSRoom</code> room object which the local peer has currently joined. Returns nil if no room is joined. 
+  
+
+</dd>
+
+        <dt id="isAudioMute" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/isAudioMute.html">isAudioMute</a></span><span class="signature">(<wbr><span class="parameter" id="isAudioMute-param-peer">{<span class="type-annotation"><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a>?</span> <span class="parameter-name">peer</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  To check the audio status of a peer is mute/unmute
+Pass in the <code>peer</code> object for the peer whose audio status you want to check 
+  
+
+</dd>
+
+        <dt id="isScreenShareActive" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/isScreenShareActive.html">isScreenShareActive</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  A method to check if the screen share is currently active on device i.e. is this Android device doing screen share. Note: This API is not available on iOS. 
+  
+
+</dd>
+
+        <dt id="isVideoMute" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/isVideoMute.html">isVideoMute</a></span><span class="signature">(<wbr><span class="parameter" id="isVideoMute-param-peer">{<span class="type-annotation"><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a>?</span> <span class="parameter-name">peer</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  To check the video status of a peer is mute/unmute
+Pass in the <code>peer</code> object for the peer whose video status you want to check 
+  
+
+</dd>
+
+        <dt id="join" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/join.html">join</a></span><span class="signature">(<wbr><span class="parameter" id="join-param-config">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSConfig-class.html">HMSConfig</a></span> <span class="parameter-name">config</span>}</span>)
+    <span class="returntype parameter">&#8594; dynamic</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Join the room with configuration options passed as a <a href="../hmssdk_flutter/HMSConfig-class.html">HMSConfig</a> object 
+  
+
+</dd>
+
+        <dt id="leave" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/leave.html">leave</a></span><span class="signature">(<wbr><span class="parameter" id="leave-param-hmsActionResultListener">{<span class="type-annotation"><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a>?</span> <span class="parameter-name">hmsActionResultListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Call this method to leave the room
+<a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a> callback will be used by SDK to inform application if there was a success or failure when the leave was executed 
+  
+
+</dd>
+
+        <dt id="muteAll" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/muteAll.html">muteAll</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  To mute audio of all peers in the room for yourself
+Audio from other peers will be stopped for the local peer after invoking <a href="../hmssdk_flutter/HMSSDK/muteAll.html">muteAll</a>
+Note: Other peers can still listen each other in the room, just you (the local peer) won't listen any audio from the peers in the room 
+  
+
+</dd>
+
+        <dt id="noSuchMethod" class="callable inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
+    <span class="returntype parameter">&#8594; dynamic</span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Invoked when a non-existent method or property is accessed. <a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">[...]</a>
+  <div class="features">inherited</div>
+
+</dd>
+
+        <dt id="preview" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/preview.html">preview</a></span><span class="signature">(<wbr><span class="parameter" id="preview-param-config">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSConfig-class.html">HMSConfig</a></span> <span class="parameter-name">config</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Begin a preview so that the local peer's audio and video can be displayed to them before they join a call.
+The details of the call they want to join is passed using <a href="../hmssdk_flutter/HMSConfig-class.html">HMSConfig</a>. This may affect whether they are allowed to publish audio or video at all. 
+  
+
+</dd>
+
+        <dt id="removeHMSLogger" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/removeHMSLogger.html">removeHMSLogger</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+   
+  
+
+</dd>
+
+        <dt id="removeLogListener" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/removeLogListener.html">removeLogListener</a></span><span class="signature">(<wbr><span class="parameter" id="removeLogListener-param-hmsLogListener">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSLogListener-class.html">HMSLogListener</a></span> <span class="parameter-name">hmsLogListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+   
+  
+
+</dd>
+
+        <dt id="removePeer" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/removePeer.html">removePeer</a></span><span class="signature">(<wbr><span class="parameter" id="removePeer-param-peer">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a></span> <span class="parameter-name">peer</span>, </span><span class="parameter" id="removePeer-param-reason"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">reason</span>, </span><span class="parameter" id="removePeer-param-hmsActionResultListener"><span class="type-annotation"><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a>?</span> <span class="parameter-name">hmsActionResultListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Removes the given peer from the room
+A <code>reason</code> string will be shown to them.
+<code>hmsActionResultListener</code> is the callback that would be called by SDK in case of a success or failure 
+  
+
+</dd>
+
+        <dt id="removePreviewListener" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/removePreviewListener.html">removePreviewListener</a></span><span class="signature">(<wbr><span class="parameter" id="removePreviewListener-param-listener">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSPreviewListener-class.html">HMSPreviewListener</a></span> <span class="parameter-name">listener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  remove a preview listener 
+  
+
+</dd>
+
+        <dt id="removeUpdateListener" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/removeUpdateListener.html">removeUpdateListener</a></span><span class="signature">(<wbr><span class="parameter" id="removeUpdateListener-param-listener">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSUpdateListener-class.html">HMSUpdateListener</a></span> <span class="parameter-name">listener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  remove a update listener 
+  
+
+</dd>
+
+        <dt id="sendBroadcastMessage" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/sendBroadcastMessage.html">sendBroadcastMessage</a></span><span class="signature">(<wbr><span class="parameter" id="sendBroadcastMessage-param-message">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">message</span>, </span><span class="parameter" id="sendBroadcastMessage-param-type"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">type</span>, </span><span class="parameter" id="sendBroadcastMessage-param-hmsActionResultListener"><span class="type-annotation"><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a>?</span> <span class="parameter-name">hmsActionResultListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Sends a message to everyone in the call. <code>message</code> contains the content of the message.
+The <code>hmsActionResultListener</code> informs about whether the message was successfully sent, or the kind of error if not. 
+  
+
+</dd>
+
+        <dt id="sendDirectMessage" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/sendDirectMessage.html">sendDirectMessage</a></span><span class="signature">(<wbr><span class="parameter" id="sendDirectMessage-param-message">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">message</span>, </span><span class="parameter" id="sendDirectMessage-param-peerTo"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a></span> <span class="parameter-name">peerTo</span>, </span><span class="parameter" id="sendDirectMessage-param-type"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">type</span>, </span><span class="parameter" id="sendDirectMessage-param-hmsActionResultListener"><span class="type-annotation"><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a>?</span> <span class="parameter-name">hmsActionResultListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Sends a message a particular peer only. The one specified in <code>peer</code>.
+<code>message</code> contains the content of the message.
+The <code>hmsActionResultListener</code> informs about whether the message was successfully sent, or the kind of error if not. 
+  
+
+</dd>
+
+        <dt id="sendGroupMessage" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/sendGroupMessage.html">sendGroupMessage</a></span><span class="signature">(<wbr><span class="parameter" id="sendGroupMessage-param-message">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">message</span>, </span><span class="parameter" id="sendGroupMessage-param-hmsRolesTo"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../hmssdk_flutter/HMSRole-class.html">HMSRole</a></span>&gt;</span></span> <span class="parameter-name">hmsRolesTo</span>, </span><span class="parameter" id="sendGroupMessage-param-type"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">type</span>, </span><span class="parameter" id="sendGroupMessage-param-hmsActionResultListener"><span class="type-annotation"><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a>?</span> <span class="parameter-name">hmsActionResultListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Sends a message to all the peers of a role defined in <code>roleName</code>. All peers currently with that role will receive the message.
+<code>message</code> contains the content of the message.
+The <code>hmsActionResultListener</code> informs about whether the message was successfully sent, or the kind of error if not. 
+  
+
+</dd>
+
+        <dt id="setPlayBackAllowed" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/setPlayBackAllowed.html">setPlayBackAllowed</a></span><span class="signature">(<wbr><span class="parameter" id="setPlayBackAllowed-param-allow">{<span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">allow</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  To mute/umute video of all peers in the room for yourself. Use the <code>allow</code> bool to toggle the status
+Video from other peers will be stopped for the local peer after invoking <a href="../hmssdk_flutter/HMSSDK/setPlayBackAllowed.html">setPlayBackAllowed</a> with <code>allow</code> as false
+Note: Other peers can still see each other in the room, just you (the local peer) won't see any video from the peers in the room 
+  
+
+</dd>
+
+        <dt id="startCapturing" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/startCapturing.html">startCapturing</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  To start capturing the local peer's video &amp; send it to other peer's in the room 
+  
+
+</dd>
+
+        <dt id="startHlsStreaming" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/startHlsStreaming.html">startHlsStreaming</a></span><span class="signature">(<wbr><span class="parameter" id="startHlsStreaming-param-hmshlsConfig">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSHLSConfig-class.html">HMSHLSConfig</a></span> <span class="parameter-name">hmshlsConfig</span>, </span><span class="parameter" id="startHlsStreaming-param-hmsActionResultListener"><span class="type-annotation"><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a>?</span> <span class="parameter-name">hmsActionResultListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Starts HLS streaming for the <code>meetingUrl</code> room.
+You can set a custom <code>metadata</code> for the HLS Stream
+<code>hmsActionResultListener</code> is callback whose <a href="../hmssdk_flutter/HMSActionResultListener/onSuccess.html">HMSActionResultListener.onSuccess</a> will be called when the the action completes successfully. 
+  
+
+</dd>
+
+        <dt id="startHMSLogger" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/startHMSLogger.html">startHMSLogger</a></span><span class="signature">(<wbr><span class="parameter" id="startHMSLogger-param-webRtclogLevel">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSLogLevel.html">HMSLogLevel</a></span> <span class="parameter-name">webRtclogLevel</span>, </span><span class="parameter" id="startHMSLogger-param-logLevel"><span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSLogLevel.html">HMSLogLevel</a></span> <span class="parameter-name">logLevel</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+   
+  
+
+</dd>
+
+        <dt id="startRtmpOrRecording" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/startRtmpOrRecording.html">startRtmpOrRecording</a></span><span class="signature">(<wbr><span class="parameter" id="startRtmpOrRecording-param-hmsRecordingConfig">{<span>required</span> <span class="type-annotation"><a href="../hmssdk_flutter/HMSRecordingConfig-class.html">HMSRecordingConfig</a></span> <span class="parameter-name">hmsRecordingConfig</span>, </span><span class="parameter" id="startRtmpOrRecording-param-hmsActionResultListener"><span class="type-annotation"><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a>?</span> <span class="parameter-name">hmsActionResultListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Starts rtmp streaming or recording on the parameters described in config.
+<code>config</code> is the HMSRecordingConfig which defines streaming/recording parameters for this start request.
+<code>hmsActionResultListener</code> is the callback that would be called by SDK in case of a success or failure. 
+  
+
+</dd>
+
+        <dt id="startScreenShare" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/startScreenShare.html">startScreenShare</a></span><span class="signature">(<wbr><span class="parameter" id="startScreenShare-param-hmsActionResultListener">{<span class="type-annotation"><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a>?</span> <span class="parameter-name">hmsActionResultListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  API to start screen share of your android device. Note: This API is not available on iOS.
+<code>hmsActionResultListener</code> is a callback instance on which <a href="../hmssdk_flutter/HMSActionResultListener/onSuccess.html">HMSActionResultListener.onSuccess</a>
+ and <a href="../hmssdk_flutter/HMSActionResultListener/onException.html">HMSActionResultListener.onException</a> will be called 
+  
+
+</dd>
+
+        <dt id="stopCapturing" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/stopCapturing.html">stopCapturing</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  To stop capturing the local peer's video. 
+  
+
+</dd>
+
+        <dt id="stopHlsStreaming" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/stopHlsStreaming.html">stopHlsStreaming</a></span><span class="signature">(<wbr><span class="parameter" id="stopHlsStreaming-param-hmshlsConfig">{<span class="type-annotation"><a href="../hmssdk_flutter/HMSHLSConfig-class.html">HMSHLSConfig</a>?</span> <span class="parameter-name">hmshlsConfig</span>, </span><span class="parameter" id="stopHlsStreaming-param-hmsActionResultListener"><span class="type-annotation"><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a>?</span> <span class="parameter-name">hmsActionResultListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Stops ongoing HLS streaming in the room
+<code>hmsActionResultListener</code> is callback whose <a href="../hmssdk_flutter/HMSActionResultListener/onSuccess.html">HMSActionResultListener.onSuccess</a> will be called when the the action completes successfully. 
+  
+
+</dd>
+
+        <dt id="stopRtmpAndRecording" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/stopRtmpAndRecording.html">stopRtmpAndRecording</a></span><span class="signature">(<wbr><span class="parameter" id="stopRtmpAndRecording-param-hmsActionResultListener">{<span class="type-annotation"><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a>?</span> <span class="parameter-name">hmsActionResultListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Stops a previously started rtmp recording or stream. See startRtmpOrRecording for starting.
+<code>hmsActionResultListener</code> is the callback that would be called by SDK in case of a success or failure. 
+  
+
+</dd>
+
+        <dt id="stopScreenShare" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/stopScreenShare.html">stopScreenShare</a></span><span class="signature">(<wbr><span class="parameter" id="stopScreenShare-param-hmsActionResultListener">{<span class="type-annotation"><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a>?</span> <span class="parameter-name">hmsActionResultListener</span>}</span>)
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  API to stop screen share
+<code>hmsActionResultListener</code> is a callback instance on which <a href="../hmssdk_flutter/HMSActionResultListener/onSuccess.html">HMSActionResultListener.onSuccess</a>
+ and <a href="../hmssdk_flutter/HMSActionResultListener/onException.html">HMSActionResultListener.onException</a> will be called 
+  
+
+</dd>
+
+        <dt id="switchAudio" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/switchAudio.html">switchAudio</a></span><span class="signature">(<wbr><span class="parameter" id="switchAudio-param-isOn">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">isOn</span> = <span class="default-value">false</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../hmssdk_flutter/HMSException-class.html">HMSException</a>?</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  To switch local peer's audio on/off.
+Pass bool value to <code>isOn</code> to change current audio status 
+  
+
+</dd>
+
+        <dt id="switchCamera" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/switchCamera.html">switchCamera</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Switch camera to front or rear mode 
+  
+
+</dd>
+
+        <dt id="switchVideo" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/switchVideo.html">switchVideo</a></span><span class="signature">(<wbr><span class="parameter" id="switchVideo-param-isOn">{<span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">isOn</span> = <span class="default-value">false</span>}</span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../hmssdk_flutter/HMSException-class.html">HMSException</a>?</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  To switch local peer's video on/off.
+Pass bool value to <code>isOn</code> to change current video status 
+  
+
+</dd>
+
+        <dt id="toString" class="callable inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  A string representation of this object. <a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">[...]</a>
+  <div class="features">inherited</div>
+
+</dd>
+
+        <dt id="unMuteAll" class="callable">
+  <span class="name"><a href="../hmssdk_flutter/HMSSDK/unMuteAll.html">unMuteAll</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd>
+  To unmute audio of all peers in the room for yourself if you had previously invoked <a href="../hmssdk_flutter/HMSSDK/muteAll.html">muteAll</a> 
+  
+
+</dd>
+
+      </dl>
+    </section>
+
+    <section class="summary offset-anchor inherited" id="operators">
+      <h2>Operators</h2>
+      <dl class="callables">
+        <dt id="operator ==" class="callable inherited">
+  <span class="name"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  The equality operator. <a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">[...]</a>
+  <div class="features">inherited</div>
+
+</dd>
+
+      </dl>
+    </section>
+
+
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  
+<li><a href="../hmssdk_flutter-library.html">hmssdk_flutter</a></li>
+  <li class="self-crumb">HMSSDK class</li>
+</ol>
+
+
+    <h5>hmssdk_flutter library</h5>
+    <ol>
+  <li class="section-title"><a href="../hmssdk_flutter/hmssdk_flutter-library.html#classes">Classes</a></li>
+  <li><a href="../hmssdk_flutter/HMSActionResultListener-class.html">HMSActionResultListener</a></li>
+  <li><a href="../hmssdk_flutter/HMSAudioSetting-class.html">HMSAudioSetting</a></li>
+  <li><a href="../hmssdk_flutter/HMSAudioTrack-class.html">HMSAudioTrack</a></li>
+  <li><a href="../hmssdk_flutter/HMSAudioTrackSetting-class.html">HMSAudioTrackSetting</a></li>
+  <li><a href="../hmssdk_flutter/HMSConfig-class.html">HMSConfig</a></li>
+  <li><a href="../hmssdk_flutter/HMSException-class.html">HMSException</a></li>
+  <li><a href="../hmssdk_flutter/HMSHLSConfig-class.html">HMSHLSConfig</a></li>
+  <li><a href="../hmssdk_flutter/HMSHLSMeetingURLVariant-class.html">HMSHLSMeetingURLVariant</a></li>
+  <li><a href="../hmssdk_flutter/HMSLocalAudioStats-class.html">HMSLocalAudioStats</a></li>
+  <li><a href="../hmssdk_flutter/HMSLocalAudioTrack-class.html">HMSLocalAudioTrack</a></li>
+  <li><a href="../hmssdk_flutter/HMSLocalPeer-class.html">HMSLocalPeer</a></li>
+  <li><a href="../hmssdk_flutter/HMSLocalVideoStats-class.html">HMSLocalVideoStats</a></li>
+  <li><a href="../hmssdk_flutter/HMSLocalVideoTrack-class.html">HMSLocalVideoTrack</a></li>
+  <li><a href="../hmssdk_flutter/HMSLog-class.html">HMSLog</a></li>
+  <li><a href="../hmssdk_flutter/HMSLogListener-class.html">HMSLogListener</a></li>
+  <li><a href="../hmssdk_flutter/HMSLogsUpdateListenerMethodResponse-class.html">HMSLogsUpdateListenerMethodResponse</a></li>
+  <li><a href="../hmssdk_flutter/HMSMessage-class.html">HMSMessage</a></li>
+  <li><a href="../hmssdk_flutter/HMSMessageRecipient-class.html">HMSMessageRecipient</a></li>
+  <li><a href="../hmssdk_flutter/HMSMessageResultListener-class.html">HMSMessageResultListener</a></li>
+  <li><a href="../hmssdk_flutter/HMSNetworkQuality-class.html">HMSNetworkQuality</a></li>
+  <li><a href="../hmssdk_flutter/HMSNetworkUpdateListenerMethodResponse-class.html">HMSNetworkUpdateListenerMethodResponse</a></li>
+  <li><a href="../hmssdk_flutter/HMSPeer-class.html">HMSPeer</a></li>
+  <li><a href="../hmssdk_flutter/HMSPeerRemovedFromPeer-class.html">HMSPeerRemovedFromPeer</a></li>
+  <li><a href="../hmssdk_flutter/HMSPermissions-class.html">HMSPermissions</a></li>
+  <li><a href="../hmssdk_flutter/HMSPreviewListener-class.html">HMSPreviewListener</a></li>
+  <li><a href="../hmssdk_flutter/HMSPreviewUpdateListenerMethodResponse-class.html">HMSPreviewUpdateListenerMethodResponse</a></li>
+  <li><a href="../hmssdk_flutter/HMSPublishSetting-class.html">HMSPublishSetting</a></li>
+  <li><a href="../hmssdk_flutter/HMSRecordingConfig-class.html">HMSRecordingConfig</a></li>
+  <li><a href="../hmssdk_flutter/HMSRemoteAudioStats-class.html">HMSRemoteAudioStats</a></li>
+  <li><a href="../hmssdk_flutter/HMSRemoteAudioTrack-class.html">HMSRemoteAudioTrack</a></li>
+  <li><a href="../hmssdk_flutter/HMSRemotePeer-class.html">HMSRemotePeer</a></li>
+  <li><a href="../hmssdk_flutter/HMSRemoteVideoStats-class.html">HMSRemoteVideoStats</a></li>
+  <li><a href="../hmssdk_flutter/HMSRemoteVideoTrack-class.html">HMSRemoteVideoTrack</a></li>
+  <li><a href="../hmssdk_flutter/HMSRole-class.html">HMSRole</a></li>
+  <li><a href="../hmssdk_flutter/HMSRoleChangeRequest-class.html">HMSRoleChangeRequest</a></li>
+  <li><a href="../hmssdk_flutter/HMSRoom-class.html">HMSRoom</a></li>
+  <li><a href="../hmssdk_flutter/HMSRTCStats-class.html">HMSRTCStats</a></li>
+  <li><a href="../hmssdk_flutter/HMSRTCStatsReport-class.html">HMSRTCStatsReport</a></li>
+  <li><a href="../hmssdk_flutter/HMSSDK-class.html">HMSSDK</a></li>
+  <li><a href="../hmssdk_flutter/HMSSimulCastSettings-class.html">HMSSimulCastSettings</a></li>
+  <li><a href="../hmssdk_flutter/HMSSpeaker-class.html">HMSSpeaker</a></li>
+  <li><a href="../hmssdk_flutter/HMSSubscribeSettings-class.html">HMSSubscribeSettings</a></li>
+  <li><a href="../hmssdk_flutter/HMSTrack-class.html">HMSTrack</a></li>
+  <li><a href="../hmssdk_flutter/HMSTrackChangeRequest-class.html">HMSTrackChangeRequest</a></li>
+  <li><a href="../hmssdk_flutter/HMSTrackSetting-class.html">HMSTrackSetting</a></li>
+  <li><a href="../hmssdk_flutter/HMSUpdateListener-class.html">HMSUpdateListener</a></li>
+  <li><a href="../hmssdk_flutter/HMSUpdateListenerMethodResponse-class.html">HMSUpdateListenerMethodResponse</a></li>
+  <li><a href="../hmssdk_flutter/HMSVideoResolution-class.html">HMSVideoResolution</a></li>
+  <li><a href="../hmssdk_flutter/HMSVideoSetting-class.html">HMSVideoSetting</a></li>
+  <li><a href="../hmssdk_flutter/HMSVideoTrack-class.html">HMSVideoTrack</a></li>
+  <li><a href="../hmssdk_flutter/HMSVideoTrackSetting-class.html">HMSVideoTrackSetting</a></li>
+  <li><a href="../hmssdk_flutter/HMSVideoView-class.html">HMSVideoView</a></li>
+  <li><a href="../hmssdk_flutter/PlatformMethodResponse-class.html">PlatformMethodResponse</a></li>
+
+  <li class="section-title"><a href="../hmssdk_flutter/hmssdk_flutter-library.html#extensions">Extensions</a></li>
+  <li><a href="../hmssdk_flutter/HMSCameraFacingValues.html">HMSCameraFacingValues</a></li>
+  <li><a href="../hmssdk_flutter/HMSCodecValues.html">HMSCodecValues</a></li>
+  <li><a href="../hmssdk_flutter/HMSLogLevelValue.html">HMSLogLevelValue</a></li>
+  <li><a href="../hmssdk_flutter/HMSMessageRecipientValues.html">HMSMessageRecipientValues</a></li>
+  <li><a href="../hmssdk_flutter/HMSPeerUpdateValues.html">HMSPeerUpdateValues</a></li>
+  <li><a href="../hmssdk_flutter/HMSPreviewUpdateListenerMethodValues.html">HMSPreviewUpdateListenerMethodValues</a></li>
+  <li><a href="../hmssdk_flutter/HMSRoomUpdateValues.html">HMSRoomUpdateValues</a></li>
+  <li><a href="../hmssdk_flutter/HMSTrackKindValue.html">HMSTrackKindValue</a></li>
+  <li><a href="../hmssdk_flutter/HMSTrackUpdateValues.html">HMSTrackUpdateValues</a></li>
+  <li><a href="../hmssdk_flutter/HMSUpdateListenerMethodValues.html">HMSUpdateListenerMethodValues</a></li>
+  <li><a href="../hmssdk_flutter/HMSVideoCodecValues.html">HMSVideoCodecValues</a></li>
+  <li><a href="../hmssdk_flutter/PlatformMethodValues.html">PlatformMethodValues</a></li>
+  <li><a href="../hmssdk_flutter/ScalingTypeExtension.html">ScalingTypeExtension</a></li>
+
+
+
+
+
+  <li class="section-title"><a href="../hmssdk_flutter/hmssdk_flutter-library.html#enums">Enums</a></li>
+  <li><a href="../hmssdk_flutter/HMSActionResultListenerMethod.html">HMSActionResultListenerMethod</a></li>
+  <li><a href="../hmssdk_flutter/HMSCameraFacing.html">HMSCameraFacing</a></li>
+  <li><a href="../hmssdk_flutter/HMSCodec.html">HMSCodec</a></li>
+  <li><a href="../hmssdk_flutter/HMSLogLevel.html">HMSLogLevel</a></li>
+  <li><a href="../hmssdk_flutter/HMSMessageRecipientType.html">HMSMessageRecipientType</a></li>
+  <li><a href="../hmssdk_flutter/HMSPeerUpdate.html">HMSPeerUpdate</a></li>
+  <li><a href="../hmssdk_flutter/HMSPreviewUpdateListenerMethod.html">HMSPreviewUpdateListenerMethod</a></li>
+  <li><a href="../hmssdk_flutter/HMSRoomUpdate.html">HMSRoomUpdate</a></li>
+  <li><a href="../hmssdk_flutter/HMSTrackKind.html">HMSTrackKind</a></li>
+  <li><a href="../hmssdk_flutter/HMSTrackUpdate.html">HMSTrackUpdate</a></li>
+  <li><a href="../hmssdk_flutter/HMSUpdateListenerMethod.html">HMSUpdateListenerMethod</a></li>
+  <li><a href="../hmssdk_flutter/HMSVideoCodec.html">HMSVideoCodec</a></li>
+  <li><a href="../hmssdk_flutter/PlatformMethod.html">PlatformMethod</a></li>
+  <li><a href="../hmssdk_flutter/ScaleType.html">ScaleType</a></li>
+
+
+  <li class="section-title"><a href="../hmssdk_flutter/hmssdk_flutter-library.html#exceptions">Exceptions</a></li>
+  <li><a href="../hmssdk_flutter/HMSInSufficientDataException-class.html">HMSInSufficientDataException</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+    <ol>
+
+    <li class="section-title"><a href="../hmssdk_flutter/HMSSDK-class.html#constructors">Constructors</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/HMSSDK.html">HMSSDK</a></li>
+
+
+    <li class="section-title">
+      <a href="../hmssdk_flutter/HMSSDK-class.html#instance-properties">Properties</a>
+    </li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/hmsTrackSetting.html">hmsTrackSetting</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/isLocalVideoOn.html">isLocalVideoOn</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/previewState.html">previewState</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+
+    <li class="section-title"><a href="../hmssdk_flutter/HMSSDK-class.html#instance-methods">Methods</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/acceptChangeRole.html">acceptChangeRole</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/addLogListener.html">addLogListener</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/addPreviewListener.html">addPreviewListener</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/addUpdateListener.html">addUpdateListener</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/build.html">build</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/changeMetadata.html">changeMetadata</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/changeName.html">changeName</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/changeRole.html">changeRole</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/changeTrackState.html">changeTrackState</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/changeTrackStateForRole.html">changeTrackStateForRole</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didChangeAccessibilityFeatures.html">didChangeAccessibilityFeatures</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/didChangeAppLifecycleState.html">didChangeAppLifecycleState</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didChangeLocales.html">didChangeLocales</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didChangeMetrics.html">didChangeMetrics</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didChangePlatformBrightness.html">didChangePlatformBrightness</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didChangeTextScaleFactor.html">didChangeTextScaleFactor</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didHaveMemoryPressure.html">didHaveMemoryPressure</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didPopRoute.html">didPopRoute</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didPushRoute.html">didPushRoute</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/widgets/WidgetsBindingObserver/didPushRouteInformation.html">didPushRouteInformation</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/endRoom.html">endRoom</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/getLocalPeer.html">getLocalPeer</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/getPeers.html">getPeers</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/getRemotePeers.html">getRemotePeers</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/getRoles.html">getRoles</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/getRoom.html">getRoom</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/isAudioMute.html">isAudioMute</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/isScreenShareActive.html">isScreenShareActive</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/isVideoMute.html">isVideoMute</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/join.html">join</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/leave.html">leave</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/muteAll.html">muteAll</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/preview.html">preview</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/removeHMSLogger.html">removeHMSLogger</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/removeLogListener.html">removeLogListener</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/removePeer.html">removePeer</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/removePreviewListener.html">removePreviewListener</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/removeUpdateListener.html">removeUpdateListener</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/sendBroadcastMessage.html">sendBroadcastMessage</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/sendDirectMessage.html">sendDirectMessage</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/sendGroupMessage.html">sendGroupMessage</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/setPlayBackAllowed.html">setPlayBackAllowed</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/startCapturing.html">startCapturing</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/startHlsStreaming.html">startHlsStreaming</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/startHMSLogger.html">startHMSLogger</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/startRtmpOrRecording.html">startRtmpOrRecording</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/startScreenShare.html">startScreenShare</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/stopCapturing.html">stopCapturing</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/stopHlsStreaming.html">stopHlsStreaming</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/stopRtmpAndRecording.html">stopRtmpAndRecording</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/stopScreenShare.html">stopScreenShare</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/switchAudio.html">switchAudio</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/switchCamera.html">switchCamera</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/switchVideo.html">switchVideo</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+    <li><a href="../hmssdk_flutter/HMSSDK/unMuteAll.html">unMuteAll</a></li>
+
+    <li class="section-title inherited"><a href="../hmssdk_flutter/HMSSDK-class.html#operators">Operators</a></li>
+    <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    hmssdk_flutter
+      0.6.1
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/script.js?v1"></script>
+
+
+
+</body>
+
+</html>
+
