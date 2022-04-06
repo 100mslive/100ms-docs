@@ -61,7 +61,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
         }
         // @ts-ignore
         if (router.query.slug[0] === 'flutter') {
-            return `/api-reference/flutter/v2/hmssdk_flutter-library.html`;
+            return `https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html`;
         }
         // @ts-ignore
         if (router.query.slug[0] === 'android') {
