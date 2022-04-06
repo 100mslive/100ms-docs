@@ -130,6 +130,22 @@ curl \
     <Response res="200: OK" resText="Beam has stopped successfully" />
 </Tab>
 
+### Error messages in RTMP API
+
+| Message                                                            | Code       | Description                                              |
+| :----------------------------------------------------------------- | :--------- | :------------------------                                |
+| Error: beam already started                                        | 1          | RTMP streaming or Recording already running for the room |
+| Error: internal server error                                       | 2          | server error                                             |
+| Error: room_id missing                                             | 3          | room id is missing in the request payload                |
+| Error: room_id invalid                                             | 4          | Room id provided is invalid                              |
+| Error: rtmp_url and record missing                                 | 5          | RTMP urls or record flag is required                     |
+| Error: meeting_url missing                                         | 6          | Meeting url is missing in the request payload            |
+| Error: meeting_url invalid                                         | 7          | Meeting url is invalid                                   |
+| Error: operation invalid                                           | 8          | Operation provided is invalid                            |
+| Error: operation missing                                           | 9          | Operation field is missing in the request payload        |
+| Error: no active beam found for the passed in identifiers          | 10         | No Active beam running in the room                       |
+| Error: Resolution not supported                                    | 11         | Input Resolution not Supported                           |
+
 ## Recording upload destination
 
 By default recordings will be uploaded to 100ms storage and a presigned URL for the same will be provided to customers via a webhook. The presigned url will expire in 12hours.
