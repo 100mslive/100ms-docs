@@ -18,19 +18,19 @@ After you're App is set click on "Go to Dashboard" or [Go Here](https://dashboar
 
 ![Dasboard](/docs/guides/token/go-to-dashboard.png)
 
-## Token Generation
+## Creating Room
 
-Any client connecting calling 100ms' service needs to authenticate using an auth token. In production you would have your own servers generating the tokens (see more [here](/docs/server-side/v2/foundation/authentication-and-tokens)), but for a quick start you can use the dashboard to create a token for you. The token will expire in 24hrs and should not be hardcoded into a production app.
-
-### Creating Room
-
-To create a token you first need to create a room. Go over to [Room in Dashboard](https://dashboard.100ms.live/rooms) and click on "Create Room" , While creating a room you can specify it's name, roles or enable SFU recording.
+Go over to [Room in Dashboard](https://dashboard.100ms.live/rooms) and click on "Create Room" , While creating a room you can specify it's name, roles or enable recording.
 
 ![Create Room](/docs/guides/token/create-room.png)
 
 You will now see "Room Details" section and we have a `room_id` created, copy it somewhere.
 
 ![Room Id](/docs/guides/token/room-id.png)
+
+## Token Generation
+
+Any client connecting calling 100ms' service needs to authenticate using an auth token. In production you would have your own servers generating the tokens (see more [here](/docs/server-side/v2/foundation/authentication-and-tokens)), but for a quick start you can use the dashboard to create a token for you. The token will expire in 24hrs and should not be hardcoded into a production app.
 
 ### Getting a Temporary Token
 
