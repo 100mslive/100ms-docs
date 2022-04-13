@@ -218,7 +218,7 @@ You can also create room using API. This provides a more scalable way of creatin
 <Tab id="req-0">
 
 ```bash
-curl https://api.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <management_token>' -X POST -H 'Content-Type: application/json' -d '{"name": "test-room", "description": "This is a test room", "recording": {"enabled": true, "upload": {"type": "s3", "location": "test-bucket", "prefix": "test-prefix", "options": {"region": "ap-south-1"}, "credentials": {"key": "aws-access-key", "secret": "aws-secret-key"}}}}'
+curl https://api.100ms.live/v2/rooms -H 'Authorization: Bearer  <management_token>' -X POST -H 'Content-Type: application/json' -d '{"name": "test-room", "description": "This is a test room", "recording": {"enabled": true, "upload": {"type": "s3", "location": "test-bucket", "prefix": "test-prefix", "options": {"region": "ap-south-1"}, "credentials": {"key": "aws-access-key", "secret": "aws-secret-key"}}}}'
 ```
 
 </Tab>
@@ -327,7 +327,7 @@ This API can be used to disable a room from further use. Provide all parameters 
 <PostRequest
     title="Disable Room API"
     desp="This endpoint is used to disable a Room. "
-    url="https://api.100ms.live/api/v2/rooms"
+    url="https://api.100ms.live/v2/rooms"
 />
 
 <Tabs items={['Request', 'Response']} id="dis" />
@@ -335,7 +335,7 @@ This API can be used to disable a room from further use. Provide all parameters 
 <Tab id="dis-0">
 
 ```bash
-curl https://api.100ms.live/api/v2/rooms?id=<id> -H 'Authorization: Bearer  <management_token>' -X POST -H 'Content-Type: application/json' -d '{"enabled": false}'
+curl https://api.100ms.live/v2/rooms?id=<id> -H 'Authorization: Bearer  <management_token>' -X POST -H 'Content-Type: application/json' -d '{"enabled": false}'
 ```
 
 </Tab>
