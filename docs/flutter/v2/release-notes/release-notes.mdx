@@ -3,6 +3,37 @@ title: Release Notes
 nav: 99
 ---
 
+## 0.7.0 - 2022-04-19
+
+### Added
+
+- Network Quality in preview. Network quality reports can now be requested at the preview screen. Use the returned value to determine if you should suggest people's internet is too slow to join with video etc.
+
+- Network Quality during calls. Peer Network Quality updates are now received during the call. Use this to show how strong any peer's internet is during the call.
+
+- Added HLS Recording to initial PeerList
+
+- `onPeerUpdate` and `onRoomUpdate` callbacks in 'HMSPreviewListener' to get info about the room at Preview screen
+
+- Added `startedAt` and `stoppedAt` field for Browser and SFU recording
+
+### Fixed
+
+- Error Analytics events not being sent
+
+- Leave not finishing if SDK is in reconnection state. Hence all join calls after that was getting queued up if called on the same HMSSDK instance
+
+- Improved subscribe degradation so that new add sinks are handled properly when SDK is already in degraded state
+
+- Crash fix on starting/stopping HLS where HlsStartRecording was null
+
+- HLS recording status wasn't always updated when stopped
+
+- Rare crash when cameras are unavailable and it seemed to the app like none exist
+
+- Updated to Native Android SDK 2.3.4 & Native iOS SDK 0.2.9
+
+
 ## 0.6.0 - 2022-01-25
  ### Breaking Change 
  - Updated Change Role APIs argument types
