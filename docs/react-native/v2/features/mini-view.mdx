@@ -1,0 +1,32 @@
+---
+title: Mini View
+nav: 3.999
+---
+
+The React Native SDK provides a Component `HmsView` that renders the video on screen. Generally all the HmsViews should be rendered side by side in a list 
+but if a `mini view / main view` type of layout is required we can pass `setZOrderMediaOverlay` prop to this component. This would allow the mini view to 
+come over the main view otherwise it would be hidden behind the main view. It is a android only feature.
+
+```js
+import { HMSVideoViewMode } from '@100mslive/react-native-hms';
+...
+// hms instance acquired from build method
+const HmsView = hmsInstance.HmsView;
+const styles = StyleSheet.create({
+  hmsView: {
+    height: '100%',
+    width: '100%',
+  },
+});
+<HmsView
+  setZOrderMediaOverlay={true} // should be passed true only for the mini view
+  trackId={trackId} 
+  scaleType={HMSVideoViewMode.ASPECT_FILL} 
+  style={styles.hmsView} 
+  mirror={true} 
+  sink={true} />
+...
+```
+
+## Example of mini view layout
+![MiniView](/docs/v2/mini-view.png)
