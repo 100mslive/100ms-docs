@@ -10,7 +10,7 @@ some of the example of device changes. These are all taken care of by the SDK wi
 
 ![Device Change Settings](/guides/settings.png)
 
-You may still want to allow users to see the currently selected devices and change them if required. We'll do this in three steps - 
+You may still want to allow users to see the currently selected devices and change them if required. We'll do this in three steps -
 
 1. Fetching all attached devices list from `hmsStore`.
 2. Fetching the currently selected devices from `hmsStore`.
@@ -25,13 +25,15 @@ const devices = hmsStore.getState(selectDevices);
 // {audioInputDeviceId, audioOutputDeviceId, videoInputDeviceId}
 const selected = hmsStore.getState(selectLocalMediaSettings);
 
-const deviceId = 'default';
 // show user a settings component to manually choose device
+// The following selected devices are to obtained when changed from your UI.
 
-// call the corresponding method to change the device id
-hmsActions.setAudioSettings({deviceId});
-hmsActions.setVideoSettings({deviceId});
-hmsActions.setAudioOutputDevice(deviceId);
+// Update AudioInput device by calling
+hmsActions.setAudioSettings({ deviceId: selectedAudioDeviceID });
+// Update VideoInput device by calling
+hmsActions.setVideoSettings({ deviceId: selecedVideoDeviceID });
+// Update AudioOutput device by calling
+hmsActions.setAudioOutputDevice(selectedAudioOutputDeivceID);
 ```
 
 ## Remember manually selected devices
@@ -40,5 +42,5 @@ We support an additional boolean in join config which can be passed in to let sd
 manual device selections for future room [join](./join).
 
 ```js
-hmsActions.join({...joinConfig, rememberDeviceSelection: true});
+hmsActions.join({ ...joinConfig, rememberDeviceSelection: true });
 ```
