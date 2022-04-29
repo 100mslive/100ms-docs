@@ -1,0 +1,95 @@
+---
+title: Store AppData
+nav: 3.36
+---
+
+## Introduction
+
+`appData` is a nifty feature provided by the `HMSStore` for the consumer to store their app's data in the HMSStore itself. This is useful to store simple states that needs sharing between your components.
+
+## Usage
+
+### Setting up initial appData
+
+```ts
+initAppData(Record<string,any>);
+```
+
+## the `initAppData` takes any javascript object. nested objects are allowed too although, going more than one level is not recommended
+
+**NOTE**
+
+## This feature is meant for simple states related to UI that needs sharing between components. Using it for complex state, although might work, is not recommended.
+
+### Updating and reading from state
+
+```ts
+     setAppData(key: string, value: any, merge?: boolean)
+```
+
+`setAppData` works in two ways, if a `merge` is passed as `true`, the `value` is merged with old value of `key` in the state. If its not passed, the `value` is replaced for `key`. The default behaviour is replace.
+
+### Example
+
+<Tabs id="appData" items={['JavaScript', 'React']} />{' '}
+
+<Tab id='appData-0'>
+
+```js:app.js
+function initAppData() {
+    const initialAppData = {
+      userThemeColor:"beige",
+      videoStats: {
+          likes:34,
+          dislikes:2,
+          views:234
+      }
+    };
+
+    hmsActions.initAppData(initialAppData);
+    console.log("initial videostates", hmsStore.getState(selectAppData("videoStats"))); // { likes:34, dislikes:2, views:234 }
+    hmsActions.setAppData("videoStats", {likes:40, dislikes: 4},true); // second param merge is either true or false. false by default
+    console.log("State when merge is true ", hmsStore.getState(selectAppData("videoStats"))); // { likes:40, dislikes:4, views:234 }
+    hmsActions.setAppData("videoStats", {likes:40, dislikes: 4});
+    console.log("State when merge is false(default)", hmsStore.getState(selectAppData("videoStats"))); // { likes:40, dislikes:4 }
+}
+
+```
+
+</Tab>
+
+<Tab  id='appData-1'>
+
+```jsx:app.jsx
+export function myComponent() {
+  const hmsActions = useHMSActions();
+  useEffect(() => {
+    const initialAppData = {
+      userThemeColor:"beige",
+      videoStats: {
+          likes:34,
+          dislikes:2,
+          views:234
+      }
+    };
+
+    hmsActions.initAppData(initialAppData); //
+  }, [hmsActions]);
+
+  setLikeCounter = useCallback((newValue)=> {
+    hmsActions.setAppData("videoStats", { likes:40 },true); // videostats becomes { likes:40, dislikes:4, views:234 }
+  },[hmsActions]);
+
+  resetStats = useCallback((newValue)=> {
+    hmsActions.setAppData("videoStats",{
+          likes:0,
+          dislikes:0
+      }); // videostats become { likes:40, dislikes:4 }
+  },[hmsActions]);
+
+  return <> {/* stuff */} </>;
+}
+}
+```
+
+</Tab>
