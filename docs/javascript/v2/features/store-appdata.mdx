@@ -5,29 +5,57 @@ nav: 3.36
 
 ## Introduction
 
-`appData` is a nifty feature provided by the `HMSStore` for the consumer to store their app's data in the HMSStore itself. This is useful to store simple states that needs sharing between your components.
+If your app doesn't already use a global store, you can use a part of hmsStore to store simple states that needs sharing between your components. You might want to do this for improved performance and cleaner code on the app layer(avoiding prop drilling). Note that this is not a replacement for external global store. It's limited by design and only suitable for straightforward use cases.
+
+> Note that this is not suitable for -
+>  - storing large amount of data
+>  - data changing at a high frequency
+>  - complex interlinked state
 
 ## Usage
 
 ### Setting up initial appData
 
-```ts
-initAppData(Record<string,any>);
-```
-
-## the `initAppData` takes any javascript object. nested objects are allowed too although, going more than one level is not recommended
-
-**NOTE**
-
-## This feature is meant for simple states related to UI that needs sharing between components. Using it for complex state, although might work, is not recommended.
-
-### Updating and reading from state
+[`initAppData`](/api-reference/javascript/v2/interfaces/HMSActions#init-app-data) takes an object of key value pairs to set the intial app data in store.
 
 ```ts
-setAppData(key: string, value: any, merge?: boolean)
+const data: Record<string,any> = {uiMode: "activeSpeaker", toasts: {message: false, errors: true}};
+hmsActions.initAppData(data);
 ```
 
-`setAppData` works in two ways, if a `merge` is passed as `true`, the `value` is merged with old value of `key` in the state. If its not passed, the `value` is replaced for `key`. The default behaviour is replace.
+### Updating State
+
+[`setAppData`](/api-reference/javascript/v2/interfaces/HMSActions#set-app-data) takes in key and value and update the state in store. If key doesn't already exist, it is added.
+
+```ts
+hmsActions.setAppData("uiMode", "gallery");
+// new value => {uiMode: "gallery", toasts: {message: false, errors: true}}
+```
+
+If your value is also an object, there is an additional boolean option which can be used to merge(instead of replace) the new value with existing value.
+
+#### With Merge as true
+
+```ts
+hmsActions.setAppData("toasts", {message: true}, true);
+// new value => {uiMode: "gallery", toasts: {message: true, errors: true}}
+```
+
+#### Without merge as true
+
+```ts
+hmsActions.setAppData("toasts", {message: true});
+// new value => {uiMode: "gallery", toasts: {message: true}}
+```
+
+### Reading App Data
+The selector [`selectAppData`](/api-reference/javascript/v2/home/content#select-app-data) can be used for this. You can pass it the key
+you want to get, and it'll give the value. The component using it will only be rendered if the value actually changes.
+
+```ts
+console.log(hmsStore.getState("uiMode")); // "gallery"
+console.log(hmsStore.getState("toasts")); // {message: false, errors: true}
+```
 
 ### Example
 
@@ -38,20 +66,23 @@ setAppData(key: string, value: any, merge?: boolean)
 ```js:app.js
 function initAppData() {
     const initialAppData = {
-      userThemeColor:"beige",
-      videoStats: {
-          likes:34,
-          dislikes:2,
-          views:234
+      uiMode: "activeSpeaker",
+      toasts: {
+          message: false,
+          errors: true,
       }
     };
 
     hmsActions.initAppData(initialAppData);
-    console.log("initial videostates", hmsStore.getState(selectAppData("videoStats"))); // { likes:34, dislikes:2, views:234 }
-    hmsActions.setAppData("videoStats", {likes:40, dislikes: 4},true); // second param merge is either true or false. false by default
-    console.log("State when merge is true ", hmsStore.getState(selectAppData("videoStats"))); // { likes:40, dislikes:4, views:234 }
-    hmsActions.setAppData("videoStats", {likes:40, dislikes: 4});
-    console.log("State when merge is false(default)", hmsStore.getState(selectAppData("videoStats"))); // { likes:40, dislikes:4 }
+    console.log("inital toasts to show", hmsStore.getState(selectAppData("toasts"))); // { message: false, errors: true }
+    hmsActions.setAppData("toasts", {message: true}, true); // merge this value in current value
+    console.log("merged new toasts", hmsStore.getState(selectAppData("toasts"))); // { message: true, errors: true }
+    hmsActions.setAppData("toasts", {message: true}, true); // replace current value
+    console.log("replaced new toasts, hmsStore.getState(selectAppData("toasts"))); // { message: true }
+    
+    console.log("uiMode", hmsStore.getState(selectAppData("uiMode")); // activeSpeaker
+    hmsActions.setAppData("uiMode", "gallery");
+    console.log("uiMode", hmsStore.getState(selectAppData("uiMode")); // gallery
 }
 
 ```
@@ -62,33 +93,36 @@ function initAppData() {
 
 ```jsx:app.jsx
 export function myComponent() {
+  const toasts = useHMSStore(selectAppData("toasts"));
+  const uiMode = useHMSStore(selectAppData("uiMode"));
+    
   const hmsActions = useHMSActions();
   useEffect(() => {
     const initialAppData = {
-      userThemeColor:"beige",
-      videoStats: {
-          likes:34,
-          dislikes:2,
-          views:234
+      uiMode: "activeSpeaker",
+      toasts: {
+          message: false,
+          errors: true,
       }
     };
 
-    hmsActions.initAppData(initialAppData); //
+    hmsActions.initAppData(initialAppData);
+  }, [hmsActions]); // runs only once
+
+  // toasts becomes { message: true, errors: true } after first call to toggle
+  toggleMessageToast = useCallback(()=> {
+    hmsActions.setAppData("toasts", { message: !toasts.message }, true);
   }, [hmsActions]);
 
-  setLikeCounter = useCallback((newValue)=> {
-    hmsActions.setAppData("videoStats", { likes:40 },true); // videostats becomes { likes:40, dislikes:4, views:234 }
-  },[hmsActions]);
+  // toasts becomes { message: false, errors: true } after call to this method
+  resetToasts = useCallback((newValue)=> {
+    hmsActions.setAppData("toasts",{
+          message: false,
+          errors: true,
+      });
+  }, [hmsActions]);
 
-  resetStats = useCallback((newValue)=> {
-    hmsActions.setAppData("videoStats",{
-          likes:0,
-          dislikes:0
-      }); // videostats become { likes:40, dislikes:4 }
-  },[hmsActions]);
-
-  return <> {/* stuff */} </>;
-}
+  return <> {/* components */} </>;
 }
 ```
 
