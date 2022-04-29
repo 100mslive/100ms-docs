@@ -64,9 +64,9 @@ Audio plugins can be added/removed at any time after the join is successful.
 
 #### Parameters
 
-| Name     | Type             |
-| :------- | :--------------- |
-| `plugin` | `HMSAudioPlugin` |
+| Name     | Type             | Description    |
+| :------- | :--------------- | :------------- |
+| `plugin` | `HMSAudioPlugin` | HMSAudioPlugin |
 
 #### Returns
 
@@ -86,10 +86,10 @@ pluginFrameRate is the rate at which the output plugin will do processing
 
 #### Parameters
 
-| Name               | Type             |
-| :----------------- | :--------------- |
-| `plugin`           | `HMSVideoPlugin` |
-| `pluginFrameRate?` | `number`         |
+| Name               | Type             | Description    |
+| :----------------- | :--------------- | :------------- |
+| `plugin`           | `HMSVideoPlugin` | HMSVideoPlugin |
+| `pluginFrameRate?` | `number`         | number         |
 
 #### Returns
 
@@ -258,6 +258,22 @@ Notifications for the ignored messages will still be sent, it'll only not be put
 
 ---
 
+### initAppData
+
+▸ **initAppData**(`data`): `void`
+
+#### Parameters
+
+| Name   | Type                       | Description                                                                                                                                                                                                                                                                                                                                                  |
+| :----- | :------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data` | `Record`<`string`, `any`\> | full app data object. use this to initialise app data in store. App Data is a small space in the store for UI to keep a few non updating global state fields for easy reference across UI. Note that if the fields are updating at high frequency or there are too many of them, it's recommended to have another UI side store to avoid performance issues. |
+
+#### Returns
+
+`void`
+
+---
+
 ### join
 
 ▸ **join**(`config`): `void`
@@ -309,6 +325,16 @@ This function can be used to leave the room, if the call is repeated it's ignore
 
 ---
 
+### refreshDevices
+
+▸ **refreshDevices**(): `Promise`<`void`\>
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
 ### rejectChangeRole
 
 ▸ **rejectChangeRole**(`request`): `void`
@@ -349,8 +375,6 @@ If you have **removeOthers** permission, you can remove a peer from the room.
 ### removePluginFromAudioTrack
 
 ▸ **removePluginFromAudioTrack**(`plugin`): `Promise`<`void`\>
-
-**`see`** addPluginToAudioTrack
 
 #### Parameters
 
@@ -470,6 +494,67 @@ Send a plain text message to all the other participants in the room.
 | Name      | Type     | Description                 |
 | :-------- | :------- | :-------------------------- |
 | `message` | `string` | string message to broadcast |
+
+#### Returns
+
+`void`
+
+---
+
+### setAppData
+
+▸ **setAppData**(`key`, `value`, `merge?`): `void`
+
+use it for updating a particular property in the appdata
+
+**`example`**
+assume appdata is initially
+{
+mySettings: {
+setting1: 'val1',
+setting2: 'val2',
+},
+mySettings2: 43,
+mySettings3: false,
+};
+
+after calling,
+setAppData("mySettings", {setting1:'val1-edit', setting3:'val3'}, true);
+it becomes
+{
+mySettings: {
+setting1: 'val1-edit',
+setting2: 'val2',
+setting3: 'val3',
+},
+mySettings2: 43,
+mySettings3: false,
+};
+
+Note: This is not suitable for keeping large data or data which updates
+at a high frequency, it is recommended to use app side store for those
+cases.
+
+#### Parameters
+
+| Name     | Type                                   | Description                                                                                                                                                                                                                                                                                        |
+| :------- | :------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `key`    | `string`                               | a string. Does not check for existence. If the key is already not a property of the appData, it is added.                                                                                                                                                                                          |
+| `value`  | `Record`<`string` \| `number`, `any`\> | value to set for the key.                                                                                                                                                                                                                                                                          |
+| `merge?` | `boolean`                              | set it to true if you want to merge the appdata. - Always replaces the value for a given key if this parameter is not explicitly set to true. - Always replaces if the value is anything other than a plain object (i.e) JSON.parse()able. - If set to true on non-plain objects, this is ignored. |
+
+#### Returns
+
+`void`
+
+▸ **setAppData**(`key`, `value`): `void`
+
+#### Parameters
+
+| Name    | Type     |
+| :------ | :------- |
+| `key`   | `string` |
+| `value` | `any`    |
 
 #### Returns
 
@@ -813,3 +898,43 @@ to resolve the autoplay error
 #### Returns
 
 `Promise`<`void`\>
+
+---
+
+### validateAudioPluginSupport
+
+▸ **validateAudioPluginSupport**(`plugin`): `HMSPluginSupportResult`
+
+To check the support of the plugin, based on browser, os and audio devices
+
+**`see`** HMSPluginSupportResult
+
+#### Parameters
+
+| Name     | Type             | Description    |
+| :------- | :--------------- | :------------- |
+| `plugin` | `HMSAudioPlugin` | HMSAudioPlugin |
+
+#### Returns
+
+`HMSPluginSupportResult`
+
+---
+
+### validateVideoPluginSupport
+
+▸ **validateVideoPluginSupport**(`plugin`): `HMSPluginSupportResult`
+
+To check the support of the plugin, based on browser, os and audio devices
+
+**`see`** HMSPluginSupportResult
+
+#### Parameters
+
+| Name     | Type             | Description    |
+| :------- | :--------------- | :------------- |
+| `plugin` | `HMSVideoPlugin` | HMSVideoPlugin |
+
+#### Returns
+
+`HMSPluginSupportResult`

@@ -25,6 +25,7 @@ title: Web SDK API Reference
 
 ## Other Interfaces
 
+- [DeviceMap](/api-reference/javascript/v2/interfaces/DeviceMap)
 - [HLSConfig](/api-reference/javascript/v2/interfaces/HLSConfig)
 - [HMSAudioTrackSettings](/api-reference/javascript/v2/interfaces/HMSAudioTrackSettings)
 - [HMSChangeMultiTrackStateParams](/api-reference/javascript/v2/interfaces/HMSChangeMultiTrackStateParams)
@@ -68,12 +69,6 @@ title: Web SDK API Reference
 - [SimulcastLayerDefinition](/api-reference/javascript/v2/interfaces/SimulcastLayerDefinition)
 
 ## Type aliases
-
-### DeviceMap
-
-Ƭ **DeviceMap**: `Omit`<`HMSDeviceManager`, `"outputDevice"` \| `"hasWebcamPermission"` \| `"hasMicrophonePermission"`\>
-
----
 
 ### HMSMessageID
 
@@ -500,6 +495,25 @@ Select the number of unread messages.
 
 ---
 
+### selectAppData
+
+▸ **selectAppData**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `any`\>
+
+Select a particular key from ui app data by passed in key.
+if key is not passed, full data is returned.
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `any`\>
+
+---
+
 ### selectAudioPlaylistTrackByPeerID
 
 ▸ **selectAudioPlaylistTrackByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSTrack`](/api-reference/javascript/v2/interfaces/HMSTrack)\>
@@ -664,7 +678,7 @@ This is the primary video track of a peer.
 
 ### selectDevices
 
-▸ **selectDevices**(`store`): [`DeviceMap`](/api-reference/javascript/v2/modules#devicemap)
+▸ **selectDevices**(`store`): [`DeviceMap`](/api-reference/javascript/v2/interfaces/DeviceMap)
 
 Select the available audio input, audio output and video input devices on your machine.
 
@@ -676,7 +690,7 @@ Select the available audio input, audio output and video input devices on your m
 
 #### Returns
 
-[`DeviceMap`](/api-reference/javascript/v2/modules#devicemap)
+[`DeviceMap`](/api-reference/javascript/v2/interfaces/DeviceMap)
 
 An object of array of available audio input, audio output and video input devices.
 
