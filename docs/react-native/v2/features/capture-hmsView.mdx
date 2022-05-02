@@ -8,29 +8,33 @@ as true to this component. This would capture the frame of that HmsView and save
 permission before capturing the surface and saving. It is a android only feature.
 
 ```js
+import React from 'react';
 import { HMSVideoViewMode } from '@100mslive/react-native-hms';
 ...
 // hms instance acquired from build method
 const HmsView = hmsInstance.HmsView;
-const [screenshot, setScreenshot] = useState(false);
+const hmsViewRef: any = React.useRef()
 
 const onPress: async () => {
   const granted = await requestExternalStoragePermission();
   if (granted) {
-    setScreenshot(true);
-    setTimeout(() => {
-      setScreenshot(false);
-    }, 1000);
+    hmsViewRef?.current?.capture()
+      .then((base64: string) => {
+        // we get a base64 string
+      });
+      .catch((error: any) => console.log(error));
   }
 },
+
 const styles = StyleSheet.create({
   hmsView: {
     height: '100%',
     width: '100%',
   },
 });
+
 <HmsView
-  screenshot={true}
+  ref={hmsViewRef}
   trackId={trackId} 
   scaleType={HMSVideoViewMode.ASPECT_FILL} 
   style={styles.hmsView} 
