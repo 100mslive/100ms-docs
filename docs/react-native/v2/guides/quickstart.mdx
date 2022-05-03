@@ -169,10 +169,10 @@ const onPeerListener = ({
   localPeer,
 }: {
   peer: HMSPeer;
-    room?: HMSRoom;
-    type?: HMSPeerUpdate;
-    localPeer: HMSLocalPeer;
-    remotePeers: HMSRemotePeer[];
+  room?: HMSRoom;
+  type?: HMSPeerUpdate;
+  localPeer: HMSLocalPeer;
+  remotePeers: HMSRemotePeer[];
 }) => {
   updateVideoIds(remotePeers, localPeer); // this function can be used to update local and remotePeers on React-Native side
 };
@@ -182,11 +182,11 @@ const onTrackListener = ({
   localPeer,
 }: {
   peer: HMSPeer;
-    track: HMSTrack;
-    room?: HMSRoom;
-    type?: HMSTrackUpdate;
-    localPeer: HMSLocalPeer;
-    remotePeers: HMSRemotePeer[];
+  track: HMSTrack;
+  room?: HMSRoom;
+  type?: HMSTrackUpdate;
+  localPeer: HMSLocalPeer;
+  remotePeers: HMSRemotePeer[];
 }) => {
   updateVideoIds(remotePeers, localPeer);
 };
