@@ -63,7 +63,6 @@ This event will be sent when session opens successfully.
 | room_id            | `string`    | 100ms assigned room id                         | 5f9edc6ac238215aec2312df |
 | room_name          | `string`    | Room name provided when creating the room      | Test Room                |
 | session_id         | `string`    | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df |
-| user_id            | `string`    | User id assigned by the customer               | user.001                 |
 | session_started_at | `timestamp` | Timestamp when session started                 | 2020-11-11T16:32:17Z     |
 
 #### Sample `session.open.success` event
@@ -79,8 +78,7 @@ This event will be sent when session opens successfully.
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "room_name": "xxxxxxxxxx",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
-    "session_started_at": "2021-11-30T12:58:49.97291247Z",
-    "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx"
+    "session_started_at": "2021-11-30T12:58:49.97291247Z"
   }
 }
 ```
@@ -94,7 +92,6 @@ This event will be sent when session closes successfully.
 | room_id            | `string`    | 100ms assigned room id                         | 5f9edc6ac238215aec2312df |
 | room_name          | `string`    | Room name provided when creating the room      | Test Room                |
 | session_id         | `string`    | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df |
-| user_id            | `string`    | User id assigned by the customer               | user.001                 |
 | session_started_at | `timestamp` | Timestamp when session started                 | 2020-11-11T16:32:17Z     |
 
 #### Sample `session.close.success` event
@@ -110,8 +107,7 @@ This event will be sent when session closes successfully.
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "room_name": "xxxxxxxxxx",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
-    "session_started_at": "2021-11-30T12:58:49.97291247Z",
-    "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx"
+    "session_started_at": "2021-11-30T12:58:49.97291247Z"
   }
 }
 ```
@@ -236,6 +232,12 @@ This event will be sent when a peer fails to join a room. This can occur when,
 | error_message      | `string`    | Reason for failure                             | Peer not joined                      |
 | session_started_at | `timestamp` | Timestamp when session started                 | 2020-11-11T16:32:17Z                 |
 
+#### Peer join failure Reason
+
+1. `role not allowed`
+2. `network disconnection`
+3. `duplicate peer id`
+
 #### Sample `peer.join.failure` event
 ```json
 {
@@ -253,7 +255,7 @@ This event will be sent when a peer fails to join a room. This can occur when,
     "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "user_name": "xxxxxxxx",
     "user_data": "",
-    "error_message": "Peer not joined",
+    "error_message": "Role not allowed",
     "session_started_at": "2021-11-30T12:58:49.97291247Z"
   }
 }
@@ -282,6 +284,11 @@ This event will be sent when the peer leave fails. This can occur when,
 | duration           | `number`    | Duration the user spent in the room in seconds | 36000                                |
 | error_message      | `string`    | Reason for failure                             | Peer not joined                      |
 | session_started_at | `timestamp` | Timestamp when session started                 | 2020-11-11T16:32:17Z                 |
+
+
+#### Peer leave failure Reason
+
+1. `peer not joined`
 
 #### Sample `peer.leave.failure` event
 ```json
@@ -856,9 +863,9 @@ This event will be sent when peer changes role successfully.
 | session_id         | `string`    | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df             |
 | peer_id            | `string`    | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id            | `string`    | User id assigned by the customer               | user.001                             |
-| user_name          | `string`    | User name of the joining user                  | Test user                            |
-| user_data          | `string`    | User data of the joining user                  | {"isHandRaised":true}                |
-| role               | `string`    | Role of the joining user                       | host                                 |
+| user_name          | `string`    | User name of the user                          | Test user                            |
+| user_data          | `string`    | User data of the user                          | {"isHandRaised":true}                |
+| role               | `string`    | New role of the user                           | host                                 |
 | joined_at          | `timestamp` | Timestamp when user joined                     | 2020-11-11T16:32:17Z                 |
 | session_started_at | `timestamp` | Timestamp when session started                 | 2020-11-11T16:32:17Z                 |
 
@@ -904,11 +911,18 @@ This event will be sent when a peer fails to change role. This can occur when,
 | user_id            | `string`    | User id assigned by the customer               | user.001                             |
 | user_name          | `string`    | User name of the user                          | Test user                            |
 | user_data          | `string`    | User data of the user                          | {"isHandRaised":true}                |
-| role               | `string`    | Role of the user                               | host                                 |
+| role               | `string`    | Old role of the user                           | host                                 |
 | joined_at          | `timestamp` | Timestamp when user joined                     | 2020-11-11T16:32:17Z                 |
 | session_started_at | `timestamp` | Timestamp when session started                 | 2020-11-11T16:32:17Z                 |
 | error_message      | `string`    | Reason for failure                             | current role is same as old role     |
 | session_id         | `string`    | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df             |
+
+#### Role change failure Reason
+
+1. `target role clash with requested roles`
+2. `peer not joined`
+3. `invalid role`
+4. `role does not have required permission`
 
 #### Sample `role.change.failure` event
 ```json
@@ -929,7 +943,7 @@ This event will be sent when a peer fails to change role. This can occur when,
     "user_name": "xxxxxxxx",
     "user_data": "",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
-    "error_message": "current role is same as old role",
+    "error_message": "invalid role",
     "session_started_at": "2021-11-30T12:58:49.97291247Z"
   }
 }
