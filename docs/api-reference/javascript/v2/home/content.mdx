@@ -316,11 +316,27 @@ Select the peer ID of your local peer.
 
 ---
 
+### selectLocalPeerName
+
+• `Const` **selectLocalPeerName**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `string`, (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `string`\>
+
+Select the peer name of your local peer.
+
+---
+
 ### selectLocalPeerRole
 
 • `Const` **selectLocalPeerRole**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `null` \| [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole), (`res1`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer), `res2`: `Record`<`string`, [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)\>) => `null` \| [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)\>
 
 Select the [HMSRole](/api-reference/javascript/v2/interfaces/HMSRole) object of your local peer.
+
+---
+
+### selectLocalPeerRoleName
+
+• `Const` **selectLocalPeerRoleName**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| `string`, (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `undefined` \| `string`\>
+
+Select the role name of your local peer.
 
 ---
 
@@ -1089,6 +1105,22 @@ Please directly use peer.metadata in case the metadata is not JSON by design.
 #### Returns
 
 `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `any`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `any`\>
+
+---
+
+### selectPeerName
+
+▸ **selectPeerName**(`peerId`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| `string`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `undefined` \| `string`\>
+
+#### Parameters
+
+| Name     | Type     |
+| :------- | :------- |
+| `peerId` | `string` |
+
+#### Returns
+
+`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| `string`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `undefined` \| `string`\>
 
 ---
 
