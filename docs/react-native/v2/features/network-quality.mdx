@@ -1,13 +1,20 @@
 ---
-title: Network Quality Reports
+title: Connection Quality
 nav: 3.996
 ---
+
+![Network Icons](/docs/v2/network-icons.png)
+
 Video/Audio conferencing is by nature a data intensive operation. The 100ms SDK attempts to stabilize connections especially if subscribe degradation 
 is turned on in the template but it's possible for really bad connections that users will still have problems.
 
-It can be helpful to measure a user's connection speed before joining a room in order to set expectations or decide to have them join with video off etc.
+It can be helpful to measure a user's connection speed before joining a room in order to set expectations or decide to have them join with video off etc. Letting the participants know of each other's connection
+status is also a great value addition.
 
-The 100ms SDK provides a way to measure the user's downlink speed in the preview screen.
+Once you have joined the room, you can get a network quality score for all the peers including yourself.
+You can also get current user's connection quality score when in preview.
+The score ranges from -1 to 5, 5 being the hightest(Good Network) and 0 being the lowest(No Network).
+-1 indicates an undefined state that is either the score hasn't yet been determined or it couldn't be determined.
 
 > ⚠️ The downlink speed is measured by having the user download a file (1mb as of this writing) after the websocket connection is established during a 
 preview.
@@ -53,10 +60,19 @@ class HMSNetworkQuality {
 
 `hmsInstance?.localPeer?.networkQuality?.downlinkQuality` will be a value between -1 and 5.
 
-* -1 -> Test timeout.
-* 0 -> Very bad network or network check failure.
-* 1 -> Poor network.
-* 2 -> Bad network.
-* 3 -> Average.
-* 4 -> Good.
-* 5 -> Best.
+* -1 -> Undefined - yet to be determined or not enough data to determine
+* 0 -> Disconnected or error in measuring score(in preview)
+* 1 -> Very Bad Connection
+* 2 -> Bad Connection
+* 3 -> Moderate Connection
+* 4 -> Good Connection
+* 5 -> Excellent Connection
+
+> 0 score in preview could also mean a failure in measuring the network due to firewall
+block if the internet otherwise looks good.
+
+## Showing in the UI
+
+You can show this as a network icon on every peer tile or show only a list of peers not having good connection.
+Feel free to checkout how the code from our dashboard app's implementation [here](https://github.com/100mslive/react-native-hms)
+where we show a network bar on each peer's tile as well in the participant list with a tooltip describing the connection state.
