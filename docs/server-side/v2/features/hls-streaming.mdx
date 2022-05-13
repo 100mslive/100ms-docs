@@ -11,7 +11,6 @@ The HLS stream will be a adaptive stream and have a latency of 8-10 seconds as c
 ## Pre-requisites
 
 1. Management token
-
 - [Click here to see how to generate management token](/server-side/v2/foundation/authentication-and-tokens)
 
 2. Single click meeting url to directly enter a room
@@ -226,8 +225,10 @@ Customers can also configure the recordings to be stored in their cloud storage.
 If Pause/UnPause was triggered for recording, those intervals will be trimmed out and the edited recording will be uploaded to the storage.
 
 
-Recording mp4 will be placed at - `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/file-recording/Rec-<room_id>-<epoch>-<layer>.mp4`. Example `s3://test-bucket/test-prefix/hls/61101349d0f56e684b608c08/20210721/1626898422000/file-recording/Rec-61101349d0f56e684b608c08-1626898422000-0.mp4`
-Recording vod playlist will be placed at - `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/hls-vod/Rec-<room_id>-<epoch>.zip`. Example `s3://test-bucket/test-prefix/hls/61101349d0f56e684b608c08/20210721/1626898422000/hls-vod/Rec-61101349d0f56e684b608c08-1626898422000.zip`
+Recording mp4 will be placed at - `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/file-recording/Rec-<room_id>-<epoch>-<layer>.mp4`.
+Example `s3://test-bucket/test-prefix/hls/61101349d0f56e684b608c08/20210721/1626898422000/file-recording/Rec-61101349d0f56e684b608c08-1626898422000-0.mp4`
+Recording vod playlist will be placed at - `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/hls-vod/Rec-<room_id>-<epoch>.zip`.
+Example `s3://test-bucket/test-prefix/hls/61101349d0f56e684b608c08/20210721/1626898422000/hls-vod/Rec-61101349d0f56e684b608c08-1626898422000.zip`
 
 ## Postman Collection
 
