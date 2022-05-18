@@ -3,6 +3,17 @@ title: Android SDK
 nav: 15
 description: Release Notes for 100ms Android SDK
 ---
+## v2.3.8 - 2022-05-18
+### Fixed
+* Screen Share not starting in highest resolution
+* Serverside Subscribe degradation fix - marking track not degrdated after removeSink is called
+* IO Exception Crash in Android 12, in the alarm maanager of Log Util
+* NPE Crash fix in webrtc stats monitor
+* Crash in LogUtils
+
+### Changed
+* `serverReceiveTime` data type in `HMSMessage` is not of type `Long` instead of `Date`
+
 ## v2.3.7 - 2022-05-09
 ### Fixed
 * A crash in some rare cases where analytics events were being sent while the room was ending.
