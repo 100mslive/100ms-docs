@@ -88,3 +88,12 @@ After calling join your app will be provided an update from the 100ms SDK.
 ✅ If successful, the `HMSUpdateListenerActions.ON_JOIN` callback of HMSUpdateListener will be invoked with information about the room encapsulated in the HMSRoom object.
 
 ❌ If failure, the `HMSUpdateListenerActions.ON_ERROR` callback will be invoked with exact failure reason.
+
+## Get Room
+
+`getRoom` is an async function on HMSSDK which returns the currently joined room. Returns null if the peer is not in a room.
+
+```js
+// instance acquired from build() method
+await hmsInstance.getRoom(); 
+```
