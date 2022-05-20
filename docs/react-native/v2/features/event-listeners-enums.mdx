@@ -27,32 +27,17 @@ const onPeerListener = ({ type } : {
   if(type === HMSPeerUpdate.PEER_LEFT){
     // when a peer leaves
   }
-  if(type === HMSPeerUpdate.AUDIO_TOGGLED){
-    // when remote peer toggles audio
-  }
-  if(type === HMSPeerUpdate.VIDEO_TOGGLED){
-    // when remote peer toggles video
-  }
   if(type === HMSPeerUpdate.ROLE_CHANGED){
     // when a peer's role is changed
   }
   if(type === HMSPeerUpdate.METADATA_CHANGED){
     // when a peer's metadata is changed
   }
-  if(type === HMSPeerUpdate.BECAME_DOMINANT_SPEAKER){
-    // when a peer becomes dominant speaker
+  if(type === HMSPeerUpdate.NAME_CHANGED){
+    // when a peer's name is changed
   }
-  if(type === HMSPeerUpdate.NO_DOMINANT_SPEAKER){
-    // when a peer is not a dominant speaker
-  }
-  if(type === HMSPeerUpdate.RESIGNED_DOMINANT_SPEAKER){
-    // when a peer resigns from dominant speaker
-  }
-  if(type === HMSPeerUpdate.STARTED_SPEAKING){
-    // when a peer starts speaking
-  }
-  if(type === HMSPeerUpdate.STOPPED_SPEAKING){
-    // when a peer stops speaking
+  if(type === HMSPeerUpdate.NETWORK_QUALITY_UPDATED){
+    // when a peer's network quality is changed
   }
 };
 ```
@@ -122,6 +107,21 @@ const onRoomListener = ({ type } : {
   }
   if(type === HMSRoomUpdate.ROOM_UNMUTED){
     // when room is unmuted
+  }
+  if(type === HMSRoomUpdate.SERVER_RECORDING_STATE_UPDATED){
+    // when server recording state is updated
+  }
+  if(type === HMSRoomUpdate.RTMP_STREAMING_STATE_UPDATED){
+    // when rtmp streaming state is updated
+  }
+  if(type === HMSRoomUpdate.BROWSER_RECORDING_STATE_UPDATED){
+    // when browser recording state is updated
+  }
+  if(type === HMSRoomUpdate.HLS_RECORDING_STATE_UPDATED){
+    // when hls recording state is updated
+  }
+  if(type === HMSRoomUpdate.HLS_STREAMING_STATE_UPDATED){
+    // when hls streaming state is updated
   }
 };
 ```
