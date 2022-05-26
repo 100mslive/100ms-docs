@@ -93,6 +93,30 @@ iOS broadcast extension provides you with CMSampleBuffers that you can process u
         switch sampleBufferType {
         case RPSampleBufferType.video:
             // Handle video sample buffer
+            screenRenderer.process(sampleBuffer)
+        ...
+    }
+  ```
+  
+## How to invalidate the connection between main app and extension when user stops screen recording
+
+When user stops screen sharing broadcastFinished function is called on your RPBroadcastSampleHandler class. At that point call invalidate on your screenRenderer instance to stop sceen sharing.
+
+```swift
+    override func broadcastFinished() {
+        // User has requested to finish the broadcast.
+        self.screenRenderer.invalidate()
+    }
+  ```
+  
+## Stop screen sharing when user leaves the room
+When user leaves the meeting room from the main app, you will receive an error HMSScreenRendererErrorCode.noActiveMeeting when calling process on screenRenderer instance. You can handle this error to stop the broadcast extension like below:
+
+```swift
+    override func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType) {
+        switch sampleBufferType {
+        case RPSampleBufferType.video:
+            // Handle video sample buffer
             if let error = screenRenderer.process(sampleBuffer) {
                 if error.code == .noActiveMeeting {
                     finishBroadcastWithError(NSError(domain: "ScreenShare", code: error.code.rawValue, userInfo: [NSLocalizedFailureReasonErrorKey : "You are not in a meeting."]))
@@ -101,11 +125,7 @@ iOS broadcast extension provides you with CMSampleBuffers that you can process u
         ...
     }
   ```
-  
-## How to stop screen sharing
 
-When user stops screen sharing broadcastFinished function is called on your RPBroadcastSampleHandler class. At that 
-
-👀 To see a Example iOS broadcast upload extension implementation for screen sharing using 100ms Broadcast extension SDK, checkout the [our Example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
+👀 To see an Example iOS broadcast upload extension implementation for screen sharing using 100ms Broadcast extension SDK, checkout [our Example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
 
 📲 Download the 100ms fully featured Sample iOS app here: https://testflight.apple.com/join/dhUSE7N8
