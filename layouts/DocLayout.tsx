@@ -56,7 +56,7 @@ const DocLayout: React.FC<Props> = ({
                 frontMatter.title || '100ms Docs'
             } | 100ms - Video conferencing infrastructure for a video-first world`
         },
-        canonical : `https://www.100ms.live/docs${  router.asPath === "/" ? "" : router.asPath.split('?')[0]}`
+        canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${router.asPath === "/" ? "" : router.asPath.split('?')[0]}`
     };
     const [menu, setMenu] = React.useState(false);
     const [modal, setModal] = React.useState(false);
