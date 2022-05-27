@@ -1,0 +1,105 @@
+---
+title: Virtual Background (Beta)
+nav: 12
+---
+
+## Introduction
+
+Virtual Background plugin helps in customising one’s background i.e. replacing the background with a static image or blurring the background.
+This guide provides an overview of usage of the Virtual Background plugin of 100ms.
+
+<div style={{textAlign: 'center'}}>
+
+![VirtualBackground](/docs/v2/android-vb.gif)
+
+</div>
+
+## Minimum Requirements
+
+-   Minimum iOS version required to support Virtual Background plugin is iOS 15
+-   Minimum 100ms SDK version required is `0.3.1`
+-   Virtual background plugin is in beta stage and may have performance issues on iPhone X, 8, 7, 6 and other older devices. We recommend that you use this feature on a high performance device for smooth experience.
+
+
+## How to enable virtual background in your app using HMSSDK
+
+1. Create an HMSVideoPlugin array
+
+```swift
+     var videoPlugins = [HMSVideoPlugin]()
+   ```
+   
+2. Create an instance of HMSVirtualBackgroundPlugin and append it to videoPlugins array, like below
+
+```swift
+     let virtualBackgroundPlugin = HMSVirtualBackgroundPlugin(backgroundImage: UIImage(named: "VB1"))
+     videoPlugins.append(virtualBackgroundPlugin)
+   ```
+   
+3. Next, create an instance of HMSVideoTrackSettings passing videoPlugins array
+
+```swift
+     let videoSettings = HMSVideoTrackSettings(codec: .VP8,
+                                                      resolution: .init(width: 320, height: 180),
+                                                      maxBitrate: 512,
+                                                      maxFrameRate: 25,
+                                                      cameraFacing: .front,
+                                                      trackDescription: "Just a normal video track",
+                                                      videoPlugins: self.videoPlugins)
+   ```
+   
+4. Use this videoSettings instance while setting the trackSettings on HMSSDK
+
+```swift
+     hmsSDK = HMSSDK.build { sdk in
+            sdk.trackSettings = HMSTrackSettings(videoSettings: videoSettings, audioSettings: audioSettings)
+            ...
+        }
+   ```
+   
+That is all you need to do to enable virtual background!
+
+   
+## How to enable/disable virtual background
+
+Hold on to a reference to the instance of HMSVirtualBackgroundPlugin and use activate and deactivate functions on it to enable/disable the virtual background.
+
+```swift
+     var virtualBackgroundPlugin: HMSVideoPlugin?
+     
+     func setupPlugins() {
+        virtualBackgroundPlugin = HMSVirtualBackgroundPlugin(backgroundImage: UIImage(named: "VB1"))
+        ...
+     }
+     
+     func toggleVB() {
+         let isVBActivated = UserDefaults.standard.bool(forKey: "virtualBackgroundPluginEnabled")
+     
+         if isVBActivated {
+             self?.interactor.virtualBackgroundPlugin?.deactivate()
+             UserDefaults.standard.set(false, forKey: "virtualBackgroundPluginEnabled")
+         }
+         else {
+             _ = self?.interactor.virtualBackgroundPlugin?.activate()
+             UserDefaults.standard.set(true, forKey: "virtualBackgroundPluginEnabled")
+         }
+     }
+   ```
+
+## How to blur background instead of replacing it with an image
+
+If you pass nil as the backgroudImage parameter while initilising HMSVirtualBackgroundPlugin, it will blur the background instead of replaicng it with an image. You can optionally pass blurRadius parameter to control the amount of blur in the background. Default blurRadius used is 10.
+
+```swift
+     let virtualBackgroundPlugin = HMSVirtualBackgroundPlugin(backgroundImage: nil, blurRadius: 20)
+   ```
+
+## Change Background
+
+You can use backgroundImage property on HMSVirtualBackgroundPlugin to set a new background image.
+
+```swift
+     let virtualBackgroundPlugin = HMSVirtualBackgroundPlugin(backgroundImage: UIImage(named: "VB1"))
+     virtualBackgroundPlugin.backgroundImage = UIImage(named: "VB2")
+   ```
+   
