@@ -56,19 +56,8 @@ iOS broadcast extension provides you with CMSampleBuffers that you can process u
 
 ```swift
     hmsSDK = HMSSDK.build { sdk in
-            sdk.analyticsLevel = .verbose
             sdk.appGroup = "group.live.100ms.videoapp"
-            
-            let videoSettings = HMSVideoTrackSettings(codec: .VP8,
-                                                          resolution: .init(width: 320, height: 180),
-                                                          maxBitrate: 512,
-                                                          maxFrameRate: 25,
-                                                          cameraFacing: .front,
-                                                      trackDescription: "Just a normal video track", videoPlugins: self.videoPlugins)
-            
-            let audioSettings = HMSAudioTrackSettings(maxBitrate: 32, trackDescription: "Just a normal audio track")
-            sdk.trackSettings = HMSTrackSettings(videoSettings: videoSettings, audioSettings: audioSettings)
-            sdk.logger = self
+            ...
         }
   ```
   
