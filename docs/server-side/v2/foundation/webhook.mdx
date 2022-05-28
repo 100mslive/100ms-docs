@@ -522,6 +522,7 @@ This event is sent when beam successfully records the room and uploads the video
 | peer_id            | `string`    | 100ms assigned id to identify the joining user  | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | metadata_id        | `string`    | Webhook metadata ID                             | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
 | metadata_timestamp | `timestamp` | Webhook message creation timestamp              | 2020-11-11T17:32:17Z                 |
+| session_id         | `string`    | 100ms assigned id to identify the session       | 5f9edc6bd238215aec7700df             |
 | created_at         | `timestamp` | Timestamp at which recording was created        | 2020-11-11T17:12:17Z                 |
 | duration           | `number`    | Duration of beam recording (seconds)            | 79                                   |
 | location           | `string`    | HTTPS url to recorded session file on S3 bucket | https://s3-loc/bucket/beam/ac.mp4    |
@@ -548,6 +549,7 @@ This event is sent when beam successfully records the room and uploads the video
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "started_at": "2021-11-30T12:58:34.051Z",
     "stopped_at": "2021-11-30T12:59:56.778Z",
+    "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "session_started_at": "2021-11-30T12:58:49.97291247Z"
   }
 }
@@ -781,6 +783,7 @@ This event will be sent when hls recordings are successfull and uploaded to the 
 | metadata_id                         | `string`    | Webhook metadata ID                                                         | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
 | metadata_timestamp                  | `timestamp` | Webhook message creation timestamp                                          | 2020-11-11T17:32:17Z                 |
 | duration                            | `number`    | Duration of RTMP streaming / recording in seconds                           | 12                                   |
+| session_id                          | `string`    | 100ms assigned id to identify the session                                   | 5f9edc6bd238215aec7700df             |
 | meeting_url                         | `string`    | meeting_url provided at hls start                                           | "https://app.100ms.live/room_id"     |
 | created_at                          | `timestamp` | Timestamp at which recording was created                                    | 2020-11-11T17:12:17Z                 |
 | started_at                          | `timestamp` | Timestamp at which hls started                                              | 2020-11-11T17:32:18Z                 |
@@ -800,6 +803,7 @@ This event will be sent when hls recordings are successfull and uploaded to the 
   "type": "hls.recording.success",
   "data": {
     "beam_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "metadata_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "metadata_timestamp": "2021-11-30T20:36:55.807155801Z",
     "peer_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
