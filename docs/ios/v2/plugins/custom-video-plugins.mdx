@@ -1,0 +1,170 @@
+---
+title: Custom Video Plugins (BETA)
+nav: 7.02
+---
+
+Custom video plugins allow you to hook into 100ms' video lifecycle and add your own video processing
+pipeline right before it gets sent to the other participants in the room. This allows for super cool things like
+building AR Filters, adding Virtual Background, Emojifying the streams and monitoring participant engagement.
+Checkout our [Virtual Background](./Virtual-Background) docs to see an example of such a plugin.
+Note that this page is about creating custom new plugins than using existing ones.
+
+## Prerequisites
+
+* Basic Knowledge about 100ms SDK, follow our quickstart guides.
+
+## Video Plugin Interface
+
+By a 'video plugin' here, we mean a custom class that you can write to to manipulate video frames. Your class should subclass HMSVideoPlugin class and override the 'process' function to implement the plugin functionality.
+
+```swift
+class GrayscaleVideoPlugin: HMSVideoPlugin {
+  
+  override func process(_ frame: CVPixelBuffer) -> CVPixelBuffer {
+    ...
+  }
+  
+}
+```
+
+The process function provides you with an input frame that you can process. After processing, you return an output frame. 
+HMSSDK calls the process function whenever a new frame is generated from the camera. The input frames are replaced by the output frames provided by you thus transforming the video stream.
+
+## Adding the plugin
+
+Once a plugin implementation is ready, it can be added to the local peer's video track as below -
+
+1. Create an HMSVideoPlugin array
+
+```swift
+     var videoPlugins = [HMSVideoPlugin]()
+   ```
+   
+2. Create an instance of HMSVirtualBackgroundPlugin and append it to videoPlugins array, like below
+
+```swift
+     let grayscalePlugin = GrayscaleVideoPlugin()
+     videoPlugins.append(grayscalePlugin)
+   ```
+   
+3. Next, create an instance of HMSVideoTrackSettings passing videoPlugins array
+
+```swift
+     let videoSettings = HMSVideoTrackSettings(... videoPlugins: self.videoPlugins)
+   ```
+   
+4. Use this videoSettings instance while setting the trackSettings on HMSSDK
+
+```swift
+     hmsSDK = HMSSDK.build { sdk in
+            sdk.trackSettings = HMSTrackSettings(videoSettings: videoSettings, audioSettings: ...)
+            ...
+        }
+   ```
+   
+That is all you need to do to add a custom video plugin to your HMSSDK session!
+
+## Activating and deactivating the plugin
+
+When you subclass from HMSVideoPlugin, your custom class also gains access to activate(), deactivate() functions. You call these functions on your plugin instance to activate or deactivate your plugin. Note that when you add your plugin it's activated by defualt.
+
+```swift
+grayscalePlugin.deactivate()
+grayscalePlugin.activate()
+```
+
+
+## Implementation Example - Grayscale Filter
+
+Below is a sample implementation of the above interface which converts the local video in grayscale.
+
+```swift
+class GrayscaleVideoPlugin: HMSVideoPlugin {
+    
+    static let defaultAttributes: [NSString: NSObject] = [
+        kCVPixelBufferPixelFormatTypeKey: NSNumber(value: kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange),
+        kCVPixelBufferIOSurfacePropertiesKey : [:] as NSDictionary
+    ]
+    
+    private var attributes: [NSString: NSObject] {
+        var attributes: [NSString: NSObject] = Self.defaultAttributes
+        attributes[kCVPixelBufferWidthKey] = NSNumber(value: Int(extent.width))
+        attributes[kCVPixelBufferHeightKey] = NSNumber(value: Int(extent.height))
+        return attributes
+    }
+    
+    private var _pixelBufferPool: CVPixelBufferPool?
+    private var pixelBufferPool: CVPixelBufferPool! {
+        get {
+            if _pixelBufferPool == nil {
+                var pixelBufferPool: CVPixelBufferPool?
+                CVPixelBufferPoolCreate(nil, nil, attributes as CFDictionary?, &pixelBufferPool)
+                _pixelBufferPool = pixelBufferPool
+            }
+            return _pixelBufferPool!
+        }
+        set {
+            _pixelBufferPool = newValue
+        }
+    }
+    
+    private var extent = CGRect.zero {
+        didSet {
+            guard extent != oldValue else { return }
+            pixelBufferPool = nil
+        }
+    }
+    
+    let ciContext = CIContext(options: nil)
+    
+    override func process(_ frame: CVPixelBuffer) -> CVPixelBuffer {
+        let inputImage = CIImage(cvPixelBuffer: frame)
+        
+        guard let outputImage = inputImage.grayscale else { return frame }
+        
+        var outputBuffer: CVImageBuffer?
+        
+        extent = outputImage.extent
+        
+        CVPixelBufferPoolCreatePixelBuffer(nil, pixelBufferPool, &outputBuffer)
+
+        if let outputBuffer = outputBuffer {
+            ciContext.render(outputImage, to: outputBuffer)
+        }
+        return outputBuffer ?? frame
+    }
+}
+
+extension CIImage {
+    var grayscale: CIImage? {
+        let context = CIContext(options: nil)
+        guard let currentFilter = CIFilter(name: "CIPhotoEffectNoir") else { return nil }
+        currentFilter.setValue(self, forKey: kCIInputImageKey)
+        if let output = currentFilter.outputImage,
+            let cgImage = context.createCGImage(output, from: output.extent) {
+            return CIImage(cgImage: cgImage)
+        }
+        return nil
+    }
+}
+```
+
+## Handler synchronisation between process and your own methods and properties
+
+When you subclass from HMSVideoPlugin, your custom class also gains access to a property called 'frameProcessingQueue'. The frameProcessingQueue is the serial dispatch queue on which the frames arrive in your process function.
+You can use this queue to serialise access to any shared resources in your class's properties and functions.
+
+```swift
+let serialGrayscalePluginProcessingQueue = grayscalePlugin.frameProcessingQueue
+```
+
+👀 To see an example video plugin implementation using 100ms SDK, checkout our [Example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
+
+📲 Download the 100ms fully featured Sample iOS app here: https://testflight.apple.com/join/dhUSE7N8
+
+
+## Plugin Guidelines
+
+* Feel free to implement more methods outside the interface, options passed in plugin's constructor etc. as required for
+the users of the plugin to give more interaction points. For e.g., our Virtual background plugin exposes a property to change
+the background as required.
