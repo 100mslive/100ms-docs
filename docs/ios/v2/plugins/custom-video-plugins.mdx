@@ -30,6 +30,43 @@ class GrayscaleVideoPlugin: HMSVideoPlugin {
 The process function provides you with an input frame that you can process. After processing, you return an output frame. 
 HMSSDK calls the process function whenever a new frame is generated from the camera. The input frames are replaced by the output frames provided by you thus transforming the video stream.
 
+The general approach to write a video plugin that modifies the frames in the video is like below:
+
+```swift
+class GrayscaleVideoPlugin: HMSVideoPlugin {
+  
+  override func process(_ frame: CVPixelBuffer) -> CVPixelBuffer {
+      
+      // Process the 'frame' to transform it into a grayscal frame
+      ...
+      
+      let outputFrame: CVPixelBuffer = ...
+      
+      // return the output frame
+      return outputFrame
+  }
+  
+}
+```
+
+In case you are writing a plugin that doesn't modify the video frames but only analyse the frames for some purpose, we recommend you do your processing asynchronously while returning the input frame immediately like below:
+
+```swift
+class FaceAttendencePlugin: HMSVideoPlugin {
+  
+  override func process(_ frame: CVPixelBuffer) -> CVPixelBuffer {
+  
+     DispatchQueue.global().async {
+        // Recognise face and mark attendence
+        ...
+     }
+     
+     return frame
+  }
+  
+}
+```
+
 ## Adding the plugin
 
 Once a plugin implementation is ready, it can be added to the local peer's video track as below -
