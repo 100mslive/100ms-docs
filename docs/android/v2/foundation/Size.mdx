@@ -3,9 +3,22 @@ title: SDK Size Impact
 nav: 1.5
 ---
 
-The exact amount the SDK adds to your app can vary based on a few parameters but the most it will add is as follows:
+The exact amount the SDK adds to your app can vary based on a few parameters but to find out the most it will add, add up the SDK size and Webrtc Size in the Size Table below.
+
+Note that when a single apk is built it will add all the webrtc binaries together but on-device, it will only take one of the webrtc architectures not all.
+
+For example, the all-arch apk will be increasd by:
+
+SDK (1.1 Mb) + Webrtc (11Mb + 10.8Mb + 8.8Mb + 5.7Mb) = 37.4 Mb
+
+However on an actual arm64 device, when the play store downloads it, it will be:
+
+SDK (1.1 Mb) + Webrtc arm64 ( 8.8Mb ) = 9.9 Mb
+
+## Size Table
 
 SDK Size:
+
 1.1Mb - for each architecture.
 
 Webrtc Size:
