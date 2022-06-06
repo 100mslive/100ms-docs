@@ -15,21 +15,22 @@ Add the `pod 'HMSSDK'` to your Podfile as follows:
   ```
   // Podfile
   
-  platform :ios, '10.0'
+  platform :ios, '12.0'
 
   target 'MyAwesomeApp' do
     pod 'HMSSDK'
   end
   ```
 
+then run `pod instal --repo-update`
 
 Add the entitlements for video, audio and network access to your `Info.plist`
 
 ```xml
 <key>NSCameraUsageDescription</key>
-<string>Allow access to Camera to enable video calling.</string>
+<string>Allow access to camera to enable video calling.</string>
 <key>NSLocalNetworkUsageDescription</key>
-<string>Allow access to Camera to network to enable video calling.</string>
+<string>Allow access to local network to enable video calling.</string>
 <key>NSMicrophoneUsageDescription</key>
-<string>Allow access to Camera to mic to enable video calling.</string>
+<string>Allow access to mic to enable video calling.</string>
 ```
