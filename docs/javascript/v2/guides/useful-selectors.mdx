@@ -56,7 +56,7 @@ const isInPreview = useHMSStore(selectIsInPreview);
 `selectPeerCount` returns the number of peers inside the room. If you have turned on
 peer list in preview, this count won't include the local peer if they're still in preview.
 
-<Tabs id="peerCount items={['Javascript', 'React']} />
+<Tabs id="peerCount" items={['Javascript', 'React']} />
 
 <Tab id='peerCount-0'>
 
@@ -71,13 +71,13 @@ const count = hmsStore.getState(selectPeerCount);
 ```jsx
 const count = useHMSStore(selectPeerCount);
 ```
- 
+
  </Tab>
 
 ## Who all are in my room?
 
 `selectPeers` returns you an array of peers(remote peers and your local peer) present in the room. It will
- include the local peer in preview phase.
+include the local peer in preview phase.
 
 <Tabs id="peers" items={['Javascript', 'React']} />
 
