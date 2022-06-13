@@ -21,15 +21,16 @@ Webhook can be configured using [Developer](https://dashboard.100ms.live/develop
 Event is a JSON dictionary which has the following keys.
 
 ### Event Attributes
-| Name       | Type        | Description                                                         | Example                              |
-|:-----------|:------------|:--------------------------------------------------------------------|:-------------------------------------|
-| version    | `string`    | Version of the event                                                | 2.0                                  |
-| id         | `string`    | Id of the event                                                     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| app_id     | `string`    | App ID from which this event is generated                           | 5ff5881b80b66969e1fb35f6             |
-| account_id | `string`    | Customer ID from which this event is generated                      | 5ff5881b80b66969e1fb35f4             |
-| timestamp  | `timestamp` | Timestamp of the event                                              | 2020-11-11T16:32:17Z                 |
-| type       | `string`    | Type of the event                                                   | peer.join.success                    |
-| data       | `dict`      | Event data. Its keys will be different for different type of event. | < See description below >            |
+| Name        | Type        | Description                                                         | Example                              |
+|:------------|:------------|:--------------------------------------------------------------------|:-------------------------------------|
+| version     | `string`    | Version of the event                                                | 2.0                                  |
+| id          | `string`    | Id of the event                                                     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
+| app_id      | `string`    | App ID from which this event is generated                           | 5ff5881b80b66969e1fb35f6             |
+| account_id  | `string`    | Customer ID from which this event is generated                      | 5ff5881b80b66969e1fb35f4             |
+| template_id | `string`    | Template ID of the room                                             | 66112497abcd52312556c4gg             |
+| timestamp   | `timestamp` | Timestamp of the event                                              | 2020-11-11T16:32:17Z                 |
+| type        | `string`    | Type of the event                                                   | peer.join.success                    |
+| data        | `dict`      | Event data. Its keys will be different for different type of event. | < See description below >            |
 
 ### Sample Event Payload
 ```json
@@ -46,6 +47,7 @@ Event is a JSON dictionary which has the following keys.
     "room_id": "60b8e13a6eb86d8101b57354",
     "room_name": "test room",
     "session_id": "610f81ee870dde099a249948",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "user_id": "user.001",
     "user_name": "test user"
   }
@@ -58,12 +60,13 @@ Event is a JSON dictionary which has the following keys.
 This event will be sent when session opens successfully.
 
 #### Attributes
-| Name               | Type        | Description                                    | Example                  |
-|:-------------------|:------------|:-----------------------------------------------|:-------------------------|
-| room_id            | `string`    | 100ms assigned room id                         | 5f9edc6ac238215aec2312df |
-| room_name          | `string`    | Room name provided when creating the room      | Test Room                |
-| session_id         | `string`    | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df |
-| session_started_at | `timestamp` | Timestamp when session started                 | 2020-11-11T16:32:17Z     |
+| Name               | Type        | Description                               | Example                  |
+|:-------------------|:------------|:------------------------------------------|:-------------------------|
+| room_id            | `string`    | 100ms assigned room id                    | 5f9edc6ac238215aec2312df |
+| room_name          | `string`    | Room name provided when creating the room | Test Room                |
+| session_id         | `string`    | 100ms assigned id to identify the session | 5f9edc6bd238215aec7700df |
+| template_id        | `string`    | Template ID of the room                   | 66112497abcd52312556c4gg |
+| session_started_at | `timestamp` | Timestamp when session started            | 2020-11-11T16:32:17Z     |
 
 #### Sample `session.open.success` event
 ```json
@@ -78,6 +81,7 @@ This event will be sent when session opens successfully.
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "room_name": "xxxxxxxxxx",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "session_started_at": "2021-11-30T12:58:49.97291247Z"
   }
 }
@@ -87,12 +91,13 @@ This event will be sent when session opens successfully.
 This event will be sent when session closes successfully.
 
 #### Attributes
-| Name               | Type        | Description                                    | Example                  |
-|:-------------------|:------------|:-----------------------------------------------|:-------------------------|
-| room_id            | `string`    | 100ms assigned room id                         | 5f9edc6ac238215aec2312df |
-| room_name          | `string`    | Room name provided when creating the room      | Test Room                |
-| session_id         | `string`    | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df |
-| session_started_at | `timestamp` | Timestamp when session started                 | 2020-11-11T16:32:17Z     |
+| Name               | Type        | Description                               | Example                  |
+|:-------------------|:------------|:------------------------------------------|:-------------------------|
+| room_id            | `string`    | 100ms assigned room id                    | 5f9edc6ac238215aec2312df |
+| room_name          | `string`    | Room name provided when creating the room | Test Room                |
+| session_id         | `string`    | 100ms assigned id to identify the session | 5f9edc6bd238215aec7700df |
+| template_id        | `string`    | Template ID of the room                   | 66112497abcd52312556c4gg |
+| session_started_at | `timestamp` | Timestamp when session started            | 2020-11-11T16:32:17Z     |
 
 #### Sample `session.close.success` event
 ```json
@@ -107,6 +112,7 @@ This event will be sent when session closes successfully.
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "room_name": "xxxxxxxxxx",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "session_started_at": "2021-11-30T12:58:49.97291247Z"
   }
 }
@@ -125,6 +131,7 @@ This event will be sent when any peer joins the room successfully
 | session_id         | `string`    | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df             |
 | peer_id            | `string`    | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id            | `string`    | User id assigned by the customer               | user.001                             |
+| template_id        | `string`    | Template ID of the room                        | 66112497abcd52312556c4gg             |
 | user_name          | `string`    | User name of the joining user                  | Test user                            |
 | user_data          | `string`    | User data of the joining user                  | {"isHandRaised":true}                |
 | role               | `string`    | Role of the joining user                       | host                                 |
@@ -146,6 +153,7 @@ This event will be sent when any peer joins the room successfully
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "room_name": "xxxxxxxxxx",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "user_name": "xxxxxxxx",
     "user_data": "",
@@ -165,6 +173,7 @@ This event will be sent when peer leaves the room
 | session_id         | `string`    | 100ms assigned id to identify the session           | 5f9edc6bd238215aec7700df             |
 | peer_id            | `string`    | 100ms assigned id to identify the joining user      | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id            | `string`    | User id assigned by the customer                    | user.001                             |
+| template_id        | `string`    | Template ID of the room                             | 66112497abcd52312556c4gg             |
 | user_name          | `string`    | User name of the user                               | Test user                            |
 | user_data          | `string`    | User data of the user                               | {"isHandRaised":true}                |
 | role               | `string`    | Role of the user                                    | host                                 |
@@ -203,6 +212,7 @@ Note:
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "room_name": "xxxxxxxxxx",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "user_name": "xxxxxxxx",
     "user_data": "",
@@ -219,17 +229,18 @@ This event will be sent when a peer fails to join a room. This can occur when,
 2. Network disconnection
 
 #### Attributes
-| Name               | Type        | Description                                    | Example                              |
-|:-------------------|:------------|:-----------------------------------------------|:-------------------------------------|
-| room_id            | `string`    | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
-| room_name          | `string`    | Room name provided when creating the room      | Test Room                            |
-| peer_id            | `string`    | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| user_id            | `string`    | User id assigned by the customer               | user.001                             |
-| user_name          | `string`    | User name of the user                          | Test user                            |
-| user_data          | `string`    | User data of the user                          | {"isHandRaised":true}                |
-| role               | `string`    | Role of the user                               | host                                 |
-| joined_at          | `timestamp` | Timestamp when user joined                     | 2020-11-11T16:32:17Z                 |
-| error_message      | `string`    | Reason for failure                             | Peer not joined                      |
+| Name          | Type        | Description                                    | Example                              |
+|:--------------|:------------|:-----------------------------------------------|:-------------------------------------|
+| room_id       | `string`    | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
+| room_name     | `string`    | Room name provided when creating the room      | Test Room                            |
+| peer_id       | `string`    | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
+| user_id       | `string`    | User id assigned by the customer               | user.001                             |
+| template_id   | `string`    | Template ID of the room                        | 66112497abcd52312556c4gg             |
+| user_name     | `string`    | User name of the user                          | Test user                            |
+| user_data     | `string`    | User data of the user                          | {"isHandRaised":true}                |
+| role          | `string`    | Role of the user                               | host                                 |
+| joined_at     | `timestamp` | Timestamp when user joined                     | 2020-11-11T16:32:17Z                 |
+| error_message | `string`    | Reason for failure                             | Peer not joined                      |
 
 #### Peer join failure Reason
 
@@ -252,6 +263,7 @@ This event will be sent when a peer fails to join a room. This can occur when,
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "room_name": "xxxxxxxxxx",
     "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "user_name": "xxxxxxxx",
     "user_data": "",
     "error_message": "role not allowed"
@@ -269,18 +281,19 @@ This event will be sent when the peer leave fails. This can occur when,
 3. peer.leave is called after peer is kicked out of room / room has ended
 
 #### Attributes
-| Name               | Type        | Description                                    | Example                              |
-|:-------------------|:------------|:-----------------------------------------------|:-------------------------------------|
-| room_id            | `string`    | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
-| room_name          | `string`    | Room name provided when creating the room      | Test Room                            |
-| peer_id            | `string`    | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| user_id            | `string`    | User id assigned by the customer               | user.001                             |
-| user_name          | `string`    | User name of the user                          | Test user                            |
-| user_data          | `string`    | User data of the user                          | {"isHandRaised":true}                |
-| role               | `string`    | Role of the user                               | host                                 |
-| left_at            | `timestamp` | Timestamp when user left                       | 2020-11-11T17:32:17Z                 |
-| duration           | `number`    | Duration the user spent in the room in seconds | 36000                                |
-| error_message      | `string`    | Reason for failure                             | Peer not joined                      |
+| Name          | Type        | Description                                    | Example                              |
+|:--------------|:------------|:-----------------------------------------------|:-------------------------------------|
+| room_id       | `string`    | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
+| room_name     | `string`    | Room name provided when creating the room      | Test Room                            |
+| peer_id       | `string`    | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
+| user_id       | `string`    | User id assigned by the customer               | user.001                             |
+| template_id   | `string`    | Template ID of the room                        | 66112497abcd52312556c4gg             |
+| user_name     | `string`    | User name of the user                          | Test user                            |
+| user_data     | `string`    | User data of the user                          | {"isHandRaised":true}                |
+| role          | `string`    | Role of the user                               | host                                 |
+| left_at       | `timestamp` | Timestamp when user left                       | 2020-11-11T17:32:17Z                 |
+| duration      | `number`    | Duration the user spent in the room in seconds | 36000                                |
+| error_message | `string`    | Reason for failure                             | Peer not joined                      |
 
 
 #### Peer leave failure Reason
@@ -303,6 +316,7 @@ This event will be sent when the peer leave fails. This can occur when,
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "room_name": "xxxxxxxxxx",
     "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "user_name": "xxxxxxxx",
     "user_data": "",
     "error_message": "Peer not joined"
@@ -323,6 +337,7 @@ This event will be sent when room end is called and the it is successfull
 | session_id         | `string`    | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df             |
 | peer_id            | `string`    | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id            | `string`    | User id assigned by the customer               | user.001                             |
+| template_id        | `string`    | Template ID of the room                        | 66112497abcd52312556c4gg             |
 | user_name          | `string`    | User name of the user                          | Test user                            |
 | role               | `string`    | Role of the user                               | host                                 |
 | lock_room          | bool        | Flag to indicate if the room was lock          | false                                |
@@ -345,6 +360,7 @@ This event will be sent when room end is called and the it is successfull
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "room_name": "xxxxxxxxxx",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "user_name": "xxxxxxxx",
     "lock_room": false,
@@ -366,6 +382,7 @@ This event will be sent when final composed recording is generated and uploaded 
 | room_id            | `string`    | 100ms assigned room id                                                    | 5f9edc6ac238215aec2312df          |
 | room_name          | `string`    | Room name assigned by you when creating room                              | class-9-batch-2                   |
 | session_id         | `string`    | 100ms assigned id to identify the session                                 | 5f9edc6bd238215aec7700df          |
+| template_id        | `string`    | Template ID of the room                                                   | 66112497abcd52312556c4gg          |
 | location           | `string`    | s3 URI of the recorded video                                              | s3://bucket/prefix/ac.mp4         |
 | URL                | `string`    | Presigned s3 URL for the recorded video, for download. Valid for 24 hours | https://s3-location/bucket/ac.mp4 |
 | duration           | `number`    | Duration the user spent in the room in seconds                            | 3600                              |
@@ -388,6 +405,7 @@ This event will be sent when final composed recording is generated and uploaded 
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "room_name": "TestRoom1",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "size": 13933649,
     "session_started_at": "2021-11-30T12:58:49.97291247Z"
   }
@@ -403,6 +421,7 @@ This event will be sent when failure occurs during final recording composition o
 | room_id            | `string`    | 100ms assigned room id                       | 5f9edc6ac238215aec2312df |
 | room_name          | `string`    | Room name assigned by you when creating room | class-9-batch-2          |
 | session_id         | `string`    | 100ms assigned id to identify the session    | 5f9edc6bd238215aec7700df |
+| template_id        | `string`    | Template ID of the room                      | 66112497abcd52312556c4gg |
 | error              | `string`    | Error message                                | Upload Failure           |
 | session_started_at | `timestamp` | Timestamp when session started               | 2020-11-11T16:32:17Z     |
 
@@ -420,6 +439,7 @@ This event will be sent when failure occurs during final recording composition o
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "room_name": "TestRoom1",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "session_started_at": "2021-11-30T12:58:49.97291247Z"
   }
 }
@@ -439,6 +459,7 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
 | peer_id            | `string`    | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | session_id         | `string`    | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df             |
 | metadata_id        | `string`    | Webhook metadata ID                            | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
+| template_id        | `string`    | Template ID of the room                        | 66112497abcd52312556c4gg             |
 | metadata_timestamp | `timestamp` | Webhook message creation timestamp             | 2020-11-11T17:32:17Z                 |
 | start_delay        | `number`    | Time taken by beam to start recording          | 12                                   |
 | state_name         | `string`    | Beam state identifier                          | Started                              |
@@ -461,6 +482,7 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
     "peer_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "start_delay": 12,
     "state_name": "Started",
     "state_timestamp": "2021-11-30T12:58:46.385555859Z",
@@ -481,6 +503,7 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
 | peer_id            | `string`    | 100ms assigned id to identify the joining user    | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | session_id         | `string`    | 100ms assigned id to identify the session         | 5f9edc6bd238215aec7700df             |
 | metadata_id        | `string`    | Webhook metadata ID                               | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
+| template_id        | `string`    | Template ID of the room                           | 66112497abcd52312556c4gg             |
 | metadata_timestamp | `timestamp` | Webhook message creation timestamp                | 2020-11-11T17:32:17Z                 |
 | state_name         | `string`    | Beam state identifier                             | Started                              |
 | state_timestamp    | `timestamp` | Timestamp at which beam state changed             | 2020-11-11T17:32:18Z                 |
@@ -503,6 +526,7 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
     "peer_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "state_name": "Stopped",
     "state_timestamp": "2021-11-30T12:59:57.685503281Z",
     "duration": 56,
@@ -523,6 +547,7 @@ This event is sent when beam successfully records the room and uploads the video
 | metadata_id        | `string`    | Webhook metadata ID                             | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
 | metadata_timestamp | `timestamp` | Webhook message creation timestamp              | 2020-11-11T17:32:17Z                 |
 | session_id         | `string`    | 100ms assigned id to identify the session       | 5f9edc6bd238215aec7700df             |
+| template_id        | `string`    | Template ID of the room                         | 66112497abcd52312556c4gg             |
 | created_at         | `timestamp` | Timestamp at which recording was created        | 2020-11-11T17:12:17Z                 |
 | duration           | `number`    | Duration of beam recording (seconds)            | 79                                   |
 | location           | `string`    | HTTPS url to recorded session file on S3 bucket | https://s3-loc/bucket/beam/ac.mp4    |
@@ -550,6 +575,7 @@ This event is sent when beam successfully records the room and uploads the video
     "started_at": "2021-11-30T12:58:34.051Z",
     "stopped_at": "2021-11-30T12:59:56.778Z",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "session_started_at": "2021-11-30T12:58:49.97291247Z"
   }
 }
@@ -574,6 +600,7 @@ This event will be sent when there are failures in RTMP streaming and/or browser
 | room_id            | `string`    | 100ms assigned room id                            | 5f9edc6ac238215aec2312df             |
 | peer_id            | `string`    | 100ms assigned id to identify the joining user    | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | session_id         | `string`    | 100ms assigned id to identify the session         | 5f9edc6bd238215aec7700df             |
+| template_id        | `string`    | Template ID of the room                           | 66112497abcd52312556c4gg             |
 | error_code         | `number`    | Beam error code                                   | 1                                    |
 | error_message      | `string`    | Beam error message (description)                  | Failed to resolve hostname           |
 | error_type         | `string`    | Beam error type                                   | BeamFailed                           |
@@ -605,6 +632,7 @@ This event will be sent when there are failures in RTMP streaming and/or browser
     "peer_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "state_message": "[tcp @ 0x55f6cc5f5780] Failed to resolve hostname rvs-isr: Name or service not known",
     "state_name": "Failed",
     "state_timestamp": "2021-11-30T20:36:55.799192444Z",
@@ -629,6 +657,7 @@ This event is sent when hls streaming is successfully triggered
 | room_id            | `string`    | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
 | peer_id            | `string`    | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | session_id         | `string`    | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df             |
+| template_id        | `string`    | Template ID of the room                        | 66112497abcd52312556c4gg             |
 | meeting_url        | `string`    | meeting_url provided at hls start              | "https://app.100ms.live/room_id"     |
 | metadata_id        | `string`    | Webhook metadata ID                            | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
 | metadata_timestamp | `timestamp` | Webhook message creation timestamp             | 2020-11-11T17:32:17Z                 |
@@ -656,6 +685,7 @@ This event is sent when hls streaming is successfully triggered
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "start_delay": 12,
     "state_name": "HLSStarted",
     "state_timestamp": "2021-11-30T12:58:46.385555859Z",
@@ -677,6 +707,7 @@ This event is sent when hls streaming is successfully stopped
 | room_id            | `string`    | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
 | peer_id            | `string`    | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | session_id         | `string`    | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df             |
+| template_id        | `string`    | Template ID of the room                        | 66112497abcd52312556c4gg             |
 | meeting_url        | `string`    | meeting_url provided at hls start              | "https://app.100ms.live/room_id"     |
 | metadata_id        | `string`    | Webhook metadata ID                            | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
 | metadata_timestamp | `timestamp` | Webhook message creation timestamp             | 2020-11-11T17:32:17Z                 |
@@ -705,6 +736,7 @@ This event is sent when hls streaming is successfully stopped
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "state_name": "HLSStopped",
     "state_timestamp": "2021-11-30T12:59:57.685503281Z",
     "duration": 56,
@@ -730,6 +762,7 @@ This event will be sent when there are failures in RTMP streaming and/or browser
 | room_id            | `string`    | 100ms assigned room id                            | 5f9edc6ac238215aec2312df             |
 | peer_id            | `string`    | 100ms assigned id to identify the joining user    | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | session_id         | `string`    | 100ms assigned id to identify the session         | 5f9edc6bd238215aec7700df             |
+| template_id        | `string`    | Template ID of the room                           | 66112497abcd52312556c4gg             |
 | meeting_url        | `string`    | meeting_url provided at hls start                 | "https://app.100ms.live/room_id"     |
 | error_code         | `number`    | Beam error code                                   | 1                                    |
 | error_message      | `string`    | Beam error message (description)                  | Failed to resolve hostname           |
@@ -762,6 +795,7 @@ This event will be sent when there are failures in RTMP streaming and/or browser
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "state_message": "[tcp @ 0x55f6cc5f5780] Failed to resolve hostname rvs-isr: Name or service not known",
     "state_name": "HLSFailed",
     "state_timestamp": "2021-11-30T20:36:55.799192444Z",
@@ -784,6 +818,7 @@ This event will be sent when hls recordings are successfull and uploaded to the 
 | metadata_timestamp                  | `timestamp` | Webhook message creation timestamp                                          | 2020-11-11T17:32:17Z                 |
 | duration                            | `number`    | Duration of RTMP streaming / recording in seconds                           | 12                                   |
 | session_id                          | `string`    | 100ms assigned id to identify the session                                   | 5f9edc6bd238215aec7700df             |
+| template_id                         | `string`    | Template ID of the room                                                     | 66112497abcd52312556c4gg             |
 | meeting_url                         | `string`    | meeting_url provided at hls start                                           | "https://app.100ms.live/room_id"     |
 | created_at                          | `timestamp` | Timestamp at which recording was created                                    | 2020-11-11T17:12:17Z                 |
 | started_at                          | `timestamp` | Timestamp at which hls started                                              | 2020-11-11T17:32:18Z                 |
@@ -804,6 +839,7 @@ This event will be sent when hls recordings are successfull and uploaded to the 
   "data": {
     "beam_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "metadata_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "metadata_timestamp": "2021-11-30T20:36:55.807155801Z",
     "peer_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
@@ -861,6 +897,7 @@ This event will be sent when peer changes role successfully.
 | room_id            | `string`    | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
 | room_name          | `string`    | Room name provided when creating the room      | Test Room                            |
 | session_id         | `string`    | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df             |
+| template_id        | `string`    | Template ID of the room                        | 66112497abcd52312556c4gg             |
 | peer_id            | `string`    | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id            | `string`    | User id assigned by the customer               | user.001                             |
 | user_name          | `string`    | User name of the user                          | Test user                            |
@@ -885,6 +922,7 @@ This event will be sent when peer changes role successfully.
     "room_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "room_name": "xxxxxxxxxx",
     "session_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
+    "template_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "user_id": "xxxxxxxxxxxxxxxxxxxxxxxx",
     "user_name": "xxxxxxxx",
     "user_data": "",
