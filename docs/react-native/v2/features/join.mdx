@@ -89,6 +89,30 @@ After calling join your app will be provided an update from the 100ms SDK.
 
 ❌ If failure, the `HMSUpdateListenerActions.ON_ERROR` callback will be invoked with exact failure reason.
 
+## Joining room audio/video muted
+
+If you want to join the room with preview, call setMute on localPeer's audio and video tracks in the onPreview event listener
+which is called after the preview is successful. 
+
+```js
+const onPreview = () => {
+    // instance acquired from build() method
+    hmsInstance?.localPeer?.localVideoTrack()?.setMute(true);
+    hmsInstance?.localPeer?.localAudioTrack()?.setMute(true);
+}
+``` 
+
+If you want to join the room directly without preview, call setMute on localPeer's audio and video tracks in the onJoin event listener
+which is called after the join is successful.
+
+```js
+const onJoin = () => {
+    // instance acquired from build() method
+    hmsInstance?.localPeer?.localVideoTrack()?.setMute(true);
+    hmsInstance?.localPeer?.localAudioTrack()?.setMute(true);
+}
+``` 
+
 ## Get Room
 
 `getRoom` is an async function on HMSSDK which returns the currently joined room. Returns null if the peer is not in a room.
