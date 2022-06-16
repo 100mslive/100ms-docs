@@ -11,7 +11,7 @@ import HmsManager, {
   HMSException,
   HMSMessage,
   HMSLeaveRoomRequest,
-  HMSSpeakerUpdate,
+  HMSSpeaker,
   HMSPeer,
   HMSTrack
 } from '@100mslive/react-native-hms';
@@ -128,7 +128,7 @@ hmsInstance.addEventListener(
   onSpeakerListener
 );
 
-const onSpeakerListener = (data: HMSSpeakerUpdate) => {
+const onSpeakerListener = (data: HMSSpeaker[]) => {
   // gets triggered whenever someone speaks
   // an array of speakers is received. Use it to highlight the speakers.
 };

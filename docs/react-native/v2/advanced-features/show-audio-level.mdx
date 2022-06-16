@@ -8,15 +8,14 @@ nav: 3.99
 ```js
 import {
   HMSUpdateListenerActions,
-  HMSSpeakerUpdate,
   HMSSpeaker,
 } from '@100mslive/react-native-hms';
 
 // hmsInstance obtained by build method
 hmsInstance?.addEventListener(HMSUpdateListenerActions.ON_SPEAKER, onSpeaker);
 
-const onSpeaker = (data: HMSSpeakerUpdate) => {
-  data?.peers?.map((speaker: HMSSpeaker) => console.log('speaker audio level: ', speaker?.level));  
+const onSpeaker = (data: HMSSpeaker[]) => {
+  data?.map((speaker: HMSSpeaker) => console.log('speaker audio level: ', speaker?.level));  
 };
 ```
 
