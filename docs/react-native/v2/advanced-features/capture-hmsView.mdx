@@ -1,0 +1,42 @@
+---
+title: Capture HmsView
+nav: 3.999
+---
+
+The React Native SDK provides a Component `HmsView` that renders the video on screen. To capture the frame from the video we can call the capture function available on the reference of this component. This will be a asynchronous function which would return a base64 string. It is a android only feature.
+
+```js
+import React from 'react';
+import { HMSVideoViewMode } from '@100mslive/react-native-hms';
+...
+// hms instance acquired from build method
+const HmsView = hmsInstance.HmsView;
+const hmsViewRef: any = React.useRef()
+
+const onPress: async () => {
+  const granted = await requestExternalStoragePermission(); // request for `WRITE_EXTERNAL_STORAGE` permission before saving
+  if (granted) {
+    hmsViewRef?.current?.capture()
+      .then((base64: string) => {
+        // we get a base64 string
+      });
+      .catch((error: any) => console.log(error));
+  }
+},
+
+const styles = StyleSheet.create({
+  hmsView: {
+    height: '100%',
+    width: '100%',
+  },
+});
+
+<HmsView
+  ref={hmsViewRef}
+  trackId={trackId} 
+  scaleType={HMSVideoViewMode.ASPECT_FILL} 
+  style={styles.hmsView} 
+  mirror={true} 
+  sink={true} />
+...
+```

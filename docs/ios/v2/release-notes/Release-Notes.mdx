@@ -1,8 +1,37 @@
 ---
 title: Release Notes
-nav: 5
+nav: 6.1
 description: Release Notes for 100ms iOS SDK
 ---
+
+## 0.3.1 - 2022-05-31
+### Added
+- Screenshare support
+- Virtual background
+- Custom video plugins API
+- Analytics capturing improvements
+### Breaking change
+- Removed tracksErrorAudioShouldBeSilenced error that was used to signal that other app is playing unmixable audio, it is now up to the app to detect for example using CallKit
+
+## 0.2.13 - 2022-05-16
+### Fixed
+- Local track state updates not being sent due to a bug in 0.2.12
+
+## 0.2.12 - 2022-05-13
+### Fixed 
+- Track will not recover if it was unsubscribed from post being degraded
+
+## 0.2.11 - 2022-04-28
+### Added
+- Subscribe degradation improvements
+### Fixed 
+- onReconnected callback not fired in some scenarios
+
+## 0.2.10 - 2022-04-21
+### Fixed
+- Error 5000 returned when trying to rejoin from onError callback
+### Changed
+- Message in sendBroadcastMessage, sendDirectMessage and sendGroupMessage completion handlers will now have the timestamp set by the server instead of using local
 
 ## 0.2.9 - 2022-03-29
 ### Added

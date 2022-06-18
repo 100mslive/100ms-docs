@@ -25,7 +25,9 @@ title: Web SDK API Reference
 
 ## Other Interfaces
 
+- [DeviceMap](/api-reference/javascript/v2/interfaces/DeviceMap)
 - [HLSConfig](/api-reference/javascript/v2/interfaces/HLSConfig)
+- [HLSMeetingURLVariant](/api-reference/javascript/v2/interfaces/HLSMeetingURLVariant)
 - [HMSAudioTrackSettings](/api-reference/javascript/v2/interfaces/HMSAudioTrackSettings)
 - [HMSChangeMultiTrackStateParams](/api-reference/javascript/v2/interfaces/HMSChangeMultiTrackStateParams)
 - [HMSChangeMultiTrackStateRequest](/api-reference/javascript/v2/interfaces/HMSChangeMultiTrackStateRequest)
@@ -68,12 +70,6 @@ title: Web SDK API Reference
 - [SimulcastLayerDefinition](/api-reference/javascript/v2/interfaces/SimulcastLayerDefinition)
 
 ## Type aliases
-
-### DeviceMap
-
-Ƭ **DeviceMap**: `Omit`<`HMSDeviceManager`, `"outputDevice"` \| `"hasWebcamPermission"` \| `"hasMicrophonePermission"`\>
-
----
 
 ### HMSMessageID
 
@@ -321,11 +317,27 @@ Select the peer ID of your local peer.
 
 ---
 
+### selectLocalPeerName
+
+• `Const` **selectLocalPeerName**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `string`, (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `string`\>
+
+Select the peer name of your local peer.
+
+---
+
 ### selectLocalPeerRole
 
 • `Const` **selectLocalPeerRole**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `null` \| [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole), (`res1`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer), `res2`: `Record`<`string`, [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)\>) => `null` \| [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)\>
 
 Select the [HMSRole](/api-reference/javascript/v2/interfaces/HMSRole) object of your local peer.
+
+---
+
+### selectLocalPeerRoleName
+
+• `Const` **selectLocalPeerRoleName**: `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| `string`, (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `undefined` \| `string`\>
+
+Select the role name of your local peer.
 
 ---
 
@@ -500,6 +512,25 @@ Select the number of unread messages.
 
 ---
 
+### selectAppData
+
+▸ **selectAppData**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `any`\>
+
+Select a particular key from ui app data by passed in key.
+if key is not passed, full data is returned.
+
+#### Parameters
+
+| Name  | Type     |
+| :---- | :------- |
+| `id?` | `string` |
+
+#### Returns
+
+`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `any`\>
+
+---
+
 ### selectAudioPlaylistTrackByPeerID
 
 ▸ **selectAudioPlaylistTrackByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSTrack`](/api-reference/javascript/v2/interfaces/HMSTrack)\>
@@ -664,7 +695,7 @@ This is the primary video track of a peer.
 
 ### selectDevices
 
-▸ **selectDevices**(`store`): [`DeviceMap`](/api-reference/javascript/v2/modules#devicemap)
+▸ **selectDevices**(`store`): [`DeviceMap`](/api-reference/javascript/v2/interfaces/DeviceMap)
 
 Select the available audio input, audio output and video input devices on your machine.
 
@@ -676,7 +707,7 @@ Select the available audio input, audio output and video input devices on your m
 
 #### Returns
 
-[`DeviceMap`](/api-reference/javascript/v2/modules#devicemap)
+[`DeviceMap`](/api-reference/javascript/v2/interfaces/DeviceMap)
 
 An object of array of available audio input, audio output and video input devices.
 
@@ -1075,6 +1106,22 @@ Please directly use peer.metadata in case the metadata is not JSON by design.
 #### Returns
 
 `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `any`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `any`\>
+
+---
+
+### selectPeerName
+
+▸ **selectPeerName**(`peerId`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| `string`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `undefined` \| `string`\>
+
+#### Parameters
+
+| Name     | Type     |
+| :------- | :------- |
+| `peerId` | `string` |
+
+#### Returns
+
+`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| `string`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `undefined` \| `string`\>
 
 ---
 

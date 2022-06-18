@@ -51,13 +51,20 @@ You can start either RTMP Streaming or Browser Recording or both for any room
 
 ##### meeting_url
 
-This is a url which lands into the meeting directly. If you are using 100ms apps then this will be like - `https://<domain>.app.100ms.live/preview/<room_id>/<role>?token=beam_recording`. Example - `https://myname.app.100ms.live/preview/61101349d0f56e684b608c08/beam?token=beam_recording`
+This is a url which lands into the meeting directly. If you are using 100ms apps then this will be like - `https://<domain>.app.100ms.live/preview/<room_id>/<role>?skip_preview=true`.
+
+There are also a few additional query params which can be used for the 100ms app link - 
+- `auth_token=token1234`: this can be used to pass auth token generated on your side to the recording webapp
+- `ui_mode=activespeaker`: this can be used to open active speaker mode by default for recording. In active speaker mode,
+    the current speaker will show up in center, and rest of the peers will show up in the sidebar.
+    
+Example - `https://myname.app.100ms.live/preview/61101349d0f56e684b608c08/beam?skip_preview=true&auth_token=token1234&ui_mode=activespeaker`
 
 ##### resolution
 
 | Name              | Type     | Description                                                                                                | Required |
 | :---------------- | :------- | :--------------------------------------------------------------------------------------------------------- | :------- |
-| width <br/>       | `int`    | Width of the video. <br/> Range: `480`-`1280`. If height>720 then max width=720. <br/>Default: `1280`      | Yes      |
+| width <br/>       | `int`    | Width of the video. <br/> Range: `500`-`1280`. If height>720 then max width=720. <br/>Default: `1280`      | Yes      |
 | height <br/>      | `int`    | Height of the video. <br/> Range: `480`-`1280`. If width>720 then max height=720. <br/>Default: `720`      | Yes      |
 
 #### cURL

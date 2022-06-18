@@ -3,6 +3,64 @@ title: Android SDK
 nav: 15
 description: Release Notes for 100ms Android SDK
 ---
+## v2.4.1 - 2022-06-14
+### Fixed
+* Made SDK compatible for compileSDKversion 30 by reducing version of Room lib to 2.3.0
+
+### Added
+* Analytics events to measure join and preview time
+* Retry on 5xx errors in internal join message
+
+## v2.4.0 - 2022-06-09
+### Fixed
+* Update the width and height of screen-share video track being published based on the rotation of device
+* Crash fix on Android 12 if app does not provide Bluetooth Connect permission. SDK now sends a non-terminal error
+* Crash fix on Android 12 on calling the `HMSScreenCaptureService.getStopScreenSharePendingIntent` API while starting screenshare
+* Un-necessarily sending `HLS_RECORDING_STATE_UPDATED` in `onRoomUpdate` callback when HLS Streaming is enabled
+
+### Changed
+* Socket close from cancel, which ensures the leave api does not wait for server response hence initiating internal teardown immediately
+
+### Added
+* Offline storage of Analytics event. Events that cannot be send immediately via websockets would be persisted in a db and will be sent later when connection returns
+* Remove height/width check for rtmp and browser recording in SDK
+* RemoveRtcStatsObserver API is added
+
+## v2.3.9 - 2022-05-18
+### Fixed
+* Screen Share not starting in highest resolution
+* Serverside Subscribe degradation fix - marking track not degraded after removeSink is called
+* IO Exception Crash in Android 12, in the alarm manager of Log Util
+* NPE Crash fix in webrtc stats monitor
+* Crash in LogUtils
+
+### Changed
+* `serverReceiveTime` data type in `HMSMessage` is not of type `Long` instead of `Date`
+
+## v2.3.7 - 2022-05-09
+### Fixed
+* A crash in some rare cases where analytics events were being sent while the room was ending.
+
+### Added
+* `sessionId` is a new parameter in HMSRoom. It is updated with the current sessionId when a room is joined.
+
+## 2.3.6 - 2022-04-28
+### Fixed
+* Fixed bug: Local peer being null in stats callbacks
+* Fixed bug: `onSuccess` callback not called from `preview`/`join` if network goes off BEFORE ws-connect and comes back after sometime
+
+### Added
+* Server Side Subscribe Degradation
+
+## 2.3.5 - 2022-04-20
+### Fixed
+* Crash fix: `InvalidTokenFormat` exeception. This would be thrown in the `onError` callback instead
+* Fixed bug: Sending `TRACK_DEGRADED` when not required in some cases
+
+### Added
+* Apps can now add resolution(w*h) when starting `RTMP` Streaming
+* SDK has the capability to write logs in the filesystem of devices. Apps can enable or disable while initializing the SDK
+
 ## 2.3.4 - 2022-03-28
 ### Fixed
 * HLS recording status wasn't always updated when stopped.

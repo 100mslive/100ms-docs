@@ -44,7 +44,9 @@ You will also need to request Camera and Record Audio permissions at runtime bef
 
 We suggest using [react-native-permission](https://www.npmjs.com/package/react-native-permissions) to acquire permissions from both platforms.
 
-#### Proguard configuration
+> Note: Compiling with Kotlin for compileSdkVersion 30 requires JDK 11 or above
+
+### Proguard configuration
 
 ##### 100ms Android SDK 2.1.2 or higher
 If using 100ms Android SDK version 2.1.2 and higher proguard configuration is bundled inside it. No additional code is required.
@@ -58,4 +60,36 @@ Add it to your proguard-rules.pro
 # 100ms proguard rules
 -keep class org.webrtc.** { *; }
 -keep class live.hms.video.** { *; }
+```
+
+### Expo Setup
+
+100ms React Native SDK supports development with [Expo](https://expo.dev/). Following is a guide to set it up -
+
+1. Install node modules
+```bash
+npm install
+```
+
+2. Install expo-cli globally to run the Expo commands
+```bash
+npm install --global expo-cli
+```
+
+3. Install Expo Dev Client
+```bash
+expo install expo-dev-client
+```
+
+4. Now we can run on iOS and Android
+```bash
+expo run: ios -d
+```
+```bash
+expo run: android -d
+```
+
+Alternatively, you can run it from IDE of your choice (VS Code, Android Studio, Xcode, etc) and start the dev server from terminal (it will help running on devices). To start the server use the following command -
+```bash
+expo start --dev-client
 ```

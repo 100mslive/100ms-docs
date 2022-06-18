@@ -3,6 +3,8 @@ title: Network Quality Reports
 nav: 15.2
 ---
 
+![Network Icons](https://www.100ms.live/docs/docs/v2/network-icons.png)
+
 Video/Audio conferencing is by nature a data intensive operation. The 100ms SDK attempts to stabilize connections especially if subscribe degradation is turned on in the template but it's possible for really bad connections that users will still have problems.
 
 It can be helpful to measure a user's connection speed before joining a room in order to set expectations or decide to have them join with video off etc.
@@ -48,6 +50,39 @@ class HMSNetworkQuality(
     int quality;
 )
 ```
+
+## In Preview
+
+you can find the updates through onPeerUpdate callback in `HMSPreviewListener`
+
+```dart
+
+@override
+void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) {
+    if (update == HMSPeerUpdate.networkQualityUpdated) {
+      print("Network Quality in Preview ${peer.networkQuality?.quality}");
+    }
+  }
+
+```
+
+## In Room
+
+you can find the updates through onPeerUpdate callback in `HMSUpdateListener`
+
+```dart
+
+@override
+void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) {
+    if (update == HMSPeerUpdate.networkQualityUpdated) {
+      print("Network Quality in Room  ${peer.networkQuality?.quality}");
+    }
+  }
+
+```
+
+
+
 
 ## Interpreting the Values
 `peer.networkQuality?.quality` will be a value between -1 and 5.
