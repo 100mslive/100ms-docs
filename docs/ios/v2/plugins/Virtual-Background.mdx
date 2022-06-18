@@ -1,0 +1,363 @@
+---
+title: Virtual Background (Beta)
+nav: 5.1
+---
+
+## Introduction
+
+Virtual Background plugin helps in customising one’s background i.e. replacing the background with a static image or blurring the background.
+This guide provides an overview of usage of the Virtual Background plugin of 100ms.
+
+<div style={{textAlign: 'center'}}>
+
+![VirtualBackground](/docs/v2/ios-vb.gif)
+
+</div>
+
+## Minimum Requirements
+
+-   Minimum iOS version required to support Virtual Background plugin is iOS 15
+-   Minimum 100ms SDK version required is `0.3.1`
+-   Virtual background plugin is in beta stage and may have performance issues on iPhone X, 8, 7, 6 and other older devices. We recommend that you use this feature on a high performance device for smooth experience.
+
+
+## How to enable virtual background in your app using HMSSDK
+
+1. Create an HMSVideoPlugin array
+
+```swift
+     var videoPlugins = [HMSVideoPlugin]()
+   ```
+   
+2. Create an instance of HMSVirtualBackgroundPlugin and append it to videoPlugins array, like below
+
+```swift
+     let virtualBackgroundPlugin = HMSVirtualBackgroundPlugin(backgroundImage: UIImage(named: "VB1"))
+     videoPlugins.append(virtualBackgroundPlugin)
+   ```
+   
+3. Next, create an instance of HMSVideoTrackSettings passing videoPlugins array
+
+```swift
+     let videoSettings = HMSVideoTrackSettings(... videoPlugins: self.videoPlugins)
+   ```
+   
+4. Use this videoSettings instance while setting the trackSettings on HMSSDK
+
+```swift
+     hmsSDK = HMSSDK.build { sdk in
+            sdk.trackSettings = HMSTrackSettings(videoSettings: videoSettings, audioSettings: ...)
+            ...
+        }
+   ```
+   
+That is all you need to do to enable virtual background!
+
+   
+## How to enable and disable virtual background
+
+Hold on to a reference to the instance of HMSVirtualBackgroundPlugin and use activate and deactivate functions on it to enable/disable the virtual background.
+
+```swift
+     var virtualBackgroundPlugin: HMSVideoPlugin?
+     
+     func setupPlugins() {
+        virtualBackgroundPlugin = HMSVirtualBackgroundPlugin(backgroundImage: UIImage(named: "VB1"))
+        ...
+     }
+     
+     func toggleVB() {
+         let isVBActivated = UserDefaults.standard.bool(forKey: "virtualBackgroundPluginEnabled")
+     
+         if isVBActivated {
+             self?.interactor.virtualBackgroundPlugin?.deactivate()
+             UserDefaults.standard.set(false, forKey: "virtualBackgroundPluginEnabled")
+         }
+         else {
+             _ = self?.interactor.virtualBackgroundPlugin?.activate()
+             UserDefaults.standard.set(true, forKey: "virtualBackgroundPluginEnabled")
+         }
+     }
+   ```
+
+## How to blur background instead of replacing it with an image
+
+If you pass nil as the backgroudImage parameter while initilising HMSVirtualBackgroundPlugin, it will blur the background instead of replaicng it with an image. You can optionally pass blurRadius parameter to control the amount of blur in the background. Default blurRadius used is 10.
+
+```swift
+     let virtualBackgroundPlugin = HMSVirtualBackgroundPlugin(backgroundImage: nil, blurRadius: 20)
+   ```
+
+## Change Background
+
+You can use backgroundImage property on HMSVirtualBackgroundPlugin to set a new background image.
+
+```swift
+     let virtualBackgroundPlugin = HMSVirtualBackgroundPlugin(backgroundImage: UIImage(named: "VB1"))
+     virtualBackgroundPlugin.backgroundImage = UIImage(named: "VB2")
+   ```
+ 
+ ## Recommendations for supporting older devices
+ 
+Built-in Virtual background plugin uses Apple's segementation APIs and is supported on iOS 15 and onwards.
+In out testing, the built-in Virtual background plugin that uses Apple's segementation API performs well on iPhone 13, 12, 11, and XS. It may not perform well on iPhone X, 8, 7, 6 and older devices.
+
+If you would like to support iOS version lower than iOS 15 or want to support older devices, you can write a custom virtual background video plugin. For example you can use Google's MLKit's segementer for replcing background. Below is an example of writing a custom video plugin called 'GoogleSegementor'
+
+```swift
+class CustomVirtualBackground: HMSVideoPlugin {
+    
+    // MARK: Private
+    private static let DefaultFrameRate = 15
+
+    private lazy var rateLimiter: RateLimiter = {.init(limit: 1/Double(CustomVirtualBackground.DefaultFrameRate))}()
+    
+    private var coreBackgroundImage: CIImage?
+    private var blurRadius: CGFloat?
+    
+    private let hmsVideoPersonSegmentationHandler = HMSMLKitPersonSegmentationHandler()
+    
+    // MARK: Public
+    public var backgroundImage: UIImage? {
+        didSet {
+            frameProcessingQueue.sync {
+                if let cgImage = backgroundImage?.cgImage {
+                    coreBackgroundImage = CIImage(cgImage: cgImage)
+                }
+                else {
+                    coreBackgroundImage = nil
+                }
+            }
+        }
+    }
+    
+    public init(backgroundImage: UIImage?, blurRadius: NSNumber? = nil) {
+        self.backgroundImage = backgroundImage
+        self.blurRadius = blurRadius != nil ? CGFloat(blurRadius!.doubleValue) : nil
+        super.init()
+        // This defer is to make didSet get triggered for backgroundImage from init
+        defer {
+            self.backgroundImage = backgroundImage
+        }
+    }
+
+    public override func process(frame: CVPixelBuffer) -> CVPixelBuffer {
+        
+        hmsVideoPersonSegmentationHandler.replaceBackground(in: frame,
+                                                            with: coreBackgroundImage,
+                                                            blurRadius: blurRadius ?? 10,
+                                                            shouldSkip: {
+            return !rateLimiter.shouldFeed()
+        })
+    }
+}
+
+// Helper classes for custom video plugin above
+// MLKit is from GoogleMLKit/SegmentationSelfie
+import MLKit
+
+class HMSMLKitPersonSegmentationHandler {
+    
+    private static let defaultAttributes: [NSString: NSObject] = [
+        kCVPixelBufferPixelFormatTypeKey: NSNumber(value: kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange),
+        kCVPixelBufferIOSurfacePropertiesKey : [:] as NSDictionary
+    ]
+    
+    private var extent = CGRect.zero {
+        didSet {
+            guard extent != oldValue else { return }
+            pixelBufferPool = nil
+        }
+    }
+    
+    private var attributes: [NSString: NSObject] {
+        var attributes: [NSString: NSObject] = Self.defaultAttributes
+        attributes[kCVPixelBufferWidthKey] = NSNumber(value: Int(extent.width))
+        attributes[kCVPixelBufferHeightKey] = NSNumber(value: Int(extent.height))
+        return attributes
+    }
+    
+    private var _pixelBufferPool: CVPixelBufferPool?
+    private var pixelBufferPool: CVPixelBufferPool! {
+        get {
+            if _pixelBufferPool == nil {
+                var pixelBufferPool: CVPixelBufferPool?
+                CVPixelBufferPoolCreate(nil, nil, attributes as CFDictionary?, &pixelBufferPool)
+                _pixelBufferPool = pixelBufferPool
+            }
+            return _pixelBufferPool!
+        }
+        set {
+            _pixelBufferPool = newValue
+        }
+    }
+
+    private var ciContext = CIContext()
+    private var previousBuffer: CVImageBuffer?
+    
+    // MARK: Public
+    func replaceBackground(in framePixelBuffer: CVPixelBuffer, with backgroundImage: CIImage?, blurRadius: CGFloat, shouldSkip: ()->Bool) -> CVImageBuffer {
+        
+        guard !shouldSkip() else { return previousBuffer ?? framePixelBuffer }
+        
+        var info = CMSampleTimingInfo()
+        info.presentationTimeStamp = CMTime.zero
+        info.duration = CMTime.invalid
+        info.decodeTimeStamp = CMTime.invalid
+    
+        var formatDesc: CMFormatDescription? = nil
+        CMVideoFormatDescriptionCreateForImageBuffer(allocator: kCFAllocatorDefault, imageBuffer: framePixelBuffer, formatDescriptionOut: &formatDesc)
+        
+        var sampleBuffer: CMSampleBuffer? = nil
+        
+        CMSampleBufferCreateReadyWithImageBuffer(allocator: kCFAllocatorDefault,
+                                                 imageBuffer: framePixelBuffer,
+                                                 formatDescription: formatDesc!,
+                                                 sampleTiming: &info,
+                                                 sampleBufferOut: &sampleBuffer);
+        
+        let image = VisionImage(buffer: sampleBuffer!)
+        image.orientation = imageOrientation(
+          deviceOrientation: UIDevice.current.orientation,
+          cameraPosition: .front)
+        
+        var mask: SegmentationMask?
+        do {
+            mask = try segmenter.results(in: image)
+        } catch let error {
+            print("Failed to perform segmentation with error: \(error.localizedDescription).")
+            
+            return framePixelBuffer
+        }
+        
+        // Get the pixel buffer that contains the mask image.
+        guard let maskPixelBuffer = mask?.buffer else { return framePixelBuffer }
+        
+        // Blend the images and mask.
+        return blend(original: framePixelBuffer, mask: maskPixelBuffer, backgroundImage: backgroundImage, blurRadius: blurRadius) ?? framePixelBuffer
+    }
+    
+    let segmenter: Segmenter = {
+        let options = SelfieSegmenterOptions()
+        options.segmenterMode = .stream
+        options.shouldEnableRawSizeMask = true
+        
+        let segmenter = Segmenter.segmenter(options: options)
+        
+        return segmenter
+    }()
+    
+    func imageOrientation(
+      deviceOrientation: UIDeviceOrientation,
+      cameraPosition: AVCaptureDevice.Position
+    ) -> UIImage.Orientation {
+      switch deviceOrientation {
+      case .portrait:
+        return cameraPosition == .front ? .leftMirrored : .right
+      case .landscapeLeft:
+        return cameraPosition == .front ? .downMirrored : .up
+      case .portraitUpsideDown:
+        return cameraPosition == .front ? .rightMirrored : .left
+      case .landscapeRight:
+        return cameraPosition == .front ? .upMirrored : .down
+      case .faceDown, .faceUp, .unknown:
+        return .up
+      }
+    }
+          
+    
+    // MARK: Private
+    
+    private func blend(original framePixelBuffer: CVPixelBuffer, mask maskPixelBuffer: CVPixelBuffer, backgroundImage: CIImage? = nil, blurRadius: CGFloat) -> CVImageBuffer? {
+        
+        var imageBuffer: CVImageBuffer?
+        
+        let originalImage = CIImage(cvPixelBuffer: framePixelBuffer)
+
+        var maskImage = CIImage(cvPixelBuffer: maskPixelBuffer)
+        
+        // Scale the mask image to fit the bounds of the video frame.
+        scaleToFit(image: &maskImage, originalImage: originalImage)
+        
+        // Create a clear colored background image.
+        var background: CIImage
+        
+        if let backgroundImage = backgroundImage {
+            background = backgroundImage.oriented(.left)
+        }
+        else {
+            background = originalImage.clampedToExtent()
+                .applyingFilter(
+                    "CIBokehBlur",
+                    parameters: [
+                        kCIInputRadiusKey: blurRadius,
+                    ]
+                )
+                .cropped(to: originalImage.extent)
+        }
+        
+        // Scale the background image to fit the bounds of the video frame.
+        scaleToFit(image: &background, originalImage: originalImage)
+        
+        // Blend the original, background, and mask images.
+        let blendFilter = CIFilter.blendWithRedMask()
+        blendFilter.inputImage = originalImage
+        blendFilter.backgroundImage = background
+        blendFilter.maskImage = maskImage
+
+        // Redner image to a new buffer.
+        if let finalImage = blendFilter.outputImage {
+            
+            imageBuffer = renderToBuffer(image: finalImage)
+        }
+        
+        previousBuffer = imageBuffer
+        
+        return imageBuffer
+    }
+    
+    private func renderToBuffer(image: CIImage) -> CVImageBuffer? {
+        
+        var imageBuffer: CVImageBuffer?
+        
+        extent = image.extent
+        
+        CVPixelBufferPoolCreatePixelBuffer(nil, pixelBufferPool, &imageBuffer)
+
+        if let imageBuffer = imageBuffer {
+            ciContext.render(image, to: imageBuffer)
+        }
+        
+        return imageBuffer
+    }
+    
+    private func scaleToFit(image: inout CIImage, originalImage: CIImage) {
+        // Scale the image to fit the bounds of the video frame.
+        let scaleX = originalImage.extent.width / image.extent.width
+        let scaleY = originalImage.extent.height / image.extent.height
+        image = image.transformed(by: .init(scaleX: scaleX, y: scaleY))
+    }
+}
+
+class RateLimiter {
+   private let limit: TimeInterval
+   private var lastExecutedAt: Date?
+   
+   init(limit: TimeInterval) {
+       self.limit = limit
+   }
+   
+   func shouldFeed() -> Bool {
+       let now = Date()
+       let timeInterval = now.timeIntervalSince(lastExecutedAt ?? .distantPast)
+       
+       if timeInterval > limit {
+           lastExecutedAt = now
+           
+           return true
+       }
+       
+       return false
+   }
+}
+   ```

@@ -31,9 +31,14 @@ interface HMSVideoPlugin {
   getName(): string;
 
   /**
-   * This function will be called before the call to init, it is used to check whether the plugin supports current
-   * OS and device or not. An error will be thrown back to the user if they try to use an unsupported plugin.
-   */
+    * This function will be called before the call to init, it is used to check whether the plugin supports current
+    * OS and device or not. An error will be thrown back to the user if they try to use an unsupported plugin.
+    */
+  checkSupport(): HMSPluginSupportResult;
+
+  /**
+    * @deprecated. Will be deleted in future updates. Use checkSupport instead.
+    */
   isSupported(): boolean;
 
   /**
@@ -76,13 +81,25 @@ interface HMSVideoPlugin {
 }
 
 /**
- * Specifies the type of the plugi, a transforming plugin will get an output canvas to give the resulting
+ * Specifies the type of the plugin, a transforming plugin will get an output canvas to give the resulting
  * transformation. While an analyzing plugin will only be passed the input canvas.
  */
 export enum HMSVideoPluginType {
   TRANSFORM = 'TRANSFORM',
   ANALYZE = 'ANALYZE',
 }
+
+export interface HMSPluginSupportResult {
+  isSupported: boolean;
+  errType?: HMSPluginUnsupportedTypes;
+  errMsg?: string;
+}
+
+export enum HMSPluginUnsupportedTypes {
+  PLATFORM_NOT_SUPPORTED = 'PLATFORM_NOT_SUPPORTED',
+  DEVICE_NOT_SUPPORTED = 'DEVICE_NOT_SUPPORTED',
+}
+
 ```
 
 ## Adding and Removing Plugins
@@ -93,8 +110,12 @@ Once a plugin implementation is ready, it can be added and removed from local pe
 <Tab id='add-remove-plugin-0'>
 
 ```js
+
+import { hmsActions } from './hms';
+
 const myPlugin = new MyCustomPlugin();
-if (myPlugin.isSupported()) {
+const pluginSupport = hmsActions.validateAudioPluginSupport(myPlugin);
+if (myPlugin.isSupported) {
     // myPlugin.init(); // optional, recommended if plugin implements it, you can show a loader here in the UI
     const isPluginAdded = hmsStore.getState(
         selectIsLocalVideoPluginPresent(myPlugin.getName());
@@ -104,6 +125,10 @@ if (myPlugin.isSupported()) {
     } else {
         hmsActions.removePluginFromVideoTrack(myPlugin);
     }
+}
+else{
+     const err = pluginSupport.errMsg;
+     console.error(err);
 }
 ```
 
@@ -129,8 +154,10 @@ class GrayscalePlugin {
     return "grayscale-plugin";
   }
 
-  isSupported() {
-    return true;
+  checkSupport() {
+    let result = {} as HMSPluginSupportResult;
+    result.isSupported = true;
+    return result;
   }
 
   async init() {}

@@ -1,0 +1,166 @@
+---
+title: Noise Suppression
+nav: 7.1
+---
+
+<Note type='warning'>
+    This feature is still in Beta. To know more or report any issues, feel free to reach out to us over <a href={'https://discord.com/invite/kGdmszyzq2'}>Discord</a>.
+</Note>
+
+## Introduction
+Background noise always rears its ugly head while live streaming outside, on site, or in any untreated setting. Sounds can ruin anyone's listening or watching experience, whether it's from passing cars, construction noise, or mechanical whirs.
+Noise suppression plugin helps in eliminating one’s background sound. This is trained for removing babble noise, car noise and street noise.
+This guide provides an overview of usage of the noise suppression plugin of 100ms and below is the demo of it.
+
+### Original audio
+
+<audio controls>
+  <source src="/docs/audio/testMusic.wav" type="audio/ogg"/>
+</audio>
+
+### Denoised audio
+
+<audio controls>
+  <source src="/docs/audio/testdenoisedMusic.wav" type="audio/ogg"/>
+</audio>
+
+<br/>
+<br/>
+
+## Supported Devices/SampleRate
+
+-   Noise suppression is currently only supported on web in Chrome, Brave and Edge browsers.
+-   Noise suppression has limited support on Firefox with bluetooth devices.
+
+## Pre-requisites
+
+**Get the 100ms NoiseSuppression Package**
+
+```bash
+npm install --save @100mslive/hms-noise-suppression
+```
+
+## Import plugin
+
+```jsx
+import { HMSNoiseSuppressionPlugin } from '@100mslive/hms-noise-suppression';
+```
+
+## Instantiate Noise Suppression
+
+This accepts durationInMs as a parameter
+- `durationInMs` - (optional)It maps to the audio samples bufferSize we need to process, by default we are using 80ms equivalent to bufferSize=4096
+
+```jsx
+const noiseSuppressionPlugin = new HMSNoiseSuppressionPlugin(durationInMs);
+```
+
+## Interfaces
+
+### Check if plugin is supported
+
+validateAudioPluginSupport can be used to check if the browser/ input device is supported or not.
+This accepts plugin instance as a parameter
+It will return True in case of plugin is supported and return error message if it is not.
+
+```jsx
+import { hmsActions } from './hms';
+
+const pluginSupport = hmsActions.validateAudioPluginSupport(noiseSuppressionPlugin);
+if (pluginSupport.isSupported){
+     console.log('Plugin is supported');
+}
+else{
+     const err = pluginSupport.errMsg;
+     console.error(err);
+}
+```
+
+### Init(Optional)
+
+Init is used to load model of background noise suppression for the first time.
+It takes on an average ..50.. milliseconds.<br/>
+Calling init is handled internally by SDK if not done by user, in this case addPlugin call will
+take around 50 milliseconds for the first time and then less than 1 milliseconds in the subsequent calls.
+Check [this section](#start-and-stop-noise-suppression) for addPlugin API usage
+
+```jsx
+noiseSuppressionPlugin.init();
+```
+
+### Add and Remove Background Noise Suppression
+
+<Tabs id="plugin-code" items={['JavaScript', 'React']} />
+
+<Tab id='plugin-code-0'>
+
+```js
+import { hmsActions, hmsStore } from './hms';
+import { selectIsLocalAudioPluginPresent } from '@100mslive/hms-video-store';
+
+async function toggleNoiseSuppression() {
+  const isNoiseSuppressed = hmsStore.getState(selectIsLocalAudioPluginPresent(noiseSuppressionPlugin.getName()));
+  try {
+    if (!isNoiseSuppressed) {
+      // add background noise suppression
+      await hmsActions.addPluginToAudioTrack(noiseSuppressionPlugin);
+    } else {
+      // remove background noise suppression
+      await hmsActions.removePluginFromAudioTrack(noiseSuppressionPlugin);
+    }
+  } catch (err) {
+    console.log('noise suppression failure - ', isNoiseSuppressed, err);
+  }
+}
+```
+
+</Tab>
+
+<Tab id='plugin-code-1'>
+
+```jsx
+import {
+  useHMSStore,
+  useHMSActions,
+  selectIsLocalAudioPluginPresent
+} from '@100mslive/hms-video-react';
+
+function NoiseSuppression() {
+  const isNoiseSuppressed = useHMSStore(selectIsLocalAudioPluginPresent(noiseSuppressionPlugin.getName());
+  const hmsActions = useHMSActions();
+
+  const toggleNoiseSuppression = async() => {
+   try {
+    if (!isNoiseSuppressed) {
+      // add background noise suppression
+      await hmsActions.addPluginToAudioTrack(noiseSuppressionPlugin);
+    } else {
+      // remove background noise suppression
+      await hmsActions.removePluginFromAudioTrack(noiseSuppressionPlugin);
+    }
+  } catch (err) {
+    console.log('noise suppression failure - ', isNoiseSuppressed, err);
+  }
+
+  return <Button onClick={toggleNoiseSuppression} />;
+}
+```
+
+</Tab>
+
+### Enable/disable background noise suppression
+
+The function `setEnabled` can be used to enable/disable background noise suppression without removing the plugin from audio track.
+It accepts boolean as a parameter.
+
+```jsx
+try {
+  noiseSuppressionPlugin.setEnabled(true); // true/false
+} catch (err) {
+  console.log("Failed to suppress noise", err);
+}
+```
+
+
+
+

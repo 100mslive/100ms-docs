@@ -6,11 +6,153 @@ description: Release Notes for 100ms JavaScript SDK
 
 ## Latest Versions
 
-| Package                    | Version                                                                                                                                |
-| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| @100mslive/hms-video       | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video)             |
-| @100mslive/hms-video-react | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-react.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-react) |
-| @100mslive/hms-video-store | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-store.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-store) |
+| Package                                | Version                                                                                                                                |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| @100mslive/hms-video-store             | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-store.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-store) |
+| @100mslive/react-sdk                   | [![npm version](https://badge.fury.io/js/%40100mslive%2Freact-sdk.svg)](https://badge.fury.io/js/%40100mslive%2Freact-sdk)             |
+| @100mslive/hms-video-react(deprecated) | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-react.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-react) |
+
+## 2022-06-14
+
+Released: `@100mslive/hms-video-store@0.3.2`, `@100mslive/react-sdk@0.1.2`, `@100mslive/hms-video-react@0.4.2`
+
+Added:
+-   Codec in track stats
+
+Fixed:
+-   System denied permission error for camera and microphone
+-   Duplicate tile in server recording on role change from AV to audio to AV
+-   Retry in join
+
+
+## 2022-06-08
+
+Released: `@100mslive/hms-video-store@0.3.1`, `@100mslive/react-sdk@0.1.1`, `@100mslive/hms-video-react@0.4.1`
+
+Fixed:
+
+-   Analytics events
+-   Reconnected notification not being triggered in some cases
+
+## 2022-05-31
+
+Released: `@100mslive/hms-video-store@0.3.0`, `@100mslive/react-sdk@0.1.0`, `@100mslive/hms-video-react@0.4.0`
+
+Fixed:
+
+-   Video freezing when same video track is played in multiple video elements and one of them is removed
+-   Incorrect device showing in device selection when initially joined as muted and then unmuted.
+
+Breaking:
+
+-   All the requests will have the sender as optional now.
+    Examples:
+    -   In chat message object, message.sender is optional
+    -   in unmute request, request.requestedBy is optional
+
+> NOTE: if you are planning to use api's to send chat messages, update metadata or change roles, the sdk version should be minimun at this version.
+
+## 2022-05-11
+
+Released: `@100mslive/hms-video-store@0.2.100`, `@100mslive/react-sdk@0.0.17`, `@100mslive/hms-video-react@0.3.128`
+
+-   Upgrade to React 18
+-   Added support for server-side subscribe degradation
+-   Fix device list failing to be populated in preview on device error
+-   Fix inconsistent peer list in preview
+-   Fix auxiliary regular tracks not having their own video tiles
+-   Fix token errors - made terminal
+
+## 2022-04-29
+
+Released: `@100mslive/hms-video-store@0.2.98`, `@100mslive/react-sdk@0.0.15`, `@100mslive/hms-video-react@0.3.126`
+
+-   Added support for resolutions in rtmp.
+-   Added methods to set your app data in 100ms store. Refer docs [here](../features/store-appdata)
+-   Exposed Styleable Pagination component from react-ui
+
+## 2022-04-21
+
+Released: `@100mslive/hms-video-store@0.2.96`, `@100mslive/react-sdk@0.0.13`, `@100mslive/hms-video-react@0.3.125`
+
+-   Add reconnections due to internet issues in preview phase
+-   Add treeshaking for react-sdk and react-ui
+-   Fix race condition when leave is called immediately after join before join could complete.
+-   Fix race condition where preview complete could be notified before join was ready to be called.
+-   Support for server side degradation
+-   Fix bug in useVideo not leading to proper detach on unmounting
+
+## 2022-03-29
+
+Released: `@100mslive/hms-video-store@0.2.94`, `@100mslive/react-sdk@0.0.11`, `@100mslive/hms-video-react@0.3.124`
+
+-   Get Connection quality score to show network bar in UI, docs [here](../advanced-features/connection-quality)
+-   Measure internet quality score for local peer in preview
+-   Errors occured during screenshare(permission not given etc.) will be sent via notification as well now in
+    addition to being thrown on the method call
+-   `hmsActions.refreshDevices()` to refresh the device list from UI side. This can be done for e.g. if the UI is
+    taking control of asking user permission.
+-   server timestamp for local peer's messages
+-   changed interface to check plugin's support
+-   Significant improvements and refactoring of our [public sample app](https://github.com/100mslive/100ms-web)
+
+## 2022-03-21
+
+Released: `@100mslive/hms-video-store@0.2.93`, `@100mslive/react-sdk@0.0.10`, `@100mslive/hms-video-react@0.3.123`
+
+Fixed:
+
+-   Redundant events sent to analytics
+
+## 2022-03-17
+
+Released: `@100mslive/hms-video-store@0.2.91`, `@100mslive/react-sdk@0.0.8`, `@100mslive/hms-video-react@0.3.121`
+
+Added:
+
+-   `useCustomEvent` hook in react-sdk
+-   Subscribing to specific notification types
+-   HLS recording status on joining room
+-   Additional fields in disconnection events
+-   Video Only mode for screenshare
+-   `joinedAt` in HMSPeer
+
+Fixed:
+
+-   Fix turning on recording with hls
+
+## 2022-02-24
+
+Released: `@100mslive/hms-video-store@0.2.90`, `@100mslive/react-sdk@0.0.7`, `@100mslive/hms-video-react@0.3.119`
+
+Added:
+
+-   PeerList in preview
+-   HLS recording status will be available
+
+Breaking(react-sdk):
+
+-   input/output interfaces of `useVideo` has been changed. check [react quickstart](../guides/react-quickstart) for reference.
+
+## 2022-02-04
+
+Released: `@100mslive/hms-video-store@0.2.89`, `@100mslive/react-sdk@0.0.6`, `@100mslive/hms-video-react@0.3.116`
+
+Added:
+
+-   startedAt fields for rtmp and recording
+-   A exception will be thrown when preview/join is called if there is no WebRTC support now(for e.g. disable via an extension)
+-   APIs to get WebRTC Stats for the call
+-   A new `@100mslive/react-sdk` beta package for primitive hooks to build React UI components
+-   A new disconnecting room state which happens from the moment leave is clicked till it's successful
+
+Fixed:
+
+-   Fix for wrong video mute state in a corner case after high frequency updates
+-   Fix for vb-background video overlaying
+-   VB not enabling in firefox if turned on in muted state
+-   Fixes related to device settings remembering in muted state
+-   Distorted audio when both noise suppression and virtual background are on
 
 ## 2022-01-14
 

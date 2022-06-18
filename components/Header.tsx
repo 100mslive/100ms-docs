@@ -61,7 +61,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
         }
         // @ts-ignore
         if (router.query.slug[0] === 'flutter') {
-            return `/api-reference/flutter/v2/hmssdk_flutter-library.html`;
+            return `https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html`;
         }
         // @ts-ignore
         if (router.query.slug[0] === 'android') {
@@ -85,9 +85,9 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
     return (
         <div className="ctx">
             <div className="head-left">
-                <a href="/">
+                <a href="/docs/javascript/v2/foundation/basics">
                     <div className="logo-ctx">
-                        <img width={36} src="/logo.svg" alt="100ms Logo" />
+                        <img width={36} src="/docs/logo.svg" alt="100ms Logo" />
                         <p className="company">
                             100ms<span>.docs</span>
                         </p>
@@ -100,7 +100,6 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     <button className={!isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
                         <Link href={`/${currentTech}/`}> Docs</Link>
                     </button>
-
                     <span style={{ marginRight: '1rem' }} />
                     {/* @ts-ignore */}
                     {isNonApiRef ? null : (

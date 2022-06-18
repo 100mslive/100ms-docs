@@ -21,11 +21,16 @@ a `variant`.
 
 You can call `hmsActions.startHLSStreaming` with a `hlsConfig` having an array of such variants.
 
+Additionally you can also start recording by passing in a recording config with below fields - 
+1. `singleFilePerLayer`: if the desired end result is a mp4 file per HLS layer, false by default
+2. `hlsVod`: if the desired end result is a zip of m3u8 and all the chunks, false by default
+
 ```js
 async startHLS() {
     const params = {
         variants: [{meetingURL: "", metadata: "landscape"}]
     };
+    params.recording = {singleFilePerLayer: true, hlsVod: false}; // to enable recording
     try {
         await hmsActions.startHLSStreaming(params);
     } catch (err) {
@@ -60,7 +65,9 @@ The `selectHLSState` selector can be used to know if HLS is currently running, a
 function updateHLSState(hlsState) {
     console.log("is hls streaming going on - ", hlsState.running);
     if (hlsState.running) {
-        console.log("hls url - ", hlsState.variants[0]?.url)
+        console.log("hls url - ", hlsState.variants[0]?.url);
+    } else if (hlsState.error) {
+        console.error("error in hls streaming - ", hlsState.error); 
     }
 }
 
@@ -77,6 +84,8 @@ function HLSState() {
     console.log("is hls streaming going on - ", hlsState.running);
     if (hlsState.running) {
         console.log("hls url - ", hlsState.variants[0]?.url)
+    } else if (hlsState.error) {
+        console.error("error in hls streaming - ", hlsState.error); 
     }
     return null;
 }
@@ -160,6 +169,7 @@ see the hls stream.
 ## Tips
 
 * If you're using the dashboard webapp from 100ms, please make sure to use a role which doesn't have publish permissions for beam tile to not show up.
+  The meeting url can be edited in the streaming/recording popup to join with a recording specific role configured as such.
 * If using your own webapp, do put in place retries for API calls like tokens etc. just in case any call fails. As human users we're
 used to reloading the page in these scenarios which is difficult to achieve in the automated case.
 * Make sure to not disable the logs for the passed in meeting URL. This will allow for us to have more visibility into the room, refreshing the page

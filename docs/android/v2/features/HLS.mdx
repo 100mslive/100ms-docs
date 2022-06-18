@@ -1,5 +1,5 @@
 ---
-title: HLS Streaming
+title: HLS Streaming / Recording
 nav: 13.2
 ---
 
@@ -18,7 +18,7 @@ it must allow access without any user level interaction. In the future it'll be 
 
 For this purpose the API supports taking in an array, although currently only the first element of the array will be used. To distinguish between multiple urls an additional field `metadata` can be optionally passed. The `meetingURL` and `metadata` are clubbed together to form what we'll call a `variant`.
 
-You can call `hmsSDK.startHLSStreaming` with a `HMSHLSConfig` having an array of such variants.
+You can call `hmsSDK.startHLSStreaming` with a `HMSHLSConfig` having an array of such variants. `HMSHlsRecordingConfig` is optional.
 
 <Tabs id="hls" items={['Kotlin', 'Java']} />
 
@@ -60,7 +60,7 @@ public void hlsStreaming(String meetingUrl, HMSSDK hmssdk) {
     ArrayList<HMSHLSMeetingURLVariant> variantList = new ArrayList<>();
     variantList.add(meetingURLVariant1);
 
-    HMSHLSConfig hlsConfig = new HMSHLSConfig(variantList);
+    HMSHLSConfig hlsConfig = new HMSHLSConfig(variantList, null);
 
     hmssdk.startHLSStreaming(hlsConfig, new HMSActionResultListener() {
         @Override
@@ -75,6 +75,51 @@ public void hlsStreaming(String meetingUrl, HMSSDK hmssdk) {
     });
 }
 ````
+
+</Tab>
+
+
+### Optional HLS Recording
+Optionally to record the HLS stream you may specify an `HMSHlsRecordingConfig` within the `HMSHLSConfig`.
+
+Here's what the `HMSHlsRecordingConfig` looks like
+
+```kotlin
+
+data class HMSHlsRecordingConfig(
+    val singleFilePerLayer : Boolean,
+    val videoOnDemand : Boolean
+)
+
+```
+
+1. `singleFilePerLayer` if the desired end result is a mp4 file per HLS layer, false by default.
+2. `videoOnDemand` if the desired end result is a zip of m3u8 and all the chunks, false by default.
+
+Here's what it looks like to call for recording configs.
+
+<Tabs id="hls-recording-config" items={['Kotlin', 'Java']} />
+
+<Tab id='hls-recording-config-0'>
+
+```kotlin
+// Optional recording config
+val hlsRecordingConfig = HMSHlsRecordingConfig(false, false)
+
+val hlsConfig = HMSHLSConfig(listOf(meetingUrlVariant), hlsRecordingConfig)
+```
+
+</Tab>
+
+<Tab id='hls-recording-config-1'>
+
+```java
+// Optional recording config
+HMSHlsRecordingConfig recordingConfig = new HMSHlsRecordingConfig(false, false);
+
+HMSHLSConfig hlsConfig = new HMSHLSConfig(variantList, recordingConfig);
+
+```
 
 </Tab>
 
@@ -144,7 +189,7 @@ data class HMSHLSVariant(
         val hlsStreamUrl: String?,
         val meetingUrl: String?,
         val metadata: String?,
-        startedAt: Long?
+        val startedAt: Long?
 )
 ```
 

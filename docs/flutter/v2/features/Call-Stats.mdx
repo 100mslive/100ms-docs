@@ -1,0 +1,133 @@
+---
+title: Call Stats
+nav: 15.1
+---
+
+Sometimes you need a way to capture certain metrics related to a call. This may be helpful if you want to tailor the experience to your users or debug issues. Typical metrics of interest are audio/video bitrate, round trip time, total consumed bandwidth and packet loss. 100ms SDK provides this data via dedicated delegate callbacks found in `HMSUpdateListener`. These will be called with a fixed interval of one second after a room has been joined. You can get stats on a per track basis ( `onRemoteAudioStats`) or as an overall summary (`onRTCStats`) 
+
+Here is the full list of callbacks:
+
+```dart
+/// This callback provides stats for a local audio track.
+void onLocalAudioStats({required HMSLocalAudioStats hmsLocalAudioStats, required HMSLocalAudioTrack track, required HMSPeer peer})
+
+/// This callback provides stats for a local video track.
+void onLocalVideoStats({required HMSLocalVideoStats hmsLocalVideoStats, required HMSLocalVideoTrack track, required HMSPeer peer})
+
+/// This callback provides stats for a remote audio track.
+ void onRemoteAudioStats({required HMSRemoteAudioStats hmsRemoteAudioStats, required HMSRemoteAudioTrack track, required HMSPeer peer})
+
+/// This callback provides stats for a remote video track.
+  void onRemoteVideoStats({required HMSRemoteVideoStats hmsRemoteVideoStats, required HMSRemoteVideoTrack track, required HMSPeer peer})
+
+/// This callback provides combined stats for the session.
+void onRTCStats({required HMSRTCStatsReport hmsrtcStatsReport})
+```
+
+## HMSRTCStatsReport
+
+This class will contain the combined stats for the room.
+
+```dart
+class HMSRTCStats {
+  // Total bytes sent in the current session.
+  int bytesSent;
+  // Total bytes received in the current session.
+  int bytesReceived;
+  // Total packets received in the current session.
+  int packetsReceived;
+  // Total packets lost in the current session.
+  int packetsLost;
+  // Total outgoing bitrate observed since previous report.
+  double bitrateSent;
+  // Total incoming bitrate observed since previous report in Kb/s.
+  double bitrateReceived;
+  // Average round trip time observed since previous report in Kb/s.
+  double roundTripTime;
+}
+
+class HMSRTCStatsReport {
+  // Combined audio + video values
+  HMSRTCStats combined;
+  // Summary of all audio tracks
+  HMSRTCStats audio;
+  // Summary of all video tracks
+  HMSRTCStats video;
+}
+```
+
+## HMSLocalAudioStats
+
+This class contains stats related to local audio track.
+
+```dart
+class HMSLocalAudioStats {
+	// Round trip time observed since previous report.
+	double roundTripTime;
+	// Total bytes sent by this track in the current session.
+	int bytesSent;
+	// Outgoing bitrate of this track observed since previous report in Kb/s.
+  double bitrate;
+}
+```
+
+## HMSLocalVideoStats
+
+This class contains stats related to local video track.
+
+```dart
+class HMSLocalVideoStats {
+	// Round trip time observed since previous report.
+  double roundTripTime;
+	// Total bytes sent by this track in the current session.
+	int bytesSent;
+	// Outgoing bitrate of this track observed since previous report in Kb/s.
+  double bitrate;
+	// Resolution of video frames being sent.
+	double frameRate;
+	// Frame rate of video frames being sent (FPS).
+  HMSVideoResolution resolution;
+}
+```
+
+## HMSRemoteAudioStats
+
+This class contains stats related to remote audio track.
+
+```dart
+class HMSRemoteAudioStats {
+	// Packet Jitter measured in seconds for this track. Calculated as defined in section 6.4.1. of RFC3550.
+  double jitter;
+	// Total bytes received by this track in the current session.
+  int bytesReceived;
+	// Incoming bitrate of this track observed since previous report in Kb/s.
+  double bitrate;
+	// Total packets received by this track in the current session.
+  int packetsReceived;
+	// Total packets lost by this track in the current session.
+	int packetsLost;
+}
+```
+
+## HMSRemoteVideoStats
+
+This class contains stats related to remote video track.
+
+```dart
+class HMSRemoteVideoStats {
+	// Packet Jitter measured in seconds for this track. Calculated as defined in section 6.4.1. of RFC3550.
+  double jitter;
+	// Total bytes received by this track in the current session.
+  int bytesReceived;
+	// Incoming bitrate of this track observed since previous report in Kb/s.
+	double bitrate;
+	// Total packets received by this track in the current session.
+  int packetsReceived;
+	// Total packets lost by this track in the current session.
+	int packetsLost;
+	// Resolution of video frames being received.
+	HMSVideoResolution resolution;
+	// Frame rate of video frames being received (FPS).
+	double frameRate;
+}
+```

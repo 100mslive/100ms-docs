@@ -1,0 +1,246 @@
+{
+	"info": {
+		"_postman_id": "ce829845-37e6-4e60-aa68-0e02cd947186",
+		"name": "Session Details APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Sessions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TOKEN}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{HOST}}/v2/sessions",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"v2",
+						"sessions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sessions By ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://qa-in2.100ms.live/v2/sessions?id=620356d36f71d0bacbec6faf",
+					"protocol": "https",
+					"host": [
+						"qa-in2",
+						"100ms",
+						"live"
+					],
+					"path": [
+						"v2",
+						"sessions"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "620356d36f71d0bacbec6faf"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sessions By Room",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{HOST}}/v2/sessions?room_id=60f2848b42a997a1ff49c5ca",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"v2",
+						"sessions"
+					],
+					"query": [
+						{
+							"key": "room_id",
+							"value": "60f2848b42a997a1ff49c5ca"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sessions By active",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{HOST}}/v2/sessions?room_id=60f2848b42a997a1ff49c5ca&active=false",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"v2",
+						"sessions"
+					],
+					"query": [
+						{
+							"key": "room_id",
+							"value": "60f2848b42a997a1ff49c5ca"
+						},
+						{
+							"key": "active",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sessions in a range",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{AUTH_TOKEN}}",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{HOST}}/v2/sessions?after=2022-02-09T05:32:19.825Z&before=2022-02-09T05:53:23.375Z",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"v2",
+						"sessions"
+					],
+					"query": [
+						{
+							"key": "after",
+							"value": "2022-02-09T05:32:19.825Z"
+						},
+						{
+							"key": "before",
+							"value": "2022-02-09T05:53:23.375Z"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login using email password",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{EMAIL}}\",\n    \"password\": \"{{PASSWORD}}\",\n    \"expiry\": 8640000\n}"
+				},
+				"url": {
+					"raw": "{{HOST}}/api/v2/auth/login",
+					"host": [
+						"{{HOST}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

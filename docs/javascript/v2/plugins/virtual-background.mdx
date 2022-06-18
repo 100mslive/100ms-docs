@@ -3,6 +3,10 @@ title: Virtual Background
 nav: 7.01
 ---
 
+<Note type='warning'>
+    This feature is still in Beta. To know more or report any issues, feel free to reach out to us over <a href={'https://discord.com/invite/kGdmszyzq2'}>Discord</a>.
+</Note>
+
 ## Introduction
 
 Virtual background plugin helps in customising one’s background. The customising options are blurring the background or replacing it with a static image.
@@ -39,9 +43,9 @@ import HMSVirtualBackgroundPlugin from '@100mslive/hms-virtual-background';
 
 This accepts background as a parameter, It can be of 3 types:
 
--  `blur` - String - This will set the background to blur
--  `image` - HTMLImageElement - This will replace the background to the image provide
--  `none` - String - This will remove the background effect from the video
+-   `blur` - String - This will set the background to blur
+-   `image` - HTMLImageElement - This will replace the background to the image provide
+-   `none` - String - This will remove the background effect from the video
 
 ```jsx
 // background : {'blur' | image | 'none'}
@@ -52,14 +56,19 @@ const virtualBackground = new HMSVirtualBackgroundPlugin(background : {'blur' | 
 
 ### Check if plugin is supported
 
-isSupported can be used to check if the browser is supported or not.
-It will return True/False based on browser.
+validateVideoPluginSupport can be used to check if the browser/input device is supported or not.
+It will return True in case of plugin is supported and return error message if it is not.
 
 ```jsx
-if (virtualBackground.isSupported()) {
-  console.log('Platform is supported');
+
+import { hmsActions } from './hms';
+
+const pluginSupport = hmsActions.validateVideoPluginSupport(virtualBackground);
+if (pluginSupport.isSupported) {
+    console.log('Platform is supported');
 } else {
-  console.log('Platform not supported');
+    const err = pluginSupport.errMsg;
+    console.error(err);
 }
 ```
 
@@ -94,20 +103,22 @@ import { hmsActions, hmsStore } from './hms';
 import { selectIsLocalVideoPluginPresent } from '@100mslive/hms-video-store';
 
 async function toggleVB() {
-  const isVirtualBackgroundEnabled = hmsStore.getState(selectIsLocalVideoPluginPresent(virtualBackground.getName()));
-  try {
-    if (!isVirtualBackgroundEnabled) {
-      // Recommended value
-      const pluginFrameRate = 15;
-      // add virtual background
-      await hmsActions.addPluginToVideoTrack(virtualBackground, pluginFrameRate);
-    } else {
-      // remove virtual background
-      await hmsActions.removePluginFromVideoTrack(virtualBackground);
+    const isVirtualBackgroundEnabled = hmsStore.getState(
+        selectIsLocalVideoPluginPresent(virtualBackground.getName())
+    );
+    try {
+        if (!isVirtualBackgroundEnabled) {
+            // Recommended value
+            const pluginFrameRate = 15;
+            // add virtual background
+            await hmsActions.addPluginToVideoTrack(virtualBackground, pluginFrameRate);
+        } else {
+            // remove virtual background
+            await hmsActions.removePluginFromVideoTrack(virtualBackground);
+        }
+    } catch (err) {
+        console.log('virtual background failure - ', isVirtualBackgroundEnabled, err);
     }
-  } catch (err) {
-    console.log('virtual background failure - ', isVirtualBackgroundEnabled, err);
-  }
 }
 ```
 
@@ -116,31 +127,29 @@ async function toggleVB() {
 <Tab id='plugin-code-1'>
 
 ```jsx
-import {
-  useHMSStore,
-  useHMSActions,
-  selectIsLocalVideoPluginPresent
-} from '@100mslive/hms-video-react';
+import { useHMSStore, useHMSActions, selectIsLocalVideoPluginPresent } from '@100mslive/react-sdk';
 
 function VirtualBackground() {
-  const isVirtualBackgroundEnabled = useHMSStore(selectIsLocalVideoPluginPresent(virtualBackground.getName()));
-  const hmsActions = useHMSActions();
+    const isVirtualBackgroundEnabled = useHMSStore(
+        selectIsLocalVideoPluginPresent(virtualBackground.getName())
+    );
+    const hmsActions = useHMSActions();
 
-  const toggleVB = async() => {
-    try {
-      if (!isVirtualBackgroundEnabled) {
-        // Recommended value
-        const pluginFrameRate = 15;
-        await hmsActions.addPluginToVideoTrack(virtualBackground, pluginFrameRate);
-      } else {
-        await hmsActions.removePluginFromVideoTrack(virtualBackground);
-      }
-    } catch (err) {
-      console.log('virtual background failure - ', isVirtualBackgroundEnabled, err);
-    }
-  }
+    const toggleVB = async () => {
+        try {
+            if (!isVirtualBackgroundEnabled) {
+                // Recommended value
+                const pluginFrameRate = 15;
+                await hmsActions.addPluginToVideoTrack(virtualBackground, pluginFrameRate);
+            } else {
+                await hmsActions.removePluginFromVideoTrack(virtualBackground);
+            }
+        } catch (err) {
+            console.log('virtual background failure - ', isVirtualBackgroundEnabled, err);
+        }
+    };
 
-  return <Button onClick={toggleVB} />;
+    return <Button onClick={toggleVB} />;
 }
 ```
 
@@ -167,9 +176,8 @@ try{
 `pluginFrameRate`- number - pluginFrameRate helps in controlling the performance and experience of Virtual background plugin.
 pluginFrameRate translates to the number of frames for which background is detected. Higher value will use more resources
 (cpu/memory/battery), while making the virtual background experience smooth. Lower value will be generous on resources,
- while lowering the virtual background smoothness. Recommended value is 15. Values higher than this will not significantly
- improve virtual background smoothness but will be heavy on resources. For lower end devices value can be in the range of 7-10.
-
+while lowering the virtual background smoothness. Recommended value is 15. Values higher than this will not significantly
+improve virtual background smoothness but will be heavy on resources. For lower end devices value can be in the range of 7-10.
 
 ## Recommendations For Better User Experience
 
