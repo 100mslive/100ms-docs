@@ -1,6 +1,6 @@
 ---
 title: Mute / Unmute
-nav: 8
+nav: 3.04
 ---
 
 Mute is something that applies to both audio and video.
@@ -30,4 +30,24 @@ hmsSDK.stopCapturing();
 
 hmsSDK.startCapturing();
 ````
- 
+
+### Setting video and mic off while joining
+
+If you want to join room with audio and video off. you can follow this
+In `onJoin` you can call `switchAudio` and `switchVideo`.if you want both audio and video to be off while joining.
+
+```dart
+
+    HMSSDK hmssdk = new HMSSDK();
+
+    @override
+    void onJoin({required HMSRoom room}) async {
+
+        this.isLocalPeerVideoOn = false;
+        this.isLocalPeerMicOn = false;
+
+        hmssdk.switchAudio(isOn: true);
+        hmssdk.switchVideo(isOn: true);
+    }
+
+```
