@@ -7,7 +7,7 @@ export default function useSearch({ search, folder, docs }): Result[] {
   const results = useMemo(() => {
     if (!search) return []
       const re: Result[] = matchSorter(
-        docs.filter((doc: Result) => doc.url.includes(`/${folder}/`)),
+        docs,
         search,
         { keys: ['title', 'description', 'content'], threshold: matchSorter.rankings.CONTAINS }
       )
