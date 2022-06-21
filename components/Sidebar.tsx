@@ -135,13 +135,16 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     <div className="menu-title">{key.replace(/-/g, ' ').toUpperCase()}</div>
                     {Object.entries(children).map(([_, route]) =>
                         Object.prototype.hasOwnProperty.call(route, 'title') ? (
-                            <Link href={route.url || ''} key={`${route.url}-${index}`}>
-                                <div
+                            <Link
+                                scroll={false}
+                                href={route.url || ''}
+                                key={`${route.url}-${index}`}>
+                                <a
                                     className={`menu-item ${
                                         route.url === router.asPath ? 'active-link' : ''
                                     }`}>
                                     {route.title}
-                                </div>
+                                </a>
                             </Link>
                         ) : null
                     )}
