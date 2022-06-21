@@ -3,11 +3,11 @@ import { matchSorter } from 'match-sorter'
 
 export type Result = { title: string; url: string; content: string , description?: string, }
 
-export default function useSearch({ search, folder, docs }): Result[] {
+export default function useSearch({ search, docs }): Result[] {
   const results = useMemo(() => {
     if (!search) return []
       const re: Result[] = matchSorter(
-        docs.filter((doc: Result) => doc.url.includes(`/${folder}/`)),
+        docs,
         search,
         { keys: ['title', 'description', 'content'], threshold: matchSorter.rankings.CONTAINS }
       )

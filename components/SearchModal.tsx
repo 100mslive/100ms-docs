@@ -12,7 +12,7 @@ interface Props {
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
+const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
     const paletteTrack = React.useRef(-1);
     const [search, setSearch] = React.useState('');
     const ref = React.useRef();
@@ -25,7 +25,6 @@ const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
     }, []);
     const res = useSearch({
         search,
-        folder: currentDocSlug,
         docs
     });
     // reset if result is 0
