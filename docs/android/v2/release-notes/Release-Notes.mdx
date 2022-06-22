@@ -3,6 +3,23 @@ title: Android SDK
 nav: 15
 description: Release Notes for 100ms Android SDK
 ---
+## v2.4.2 - 2022-06-22
+### Fixed
+* Webrtc not able to find Camera from Android Camera Manager leading to `CantAccessCaptureDevice` error while calling preview or join API
+* Assertion Crash in Network Monitor while trying to create new instane of HMSSDK while a call is in progress
+* Chances of Multiple socket connection getting created incase there is network disconnection in preview screen and join gets called during that time
+
+### Added
+* `setAudioMode` API to change the Audio out mode manually between in-call volume and media volume
+* Retry on 5xx and 429 errors in all RPC calls
+* Analytics events to measure `peer-list` time
+* Join optimization by not sending offer for non webrtc peers
+
+### Changed
+* Made TrackError while switching camera non-terminal
+* Removed recreation of Lists happening in SDK, leading to slowness while calling certain APIs in big rooms. Affected APIs by this change are :-
+`getPeers()` , `getRemotePeers()`, `getPlugins()` - now return `List` instead of `Array`
+
 ## v2.4.1 - 2022-06-14
 ### Fixed
 * Made SDK compatible for compileSDKversion 30 by reducing version of Room lib to 2.3.0
