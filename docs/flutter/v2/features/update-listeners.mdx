@@ -67,7 +67,7 @@ abstract class HMSUpdateListener {
   ///
   /// and SDK has already retried to fix the error
   /// - Parameter error: the error that occurred
-  void onError({required HMSError error});
+  void onHMSError({required HMSException error});
 
 
   /// This is called when there is a change in any property of the Room
@@ -109,6 +109,6 @@ hmsSDK.addUpdateListener(updateListener);
 
 After calling join your app will be provided an update from the 100ms SDK.
 
-✅ If successful, the `fun onJoin(room: HMSRoom)` method of HMSUpdateListener will be invoked with information about the room encapsulated in the HMSRoom object.
+✅ If successful, the `onJoin({required HMSRoom room})` method of HMSUpdateListener will be invoked with information about the room encapsulated in the HMSRoom object.
 
-❌ If failure, the `fun onError(error: HMSException)` method will be invoked with exact failure reason.
+❌ If failure, the `onHMSError({required HMSException error})` method will be invoked with exact failure reason.
