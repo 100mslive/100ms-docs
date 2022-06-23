@@ -39,23 +39,10 @@ super.onActivityResult(requestCode, resultCode, data)
 
 You need to create an iOS broadcast upload extension. It uses Apple's ReplayKit framework to record the device screen and delivers frame samples to your broadcast extension. You can share not only your own app but also the entire device sceeen including other apps on the device.
 
-### Step 1 - Edit Podfile
-Expand ios folder and open `Podfile`.
-Paste the following code:
-```
-target 'FlutterBroadcastUploadExtension' do
-  use_modular_headers!
-  pod 'HMSBroadcastExtensionSDK'
-end
-```
-![Podfile](/docs/v2/flutter-podfile.png)
-
-In terminal change directory to ios and run `pod install` command.
-
-### Step 2 - Open project
+### Step 1 - Open project
 Open your iOS Xcode project, such as `ios/Runner.xcworkspace` for full-Flutter apps.
 
-### Step 3 - Add Broadcast Upload Extension
+### Step 2 - Add Broadcast Upload Extension
 Click on your project in the Project Navigator to show the project settings. 
 Press + at the bottom of the target list to add a new target.
 
@@ -74,7 +61,7 @@ In the following dialog, activate the new scheme for the new target.
 
 ![ActivateExtension](/docs/v2/flutter-activate-extension.png)
 
-### Step 4 - Add App Group
+### Step 3 - Add App Group
 
 Click + icon in `Signing & Capabilities` section.
 Select `App Group` from the list of Capabilities.
@@ -88,6 +75,19 @@ New section should be added under `Signing & Capabilities` named App Groups. Cli
 Enter App group name (create unique app group name ex: group.your.domain.name)
 
 ![AppgroupDetail](/docs/v2/flutter-appgroup-detail.png)
+
+### Step 4 - Edit Podfile
+In ios folder of your flutter project and open `Podfile`.
+Paste the following code and replace the extension name you just created:
+```
+target 'Your Extension Name here' do
+  use_modular_headers!
+  pod 'HMSBroadcastExtensionSDK'
+end
+```
+![Podfile](/docs/v2/flutter-podfile.png)
+
+In terminal change directory to ios and run `pod install` command.
 
 ### Step 5 - Edit SampleHandler
 Expand `Runner > ExtensionName` and open SampleHandler file.
