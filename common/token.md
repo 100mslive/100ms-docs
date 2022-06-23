@@ -1,20 +1,20 @@
 ## Creating Account in 100ms
 
-Create an account at [Dashboard of 100ms](https://dashboard.100ms.live/)
+- Create an account at [Dashboard of 100ms](https://dashboard.100ms.live/)
 
 ![Create Account](/docs/guides/token/create-account.png)
 
-After you have created your account you have to Confirm your Email , check the promotions tab in your Mail Box if you can't find it.
+- After you have created your account you have to Confirm your Email , check the promotions tab in your Mail Box if you can't find it.
 
-Then login again and you would see this Section. Fill it out
+- Then login again and you would see this Section with the list of starter kits, hover over one of the starter kits and click `Deploy`. We will choose "Video Conferencing" for now.
 
-![Build App](/docs/guides/token/build-app.png)
+![Initialize Started Kit](/docs/guides/token/starter-kit-initialize.png)
 
-After that's done you would be asked to choose a template we will choose "Video Conferencing" for now then click on "Set up App"
+- In the `Choose your deployment` step, select 100ms and enter the subdomain you wish in the `Subdomain` field.
 
-![Template](/docs/guides/token/template.png)
+![Domain details](/docs/guides/token/domain-details.png)
 
-After you're App is set click on "Go to Dashboard" or [Go Here](https://dashboard.100ms.live/dashboard)
+- After you're App is set click on "Go to Dashboard" or [Go Here](https://dashboard.100ms.live/dashboard)
 
 ![Dasboard](/docs/guides/token/go-to-dashboard.png)
 
