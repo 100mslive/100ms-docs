@@ -37,17 +37,14 @@ You need to create an iOS broadcast upload extension. It uses Apple's ReplayKit 
 ### Step 1 - Edit Podfile
 #### 1.1
 Expand ios folder and open `Podfile`.
-
 Paste the following code:
-
 ```
 target 'FlutterBroadcastUploadExtension' do
   use_modular_headers!
   pod 'HMSBroadcastExtensionSDK'
 end
 ```
-
-![Podfile](docs/v2/flutter-podfile.png)
+![Podfile](/docs/v2/flutter-podfile.png)
 #### 1.2
 In terminal change directory to ios and run `pod install` command.
 
@@ -57,44 +54,35 @@ Open your iOS Xcode project, such as `ios/Runner.xcworkspace` for full-Flutter a
 ### Step 3 - Add Broadcast Upload Extension
 #### 3.1
 Click on your project in the Project Navigator to show the project settings. 
-
 Press + at the bottom of the target list to add a new target.
-
-![AddExtension](docs/v2/flutter-xcode.png)
+![AddExtension](/docs/v2/flutter-xcode.png)
 #### 3.2
 Select the `Broadcast Upload Extension` type for your new target.
-
-![SelectExtension](docs/v2/flutter-select-extension.png)
+![SelectExtension](/docs/v2/flutter-select-extension.png)
 #### 3.3
 Enter your new target detail in the dialog.
 Uncheck Include UI Extension option.
-
-![DetailExtension](docs/v2/flutter-extension-detail.png)
+![DetailExtension](/docs/v2/flutter-extension-detail.png)
 #### 3.4
 In the following dialog, activate the new scheme for the new target.
-
-![ActivateExtension](docs/v2/flutter-activate-extension.png)
+![ActivateExtension](/docs/v2/flutter-activate-extension.png)
 
 ### Step 4 - Add App Group
 #### 4.1
 Click + icon in `Signing & Capabilities` section.
 Select `App Group` from the list of Capabilities.
-
-![AddAppgroup](docs/v2/flutter-add-appgroup.png)
+![AddAppgroup](/docs/v2/flutter-add-appgroup.png)
 #### 4.2
 New section should be added under `Signing & Capabilities` named App Groups. Click + icon under that.
-
-![Appgroup](docs/v2/flutter-appgroup.png)
+![Appgroup](/docs/v2/flutter-appgroup.png)
 #### 4.3
 Enter App group name (create unique app group name ex: group.your.domain.name)
-
-![AppgroupDetail](docs/v2/flutter-appgroup-detail.png)
+![AppgroupDetail](/docs/v2/flutter-appgroup-detail.png)
 
 ### Step 5 - Edit SampleHandler
 #### 5.1
 Expand `Runner > ExtensionName` and open SampleHandler file.
-
-![SampleHandler](docs/v2/flutter-sample-handler.png)
+![SampleHandler](/docs/v2/flutter-sample-handler.png)
 #### 5.2
 Replace the code with the code below and pass app group name to the respected field:
 
