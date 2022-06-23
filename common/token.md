@@ -20,11 +20,11 @@
 
 ## Creating Room
 
-Go over to [Room in Dashboard](https://dashboard.100ms.live/rooms) and click on "Create Room" , While creating a room you can specify it's name, roles or enable recording.
+- Go over to [Room in Dashboard](https://dashboard.100ms.live/rooms) and click on "Create Room" , While creating a room you can specify it's name, roles or enable recording.
 
 ![Create Room](/docs/guides/token/create-room.png)
 
-You will now see "Room Details" section and we have a `room_id` created, copy it somewhere.
+- You will now see "Room Details" section and we have a `room_id` created, copy it somewhere.
 
 ![Room Id](/docs/guides/token/room-id.png)
 
@@ -34,11 +34,11 @@ Any client connecting calling 100ms' service needs to authenticate using an auth
 
 ### Getting a Temporary Token
 
-To get a temporary token click on "Join room" button.
+- To get a temporary token click on "Join room" button.
 
 ![Join Room](/docs/guides/token/join-room.png)
 
-In the popup that shows up click on icon with a key shape next to the role you want to join as.
+- In the popup that shows up click on icon with a key shape next to the role you want to join as.
 
 ![Copy Token](/docs/guides/token/copy-token.png)
 
