@@ -1,0 +1,235 @@
+---
+title: HLS Streaming
+nav: 4.5
+---
+
+## Introduction
+
+HLS Streaming can be used to live stream your video conferencing apps in a cost effective way.
+The HLS stream will be a adaptive stream and have a latency of 8-10 seconds as compared to live.
+
+## Pre-requisites
+
+1. Management token
+- [Click here to see how to generate management token](/server-side/v2/foundation/authentication-and-tokens)
+
+2. Single click meeting url to directly enter a room
+
+3. 100ms SDK logs should be logged to console for the webapp url provided above. The SDK logs will be analysed to detect any room join failures and retries will be attemped to fix the same. If SDK logs are not enabled then the server will stop recording/streaming and return error (after fixed number of retries).
+
+## APIs
+
+### Start Streaming
+<PostRequest
+    desp="This endpoint is used to start hls streaming"
+    url="https://prod-in2.100ms.live/islb/api/v2/room/hls/start"
+/>
+
+<Tabs items={['Request', 'Response']} id="start" />
+
+<div id="start-0">
+
+#### Headers
+
+| Name                           | Value                        | Required |
+| :----------------------------- | :--------------------------- | :------- |
+| Content-type <br/>             | application/json             | Yes      |
+| Authorization <br/>            | Bearer `<management token>`  | Yes      |
+
+#### Body Parameters
+
+| Name              | Type     | Description                                                                                  | Required |
+| :---------------- | :------- | :------------------------------------------------------------------------------------------- | :------- |
+| room_id <br/>     | `string` | The room id of the room which we need to start streaming                                     | Yes      |
+| variants <br/>    | `array`  | List of objects of type `variants`                                                           | Yes      |
+| recording <br/>   | `object` | Recording configuration                                                                      | No       |
+
+##### variants
+
+| Name              | Type     | Description                                                                                  | Required |
+| :---------------- | :------- | :------------------------------------------------------------------------------------------- | :------- |
+| meeting_url <br/> | `string` | Single click meeting url which we need to start streaming (see below for more details)       | Yes      |
+
+##### meeting_url
+
+This is a url which lands into the meeting directly. If you are using 100ms apps then this will be like - `https://<domain>.app.100ms.live/preview/<room_id>/<role>?token=beam_recording`. Example - `https://myname.app.100ms.live/preview/61101349d0f56e684b608c08/beam?token=beam_recording`
+
+##### recording
+
+| Name                         | Type     | Description                                                                       | Required |
+| :--------------------------- | :------- | :-------------------------------------------------------------------------------- | :------- |
+| single_file_per_layer <br/>  | `bool`   | Get one recording file each for each hls layer                                    | No       |
+| hls_vod               <br/>  | `bool`   | Get hls vod playlist                                                              | No       |
+
+#### cURL
+
+```bash
+curl \
+    --location \
+    --request POST 'https://prod-in2.100ms.live/islb/api/v2/room/hls/start' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer <management_token>' \
+    --data-raw '{
+        "room_id": <room_id>,
+        "variants": [{"meeting_url": <meeting_url>}],
+        "recording": {"single_file_per_layer": <true|false>,"hls_vod": <true|false>}
+    }'
+```
+
+</div>
+
+<Tab id="start-1">
+    <Response res="200: OK" resText="Hls streaming is starting" />
+</Tab>
+
+---
+
+### Stop Streaming
+<PostRequest
+    desp="This endpoint is used to stop hls streaming"
+    url="https://prod-in2.100ms.live/islb/api/v2/room/hls/stop"
+/>
+
+<Tabs items={['Request', 'Response']} id="stop" />
+
+<div id="stop-0">
+
+#### Headers
+
+| Name                           | Value                        | Required |
+| :----------------------------- | :--------------------------- | :------- |
+| Content-type <br/>             | application/json             | Yes      |
+| Authorization <br/>            | Bearer `<management token>`  | Yes      |
+
+#### Body Paramters
+
+| Name              | Type     | Description                                                           | Required |
+| :---------------- | :------- | :-------------------------------------------------------------------- | :------- |
+| room_id <br/>     | `string` | The room id of the room for which we need to stop streaming           | Yes      |
+
+#### cURL
+
+```bash
+curl \
+    --location \
+    --request POST 'https://prod-in2.100ms.live/islb/api/v2/room/hls/stop' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer <management_token>' \
+    --data-raw '{
+        "room_id": <room_id>
+    }'
+```
+
+</div>
+
+<Tab id="stop-1">
+    <Response res="200: OK" resText="Hls streaming is stopping" />
+</Tab>
+
+---
+
+### Pause Recording
+
+<PostRequest
+desp="This endpoint is used to pause hls recording. This has no effect on the live stream."
+url="http://prod-in2.100ms.live/islb/api/v2/room/hls/pause"
+/>
+
+<Tabs items={['Request', 'Response']} id="pause" />
+
+<div id="pause-0">
+
+
+#### Headers
+
+| Name                           | Value                        | Required |
+| :----------------------------- | :--------------------------- | :------- |
+| Content-type <br/>             | application/json             | Yes      |
+| Authorization <br/>            | Bearer `<management token>`  | Yes      |
+
+#### Body Paramters
+
+| Name              | Type     | Description                                                           | Required |
+| :---------------- | :------- | :-------------------------------------------------------------------- | :------- |
+| room_id <br/>     | `string` | The room id of the room for which we need to pause recording          | Yes      |
+
+#### cURL
+
+```bash
+curl \
+--location \
+--request POST 'https://prod-in2.100ms.live/islb/api/v2/room/hls/pause' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer <management_token>' \
+--data-raw '{
+"room_id": <room_id>
+}'
+```
+
+</div>
+<Tab id="pause-1">
+<Response res="200: OK" resText="Pause event triggered for room" />
+</Tab>
+
+---
+
+### Unpause Recording
+
+<PostRequest
+desp="This endpoint is used to unPause hls recording. This has no effect on the live stream."
+url="http://prod-in2.100ms.live/islb/api/v2/room/hls/unpause"
+/>
+
+<Tabs items={['Request', 'Response']} id="unpause" />
+
+<div id="unpause-0">
+
+
+#### Headers
+
+| Name                           | Value                        | Required |
+| :----------------------------- | :--------------------------- | :------- |
+| Content-type <br/>             | application/json             | Yes      |
+| Authorization <br/>            | Bearer `<management token>`  | Yes      |
+
+#### Body Paramters
+
+| Name              | Type     | Description                                                           | Required |
+| :---------------- | :------- | :-------------------------------------------------------------------- | :------- |
+| room_id <br/>     | `string` | The room id of the room for which we need to unpause recording          | Yes      |
+
+#### cURL
+
+```bash
+curl \
+--location \
+--request POST 'https://prod-in2.100ms.live/islb/api/v2/room/hls/unpause' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer <management_token>' \
+--data-raw '{
+"room_id": <room_id>
+}'
+```
+
+</div>
+<Tab id="unpause-1">
+<Response res="200: OK" resText="Unpause event triggered for room" />
+</Tab>
+
+---
+
+## Recording upload destination
+
+By default recordings will be uploaded to 100ms storage and a presigned URL for the same will be provided to customers via a webhook. The presigned url will expire in 72hours.
+Customers can also configure the recordings to be stored in their cloud storage. The configuration for the same can be provided when [creating the room](/server-side/v2/features/room).
+If Pause/UnPause was triggered for recording, those intervals will be trimmed out and the edited recording will be uploaded to the storage.
+
+
+Recording mp4 will be placed at - `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/file-recording/Rec-<room_id>-<epoch>-<layer>.mp4`.
+Example `s3://test-bucket/test-prefix/hls/61101349d0f56e684b608c08/20210721/1626898422000/file-recording/Rec-61101349d0f56e684b608c08-1626898422000-0.mp4`
+Recording vod playlist will be placed at - `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/hls-vod/Rec-<room_id>-<epoch>.zip`.
+Example `s3://test-bucket/test-prefix/hls/61101349d0f56e684b608c08/20210721/1626898422000/hls-vod/Rec-61101349d0f56e684b608c08-1626898422000.zip`
+
+## Postman Collection
+
+<DownloadCollection type='hls' />
