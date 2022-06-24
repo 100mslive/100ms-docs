@@ -118,6 +118,15 @@ export interface IHMSPlaylistActions {
      * @param playbackRate - value from 0.25 and 2.0
      */
     setPlaybackRate(playbackRate: number): void;
+    /**
+     * Remove a single item from the playlist. This will stop the track if it is the current playing one and remove the item
+     * returns a promise that resolves to true if the item was removed
+     */
+    removeItem(id: string): Promise<boolean>;
+    /**
+     * Clear the entire playlist. This will stop the playing track(if any)
+     */
+    clearList(): Promise<void>;
 }
 ```
 
