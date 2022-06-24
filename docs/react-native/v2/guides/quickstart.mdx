@@ -121,7 +121,7 @@ hmsInstance.leave();
 
 ## Render video
 
-Let us next add a way to show a tile for every participant in the room. We use HmsView component to render video on screen. This component takes sink, trackId and scaleType of HMSVideoTrack and renders the corresponding track. The prop scaleType can be selected from HMSVideoViewMode as required. When sink is true the video will be visible and when it is false video would be removed. It is ios only prop for android it is handled by the package itself. We can also add mirror a boolean prop as true to flip videos horizontally. Here is a code snippet explaining the way to link a videoTrack to HmsView.
+Let us next add a way to show a tile for every participant in the room. We use HmsView component to render video on screen. This component takes trackId and scaleType of HMSVideoTrack and renders the corresponding track. The prop scaleType can be selected from HMSVideoViewMode as required. We can also add mirror a boolean prop as true to flip videos horizontally. Here is a code snippet explaining the way to link a videoTrack to HmsView.
 
 ```js
 import { HmsView, HMSVideoViewMode } from 'react-native-hms';
@@ -134,7 +134,6 @@ const styles = StyleSheet.create({
 });
 
 <HmsView
-  sink={true}
   style={styles.hmsView}
   trackId={trackId}
   mirror={true}
@@ -169,9 +168,11 @@ const onPeerListener = ({
   remotePeers,
   localPeer,
 }: {
-  room?: any,
-  localPeer: any,
-  remotePeers: any,
+  peer: HMSPeer;
+  room?: HMSRoom;
+  type?: HMSPeerUpdate;
+  localPeer: HMSLocalPeer;
+  remotePeers: HMSRemotePeer[];
 }) => {
   updateVideoIds(remotePeers, localPeer); // this function can be used to update local and remotePeers on React-Native side
 };
@@ -180,9 +181,12 @@ const onTrackListener = ({
   remotePeers,
   localPeer,
 }: {
-  room?: any,
-  localPeer: any,
-  remotePeers: any,
+  peer: HMSPeer;
+  track: HMSTrack;
+  room?: HMSRoom;
+  type?: HMSTrackUpdate;
+  localPeer: HMSLocalPeer;
+  remotePeers: HMSRemotePeer[];
 }) => {
   updateVideoIds(remotePeers, localPeer);
 };

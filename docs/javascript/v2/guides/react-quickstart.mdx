@@ -6,18 +6,21 @@ nav: 2.3
 ## Getting started
 
 Hello there! In this guide, we'll build a video conferencing application using our React SDK. We'll be using functional
-components with the powerful hooks provided by our SDK and build an app where you can have video call with your friends.
+components with the powerful hooks provided by our SDK and build an app where you can have a video call with your friends.
 
-TL;DR - You can find the link to the complete example over [here](https://codesandbox.io/s/happy-meddling-syndrome-q4ukf).
+TL;DR - You can find the link to the complete example over [here](https://codesandbox.io/s/100ms-react-quickstart-kh0hy?file=/src/App.jsx).
 
 ### Prerequisites
 
-To get started you should be familiar with basics of [React](https://reactjs.org/).
+To get started you should be familiar with the basics of [React](https://reactjs.org/).
 
 ### Installing the dependencies
 
 ```bash
-npm install --save @100mslive/hms-video@latest @100mslive/hms-video-react@latest
+## npm
+npm install --save @100mslive/react-sdk@latest
+## yarn
+yarn add @100mslive/react-sdk@latest
 ```
 
 ### Initializing the SDK
@@ -26,10 +29,10 @@ Let us start with initializing the libraries. We need to wrap the entire applica
 
 This will let us use the hooks for state and actions.
 
-```jsx:src/index.jsx
+```jsx:src/index.js
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
-import { HMSRoomProvider } from "@100mslive/hms-video-react";
+import { HMSRoomProvider } from "@100mslive/react-sdk";
 
 import App from "./App";
 
@@ -48,13 +51,13 @@ ReactDOM.render(
 `hmsStore` will hold the complete state of the application such as details of all the participants. We can also visualize this state at any time using the
 [devtools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en) extension.
 
-`hmsActions` will help us perform actions such as joining the room, mute our audio and send messages.
+`hmsActions` will help us perform actions such as joining the room, muting our audio/video, and sending messages.
 
 ### Concepts
 
 -   `Room`: When we join a conference call, the participants are said to be in a video call `room`.
 -   `Peer`: A participant in the video call. You are the `local peer` while others are `remote peers`.
--   `Track`: Media. There are two types of track a peer can have - audio and video.
+-   `Track`: Media. There are two types of tracks a peer can have - audio and video.
 
 ## Joining a room
 
@@ -68,7 +71,7 @@ For our application, let us collect both of these fields from the user using a f
 
 ```jsx:src/JoinForm.jsx
 import { useState } from "react";
-import { useHMSActions } from "@100mslive/hms-video-react";
+import { useHMSActions } from "@100mslive/react-sdk";
 
 function JoinForm() {
   const hmsActions = useHMSActions();
@@ -97,6 +100,7 @@ function JoinForm() {
       <h2>Join Room</h2>
       <div className="input-container">
         <input
+          required
           value={inputValues.name}
           onChange={handleInputChange}
           id="name"
@@ -107,6 +111,7 @@ function JoinForm() {
       </div>
       <div className="input-container">
         <input
+          required
           value={inputValues.token}
           onChange={handleInputChange}
           id="token"
@@ -172,26 +177,26 @@ Let us next add a way to show a tile for every participant in the room. We'll ne
 At any point in time we can get a list of peers with:
 
 ```jsx
-import { useHMSStore, selectPeers } from '@100mslive/hms-video-react';
+import { useHMSStore, selectPeers } from '@100mslive/react-sdk';
 
 function Component() {
-  const peers = useHMSStore(selectPeers);
-  return <Peers peers={peers} />;
+    const peers = useHMSStore(selectPeers);
+    return <Peers peers={peers} />;
 }
 ```
 
 Let's take a moment to discuss how `hmsStore` works. The store maintains the state of the video call which includes
-the list of peers, the connection state of the room, the tracks, track states etc.
+the list of peers, the connection state of the room, the tracks, track states, etc.
 We can use "selectors" that return a slice of the state to get the data piece we're interested in.
 
 The `hmsStore` is also reactive, which means any component using the HMSStore hook will re-render when the slice of the state, it listens to, changes.
 This allows us to write [declarative](https://en.wikipedia.org/wiki/Declarative_programming) code.
 
-Let us now create a `Conference` component that will render a list of peers. We'll get the peers from store and render them.
+Let us now create a `Conference` component that will render a list of peers. We'll get the peers from the store and render them.
 Our component will get rerendered if this list of peers changes.
 
 ```jsx:src/Conference.jsx
-import { selectPeers, useHMSStore } from "@100mslive/hms-video-react";
+import { selectPeers, useHMSStore } from "@100mslive/react-sdk";
 import React from "react";
 import Peer from "./Peer";
 
@@ -214,31 +219,18 @@ export default Conference;
 ```
 
 For each peer, we'll render a `<video>` element and a `<div>` element with their name.
-In order to render the video, we need to call `attachVideo` method of `hmsActions`, which accepts a trackId and a DOM element.
+
+To render the video, we need to call `attachVideo` method of `hmsActions`, which accepts a `trackId` and a DOM element.
+
+But we have abstracted this implementation inside `useVideo` hook for ease. This hook will return an object videoRef given a video `trackId`. The returned `videoRef` can be used to set on a video element meant to display the video. The hook will take care of attaching and detaching video, and will automatically detach when the video goes out of view to save on bandwidth.
 
 ```jsx:src/Peer.jsx
-import {
-  selectVideoTrackByPeerID,
-  useHMSActions,
-  useHMSStore
-} from "@100mslive/hms-video-react";
-import { useRef, useEffect } from "react";
+import { useVideo } from "@100mslive/react-sdk";
 
 function Peer({ peer }) {
-  const videoRef = useRef(null);
-  const hmsActions = useHMSActions();
-  const videoTrack = useHMSStore(selectVideoTrackByPeerID(peer.id));
-
-   useEffect(() => {
-    if (videoRef.current && videoTrack) {
-      if (videoTrack.enabled) {
-        hmsActions.attachVideo(videoTrack.id, videoRef.current);
-      } else {
-        hmsActions.detachVideo(videoTrack.id, videoRef.current);
-      }
-    }
-  }, [videoTrack, hmsActions]);
-
+  const { videoRef } = useVideo({
+    trackId: peer.videoTrack
+  });
   return (
     <div className="peer-container">
       <video
@@ -256,7 +248,6 @@ function Peer({ peer }) {
 }
 
 export default Peer;
-
 ```
 
 > Note that `height` and `width` CSS properties need to be set on the `<video>` element to render the peer's video.
@@ -276,7 +267,7 @@ import {
   selectIsConnectedToRoom,
   useHMSActions,
   useHMSStore
-} from "@100mslive/hms-video-react";
+} from "@100mslive/react-sdk";
 
 export default function App() {
   const isConnected = useHMSStore(selectIsConnectedToRoom);
@@ -309,36 +300,27 @@ export default function App() {
 Right now we are publishing both audio and video feed of the user whenever they join the room.
 We may want to allow the user to mute/unmute their own tracks - both audio and video.
 
-Let's add 2 buttons on the bottom of the page and call the methods on `hmsActions` to mute/unmute the local tracks.
+If you specifically need granular data like knowing the current video status you can use `selectIsLocalVideoEnabled` and for audio `selectIsLocalAudioEnabled` instead.
+
+In this case, we can use `useAVToggle` hook which will give us the current audio/video status of the user and also give us functions to toggle them.
 
 ```jsx:src/Footer.jsx
-import {
-  selectIsLocalAudioEnabled,
-  selectIsLocalVideoEnabled,
-  useHMSActions,
-  useHMSStore
-} from "@100mslive/hms-video-react";
+import { useAVToggle } from "@100mslive/react-sdk";
 
 function Footer() {
-  const videoEnabled = useHMSStore(selectIsLocalVideoEnabled);
-  const audioEnabled = useHMSStore(selectIsLocalAudioEnabled);
-  const hmsActions = useHMSActions();
-
-  const toggleAudio = () => {
-    hmsActions.setLocalAudioEnabled(!audioEnabled);
-  };
-
-  const toggleVideo = () => {
-    hmsActions.setLocalVideoEnabled(!videoEnabled);
-  };
-
+  const {
+    isLocalAudioEnabled,
+    isLocalVideoEnabled,
+    toggleAudio,
+    toggleVideo
+  } = useAVToggle();
   return (
     <div className="control-bar">
       <button className="btn-control" onClick={toggleAudio}>
-        {audioEnabled ? "Mute" : "Unmute"}
+        {isLocalAudioEnabled ? "Mute" : "Unmute"}
       </button>
       <button className="btn-control" onClick={toggleVideo}>
-        {videoEnabled ? "Hide" : "Unhide"}
+        {isLocalVideoEnabled ? "Hide" : "Unhide"}
       </button>
     </div>
   );
@@ -351,7 +333,7 @@ We fetch the current state of the local audio and video and toggle them whenever
 
 ![Mute/Unmute](/guides/mute-unmute.gif)
 
-And finally let's add this component to the `<App>` component to render the buttons only when we are connected to the room.
+And finally, let's add this component to the `<App>` component to render the buttons only when we are connected to the room.
 
 ```jsx{1,19-22}:src/App.js
 import Footer from './Footer';
@@ -385,8 +367,8 @@ export default function App() {
 ```
 
 That wraps it up for this guide. We hope you had fun.
-There are plenty of cool stuff which can be done with our SDK, be sure to check the [features section](/javascript/v2/features/integration) for more information. -->
+There is plenty of cool stuff which can be done with our SDK, be sure to check the [features section](/javascript/v2/features/integration) for more information. -->
 
 Here's the complete example.
 
-<Codesandbox id="q4ukf" />
+<Codesandbox id="100ms-react-quickstart-kh0hy" />

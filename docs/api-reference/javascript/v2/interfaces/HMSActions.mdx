@@ -57,11 +57,16 @@ Accept the role change request received
 
 ▸ **addPluginToAudioTrack**(`plugin`): `Promise`<`void`\>
 
+Add or remove a audio plugin from/to the local peer audio track. Eg. gain filter, noise suppression etc.
+Audio plugins can be added/removed at any time after the join is successful.
+
+**`see`** HMSAudioPlugin
+
 #### Parameters
 
-| Name     | Type             |
-| :------- | :--------------- |
-| `plugin` | `HMSAudioPlugin` |
+| Name     | Type             | Description    |
+| :------- | :--------------- | :------------- |
+| `plugin` | `HMSAudioPlugin` | HMSAudioPlugin |
 
 #### Returns
 
@@ -138,9 +143,8 @@ the stream coming from server saving significant bandwidth for the user.
 
 ▸ **changeMetadata**(`metadata`): `Promise`<`void`\>
 
-If you want to update the metadata of peer.
-
-**`beta`**
+If you want to update the metadata of local peer. If an object is passed, it should be serializable using
+JSON.stringify.
 
 #### Parameters
 
@@ -159,8 +163,6 @@ If you want to update the metadata of peer.
 ▸ **changeName**(`name`): `Promise`<`void`\>
 
 If you want to update the name of peer.
-
-**`beta`**
 
 #### Parameters
 
@@ -233,6 +235,45 @@ If lock is passed as true, the room cannot be used further.
 
 ---
 
+### ignoreMessageTypes
+
+▸ **ignoreMessageTypes**(`msgTypes`, `replace?`): `void`
+
+ignore messages with this type for storing in store. You can use this to have a clear segregation between
+chat messages(you would want to persist for the duration of the call) and one off custom events(emoji reactions,
+stop screenshare, moderator messages, etc.). You can also use this to store messages on your own side if some additional
+processing is required(the default type is "chat").
+Notifications for the ignored messages will still be sent, it'll only not be put in the store.
+
+#### Parameters
+
+| Name       | Type       | Description                                                                                                                                                                                 |
+| :--------- | :--------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `msgTypes` | `string`[] | list of messages types to ignore for storing                                                                                                                                                |
+| `replace?` | `boolean`  | (default is false) whether to replace the list of ignored messages. Types are appended to the existing list by default so you can call this method from different places and all will hold. |
+
+#### Returns
+
+`void`
+
+---
+
+### initAppData
+
+▸ **initAppData**(`data`): `void`
+
+#### Parameters
+
+| Name   | Type                       | Description                                                                                                                                                                                                                                                                                                                                                  |
+| :----- | :------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `data` | `Record`<`string`, `any`\> | full app data object. use this to initialise app data in store. App Data is a small space in the store for UI to keep a few non updating global state fields for easy reference across UI. Note that if the fields are updating at high frequency or there are too many of them, it's recommended to have another UI side store to avoid performance issues. |
+
+#### Returns
+
+`void`
+
+---
+
 ### join
 
 ▸ **join**(`config`): `void`
@@ -277,6 +318,16 @@ This function can be used to leave the room, if the call is repeated it's ignore
 | Name     | Type                                                             |
 | :------- | :--------------------------------------------------------------- |
 | `config` | [`HMSConfig`](/api-reference/javascript/v2/interfaces/HMSConfig) |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### refreshDevices
+
+▸ **refreshDevices**(): `Promise`<`void`\>
 
 #### Returns
 
@@ -450,6 +501,67 @@ Send a plain text message to all the other participants in the room.
 
 ---
 
+### setAppData
+
+▸ **setAppData**(`key`, `value`, `merge?`): `void`
+
+use it for updating a particular property in the appdata
+
+**`example`**
+assume appdata is initially
+{
+mySettings: {
+setting1: 'val1',
+setting2: 'val2',
+},
+mySettings2: 43,
+mySettings3: false,
+};
+
+after calling,
+setAppData("mySettings", {setting1:'val1-edit', setting3:'val3'}, true);
+it becomes
+{
+mySettings: {
+setting1: 'val1-edit',
+setting2: 'val2',
+setting3: 'val3',
+},
+mySettings2: 43,
+mySettings3: false,
+};
+
+Note: This is not suitable for keeping large data or data which updates
+at a high frequency, it is recommended to use app side store for those
+cases.
+
+#### Parameters
+
+| Name     | Type                                   | Description                                                                                                                                                                                                                                                                                        |
+| :------- | :------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `key`    | `string`                               | a string. Does not check for existence. If the key is already not a property of the appData, it is added.                                                                                                                                                                                          |
+| `value`  | `Record`<`string` \| `number`, `any`\> | value to set for the key.                                                                                                                                                                                                                                                                          |
+| `merge?` | `boolean`                              | set it to true if you want to merge the appdata. - Always replaces the value for a given key if this parameter is not explicitly set to true. - Always replaces if the value is anything other than a plain object (i.e) JSON.parse()able. - If set to true on non-plain objects, this is ignored. |
+
+#### Returns
+
+`void`
+
+▸ **setAppData**(`key`, `value`): `void`
+
+#### Parameters
+
+| Name    | Type     |
+| :------ | :------- |
+| `key`   | `string` |
+| `value` | `any`    |
+
+#### Returns
+
+`void`
+
+---
+
 ### setAudioOutputDevice
 
 ▸ **setAudioOutputDevice**(`deviceId`): `void`
@@ -552,7 +664,7 @@ Note that HMSLogLevel is decremental meaning,
 - HMSLogLevel.INFO(2) - will log important info, warnings and errors.
 - HMSLogLevel.WARN(3) - will log warnings and errors.
 - HMSLogLevel.ERROR(4) - will log only errors.
-- HMSLogLevel.NONE(5) - won't log anything.
+- HMSLogLevel.NONE(5) - won't log anything(Not recommended).
 
 Usage: `hmsActions.setLogLevel(4)` or `hmsActions.setLogLevel(HMSlogLevel.ERROR)`.
 
@@ -595,7 +707,9 @@ found in store, no change in store will take place.
 
 ▸ **setPreferredLayer**(`trackId`, `layer`): `void`
 
-set the quality of the selected videoTrack
+set the quality of the selected videoTrack for simulcast.
+
+**`alpha`**
 
 #### Parameters
 
@@ -650,7 +764,7 @@ Use this to mute/unmute multipe tracks by source, role or type
 
 ### setScreenShareEnabled
 
-▸ **setScreenShareEnabled**(`enabled`, `audioOnly?`): `Promise`<`void`\>
+▸ **setScreenShareEnabled**(`enabled`, `config?`): `Promise`<`void`\>
 
 If you want to enable screenshare for the local peer this class can be called.
 The store will be populated with the incoming track, and the subscriber(or
@@ -658,10 +772,10 @@ react component if our hook is used) will be notified/rerendered
 
 #### Parameters
 
-| Name         | Type      | Description                                    |
-| :----------- | :-------- | :--------------------------------------------- |
-| `enabled`    | `boolean` | boolean                                        |
-| `audioOnly?` | `boolean` | boolean To publish only audio from screenshare |
+| Name      | Type                                                               | Description                                                                                |
+| :-------- | :----------------------------------------------------------------- | :----------------------------------------------------------------------------------------- |
+| `enabled` | `boolean`                                                          | boolean                                                                                    |
+| `config?` | `boolean` \| { `audioOnly?`: `boolean` ; `videoOnly?`: `boolean` } | it can also be boolean to ensure backward compatibility where it stands for audioOnly flag |
 
 #### Returns
 
@@ -714,9 +828,9 @@ If you want to start HLS streaming.
 
 #### Parameters
 
-| Name     | Type        |
-| :------- | :---------- |
-| `params` | `HLSConfig` |
+| Name     | Type                                                             |
+| :------- | :--------------------------------------------------------------- |
+| `params` | [`HLSConfig`](/api-reference/javascript/v2/interfaces/HLSConfig) |
 
 #### Returns
 
@@ -750,9 +864,9 @@ If you want to stop HLS streaming. The passed in arguments is not considered at 
 
 #### Parameters
 
-| Name      | Type        |
-| :-------- | :---------- |
-| `params?` | `HLSConfig` |
+| Name      | Type                                                             |
+| :-------- | :--------------------------------------------------------------- |
+| `params?` | [`HLSConfig`](/api-reference/javascript/v2/interfaces/HLSConfig) |
 
 #### Returns
 
@@ -784,3 +898,43 @@ to resolve the autoplay error
 #### Returns
 
 `Promise`<`void`\>
+
+---
+
+### validateAudioPluginSupport
+
+▸ **validateAudioPluginSupport**(`plugin`): `HMSPluginSupportResult`
+
+To check the support of the plugin, based on browser, os and audio devices
+
+**`see`** HMSPluginSupportResult
+
+#### Parameters
+
+| Name     | Type             | Description    |
+| :------- | :--------------- | :------------- |
+| `plugin` | `HMSAudioPlugin` | HMSAudioPlugin |
+
+#### Returns
+
+`HMSPluginSupportResult`
+
+---
+
+### validateVideoPluginSupport
+
+▸ **validateVideoPluginSupport**(`plugin`): `HMSPluginSupportResult`
+
+To check the support of the plugin, based on browser, os and audio devices
+
+**`see`** HMSPluginSupportResult
+
+#### Parameters
+
+| Name     | Type             | Description    |
+| :------- | :--------------- | :------------- |
+| `plugin` | `HMSVideoPlugin` | HMSVideoPlugin |
+
+#### Returns
+
+`HMSPluginSupportResult`

@@ -17,16 +17,11 @@ You can create room on [100ms Dashboard](https://dashboard.100ms.live/create-roo
 
 Room creation via dashboard is helpful in doing quick POC or creating smaller number of rooms.
 
-<Image width={2168} height={1083} alt="Create a room" src="/docs/v2/create-a-room.png" />
+![Create a room](/docs/v2/create-a-room.png)
 
 You can add or modify templates on [100ms Dashboard](https://dashboard.100ms.live/templates).
 
-<Image
-    width={2168}
-    height={1139}
-    alt="Room details on dashboard"
-    src="/docs/v2/role-dashboard.png"
-/>
+![Room details on dashboard](/docs/v2/role-dashboard.png)
 
 ## Create Room using API
 
@@ -107,6 +102,11 @@ curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <manage
 | enabled     | `boolean` | Enable SFU recording. Disabled by default                                                                                                                                                       | No       |
 | upload_info | `object`  | Object of type `upload_info`. This object contains information on recordings storage location. If you want to store recording with 100ms, and not use your own s3, don't add this to the object | No       |
 
+`recording_info` in room acts as an atomic property. Following describes the way `recording_info` depends on recording settings defined in a template.
+
+- If `recording_info` key is **not** provided in the api, the room will fill it with recording settings from template. And the response body will include `recording_source_template: true`. This means, whenever recording info is changed in template, they will also be reflected in room's recording settings.
+- If `recording_info` key is provided in the api, the room's recording settings will not depend on template at all.
+
 To know more about recording please visit [Recording](./recording)
 
 ### upload_info
@@ -127,10 +127,10 @@ To know more about recording please visit [Recording](./recording)
 
 ### Credentials
 
-| Name   | Type     | Description                                                                            | Required |
-| :----- | :------- | :------------------------------------------------------------------------------------- | :------- |
-| key    | `string` | `access key ID` for the AWS account hosting the s3 bucket for storing recordings       | Yes      |
-| secret | `string` | `secret access key` for the AWS account hosting the s3 bucket for storing recordings   | Yes      |
+| Name   | Type     | Description                                                                          | Required |
+| :----- | :------- | :----------------------------------------------------------------------------------- | :------- |
+| key    | `string` | `access key ID` for the AWS account hosting the s3 bucket for storing recordings     | Yes      |
+| secret | `string` | `secret access key` for the AWS account hosting the s3 bucket for storing recordings | Yes      |
 
 The access keys should have read(GetObject) and write(PutObject) permissions for the s3 bucket.
 For more details check - https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html

@@ -25,7 +25,7 @@ Create an Xcode project and select "iOS" for platform and "App" for application
 Select "Storyboard" for interface and "Swift" for language
 
 
-Create "Podfile" in the project folder with the following contents
+Assuming your project name is "basicvideocall", create "Podfile" in the project folder with the following contents
 then run `pod install`
 
 ```jsx
@@ -73,6 +73,9 @@ extension ViewController: HMSUpdateListener {
 ```
 
 
+Create an instance of HMSSDK
+
+
 ```swift
 class ViewController: UIViewController {
 var hmsSDK = HMSSDK.build()
@@ -110,7 +113,7 @@ override func viewDidLoad() {
     
 Congratulations! You have an audio conference app.
 
-Build and launch on device, then join same room on web app to try a call between web and iOS. 
+Build and launch on device, then join same room on web app to try a call between web and iOS. (To join from the web, use one of the role url links from your room [Room in Dashboard](https://dashboard.100ms.live/rooms))
 
 
 ## Adding Video
@@ -271,7 +274,7 @@ hmsSDK.leave()
     
 ### Ways to go from here
 
-Checkout complete project code on github:  [https://github.com/100mslive/100ms-ios-sdk/tree/main/BasicExample](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example)
+Checkout complete project code on github:  [https://github.com/100mslive/100ms-ios-sdk/tree/main/BasicExample](https://github.com/100mslive/100ms-ios-sdk/tree/main/BasicExample)
 
 Checkout a sample code for a full featured conferencing app: 
 

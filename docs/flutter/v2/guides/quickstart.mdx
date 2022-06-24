@@ -57,6 +57,9 @@ flutter:
 hmssdk_flutter:
 ```
 
+If you are running Flutter 3.0 or higher, use this branch to add the package: `flutter3.0` 
+<https://github.com/100mslive/100ms-flutter/tree/flutter3.0>
+
 ### Login
 
 #### Request
@@ -114,7 +117,7 @@ Add following permissions in iOS Info.plist file
 
 ### Join a Video Call
 
-To join a video call, call join method on HMSSDK with the config settings. To listen the updates, call addMeetingListener on HMSSDK.
+To join a video call, call join method on HMSSDK with the config settings. To listen the updates, call addUpdateListener on HMSSDK.
 
 These are some listener's callback functions:
 
@@ -133,7 +136,7 @@ HMSConfig config = HMSConfig(userName: this.userName, authToken: this.authToken)
 hmsSDK = HMSSDK();
 hmsSDK.build()
 hmsSDK.join(config: this.config);
-hmsSDK.addMeetingListener(listener);
+hmsSDK.addUpdateListener(listener);
 ```
 
 ```dart

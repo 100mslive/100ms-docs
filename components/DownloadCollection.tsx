@@ -1,36 +1,38 @@
 /* eslint-disable global-require */
-import React from 'react'
+import React from 'react';
 
-import rtmp from '../public/postman/100ms-rtmp.postman_collection.json'
-import hls from '../public/postman/100ms-hls.postman_collection.json'
+import rtmp from '../public/postman/100ms-rtmp.postman_collection.json';
+import rooms from '../public/postman/100ms-rooms.postman_collection.json';
+import hls from '../public/postman/100ms-hls.postman_collection.json';
 
 const collections = {
-  rtmp,
-  hls,
-}
+    rtmp,
+    rooms,
+    hls
+};
 
 interface Props {
-  type: keyof typeof collections;
+    type: keyof typeof collections;
 }
 
 const DownloadCollection = ({ type }: Props) => {
-  const data  = collections[type]
-  const download =() => {
-    const element = document.createElement('a');
-    const file = new Blob([JSON.stringify(data)], {
-      type: 'text/plain;charset=utf-8',
-    });
-  element.href = URL.createObjectURL(file);
-  element.download = `100ms-${type}.json`;
-  document.body.appendChild(element);
-  element.click();
-  }
+    const data = collections[type];
+    const download = () => {
+        const element = document.createElement('a');
+        const file = new Blob([JSON.stringify(data)], {
+            type: 'text/plain;charset=utf-8'
+        });
+        element.href = URL.createObjectURL(file);
+        element.download = `100ms-${type}.json`;
+        document.body.appendChild(element);
+        element.click();
+    };
 
-  return (
-    <button type='button' onClick={download} className='download-btn'>
-      Download Collection
-    </button>
-  )
-}
+    return (
+        <button type="button" onClick={download} className="download-btn">
+            Download Collection
+        </button>
+    );
+};
 
-export default DownloadCollection
+export default DownloadCollection;

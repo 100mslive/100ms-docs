@@ -46,6 +46,7 @@ const DocLayout: React.FC<Props> = ({
     allDocs,
     currentDocSlug
 }) => {
+    const router = useRouter();
     const SEO = {
         title: `${
             frontMatter.title || '100ms Docs'
@@ -54,13 +55,13 @@ const DocLayout: React.FC<Props> = ({
             title: `${
                 frontMatter.title || '100ms Docs'
             } | 100ms - Video conferencing infrastructure for a video-first world`
-        }
+        },
+        canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${router.asPath === "/" ? "" : router.asPath.split('?')[0]}`
     };
     const [menu, setMenu] = React.useState(false);
     const [modal, setModal] = React.useState(false);
     const menuState = { menu, setMenu };
     useLockBodyScroll(modal);
-    const router = useRouter();
     let newNav;
     // if 3 levels of directory
     let showPagination = true;

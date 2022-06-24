@@ -23,12 +23,42 @@ interface Props {
 const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const router = useRouter();
     const menuItem = [
-        { link: '/android/v2/foundation/Basics', name: 'Android', icon: <AndroidIcon /> },
-        { link: '/ios/v2/foundation/Basics', name: 'iOS', icon: <IosIcon /> },
-        { link: '/javascript/v2/foundation/basics', name: 'JavaScript', icon: <JavascriptIcon /> },
-        { link: '/react-native/v2/foundation/basics', name: 'React-Native', icon: <ReactIcon /> },
-        { link: '/flutter/v2/foundation/basics', name: 'Flutter', icon: <FlutterIcon /> },
-        { link: '/server-side/v2/foundation/basics', name: 'Server-Side', icon: <ServerIcon /> }
+        {
+            link: '/android/v2/foundation/Basics',
+            name: 'Android',
+            icon: <AndroidIcon />,
+            apiRef: '/api-reference/android/v2/index.html'
+        },
+        {
+            link: '/ios/v2/foundation/Basics',
+            name: 'iOS',
+            icon: <IosIcon />,
+            apiRef: '/api-reference/ios/v2/home/content'
+        },
+        {
+            link: '/javascript/v2/foundation/basics',
+            name: 'JavaScript',
+            icon: <JavascriptIcon />,
+            apiRef: '/api-reference/javascript/v2/home/content'
+        },
+        {
+            link: '/react-native/v2/foundation/basics',
+            name: 'React-Native',
+            icon: <ReactIcon />,
+            apiRef: '/api-reference/react-native/v2/modules.html'
+        },
+        {
+            link: '/flutter/v2/foundation/basics',
+            name: 'Flutter',
+            icon: <FlutterIcon />,
+            apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
+        },
+        {
+            link: '/server-side/v2/foundation/basics',
+            name: 'Server-Side',
+            icon: <ServerIcon />,
+            apiRef: '/server-side/v2/foundation/basics'
+        }
     ];
     // @ts-ignore
     let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === router.query.slug[0]);
@@ -44,7 +74,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
         // @ts-ignore
         if (router.query.slug[0] === 'api-reference') {
             // @ts-ignore
-            router.push(`/api-reference/${s.name.toLowerCase()}/v2/home/content`, undefined, {
+            router.push(s.apiRef, undefined, {
                 shallow: false
             });
         } else {
@@ -63,11 +93,11 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
         {
             title: 'SFU Recording',
             url: '/server-side/v2/features/recording'
-        },
-        {
-            title: 'Simulcast',
-            url: '/server-side/v2/features/simulcast'
         }
+        // {
+        //     title: 'Simulcast',
+        //     url: '/docs/server-side/v2/features/simulcast'
+        // }
     ];
     return (
         <div className="ctx">

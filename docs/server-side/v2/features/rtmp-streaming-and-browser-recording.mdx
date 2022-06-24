@@ -51,7 +51,14 @@ You can start either RTMP Streaming or Browser Recording or both for any room
 
 ##### meeting_url
 
-This is a url which lands into the meeting directly. If you are using 100ms apps then this will be like - `https://<domain>.app.100ms.live/preview/<room_id>/<role>?token=beam_recording`. Example - `https://myname.app.100ms.live/preview/61101349d0f56e684b608c08/beam?token=beam_recording`
+This is a url which lands into the meeting directly. If you are using 100ms apps then this will be like - `https://<domain>.app.100ms.live/preview/<room_id>/<role>?skip_preview=true`.
+
+There are also a few additional query params which can be used for the 100ms app link -
+- `auth_token=token1234`: this can be used to pass auth token generated on your side to the recording webapp
+- `ui_mode=activespeaker`: this can be used to open active speaker mode by default for recording. In active speaker mode,
+    the current speaker will show up in center, and rest of the peers will show up in the sidebar.
+
+Example - `https://myname.app.100ms.live/preview/61101349d0f56e684b608c08/beam?skip_preview=true&auth_token=token1234&ui_mode=activespeaker`
 
 ##### resolution
 
@@ -129,6 +136,22 @@ curl \
 <Tab id="stop-1">
     <Response res="200: OK" resText="Beam has stopped successfully" />
 </Tab>
+
+### Error messages in RTMP API
+
+| Message                                                            | Code       | Description                                              |
+| :----------------------------------------------------------------- | :--------- | :------------------------                                |
+| Error: beam already started                                        | 1          | RTMP streaming or Recording already running for the room |
+| Error: internal server error                                       | 2          | server error                                             |
+| Error: room_id missing                                             | 3          | room id is missing in the request payload                |
+| Error: room_id invalid                                             | 4          | Room id provided is invalid                              |
+| Error: rtmp_url and record missing                                 | 5          | RTMP urls or record flag is required                     |
+| Error: meeting_url missing                                         | 6          | Meeting url is missing in the request payload            |
+| Error: meeting_url invalid                                         | 7          | Meeting url is invalid                                   |
+| Error: operation invalid                                           | 8          | Operation provided is invalid                            |
+| Error: operation missing                                           | 9          | Operation field is missing in the request payload        |
+| Error: no active beam found for the passed in identifiers          | 10         | No Active beam running in the room                       |
+| Error: Resolution not supported                                    | 11         | Input Resolution not Supported                           |
 
 ## Recording upload destination
 
