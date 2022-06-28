@@ -50,25 +50,37 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
         // update the state
         setIsDark(!isDark);
     };
+
+    const getCurrentTech = () => {
+        const techs = ['android', 'flutter', 'ios', 'javascript', 'react-native', 'server-side'];
+        let currentTech: string | undefined =
+            router.query.slug?.[0] === 'api-reference'
+                ? router.query.slug[1]
+                : router.query.slug?.[0];
+
+        if (!techs.includes(currentTech || '')) {
+            currentTech = techs.find((tech) => router.asPath.toLowerCase().includes(tech));
+        }
+
+        return currentTech;
+    };
     // @ts-ignore
-    const currentTech =
-        // @ts-ignore
-        router.query.slug[0] === 'api-reference' ? router.query.slug[1] : router.query.slug[0];
     const routeAPIRef = () => {
+        const currentTech = getCurrentTech() || 'javascript';
         // @ts-ignore
-        if (router.query.slug[0] === 'react-native') {
+        if (currentTech === 'react-native') {
             return `/api-reference/react-native/v2/modules.html`;
         }
         // @ts-ignore
-        if (router.query.slug[0] === 'flutter') {
+        if (currentTech === 'flutter') {
             return `https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html`;
         }
         // @ts-ignore
-        if (router.query.slug[0] === 'android') {
+        if (currentTech === 'android') {
             return `/api-reference/android/v2/index.html`;
         }
         // @ts-ignore
-        const routeLink = `/api-reference/${router.query.slug[0]}/v2/home/content`;
+        const routeLink = `/api-reference/${currentTech}/v2/home/content`;
         // @ts-ignore
         if (router.query.slug[0] === 'api-reference') {
             return router.asPath;
@@ -98,7 +110,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
             <div className="head-right">
                 <div className="nav-links">
                     <button className={!isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
-                        <Link href={`/${currentTech}/`}> Docs</Link>
+                        <Link href={`/${getCurrentTech() || 'javascript'}/`}> Docs</Link>
                     </button>
                     <span style={{ marginRight: '1rem' }} />
                     {/* @ts-ignore */}
