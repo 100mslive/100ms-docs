@@ -62,11 +62,11 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
             currentTech = techs.find((tech) => router.asPath.toLowerCase().includes(tech));
         }
 
-        return currentTech;
+        return currentTech || 'javascript';
     };
+    const currentTech = getCurrentTech();
     // @ts-ignore
     const routeAPIRef = () => {
-        const currentTech = getCurrentTech() || 'javascript';
         // @ts-ignore
         if (currentTech === 'react-native') {
             return `/api-reference/react-native/v2/modules.html`;
@@ -110,7 +110,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
             <div className="head-right">
                 <div className="nav-links">
                     <button className={!isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
-                        <Link href={`/${getCurrentTech() || 'javascript'}/`}> Docs</Link>
+                        <Link href={`/${currentTech}/`}> Docs</Link>
                     </button>
                     <span style={{ marginRight: '1rem' }} />
                     {/* @ts-ignore */}
