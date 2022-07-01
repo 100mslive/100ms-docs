@@ -69,7 +69,7 @@ SDK will also start a foreground service with a notification when it starts capt
 
 To take a look at how this is implemented in our sample app, click [here](https://github.com/100mslive/100ms-android/blob/3590777bf0a3677cb9b5001034ea9ed7087f9d90/app/src/main/java/live/hms/app2/ui/meeting/MeetingViewModel.kt#L860).
 
-`hmssdk.startAudioShare` also takes an optional third parameter of type notification. See how to build a custom notification in the android docs [here](https://developer.android.com/training/notify-user/build-notification).
+`hmssdk.startAudioShare` also takes an optional fourth parameter of type notification. See how to build a custom notification in the android docs [here](https://developer.android.com/training/notify-user/build-notification).
 
 It could look something like this:
 Since this is a standard Android notification the full range of customization is available.
@@ -97,7 +97,8 @@ Since this is a standard Android notification the full range of customization is
 ## How to change mode
 To change the mode the user is streaming audio, call the `setAudioMixingMode` API and pass one of the modes out of
     `TALK_ONLY` or `TALK_AND_MUSIC` or `MUSIC_ONLY`
-Note that the `TALK_ONLY` mode is equivalent to regular mode, that is without starting this API
+
+Note that `TALK_ONLY` mode is equivalent to regular mode, that is without starting this API
 
 ## How to stop audio sharing
 To stop capturing device audio and streaming into the room, call the `stopAudioShare` API and provide a `HMSActionResultListener`
@@ -128,7 +129,7 @@ to listen to the success or error callbacks.
     started the sharing of device audio otherwise the foreground service will be running if even user kills the
     app from the Recents tab.
 
->   DONOT forget to add the permission for foreground service
+>   DONOT forget to add the following permission for foreground service
 
 ```kotlin
 
