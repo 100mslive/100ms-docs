@@ -36,7 +36,7 @@ const onErrorListener = (error: HMSException) => {
 ## Best Practices
 
 * Once you receive an onReconnectingListener try and avoid user from interacting with any APIs untill onReconnectedListener is received otherwise 
-the APIs might not be successful like leave, setMute etc. 
+the APIs might not be successful like join, leave, setMute etc. 
 * If 60 seconds timeout is passed and you receive an onErrorListener, check for 4005 error code and redirect back to home screen as the connection is 
 terminated and you will have to again join the room.
 ```js
