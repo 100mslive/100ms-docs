@@ -34,9 +34,9 @@ const startHLSStreaming = () => {
     meetingURLVariants: [hlsStreamingDetails],
   });
   
-  hmsInstance.startHLSStreaming(hmsHLSConfig)
-    .then(r => console.log(r))
-    .catch(e => console.log(e));
+  await hmsInstance.startHLSStreaming(hmsHLSConfig)
+    .then(d => console.log('Start Hls Success: ', d))
+    .catch(e => console.log('Start Hls Error: ', e));
 };
 ```
 
@@ -45,9 +45,9 @@ You can call hmsInstance.stopHLSStreaming to stop HLS Streaming which will stop 
 
 ```js 
 const stopHLSStreaming = () => {  
-  hmsInstance.stopHLSStreaming()
-    .then(r => console.log(r))
-    .catch(e => console.log(e));
+  await hmsInstance.stopHLSStreaming()
+    .then(d => console.log('Stop Hls Success: ', d))
+    .catch(e => console.log('Stop Hls Error: ', e));
 };
 ```
 Want to see how this works in a live project? Take a look at our advanced sample app.

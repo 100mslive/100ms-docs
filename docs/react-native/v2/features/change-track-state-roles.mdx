@@ -56,9 +56,10 @@ Here's an example of how you would check if the caller was allowed to mute peers
 
 ```js
 // instance acquired from build() method
-hmsInstance?.changeTrackStateForRoles(true, undefined, undefined, [
+await hmsInstance?.changeTrackStateForRoles(true, undefined, undefined, [
   hmsInstance?.knownRoles,
-]);
+]).then(d => console.log('Change Track State Roles Success: ', d))
+  .catch(e => console.log('Change Track State Roles Error: ', e));
 ```
 This can be further narrowed by specifying only those tracks of type Audio.
 
@@ -67,7 +68,8 @@ Note that `HMSTrackSource.REGULAR` is the peer's own audio and video as opposed 
 import { HMSTrackType, HMSTrackSource } from '@100mslive/react-native-hms';
 
 // instance acquired from build() method
-hmsInstance?.changeTrackStateForRoles(true, HMSTrackType.AUDIO, HMSTrackSource.REGULAR, [
+await hmsInstance?.changeTrackStateForRoles(true, HMSTrackType.AUDIO, HMSTrackSource.REGULAR, [
   hmsInstance?.knownRoles,
-]);
+]).then(d => console.log('Change Track State Roles Success: ', d))
+  .catch(e => console.log('Change Track State Roles Error: ', e));
 ```
