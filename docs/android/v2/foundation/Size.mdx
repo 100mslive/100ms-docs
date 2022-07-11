@@ -3,33 +3,11 @@ title: SDK Size Impact
 nav: 1.5
 ---
 
-The exact amount the SDK adds to your app can vary based on a few parameters but to find out the most it will add, add up the SDK size and Webrtc Size in the Size Table below.
 
-Note that when a single apk is built it will add all the webrtc binaries together but on-device, it will only take one of the webrtc architectures not all.
-
-For example, the all-arch apk will be increasd by:
-
-SDK (1.1 Mb) + Webrtc (11Mb + 10.8Mb + 8.8Mb + 5.7Mb) = **37.4 Mb**
-
-However on an actual arm64 device, when the play store downloads it, it will be:
-
-SDK (1.1 Mb) + Webrtc arm64 ( 8.8Mb ) = **9.9 Mb**
-
-## Size Table
-
-#### SDK Size:
-
-1.1Mb - for each architecture.
-
-#### Webrtc Size:
-
-| Architecture | Size Increase (Uncompressed) | **APK Size Increase (Compressed)** |
+| Increase APK size |
 |---|---|---|
-|x86_64| 11mb | **6mb** |
-|x86| 10.8mb | **6.1mb**|
-|arm64-v8a|8.8mb|**5.3mb**|
-|armeabi-v7|5.7mb|**4.7mb**|
+|(armeabi-v7)| **5.8MB**|
+|(arm64-v8a) **(most common one)**| **6.4MB**|
+|(x86_64)| **7.1MB**|
+|(x86)| **7.2MB**|
 
-> 💡 The webrtc binaries contribute most to the size increase. When inside your apk they are compressed by default so the apk size will only be what you see under **compressed* since the APKs themselves are compressed files. If the apk was unzipped then you'd see the uncompressed file sizes. In practise this only happens to ram when the app is in use and does not contribute to disk space.
-
-You could observe the architectures within your app's play store / analytics dashboard to see what the most common architectures are for your customers.
