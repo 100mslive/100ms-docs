@@ -15,7 +15,9 @@ This will be received by everyone in the room.
 
 ```js
 // instance acquired from build() method
-hmsInstance.sendBroadcastMessage('hello everyone!'); // yes it's that simple 😉
+await hmsInstance.sendBroadcastMessage('hello everyone!') // yes it's that simple 😉
+    .then(d => console.log('Broadcast Message Success: ', d))
+    .catch(e => console.log('Broadcast Message Error: ', e));
 ```
 
 ### Group Messages
@@ -28,7 +30,9 @@ This will be received by every peer who is part of the passed in roles.
 // all available Roles can be obtained from hmsInstance using hmsInstance.knownRoles. 
 // it will return an array of HMSRole from which required roles can be selected for this API.
 
-hmsInstance.sendGroupMessage('hi folks!', [role1, role2]);
+await hmsInstance.sendGroupMessage('hi folks!', [role1, role2])
+    .then(d => console.log('Group Message Success: ', d))
+    .catch(e => console.log('Group Message Error: ', e));
 ```
 
 ### Direct Messages
@@ -37,7 +41,9 @@ This will only be received by the peer whom the message was sent to.
 
 ```js
 // instance acquired from build() method
-hmsInstance.sendDirectMessage('keep this message a secret!', peer);
+await hmsInstance.sendDirectMessage('keep this message a secret!', peer)
+    .then(d => console.log('Direct Message Success: ', d))
+    .catch(e => console.log('Direct Message Error: ', e));
 ```
 
 ## Receiving Chat Messages

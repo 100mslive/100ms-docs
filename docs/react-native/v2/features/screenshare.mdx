@@ -21,19 +21,25 @@ To start screen share, app needs to call the `startScreenshare` method of `HMSSD
 Following is the snippet on how to use this:
 ```js
 // hms instance acquired from build method
-hmsInstance?.startScreenshare();
+await hmsInstance?.startScreenshare()
+    .then(d => console.log('Start startScreenshare Success: ', d))
+    .catch(e => console.log('Start startScreenshare Error: ', e));
 ```
 ## How to stop screenshare from the app
 To start screen share, application needs to call the `stopScreenshare` method of `HMSSDK`.
 Following is the snippet on how to use this:
 ```js
 // hms instance acquired from build method
-await hmsInstance?.stopScreenshare();
+await hmsInstance?.stopScreenshare()
+    .then(d => console.log('Stop Screenshare Success: ', d))
+    .catch(e => console.log('Stop Screenshare Error: ', e));
 ```
 ## How to get Screen Share Status
 Application needs to call the `isScreenShared` method of `HMSSDK`. This method returns a Boolean which will be true 
 inscase ScreenShare is currently active and being used, and False for inactive state.
 ```js
 // hms instance acquired from build method
-hmsInstance?.isScreenShared()
+await hmsInstance?.isScreenShared()
+    .then(d => console.log('Is Screenshare Success: ', d))
+    .catch(e => console.log('Is Screenshare Error: ', e));
 ```

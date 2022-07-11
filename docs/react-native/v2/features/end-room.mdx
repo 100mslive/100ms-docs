@@ -18,7 +18,9 @@ const reason = 'Host ended the room';
 const lock = false; // optional parameter
 
 // instance acquired from build() method
-hmsInstance.endRoom(reason, lock);
+await hmsInstance.endRoom(reason, lock)
+    .then(d => console.log('End Room Success: ', d))
+    .catch(e => console.log('End Room Error: ', e));
 ```
 
 ## End Room Notification

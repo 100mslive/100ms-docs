@@ -21,7 +21,9 @@ const reason = 'removed from room';
 // instance acquired from build() method
 const peer: HMSPeer = hmsInstance?.remotePeers[0]
 
-hmsInstance.removePeer(peer, reason);
+await hmsInstance.removePeer(peer, reason)
+    .then(d => console.log('Remove Peer Success: ', d))
+    .catch(e => console.log('Remove Peer Error: ', e));
 ```
 
 ## Remove Peer Notification

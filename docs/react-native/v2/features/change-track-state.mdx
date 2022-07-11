@@ -24,8 +24,12 @@ If you have the required permissions you can mute remote tracks audio / video. T
 const mute: boolean = true;
 
 // instance acquired from build() method
-hmsInstance?.changeTrackState(audioTrack as HMSTrack, mute);
-hmsInstance?.changeTrackState(videoTrack as HMSTrack, mute);
+await hmsInstance?.changeTrackState(audioTrack as HMSTrack, mute)
+  .then(d => console.log('Change Track State Success: ', d))
+  .catch(e => console.log('Change Track State Error: ', e));
+await hmsInstance?.changeTrackState(videoTrack as HMSTrack, mute)
+  .then(d => console.log('Change Track State Success: ', d))
+  .catch(e => console.log('Change Track State Error: ', e));
 ```
 
 ## Unmute other tracks
@@ -36,8 +40,12 @@ If you have the required permissions you can request to unmute remote tracks aud
 const unmute: boolean = false;
 
 // instance acquired from build() method
-hmsInstance?.changeTrackState(audioTrack as HMSTrack, unmute);
-hmsInstance?.changeTrackState(videoTrack as HMSTrack, unmute);
+await hmsInstance?.changeTrackState(audioTrack as HMSTrack, unmute)
+  .then(d => console.log('Change Track State Success: ', d))
+  .catch(e => console.log('Change Track State Error: ', e));
+await hmsInstance?.changeTrackState(videoTrack as HMSTrack, unmute)
+  .then(d => console.log('Change Track State Success: ', d))
+  .catch(e => console.log('Change Track State Error: ', e));
 ```
 
 ## Accept Track change request
@@ -71,5 +79,7 @@ If you have the required permissions you can mute all remote audio tracks at onc
 
 ```js
 // instance acquired from build method
-hmsInstance.remoteMuteAllAudio()
+await hmsInstance.remoteMuteAllAudio()
+  .then(d => console.log('Remote Mute All Audio Success: ', d))
+  .catch(e => console.log('Remote Mute All Audio Error: ', e));
 ```
