@@ -128,22 +128,15 @@ curl \
 
 ---
 
-### Get stream URL
+### Get HLS URL
 <GetRequest
-desp="This endpoint is used to get the URL of a HLS stream."
-url="http://prod-in2.100ms.live/islb/api/v2/room/hls/url"
+    desp="This endpoint is used to get the URL of a HLS stream"
+    url="http://prod-in2.100ms.live/islb/api/v2/room/hls/url"
 />
 
-<p>
-If static HLS url is enabled for your account, this endpoint always
-returns a success response with the static HLS URL. Otherwise,
-it return a error response if HLS is not running.
-</p>
+<Tabs items={['Request', 'Response', 'Error Response']} id="url" />
 
-<Tabs items={['Request', 'Response']} id="hls-url" />
-
-<div id="hls-url-0">
-
+<div id="url-0">
 
 #### Headers
 
@@ -156,23 +149,29 @@ it return a error response if HLS is not running.
 
 | Name              | Type     | Description                                                           | Required |
 | :---------------- | :------- | :-------------------------------------------------------------------- | :------- |
-| room_id <br/>     | `string` | The room id of the room for which you want to get the HLS URL         | Yes      |
+| room_id <br/>     | `string` | The room id of the room for which we need to get hls url              | Yes      |
 
 #### cURL
 
 ```bash
 curl \
---location \
---request GET 'http://prod-in2.100ms.live/islb/api/v2/room/hls/url' \
---header 'Authorization: Bearer <management_token>' \
---header 'Content-Type: application/json' \
---data-raw '{"room_id": "62bea5b9b018941974406f3e"}
-'
+    --location \
+    --request GET 'https://prod-in2.100ms.live/islb/api/v2/room/hls/url' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer <management_token>' \
+    --data-raw '{
+        "room_id": <room_id>
+    }'
 ```
+
 </div>
 
-<Tab id="hls-url-1">
-<Response res="200: OK" resText='{"url": "https://cdn-in3.100ms.live/beam/6278fcadff688c037a38e874/6278ad1cbd4f3b56b0777b69/20220712/1657626715578/master.m3u8"}' />
+<Tab id="url-1">
+    <Response res="200: OK" resText='{"url": "https://***-in3.100ms.live/*******/master.m3u8"}' />
+</Tab>
+
+<Tab id="url-2">
+    <Response res="404: Not Found" resText='{"code": 404, "message": "No HLS stream running"}' />
 </Tab>
 
 ---
