@@ -128,6 +128,54 @@ curl \
 
 ---
 
+### Get HLS URL
+<GetRequest
+    desp="This endpoint is used to get the URL of a HLS stream"
+    url="http://prod-in2.100ms.live/islb/api/v2/room/hls/url"
+/>
+
+<Tabs items={['Request', 'Response', 'Error Response']} id="url" />
+
+<div id="url-0">
+
+#### Headers
+
+| Name                           | Value                        | Required |
+| :----------------------------- | :--------------------------- | :------- |
+| Content-type <br/>             | application/json             | Yes      |
+| Authorization <br/>            | Bearer `<management token>`  | Yes      |
+
+#### Body Paramters
+
+| Name              | Type     | Description                                                           | Required |
+| :---------------- | :------- | :-------------------------------------------------------------------- | :------- |
+| room_id <br/>     | `string` | The room id of the room for which we need to get hls url              | Yes      |
+
+#### cURL
+
+```bash
+curl \
+    --location \
+    --request GET 'https://prod-in2.100ms.live/islb/api/v2/room/hls/url' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer <management_token>' \
+    --data-raw '{
+        "room_id": <room_id>
+    }'
+```
+
+</div>
+
+<Tab id="url-1">
+    <Response res="200: OK" resText='{"url": "https://***-in3.100ms.live/*******/master.m3u8"}' />
+</Tab>
+
+<Tab id="url-2">
+    <Response res="404: Not Found" resText='{"code": 404, "message": "No HLS stream running"}' />
+</Tab>
+
+---
+
 ### Pause Recording
 
 <PostRequest
