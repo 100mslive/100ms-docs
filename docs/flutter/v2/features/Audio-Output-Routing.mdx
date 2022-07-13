@@ -12,7 +12,8 @@ similar to the phone calls.
 void switchAudioOutput(HMSAudioDevice audioDevice)
 ```
 
-* Types of audio routing supported.
+Types of audio routing supported:
+
 * SPEAKER_PHONE   - route audio to device speaker
 * EARPIECE  - route audio to device earpiece
 * WIRED_HEADSET     - route audio to connected wired device
@@ -24,7 +25,7 @@ Invoke this method with appropriate option , to switch the output to that device
 `audioDevice` is the [AudioDevice] type through which audio should be routed.
 
 ```dart
-        hmsSDK.switchAudioOutput(audioDevice);
+hmsSDK.switchAudioOutput(audioDevice);
 ```
 
 ## Adding a listener
@@ -50,5 +51,5 @@ Future<HMSAudioDevice> getCurrentAudioDevice()
 Invoke this method get current device type through which audio output is being routed.
 
 ```dart
-        hmsSDK.getCurrentAudioDevice()
+hmsSDK.getCurrentAudioDevice()
 ```
