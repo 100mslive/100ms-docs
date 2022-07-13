@@ -3,17 +3,17 @@ title: Screen Share (Beta)
 nav: 12
 ---
 
-iOS SDK provides support for sharing the entire screen of the device to the room.
+iOS SDK provides support for sharing the entire screen of the device in the room.
 
-Please note that for a peer to share their screen, their role must have screenshare enabled in the dashboard. Also select the appropriate resolution that you desire the screenshare track should be of.
+Please note that for a peer to share their screen, their role must have screenshare enabled in the dashboard. Also, select the appropriate resolution that you desire the screenshare track should be of.
 
 ![ScreenshareDashboard](/docs/v2/screenshare-dashboard.png)
 
 ## How to start screenshare from the app
 
-You create an iOS broadcast upload extension. It uses Apple's ReplayKit framework to record the device screen and delivers frame samples to your broadcast extension. You can share not ony your own app but also the entire device sceeen including other apps on the device.
+You create an iOS broadcast upload extension. It uses Apple's ReplayKit framework to record the device screen and delivers frame samples to your broadcast extension. You can share not only your own app but also the entire device screen including other apps on the device.
 
-HMSBroadcastExtensionSDK is made specifically to be used in the iOS broadcast upload extension target. After importing the SDK, you use HMSScreenRenderer class to process the sample buffer coming from RPBroadcastSampleHandler. These samples are then presented in your main meeting app as screen recording track.
+HMSBroadcastExtensionSDK is made specifically to be used in the iOS broadcast upload extension target. After importing the SDK, you use HMSScreenRenderer class to process the sample buffer coming from RPBroadcastSampleHandler. These samples are then presented in your main meeting app as a screen recording track.
 
 ## How to import
 
@@ -46,8 +46,8 @@ iOS broadcast extension provides you with CMSampleBuffers that you can process u
 
 ## How to create Replaykit Broadcast extension?
 
-1. Create a Broadcast Upload Extension target that is embeded in your app project target.
-2. You create a subclass of RPBroadcastSampleHandler and override processSampleBuffer funtion. This gives you access to the CMSampleBuffer provided by the Replaykit framework.
+1. Create a Broadcast Upload Extension target that is embedded in your app project target.
+2. You create a subclass of RPBroadcastSampleHandler and override the processSampleBuffer function. This gives you access to the CMSampleBuffer provided by the Replaykit framework.
 
 ## How to configure your main app and extension to enable screen sharing
 
@@ -79,9 +79,9 @@ iOS broadcast extension provides you with CMSampleBuffers that you can process u
   
   HMSScreenRenderer uses this app group string to talk to your main app.
   
-## How to share screen in meeting
+## How to share the screen in meeting
 
-  In your broadcast extension you create a subclass of RPBroadcastSampleHandler class. This class handles screen frame samples produced by Replaykit. Replaykit delivers these frame as CMSampleBuffer to processSampleBuffer function.
+  In your Broadcast Extension, you create a subclass of RPBroadcastSampleHandler class. This class handles screen frame samples produced by Replaykit. Replaykit delivers these frames as CMSampleBuffer to processSampleBuffer function.
   
 In your processSampleBuffer function call process function on your screenRenderer instance passing the CMSampleBuffer like below:
   
@@ -95,9 +95,9 @@ In your processSampleBuffer function call process function on your screenRendere
     }
   ```
   
-## How to invalidate the connection between main app and extension when user stops screen recording
+## How to invalidate the connection between main app and extension when the user stops screen recording
 
-When user stops screen sharing broadcastFinished function is called on your RPBroadcastSampleHandler class. At that point call invalidate on your screenRenderer instance to stop sceen sharing.
+When the user stops screen sharing broadcastFinished function is called on your RPBroadcastSampleHandler class. At that point, call invalidate on your screenRenderer instance to stop screen sharing.
 
 ```swift
     override func broadcastFinished() {
@@ -106,8 +106,8 @@ When user stops screen sharing broadcastFinished function is called on your RPBr
     }
   ```
   
-## Stop screen sharing when user leaves the room
-When user leaves the meeting room from the main app, you will receive an error HMSScreenRendererErrorCode.noActiveMeeting when calling process on screenRenderer instance. You can handle this error to stop the broadcast extension like below:
+## Stop screen sharing when the user leaves the room
+When a user leaves the meeting room from the main app, you will receive an error HMSScreenRendererErrorCode.noActiveMeeting when calling process on screenRenderer instance. You can handle this error to stop the broadcast extension like below:
 
 ```swift
     override func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType) {
@@ -125,4 +125,4 @@ When user leaves the meeting room from the main app, you will receive an error H
 
 👀 To see an Example iOS broadcast upload extension implementation for screen sharing using 100ms Broadcast extension SDK, checkout [our Example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
 
-📲 Download the 100ms fully featured Sample iOS app here: https://testflight.apple.com/join/dhUSE7N8
+📲 Download the 100ms fully-featured Sample iOS app here: https://testflight.apple.com/join/dhUSE7N8
