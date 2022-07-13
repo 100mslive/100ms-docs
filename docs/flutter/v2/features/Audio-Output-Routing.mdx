@@ -25,7 +25,9 @@ Invoke this method with appropriate option , to switch the output to that device
 `audioDevice` is the [AudioDevice] type through which audio should be routed.
 
 ```dart
-hmsSDK.switchAudioOutput(audioDevice);
+void switchAudioOutput(HMSAudioDevice audioDevice) {
+    hmsSDK.switchAudioOutput(audioDevice:audioDevice);
+}
 ```
 
 ## Adding a listener
@@ -35,9 +37,13 @@ This method needs to be overriden in the class wherever `HMSUpdateListener` is i
 
 ```dart
 @override
-  void onAudioDeviceChanged(
-      {HMSAudioDevice? currentAudioDevice,
-      List<HMSAudioDevice>? availableAudioDevice})
+void onAudioDeviceChanged(
+{HMSAudioDevice? currentAudioDevice,
+List<HMSAudioDevice>? availableAudioDevice})
+{
+    //currentAudioDevice : audio device to which audio is routed to
+    //availableAudioDevice : other available audio devices
+}
 ```
 
 ## Get current focussed device
@@ -51,5 +57,7 @@ Future<HMSAudioDevice> getCurrentAudioDevice()
 Invoke this method get current device type through which audio output is being routed.
 
 ```dart
-hmsSDK.getCurrentAudioDevice()
+Future<HMSAudioDevice> getCurrentAudioDevice() async {
+    return await hmsSDK.getCurrentAudioDevice();
+}
 ```
