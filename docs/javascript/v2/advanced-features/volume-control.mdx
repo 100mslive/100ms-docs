@@ -37,8 +37,9 @@ If you want to set volume for specific track, always do a check before calling s
 
 
 ```
-if (trackId) {
-  hmsActions.setVolume(0, trackId);
+const peer = hmsStore.getState(selectPeerById("peer-id"));
+if (peer?.audioTrack) {
+  hmsActions.setVolume(0, peer.audioTrack);
 }
 ```
 
@@ -56,7 +57,7 @@ To silence a particular role, you can get all the peers for the role and silence
 
 ```
 function setVolumeByRole(roleName, volume) {
-  const peers = useHMSStore(selectPeersByRole(roleName));
+  const peers = hmsStore.getState(selectPeersByRole(roleName));
   for (const peer of peers) {
     hmsActions.setVolume(volume, peer.audioTrack);
   }
