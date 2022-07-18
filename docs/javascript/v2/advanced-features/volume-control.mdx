@@ -5,6 +5,8 @@ nav: 5.02
 
 ![Change Volume](/guides/volume.png)
 
+## Change Volume API
+
 Audio volume refers to the volume of an audio track as perceived on the receiving end. This is a number between 0 to 100.
 To modify audio volume - 
 
@@ -16,4 +18,52 @@ hmsActions.setVolume(volume);
 
 // set the volume for a specific track
 hmsActions.setVolume(volume, "<track_id>");
+
+// get the currrent volume for a specific track
+hmsStore.getState(selectAudioTrackVolume("<track_id>"));
+```
+
+## Gotchas
+
+Availability of peer doesn't mean availability of their track id. The below code can silence the whole room if peer's audio
+track is not yet present.
+
+```
+const peer = hmsStore.getState(selectPeerById("peer-id"));
+hmsActions.setVolume(0, peer?.audioTrack);
+```
+
+If you want to set volume for specific track, always do a check before calling setVolume - 
+
+
+```
+if (trackId) {
+  hmsActions.setVolume(0, trackId);
+}
+```
+
+## Ideas
+
+### Proximity based audio for the Metaverse
+
+If you're building a 2D/3D world, where peers can navigate around and you want the audio to be based on how close two people are, you 
+can use this action to decide an appropriate audio level based on proximity.
+
+
+### Silence a role
+
+To silence a particular role, you can get all the peers for the role and silence the tracks in a loop - 
+
+```
+function setVolumeByRole(roleName, volume) {
+  const peers = useHMSStore(selectPeersByRole(roleName));
+  for (const peer of peers) {
+    hmsActions.setVolume(volume, peer.audioTrack);
+  }
+}
+
+// silence a role
+setVolumeByRole("role-name", 0);
+// revert the silence
+setVolumeByRole("role-name", 100);
 ```
