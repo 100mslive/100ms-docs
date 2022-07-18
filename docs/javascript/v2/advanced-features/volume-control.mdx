@@ -32,22 +32,19 @@ hmsStore.getState(selectAudioTrackVolume("<track_id>"));
 <Tab id='volume-1'>
 
 ```jsx
-// hook exporting current volume and a method to setVolume for a particular track
-function useSetVolume({trackId}) {
+function PeerVolumeController({peerID}) {
+  const track = useHMSStore(selectAudioTrackByPeerID(peerID));
+  const currVolume = useHMSStore(selectAudioTrackVolume(track?.id));
   const hmsActions = useHMSActions();
-  const currVolume = useHMSStore(selectAudioTrackVolume(trackId));
 
   const setVolume = (volume) => {
-    if (trackId) {
-      console.log(`setting volume for track=${trackId}, prev=${currVolume}, new=${volume}`);
-      hmsActions.setVolume(volume, trackId);
-    } else {
-      console.log("setting volume globally for everyone - ", volume);
-      hmsActions.setVolume(volume);
+    if (track) {
+      console.log(`setting volume for track=${track.id}, prev=${currVolume}, new=${volume}`);
+      hmsActions.setVolume(volume, track.id);
     }
   }
 
-  return setVolume;
+  return <Slider onChange={setVolume}/>;
 }
 ```
 
