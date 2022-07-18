@@ -142,10 +142,9 @@ curl \
 
 | Name                           | Value                        | Required |
 | :----------------------------- | :--------------------------- | :------- |
-| Content-type <br/>             | application/json             | Yes      |
 | Authorization <br/>            | Bearer `<management token>`  | Yes      |
 
-#### Body Paramters
+#### Request Parameters
 
 | Name              | Type     | Description                                                           | Required |
 | :---------------- | :------- | :-------------------------------------------------------------------- | :------- |
@@ -156,18 +155,13 @@ curl \
 ```bash
 curl \
     --location \
-    --request GET 'https://prod-in2.100ms.live/islb/api/v2/room/hls/url' \
-    --header 'Content-Type: application/json' \
-    --header 'Authorization: Bearer <management_token>' \
-    --data-raw '{
-        "room_id": <room_id>
-    }'
+    --request GET 'https://prod-in2.100ms.live/islb/api/v2/room/hls/url?room_id=<room_id>' \
+    --header 'Authorization: Bearer <management_token>'
 ```
-
 </div>
 
 <Tab id="url-1">
-    <Response res="200: OK" resText='{"url": "https://***-in3.100ms.live/*******/master.m3u8"}' />
+    <Response res="200: OK" resText='{"url": "https://***-in2.100ms.live/*******/master.m3u8"}' />
 </Tab>
 
 <Tab id="url-2">
@@ -179,8 +173,8 @@ curl \
 ### Pause Recording
 
 <PostRequest
-desp="This endpoint is used to pause hls recording. This has no effect on the live stream."
-url="http://prod-in2.100ms.live/islb/api/v2/room/hls/pause"
+    desp="This endpoint is used to pause hls recording. This has no effect on the live stream."
+    url="http://prod-in2.100ms.live/islb/api/v2/room/hls/pause"
 />
 
 <Tabs items={['Request', 'Response']} id="pause" />
@@ -205,18 +199,18 @@ url="http://prod-in2.100ms.live/islb/api/v2/room/hls/pause"
 
 ```bash
 curl \
---location \
---request POST 'https://prod-in2.100ms.live/islb/api/v2/room/hls/pause' \
---header 'Content-Type: application/json' \
---header 'Authorization: Bearer <management_token>' \
---data-raw '{
-"room_id": <room_id>
-}'
+    --location \
+    --request POST 'https://prod-in2.100ms.live/islb/api/v2/room/hls/pause' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer <management_token>' \
+    --data-raw '{
+        "room_id": <room_id>
+    }'
 ```
 
 </div>
 <Tab id="pause-1">
-<Response res="200: OK" resText="Pause event triggered for room" />
+    <Response res="200: OK" resText="Pause event triggered for room" />
 </Tab>
 
 ---
@@ -224,8 +218,8 @@ curl \
 ### Unpause Recording
 
 <PostRequest
-desp="This endpoint is used to unPause hls recording. This has no effect on the live stream."
-url="http://prod-in2.100ms.live/islb/api/v2/room/hls/unpause"
+    desp="This endpoint is used to unPause hls recording. This has no effect on the live stream."
+    url="http://prod-in2.100ms.live/islb/api/v2/room/hls/unpause"
 />
 
 <Tabs items={['Request', 'Response']} id="unpause" />
@@ -244,24 +238,24 @@ url="http://prod-in2.100ms.live/islb/api/v2/room/hls/unpause"
 
 | Name              | Type     | Description                                                           | Required |
 | :---------------- | :------- | :-------------------------------------------------------------------- | :------- |
-| room_id <br/>     | `string` | The room id of the room for which we need to unpause recording          | Yes      |
+| room_id <br/>     | `string` | The room id of the room for which we need to unpause recording        | Yes      |
 
 #### cURL
 
 ```bash
 curl \
---location \
---request POST 'https://prod-in2.100ms.live/islb/api/v2/room/hls/unpause' \
---header 'Content-Type: application/json' \
---header 'Authorization: Bearer <management_token>' \
---data-raw '{
-"room_id": <room_id>
-}'
+    --location \
+    --request POST 'https://prod-in2.100ms.live/islb/api/v2/room/hls/unpause' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer <management_token>' \
+    --data-raw '{
+        "room_id": <room_id>
+    }'
 ```
 
 </div>
 <Tab id="unpause-1">
-<Response res="200: OK" resText="Unpause event triggered for room" />
+    <Response res="200: OK" resText="Unpause event triggered for room" />
 </Tab>
 
 ---
