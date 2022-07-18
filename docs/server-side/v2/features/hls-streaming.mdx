@@ -145,7 +145,7 @@ curl \
 | Content-type <br/>             | application/json             | Yes      |
 | Authorization <br/>            | Bearer `<management token>`  | Yes      |
 
-#### Body Paramters
+#### Request Parameters
 
 | Name              | Type     | Description                                                           | Required |
 | :---------------- | :------- | :-------------------------------------------------------------------- | :------- |
@@ -155,19 +155,14 @@ curl \
 
 ```bash
 curl \
-    --location \
-    --request GET 'https://prod-in2.100ms.live/islb/api/v2/room/hls/url' \
-    --header 'Content-Type: application/json' \
-    --header 'Authorization: Bearer <management_token>' \
-    --data-raw '{
-        "room_id": <room_id>
-    }'
+--location \
+--request GET 'https://prod-in2.100ms.live/islb/api/v2/room/hls/url?room_id=<room_id>' \
+--header 'Authorization: Bearer <management_token>'
 ```
-
 </div>
 
 <Tab id="url-1">
-    <Response res="200: OK" resText='{"url": "https://***-in3.100ms.live/*******/master.m3u8"}' />
+    <Response res="200: OK" resText='{"url": "https://***-in2.100ms.live/*******/master.m3u8"}' />
 </Tab>
 
 <Tab id="url-2">
