@@ -28,7 +28,7 @@ hmsStore.getState(selectAudioTrackVolume("<track_id>"));
 Availability of peer doesn't mean availability of their track id. The below code can silence the whole room if peer's audio
 track is not yet present.
 
-```
+```js
 const peer = hmsStore.getState(selectPeerById("peer-id"));
 hmsActions.setVolume(0, peer?.audioTrack);
 ```
@@ -36,7 +36,7 @@ hmsActions.setVolume(0, peer?.audioTrack);
 If you want to set volume for specific track, always do a check before calling setVolume - 
 
 
-```
+```js
 const peer = hmsStore.getState(selectPeerById("peer-id"));
 if (peer?.audioTrack) {
   hmsActions.setVolume(0, peer.audioTrack);
@@ -55,7 +55,7 @@ can use this action to decide an appropriate audio level based on proximity.
 
 To silence a particular role, you can get all the peers for the role and silence the tracks in a loop - 
 
-```
+```js
 function setVolumeByRole(roleName, volume) {
   const peers = hmsStore.getState(selectPeersByRole(roleName));
   for (const peer of peers) {
