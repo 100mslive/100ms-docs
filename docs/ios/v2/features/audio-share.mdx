@@ -21,22 +21,17 @@ The audio that you share goes to other peers through your local mic channel. To 
 2. Next, you create an instance of HMSAudioMixerSource passing an array of nodes that we created in the step above like so:
 
 ```swift
-    do {
-        let audioMixerSource = try HMSAudioMixerSource(nodes: [audioFilePlayerNode, micNode])
-    }
-    catch {
-        print(error.localizedDescription)
-    }
+    let audioMixerSource = try HMSAudioMixerSource(nodes: [audioFilePlayerNode, micNode])
   ```
   
 3. Next, you pass this custom audio source to the 'audioSource' parameter of HMSAudioTrackSettings for the sdk like below:
 
 ```swift
     let audioSettings = HMSAudioTrackSettings(..., audioSource: audioMixerSource)
-    sdk.trackSettings = HMSTrackSettings(..., audioSettings: audioSettings)
+    hmsSDK.trackSettings = HMSTrackSettings(..., audioSettings: audioSettings)
   ```
 
-That's all you need to setup the sdk to use 'audioMixerSource' as your custom local audio source.
+That's all you need to setup the sdk to use your custom audio source.
 
 ## How to play an audio file
 
@@ -56,6 +51,7 @@ You can set 'interrupts' parameter to false to tell audioFilePlayerNode to not i
     audioFilePlayerNode.play(fileUrl: url to file 1)
     audioFilePlayerNode.play(fileUrl: url to file 2, interrupts: false)
     audioFilePlayerNode.play(fileUrl: url to file 3, interrupts: false)
+    ...
   ```
 
 ## How to play multiple files at the same time
@@ -70,14 +66,14 @@ You can pass multiple instances of audioFilePlayerNode and pass them as nodes wh
     let audioMixerSource = try HMSAudioMixerSource(nodes: [backgroundMusicNode, audioFilePlaybackNode, micNode])
   ```
 
-Now for example, you can play a looping background music at low volume while also being able to play an audio file at the same time like so:
+Now, you can play a looping background music at low volume and an audio file at the same time like so:
 
 ```swift
     backgroundMusicNode.play(fileUrl: ..., volume: 0.2, loops: true)
     audioFilePlayerNode.play(fileUrl: ..., volume: 0.8)
   ```
   
-## How to pause, resume, stop playback
+## How to pause, resume, stop playback and more
 
 You can use following interfaces on HMSAudioFilePlayerNode to pause, resume or stop playback and more:
 
@@ -138,6 +134,20 @@ The broadcast extension receives audio that's playing on your iOS device in proc
 Now your broadcast extension is set to be send audio to your main app.
 
 And that's it. Now your custom mixer source in the main app can receive the audio from broadcast extension and mix it with other source nodes to finally broadcast it to other peers in the room.
+
+## Advanced use cases
+
+If you want to create your own custom audio implementation and just need us to forward audio buffers to other peers in the room, you can use HMSAudioBufferSource as custom audio source. Use enqueue(buffer: AVAudioBuffer) function on HMSAudioBufferSource to send audio to remote peers.
+
+```swift
+    let audioBufferSource = HMSAudioBufferSource()
+    
+    let audioSettings = HMSAudioTrackSettings(..., audioSource: audioBufferSource)
+    hmsSDK.trackSettings = HMSTrackSettings(..., audioSettings: audioSettings)
+    ...
+    
+    audioBufferSource.enqueue(buffer: ...)
+  ```
 
 👀 To see an example iOS broadcast upload extension implementation for screen sharing using 100ms Broadcast Extension SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
 
