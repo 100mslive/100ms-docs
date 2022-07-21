@@ -1,0 +1,85 @@
+---
+title: Reconnection Handling
+nav: 3.22
+---
+
+Real world apps operate in varying network conditions thus requires handling for network bandwidth issues.
+The SDK provides callbacks when a user gets disconnected due to network issues or network switch and also when user gets reconnected again.
+
+> 💡 Note: The SDK tries to reconnect automatically for 60 seconds after that the connection is terminated,the peer is removed from the room and the room has to be rejoined.
+
+## Reconnecting & Reconnected Callbacks
+
+`onReconnecting` and `onReconnected` callbacks are provided in `HMSUpdateListener`.So,These method needs to be overriden in the class wherever `HMSUpdateListener` is implemented.
+
+```dart
+
+//OnReconnecting callback is triggered when the SDK detects a network issue or is trying to reconnect automatically on a network drop, switch etc. 
+@override
+void onReconnecting(){
+    // Reconnecting...
+    // Handle reconnection by showing loaders etc.
+}
+
+//OnReconnected callback is triggered when the SDK has successfully recovered from a network drop, switch or a network issue etc.
+@override
+void onReconnected(){
+    // Reconnected...
+    // Handle by reseting the loaders and switching to normal UI. 
+}
+
+```
+
+> 💡 Note: On getting reconnected the SDK will send all the updates(Track and Peer updates) again.
+
+## Case when user never gets reconnected
+
+SDK tries to reconnect the user automatically for 60 seconds after that the connection gets terminated and the peer is removed from the room by SDK.
+If reconnection fails the SDK sends `onHMSError` callback.
+
+```dart
+
+@override
+  void onHMSError({required HMSException error}){
+    //Handle the UI depending on the error object
+  }
+  
+```
+
+The user will receive the following callbacks with `error` object having `isTerminal:true` and `errorCode` as :
+
+* `Error Code: 1003, Cause: Websocket disconnected`
+
+![Error Code:1003](/docs/v2/flutter-errorCode-1003)
+
+* `Error Code: 4005, Cause: ICE Connection Failed due to network issue[PUBLISH]`
+
+![Error Code:1003](/docs/v2/flutter-errorCode-4005-PUBLISH)
+
+* `Error Code: 4005, Cause: ICE Connection Failed due to network issue[SUBSCRIBE]`
+
+![Error Code:1003](/docs/v2/flutter-errorCode-4005-SUBSCRIBE)
+
+## Best Practices to handle Reconnection
+
+The SDK will send `onReconnecting` callback first if user disconnects, If user reconnects again the SDK sends `onReconnected` callback whereas if
+the user fails to connect again then it sends `onHMSError`.These callbacks can be handled as follows: 
+
+* Once the SDK sends `onReconnecting` callback,Do not allow user to interact with UI and show some loader or reconnecting indicator
+* If `onReconnected` is received then switch back to room UI allowing interaction as usual.
+* If the user fails to reconnect then `onHMSError` callback look for `isTerminal` parameter if it 
+is set to `true` then there is no chance of recovering hence navigate to the `HomeScreen`,showing as toast or errorDialog to the user.
+In the `false` case look for the `errorCode` and handle it accordingly.
+```dart
+@override
+  void onHMSError({required HMSException error}){
+    if(error.isTerminal){
+        //Pop from the meeting room 
+    }
+    else{
+        //Handle the error accordingly
+    }
+  }
+```
+
+> 🗝️ Note: You can find the `errorCode` and the suggested action to be taken [here](./error-handling)
