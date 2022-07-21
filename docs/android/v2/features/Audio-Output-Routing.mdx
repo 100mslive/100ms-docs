@@ -43,23 +43,56 @@ invoke this method with appropriate option , to switch the output to that device
 ## Adding a listener
 
 ```kotlin
-fun setAudioDeviceChangeListener(audioManageDeviceChangeListener: AudioManagerEvents)
+fun setAudioDeviceChangeListener(audioManagerDeviceChangeListener: AudioManagerDeviceChangeListener)
 ```
 add a listener to get updates whenever a device is removed or attached to the device.
-`audioManageDeviceChangeListener` -  listener to be passed to be able to listen to device updates.
+`audioManagerDeviceChangeListener` -  listener to be passed to be able to listen to device updates.
+
+callback methods : 
+1. `onAudioDeviceChanged` - this method is invoked when output device has changed.
+2. `onError` - this method is invoked when there is an error with switching to output device.
+
 
 <Tabs id="device-change-listener" items={['Kotlin', 'Java']} />
 
 <Tab id='device-change-listener-0'>
 
 ```kotlin
-        hmsSDK.setAudioDeviceChangeListener(AudioDevice.SPEAKER_PHONE)
+
+        hmsSDK.setAudioDeviceChangeListener(object :
+            HMSAudioManager.AudioManagerDeviceChangeListener {
+            override fun onAudioDeviceChanged(
+                device: HMSAudioManager.AudioDevice?,
+                listOfDevices: MutableSet<HMSAudioManager.AudioDevice>?
+            ) {
+              
+            }
+
+            override fun onError(error: HMSException?) {
+                HMSLogger.d(TAG, "error : ${error?.description}")
+            }
+        })
+
 ```
 </Tab>
 <Tab id='device-change-listener-1'>
 
 ```java
-        hmsSDK.setAudioDeviceChangeListener(AudioDevice.SPEAKER_PHONE);
+
+
+        hmsSDK.setAudioDeviceChangeListener(new HMSAudioManager.AudioManagerDeviceChangeListener() {
+            @Override
+            public void onAudioDeviceChanged(HMSAudioManager.AudioDevice audioDevice, Set<HMSAudioManager.AudioDevice> listOfDevices) {
+                
+            }
+
+            @Override
+            public void onError(HMSException e) {
+
+            }
+        });
+
+
 ```
 
 </Tab>

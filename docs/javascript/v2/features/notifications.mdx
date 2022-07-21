@@ -68,7 +68,7 @@ The data in notification depends on the notification type. You can use the `swit
 
 <Tab id="notification-types-0">
 
-```jsx{14-44}
+```jsx
 import { hmsNotifications } from './hms';
 
 const unsubscribe = hmsNotifications.onNotification((notification) => {
@@ -131,7 +131,7 @@ const unsubscribe = hmsNotifications.onNotification((notification) => {
 
 <Tab id="notification-types-1">
 
-```jsx{14-44}
+```jsx
 import { useHMSNotifications } from '@100mslive/react-sdk';
 
 function Notification() {
@@ -203,11 +203,11 @@ function Notification() {
 
 You can pass a single notification or array of notifications from one of `HMSNotificationTypes`.
 
-<Tabs id="notification-types" items={['JavaScript', 'React']} />
+<Tabs id="notification-specific-types" items={['JavaScript', 'React']} />
 
-<Tab id="notification-types-0">
+<Tab id="notification-specific-types-0">
 
-```jsx{14-44}
+```jsx
 import { hmsNotifications } from './hms';
 
 const unsubscribe = hmsNotifications.onNotification((notification) => {
@@ -215,26 +215,32 @@ const unsubscribe = hmsNotifications.onNotification((notification) => {
     console.log('data', notification.data);
 }, HMSNotificationTypes.PEER_JOINED);
 
-const unsubscribePeerNotifications = hmsNotifications.onNotification((notification) => {
-    if (!notification) {
-        return;
-    }
-    // this will be called when one of HMSNotificationTypes.PEER_JOINED, HMSNotificationTypes.PEER_LEFT is arrived
-    console.log('notification type', notification.type);
-    console.log('data', notification.data);
-}, [HMSNotificationTypes.PEER_JOINED, HMSNotificationTypes.PEER_LEFT]);
+const unsubscribePeerNotifications = hmsNotifications.onNotification(
+    (notification) => {
+        if (!notification) {
+            return;
+        }
+        // this will be called when one of HMSNotificationTypes.PEER_JOINED, HMSNotificationTypes.PEER_LEFT is arrived
+        console.log('notification type', notification.type);
+        console.log('data', notification.data);
+    },
+    [HMSNotificationTypes.PEER_JOINED, HMSNotificationTypes.PEER_LEFT]
+);
 ```
 
 </Tab>
 
-<Tab id="notification-types-1">
+<Tab id="notification-specific-types-1">
 
-```jsx{14-44}
+```jsx
 import { useHMSNotifications } from '@100mslive/react-sdk';
 
 function Notification() {
     const notification = useHMSNotifications(HMSNotificationTypes.PEER_JOINED);
-    const peerNotification = useHMSNotifications([HMSNotificationTypes.PEER_JOINED, HMSNotificationTypes.PEER_LEFT]);
+    const peerNotification = useHMSNotifications([
+        HMSNotificationTypes.PEER_JOINED,
+        HMSNotificationTypes.PEER_LEFT
+    ]);
 
     React.useEffect(() => {
         if (!notification) {
@@ -243,7 +249,6 @@ function Notification() {
 
         console.log('notification type', notification.type);
         console.log('data', notification.data);
-
     }, [notification]);
 
     React.useEffect(() => {
