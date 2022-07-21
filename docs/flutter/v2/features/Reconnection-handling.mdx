@@ -50,27 +50,27 @@ If reconnection fails the SDK sends `onHMSError` callback.
 
 The user will receive the following callbacks with `error` object having `isTerminal:true` and `errorCode` as :
 
-* `Error Code: 1003, Cause: Websocket disconnected`
+* Error Code: 1003, Cause: Websocket disconnected
 
 ![Error Code:1003](/docs/v2/flutter-errorCode-1003.png)
 
-* `Error Code: 4005, Cause: ICE Connection Failed due to network issue[PUBLISH]`
+* Error Code: 4005, Cause: ICE Connection Failed due to network issue[PUBLISH]
 
 ![Error Code:1003](/docs/v2/flutter-errorCode-4005-PUBLISH.png)
 
-* `Error Code: 4005, Cause: ICE Connection Failed due to network issue[SUBSCRIBE]`
+* Error Code: 4005, Cause: ICE Connection Failed due to network issue[SUBSCRIBE]
 
 ![Error Code:1003](/docs/v2/flutter-errorCode-4005-SUBSCRIBE.png)
 
-## Best Practices to handle Reconnection
+## Best practices to handle reconnection
 
-The SDK will send `onReconnecting` callback first if user disconnects, If user reconnects again the SDK sends `onReconnected` callback whereas if
-the user fails to connect again then it sends `onHMSError`.These callbacks can be handled as follows: 
+The SDK will send `onReconnecting` callback first if user disconnects, If user reconnects the SDK sends `onReconnected` callback whereas if
+the user fails to connect then it sends `onHMSError`.These callbacks can be handled as follows: 
 
 * Once the SDK sends `onReconnecting` callback, Do not allow user to interact with UI and show loaders or reconnecting indicator.
 * If `onReconnected` is received then switch back to room UI allowing interaction as usual.
-* If the user fails to reconnect then `onHMSError` callback look for `isTerminal` parameter if it 
-is set to `true` then there is no chance of recovering hence navigate to the `HomeScreen`,showing as toast or errorDialog to the user.
+* If the user fails to reconnect then SDK sends `onHMSError` callback, look for `isTerminal` parameter if it 
+is set to `true` then navigate to the `HomeScreen`,showing a toast or errorDialog to the user with `description`.
 In the `false` case look for the `errorCode` and handle it accordingly.
 ```dart
 @override
