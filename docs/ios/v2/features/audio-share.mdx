@@ -36,19 +36,26 @@ That's all you need to setup the sdk to use your custom audio source.
 4. You call play function on audioFilePlayerNode to play a file on local device with it's file url like below:
 
 ```swift
-    try audioFilePlayerNode.play(fileUrl: ..., volume: 0.5)
+    try audioFilePlayerNode.play(fileUrl: ...)
   ```
-  
-Note: if you don't pass the volume parameter, the file is played at full (1.0) volume.
 
 ### How to know when file playback is finished
 
 You pass a completion handler to the play function. CompletionHandler gets called when file is finished playing.
 
 ```swift
-    try audioFilePlayerNode.play(fileUrl: ..., volume: 0.5) {
+    try audioFilePlayerNode.play(fileUrl: ...) {
         print("File finished playing")
     }
+  ```
+  
+### How to change mix volume of different nodes
+
+You can use volume property on nodes to control the volume.
+
+```swift
+    audioFilePlayerNode.volume = 0.5
+    micNode.volume = 0.9
   ```
 
 ### How to schedule multiple audio files for back-to-back playback
@@ -62,13 +69,15 @@ You can set 'interrupts' parameter to false to tell audioFilePlayerNode to not i
     ...
   ```
 
-### How to play multiple files at the same time
+### How to play multiple files concurrently
 
 You can pass multiple instances of audioFilePlayerNode and pass them as nodes when creating audioMixerSource like so:
 
 ```swift
     let backgroundMusicNode = HMSAudioFilePlayerNode()
+    backgroundMusicNode.volume = 0.2
     let audioFilePlaybackNode = HMSAudioFilePlayerNode()
+    audioFilePlaybackNode.volume = 0.5
     let micNode = HMSMicNode()
     
     let audioMixerSource = try HMSAudioMixerSource(nodes: [backgroundMusicNode, audioFilePlaybackNode, micNode])
@@ -77,8 +86,8 @@ You can pass multiple instances of audioFilePlayerNode and pass them as nodes wh
 Now, you can play a looping background music at low volume and an audio file at the same time:
 
 ```swift
-    try backgroundMusicNode.play(fileUrl: ..., volume: 0.2, loops: true)
-    try audioFilePlayerNode.play(fileUrl: ..., volume: 0.8)
+    try backgroundMusicNode.play(fileUrl: ..., loops: true)
+    try audioFilePlayerNode.play(fileUrl: ...)
   ```
   
 ### How to pause, resume, stop playback and more
@@ -95,14 +104,6 @@ You can use following interfaces on HMSAudioFilePlayerNode to pause, resume or s
     let totalPlaybackDuration = audioFilePlayerNode.duration
   ```
   
-### How to change mix volume of different nodes
-
-You can use volume property on nodes to control the volume.
-
-```swift
-    audioFilePlayerNode.volume = 0.5
-    micNode.volume = 0.9
-  ```
   
 ### How to share audio that's playing on your iPhone
 
