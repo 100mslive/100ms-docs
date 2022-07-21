@@ -5,39 +5,103 @@ nav: 3.08
 
 When you make an API call to access an HMS SDK, the SDK may return error codes. ErrorCodes are returned when a problem that cannot be recovered without app intervention has occurred.
 
-These are returned as `HMSException` in the onHMSError callback of the `HMSUpdateListner`.
+These are returned as `HMSException` in the onHMSError callback of the `HMSUpdateListener`.
 
-Following are the different error codes that are returned by the SDK . Before returning any error code, SDK retries the errors (whichever is possible).
+Following are the different error codes that are returned by the SDK . Before returning any error code, SDK retries the errors\(whichever is possible\).
 
-| Error Code  | Cause of the error | Action to be taken     |
-|-------------|--------------------|------------------------|
-| 1003      | Websocket disconnected - Happens due to network issues             | Mention user to check their network connection or try again after some time.           |
-| 2002   | Invalid Endpoint URL          | Check the endpoint provided while calling `join` on `HMSSDK`.               |
-| 2003   | Endpoint is not reachable               | Mention user to check their network connection or try again after some time.              |
-| 2004   | Token is not in proper JWT format               | The token passed while calling `join` is not in correct format. Retry getting a new token.             |
-| 3001   | Cant Access Capture Device               | Ask user to check permission granted to audio/video capture devices.              |
-| 3002   | Capture Device is not Available               | Ask user to check if the audio/video capture device is connected or not.              |
-| 3003   | Capture device is in use by some other application               | Show notification to user mentioning that the capturing device is used by some other application currently. |
-| 3008   | Browser has thrown an autoplay exception.               | Show notification to user mentioning that the browser blocked autoplay             |
-| 3012       | [BLUETOOTH_CONNECT](https://developer.android.com/reference/android/Manifest.permission#BLUETOOTH_CONNECT) permission is not given.| Add the BLUETOOTH_CONNECT permission to your app and request it at runtime since it's a dangerous level permission.|
-| 3013       | [BLUETOOTH](https://developer.android.com/reference/android/Manifest.permission#BLUETOOTH) permission is not given.                     | Add the BLUETOOTH permission to your app.|
-| 4001   | WebRTC error               | Some webRTC error has occured. Need more logs to debug.             |
-| 4002   | WebRTC error               | Some webRTC error has occured. Need more logs to debug.              |
-| 4003   | WebRTC error               | 	Some webRTC error has occured. Need more logs to debug.            |
-| 4004   | WebRTC error               | Some webRTC error has occured. Need more logs to debug.             |
-| 4005   | ICE Connection Failed due to network issue               | Mention user to check their network connection or try again after some time.               |
-| 5001   | Trying to join a room which is already joined               | Trying to join an already joined room.              |
-| 6002   | webRTC Error: Error while renegotiating               | Please try again.               |
-| 40101   | Token Error: Invalid Access Key               | Access Key provided in the token is wrong.         |
-| 40102   | Token Error: Invalid Room Id               | RoomID provided in the token is wrong.            |
-| 40103   | Token Error: Invalid Auth Id               | 	AuthID provided in the token is wrong.           |
-| 40104   | Token Error: Invalid App Id               | App ID provided in the token is wrong.            |
-| 40105   | Token Error: Invalid Customer Id               | Customer Id provided in the token is wrong.             |
-| 40107   | Token Error: Invalid User Id               | User ID provided in the token is wrong.             |
-| 40108   | Token Error: Invalid Role               | The role provided in the token is wrong.            |
-| 40109   | Token Error: Bad JWT Token                 | Bad JWT Token.               |
-| 40100   | 	Generic Error               | Need to debug further with logs.               |
-| 40001   | Invalid Room               | Room ID provided while fetching the token is an invalid room.             |
-| 40002   | Room Mismatched with Token               |Room ID provided while fetching the token does not match.               |
-| 40004   | Peer already joined               | Peer who is trying to join has already joined the room.            |
-| 41001   | Peer is gone               | The peer is no more present in the room.              |
+| **Error Code** | **Cause of the error**                                 | **Action to be taken**                                                                                     |
+| :------------- | :----------------------------------------------------- | :--------------------------------------------------------------------------------------------------------- |
+| **1003**       | Websocket disconnected - Happens due to network issues | Mention user to check their network connection or try again after some time.                                |
+| **2002**       | Invalid Endpoint URL                                   | Check the endpoint provided while calling `join` on `HMSSDK`.                                               |
+| **2003**       | Endpoint is not reachable                              | Mention user to check their network connection or try again after some time.                                |
+| **2004**       | Token is not in proper JWT format                      | The token passed while calling `join` is not in correct format. Retry getting a new token.                  |
+| **3001**       | Cant Access Capture Device                             | Ask user to check permission granted to audio/video capture devices.                                        |
+| **3002**       | Capture Device is not Available                        | Ask user to check if the audio/video capture device is connected or not.                                    |
+| **3003**       | Capture device is in use by some other application.    | Show notification to user mentioning that the capturing device is used by some other application currently. |
+| **3012**       | [BLUETOOTH_CONNECT](https://developer.android.com/reference/android/Manifest.permission#BLUETOOTH_CONNECT) permission is not given.| Add the BLUETOOTH_CONNECT permission to your app and request it at runtime since it's a dangerous level permission.|
+| **3013**       | [BLUETOOTH](https://developer.android.com/reference/android/Manifest.permission#BLUETOOTH) permission is not given.                     | Add the BLUETOOTH permission to your app.|
+| **4001**       | WebRTC error                                           | Some webRTC error has occured. Need more logs to debug.                                                     |
+| **4002**       | WebRTC error                                           | Some webRTC error has occured. Need more logs to debug.                                                     |
+| **4003**       | WebRTC error                                           | Some webRTC error has occured. Need more logs to debug.                                                     |
+| **4004**       | WebRTC error                                           | Some webRTC error has occured. Need more logs to debug.                                                     |
+| **4005**       | ICE Connection Failed due to network issue             | Mention user to check their network connection or try again after some time.                                |
+| **5001**       | Trying to join a room which is already joined          | Trying to join an already joined room.                                                                     |
+| **6002**       | webRTC Error: Error while renegotiating                | Please try again.                                                                                           |
+| **40101**      | Token Error: Invalid Access Key                        | Access Key provided in the token is wrong.                                                                  |
+| **40102**      | Token Error: Invalid Room Id                           | RoomID provided in the token is wrong.                                                                      |
+| **40103**      | Token Error: Invalid Auth Id                           | AuthID provided in the token is wrong.                                                                      |
+| **40104**      | Token Error: Invalid App Id                            | App ID provided in the token is wrong.                                                                      |
+| **40105**      | Token Error: Invalid Customer Id                       | Customer Id provided in the token is wrong.                                                                 |
+| **40107**      | Token Error: Invalid User Id                           | User ID provided in the token is wrong.                                                                     |
+| **40108**      | Token Error: Invalid Role                              | The role provided in the token is wrong.                                                                    |
+| **40109**      | Token Error: Bad JWT Token                             | Bad JWT Token.                                                                                              |
+| **40100**      | Generic Error                                          | Need to debug further with logs.                                                                            |
+| **40001**      | Invalid Room                                           | Room ID provided while fetching the token is an invalid room.                                               |
+| **40002**      | Room Mismatched with Token                             | Room ID provided while fetching the token does not match.                                                   |
+| **40004**      | Peer already joined                                    | Peer who is trying to join has already joined the room.                                                     |
+| **41001**      | Peer is gone                                           | The peer is no more present in the room.                                                                    |
+| **7001**       | Platform Not Supported                                 | The platform is not supported for plugin                                                                    |
+| **7002**       | Plugin Init Failed                                     | Plugin initialization has failed                                                                            |
+| **7003**       | Plugin Processing Failed                               | Plugin processing failed                                                                                    |
+| **7004**       | Plugin Add Already Going on                            | Plugin add is already in progress    
+
+## HMSException
+
+The SDK returns error as an object of `HMSException` in `onHMSError` method.
+
+```dart
+@override
+void onHMSError({required HMSException error}){
+    //Handle Error
+}
+
+```
+
+Let's have a look at the `HMSException` object 
+```dart
+class HMSException {
+  final String? id; 
+
+  //HMSException code
+  final HMSExceptionCode? code;
+
+  //Error message
+  final String message;
+
+  //Error description 
+  String description; 
+
+  //Action in which SDK failed
+  String action; 
+   
+  //Extra params sent with the error
+  Map? params;
+
+  //Whether the error is a terminal error or not
+  bool isTerminal;
+}
+
+```
+
+## Terminal Errors 
+
+Terminal errors are raised when SDK has cleaned up the connection due to the error.
+
+`isTerminal` property of HMSException object can be used to check whther the error is a terminal error.
+
+> 💡 Note: `isTerminal` denotes if the SDK has cleaned up the connection due to the error or not.
+If this is [true] it denotes that the error has removed user from the room
+   else it denotes that user is still in the room even with the error.
+
+
+Hence `isTerminal` property can be used to handle the UI as if `isTerminal:true` we can navigate user back to home screen or show them a popup.
+While in other case the error can be handled accrodingly.
+
+Example of a terminal error:
+
+![Terminal Error](/docs/v2/flutter-errorCode-1003.png)
+
+Above error(`errorCode:1003`) occurs when the reconnection fails.The SDK returns this error after trying to reconnect for 60 seconds.
+In such cases the `isTerminal` property can be used to handle the UI updates.
+
+> 🔑  More info for reconnection handling can be found [here](./Reconnection-handling)
