@@ -11,14 +11,14 @@ The audio that you share goes to other peers through your local mic channel. To 
 
 ## How to setup hmssdk to be able to share audio from a file along with mic in a room
 
-You create an instance of HMSAudioFilePlayerNode and an instance of HMSMicNode like below:
+1. You create an instance of HMSAudioFilePlayerNode and an instance of HMSMicNode like below:
 
 ```swift
     let audioFilePlayerNode = HMSAudioFilePlayerNode()
     let micNode = HMSMicNode()
   ```
 
-Next, you create an instance of HMSAudioMixerSource passing an array of nodes that we created in the step above like so:
+2. Next, you create an instance of HMSAudioMixerSource passing an array of nodes that we created in the step above like so:
 
 ```swift
     do {
@@ -29,7 +29,7 @@ Next, you create an instance of HMSAudioMixerSource passing an array of nodes th
     }
   ```
   
-Next, you pass this custom audio source to the 'audioSource' parameter of HMSAudioTrackSettings for the sdk like below:
+3. Next, you pass this custom audio source to the 'audioSource' parameter of HMSAudioTrackSettings for the sdk like below:
 
 ```swift
     let audioSettings = HMSAudioTrackSettings(..., audioSource: audioMixerSource)
@@ -90,7 +90,54 @@ You can use following interfaces on HMSAudioFilePlayerNode to pause, resume or s
     let currentPlaybackTime = audioFilePlayerNode.currentTime
     let totalPlaybackDuration = audioFilePlayerNode.duration
   ```
+  
+## How to change mix volume of different nodes
+
+The nodes (eg. HMSAudioFilePlayerNode, HMSMicNode) that you pass to the HMSAudioMixerSource inherit from HMSAudioNode. You can use volume property on HMSAudioNode to control the volume of nodes.
+
+```swift
+    audioFilePlayerNode.volume = 0.5
+    micNode.volume = 0.9
+  ```
+  
+## How to share audio that's playing on your iPhone (for example, from another app like spotify)
+
+Note: iOS allows to get access to system audio (audio from another apps) only while broadcating your entire iPhone screen. So for this to work you should implement screen sharing in your app with help from hmssdk. You can follow along here to set it up ![Screen Share](/docs/ios/v2/features/screen-share.mdx)
+
+Now once you have implemented the screen share feature from above. You can follow these steps to enable system audio broadcasting while sharing your screen:
+
+1. You get an instance of HMSScreenBroadcastAudioNode and add this node to your mixer like below
+
+```swift
+    let screenAudioNode = try sdk.screenBroadcastAudioReceiverNode()
+    
+    let audioMixerSource = try HMSAudioMixerSource(nodes: [audioFilePlaybackNode, micNode, screenAudioNode])
+  ```
  
+Note: Please note that you can only pass only a single instance of HMSMicNode and HMSScreenBroadcastAudioNode to the HMSAudioMixerSource, else you will receive an error.
+
+Now your mixer source is set to be able to receive audio from your broadcast extension.
+
+2. Next, you need to setup broadcast extension to send audio to the main app.
+
+The broadcast extension receives audio that's playing on your iOS device in processSampleBuffer function in your RPBroadcastSampleHandler class. To send audio from your broadcast extension you call process(audioSampleBuffer) function on HMSScreenRenderer like below:
+
+```swift
+    let screenRenderer = HMSScreenRenderer(appGroup: "group.live.100ms.videoapp")
+    
+    override func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType) {
+        ...
+        
+        case RPSampleBufferType.audioApp:
+            self.screenRenderer.process(audioSampleBuffer: sampleBuffer)
+            break
+        ...
+    }
+  ```
+  
+Now your broadcast extension is set to be send audio to your main app.
+
+And that's it. Now your custom mixer source in the main app can receive the audio from broadcast extension and mix it with other source nodes to finally broadcast it to other peers in the room.
 
 👀 To see an example iOS broadcast upload extension implementation for screen sharing using 100ms Broadcast Extension SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
 
