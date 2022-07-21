@@ -67,7 +67,7 @@ The user will receive the following callbacks with `error` object having `isTerm
 The SDK will send `onReconnecting` callback first if user disconnects, If user reconnects again the SDK sends `onReconnected` callback whereas if
 the user fails to connect again then it sends `onHMSError`.These callbacks can be handled as follows: 
 
-* Once the SDK sends `onReconnecting` callback,Do not allow user to interact with UI and show some loader or reconnecting indicator
+* Once the SDK sends `onReconnecting` callback, Do not allow user to interact with UI and show loaders or reconnecting indicator.
 * If `onReconnected` is received then switch back to room UI allowing interaction as usual.
 * If the user fails to reconnect then `onHMSError` callback look for `isTerminal` parameter if it 
 is set to `true` then there is no chance of recovering hence navigate to the `HomeScreen`,showing as toast or errorDialog to the user.
@@ -84,4 +84,4 @@ In the `false` case look for the `errorCode` and handle it accordingly.
   }
 ```
 
-> 🗝️ Note: You can find the errorCodes,their descriptions and the suggested action to be taken [here](./error-handling)
+> 🗝️ You can find the errorCodes, descriptions and the suggested actions to be taken [here](./error-handling)
