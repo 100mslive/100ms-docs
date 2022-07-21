@@ -36,19 +36,29 @@ That's all you need to setup the sdk to use your custom audio source.
 4. You call play function on audioFilePlayerNode to play a file on local device with it's file url like below:
 
 ```swift
-    audioFilePlayerNode.play(fileUrl: ..., volume: 0.5)
+    try audioFilePlayerNode.play(fileUrl: ..., volume: 0.5)
   ```
   
 Note: if you don't pass the volume parameter, the file is played at full (1.0) volume.
+
+### How to know when file playback is finished
+
+You pass a completion handler to the play function. CompletionHandler gets called when file is finished playing.
+
+```swift
+    try audioFilePlayerNode.play(fileUrl: ..., volume: 0.5) {
+        print("File finished playing")
+    }
+  ```
 
 ### How to schedule multiple audio files for back-to-back playback
 
 You can set 'interrupts' parameter to false to tell audioFilePlayerNode to not interrupt the current file playback, but schedule the file after the current file is finished. Like below:
 
 ```swift
-    audioFilePlayerNode.play(fileUrl: url to file 1)
-    audioFilePlayerNode.play(fileUrl: url to file 2, interrupts: false)
-    audioFilePlayerNode.play(fileUrl: url to file 3, interrupts: false)
+    try audioFilePlayerNode.play(fileUrl: url to file 1)
+    try audioFilePlayerNode.play(fileUrl: url to file 2, interrupts: false)
+    try audioFilePlayerNode.play(fileUrl: url to file 3, interrupts: false)
     ...
   ```
 
@@ -67,8 +77,8 @@ You can pass multiple instances of audioFilePlayerNode and pass them as nodes wh
 Now, you can play a looping background music at low volume and an audio file at the same time:
 
 ```swift
-    backgroundMusicNode.play(fileUrl: ..., volume: 0.2, loops: true)
-    audioFilePlayerNode.play(fileUrl: ..., volume: 0.8)
+    try backgroundMusicNode.play(fileUrl: ..., volume: 0.2, loops: true)
+    try audioFilePlayerNode.play(fileUrl: ..., volume: 0.8)
   ```
   
 ### How to pause, resume, stop playback and more
@@ -143,7 +153,7 @@ You add HMSAudioBufferPlayerNode to the mixer. And call play with passing AVAudi
     let audioMixerSource = try HMSAudioMixerSource(nodes: [audioFilePlaybackNode, micNode, streamPlayer])
     ...
     
-    streamPlayer.play(buffer: ...)
+    try streamPlayer.play(buffer: ...)
   ```
 
 ### You own custom audio implementation
