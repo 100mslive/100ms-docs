@@ -1,0 +1,97 @@
+---
+title: Audio Share (Beta)
+nav: 13
+---
+
+iOS SDK provides support for sharing audio from an audio file on your device or sharing audio from other apps (device audio) while sharing the screen of your device in the room.
+
+## How audio sharing work in iOS SDK
+
+The audio that you share goes to other peers through your local mic channel. To be able to share audio you need to setup the sdk to use a custom audio source instead of default mic. To do that you pass an instance of custom audio source to HMSAudioTrackSettings on your hmssdk instance.
+
+## How to setup hmssdk to be able to share audio from a file along with mic in a room
+
+You create an instance of HMSAudioFilePlayerNode and an instance of HMSMicNode like below:
+
+```swift
+    let audioFilePlayerNode = HMSAudioFilePlayerNode()
+    let micNode = HMSMicNode()
+  ```
+
+Next, you create an instance of HMSAudioMixerSource passing an array of nodes that we created in the step above like so:
+
+```swift
+    do {
+        let audioMixerSource = try HMSAudioMixerSource(nodes: [audioFilePlayerNode, micNode])
+    }
+    catch {
+        print(error.localizedDescription)
+    }
+  ```
+  
+Next, you pass this custom audio source to the 'audioSource' parameter of HMSAudioTrackSettings for the sdk like below:
+
+```swift
+    let audioSettings = HMSAudioTrackSettings(..., audioSource: audioMixerSource)
+    sdk.trackSettings = HMSTrackSettings(..., audioSettings: audioSettings)
+  ```
+
+That's all you need to setup the sdk to use 'audioMixerSource' as your custom local audio source.
+
+## How to play an audio file
+
+You call play function on audioFilePlayerNode to play a file on local device with it's file url like below:
+
+```swift
+    audioFilePlayerNode.play(fileUrl: ..., volume: 0.5)
+  ```
+  
+Note: if you don't pass the volume parameter, the file is played at full (1.0) volume.
+
+## How to schedule multiple audio files for back-to-back playback
+
+You can set 'interrupts' parameter to false to tell audioFilePlayerNode to not interrupt the current file playback, but schedule the file after the current file is finished. Like below:
+
+```swift
+    audioFilePlayerNode.play(fileUrl: url to file 1)
+    audioFilePlayerNode.play(fileUrl: url to file 2, interrupts: false)
+    audioFilePlayerNode.play(fileUrl: url to file 3, interrupts: false)
+  ```
+
+## How to play multiple files at the same time
+
+You can pass multiple instances of audioFilePlayerNode and pass them as nodes when creating audioMixerSource like below:
+
+```swift
+    let backgroundMusicNode = HMSAudioFilePlayerNode()
+    let audioFilePlaybackNode = HMSAudioFilePlayerNode()
+    let micNode = HMSMicNode()
+    
+    let audioMixerSource = try HMSAudioMixerSource(nodes: [backgroundMusicNode, audioFilePlaybackNode, micNode])
+  ```
+
+Now for example, you can play a looping background music at low volume while also being able to play an audio file at the same time like so:
+
+```swift
+    backgroundMusicNode.play(fileUrl: ..., volume: 0.2, loops: true)
+    audioFilePlayerNode.play(fileUrl: ..., volume: 0.8)
+  ```
+  
+## How to pause, resume, stop playback
+
+You can use following interfaces on HMSAudioFilePlayerNode to pause, resume or stop playback and more:
+
+```swift
+    audioFilePlayerNode.pause()
+    audioFilePlayerNode.resume()
+    audioFilePlayerNode.stop()
+    
+    let isPlaying = audioFilePlayerNode.isPlaying()
+    let currentPlaybackTime = audioFilePlayerNode.currentTime
+    let totalPlaybackDuration = audioFilePlayerNode.duration
+  ```
+ 
+
+👀 To see an example iOS broadcast upload extension implementation for screen sharing using 100ms Broadcast Extension SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
+
+📲 Download the 100ms fully-featured Sample iOS app here: https://testflight.apple.com/join/dhUSE7N8
