@@ -5,7 +5,7 @@ nav: 3.08
 
 When you make an API call to access an HMS SDK, the SDK may return error codes. ErrorCodes are returned when a problem that cannot be recovered without app intervention has occurred.
 
-These are returned as `HMSException` in the onHMSError callback of the `HMSUpdateListener`.
+These are returned as `HMSException` in the `onHMSError` callback of the `HMSUpdateListener`.
 
 Following are the different error codes that are returned by the SDK . Before returning any error code, SDK retries the errors\(whichever is possible\).
 
@@ -54,9 +54,7 @@ The SDK returns error as an object of `HMSException` in `onHMSError` method.
 void onHMSError({required HMSException error}){
     //Handle Error
 }
-
 ```
-
 Let's have a look at the `HMSException` object 
 ```dart
 class HMSException {
@@ -80,14 +78,12 @@ class HMSException {
   //Whether the error is a terminal error or not
   bool isTerminal;
 }
-
 ```
 
 ## Terminal Errors 
 
 Terminal errors are raised when SDK has cleaned up the connection due to the error.
-
-`isTerminal` property of HMSException object can be used to check whther the error is a terminal error.
+`isTerminal` property of HMSException object can be used to check whether the error is a terminal error.
 
 > 💡 Note: `isTerminal` denotes if the SDK has cleaned up the connection due to the error or not.
 If this is [true] it denotes that the error has removed user from the room
@@ -97,11 +93,11 @@ If this is [true] it denotes that the error has removed user from the room
 Hence `isTerminal` property can be used to handle the UI as if `isTerminal:true` we can navigate user back to home screen or show them a popup.
 While in other case the error can be handled accrodingly.
 
-Example of a terminal error:
+Terminal error example:
 
 ![Terminal Error](/docs/v2/flutter-errorCode-1003.png)
 
 Above error(`errorCode:1003`) occurs when the reconnection fails.The SDK returns this error after trying to reconnect for 60 seconds.
 In such cases the `isTerminal` property can be used to handle the UI updates.
 
-> 🔑  More info for reconnection handling can be found [here](./Reconnection-handling)
+> 🔑  More info on reconnection handling can be found [here](./Reconnection-handling)
