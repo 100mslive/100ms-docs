@@ -5,7 +5,11 @@ nav: 3.983
 
 iOS SDK provides support for creating Picture in Picture mode experience for video calls.
 
-Please note that your app need to have [com.apple.developer.avfoundation.multitasking-camera-access]([/docs/v2/screenshare-dashboard.png](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_avfoundation_multitasking-camera-access)) entitlement to use PiP mode during video calls.
+## Minimum Requirements
+
+-   Minimum iOS version required to support PiP is iOS 15
+-   Minimum 100ms SDK version required is `0.3.3`
+-   Your app need to have [com.apple.developer.avfoundation.multitasking-camera-access]([/docs/v2/screenshare-dashboard.png](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_avfoundation_multitasking-camera-access)) entitlement to use PiP mode during video calls.
 
 ## How Picture in Picture works during a video call
 
@@ -74,6 +78,14 @@ AVPictureInPictureController requires source content to use AVSampleBufferDispla
     
     // When PiP window is hidden
     trackVideoView.isEnabled = false
+  ```
+  
+### CPU budget in the background
+HMSSampleBufferDisplayView updates it's frame every 0.25 seconds (4 frames per second) to save CPU cycles. This is done to not exceed CPU budget assinged to a background app on iOS. You can experiment and change this update frequency using 'updateEvery' property on HMSSampleBufferDisplayView:
+
+```swift
+    // 10 frames per second
+    trackVideoView.updateEvery = 0.1
   ```
 
 👀 To see an example iOS Picuture in Picture implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
