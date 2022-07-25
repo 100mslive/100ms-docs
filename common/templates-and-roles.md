@@ -59,7 +59,7 @@ As the name suggests, Advanced Settings section contains more settings and contr
 
 ![Template](/docs/docs/v2/advanced-settings.png)
 
-### Room State
+### Pre-join room state
 
 Room state settings control the strategy of sending room state updates sent to our client SDK consumers.
 
