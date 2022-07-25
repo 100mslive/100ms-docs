@@ -25,12 +25,16 @@ const styles = StyleSheet.create({
 
 
 ## Track Id
-It is a required prop in the `HmsView` component. There are 2 types of Peers remotePeers and a localPeer to extract trackId from peers we can use following code snippet. These track IDs can directly be passed to HmsView component
+It is a required prop in the `HmsView` component. There are 2 types of peers remotePeer and a localPeer, to extract trackId from peers we can use following code snippet. These track IDs can directly be passed to HmsView component.
 ```js
 const localTrackId = hmsInstance.localPeer.videoTrack.trackId;
 const remoteTrackId = hmsInstance.remotePeers[index].videoTrack.trackId;
 ```
-
+Make sure the trackId passed in the HMSView is not null because once a trackId is linked to HMSView, it can not be unlinked. You can make sure the trackId is not null by checking the onTrackListener type as `TRACK_ADDED` and track type as `VIDEO` of that peer. If a null trackId is 
+passed in HMSView you have to unmount the HMSView component and mount it with a new trackId, this can be done using a key prop and trackId as its value in the HMSView component.
+```js
+<HmsView trackId={trackId} key={trackId} />
+```
 
 ## Scale Type
 It is a optional prop in the `HmsView` component. By default value of scale type is set to `HMSVideoViewMode.ASPECT_FILL`. There are 3 scale types you can pass to render a video. 
