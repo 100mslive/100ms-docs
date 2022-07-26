@@ -7,6 +7,7 @@ iOS SDK provides support for sharing audio from audio files on your device or sh
 
 ## Minimum Requirements
 
+-   Minimum iOS version required to support Audio Share is iOS 13
 -   Minimum 100ms SDK version required is `0.3.3`
 
 ## How audio sharing works in iOS SDK
@@ -163,7 +164,7 @@ You add HMSAudioBufferPlayerNode to the mixer. And call play with passing AVAudi
 
 ### You own custom audio implementation
 
-If you want to create your own custom audio implementation and just need hmssdk to forward your audio buffers to other peers in the room, you can use HMSAudioBufferSource as custom audio source. Use enqueue(buffer: AVAudioBuffer) function on HMSAudioBufferSource to send audio to remote peers.
+If you want to create your own custom audio implementation and just need hmssdk to forward your audio buffers to other peers in the room, you can use HMSAudioBufferSource (supported iOS 12+) as custom audio source. Use enqueue(buffer: AVAudioBuffer) function on HMSAudioBufferSource to send audio to remote peers.
 
 ```swift
     let audioBufferSource = HMSAudioBufferSource()
