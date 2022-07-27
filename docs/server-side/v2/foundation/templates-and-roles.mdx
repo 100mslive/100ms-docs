@@ -209,13 +209,16 @@ curl 'https://prod-policy.100ms.live/policy/v1/templates' -H 'Authorization: Bea
 
 #### permissions
 
-| Name         | Type      | Description                                        | Required |
-| :----------- | :-------- | :------------------------------------------------- | :------- |
-| endRoom      | `boolean` | Permission to end room for all.                    | No       |
-| removeOthers | `boolean` | Permission to remove others from the room.         | No       |
-| mute         | `boolean` | Permission to request others to mute them.         | No       |
-| unmute       | `boolean` | Permission to request others to unmute them.       | No       |
-| changeRole   | `boolean` | Permission to request others to change their role. | No       |
+| Name             | Type      | Description                                                         | Required | Default |
+| :--------------- | :-------- | :------------------------------------------------------------------ | :------- | :------ |
+| endRoom          | `boolean` | Permission to end room for all.                                     | No       | `false` |
+| removeOthers     | `boolean` | Permission to remove others from the room.                          | No       | `false` |
+| mute             | `boolean` | Permission to request others to mute them.                          | No       | `false` |
+| unmute           | `boolean` | Permission to request others to unmute them.                        | No       | `false` |
+| changeRole       | `boolean` | Permission to request others to change their role.                  | No       | `false` |
+| browserRecording | `boolean` | Permission to start/stop browser recording.                         | No       | `true`  |
+| rtmpStreaming    | `boolean` | Permission to start/stop RTMP streaming.                            | No       | `true`  |
+| hlsStreaming     | `boolean` | Permission to start/stop HLS streaming (with or without recording). | No       | `true`  |
 
 #### settings
 
