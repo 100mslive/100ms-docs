@@ -7,15 +7,26 @@ When you make various function calls through HmsInstance, it may return errors w
 
 These are returned as HMSException in the onError callback of the HMSUpdateListner.
 
+On Android we receive `isTerminal` property in HMSException - Use this property to determine whether peer can continue in the room or not
+
 ```js
 // import HMSUpdateListenerActions class
-import { HMSUpdateListenerActions } from '@100mslive/react-native-hms';
+import { HMSUpdateListenerActions, HMSException } from '@100mslive/react-native-hms';
 
 // instance acquired from build() method
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
 
-const onError = (error) => {
+const onError = (error: HMSException) => {
     // console.log(error);
+    if (Platform.OS === 'android') {
+      if (error?.isTerminal === true) {
+        // navigate to home screen
+      }
+    } else {
+      if (error?.code === 4005) {
+        // navigate to home screen
+      }
+    }
 };
 ```
 
