@@ -6,11 +6,12 @@ nav: 5.1
 This page lists down frequently asked questions. If you want to add a new question or edit an older one, feel free to
 [send us a PR](https://github.com/100mslive/100ms-docs/blob/main/docs/flutter/v2/debugging/faq.mdx).
 
-## Videos are not getting rendered at the correct position or Video screen is coming over the buttons
+## Videos are not getting rendered at the correct position or video screen is coming over the buttons
 Please check the flutter version this issue is likely happening due to usage of Flutter 3.x.x series.
 This is due to an ongoing issue in Flutter 3.x.x which causes Native Platform Views to be drawn at incorrect position.
 Refer: [Android Platform View](https://github.com/flutter/flutter/issues/107313) & [Platform View bug](https://github.com/flutter/flutter/issues/103630)
 
+Use a version of the 2.x.x series, 2.10.5 or lower. We are actively tracking these issues & once they are released on flutter `stable` branch, we'll release a compatible `hmssdk_flutter` version.
 ## Do you have any implementation with other state management libraries than provider
 Please find the implementations below:
 * [Bloc](https://github.com/100mslive/100ms-flutter/tree/main/demo_app_with_100ms_and_bloc)
