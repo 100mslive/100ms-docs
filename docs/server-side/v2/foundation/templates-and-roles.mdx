@@ -220,6 +220,10 @@ curl 'https://prod-policy.100ms.live/policy/v1/templates' -H 'Authorization: Bea
 | rtmpStreaming    | `boolean` | Permission to start/stop RTMP streaming.                            | No       | `true`  |
 | hlsStreaming     | `boolean` | Permission to start/stop HLS streaming (with or without recording). | No       | `true`  |
 
+> Note: `hlsStreaming` is also required to - pause/unpause HLS recording or insert metadata in HLS stream
+
+> Note: Starting/Stopping rtmp + browser recording will need both `browserRecording` and `rtmpStreaming` permissions
+
 #### settings
 
 | Name      | Type     | Description                                                                                                                           | Required |
