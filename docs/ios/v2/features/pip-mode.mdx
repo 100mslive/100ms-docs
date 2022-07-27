@@ -1,0 +1,91 @@
+---
+title: PiP Mode (Beta)
+nav: 3.983
+---
+
+iOS SDK provides support for creating Picture in Picture mode experience for video calls.
+
+## Minimum Requirements
+
+-   Minimum iOS version required to support PiP is iOS 15
+-   Minimum 100ms SDK version required is `0.3.3`
+-   Your app need to have [com.apple.developer.avfoundation.multitasking-camera-access](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_avfoundation_multitasking-camera-access) entitlement to use PiP mode during video calls.
+
+## How Picture in Picture works during a video call
+
+When your app goes into the background, it can no longer access camera and publish it to other peers in the room. Also, you can't see video of other particiapants in the call if your app is in the background. Both of these issues are resolved by implementing PiP mode for video calling in your app.
+
+### How to add PiP support
+
+1. You create an instance of AVPictureInPictureVideoCallViewController. And add the view that you want to show in PiP window as subview:
+
+```swift
+    let pipVideoCallViewController = AVPictureInPictureVideoCallViewController()
+    pipVideoCallViewController.view.add(subview: ...)
+  ```
+
+2. Next, you create a content source from pipVideoCallViewController, passing the target view that PiP window will use as anchor view to animate from (you can optionally set PiP preferred size):
+
+```swift
+    let pipContentSource = AVPictureInPictureController.ContentSource(
+            activeVideoCallSourceView: targetView,
+            contentViewController: pipVideoCallViewController)
+            
+    // Optionally set the target frame as preferred content size for PiP window
+    pipVideoCallViewController.preferredContentSize = targetView.frame.size
+  ```
+  
+3. Then you create AVPictureInPictureController with the content source:
+
+```swift
+    let pipController = AVPictureInPictureController(contentSource: pipContentSource)
+  ```
+  
+4. To start the PiP mode, you set pipController to automatically start PiP when the app goes to background or you can use startPictureInPicture function to start PiP manually:
+
+```swift
+    // To start PiP automatically when app goes to background
+    pipController.canStartPictureInPictureAutomaticallyFromInline = true
+            
+    // Or you can start PiP manually
+    pipController.startPictureInPicture()
+  ```
+  
+### How to display participant's video in PiP
+
+AVPictureInPictureController requires source content to use AVSampleBufferDisplayLayer on it's subview. HMSVideoView uses Metal for rendering video of peers on the call. But because Metal is currently unsupported by AVPictureInPictureController, you can't directly use HMSVideoView to draw participants' video in PiP window. You need to use HMSSampleBufferDisplayView instead. HMSSampleBufferDisplayView is an UIImageView that uses AVSampleBufferDisplayLayer for drawing.
+
+1. You create an instance of HMSSampleBufferDisplayView and set the track to display. You add this as subview to pipVideoCallViewController view:
+
+```swift
+    let trackVideoView = HMSSampleBufferDisplayView(frame: .zero)
+    trackVideoView.track = track
+    
+    // Optionally set preferredSize and contentMode
+    trackVideoView.preferredSize = CGSize(width: 640.0, height: 480.0)
+    trackVideoView.contentMode = .scaleAspectFill
+    
+    ...
+    // As in step 1 in 'How to add PiP support'
+    pipVideoCallViewController.view.add(subview: trackVideoView)
+  ```
+  
+2. Set trackVideoView to beging drawing by making it enabled when PiP window is shown (Make it false when PiP window is closed to save resources)
+
+```swift
+    trackVideoView.isEnabled = true
+    ...
+    
+    // When PiP window is hidden
+    trackVideoView.isEnabled = false
+  ```
+  
+### CPU budget in the background
+HMSSampleBufferDisplayView updates it's frame every 0.25 seconds (4 frames per second) to save CPU cycles. This is done to not exceed CPU budget assinged to a background app on iOS. You can experiment and change this update frequency using 'updateEvery' property on HMSSampleBufferDisplayView:
+
+```swift
+    // 10 frames per second
+    trackVideoView.updateEvery = 0.1
+  ```
+
+👀 To see an example iOS Picuture in Picture implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
