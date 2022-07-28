@@ -3,6 +3,19 @@ title: Android SDK
 nav: 15
 description: Release Notes for 100ms Android SDK
 ---
+## v2.4.7 - 2022-07-28
+### Fixed
+* Calling `switchCamera` API leads trigerring of `onSuccess` callback twice
+* `onRoomUpdate` with type `HMSRoomUpdate.ROOM_PEER_COUNT_UPDATED` not getting called when peer count changes in the room
+
+### Changed
+* `HMSHLSConfig` is now an optional parameter while calling `startHLSStreaming` and `stopHLSStreaming`
+* The `meetingUrl` parameter while creating `HMSHLSMeetingURLVariant` instance for `HMSHLSConfig` is optional now. If nothing is provided
+HMS system will take the default meetingUrl for starting HLS stream
+* `changeRoleForce` permission in `HMSRole` is now removed and no longer used
+* `recording` permission in `HMSRole` is now broken into - `browserRecording` and `rtmpStreaming`
+* `streaming` permission in `HMSRole` is now `hlsStreaming`
+
 ## v2.4.6 - 2022-07-15
 ### Fixed
 * Checking for targetApiVersion along with Device SDK version while initializing Bluetooth manager
