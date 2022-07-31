@@ -63,9 +63,11 @@ As the name suggests, Advanced Settings section contains more settings and contr
 
 ![Template](/docs/docs/v2/advanced-settings.png)
 
-### Room State
+### Pre-join room state
 
-Room state settings control the strategy of sending room state updates sent to our client SDK consumers.
+Pre-join room state enables you to build a "preview" screen which shows the state of the room before joining. This room state includes a list of peers, which can be used to show who is in the room. Pre-join room state also includes recording and streaming state.
+
+Pre-join room state settings define strategy of sending state updates to client SDKs.
 
 | Setting                                  | Description                                                                                                                                                                                                                                        |
 | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
