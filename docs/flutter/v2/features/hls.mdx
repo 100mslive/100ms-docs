@@ -13,20 +13,22 @@ on YouTube, Twitch etc., please have a look at our RTMP streaming docs [here](./
 
 ## Starting HLS
 
-To start HLS you'll need to pass in a meeting URL. The 100ms bot will open this URL to join your room, so
+To start HLS you can call `hmsSDK.startHlsStreaming` method. The 100ms bot will open default meeting URL to join your room, so
 it must allow access without any user level interaction. In the future it'll be possible to start HLS for multiple such URLs for the same room.
 
 For this purpose the API supports taking in an array, although currently only the first element of the array will be used. To distinguish between multiple urls an additional field `metadata` can be optionally passed. The `meetingUrl` and `metadata` are clubbed together to form what we'll call a `variant`.
 
-You can call `meeting.startHlsStreaming` with a `HMSHLSConfig` having an array of such variants.
-
-
-
+You can call `hmsSDK.startHlsStreaming` with a optional parameter `HMSHLSConfig` having an array of such variants.
 
 ```dart
+    hmsSDK.startHlsStreaming(hmsActionResultListener: hmsActionResultListener);
+```
 
-    meeting.startHlsStreaming(hmsHLSMeetingUrlVariant,hmsActionResultListener:null);
-
+```dart
+class HMSHLSConfig {
+  List<HMSHLSMeetingURLVariant>? meetingURLVariant;
+  HMSHLSRecordingConfig? hmsHLSRecordingConfig;
+}
 ```
 
 
@@ -45,18 +47,18 @@ The object contains a boolean `running` which lets you know if it's active on th
 
 ```dart
 class HMSHLSStreamingState(
-        val running : Boolean,
-        val variants : List<HMSHLSVariant?>,
+  bool running;
+  List<HMSHLSVariant?> variants;
 )
 ```
 
 This represents a livestream to one or more HLS urls in the container of `HMSHLSVariant`. Which looks like:
 ```dart
 class HMSHLSVariant(
-    hlsStreamUrl: String?,
-    meetingUrl: String?,
-    metadata: String?,
-    startedAt: double?
+  String? hlsStreamUrl;
+  String? meetingUrl;
+  String? metadata;
+  DateTime? startedAt;
 )
 ```
 
