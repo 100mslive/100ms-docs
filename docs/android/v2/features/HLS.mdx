@@ -14,11 +14,12 @@ on YouTube, Twitch etc., please have a look at our RTMP streaming docs [here](./
 ## Starting 
 
 HLS can be started in three ways depending on the level of customization you need.
-1. [Default View](#default-view): The simplest view to just begin a stream with default UI and parameters.
-2. Portrait View: The default view streams a landscape video. This can be changed to portrait instead.
-3. Custom Views: To use your own UI for HLS, you would need a custom implementation of the browser that joins to stream it. Provide your own URLs for it to join.
+1. Default View: The simplest view to just begin a stream with default UI and parameters.
+2. Custom Views: To use your own UI for HLS, you would need a custom implementation of the browser that joins to stream it. Provide your own URLs for it to join.
 
 #### Default View
+
+Begins a stream with default parameters.
 
 <Tabs id="hls-default-view" items={['Kotlin', 'Java']} />
 
@@ -51,55 +52,6 @@ hmsSdkHost.startHLSStreaming(null, new HMSActionResultListener() {
     @Override
     public void onError(@NonNull HMSException error) {
         // hls failed to start with error $error
-    }
-});
-
-```
-
-</Tab>
-
-#### Portrait View
-
-<Tabs id="hls-orientation-view" items={['Kotlin', 'Java']} />
-
-<Tab id='hls-orientation-view-0'>
-
-```kotlin
-// Note the use of metadata to set the orientation from the default of 'landscape'
-//  to 'portrait'
-val hlsConfig = HMSHLSConfig(listOf(HMSHLSMeetingURLVariant(metadata = "portrait")))
-
-hmsSdkHost.startHLSStreaming(hlsConfig, object : HMSActionResultListener {
-    override fun onSuccess() {
-        // hls was started successfully
-    }
-
-    override fun onError(error: HMSException) {
-        // hls failed to start with error $error
-    }
-
-})
-```
-
-</Tab>
-
-<Tab id='hls-orientation-view-1'>
-
-```java
-// Note the use of metadata to set the orientation from the default of 'landscape'
-//  to 'portrait'
-List<HMSHLSMeetingURLVariant> variantList = Arrays.asList(new HMSHLSMeetingURLVariant(null, "portrait"));
-HMSHLSConfig hlsConfig = new HMSHLSConfig(variantList, null);
-
-hmsSdkHost.startHLSStreaming(hlsConfig, new HMSActionResultListener() {
-    @Override
-    public void onSuccess() {
-
-    }
-
-    @Override
-    public void onError(@NonNull HMSException error) {
-
     }
 });
 
