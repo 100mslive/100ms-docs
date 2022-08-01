@@ -1,24 +1,28 @@
 ## Overview
 
-100ms enables you to build live interactive video features in your app with **3 circles of interactivity**. These 3 circles can be mixed and matched to get your ideal use-case.
+Live video interactions can span various levels of interactivity. For example, in a virtual event, some participants can be on stage talking to each other, whereas participants in the audience can be listening to them.
 
-Each of these circles are represented by [100ms roles](templates-and-roles). Participants can move across circles with a single API call to change roles.
+At 100ms, we think of this as the **3 levels of interactivity**. 100ms enables you to build live video use-cases by mixing and matching these 3 levels to get to your ideal solution.
 
-* **Circle 1**: Full duplex audio/video in real-time
+* **Level 1**: Full duplex audio/video in real-time
 
-    Every participant publishes their audio/video, and interacts with others in sub-second latency. This is real-time video conferencing, similar to Zoom or Google Meet.
+    Level 1 participants publish their audio/video, and interact with others in sub-second latency. This is real-time video conferencing, similar to Zoom or Google Meet.
     
-* **Circle 2**: Webinar-style audience in real-time
+* **Level 2**: Webinar-style audience in real-time
 
-    Participants are split into stage and audience, where the stage is on circle 1. The audience consumes their audio/video in sub-second latency. The audience is not publishing their own audio/video, but can engage with the stage through messaging (chat, emojis, custom events). This is similar to a webinar on Zoom.
+    Level 2 participants consume audio/video from level 1 participants with sub-second latency, without publishing their own audio/video. Level 2 participants can engage with level 1 through messaging (chat, emojis, custom events). This is similar to a Zoom webinar.
+
+    Levels 1 and 2 are enabled using WebRTC.
     
-* **Circle 3**: Live stream audience consuming in near real-time
+* **Level 3**: Live stream audience consuming in near real-time
 
-    In this circle, the audience consumes a composite live stream in near real-time (<10 secs of latency). The audience can interact with other participants via messaging. This is similar to Twitch or YouTube Live. 
+    Level 3 participants consume a composite live stream in near real-time (<10 secs of latency) without publishing their audio/video. They can interact with other participants via messaging. This is similar to viewers on Twitch or YouTube Live, and is enabled via **100ms Interactive Live Streaming**.
 
-100ms Interactive Live Streaming enables circle 3 of interactivity.
+    Live streaming uses [HLS](https://www.100ms.live/blog/hls-101-beginners-guide) to achieve near real-time latency at scale.
 
-## Try it out
+The [roles primitive](templates-and-roles) can be used to define capabilities of a participant and associate them to an interaction level. A participant can move between levels using a single API call to change roles.
+
+## Try Interactive Live Streaming
 
 Use our [Live Streaming Starter Kit](https://www.100ms.live/marketplace/live-streaming-starter-kit) to try out the experience before you write a line of code.
 
@@ -65,11 +69,15 @@ By default, the live stream is composed in landscape mode for desktop viewers (w
 To integrate 100ms Interactive Live Streaming in your app, follow these steps:
 
 1. [Enable live streaming destination](#enable-destination)
-1. [Integrate the SDK in your app](#sdk-integration)
+1. [Integrate the 100ms SDK in your app](#sdk-integration)
 
 ### Enable destination
 
 ![Enable HLS](/docs/docs/v2/live-streaming-enable.gif)
+
+If your app is based on the Live Streaming Starter Kit (as shown above), the live streaming destination is enabled out-of-the-box.
+
+For custom apps, you can enable the live streaming destination manually:
 
 1. Open configuration for your existing app using the 100ms dashboard
 1. In the "destinations" tab, enable "Live Streaming with HLS"
