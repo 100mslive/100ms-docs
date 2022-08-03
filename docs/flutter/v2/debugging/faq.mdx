@@ -6,6 +6,19 @@ nav: 5.1
 This page lists down frequently asked questions. If you want to add a new question or edit an older one, feel free to
 [send us a PR](https://github.com/100mslive/100ms-docs/blob/main/docs/flutter/v2/debugging/faq.mdx).
 
+## Not getting event updates after hot reload/restart
+This is caused because platform channel needs to be reinitialized again,hence this is intended behaviour.
+The solution for this is to re-run the app.
+
+Practices for faster development :
+
+* Perform the intended changes.
+* Leave the room.
+* Perform hot reload/restart and rejoin the room.
+* Verify the changes.
+
+The permanent solution for this is in pipeline, we will update once it's done.
+
 ## Videos are not getting rendered at the correct position or video screen is coming over the buttons
 Please check the flutter version this issue is likely happening due to usage of Flutter 3.x.x series.
 This is due to an ongoing issue in Flutter 3.x.x which causes Native Platform Views to be drawn at incorrect position.
