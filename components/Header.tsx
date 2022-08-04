@@ -15,8 +15,8 @@ interface Props {
         setMenu: React.Dispatch<React.SetStateAction<boolean>>;
     };
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
-    docs?: { url: string; title: string; description: string; nav: number; content: string }[];
-    currentDocSlug?: string;
+    docs: { url: string; title: string; description: string; nav: number; content: string }[];
+    currentDocSlug: string;
     modal: boolean;
 }
 
