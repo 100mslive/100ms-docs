@@ -1,5 +1,5 @@
 ---
-title: RTMP Streaming / Recording
+title: RTMP Streaming & Recording
 nav: 3.991
 ---
 
@@ -45,7 +45,9 @@ const recordingDetails = HMSRTMPConfig({
   rtmpURLs: [],
 });
   
-const result = await instance?.startRTMPOrRecording(recordingDetails);
+await instance?.startRTMPOrRecording(recordingDetails)
+    .then(d => console.log('Start Recording Success: ', d))
+    .catch(e => console.log('Start Recording Error: ', e));
 ```
 
 
@@ -61,7 +63,9 @@ The result of the action is returned. On failure to start then an error will be 
 
 
 ```js
-const result = await instance?.stopRtmpAndRecording();
+await instance?.stopRtmpAndRecording()
+    .then(d => console.log('Stop Recording Success: ', d))
+    .catch(e => console.log('Stop Recording Error: ', e));
 ```
 
 

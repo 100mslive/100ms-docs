@@ -12,5 +12,7 @@ When the hms instance is not required any more or when a new hms instance has to
 
 ```js
 // instance aquired from build method 
-hmsInstance?.destroy();
+await hmsInstance?.destroy()
+    .then(d => console.log('Destroy Success: ', d))
+    .catch(e => console.log('Destroy Error: ', e));
 ```

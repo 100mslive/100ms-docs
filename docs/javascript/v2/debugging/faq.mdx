@@ -7,7 +7,7 @@ This page lists down frequently asked questions. If you want to add a new questi
 [send us a PR](https://github.com/100mslive/100ms-docs/blob/main/docs/javascript/v2/debugging/faq.mdx).
 
 ## What does HMS stand for in the SDK name?
-Hundred(100) ms 😊
+Hundred(100) Milli Seconds 😊. [Why?](https://www.nngroup.com/articles/response-times-3-important-limits/)
 
 ## Can I listen to webhooks on server side?
 Yes, please check [webhooks](/server-side/v2/foundation/webhook).
@@ -20,11 +20,12 @@ You can also start the latter from the [SDK](../features/rtmp-recording).
 Start with making sure that attach video is being called for the correct track and video
 element. Also ensure that there is no bug leading to detach call just after or around the same time as attach. These calls
 when done will also show up in the redux devtools [extension](../debugging/debugging#redux-devtools-integration). Some things we have seen in the past -
-* [React] Calling detach as a cleanup function of the same useEffect which calls attach and has video track as dependency. Instead of this
+- The role was not subscribed properly in the dashboard's templates section
+- [React] Calling detach as a cleanup function of the same useEffect which calls attach and has video track as dependency. Instead of this
 please have a separate useEffect with no dependencies to call detach on component unmount.
-* [React] Not using the [key](https://reactjs.org/docs/lists-and-keys.html) field properly while rendering the list of components displaying
+- [React] Not using the [key](https://reactjs.org/docs/lists-and-keys.html) field properly while rendering the list of components displaying
 the track. This should ideally be the `trackId` or `peerId-trackType`, where track type is video or screen.
-* [Angular] Not using the [trackBy](https://angular.io/api/core/TrackByFunction) field properly while rendering the list of components displaying
+- [Angular] Not using the [trackBy](https://angular.io/api/core/TrackByFunction) field properly while rendering the list of components displaying
 the track. This should ideally be the `trackId` or `peerId-trackType`, where track type is video or screen.
 
 ## Why is the video not autoplaying on page load?
@@ -37,9 +38,13 @@ Angular 2+ is sometimes not able to translate the `muted` field correctly. Inste
 Please check this [stackoverflow answer](https://stackoverflow.com/questions/48856562/chrome-android-video-autoplay-inside-angular-2-component) for more details.
 
 ## How do I debug no audio coming in the room?
-If your webapp doesn't require a user click to join the room, you might run into autoplay issues. Browsers don't allow
-a website to play audio if user hasn't interacted with the page till that point in time. Fortunately, we have inbuilt support
-to detect and resolve this given in more details [here](../features/error-handling#handling-autoplay-error).
+
+- Check that the role is being [subscribed to](../foundation/templates-and-roles#subscribe-strategies) properly in [dashboard's](https://dashboard.100ms.live/) templates section.
+
+- If your webapp doesn't require a user click to join the room, you might run into autoplay issues. Browsers don't allow a website to play audio if user hasn't interacted with the page till that point in time. Fortunately, we have inbuilt support to detect and resolve this given in more details [here](../features/error-handling#handling-autoplay-error).
+
+- If you're using the [setVolume](../advanced-features/volume-control) API, it's possible that even though the audio is available it has been locally muted.
+
 
 ## Is it possible to do RTMP out, live stream a room to YouTube, Twitch, Wowza?
 Yes, you can achieve it both from [server-side APIs](/server-side/v2/features/rtmp-streaming-and-browser-recording) or [SDK](../features/rtmp-recording).
@@ -87,7 +92,7 @@ Yes, the core sdk is framework agnostic, you can follow the [JS Quickstart](../g
 guide is with vanilla js and doesn't assume any framework.
 
 ## I want to suggest a new feature.
-Awesome, we're always on the lookout for new ideas and feature. Please reach out to use over [discord](https://100ms.live/discord).
+Awesome, we're always on the lookout for new ideas and feature. Please reach out to us over [discord](https://100ms.live/discord).
 
 ## I'm facing an issue, how do I reach out?
 Please see [reaching out](../debugging/debugging#reaching-out).

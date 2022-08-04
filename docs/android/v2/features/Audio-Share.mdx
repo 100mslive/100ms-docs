@@ -1,0 +1,137 @@
+---
+title: Audio Share (Beta)
+nav: 12
+---
+This feature is the analog of screen capture, but for audio.
+There may be cases where the application needs to stream music which is either stored in the device locally or from some other app present on the device in the room where the peer is joined.
+
+Examples of such use cases can be a FM like application where the host would want to stream music while also interacting with others in the room or a host in a gaming app who would want to stream music from their device in the room along with their regular audio track.
+
+## How does audio share work
+>  The Audio share option only works in Android 10 and above.
+
+100ms SDK uses the [MediaProjection](https://developer.android.com/guide/topics/media/av-capture#capture_audio_playback) APIs of Android to capture the device audio and stream it along with the user's regular audio track. To achieve this SDK starts a foreground service
+and starts capturing the device audio and muxes the bytes with the data collected from mic, so that the stream contains both system music and mic data.
+
+This API gives apps the ability to copy the audio being played by other apps which have set its usage
+to  USAGE_MEDIA, USAGE_GAME, or USAGE_UNKNOWN. (Audio from apps like youtube etc can be captured)
+
+## How to stream device audio from the app (without a custom notification)
+To start streaming device audio , app needs to call the `startAudioshare` method of `HMSSDK`, which takes in three parameters -
+    The first one is `HMSActionResultListener` which is a callback object needed to inform about `success`
+        or `failure` of the action
+    The second one is an `Intent` which is the result data of MediaProjection permission activity;
+    the calling app must validate that result code is `Activity.RESULT_OK` before
+    calling this method.
+    The third one is one of the modes of type `AudioMixingMode` in which the user wants to stream. This can be one out of the three available types -
+    TALK_ONLY : only data captured by mic will be streamed in the room
+    TALK_AND_MUSIC: data captured by mic as well as playback audio being captured from device will be streamed in the room
+    MUSIC_ONLY: only the playback audio being captured from device will be streamed in the room
+
+Following is the snippet on how to use this:
+
+<Tabs id="startaudioshare" items={['Kotlin']} />
+
+<Tab id='startaudioshare-0'>
+
+```kotlin
+// Define a result Launcher
+  var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    if (result.resultCode == Activity.RESULT_OK) {
+      val mediaProjectionPermissionResultData: Intent? = result.data
+      // Pass this intent to hmsSDK
+      hmsSDK.startAudioshare(object : HMSActionResultListener {
+        override fun onError(error: HMSException) {
+          // an error occurred
+        }
+
+        override fun onSuccess() {
+          // started successfully
+        }
+
+      } ,mediaProjectionPermissionResultData, AudioMixingMode.TALK_AND_MUSIC)
+    }
+  }
+
+    // Get the MEDIA_PROJECTION_SERVICE and launch the result launcher
+    val mediaProjectionManager: MediaProjectionManager? = requireContext().getSystemService(
+                Context.MEDIA_PROJECTION_SERVICE
+              ) as MediaProjectionManager
+    resultLauncher.launch(mediaProjectionManager?.createScreenCaptureIntent())
+
+```
+
+
+It is important to note that this API will not work if the `resultCode` is NOT `Activity.RESULT_OK`.
+SDK will also start a foreground service with a notification when it starts capturing the audio of the device.
+
+## How to add a custom notification
+
+To take a look at how this is implemented in our sample app, click [here](https://github.com/100mslive/100ms-android/blob/3590777bf0a3677cb9b5001034ea9ed7087f9d90/app/src/main/java/live/hms/app2/ui/meeting/MeetingViewModel.kt#L860).
+
+`hmssdk.startAudioShare` also takes an optional fourth parameter of type notification. See how to build a custom notification in the android docs [here](https://developer.android.com/training/notify-user/build-notification).
+
+It could look something like this:
+Since this is a standard Android notification the full range of customization is available.
+
+```kotlin
+
+  fun startScreenshare(mediaProjectionPermissionResultData: Intent?, actionListener: HMSActionResultListener) {
+    // Without custom notification
+    // hmsSDK.startAudioshare(actionListener ,mediaProjectionPermissionResultData, AudioMixingMode.TALK_AND_MUSIC)
+
+    // With custom notification
+    val notification = NotificationCompat.Builder(getApplication(), "ScreenCapture channel")
+      .setContentText("Screenshare running for roomId: ${hmsRoom?.roomId}")
+      .setSmallIcon(R.drawable.arrow_up_float)
+      .build()
+
+    hmsSDK.startScreenshare(actionListener, mediaProjectionPermissionResultData, notification, AudioMixingMode.TALK_AND_MUSIC)
+  }
+
+```
+
+
+</Tab>
+
+## How to change mode
+To change the mode the user is streaming audio, call the `setAudioMixingMode` API and pass one of the modes out of
+    `TALK_ONLY` or `TALK_AND_MUSIC` or `MUSIC_ONLY`
+
+Note that `TALK_ONLY` mode is equivalent to regular mode, that is without starting this API
+
+## How to stop audio sharing
+To stop capturing device audio and streaming into the room, call the `stopAudioShare` API and provide a `HMSActionResultListener`
+to listen to the success or error callbacks.
+
+<Tabs id="stopaudioshare" items={['Kotlin']} />
+
+<Tab id='stopaudioshare-0'>
+
+```kotlin
+
+      hmsSDK.stopAudioshare(object : HMSActionResultListener {
+        override fun onError(error: HMSException) {
+          // an error occurred
+        }
+
+        override fun onSuccess() {
+          // stopped successfully
+        }
+
+      } )
+
+```
+
+</Tab>
+
+>   It is advisable to call `leave` API from the `onDestroy()` of the `activity`/ `fragment` that
+    started the sharing of device audio otherwise the foreground service will be running if even user kills the
+    app from the Recents tab.
+
+>   DONOT forget to add the following permission for foreground service
+
+```kotlin
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+

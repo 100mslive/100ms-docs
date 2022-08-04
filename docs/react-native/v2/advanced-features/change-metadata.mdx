@@ -36,18 +36,20 @@ Here is how a peer can set their own metadata to a random string. In this case t
 const parsedMetadata = JSON.parse(hmsInstance?.localPeer?.metadata)
 
 // Raise Hand
-hmsInstance?.changeMetadata(
+await hmsInstance?.changeMetadata(
   JSON.stringify({
     ...parsedMetadata,
     isHandRaised: true,
   }),
-);
+).then(d => console.log('Change Metadata Success: ', d))
+ .catch(e => console.log('Change Metadata Error: ', e));
 
 // BRB
-hmsInstance?.changeMetadata(
+await hmsInstance?.changeMetadata(
   JSON.stringify({
     ...parsedMetadata,
     isBRBOn: true,
   }),
-);
+).then(d => console.log('Change Metadata Success: ', d))
+ .catch(e => console.log('Change Metadata Error: ', e));
 ```

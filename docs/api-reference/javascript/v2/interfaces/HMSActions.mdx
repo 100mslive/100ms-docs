@@ -480,6 +480,38 @@ Send a plain text message to all the other participants in the room.
 
 ---
 
+### sendHLSTimedMetadata
+
+▸ **sendHLSTimedMetadata**(`metadataList`): `Promise`<`void`\>
+
+**`alpha`**
+Used to define date range metadata in a media playlist.
+This api adds EXT-X-DATERANGE tags to the media playlist.
+It is useful for defining timed metadata for interstitial regions such as advertisements,
+but can be used to define any timed metadata needed by your stream.
+usage (e.g)
+const metadataList = [{
+payload: "some string 1",
+duration: 2
+},
+{
+payload: "some string 2",
+duration: 3
+}]
+sendHLSTimedMetadata(metadataList);
+
+#### Parameters
+
+| Name           | Type                 |
+| :------------- | :------------------- |
+| `metadataList` | `HLSTimedMetadata`[] |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
 ### sendMessage
 
 ▸ **sendMessage**(`message`): `void`
