@@ -8,7 +8,7 @@ interface Props {
     endLogo?: React.SVGProps<SVGSVGElement>;
     css?: {};
     text: string;
-    textVariant?: string;
+    textVariant?: any;
 }
 
 const Item: React.FC<Props> = ({

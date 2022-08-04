@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BookIcon, CodeIcon, GithubIcon, SettingsIcon, WiredMic, DividerIcon } from '@100mslive/react-icons';
+import {
+    BookIcon,
+    CodeIcon,
+    DividerIcon,
+    GithubIcon,
+    SettingsIcon,
+    WiredMic
+} from '@100mslive/react-icons';
 import { Flex } from '@100mslive/react-ui';
 import { Item } from 'components';
 import React from 'react';
@@ -43,7 +50,7 @@ interface Props {
     logo: React.SVGProps<SVGSVGElement>;
     sdk: any;
     text: any;
-    cssHeading: {};
+    cssHeading?: {};
 }
 
 const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading }) => (
