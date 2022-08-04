@@ -1,12 +1,12 @@
-import SearchIcon from '@/assets/icons/SearchIcon';
-import SvgMoon from '@/assets/icons/Moon';
-import SvgSun from '@/assets/icons/Sun';
 import CrossIcon from '@/assets/icons/CrossIcon';
 import MenuIcon from '@/assets/icons/MenuIcon';
-import React from 'react';
+import SvgMoon from '@/assets/icons/Moon';
+import SearchIcon from '@/assets/icons/SearchIcon';
+import SvgSun from '@/assets/icons/Sun';
 import useKeyPress from '@/lib/useKeyPress';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import React from 'react';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -15,8 +15,8 @@ interface Props {
         setMenu: React.Dispatch<React.SetStateAction<boolean>>;
     };
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
-    docs: { url: string; title: string; description: string; nav: number; content: string }[];
-    currentDocSlug: string;
+    docs?: { url: string; title: string; description: string; nav: number; content: string }[];
+    currentDocSlug?: string;
     modal: boolean;
 }
 
@@ -82,17 +82,17 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
         // @ts-ignore
         const routeLink = `/api-reference/${currentTech}/v2/home/content`;
         // @ts-ignore
-        if (router.query.slug[0] === 'api-reference') {
+        if (router?.query?.slug?.[0] === 'api-reference') {
             return router.asPath;
         }
         return routeLink;
     };
     // @ts-ignore
-    const isApiRef = router.query.slug[0] === 'api-reference';
+    const isApiRef = router?.query?.slug?.[0] === 'api-reference';
 
     const isNonApiRef =
         // @ts-ignore
-        router.query.slug[0] === 'server-side';
+        router?.query?.slug?.[0] === 'server-side';
 
     return (
         <div className="ctx">
@@ -129,7 +129,6 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     </button>
                 </div>
             </div>
-
             <span
                 aria-label="theme-toggle-button"
                 className="pointer"
