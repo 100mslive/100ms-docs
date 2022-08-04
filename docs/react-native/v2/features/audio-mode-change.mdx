@@ -1,0 +1,26 @@
+---
+title: Audio Mode Change
+nav: 3.999
+---
+
+This is android only API to change Audio Mode manually. The most common usecase would be toggle between (in-call volume/media volume) for in call volume [AudioManager.MODE_IN_COMMUNICATION] media volume [AudioManager.MODE_NORMAL]
+
+## Switch audio mode
+
+```js
+fun setAudioMode(audioMode: HMSAudioMode)
+```
+* Types of audio mode. [Audio Modes in Android](https://developer.android.com/reference/android/media/AudioManager#MODE_IN_COMMUNICATION)
+* MODE_NORMAL - Normal audio mode: not ringing and no call established. (common one!)
+* MODE_RINGTONE - Ringing audio mode. An incoming is being signaled.
+* MODE_IN_CALL - In call audio mode. A telephony call is established.(common one!)
+* MODE_IN_COMMUNICATION - In communication audio mode. An audio/video chat or VoIP call is established.
+* MODE_CALL_SCREENING - Call screening in progress. Call is connected and audio is accessible to call screening applications but other audio use cases are still possible
+
+invoke this method with appropriate option, to switch audio mode manually
+
+```js
+import { HMSAudioMode } from '@100mslive/react-native-hms';
+
+hmsInstance?.setAudioMode(HMSAudioMode.MODE_IN_COMMUNICATION)
+```
