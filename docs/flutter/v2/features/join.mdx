@@ -144,6 +144,11 @@ abstract class HMSUpdateListener {
   ///when someone kicks you out or when someone ends the room at that time it is triggered
   /// [hmsPeerRemovedFromPeer] it consists info about who removed you and why.
   void onRemovedFromRoom({required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer});
+
+  ///whenever a new audio device gets connected to the device or audio device is switched this is triggered
+  void onAudioDeviceChanged(
+     {HMSAudioDevice? currentAudioDevice,
+     List<HMSAudioDevice>? availableAudioDevice});
 }
 
 ```

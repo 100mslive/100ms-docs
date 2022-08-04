@@ -1,0 +1,57 @@
+---
+title: HMSActionResultListener
+nav: 3.23
+---
+
+Whenever an instance of `HMSActionResultListener` is passed with a method then it's status i.e whether it succeeded or failed 
+can be listened using HMSActionResultListener's `onSuccess` & `onException` callbacks respectively. 
+
+> `HMSActionResultListener` should be implemented in the class where HMSActionResultListener methods are called.
+
+```dart
+abstract class HMSActionResultListener {
+  void onSuccess(
+      {HMSActionResultListenerMethod methodType,
+      Map<String, dynamic>? arguments});
+
+  void onException(
+      {HMSActionResultListenerMethod methodType,
+      Map<String, dynamic>? arguments,
+      required HMSException hmsException});
+}
+```
+
+> `HMSActionResultListener` : A class conforming to HMSActionResultListener interface.
+The methods of HMSActionResultListener are invoked to notify the status of the api's whether it failed or succedded.
+
+## HMSActionResultListenerMethod
+
+`HMSActionResultListenerMethod` is an enum which can be used to segregate the `HMSActionResultListener` method type.
+
+```dart
+enum HMSActionResultListenerMethod {
+  leave,
+  changeTrackState,
+  changeMetadata,
+  endRoom,
+  removePeer,
+  acceptChangeRole,
+  changeRole,
+  changeTrackStateForRole,
+  startRtmpOrRecording,
+  stopRtmpAndRecording,
+  changeName,
+  sendBroadcastMessage,
+  sendGroupMessage,
+  sendDirectMessage,
+  hlsStreamingStarted,
+  hlsStreamingStopped,
+  startScreenShare,
+  stopScreenShare,
+  startAudioShare,
+  stopAudioShare,
+  
+  //default case
+  unknown
+}
+```
