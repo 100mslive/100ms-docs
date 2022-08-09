@@ -1,3 +1,6 @@
+import React from 'react';
+import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
 import Header from '@/components/Header';
 import Pagination from '@/components/Pagination';
 import Sidebar from '@/components/Sidebar';
@@ -5,9 +8,6 @@ import Toc from '@/components/Toc';
 import { PaginationType } from '@/lib/getPagination';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
-import { NextSeo } from 'next-seo';
-import { useRouter } from 'next/router';
-import React from 'react';
 import EditFile from '@/components/EditFile';
 import SegmentAnalytics from '@/components/SegmentAnalytics'
 
