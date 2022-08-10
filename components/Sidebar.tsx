@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
+import React from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import React from 'react';
 import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
@@ -103,7 +103,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
         <div className="ctx">
             {/* Sidebar Version Section */}
             <section className="menu-container">
-                <div className="menu-title">TECHNOLOGY</div>
+                <div className="menu-title">Platform</div>
                 <Listbox value={tech} onChange={changeTech}>
                     <Listbox.Button className="dropdown">
                         <div style={{ display: 'flex ', alignItems: 'center' }}>

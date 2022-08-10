@@ -55,6 +55,11 @@ to decide colors
 
     --success: var(--blue11);
     --warning: #f5a623;
+
+    --primary_light: hsl(217 100% 70%); 
+
+    --text_med_emp: hsl(217 100% 94%);
+    --text_high_emp: hsl(216 100% 98%);
 }
 
 [data-theme='light'] {
@@ -130,6 +135,7 @@ small {
 }
 
 p {
+    color: var(--text_med_emp);
     margin: 1rem 0;
     font-size: 1em;
     font-weight: 400;
@@ -170,16 +176,25 @@ a {
     line-height: inherit;
 }
 
-.child{
+span.child a{
     font-size: 0.8125rem !important;
+    color: var(--text_med_emp);
 }
 
 span.text:not(.child) > a{
-    font-size: 0.9375rem !important;
+    font-weight: 400;
+    font-size: 0.9375rem;
+    color: var(--text_med_emp);
 }
 
-.menu-item{
-    font-size: 0.9375rem !important;
+.menu-container a.menu-item{
+    font-size: 0.9375rem;
+    color: var(--text_med_emp);
+}
+.menu-container a.active-link{
+    color: var(--primary_light);
+    background-color: transparent;;
+    border-left: 2px solid var(--primary_light);
 }
 
 .menu-item:focus{
@@ -217,9 +232,14 @@ ol {
 }
 
 li {
+    color: var(--text_med_emp);
     margin-bottom: 0.625rem;
     font-size: 1em;
     line-height: 1.625em;
+}
+
+li p strong{
+    color: var(--text_high_emp);
 }
 
 /* ul li:before {
@@ -237,7 +257,7 @@ h4,
 h5,
 h6 {
     position: relative;
-    color: var(--gray12);
+    color: var(--text_high_emp);
 }
 
 h1 {
@@ -348,7 +368,6 @@ code {
     font-size: 1rem;
     line-height: 24px;
     white-space: pre-wrap;
-    background-color: var(--blue3);
     padding: 2px 4px;
 }
 
@@ -547,6 +566,11 @@ input {
     letter-spacing: inherit;
     font-weight: inherit;
     text-decoration: none;
+}
+
+.toc-ctx p.head{
+    font-size: 10px;
+    font-weight: 500;
 }
 
 /* Code Higlight Word */
