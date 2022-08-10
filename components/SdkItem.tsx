@@ -82,21 +82,16 @@ const sdkItems = {
 };
 
 interface Props {
-    logo: React.SVGProps<SVGSVGElement>;
-    sdk: any;
-    text: any;
-    listView: any;
+    logo?: React.SVGProps<SVGSVGElement>;
+    sdk?: any;
+    text?: any;
+    listView?: any;
     cssHeading?: {};
 }
 
 const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading, listView = false }) =>
     !listView ? (
-        <Box
-            css={
-                {
-                    //backgroundColor: 'red'
-                }
-            }>
+        <Box>
             <Flex
                 css={{
                     marginTop: '$8',
@@ -132,7 +127,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading, listView = fals
                     borderRadius: '$3',
                     gap: '$10'
                 }}>
-                <Item logo={logo} text={text} textVariant="body1" endLogo={null} />
+                <Item logo={logo} text={text} textVariant="body1" endLogo={undefined} />
                 {/* <hr style={{ width: '48px', height: '8px' }} /> */}
                 {sdkItems[sdk].map((value) => (
                     <Item

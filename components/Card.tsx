@@ -9,7 +9,7 @@ interface Props {
     title: string;
     body: any;
     css?: {};
-    endComponent: any;
+    endComponent?: any;
 }
 
 const Card: React.FC<Props> = ({ logo, title, body, endComponent, css }) => (
