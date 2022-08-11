@@ -144,6 +144,10 @@ p {
     line-height: 1.5rem;
 }
 
+p.company {
+    margin: 0 !important;
+}
+
 p strong{
     font-weight: 600 !important;
 }
@@ -183,12 +187,14 @@ a {
 }
 
 /* body3 */
-span.child a{
+span.text.child {
     font-size: 0.8125rem !important;
-    color: var(--text_med_emp);
-    line-height: 24px
+        color: var(--text_med_emp);
+        margin-top: 0 !important;
+        line-height: 24px;
 }
 
+/* body2 */
 span.text:not(.child) > a{
     font-weight: 400;
     font-size: 0.9375rem;
@@ -270,11 +276,12 @@ h4,
 h5,
 h6 {
     position: relative;
-    margin: 16px 0 !important;
+    margin: 16px 0;
     color: var(--text_high_emp);
 }
 
 h1 {
+    margin-top: 0;
     letter-spacing: -0.025em;
     font-size: 1.875rem;
     line-height: 2rem;
@@ -283,9 +290,14 @@ h1 {
 
 h2 {
     font-size: 1.4375rem;
+    margin-top: 80px;
     line-height: 1.5rem;
     letter-spacing: -0.837px;
     font-weight: 700;
+}
+
+div h2:first-of-type{
+    margin-top: 16px;
 }
 
 h3 {
@@ -378,7 +390,7 @@ pre::-webkit-scrollbar {
 code {
     display: inline;
     color: var(--blue11);
-    background-color: var(--code) !important;
+    background-color: var(--code);
     font-family: 'Source Code Pro', menlo, monospace;
     font-size: 1rem;
     line-height: 24px;
@@ -714,8 +726,9 @@ h3:hover .copy-anchor {
     flex-direction: column;
 }
 
-img {
+p img {
     max-width: 100%;
+    margin: 16px 0 9px 0;
 }
 .download-btn {
     background: var(--blue6);
