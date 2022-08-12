@@ -42,12 +42,14 @@ to decide colors
     --cyan11: hsl(186 100% 42.2%);
 
     --code: hsl(216 39% 17%);
+    
+    --primary_light: hsl(217 100% 70%);
 
-    --token_code_class: var(--gray12);
-    --token_regex_imp_var: var(--blue11);
-    --token_func_cn: var(--blue11);
-    --token_attr_key: var(--blue11);
-    --token_oper_string: var(--blue11);
+    --token_code_class: var(--text_high_emp);
+    --token_regex_imp_var: var(--primary_light);
+    --token_func_cn: var(--primary_light);
+    --token_attr_key: var(--primary_light);
+    --token_oper_string: var(--primary_light);
     --token_selector: var(--cyan11);
     --token_property: var(--cyan11);
     --token_punctuation: var(--gray10);
@@ -55,10 +57,9 @@ to decide colors
     --token_inserted: rgba(38, 166, 155, 0.5);
     --token_comment: var(--gray10);
 
-    --success: var(--blue11);
+    --success: var(--primary_light);
     --warning: #f5a623;
 
-    --primary_light: hsl(217 100% 70%); 
 
     --text_med_emp: hsl(217 100% 94%);
     --text_high_emp: hsl(216 100% 98%);
@@ -86,7 +87,7 @@ to decide colors
 
     --cyan11: hsl(192 85% 31%);
 
-    --success: var(--blue11);
+    --success: var(--primary_light);
     --warning: #f5a623;
 }
 
@@ -101,7 +102,7 @@ to decide colors
 html,
 body {
     background-color: var(--gray1);
-    color: var(--gray12);
+    color: var(--text_high_emp);
     transition: none;
     overscroll-behavior-y: none;
     scroll-behavior: smooth;
@@ -141,6 +142,7 @@ p {
     margin: 0 0 1rem 0;
     font-size: 1em;
     font-weight: 400;
+    letter-spacing: 0.02em;
     line-height: 1.5rem;
 }
 
@@ -159,7 +161,7 @@ small {
 }
 
 b {
-    color: var(--gray12);
+    color: var(--text_high_emp);
     font-weight: 600;
 }
 
@@ -174,8 +176,8 @@ a {
     font-size: inherit;
     line-height: 1.5rem;
     font-weight: 500;
-    letter-spacing: 0.02em;
-    color: var(--blue11);
+    letter-spacing: 0.5px;
+    color: var(--primary_light);
     align-items: center;
     flex-shrink: 0;
     outline: none;
@@ -184,6 +186,10 @@ a {
     text-decoration-color: var(--blue4);
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     line-height: inherit;
+}
+
+span a{
+    letter-spacing: 0.02rem;
 }
 
 /* body3 */
@@ -207,6 +213,7 @@ span.text:not(.child) > a{
     font-size: 0.9375rem;
     color: var(--text_med_emp);
     line-height: 24px;
+    letter-spacing: 0.02em;
 }
 
 .menu-container a.active-link{
@@ -214,6 +221,12 @@ span.text:not(.child) > a{
     color: var(--primary_light);
     background-color: transparent;;
     border-left: 2px solid var(--primary_light);
+}
+
+.menu-title{
+    line-height: 24px;
+    font-size: 1rem !important;
+
 }
 
 .menu-item:focus{
@@ -282,7 +295,7 @@ h6 {
 
 h1 {
     margin-top: 0;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.025rem;
     font-size: 1.875rem;
     line-height: 2rem;
     font-weight: 700;
@@ -292,7 +305,7 @@ h2 {
     font-size: 1.4375rem;
     margin-top: 80px;
     line-height: 1.5rem;
-    letter-spacing: -0.837px;
+    letter-spacing: 0.02rem;
     font-weight: 700;
 }
 
@@ -303,7 +316,7 @@ div h2:first-of-type{
 h3 {
     font-size: 1.3125rem;    
     line-height: 1.5rem;
-    letter-spacing: -0.015em;
+    letter-spacing: 0.02rem;
     font-weight: 600;
     margin-bottom: 8px;
 }
@@ -370,7 +383,7 @@ pre p {
 }
 
 pre code {
-    color: var(--gray12);
+    color: var(--text_high_emp);
     font-size: 1rem;
     line-height: 1.25rem;
     white-space: pre;
@@ -390,7 +403,7 @@ pre::-webkit-scrollbar {
 
 code {
     display: inline;
-    color: var(--blue11);
+    color: var(--primary_light);
     background-color: var(--code);
     font-family: 'Source Code Pro', menlo, monospace;
     font-size: 1rem;
@@ -408,7 +421,7 @@ hr {
 
 blockquote {
     padding: calc(0.667 * 16pt) 16pt;
-    color: var(--gray12);
+    color: var(--text_high_emp);
     background-color: var(--gray3);
     border-radius: 5px;
     margin: 1.5rem 0;
@@ -426,7 +439,7 @@ blockquote :global(*:last-child) {
 }
 
 ::selection {
-    color: var(--gray12);
+    color: var(--text_high_emp);
     background-color: rgba(31, 90, 158, 0.5);
 }
 
@@ -485,7 +498,7 @@ table td:nth-child(1) {
     border-left: 1px solid transparent;
 }
 tr {
-    color: var(--gray12);
+    color: var(--text_high_emp);
     background-color: var(--gray2);
 }
 
@@ -581,7 +594,7 @@ pre[class*='language-'] {
 }
 
 input {
-    color: var(--gray12);
+    color: var(--text_high_emp);
     border: none;
     background-color: transparent;
 }
@@ -598,8 +611,11 @@ input {
 
 .toc-ctx p.head{
     font-size: 10px;
-    margin: 0;
     font-weight: 500;
+    letter-spacing: 0.1rem;
+    line-height: 1rem;
+    margin: 1rem 0 0.5rem 0;
+    color: var(--text_high_emp);
 }
 
 /* Code Higlight Word */
@@ -635,7 +651,7 @@ input {
     display: block;
     margin-left: -1rem;
     padding-left: 1rem;
-    border-left: 5px solid var(--blue11);
+    border-left: 5px solid var(--primary_light);
     background-color: var(--gray3);
 }
 
@@ -672,7 +688,7 @@ h3:hover .copy-anchor {
     width: 250px;
     height: 40px;
     background-color: var(--gray3);
-    color: var(--gray12);
+    color: var(--text_high_emp);
     border-radius: 5px;
     margin: 10px 0;
     margin-left: 20px;
@@ -735,7 +751,7 @@ p img {
 .download-btn {
     background: var(--blue6);
     font-weight: 700;
-    color: var(--gray12);
+    color: var(--text_high_emp);
     width: 300px;
     height: 40px;
     border-radius: 5px;
