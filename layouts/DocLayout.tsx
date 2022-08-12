@@ -120,6 +120,7 @@ const DocLayout: React.FC<Props> = ({
                             )}
                             <EditFile slug={router.asPath} />
                         </article>
+                        {/* SS-1199 pass active link prop here */}
                         <Toc />
                     </div>
                 </div>

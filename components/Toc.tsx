@@ -5,7 +5,7 @@ export type TocItem = {
     slug: string;
     title: string;
 };
-
+// SS-1199 use prop to highlight class
 const TocContainer = () => {
     const [toc, setToc] = React.useState<TocItem[] | []>([]);
     React.useEffect(() => {
@@ -23,7 +23,7 @@ const TocContainer = () => {
     return (
         <div className="toc-ctx">
             {toc.length !== 0 ? <p className="head">On This Page</p> : null}
-
+            {/* H3 -> sublinks, H2 -> links */}
             {toc.map((item) =>
                 item.title !== '' ? (
                     <span className={`text ${item.depth === 3 ? 'child' : ''}`} key={item.slug}>
@@ -56,10 +56,11 @@ const TocContainer = () => {
                 .text {
                     font-size: 14px;
                     margin: 0.5rem 0;
+                    margin-left: 1rem;
                     color: var(--gray11);
                 }
                 .child {
-                    margin-left: 1rem;
+                    margin-left: 2rem;
                 }
                 ::-webkit-scrollbar {
                     width: 0px;
