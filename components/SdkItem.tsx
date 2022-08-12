@@ -1,14 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     BookIcon,
+    ChevronRightIcon,
     CodeIcon,
     DividerIcon,
     GithubIcon,
+    ListCheckIcon,
     SettingsIcon,
     WiredMic
 } from '@100mslive/react-icons';
 import { Box, Flex } from '@100mslive/react-ui';
 import { Item } from 'components';
+import Link from 'next/link';
 import React from 'react';
 
 const itemId = {
@@ -21,7 +24,7 @@ const itemId = {
     7: 'Domain and  port whitelisting'
 };
 
-const iconStyle = { height: '16px' };
+const iconStyle = { height: '16px', color: '$textMedEmp' };
 
 const itemList = {
     1: <BookIcon style={iconStyle} />,
@@ -30,7 +33,7 @@ const itemList = {
     4: <SettingsIcon style={iconStyle} />,
     5: <WiredMic style={iconStyle} />,
     6: <WiredMic style={iconStyle} />,
-    7: <WiredMic style={iconStyle} />
+    7: <ListCheckIcon style={iconStyle} />
 };
 
 const link = 'https://google.com';
@@ -99,21 +102,38 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading, listView = fals
                     paddingTop: '$8',
                     paddingBottom: '$8',
                     borderRadius: '$3',
-                    gap: '$10'
+                    gap: '$2'
                 }}
                 align="center">
                 {text ? (
-                    <Flex css={{ marginLeft: '$14', gap: '$4', ...cssHeading }} align="center">
-                        <Item logo={logo} text={text} textVariant="body1" />
+                    <Flex css={{ marginLeft: '$10', gap: '$2', ...cssHeading }} align="center">
+                        <Item logo={logo} text={text} textVariant="body1" endLogo={null} />
                         <DividerIcon />
                     </Flex>
                 ) : (
                     <Box css={{ marginLeft: '$8' }} />
                 )}
-
-                {sdkItems[sdk].map((value) => (
-                    <Item key={value.id} logo={itemList[value.id]} text={itemId[value.id]} />
-                ))}
+                <Flex css={{ gap: '$10', flexWrap: 'wrap' }}>
+                    {sdkItems[sdk].map((value) => (
+                        <Link key={value.id} href="/docs">
+                            <a>
+                                <Box
+                                    css={{
+                                        color: '$textMedEmp',
+                                        ':hover': {
+                                            color: '$primaryLight'
+                                        }
+                                    }}>
+                                    <Item
+                                        logo={itemList[value.id]}
+                                        text={itemId[value.id]}
+                                        endLogo={<ChevronRightIcon style={{ height: '14px' }} />}
+                                    />
+                                </Box>
+                            </a>
+                        </Link>
+                    ))}
+                </Flex>
             </Flex>
         </Box>
     ) : (
@@ -127,15 +147,33 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading, listView = fals
                     borderRadius: '$3',
                     gap: '$10'
                 }}>
-                <Item logo={logo} text={text} textVariant="body1" endLogo={undefined} />
+                <Item logo={logo} text={text} textVariant="body1" endLogo={null} />
                 {/* <hr style={{ width: '48px', height: '8px' }} /> */}
                 {sdkItems[sdk].map((value) => (
-                    <Item
-                        key={value.id}
-                        logo={itemList[value.id]}
-                        text={itemId[value.id]}
-                        textVariant="body2"
-                    />
+                    <Link key={value.id} href="/docs">
+                        <a>
+                            <Box
+                                css={{
+                                    color: '#E0ECFF',
+
+                                    ':hover': {
+                                        color: '$primaryLight'
+                                    }
+                                }}>
+                                <Item
+                                    logo={itemList[value.id]}
+                                    textCSS={{ color: '$textMedEmp' }}
+                                    text={itemId[value.id]}
+                                    textVariant="body2"
+                                    endLogo={
+                                        <ChevronRightIcon
+                                            style={{ height: '14px', color: '$textMedEmp' }}
+                                        />
+                                    }
+                                />
+                            </Box>
+                        </a>
+                    </Link>
                 ))}
             </Flex>
         </Flex>

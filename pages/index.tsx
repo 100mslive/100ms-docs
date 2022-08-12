@@ -2,17 +2,51 @@
 import {
     AndroidIcon,
     AppleIcon,
+    ArrowRightIcon,
+    BookIcon,
     ComputerIcon,
     FlutterIcon,
     GameIcon,
     JavascriptIcon,
     LegoIcon,
-    ReactIcon
+    ReactIcon,
+    ViewIcon
 } from '@100mslive/react-icons';
 import { Box, Flex, Text } from '@100mslive/react-ui';
-import { Card, SdkItem } from 'components';
+import { Card, Item, SdkItem } from 'components';
 import Header from 'components/Header';
+import Link from 'next/link';
 import { useState } from 'react';
+
+const quickLinks = [
+    {
+        title: 'Fundamentals'
+    },
+    {
+        title: 'Quickstart',
+        link: ''
+    },
+    {
+        title: 'Tutorials',
+        link: ''
+    },
+    {
+        title: 'Features',
+        link: ''
+    },
+    {
+        title: 'Debugging',
+        link: ''
+    },
+    {
+        title: 'Changelog',
+        link: ''
+    },
+    {
+        title: 'API reference',
+        link: ''
+    }
+];
 
 const mobileSDK = [
     {
@@ -43,7 +77,7 @@ const fundamentals = [
     {
         title: 'Architecture',
         body: 'Learn the basic architecture to understand how your application communicates with 100ms servers.',
-        logo: <AndroidIcon style={style} />
+        logo: <ViewIcon style={style} />
     },
     {
         title: 'Templates and Roles',
@@ -57,6 +91,39 @@ const fundamentals = [
     }
 ];
 
+const guides = [
+    {
+        title: 'Discord stage clone',
+        body: 'A way to control the permissions and capabilities of users in a room.',
+        link: 'https://google.com'
+    },
+    {
+        title: 'Slack huddle clone',
+        body: 'A way to control the permissions and capabilities of users in a room.',
+        link: 'https://google.com'
+    },
+    {
+        title: 'Skype clone',
+        body: 'A way to control the permissions and capabilities of users in a room.',
+        link: 'https://google.com'
+    },
+    {
+        title: 'Webex clone',
+        body: 'A way to control the permissions and capabilities of users in a room.',
+        link: ''
+    },
+    {
+        title: 'Google classroom clone',
+        body: 'A way to control the permissions and capabilities of users in a room.',
+        link: ''
+    },
+    {
+        title: 'Twitch clone',
+        body: 'A way to control the permissions and capabilities of users in a room.',
+        link: ''
+    }
+];
+
 const Homepage = () => {
     const [menu, setMenu] = useState(false);
     const [modal, setModal] = useState(false);
@@ -67,13 +134,26 @@ const Homepage = () => {
             <Box>
                 <Header modal={modal} setModal={setModal} menuState={menuState} />
             </Box>
-            <Box
+            <Flex
+                css={{ gap: '$12', paddingLeft: '$8', backgroundColor: '#0F1115', width: '100%' }}>
+                {quickLinks.map((item) => (
+                    <Link key={item.title} href={`#${item.title}`}>
+                        <a>
+                            <Text css={{ padding: '$4', color: '$textMedEmp' }}>{item.title}</Text>
+                        </a>
+                    </Link>
+                ))}
+            </Flex>
+            {/* todo remove */}
+            <Flex
+                justify="center"
                 css={{
-                    marginLeft: '$32',
-                    marginRight: '$32',
-                    marginBottom: '$100'
+                    marginBottom: '400px',
+                    backgroundColor: '',
+                    maxWidth: '',
+                    overflow: ''
                 }}>
-                <Box css={{}}>
+                <Box>
                     <Flex
                         justify="center"
                         direction="column"
@@ -84,7 +164,7 @@ const Homepage = () => {
                             marginBottom: '$16'
                         }}>
                         <Text variant="h4">Documentation</Text>
-                        <Text variant="caption">
+                        <Text variant="body2" css={{ color: '$textMedEmp' }}>
                             Study our quickstarts, guides, and examples to learn how to create live
                             experiences with 100ms.
                         </Text>
@@ -116,11 +196,11 @@ const Homepage = () => {
                         text="ReactJS"
                         sdk="reactjs"
                     />
-                    <Flex gap="2" align="center" css={{ marginTop: '$12', marginBottom: '$8' }}>
+                    <Flex gap="2" align="center" css={{ marginTop: '$9', marginBottom: '$6' }}>
                         <ComputerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Mobile</Text>
                     </Flex>
-                    <Flex gap="4">
+                    <Flex gap="4" css={{ flexWrap: 'wrap' }}>
                         {mobileSDK.map((value) => (
                             <SdkItem
                                 key={value.id}
@@ -131,16 +211,18 @@ const Homepage = () => {
                             />
                         ))}
                     </Flex>
-                    <Flex gap="2" align="center" css={{ marginTop: '$12', marginBottom: '$8' }}>
+                    <Flex gap="2" align="center" css={{ marginTop: '$9' }}>
                         <ComputerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Server side</Text>
                     </Flex>
                     <SdkItem sdk="serverSide" />
-                    <Flex
-                        direction="column"
-                        css={{ marginTop: '$12', marginBottom: '$12', gap: '$4' }}>
-                        <Text variant="h5">Fundamentals</Text>
-                        <Text variant="caption">
+                    <Flex direction="column" css={{ marginTop: '$14', marginBottom: '$9' }}>
+                        <Text variant="h5">
+                            <a id="Fundamentals" href="#Fundamentals">
+                                Fundamentals
+                            </a>
+                        </Text>
+                        <Text variant="body2" css={{ color: '$textMedEmp' }}>
                             Learn how to integrate live video in your app with 100ms.
                         </Text>
                     </Flex>
@@ -148,14 +230,47 @@ const Homepage = () => {
                         {fundamentals.map((item) => (
                             <Card
                                 key={item.title}
-                                logo={item.logo}
-                                title={item.title}
                                 body={item.body}
+                                titleComponent={
+                                    <Item
+                                        logo={item.logo}
+                                        text={item.title}
+                                        textVariant="body1"
+                                        endLogo={<ArrowRightIcon />}
+                                    />
+                                }
+                            />
+                        ))}
+                    </Flex>
+                    <Flex
+                        direction="column"
+                        css={{ marginTop: '$16', marginBottom: '$12', gap: '$3' }}>
+                        <Text variant="h5">Guides</Text>
+                        <Text variant="body2" css={{ color: '$textMedEmp' }}>
+                            Learn the finer aspects of building custom live video.
+                        </Text>
+                    </Flex>
+                    <Flex css={{ gap: '$12', flexWrap: 'wrap' }}>
+                        {guides.slice(0, 3).map((item) => (
+                            <Card
+                                key={item.title}
+                                body={item.body}
+                                titleComponent={
+                                    <Item text={item.title} textVariant="h6" endLogo={null} />
+                                }
+                                endComponent={
+                                    <Item
+                                        text="React Guide"
+                                        logo={<BookIcon style={{ height: '16px' }} />}
+                                        textVariant="body2"
+                                        css={{ gap: '$4', marginBottom: '$8' }}
+                                    />
+                                }
                             />
                         ))}
                     </Flex>
                 </Box>
-            </Box>
+            </Flex>
         </>
     );
 };

@@ -5,8 +5,9 @@ import React from 'react';
 
 interface Props {
     logo?: React.SVGProps<SVGSVGElement>;
-    endLogo?: React.SVGProps<SVGSVGElement>;
+    endLogo?: React.SVGProps<SVGSVGElement> | null;
     css?: {};
+    textCSS?: {};
     text: string;
     textVariant?: any;
 }
@@ -14,18 +15,25 @@ interface Props {
 const Item: React.FC<Props> = ({
     logo,
     text,
-    textVariant = 'xs',
+    textVariant = 'body2',
+    textCSS,
     endLogo = <ChevronRightIcon style={{ height: '14px' }} />,
     css
 }) => (
     <Flex
         css={{
-            gap: '8px',
+            gap: '4px',
             ...css
         }}
         align="center">
         {logo}
-        <Text variant={textVariant}>{text}</Text>
+        <Text
+            variant={textVariant}
+            css={{
+                textCSS
+            }}>
+            {text}
+        </Text>
         {endLogo}
     </Flex>
 );
