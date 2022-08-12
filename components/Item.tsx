@@ -30,7 +30,8 @@ const Item: React.FC<Props> = ({
         <Text
             variant={textVariant}
             css={{
-                textCSS
+                color: '$textMedEmp',
+                ...textCSS
             }}>
             {text}
         </Text>

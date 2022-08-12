@@ -94,88 +94,96 @@ interface Props {
 
 const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading, listView = false }) =>
     !listView ? (
-        <Box>
-            <Flex
-                css={{
-                    marginTop: '$8',
-                    backgroundColor: '$surfaceDefault',
-                    paddingTop: '$8',
-                    paddingBottom: '$8',
-                    borderRadius: '$3',
-                    gap: '$2'
-                }}
-                align="center">
-                {text ? (
-                    <Flex css={{ marginLeft: '$10', gap: '$2', ...cssHeading }} align="center">
-                        <Item logo={logo} text={text} textVariant="body1" endLogo={null} />
-                        <DividerIcon />
-                    </Flex>
-                ) : (
-                    <Box css={{ marginLeft: '$8' }} />
-                )}
-                <Flex css={{ gap: '$10', flexWrap: 'wrap' }}>
-                    {sdkItems[sdk].map((value) => (
-                        <Link key={value.id} href="/docs">
-                            <a>
-                                <Box
-                                    css={{
-                                        color: '$textMedEmp',
-                                        ':hover': {
-                                            color: '$primaryLight'
-                                        }
-                                    }}>
-                                    <Item
-                                        logo={itemList[value.id]}
-                                        text={itemId[value.id]}
-                                        endLogo={<ChevronRightIcon style={{ height: '14px' }} />}
-                                    />
-                                </Box>
-                            </a>
-                        </Link>
-                    ))}
+        <Flex
+            css={{
+                marginTop: '$8',
+                backgroundColor: '$surfaceDefault',
+                paddingTop: '$8',
+                paddingBottom: '$8',
+                borderRadius: '$3',
+                gap: '$2'
+            }}
+            align="center">
+            {text ? (
+                <Flex css={{ marginLeft: '$10', gap: '$2', ...cssHeading }} align="center">
+                    <Item
+                        logo={logo}
+                        text={text}
+                        textVariant="body1"
+                        endLogo={null}
+                        textCSS={{ color: 'white' }}
+                    />
+                    <DividerIcon />
                 </Flex>
-            </Flex>
-        </Box>
-    ) : (
-        <Flex>
-            <Flex
-                direction="column"
-                css={{
-                    backgroundColor: '$surfaceDefault',
-                    padding: '$10',
-                    width: '$52',
-                    borderRadius: '$3',
-                    gap: '$10'
-                }}>
-                <Item logo={logo} text={text} textVariant="body1" endLogo={null} />
-                {/* <hr style={{ width: '48px', height: '8px' }} /> */}
+            ) : (
+                <Box css={{ marginLeft: '$8' }} />
+            )}
+            <Flex css={{ gap: '$10', flexWrap: 'wrap' }}>
                 {sdkItems[sdk].map((value) => (
                     <Link key={value.id} href="/docs">
                         <a>
                             <Box
                                 css={{
-                                    color: '#E0ECFF',
-
+                                    color: '$textMedEmp',
                                     ':hover': {
                                         color: '$primaryLight'
                                     }
                                 }}>
                                 <Item
                                     logo={itemList[value.id]}
-                                    textCSS={{ color: '$textMedEmp' }}
                                     text={itemId[value.id]}
-                                    textVariant="body2"
-                                    endLogo={
-                                        <ChevronRightIcon
-                                            style={{ height: '14px', color: '$textMedEmp' }}
-                                        />
-                                    }
+                                    endLogo={<ChevronRightIcon style={{ height: '14px' }} />}
                                 />
                             </Box>
                         </a>
                     </Link>
                 ))}
             </Flex>
+        </Flex>
+    ) : (
+        <Flex
+            direction="column"
+            css={{
+                backgroundColor: '$surfaceDefault',
+                padding: '$10',
+                width: '$52',
+                borderRadius: '$3',
+                gap: '$10'
+            }}>
+            <Item
+                logo={logo}
+                text={text}
+                textVariant="body1"
+                endLogo={null}
+                textCSS={{ color: 'white' }}
+            />
+            {/* <hr style={{ width: '48px', height: '8px' }} /> */}
+            {sdkItems[sdk].map((value) => (
+                <Link key={value.id} href="/docs">
+                    <a>
+                        <Box
+                            css={{
+                                color: '#E0ECFF',
+
+                                ':hover': {
+                                    color: '$primaryLight'
+                                }
+                            }}>
+                            <Item
+                                logo={itemList[value.id]}
+                                textCSS={{ color: '$textMedEmp' }}
+                                text={itemId[value.id]}
+                                textVariant="body2"
+                                endLogo={
+                                    <ChevronRightIcon
+                                        style={{ height: '14px', color: '$textMedEmp' }}
+                                    />
+                                }
+                            />
+                        </Box>
+                    </a>
+                </Link>
+            ))}
         </Flex>
     );
 export default SdkItem;

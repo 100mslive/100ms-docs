@@ -12,7 +12,7 @@ import {
     ReactIcon,
     ViewIcon
 } from '@100mslive/react-icons';
-import { Box, Flex, Text } from '@100mslive/react-ui';
+import { Box, Button, Flex, Text } from '@100mslive/react-ui';
 import { Card, Item, SdkItem } from 'components';
 import Header from 'components/Header';
 import Link from 'next/link';
@@ -71,7 +71,7 @@ const mobileSDK = [
     }
 ];
 
-const style = { padding: '6px', backgroundColor: '#1D2229', borderRadius: '999px' };
+const style = { padding: '6px', backgroundColor: '#1D2229', borderRadius: '999px', color: 'white' };
 
 const fundamentals = [
     {
@@ -95,34 +95,80 @@ const guides = [
     {
         title: 'Discord stage clone',
         body: 'A way to control the permissions and capabilities of users in a room.',
-        link: 'https://google.com'
+        link: 'https://www.100ms.live/blog/build-discord-stage-channel-clone-hms'
     },
     {
         title: 'Slack huddle clone',
         body: 'A way to control the permissions and capabilities of users in a room.',
-        link: 'https://google.com'
+        link: 'https://www.100ms.live/blog/building-slack-huddle-clone'
     },
     {
         title: 'Skype clone',
         body: 'A way to control the permissions and capabilities of users in a room.',
-        link: 'https://google.com'
+        link: 'https://www.100ms.live/blog/skype-clone-react'
     },
     {
         title: 'Webex clone',
         body: 'A way to control the permissions and capabilities of users in a room.',
-        link: ''
+        link: 'https://www.100ms.live/blog/create-webex-clone-100ms'
     },
     {
         title: 'Google classroom clone',
         body: 'A way to control the permissions and capabilities of users in a room.',
-        link: ''
+        link: 'https://www.100ms.live/blog/google-classroom-clone-react-100ms'
     },
     {
         title: 'Twitch clone',
         body: 'A way to control the permissions and capabilities of users in a room.',
-        link: ''
+        link: 'https://www.100ms.live/blog/twitch-clone-in-react'
     }
 ];
+
+const more = {
+    javascript: [
+        {
+            heading: 'Debugging',
+            items: [
+                { name: 'Basic debugging', link: '' },
+                { name: 'Frequently asked', link: '' },
+                { name: 'Known issues', link: '' },
+                { name: 'Supported devices', link: '' },
+                { name: 'Audio-video edge cases', link: '' }
+            ]
+        },
+        {
+            heading: 'Features',
+            items: [
+                { name: 'Integrating the SDK', link: '' },
+                { name: 'Join room', link: '' },
+                { name: 'Leave room', link: '' },
+                { name: 'Render video', link: '' },
+                { name: 'Mute / unmute', link: '' },
+                { name: 'View all features', link: '' }
+            ]
+        },
+        {
+            heading: 'Advanced Features',
+            items: [
+                { name: 'Show audio level', link: '' },
+                { name: 'Manage audio volume', link: '' },
+                { name: 'Peer metadata', link: '' },
+                { name: 'Add custom tracks', link: '' },
+                { name: 'Playlist - audio/video', link: '' },
+                { name: 'Connection quality', link: '' }
+            ]
+        },
+        {
+            heading: 'Plugins',
+            items: [
+                { name: 'Virtual background', link: '' },
+                { name: 'Manage audio volume', link: '' },
+                { name: 'Custom video plugins', link: '' },
+                { name: 'Noise suppression', link: '' }
+            ]
+        }
+    ]
+};
 
 const Homepage = () => {
     const [menu, setMenu] = useState(false);
@@ -135,7 +181,12 @@ const Homepage = () => {
                 <Header modal={modal} setModal={setModal} menuState={menuState} />
             </Box>
             <Flex
-                css={{ gap: '$12', paddingLeft: '$8', backgroundColor: '#0F1115', width: '100%' }}>
+                css={{
+                    gap: '$12',
+                    paddingLeft: '$8',
+                    backgroundColor: '#0F1115',
+                    width: '100%'
+                }}>
                 {quickLinks.map((item) => (
                     <Link key={item.title} href={`#${item.title}`}>
                         <a>
@@ -148,12 +199,9 @@ const Homepage = () => {
             <Flex
                 justify="center"
                 css={{
-                    marginBottom: '400px',
-                    backgroundColor: '',
-                    maxWidth: '',
-                    overflow: ''
+                    marginBottom: '400px'
                 }}>
-                <Box>
+                <Box css={{ width: '90%', maxWidth: '1248px' }}>
                     <Flex
                         justify="center"
                         direction="column"
@@ -169,7 +217,7 @@ const Homepage = () => {
                             experiences with 100ms.
                         </Text>
                     </Flex>
-                    <Flex gap="2" align="center">
+                    <Flex gap="2" align="start">
                         <ComputerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Web</Text>
                     </Flex>
@@ -200,7 +248,7 @@ const Homepage = () => {
                         <ComputerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Mobile</Text>
                     </Flex>
-                    <Flex gap="4" css={{ flexWrap: 'wrap' }}>
+                    <Flex justify="between" css={{ flexWrap: 'wrap', gap: '$12' }}>
                         {mobileSDK.map((value) => (
                             <SdkItem
                                 key={value.id}
@@ -226,20 +274,32 @@ const Homepage = () => {
                             Learn how to integrate live video in your app with 100ms.
                         </Text>
                     </Flex>
-                    <Flex css={{ gap: '$12' }}>
+                    <Flex css={{ gap: '$12' }} justify="between">
                         {fundamentals.map((item) => (
-                            <Card
-                                key={item.title}
-                                body={item.body}
-                                titleComponent={
-                                    <Item
-                                        logo={item.logo}
-                                        text={item.title}
-                                        textVariant="body1"
-                                        endLogo={<ArrowRightIcon />}
+                            <a key={item.title}>
+                                <Box
+                                    css={{
+                                        ':hover': {
+                                            backgroundColor: '$surfaceLight'
+                                        }
+                                    }}>
+                                    <Card
+                                        css={{ height: '$36' }}
+                                        body={item.body}
+                                        titleComponent={
+                                            <Item
+                                                logo={item.logo}
+                                                text={item.title}
+                                                textCSS={{ color: 'white' }}
+                                                textVariant="body1"
+                                                endLogo={
+                                                    <ArrowRightIcon style={{ color: 'white' }} />
+                                                }
+                                            />
+                                        }
                                     />
-                                }
-                            />
+                                </Box>
+                            </a>
                         ))}
                     </Flex>
                     <Flex
@@ -250,23 +310,85 @@ const Homepage = () => {
                             Learn the finer aspects of building custom live video.
                         </Text>
                     </Flex>
-                    <Flex css={{ gap: '$12', flexWrap: 'wrap' }}>
-                        {guides.slice(0, 3).map((item) => (
-                            <Card
-                                key={item.title}
-                                body={item.body}
-                                titleComponent={
-                                    <Item text={item.title} textVariant="h6" endLogo={null} />
-                                }
-                                endComponent={
-                                    <Item
-                                        text="React Guide"
-                                        logo={<BookIcon style={{ height: '16px' }} />}
-                                        textVariant="body2"
-                                        css={{ gap: '$4', marginBottom: '$8' }}
-                                    />
-                                }
-                            />
+                    <Flex
+                        css={{ gap: '$12', flexWrap: 'wrap', maxWidth: 'fit-content' }}
+                        justify="center">
+                        {guides.map((item) => (
+                            <Link href={item.link} key={item.title}>
+                                <a>
+                                    <Box
+                                        css={{
+                                            ':hover': {
+                                                backgroundColor: '$surfaceLight'
+                                            }
+                                        }}>
+                                        <Card
+                                            css={{ width: '$60' }}
+                                            body={item.body}
+                                            titleComponent={
+                                                <Item
+                                                    text={item.title}
+                                                    textVariant="h6"
+                                                    textCSS={{ color: 'white' }}
+                                                    endLogo={null}
+                                                />
+                                            }
+                                            endComponent={
+                                                <Box
+                                                    css={{
+                                                        color: '$textMedEmp',
+                                                        marginTop: '$8',
+                                                        ':hover': {
+                                                            color: '$primaryLight'
+                                                        }
+                                                    }}>
+                                                    <Item
+                                                        text="React Guide"
+                                                        logo={
+                                                            <BookIcon style={{ height: '18px' }} />
+                                                        }
+                                                        textVariant="body2"
+                                                        css={{ gap: '$4', marginBottom: '$8' }}
+                                                    />
+                                                </Box>
+                                            }
+                                        />
+                                    </Box>
+                                </a>
+                            </Link>
+                        ))}
+                    </Flex>
+                    <Flex css={{ marginTop: '$24', gap: '$8', marginBottom: '$12' }} align="center">
+                        <Text variant="h5">More</Text>
+                        <Button variant="standard" css={{ borderRadius: '20px' }}>
+                            JavaScript
+                        </Button>
+                    </Flex>
+                    <Flex justify="between">
+                        {more.javascript.map((section) => (
+                            <Flex direction="column" key={section.heading} css={{ gap: '$5' }}>
+                                <Text variant="body1" css={{ marginBottom: '$4' }}>
+                                    {section.heading}
+                                </Text>
+                                {section.items.map((item) => (
+                                    <Link key={item.name} href={item.link}>
+                                        <a>
+                                            <Box
+                                                css={{
+                                                    ':hover': { color: '$primaryLight' }
+                                                }}>
+                                                <Text
+                                                    variant="body1"
+                                                    css={{
+                                                        color: '$primaryDefault'
+                                                    }}>
+                                                    {item.name}
+                                                </Text>
+                                            </Box>
+                                        </a>
+                                    </Link>
+                                ))}
+                            </Flex>
                         ))}
                     </Flex>
                 </Box>
