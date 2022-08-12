@@ -60,7 +60,7 @@ const TocContainer = () => {
                     color: var(--gray11);
                 }
                 .child {
-                    margin-left: 2rem;
+                    margin-left: 1.5rem;
                 }
                 ::-webkit-scrollbar {
                     width: 0px;

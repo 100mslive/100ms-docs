@@ -9,7 +9,7 @@ import { PaginationType } from '@/lib/getPagination';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import EditFile from '@/components/EditFile';
-import SegmentAnalytics from '@/components/SegmentAnalytics'
+import SegmentAnalytics from '@/components/SegmentAnalytics';
 
 type NavRoute = {
     url: string;
@@ -56,7 +56,9 @@ const DocLayout: React.FC<Props> = ({
                 frontMatter.title || '100ms Docs'
             } | 100ms - Video conferencing infrastructure for a video-first world`
         },
-        canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${router.asPath === "/" ? "" : router.asPath.split('?')[0]}`
+        canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${
+            router.asPath === '/' ? '' : router.asPath.split('?')[0]
+        }`
     };
     const [menu, setMenu] = React.useState(false);
     const [modal, setModal] = React.useState(false);
