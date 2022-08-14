@@ -63,6 +63,9 @@ const DocLayout: React.FC<Props> = ({
     const [menu, setMenu] = React.useState(false);
     const [modal, setModal] = React.useState(false);
     const menuState = { menu, setMenu };
+    const [activeHeading, setActiveHeading] = React.useState('');
+    const [activeSubHeading, setActiveSubHeading] = React.useState('');
+
     useLockBodyScroll(modal);
     let newNav;
     // if 3 levels of directory
@@ -93,6 +96,37 @@ const DocLayout: React.FC<Props> = ({
     setTimeout(() => {
         scrollToUrlHash(router.asPath);
     }, 500);
+
+    const articleRef = React.useRef();
+    React.useEffect(() => {
+        if (articleRef && articleRef.current) {
+            const getActiveLinks = window.addEventListener('scroll', () => {
+                const h2Array = document.getElementsByTagName('h2');
+                const h3Array = document.getElementsByTagName('h3');
+
+                let height = Infinity;
+                let h3Index;
+                for (let i = 0; i < h3Array.length; i += 1) {
+                    const currHeight = Math.abs(h3Array[i].getBoundingClientRect().top);
+                    if (currHeight < height) {
+                        height = currHeight;
+                        h3Index = i;
+                    }
+                }
+                let h2Index;
+                height = Infinity;
+                for (let i = 0; i < h2Array.length; i += 1) {
+                    const currHeight = Math.abs(h2Array[i].getBoundingClientRect().top);
+                    if (currHeight < height && currHeight < window.screen.availHeight) {
+                        height = currHeight;
+                        h2Index = i;
+                    }
+                }
+                if (h2Index >= 0) setActiveHeading(h2Array[h2Index].id.replace(/-/g, ' '));
+            });
+        }
+    }, []);
+
     return (
         <>
             <div className="page">
@@ -110,7 +144,7 @@ const DocLayout: React.FC<Props> = ({
                         <Sidebar menu={menu} nav={newNav} />
                     </div>
                     <div className="content-wrapper">
-                        <article>
+                        <article ref={articleRef}>
                             <h1>{frontMatter.title}</h1>
                             {children}
                             <hr />
@@ -122,8 +156,7 @@ const DocLayout: React.FC<Props> = ({
                             )}
                             <EditFile slug={router.asPath} />
                         </article>
-                        {/* SS-1199 pass active link prop here */}
-                        <Toc />
+                        <Toc activeHeading={activeHeading} />
                     </div>
                 </div>
                 <style jsx>{`
