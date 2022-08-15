@@ -64,7 +64,6 @@ const DocLayout: React.FC<Props> = ({
     const [modal, setModal] = React.useState(false);
     const menuState = { menu, setMenu };
     const [activeHeading, setActiveHeading] = React.useState('');
-    const [activeSubHeading, setActiveSubHeading] = React.useState('');
 
     useLockBodyScroll(modal);
     let newNav;
@@ -102,19 +101,9 @@ const DocLayout: React.FC<Props> = ({
         if (articleRef && articleRef.current) {
             const getActiveLinks = window.addEventListener('scroll', () => {
                 const h2Array = document.getElementsByTagName('h2');
-                const h3Array = document.getElementsByTagName('h3');
 
                 let height = Infinity;
-                let h3Index;
-                for (let i = 0; i < h3Array.length; i += 1) {
-                    const currHeight = Math.abs(h3Array[i].getBoundingClientRect().top);
-                    if (currHeight < height) {
-                        height = currHeight;
-                        h3Index = i;
-                    }
-                }
                 let h2Index;
-                height = Infinity;
                 for (let i = 0; i < h2Array.length; i += 1) {
                     const currHeight = Math.abs(h2Array[i].getBoundingClientRect().top);
                     if (currHeight < height && currHeight < window.screen.availHeight) {

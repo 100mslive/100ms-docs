@@ -62,14 +62,14 @@ const TocContainer = ({ activeHeading }) => {
                 .text {
                     font-size: 14px;
                     margin: 0.5rem 0;
-                    margin-left: 1rem;
                     color: var(--gray11);
                 }
-                .child {
-                    margin-left: 1.5rem;
+                .text a{
+                    padding-left: 1rem !important;
+                    display: block;
                 }
-                .active-toc {
-                    color: green;
+                .child {
+                    margin-left: 1rem;
                 }
                 ::-webkit-scrollbar {
                     width: 0px;
