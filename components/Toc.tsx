@@ -6,7 +6,7 @@ export type TocItem = {
     title: string;
 };
 
-const TocContainer = ({ activeHeading }) => {
+const TocContainer = ({ activeHeading, activeSubHeading }) => {
     const [toc, setToc] = React.useState<TocItem[] | []>([]);
     React.useEffect(() => {
         const list: TocItem[] = [];
@@ -23,15 +23,14 @@ const TocContainer = ({ activeHeading }) => {
     return (
         <div className="toc-ctx">
             {toc.length !== 0 ? <p className="head">On This Page</p> : null}
-            {/* H3 -> sublinks, H2 -> links */}
             {toc.map((item) =>
                 item.title !== '' ? (
                     <span
-                        className={`${
-                            item.title.toLowerCase().replace('?', '') === activeHeading
-                                ? 'active-toc'
+                        className={`${item.slug === activeHeading ? 'active-toc' : ''} text ${
+                            item.depth === 3
+                                ? `child ${item.slug === activeSubHeading ? 'active-sublink' : ''}`
                                 : ''
-                        } text ${item.depth === 3 ? 'child' : ''}`}
+                        }`}
                         key={item.slug}>
                         <a href={`#${item.slug}`}>{item.title}</a>
                     </span>
@@ -64,7 +63,7 @@ const TocContainer = ({ activeHeading }) => {
                     margin: 0.5rem 0;
                     color: var(--gray11);
                 }
-                .text a{
+                .text a {
                     padding-left: 1rem !important;
                     display: block;
                 }
