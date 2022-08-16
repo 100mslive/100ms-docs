@@ -6,7 +6,7 @@ import Pagination from '@/components/Pagination';
 import Sidebar from '@/components/Sidebar';
 import Toc from '@/components/Toc';
 import { PaginationType } from '@/lib/getPagination';
-import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
+// import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import EditFile from '@/components/EditFile';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
