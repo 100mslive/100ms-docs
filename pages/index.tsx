@@ -320,8 +320,7 @@ const Homepage = () => {
                         </Text>
                     </Flex>
                     <Flex
-                        css={{ gap: '$12', flexWrap: 'wrap', maxWidth: 'fit-content' }}
-                        justify=''>
+                        css={{ gap: '$12', flexWrap: 'wrap', maxWidth: 'fit-content' }}>
                         {guides.map((item) => (
                             <Link href={item.link} key={item.title}>
                                 <a>
