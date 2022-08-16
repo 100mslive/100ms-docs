@@ -43,7 +43,7 @@ to decide colors
 
     --code: hsl(216 39% 17%);
     
-    --primary_light: hsl(217 100% 70%);
+    --primary_light: #66A1FF;
 
     --token_code_class: var(--text_high_emp);
     --token_regex_imp_var: var(--primary_light);
@@ -60,11 +60,13 @@ to decide colors
     --success: var(--primary_light);
     --warning: #f5a623;
 
-    --border_default: hsl(218 17% 13%);
-    --background_default: hsl(210 15% 5%);
+    --surface_lighter: #272E38;
 
-    --text_med_emp: hsl(217 100% 94%);
-    --text_high_emp: hsl(216 100% 98%);
+    --border_default: #1B1F26;
+    --background_default: #0B0D0F;
+
+    --text_med_emp: #E0ECFFCC;
+    --text_high_emp: #F5F9FFF2;
 }
 
 [data-theme='light'] {
@@ -215,6 +217,7 @@ span.text:not(.child) > a{
     font-size: 0.9375rem;
     color: var(--text_med_emp);
     line-height: 24px;
+    padding-right: 1rem;
     letter-spacing: 0.02em;
 }
 
@@ -224,6 +227,10 @@ span.text:not(.child) > a{
     background-color: transparent;
     padding-left: -2px;
     border-left: 2px solid var(--primary_light);
+}
+
+.menu-container:first-of-type{
+    margin-left: 0.5rem !important;
 }
 
 span.active-toc.text a{
@@ -700,15 +707,16 @@ h3:hover .copy-anchor {
     text-align: left;
     outline: none;
     border: none;
-    width: 250px;
-    height: 40px;
-    background-color: var(--gray3);
+    width: 230px;
+    height: 24px;
+    background-color: var(--surface_lighter);
     color: var(--text_high_emp);
-    border-radius: 5px;
-    margin: 10px 0;
+    border-radius: 8px;
+    margin: 8px 0;
     margin-left: 20px;
+    margin-bottom: 15px;
     position: relative;
-    padding-left: 10px;
+    padding: 16px;
     cursor: pointer;
     font-weight: 600;
 }

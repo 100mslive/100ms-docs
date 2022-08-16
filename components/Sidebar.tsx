@@ -103,7 +103,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
         <div className="ctx">
             {/* Sidebar Version Section */}
             <section className="menu-container">
-                <div className="menu-title">TECHNOLOGY</div>
+                <div className="menu-title">Platform</div>
                 <Listbox value={tech} onChange={changeTech}>
                     <Listbox.Button className="dropdown">
                         <div style={{ display: 'flex ', alignItems: 'center' }}>
@@ -188,6 +188,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 }
                 .menu-container {
                     margin: 10px 0;
+                    margin-left: 1.5rem;
                 }
                 .menu-item {
                     cursor: pointer;
@@ -197,7 +198,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     font-size: 13px;
                     display: flex;
                     align-items: center;
-                    padding-left: 20px;
+                    padding-left: 1rem;
                 }
                 .sub-title {
                     padding-left: 30px;
@@ -231,7 +232,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     background-color: var(--blue5);
                 }
                 .menu-title {
-                    padding-left: 20px;
+                    padding-left: 1rem;
                     font-weight: 700;
                     font-size: 15px;
                     margin: 5px 0;
@@ -260,12 +261,12 @@ const ChevronDown = () => (
         width="24"
         height="24"
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"
         shapeRendering="geometricPrecision"
-        style={{ color: 'var(--gray10)' }}>
+        style={{ color: 'var(--text_high_emp)' }}>
         <path d="M6 9l6 6 6-6" />
     </svg>
 );
