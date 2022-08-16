@@ -7,9 +7,11 @@ There may be cases where the application needs to stream music which is either s
 
 Examples of such use cases can be a FM like application where the host would want to stream music while also interacting with others in the room or a host in a gaming app who would want to stream music from their device in the room along with their regular audio track.
 
-## How does audio share work
->  The Audio share option currently available in Android 10 and above.
+## Android Setup
 
+-  The Audio share option currently available in Android 10 and above.
+
+## How does audio share work in android
 100ms SDK uses the [MediaProjection](https://developer.android.com/guide/topics/media/av-capture#capture_audio_playback) APIs of Android to capture the device audio and stream it along with the user's regular audio track. To achieve this SDK starts a foreground service
 and starts capturing the device audio and muxes the bytes with the data collected from mic, so that the stream contains both system music and mic data.
 
@@ -17,8 +19,6 @@ This API gives apps the ability to copy the audio being played by other apps whi
 to  USAGE_MEDIA, USAGE_GAME, or USAGE_UNKNOWN. (Audio from apps like youtube etc can be captured)
 
 Following is the snippet on how to use this:
-
-## Android Setup
 
 You also need to pass the intent from android native side to HMSSDK in the following way :
 
@@ -82,13 +82,9 @@ hmsSDK.stopAudioShare(hmsActionResultListener: hmsActionResultListener);
 
 ## iOS Setup
 
-iOS SDK provides support for sharing audio from audio files on your device or sharing audio that's playing on iOS device (for example, from another app like spotify) while sharing the screen of your device in the room.
+-  Minimum iOS version required to support Audio Share is iOS 13
 
-## Minimum Requirements
-
--   Minimum iOS version required to support Audio Share is iOS 13
-
-## How audio sharing works in iOS SDK
+## How audio sharing works in iOS
 
 The audio that you share goes to other peers through the mic channel. To be able to share audio you need to setup the sdk to use a custom audio source instead of default mic. To do that you pass an instance of custom audio source to HMSAudioTrackSettings on your hmssdk instance.
 
