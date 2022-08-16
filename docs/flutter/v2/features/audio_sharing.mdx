@@ -2,6 +2,11 @@
 title: Audio Share (Beta)
 nav: 3.19
 ---
+
+>    This feature is still in Beta. To know more or report any issues, feel free to reach out to us
+>    over [Discord]('https://discord.com/invite/kGdmszyzq2').
+
+
 This feature is the analog of screen capture, but for audio.
 There may be cases where the application needs to stream music which is either stored in the device locally or from some other app present on the device in the room where the peer is joined.
 
@@ -40,7 +45,7 @@ super.onActivityResult(requestCode, resultCode, data)
 }
 
 ```
-> DONOT forget to add the permission for foreground service in AndroidManifest.xml
+> DO NOT forget to add the permission for foreground service in AndroidManifest.xml
 
 ```kotlin
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -94,24 +99,24 @@ The audio that you share goes to other peers through the mic channel. To be able
     HMSAudioFilePlayerNode required a parameter type `String` which will be use at control music player in room.
     
 ```dart
-    HMSAudioFilePlayerNode audioFilePlayerNode = HMSAudioFilePlayerNode("nodeName");
-    HMSMicNode micNode = HMSMicNode();
-  ```
+HMSAudioFilePlayerNode audioFilePlayerNode = HMSAudioFilePlayerNode("nodeName");
+HMSMicNode micNode = HMSMicNode();
+```
 
 2. Next, you create an instance of HMSAudioMixerSource, passing an array of nodes that we created in the step above like below:
 
 ```dart
-    HMSAudioMixerSource audioMixerSource = HMSAudioMixerSource(nodes: [audioFilePlayerNode, micNode]);
-  ```
+HMSAudioMixerSource audioMixerSource = HMSAudioMixerSource(nodes: [audioFilePlayerNode, micNode]);
+```
   
 3. Next, you pass this custom audio source to the 'audioSource' parameter of HMSAudioTrackSetting that you set on hmssdk instance like so:
 
 ```dart
-    HMSAudioTrackSetting audioSettings = HMSAudioTrackSetting(..., audioSource: audioMixerSource);
-    HMSTrackSetting = HMSTrackSetting(..., audioTrackSetting: audioSettings);
-    HMSSDK hmsSDK = HMSSDK(hmsTrackSetting: trackSetting);
-    hmsSDK.build();
-  ```
+HMSAudioTrackSetting audioSettings = HMSAudioTrackSetting(..., audioSource: audioMixerSource);
+HMSTrackSetting = HMSTrackSetting(..., audioTrackSetting: audioSettings);
+HMSSDK hmsSDK = HMSSDK(hmsTrackSetting: trackSetting);
+hmsSDK.build();
+```
 
 That's all you need to setup the sdk to use your custom audio source.
 
@@ -128,9 +133,9 @@ Note the parameter value in `HMSAudioFilePlayerNode` must be same as define at t
 You can use volume property on nodes to control the volume.
 
 ```dart
-    audioFilePlayerNode.setVolume(0.5);
-    micNode.setVolume(0.9);
-  ```
+audioFilePlayerNode.setVolume(0.5);
+micNode.setVolume(0.9);
+```
 
 Note volume value range from 0.0 to 1.0
 
@@ -139,31 +144,31 @@ Note volume value range from 0.0 to 1.0
 You can set 'interrupts' parameter to false to tell audioFilePlayerNode to not interrupt the current file playback, but schedule the file after the current file is finished. Like below:
 
 ```dart
-    audioFilePlayerNode.play(fileUrl: url to file 1)
-    audioFilePlayerNode.play(fileUrl: url to file 2, interrupts: false)
-    audioFilePlayerNode.play(fileUrl: url to file 3, interrupts: false)
-    ...
-  ```
+audioFilePlayerNode.play(fileUrl: url to file 1)
+audioFilePlayerNode.play(fileUrl: url to file 2, interrupts: false)
+audioFilePlayerNode.play(fileUrl: url to file 3, interrupts: false)
+...
+```
 
 ### How to play multiple files concurrently
 
 You can pass multiple instances of audioFilePlayerNode and pass them as nodes when creating audioMixerSource like so:
 
 ```dart
-    HMSAudioFilePlayerNode backgroundMusicNode = HMSAudioFilePlayerNode("backgroundMusicNode")
-    backgroundMusicNode.setVolume(0.2)
-    HMSAudioFilePlayerNode audioFilePlaybackNode = HMSAudioFilePlayerNode("audioFilePlaybackNode")
-    audioFilePlaybackNode.setVolume(0.5)
-    HMSMicNode micNode = HMSMicNode()
-    
-    HMSAudioMixerSource audioMixerSource = HMSAudioMixerSource(nodes: [backgroundMusicNode, audioFilePlaybackNode, micNode])
-  ```
+HMSAudioFilePlayerNode backgroundMusicNode = HMSAudioFilePlayerNode("backgroundMusicNode")
+backgroundMusicNode.setVolume(0.2)
+HMSAudioFilePlayerNode audioFilePlaybackNode = HMSAudioFilePlayerNode("audioFilePlaybackNode")
+audioFilePlaybackNode.setVolume(0.5)
+HMSMicNode micNode = HMSMicNode()
+
+HMSAudioMixerSource audioMixerSource = HMSAudioMixerSource(nodes: [backgroundMusicNode, audioFilePlaybackNode, micNode])
+```
 
 Now, you can play a looping background music at low volume and an audio file at the same time:
 
 ```dart
-    backgroundMusicNode.play(fileUrl: ..., loops: true)
-    audioFilePlayerNode.play(fileUrl: ...)
+backgroundMusicNode.play(fileUrl: ..., loops: true)
+audioFilePlayerNode.play(fileUrl: ...)
   ```
   
 ### How to pause, resume, stop playback and more
@@ -171,13 +176,13 @@ Now, you can play a looping background music at low volume and an audio file at 
 You can use following interfaces on HMSAudioFilePlayerNode to pause, resume or stop playback and more:
 
 ```dart
-    audioFilePlayerNode.pause()
-    audioFilePlayerNode.resume()
-    audioFilePlayerNode.stop()
-    
-    bool isPlaying = await audioFilePlayerNode.isPlaying()
-    double currentPlaybackTime = audioFilePlayerNode.currentDuration()
-    double totalPlaybackDuration = audioFilePlayerNode.duration()
+audioFilePlayerNode.pause()
+audioFilePlayerNode.resume()
+audioFilePlayerNode.stop()
+
+bool isPlaying = await audioFilePlayerNode.isPlaying()
+double currentPlaybackTime = audioFilePlayerNode.currentDuration()
+double totalPlaybackDuration = audioFilePlayerNode.duration()
   ```
   
   
@@ -190,8 +195,8 @@ Now once you have implemented the screen share feature from above. You can follo
 1. You get an instance of HMSScreenBroadcastAudioNode and add it to your mixer.
 
 ```dart
-    HMSScreenBroadcastAudioReceiverNode screenAudioNode = HMSScreenBroadcastAudioReceiverNode()
-    HMSAudioMixerSource audioMixerSource = HMSAudioMixerSource(nodes: [audioFilePlaybackNode, micNode, screenAudioNode])
+HMSScreenBroadcastAudioReceiverNode screenAudioNode = HMSScreenBroadcastAudioReceiverNode()
+HMSAudioMixerSource audioMixerSource = HMSAudioMixerSource(nodes: [audioFilePlaybackNode, micNode, screenAudioNode])
   ```
  
 Note: you can pass only a single instance of HMSMicNode and HMSScreenBroadcastAudioNode to HMSAudioMixerSource, else you will receive an error.
@@ -203,16 +208,15 @@ Now your mixer source is set to receive audio from your broadcast extension.
 Broadcast extension receives audio that's playing on your iOS device in processSampleBuffer function in your RPBroadcastSampleHandler class. To send audio from broadcast extension to main app, you call process(audioSampleBuffer) function on HMSScreenRenderer:
 
 ```swift
+override func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType) {
+    ...
     
-    override func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType) {
-        ...
-        
-        case RPSampleBufferType.audioApp:
-            _ = self.screenRenderer.process(audioSampleBuffer: sampleBuffer)
-            break
-        ...
-    }
-  ```
+    case RPSampleBufferType.audioApp:
+        _ = self.screenRenderer.process(audioSampleBuffer: sampleBuffer)
+        break
+    ...
+}
+```
   
 Now your broadcast extension is set to be send audio to the main app.
 
