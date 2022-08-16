@@ -118,8 +118,10 @@ const DocLayout: React.FC<Props> = ({
             const h2Index = getTopIndex(h2Array);
             const h3Index = getTopIndex(h3Array);
 
-            setActiveSubHeading(h3Index >= 0 ? h3Array[h3Index].id : '');
-            if (h2Index >= 0) setActiveHeading(h2Array[h2Index].id);
+            if (h2Index >= 0) {
+                setActiveHeading(h2Array[h2Index].id);
+                setActiveSubHeading(h3Index >= 0 ? h3Array[h3Index].id : '');
+            }
         };
 
         window.addEventListener('scroll', getActiveLinks);
