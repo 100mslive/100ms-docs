@@ -119,6 +119,7 @@ const DocLayout: React.FC<Props> = ({
             const h3Index = getTopIndex(h3Array);
 
             if (h2Index >= 0) {
+                setActiveHeading(h2Array[h2Index].id);
                 if (h3Index >= 0) {
                     if (
                         h2Array[h2Index].getBoundingClientRect().top <
@@ -126,8 +127,7 @@ const DocLayout: React.FC<Props> = ({
                     )
                         setActiveSubHeading(h3Array[h3Index].id);
                     else setActiveSubHeading('');
-                }
-                setActiveHeading(h2Array[h2Index].id);
+                }else setActiveSubHeading('')
             }
         };
 
