@@ -120,7 +120,13 @@ const DocLayout: React.FC<Props> = ({
 
             if (h2Index >= 0) {
                 setActiveHeading(h2Array[h2Index].id);
-                setActiveSubHeading(h3Index >= 0 ? h3Array[h3Index].id : '');
+                setActiveSubHeading(
+                    h3Index >= 0 &&
+                        h2Array[h2Index].getBoundingClientRect().top <
+                            h3Array[h3Index].getBoundingClientRect().top
+                        ? h3Array[h3Index].id
+                        : ''
+                );
             }
         };
 
@@ -142,7 +148,7 @@ const DocLayout: React.FC<Props> = ({
                     currentDocSlug={currentDocSlug}
                 />
                 <div className="ctx">
-                    <div style={{ borderRight: '1px solid var(--border_default)' }}>
+                    <div style={{ borderRight: '2px solid var(--border_default)' }}>
                         <Sidebar menu={menu} nav={newNav} />
                     </div>
                     <div className="content-wrapper">
