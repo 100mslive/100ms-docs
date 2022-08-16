@@ -93,9 +93,9 @@ const DocLayout: React.FC<Props> = ({
     } else {
         newNav = nav;
     }
-    setTimeout(() => {
-        scrollToUrlHash(router.asPath);
-    }, 500);
+    // setTimeout(() => {
+    //     scrollToUrlHash(router.asPath);
+    // }, 500);
 
     React.useEffect(() => {
         const getTopIndex = (arr) => {
@@ -119,14 +119,15 @@ const DocLayout: React.FC<Props> = ({
             const h3Index = getTopIndex(h3Array);
 
             if (h2Index >= 0) {
-                setActiveHeading(h2Array[h2Index].id);
-                setActiveSubHeading(
-                    h3Index >= 0 &&
+                if (h3Index >= 0) {
+                    if (
                         h2Array[h2Index].getBoundingClientRect().top <
-                            h3Array[h3Index].getBoundingClientRect().top
-                        ? h3Array[h3Index].id
-                        : ''
-                );
+                        h3Array[h3Index].getBoundingClientRect().top
+                    )
+                        setActiveSubHeading(h3Array[h3Index].id);
+                    else setActiveSubHeading('');
+                }
+                setActiveHeading(h2Array[h2Index].id);
             }
         };
 
@@ -148,7 +149,7 @@ const DocLayout: React.FC<Props> = ({
                     currentDocSlug={currentDocSlug}
                 />
                 <div className="ctx">
-                    <div style={{ borderRight: '2px solid var(--border_default)' }}>
+                    <div style={{ borderRight: '1px solid var(--border_default)' }}>
                         <Sidebar menu={menu} nav={newNav} />
                     </div>
                     <div className="content-wrapper">

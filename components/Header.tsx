@@ -161,8 +161,8 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     margin: 0 auto;
                     top: 0;
                     padding: 0.5rem;
-                    background-color: var(--surface_default);
-                    border-bottom: 1px solid var(--gray6);
+                    background-color: var(--surface_lighter);
+                    border-bottom: 1px solid var(--border_default);
                 }
                 .res-ctx {
                     background-color: var(--gray2);
