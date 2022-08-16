@@ -17,6 +17,7 @@ import { Box, Button, Flex, Text } from '@100mslive/react-ui';
 import { Card, Item, SdkItem } from 'components';
 import Header from 'components/Header';
 import Link from 'next/link';
+import Footer from '@/components/Footer';
 import { useState } from 'react';
 
 const quickLinks = [
@@ -396,6 +397,7 @@ const Homepage = () => {
                     </Flex>
                 </Box>
             </Flex>
+            <Footer />
         </>
     );
 };
