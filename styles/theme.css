@@ -60,6 +60,8 @@ to decide colors
     --success: var(--primary_light);
     --warning: #f5a623;
 
+    --border_default: hsl(218 17% 13%);
+    --background_default: hsl(210 15% 5%);
 
     --text_med_emp: hsl(217 100% 94%);
     --text_high_emp: hsl(216 100% 98%);
@@ -101,7 +103,7 @@ to decide colors
 
 html,
 body {
-    background-color: var(--gray1);
+    background-color: var(--background_default);
     color: var(--text_high_emp);
     transition: none;
     overscroll-behavior-y: none;
@@ -219,7 +221,8 @@ span.text:not(.child) > a{
 .menu-container a.active-link{
     font-weight: 500;
     color: var(--primary_light);
-    background-color: transparent;;
+    background-color: transparent;
+    padding-left: -2px;
     border-left: 2px solid var(--primary_light);
 }
 

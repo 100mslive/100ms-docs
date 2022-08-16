@@ -177,7 +177,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     top: ${menu ? '10px' : '80px'};
                     left: 0;
                     position: ${menu ? 'absolute' : 'sticky'};
-                    background: var(--gray1);
+                    background: var(--background_default);
                     z-index: 40;
                 }
                 ::-webkit-scrollbar {

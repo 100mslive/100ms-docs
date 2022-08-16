@@ -140,7 +140,7 @@ const DocLayout: React.FC<Props> = ({
                     currentDocSlug={currentDocSlug}
                 />
                 <div className="ctx">
-                    <div style={{ borderRight: '1px solid var(--gray6)' }}>
+                    <div style={{ borderRight: '1px solid var(--border_default)' }}>
                         <Sidebar menu={menu} nav={newNav} />
                     </div>
                     <div className="content-wrapper">
