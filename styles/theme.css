@@ -677,10 +677,23 @@ img {
 .footer-wrapper{
     width: 90%;
 }
+
 .footer{
     margin-top: 40px;
     width: 100%;
     max-width: 1352px;
+}
+
+.footer-contact{
+    width: 66%;
+}
+
+.footer-form {
+    align-items: center;
+}
+
+.footer-final{
+    margin-bottom: 56px;
 }
 
 .socials{
@@ -689,12 +702,8 @@ img {
     margin-top: 10px;
 }
 
-.search-ctx {
-    border-radius: 8px;
-    background: var(--gray3);
-    position: relative;
-    height: 38px;
-    padding: 5px 12px;
+.mobile-hr{
+    display: none;
 }
 
 div#hs-eu-cookie-confirmation {
@@ -738,32 +747,76 @@ div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a#hs-eu-cookie
     display: none;
 }
 
-@media screen and (max-width: 760px) {
-    div#hs-eu-cookie-confirmation
-        div#hs-eu-cookie-confirmation-inner
-        div#hs-en-cookie-confirmation-buttons-area {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a#hs-eu-decline-button {
-        margin-top: 5px !important;
-        margin-right: 12px !important;
-    }
-}
-
 @media screen and (max-width: 1160px){
+    
+    .footer-wrapper {
+        margin: 0 48px;
+    }
+
     .footer{
         flex-direction: column;
         gap: 45px;
     }
 
-    #footer-contact{
+    .footer-contact{
         width: 100%;
+    }
+
+    .footer-form{
+        align-items: center;
     }
 
     .footer-last{
         flex-direction: column;
         gap: 16px !important;
+    }
+
+    .footer-final{
+        margin-bottom: 48px;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner div#hs-en-cookie-confirmation-buttons-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a#hs-eu-decline-button {
+        margin-top: 5px !important;
+        margin-right: 12px !important;
+    }
+
+    .footer-wrapper{
+        margin: 0 24px;
+    }
+
+    .footer-form {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 50px;
+    }
+
+    .footer-input{
+        width: calc(100%-24px);
+    }
+
+    .subscribe-btn{
+        margin: 0 auto;
+    }
+
+    .footer-contact {
+        flex-direction: column;
+    }
+
+    .mobile-hr {
+        display: block;
+    }
+
+    .footer-final {
+        flex-direction: column;
+        gap: 32px;
+        margin-bottom: 24px;
     }
 }

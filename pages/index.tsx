@@ -73,7 +73,12 @@ const mobileSDK = [
     }
 ];
 
-const style = { padding: '6px', backgroundColor: '#1D2229', borderRadius: '999px', color: 'white' };
+const style = {
+    padding: '6px',
+    backgroundColor: '#1D2229',
+    borderRadius: '999px',
+    color: 'white'
+};
 
 const fundamentals = [
     {
@@ -199,31 +204,31 @@ const Homepage = () => {
             </Flex>
             {/* todo remove */}
             <Flex
-                justify="center"
+                justify='center'
                 css={{
                     marginBottom: '100px'
                 }}>
                 <Box css={{ width: '90%', maxWidth: '1248px' }}>
                     <Flex
-                        justify="center"
-                        direction="column"
-                        align="center"
-                        gap="4"
+                        justify='center'
+                        direction='column'
+                        align='center'
+                        gap='4'
                         css={{
                             marginTop: '$md',
                             marginBottom: '$16'
                         }}>
-                        <Text variant="h4">Documentation</Text>
-                        <Text variant="body2" css={{ color: '$textMedEmp' }}>
+                        <Text variant='h4'>Documentation</Text>
+                        <Text variant='body2' css={{ color: '$textMedEmp' }}>
                             Study our quickstarts, guides, and examples to learn how to create live
                             experiences with 100ms.
                         </Text>
                     </Flex>
-                    <Flex gap="2" align="start">
+                    <Flex gap='2' align='start'>
                         <ComputerIcon style={{ height: '14px' }} />
-                        <Text variant="sub2">Web</Text>
+                        <Text variant='sub2'>Web</Text>
                     </Flex>
-                    <Flex direction="" justify="between" css={{ flexWrap: 'wrap' }}>
+                    <Flex justify='between' css={{ flexWrap: 'wrap' }}>
                         <SdkItem
                             logo={
                                 <JavascriptIcon
@@ -232,8 +237,8 @@ const Homepage = () => {
                                     }}
                                 />
                             }
-                            text="Read Guide"
-                            sdk="javascript"
+                            text='Read Guide'
+                            sdk='javascript'
                         />
                         <SdkItem
                             logo={
@@ -244,15 +249,15 @@ const Homepage = () => {
                                 />
                             }
                             cssHeading={{ gap: '$12' }}
-                            text="ReactJS"
-                            sdk="reactjs"
+                            text='ReactJS'
+                            sdk='reactjs'
                         />
                     </Flex>
-                    <Flex gap="2" align="center" css={{ marginTop: '$9', marginBottom: '$6' }}>
+                    <Flex gap='2' align='center' css={{ marginTop: '$9', marginBottom: '$6' }}>
                         <ComputerIcon style={{ height: '14px' }} />
-                        <Text variant="sub2">Mobile</Text>
+                        <Text variant='sub2'>Mobile</Text>
                     </Flex>
-                    <Flex justify="between" css={{ flexWrap: 'wrap', gap: '$12' }}>
+                    <Flex justify='between' css={{ flexWrap: 'wrap', gap: '$12' }}>
                         {mobileSDK.map((value) => (
                             <SdkItem
                                 key={value.id}
@@ -263,22 +268,22 @@ const Homepage = () => {
                             />
                         ))}
                     </Flex>
-                    <Flex gap="2" align="center" css={{ marginTop: '$9' }}>
+                    <Flex gap='2' align='center' css={{ marginTop: '$9' }}>
                         <ComputerIcon style={{ height: '14px' }} />
-                        <Text variant="sub2">Server side</Text>
+                        <Text variant='sub2'>Server side</Text>
                     </Flex>
-                    <SdkItem sdk="serverSide" />
-                    <Flex direction="column" css={{ marginTop: '$14', marginBottom: '$9' }}>
-                        <Text variant="h5">
-                            <a id="Fundamentals" href="#Fundamentals">
+                    <SdkItem sdk='serverSide' />
+                    <Flex direction='column' css={{ marginTop: '$14', marginBottom: '$9' }}>
+                        <Text variant='h5'>
+                            <a id='Fundamentals' href='#Fundamentals'>
                                 Fundamentals
                             </a>
                         </Text>
-                        <Text variant="body2" css={{ color: '$textMedEmp' }}>
+                        <Text variant='body2' css={{ color: '$textMedEmp' }}>
                             Learn how to integrate live video in your app with 100ms.
                         </Text>
                     </Flex>
-                    <Flex css={{ gap: '$12', flexWrap: 'wrap' }} justify="between">
+                    <Flex css={{ gap: '$12', flexWrap: 'wrap' }} justify='between'>
                         {fundamentals.map((item) => (
                             <a key={item.title}>
                                 <Box
@@ -295,7 +300,7 @@ const Homepage = () => {
                                                 logo={item.logo}
                                                 text={item.title}
                                                 textCSS={{ color: 'white' }}
-                                                textVariant="body1"
+                                                textVariant='body1'
                                                 endLogo={
                                                     <ArrowRightIcon style={{ color: 'white' }} />
                                                 }
@@ -307,16 +312,16 @@ const Homepage = () => {
                         ))}
                     </Flex>
                     <Flex
-                        direction="column"
+                        direction='column'
                         css={{ marginTop: '$16', marginBottom: '$12', gap: '$3' }}>
-                        <Text variant="h5">Guides</Text>
-                        <Text variant="body2" css={{ color: '$textMedEmp' }}>
+                        <Text variant='h5'>Guides</Text>
+                        <Text variant='body2' css={{ color: '$textMedEmp' }}>
                             Learn the finer aspects of building custom live video.
                         </Text>
                     </Flex>
                     <Flex
                         css={{ gap: '$12', flexWrap: 'wrap', maxWidth: 'fit-content' }}
-                        justify="">
+                        justify=''>
                         {guides.map((item) => (
                             <Link href={item.link} key={item.title}>
                                 <a>
@@ -332,7 +337,7 @@ const Homepage = () => {
                                             titleComponent={
                                                 <Item
                                                     text={item.title}
-                                                    textVariant="h6"
+                                                    textVariant='h6'
                                                     textCSS={{ color: 'white' }}
                                                     endLogo={null}
                                                 />
@@ -347,11 +352,11 @@ const Homepage = () => {
                                                         }
                                                     }}>
                                                     <Item
-                                                        text="React Guide"
+                                                        text='React Guide'
                                                         logo={
                                                             <BookIcon style={{ height: '18px' }} />
                                                         }
-                                                        textVariant="body2"
+                                                        textVariant='body2'
                                                         css={{ gap: '$4', marginBottom: '$8' }}
                                                     />
                                                 </Box>
@@ -362,16 +367,16 @@ const Homepage = () => {
                             </Link>
                         ))}
                     </Flex>
-                    <Flex css={{ marginTop: '$24', gap: '$8', marginBottom: '$12' }} align="center">
-                        <Text variant="h5">More</Text>
-                        <Button variant="standard" css={{ borderRadius: '20px' }}>
+                    <Flex css={{ marginTop: '$24', gap: '$8', marginBottom: '$12' }} align='center'>
+                        <Text variant='h5'>More</Text>
+                        <Button variant='standard' css={{ borderRadius: '20px' }}>
                             <FilterIcon /> JavaScript
                         </Button>
                     </Flex>
-                    <Flex justify="between">
+                    <Flex justify='between'>
                         {more.javascript.map((section) => (
-                            <Flex direction="column" key={section.heading} css={{ gap: '$5' }}>
-                                <Text variant="body1" css={{ marginBottom: '$4' }}>
+                            <Flex direction='column' key={section.heading} css={{ gap: '$5' }}>
+                                <Text variant='body1' css={{ marginBottom: '$4' }}>
                                     {section.heading}
                                 </Text>
                                 {section.items.map((item) => (
@@ -382,7 +387,7 @@ const Homepage = () => {
                                                     ':hover': { color: '$primaryLight' }
                                                 }}>
                                                 <Text
-                                                    variant="body1"
+                                                    variant='body1'
                                                     css={{
                                                         color: '$primaryDefault'
                                                     }}>

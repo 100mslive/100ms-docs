@@ -1,7 +1,6 @@
 import React from 'react';
-import { Flex, Box, Text, Button } from '@100mslive/react-ui';
+import { Flex, Box, Text, Button, Input } from '@100mslive/react-ui';
 import { GithubIcon, ChatIcon } from '@100mslive/react-icons';
-import SearchIcon from '@/assets/icons/SearchIcon';
 
 const Footer = () => (
     <Flex justify="center">
@@ -19,7 +18,7 @@ const Footer = () => (
                         <img height="27" src="/docs/static/images/discord.svg" alt="discord" />
                     </Box>
                 </Box>
-                <Flex justify="between" id="footer-contact" css={{ width: '66%' }}>
+                <Flex justify="between" className="footer-contact">
                     <Box className="details">
                         <Flex align="center" gap="1" css={{ marginBottom: '16px' }}>
                             <ChatIcon />
@@ -35,18 +34,27 @@ const Footer = () => (
                         </a>
                     </Box>
                     <Box className="subscribe">
-                        <Text css={{ marginBottom: '12px' }}>Subscribe for developer updates</Text>
-                        <Flex align="center" css={{ gap: '16px', marginBottom: '12px' }}>
-                            <Box className="search-ctx">
-                                <button type="button" className="search-btn">
-                                    <SearchIcon />
-                                    <span>Find what you're looking for</span>
-                                    <span className="hot-key">/</span>
-                                </button>
-                            </Box>
-                            <Button>Subscribe</Button>
+                        <Box
+                            className="mobile-hr"
+                            css={{ width: '100%', paddingTop: '10px', marginBottom: '-8px' }}>
+                            <hr />
+                        </Box>
+                        <Flex className="footer-form" css={{ gap: '16px' }}>
+                            <Flex direction="column" css={{ gap: '12px', width: '100%' }}>
+                                <Text>Subscribe for developer updates</Text>
+                                <Input
+                                    className="footer-input"
+                                    type="email"
+                                    placeholder="Enter your email"
+                                />
+                                <Text variant="sm">You can unsubscribe anytime</Text>
+                            </Flex>
+                            <Button
+                                className="subscribe-btn"
+                                css={{ height: '30px', width: 'fit-content' }}>
+                                Subscribe
+                            </Button>
                         </Flex>
-                        <Text variant="sm">You can unsubscribe anytime</Text>
                     </Box>
                 </Flex>
             </Flex>
@@ -56,7 +64,8 @@ const Footer = () => (
             <Flex
                 justify="between"
                 align="center"
-                css={{ width: '100%', maxWidth: '1352px', marginBottom: '56px' }}>
+                className="footer-final"
+                css={{ width: '100%', maxWidth: '1352px' }}>
                 <Flex className="footer-last" css={{ gap: '80px' }}>
                     <Text>© 100ms, Inc. All rights reserved.</Text>
                     <Flex css={{ gap: '40px' }}>
@@ -85,38 +94,6 @@ const Footer = () => (
                     All Systems Operational
                 </Flex>
             </Flex>
-            <style jsx>
-                {`
-                    .search-btn {
-                        opacity: 0.6;
-                        background-color: transparent;
-                        display: flex;
-                        align-items: center;
-                        border: none;
-                        border-radius: 5px;
-                        cursor: pointer;
-                        border-bottom-width: 1px;
-                    }
-                    .search-btn span {
-                        margin-left: 1rem;
-                    }
-                    .hot-key {
-                        margin-left: 1rem;
-                        border-radius: 5px;
-                        padding: 0 8px;
-                        border: 1px solid var(--gray6);
-                    }
-                    .search-btn:hover {
-                        opacity: 1;
-                    }
-                    @media screen and (max-width: 1024px) {
-                        .footer {
-                            margin-left: 48px;
-                            margin-right: 48px;
-                        }
-                    }
-                `}
-            </style>
         </Flex>
     </Flex>
 );
