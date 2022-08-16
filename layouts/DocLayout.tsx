@@ -99,39 +99,33 @@ const DocLayout: React.FC<Props> = ({
 
     const articleRef = React.useRef();
     React.useEffect(() => {
-        if (articleRef && articleRef.current) {
-            const getActiveLinks = window.addEventListener('scroll', () => {
-                const h2Array = document.getElementsByTagName('h2');
-                const h3Array = document.getElementsByTagName('h3');
+        const getTopIndex = (arr) => {
+            let height = Infinity;
+            let topIndex;
+            for (let i = 0; i < arr.length; i += 1) {
+                const currHeight = Math.abs(arr[i].getBoundingClientRect().top);
+                if (currHeight < height && currHeight < window.screen.availHeight) {
+                    height = currHeight;
+                    topIndex = i;
+                }
+            }
+            return topIndex;
+        };
 
-                let height = Infinity;
-                let h2Index;
-                for (let i = 0; i < h2Array.length; i += 1) {
-                    const currHeight = Math.abs(h2Array[i].getBoundingClientRect().top);
-                    if (currHeight < height && currHeight < window.screen.availHeight) {
-                        height = currHeight;
-                        h2Index = i;
-                    }
-                }
-                let h3Index;
-                height = Infinity;
-                for (let i = 0; i < h3Array.length; i += 1) {
-                    const currHeight = Math.abs(h3Array[i].getBoundingClientRect().top);
-                    if (
-                        currHeight < height &&
-                        currHeight < window.screen.availHeight
-                    ) {
-                        height = currHeight;
-                        h3Index = i;
-                    }
-                }
-                if (h3Index >= 0) {
-                    setActiveSubHeading(h3Array[h3Index].id);
-                    console.log(h3Array[h3Index].id);
-                }
-                if (h2Index >= 0) setActiveHeading(h2Array[h2Index].id);
-            });
-        }
+        const getActiveLinks = () => {
+            const h2Array = document.getElementsByTagName('h2');
+            const h3Array = document.getElementsByTagName('h3');
+
+            const h2Index = getTopIndex(h2Array);
+            const h3Index = getTopIndex(h3Array);
+
+            setActiveSubHeading(h3Index >= 0 ? h3Array[h3Index].id : '');
+            if (h2Index >= 0) setActiveHeading(h2Array[h2Index].id);
+        };
+
+        if (articleRef && articleRef.current) window.addEventListener('scroll', getActiveLinks);
+
+        return () => window.removeEventListener('scroll', getActiveLinks);
     }, []);
 
     return (
