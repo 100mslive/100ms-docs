@@ -99,13 +99,23 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading, listView = fals
                 marginTop: '$8',
                 backgroundColor: '$surfaceDefault',
                 paddingTop: '$8',
+                paddingLeft: text ? '$10' : undefined,
                 paddingBottom: '$8',
                 borderRadius: '$3',
-                gap: '$2'
+                gap: '$2',
+                width: '100%',
+                flexWrap: 'wrap',
+                '@md': {
+                    maxWidth: '$80'
+                }
+                //     width: '350px'
             }}
             align="center">
             {text ? (
-                <Flex css={{ marginLeft: '$10', gap: '$2', ...cssHeading }} align="center">
+                <Flex
+                    css={{ gap: '$2', flexWrap: 'wrap', ...cssHeading }}
+                    align="center"
+                    direction="column">
                     <Item
                         logo={logo}
                         text={text}
@@ -113,7 +123,14 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading, listView = fals
                         endLogo={null}
                         textCSS={{ color: 'white' }}
                     />
-                    <DividerIcon />
+                    <Box
+                        css={{
+                            '@md': {
+                                display: 'none'
+                            }
+                        }}>
+                        <DividerIcon />
+                    </Box>
                 </Flex>
             ) : (
                 <Box css={{ marginLeft: '$8' }} />

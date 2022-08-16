@@ -5,6 +5,7 @@ import {
     ArrowRightIcon,
     BookIcon,
     ComputerIcon,
+    FilterIcon,
     FlutterIcon,
     GameIcon,
     JavascriptIcon,
@@ -199,7 +200,7 @@ const Homepage = () => {
             <Flex
                 justify="center"
                 css={{
-                    marginBottom: '400px'
+                    marginBottom: '100px'
                 }}>
                 <Box css={{ width: '90%', maxWidth: '1248px' }}>
                     <Flex
@@ -221,29 +222,31 @@ const Homepage = () => {
                         <ComputerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Web</Text>
                     </Flex>
-                    <SdkItem
-                        logo={
-                            <JavascriptIcon
-                                style={{
-                                    color: 'yellow'
-                                }}
-                            />
-                        }
-                        text="Read Guide"
-                        sdk="javascript"
-                    />
-                    <SdkItem
-                        logo={
-                            <ReactIcon
-                                style={{
-                                    color: 'DodgerBlue'
-                                }}
-                            />
-                        }
-                        cssHeading={{ gap: '$12' }}
-                        text="ReactJS"
-                        sdk="reactjs"
-                    />
+                    <Flex direction="" justify="between" css={{ flexWrap: 'wrap' }}>
+                        <SdkItem
+                            logo={
+                                <JavascriptIcon
+                                    style={{
+                                        color: 'yellow'
+                                    }}
+                                />
+                            }
+                            text="Read Guide"
+                            sdk="javascript"
+                        />
+                        <SdkItem
+                            logo={
+                                <ReactIcon
+                                    style={{
+                                        color: 'DodgerBlue'
+                                    }}
+                                />
+                            }
+                            cssHeading={{ gap: '$12' }}
+                            text="ReactJS"
+                            sdk="reactjs"
+                        />
+                    </Flex>
                     <Flex gap="2" align="center" css={{ marginTop: '$9', marginBottom: '$6' }}>
                         <ComputerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Mobile</Text>
@@ -274,7 +277,7 @@ const Homepage = () => {
                             Learn how to integrate live video in your app with 100ms.
                         </Text>
                     </Flex>
-                    <Flex css={{ gap: '$12' }} justify="between">
+                    <Flex css={{ gap: '$12', flexWrap: 'wrap' }} justify="between">
                         {fundamentals.map((item) => (
                             <a key={item.title}>
                                 <Box
@@ -312,7 +315,7 @@ const Homepage = () => {
                     </Flex>
                     <Flex
                         css={{ gap: '$12', flexWrap: 'wrap', maxWidth: 'fit-content' }}
-                        justify="center">
+                        justify="">
                         {guides.map((item) => (
                             <Link href={item.link} key={item.title}>
                                 <a>
@@ -361,7 +364,7 @@ const Homepage = () => {
                     <Flex css={{ marginTop: '$24', gap: '$8', marginBottom: '$12' }} align="center">
                         <Text variant="h5">More</Text>
                         <Button variant="standard" css={{ borderRadius: '20px' }}>
-                            JavaScript
+                            <FilterIcon /> JavaScript
                         </Button>
                     </Flex>
                     <Flex justify="between">
