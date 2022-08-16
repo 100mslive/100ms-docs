@@ -97,7 +97,6 @@ const DocLayout: React.FC<Props> = ({
         scrollToUrlHash(router.asPath);
     }, 500);
 
-    const articleRef = React.useRef();
     React.useEffect(() => {
         const getTopIndex = (arr) => {
             let height = Infinity;
@@ -123,7 +122,7 @@ const DocLayout: React.FC<Props> = ({
             if (h2Index >= 0) setActiveHeading(h2Array[h2Index].id);
         };
 
-        if (articleRef && articleRef.current) window.addEventListener('scroll', getActiveLinks);
+        window.addEventListener('scroll', getActiveLinks);
 
         return () => window.removeEventListener('scroll', getActiveLinks);
     }, []);
@@ -145,7 +144,7 @@ const DocLayout: React.FC<Props> = ({
                         <Sidebar menu={menu} nav={newNav} />
                     </div>
                     <div className="content-wrapper">
-                        <article ref={articleRef}>
+                        <article>
                             <h1>{frontMatter.title}</h1>
                             {children}
                             <hr />
