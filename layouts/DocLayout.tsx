@@ -6,7 +6,7 @@ import Pagination from '@/components/Pagination';
 import Sidebar from '@/components/Sidebar';
 import Toc from '@/components/Toc';
 import { PaginationType } from '@/lib/getPagination';
-// import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
+import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import EditFile from '@/components/EditFile';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
@@ -93,9 +93,12 @@ const DocLayout: React.FC<Props> = ({
     } else {
         newNav = nav;
     }
-    // setTimeout(() => {
-    //     scrollToUrlHash(router.asPath);
-    // }, 500);
+    
+    React.useEffect(() => {
+        setTimeout(() => {
+            scrollToUrlHash(router.asPath);
+        }, 500);
+    }, [router.asPath]);
 
     React.useEffect(() => {
         const getTopIndex = (arr) => {
@@ -121,13 +124,14 @@ const DocLayout: React.FC<Props> = ({
             if (h2Index >= 0) {
                 setActiveHeading(h2Array[h2Index].id);
                 if (h3Index >= 0) {
+                    // To ensure active H2 is always above active H3
                     if (
                         h2Array[h2Index].getBoundingClientRect().top <
                         h3Array[h3Index].getBoundingClientRect().top
                     )
                         setActiveSubHeading(h3Array[h3Index].id);
                     else setActiveSubHeading('');
-                }else setActiveSubHeading('')
+                } else setActiveSubHeading('');
             }
         };
 
