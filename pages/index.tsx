@@ -23,31 +23,32 @@ import { useState } from 'react';
 
 const quickLinks = [
     {
-        title: 'Fundamentals'
+        title: 'Fundamentals',
+        link: '/javascript/v2/foundation/basics'
     },
     {
         title: 'Quickstart',
-        link: ''
+        link: '/javascript/v2/guides/javascript-quickstart'
     },
     {
-        title: 'Tutorials',
-        link: ''
+        title: 'Guides',
+        link: '#guides'
     },
     {
         title: 'Features',
-        link: ''
+        link: '/javascript/v2/features/integration'
     },
     {
         title: 'Debugging',
-        link: ''
+        link: '/javascript/v2/debugging/debugging'
     },
     {
         title: 'Changelog',
-        link: ''
+        link: '/javascript/v2/release-notes/release-notes'
     },
     {
         title: 'API reference',
-        link: ''
+        link: '/api-reference/javascript/v2/home/content'
     }
 ];
 
@@ -85,16 +86,19 @@ const fundamentals = [
     {
         title: 'Architecture',
         body: 'Learn the basic architecture to understand how your application communicates with 100ms servers.',
+        link: '/javascript/v2/foundation/basics#architecture',
         logo: <ViewIcon style={style} />
     },
     {
         title: 'Templates and Roles',
         body: 'A collection of roles and video settings that are used by the SDK to decide what happens when a room is created.',
+        link: '/javascript/v2/foundation/templates-and-roles',
         logo: <LegoIcon style={style} />
     },
     {
         title: 'Authentication',
         body: 'A way to control the permissions and capabilities of users in a room.',
+        link: '/javascript/v2/foundation/security-and-tokens',
         logo: <GameIcon style={style} />
     }
 ];
@@ -202,7 +206,7 @@ const Homepage = () => {
                     }
                 }}>
                 {quickLinks.map((item) => (
-                    <Link key={item.title} href={`#${item.title}`}>
+                    <Link key={item.title} href={item.link}>
                         <a>
                             <Text css={{ padding: '$4', color: '$textMedEmp' }}>{item.title}</Text>
                         </a>
@@ -303,45 +307,49 @@ const Homepage = () => {
                         }}>
                         {fundamentals.map((item) => (
                             <Box key={item.title} css={{ width: '100%' }}>
-                                <a>
-                                    <Box
-                                        css={{
-                                            ':hover': {
-                                                backgroundColor: '$surfaceLight'
-                                            },
-                                            height: '80%'
-                                        }}>
-                                        <Card
+                                <Link href={item.link}>
+                                    <a>
+                                        <Box
                                             css={{
-                                                height: '100%',
-                                                '@md': {
-                                                    height: 'auto'
-                                                }
-                                            }}
-                                            body={item.body}
-                                            titleComponent={
-                                                <Item
-                                                    logo={item.logo}
-                                                    text={item.title}
-                                                    textCSS={{ color: 'white' }}
-                                                    textVariant="body1"
-                                                    endLogo={
-                                                        <ArrowRightIcon
-                                                            style={{ color: 'white' }}
-                                                        />
+                                                ':hover': {
+                                                    backgroundColor: '$surfaceLight'
+                                                },
+                                                height: '80%'
+                                            }}>
+                                            <Card
+                                                css={{
+                                                    height: '100%',
+                                                    '@md': {
+                                                        height: 'auto'
                                                     }
-                                                />
-                                            }
-                                        />
-                                    </Box>
-                                </a>
+                                                }}
+                                                body={item.body}
+                                                titleComponent={
+                                                    <Item
+                                                        logo={item.logo}
+                                                        text={item.title}
+                                                        textCSS={{ color: 'white' }}
+                                                        textVariant="body1"
+                                                        endLogo={
+                                                            <ArrowRightIcon
+                                                                style={{ color: 'white' }}
+                                                            />
+                                                        }
+                                                    />
+                                                }
+                                            />
+                                        </Box>
+                                    </a>
+                                </Link>
                             </Box>
                         ))}
                     </Box>
                     <Flex
                         direction="column"
                         css={{ marginTop: '$16', marginBottom: '$12', gap: '$3' }}>
-                        <Text variant="h5">Guides</Text>
+                        <Text variant="h5" id="guides">
+                            Guides
+                        </Text>
                         <Text variant="body2" css={{ color: '$textMedEmp' }}>
                             Learn the finer aspects of building custom live video.
                         </Text>
