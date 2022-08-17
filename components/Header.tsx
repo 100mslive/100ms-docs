@@ -153,7 +153,6 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 .ctx {
                     display: flex;
                     align-items: center;
-                    width: 100%;
                     height: 3rem;
                     z-index: 50;
                     position: sticky;
