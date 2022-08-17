@@ -10,6 +10,7 @@ import {
     GameIcon,
     JavascriptIcon,
     LegoIcon,
+    NoEntryIcon,
     ReactIcon,
     ViewIcon
 } from '@100mslive/react-icons';
@@ -195,7 +196,10 @@ const Homepage = () => {
                     gap: '$10',
                     paddingLeft: '$8',
                     backgroundColor: '#0F1115',
-                    width: '100%'
+                    width: '100%',
+                    '@lg': {
+                        display: 'none'
+                    }
                 }}>
                 {quickLinks.map((item) => (
                     <Link key={item.title} href={`#${item.title}`}>
@@ -287,34 +291,58 @@ const Homepage = () => {
                             Learn how to integrate live video in your app with 100ms.
                         </Text>
                     </Flex>
-                    <Flex css={{ gap: '$12', flexWrap: 'wrap' }} justify="between">
+                    <Box
+                        css={{
+                            gap: '$12',
+                            display: 'grid',
+                            gridTemplateColumns: '1fr 1fr 1fr',
+                            '@xl': {
+                                gap: '$10'
+                            },
+                            '@md': {
+                                gridTemplateColumns: '1fr',
+                                gridTemplateRows: '1fr 1fr 1fr',
+                                gap: '$8'
+                            }
+                        }}>
                         {fundamentals.map((item) => (
-                            <a key={item.title}>
-                                <Box
-                                    css={{
-                                        ':hover': {
-                                            backgroundColor: '$surfaceLight'
-                                        }
-                                    }}>
-                                    <Card
-                                        css={{ height: '$36' }}
-                                        body={item.body}
-                                        titleComponent={
-                                            <Item
-                                                logo={item.logo}
-                                                text={item.title}
-                                                textCSS={{ color: 'white' }}
-                                                textVariant="body1"
-                                                endLogo={
-                                                    <ArrowRightIcon style={{ color: 'white' }} />
+                            <Box key={item.title} css={{ width: '100%' }}>
+                                <a>
+                                    <Box
+                                        css={{
+                                            ':hover': {
+                                                backgroundColor: '$surfaceLight'
+                                            },
+                                            height: '80%'
+                                        }}>
+                                        <Card
+                                            css={{
+                                                height: '100%',
+                                                width: 'calc(100% - 48px)',
+                                                '@md': {
+                                                    height: 'auto'
                                                 }
-                                            />
-                                        }
-                                    />
-                                </Box>
-                            </a>
+                                            }}
+                                            body={item.body}
+                                            titleComponent={
+                                                <Item
+                                                    logo={item.logo}
+                                                    text={item.title}
+                                                    textCSS={{ color: 'white' }}
+                                                    textVariant="body1"
+                                                    endLogo={
+                                                        <ArrowRightIcon
+                                                            style={{ color: 'white' }}
+                                                        />
+                                                    }
+                                                />
+                                            }
+                                        />
+                                    </Box>
+                                </a>
+                            </Box>
                         ))}
-                    </Flex>
+                    </Box>
                     <Flex
                         direction="column"
                         css={{ marginTop: '$16', marginBottom: '$12', gap: '$3' }}>
@@ -323,7 +351,15 @@ const Homepage = () => {
                             Learn the finer aspects of building custom live video.
                         </Text>
                     </Flex>
-                    <Flex css={{ gap: '$12', flexWrap: 'wrap', maxWidth: 'fit-content' }}>
+                    {/* <Box
+                        css={{
+                            gap: '$12',
+                            display: 'grid',
+                            gridTemplateColumns: '1fr 1fr 1fr 1fr',
+                            '@2xl': { gap: '$10', gridTemplateColumns: '290px 290px 290px' },
+                            '@lg': { gridTemplateColumns: '250px 250px 250px' },
+                            '@md': { gridTemplateColumns: '1fr' }
+                        }}>
                         {guides.map((item) => (
                             <Link href={item.link} key={item.title}>
                                 <a>
@@ -331,10 +367,13 @@ const Homepage = () => {
                                         css={{
                                             ':hover': {
                                                 backgroundColor: '$surfaceLight'
-                                            }
+                                            },
+                                            width: '240px',
+                                            '@lg': { width: '230px' },
+                                            '@md': { width: 'calc(100% - 24px)' }
                                         }}>
                                         <Card
-                                            css={{ width: '$60' }}
+                                            css={{ width: '85%' }}
                                             body={item.body}
                                             titleComponent={
                                                 <Item
@@ -368,7 +407,7 @@ const Homepage = () => {
                                 </a>
                             </Link>
                         ))}
-                    </Flex>
+                    </Box> */}
                     <Flex
                         css={{
                             marginTop: '$24',
