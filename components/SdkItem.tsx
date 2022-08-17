@@ -104,18 +104,28 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading, listView = fals
                 borderRadius: '$3',
                 gap: '$2',
                 width: '100%',
-                flexWrap: 'wrap',
+                // flexWrap: 'wrap',
+                '@lg': {
+                    gap: '$10',
+                    maxWidth: '$80',
+                    justifyContent: 'start',
+                    padding: '$10',
+                    flexDirection: 'column'
+                },
                 '@md': {
-                    maxWidth: '$80'
+                    maxWidth: '$44'
                 }
                 //     width: '350px'
             }}
             align="center">
             {text ? (
                 <Flex
-                    css={{ gap: '$2', flexWrap: 'wrap', ...cssHeading }}
-                    align="center"
-                    direction="column">
+                    css={{
+                        gap: '$2',
+
+                        ...cssHeading
+                    }}
+                    align="center">
                     <Item
                         logo={logo}
                         text={text}
@@ -125,7 +135,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading, listView = fals
                     />
                     <Box
                         css={{
-                            '@md': {
+                            '@lg': {
                                 display: 'none'
                             }
                         }}>
@@ -135,7 +145,18 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading, listView = fals
             ) : (
                 <Box css={{ marginLeft: '$8' }} />
             )}
-            <Flex css={{ gap: '$10', flexWrap: 'wrap' }}>
+            <Box
+                css={{
+                    gap: '$10',
+                    display: 'grid',
+                    gridAutoFlow: 'column',
+                    '@lg': {
+                        gridTemplateRows: 'repeat(3, minmax(0, 1fr))'
+                    },
+                    '@md': {
+                        gridTemplateRows: 'repeat(5, minmax(0, 1fr))'
+                    }
+                }}>
                 {sdkItems[sdk].map((value) => (
                     <Link key={value.id} href="/docs">
                         <a>
@@ -155,7 +176,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading, listView = fals
                         </a>
                     </Link>
                 ))}
-            </Flex>
+            </Box>
         </Flex>
     ) : (
         <Flex

@@ -1,4 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
+import Footer from '@/components/Footer';
+import HomeDropDown from '@/components/HomeDropDown';
 import {
     AndroidIcon,
     AppleIcon,
@@ -17,9 +19,7 @@ import { Box, Button, Flex, Text } from '@100mslive/react-ui';
 import { Card, Item, SdkItem } from 'components';
 import Header from 'components/Header';
 import Link from 'next/link';
-import Footer from '@/components/Footer';
 import { useState } from 'react';
-import HomeDropDown from '@/components/HomeDropDown';
 
 const quickLinks = [
     {
@@ -231,7 +231,7 @@ const Homepage = () => {
                         <ComputerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Web</Text>
                     </Flex>
-                    <Flex justify="between" css={{ flexWrap: 'wrap' }}>
+                    <Flex justify="between" css={{ flexWrap: 'wrap', gap: '$8' }}>
                         <SdkItem
                             logo={
                                 <JavascriptIcon
@@ -386,7 +386,7 @@ const Homepage = () => {
                             {showDropDown && <HomeDropDown />}
                         </Flex>
                     </Flex>
-                    <Flex justify="between">
+                    <Flex justify="between" css={{ flexWrap: 'wrap', gap: '$16' }}>
                         {more.javascript.map((section) => (
                             <Flex direction="column" key={section.heading} css={{ gap: '$5' }}>
                                 <Text variant="body1" css={{ marginBottom: '$4' }}>
