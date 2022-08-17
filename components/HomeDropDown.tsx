@@ -8,9 +8,9 @@ import {
     ReactIcon
 } from '@100mslive/react-icons';
 import { Box, Flex, Text } from '@100mslive/react-ui';
-import Link from 'next/link';
+import DropDownOption from './DropDownOption';
 
-const HomeDropDown = () => {
+const HomeDropDown = ({ setDropDownSelection }) => {
     const mobileSDK = [
         {
             icon: <AndroidIcon style={{ color: '#6BDEB6' }} />,
@@ -19,7 +19,7 @@ const HomeDropDown = () => {
         },
         {
             icon: <AppleIcon style={{ color: '#A2ACBA' }} />,
-            title: 'IOS',
+            title: 'iOS',
             id: 'ios'
         },
         {
@@ -48,60 +48,56 @@ const HomeDropDown = () => {
             }}>
             <Box>
                 <Text variant="overline">WEB</Text>
-                <Link href="/javascript/v2/foundation/basics">
-                    <a>
-                        <Flex className="home-dropdown-option" gap="1">
-                            <JavascriptIcon
-                                style={{
-                                    color: 'white'
-                                }}
-                            />
-                            <Text>JavaScript</Text>
-                        </Flex>
-                    </a>
-                </Link>
-                <Link href="/javascript/v2/foundation/basics">
-                    <a>
-                        <Flex className="home-dropdown-option" gap="1">
-                            <ReactIcon
-                                style={{
-                                    color: 'white'
-                                }}
-                            />
-                            <Text>ReactJS</Text>
-                        </Flex>
-                    </a>
-                </Link>
+                <DropDownOption
+                    title="JavaScript"
+                    icon={
+                        <JavascriptIcon
+                            style={{
+                                color: 'yellow'
+                            }}
+                        />
+                    }
+                    setDropDownSelection={setDropDownSelection}
+                />
+
+                <DropDownOption
+                    title="ReactJS"
+                    icon={
+                        <ReactIcon
+                            style={{
+                                color: 'DodgerBlue'
+                            }}
+                        />
+                    }
+                    setDropDownSelection={setDropDownSelection}
+                />
             </Box>
 
             <Box>
                 <Text variant="overline">MOBILE</Text>
                 {mobileSDK.map((tech) => (
-                    <Link key={tech.id} href={`/${tech.id}`}>
-                        <a>
-                            <Flex className="home-dropdown-option" gap="1">
-                                {tech.icon}
-                                <Text>{tech.title}</Text>
-                            </Flex>
-                        </a>
-                    </Link>
+                    <DropDownOption
+                        key={tech.id}
+                        title={tech.title}
+                        icon={tech.icon}
+                        setDropDownSelection={setDropDownSelection}
+                    />
                 ))}
             </Box>
 
             <Box>
                 <Text variant="overline">SERVER</Text>
-                <Link href="/server-side/v2/foundation/basics">
-                    <a>
-                        <Flex className="home-dropdown-option" gap="1">
-                            <ComputerIcon
-                                style={{
-                                    color: 'white'
-                                }}
-                            />
-                            <Text>Serverside</Text>
-                        </Flex>
-                    </a>
-                </Link>
+                <DropDownOption
+                    title="Serverside"
+                    icon={
+                        <ComputerIcon
+                            style={{
+                                color: 'white'
+                            }}
+                        />
+                    }
+                    setDropDownSelection={setDropDownSelection}
+                />
             </Box>
         </Flex>
     );

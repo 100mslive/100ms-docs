@@ -182,6 +182,7 @@ const Homepage = () => {
     const [menu, setMenu] = useState(false);
     const [modal, setModal] = useState(false);
     const [showDropDown, setShowDropDown] = useState(false);
+    const [dropDownSelection, setDropDownSelection] = useState('JavaScript');
     const menuState = { menu, setMenu };
 
     return (
@@ -425,9 +426,11 @@ const Homepage = () => {
                                     setShowDropDown((prev) => !prev);
                                     e.stopPropagation();
                                 }}>
-                                <FilterIcon /> JavaScript
+                                <FilterIcon /> {dropDownSelection}
                             </Button>
-                            {showDropDown && <HomeDropDown />}
+                            {showDropDown && (
+                                <HomeDropDown setDropDownSelection={setDropDownSelection} />
+                            )}
                         </Flex>
                     </Flex>
                     <Flex justify="between" css={{ flexWrap: 'wrap', gap: '$16' }}>
