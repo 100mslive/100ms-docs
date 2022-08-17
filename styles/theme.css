@@ -40,6 +40,8 @@ to decide colors
     --blue11: hsl(210 100% 66.1%);
 
     --cyan11: hsl(186 100% 42.2%);
+    
+    --secondary_default: #475366;
 
     --token_code_class: var(--gray12);
     --token_regex_imp_var: var(--blue11);
@@ -53,7 +55,6 @@ to decide colors
     --token_inserted: rgba(38, 166, 155, 0.5);
     --token_comment: var(--gray10);
 
-    /* --secondaryDefault */
 
     --success: var(--blue11);
     --warning: #f5a623;
@@ -675,6 +676,17 @@ img {
     border: none;
     cursor: pointer;
 }
+
+div.home-dropdown-option{
+    margin: 8px 0;
+    width: 160px;
+    padding: 4px 0 4px 8px;
+}
+div.home-dropdown-option:hover{
+    background-color: var(--secondary_default);
+    border-radius: 8px;
+}
+
 .footer-wrapper{
     width: 90%;
 }
@@ -781,6 +793,9 @@ div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a#hs-eu-cookie
     div.quicklinks{
         display: none;
     }
+    div.home-dropdown-option {
+        width: 120px;
+    }
 }
 @media screen and (max-width: 760px) {
     div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner div#hs-en-cookie-confirmation-buttons-area {
@@ -792,6 +807,14 @@ div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a#hs-eu-cookie
     div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a#hs-eu-decline-button {
         margin-top: 5px !important;
         margin-right: 12px !important;
+    }
+
+    div.dropdown-wrapper {
+        flex-direction: column;
+    }
+
+    div.home-dropdown-option {
+        width: 160px;
     }
 
     .footer-wrapper{
