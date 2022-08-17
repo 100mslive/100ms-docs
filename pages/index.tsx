@@ -320,7 +320,7 @@ const Homepage = () => {
                                                 css={{
                                                     height: '100%',
                                                     '@md': {
-                                                        height: 'auto'
+                                                        height: '100px'
                                                     }
                                                 }}
                                                 body={item.body}
@@ -347,9 +347,7 @@ const Homepage = () => {
                     <Flex
                         direction="column"
                         css={{ marginTop: '$16', marginBottom: '$12', gap: '$3' }}>
-                        <Text variant="h5" id="guides">
-                            Guides
-                        </Text>
+                        <Text variant="h5" id="guide">Guides</Text>
                         <Text variant="body2" css={{ color: '$textMedEmp' }}>
                             Learn the finer aspects of building custom live video.
                         </Text>

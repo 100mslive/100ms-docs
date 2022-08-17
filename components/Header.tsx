@@ -1,3 +1,4 @@
+import React from 'react';
 import CrossIcon from '@/assets/icons/CrossIcon';
 import MenuIcon from '@/assets/icons/MenuIcon';
 import SvgMoon from '@/assets/icons/Moon';
@@ -6,7 +7,6 @@ import SvgSun from '@/assets/icons/Sun';
 import useKeyPress from '@/lib/useKeyPress';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -146,7 +146,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
 
             <div className="menu-btn">
                 <button aria-label="menu-button" type="button" onClick={() => setMenu(!menu)}>
-                    {menu ? <CrossIcon /> : <MenuIcon />}
+                    {/* <Box>{menu ? <CrossIcon /> : <MenuIcon />}</Box> */}
                 </button>
             </div>
             <style jsx>{`

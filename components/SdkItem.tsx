@@ -36,51 +36,49 @@ const itemList = {
     7: <ListCheckIcon style={iconStyle} />
 };
 
-const link = 'https://google.com';
-
 const sdkItems = {
     javascript: [
-        { id: 1, link },
-        { id: 2, link },
-        { id: 3, link },
-        { id: 4, link },
-        { id: 5, link }
+        { id: 1, link: '' },
+        { id: 2, link: '' },
+        { id: 3, link: '' },
+        { id: 4, link: '' },
+        { id: 5, link: '' }
     ],
     reactjs: [
-        { id: 1, link },
-        { id: 2, link },
-        { id: 3, link },
-        { id: 4, link },
-        { id: 5, link }
+        { id: 1, link: '' },
+        { id: 2, link: '' },
+        { id: 3, link: '' },
+        { id: 4, link: '' },
+        { id: 5, link: '' }
     ],
     serverSide: [
-        { id: 4, link },
-        { id: 6, link },
-        { id: 7, link }
+        { id: 4, link: '' },
+        { id: 6, link: '' },
+        { id: 7, link: '' }
     ],
     android: [
-        { id: 1, link },
-        { id: 3, link },
-        { id: 4, link },
-        { id: 5, link }
+        { id: 1, link: '' },
+        { id: 3, link: '' },
+        { id: 4, link: '' },
+        { id: 5, link: '' }
     ],
     ios: [
-        { id: 1, link },
-        { id: 3, link },
-        { id: 4, link },
-        { id: 5, link }
+        { id: 1, link: '' },
+        { id: 3, link: '' },
+        { id: 4, link: '' },
+        { id: 5, link: '' }
     ],
     flutter: [
-        { id: 1, link },
-        { id: 3, link },
-        { id: 4, link },
-        { id: 5, link }
+        { id: 1, link: '' },
+        { id: 3, link: '' },
+        { id: 4, link: '' },
+        { id: 5, link: '' }
     ],
     react: [
-        { id: 1, link },
-        { id: 3, link },
-        { id: 4, link },
-        { id: 5, link }
+        { id: 1, link: '' },
+        { id: 3, link: '' },
+        { id: 4, link: '' },
+        { id: 5, link: '' }
     ]
 };
 
