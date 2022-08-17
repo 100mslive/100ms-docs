@@ -12,24 +12,40 @@ const Footer = () => (
                 <Box>
                     <img height="36" src="/docs/100ms.svg" alt="100ms Logo" />
                     <Box className="socials">
-                        <img height="27" src="/docs/static/images/linkedin.svg" alt="Linkedin" />
-                        <img height="27" src="/docs/static/images/facebook.svg" alt="facebook" />
-                        <img height="27" src="/docs/static/images/twitter.svg" alt="twitter" />
-                        <img height="27" src="/docs/static/images/discord.svg" alt="discord" />
+                        <a href="https://www.linkedin.com/company/100mslive/about/">
+                            <img
+                                height="27"
+                                src="/docs/static/images/linkedin.svg"
+                                alt="Linkedin"
+                            />
+                        </a>
+                        <a href="https://www.facebook.com/100mslive">
+                            <img
+                                height="27"
+                                src="/docs/static/images/facebook.svg"
+                                alt="facebook"
+                            />
+                        </a>
+                        <a href="https://twitter.com/100mslive">
+                            <img height="27" src="/docs/static/images/twitter.svg" alt="twitter" />
+                        </a>
+                        <a href="https://discord.com/invite/kGdmszyzq2">
+                            <img height="24" src="/docs/static/images/discord.svg" alt="discord" />
+                        </a>
                     </Box>
                 </Box>
                 <Flex justify="between" className="footer-contact">
                     <Box className="details">
                         <Flex align="center" gap="1" css={{ marginBottom: '16px' }}>
                             <ChatIcon />
-                            <Text>
-                                Need help? <a>Talk to us</a>
+                            <Text css={{ color: '$textHighEmp' }}>
+                                Need help? <a href="https://www.100ms.live/contact">Talk to us</a>
                             </Text>
                         </Flex>
-                        <a>
-                            <Flex align="center" gap="1" css={{ color: '$textMedEmp' }}>
+                        <a href="https://github.com/100mslive">
+                            <Flex align="center" gap="1" css={{ color: '$textHighEmp' }}>
                                 <GithubIcon />
-                                <Text>View sample code</Text>
+                                <Text css={{ color: '$textHighEmp' }}>View sample code</Text>
                             </Flex>
                         </a>
                     </Box>
@@ -41,13 +57,17 @@ const Footer = () => (
                         </Box>
                         <Flex className="footer-form" css={{ gap: '16px' }}>
                             <Flex direction="column" css={{ gap: '12px', width: '100%' }}>
-                                <Text>Subscribe for developer updates</Text>
+                                <Text css={{ color: '$textHighEmp' }}>
+                                    Subscribe for developer updates
+                                </Text>
                                 <Input
                                     className="footer-input"
                                     type="email"
                                     placeholder="Enter your email"
                                 />
-                                <Text variant="sm">You can unsubscribe anytime</Text>
+                                <Text variant="sm" css={{ color: '$textMedEmp' }}>
+                                    You can unsubscribe anytime
+                                </Text>
                             </Flex>
                             <Button
                                 className="subscribe-btn"
@@ -67,10 +87,14 @@ const Footer = () => (
                 className="footer-final"
                 css={{ width: '100%', maxWidth: '1352px' }}>
                 <Flex className="footer-last" css={{ gap: '80px' }}>
-                    <Text>© 100ms, Inc. All rights reserved.</Text>
+                    <Text css={{ color: '$textMedEmp' }}>© 100ms, Inc. All rights reserved.</Text>
                     <Flex css={{ gap: '40px' }}>
-                        <Text>Terms & Conditions</Text>
-                        <Text>Privacy</Text>
+                        <a href="https://www.100ms.live/terms-of-service">
+                            <Text css={{ color: '$textHighEmp' }}>Terms & Conditions</Text>
+                        </a>
+                        <a href="https://www.100ms.live/privacy-policy">
+                            <Text css={{ color: '$textHighEmp' }}>Privacy</Text>
+                        </a>
                     </Flex>
                 </Flex>
                 <Flex
@@ -91,7 +115,7 @@ const Footer = () => (
                             borderRadius: '50%'
                         }}
                     />
-                    All Systems Operational
+                    <Text css={{ color: '$textHighEmp' }}>All Systems Operational</Text>
                 </Flex>
             </Flex>
         </Flex>
