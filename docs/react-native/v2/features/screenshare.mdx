@@ -43,3 +43,56 @@ await hmsInstance?.isScreenShared()
     .then(d => console.log('Is Screenshare Success: ', d))
     .catch(e => console.log('Is Screenshare Error: ', e));
 ```
+
+## How to display screenshare tracks
+You can get screenshare track in two ways, one from onTrackListener when the track is added and other from peer's auxiliaryTracks.
+
+Get screenshare track directly from onTrackListener and display it.
+
+```js
+const HmsView = hmsInstance?.HmsView;
+const peerTrackNodes = [];
+
+// Get screenshare track from onTrackListener
+const onTrackListener = ({
+  peer,
+  track,
+  type,
+}: {
+  peer: HMSPeer;
+  track: HMSTrack;
+  type: HMSTrackUpdate;
+}) => {
+  if(type === HMSTrackUpdate.TRACK_ADDED && track.source === HMSTrackSource.SCREEN && track.type === HMSTrackType.VIDEO){
+    peerTrackNodes.push({
+      id: peer.peerID + track.trackId,
+      peer,
+      track,
+    })
+  }
+};
+
+<HmsView trackId={peerTrackNodes[0]?.trackId} />
+```
+
+The peer's ScreenShare video is in the `peer.auxiliaryTracks` which is of type `HMSTrack[]`.
+
+```js
+const HmsView = hmsInstance?.HmsView;
+const peerTrackNodes = [];
+
+// Get screenshare track from peer
+const auxiliaryTracks = hmsInstance?.remotePeers[0]?.auxiliaryTracks
+
+auxiliaryTracks?.map(track => {
+  if(track.source === HMSTrackSource.SCREEN && track.type === HMSTrackType.VIDEO){
+    peerTrackNodes.push({
+      id: peer.peerID + track.trackId,
+      peer,
+      track,
+    })
+  }
+});
+
+<HmsView trackId={peerTrackNodes[0]?.trackId} />
+```
