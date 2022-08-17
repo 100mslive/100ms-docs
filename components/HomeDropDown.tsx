@@ -1,5 +1,4 @@
 /* eslint-disable react/react-in-jsx-scope */
-import Link from 'next/link';
 import {
     AndroidIcon,
     AppleIcon,
@@ -9,6 +8,7 @@ import {
     ReactIcon
 } from '@100mslive/react-icons';
 import { Box, Flex, Text } from '@100mslive/react-ui';
+import Link from 'next/link';
 
 const HomeDropDown = ({}) => {
     const mobileSDK = [
