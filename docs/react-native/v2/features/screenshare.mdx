@@ -45,7 +45,9 @@ await hmsInstance?.isScreenShared()
 ```
 
 ## How to display screenshare tracks
-The peer's video is in `peer.videoTrack` and their ScreenShare video is in the `peer.auxiliaryTracks` which is of type `HMSTrack[]`.
+You can get screenshare track in two ways, one from onTrackListener when the track is added and other from peer's auxiliaryTracks.
+
+Get screenshare track directly from onTrackListener and display it.
 
 ```js
 const HmsView = hmsInstance?.HmsView;
@@ -70,6 +72,12 @@ const onTrackListener = ({
   }
 };
 
+<HmsView trackId={peerTrackNodes[0]?.trackId} />
+```
+
+The peer's ScreenShare video is in the `peer.auxiliaryTracks` which is of type `HMSTrack[]`.
+
+```js
 // Get screenshare track from peer
 const auxiliaryTracks = hmsInstance?.remotePeers[0]?.auxiliaryTracks
 
@@ -85,7 +93,3 @@ auxiliaryTracks?.map(track => {
 
 <HmsView trackId={peerTrackNodes[0]?.trackId} />
 ```
-
-
-
-
