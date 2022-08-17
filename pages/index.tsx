@@ -230,7 +230,9 @@ const Homepage = () => {
                             marginTop: '$md',
                             marginBottom: '$16'
                         }}>
-                        <Text variant="h4">Documentation</Text>
+                        <h1>
+                            <Text variant="h4">Documentation</Text>
+                        </h1>
                         <Text variant="body2" css={{ color: '$textMedEmp' }}>
                             Study our quickstarts, guides, and examples to learn how to create live
                             experiences with 100ms.
@@ -286,7 +288,9 @@ const Homepage = () => {
                     </Flex>
                     <SdkItem sdk="serverSide" />
                     <Flex direction="column" css={{ marginTop: '$14', marginBottom: '$9' }}>
-                        <Text variant="h5">Fundamentals</Text>
+                        <h2>
+                            <Text variant="h5">Fundamentals</Text>
+                        </h2>
                         <Text variant="body2" css={{ color: '$textMedEmp' }}>
                             Learn how to integrate live video in your app with 100ms.
                         </Text>
@@ -347,7 +351,11 @@ const Homepage = () => {
                     <Flex
                         direction="column"
                         css={{ marginTop: '$16', marginBottom: '$12', gap: '$3' }}>
-                        <Text variant="h5" id="guide">Guides</Text>
+                        <h2>
+                            <Text variant="h5" id="guide">
+                                Guides
+                            </Text>
+                        </h2>
                         <Text variant="body2" css={{ color: '$textMedEmp' }}>
                             Learn the finer aspects of building custom live video.
                         </Text>
@@ -421,7 +429,9 @@ const Homepage = () => {
                             marginBottom: '$12'
                         }}
                         align="center">
-                        <Text variant="h5">More</Text>
+                        <h2>
+                            <Text variant="h5">More</Text>
+                        </h2>
                         <Flex direction="column" css={{ position: 'relative' }}>
                             <Button
                                 variant="standard"
