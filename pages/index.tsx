@@ -363,10 +363,14 @@ const Homepage = () => {
                                                 ':hover': {
                                                     backgroundColor: '$surfaceLight'
                                                 },
-                                                height: '75%'
+                                                height: '240px',
+                                                '@md': { height: '180px' },
+                                                boxSizing: 'border-box'
                                             }}>
                                             <Card
-                                                css={{ height: '100%' }}
+                                                css={{
+                                                    height: '100%'
+                                                }}
                                                 body={item.body}
                                                 titleComponent={
                                                     <Item
@@ -393,7 +397,7 @@ const Homepage = () => {
                                                                 />
                                                             }
                                                             textVariant="body2"
-                                                            css={{ gap: '$4', marginBottom: '$8' }}
+                                                            css={{ gap: '$4', marginBottom: '$4' }}
                                                         />
                                                     </Box>
                                                 }
