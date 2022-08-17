@@ -1,14 +1,16 @@
+/* eslint-disable react/no-deprecated */
+/* eslint-disable react/react-in-jsx-scope */
 import { ChatIcon, GithubIcon } from '@100mslive/react-icons';
 import { Box, Button, Flex, Input, Text } from '@100mslive/react-ui';
-import React from 'react';
+import { useStatusPage } from 'hooks';
 
 const Footer = () => (
     <>
-        <script
-            defer
-            src="https://unpkg.com/@webcomponents/webcomponentsjs@2.1.3/webcomponents-bundle.js"
-        />
-        <script defer src="https://unpkg.com/@statuspage/status-widget/dist/index.js" />
+        {/* <script
+                defer
+                src="https://unpkg.com/@webcomponents/webcomponentsjs@2.1.3/webcomponents-bundle.js"
+            />
+            <script defer src="https://unpkg.com/@statuspage/status-widget/dist/index.js" /> */}
         <Flex justify="center">
             <Flex align="center" direction="column" className="footer-wrapper">
                 <Box css={{ width: '100vw', margin: '0' }}>
@@ -67,7 +69,11 @@ const Footer = () => (
                         <Box className="subscribe">
                             <Box
                                 className="mobile-hr"
-                                css={{ width: '100%', paddingTop: '10px', marginBottom: '-8px' }}>
+                                css={{
+                                    width: '100%',
+                                    paddingTop: '10px',
+                                    marginBottom: '-8px'
+                                }}>
                                 <hr />
                             </Box>
                             <Flex className="footer-form" css={{ gap: '16px' }}>
@@ -114,14 +120,36 @@ const Footer = () => (
                             </a>
                         </Flex>
                     </Flex>
-                    <Box
+                    <Flex
+                        className="footer-systems"
+                        align="center"
+                        css={{
+                            backgroundColor: '$secondaryDefault',
+                            gap: '12px',
+                            padding: '8px 24px 8px 16px',
+                            borderRadius: '20px'
+                        }}>
+                        <Box
+                            css={{
+                                height: '16px',
+                                width: '16px',
+                                backgroundColor: useStatusPage()[0].colour,
+                                margin: '4px',
+                                borderRadius: '50%'
+                            }}
+                        />
+                        <Text css={{ color: '$textHighEmp' }}>
+                            {useStatusPage()[0].description}
+                        </Text>
+                    </Flex>
+                    {/* <Box
                         css={{
                             backgroundColor: '$secondaryDefault',
                             borderRadius: '$round',
                             padding: '$4'
                         }}>
                         <statuspage-widget src="https://status.100ms.live" />
-                    </Box>
+                    </Box> */}
                 </Flex>
             </Flex>
         </Flex>

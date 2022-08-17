@@ -1,12 +1,10 @@
-import React from 'react';
-import CrossIcon from '@/assets/icons/CrossIcon';
-import MenuIcon from '@/assets/icons/MenuIcon';
 import SvgMoon from '@/assets/icons/Moon';
 import SearchIcon from '@/assets/icons/SearchIcon';
 import SvgSun from '@/assets/icons/Sun';
 import useKeyPress from '@/lib/useKeyPress';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import React from 'react';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -15,7 +13,7 @@ interface Props {
         setMenu: React.Dispatch<React.SetStateAction<boolean>>;
     };
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
-    docs?: { url: string; title: string; description: string; nav: number; content: string }[];
+    docs: { url: string; title: string; description: string; nav: number; content: string }[];
     currentDocSlug?: string;
     modal: boolean;
 }

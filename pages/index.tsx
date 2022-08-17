@@ -1,6 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import Footer from '@/components/Footer';
 import HomeDropDown from '@/components/HomeDropDown';
+import { getAllDocs } from '@/lib/mdxUtils';
 import {
     AndroidIcon,
     AppleIcon,
@@ -182,7 +183,7 @@ const more = {
     ]
 };
 
-const Homepage = () => {
+const Homepage = ({ allDocs }) => {
     const [menu, setMenu] = useState(false);
     const [modal, setModal] = useState(false);
     const [showDropDown, setShowDropDown] = useState(false);
@@ -192,7 +193,7 @@ const Homepage = () => {
     return (
         <>
             <Box>
-                <Header modal={modal} setModal={setModal} menuState={menuState} />
+                <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} />
             </Box>
             <Flex
                 className="quicklinks"
@@ -479,6 +480,15 @@ const Homepage = () => {
             <Footer />
         </>
     );
+};
+
+export const getStaticProps = async () => {
+    const allDocs = await getAllDocs();
+    return {
+        props: {
+            allDocs
+        }
+    };
 };
 
 export default Homepage;
