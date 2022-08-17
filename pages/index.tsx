@@ -188,8 +188,9 @@ const Homepage = () => {
                 <Header modal={modal} setModal={setModal} menuState={menuState} />
             </Box>
             <Flex
+            className='quicklinks'
                 css={{
-                    gap: '$12',
+                    gap: '$10',
                     paddingLeft: '$8',
                     backgroundColor: '#0F1115',
                     width: '100%'
