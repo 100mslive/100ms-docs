@@ -368,8 +368,6 @@ const Homepage = () => {
                                             ':hover': {
                                                 backgroundColor: '$surfaceLight'
                                             },
-                                            width: '240px',
-                                            '@lg': { width: '230px' },
                                             '@md': { width: 'calc(100% - 24px)' }
                                         }}>
                                         <Card
