@@ -282,11 +282,7 @@ const Homepage = () => {
                     </Flex>
                     <SdkItem sdk="serverSide" />
                     <Flex direction="column" css={{ marginTop: '$14', marginBottom: '$9' }}>
-                        <Text variant="h5">
-                            <a id="Fundamentals" href="#Fundamentals">
-                                Fundamentals
-                            </a>
-                        </Text>
+                        <Text variant="h5">Fundamentals</Text>
                         <Text variant="body2" css={{ color: '$textMedEmp' }}>
                             Learn how to integrate live video in your app with 100ms.
                         </Text>
@@ -318,7 +314,6 @@ const Homepage = () => {
                                         <Card
                                             css={{
                                                 height: '100%',
-                                                width: 'calc(100% - 48px)',
                                                 '@md': {
                                                     height: 'auto'
                                                 }
@@ -360,7 +355,7 @@ const Homepage = () => {
                             '@md': { gridTemplateColumns: '1fr' }
                         }}>
                         {guides.map((item) => (
-                            <Box key={item.title}>
+                            <Box key={item.title} css={{ width: '100%' }}>
                                 <Link href={item.link}>
                                     <a>
                                         <Box
@@ -368,11 +363,10 @@ const Homepage = () => {
                                                 ':hover': {
                                                     backgroundColor: '$surfaceLight'
                                                 },
-                                                height: '75%',
-                                                '@md': { width: 'calc(100% - 48px)' }
+                                                height: '75%'
                                             }}>
                                             <Card
-                                                css={{ height: '100%', '@md': { width: '100%' } }}
+                                                css={{ height: '100%' }}
                                                 body={item.body}
                                                 titleComponent={
                                                     <Item
