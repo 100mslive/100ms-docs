@@ -351,61 +351,65 @@ const Homepage = () => {
                             Learn the finer aspects of building custom live video.
                         </Text>
                     </Flex>
-                    {/* <Box
+                    <Box
                         css={{
                             gap: '$12',
                             display: 'grid',
                             gridTemplateColumns: '1fr 1fr 1fr 1fr',
-                            '@2xl': { gap: '$10', gridTemplateColumns: '290px 290px 290px' },
-                            '@lg': { gridTemplateColumns: '250px 250px 250px' },
+                            '@lg': { gridTemplateColumns: '1fr 1fr 1fr' },
                             '@md': { gridTemplateColumns: '1fr' }
                         }}>
                         {guides.map((item) => (
-                            <Link href={item.link} key={item.title}>
-                                <a>
-                                    <Box
-                                        css={{
-                                            ':hover': {
-                                                backgroundColor: '$surfaceLight'
-                                            },
-                                            '@md': { width: 'calc(100% - 24px)' }
-                                        }}>
-                                        <Card
-                                            css={{ width: '85%' }}
-                                            body={item.body}
-                                            titleComponent={
-                                                <Item
-                                                    text={item.title}
-                                                    textVariant="h6"
-                                                    textCSS={{ color: 'white' }}
-                                                    endLogo={null}
-                                                />
-                                            }
-                                            endComponent={
-                                                <Box
-                                                    css={{
-                                                        color: '$textMedEmp',
-                                                        marginTop: '$8',
-                                                        ':hover': {
-                                                            color: '$primaryLight'
-                                                        }
-                                                    }}>
+                            <Box key={item.title}>
+                                <Link href={item.link}>
+                                    <a>
+                                        <Box
+                                            css={{
+                                                ':hover': {
+                                                    backgroundColor: '$surfaceLight'
+                                                },
+                                                height: '75%',
+                                                '@md': { width: 'calc(100% - 48px)' }
+                                            }}>
+                                            <Card
+                                                css={{ height: '100%', '@md': { width: '100%' } }}
+                                                body={item.body}
+                                                titleComponent={
                                                     <Item
-                                                        text="React Guide"
-                                                        logo={
-                                                            <BookIcon style={{ height: '18px' }} />
-                                                        }
-                                                        textVariant="body2"
-                                                        css={{ gap: '$4', marginBottom: '$8' }}
+                                                        text={item.title}
+                                                        textVariant="h6"
+                                                        textCSS={{ color: 'white' }}
+                                                        endLogo={null}
                                                     />
-                                                </Box>
-                                            }
-                                        />
-                                    </Box>
-                                </a>
-                            </Link>
+                                                }
+                                                endComponent={
+                                                    <Box
+                                                        css={{
+                                                            color: '$textMedEmp',
+                                                            marginTop: '$8',
+                                                            ':hover': {
+                                                                color: '$primaryLight'
+                                                            }
+                                                        }}>
+                                                        <Item
+                                                            text="React Guide"
+                                                            logo={
+                                                                <BookIcon
+                                                                    style={{ height: '18px' }}
+                                                                />
+                                                            }
+                                                            textVariant="body2"
+                                                            css={{ gap: '$4', marginBottom: '$8' }}
+                                                        />
+                                                    </Box>
+                                                }
+                                            />
+                                        </Box>
+                                    </a>
+                                </Link>
+                            </Box>
                         ))}
-                    </Box> */}
+                    </Box>
                     <Flex
                         css={{
                             marginTop: '$24',

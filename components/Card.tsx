@@ -12,7 +12,6 @@ interface Props {
 const Card: React.FC<Props> = ({ body, endComponent, titleComponent, css }) => (
     <Box
         css={{
-            width: '$72',
             padding: '$10',
             backgroundColor: '$surfaceDefault',
             borderRadius: '$3',
