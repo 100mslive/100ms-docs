@@ -36,6 +36,7 @@ const HomeDropDown = ({}) => {
     return (
         <Flex
             className="dropdown-wrapper"
+            onClick={(e) => e.preventDefault()}
             css={{
                 position: 'absolute',
                 zIndex: '10',

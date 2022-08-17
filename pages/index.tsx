@@ -207,6 +207,7 @@ const Homepage = () => {
             </Flex>
             {/* todo remove */}
             <Flex
+                onClick={() => setShowDropDown(false)}
                 justify="center"
                 css={{
                     marginBottom: '100px'
@@ -379,8 +380,11 @@ const Homepage = () => {
                         <Flex direction="column" css={{ position: 'relative' }}>
                             <Button
                                 variant="standard"
-                                css={{ borderRadius: '20px' }}
-                                onClick={() => setShowDropDown((prev) => !prev)}>
+                                css={{ borderRadius: '20px', cursor: 'pointer' }}
+                                onClick={(e) => {
+                                    setShowDropDown((prev) => !prev);
+                                    e.stopPropagation();
+                                }}>
                                 <FilterIcon /> JavaScript
                             </Button>
                             {showDropDown && <HomeDropDown />}
