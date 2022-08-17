@@ -10,25 +10,25 @@ import {
 import { Box, Flex, Text } from '@100mslive/react-ui';
 import Link from 'next/link';
 
-const HomeDropDown = ({}) => {
+const HomeDropDown = () => {
     const mobileSDK = [
         {
-            icon: <AndroidIcon style={{ color: 'white' }} />,
+            icon: <AndroidIcon style={{ color: '#6BDEB6' }} />,
             title: 'Android',
             id: 'android'
         },
         {
-            icon: <AppleIcon style={{ color: 'white' }} />,
+            icon: <AppleIcon style={{ color: '#A2ACBA' }} />,
             title: 'IOS',
             id: 'ios'
         },
         {
-            icon: <FlutterIcon style={{ color: 'white' }} />,
+            icon: <FlutterIcon style={{ color: '' }} />,
             title: 'Flutter',
             id: 'flutter'
         },
         {
-            icon: <ReactIcon style={{ color: 'white' }} />,
+            icon: <ReactIcon style={{ color: 'DodgerBlue' }} />,
             title: 'React Native',
             id: 'react-native'
         }

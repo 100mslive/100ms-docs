@@ -10,7 +10,6 @@ import {
     GameIcon,
     JavascriptIcon,
     LegoIcon,
-    NoEntryIcon,
     ReactIcon,
     ViewIcon
 } from '@100mslive/react-icons';
