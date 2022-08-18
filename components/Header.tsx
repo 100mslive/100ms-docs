@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import CrossIcon from '@/assets/icons/CrossIcon';
-import MenuIcon from '@/assets/icons/MenuIcon';
-import SvgMoon from '@/assets/icons/Moon';
-import SearchIcon from '@/assets/icons/SearchIcon';
-import SvgSun from '@/assets/icons/Sun';
 import useKeyPress from '@/lib/useKeyPress';
+import {
+    DividerIcon,
+    CloseIcon,
+    HamburgerMenuIcon,
+    SearchIcon,
+    SunIcon,
+    NightIcon
+} from '@100mslive/react-icons';
 import Link from 'next/link';
 import { Flex, Button, Text } from '@100mslive/react-ui';
 import { useRouter } from 'next/router';
@@ -133,31 +136,18 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     <a href="/docs/javascript/v2/foundation/basics">
                         <div className="logo-ctx">
                             <img width={36} src="/docs/logo.svg" alt="100ms Logo" />
-                            <p className="company">
-                                100ms<span>.docs</span>
-                            </p>
+                            <p className="company">100ms</p>
                         </div>
                     </a>
+                    <DividerIcon />
+                    <div className="nav-links">
+                        <Text>
+                            <Link href={`/${currentTech}/`}> Docs</Link>
+                        </Text>
+                    </div>
                 </div>
 
                 <div className="head-right">
-                    <div className="nav-links">
-                        <button
-                            className={!isApiRef ? 'link-btn' : 'link-btn-active'}
-                            type="button">
-                            <Link href={`/${currentTech}/`}> Docs</Link>
-                        </button>
-                        <span style={{ marginRight: '1rem' }} />
-                        {/* @ts-ignore */}
-                        {isNonApiRef ? null : (
-                            <button
-                                className={isApiRef ? 'link-btn' : 'link-btn-active'}
-                                type="button">
-                                <Link href={routeAPIRef()}>API Reference</Link>
-                            </button>
-                        )}
-                    </div>
-
                     <div className="search-ctx">
                         <button onClick={() => setModal(true)} type="button" className="search-btn">
                             <SearchIcon />
@@ -174,7 +164,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     tabIndex={0}
                     onKeyPress={() => {}}
                     onClick={() => toggleTheme()}>
-                    {isDark ? <SvgMoon /> : <SvgSun />}
+                    {isDark ? <NightIcon /> : <SunIcon style={{ color: 'yellow' }} />}
                 </span>
 
                 {modal ? (
@@ -188,7 +178,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                             justify="center"
                             css={{ height: '$10', width: '$10' }}
                             onClick={() => setShowMenu((prev) => !prev)}>
-                            {menu ? <CrossIcon /> : <MenuIcon />}
+                            {menu ? <CloseIcon /> : <HamburgerMenuIcon />}
                         </Flex>
                     </button>
                 </div>
