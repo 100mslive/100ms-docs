@@ -192,7 +192,7 @@ const DocLayout: React.FC<Props> = ({
                     article {
                         max-width: 760px;
                         width: 100%;
-                        padding: 2rem 3rem;
+                        padding: 0 3rem;
                         display: flex;
                         flex-direction: column;
                         align-items: stretch;
