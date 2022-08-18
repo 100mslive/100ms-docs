@@ -61,7 +61,7 @@ const mobileSDK = [
     },
     {
         icon: <AppleIcon style={{ color: '#A2ACBA' }} />,
-        title: 'IOS',
+        title: 'iOS',
         id: 'ios'
     },
     {
@@ -71,8 +71,8 @@ const mobileSDK = [
     },
     {
         icon: <ReactIcon style={{ color: 'DodgerBlue' }} />,
-        title: 'React',
-        id: 'react'
+        title: 'React Native',
+        id: 'reactNative'
     }
 ];
 
@@ -142,22 +142,6 @@ const guides = [
 const more = {
     JavaScript: [
         {
-            heading: 'Debugging',
-            items: [
-                { name: 'Basic debugging', link: '/javascript/v2/debugging/debugging' },
-                { name: 'Frequently asked', link: '/javascript/v2/debugging/faq' },
-                { name: 'Known issues', link: '/javascript/v2/debugging/known-issues' },
-                {
-                    name: 'Supported devices',
-                    link: '/javascript/v2/debugging/supported-devices'
-                },
-                {
-                    name: 'Audio-video edge cases',
-                    link: '/javascript/v2/foundation/handling-audio-video-edge-cases'
-                }
-            ]
-        },
-        {
             heading: 'Features',
             items: [
                 {
@@ -197,6 +181,22 @@ const more = {
                 {
                     name: 'Connection quality',
                     link: '/javascript/v2/advanced-features/connection-quality'
+                }
+            ]
+        },
+        {
+            heading: 'Debugging',
+            items: [
+                { name: 'Basic debugging', link: '/javascript/v2/debugging/debugging' },
+                { name: 'Frequently asked', link: '/javascript/v2/debugging/faq' },
+                { name: 'Known issues', link: '/javascript/v2/debugging/known-issues' },
+                {
+                    name: 'Supported devices',
+                    link: '/javascript/v2/debugging/supported-devices'
+                },
+                {
+                    name: 'Audio-video edge cases',
+                    link: '/javascript/v2/foundation/handling-audio-video-edge-cases'
                 }
             ]
         },
@@ -218,23 +218,7 @@ const more = {
             ]
         }
     ],
-    ReactJS: [
-        {
-            heading: 'Debugging',
-            items: [
-                { name: 'Basic debugging', link: '/javascript/v2/debugging/debugging' },
-                { name: 'Frequently asked', link: '/javascript/v2/debugging/faq' },
-                { name: 'Known issues', link: '/javascript/v2/debugging/known-issues' },
-                {
-                    name: 'Supported devices',
-                    link: '/javascript/v2/debugging/supported-devices'
-                },
-                {
-                    name: 'Audio-video edge cases',
-                    link: '/javascript/v2/foundation/handling-audio-video-edge-cases'
-                }
-            ]
-        },
+    React: [
         {
             heading: 'Features',
             items: [
@@ -275,6 +259,22 @@ const more = {
                 {
                     name: 'Connection quality',
                     link: '/javascript/v2/advanced-features/connection-quality'
+                }
+            ]
+        },
+        {
+            heading: 'Debugging',
+            items: [
+                { name: 'Basic debugging', link: '/javascript/v2/debugging/debugging' },
+                { name: 'Frequently asked', link: '/javascript/v2/debugging/faq' },
+                { name: 'Known issues', link: '/javascript/v2/debugging/known-issues' },
+                {
+                    name: 'Supported devices',
+                    link: '/javascript/v2/debugging/supported-devices'
+                },
+                {
+                    name: 'Audio-video edge cases',
+                    link: '/javascript/v2/foundation/handling-audio-video-edge-cases'
                 }
             ]
         },
@@ -298,15 +298,6 @@ const more = {
     ],
     Android: [
         {
-            heading: 'Debugging',
-            items: [
-                {
-                    name: 'Writing HmsLogs in Local Storage',
-                    link: '/android/v2/debugging/log_utils'
-                }
-            ]
-        },
-        {
             heading: 'Features',
             items: [
                 { name: 'Integrating the SDK', link: '' },
@@ -323,6 +314,15 @@ const more = {
                 { name: 'Show audio levels', link: '' },
                 { name: 'Peer metadata update', link: '' },
                 { name: 'Show network quality for peers', link: '' }
+            ]
+        },
+        {
+            heading: 'Debugging',
+            items: [
+                {
+                    name: 'Writing HmsLogs in Local Storage',
+                    link: '/android/v2/debugging/log_utils'
+                }
             ]
         },
         {
@@ -356,10 +356,6 @@ const more = {
     ],
     Flutter: [
         {
-            heading: 'Debugging',
-            items: [{ name: 'Frequently asked questions', link: '' }]
-        },
-        {
             heading: 'Features',
             items: [
                 { name: 'Integrating the SDK', link: '' },
@@ -379,6 +375,10 @@ const more = {
                 { name: 'Network quality reports', link: '' },
                 { name: 'Echo cancellation', link: '' }
             ]
+        },
+        {
+            heading: 'Debugging',
+            items: [{ name: 'Frequently asked questions', link: '' }]
         }
     ],
     'React Native': [
@@ -508,15 +508,15 @@ const Homepage = ({ allDocs }) => {
                                 />
                             }
                             cssHeading={{ gap: '$12' }}
-                            text="ReactJS"
-                            sdk="reactjs"
+                            text="React"
+                            sdk="react"
                         />
                     </Flex>
                     <Flex gap="2" align="center" css={{ marginTop: '$9', marginBottom: '$6' }}>
                         <ComputerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Mobile</Text>
                     </Flex>
-                    <Flex css={{ flexWrap: 'wrap', gap: '$8' }}>
+                    <Flex css={{ flexWrap: 'wrap', gap: '$12' }}>
                         {mobileSDK.map((value) => (
                             <SdkItem
                                 key={value.id}

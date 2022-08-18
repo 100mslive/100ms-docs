@@ -55,7 +55,7 @@ const HomeDropDown = ({ setDropDownSelection }) => {
                 />
 
                 <DropDownOption
-                    title="ReactJS"
+                    title="React"
                     icon={<ReactIcon />}
                     setDropDownSelection={setDropDownSelection}
                 />
