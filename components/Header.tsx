@@ -132,7 +132,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
 
     return (
         <>
-            <div className="ctx">
+            <div style={{ height: '80px', boxSizing: 'border-box' }} className="ctx">
                 <div className="head-left">
                     <a href="/docs/javascript/v2/foundation/basics">
                         <div className="logo-ctx">
@@ -140,54 +140,66 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                             <p className="company">100ms</p>
                         </div>
                     </a>
-                    <DividerIcon />
-                    <div className="nav-links">
-                        <Text>
-                            <Link href={`/${currentTech}/`}> Docs</Link>
-                        </Text>
+                    <DividerIcon style={{ strokeWidth: '2px' }} />
+                    <div>
+                        <Link href={`/${currentTech}/`}>
+                            <Text
+                                css={{
+                                    color: '$textMedEmp',
+                                    cursor: 'pointer',
+                                    fontWeight: '700'
+                                }}>
+                                Docs
+                            </Text>
+                        </Link>
                     </div>
                 </div>
-                <div className="head-right">
+                <div>
                     <div className="search-ctx">
                         <button onClick={() => setModal(true)} type="button" className="search-btn">
-                            <SearchIcon />
-                            <span>Quick search for anything</span>
+                            <SearchIcon style={{ height: '25px', width: '48px' }} />
+                            <span style={{ width: '100%' }}>Search docs</span>
                             <span className="hot-key">/</span>
                         </button>
                     </div>
                 </div>
-                <span
+                <div
                     aria-label="theme-toggle-button"
-                    className="pointer"
+                    className="head-right"
                     role="button"
-                    style={{ paddingTop: '8px', paddingLeft: '10px', margin: '0 2rem 0 1rem' }}
                     tabIndex={0}
+                    style={{ cursor: 'pointer' }}
                     onKeyPress={() => {}}
                     onClick={() => toggleTheme()}>
                     {isDark ? <NightIcon /> : <SunIcon style={{ color: 'yellow' }} />}
-                </span>
+                </div>
                 {modal ? (
                     <SearchModal setModal={setModal} docs={docs} currentDocSlug={currentDocSlug} />
                 ) : null}
 
-                <Box
+                <Flex
                     className="menu-btn"
+                    align="center"
+                    justify="center"
                     css={{
+                        height: '$10',
+                        width: '$10',
+                        marginLeft: '24px',
                         display: 'none',
                         '@md': {
                             display: 'block'
                         }
                     }}>
-                    <button aria-label="menu-button" type="button" onClick={() => setMenu(!menu)}>
-                        <Flex
-                            align="center"
-                            justify="center"
-                            css={{ height: '$10', width: '$10' }}
-                            onClick={() => setShowMenu((prev) => !prev)}>
+                    <button
+                        aria-label="menu-button"
+                        type="button"
+                        style={{ padding: '0' }}
+                        onClick={() => setMenu(!menu)}>
+                        <Flex onClick={() => setShowMenu((prev) => !prev)}>
                             {menu ? <CloseIcon /> : <HamburgerMenuIcon />}
                         </Flex>
                     </button>
-                </Box>
+                </Flex>
             </div>
             <Flex css={{ position: 'relative', width: '100%' }}>
                 {showMenu && (
@@ -295,10 +307,6 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 .res-box:hover {
                     opacity: 1;
                 }
-                .nav-links {
-                    display: flex;
-                    align-items: center;
-                }
                 .res-box {
                     margin: 0.5rem 0;
                     border-radius: 5px;
@@ -323,12 +331,12 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 .head-left {
                     display: flex;
                     align-items: center;
-                    width: 250px;
                 }
                 .head-right {
+                    margin-left: auto;
+                    margin-right: 1rem;
                     display: flex;
                     align-items: center;
-                    width: 100%;
                     justify-content: space-between;
                 }
                 .logo-ctx {
@@ -343,9 +351,11 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 }
                 .search-ctx {
                     border-radius: 5px;
-                    background: var(--gray3);
+                    width: 320px;
+                    margin-left: 32px;
+                    background: var(--surface_light);
                     position: relative;
-                    padding: 5px 12px;
+                    padding: 8px 16px;
                 }
                 .search-ctx-mob {
                     display: none;
@@ -354,20 +364,22 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     opacity: 0.6;
                     background-color: transparent;
                     display: flex;
+                    width: 100%;
                     align-items: center;
                     border: none;
                     border-radius: 5px;
-
                     cursor: pointer;
                     border-bottom-width: 1px;
                 }
                 .search-btn span {
                     margin-left: 1rem;
+                    text-align: left;
                 }
                 .hot-key {
-                    margin-left: 1rem;
+                    margin-left: auto;
                     border-radius: 5px;
                     padding: 0 8px;
+                    color: var(--text_high_emp);
                     border: 1px solid var(--gray6);
                 }
                 .search-btn:hover {
@@ -387,7 +399,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     outline: none;
                     border: none;
                 }
-                @media screen and (max-width: 600px) {
+                @media screen and (max-width: 768px) {
                     .search-ctx {
                         display: none;
                     }
@@ -409,7 +421,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                         display: none;
                     }
                     .menu-btn {
-                        margin-top: 0.5rem;
+                        margin: auto 0;
                         display: block;
                     }
                 }
