@@ -112,6 +112,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading, listView = fals
                 gap: '$10',
                 width: 'fit-content',
                 justifyContent: 'start',
+                maxWidth: listView ? '$96' : undefined,
                 padding: '$10',
                 flexDirection: 'column'
             },
@@ -152,8 +153,8 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading, listView = fals
             <Box css={{ marginLeft: '$8', '@md': { display: 'none' } }} />
         )}
         {listView ? (
-            <hr style={{ margin: '0', width: '90%', backgroundColor: '$borderDefault' }} />
-        ) : null}{' '}
+            <hr style={{ margin: '0', width: '95%', backgroundColor: '$borderDefault' }} />
+        ) : null}
         <Box
             css={{
                 gap: '$10',

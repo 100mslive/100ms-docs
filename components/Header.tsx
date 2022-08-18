@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
 import useKeyPress from '@/lib/useKeyPress';
 import {
-    DividerIcon,
     CloseIcon,
+    DividerIcon,
     HamburgerMenuIcon,
+    NightIcon,
     SearchIcon,
-    SunIcon,
-    NightIcon
+    SunIcon
 } from '@100mslive/react-icons';
+import React, { useState } from 'react';
 
 import { Button, Flex, Text } from '@100mslive/react-ui';
 import Link from 'next/link';
@@ -72,7 +72,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
             setModal(true);
         }
     }, [slashPressed]);
-    
+
     const { menu, setMenu } = menuState;
     const [isDark, setIsDark] = React.useState<boolean>(true);
 

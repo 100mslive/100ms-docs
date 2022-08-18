@@ -427,7 +427,7 @@ const Homepage = ({ allDocs }) => {
 
     return (
         <>
-            <Box>
+            <Box css={{ width: '100%' }}>
                 <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} />
             </Box>
             <Flex
@@ -475,9 +475,9 @@ const Homepage = ({ allDocs }) => {
                             experiences with 100ms.
                         </Text>
                     </Flex>
-                    <Flex gap="2" align="start">
+                    <Flex gap="2" align="center">
                         <ComputerIcon style={{ height: '14px' }} />
-                        <Text variant="sub2">Web</Text>
+                        <Text variant="sub2">Web SDK</Text>
                     </Flex>
                     <Flex
                         css={{
@@ -496,7 +496,7 @@ const Homepage = ({ allDocs }) => {
                                     }}
                                 />
                             }
-                            text="Read Guide"
+                            text="Javascript"
                             sdk="javascript"
                         />
                         <SdkItem
@@ -507,16 +507,25 @@ const Homepage = ({ allDocs }) => {
                                     }}
                                 />
                             }
-                            cssHeading={{ gap: '$12' }}
+                            cssHeading={{ gap: '$14' }}
                             text="React"
                             sdk="react"
                         />
                     </Flex>
                     <Flex gap="2" align="center" css={{ marginTop: '$9', marginBottom: '$6' }}>
                         <ComputerIcon style={{ height: '14px' }} />
-                        <Text variant="sub2">Mobile</Text>
+                        <Text variant="sub2">Mobile SDK</Text>
                     </Flex>
-                    <Flex css={{ flexWrap: 'wrap', gap: '$12' }}>
+                    <Flex
+                        css={{
+                            flexWrap: 'wrap',
+                            gap: '$12',
+
+                            justifyContent: 'space-between',
+                            '@xl': {
+                                justifyContent: 'flex-start'
+                            }
+                        }}>
                         {mobileSDK.map((value) => (
                             <SdkItem
                                 key={value.id}
@@ -529,7 +538,7 @@ const Homepage = ({ allDocs }) => {
                     </Flex>
                     <Flex gap="2" align="center" css={{ marginTop: '$9' }}>
                         <ComputerIcon style={{ height: '14px' }} />
-                        <Text variant="sub2">Server side</Text>
+                        <Text variant="sub2">Server-side API</Text>
                     </Flex>
                     <SdkItem sdk="serverSide" />
 
