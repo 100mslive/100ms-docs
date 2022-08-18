@@ -138,7 +138,7 @@ const guides = [
 ];
 
 const more = {
-    javascript: [
+    JavaScript: [
         {
             heading: 'Debugging',
             items: [
@@ -178,6 +178,164 @@ const more = {
                 { name: 'Manage audio volume', link: '' },
                 { name: 'Custom video plugins', link: '' },
                 { name: 'Noise suppression', link: '' }
+            ]
+        }
+    ],
+    ReactJS: [
+        {
+            heading: 'Debugging',
+            items: [
+                { name: 'Basic debugging', link: '' },
+                { name: 'Frequently asked', link: '' },
+                { name: 'Known issues', link: '' },
+                { name: 'Supported devices', link: '' },
+                { name: 'Audio-video edge cases', link: '' }
+            ]
+        },
+        {
+            heading: 'Features',
+            items: [
+                { name: 'Integrating the SDK', link: '' },
+                { name: 'Join room', link: '' },
+                { name: 'Leave room', link: '' },
+                { name: 'Render video', link: '' },
+                { name: 'Mute / unmute', link: '' },
+                { name: 'View all features', link: '' }
+            ]
+        },
+        {
+            heading: 'Advanced Features',
+            items: [
+                { name: 'Show audio level', link: '' },
+                { name: 'Manage audio volume', link: '' },
+                { name: 'Peer metadata', link: '' },
+                { name: 'Add custom tracks', link: '' },
+                { name: 'Playlist - audio/video', link: '' },
+                { name: 'Connection quality', link: '' }
+            ]
+        },
+        {
+            heading: 'Plugins',
+            items: [
+                { name: 'Virtual background', link: '' },
+                { name: 'Manage audio volume', link: '' },
+                { name: 'Custom video plugins', link: '' },
+                { name: 'Noise suppression', link: '' }
+            ]
+        }
+    ],
+    Android: [
+        {
+            heading: 'Debugging',
+            items: [{ name: 'Writing HmsLogs in Local Storage', link: '' }]
+        },
+        {
+            heading: 'Features',
+            items: [
+                { name: 'Integrating the SDK', link: '' },
+                { name: 'Join room', link: '' },
+                { name: 'Leave room', link: '' },
+                { name: 'End room', link: '' },
+                { name: 'Mute / unmute', link: '' },
+                { name: 'View all features', link: '' }
+            ]
+        },
+        {
+            heading: 'Advanced Features',
+            items: [
+                { name: 'Show audio levels', link: '' },
+                { name: 'Peer metadata update', link: '' },
+                { name: 'Show network quality for peers', link: '' }
+            ]
+        },
+        {
+            heading: 'Plugins',
+            items: [{ name: 'Virtual background', link: '' }]
+        }
+    ],
+    iOS: [
+        {
+            heading: 'Features',
+            items: [
+                { name: 'Integrating the SDK', link: '' },
+                { name: 'Join room', link: '' },
+                { name: 'Leave room', link: '' },
+                { name: 'Mute / unmute', link: '' },
+                { name: 'Chat', link: '' },
+                { name: 'View all features', link: '' }
+            ]
+        },
+        {
+            heading: 'Advanced Features',
+            items: [{ name: 'Peer metadata update', link: '' }]
+        },
+        {
+            heading: 'Plugins',
+            items: [
+                { name: 'Virtual background (Beta)', link: '' },
+                { name: 'Custom video plugins (Beta)', link: '' }
+            ]
+        }
+    ],
+    Flutter: [
+        {
+            heading: 'Debugging',
+            items: [{ name: 'Frequently asked questions', link: '' }]
+        },
+        {
+            heading: 'Features',
+            items: [
+                { name: 'Integrating the SDK', link: '' },
+                { name: 'Join room', link: '' },
+                { name: 'Leave room', link: '' },
+                { name: 'Mute / unmute', link: '' },
+                { name: 'Chat', link: '' },
+                { name: 'View all features', link: '' }
+            ]
+        },
+        {
+            heading: 'Advanced Features',
+            items: [
+                { name: 'Set track settings', link: '' },
+                { name: 'Show audio levels', link: '' },
+                { name: 'Peer metadata update', link: '' },
+                { name: 'Network quality reports', link: '' },
+                { name: 'Echo cancellation', link: '' }
+            ]
+        }
+    ],
+    'React Native': [
+        {
+            heading: 'Features',
+            items: [
+                { name: 'Integrating the SDK', link: '' },
+                { name: 'Join room', link: '' },
+                { name: 'Leave room', link: '' },
+                { name: 'Mute / unmute', link: '' },
+                { name: 'Chat', link: '' },
+                { name: 'View all features', link: '' }
+            ]
+        },
+        {
+            heading: 'Advanced Features',
+            items: [
+                { name: 'Set track settings', link: '' },
+                { name: 'Set volume', link: '' },
+                { name: 'Show audio levels', link: '' },
+                { name: 'Peer metadata update', link: '' },
+                { name: 'Connection quality', link: '' },
+                { name: 'View all features', link: '' }
+            ]
+        }
+    ],
+    Serverside: [
+        {
+            heading: 'Features',
+            items: [
+                { name: 'Room', link: '' },
+                { name: 'Session', link: '' },
+                { name: 'SFU recording', link: '' },
+                { name: 'RTMP streaming & browser recording', link: '' }
             ]
         }
     ]
@@ -457,7 +615,7 @@ const Homepage = ({ allDocs }) => {
                         </Flex>
                     </Flex>
                     <Flex justify="between" css={{ flexWrap: 'wrap', gap: '$16' }}>
-                        {more.javascript.map((section) => (
+                        {more[dropDownSelection].map((section) => (
                             <Flex direction="column" key={section.heading} css={{ gap: '$5' }}>
                                 <Text variant="body1" css={{ marginBottom: '$4' }}>
                                     {section.heading}
