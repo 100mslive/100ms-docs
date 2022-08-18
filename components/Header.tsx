@@ -9,7 +9,7 @@ import {
     NightIcon
 } from '@100mslive/react-icons';
 
-import { Box, Button, Flex, Text } from '@100mslive/react-ui';
+import { Button, Flex, Text } from '@100mslive/react-ui';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import SearchModal from './SearchModal';
@@ -59,23 +59,28 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
             link: '/api-reference/javascript/v2/home/content'
         }
     ];
+
     const router = useRouter();
     React.useEffect(() => {
         if (escPressed) {
             setModal(false);
         }
     }, [escPressed]);
+
     React.useEffect(() => {
         if (slashPressed) {
             setModal(true);
         }
     }, [slashPressed]);
+    
     const { menu, setMenu } = menuState;
     const [isDark, setIsDark] = React.useState<boolean>(true);
+
     React.useEffect(() => {
         const docHtml = document.documentElement.dataset;
         setIsDark(docHtml.theme === 'dark');
     }, []);
+
     const toggleTheme = () => {
         const docHtml = document.documentElement.dataset;
         // toggle theme
@@ -101,34 +106,6 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
         return currentTech || 'javascript';
     };
     const currentTech = getCurrentTech();
-    // @ts-ignore
-    const routeAPIRef = () => {
-        // @ts-ignore
-        if (currentTech === 'react-native') {
-            return `/api-reference/react-native/v2/modules.html`;
-        }
-        // @ts-ignore
-        if (currentTech === 'flutter') {
-            return `https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html`;
-        }
-        // @ts-ignore
-        if (currentTech === 'android') {
-            return `/api-reference/android/v2/index.html`;
-        }
-        // @ts-ignore
-        const routeLink = `/api-reference/${currentTech}/v2/home/content`;
-        // @ts-ignore
-        if (router?.query?.slug?.[0] === 'api-reference') {
-            return router.asPath;
-        }
-        return routeLink;
-    };
-    // @ts-ignore
-    const isApiRef = router?.query?.slug?.[0] === 'api-reference';
-
-    const isNonApiRef =
-        // @ts-ignore
-        router?.query?.slug?.[0] === 'server-side';
 
     return (
         <>
