@@ -142,42 +142,59 @@ const more = {
         {
             heading: 'Debugging',
             items: [
-                { name: 'Basic debugging', link: '' },
-                { name: 'Frequently asked', link: '' },
-                { name: 'Known issues', link: '' },
-                { name: 'Supported devices', link: '' },
-                { name: 'Audio-video edge cases', link: '' }
+                { name: 'Basic debugging', link: '/javascript/v2/debugging/debugging' },
+                { name: 'Frequently asked', link: '/javascript/v2/debugging/faq' },
+                { name: 'Known issues', link: '/javascript/v2/debugging/known-issues' },
+                { name: 'Supported devices', link: '/javascript/v2/debugging/supported-devices' },
+                {
+                    name: 'Audio-video edge cases',
+                    link: '/javascript/v2/foundation/handling-audio-video-edge-cases'
+                }
             ]
         },
         {
             heading: 'Features',
             items: [
-                { name: 'Integrating the SDK', link: '' },
-                { name: 'Join room', link: '' },
-                { name: 'Leave room', link: '' },
-                { name: 'Render video', link: '' },
-                { name: 'Mute / unmute', link: '' },
-                { name: 'View all features', link: '' }
+                { name: 'Integrating the SDK', link: '/javascript/v2/features/integration' },
+                { name: 'Join room', link: '/javascript/v2/features/join' },
+                { name: 'Leave room', link: '/javascript/v2/features/leave' },
+                { name: 'Render video', link: '/javascript/v2/features/render-video' },
+                { name: 'Mute / unmute', link: '/javascript/v2/features/mute' },
+                { name: 'View all features', link: '/javascript/v2/foundation/basics' }
             ]
         },
         {
             heading: 'Advanced Features',
             items: [
-                { name: 'Show audio level', link: '' },
-                { name: 'Manage audio volume', link: '' },
-                { name: 'Peer metadata', link: '' },
-                { name: 'Add custom tracks', link: '' },
-                { name: 'Playlist - audio/video', link: '' },
-                { name: 'Connection quality', link: '' }
+                { name: 'Show audio level', link: '/javascript/v2/advanced-features/audio-level' },
+                {
+                    name: 'Manage audio volume',
+                    link: '/javascript/v2/advanced-features/volume-control'
+                },
+                { name: 'Peer metadata', link: '/javascript/v2/advanced-features/peer-metadata' },
+                {
+                    name: 'Add custom tracks',
+                    link: '/javascript/v2/advanced-features/custom-tracks'
+                },
+                {
+                    name: 'Playlist - audio/video',
+                    link: '/javascript/v2/advanced-features/playlist'
+                },
+                {
+                    name: 'Connection quality',
+                    link: '/javascript/v2/advanced-features/connection-quality'
+                }
             ]
         },
         {
             heading: 'Plugins',
             items: [
-                { name: 'Virtual background', link: '' },
-                { name: 'Manage audio volume', link: '' },
-                { name: 'Custom video plugins', link: '' },
-                { name: 'Noise suppression', link: '' }
+                { name: 'Virtual background', link: '/javascript/v2/plugins/virtual-background' },
+                {
+                    name: 'Custom video plugins',
+                    link: '/javascript/v2/plugins/custom-video-plugins'
+                },
+                { name: 'Noise suppression', link: '/javascript/v2/plugins/noise-suppression' }
             ]
         }
     ],
@@ -185,49 +202,71 @@ const more = {
         {
             heading: 'Debugging',
             items: [
-                { name: 'Basic debugging', link: '' },
-                { name: 'Frequently asked', link: '' },
-                { name: 'Known issues', link: '' },
-                { name: 'Supported devices', link: '' },
-                { name: 'Audio-video edge cases', link: '' }
+                { name: 'Basic debugging', link: '/javascript/v2/debugging/debugging' },
+                { name: 'Frequently asked', link: '/javascript/v2/debugging/faq' },
+                { name: 'Known issues', link: '/javascript/v2/debugging/known-issues' },
+                { name: 'Supported devices', link: '/javascript/v2/debugging/supported-devices' },
+                {
+                    name: 'Audio-video edge cases',
+                    link: '/javascript/v2/foundation/handling-audio-video-edge-cases'
+                }
             ]
         },
         {
             heading: 'Features',
             items: [
-                { name: 'Integrating the SDK', link: '' },
-                { name: 'Join room', link: '' },
-                { name: 'Leave room', link: '' },
-                { name: 'Render video', link: '' },
-                { name: 'Mute / unmute', link: '' },
-                { name: 'View all features', link: '' }
+                { name: 'Integrating the SDK', link: '/javascript/v2/features/integration' },
+                { name: 'Join room', link: '/javascript/v2/features/join' },
+                { name: 'Leave room', link: '/javascript/v2/features/leave' },
+                { name: 'Render video', link: '/javascript/v2/features/render-video' },
+                { name: 'Mute / unmute', link: '/javascript/v2/features/mute' },
+                { name: 'View all features', link: '/javascript/v2/foundation/basics' }
             ]
         },
         {
             heading: 'Advanced Features',
             items: [
-                { name: 'Show audio level', link: '' },
-                { name: 'Manage audio volume', link: '' },
-                { name: 'Peer metadata', link: '' },
-                { name: 'Add custom tracks', link: '' },
-                { name: 'Playlist - audio/video', link: '' },
-                { name: 'Connection quality', link: '' }
+                { name: 'Show audio level', link: '/javascript/v2/advanced-features/audio-level' },
+                {
+                    name: 'Manage audio volume',
+                    link: '/javascript/v2/advanced-features/volume-control'
+                },
+                { name: 'Peer metadata', link: '/javascript/v2/advanced-features/peer-metadata' },
+                {
+                    name: 'Add custom tracks',
+                    link: '/javascript/v2/advanced-features/custom-tracks'
+                },
+                {
+                    name: 'Playlist - audio/video',
+                    link: '/javascript/v2/advanced-features/playlist'
+                },
+                {
+                    name: 'Connection quality',
+                    link: '/javascript/v2/advanced-features/connection-quality'
+                }
             ]
         },
         {
             heading: 'Plugins',
             items: [
-                { name: 'Virtual background', link: '' },
-                { name: 'Manage audio volume', link: '' },
-                { name: 'Custom video plugins', link: '' },
-                { name: 'Noise suppression', link: '' }
+                { name: 'Virtual background', link: '/javascript/v2/plugins/virtual-background' },
+                {
+                    name: 'Custom video plugins',
+                    link: '/javascript/v2/plugins/custom-video-plugins'
+                },
+                { name: 'Noise suppression', link: '/javascript/v2/plugins/noise-suppression' }
             ]
         }
     ],
     Android: [
         {
             heading: 'Debugging',
-            items: [{ name: 'Writing HmsLogs in Local Storage', link: '' }]
+            items: [
+                {
+                    name: 'Writing HmsLogs in Local Storage',
+                    link: '/android/v2/debugging/log_utils'
+                }
+            ]
         },
         {
             heading: 'Features',
@@ -491,7 +530,10 @@ const Homepage = ({ allDocs }) => {
                                                 css={{
                                                     height: '100%',
                                                     '@md': {
-                                                        height: '100px'
+                                                        height: '90px'
+                                                    },
+                                                    '@sm': {
+                                                        height: '125px'
                                                     }
                                                 }}
                                                 body={item.body}
@@ -532,8 +574,8 @@ const Homepage = ({ allDocs }) => {
                             gap: '$12',
                             display: 'grid',
                             gridTemplateColumns: '1fr 1fr 1fr 1fr',
-                            '@lg': { gridTemplateColumns: '1fr 1fr 1fr' },
-                            '@md': { gridTemplateColumns: '1fr' }
+                            '@lg': { gridTemplateColumns: '1fr 1fr 1fr', gap: '$10' },
+                            '@md': { gridTemplateColumns: '1fr', gap: '$8' }
                         }}>
                         {guides.map((item) => (
                             <Box key={item.title} css={{ width: '100%' }}>

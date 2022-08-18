@@ -13,22 +13,22 @@ import DropDownOption from './DropDownOption';
 const HomeDropDown = ({ setDropDownSelection }) => {
     const mobileSDK = [
         {
-            icon: <AndroidIcon style={{ color: '#6BDEB6' }} />,
+            icon: <AndroidIcon />,
             title: 'Android',
             id: 'android'
         },
         {
-            icon: <AppleIcon style={{ color: '#A2ACBA' }} />,
+            icon: <AppleIcon />,
             title: 'iOS',
             id: 'ios'
         },
         {
-            icon: <FlutterIcon style={{ color: '' }} />,
+            icon: <FlutterIcon />,
             title: 'Flutter',
             id: 'flutter'
         },
         {
-            icon: <ReactIcon style={{ color: 'DodgerBlue' }} />,
+            icon: <ReactIcon />,
             title: 'React Native',
             id: 'react-native'
         }
@@ -50,25 +50,13 @@ const HomeDropDown = ({ setDropDownSelection }) => {
                 <Text variant="overline">WEB</Text>
                 <DropDownOption
                     title="JavaScript"
-                    icon={
-                        <JavascriptIcon
-                            style={{
-                                color: 'yellow'
-                            }}
-                        />
-                    }
+                    icon={<JavascriptIcon />}
                     setDropDownSelection={setDropDownSelection}
                 />
 
                 <DropDownOption
                     title="ReactJS"
-                    icon={
-                        <ReactIcon
-                            style={{
-                                color: 'DodgerBlue'
-                            }}
-                        />
-                    }
+                    icon={<ReactIcon />}
                     setDropDownSelection={setDropDownSelection}
                 />
             </Box>
