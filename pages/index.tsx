@@ -234,7 +234,7 @@ const Homepage = ({ allDocs }) => {
                         <h1>
                             <Text variant="h4">Documentation</Text>
                         </h1>
-                        <Text variant="body2" css={{ color: '$textMedEmp' }}>
+                        <Text variant="body2" css={{ color: '$textMedEmp', textAlign: 'center' }}>
                             Study our quickstarts, guides, and examples to learn how to create live
                             experiences with 100ms.
                         </Text>
@@ -243,7 +243,15 @@ const Homepage = ({ allDocs }) => {
                         <ComputerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Web</Text>
                     </Flex>
-                    <Flex justify="between" css={{ flexWrap: 'wrap', gap: '$8' }}>
+                    <Flex
+                        css={{
+                            flexWrap: 'wrap',
+                            justify: 'between',
+                            gap: '$8',
+                            '@md': {
+                                justify: 'start'
+                            }
+                        }}>
                         <SdkItem
                             logo={
                                 <JavascriptIcon
@@ -272,7 +280,7 @@ const Homepage = ({ allDocs }) => {
                         <ComputerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Mobile</Text>
                     </Flex>
-                    <Flex justify="between" css={{ flexWrap: 'wrap', gap: '$12' }}>
+                    <Flex css={{ flexWrap: 'wrap', gap: '$8' }}>
                         {mobileSDK.map((value) => (
                             <SdkItem
                                 key={value.id}
