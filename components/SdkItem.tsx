@@ -17,7 +17,7 @@ import React from 'react';
 const itemId = {
     1: 'Quickstart',
     2: 'Sandbox',
-    3: 'Sample App',
+    3: 'Sample app',
     4: 'API reference',
     5: 'Release notes',
     6: 'Webhook',
@@ -58,28 +58,24 @@ const sdkItems = {
     ],
     android: [
         { id: 1, link: '' },
-        { id: 2, link: '' },
         { id: 3, link: '' },
         { id: 4, link: '' },
         { id: 5, link: '' }
     ],
     ios: [
         { id: 1, link: '' },
-        { id: 2, link: '' },
         { id: 3, link: '' },
         { id: 4, link: '' },
         { id: 5, link: '' }
     ],
     flutter: [
         { id: 1, link: '' },
-        { id: 2, link: '' },
         { id: 3, link: '' },
         { id: 4, link: '' },
         { id: 5, link: '' }
     ],
     react: [
         { id: 1, link: '' },
-        { id: 2, link: '' },
         { id: 3, link: '' },
         { id: 4, link: '' },
         { id: 5, link: '' }
@@ -152,6 +148,9 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading, listView = fals
         ) : (
             <Box css={{ marginLeft: '$8', '@md': { display: 'none' } }} />
         )}
+        {listView ? (
+            <hr style={{ margin: '0', width: '90%', backgroundColor: '$borderDefault' }} />
+        ) : null}{' '}
         <Box
             css={{
                 gap: '$10',

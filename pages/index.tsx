@@ -449,7 +449,6 @@ const Homepage = ({ allDocs }) => {
                     </Link>
                 ))}
             </Flex>
-            {/* todo remove */}
             <Flex
                 onClick={() => setShowDropDown(false)}
                 justify="center"
@@ -539,9 +538,7 @@ const Homepage = ({ allDocs }) => {
                         <h2 style={{ marginTop: '0', marginBottom: '4px' }}>
                             <Text variant="h5">Fundamentals</Text>
                         </h2>
-                        <Text
-                            variant="body2"
-                            css={{ color: '$textMedEmp', marginTop: '0'}}>
+                        <Text variant="body2" css={{ color: '$textMedEmp', marginTop: '0' }}>
                             Learn how to integrate live video in your app with 100ms.
                         </Text>
                     </Flex>

@@ -12,7 +12,7 @@ function useStatusPage() {
         colour: '$warning'
     });
     useEffect(() => {
-        fetch('https://status.100ms.live/api/v2/summary.json')
+        fetch('https://status.100ms.live/api/v2/status.json')
             .then((res) => res.json())
             .then((data) => {
                 setStatusPage({
