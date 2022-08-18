@@ -8,8 +8,9 @@ import {
     SunIcon,
     NightIcon
 } from '@100mslive/react-icons';
+
+import { Box, Button, Flex, Text } from '@100mslive/react-ui';
 import Link from 'next/link';
-import { Flex, Button, Text } from '@100mslive/react-ui';
 import { useRouter } from 'next/router';
 import SearchModal from './SearchModal';
 
@@ -146,7 +147,6 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                         </Text>
                     </div>
                 </div>
-
                 <div className="head-right">
                     <div className="search-ctx">
                         <button onClick={() => setModal(true)} type="button" className="search-btn">
@@ -166,12 +166,18 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     onClick={() => toggleTheme()}>
                     {isDark ? <NightIcon /> : <SunIcon style={{ color: 'yellow' }} />}
                 </span>
-
                 {modal ? (
                     <SearchModal setModal={setModal} docs={docs} currentDocSlug={currentDocSlug} />
                 ) : null}
 
-                <div className="menu-btn">
+                <Box
+                    className="menu-btn"
+                    css={{
+                        display: 'none',
+                        '@md': {
+                            display: 'block'
+                        }
+                    }}>
                     <button aria-label="menu-button" type="button" onClick={() => setMenu(!menu)}>
                         <Flex
                             align="center"
@@ -181,7 +187,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                             {menu ? <CloseIcon /> : <HamburgerMenuIcon />}
                         </Flex>
                     </button>
-                </div>
+                </Box>
             </div>
             <Flex css={{ position: 'relative', width: '100%' }}>
                 {showMenu && (
@@ -375,9 +381,6 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     font-size: 1rem;
                     font-weight: 500;
                     color: var(--gray9);
-                }
-                .menu-btn {
-                    display: none;
                 }
                 button {
                     background: transparent;

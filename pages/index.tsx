@@ -693,7 +693,7 @@ const Homepage = ({ allDocs }) => {
                             )}
                         </Flex>
                     </Flex>
-                    <Flex justify="between" css={{ flexWrap: 'wrap', gap: '$16' }}>
+                    <Flex css={{ flexWrap: 'wrap', gap: '$16' }}>
                         {more[dropDownSelection].map((section) => (
                             <Flex direction="column" key={section.heading} css={{ gap: '$5' }}>
                                 <Text variant="body1" css={{ marginBottom: '$4' }}>
