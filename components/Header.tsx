@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CrossIcon from '@/assets/icons/CrossIcon';
 import MenuIcon from '@/assets/icons/MenuIcon';
 import SvgMoon from '@/assets/icons/Moon';
@@ -6,6 +6,7 @@ import SearchIcon from '@/assets/icons/SearchIcon';
 import SvgSun from '@/assets/icons/Sun';
 import useKeyPress from '@/lib/useKeyPress';
 import Link from 'next/link';
+import { Flex, Button, Text } from '@100mslive/react-ui';
 import { useRouter } from 'next/router';
 import SearchModal from './SearchModal';
 
@@ -23,6 +24,37 @@ interface Props {
 const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocSlug }) => {
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
+    const [showMenu, setShowMenu] = useState(false);
+    const quickLinks = [
+        {
+            title: 'Fundamentals',
+            link: '/javascript/v2/foundation/basics'
+        },
+        {
+            title: 'Quickstart',
+            link: '/javascript/v2/guides/javascript-quickstart'
+        },
+        {
+            title: 'Guides',
+            link: '#guides'
+        },
+        {
+            title: 'Features',
+            link: '/javascript/v2/features/integration'
+        },
+        {
+            title: 'Debugging',
+            link: '/javascript/v2/debugging/debugging'
+        },
+        {
+            title: 'Changelog',
+            link: '/javascript/v2/release-notes/release-notes'
+        },
+        {
+            title: 'API reference',
+            link: '/api-reference/javascript/v2/home/content'
+        }
+    ];
     const router = useRouter();
     React.useEffect(() => {
         if (escPressed) {
@@ -95,60 +127,149 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
         router?.query?.slug?.[0] === 'server-side';
 
     return (
-        <div className="ctx">
-            <div className="head-left">
-                <a href="/docs/javascript/v2/foundation/basics">
-                    <div className="logo-ctx">
-                        <img width={36} src="/docs/logo.svg" alt="100ms Logo" />
-                        <p className="company">
-                            100ms<span>.docs</span>
-                        </p>
-                    </div>
-                </a>
-            </div>
+        <>
+            <div className="ctx">
+                <div className="head-left">
+                    <a href="/docs/javascript/v2/foundation/basics">
+                        <div className="logo-ctx">
+                            <img width={36} src="/docs/logo.svg" alt="100ms Logo" />
+                            <p className="company">
+                                100ms<span>.docs</span>
+                            </p>
+                        </div>
+                    </a>
+                </div>
 
-            <div className="head-right">
-                <div className="nav-links">
-                    <button className={!isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
-                        <Link href={`/${currentTech}/`}> Docs</Link>
-                    </button>
-                    <span style={{ marginRight: '1rem' }} />
-                    {/* @ts-ignore */}
-                    {isNonApiRef ? null : (
-                        <button className={isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
-                            <Link href={routeAPIRef()}>API Reference</Link>
+                <div className="head-right">
+                    <div className="nav-links">
+                        <button
+                            className={!isApiRef ? 'link-btn' : 'link-btn-active'}
+                            type="button">
+                            <Link href={`/${currentTech}/`}> Docs</Link>
                         </button>
-                    )}
-                </div>
+                        <span style={{ marginRight: '1rem' }} />
+                        {/* @ts-ignore */}
+                        {isNonApiRef ? null : (
+                            <button
+                                className={isApiRef ? 'link-btn' : 'link-btn-active'}
+                                type="button">
+                                <Link href={routeAPIRef()}>API Reference</Link>
+                            </button>
+                        )}
+                    </div>
 
-                <div className="search-ctx">
-                    <button onClick={() => setModal(true)} type="button" className="search-btn">
-                        <SearchIcon />
-                        <span>Quick search for anything</span>
-                        <span className="hot-key">/</span>
+                    <div className="search-ctx">
+                        <button onClick={() => setModal(true)} type="button" className="search-btn">
+                            <SearchIcon />
+                            <span>Quick search for anything</span>
+                            <span className="hot-key">/</span>
+                        </button>
+                    </div>
+                </div>
+                <span
+                    aria-label="theme-toggle-button"
+                    className="pointer"
+                    role="button"
+                    style={{ paddingTop: '8px', paddingLeft: '10px', margin: '0 2rem 0 1rem' }}
+                    tabIndex={0}
+                    onKeyPress={() => {}}
+                    onClick={() => toggleTheme()}>
+                    {isDark ? <SvgMoon /> : <SvgSun />}
+                </span>
+
+                {modal ? (
+                    <SearchModal setModal={setModal} docs={docs} currentDocSlug={currentDocSlug} />
+                ) : null}
+
+                <div className="menu-btn">
+                    <button aria-label="menu-button" type="button" onClick={() => setMenu(!menu)}>
+                        <Flex
+                            align="center"
+                            justify="center"
+                            css={{ height: '$10', width: '$10' }}
+                            onClick={() => setShowMenu((prev) => !prev)}>
+                            {menu ? <CrossIcon /> : <MenuIcon />}
+                        </Flex>
                     </button>
                 </div>
             </div>
-            <span
-                aria-label="theme-toggle-button"
-                className="pointer"
-                role="button"
-                style={{ paddingTop: '8px', paddingLeft: '10px', margin: '0 2rem 0 1rem' }}
-                tabIndex={0}
-                onKeyPress={() => {}}
-                onClick={() => toggleTheme()}>
-                {isDark ? <SvgMoon /> : <SvgSun />}
-            </span>
+            <Flex css={{ position: 'relative', width: '100%' }}>
+                {showMenu && (
+                    <Flex
+                        direction="column"
+                        css={{
+                            backgroundColor: '$surfaceDefault',
+                            position: 'absolute',
+                            padding: '$0 $10',
+                            width: 'stretch'
+                        }}>
+                        <div className="search-ctx-mob">
+                            <button
+                                onClick={() => setModal(true)}
+                                type="button"
+                                className="search-btn">
+                                <SearchIcon />
+                                <span>Search docs</span>
+                            </button>
+                        </div>
+                        <Flex
+                            className="quicklinks"
+                            direction="column"
+                            css={{
+                                gap: '$10',
+                                marginTop: '$6',
+                                backgroundColor: '$surfaceDefault',
+                                width: '100%',
+                                display: 'none',
+                                '@md': {
+                                    display: 'flex'
+                                }
+                            }}>
+                            {quickLinks.map((item) => (
+                                <Link key={item.title} href={item.link}>
+                                    <a>
+                                        <Text css={{ padding: '$4', color: '$textMedEmp' }}>
+                                            {item.title}
+                                        </Text>
+                                    </a>
+                                </Link>
+                            ))}
+                        </Flex>
+                        <Flex
+                            justify="center"
+                            css={{
+                                marginTop: '$9',
+                                gap: '$4',
+                                marginBottom: '$10',
+                                display: 'none',
+                                '@md': { display: 'flex' }
+                            }}>
+                            <Button
+                                variant="primary"
+                                onClick={() => {
+                                    window.location.href = 'https://dashboard.100ms.live/register';
+                                }}
+                                css={{ height: '30px', width: '100%', maxWidth: '200px' }}>
+                                Sign up
+                            </Button>
 
-            {modal ? (
-                <SearchModal setModal={setModal} docs={docs} currentDocSlug={currentDocSlug} />
-            ) : null}
-
-            <div className="menu-btn">
-                <button aria-label="menu-button" type="button" onClick={() => setMenu(!menu)}>
-                    {/* <Box>{menu ? <CrossIcon /> : <MenuIcon />}</Box> */}
-                </button>
-            </div>
+                            <Button
+                                variant="standard"
+                                outlined
+                                onClick={() => {
+                                    window.location.href = 'https://dashboard.100ms.live/login';
+                                }}
+                                css={{
+                                    height: '30px',
+                                    width: 'stretch',
+                                    maxWidth: '200px'
+                                }}>
+                                Login
+                            </Button>
+                        </Flex>
+                    </Flex>
+                )}
+            </Flex>
             <style jsx>{`
                 .ctx {
                     display: flex;
@@ -159,8 +280,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     margin: 0 auto;
                     top: 0;
                     padding: 0.5rem;
-                    background-color: var(--gray1);
-                    border-bottom: 1px solid var(--gray6);
+                    background-color: var(--surface_default);
                 }
                 .res-ctx {
                     background-color: var(--gray2);
@@ -230,6 +350,9 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     position: relative;
                     padding: 5px 12px;
                 }
+                .search-ctx-mob {
+                    display: none;
+                }
                 .search-btn {
                     opacity: 0.6;
                     background-color: transparent;
@@ -274,6 +397,14 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     .search-ctx {
                         display: none;
                     }
+                    .search-ctx-mob {
+                        border-radius: 8px;
+                        display: block;
+                        width: 100%;
+                        background: var(--surface_light);
+                        position: relative;
+                        padding: 7px 0;
+                    }
                     .ctx {
                         justify-content: space-between;
                     }
@@ -289,7 +420,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     }
                 }
             `}</style>
-        </div>
+        </>
     );
 };
 
