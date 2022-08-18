@@ -93,7 +93,7 @@ const DocLayout: React.FC<Props> = ({
     } else {
         newNav = nav;
     }
-    
+
     React.useEffect(() => {
         setTimeout(() => {
             scrollToUrlHash(router.asPath);
@@ -193,6 +193,7 @@ const DocLayout: React.FC<Props> = ({
                         max-width: 760px;
                         width: 100%;
                         padding: 0 2rem;
+                        padding-bottom: 80px;
                         display: flex;
                         flex-direction: column;
                         align-items: stretch;

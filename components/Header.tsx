@@ -228,7 +228,8 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 }
                 .search-ctx {
                     border-radius: 5px;
-                    background: var(--gray3);
+                    border-color: var(--border_light);
+                    background: var(--surface_light);
                     position: relative;
                     padding: 5px 12px;
                 }
