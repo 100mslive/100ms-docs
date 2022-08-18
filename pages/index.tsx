@@ -78,6 +78,8 @@ const mobileSDK = [
 
 const style = {
     padding: '6px',
+    height: '40px',
+    width: '40px',
     backgroundColor: '#1D2229',
     borderRadius: '999px',
     color: 'white'
@@ -145,7 +147,10 @@ const more = {
                 { name: 'Basic debugging', link: '/javascript/v2/debugging/debugging' },
                 { name: 'Frequently asked', link: '/javascript/v2/debugging/faq' },
                 { name: 'Known issues', link: '/javascript/v2/debugging/known-issues' },
-                { name: 'Supported devices', link: '/javascript/v2/debugging/supported-devices' },
+                {
+                    name: 'Supported devices',
+                    link: '/javascript/v2/debugging/supported-devices'
+                },
                 {
                     name: 'Audio-video edge cases',
                     link: '/javascript/v2/foundation/handling-audio-video-edge-cases'
@@ -155,7 +160,10 @@ const more = {
         {
             heading: 'Features',
             items: [
-                { name: 'Integrating the SDK', link: '/javascript/v2/features/integration' },
+                {
+                    name: 'Integrating the SDK',
+                    link: '/javascript/v2/features/integration'
+                },
                 { name: 'Join room', link: '/javascript/v2/features/join' },
                 { name: 'Leave room', link: '/javascript/v2/features/leave' },
                 { name: 'Render video', link: '/javascript/v2/features/render-video' },
@@ -166,12 +174,18 @@ const more = {
         {
             heading: 'Advanced Features',
             items: [
-                { name: 'Show audio level', link: '/javascript/v2/advanced-features/audio-level' },
+                {
+                    name: 'Show audio level',
+                    link: '/javascript/v2/advanced-features/audio-level'
+                },
                 {
                     name: 'Manage audio volume',
                     link: '/javascript/v2/advanced-features/volume-control'
                 },
-                { name: 'Peer metadata', link: '/javascript/v2/advanced-features/peer-metadata' },
+                {
+                    name: 'Peer metadata',
+                    link: '/javascript/v2/advanced-features/peer-metadata'
+                },
                 {
                     name: 'Add custom tracks',
                     link: '/javascript/v2/advanced-features/custom-tracks'
@@ -189,12 +203,18 @@ const more = {
         {
             heading: 'Plugins',
             items: [
-                { name: 'Virtual background', link: '/javascript/v2/plugins/virtual-background' },
+                {
+                    name: 'Virtual background',
+                    link: '/javascript/v2/plugins/virtual-background'
+                },
                 {
                     name: 'Custom video plugins',
                     link: '/javascript/v2/plugins/custom-video-plugins'
                 },
-                { name: 'Noise suppression', link: '/javascript/v2/plugins/noise-suppression' }
+                {
+                    name: 'Noise suppression',
+                    link: '/javascript/v2/plugins/noise-suppression'
+                }
             ]
         }
     ],
@@ -205,7 +225,10 @@ const more = {
                 { name: 'Basic debugging', link: '/javascript/v2/debugging/debugging' },
                 { name: 'Frequently asked', link: '/javascript/v2/debugging/faq' },
                 { name: 'Known issues', link: '/javascript/v2/debugging/known-issues' },
-                { name: 'Supported devices', link: '/javascript/v2/debugging/supported-devices' },
+                {
+                    name: 'Supported devices',
+                    link: '/javascript/v2/debugging/supported-devices'
+                },
                 {
                     name: 'Audio-video edge cases',
                     link: '/javascript/v2/foundation/handling-audio-video-edge-cases'
@@ -215,7 +238,10 @@ const more = {
         {
             heading: 'Features',
             items: [
-                { name: 'Integrating the SDK', link: '/javascript/v2/features/integration' },
+                {
+                    name: 'Integrating the SDK',
+                    link: '/javascript/v2/features/integration'
+                },
                 { name: 'Join room', link: '/javascript/v2/features/join' },
                 { name: 'Leave room', link: '/javascript/v2/features/leave' },
                 { name: 'Render video', link: '/javascript/v2/features/render-video' },
@@ -226,12 +252,18 @@ const more = {
         {
             heading: 'Advanced Features',
             items: [
-                { name: 'Show audio level', link: '/javascript/v2/advanced-features/audio-level' },
+                {
+                    name: 'Show audio level',
+                    link: '/javascript/v2/advanced-features/audio-level'
+                },
                 {
                     name: 'Manage audio volume',
                     link: '/javascript/v2/advanced-features/volume-control'
                 },
-                { name: 'Peer metadata', link: '/javascript/v2/advanced-features/peer-metadata' },
+                {
+                    name: 'Peer metadata',
+                    link: '/javascript/v2/advanced-features/peer-metadata'
+                },
                 {
                     name: 'Add custom tracks',
                     link: '/javascript/v2/advanced-features/custom-tracks'
@@ -249,12 +281,18 @@ const more = {
         {
             heading: 'Plugins',
             items: [
-                { name: 'Virtual background', link: '/javascript/v2/plugins/virtual-background' },
+                {
+                    name: 'Virtual background',
+                    link: '/javascript/v2/plugins/virtual-background'
+                },
                 {
                     name: 'Custom video plugins',
                     link: '/javascript/v2/plugins/custom-video-plugins'
                 },
-                { name: 'Noise suppression', link: '/javascript/v2/plugins/noise-suppression' }
+                {
+                    name: 'Noise suppression',
+                    link: '/javascript/v2/plugins/noise-suppression'
+                }
             ]
         }
     ],
@@ -497,11 +535,13 @@ const Homepage = ({ allDocs }) => {
                     <SdkItem sdk="serverSide" />
 
                     <hr className="home-hr" />
-                    <Flex direction="column" css={{ marginBottom: '$9' }}>
-                        <h2 style={{ marginTop: '0' }}>
+                    <Flex direction="column" css={{ marginBottom: '$10' }}>
+                        <h2 style={{ marginTop: '0', marginBottom: '4px' }}>
                             <Text variant="h5">Fundamentals</Text>
                         </h2>
-                        <Text variant="body2" css={{ color: '$textMedEmp' }}>
+                        <Text
+                            variant="body2"
+                            css={{ color: '$textMedEmp', marginTop: '0'}}>
                             Learn how to integrate live video in your app with 100ms.
                         </Text>
                     </Flex>
@@ -559,8 +599,8 @@ const Homepage = ({ allDocs }) => {
 
                     <hr className="home-hr" />
 
-                    <Flex direction="column" css={{ marginBottom: '$12', gap: '$3' }}>
-                        <h2 style={{ marginTop: '0' }}>
+                    <Flex direction="column" css={{ marginBottom: '$10' }}>
+                        <h2 style={{ marginTop: '0', marginBottom: '4px' }}>
                             <Text variant="h5" id="guide">
                                 Guides
                             </Text>
@@ -620,7 +660,7 @@ const Homepage = ({ allDocs }) => {
                                                                 />
                                                             }
                                                             textVariant="body2"
-                                                            css={{ gap: '$4'}}
+                                                            css={{ gap: '$4' }}
                                                         />
                                                     </Box>
                                                 }
@@ -634,8 +674,8 @@ const Homepage = ({ allDocs }) => {
                     <hr className="home-hr" />
                     <Flex
                         css={{
-                            gap: '$8',
-                            marginBottom: '$12'
+                            gap: '$10',
+                            marginBottom: '$10'
                         }}
                         align="center">
                         <h2 style={{ marginTop: '0', marginBottom: '0' }}>
