@@ -1,6 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import Footer from '@/components/Footer';
 import HomeDropDown from '@/components/HomeDropDown';
+import { getAllDocs } from '@/lib/mdxUtils';
 import {
     AndroidIcon,
     AppleIcon,
@@ -182,7 +183,7 @@ const more = {
     ]
 };
 
-const Homepage = () => {
+const Homepage = ({ allDocs }) => {
     const [menu, setMenu] = useState(false);
     const [modal, setModal] = useState(false);
     const [showDropDown, setShowDropDown] = useState(false);
@@ -192,7 +193,7 @@ const Homepage = () => {
     return (
         <>
             <Box>
-                <Header modal={modal} setModal={setModal} menuState={menuState} />
+                <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} />
             </Box>
             <Flex
                 className="quicklinks"
@@ -230,8 +231,10 @@ const Homepage = () => {
                             marginTop: '$md',
                             marginBottom: '$16'
                         }}>
-                        <Text variant="h4">Documentation</Text>
-                        <Text variant="body2" css={{ color: '$textMedEmp' }}>
+                        <h1>
+                            <Text variant="h4">Documentation</Text>
+                        </h1>
+                        <Text variant="body2" css={{ color: '$textMedEmp', textAlign: 'center' }}>
                             Study our quickstarts, guides, and examples to learn how to create live
                             experiences with 100ms.
                         </Text>
@@ -240,7 +243,15 @@ const Homepage = () => {
                         <ComputerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Web</Text>
                     </Flex>
-                    <Flex justify="between" css={{ flexWrap: 'wrap', gap: '$8' }}>
+                    <Flex
+                        css={{
+                            flexWrap: 'wrap',
+                            justify: 'between',
+                            gap: '$8',
+                            '@md': {
+                                justify: 'start'
+                            }
+                        }}>
                         <SdkItem
                             logo={
                                 <JavascriptIcon
@@ -269,7 +280,7 @@ const Homepage = () => {
                         <ComputerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Mobile</Text>
                     </Flex>
-                    <Flex justify="between" css={{ flexWrap: 'wrap', gap: '$12' }}>
+                    <Flex css={{ flexWrap: 'wrap', gap: '$8' }}>
                         {mobileSDK.map((value) => (
                             <SdkItem
                                 key={value.id}
@@ -286,7 +297,9 @@ const Homepage = () => {
                     </Flex>
                     <SdkItem sdk="serverSide" />
                     <Flex direction="column" css={{ marginTop: '$14', marginBottom: '$9' }}>
-                        <Text variant="h5">Fundamentals</Text>
+                        <h2>
+                            <Text variant="h5">Fundamentals</Text>
+                        </h2>
                         <Text variant="body2" css={{ color: '$textMedEmp' }}>
                             Learn how to integrate live video in your app with 100ms.
                         </Text>
@@ -347,7 +360,11 @@ const Homepage = () => {
                     <Flex
                         direction="column"
                         css={{ marginTop: '$16', marginBottom: '$12', gap: '$3' }}>
-                        <Text variant="h5" id="guide">Guides</Text>
+                        <h2>
+                            <Text variant="h5" id="guide">
+                                Guides
+                            </Text>
+                        </h2>
                         <Text variant="body2" css={{ color: '$textMedEmp' }}>
                             Learn the finer aspects of building custom live video.
                         </Text>
@@ -421,7 +438,9 @@ const Homepage = () => {
                             marginBottom: '$12'
                         }}
                         align="center">
-                        <Text variant="h5">More</Text>
+                        <h2>
+                            <Text variant="h5">More</Text>
+                        </h2>
                         <Flex direction="column" css={{ position: 'relative' }}>
                             <Button
                                 variant="standard"
@@ -469,6 +488,15 @@ const Homepage = () => {
             <Footer />
         </>
     );
+};
+
+export const getStaticProps = async () => {
+    const allDocs = await getAllDocs();
+    return {
+        props: {
+            allDocs
+        }
+    };
 };
 
 export default Homepage;
