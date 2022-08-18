@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
 import CrossIcon from '@/assets/icons/CrossIcon';
 import MenuIcon from '@/assets/icons/MenuIcon';
 import SvgMoon from '@/assets/icons/Moon';
 import SearchIcon from '@/assets/icons/SearchIcon';
 import SvgSun from '@/assets/icons/Sun';
 import useKeyPress from '@/lib/useKeyPress';
+import { Box, Button, Flex, Text } from '@100mslive/react-ui';
 import Link from 'next/link';
-import { Flex, Button, Text } from '@100mslive/react-ui';
 import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -139,7 +139,6 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                         </div>
                     </a>
                 </div>
-
                 <div className="head-right">
                     <div className="nav-links">
                         <button
@@ -176,12 +175,18 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     onClick={() => toggleTheme()}>
                     {isDark ? <SvgMoon /> : <SvgSun />}
                 </span>
-
                 {modal ? (
                     <SearchModal setModal={setModal} docs={docs} currentDocSlug={currentDocSlug} />
                 ) : null}
 
-                <div className="menu-btn">
+                <Box
+                    className="menu-btn"
+                    css={{
+                        display: 'none',
+                        '@md': {
+                            display: 'block'
+                        }
+                    }}>
                     <button aria-label="menu-button" type="button" onClick={() => setMenu(!menu)}>
                         <Flex
                             align="center"
@@ -191,7 +196,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                             {menu ? <CrossIcon /> : <MenuIcon />}
                         </Flex>
                     </button>
-                </div>
+                </Box>
             </div>
             <Flex css={{ position: 'relative', width: '100%' }}>
                 {showMenu && (
@@ -385,9 +390,6 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     font-size: 1rem;
                     font-weight: 500;
                     color: var(--gray9);
-                }
-                .menu-btn {
-                    display: none;
                 }
                 button {
                     background: transparent;
