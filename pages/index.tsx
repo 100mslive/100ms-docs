@@ -429,7 +429,9 @@ const Homepage = ({ allDocs }) => {
                             marginBottom: '$16'
                         }}>
                         <h1>
-                            <Text variant="h4">Documentation</Text>
+                            <Text variant="h4" css={{ zIndex: '0' }}>
+                                Documentation
+                            </Text>
                         </h1>
                         <Text variant="body2" css={{ color: '$textMedEmp', textAlign: 'center' }}>
                             Study our quickstarts, guides, and examples to learn how to create live
@@ -493,8 +495,10 @@ const Homepage = ({ allDocs }) => {
                         <Text variant="sub2">Server side</Text>
                     </Flex>
                     <SdkItem sdk="serverSide" />
-                    <Flex direction="column" css={{ marginTop: '$14', marginBottom: '$9' }}>
-                        <h2>
+
+                    <hr className="home-hr" />
+                    <Flex direction="column" css={{ marginBottom: '$9' }}>
+                        <h2 style={{ marginTop: '0' }}>
                             <Text variant="h5">Fundamentals</Text>
                         </h2>
                         <Text variant="body2" css={{ color: '$textMedEmp' }}>
@@ -524,17 +528,12 @@ const Homepage = ({ allDocs }) => {
                                                 ':hover': {
                                                     backgroundColor: '$surfaceLight'
                                                 },
-                                                height: '80%'
+                                                height: '100%',
+                                                boxSizing: 'border-box'
                                             }}>
                                             <Card
                                                 css={{
-                                                    height: '100%',
-                                                    '@md': {
-                                                        height: '90px'
-                                                    },
-                                                    '@sm': {
-                                                        height: '125px'
-                                                    }
+                                                    height: '100%'
                                                 }}
                                                 body={item.body}
                                                 titleComponent={
@@ -557,10 +556,11 @@ const Homepage = ({ allDocs }) => {
                             </Box>
                         ))}
                     </Box>
-                    <Flex
-                        direction="column"
-                        css={{ marginTop: '$16', marginBottom: '$12', gap: '$3' }}>
-                        <h2>
+
+                    <hr className="home-hr" />
+
+                    <Flex direction="column" css={{ marginBottom: '$12', gap: '$3' }}>
+                        <h2 style={{ marginTop: '0' }}>
                             <Text variant="h5" id="guide">
                                 Guides
                             </Text>
@@ -586,7 +586,7 @@ const Homepage = ({ allDocs }) => {
                                                 ':hover': {
                                                     backgroundColor: '$surfaceLight'
                                                 },
-                                                height: '240px',
+                                                height: '100%',
                                                 '@md': { height: '180px' },
                                                 boxSizing: 'border-box'
                                             }}>
@@ -620,7 +620,7 @@ const Homepage = ({ allDocs }) => {
                                                                 />
                                                             }
                                                             textVariant="body2"
-                                                            css={{ gap: '$4', marginBottom: '$4' }}
+                                                            css={{ gap: '$4'}}
                                                         />
                                                     </Box>
                                                 }
@@ -631,14 +631,14 @@ const Homepage = ({ allDocs }) => {
                             </Box>
                         ))}
                     </Box>
+                    <hr className="home-hr" />
                     <Flex
                         css={{
-                            marginTop: '$24',
                             gap: '$8',
                             marginBottom: '$12'
                         }}
                         align="center">
-                        <h2>
+                        <h2 style={{ marginTop: '0', marginBottom: '0' }}>
                             <Text variant="h5">More</Text>
                         </h2>
                         <Flex direction="column" css={{ position: 'relative' }}>
@@ -686,6 +686,11 @@ const Homepage = ({ allDocs }) => {
                 </Box>
             </Flex>
             <Footer />
+            <style jsx>{`
+                .home-hr {
+                    margin: 24px 0;
+                }
+            `}</style>
         </>
     );
 };

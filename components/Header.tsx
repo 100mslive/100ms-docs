@@ -200,6 +200,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                         css={{
                             backgroundColor: '$surfaceDefault',
                             position: 'absolute',
+                            zIndex: '10',
                             padding: '$0 $10',
                             width: 'stretch'
                         }}>
