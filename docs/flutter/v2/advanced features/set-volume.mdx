@@ -1,0 +1,42 @@
+---
+title: Set Volume
+nav: 4.6
+---
+
+Sometime during calls we need to deafen or turn up a particular peer's volume,thus set volume comes to rescue.
+It allows you to vary the volume level of the remote peer's audio track. The change in volume level is only effective locally,remote peers remain unaffected. 
+It can only be called on remote audio tracks.
+
+>Volume can vary from 0(min) to 10(max). The default value for volume would be 1.0.
+
+```dart
+    HMSRemoteAudioTrack remoteAudioTrack;
+    remoteAudioTrack.setVolume(double volume);
+```
+
+## Ways to set volume on audio tracks
+
+1. Set volume while track is added 
+
+```dart
+  @override
+  void onTrackUpdate(
+      {required HMSTrack track,
+      required HMSTrackUpdate trackUpdate,
+      required HMSPeer peer}) {
+
+        if(trackUpdate === HMSTrackUpdate.TRACK_ADDED && track.kind == HMSTrackKind.kHMSTrackKindAudio && peer.isLocal === false){
+            track.setVolume("set the required volume");
+        }
+}
+```
+
+2. Set volume for particular peer
+
+> On UI this can be rendered as a slider to set a volume between 0-10 and passing it to the `setVolume` method on `HMSRemoteAudioTrack`. 
+
+```dart
+void setVolume(HMSRemoteAudioTrack track,double volume){
+    track.setVolume(volume)
+}
+```
