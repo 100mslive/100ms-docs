@@ -22,7 +22,7 @@ const Item: React.FC<Props> = ({
 }) => (
     <Flex
         css={{
-            gap: '4px',
+            gap: '8px',
             ...css
         }}
         align="center">
