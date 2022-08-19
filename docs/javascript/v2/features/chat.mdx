@@ -152,8 +152,8 @@ It returns an object containing `sendEvent` which helps to send the event data t
 Let's understand the hook with an example where we're showing a button on UI to send emoji reactions.
 
 ```jsx
-import { useCustomEvent, useHMSActions } from '@100mslive/react-sdk';
 import { useCallback } from 'react';
+import { useCustomEvent, useHMSActions } from '@100mslive/react-sdk';
 
 const Confetti = () => {
     const actions = useHMSActions();
@@ -166,7 +166,7 @@ const Confetti = () => {
 
     const { sendEvent } = useCustomEvent({
         type: 'EMOJI_REACTION',
-        onEvent
+        onEvent: onEvent
     });
 
     return <button onClick={() => sendEvent({ emoji: '🚀' })}>Rockets</button>;
