@@ -300,20 +300,26 @@ const more = {
         {
             heading: 'Features',
             items: [
-                { name: 'Integrating the SDK', link: '' },
-                { name: 'Join room', link: '' },
-                { name: 'Leave room', link: '' },
-                { name: 'End room', link: '' },
-                { name: 'Mute / unmute', link: '' },
-                { name: 'View all features', link: '' }
+                { name: 'Integrating the SDK', link: '/android/v2/features/Integration' },
+                { name: 'Join room', link: '/android/v2/features/Join' },
+                { name: 'Leave room', link: '/android/v2/features/Leave' },
+                { name: 'End room', link: '/android/v2/features/End-Room' },
+                { name: 'Mute / unmute', link: '/android/v2/features/Mute' },
+                { name: 'View all features', link: '/android/v2/features/Integration' }
             ]
         },
         {
             heading: 'Advanced Features',
             items: [
-                { name: 'Show audio levels', link: '' },
-                { name: 'Peer metadata update', link: '' },
-                { name: 'Show network quality for peers', link: '' }
+                { name: 'Show audio levels', link: '/android/v2/advanced-features/audio-level' },
+                {
+                    name: 'Peer metadata update',
+                    link: '/android/v2/advanced-features/peer-metadata-update'
+                },
+                {
+                    name: 'Show network quality for peers',
+                    link: '/android/v2/advanced-features/peer-network-quality'
+                }
             ]
         },
         {
@@ -327,30 +333,38 @@ const more = {
         },
         {
             heading: 'Plugins',
-            items: [{ name: 'Virtual background', link: '' }]
+            items: [{ name: 'Virtual background', link: '/android/v2/plugins/Virtual-Background' }]
         }
     ],
     iOS: [
         {
             heading: 'Features',
             items: [
-                { name: 'Integrating the SDK', link: '' },
-                { name: 'Join room', link: '' },
-                { name: 'Leave room', link: '' },
-                { name: 'Mute / unmute', link: '' },
-                { name: 'Chat', link: '' },
-                { name: 'View all features', link: '' }
+                { name: 'Integrating the SDK', link: '/ios/v2/features/Integration' },
+                { name: 'Join room', link: '/ios/v2/features/Join' },
+                { name: 'Leave room', link: '/ios/v2/features/Leave' },
+                { name: 'Mute / unmute', link: '/ios/v2/features/Mute' },
+                { name: 'Chat', link: '/ios/v2/features/Chat' },
+                { name: 'View all features', link: '/ios/v2/features/Integration' }
             ]
         },
         {
             heading: 'Advanced Features',
-            items: [{ name: 'Peer metadata update', link: '' }]
+            items: [
+                {
+                    name: 'Peer metadata update',
+                    link: '/ios/v2/advanced-features/peer-metadata-update'
+                }
+            ]
         },
         {
             heading: 'Plugins',
             items: [
-                { name: 'Virtual background (Beta)', link: '' },
-                { name: 'Custom video plugins (Beta)', link: '' }
+                { name: 'Virtual background (Beta)', link: '/ios/v2/plugins/Virtual-Background' },
+                {
+                    name: 'Custom video plugins (Beta)',
+                    link: '/ios/v2/plugins/custom-video-plugins'
+                }
             ]
         }
     ],
@@ -358,50 +372,80 @@ const more = {
         {
             heading: 'Features',
             items: [
-                { name: 'Integrating the SDK', link: '' },
-                { name: 'Join room', link: '' },
-                { name: 'Leave room', link: '' },
-                { name: 'Mute / unmute', link: '' },
-                { name: 'Chat', link: '' },
-                { name: 'View all features', link: '' }
+                { name: 'Integrating the SDK', link: '/flutter/v2/features/integration' },
+                { name: 'Join room', link: '/flutter/v2/features/join' },
+                { name: 'Leave room', link: '/flutter/v2/features/leave' },
+                { name: 'Mute / unmute', link: '/flutter/v2/features/mute' },
+                { name: 'Chat', link: '/flutter/v2/features/chat' },
+                { name: 'View all features', link: '/flutter/v2/features/integration' }
             ]
         },
         {
             heading: 'Advanced Features',
             items: [
-                { name: 'Set track settings', link: '' },
-                { name: 'Show audio levels', link: '' },
-                { name: 'Peer metadata update', link: '' },
-                { name: 'Network quality reports', link: '' },
-                { name: 'Echo cancellation', link: '' }
+                {
+                    name: 'Set track settings',
+                    link: '/flutter/v2/advanced%20features/set-track-settings'
+                },
+                {
+                    name: 'Show audio levels',
+                    link: '/flutter/v2/advanced%20features/show-audio-level'
+                },
+                {
+                    name: 'Peer metadata update',
+                    link: '/flutter/v2/advanced%20features/peer-metadata-update'
+                },
+                {
+                    name: 'Network quality reports',
+                    link: '/flutter/v2/advanced%20features/network-quality-reports'
+                },
+                {
+                    name: 'Echo cancellation',
+                    link: '/flutter/v2/advanced%20features/Echo-Cancellation'
+                }
             ]
         },
         {
             heading: 'Debugging',
-            items: [{ name: 'Frequently asked questions', link: '' }]
+            items: [{ name: 'Frequently asked questions', link: '/flutter/v2/debugging/faq' }]
         }
     ],
     'React Native': [
         {
             heading: 'Features',
             items: [
-                { name: 'Integrating the SDK', link: '' },
-                { name: 'Join room', link: '' },
-                { name: 'Leave room', link: '' },
-                { name: 'Mute / unmute', link: '' },
-                { name: 'Chat', link: '' },
-                { name: 'View all features', link: '' }
+                { name: 'Integrating the SDK', link: '/react-native/v2/features/integration' },
+                { name: 'Join room', link: '/react-native/v2/features/join' },
+                { name: 'Leave room', link: '/react-native/v2/features/leave' },
+                { name: 'Mute / unmute', link: '/react-native/v2/features/mute' },
+                { name: 'Chat', link: '/react-native/v2/features/chat' },
+                { name: 'View all features', link: '/react-native/v2/features/integration' }
             ]
         },
         {
             heading: 'Advanced Features',
             items: [
-                { name: 'Set track settings', link: '' },
-                { name: 'Set volume', link: '' },
-                { name: 'Show audio levels', link: '' },
-                { name: 'Peer metadata update', link: '' },
-                { name: 'Connection quality', link: '' },
-                { name: 'View all features', link: '' }
+                {
+                    name: 'Set track settings',
+                    link: '/react-native/v2/advanced-features/track-settings'
+                },
+                { name: 'Set volume', link: '/react-native/v2/advanced-features/set-volume' },
+                {
+                    name: 'Show audio levels',
+                    link: '/react-native/v2/advanced-features/show-audio-level'
+                },
+                {
+                    name: 'Peer metadata update',
+                    link: '/react-native/v2/advanced-features/change-metadata'
+                },
+                {
+                    name: 'Connection quality',
+                    link: '/react-native/v2/advanced-features/network-quality'
+                },
+                {
+                    name: 'View all advanced features',
+                    link: '/react-native/v2/advanced-features/track-settings'
+                }
             ]
         }
     ],
@@ -409,10 +453,13 @@ const more = {
         {
             heading: 'Features',
             items: [
-                { name: 'Room', link: '' },
-                { name: 'Session', link: '' },
-                { name: 'SFU recording', link: '' },
-                { name: 'RTMP streaming & browser recording', link: '' }
+                { name: 'Room', link: '/server-side/v2/features/room' },
+                { name: 'Session', link: '/server-side/v2/features/session' },
+                { name: 'SFU recording', link: '/server-side/v2/features/recording' },
+                {
+                    name: 'RTMP streaming & browser recording',
+                    link: '/server-side/v2/features/rtmp-streaming-and-browser-recording'
+                }
             ]
         }
     ]
@@ -713,14 +760,24 @@ const Homepage = ({ allDocs }) => {
                                         <a>
                                             <Box
                                                 css={{
-                                                    ':hover': { color: '$primaryLight' }
+                                                    ':hover': {
+                                                        color: '$primaryLight'
+                                                    },
+                                                    ':active': { color: '$primaryDark' }
                                                 }}>
                                                 <Text
                                                     variant="body1"
                                                     css={{
-                                                        color: '$primaryDefault'
+                                                        display: 'flex',
+                                                        gap: '$1',
+                                                        color: '$primaryDefault',
+                                                        zIndex: '0',
+                                                        fontWeight: '400'
                                                     }}>
-                                                    {item.name}
+                                                    {item.name}{' '}
+                                                    {item.name.slice(0, 8) === 'View all' ? (
+                                                        <ArrowRightIcon />
+                                                    ) : null}
                                                 </Text>
                                             </Box>
                                         </a>
