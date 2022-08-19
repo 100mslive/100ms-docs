@@ -30,12 +30,14 @@ const Item: React.FC<Props> = ({
         <Text
             variant={textVariant}
             css={{
+                display: 'flex',
                 color: '$textMedEmp',
+                alignItems: 'center',
                 ...textCSS
             }}>
             {text}
+            {endLogo}
         </Text>
-        {endLogo}
     </Flex>
 );
 

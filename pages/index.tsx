@@ -637,7 +637,10 @@ const Homepage = ({ allDocs }) => {
                                                         textVariant="body1"
                                                         endLogo={
                                                             <ArrowRightIcon
-                                                                style={{ color: 'white' }}
+                                                                style={{
+                                                                    color: 'white',
+                                                                    marginLeft: '8px'
+                                                                }}
                                                             />
                                                         }
                                                     />
