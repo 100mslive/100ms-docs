@@ -474,16 +474,13 @@ const Homepage = ({ allDocs }) => {
 
     return (
         <>
-            <Box css={{ width: '100%' }}>
-                <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} />
-            </Box>
+            <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} />
             <Flex
                 className="quicklinks"
                 css={{
                     gap: '$10',
                     paddingLeft: '$8',
                     backgroundColor: '#0F1115',
-                    width: '100%',
                     '@lg': {
                         display: 'none'
                     }
