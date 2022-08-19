@@ -662,7 +662,7 @@ const Homepage = ({ allDocs }) => {
                             </Text>
                         </h2>
                         <Text variant="body2" css={{ color: '$textMedEmp' }}>
-                            Learn the finer aspects of building custom live video.
+                            Walk through implementations of common use-cases with 100ms.
                         </Text>
                     </Flex>
                     <Box
