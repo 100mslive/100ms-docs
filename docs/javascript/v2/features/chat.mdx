@@ -7,6 +7,8 @@ What's a video call without being able to send messages to each other too? 100ms
 
 ![Chat](/guides/chat.png)
 
+> Note: Chat messages are not persistent. For example, if you joined a call, received some messages and got disconnected and rejoin the call, you won't be able to see the previous messages
+
 ## Sending Chat Messages
 
 ### Broadcast Message:
@@ -164,10 +166,10 @@ const Confetti = () => {
 
     const { sendEvent } = useCustomEvent({
         type: 'EMOJI_REACTION',
-        onEvent,
+        onEvent
     });
 
-    return <button onClick={() => sendEvent({emoji: "🚀"})}>Rockets</button>;
+    return <button onClick={() => sendEvent({ emoji: '🚀' })}>Rockets</button>;
 };
 
 export default Confetti;
