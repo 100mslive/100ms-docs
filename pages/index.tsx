@@ -109,32 +109,32 @@ const fundamentals = [
 const guides = [
     {
         title: 'Discord stage clone',
-        body: 'A way to control the permissions and capabilities of users in a room.',
+        body: 'In this blog, we’ll learn how to build a similar platform painlessly with 100ms',
         link: 'https://www.100ms.live/blog/build-discord-stage-channel-clone-hms'
     },
     {
         title: 'Slack huddle clone',
-        body: 'A way to control the permissions and capabilities of users in a room.',
+        body: "In this guide, we'll be building the Slack huddle feature with React and the 100ms SDK  ",
         link: 'https://www.100ms.live/blog/building-slack-huddle-clone'
     },
     {
         title: 'Skype clone',
-        body: 'A way to control the permissions and capabilities of users in a room.',
+        body: 'In this tutorial article, we would be building an app like Skype using the 100ms React SDK',
         link: 'https://www.100ms.live/blog/skype-clone-react'
     },
     {
         title: 'Webex clone',
-        body: 'A way to control the permissions and capabilities of users in a room.',
+        body: 'In this article, we will discuss how to create a Webex clone using the 100ms JavaScript SDK',
         link: 'https://www.100ms.live/blog/create-webex-clone-100ms'
     },
     {
         title: 'Google classroom clone',
-        body: 'A way to control the permissions and capabilities of users in a room.',
+        body: 'This article will discuss how to create a Google Classroom clone with React and the 100ms SDK',
         link: 'https://www.100ms.live/blog/google-classroom-clone-react-100ms'
     },
     {
         title: 'Twitch clone',
-        body: 'A way to control the permissions and capabilities of users in a room.',
+        body: 'In this step-by-step guide, we will be exploring building Twitch with the aid of 100ms',
         link: 'https://www.100ms.live/blog/twitch-clone-in-react'
     }
 ];
@@ -763,7 +763,11 @@ const Homepage = ({ allDocs }) => {
                                                     ':hover': {
                                                         color: '$primaryLight'
                                                     },
-                                                    ':active': { color: '$primaryDark' }
+                                                    ':active': { color: '$primaryDark' },
+                                                    marginTop:
+                                                        item.name.slice(0, 8) === 'View all'
+                                                            ? '$3'
+                                                            : '0'
                                                 }}>
                                                 <Text
                                                     variant="body1"
