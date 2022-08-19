@@ -775,7 +775,6 @@ const Homepage = ({ allDocs }) => {
                                                         display: 'flex',
                                                         gap: '$1',
                                                         color: '$primaryDefault',
-                                                        zIndex: '0',
                                                         fontWeight: '400'
                                                     }}>
                                                     {item.name}{' '}
