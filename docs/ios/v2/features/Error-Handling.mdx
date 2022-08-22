@@ -3,39 +3,144 @@ title: Error Handling
 nav: 3.9
 ---
 
-When you make an API call to access an HMS SDK, the SDK may return error codes. ErrorCodes are returned when a problem that cannot be recovered without app intervention has occurred.
+Don't have time to dig into details? Here is a minimum error handling code to have in the app:
 
-These are returned as `HMSError` in the `func on(error: HMSError)` callback of the `HMSUpdateListner`.
+```swift
+func on(error: Error) {
+    guard let error = error as? HMSError else { return }
+    
+    if error.isTerminal {
+        showErrorAndExitMeeting(errorMessage: error.localizedDescription)
+    } else {
+        print(error)
+    }
+}
+```
 
-Following are the different error codes that are returned by the SDK . Before returning any error code, SDK retries the errors\(whichever is possible\).
+Errors happen. When they happen the app needs to react in a manner that makes the most sense to a user. There are 3 major categories of errors:
 
-| **Error Code** | **Cause of the error**                                 | **Action to be taken**                                                                                     |
-| :------------- | :----------------------------------------------------- | :--------------------------------------------------------------------------------------------------------- |
-| **1003**       | Websocket disconnected - Happens due to network issues | Mention user to check their network connection or try again after some time.                                |
-| **2002**       | Invalid Endpoint URL                                   | Check the endpoint provided while calling `join` on `HMSSDK`.                                               |
-| **2003**       | Endpoint is not reachable                              | Mention user to check their network connection or try again after some time.                                |
-| **2004**       | Token is not in proper JWT format                      | The token passed while calling `join` is not in correct format. Retry getting a new token.                  |
-| **3001**       | Cant Access Capture Device                             | Ask user to check permission granted to audio/video capture devices.                                        |
-| **3002**       | Capture Device is not Available                        | Ask user to check if the audio/video capture device is connected or not.                                    |
-| **3003**       | Capture device is in use by some other application     | Show notification to user mentioning that the capturing device is used by some other application currently. |
-| **3008**       | Browser has throw an autoplay exception                | Show notification to user mentioning that the browser blocked autoplay |
-| **4001**       | WebRTC error                                           | Some webRTC error has occured. Need more logs to debug.                                                     |
-| **4002**       | WebRTC error                                           | Some webRTC error has occured. Need more logs to debug.                                                     |
-| **4003**       | WebRTC error                                           | Some webRTC error has occured. Need more logs to debug.                                                     |
-| **4004**       | WebRTC error                                           | Some webRTC error has occured. Need more logs to debug.                                                     |
-| **4005**       | ICE Connection Failed due to network issue             | Mention user to check their network connection or try again after some time.                                |
-| **5001**       | Trying to join a room which is already joined          | Trying to join an already joined room.                                                                     |
-| **6002**       | webRTC Error: Error while renegotiating                | Please try again.                                                                                           |
-| **40101**      | Token Error: Invalid Access Key                        | Access Key provided in the token is wrong.                                                                  |
-| **40102**      | Token Error: Invalid Room Id                           | RoomID provided in the token is wrong.                                                                      |
-| **40103**      | Token Error: Invalid Auth Id                           | AuthID provided in the token is wrong.                                                                      |
-| **40104**      | Token Error: Invalid App Id                            | App ID provided in the token is wrong.                                                                      |
-| **40105**      | Token Error: Invalid Customer Id                       | Customer Id provided in the token is wrong.                                                                 |
-| **40107**      | Token Error: Invalid User Id                           | User ID provided in the token is wrong.                                                                     |
-| **40108**      | Token Error: Invalid Role                              | The role provided in the token is wrong.                                                                    |
-| **40109**      | Token Error: Bad JWT Token                             | Bad JWT Token.                                                                                              |
-| **40100**      | Generic Error                                          | Need to debug further with logs.                                                                            |
-| **40001**      | Invalid Room                                           | Room ID provided while fetching the token is an invalid room.                                               |
-| **40002**      | Room Mismatched with Token                               | Room ID provided while fetching the token does not match.                                                   |
-| **40004**      | Peer already joined                                    | Peer who is trying to join has already joined the room.                                                     |
-| **41001**      | Peer is gone                                           | The peer is no more present in the room.                                                                    |
+1. Connection errors (i.e connect lost, unable to connect)
+2. Capture device errors (i.e user did not give permission to use microphone)
+3. Lack of permissions/authentication errors (i.e. auth token is invalid/expired)
+
+While some errors like permissions/authentication errors usually happen during development and are not expected in production, others like connection/device errors are expected to come during normal app lifecycle and require handling in the application code.  
+
+### Error callbacks
+
+There 2 places where a developer is expected to add error handling:
+
+1. `func on(error: HMSError)` callback of the `HMSUpdateListener`
+2. Completion handler of the various SDK APIs (i.e endRoom, changeRole etc) 
+
+# Error Type
+
+The error type in the public SDK interface is  `Error` (`NSError` in case of ObjC).  In swift the error can be type casted to either `HMSError` or `NSError` for getting additional details like error code. 
+
+### Error Handling Example
+
+```swift
+func on(error: Error) {
+    guard let error = error as? HMSError else { return }
+    
+    //Example using error constants
+    switch error.code {
+    case .websocketConnectionLost, .iceFailure, .endpointUnreachable:
+        retryConnection()
+    default:
+		showErrorAndExitMeeting(errorMessage: error.localizedDescription)
+        break
+    }
+    
+    //Example using error codes
+    switch error.code.rawValue {
+    case 1003, 4005, 2003:
+        retryConnection()
+    default:
+		showErrorAndExitMeeting(errorMessage: error.localizedDescription)
+        break
+    }
+}
+```
+
+## HMSError Properties
+
+### isTerminal
+
+The `HMSError` struct in swift will now have an `isTerminal` property which denotes wether error has caused the current session to terminate and the app will need to call `join` again to reconnect. Same will be available via `is_terminal` (`HMSIsTerminalUserInfoKey` constant) key in `userInfo` dictionary of `NSError`
+
+### canRetry
+
+The `HMSError` struct in swift will now have an `canRetry` property which denotes wether app can call `join` again with the same configuration it has used before. The value be false in cases like token expiring or room getting locked. You can use this property while implementing infinite retry in your app. Same will be available via `can_retry` (`HMSCanRetryUserInfoKey` constant) key in `userInfo` dictionary of `NSError`
+
+### Error Handling Example Using Properties
+
+This example shows the minimal error handling you can have in the app without worrying about error codes.
+
+```swift
+func on(error: Error) {
+    guard let error = error as? HMSError else { return }
+    
+    if error.isTerminal {
+        if error.canRetry && isInfiniteRetryEnabledInApp  {
+            retryConnection()
+        } else {
+            showErrorAndExitMeeting(errorMessage: error.localizedDescription)
+        }
+    } else {
+        logError(message: error.localizedDescription)
+    }
+}
+```
+
+# Connection Errors
+
+When for whatever reason the internet connection becomes unavailable the SDK will first try to automatically reconnect. Upon failing to reconnect within a timeframe of 50 seconds SDK will give up and send an error via `onError` callback of `HMSUpdateListener`
+
+There are 3 error codes you can expect in this scenario: 
+
+1. websocketConnectionLost (1003)
+2. iceFailure (4005)
+3. endpointUnreachable (2003)
+
+When the application gets any of these it can react by calling join again as in an infinite retry, or it can bring user to the previous screen showing an error popup.
+
+# Capture Device Errors
+
+Typically when the SDK can’t get a hold of a capture device i.e the user has not given access permission it will send an `onError` callback with `cantAccessCaptureDevice` (3001). If the microphone/camera access are crucial to the experience you are trying to build the app should end the meeting and show an error popup, otherwise user can continue participating without camera/mic in a listen/watch only mode.
+
+# API Errors
+
+When issuing certain API calls like endRoom, changRole etc you might get en error in return. This might be due to lack of permissions for a current role or server getting overloaded etc. 
+
+# Error Code List
+
+Following are the different error codes that are returned by the SDK.
+
+| Error Code | HMSError.Code Enum Case Name | Cause of the error | Action to be taken |
+| :-- | :--- | :--- | :--- |
+| 1003 | websocketConnectionLost | Websocket disconnected - Happens due to network issues | Mention user to check their network connection or try again after some time. |
+| 2002 | invalidEndpointUrl | Invalid Endpoint URL | Check the endpoint provided while calling join on HMSSDK. |
+| 2003 | endpointUnreachable | Endpoint is not reachable | Mention user to check their network connection or try again after some time. |
+| 2004 | invalidTokenFormat | Token is not in proper JWT format | The token passed while calling join is not in correct format. Retry getting a new token. |
+| 3001 | cantAccessCaptureDevice | Cant Access Capture Device | Ask user to check permission granted to audio/video capture devices. |
+| 3008 | audiovideoSubsystemFailure | System media services were reset due to a failure. | Restart the session |
+| 4001 | createOfferFailed | WebRTC error | Some webRTC error has occured. Need more logs to debug. |
+| 4002 | createOfferFailed | WebRTC error | Some webRTC error has occured. Need more logs to debug. |
+| 4003 | createOfferFailed | WebRTC error | Some webRTC error has occured. Need more logs to debug. |
+| 4004 | createOfferFailed | WebRTC error | Some webRTC error has occured. Need more logs to debug. |
+| 4005 | iceFailure | ICE Connection Failed due to network issue | Mention user to check their network connection or try again after some time. |
+| 5001 | alreadyJoined | Trying to join a room which is already joined | Trying to join an already joined room. |
+| 6002 | unknown | webRTC Error: Error while renegotiating | Please try again. |
+| 401 | n/a | Token Error: Invalid Access Key | Access Key provided in the token is wrong. |
+| 401 | n/a | Token Error: Invalid Room Id | RoomID provided in the token is wrong. |
+| 401 | n/a | Token Error: Invalid Auth Id | AuthID provided in the token is wrong. |
+| 401 | n/a | Token Error: Invalid App Id | App ID provided in the token is wrong. |
+| 401 | n/a | Token Error: Invalid Customer Id | Customer Id provided in the token is wrong. |
+| 401 | n/a | Token Error: Invalid User Id | User ID provided in the token is wrong. |
+| 401 | n/a | Token Error: Invalid Role | The role provided in the token is wrong. |
+| 401 | n/a | Token Error: Bad JWT Token | Bad JWT Token. |
+| 401 | n/a | Generic Error | Need to debug further with logs. |
+| 400 | n/a | Invalid Room | Room ID provided while fetching the token is an invalid room. |
+| 400 | n/a | Room Mismatched with Token | Room ID provided while fetching the token does not match. |
+| 400 | n/a | Peer already joined | Peer who is trying to join has already joined the room. |
+| 410 | n/a | Peer is gone | The peer is no more present in the room. |
