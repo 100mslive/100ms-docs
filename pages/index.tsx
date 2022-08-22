@@ -5,7 +5,7 @@ import { getAllDocs } from '@/lib/mdxUtils';
 import {
     AndroidIcon,
     AppleIcon,
-    ArrowRightIcon,
+    ChevronRightIcon,
     BookIcon,
     ComputerIcon,
     FilterIcon,
@@ -77,11 +77,8 @@ const mobileSDK = [
 ];
 
 const style = {
-    padding: '6px',
-    height: '40px',
-    width: '40px',
-    backgroundColor: '#1D2229',
-    borderRadius: '999px',
+    height: '32px',
+    width: '32px',
     color: 'white'
 };
 
@@ -633,7 +630,7 @@ const Homepage = ({ allDocs }) => {
                                                         textCSS={{ color: 'white' }}
                                                         textVariant="body1"
                                                         endLogo={
-                                                            <ArrowRightIcon
+                                                            <ChevronRightIcon
                                                                 style={{
                                                                     color: 'white',
                                                                     marginLeft: '8px'
@@ -779,7 +776,7 @@ const Homepage = ({ allDocs }) => {
                                                     }}>
                                                     {item.name}{' '}
                                                     {item.name.slice(0, 8) === 'View all' ? (
-                                                        <ArrowRightIcon />
+                                                        <ChevronRightIcon />
                                                     ) : null}
                                                 </Text>
                                             </Box>
