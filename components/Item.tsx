@@ -27,20 +27,20 @@ const Item: React.FC<Props> = ({
                 right: '-$12'
             },
             marginRight: '$8',
-            gap: '8px',
             ...css
         }}
         align="center">
-        {logo}
         <Text
             variant={textVariant}
             css={{
                 display: 'flex',
+                gap: '$4',
                 position: 'relative',
                 color: '$textMedEmp',
                 alignItems: 'center',
                 ...textCSS
             }}>
+            {logo}
             {text}
             <Flex
                 className="hoverChild"
