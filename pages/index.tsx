@@ -553,7 +553,6 @@ const Homepage = ({ allDocs }) => {
                     <Flex
                         css={{
                             flexWrap: 'wrap',
-                            gap: '$10',
                             justify: 'between',
                             '@md': {
                                 justify: 'start'
@@ -583,14 +582,14 @@ const Homepage = ({ allDocs }) => {
                             sdk="react"
                         />
                     </Flex>
-                    <Flex gap="2" align="center" css={{ marginTop: '$10', marginBottom: '$8' }}>
+                    <Flex gap="2" align="center" css={{ marginTop: '$12', marginBottom: '$8' }}>
                         <PhoneIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Mobile SDK</Text>
                     </Flex>
                     <Flex
                         css={{
                             flexWrap: 'wrap',
-                            gap: '$12',
+                            
 
                             justifyContent: 'space-between',
                             '@xl': {
@@ -603,11 +602,11 @@ const Homepage = ({ allDocs }) => {
                                 logo={value.icon}
                                 text={value.title}
                                 sdk={value.id}
-                                listView={true}
+                                // listView={true}
                             />
                         ))}
                     </Flex>
-                    <Flex gap="2" align="center" css={{ marginTop: '$10', marginBottom: '$8' }}>
+                    <Flex gap="2" align="center" css={{ marginTop: '$12', marginBottom: '$8' }}>
                         <ServerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Server-side API</Text>
                     </Flex>
