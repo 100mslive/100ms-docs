@@ -5,15 +5,17 @@ import { getAllDocs } from '@/lib/mdxUtils';
 import {
     AndroidIcon,
     AppleIcon,
-    ChevronRightIcon,
     BookIcon,
+    ChevronRightIcon,
     ComputerIcon,
     FilterIcon,
-    FlutterIcon,
+    FlutterWIthColourIcon,
     GameIcon,
     JavascriptIcon,
     LegoIcon,
+    PhoneIcon,
     ReactIcon,
+    ServerIcon,
     ViewIcon
 } from '@100mslive/react-icons';
 import { Box, Button, Flex, Text } from '@100mslive/react-ui';
@@ -65,7 +67,7 @@ const mobileSDK = [
         id: 'ios'
     },
     {
-        icon: <FlutterIcon style={{ color: '' }} />,
+        icon: <FlutterWIthColourIcon />,
         title: 'Flutter',
         id: 'flutter'
     },
@@ -559,7 +561,7 @@ const Homepage = ({ allDocs }) => {
                         />
                     </Flex>
                     <Flex gap="2" align="center" css={{ marginTop: '$10', marginBottom: '$8' }}>
-                        <ComputerIcon style={{ height: '14px' }} />
+                        <PhoneIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Mobile SDK</Text>
                     </Flex>
                     <Flex
@@ -583,7 +585,7 @@ const Homepage = ({ allDocs }) => {
                         ))}
                     </Flex>
                     <Flex gap="2" align="center" css={{ marginTop: '$10', marginBottom: '$8' }}>
-                        <ComputerIcon style={{ height: '14px' }} />
+                        <ServerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Server-side API</Text>
                     </Flex>
                     <SdkItem sdk="serverSide" />

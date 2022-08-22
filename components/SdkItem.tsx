@@ -6,8 +6,9 @@ import {
     DividerIcon,
     GithubIcon,
     ListCheckIcon,
-    SettingsIcon,
-    WiredMic
+    RestApiIcon,
+    RocketIcon,
+    WebhookIcon
 } from '@100mslive/react-icons';
 import { Box, Flex } from '@100mslive/react-ui';
 import { Item } from 'components';
@@ -30,9 +31,9 @@ const itemList = {
     1: <BookIcon style={iconStyle} />,
     2: <CodeIcon style={iconStyle} />,
     3: <GithubIcon style={iconStyle} />,
-    4: <SettingsIcon style={iconStyle} />,
-    5: <WiredMic style={iconStyle} />,
-    6: <WiredMic style={iconStyle} />,
+    4: <RestApiIcon style={iconStyle} />,
+    5: <RocketIcon style={iconStyle} />,
+    6: <WebhookIcon style={iconStyle} />,
     7: <ListCheckIcon style={iconStyle} />
 };
 
