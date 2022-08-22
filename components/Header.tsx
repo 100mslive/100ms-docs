@@ -329,6 +329,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 .search-ctx {
                     border-radius: 5px;
                     width: 320px;
+                    border: 1px solid var(--border_light);
                     margin-left: 32px;
                     background: var(--surface_light);
                     position: relative;
@@ -343,7 +344,6 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     display: flex;
                     width: 100%;
                     align-items: center;
-                    border: none;
                     border-radius: 5px;
                     cursor: pointer;
                     border-bottom-width: 1px;
@@ -383,6 +383,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     .search-ctx-mob {
                         border-radius: 8px;
                         display: block;
+                        border: 1px solid var(--border_light);
                         width: 100%;
                         background: var(--surface_light);
                         position: relative;

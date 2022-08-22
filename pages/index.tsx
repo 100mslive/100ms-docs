@@ -477,6 +477,11 @@ const Homepage = ({ allDocs }) => {
                 css={{
                     gap: '$10',
                     paddingLeft: '$8',
+                    boxSizing: 'border-box',
+                    height: '$16',
+                    borderBottomWidth: '1px',
+                    borderBottomStyle: 'solid',
+                    borderColor: '$borderDefault',
                     backgroundColor: '#0F1115',
                     '@lg': {
                         display: 'none'
