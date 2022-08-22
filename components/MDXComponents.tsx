@@ -41,14 +41,14 @@ const LinkCustom = (props) => {
 
     if (isInternalLink) {
         return (
-            <Link href={href}>
-                <a>{props.children}</a>
+            <Link href={href} passHref onClick={props?.onClick}>
+                <a> {props.children}</a>
             </Link>
         );
     }
 
     return (
-        <a target="_blank" rel="noopener noreferrer" href={href}>
+        <a target="_blank" rel="noopener noreferrer" href={href} onClick={props?.onClick}>
             {props.children}
         </a>
     );
