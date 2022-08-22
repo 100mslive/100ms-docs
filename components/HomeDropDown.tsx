@@ -4,6 +4,7 @@ import {
     AppleIcon,
     ComputerIcon,
     FlutterIcon,
+    ServerIcon,
     JavascriptIcon,
     ReactIcon
 } from '@100mslive/react-icons';
@@ -78,9 +79,10 @@ const HomeDropDown = ({ setDropDownSelection }) => {
                 <DropDownOption
                     title="Serverside"
                     icon={
-                        <ComputerIcon
+                        <ServerIcon
                             style={{
-                                color: 'white'
+                                color: 'white',
+                                height: '18px'
                             }}
                         />
                     }

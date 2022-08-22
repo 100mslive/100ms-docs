@@ -8,6 +8,7 @@ import {
     BookIcon,
     ChevronRightIcon,
     ComputerIcon,
+    ArrowRightIcon,
     FilterIcon,
     FlutterWIthColourIcon,
     GameIcon,
@@ -151,7 +152,11 @@ const more = {
                 { name: 'Leave room', link: '/javascript/v2/features/leave' },
                 { name: 'Render video', link: '/javascript/v2/features/render-video' },
                 { name: 'Mute / unmute', link: '/javascript/v2/features/mute' },
-                { name: 'View all features', link: '/javascript/v2/foundation/basics' }
+                {
+                    name: 'View all features',
+                    link: '/javascript/v2/foundation/basics',
+                    viewAll: true
+                }
             ]
         },
         {
@@ -229,7 +234,11 @@ const more = {
                 { name: 'Leave room', link: '/javascript/v2/features/leave' },
                 { name: 'Render video', link: '/javascript/v2/features/render-video' },
                 { name: 'Mute / unmute', link: '/javascript/v2/features/mute' },
-                { name: 'View all features', link: '/javascript/v2/foundation/basics' }
+                {
+                    name: 'View all features',
+                    link: '/javascript/v2/foundation/basics',
+                    viewAll: true
+                }
             ]
         },
         {
@@ -304,7 +313,11 @@ const more = {
                 { name: 'Leave room', link: '/android/v2/features/Leave' },
                 { name: 'End room', link: '/android/v2/features/End-Room' },
                 { name: 'Mute / unmute', link: '/android/v2/features/Mute' },
-                { name: 'View all features', link: '/android/v2/features/Integration' }
+                {
+                    name: 'View all features',
+                    link: '/android/v2/features/Integration',
+                    viewAll: true
+                }
             ]
         },
         {
@@ -344,7 +357,7 @@ const more = {
                 { name: 'Leave room', link: '/ios/v2/features/Leave' },
                 { name: 'Mute / unmute', link: '/ios/v2/features/Mute' },
                 { name: 'Chat', link: '/ios/v2/features/Chat' },
-                { name: 'View all features', link: '/ios/v2/features/Integration' }
+                { name: 'View all features', link: '/ios/v2/features/Integration', viewAll: true }
             ]
         },
         {
@@ -376,7 +389,11 @@ const more = {
                 { name: 'Leave room', link: '/flutter/v2/features/leave' },
                 { name: 'Mute / unmute', link: '/flutter/v2/features/mute' },
                 { name: 'Chat', link: '/flutter/v2/features/chat' },
-                { name: 'View all features', link: '/flutter/v2/features/integration' }
+                {
+                    name: 'View all features',
+                    link: '/flutter/v2/features/integration',
+                    viewAll: true
+                }
             ]
         },
         {
@@ -418,7 +435,11 @@ const more = {
                 { name: 'Leave room', link: '/react-native/v2/features/leave' },
                 { name: 'Mute / unmute', link: '/react-native/v2/features/mute' },
                 { name: 'Chat', link: '/react-native/v2/features/chat' },
-                { name: 'View all features', link: '/react-native/v2/features/integration' }
+                {
+                    name: 'View all features',
+                    link: '/react-native/v2/features/integration',
+                    viewAll: true
+                }
             ]
         },
         {
@@ -443,7 +464,8 @@ const more = {
                 },
                 {
                     name: 'View all advanced features',
-                    link: '/react-native/v2/advanced-features/track-settings'
+                    link: '/react-native/v2/advanced-features/track-settings',
+                    viewAll: true
                 }
             ]
         }
@@ -476,6 +498,7 @@ const Homepage = ({ allDocs }) => {
             <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} />
             <Flex
                 className="quicklinks"
+                align="center"
                 css={{
                     gap: '$10',
                     paddingLeft: '$8',
@@ -768,10 +791,7 @@ const Homepage = ({ allDocs }) => {
                                                         color: '$primaryLight'
                                                     },
                                                     ':active': { color: '$primaryDark' },
-                                                    marginTop:
-                                                        item.name.slice(0, 8) === 'View all'
-                                                            ? '$3'
-                                                            : '0'
+                                                    marginTop: item?.viewAll ? '$3' : '0'
                                                 }}>
                                                 <Text
                                                     variant="body1"
@@ -782,9 +802,7 @@ const Homepage = ({ allDocs }) => {
                                                         fontWeight: '400'
                                                     }}>
                                                     {item.name}{' '}
-                                                    {item.name.slice(0, 8) === 'View all' ? (
-                                                        <ChevronRightIcon />
-                                                    ) : null}
+                                                    {item?.viewAll ? <ArrowRightIcon /> : null}
                                                 </Text>
                                             </Box>
                                         </a>

@@ -24,9 +24,9 @@ const Item: React.FC<Props> = ({
         className="hoverParent"
         css={{
             ':hover .hoverChild': {
-                right: '-29px'
+                right: '-$12'
             },
-            margin: '0 16px 0 0',
+            marginRight: '$8',
             gap: '8px',
             ...css
         }}
