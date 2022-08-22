@@ -521,13 +521,14 @@ const Homepage = ({ allDocs }) => {
                             experiences with 100ms.
                         </Text>
                     </Flex>
-                    <Flex gap="2" align="center">
+                    <Flex gap="2" align="center" css={{ marginBottom: '$8' }}>
                         <ComputerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Web SDK</Text>
                     </Flex>
                     <Flex
                         css={{
                             flexWrap: 'wrap',
+                            gap: '$10',
                             justify: 'between',
                             '@md': {
                                 justify: 'start'
@@ -557,7 +558,7 @@ const Homepage = ({ allDocs }) => {
                             sdk="react"
                         />
                     </Flex>
-                    <Flex gap="2" align="center" css={{ marginTop: '$10', marginBottom: '0' }}>
+                    <Flex gap="2" align="center" css={{ marginTop: '$10', marginBottom: '$8' }}>
                         <ComputerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Mobile SDK</Text>
                     </Flex>
@@ -581,7 +582,7 @@ const Homepage = ({ allDocs }) => {
                             />
                         ))}
                     </Flex>
-                    <Flex gap="2" align="center" css={{ marginTop: '$10' }}>
+                    <Flex gap="2" align="center" css={{ marginTop: '$10', marginBottom: '$8' }}>
                         <ComputerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Server-side API</Text>
                     </Flex>

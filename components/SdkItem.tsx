@@ -97,7 +97,6 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading, listView = fals
     <Flex
         direction={listView ? 'column' : undefined}
         css={{
-            marginTop: '$8',
             backgroundColor: '$surfaceDefault',
             paddingTop: '$8',
             paddingLeft: text ? '$10' : undefined,
