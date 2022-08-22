@@ -41,6 +41,7 @@ const LinkCustom = (props) => {
 
     if (isInternalLink) {
         return (
+            // @ts-ignore
             <Link href={href} passHref onClick={props?.onClick}>
                 <a> {props.children}</a>
             </Link>
