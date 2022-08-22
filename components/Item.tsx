@@ -21,7 +21,12 @@ const Item: React.FC<Props> = ({
     css
 }) => (
     <Flex
+        className="hoverParent"
         css={{
+            ':hover .hoverChild': {
+                right: '-29px'
+            },
+            margin: '0 16px 0 0',
             gap: '8px',
             ...css
         }}
@@ -31,12 +36,21 @@ const Item: React.FC<Props> = ({
             variant={textVariant}
             css={{
                 display: 'flex',
+                position: 'relative',
                 color: '$textMedEmp',
                 alignItems: 'center',
                 ...textCSS
             }}>
             {text}
-            {endLogo}
+            <Flex
+                className="hoverChild"
+                css={{
+                    transition: '200ms',
+                    position: 'absolute',
+                    right: '-25px'
+                }}>
+                {endLogo}
+            </Flex>
         </Text>
     </Flex>
 );
