@@ -524,7 +524,6 @@ const Homepage = ({ allDocs }) => {
                         css={{
                             flexWrap: 'wrap',
                             justify: 'between',
-                            gap: '$8',
                             '@md': {
                                 justify: 'start'
                             }
@@ -553,7 +552,7 @@ const Homepage = ({ allDocs }) => {
                             sdk="react"
                         />
                     </Flex>
-                    <Flex gap="2" align="center" css={{ marginTop: '$9', marginBottom: '$6' }}>
+                    <Flex gap="2" align="center" css={{ marginTop: '$10', marginBottom: '0' }}>
                         <ComputerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Mobile SDK</Text>
                     </Flex>
@@ -577,7 +576,7 @@ const Homepage = ({ allDocs }) => {
                             />
                         ))}
                     </Flex>
-                    <Flex gap="2" align="center" css={{ marginTop: '$9' }}>
+                    <Flex gap="2" align="center" css={{ marginTop: '$10' }}>
                         <ComputerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Server-side API</Text>
                     </Flex>
