@@ -57,10 +57,11 @@ const Footer = () => {
                             <Box className="details">
                                 <Flex align="center" gap="1" css={{ marginBottom: '16px' }}>
                                     <ChatIcon />
-                                    <Text css={{ color: '$textHighEmp' }}>
-                                        Need help?{' '}
-                                        <a href="https://www.100ms.live/contact">Talk to us</a>
-                                    </Text>
+                                    <a href="https://www.100ms.live/contact">
+                                        <Text css={{ color: '$textHighEmp' }}>
+                                            Need help? Talk to us
+                                        </Text>
+                                    </a>
                                 </Flex>
                                 <a href="https://github.com/100mslive">
                                     <Flex align="center" gap="1" css={{ color: '$textHighEmp' }}>

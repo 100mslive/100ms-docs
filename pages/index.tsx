@@ -109,32 +109,32 @@ const fundamentals = [
 const guides = [
     {
         title: 'Discord stage clone',
-        body: 'In this blog, we’ll learn how to build a similar platform painlessly with 100ms',
+        body: 'Discord Stages - an audio-only channel to engage with your Discord community with separation between speakers and audience. In this blog, we’ll learn how to build a similar platform painlessly with 100ms.',
         link: 'https://www.100ms.live/blog/build-discord-stage-channel-clone-hms'
     },
     {
         title: 'Slack huddle clone',
-        body: "In this guide, we'll be building the Slack huddle feature with React and the 100ms SDK  ",
+        body: 'Just over a month ago Slack unveiled a new feature called "Huddle". Slack\'s huddle allows the users to have audio discussions with people in their workspace and other invited users. In this guide, we will build a Slack Huddle clone using 100ms React SDK.',
         link: 'https://www.100ms.live/blog/building-slack-huddle-clone'
     },
     {
         title: 'Skype clone',
-        body: 'In this tutorial article, we would be building an app like Skype using the 100ms React SDK',
+        body: 'In this tutorial article, we would be building an app like Skype using the 100ms React SDK.',
         link: 'https://www.100ms.live/blog/skype-clone-react'
     },
     {
         title: 'Webex clone',
-        body: 'In this article, we will discuss how to create a Webex clone using the 100ms JavaScript SDK',
+        body: 'Step by step tutorial on how to create a Webex clone using 100ms.',
         link: 'https://www.100ms.live/blog/create-webex-clone-100ms'
     },
     {
         title: 'Google classroom clone',
-        body: 'This article will discuss how to create a Google Classroom clone with React and the 100ms SDK',
+        body: 'Step by step tutorial on how to build a Google Classroom clone with React and the 100ms SDK. ',
         link: 'https://www.100ms.live/blog/google-classroom-clone-react-100ms'
     },
     {
         title: 'Twitch clone',
-        body: 'In this step-by-step guide, we will be exploring building Twitch with the aid of 100ms',
+        body: 'Twitch is a livestreaming platform that can be used to stream games, music, or a yoga class. In this blog, we will build a Twitch clone using 100ms React SDK.',
         link: 'https://www.100ms.live/blog/twitch-clone-in-react'
     }
 ];
