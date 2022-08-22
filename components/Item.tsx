@@ -35,6 +35,7 @@ const Item: React.FC<Props> = ({
             css={{
                 display: 'flex',
                 gap: '$4',
+                fontWeight: '$semiBold',
                 position: 'relative',
                 color: '$textMedEmp',
                 alignItems: 'center',

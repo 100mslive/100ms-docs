@@ -138,7 +138,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading, listView = fals
                 <Item
                     logo={logo}
                     text={text}
-                    textVariant="body1"
+                    textVariant="body2"
                     endLogo={null}
                     textCSS={{ color: 'white' }}
                 />

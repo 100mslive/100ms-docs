@@ -23,7 +23,7 @@ const Card: React.FC<Props> = ({ body, endComponent, titleComponent, css }) => (
         <Flex direction="column" justify="between" css={{ height: '100%' }}>
             <Flex direction="column" css={{ gap: '$3' }}>
                 {titleComponent}
-                <Text variant="body1" css={{ color: '$textMedEmp' }}>
+                <Text variant="body1" css={{ color: '$textMedEmp', fontWeight: '$regular' }}>
                     {body}
                 </Text>
             </Flex>

@@ -2,7 +2,6 @@
 import {
     AndroidIcon,
     AppleIcon,
-    ComputerIcon,
     FlutterIcon,
     ServerIcon,
     JavascriptIcon,

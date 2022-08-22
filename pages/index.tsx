@@ -657,7 +657,10 @@ const Homepage = ({ allDocs }) => {
                                                     <Item
                                                         logo={item.logo}
                                                         text={item.title}
-                                                        textCSS={{ color: 'white' }}
+                                                        textCSS={{
+                                                            color: 'white',
+                                                            fontSize: '$h6'
+                                                        }}
                                                         textVariant="body1"
                                                         endLogo={
                                                             <ChevronRightIcon
@@ -799,7 +802,7 @@ const Homepage = ({ allDocs }) => {
                                                         display: 'flex',
                                                         gap: '$1',
                                                         color: '$primaryDefault',
-                                                        fontWeight: '400'
+                                                        fontWeight: '$regular'
                                                     }}>
                                                     {item.name}{' '}
                                                     {item?.viewAll ? <ArrowRightIcon /> : null}
