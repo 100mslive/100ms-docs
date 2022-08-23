@@ -188,7 +188,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 }
                 .menu-container {
                     margin: 10px 0;
-                    margin-left: 1.5rem;
+                    margin-left: 0.5rem;
                 }
                 .menu-item {
                     cursor: pointer;
@@ -199,6 +199,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     display: flex;
                     align-items: center;
                     padding-left: 1rem;
+                    margin-left: 1rem;
                 }
                 .sub-title {
                     padding-left: 30px;
@@ -226,7 +227,6 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 }
                 .menu-item:hover {
                     background-color: var(--blue5);
-                }
                 }
                 .sub-menu-item:hover {
                     background-color: var(--blue5);
