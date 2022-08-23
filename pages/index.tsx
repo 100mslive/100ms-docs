@@ -500,7 +500,7 @@ const Homepage = ({ allDocs }) => {
     return (
         <>
             <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} />
-            <Flex
+            {/* <Flex
                 className="quicklinks"
                 align="center"
                 css={{
@@ -523,7 +523,7 @@ const Homepage = ({ allDocs }) => {
                         </a>
                     </Link>
                 ))}
-            </Flex>
+            </Flex> */}
             <Flex
                 onClick={() => setShowDropDown(false)}
                 justify="center"
