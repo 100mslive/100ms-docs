@@ -25,36 +25,36 @@ import Header from 'components/Header';
 import Link from 'next/link';
 import { useState } from 'react';
 
-const quickLinks = [
-    {
-        title: 'Fundamentals',
-        link: '/javascript/v2/foundation/basics'
-    },
-    {
-        title: 'Quickstart',
-        link: '/javascript/v2/guides/javascript-quickstart'
-    },
-    {
-        title: 'Guides',
-        link: '#guides'
-    },
-    {
-        title: 'Features',
-        link: '/javascript/v2/features/integration'
-    },
-    {
-        title: 'Debugging',
-        link: '/javascript/v2/debugging/debugging'
-    },
-    {
-        title: 'Changelog',
-        link: '/javascript/v2/release-notes/release-notes'
-    },
-    {
-        title: 'API reference',
-        link: '/api-reference/javascript/v2/home/content'
-    }
-];
+// const quickLinks = [
+//     {
+//         title: 'Fundamentals',
+//         link: '/javascript/v2/foundation/basics'
+//     },
+//     {
+//         title: 'Quickstart',
+//         link: '/javascript/v2/guides/javascript-quickstart'
+//     },
+//     {
+//         title: 'Guides',
+//         link: '#guides'
+//     },
+//     {
+//         title: 'Features',
+//         link: '/javascript/v2/features/integration'
+//     },
+//     {
+//         title: 'Debugging',
+//         link: '/javascript/v2/debugging/debugging'
+//     },
+//     {
+//         title: 'Changelog',
+//         link: '/javascript/v2/release-notes/release-notes'
+//     },
+//     {
+//         title: 'API reference',
+//         link: '/api-reference/javascript/v2/home/content'
+//     }
+// ];
 
 const mobileSDK = [
     {
