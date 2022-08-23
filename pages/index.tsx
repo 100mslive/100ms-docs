@@ -5,10 +5,10 @@ import { getAllDocs } from '@/lib/mdxUtils';
 import {
     AndroidIcon,
     AppleIcon,
+    ArrowRightIcon,
     BookIcon,
     ChevronRightIcon,
     ComputerIcon,
-    ArrowRightIcon,
     FilterIcon,
     FlutterWIthColourIcon,
     GameIcon,
@@ -60,17 +60,20 @@ const mobileSDK = [
     {
         icon: <AndroidIcon style={{ color: '#6BDEB6' }} />,
         title: 'Android',
-        id: 'android'
+        id: 'android',
+        cssHeading: { gap: '$9' }
     },
     {
         icon: <AppleIcon style={{ color: '#A2ACBA' }} />,
         title: 'iOS',
-        id: 'ios'
+        id: 'ios',
+        cssHeading: { gap: '3.2rem' }
     },
     {
         icon: <FlutterWIthColourIcon />,
         title: 'Flutter',
-        id: 'flutter'
+        id: 'flutter',
+        cssHeading: { gap: '$11' }
     },
     {
         icon: <ReactIcon style={{ color: 'DodgerBlue' }} />,
@@ -568,6 +571,7 @@ const Homepage = ({ allDocs }) => {
                             }
                             text="Javascript"
                             sdk="javascript"
+                            css={{ borderBottomRightRadius: '0', borderBottomLeftRadius: '0' }}
                         />
                         <SdkItem
                             logo={
@@ -577,7 +581,8 @@ const Homepage = ({ allDocs }) => {
                                     }}
                                 />
                             }
-                            cssHeading={{ gap: '$14' }}
+                            css={{ borderTopRightRadius: '0', borderTopLeftRadius: '0' }}
+                            cssHeading={{ gap: '$13' }}
                             text="React"
                             sdk="react"
                         />
@@ -589,19 +594,27 @@ const Homepage = ({ allDocs }) => {
                     <Flex
                         css={{
                             flexWrap: 'wrap',
-                            
 
                             justifyContent: 'space-between',
                             '@xl': {
                                 justifyContent: 'flex-start'
                             }
                         }}>
-                        {mobileSDK.map((value) => (
+                        {mobileSDK.map((value, index) => (
                             <SdkItem
                                 key={value.id}
                                 logo={value.icon}
                                 text={value.title}
                                 sdk={value.id}
+                                cssHeading={value.cssHeading}
+                                css={{
+                                    borderBottomRightRadius:
+                                        index !== mobileSDK.length - 1 ? '0' : undefined,
+                                    borderBottomLeftRadius:
+                                        index !== mobileSDK.length - 1 ? '0' : undefined,
+                                    borderTopRightRadius: index !== 0 ? '0' : undefined,
+                                    borderTopLeftRadius: index !== 0 ? '0' : undefined
+                                }}
                                 // listView={true}
                             />
                         ))}

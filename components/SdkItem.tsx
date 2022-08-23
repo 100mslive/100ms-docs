@@ -92,9 +92,10 @@ interface Props {
     text?: any;
     listView?: any;
     cssHeading?: {};
+    css?: {};
 }
 
-const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading, listView = false }) => (
+const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading, listView = false }) => (
     <Flex
         direction={listView ? 'column' : undefined}
         css={{
@@ -126,7 +127,8 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, cssHeading, listView = fals
             '@sm': {
                 padding: '$8 $6 $8 $6',
                 width: 'fit-content'
-            }
+            },
+            ...css
         }}>
         {text ? (
             <Flex
