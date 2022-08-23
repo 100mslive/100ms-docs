@@ -73,12 +73,13 @@ const mobileSDK = [
         icon: <FlutterWIthColourIcon />,
         title: 'Flutter',
         id: 'flutter',
-        cssHeading: { gap: '$11' }
+        cssHeading: { gap: '$14' }
     },
     {
         icon: <ReactIcon style={{ color: 'DodgerBlue' }} />,
         title: 'React Native',
-        id: 'reactNative'
+        id: 'reactNative',
+        cssHeading: { gap: '$0' }
     }
 ];
 
@@ -567,7 +568,7 @@ const Homepage = ({ allDocs }) => {
                                     }}
                                 />
                             }
-                            text="Javascript"
+                            text="JavaScript"
                             sdk="javascript"
                             css={{ borderBottomRightRadius: '0', borderBottomLeftRadius: '0' }}
                         />
@@ -581,7 +582,7 @@ const Homepage = ({ allDocs }) => {
                             }
                             css={{ borderTopRightRadius: '0', borderTopLeftRadius: '0' }}
                             cssHeading={{ gap: '$13' }}
-                            text="React"
+                            text="ReactJS"
                             sdk="react"
                         />
                     </Flex>
