@@ -9,7 +9,7 @@ import {
     BookIcon,
     ChevronRightIcon,
     ComputerIcon,
-    FilterIcon,
+    FilterOneIcon,
     FlutterWIthColourIcon,
     GameIcon,
     JavascriptIcon,
@@ -499,7 +499,7 @@ const Homepage = ({ allDocs }) => {
     return (
         <>
             <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} />
-            <Flex
+            {/* <Flex
                 className="quicklinks"
                 align="center"
                 css={{
@@ -522,31 +522,29 @@ const Homepage = ({ allDocs }) => {
                         </a>
                     </Link>
                 ))}
-            </Flex>
+            </Flex> */}
             <Flex
                 onClick={() => setShowDropDown(false)}
                 justify="center"
                 css={{
-                    marginBottom: '100px'
+                    marginBottom: '$16'
                 }}>
                 <Box css={{ width: '90%', maxWidth: '1248px' }}>
                     <Flex
                         justify="center"
                         direction="column"
                         align="center"
-                        gap="4"
                         css={{
                             marginTop: '$md',
-                            marginBottom: '$16'
+                            marginBottom: '$12'
                         }}>
-                        <h1>
+                        <h1 style={{ marginBottom: '0' }}>
                             <Text variant="h4" css={{ zIndex: '0' }}>
                                 Documentation
                             </Text>
                         </h1>
-                        <Text variant="body2" css={{ color: '$textMedEmp', textAlign: 'center' }}>
-                            Study our quickstarts, guides, and examples to learn how to create live
-                            experiences with 100ms.
+                        <Text variant="body2" css={{ color: '$textMedEmp', textAlign: 'center', marginTop: '$4' }}>
+                            Explore our guides and examples to integrate 100ms.
                         </Text>
                     </Flex>
                     <Flex gap="2" align="center" css={{ marginBottom: '$8' }}>
@@ -625,8 +623,7 @@ const Homepage = ({ allDocs }) => {
                     </Flex>
                     <SdkItem sdk="serverSide" />
 
-                    <hr className="home-hr" />
-                    <Flex direction="column" css={{ marginBottom: '$10' }}>
+                    <Flex direction="column" css={{ marginTop: '$24', marginBottom: '$10' }}>
                         <h2 style={{ marginTop: '0', marginBottom: '4px' }}>
                             <Text variant="h5">Fundamentals</Text>
                         </h2>
@@ -692,9 +689,7 @@ const Homepage = ({ allDocs }) => {
                         ))}
                     </Box>
 
-                    <hr className="home-hr" />
-
-                    <Flex direction="column" css={{ marginBottom: '$10' }}>
+                    <Flex direction="column" css={{ marginTop: '$24', marginBottom: '$10' }}>
                         <h2 style={{ marginTop: '0', marginBottom: '4px' }}>
                             <Text variant="h5" id="guide">
                                 Guides
@@ -766,25 +761,30 @@ const Homepage = ({ allDocs }) => {
                             </Box>
                         ))}
                     </Box>
-                    <hr className="home-hr" />
                     <Flex
                         css={{
                             gap: '$10',
-                            marginBottom: '$10'
+                            marginBottom: '$10',
+                            marginTop: '$24'
                         }}
                         align="center">
                         <h2 style={{ marginTop: '0', marginBottom: '0' }}>
-                            <Text variant="h5">More</Text>
+                            <Text variant="h5">All Pages</Text>
                         </h2>
                         <Flex direction="column" css={{ position: 'relative' }}>
                             <Button
                                 variant="standard"
-                                css={{ borderRadius: '20px', cursor: 'pointer' }}
+                                css={{
+                                    borderRadius: '20px',
+                                    cursor: 'pointer',
+                                    backgroundColor: '$secondaryDisabled',
+                                    borderColor: '$secondaryDisabled'
+                                }}
                                 onClick={(e) => {
                                     setShowDropDown((prev) => !prev);
                                     e.stopPropagation();
                                 }}>
-                                <FilterIcon /> {dropDownSelection}
+                                <FilterOneIcon style={{ marginRight: '7px' }} /> {dropDownSelection}
                             </Button>
                             {showDropDown && (
                                 <HomeDropDown setDropDownSelection={setDropDownSelection} />
@@ -829,11 +829,6 @@ const Homepage = ({ allDocs }) => {
                 </Box>
             </Flex>
             <Footer />
-            <style jsx>{`
-                .home-hr {
-                    margin: 24px 0;
-                }
-            `}</style>
         </>
     );
 };
