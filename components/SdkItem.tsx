@@ -12,6 +12,7 @@ import {
 } from '@100mslive/react-icons';
 import { Box, Flex } from '@100mslive/react-ui';
 import { Item } from 'components';
+import merge from 'lodash/merge';
 import Link from 'next/link';
 import React from 'react';
 
@@ -97,39 +98,41 @@ interface Props {
 
 const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading, listView = false }) => (
     <Flex
-        direction={listView ? 'column' : undefined}
-        css={{
-            backgroundColor: '$surfaceDefault',
-            paddingTop: '$8',
-            paddingLeft: text ? '$10' : undefined,
-            paddingBottom: '$8',
-            borderRadius: '$3',
-            borderWidth: '1px',
-            borderStyle: 'solid',
-            borderColor: '$borderDefault',
-            gap: listView ? '$8' : undefined,
-            flexWrap: 'wrap',
-            justify: 'between',
-            width: '100%',
-            maxWidth: listView ? '$60' : undefined,
-            '@lg': {
-                gap: '$10',
-                width: 'fit-content',
-                justifyContent: 'start',
-                maxWidth: listView ? '$96' : undefined,
-                padding: '$10',
-                flexDirection: 'column'
+        css={merge(
+            {
+                backgroundColor: '$surfaceDark',
+                paddingTop: '$8',
+                paddingLeft: text ? '$10' : undefined,
+                paddingBottom: '$8',
+                borderRadius: '$3',
+                borderWidth: '1px',
+                borderStyle: 'solid',
+                borderColor: '$borderDefault',
+                gap: listView ? '$8' : undefined,
+                flexWrap: 'wrap',
+                justify: 'between',
+                width: '100%',
+                maxWidth: listView ? '$60' : undefined,
+                '@lg': {
+                    gap: '$10',
+                    width: 'fit-content',
+                    justifyContent: 'start',
+                    maxWidth: listView ? '$96' : undefined,
+                    padding: '$10',
+                    borderRadius: '$3',
+                    flexDirection: 'column'
+                },
+                '@md': {
+                    width: 'fit-content',
+                    padding: '$10 $0 $10 $6'
+                },
+                '@sm': {
+                    padding: '$8 $6 $8 $6',
+                    width: 'fit-content'
+                }
             },
-            '@md': {
-                width: 'fit-content',
-                padding: '$10 $0 $10 $6'
-            },
-            '@sm': {
-                padding: '$8 $6 $8 $6',
-                width: 'fit-content'
-            },
-            ...css
-        }}>
+            css
+        )}>
         {text ? (
             <Flex
                 css={{
@@ -142,7 +145,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading, listView =
                     text={text}
                     textVariant="body2"
                     endLogo={null}
-                    textCSS={{ color: 'white' }}
+                    textCSS={{ color: 'white', width: '$32' }}
                 />
                 <Box
                     css={{

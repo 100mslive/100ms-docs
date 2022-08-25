@@ -60,26 +60,22 @@ const mobileSDK = [
     {
         icon: <AndroidIcon style={{ color: '#6BDEB6' }} />,
         title: 'Android',
-        id: 'android',
-        cssHeading: { gap: '$9' }
+        id: 'android'
     },
     {
         icon: <AppleIcon style={{ color: '#A2ACBA' }} />,
         title: 'iOS',
-        id: 'ios',
-        cssHeading: { gap: '3.2rem' }
+        id: 'ios'
     },
     {
         icon: <FlutterWIthColourIcon />,
         title: 'Flutter',
-        id: 'flutter',
-        cssHeading: { gap: '$14' }
+        id: 'flutter'
     },
     {
         icon: <ReactIcon style={{ color: 'DodgerBlue' }} />,
         title: 'React Native',
-        id: 'reactNative',
-        cssHeading: { gap: '$0' }
+        id: 'reactNative'
     }
 ];
 
@@ -558,8 +554,14 @@ const Homepage = ({ allDocs }) => {
                         css={{
                             flexWrap: 'wrap',
                             justify: 'between',
+                            '@lg': {
+                                gap: '$10'
+                            },
                             '@md': {
                                 justify: 'start'
+                            },
+                            '@sm': {
+                                gap: '$8'
                             }
                         }}>
                         <SdkItem
@@ -572,7 +574,12 @@ const Homepage = ({ allDocs }) => {
                             }
                             text="JavaScript"
                             sdk="javascript"
-                            css={{ borderBottomRightRadius: '0', borderBottomLeftRadius: '0' }}
+                            css={{
+                                borderRadius: '$3 $3 0 0',
+                                '@lg': {
+                                    borderRadius: '$3'
+                                }
+                            }}
                         />
                         <SdkItem
                             logo={
@@ -582,8 +589,12 @@ const Homepage = ({ allDocs }) => {
                                     }}
                                 />
                             }
-                            css={{ borderTopRightRadius: '0', borderTopLeftRadius: '0' }}
-                            cssHeading={{ gap: '$13' }}
+                            css={{
+                                borderRadius: '0 0 $3 $3',
+                                '@lg': {
+                                    borderRadius: '$3'
+                                }
+                            }}
                             text="ReactJS"
                             sdk="react"
                         />
@@ -599,6 +610,9 @@ const Homepage = ({ allDocs }) => {
                             justifyContent: 'space-between',
                             '@xl': {
                                 justifyContent: 'flex-start'
+                            },
+                            '@lg': {
+                                gap: '$8'
                             }
                         }}>
                         {mobileSDK.map((value, index) => (
@@ -607,14 +621,10 @@ const Homepage = ({ allDocs }) => {
                                 logo={value.icon}
                                 text={value.title}
                                 sdk={value.id}
-                                cssHeading={value.cssHeading}
                                 css={{
-                                    borderBottomRightRadius:
-                                        index !== mobileSDK.length - 1 ? '0' : undefined,
-                                    borderBottomLeftRadius:
-                                        index !== mobileSDK.length - 1 ? '0' : undefined,
-                                    borderTopRightRadius: index !== 0 ? '0' : undefined,
-                                    borderTopLeftRadius: index !== 0 ? '0' : undefined
+                                    borderRadius: `${index !== 0 ? '0 0' : '$3 $3'} ${
+                                        mobileSDK.length - 1 !== index ? '0 0' : '$3 $3'
+                                    }`
                                 }}
                                 // listView={true}
                             />
