@@ -142,7 +142,7 @@ const Footer = () => (
                                 className="footer-systems"
                                 align="center"
                                 css={{
-                                    backgroundColor: 'red',
+                                    backgroundColor: '$secondaryDefault',
                                     gap: '12px',
                                     padding: '8px 24px 8px 16px',
                                     maxWidth: '214px',
