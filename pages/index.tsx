@@ -649,16 +649,26 @@ const Homepage = ({ allDocs }) => {
                             }
                         }}>
                         {fundamentals.map((item) => (
-                            <Box key={item.title} css={{ width: '100%' }}>
+                            <Box
+                                key={item.title}
+                                css={{
+                                    width: '100%',
+                                    borderRadius: '$3',
+                                    borderWidth: '$1',
+                                    borderStyle: 'solid',
+                                    borderColor: '$surfaceDefault',
+                                    '&:hover': {
+                                        borderColor: '$primaryDefault'
+                                    }
+                                }}>
                                 <Link href={item.link}>
                                     <a>
                                         <Box
                                             css={{
-                                                ':hover': {
-                                                    backgroundColor: '$surfaceLight'
-                                                },
                                                 height: '100%',
-                                                boxSizing: 'border-box'
+                                                boxSizing: 'border-box',
+                                                border: 'none',
+                                                '&:hover': { border: 'none' }
                                             }}>
                                             <Card
                                                 css={{
@@ -666,7 +676,10 @@ const Homepage = ({ allDocs }) => {
                                                 }}
                                                 body={item.body}
                                                 titleComponent={
-                                                    <h3 style={{ margin: '0' }}>
+                                                    <h3
+                                                        style={{
+                                                            margin: '0'
+                                                        }}>
                                                         <Item
                                                             logo={item.logo}
                                                             text={item.title}
@@ -718,8 +731,12 @@ const Homepage = ({ allDocs }) => {
                                     <a>
                                         <Box
                                             css={{
-                                                ':hover': {
-                                                    backgroundColor: '$surfaceLight'
+                                                borderRadius: '$3',
+                                                borderWidth: '$1',
+                                                borderStyle: 'solid',
+                                                borderColor: '$surfaceDefault',
+                                                '&:hover': {
+                                                    borderColor: '$primaryDefault'
                                                 },
                                                 height: '100%',
                                                 '@md': { height: '180px' },
@@ -743,7 +760,7 @@ const Homepage = ({ allDocs }) => {
                                                         css={{
                                                             color: '$textMedEmp',
                                                             marginTop: '$8',
-                                                            ':hover': {
+                                                            '&:hover': {
                                                                 color: '$primaryLight'
                                                             }
                                                         }}>
@@ -807,7 +824,7 @@ const Homepage = ({ allDocs }) => {
                                         <a>
                                             <Box
                                                 css={{
-                                                    ':hover': {
+                                                    '&:hover': {
                                                         color: '$primaryLight'
                                                     },
                                                     ':active': { color: '$primaryDark' },
