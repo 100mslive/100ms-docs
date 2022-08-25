@@ -102,16 +102,9 @@ const DocLayout: React.FC<Props> = ({
 
     React.useEffect(() => {
         const getTopIndex = (arr) => {
-            let height = Infinity;
-            let topIndex;
-            for (let i = 0; i < arr.length; i += 1) {
-                const currHeight = Math.abs(arr[i].getBoundingClientRect().top);
-                if (currHeight < height && currHeight < window.screen.availHeight) {
-                    height = currHeight;
-                    topIndex = i;
-                }
-            }
-            return topIndex;
+            for (let i = arr.length - 1; i >= 0; i--)
+                if (Math.floor(arr[i].getBoundingClientRect().top) < 200) return i;
+            return -1;
         };
 
         const getActiveLinks = () => {
@@ -123,15 +116,13 @@ const DocLayout: React.FC<Props> = ({
 
             if (h2Index >= 0) {
                 setActiveHeading(h2Array[h2Index].id);
-                if (h3Index >= 0) {
-                    // To ensure active H2 is always above active H3
-                    if (
-                        h2Array[h2Index].getBoundingClientRect().top <
-                        h3Array[h3Index].getBoundingClientRect().top
-                    )
-                        setActiveSubHeading(h3Array[h3Index].id);
-                    else setActiveSubHeading('');
-                } else setActiveSubHeading('');
+                if (
+                    h3Index >= 0 &&
+                    h3Array[h3Index].getBoundingClientRect().top >
+                        h2Array[h2Index].getBoundingClientRect().top
+                )
+                    setActiveSubHeading(h3Array[h3Index].id);
+                else setActiveSubHeading('');
             }
         };
 
