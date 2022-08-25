@@ -102,14 +102,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     </div>
                 </div>
 
-                <div
-                    aria-label="theme-toggle-button"
-                    className="head-right"
-                    role="button"
-                    tabIndex={0}
-                    style={{ cursor: 'pointer' }}
-                    onKeyPress={() => {}}
-                    onClick={() => toggleTheme()}>
+                <div className="head-right">
                     <div style={{ marginLeft: 'auto' }}>
                         <div className="search-ctx">
                             <button
@@ -122,7 +115,15 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                             </button>
                         </div>
                     </div>
-                    {isDark ? <NightIcon /> : <SunIcon style={{ color: 'yellow' }} />}
+                    <div
+                        aria-label="theme-toggle-button"
+                        role="button"
+                        tabIndex={0}
+                        style={{ cursor: 'pointer' }}
+                        onKeyPress={() => {}}
+                        onClick={() => toggleTheme()}>
+                        {isDark ? <NightIcon /> : <SunIcon style={{ color: 'yellow' }} />}
+                    </div>
                 </div>
                 {modal ? (
                     <SearchModal setModal={setModal} docs={docs} currentDocSlug={currentDocSlug} />
