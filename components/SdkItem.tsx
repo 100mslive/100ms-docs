@@ -159,7 +159,15 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading, listView =
                 </Box>
             </Flex>
         ) : null}
-        {/* <hr style={{ margin: '0', width: '95%', backgroundColor: '$borderDefault' }} /> */}
+        <Box css={{ display: 'none', '@lg': { display: text ? 'block' : 'none' } }}>
+            <hr
+                style={{
+                    margin: '0',
+                    width: '95%',
+                    backgroundColor: '$borderDefault'
+                }}
+            />
+        </Box>
         <Box
             css={{
                 gap: '$10',
