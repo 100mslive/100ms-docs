@@ -676,23 +676,25 @@ const Homepage = ({ allDocs }) => {
                                                 }}
                                                 body={item.body}
                                                 titleComponent={
-                                                    <Item
-                                                        logo={item.logo}
-                                                        text={item.title}
-                                                        textCSS={{
-                                                            color: 'white',
-                                                            fontSize: '$h6'
-                                                        }}
-                                                        textVariant="body1"
-                                                        endLogo={
-                                                            <ChevronRightIcon
-                                                                style={{
-                                                                    color: 'white',
-                                                                    marginLeft: '8px'
-                                                                }}
-                                                            />
-                                                        }
-                                                    />
+                                                    <h3 style={{ margin: '0' }}>
+                                                        <Item
+                                                            logo={item.logo}
+                                                            text={item.title}
+                                                            textCSS={{
+                                                                color: 'white',
+                                                                fontSize: '$h6'
+                                                            }}
+                                                            textVariant="body1"
+                                                            endLogo={
+                                                                <ChevronRightIcon
+                                                                    style={{
+                                                                        color: 'white',
+                                                                        marginLeft: '8px'
+                                                                    }}
+                                                                />
+                                                            }
+                                                        />
+                                                    </h3>
                                                 }
                                             />
                                         </Box>
