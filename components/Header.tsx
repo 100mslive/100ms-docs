@@ -29,36 +29,6 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
     const [showMenu, setShowMenu] = useState(false);
-    const quickLinks = [
-        {
-            title: 'Fundamentals',
-            link: '/javascript/v2/foundation/basics'
-        },
-        {
-            title: 'Quickstart',
-            link: '/javascript/v2/guides/javascript-quickstart'
-        },
-        {
-            title: 'Guides',
-            link: '#guides'
-        },
-        {
-            title: 'Features',
-            link: '/javascript/v2/features/integration'
-        },
-        {
-            title: 'Debugging',
-            link: '/javascript/v2/debugging/debugging'
-        },
-        {
-            title: 'Changelog',
-            link: '/javascript/v2/release-notes/release-notes'
-        },
-        {
-            title: 'API reference',
-            link: '/api-reference/javascript/v2/home/content'
-        }
-    ];
 
     const router = useRouter();
     React.useEffect(() => {
@@ -131,15 +101,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                         </Link>
                     </div>
                 </div>
-                <div>
-                    <div className="search-ctx">
-                        <button onClick={() => setModal(true)} type="button" className="search-btn">
-                            <SearchIcon style={{ height: '25px', width: '48px' }} />
-                            <span style={{ width: '100%' }}>Search docs</span>
-                            <span className="hot-key">/</span>
-                        </button>
-                    </div>
-                </div>
+
                 <div
                     aria-label="theme-toggle-button"
                     className="head-right"
@@ -148,6 +110,18 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     style={{ cursor: 'pointer' }}
                     onKeyPress={() => {}}
                     onClick={() => toggleTheme()}>
+                    <div style={{ marginLeft: 'auto' }}>
+                        <div className="search-ctx">
+                            <button
+                                onClick={() => setModal(true)}
+                                type="button"
+                                className="search-btn">
+                                <SearchIcon style={{ height: '25px', width: '48px' }} />
+                                <span style={{ width: '100%' }}>Search docs</span>
+                                <span className="hot-key">/</span>
+                            </button>
+                        </div>
+                    </div>
                     {isDark ? <NightIcon /> : <SunIcon style={{ color: 'yellow' }} />}
                 </div>
                 {modal ? (
@@ -198,29 +172,6 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                                 <span>Search docs</span>
                             </button>
                         </div>
-                        <Flex
-                            className="quicklinks"
-                            direction="column"
-                            css={{
-                                gap: '$10',
-                                marginTop: '$6',
-                                backgroundColor: '$surfaceDefault',
-                                width: '100%',
-                                display: 'none',
-                                '@md': {
-                                    display: 'flex'
-                                }
-                            }}>
-                            {quickLinks.map((item) => (
-                                <Link key={item.title} href={item.link}>
-                                    <a>
-                                        <Text css={{ padding: '$4', color: '$textMedEmp' }}>
-                                            {item.title}
-                                        </Text>
-                                    </a>
-                                </Link>
-                            ))}
-                        </Flex>
                         <Flex
                             justify="center"
                             css={{
@@ -330,7 +281,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     border-radius: 5px;
                     width: 320px;
                     border: 1px solid var(--border_light);
-                    margin-left: 32px;
+                    margin-right: 36px;
                     background: var(--surface_light);
                     position: relative;
                     padding: 8px 16px;

@@ -17,7 +17,7 @@ const Footer = () => (
                 borderTopWidth: '1px',
                 borderTopStyle: 'solid',
                 borderTopColor: '$surfaceLight',
-                paddingTop: '$14',
+                paddingTop: '$14'
             }}>
             <Flex align="center" direction="column" className="footer-wrapper">
                 <Flex className="footer" justify="between">
@@ -142,9 +142,10 @@ const Footer = () => (
                                 className="footer-systems"
                                 align="center"
                                 css={{
-                                    backgroundColor: '$secondaryDefault',
+                                    backgroundColor: 'red',
                                     gap: '12px',
                                     padding: '8px 24px 8px 16px',
+                                    maxWidth: '214px',
                                     borderRadius: '20px'
                                 }}>
                                 <Box
