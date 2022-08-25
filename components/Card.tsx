@@ -14,9 +14,6 @@ const Card: React.FC<Props> = ({ body, endComponent, titleComponent, css }) => (
         css={{
             padding: '$10',
             backgroundColor: '$surfaceDefault',
-            borderStyle: 'solid',
-            borderWidth: '1px',
-            borderColor: '$borderDefault',
             borderRadius: '$3',
             ...css
         }}>

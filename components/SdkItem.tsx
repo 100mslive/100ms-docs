@@ -184,7 +184,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading, listView =
                         <Box
                             css={{
                                 color: '$textMedEmp',
-                                ':hover': {
+                                '&:hover': {
                                     color: '$primaryLight'
                                 }
                             }}>
@@ -224,7 +224,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading, listView =
     //                     css={{
     //                         color: '#E0ECFF',
 
-    //                         ':hover': {
+    //                         '&:hover': {
     //                             color: '$primaryLight'
     //                         }
     //                     }}>

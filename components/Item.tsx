@@ -23,7 +23,7 @@ const Item: React.FC<Props> = ({
     <Flex
         className="hoverParent"
         css={{
-            ':hover .hoverChild': {
+            '&:hover .hoverChild': {
                 right: '-$11'
             },
             marginRight: '$8',
