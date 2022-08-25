@@ -187,7 +187,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                                 onClick={() => {
                                     window.location.href = 'https://dashboard.100ms.live/register';
                                 }}
-                                css={{ height: '30px', width: '100%', maxWidth: '200px' }}>
+                                css={{ width: '60px' }}>
                                 Sign up
                             </Button>
 
@@ -198,9 +198,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                                     window.location.href = 'https://dashboard.100ms.live/login';
                                 }}
                                 css={{
-                                    height: '30px',
-                                    width: 'stretch',
-                                    maxWidth: '200px'
+                                    width: '60px'
                                 }}>
                                 Login
                             </Button>
@@ -334,6 +332,8 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     }
                     .search-ctx-mob {
                         border-radius: 8px;
+                        max-width: 320px;
+                        margin: 0 auto;
                         display: block;
                         border: 1px solid var(--border_light);
                         width: 100%;
