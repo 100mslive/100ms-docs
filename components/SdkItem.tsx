@@ -42,37 +42,38 @@ const sdkItems = {
     javascript: [
         { id: 1, link: '/javascript/v2/guides/javascript-quickstart' },
         { id: 2, link: 'https://codesandbox.io/s/hms-js-quickstart-5rmes' },
-        { id: 3, link: '' },
+        { id: 3, link: 'https://github.com/100mslive/100ms-web' },
         { id: 4, link: '/api-reference/javascript/v2/home/content' },
         { id: 5, link: '/javascript/v2/release-notes/release-notes' }
     ],
     react: [
         { id: 1, link: '/javascript/v2/guides/javascript-quickstart' },
         { id: 2, link: '' },
-        { id: 3, link: '' },
+        { id: 3, link: 'https://github.com/100mslive/100ms-web' },
         { id: 4, link: '/api-reference/javascript/v2/home/content' },
         { id: 5, link: '/javascript/v2/release-notes/release-notes' }
     ],
     serverSide: [
-        { id: 4, link: '' },
+        { id: 1, link: '/server-side/v2/guides/quickstart' },
+        { id: 4, link: '/server-side/v2/foundation/templates-and-roles#api-reference' },
         { id: 6, link: '/server-side/v2/foundation/webhook' },
         { id: 7, link: '/server-side/v2/foundation/firewall-and-ports' }
     ],
     android: [
         { id: 1, link: '/android/v2/guides/Quickstart' },
-        { id: 3, link: '' },
+        { id: 3, link: 'https://github.com/100mslive/100ms-android' },
         { id: 4, link: '/api-reference/android/v2/index.html' },
         { id: 5, link: '/android/v2/release-notes/Release-Notes' }
     ],
     ios: [
         { id: 1, link: '/ios/v2/guides/Quickstart' },
-        { id: 3, link: '' },
+        { id: 3, link: 'https://github.com/100mslive/100ms-ios-sdk' },
         { id: 4, link: '/api-reference/ios/v2/home/content' },
         { id: 5, link: '/ios/v2/release-notes/Release-Notes' }
     ],
     flutter: [
         { id: 1, link: '/flutter/v2/guides/quickstart' },
-        { id: 3, link: '' },
+        { id: 3, link: 'https://github.com/100mslive/100ms-flutter/tree/main/example' },
         {
             id: 4,
             link: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
@@ -81,7 +82,7 @@ const sdkItems = {
     ],
     reactNative: [
         { id: 1, link: '/react-native/v2/guides/quickstart' },
-        { id: 3, link: '' },
+        { id: 3, link: 'https://github.com/100mslive/react-native-hms' },
         { id: 4, link: '/api-reference/react-native/v2/modules.html' },
         { id: 5, link: '/react-native/v2/release-notes/release-notes' }
     ]
@@ -163,7 +164,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading, listView =
             <hr
                 style={{
                     margin: '0',
-                    width: '95%',
+                    width: '100%',
                     backgroundColor: '$borderDefault'
                 }}
             />

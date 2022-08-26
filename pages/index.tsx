@@ -634,7 +634,11 @@ const Homepage = ({ allDocs }) => {
                         <ServerIcon style={{ height: '14px' }} />
                         <Text variant="sub2">Server-side API</Text>
                     </Flex>
-                    <SdkItem sdk="serverSide" />
+                    <SdkItem
+                        logo={<ServerIcon style={{ color: '#66A1FF' }} />}
+                        text="Server-side"
+                        sdk="serverSide"
+                    />
 
                     <Flex direction="column" css={{ marginTop: '$24', marginBottom: '$10' }}>
                         <h2 style={{ marginTop: '0', marginBottom: '4px' }}>
