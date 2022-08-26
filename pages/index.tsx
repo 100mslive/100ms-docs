@@ -635,7 +635,7 @@ const Homepage = ({ allDocs }) => {
                         <Text variant="sub2">Server-side API</Text>
                     </Flex>
                     <SdkItem
-                        logo={<ServerIcon style={{ color: '#66A1FF' }} />}
+                        logo={<ServerIcon style={{ color: '#66A1FF', height: '20px' }} />}
                         text="Server-side"
                         sdk="serverSide"
                     />

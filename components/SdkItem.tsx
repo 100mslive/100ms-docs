@@ -42,13 +42,11 @@ const sdkItems = {
     javascript: [
         { id: 1, link: '/javascript/v2/guides/javascript-quickstart' },
         { id: 2, link: 'https://codesandbox.io/s/hms-js-quickstart-5rmes' },
-        { id: 3, link: 'https://github.com/100mslive/100ms-web' },
         { id: 4, link: '/api-reference/javascript/v2/home/content' },
         { id: 5, link: '/javascript/v2/release-notes/release-notes' }
     ],
     react: [
         { id: 1, link: '/javascript/v2/guides/javascript-quickstart' },
-        { id: 2, link: '' },
         { id: 3, link: 'https://github.com/100mslive/100ms-web' },
         { id: 4, link: '/api-reference/javascript/v2/home/content' },
         { id: 5, link: '/javascript/v2/release-notes/release-notes' }
