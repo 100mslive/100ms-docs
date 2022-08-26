@@ -659,61 +659,37 @@ const Homepage = ({ allDocs }) => {
                             }
                         }}>
                         {fundamentals.map((item) => (
-                            <Box
-                                key={item.title}
-                                css={{
-                                    width: '100%',
-                                    borderRadius: '$3',
-                                    borderWidth: '$1',
-                                    borderStyle: 'solid',
-                                    borderColor: '$surfaceDefault',
-                                    '&:hover': {
-                                        borderColor: '$primaryDefault'
-                                    }
-                                }}>
-                                <Link href={item.link}>
-                                    <a>
-                                        <Box
-                                            css={{
-                                                height: '100%',
-                                                boxSizing: 'border-box',
-                                                border: 'none',
-                                                '&:hover': { border: 'none' }
-                                            }}>
-                                            <Card
-                                                css={{
-                                                    height: '100%'
-                                                }}
-                                                body={item.body}
-                                                titleComponent={
-                                                    <h3
-                                                        style={{
-                                                            margin: '0'
-                                                        }}>
-                                                        <Item
-                                                            logo={item.logo}
-                                                            text={item.title}
-                                                            textCSS={{
+                            <Link href={item.link} key={item.title}>
+                                <a>
+                                    <Card
+                                        body={item.body}
+                                        titleComponent={
+                                            <h3
+                                                style={{
+                                                    margin: '0'
+                                                }}>
+                                                <Item
+                                                    logo={item.logo}
+                                                    text={item.title}
+                                                    textCSS={{
+                                                        color: 'white',
+                                                        fontSize: '$h6'
+                                                    }}
+                                                    textVariant="body1"
+                                                    endLogo={
+                                                        <ChevronRightIcon
+                                                            style={{
                                                                 color: 'white',
-                                                                fontSize: '$h6'
+                                                                marginLeft: '8px'
                                                             }}
-                                                            textVariant="body1"
-                                                            endLogo={
-                                                                <ChevronRightIcon
-                                                                    style={{
-                                                                        color: 'white',
-                                                                        marginLeft: '8px'
-                                                                    }}
-                                                                />
-                                                            }
                                                         />
-                                                    </h3>
-                                                }
-                                            />
-                                        </Box>
-                                    </a>
-                                </Link>
-                            </Box>
+                                                    }
+                                                />
+                                            </h3>
+                                        }
+                                    />
+                                </a>
+                            </Link>
                         ))}
                     </Box>
 
@@ -736,61 +712,38 @@ const Homepage = ({ allDocs }) => {
                             '@md': { gridTemplateColumns: '1fr', gap: '$8' }
                         }}>
                         {guides.map((item) => (
-                            <Box key={item.title} css={{ width: '100%' }}>
-                                <Link href={item.link}>
-                                    <a>
-                                        <Box
-                                            css={{
-                                                borderRadius: '$3',
-                                                borderWidth: '$1',
-                                                borderStyle: 'solid',
-                                                borderColor: '$surfaceDefault',
-                                                '&:hover': {
-                                                    borderColor: '$primaryDefault'
-                                                },
-                                                height: '100%',
-                                                '@md': { height: '180px' },
-                                                boxSizing: 'border-box'
-                                            }}>
-                                            <Card
-                                                css={{
-                                                    height: '100%'
-                                                }}
-                                                body={item.body}
-                                                titleComponent={
-                                                    <Item
-                                                        text={item.title}
-                                                        textVariant="h6"
-                                                        textCSS={{ color: 'white' }}
-                                                        endLogo={null}
-                                                    />
-                                                }
-                                                endComponent={
-                                                    <Box
-                                                        css={{
-                                                            color: '$textMedEmp',
-                                                            marginTop: '$8',
-                                                            '&:hover': {
-                                                                color: '$primaryLight'
-                                                            }
-                                                        }}>
-                                                        <Item
-                                                            text="React Guide"
-                                                            logo={
-                                                                <BookIcon
-                                                                    style={{ height: '18px' }}
-                                                                />
-                                                            }
-                                                            textVariant="body2"
-                                                            css={{ gap: '$4' }}
-                                                        />
-                                                    </Box>
-                                                }
+                            <Link href={item.link} key={item.title}>
+                                <a>
+                                    <Card
+                                        body={item.body}
+                                        titleComponent={
+                                            <Item
+                                                text={item.title}
+                                                textVariant="h6"
+                                                textCSS={{ color: 'white' }}
+                                                endLogo={null}
                                             />
-                                        </Box>
-                                    </a>
-                                </Link>
-                            </Box>
+                                        }
+                                        endComponent={
+                                            <Box
+                                                css={{
+                                                    color: '$textMedEmp',
+                                                    marginTop: '$8',
+                                                    '&:hover': {
+                                                        color: '$primaryLight'
+                                                    }
+                                                }}>
+                                                <Item
+                                                    text="React Guide"
+                                                    logo={<BookIcon style={{ height: '18px' }} />}
+                                                    textVariant="body2"
+                                                    css={{ gap: '$4' }}
+                                                />
+                                            </Box>
+                                        }
+                                    />
+                                </a>
+                            </Link>
                         ))}
                     </Box>
                     <Flex

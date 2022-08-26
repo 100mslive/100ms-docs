@@ -12,9 +12,18 @@ interface Props {
 const Card: React.FC<Props> = ({ body, endComponent, titleComponent, css }) => (
     <Box
         css={{
-            padding: '$10',
-            backgroundColor: '$surfaceDefault',
+            height: '100%',
             borderRadius: '$3',
+            borderWidth: '$1',
+            borderStyle: 'solid',
+            borderColor: '$surfaceDefault',
+            backgroundColor: '$surfaceDark',
+            '&:hover': {
+                borderColor: '$primaryDefault',
+                backgroundColor: '$surfaceDefault'
+            },
+            boxSizing: 'border-box',
+            padding: '$10',
             ...css
         }}>
         <Flex direction="column" justify="between" css={{ height: '100%' }}>
