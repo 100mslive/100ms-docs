@@ -103,6 +103,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading, listView =
                 backgroundColor: '$surfaceDark',
                 paddingTop: '$8',
                 paddingLeft: text ? '$10' : undefined,
+                paddingRight: text ? '$10' : undefined,
                 paddingBottom: '$8',
                 borderRadius: '$3',
                 borderWidth: '1px',
@@ -124,7 +125,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading, listView =
                 },
                 '@md': {
                     width: 'fit-content',
-                    padding: '$10 $0 $10 $6'
+                    padding: '$10 $6 $10 $6'
                 },
                 '@sm': {
                     padding: '$8 $6 $8 $6',
@@ -157,22 +158,28 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading, listView =
                     <DividerIcon />
                 </Box>
             </Flex>
-        ) : (
-            <Box css={{ marginLeft: '$8', '@md': { display: 'none' } }} />
-        )}
-        {listView ? (
-            <hr style={{ margin: '0', width: '95%', backgroundColor: '$borderDefault' }} />
         ) : null}
+        <Box css={{ display: 'none', '@lg': { display: text ? 'block' : 'none' } }}>
+            <hr
+                style={{
+                    margin: '0',
+                    width: '95%',
+                    backgroundColor: '$borderDefault'
+                }}
+            />
+        </Box>
         <Box
             css={{
                 gap: '$10',
                 display: 'grid',
                 alignContent: 'center',
+                marginLeft: !text ? '$8' : undefined,
                 width: 'fit-content',
                 gridAutoFlow: listView ? 'row' : 'column',
                 '@lg': {
                     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-                    gridAutoFlow: 'row'
+                    gridAutoFlow: 'row',
+                    marginLeft: 0
                 },
                 '@sm': {
                     gridAutoFlow: 'row',
