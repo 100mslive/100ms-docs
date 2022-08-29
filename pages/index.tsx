@@ -664,7 +664,7 @@ const Homepage = ({ allDocs }) => {
                         }}>
                         {fundamentals.map((item) => (
                             <Link href={item.link} key={item.title}>
-                                <a>
+                                <a style={{ all: 'unset', cursor: 'pointer' }}>
                                     <Card
                                         body={item.body}
                                         titleComponent={
@@ -717,7 +717,7 @@ const Homepage = ({ allDocs }) => {
                         }}>
                         {guides.map((item) => (
                             <Link href={item.link} key={item.title}>
-                                <a>
+                                <a style={{ all: 'unset', cursor: 'pointer' }}>
                                     <Card
                                         body={item.body}
                                         titleComponent={
