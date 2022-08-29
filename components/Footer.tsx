@@ -54,7 +54,7 @@ const Footer = () => (
                             </a>
                         </Box>
                     </Box>
-                    <Flex justify="between" className="footer-contact">
+                    {/* <Flex justify="between" className="footer-contact"> */}
                         <Box className="details">
                             <Flex align="center" gap="1" css={{ marginBottom: '16px' }}>
                                 <ChatIcon />
@@ -66,7 +66,7 @@ const Footer = () => (
                             </Flex>
                         </Box>
                         <Box className="subscribe">
-                            <Box
+                            {/* <Box
                                 className="mobile-hr"
                                 css={{
                                     width: '100%',
@@ -74,7 +74,7 @@ const Footer = () => (
                                     marginBottom: '-8px'
                                 }}>
                                 <hr />
-                            </Box>
+                            </Box> */}
                             {/* {isSubscribed ? (
                                     <Flex
                                         gap="2"
@@ -162,7 +162,7 @@ const Footer = () => (
                                 </Text>
                             </Flex>
                         </Box>
-                    </Flex>
+                    {/* </Flex> */}
                 </Flex>
                 <Box css={{ width: '100%', maxWidth: '1352px', margin: '16px 0' }}>
                     <hr />

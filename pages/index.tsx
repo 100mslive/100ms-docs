@@ -80,8 +80,9 @@ const mobileSDK = [
 ];
 
 const style = {
-    height: '32px',
     width: '32px',
+    minWidth: '32px',
+    height: '32px',
     color: 'white'
 };
 
@@ -780,7 +781,7 @@ const Homepage = ({ allDocs }) => {
                             )}
                         </Flex>
                     </Flex>
-                    <Flex css={{ flexWrap: 'wrap', gap: '$16' }}>
+                    <Flex css={{ flexWrap: 'wrap', gap: '$20' }}>
                         {more[dropDownSelection].map((section) => (
                             <Flex direction="column" key={section.heading} css={{ gap: '$5' }}>
                                 <Text variant="body1" css={{ marginBottom: '$4' }}>

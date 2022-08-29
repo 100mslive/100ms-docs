@@ -26,7 +26,7 @@ const itemId = {
     7: 'Domain and port whitelisting'
 };
 
-const iconStyle = { height: '16px', color: '$textMedEmp' };
+const iconStyle = { height: '20px', color: '$textMedEmp' };
 
 const itemList = {
     1: <BookIcon style={iconStyle} />,
