@@ -89,12 +89,11 @@ interface Props {
     logo?: React.SVGProps<SVGSVGElement>;
     sdk?: any;
     text?: any;
-    listView?: any;
     cssHeading?: {};
     css?: {};
 }
 
-const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading, listView = false }) => (
+const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
     <Flex
         css={merge(
             {
