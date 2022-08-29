@@ -18,13 +18,14 @@ const Card: React.FC<Props> = ({ body, endComponent, titleComponent, css }) => (
             borderWidth: '$1',
             borderStyle: 'solid',
             borderColor: '$surfaceDefault',
-            backgroundColor: '$surfaceDark',
-            '&:hover': {
-                borderColor: '$primaryDefault',
-                backgroundColor: '$surfaceDefault'
-            },
+            backgroundColor: '$surfaceDefault',
             boxSizing: 'border-box',
             padding: '$10',
+            marginRight: '$8',
+            '&:active': { backgroundColor: '$surfaceDark' },
+            '&:hover': {
+                borderColor: '$primaryDefault'
+            },
             '&:hover .hoverChild': {
                 right: '-$11',
                 color: '$primaryLight'
@@ -35,7 +36,6 @@ const Card: React.FC<Props> = ({ body, endComponent, titleComponent, css }) => (
             '&:hover .childLogo': {
                 color: '$primaryLight'
             },
-            marginRight: '$8',
             ...css
         }}>
         <Flex direction="column" justify="between" css={{ height: '100%' }}>

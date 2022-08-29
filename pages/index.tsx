@@ -666,6 +666,7 @@ const Homepage = ({ allDocs }) => {
                             <Link href={item.link} key={item.title}>
                                 <a style={{ all: 'unset', cursor: 'pointer' }}>
                                     <Card
+                                        css={{ width: '100%' }}
                                         body={item.body}
                                         titleComponent={
                                             <h3

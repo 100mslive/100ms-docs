@@ -187,7 +187,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading, listView =
             }}>
             {sdkItems[sdk].map((value) => (
                 <Link key={value.id} href={value.link}>
-                    <a>
+                    <a style={{ width: 'fit-content' }}>
                         <Box
                             className="hoverParent"
                             css={{
