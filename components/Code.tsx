@@ -32,7 +32,7 @@ export const CheckIcon = () => (
 const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number; tab?: string }>> =
     ({ children, section, sectionIndex, tab }) => {
         const textRef = React.useRef(null);
-        console.log(section);
+
         const copyFunction = () => {
             setCopy(true);
             // @ts-ignore
@@ -40,7 +40,7 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
             setTimeout(() => {
                 setCopy(false);
             }, 2000);
-
+            // @ts-ignore
             window.analytics.track('copy.to.clipboard', {
                 title: document.title,
                 referrer: document.referrer,
