@@ -108,32 +108,32 @@ const fundamentals = [
 
 const guides = [
     {
-        title: 'Discord stage clone',
+        title: 'Discord Stage Clone',
         body: 'Build an audio-only channel, like Discord Stages, in your app using Next.js.',
         link: 'https://www.100ms.live/blog/build-discord-stage-channel-clone-hms'
     },
     {
-        title: 'Slack huddle clone',
+        title: 'Slack Huddle Clone',
         body: 'Add audio calling similar to Slack Huddle to your app using React, and Tailwind.',
         link: 'https://www.100ms.live/blog/building-slack-huddle-clone'
     },
     {
-        title: 'Skype clone',
+        title: 'Skype Clone',
         body: 'Model a video conferencing and file sharing app, like Skype, with 100ms.',
         link: 'https://www.100ms.live/blog/skype-clone-react'
     },
     {
-        title: 'Webex clone',
+        title: 'Webex Clone',
         body: 'Jerry-build an online calling app, like Cisco Webex, with 100ms.',
         link: 'https://www.100ms.live/blog/create-webex-clone-100ms'
     },
     {
-        title: 'Google classroom clone',
+        title: 'Google Classroom Clone',
         body: 'Build a blended learning platform, like Google Classroom, with React.',
         link: 'https://www.100ms.live/blog/google-classroom-clone-react-100ms'
     },
     {
-        title: 'Twitch clone',
+        title: 'Twitch Clone',
         body: 'Create a live streaming platform, live Twitch, using React, and Tailwind.',
         link: 'https://www.100ms.live/blog/twitch-clone-in-react'
     }
