@@ -11,6 +11,7 @@ interface Props {
 
 const Card: React.FC<Props> = ({ body, endComponent, titleComponent, css }) => (
     <Box
+        className="hoverParent"
         css={{
             height: '100%',
             borderRadius: '$3',
@@ -24,6 +25,17 @@ const Card: React.FC<Props> = ({ body, endComponent, titleComponent, css }) => (
             },
             boxSizing: 'border-box',
             padding: '$10',
+            '&:hover .hoverChild': {
+                right: '-$11',
+                color: '$primaryLight'
+            },
+            '&:hover .childText': {
+                color: '$primaryLight'
+            },
+            '&:hover .childLogo': {
+                color: '$primaryLight'
+            },
+            marginRight: '$8',
             ...css
         }}>
         <Flex direction="column" justify="between" css={{ height: '100%' }}>

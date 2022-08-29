@@ -189,11 +189,16 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading, listView =
                 <Link key={value.id} href={value.link}>
                     <a>
                         <Box
+                            className="hoverParent"
                             css={{
                                 color: '$textMedEmp',
                                 '&:hover': {
                                     color: '$primaryLight'
-                                }
+                                },
+                                '&:hover .hoverChild': {
+                                    right: '-$11'
+                                },
+                                marginRight: '$6'
                             }}>
                             <Item
                                 logo={itemList[value.id]}

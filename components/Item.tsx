@@ -20,17 +20,9 @@ const Item: React.FC<Props> = ({
     endLogo = <ChevronRightIcon style={{ height: '14px' }} />,
     css
 }) => (
-    <Flex
-        className="hoverParent"
-        css={{
-            '&:hover .hoverChild': {
-                right: '-$11'
-            },
-            marginRight: '$8',
-            ...css
-        }}
-        align="center">
+    <Flex css={{ ...css }} align="center">
         <Text
+            className="childText"
             variant={textVariant}
             css={{
                 display: 'flex',

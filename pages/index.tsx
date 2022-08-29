@@ -82,8 +82,7 @@ const mobileSDK = [
 const style = {
     width: '32px',
     minWidth: '32px',
-    height: '32px',
-    color: 'white'
+    height: '32px'
 };
 
 const fundamentals = [
@@ -91,19 +90,19 @@ const fundamentals = [
         title: 'Architecture',
         body: 'Learn the basic architecture to understand how your application communicates with 100ms servers.',
         link: '/javascript/v2/foundation/basics#architecture',
-        logo: <ViewIcon style={style} />
+        logo: <ViewIcon className="childLogo" style={style} />
     },
     {
         title: 'Templates and Roles',
         body: 'A collection of roles and video settings that are used by the SDK to decide what happens when a room is created.',
         link: '/javascript/v2/foundation/templates-and-roles',
-        logo: <LegoIcon style={style} />
+        logo: <LegoIcon className="childLogo" style={style} />
     },
     {
         title: 'Authentication',
         body: 'A way to control the permissions and capabilities of users in a room.',
         link: '/javascript/v2/foundation/security-and-tokens',
-        logo: <GameIcon style={style} />
+        logo: <GameIcon className="childLogo" style={style} />
     }
 ];
 
@@ -678,13 +677,13 @@ const Homepage = ({ allDocs }) => {
                                                     text={item.title}
                                                     textCSS={{
                                                         color: 'white',
-                                                        fontSize: '$h6'
+                                                        fontSize: '$h6',
+                                                        '@lg': { fontSize: '$md' }
                                                     }}
                                                     textVariant="body1"
                                                     endLogo={
                                                         <ChevronRightIcon
                                                             style={{
-                                                                color: 'white',
                                                                 marginLeft: '8px'
                                                             }}
                                                         />
