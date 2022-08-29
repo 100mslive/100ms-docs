@@ -52,6 +52,7 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                 tab
             });
         };
+        // @ts-ignore
         const [hovered, setHovered] = React.useState(false);
         const [copy, setCopy] = React.useState(false);
         const onEnter = () => {
