@@ -191,10 +191,6 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading, listView =
                         <Box
                             className="hoverParent"
                             css={{
-                                color: '$textMedEmp',
-                                '&:hover': {
-                                    color: '$primaryLight'
-                                },
                                 '&:hover .hoverChild': {
                                     right: '-$11'
                                 },
@@ -204,6 +200,12 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading, listView =
                                 logo={itemList[value.id]}
                                 text={itemId[value.id]}
                                 endLogo={<ChevronRightIcon style={{ height: '14px' }} />}
+                                textCSS={{
+                                    color: 'textMedEmp',
+                                    '&:hover': {
+                                        color: '$primaryLight'
+                                    }
+                                }}
                             />
                         </Box>
                     </a>
