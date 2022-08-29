@@ -169,7 +169,6 @@ const DocLayout: React.FC<Props> = ({
                         scroll-padding-top: 120px !important;
                     }
                     .page {
-                        max-width: 1600px;
                         margin: 0 auto;
                     }
                     .ctx {
