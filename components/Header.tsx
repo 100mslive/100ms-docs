@@ -7,11 +7,10 @@ import {
     SearchIcon,
     SunIcon
 } from '@100mslive/react-icons';
-import React, { useState } from 'react';
-
-import { Button, Flex, Text } from '@100mslive/react-ui';
+import { Button, Flex, Text, useTheme } from '@100mslive/react-ui';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -29,6 +28,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
     const [showMenu, setShowMenu] = useState(false);
+    const { toggleTheme, themeType } = useTheme();
 
     const router = useRouter();
     React.useEffect(() => {
@@ -49,9 +49,10 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
     React.useEffect(() => {
         const docHtml = document.documentElement.dataset;
         setIsDark(docHtml.theme === 'dark');
+        if (docHtml.theme !== themeType) toggleTheme();
     }, []);
 
-    const toggleTheme = () => {
+    const buttonToggleTheme = () => {
         const docHtml = document.documentElement.dataset;
         // toggle theme
         // set local storage
@@ -60,6 +61,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
         docHtml.theme = `${!isDark ? 'dark' : 'light'}`;
         // update the state
         setIsDark(!isDark);
+        toggleTheme();
     };
 
     const getCurrentTech = () => {
@@ -121,7 +123,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                         tabIndex={0}
                         style={{ cursor: 'pointer' }}
                         onKeyPress={() => {}}
-                        onClick={() => toggleTheme()}>
+                        onClick={() => buttonToggleTheme()}>
                         {isDark ? <NightIcon /> : <SunIcon style={{ color: 'yellow' }} />}
                     </div>
                 </div>

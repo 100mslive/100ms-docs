@@ -3,14 +3,13 @@ import {
     BookIcon,
     ChevronRightIcon,
     CodeIcon,
-    DividerIcon,
     GithubIcon,
     ListCheckIcon,
     RestApiIcon,
     RocketIcon,
     WebhookIcon
 } from '@100mslive/react-icons';
-import { Box, Flex } from '@100mslive/react-ui';
+import { Box, Flex, VerticalDivider } from '@100mslive/react-ui';
 import { Item } from 'components';
 import merge from 'lodash/merge';
 import Link from 'next/link';
@@ -108,27 +107,24 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading, listView =
                 borderWidth: '1px',
                 borderStyle: 'solid',
                 borderColor: '$borderDefault',
-                gap: listView ? '$8' : undefined,
+                gap: '$12',
                 flexWrap: 'wrap',
                 justify: 'between',
                 width: '100%',
-                maxWidth: listView ? '$60' : undefined,
                 '@lg': {
                     gap: '$10',
                     width: 'fit-content',
                     justifyContent: 'start',
-                    maxWidth: listView ? '$96' : undefined,
                     padding: '$10',
                     borderRadius: '$3',
+
                     flexDirection: 'column'
                 },
                 '@md': {
-                    width: 'fit-content',
                     padding: '$10 $6 $10 $6'
                 },
                 '@sm': {
-                    padding: '$8 $6 $8 $6',
-                    width: 'fit-content'
+                    padding: '$8 $6 $8 $6'
                 }
             },
             css
@@ -145,19 +141,19 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading, listView =
                     text={text}
                     textVariant="body2"
                     endLogo={null}
-                    textCSS={{ color: 'white', width: '$32' }}
+                    textCSS={{ width: '$32' }}
                 />
                 <Box
                     css={{
-                        display: listView ? 'none' : undefined,
                         '@lg': {
                             display: 'none'
                         }
                     }}>
-                    <DividerIcon />
+                    <VerticalDivider css={{ display: 'block' }} />
                 </Box>
             </Flex>
         ) : null}
+
         <Box css={{ display: 'none', '@lg': { display: text ? 'block' : 'none' } }}>
             <hr
                 style={{
@@ -174,11 +170,10 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading, listView =
                 alignContent: 'center',
                 marginLeft: !text ? '$8' : undefined,
                 width: 'fit-content',
-                gridAutoFlow: listView ? 'row' : 'column',
+                gridAutoFlow: 'column',
                 '@lg': {
                     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-                    gridAutoFlow: 'row',
-                    marginLeft: 0
+                    gridAutoFlow: 'row'
                 },
                 '@sm': {
                     gridAutoFlow: 'row',

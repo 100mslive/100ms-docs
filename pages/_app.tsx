@@ -1,12 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React from 'react';
+import '@/styles/theme.css';
+import 'inter-ui/inter.css';
 import { NextPage } from 'next';
-import { AppProps } from 'next/app';
 import { DefaultSeo } from 'next-seo';
+import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import SEO from '../next-seo.config';
-import 'inter-ui/inter.css';
-import '@/styles/theme.css';
 
 const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
     const router = useRouter();

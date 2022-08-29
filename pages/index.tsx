@@ -536,7 +536,7 @@ const Homepage = ({ allDocs }) => {
                             marginBottom: '$12'
                         }}>
                         <h1 style={{ marginBottom: '0' }}>
-                            <Text variant="h4" css={{ zIndex: '0' }}>
+                            <Text variant="h4" css={{ zIndex: '0', color: '$textHighEmp' }}>
                                 Documentation
                             </Text>
                         </h1>
@@ -635,11 +635,10 @@ const Homepage = ({ allDocs }) => {
                         <Text variant="sub2">Server-side API</Text>
                     </Flex>
                     <SdkItem
-                        logo={<ServerIcon style={{ color: '#66A1FF', height: '20px' }} />}
+                        logo={<ServerIcon style={{ color: '#66A1FF' }} />}
                         text="Server-side"
                         sdk="serverSide"
                     />
-
                     <Flex direction="column" css={{ marginTop: '$24', marginBottom: '$10' }}>
                         <h2 style={{ marginTop: '0', marginBottom: '4px' }}>
                             <Text variant="h5">Fundamentals</Text>
@@ -697,7 +696,6 @@ const Homepage = ({ allDocs }) => {
                             </Link>
                         ))}
                     </Box>
-
                     <Flex direction="column" css={{ marginTop: '$24', marginBottom: '$10' }}>
                         <h2 style={{ marginTop: '0', marginBottom: '4px' }}>
                             <Text variant="h5" id="guide">
