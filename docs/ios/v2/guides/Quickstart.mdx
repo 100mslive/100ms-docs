@@ -10,7 +10,6 @@ tags:
     - ios
 ---
 
-
 ## Prerequisites
 
 Familiarity with Xcode and iOS SDK, Cocoapods installed
@@ -19,16 +18,14 @@ Familiarity with Xcode and iOS SDK, Cocoapods installed
 
 Create an Xcode project and select "iOS" for platform and "App" for application
 
-
 ![Xcode](/guides/xcode1.png)
 
 Select "Storyboard" for interface and "Swift" for language
 
-
 Assuming your project name is "basicvideocall", create "Podfile" in the project folder with the following contents
 then run `pod install`
 
-```jsx
+```jsx section=Xcode sectionIndex=1
 platform :ios, '13.0'
 
 target 'basicvideocall' do
@@ -42,7 +39,7 @@ Open .xcworkspace
 
 Add the entitlements for video, audio and network access to your `Info.plist`
 
-```xml
+```xml section=Xcode sectionIndex=2
 <key>NSCameraUsageDescription</key>
 <string>Please allow access to Camera to enable video conferencing.</string>
 <key>NSLocalNetworkUsageDescription</key>
@@ -51,38 +48,31 @@ Add the entitlements for video, audio and network access to your `Info.plist`
 <string>Please allow access to Microphone to enable video conferencing.</string>
 ```
 
-
 ### Initialising The SDK
 
 Open `ViewController.swift`
 
 Add `HMSSDK` import
 
-
-```swift
+```swift section=SDK sectionIndex=1
 import HMSSDK
 ```
 
-
 Conform to HMSUpdateListener and add stubs when Xcode offers to
 
-
-```swift
+```swift section=SDK sectionIndex=2
 extension ViewController: HMSUpdateListener {
 }
 ```
 
-
 Create an instance of HMSSDK
 
-
-```swift
+```swift section=SDK sectionIndex=3
 class ViewController: UIViewController {
 var hmsSDK = HMSSDK.build()
 ...
 }
 ```
-
 
 ### Get Auth Token
 
@@ -96,10 +86,9 @@ Alright with the token and room id we are ready to proceed.
 
 Add `joinRoom()` function with room id and token you obtained in previous steps. Then call `joinRoom()` from `viewDidLoad()`
 
-
-```swift
+```swift section=JoinRoom sectionIndex=1
 func joinRoom() {
-    let config = HMSConfig(userID: UUID().uuidString, 
+    let config = HMSConfig(userID: UUID().uuidString,
             roomID: "replace with room id", authToken: "replace with token")
         hmsSDK.join(config: config, delegate: self)
 }
@@ -110,25 +99,22 @@ override func viewDidLoad() {
 }
 ```
 
-    
 Congratulations! You have an audio conference app.
 
 Build and launch on device, then join same room on web app to try a call between web and iOS. (To join from the web, use one of the role url links from your room [Room in Dashboard](https://dashboard.100ms.live/rooms))
-
 
 ## Adding Video
 
 Lets create add a lazily initialized UIStackView that will hold our video views
 
-
-```swift{4-24}
+```swift{4-24} section=AddingVideo sectionIndex=1
 class ViewController: UIViewController {
     var hmsSDK = HMSSDK.build()
 
     lazy var stackView: UIStackView = {
         let result = UIStackView()
         result.axis = .vertical
-        
+
         view.addSubview(result)
         result.translatesAutoresizingMaskIntoConstraints = false
         result.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -137,21 +123,19 @@ class ViewController: UIViewController {
         let heightConstraint =  result.heightAnchor.constraint(equalToConstant: 0)
         heightConstraint.isActive = true
         heightConstraint.priority = .defaultLow
-        
+
         return result
     }()
 ```
-
 
 Next step is to listen for `trackAdded` update so that we get notified when someone has published a video track.
 
 In the handler we will create an instance of `HMSVideoView` that allows us to render the `HMSVideoTrack`
 
-
-```swift
+```swift section=AddingVideo sectionIndex=2
 extension ViewController: HMSUpdateListener {
     ...
-    
+
     func on(track: HMSTrack, update: HMSTrackUpdate, for peer: HMSPeer) {
         switch update {
         case .trackAdded:
@@ -172,19 +156,15 @@ extension ViewController: HMSUpdateListener {
     }
 ```
 
+Build and run the app. Congratulations you have an a/v call running!
 
-Build and run the app. Congratulations you have an a/v call running! 
-
-    
 ### Cleanup
 
 A peer can decide to stop publishing any of his tracks at any time (most frequent case is start/stop screen share), also peer may choose to leave a room. In any of these events we want to remove the corresponding video view to release resources.
 
 To start we will introduce a map of track to video view so that we can figure out which video view to remove
 
-
-
-```swift{4}
+```swift{4} section=Cleanup sectionIndex=1
 class ViewController: UIViewController {
     var hmsSDK = HMSSDK.build()
 
@@ -193,11 +173,9 @@ class ViewController: UIViewController {
 ...
 ```
 
-    
 Next we want to add a map entry as a last step in our `addVideoView` function
 
-
-```jsx
+```jsx section=Cleanup sectionIndex=2
 func addVideoView(for track: HMSVideoTrack) {
     let videoView = HMSVideoView()
     videoView.translatesAutoresizingMaskIntoConstraints = false
@@ -208,21 +186,17 @@ func addVideoView(for track: HMSVideoTrack) {
 }
 ```
 
-    
 Now we will create a helper function that will remove the view for given track
 
-
-```swift
+```swift section=Cleanup sectionIndex=3
 func removeVideoView(for track: HMSVideoTrack) {
     trackViewMap[track]?.removeFromSuperview()
 }
 ```
 
-
 With this we are ready to add handlers for `trackRemoved` and `peerLeft` events as follows:
 
-
-```swift
+```swift section=Cleanup sectionIndex=4
 func on(peer: HMSPeer, update: HMSPeerUpdate) {
     switch update {
     case .peerLeft:
@@ -250,33 +224,27 @@ func on(track: HMSTrack, update: HMSTrackUpdate, for peer: HMSPeer) {
 }
 ```
 
-
 And that's how you handle most common use case with the 100ms SDK!
-
 
 ### Final Points
 
-To control mute/unmute state of local video and audio tracks use 
+To control mute/unmute state of local video and audio tracks use
 
-```swift
+```swift section=FinalPoints sectionIndex=1
 hmsSDK.localPeer?.localAudioTrack()?.setMute(true)
 hmsSDK.localPeer?.localVideoTrack()?.setMute(true)
 ```
 
+After you are done with the call it is a good idea to call
 
-After you are done with the call it is a good idea to call 
-
-
-```swift
+```swift section=FinalPoints sectionIndex=2
 hmsSDK.leave()
 ```
 
-    
 ### Ways to go from here
 
-Checkout complete project code on github:  [https://github.com/100mslive/100ms-ios-sdk/tree/main/BasicExample](https://github.com/100mslive/100ms-ios-sdk/tree/main/BasicExample)
+Checkout complete project code on github: [https://github.com/100mslive/100ms-ios-sdk/tree/main/BasicExample](https://github.com/100mslive/100ms-ios-sdk/tree/main/BasicExample)
 
-Checkout a sample code for a full featured conferencing app: 
+Checkout a sample code for a full featured conferencing app:
 
 [https://github.com/100mslive/100ms-ios-sdk/tree/main/Example](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example)
-

@@ -47,7 +47,7 @@ From either the dashboard, or your own server once implemented, you need to gene
 
 Add the `hmssdk_flutter` plugin in dependencies of pubspec.yaml
 
-```dart
+```dart section=SDK sectionIndex=1
 #pubspec.yaml
 
 dependencies:
@@ -58,7 +58,7 @@ hmssdk_flutter:
 ```
 
 > At this moment, Flutter 3.0 or higher is not supported due to ongoing issues in Flutter 3.x release for Platform Views. Refer issues: [107313](https://github.com/flutter/flutter/issues/107313) & [103630](https://github.com/flutter/flutter/issues/103630). We are actively monitoring these issues & once [Flutter](https://github.com/flutter/flutter) team releases a fix for these issues on [stable](https://github.com/flutter/flutter/tree/stable) branch, we'll release a compatible version of 100ms SDK.
-> 
+>
 > Until then, please use Flutter version `2.10.5` or any other 2.x series.
 
 ### Login
@@ -105,7 +105,7 @@ You will also need to request Camera and Record Audio permissions at runtime bef
 
 Add following permissions in iOS Info.plist file
 
-```xml
+```xml section=iOSPermissions sectionIndex=1
 <key>NSMicrophoneUsageDescription</key>
 <string>{YourAppName} wants to use your microphone</string>
 
@@ -132,7 +132,7 @@ These are some listener's callback functions:
 
 > 💡 It's essential that this callback is listened to or you may have peers without video.
 
-```dart
+```dart section=JoinVideo sectionIndex=1
 HMSConfig config = HMSConfig(userName: this.userName, authToken: this.authToken);
 hmsSDK = HMSSDK();
 hmsSDK.build()
@@ -140,7 +140,7 @@ hmsSDK.join(config: this.config);
 hmsSDK.addUpdateListener(listener);
 ```
 
-```dart
+```dart section=JoinVideo sectionIndex=2
 /// 100ms SDK provides callbacks to the client app about any change or update happening in the room after a user has joined by implementing HMSUpdateListener.
 /// These updates can be used to render the video on screen or to display other info regarding the room.
 abstract class HMSUpdateListener {
@@ -242,7 +242,7 @@ A peer represents one person in the video call.
 
 A peer's video track is in hmsPeer.videoTrack. ScreenShares can be found in auxilary tracks of peer i.e the auxiliary tracks is a list of tracks, one of which can be a ScreenShare if they have chosen to share their screen.
 
-```dart
+```dart section=ShowingVideo sectionIndex=1
 peer.auxiliaryTracks
           ?.where((each) => each.kind == HMSTrackKind.kHMSTrackKindVideo);
 ```
@@ -251,7 +251,7 @@ peer.auxiliaryTracks
 
 You can mute/unmute audio by calling switchAudio on HMSSDK. `isOn` is state variable. If `isOn` is true then audio will unmute and if its false then audio will mute.
 
-```dart
+```dart section=MuteAudio sectionIndex=1
 
 /// audio unmute
 hmsSDK.switchAudio(isOn: true);
@@ -264,7 +264,7 @@ hmsSDK.switchAudio(isOn: false);
 
 You can mute/unmute video by calling switchVideo on HMSSDK. `isOn` is state variable. If `isOn` is true then video will turn on and if its false then video will turn off.
 
-```dart
+```dart section=MuteVideo sectionIndex=1
 
 /// video on
 hmsSDK.switchVideo(isOn: true);
@@ -277,7 +277,7 @@ hmsSDK.switchVideo(isOn: false);
 
 To leave a video call, just call leave on HMSSDK.
 
-```dart
+```dart section=LeaveVideo sectionIndex=1
 hmsSDK.leave();
 ```
 
@@ -288,15 +288,13 @@ hmsSDK.leave();
 -   `Peer`: One participant in the video call. Local peers are you, remote peers are others.
 -   `Broadcast`: Chat messages are broadcasts.
 
-
 ## Where to go from here
 
 Checkout the [simple version](https://github.com/100mslive/100ms-flutter/tree/main/example) of the project.
 
-
 ### 100ms Flutter app
 
-You can download & check out the 100ms Flutter app - 
+You can download & check out the 100ms Flutter app -
 
 🤖 The Flutter Android app from [Google Play Store here](https://play.google.com/store/apps/details?id=live.hms.flutter)
 

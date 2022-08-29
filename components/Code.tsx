@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ComponentProps, PropsWithChildren } from 'react';
 
 export const CopyIcon = () => (
     <svg
@@ -29,69 +29,82 @@ export const CheckIcon = () => (
         <polyline points="20 6 9 17 4 12" />
     </svg>
 );
-const Code: React.FC = ({ children }) => {
-    const textRef = React.useRef(null);
-    const copyFunction = () => {
-        setCopy(true);
-        // @ts-ignore
-        navigator.clipboard.writeText(textRef.current.textContent);
-        setTimeout(() => {
+const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number; tab?: string }>> =
+    ({ children, section, sectionIndex, tab }) => {
+        const textRef = React.useRef(null);
+        console.log(section);
+        const copyFunction = () => {
+            setCopy(true);
+            // @ts-ignore
+            navigator.clipboard.writeText(textRef.current.textContent);
+            setTimeout(() => {
+                setCopy(false);
+            }, 2000);
+
+            window.analytics.track('copy.to.clipboard', {
+                title: document.title,
+                referrer: document.referrer,
+                path: window.location.hostname,
+                pathname: window.location.pathname,
+                href: window.location.href,
+                section,
+                sectionIndex,
+                tab
+            });
+        };
+        const [hovered, setHovered] = React.useState(false);
+        const [copy, setCopy] = React.useState(false);
+        const onEnter = () => {
+            setHovered(true);
+        };
+        const onExit = () => {
+            setHovered(false);
             setCopy(false);
-        }, 2000);
+        };
+        return (
+            <div className="code-block" onMouseEnter={onEnter} onMouseLeave={onExit}>
+                {!copy ? (
+                    <button
+                        aria-label="Copy to Clipboard"
+                        onClick={() => copyFunction()}
+                        type="button"
+                        className="copied">
+                        <CopyIcon />
+                    </button>
+                ) : null}
+                {copy ? (
+                    <button
+                        aria-label="Copy to Clipboard"
+                        onClick={() => copyFunction()}
+                        type="button"
+                        className="copied">
+                        <CheckIcon />
+                    </button>
+                ) : null}{' '}
+                <div ref={textRef}>{children}</div>
+                <style jsx>{`
+                    .code-block {
+                        position: relative;
+                    }
+                    button:hover {
+                        opacity: 0.8;
+                    }
+                    .copied {
+                        z-index: 45;
+                        outline: none;
+                        cursor: pointer;
+                        width: 25px;
+                        height: 25px;
+                        padding: 5px;
+                        border: 1px solid var(--gray3);
+                        background: var(--gray1);
+                        border-radius: 5px;
+                        position: fixed;
+                        margin: 10px 0 0 clamp(150px, 690px, 80vw);
+                    }
+                `}</style>
+            </div>
+        );
     };
-    const [hovered, setHovered] = React.useState(false);
-    const [copy, setCopy] = React.useState(false);
-    const onEnter = () => {
-        setHovered(true);
-    };
-    const onExit = () => {
-        setHovered(false);
-        setCopy(false);
-    };
-    return (
-        <div className="code-block" onMouseEnter={onEnter} onMouseLeave={onExit}>
-            {hovered && !copy ? (
-                <button
-                    aria-label="Copy to Clipboard"
-                    onClick={() => copyFunction()}
-                    type="button"
-                    className="copied">
-                    <CopyIcon />
-                </button>
-            ) : null}
-            {copy ? (
-                <button
-                    aria-label="Copy to Clipboard"
-                    onClick={() => copyFunction()}
-                    type="button"
-                    className="copied">
-                    <CheckIcon />
-                </button>
-            ) : null}{' '}
-            <div ref={textRef}>{children}</div>
-            <style jsx>{`
-                .code-block {
-                    position: relative;
-                }
-                button:hover {
-                    opacity: 0.8;
-                }
-                .copied {
-                    z-index: 45;
-                    outline: none;
-                    cursor: pointer;
-                    width: 25px;
-                    height: 25px;
-                    padding: 5px;
-                    border: 1px solid var(--gray3);
-                    background: var(--gray1);
-                    border-radius: 5px;
-                    position: fixed;
-                    margin: 10px 0 0 clamp(150px, 690px, 80vw);
-                }
-            `}</style>
-        </div>
-    );
-};
 
 export default Code;
