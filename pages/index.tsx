@@ -549,7 +549,9 @@ const Homepage = ({ allDocs }) => {
                     </Flex>
                     <Flex gap="2" align="center" css={{ marginBottom: '$8' }}>
                         <ComputerIcon style={{ height: '14px' }} />
-                        <Text variant="sub2">Web SDK</Text>
+                        <Text variant="sub2" css={{ fontWeight: '$semiBold' }}>
+                            Web SDK
+                        </Text>
                     </Flex>
                     <Flex
                         css={{
@@ -602,7 +604,9 @@ const Homepage = ({ allDocs }) => {
                     </Flex>
                     <Flex gap="2" align="center" css={{ marginTop: '$12', marginBottom: '$8' }}>
                         <PhoneIcon style={{ height: '14px' }} />
-                        <Text variant="sub2">Mobile SDK</Text>
+                        <Text variant="sub2" css={{ fontWeight: '$semiBold' }}>
+                            Mobile SDK
+                        </Text>
                     </Flex>
                     <Flex
                         css={{
@@ -633,13 +637,17 @@ const Homepage = ({ allDocs }) => {
                     </Flex>
                     <Flex gap="2" align="center" css={{ marginTop: '$12', marginBottom: '$8' }}>
                         <ServerIcon style={{ height: '14px' }} />
-                        <Text variant="sub2">Server-side API</Text>
+                        <Text variant="sub2" css={{ fontWeight: '$semiBold' }}>
+                            Server-side API
+                        </Text>
                     </Flex>
-                    <SdkItem
-                        logo={<ServerIcon style={{ color: '#66A1FF' }} />}
-                        text="Server-side"
-                        sdk="serverSide"
-                    />
+                    <Flex>
+                        <SdkItem
+                            logo={<ServerIcon style={{ color: '#66A1FF' }} />}
+                            text="Server-side"
+                            sdk="serverSide"
+                        />
+                    </Flex>
                     <Flex direction="column" css={{ marginTop: '$24', marginBottom: '$10' }}>
                         <h2 style={{ marginTop: '0', marginBottom: '4px' }}>
                             <Text variant="h5">Fundamentals</Text>
