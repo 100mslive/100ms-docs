@@ -167,12 +167,11 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
             ))}
             <style jsx>{`
                 .ctx {
-                    width: calc((100% - 1448px) / 2 + 298px);
+                    width: 280px;
                     display: flex;
                     flex-direction: column;
                     align-items: stretch;
                     height: calc(100vh - 80px);
-                    min-width: 298px;
                     overflow-y: scroll;
                     top: ${menu ? '10px' : '80px'};
                     left: 0;
