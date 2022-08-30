@@ -180,7 +180,7 @@ const DocLayout: React.FC<Props> = ({
                         width: 100%;
                     }
                     article {
-                        max-width: 760px;
+                        max-width: 900px;
                         width: 100%;
                         padding: 0 2rem;
                         padding-bottom: 80px;
