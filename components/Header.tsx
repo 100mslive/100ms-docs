@@ -146,7 +146,11 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
             ) : null}
 
             <div className="menu-btn">
-                <button aria-label="menu-button" type="button" onClick={() => setMenu(!menu)}>
+                <button
+                    style={{ width: '24px' }}
+                    aria-label="menu-button"
+                    type="button"
+                    onClick={() => setMenu(!menu)}>
                     {menu ? <CrossIcon /> : <MenuIcon />}
                 </button>
             </div>
@@ -277,7 +281,6 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     .search-ctx {
                         display: none;
                     }
-                    
                 }
                 @media screen and (max-width: 600px) {
                     .search-ctx {
