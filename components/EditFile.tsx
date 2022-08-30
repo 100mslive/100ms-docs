@@ -23,7 +23,7 @@ export const EditIcon = () => (
 const EditFile: React.FC<Props> = ({ slug }) => {
     const url = `https://github.com/100mslive/100ms-docs/blob/main/docs${slug}.mdx`;
     return (
-        <div css={{ width: 'fit-content' }}>
+        <div style={{ width: 'fit-content' }}>
             <a href={url}>
                 <EditIcon /> <span>Edit this File</span>
             </a>
