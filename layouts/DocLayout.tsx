@@ -125,7 +125,7 @@ const DocLayout: React.FC<Props> = ({
                 else setActiveSubHeading('');
             }
         };
-
+        getActiveLinks();
         window.addEventListener('scroll', getActiveLinks);
 
         return () => window.removeEventListener('scroll', getActiveLinks);
