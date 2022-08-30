@@ -9,7 +9,7 @@ import {
     RocketIcon,
     WebhookIcon
 } from '@100mslive/react-icons';
-import { Box, Flex, VerticalDivider } from '@100mslive/react-ui';
+import { Box, Flex, HorizontalDivider, VerticalDivider } from '@100mslive/react-ui';
 import { Item } from 'components';
 import merge from 'lodash/merge';
 import Link from 'next/link';
@@ -97,7 +97,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
     <Flex
         css={merge(
             {
-                backgroundColor: '$surfaceDark',
+                backgroundColor: '$surfaceDefault',
                 paddingTop: '$8',
                 paddingLeft: text ? '$10' : undefined,
                 paddingRight: text ? '$10' : undefined,
@@ -152,16 +152,13 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
                 </Box>
             </Flex>
         ) : null}
-
-        <Box css={{ display: 'none', '@lg': { display: text ? 'block' : 'none' } }}>
-            <hr
-                style={{
-                    margin: '0',
-                    width: '100%',
-                    backgroundColor: '$borderDefault'
-                }}
-            />
-        </Box>
+        <HorizontalDivider
+            css={{
+                backgroundColor: '$borderDefault',
+                display: 'none',
+                '@lg': { display: text ? 'block' : 'none' }
+            }}
+        />
         <Box
             css={{
                 gap: '$10',

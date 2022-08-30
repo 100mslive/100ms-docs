@@ -1,5 +1,4 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { Box, Button, Flex, Text } from '@100mslive/react-ui';
 import Footer from '@/components/Footer';
 import HomeDropDown from '@/components/HomeDropDown';
 import { getAllDocs } from '@/lib/mdxUtils';
@@ -20,6 +19,7 @@ import {
     ServerIcon,
     ViewIcon
 } from '@100mslive/react-icons';
+import { Box, Button, Flex, Text } from '@100mslive/react-ui';
 import { Card, Item, SdkItem } from 'components';
 import Header from 'components/Header';
 import Link from 'next/link';
@@ -524,7 +524,8 @@ const Homepage = ({ allDocs }) => {
                 onClick={() => setShowDropDown(false)}
                 justify="center"
                 css={{
-                    marginBottom: '$16'
+                    marginBottom: '$16',
+                    backgroundColor: '$backgroundDefault'
                 }}>
                 <Box css={{ width: '90%', maxWidth: '1248px' }}>
                     <Flex
@@ -676,7 +677,7 @@ const Homepage = ({ allDocs }) => {
                                                     logo={item.logo}
                                                     text={item.title}
                                                     textCSS={{
-                                                        color: 'white',
+                                                        color: '$textHighEmp',
                                                         fontSize: '$h6',
                                                         '@lg': { fontSize: '$md' }
                                                     }}
@@ -723,7 +724,7 @@ const Homepage = ({ allDocs }) => {
                                             <Item
                                                 text={item.title}
                                                 textVariant="h6"
-                                                textCSS={{ color: 'white' }}
+                                                textCSS={{ color: '$textHighEmp' }}
                                                 endLogo={null}
                                             />
                                         }
@@ -765,8 +766,8 @@ const Homepage = ({ allDocs }) => {
                                 css={{
                                     borderRadius: '20px',
                                     cursor: 'pointer',
-                                    backgroundColor: '$secondaryDisabled',
-                                    borderColor: '$secondaryDisabled'
+                                    backgroundColor: '$surfaceDefault',
+                                    borderColor: '$borderDefault'
                                 }}
                                 onClick={(e) => {
                                     setShowDropDown((prev) => !prev);
@@ -816,7 +817,7 @@ const Homepage = ({ allDocs }) => {
                     </Flex>
                 </Box>
             </Flex>
-            <Footer />
+            <Footer css={{ backgroundColor: '$backgroundDefault' }} />
         </>
     );
 };

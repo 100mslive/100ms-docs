@@ -1,11 +1,11 @@
 /* eslint-disable react/no-deprecated */
 /* eslint-disable react/react-in-jsx-scope */
 import { ChatIcon } from '@100mslive/react-icons';
-import { Box, Flex, Text } from '@100mslive/react-ui';
+import { Box, Flex, HorizontalDivider, Text } from '@100mslive/react-ui';
 import { useStatusPage } from 'hooks';
 
-const Footer = () => (
-    <>
+const Footer = ({ css = {} }) => (
+    <Box css={{ ...css }}>
         {/* <script
                 defer
                 src="https://unpkg.com/@webcomponents/webcomponentsjs@2.1.3/webcomponents-bundle.js"
@@ -16,7 +16,7 @@ const Footer = () => (
             css={{
                 borderTopWidth: '1px',
                 borderTopStyle: 'solid',
-                borderTopColor: '$surfaceLight',
+                borderTopColor: '$borderDefault',
                 paddingTop: '$14'
             }}>
             <Flex align="center" direction="column" className="footer-wrapper">
@@ -55,18 +55,16 @@ const Footer = () => (
                         </Box>
                     </Box>
                     {/* <Flex justify="between" className="footer-contact"> */}
-                        <Box className="details">
-                            <Flex align="center" gap="1" css={{ marginBottom: '16px' }}>
-                                <ChatIcon />
-                                <a href="https://www.100ms.live/contact">
-                                    <Text css={{ color: '$textHighEmp' }}>
-                                        Need help? Talk to us
-                                    </Text>
-                                </a>
-                            </Flex>
-                        </Box>
-                        <Box className="subscribe">
-                            {/* <Box
+                    <Box className="details">
+                        <Flex align="center" gap="1" css={{ marginBottom: '16px' }}>
+                            <ChatIcon />
+                            <a href="https://www.100ms.live/contact">
+                                <Text css={{ color: '$textHighEmp' }}>Need help? Talk to us</Text>
+                            </a>
+                        </Flex>
+                    </Box>
+                    <Box className="subscribe">
+                        {/* <Box
                                 className="mobile-hr"
                                 css={{
                                     width: '100%',
@@ -75,7 +73,7 @@ const Footer = () => (
                                 }}>
                                 <hr />
                             </Box> */}
-                            {/* {isSubscribed ? (
+                        {/* {isSubscribed ? (
                                     <Flex
                                         gap="2"
                                         css={{
@@ -138,35 +136,33 @@ const Footer = () => (
                                         </Button>
                                     </Flex>
                                 )} */}
-                            <Flex
-                                className="footer-systems"
-                                align="center"
+                        <Flex
+                            className="footer-systems"
+                            align="center"
+                            css={{
+                                backgroundColor: '$surfaceDefault',
+                                gap: '12px',
+                                padding: '8px 24px 8px 16px',
+                                maxWidth: '214px',
+                                borderRadius: '20px'
+                            }}>
+                            <Box
                                 css={{
-                                    backgroundColor: '$secondaryDefault',
-                                    gap: '12px',
-                                    padding: '8px 24px 8px 16px',
-                                    maxWidth: '214px',
-                                    borderRadius: '20px'
-                                }}>
-                                <Box
-                                    css={{
-                                        height: '16px',
-                                        width: '16px',
-                                        backgroundColor: useStatusPage()[0].colour,
-                                        margin: '4px',
-                                        borderRadius: '50%'
-                                    }}
-                                />
-                                <Text css={{ color: '$textHighEmp' }}>
-                                    {useStatusPage()[0].description}
-                                </Text>
-                            </Flex>
-                        </Box>
+                                    height: '16px',
+                                    width: '16px',
+                                    backgroundColor: useStatusPage()[0].colour,
+                                    margin: '4px',
+                                    borderRadius: '50%'
+                                }}
+                            />
+                            <Text css={{ color: '$textHighEmp' }}>
+                                {useStatusPage()[0].description}
+                            </Text>
+                        </Flex>
+                    </Box>
                     {/* </Flex> */}
                 </Flex>
-                <Box css={{ width: '100%', maxWidth: '1352px', margin: '16px 0' }}>
-                    <hr />
-                </Box>
+                <HorizontalDivider css={{ backgroundColor: '$borderDefault', margin: '$16 0' }} />
                 <Flex
                     justify="between"
                     align="center"
@@ -196,7 +192,7 @@ const Footer = () => (
                 </Flex>
             </Flex>
         </Flex>
-    </>
+    </Box>
 );
 
 export default Footer;

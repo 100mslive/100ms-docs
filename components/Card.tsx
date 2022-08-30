@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, Flex, Text } from '@100mslive/react-ui';
+import { Box, Flex, Text, useTheme } from '@100mslive/react-ui';
 import React from 'react';
 
 interface Props {
@@ -17,12 +17,14 @@ const Card: React.FC<Props> = ({ body, endComponent, titleComponent, css }) => (
             borderRadius: '$3',
             borderWidth: '$1',
             borderStyle: 'solid',
-            borderColor: '$surfaceDefault',
+            borderColor: '$borderDefault',
             backgroundColor: '$surfaceDefault',
             boxSizing: 'border-box',
             padding: '$10',
             marginRight: '$8',
-            '&:active': { backgroundColor: '$surfaceDark' },
+            '&:active': {
+                backgroundColor: useTheme().themeType === 'dark' ? '$surfaceDark' : '$surfaceLight'
+            },
             '&:hover': {
                 borderColor: '$primaryDefault'
             },
