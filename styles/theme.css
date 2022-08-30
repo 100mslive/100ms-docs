@@ -735,6 +735,9 @@ h3:hover .copy-anchor {
     cursor: pointer;
     font-weight: 600;
 }
+.dropdown:hover{
+    background-color: var(--surface_lighter);
+}
 .dropdown:focus-visible {
     box-shadow: 0 0 0 3px var(--blue5);
     border-color: var(--blue5);
@@ -742,13 +745,17 @@ h3:hover .copy-anchor {
 .dropdown-options li:before {
     content: '';
 }
+
+ul.dropdown-options{
+    padding-left: 0;
+}
 .dropdown-options {
     z-index: 100;
     border-radius: 5px;
     background: var(--surface_default);
     position: absolute;
     left: 25px;
-    width: calc(100% - 52px);
+    width: 260px;
     top: 100px;
     padding-top: 10px;
     cursor: pointer;
@@ -762,12 +769,16 @@ h3:hover .copy-anchor {
     padding: 5px 0;
     padding-left: 10px;
 }
+
+.dropdown-option:first-of-type{
+    margin-top: 5px;
+}
 .dropdown-option:focus {
     box-shadow: 0 0 0 3px rgba(102, 160, 205, 0.5);
     border-color: rgba(102, 160, 205, 0.5);
 }
 .dropdown-option-active {
-    background: var(--gray6);
+    background: var(--surface_lighter);
 }
 .flex {
     display: flex;
