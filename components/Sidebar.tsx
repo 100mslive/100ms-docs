@@ -223,7 +223,6 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 }
                 .active-link {
                     color: var(--gray12);
-                    background-color: var(--blue6);
                 }
                 .sub-menu-item:hover {
                     background-color: var(--blue5);
