@@ -12,7 +12,6 @@ const SegmentAnalytics = ({ title, options }) => {
                 }, {});
             // @ts-ignore
             var url = new URL(window.location.href);
-            // @ts-ignore
             window.analytics.page(title, {
                 ...params,
                 ...options,
@@ -27,7 +26,6 @@ const SegmentAnalytics = ({ title, options }) => {
                 utm_keyword: url.searchParams.get('utm_keyword'),
                 utm_term: url.searchParams.get('utm_term')
             });
-            // @ts-ignore
             window.analytics.track('page.viewed', {
                 ...params,
                 ...options,

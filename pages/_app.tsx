@@ -8,8 +8,15 @@ import SEO from '../next-seo.config';
 import 'inter-ui/inter.css';
 import '@/styles/theme.css';
 
+declare global {
+    interface Window {
+        analytics: any;
+    }
+}
+
 const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
     const router = useRouter();
+
     return (
         <>
             <DefaultSeo {...SEO} />

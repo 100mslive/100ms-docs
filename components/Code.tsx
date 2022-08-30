@@ -40,7 +40,7 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
             setTimeout(() => {
                 setCopy(false);
             }, 2000);
-            // @ts-ignore
+
             window.analytics.track('copy.to.clipboard', {
                 title: document.title,
                 referrer: document.referrer,
@@ -52,18 +52,14 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                 tab
             });
         };
-        // @ts-ignore
-        const [hovered, setHovered] = React.useState(false);
+
         const [copy, setCopy] = React.useState(false);
-        const onEnter = () => {
-            setHovered(true);
-        };
+
         const onExit = () => {
-            setHovered(false);
             setCopy(false);
         };
         return (
-            <div className="code-block" onMouseEnter={onEnter} onMouseLeave={onExit}>
+            <div className="code-block" onMouseLeave={onExit}>
                 {!copy ? (
                     <button
                         aria-label="Copy to Clipboard"
