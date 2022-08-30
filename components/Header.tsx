@@ -132,7 +132,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
 
             <span
                 aria-label="theme-toggle-button"
-                className="pointer"
+                className="pointer theme-btn"
                 role="button"
                 style={{ paddingTop: '8px', paddingLeft: '10px', margin: '0 2rem 0 1rem' }}
                 tabIndex={0}
@@ -273,18 +273,28 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     outline: none;
                     border: none;
                 }
+                @media screen and (max-width: 800px) {
+                    .search-ctx {
+                        display: none;
+                    }
+                    
+                }
                 @media screen and (max-width: 600px) {
                     .search-ctx {
                         display: none;
                     }
                     .ctx {
-                        justify-content: space-between;
+                        justify-content: flex-end;
                     }
                     .head-left {
                         width: unset;
+                        margin-right: auto;
                     }
                     .head-right {
                         display: none;
+                    }
+                    .theme-btn {
+                        margin-left: auto;
                     }
                     .menu-btn {
                         margin-top: 0.5rem;
