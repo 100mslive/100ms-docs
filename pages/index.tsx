@@ -876,6 +876,7 @@ const Homepage = ({ allDocs }) => {
                                 css={{
                                     borderRadius: '20px',
                                     cursor: 'pointer',
+                                    color: '$textHighEmp',
                                     backgroundColor: '$surfaceDefault',
                                     borderColor: '$borderDefault'
                                 }}
