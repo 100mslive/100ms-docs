@@ -186,8 +186,13 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     outline: 0px;
                 }
                 .menu-container {
-                    margin: 10px 0;
+                    margin-top: 10px;
                     margin-left: 0.5rem;
+                    margin-bottom: 17px;
+                    margin-right: 1.5rem;
+                }
+                .menu-container:first-of-type {
+                    margin-bottom: 10px;
                 }
                 .menu-item {
                     cursor: pointer;
