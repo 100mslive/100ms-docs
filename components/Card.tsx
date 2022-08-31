@@ -21,7 +21,6 @@ const Card: React.FC<Props> = ({ body, endComponent, titleComponent, css }) => (
             backgroundColor: '$surfaceDefault',
             boxSizing: 'border-box',
             padding: '$10',
-            marginRight: '$8',
             '&:active': {
                 backgroundColor: useTheme().themeType === 'dark' ? '$surfaceDark' : '$surfaceLight'
             },

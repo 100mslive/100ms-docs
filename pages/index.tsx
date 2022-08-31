@@ -22,6 +22,7 @@ import {
 import { Box, Button, Flex, Text } from '@100mslive/react-ui';
 import { Card, Item, SdkItem } from 'components';
 import Header from 'components/Header';
+import Switcher from 'components/Switcher';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -106,36 +107,130 @@ const fundamentals = [
     }
 ];
 
+const tabs = [
+    { name: 'Web', id: 0 },
+    { name: 'Mobile', id: 1 }
+];
+
 const guides = [
-    {
-        title: 'Discord Stage Clone',
-        body: 'Build an audio-only channel, like Discord Stages, in your app using Next.js.',
-        link: 'https://www.100ms.live/blog/build-discord-stage-channel-clone-hms'
-    },
     {
         title: 'Slack Huddle Clone',
         body: 'Add audio calling similar to Slack Huddle to your app using React, and Tailwind.',
-        link: 'https://www.100ms.live/blog/building-slack-huddle-clone'
+        link: 'https://www.100ms.live/blog/building-slack-huddle-clone',
+        platform: 'Web',
+        guideTitle: 'React Guide'
     },
     {
-        title: 'Skype Clone',
-        body: 'Model a video conferencing and file sharing app, like Skype, with 100ms.',
-        link: 'https://www.100ms.live/blog/skype-clone-react'
-    },
-    {
-        title: 'Webex Clone',
-        body: 'Jerry-build an online calling app, like Cisco Webex, with 100ms.',
-        link: 'https://www.100ms.live/blog/create-webex-clone-100ms'
-    },
-    {
-        title: 'Google Classroom Clone',
-        body: 'Build a blended learning platform, like Google Classroom, with React.',
-        link: 'https://www.100ms.live/blog/google-classroom-clone-react-100ms'
+        title: 'Discord Stage Clone',
+        body: 'Build an audio-only channel, like Discord Stages, in your app using Next.js.',
+        link: 'https://www.100ms.live/blog/build-discord-stage-channel-clone-hms',
+        platform: 'Web',
+        guideTitle: 'Next.js Guide'
     },
     {
         title: 'Twitch Clone',
         body: 'Create a live streaming platform, live Twitch, using React, and Tailwind.',
-        link: 'https://www.100ms.live/blog/twitch-clone-in-react'
+        link: 'https://www.100ms.live/blog/twitch-clone-in-react',
+        platform: 'Web',
+        guideTitle: 'React Guide'
+    },
+    {
+        title: 'Clubhouse Clone',
+        body: 'Build a drop-in audio room, like Clubhouse, using Parcel, and Tailwind CSS.',
+        link: 'https://www.100ms.live/blog/clubhouse-clone-with-javascript',
+        platform: 'Web',
+        guideTitle: 'JavaScript Guide'
+    },
+    {
+        title: 'Skype Clone',
+        body: 'Model a video conferencing and file sharing app, like Skype, with 100ms.',
+        link: 'https://www.100ms.live/blog/skype-clone-react',
+        platform: 'Web',
+        guideTitle: 'React Guide'
+    },
+    {
+        title: 'Video Streaming Server',
+        body: 'Put together a production-ready video streaming server with Node.js',
+        link: 'https://www.100ms.live/blog/create-video-streaming-server-nodejs',
+        platform: 'Web',
+        guideTitle: 'Node.js Guide'
+    },
+    {
+        title: 'Google Classroom Clone',
+        body: 'Build a blended learning platform, like Google Classroom, with React.',
+        link: 'https://www.100ms.live/blog/google-classroom-clone-react-100ms',
+        platform: 'Web',
+        guideTitle: 'React Guide'
+    },
+    {
+        title: 'Cisco Webex Clone',
+        body: 'Jerry-build an online calling app, like Cisco Webex, with 100ms.',
+        link: 'https://www.100ms.live/blog/create-webex-clone-100ms',
+        platform: 'Web',
+        guideTitle: 'JavaScript Guide'
+    },
+    {
+        title: 'Video Chatting App',
+        body: 'Create a video chatting app with VueJS, and Golang',
+        link: 'https://www.100ms.live/blog/video-chat-app-with-vuejs-and-golang',
+        platform: 'Web',
+        guideTitle: 'Vue.js Guide'
+    },
+    {
+        title: 'Clubhouse Clone',
+        body: 'Develop a drop-in audio room, like Clubhouse, using Svelte, and 100ms.',
+        link: 'https://www.100ms.live/blog/clubhouse-clone-with-svelte',
+        platform: 'Web',
+        guideTitle: 'Svelte Guide'
+    },
+    {
+        title: 'Google Meet Clone',
+        body: 'Model a Google Meet like video conferencing app with 100ms.',
+        link: 'https://www.100ms.live/blog/google-meet',
+        platform: 'Mobile',
+        guideTitle: 'Flutter Guide'
+    },
+    {
+        title: 'Clubhouse Clone',
+        body: 'Build a drop-in audio room for iOS, like Clubhouse, with 100ms.',
+        link: 'https://www.100ms.live/blog/building-an-audio-app-like-clubhouse-for-ios',
+        platform: 'Mobile',
+        guideTitle: 'Swift Guide'
+    },
+    {
+        title: 'Clubhouse Clone',
+        body: 'Put together a drop-in audio room for mobile, like Clubhouse, with Flutter.',
+        link: 'https://www.100ms.live/blog/building-clubhouse-clone-using-100ms-in-flutter',
+        platform: 'Mobile',
+        guideTitle: 'Flutter Guide'
+    },
+    {
+        title: 'Zoom Clone',
+        body: 'Create a Zoom like video conferencing app for mobile with Flutter.',
+        link: 'https://www.100ms.live/blog/zoom-clone-in-flutter',
+        platform: 'Mobile',
+        guideTitle: 'Flutter Guide'
+    },
+    {
+        title: 'Omegle Clone',
+        body: 'Build an online chat website, like Omegle, with Flutter.',
+        link: 'https://www.100ms.live/blog/omegle-clone-in-flutter',
+        platform: 'Mobile',
+        guideTitle: 'Flutter Guide'
+    },
+    {
+        title: 'Twitter Spaces Clone',
+        body: 'Build a Twitter Spaces like app for Android with 100ms.',
+        link: 'https://www.100ms.live/blog/twitter-spaces-clone',
+        platform: 'Mobile',
+        guideTitle: 'Android Guide'
+    },
+    {
+        title: 'Telehealth App',
+        body: 'Develop a telehealth app with Flutter.',
+        link: 'https://www.100ms.live/blog/telehealth-app-development-flutter-100ms',
+        platform: 'Mobile',
+        guideTitle: 'Flutter Guide'
     }
 ];
 
@@ -487,6 +582,7 @@ const more = {
 };
 
 const Homepage = ({ allDocs }) => {
+    const [activeTab, setActiveTab] = useState('Web');
     const [menu, setMenu] = useState(false);
     const [modal, setModal] = useState(false);
     const [showDropDown, setShowDropDown] = useState(false);
@@ -715,48 +811,54 @@ const Homepage = ({ allDocs }) => {
                             Walk through implementations of common use-cases with 100ms.
                         </Text>
                     </Flex>
+                    <Switcher tabs={tabs} setActiveTab={setActiveTab} activeTab={activeTab} />
                     <Box
                         css={{
                             gap: '$12',
+                            marginTop: '$12',
                             display: 'grid',
                             gridTemplateColumns: '1fr 1fr 1fr 1fr',
                             '@lg': { gridTemplateColumns: '1fr 1fr 1fr', gap: '$10' },
                             '@md': { gridTemplateColumns: '1fr', gap: '$8' }
                         }}>
-                        {guides.map((item) => (
-                            <Link href={item.link} key={item.title}>
-                                <a style={{ all: 'unset', cursor: 'pointer' }}>
-                                    <Card
-                                        body={item.body}
-                                        titleComponent={
-                                            <Item
-                                                text={item.title}
-                                                textVariant="h6"
-                                                textCSS={{ color: '$textHighEmp' }}
-                                                endLogo={null}
-                                            />
-                                        }
-                                        endComponent={
-                                            <Box
-                                                css={{
-                                                    color: '$textMedEmp',
-                                                    marginTop: '$8',
-                                                    '&:hover': {
-                                                        color: '$primaryLight'
-                                                    }
-                                                }}>
+                        {guides.map((item) =>
+                            item.platform === activeTab ? (
+                                <Link href={item.link} key={item.title + item.link}>
+                                    <a style={{ all: 'unset', cursor: 'pointer' }}>
+                                        <Card
+                                            body={item.body}
+                                            titleComponent={
                                                 <Item
-                                                    text="React Guide"
-                                                    logo={<BookIcon style={{ height: '18px' }} />}
-                                                    textVariant="body2"
-                                                    css={{ gap: '$4' }}
+                                                    text={item.title}
+                                                    textVariant="h6"
+                                                    textCSS={{ color: '$textHighEmp' }}
+                                                    endLogo={null}
                                                 />
-                                            </Box>
-                                        }
-                                    />
-                                </a>
-                            </Link>
-                        ))}
+                                            }
+                                            endComponent={
+                                                <Box
+                                                    css={{
+                                                        color: '$textMedEmp',
+                                                        marginTop: '$8',
+                                                        '&:hover': {
+                                                            color: '$primaryLight'
+                                                        }
+                                                    }}>
+                                                    <Item
+                                                        text={item.guideTitle}
+                                                        logo={
+                                                            <BookIcon style={{ height: '18px' }} />
+                                                        }
+                                                        textVariant="body2"
+                                                        css={{ gap: '$4' }}
+                                                    />
+                                                </Box>
+                                            }
+                                        />
+                                    </a>
+                                </Link>
+                            ) : null
+                        )}
                     </Box>
                     <Flex
                         css={{
