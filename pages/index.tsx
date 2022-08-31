@@ -620,7 +620,7 @@ const Homepage = ({ allDocs }) => {
                 onClick={() => setShowDropDown(false)}
                 justify="center"
                 css={{
-                    marginBottom: '$16',
+                    paddingBottom: '$16',
                     backgroundColor: '$backgroundDefault'
                 }}>
                 <Box css={{ width: '90%', maxWidth: '1248px' }}>

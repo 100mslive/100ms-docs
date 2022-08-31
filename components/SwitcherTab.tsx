@@ -12,10 +12,7 @@ const SwitcherTab: React.FC<Props> = ({ value, setActiveTab, isActiveTab }) => (
     <Flex
         align="center"
         justify="center"
-        onClick={() => {
-            console.log(value);
-            setActiveTab(value);
-        }}
+        onClick={() => setActiveTab(value)}
         css={{
             height: '$14',
             width: '$48',
