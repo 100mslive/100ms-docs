@@ -1,6 +1,12 @@
 /* eslint-disable react/no-deprecated */
 /* eslint-disable react/react-in-jsx-scope */
-import { ChatIcon } from '@100mslive/react-icons';
+import {
+    ChatIcon,
+    FacebookIcon,
+    DiscordIcon,
+    LinkedInIcon,
+    SlackIcon
+} from '@100mslive/react-icons';
 import { Box, Flex, HorizontalDivider, Text } from '@100mslive/react-ui';
 import { useStatusPage } from 'hooks';
 
@@ -25,31 +31,35 @@ const Footer = ({ css = {} }) => (
                         <img height="36" src="/docs/100ms.svg" alt="100ms Logo" />
                         <Box className="socials">
                             <a href="https://www.linkedin.com/company/100mslive/about/">
-                                <img
-                                    height="27"
-                                    src="/docs/static/images/linkedin.svg"
-                                    alt="Linkedin"
+                                <LinkedInIcon
+                                    style={{
+                                        width: '36px',
+                                        height: '36px'
+                                    }}
                                 />
                             </a>
                             <a href="https://www.facebook.com/100mslive">
-                                <img
-                                    height="27"
-                                    src="/docs/static/images/facebook.svg"
-                                    alt="facebook"
+                                <FacebookIcon
+                                    style={{
+                                        width: '36px',
+                                        height: '36px'
+                                    }}
                                 />
                             </a>
                             <a href="https://twitter.com/100mslive">
-                                <img
-                                    height="27"
-                                    src="/docs/static/images/twitter.svg"
-                                    alt="twitter"
+                                <SlackIcon
+                                    style={{
+                                        width: '36px',
+                                        height: '36px'
+                                    }}
                                 />
                             </a>
                             <a href="https://discord.com/invite/kGdmszyzq2">
-                                <img
-                                    height="24"
-                                    src="/docs/static/images/discord.svg"
-                                    alt="discord"
+                                <DiscordIcon
+                                    style={{
+                                        width: '36px',
+                                        height: '36px'
+                                    }}
                                 />
                             </a>
                         </Box>
