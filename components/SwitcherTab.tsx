@@ -18,7 +18,7 @@ const SwitcherTab: React.FC<Props> = ({ value, setActiveTab, isActiveTab }) => (
             width: '$48',
             borderRadius: '$1',
             cursor: 'pointer',
-            backgroundColor: isActiveTab ? '$surfaceDark' : '$surfaceDefault',
+            backgroundColor: isActiveTab ? '$surfaceDefault' : '$surfaceDark',
             '@sm': {
                 maxWidth: '$36'
             }

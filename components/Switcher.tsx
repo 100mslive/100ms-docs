@@ -22,7 +22,7 @@ const Switcher: React.FC<Props> = ({ tabs, setActiveTab, activeTab }) => (
             height: '$16',
             width: 'fit-content',
             boxSizing: 'border-box',
-            backgroundColor: '$surfaceDefault',
+            backgroundColor: '$surfaceDark',
             borderRadius: '$1',
             padding: '$2'
         }}>

@@ -138,18 +138,20 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
                 <Item
                     logo={logo}
                     text={text}
-                    textVariant="body2"
+                    textVariant="body1"
                     endLogo={null}
-                    textCSS={{ width: '$32' }}
+                    textCSS={{ width: '$36', color: '$textHighEmp' }}
                 />
-                <Box
+
+                <VerticalDivider
                     css={{
+                        display: 'block',
                         '@lg': {
                             display: 'none'
-                        }
-                    }}>
-                    <VerticalDivider css={{ display: 'block' }} />
-                </Box>
+                        },
+                        backgroundColor: '$borderLight'
+                    }}
+                />
             </Flex>
         ) : null}
         <HorizontalDivider
@@ -192,7 +194,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
                                 text={itemId[value.id]}
                                 endLogo={<ChevronRightIcon style={{ height: '14px' }} />}
                                 textCSS={{
-                                    color: 'textMedEmp',
+                                    color: '$textMedEmp',
                                     '&:hover': {
                                         color: '$primaryLight'
                                     }

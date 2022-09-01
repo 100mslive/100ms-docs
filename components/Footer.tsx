@@ -2,8 +2,8 @@
 /* eslint-disable react/react-in-jsx-scope */
 import {
     ChatIcon,
-    FacebookIcon,
     DiscordIcon,
+    FacebookIcon,
     LinkedInIcon,
     TwitterIcon
 } from '@100mslive/react-icons';
@@ -12,11 +12,6 @@ import { useStatusPage } from 'hooks';
 
 const Footer = ({ css = {} }) => (
     <Box css={{ ...css }}>
-        {/* <script
-                defer
-                src="https://unpkg.com/@webcomponents/webcomponentsjs@2.1.3/webcomponents-bundle.js"
-            />
-            <script defer src="https://unpkg.com/@statuspage/status-widget/dist/index.js" /> */}
         <Flex
             justify="center"
             css={{
@@ -78,7 +73,6 @@ const Footer = ({ css = {} }) => (
                             </a>
                         </Box>
                     </Box>
-                    {/* <Flex justify="between" className="footer-contact"> */}
                     <Box className="details">
                         <Flex align="center" gap="1" css={{ '@sm': { marginBottom: '16px' } }}>
                             <ChatIcon />
@@ -166,7 +160,7 @@ const Footer = ({ css = {} }) => (
                             className="footer-systems"
                             align="center"
                             css={{
-                                backgroundColor: '$secondaryDefault',
+                                backgroundColor: '$surfaceDefault',
                                 gap: '12px',
                                 padding: '8px 24px 8px 16px',
                                 maxWidth: '214px',
@@ -186,7 +180,6 @@ const Footer = ({ css = {} }) => (
                             </Text>
                         </Flex>
                     </Box>
-                    {/* </Flex> */}
                 </Flex>
                 <HorizontalDivider css={{ backgroundColor: '$borderDefault', margin: '$16 0' }} />
                 <Flex
@@ -211,14 +204,6 @@ const Footer = ({ css = {} }) => (
                             </a>
                         </Flex>
                     </Flex>
-                    {/* <Box
-                        css={{
-                            backgroundColor: '$secondaryDefault',
-                            borderRadius: '$round',
-                            padding: '$4'
-                        }}>
-                        <statuspage-widget src="https://status.100ms.live" />
-                    </Box> */}
                 </Flex>
             </Flex>
         </Flex>

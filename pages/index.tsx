@@ -592,30 +592,6 @@ const Homepage = ({ allDocs }) => {
     return (
         <>
             <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} />
-            {/* <Flex
-                className="quicklinks"
-                align="center"
-                css={{
-                    gap: '$10',
-                    paddingLeft: '$8',
-                    boxSizing: 'border-box',
-                    height: '$16',
-                    borderBottomWidth: '1px',
-                    borderBottomStyle: 'solid',
-                    borderColor: '$borderDefault',
-                    backgroundColor: '#0F1115',
-                    '@lg': {
-                        display: 'none'
-                    }
-                }}>
-                {quickLinks.map((item) => (
-                    <Link key={item.title} href={item.link}>
-                        <a>
-                            <Text css={{ padding: '$4', color: '$textMedEmp' }}>{item.title}</Text>
-                        </a>
-                    </Link>
-                ))}
-            </Flex> */}
             <Flex
                 onClick={() => setShowDropDown(false)}
                 justify="center"
