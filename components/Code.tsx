@@ -39,13 +39,9 @@ const Code: React.FC = ({ children }) => {
             setCopy(false);
         }, 2000);
     };
-    const [hovered, setHovered] = React.useState(false);
     const [copy, setCopy] = React.useState(false);
-    const onEnter = () => {
-        setHovered(true);
-    };
+
     const onExit = () => {
-        setHovered(false);
         setCopy(false);
     };
     return (
