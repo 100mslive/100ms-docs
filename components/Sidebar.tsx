@@ -171,11 +171,11 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     display: flex;
                     flex-direction: column;
                     align-items: stretch;
-                    height: 100vh;
+                    height: ${menu ? 'calc(100vh - 60px)' : '100vh'};
                     overflow-y: scroll;
-                    top: 80px;
+                    top: 0;
                     left: 0;
-                    position: sticky;
+                    position: ${menu ? 'absolute' : 'sticky'};
                     background: var(--background_default);
                     z-index: 40;
                 }
@@ -240,7 +240,6 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 @media screen and (max-width: 1000px) {
                     .ctx {
                         display: ${menu ? 'flex' : 'none'};
-                        top: 20px;
                     }
                     :global(.page) {
                         height: ${menu ? '100vh !important' : ''};
