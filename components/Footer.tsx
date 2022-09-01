@@ -5,7 +5,7 @@ import {
     FacebookIcon,
     DiscordIcon,
     LinkedInIcon,
-    SlackIcon
+    TwitterIcon
 } from '@100mslive/react-icons';
 import { Box, Flex, HorizontalDivider, Text } from '@100mslive/react-ui';
 import { useStatusPage } from 'hooks';
@@ -47,10 +47,12 @@ const Footer = ({ css = {} }) => (
                                 />
                             </a>
                             <a href="https://twitter.com/100mslive">
-                                <SlackIcon
+                                <TwitterIcon
                                     style={{
-                                        width: '36px',
-                                        height: '36px'
+                                        width: '27px',
+                                        height: '27px',
+                                        position: 'relative',
+                                        top: '5px'
                                     }}
                                 />
                             </a>

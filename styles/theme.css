@@ -54,6 +54,7 @@ to decide colors
 
     --text_med_emp: #E0ECFC;
     --text_high_emp: #F5F9FF;
+    --text_disabled: #C3D0E580;
 
     --token_code_class: var(--gray12);
     --token_regex_imp_var: var(--blue11);
@@ -94,8 +95,8 @@ to decide colors
     --blue11: hsl(211 100% 43.2%);
 
     --surface_default: #F0F2F5;
-    --surface_light: #F9FAFB;
-    --surface_lighter: #E8EAED;
+    --surface_light: #F6F7F9;
+    --surface_lighter: #FCFCFD;
 
     --border_default: #E9ECF1;
     --border_light: #DFE4EC;
@@ -106,6 +107,7 @@ to decide colors
 
     --text_med_emp: rgba(0, 0, 0, 0.7);
     --text_high_emp: rgba(0, 0, 0, 0.95);
+    --text_disabled: rgba(0, 0, 0, 0.4);
 
     --code: var(--surface_lighter);
 
@@ -748,6 +750,19 @@ div.home-dropdown-option:hover{
 
 .mobile-hr{
     display: none;
+}
+
+.switcher-tab p {
+    color: var(--text_disabled);
+}
+
+.switcher-tab-active {
+    background-color: var(--surface_light);
+    color: var(--text_high_emp);
+}
+
+.switcher-tab:hover, .switcher-tab-active:hover {
+    background-color: var(--surface_lighter);
 }
 
 div#hs-eu-cookie-confirmation {

@@ -12,7 +12,7 @@ const SwitcherTab: React.FC<Props> = ({ value, setActiveTab, isActiveTab }) => (
     <Flex
         align="center"
         justify="center"
-        className="switcher-tab"
+        className={`${isActiveTab ? 'switcher-tab-active' : 'switcher-tab'}`}
         onClick={() => setActiveTab(value)}
         css={{
             height: '$14',
@@ -24,19 +24,6 @@ const SwitcherTab: React.FC<Props> = ({ value, setActiveTab, isActiveTab }) => (
             }
         }}>
         <Text css={{ fontWeight: '$semiBold' }}>{value}</Text>
-        <style jsx>
-            {`
-                .switcher-tab {
-                    background-color: ${isActiveTab
-                        ? 'var(--surface_light)'
-                        : 'var(--surface_default)'} !important;
-                }
-
-                .switcher-tab:hover {
-                    background-color: var(--surface_lighter);
-                }
-            `}
-        </style>
     </Flex>
 );
 
