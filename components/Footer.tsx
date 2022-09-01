@@ -26,46 +26,55 @@ const Footer = ({ css = {} }) => (
                 paddingTop: '$14'
             }}>
             <Flex align="center" direction="column" className="footer-wrapper">
-                <Flex
-                    className="footer"
-                    justify="between"
-                    >
+                <Flex className="footer" justify="between">
                     <Box>
                         <img height="36" src="/docs/100ms.svg" alt="100ms Logo" />
                         <Box className="socials">
                             <a href="https://www.linkedin.com/company/100mslive/about/">
-                                <LinkedInIcon
-                                    style={{
-                                        width: '36px',
-                                        height: '36px'
-                                    }}
-                                />
+                                <Box css={{ color: '$textMedEmp' }}>
+                                    <LinkedInIcon
+                                        style={{
+                                            width: '36px',
+                                            height: '36px',
+                                            color: 'inherit'
+                                        }}
+                                    />
+                                </Box>
                             </a>
                             <a href="https://www.facebook.com/100mslive">
-                                <FacebookIcon
-                                    style={{
-                                        width: '36px',
-                                        height: '36px'
-                                    }}
-                                />
+                                <Box css={{ color: '$textMedEmp' }}>
+                                    <FacebookIcon
+                                        style={{
+                                            width: '36px',
+                                            height: '36px',
+                                            color: 'inherit'
+                                        }}
+                                    />
+                                </Box>
                             </a>
                             <a href="https://twitter.com/100mslive">
-                                <TwitterIcon
-                                    style={{
-                                        width: '27px',
-                                        height: '27px',
-                                        position: 'relative',
-                                        top: '5px'
-                                    }}
-                                />
+                                <Box css={{ color: '$textMedEmp' }}>
+                                    <TwitterIcon
+                                        style={{
+                                            width: '27px',
+                                            height: '27px',
+                                            color: 'inherit',
+                                            position: 'relative',
+                                            top: '5px'
+                                        }}
+                                    />
+                                </Box>
                             </a>
                             <a href="https://discord.com/invite/kGdmszyzq2">
-                                <DiscordIcon
-                                    style={{
-                                        width: '36px',
-                                        height: '36px'
-                                    }}
-                                />
+                                <Box css={{ color: '$textMedEmp' }}>
+                                    <DiscordIcon
+                                        style={{
+                                            width: '36px',
+                                            height: '36px',
+                                            color: 'inherit'
+                                        }}
+                                    />
+                                </Box>
                             </a>
                         </Box>
                     </Box>
