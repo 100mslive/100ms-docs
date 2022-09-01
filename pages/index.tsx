@@ -654,13 +654,10 @@ const Homepage = ({ allDocs }) => {
                             flexWrap: 'wrap',
                             justify: 'between',
                             '@lg': {
-                                gap: '$10'
+                                gap: '$8'
                             },
                             '@md': {
                                 justify: 'start'
-                            },
-                            '@sm': {
-                                gap: '$8'
                             }
                         }}>
                         <SdkItem

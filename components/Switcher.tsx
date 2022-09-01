@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
 import { Flex } from '@100mslive/react-ui';
+import React from 'react';
 import SwitcherTab from './SwitcherTab';
 
 interface TabObject {
@@ -21,7 +21,7 @@ const Switcher: React.FC<Props> = ({ tabs, setActiveTab, activeTab }) => (
         css={{
             height: '$16',
             width: 'fit-content',
-            backgroundColor: '$surfaceDark',
+            backgroundColor: '$surfaceDefault',
             borderRadius: '$1',
             padding: '$2 $3'
         }}>
