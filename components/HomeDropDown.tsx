@@ -3,9 +3,9 @@ import {
     AndroidIcon,
     AppleIcon,
     FlutterIcon,
-    ServerIcon,
     JavascriptIcon,
-    ReactIcon
+    ReactIcon,
+    ServerIcon
 } from '@100mslive/react-icons';
 import { Box, Flex, Text } from '@100mslive/react-ui';
 import DropDownOption from './DropDownOption';
@@ -80,7 +80,6 @@ const HomeDropDown = ({ setDropDownSelection }) => {
                     icon={
                         <ServerIcon
                             style={{
-                                color: 'white',
                                 height: '18px'
                             }}
                         />
