@@ -40,11 +40,14 @@ const HomeDropDown = ({ setDropDownSelection }) => {
             css={{
                 position: 'absolute',
                 zIndex: '10',
-                top: '58px',
+                top: '$17',
                 backgroundColor: '$surfaceDefault',
-                padding: '24px',
-                borderRadius: '16px',
-                gap: '$8'
+                padding: '$10',
+                borderRadius: '$2',
+                gap: '$8',
+                '@sm': {
+                    right: '$0'
+                }
             }}>
             <Box>
                 <Text variant="overline">WEB</Text>
