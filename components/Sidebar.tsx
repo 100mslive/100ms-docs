@@ -196,7 +196,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 }
                 .menu-item {
                     cursor: pointer;
-                    padding: 8px 0;
+                    padding: 4px 0;
                     color: var(--gray11);
                     font-weight: 400;
                     font-size: 13px;
