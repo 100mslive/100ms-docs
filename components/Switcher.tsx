@@ -21,9 +21,10 @@ const Switcher: React.FC<Props> = ({ tabs, setActiveTab, activeTab }) => (
         css={{
             height: '$16',
             width: 'fit-content',
+            boxSizing: 'border-box',
             backgroundColor: '$surfaceDefault',
             borderRadius: '$1',
-            padding: '$2 $3'
+            padding: '$2'
         }}>
         {tabs.map((tab) => (
             <SwitcherTab

@@ -26,7 +26,10 @@ const Footer = ({ css = {} }) => (
                 paddingTop: '$14'
             }}>
             <Flex align="center" direction="column" className="footer-wrapper">
-                <Flex className="footer" justify="between">
+                <Flex
+                    className="footer"
+                    justify="between"
+                    >
                     <Box>
                         <img height="36" src="/docs/100ms.svg" alt="100ms Logo" />
                         <Box className="socials">
@@ -68,10 +71,12 @@ const Footer = ({ css = {} }) => (
                     </Box>
                     {/* <Flex justify="between" className="footer-contact"> */}
                     <Box className="details">
-                        <Flex align="center" gap="1" css={{ marginBottom: '16px' }}>
+                        <Flex align="center" gap="1" css={{ '@sm': { marginBottom: '16px' } }}>
                             <ChatIcon />
                             <a href="https://www.100ms.live/contact">
-                                <Text css={{ color: '$textHighEmp' }}>Need help? Talk to us</Text>
+                                <Text css={{ color: '$textHighEmp', fontWeight: '$semiBold' }}>
+                                    Need help? Talk to us
+                                </Text>
                             </a>
                         </Flex>
                     </Box>
@@ -152,7 +157,7 @@ const Footer = ({ css = {} }) => (
                             className="footer-systems"
                             align="center"
                             css={{
-                                backgroundColor: '$surfaceDefault',
+                                backgroundColor: '$secondaryDefault',
                                 gap: '12px',
                                 padding: '8px 24px 8px 16px',
                                 maxWidth: '214px',
@@ -181,15 +186,19 @@ const Footer = ({ css = {} }) => (
                     className="footer-final"
                     css={{ width: '100%', maxWidth: '1352px' }}>
                     <Flex className="footer-last" css={{ gap: '80px' }}>
-                        <Text css={{ color: '$textMedEmp' }}>
+                        <Text css={{ color: '$textMedEmp', fontWeight: '$semiBold' }}>
                             © 100ms, Inc. All rights reserved.
                         </Text>
                         <Flex css={{ gap: '40px' }}>
                             <a href="https://www.100ms.live/terms-of-service">
-                                <Text css={{ color: '$textHighEmp' }}>Terms & Conditions</Text>
+                                <Text css={{ color: '$textHighEmp', fontWeight: '$semiBold' }}>
+                                    Terms & Conditions
+                                </Text>
                             </a>
                             <a href="https://www.100ms.live/privacy-policy">
-                                <Text css={{ color: '$textHighEmp' }}>Privacy</Text>
+                                <Text css={{ color: '$textHighEmp', fontWeight: '$semiBold' }}>
+                                    Privacy
+                                </Text>
                             </a>
                         </Flex>
                     </Flex>
