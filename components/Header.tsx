@@ -1,6 +1,7 @@
 import SvgMoon from '@/assets/icons/Moon';
 import SvgSun from '@/assets/icons/Sun';
 import React from 'react';
+import Link from 'next/link';
 import useKeyPress from '@/lib/useKeyPress';
 import { SearchIcon, CrossIcon, HamburgerMenuIcon } from '@100mslive/react-icons';
 import { useRouter } from 'next/router';
@@ -103,6 +104,17 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     </div>
                 </a>
             </div>
+            <div className="left-content">
+                <div className="nav-links">
+                    <span style={{ marginRight: '1rem' }} />
+                    {/* @ts-ignore */}
+                    {isNonApiRef ? null : (
+                        <button className={isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
+                            <Link href={routeAPIRef()}>API Reference</Link>
+                        </button>
+                    )}
+                </div>
+            </div>
             <div className="head-right">
                 <div className="search-ctx">
                     <button onClick={() => setModal(true)} type="button" className="search-btn">
@@ -115,7 +127,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     aria-label="theme-toggle-button"
                     className="pointer theme-btn"
                     role="button"
-                    style={{ paddingTop: '8px', paddingLeft: '10px', margin: '0 1rem 0 1rem' }}
+                    style={{ paddingTop: '8px', paddingLeft: '10px', margin: '0 2rem 0 1rem' }}
                     tabIndex={0}
                     onKeyPress={() => {}}
                     onClick={() => toggleTheme()}>
@@ -130,7 +142,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
             <div className="menu-btn">
                 <button
                     onClick={() => setModal(true)}
-                    style={{ marginRight: '0.5rem' }}
+                    style={{ marginRight: '0.5rem', marginLeft: '-1rem' }}
                     type="button"
                     className="search-btn">
                     <SearchIcon style={{ width: '24px' }} />
@@ -197,7 +209,8 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 .head-left {
                     display: flex;
                     align-items: center;
-                    width: 250px;
+                    width: auto;
+                    margin-right: 0.5rem;
                 }
                 .left-content {
                     display: flex;
@@ -271,20 +284,17 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     .menu-btn {
                         display: flex;
                     }
-                }
-                @media screen and (max-width: 600px) {
-                    .search-ctx {
+                    .left-content {
                         display: none;
                     }
+                }
+                @media screen and (max-width: 600px) {
                     .ctx {
                         justify-content: flex-end;
                     }
                     .head-left {
                         width: unset;
                         margin-right: auto;
-                    }
-                    .left-content {
-                        display: none;
                     }
                     .theme-btn {
                         margin-left: auto;
