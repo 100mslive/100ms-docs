@@ -15,13 +15,14 @@ To invoke this API call
 const config = {
     userName: 'Jon Snow',
     authToken: '<Auth token>', // client-side token generated from your token service
-    settings: { // initial states
+    settings: {
+        // initial states
         isAudioMuted: true,
         isVideoMuted: false
     },
-    metaData: JSON.stringify({city: 'Winterfell', knowledge: 'nothing'}),
-    rememberDeviceSelection: true,  // remember manual device change
-    captureNetworkQualityInPreview: false, // whether to measure network score in preview
+    metaData: JSON.stringify({ city: 'Winterfell', knowledge: 'nothing' }),
+    rememberDeviceSelection: true, // remember manual device change
+    captureNetworkQualityInPreview: false // whether to measure network score in preview
 };
 await hmsActions.preview(config);
 ```
@@ -57,8 +58,26 @@ tracks will be carry forwarded when user enters the room.
 
 ## Know Others in the room
 
-It's also possible to know about the room state and other peers in the room, if the permission to receive room state is given for the 
+It's also possible to know about the room state and other peers in the room, if the permission to receive room state is given for the
 role in dashboard. The peers present in the room can be known by using the `selectPeers` selector as given [here](../guides/useful-selectors#who-all-are-in-my-room).
+
+<Tabs id="peers" items={['Javascript', 'React']} />
+
+<Tab id='peers-0'>
+
+```js
+const peers = hmsStore.getState(selectPeers);
+```
+
+</Tab>
+
+<Tab id='peers-1'>
+
+```jsx
+const peers = useHMSStore(selectPeers);
+```
+
+</Tab>
 
 ## Network Quality in preview
 
