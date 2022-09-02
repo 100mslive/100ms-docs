@@ -47,7 +47,7 @@ From either the dashboard, or your own server once implemented, you need to gene
 
 Add the `hmssdk_flutter` plugin in dependencies of pubspec.yaml
 
-```dart section=SDK sectionIndex=1
+```dart section=AddSDKDependencies sectionIndex=1
 #pubspec.yaml
 
 dependencies:
@@ -87,7 +87,7 @@ The 100ms server will respond with an auth token like this `{"token":"some-token
 
 Camera, Recording Audio and Internet permissions are required. Add them to your AndroidManifest.xml.
 
-```xml
+```xml section=AndroidPermissions sectionIndex=1
 <uses-feature android:name="android.hardware.camera"/>
 <uses-feature android:name="android.hardware.camera.autofocus"/>
 <uses-permission android:name="android.permission.CAMERA"/>
@@ -132,7 +132,7 @@ These are some listener's callback functions:
 
 > 💡 It's essential that this callback is listened to or you may have peers without video.
 
-```dart section=JoinVideo sectionIndex=1
+```dart section=JoinVideoCall sectionIndex=1
 HMSConfig config = HMSConfig(userName: this.userName, authToken: this.authToken);
 hmsSDK = HMSSDK();
 hmsSDK.build()
@@ -140,7 +140,7 @@ hmsSDK.join(config: this.config);
 hmsSDK.addUpdateListener(listener);
 ```
 
-```dart section=JoinVideo sectionIndex=2
+```dart section=JoinVideoCall sectionIndex=2
 /// 100ms SDK provides callbacks to the client app about any change or update happening in the room after a user has joined by implementing HMSUpdateListener.
 /// These updates can be used to render the video on screen or to display other info regarding the room.
 abstract class HMSUpdateListener {
@@ -242,7 +242,7 @@ A peer represents one person in the video call.
 
 A peer's video track is in hmsPeer.videoTrack. ScreenShares can be found in auxilary tracks of peer i.e the auxiliary tracks is a list of tracks, one of which can be a ScreenShare if they have chosen to share their screen.
 
-```dart section=ShowingVideo sectionIndex=1
+```dart section=ShowingVideos sectionIndex=1
 peer.auxiliaryTracks
           ?.where((each) => each.kind == HMSTrackKind.kHMSTrackKindVideo);
 ```
@@ -251,7 +251,7 @@ peer.auxiliaryTracks
 
 You can mute/unmute audio by calling switchAudio on HMSSDK. `isOn` is state variable. If `isOn` is true then audio will unmute and if its false then audio will mute.
 
-```dart section=MuteAudio sectionIndex=1
+```dart section=MuteUnMuteAudio sectionIndex=1
 
 /// audio unmute
 hmsSDK.switchAudio(isOn: true);
@@ -264,7 +264,7 @@ hmsSDK.switchAudio(isOn: false);
 
 You can mute/unmute video by calling switchVideo on HMSSDK. `isOn` is state variable. If `isOn` is true then video will turn on and if its false then video will turn off.
 
-```dart section=MuteVideo sectionIndex=1
+```dart section=MuteUnMuteVideo sectionIndex=1
 
 /// video on
 hmsSDK.switchVideo(isOn: true);
@@ -277,7 +277,7 @@ hmsSDK.switchVideo(isOn: false);
 
 To leave a video call, just call leave on HMSSDK.
 
-```dart section=LeaveVideo sectionIndex=1
+```dart section=LeaveVideoCall sectionIndex=1
 hmsSDK.leave();
 ```
 

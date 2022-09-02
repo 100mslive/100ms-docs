@@ -25,7 +25,7 @@ Select "Storyboard" for interface and "Swift" for language
 Assuming your project name is "basicvideocall", create "Podfile" in the project folder with the following contents
 then run `pod install`
 
-```jsx section=Xcode sectionIndex=1
+```jsx section=XcodeProjectSetup sectionIndex=1
 platform :ios, '13.0'
 
 target 'basicvideocall' do
@@ -39,7 +39,7 @@ Open .xcworkspace
 
 Add the entitlements for video, audio and network access to your `Info.plist`
 
-```xml section=Xcode sectionIndex=2
+```xml section=XcodeProjectSetup sectionIndex=2
 <key>NSCameraUsageDescription</key>
 <string>Please allow access to Camera to enable video conferencing.</string>
 <key>NSLocalNetworkUsageDescription</key>
@@ -54,20 +54,20 @@ Open `ViewController.swift`
 
 Add `HMSSDK` import
 
-```swift section=SDK sectionIndex=1
+```swift section=InitializingTheSDK sectionIndex=1
 import HMSSDK
 ```
 
 Conform to HMSUpdateListener and add stubs when Xcode offers to
 
-```swift section=SDK sectionIndex=2
+```swift section=InitializingTheSDK sectionIndex=2
 extension ViewController: HMSUpdateListener {
 }
 ```
 
 Create an instance of HMSSDK
 
-```swift section=SDK sectionIndex=3
+```swift section=InitializingTheSDK sectionIndex=3
 class ViewController: UIViewController {
 var hmsSDK = HMSSDK.build()
 ...

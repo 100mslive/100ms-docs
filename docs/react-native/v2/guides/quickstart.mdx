@@ -13,7 +13,7 @@ To get started you should be familiar with basics of [React Native](https://reac
 
 ## Installing the dependencies
 
-```bash section=Dependencies sectionIndex=1
+```bash section=InstallingTheDependencies sectionIndex=1
 npm install --save @100mslive/react-native-hms
 ```
 
@@ -23,7 +23,7 @@ npm install --save @100mslive/react-native-hms
 
 Add following permissions in `AndroidManifest.xml`
 
-```xml section=Android sectionIndex=1
+```xml section=ForAndroidPermissions sectionIndex=1
 <uses-permission android:name="android.permission.CAMERA" />
 <uses-permission android:name="android.permission.RECORD_AUDIO" />
 <uses-permission android:name="android.permission.INTERNET" />
@@ -35,7 +35,7 @@ You will also need to request Camera and Record Audio permissions at runtime bef
 
 Add following lines in `Info.plist` file
 
-```xml section=iOSPermissions sectionIndex=1
+```xml section=ForIOSPermissions sectionIndex=1
 <key>NSCameraUsageDescription</key>
 <string>Please allow access to Camera to enable video conferencing</string>
 <key>NSLocalNetworkUsageDescription</key>
@@ -54,7 +54,7 @@ Add following lines in `Info.plist` file
 
 Call the function given below to initialise the SDK
 
-```js section=SDK sectionIndex=1
+```js section=InitializingTheSDK sectionIndex=1
 import HmsManager from '@100mslive/react-native-hms';
 
 const hmsInstance = await HmsManager.build();
@@ -68,7 +68,7 @@ Add event listeners for all the events you want updates from such as onPreview, 
 
 The event handlers are the way of handling any update happening in hms. It is advised to attach all the event listeners so you don't miss any update.
 
-```js section=AddEvent sectionIndex=1
+```js section=AddEventListeners sectionIndex=1
 import HmsManager, { HMSUpdateListenerActions } from 'react-native-hms';
 
 // instance acquired from build() method

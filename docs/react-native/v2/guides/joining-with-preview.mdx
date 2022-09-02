@@ -8,7 +8,7 @@ nav: 2.3
 It is important to attach preview listener and error listener before calling the preview
 function in order to get updates if preview got executed successfully or if it failed.
 
-```js section=AttachingPreview sectionIndex=1
+```js section=AttachingPreviewAndErrorListeners sectionIndex=1
 import HmsManager, { HMSUpdateListenerActions } from '@100mslive/react-native-hms';
 
 const build = () => {
@@ -37,7 +37,7 @@ Preview screen is a frequently used UX element which allows users to check if th
 (mute/unmute) of their audio and video tracks before joining. Once the listeners are attached we can call the preview function. After the preview
 function is called we have to wait for the preview or error callback before calling the join function.
 
-```js section=CallingPreview sectionIndex=1
+```js section=CallingPreviewAndJoinFunctions sectionIndex=1
 import { HMSException } from '@100mslive/react-native-hms';
 
 const preview = () => {
