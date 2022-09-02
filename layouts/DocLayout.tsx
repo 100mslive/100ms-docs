@@ -175,10 +175,10 @@ const DocLayout: React.FC<Props> = ({
                     }
                     .ctx {
                         display: flex;
+                        width: 100%;
                         filter: blur(${modal ? '10px' : '0px'});
                     }
                     .sidebar-container {
-                        width: 280px;
                         background-color: var(--background_default);
                     }
                     .wrapper-ctx {
@@ -188,7 +188,6 @@ const DocLayout: React.FC<Props> = ({
                         max-width: 900px;
                         width: 100%;
                         padding: 0 2rem;
-                        
                         min-height: calc(100vh - 140px);
                         padding-bottom: 80px;
                         display: flex;

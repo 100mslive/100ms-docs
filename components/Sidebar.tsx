@@ -167,7 +167,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
             ))}
             <style jsx>{`
                 .sidebar {
-                    width: 100%;
+                    width: 288px;
                     display: flex;
                     flex-direction: column;
                     align-items: stretch;
