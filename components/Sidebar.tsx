@@ -171,9 +171,9 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     display: flex;
                     flex-direction: column;
                     align-items: stretch;
-                    height: ${menu ? 'calc(100vh - 60px)' : '100vh'};
+                    height: calc(100vh - 80px);
                     overflow-y: scroll;
-                    top: 0;
+                    top: ${menu ? '10px' : '80px'};
                     left: 0;
                     position: ${menu ? 'absolute' : 'sticky'};
                     background: var(--background_default);
