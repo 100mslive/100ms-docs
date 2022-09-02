@@ -51,7 +51,6 @@ const TocContainer = ({ activeHeading, activeSubHeading }) => {
                 }
                 .head {
                     font-weight: bold;
-                    color: var(--gray12);
                     text-transform: uppercase;
                 }
                 a {
@@ -61,7 +60,6 @@ const TocContainer = ({ activeHeading, activeSubHeading }) => {
                 .text {
                     font-size: 14px;
                     margin: 0.5rem 0;
-                    color: var(--gray11);
                 }
                 .text a {
                     padding-left: 1rem !important;
