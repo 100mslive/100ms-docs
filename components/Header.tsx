@@ -1,16 +1,9 @@
 import useKeyPress from '@/lib/useKeyPress';
-import {
-    CloseIcon,
-    DividerIcon,
-    HamburgerMenuIcon,
-    NightIcon,
-    SearchIcon,
-    SunIcon
-} from '@100mslive/react-icons';
-import { Button, Flex, Text, useTheme } from '@100mslive/react-ui';
+import { CloseIcon, DividerIcon, NightIcon, SearchIcon, SunIcon } from '@100mslive/react-icons';
+import { Flex, Text, useTheme, Box } from '@100mslive/react-ui';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React from 'react';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -27,7 +20,6 @@ interface Props {
 const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocSlug }) => {
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
-    const [showMenu, setShowMenu] = useState(false);
     const { toggleTheme, themeType } = useTheme();
 
     const router = useRouter();
@@ -117,97 +109,46 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                             </button>
                         </div>
                     </div>
-                    <div
-                        aria-label="theme-toggle-button"
-                        role="button"
-                        tabIndex={0}
-                        style={{ cursor: 'pointer' }}
-                        onKeyPress={() => {}}
-                        onClick={() => buttonToggleTheme()}>
-                        {isDark ? <NightIcon /> : <SunIcon style={{ color: 'yellow' }} />}
-                    </div>
                 </div>
                 {modal ? (
                     <SearchModal setModal={setModal} docs={docs} currentDocSlug={currentDocSlug} />
                 ) : null}
 
                 <Flex
-                    className="menu-btn"
                     align="center"
                     justify="center"
                     css={{
                         height: '$10',
-                        width: '$10',
-                        marginLeft: '24px',
-                        display: 'none',
-                        '@md': {
-                            display: 'block'
-                        }
+                        marginRight: '$8'
                     }}>
-                    <button
-                        aria-label="menu-button"
-                        type="button"
-                        style={{ padding: '0' }}
-                        onClick={() => setMenu(!menu)}>
-                        <Flex onClick={() => setShowMenu((prev) => !prev)}>
-                            {menu ? <CloseIcon /> : <HamburgerMenuIcon />}
-                        </Flex>
-                    </button>
+                    <Box
+                        css={{
+                            display: 'none',
+                            '@md': {
+                                display: 'flex'
+                            }
+                        }}>
+                        <button
+                            aria-label="menu-button"
+                            type="button"
+                            style={{ padding: '0', marginTop: '-5px' }}
+                            onClick={() => setMenu(!menu)}>
+                            <Flex onClick={() => setModal(true)}>
+                                {menu ? <CloseIcon /> : <SearchIcon />}
+                            </Flex>
+                        </button>
+                    </Box>
+                    <div
+                        aria-label="theme-toggle-button"
+                        role="button"
+                        tabIndex={0}
+                        style={{ cursor: 'pointer', margin: '2px 8px 0 16px' }}
+                        onKeyPress={() => {}}
+                        onClick={() => buttonToggleTheme()}>
+                        {isDark ? <NightIcon /> : <SunIcon style={{ color: '#ECC502' }} />}
+                    </div>
                 </Flex>
             </div>
-            <Flex css={{ position: 'relative', width: '100%' }}>
-                {showMenu && (
-                    <Flex
-                        direction="column"
-                        css={{
-                            backgroundColor: '$surfaceDefault',
-                            position: 'absolute',
-                            zIndex: '10',
-                            padding: '$0 $10',
-                            width: 'stretch'
-                        }}>
-                        <div className="search-ctx-mob">
-                            <button
-                                onClick={() => setModal(true)}
-                                type="button"
-                                className="search-btn">
-                                <SearchIcon />
-                                <span>Search docs</span>
-                            </button>
-                        </div>
-                        <Flex
-                            justify="center"
-                            css={{
-                                marginTop: '$9',
-                                gap: '$4',
-                                marginBottom: '$10',
-                                display: 'none',
-                                '@md': { display: 'flex' }
-                            }}>
-                            <Button
-                                variant="primary"
-                                onClick={() => {
-                                    window.location.href = 'https://dashboard.100ms.live/register';
-                                }}
-                                css={{ width: '60px' }}>
-                                Sign up
-                            </Button>
-
-                            <Button
-                                variant="standard"
-                                outlined
-                                onClick={() => {
-                                    window.location.href = 'https://dashboard.100ms.live/login';
-                                }}
-                                css={{
-                                    width: '60px'
-                                }}>
-                                Login
-                            </Button>
-                        </Flex>
-                    </Flex>
-                )}
-            </Flex>
             <style jsx>{`
                 .ctx {
                     display: flex;
@@ -263,7 +204,6 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 }
                 .head-right {
                     margin-left: auto;
-                    margin-right: 1rem;
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
@@ -282,7 +222,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     border-radius: 5px;
                     width: 320px;
                     border: 1px solid var(--border_light);
-                    margin-right: 36px;
+                    margin-right: 20px;
                     background: var(--surface_light);
                     position: relative;
                     padding: 8px 16px;
@@ -337,9 +277,8 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                         max-width: 320px;
                         margin: 0 auto;
                         display: block;
-                        border: 1px solid var(--border_light);
                         width: 100%;
-                        background: var(--surface_light);
+                        background: red;
                         position: relative;
                         padding: 7px 0;
                     }
