@@ -97,12 +97,12 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
     <Flex
         css={merge(
             {
-                backgroundColor: '$surfaceDefault',
-                paddingTop: '$8',
+                backgroundColor: '$surfaceDefault',                
+                boxSizing: 'border-box',
                 paddingLeft: text ? '$10' : undefined,
-                paddingRight: text ? '$10' : undefined,
-                paddingBottom: '$8',
+                paddingRight: text ? '$10' : undefined,                
                 borderRadius: '$3',
+                height: '$18',
                 borderWidth: '1px',
                 borderStyle: 'solid',
                 borderColor: '$borderDefault',
@@ -111,6 +111,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
                 justify: 'between',
                 width: '100%',
                 '@lg': {
+                    height: 'auto',
                     gap: '$10',
                     width: 'fit-content',
                     justifyContent: 'start',
