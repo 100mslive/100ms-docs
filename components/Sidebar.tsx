@@ -100,7 +100,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
         // }
     ];
     return (
-        <div className="ctx">
+        <div className="sidebar">
             {/* Sidebar Version Section */}
             <section className="menu-container">
                 <div className="menu-title">Platform</div>
@@ -166,8 +166,8 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 </section>
             ))}
             <style jsx>{`
-                .ctx {
-                    width: 280px;
+                .sidebar {
+                    width: 100%;
                     display: flex;
                     flex-direction: column;
                     align-items: stretch;
@@ -238,7 +238,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     margin: 5px 0;
                 }
                 @media screen and (max-width: 1000px) {
-                    .ctx {
+                    .sidebar {
                         display: ${menu ? 'flex' : 'none'};
                     }
                     :global(.page) {

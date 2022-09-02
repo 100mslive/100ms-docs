@@ -171,30 +171,29 @@ const DocLayout: React.FC<Props> = ({
                         scroll-behavior: smooth !important;
                     }
                     .page {
-                        margin: 0 auto;
+                        margin: 0;
                     }
                     .ctx {
                         display: flex;
                         filter: blur(${modal ? '10px' : '0px'});
                     }
                     .sidebar-container {
+                        width: 280px;
                         background-color: var(--background_default);
                     }
                     .wrapper-ctx {
                         display: flex;
-                        width: 100%;
                     }
                     article {
                         max-width: 900px;
                         width: 100%;
                         padding: 0 2rem;
+                        
+                        min-height: calc(100vh - 140px);
                         padding-bottom: 80px;
                         display: flex;
                         flex-direction: column;
                         align-items: stretch;
-                    }
-                    .content-ctx {
-                        min-height: 100vh;
                     }
                     .content-wrapper {
                         width: 100%;
