@@ -12,10 +12,9 @@ We'll explain the API using an example of implementing raise hand. For this, we'
 
 ```ts
 interface CustomMetadata {
-    isHandRaised: boolean
+    isHandRaised: boolean;
 }
 ```
-
 
 ## Getting and Setting metadata
 
@@ -23,6 +22,10 @@ Note that `peer.metadata` is a string, it can be used to keep a stringified JSON
 to a json object however if you use the selector described below.
 Metadata update post join can be achieved by calling `hmsActions.changeMetadata(metadata)`, the below example shows implementing a toggle raise
 hand function for the local peer.
+
+<Tabs id="meta" items={['Javascript', 'React']} />
+
+<Tab id='meta-0'>
 
 ```js
 async function toggleRaiseHand() {
@@ -32,6 +35,21 @@ async function toggleRaiseHand() {
     await hmsActions.changeMetadata(newMetadata);
 }
 ```
+
+</Tab>
+
+<Tab id='meta-1'>
+
+```jsx
+async function toggleRaiseHand() {
+    const localPeerId = useHMSStore(selectLocalPeerID);
+    const metaData = useHMSStore(selectPeerMetadata(localPeerId));
+    const newMetadata = { ...metadata, isHandRaised: !metadata.isHandRaised };
+    await hmsActions.changeMetadata(newMetadata);
+}
+```
+
+</Tab>
 
 ## Peer Metadata update Notification
 
@@ -44,9 +62,9 @@ hmsNotifications.onNotification((notification) => {
     switch (notification.type) {
         case HMSNotificationTypes.METADATA_UPDATED:
             const peer = notification.data;
-            const { isHandRaised } = hmsStore.getState(selectPeerMetadata(peer.id))
+            const { isHandRaised } = hmsStore.getState(selectPeerMetadata(peer.id));
             if (isHandRaised && !peer.isLocal) {
-                toast(`${peer.name} raised their hand.`)
+                toast(`${peer.name} raised their hand.`);
             }
             break;
     }
@@ -61,7 +79,7 @@ don't have a direct method available to do this currently but it can be done usi
 who raised their hand, and the peer can lower their hand on getting the message.
 
 ```js
-const LOWER_HAND = "LOWER_HAND";
+const LOWER_HAND = 'LOWER_HAND';
 // don't save messages with this type in store
 hmsActions.ignoreMessageTypes([LOWER_HAND]);
 
@@ -69,19 +87,19 @@ hmsActions.ignoreMessageTypes([LOWER_HAND]);
 hmsActions.sendDirectMessage('', peerIdWithRaisedHand, LOWER_HAND);
 
 // the peer on receiving the event can lower their hand
-hmsNotifications.onNotification(notification => {
-  const msg = notification.data;
-  if (msg && msg.type === LOWER_HAND) {
-    const localPeerId = hmsStore.getState(selectLocalPeerID);
-    const metadata = hmsStore.getState(selectPeerMetadata(localPeerId));
-    const newMetadata = { ...metadata, isHandRaised: false };
-    hmsActions.changeMetadata(newMetadata);
-  }
+hmsNotifications.onNotification((notification) => {
+    const msg = notification.data;
+    if (msg && msg.type === LOWER_HAND) {
+        const localPeerId = hmsStore.getState(selectLocalPeerID);
+        const metadata = hmsStore.getState(selectPeerMetadata(localPeerId));
+        const newMetadata = { ...metadata, isHandRaised: false };
+        hmsActions.changeMetadata(newMetadata);
+    }
 }, HMSNotificationTypes.NEW_MESSAGE);
 ```
 
 ## Ideas
 
-* Implementing raise hand
-* Multiplayer games like chess, scribble, quizzes etc.
-* Store extra information such as profile picture for every peer which can be updated mid call
+-   Implementing raise hand
+-   Multiplayer games like chess, scribble, quizzes etc.
+-   Store extra information such as profile picture for every peer which can be updated mid call
