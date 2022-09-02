@@ -57,7 +57,7 @@ From either the dashboard, or your own server once implemented, you need to gene
 
 You can open it in Android Studio by double tapping shift and typing `settings.gradle`.
 
-```json{7}:settings.gradle section=SDK sectionIndex=1
+```json{7}:settings.gradle section=AddSDKDependencies sectionIndex=1
 dependencyResolutionManagement {
  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
  repositories {
@@ -74,7 +74,7 @@ include ':app'
 
 -   Add the 100ms sdk dependency to your app-level `build.gradle` [![](https://jitpack.io/v/100mslive/android-sdk.svg)](https://jitpack.io/#100mslive/android-sdk).
 
-```json{3,4}:build.gradle section=SDK sectionIndex=2
+```json{3,4}:build.gradle section=AddSDKDependencies sectionIndex=2
 dependencies {
  // See the version in the jitpack badge above.
  implementation 'com.github.100mslive.android-sdk:lib:x.x.x'
@@ -105,7 +105,7 @@ The 100ms server will respond with an auth token like this `{"token":"some-token
 
 Camera, Recording Audio and Internet permissions are required. Add them to your manifest.
 
-```xml:AndroidManifest.xml section=LoginRequest sectionIndex=1
+```xml:AndroidManifest.xml section=Permissions sectionIndex=1
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -121,7 +121,7 @@ Instantiate the HMSSDK like this:
 
 <Tab id='instanstiate-hmssdk-0'>
 
-```kotlin section=HMSSDK sectionIndex=1 tab=Kotlin
+```kotlin section=InstantiateHMSSDK sectionIndex=1 tab=Kotlin
     val hmsSdk = HMSSDK
         .Builder(application)
         .build()
@@ -131,7 +131,7 @@ Instantiate the HMSSDK like this:
 
 <Tab id='instanstiate-hmssdk-1'>
 
-```java section=HMSSDK sectionIndex=1 tab=Java
+```java section=InstantiateHMSSDK sectionIndex=1 tab=Java
  HMSSDK hmssdk = new HMSSDK
                         .Builder(application)
                         .build();
@@ -226,7 +226,7 @@ The adapter data should be a list of class that has both the peer and the track 
 
 Your layout xml for a peer video would need to have an `org.webrtc.SurfaceViewRenderer`
 
-```xml section=ShowingVideo sectionIndex=1
+```xml section=ShowingVideos sectionIndex=1
 
 <org.webrtc.SurfaceViewRenderer
  android:id="@+id/videoSurfaceView"
