@@ -568,13 +568,13 @@ table th {
 table th:nth-child(1) {
     border-bottom: 1px solid var(--gray5);
     border-left: 1px solid var(--gray5);
-    border-radius: 4px 4px 0 0;
+    border-top-left-radius: 4px;
     border-top: 1px solid var(--gray5);
 }
 
 table th:last-child {
     border-bottom: 1px solid var(--gray5);
-    border-radius: 4px 4px 0 0;
+    border-top-right-radius: 4px;
     border-right: 1px solid var(--gray5);
     border-top: 1px solid var(--gray5);
 }
@@ -584,15 +584,18 @@ table tr td {
     height: 2.5rem;
 }
 
-table td:nth-child(1) {
-    border-left: 1px solid transparent;
+table td {
+    border: 1px solid var(--border_default);
 }
 tr {
     color: var(--text_high_emp);
 }
 
-table tr:not(:last-of-type) td {
-    border-bottom: 1px solid;
+table tr td:not(:last-of-type) {
+    border-right: 0px;
+}
+table tr td:not(:first-of-type) {
+    border-left: 0px;
 }
 
 .table-wrapper {
