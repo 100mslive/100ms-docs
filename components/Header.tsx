@@ -1,9 +1,13 @@
-import SvgMoon from '@/assets/icons/Moon';
-import SvgSun from '@/assets/icons/Sun';
 import React from 'react';
 import Link from 'next/link';
 import useKeyPress from '@/lib/useKeyPress';
-import { SearchIcon, CrossIcon, HamburgerMenuIcon } from '@100mslive/react-icons';
+import {
+    SearchIcon,
+    CrossIcon,
+    HamburgerMenuIcon,
+    SunIcon,
+    NightIcon
+} from '@100mslive/react-icons';
 import { useRouter } from 'next/router';
 import SearchModal from './SearchModal';
 
@@ -21,17 +25,23 @@ interface Props {
 const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocSlug }) => {
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
+    const [showMobileMenu, setShowMobileMenu] = React.useState(true);
     const router = useRouter();
+
     React.useEffect(() => {
+        // Hide dropdown menu in landing page
+        setShowMobileMenu(window.location.href.slice(window.location.href.length - 6) !== '/docs');
         if (escPressed) {
             setModal(false);
         }
     }, [escPressed]);
+
     React.useEffect(() => {
         if (slashPressed) {
             setModal(true);
         }
     }, [slashPressed]);
+
     const { menu, setMenu } = menuState;
     const [isDark, setIsDark] = React.useState<boolean>(true);
     React.useEffect(() => {
@@ -131,7 +141,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     tabIndex={0}
                     onKeyPress={() => {}}
                     onClick={() => toggleTheme()}>
-                    {isDark ? <SvgMoon /> : <SvgSun />}
+                    {isDark ? <NightIcon /> : <SunIcon />}
                 </span>
             </div>
 
@@ -147,13 +157,15 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     className="search-btn">
                     <SearchIcon style={{ width: '24px' }} />
                 </button>
-                <button
-                    style={{ width: '24px', marginTop: '8px' }}
-                    aria-label="menu-button"
-                    type="button"
-                    onClick={() => setMenu(!menu)}>
-                    {menu ? <CrossIcon /> : <HamburgerMenuIcon />}
-                </button>
+                {showMobileMenu && (
+                    <button
+                        style={{ width: '24px', marginTop: '8px' }}
+                        aria-label="menu-button"
+                        type="button"
+                        onClick={() => setMenu(!menu)}>
+                        {menu ? <CrossIcon /> : <HamburgerMenuIcon />}
+                    </button>
+                )}
             </div>
             <style jsx>{`
                 .ctx {
