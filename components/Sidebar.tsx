@@ -239,7 +239,9 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 }
                 @media screen and (max-width: 1000px) {
                     .sidebar {
-                        display: ${menu ? 'flex' : 'none'};
+                        display: ${menu ? 'absolute' : 'none'};
+                        top: 0;
+                        height: calc(100vh - 60px);
                     }
                     :global(.page) {
                         height: ${menu ? '100vh !important' : ''};
