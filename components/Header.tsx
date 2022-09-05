@@ -1,16 +1,16 @@
-import React from 'react';
-import Link from 'next/link';
-import useKeyPress from '@/lib/useKeyPress';
-import {
-    SearchIcon,
-    CrossIcon,
-    HamburgerMenuIcon,
-    SunIcon,
-    NightIcon,
-    DividerIcon
-} from '@100mslive/react-icons';
-import { useRouter } from 'next/router';
 import { useTheme } from '@100mslive/react-ui';
+import {
+    CrossIcon,
+    DividerIcon,
+    HamburgerMenuIcon,
+    NightIcon,
+    SearchIcon,
+    SunIcon
+} from '@100mslive/react-icons';
+import useKeyPress from '@/lib/useKeyPress';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React from 'react';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -85,35 +85,25 @@ const Header: React.FC<Props> = ({
         return currentTech || 'javascript';
     };
     const currentTech = getCurrentTech();
-    // @ts-ignore
     const routeAPIRef = () => {
-        // @ts-ignore
         if (currentTech === 'react-native') {
             return `/api-reference/react-native/v2/modules.html`;
         }
-        // @ts-ignore
         if (currentTech === 'flutter') {
             return `https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html`;
         }
-        // @ts-ignore
         if (currentTech === 'android') {
             return `/api-reference/android/v2/index.html`;
         }
-        // @ts-ignore
         const routeLink = `/api-reference/${currentTech}/v2/home/content`;
-        // @ts-ignore
         if (router.query.slug && router.query.slug[0] === 'api-reference') {
             return router.asPath;
         }
         return routeLink;
     };
 
-    // @ts-ignore
     const isApiRef = router.query.slug && router.query.slug[0] === 'api-reference';
-
-    const isNonApiRef =
-        // @ts-ignore
-        router.query.slug && router.query.slug[0] === 'server-side';
+    const isNonApiRef = router.query.slug && router.query.slug[0] === 'server-side';
 
     return (
         <div className="ctx header">
@@ -141,7 +131,6 @@ const Header: React.FC<Props> = ({
             <div className="left-content">
                 <div className="nav-links">
                     <span style={{ marginRight: '1rem' }} />
-                    {/* @ts-ignore */}
                     {isNonApiRef ? null : (
                         <button className={isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
                             <Link href={routeAPIRef()}>API Reference</Link>
