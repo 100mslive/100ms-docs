@@ -30,7 +30,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
 
     React.useEffect(() => {
         // Hide dropdown menu in landing page
-        setShowMobileMenu(window.location.href.slice(window.location.href.length - 6) !== '/docs');
+        setShowMobileMenu(window.location.href.slice(-6) !== '/docs');
         if (escPressed) {
             setModal(false);
         }
@@ -141,7 +141,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     tabIndex={0}
                     onKeyPress={() => {}}
                     onClick={() => toggleTheme()}>
-                    {isDark ? <NightIcon /> : <SunIcon />}
+                    {isDark ? <NightIcon /> : <SunIcon style={{ color: '#ECC502' }} />}
                 </span>
             </div>
 
