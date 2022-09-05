@@ -640,7 +640,7 @@ const Homepage = ({ allDocs }) => {
                             logo={
                                 <JavascriptIcon
                                     style={{
-                                        color: 'yellow'
+                                        color: '#F0DB4F'
                                     }}
                                 />
                             }
@@ -866,7 +866,10 @@ const Homepage = ({ allDocs }) => {
                     </Flex>
                     <Flex css={{ flexWrap: 'wrap', gap: '$20' }}>
                         {more[dropDownSelection].map((section) => (
-                            <Flex direction="column" key={section.heading} css={{ gap: '$5', width: '200px' }}>
+                            <Flex
+                                direction="column"
+                                key={section.heading}
+                                css={{ gap: '$5', width: '200px' }}>
                                 <Text variant="body1" css={{ marginBottom: '$4' }}>
                                     {section.heading}
                                 </Text>

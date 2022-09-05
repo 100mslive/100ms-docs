@@ -1,6 +1,6 @@
 import useKeyPress from '@/lib/useKeyPress';
 import { CloseIcon, DividerIcon, NightIcon, SearchIcon, SunIcon } from '@100mslive/react-icons';
-import { Flex, Text, useTheme, Box } from '@100mslive/react-ui';
+import { Box, Flex, Text, useTheme } from '@100mslive/react-ui';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -145,7 +145,9 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                         style={{ cursor: 'pointer', margin: '2px 8px 0 16px' }}
                         onKeyPress={() => {}}
                         onClick={() => buttonToggleTheme()}>
-                        {isDark ? <NightIcon /> : <SunIcon style={{ color: '#ECC502' }} />}
+                        <Box css={{ color: isDark ? '$textHighEmp' : '$twinYellow' }}>
+                            {isDark ? <NightIcon /> : <SunIcon />}
+                        </Box>
                     </div>
                 </Flex>
             </div>

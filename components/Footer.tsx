@@ -5,6 +5,7 @@ import {
     DiscordIcon,
     FacebookIcon,
     LinkedInIcon,
+    Svg100MsLogo,
     TwitterIcon
 } from '@100mslive/react-icons';
 import { Box, Flex, HorizontalDivider, Text } from '@100mslive/react-ui';
@@ -23,7 +24,7 @@ const Footer = ({ css = {} }) => (
             <Flex align="center" direction="column" className="footer-wrapper">
                 <Flex className="footer" justify="between">
                     <Box>
-                        <img height="36" src="/docs/100ms.svg" alt="100ms Logo" />
+                        <Svg100MsLogo style={{ height: '36px', width: '125px' }} />
                         <Box className="socials">
                             <a href="https://www.linkedin.com/company/100mslive/about/">
                                 <Box css={{ color: '$textMedEmp' }}>
