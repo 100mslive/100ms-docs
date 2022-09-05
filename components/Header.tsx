@@ -116,10 +116,10 @@ const Header: React.FC<Props> = ({
                 <a href="/docs/javascript/v2/foundation/basics">
                     <div className="logo-ctx">
                         <img width={36} src="/docs/logo.svg" alt="100ms Logo" />
-                        <p className="company">100ms</p>
+                        <p className="company hide-content">100ms</p>
                     </div>
                 </a>
-                <DividerIcon style={{ strokeWidth: '2px' }} />
+                <DividerIcon style={{ strokeWidth: '2px', marginLeft: '-16px' }} />
                 <div>
                     <Link href={`/${currentTech}/`}>
                         <p
@@ -230,6 +230,9 @@ const Header: React.FC<Props> = ({
                 .res-box span {
                     margin-right: 1rem;
                 }
+                p.hide-content {
+                    margin-right: 16px;
+                }
                 button a {
                     color: var(--gray11) !important;
                     text-decoration: none;
@@ -334,6 +337,11 @@ const Header: React.FC<Props> = ({
                     }
                     .theme-btn {
                         margin-left: auto;
+                    }
+                }
+                @media screen and (max-width: 375px) {
+                    p.hide-content {
+                        display: none !important;
                     }
                 }
             `}</style>
