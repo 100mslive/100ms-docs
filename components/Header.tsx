@@ -10,6 +10,7 @@ import {
     DividerIcon
 } from '@100mslive/react-icons';
 import { useRouter } from 'next/router';
+import { useTheme } from '@100mslive/react-ui';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -50,13 +51,15 @@ const Header: React.FC<Props> = ({
 
     const { menu, setMenu } = menuState;
     const [isDark, setIsDark] = React.useState<boolean>(true);
+    const { toggleTheme, themeType } = useTheme();
 
     React.useEffect(() => {
         const docHtml = document.documentElement.dataset;
         setIsDark(docHtml.theme === 'dark');
+        if (docHtml.theme !== themeType) toggleTheme();
     }, []);
 
-    const toggleTheme = () => {
+    const buttonToggleTheme = () => {
         const docHtml = document.documentElement.dataset;
         // toggle theme
         // set local storage
@@ -65,6 +68,7 @@ const Header: React.FC<Props> = ({
         docHtml.theme = `${!isDark ? 'dark' : 'light'}`;
         // update the state
         setIsDark(!isDark);
+        toggleTheme();
     };
 
     const getCurrentTech = () => {
@@ -160,7 +164,7 @@ const Header: React.FC<Props> = ({
                     style={{ paddingTop: '8px', paddingLeft: '10px', margin: '0 2rem 0 1rem' }}
                     tabIndex={0}
                     onKeyPress={() => {}}
-                    onClick={() => toggleTheme()}>
+                    onClick={() => buttonToggleTheme()}>
                     {isDark ? <NightIcon /> : <SunIcon style={{ color: '#ECC502' }} />}
                 </span>
             </div>
