@@ -66,13 +66,13 @@ with type `METADATA_UPDATED` and [HMSPeer](../../../api-reference/javascript/v2/
 object as notification data.
 
 ```js
-hmsNotifications.onNotification((notification,HMSNotificationsTypes.METADATA_UPDATED) => {
+hmsNotifications.onNotification((notification) => {
     const peer = notification.data;
     const { isHandRaised } = hmsStore.getState(selectPeerMetadata(peer.id));
     if (isHandRaised && !peer.isLocal) {
         toast(`${peer.name} raised their hand.`);
     }
-});
+}, HMSNotificationsTypes.METADATA_UPDATED);
 ```
 
 ## Updating Remote Peer Metadata
