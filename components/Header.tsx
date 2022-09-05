@@ -293,6 +293,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 .company {
                     font-size: 1.2rem;
                     font-weight: 700;
+                    margin: 0;
                 }
                 .company span {
                     font-size: 1rem;
