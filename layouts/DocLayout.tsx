@@ -101,6 +101,7 @@ const DocLayout: React.FC<Props> = ({
                     modal={modal}
                     setModal={setModal}
                     menuState={menuState}
+                    
                     docs={allDocs}
                     currentDocSlug={currentDocSlug}
                 />
