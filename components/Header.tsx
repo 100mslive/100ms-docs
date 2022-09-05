@@ -9,7 +9,6 @@ import {
     NightIcon,
     DividerIcon
 } from '@100mslive/react-icons';
-import { Text } from '@100mslive/react-ui';
 import { useRouter } from 'next/router';
 import SearchModal from './SearchModal';
 
@@ -46,10 +45,12 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
 
     const { menu, setMenu } = menuState;
     const [isDark, setIsDark] = React.useState<boolean>(true);
+
     React.useEffect(() => {
         const docHtml = document.documentElement.dataset;
         setIsDark(docHtml.theme === 'dark');
     }, []);
+
     const toggleTheme = () => {
         const docHtml = document.documentElement.dataset;
         // toggle theme
@@ -280,7 +281,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     text-align: left;
                 }
                 .hot-key {
-                    margin-left: auto !important; 
+                    margin-left: auto !important;
                     border-radius: 5px;
                     padding: 0 5px;
                     color: var(--text_high_emp);
