@@ -186,9 +186,9 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     outline: 0px;
                 }
                 .menu-container {
-                    margin-top: 10px;
+                    margin-top: 2px;
                     margin-left: 0.5rem;
-                    margin-bottom: 17px;
+                    margin-bottom: 9px;
                     margin-right: 1.5rem;
                 }
                 .menu-container:first-of-type {
