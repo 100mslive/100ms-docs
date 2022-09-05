@@ -21,17 +21,22 @@ interface Props {
     docs: { url: string; title: string; description: string; nav: number; content: string }[];
     currentDocSlug: string;
     modal: boolean;
+    showMobileMenu: boolean;
 }
 
-const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocSlug }) => {
+const Header: React.FC<Props> = ({
+    menuState,
+    modal,
+    setModal,
+    docs,
+    currentDocSlug,
+    showMobileMenu = true
+}) => {
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
-    const [showMobileMenu, setShowMobileMenu] = React.useState(true);
     const router = useRouter();
 
     React.useEffect(() => {
-        // Hide dropdown menu in landing page
-        setShowMobileMenu(window.location.href.slice(-6) !== '/docs');
         if (escPressed) {
             setModal(false);
         }
