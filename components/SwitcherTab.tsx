@@ -4,7 +4,7 @@ import React from 'react';
 
 interface Props {
     value: string;
-    setActiveTab: any;
+    setActiveTab: Function;
     isActiveTab: boolean;
 }
 

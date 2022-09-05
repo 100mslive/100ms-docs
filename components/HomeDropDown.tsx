@@ -8,9 +8,14 @@ import {
     ServerIcon
 } from '@100mslive/react-icons';
 import { Box, Flex, Text } from '@100mslive/react-ui';
+import React from 'react';
 import DropDownOption from './DropDownOption';
 
-const HomeDropDown = ({ setDropDownSelection }) => {
+interface Props {
+    setDropDownSelection: Function;
+}
+
+const HomeDropDown: React.FC<Props> = ({ setDropDownSelection }) => {
     const mobileSDK = [
         {
             icon: <AndroidIcon />,

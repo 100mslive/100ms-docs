@@ -1,4 +1,4 @@
-import { useTheme } from '@100mslive/react-ui';
+import useKeyPress from '@/lib/useKeyPress';
 import {
     CrossIcon,
     DividerIcon,
@@ -7,7 +7,7 @@ import {
     SearchIcon,
     SunIcon
 } from '@100mslive/react-icons';
-import useKeyPress from '@/lib/useKeyPress';
+import { useTheme } from '@100mslive/react-ui';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -20,19 +20,11 @@ interface Props {
     };
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
     docs: { url: string; title: string; description: string; nav: number; content: string }[];
-    currentDocSlug?: string;
     modal: boolean;
     showMobileMenu?: boolean;
 }
 
-const Header: React.FC<Props> = ({
-    menuState,
-    modal,
-    setModal,
-    docs,
-    currentDocSlug,
-    showMobileMenu = true
-}) => {
+const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, showMobileMenu = true }) => {
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
     const router = useRouter();
@@ -158,9 +150,7 @@ const Header: React.FC<Props> = ({
                 </span>
             </div>
 
-            {modal ? (
-                <SearchModal setModal={setModal} docs={docs} currentDocSlug={currentDocSlug} />
-            ) : null}
+            {modal ? <SearchModal setModal={setModal} docs={docs} /> : null}
 
             <div className="menu-btn">
                 <button
@@ -327,8 +317,7 @@ const Header: React.FC<Props> = ({
 };
 
 Header.defaultProps = {
-    showMobileMenu: true,
-    currentDocSlug: undefined
+    showMobileMenu: true
 };
 
 export default Header;

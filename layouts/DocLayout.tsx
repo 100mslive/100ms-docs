@@ -1,16 +1,16 @@
-import React from 'react';
+import EditFile from '@/components/EditFile';
+import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import Pagination from '@/components/Pagination';
+import SegmentAnalytics from '@/components/SegmentAnalytics';
 import Sidebar from '@/components/Sidebar';
 import Toc from '@/components/Toc';
-import Footer from '@/components/Footer';
 import { PaginationType } from '@/lib/getPagination';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
-import EditFile from '@/components/EditFile';
-import SegmentAnalytics from '@/components/SegmentAnalytics'
+import React from 'react';
 
 type NavRoute = {
     url: string;
@@ -36,17 +36,9 @@ interface Props {
         nextPost: PaginationType;
     };
     allDocs: AllDocsType[];
-    currentDocSlug: string;
 }
 
-const DocLayout: React.FC<Props> = ({
-    frontMatter,
-    nav,
-    children,
-    pagination,
-    allDocs,
-    currentDocSlug
-}) => {
+const DocLayout: React.FC<Props> = ({ frontMatter, nav, children, pagination, allDocs }) => {
     const router = useRouter();
     const SEO = {
         title: `${
@@ -57,7 +49,9 @@ const DocLayout: React.FC<Props> = ({
                 frontMatter.title || '100ms Docs'
             } | 100ms - Video conferencing infrastructure for a video-first world`
         },
-        canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${router.asPath === "/" ? "" : router.asPath.split('?')[0]}`
+        canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${
+            router.asPath === '/' ? '' : router.asPath.split('?')[0]
+        }`
     };
     const [menu, setMenu] = React.useState(false);
     const [modal, setModal] = React.useState(false);
@@ -97,14 +91,7 @@ const DocLayout: React.FC<Props> = ({
             <div className="page">
                 <NextSeo {...SEO} />
                 <SegmentAnalytics options={{}} title={frontMatter.title} />
-                <Header
-                    modal={modal}
-                    setModal={setModal}
-                    menuState={menuState}
-                    
-                    docs={allDocs}
-                    currentDocSlug={currentDocSlug}
-                />
+                <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} />
                 <div className="ctx">
                     <div style={{ borderRight: '1px solid var(--gray6)' }}>
                         <Sidebar menu={menu} nav={newNav} />
@@ -170,7 +157,7 @@ const DocLayout: React.FC<Props> = ({
                         }
                     }
                 `}</style>
-                <Footer/>
+                <Footer />
             </div>
         </>
     );

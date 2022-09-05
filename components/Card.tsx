@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Box, Flex, Text, useTheme } from '@100mslive/react-ui';
+import { Box, CSS, Flex, Text, useTheme } from '@100mslive/react-ui';
 import React from 'react';
 
 interface Props {
     body: any;
-    css?: {};
+    css?: CSS;
     endComponent?: any;
     titleComponent?: any;
 }

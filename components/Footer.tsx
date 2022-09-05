@@ -8,10 +8,15 @@ import {
     Svg100MsLogo,
     TwitterIcon
 } from '@100mslive/react-icons';
-import { Box, Flex, HorizontalDivider, Text } from '@100mslive/react-ui';
+import { Box, CSS, Flex, HorizontalDivider, Text } from '@100mslive/react-ui';
 import { useStatusPage } from 'hooks';
+import React from 'react';
 
-const Footer = ({ css = {} }) => (
+interface Props {
+    css?: CSS;
+}
+
+const Footer: React.FC<Props> = ({ css = {} }) => (
     <Box css={{ ...css }}>
         <Flex
             justify="center"
@@ -85,78 +90,6 @@ const Footer = ({ css = {} }) => (
                         </Flex>
                     </Box>
                     <Box className="subscribe">
-                        {/* <Box
-                                className="mobile-hr"
-                                css={{
-                                    width: '100%',
-                                    paddingTop: '10px',
-                                    marginBottom: '-8px'
-                                }}>
-                                <hr />
-                            </Box> */}
-                        {/* {isSubscribed ? (
-                                    <Flex
-                                        gap="2"
-                                        css={{
-                                            '@md': { flexDirection: 'column', alignItems: 'center' }
-                                        }}>
-                                        <CheckCircleIcon
-                                            onClick={() => setIsSubscribed(false)}
-                                            style={{
-                                                color: 'var(--alert_success)',
-                                                height: '32px',
-                                                width: '32px',
-                                                margin: '-4px 0 0 0'
-                                            }}
-                                        />
-                                        <Box>
-                                            <Text
-                                                variant="button"
-                                                css={{
-                                                    '@md': { textAlign: 'center' },
-                                                    marginBottom: '$4'
-                                                }}>
-                                                Subscribed! You are on the list!
-                                            </Text>
-                                            <Text
-                                                css={{
-                                                    '@md': { textAlign: 'center' },
-                                                    color: '$textMedEmp'
-                                                }}>
-                                                We will send you developer updates every time they
-                                                come out.
-                                            </Text>
-                                        </Box>
-                                    </Flex>
-                                ) : (
-                                    <Flex className="footer-form" css={{ gap: '16px' }}>
-                                        <Flex
-                                            direction="column"
-                                            css={{ gap: '12px', width: '100%' }}>
-                                            <Text css={{ color: '$textHighEmp' }}>
-                                                Subscribe for developer updates
-                                            </Text>
-                                            <Input
-                                                className="footer-input"
-                                                type="email"
-                                                placeholder="Enter your email"
-                                            />
-                                            <Text variant="sm" css={{ color: '$textMedEmp' }}>
-                                                You can unsubscribe anytime
-                                            </Text>
-                                        </Flex>
-                                        <Button
-                                            onClick={() => setIsSubscribed(true)}
-                                            className="subscribe-btn"
-                                            css={{
-                                                height: '30px',
-                                                width: 'fit-content',
-                                                cursor: 'pointer'
-                                            }}>
-                                            Subscribe
-                                        </Button>
-                                    </Flex>
-                                )} */}
                         <Flex
                             className="footer-systems"
                             align="center"

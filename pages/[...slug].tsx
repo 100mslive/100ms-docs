@@ -13,7 +13,6 @@ import renderToString from 'next-mdx-remote/render-to-string';
 import { useRouter } from 'next/router';
 import path from 'path';
 import setValue from 'set-value';
-import React from 'react';
 
 const DocSlugs = ({ source, allDocs, nav, frontMatter }) => {
     const {
@@ -29,8 +28,7 @@ const DocSlugs = ({ source, allDocs, nav, frontMatter }) => {
             frontMatter={frontMatter}
             nav={nav[currentDocSlug]}
             pagination={pagination}
-            allDocs={allDocs}
-            currentDocSlug={currentDocSlug}>
+            allDocs={allDocs}>
             {content}
         </DocLayout>
     );

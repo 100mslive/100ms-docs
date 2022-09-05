@@ -9,7 +9,7 @@ import {
     RocketIcon,
     WebhookIcon
 } from '@100mslive/react-icons';
-import { Box, Flex, HorizontalDivider, VerticalDivider } from '@100mslive/react-ui';
+import { Box, CSS, Flex, HorizontalDivider, VerticalDivider } from '@100mslive/react-ui';
 import { Item } from 'components';
 import merge from 'lodash/merge';
 import Link from 'next/link';
@@ -88,9 +88,9 @@ const sdkItems = {
 interface Props {
     logo?: React.SVGProps<SVGSVGElement>;
     sdk?: any;
-    text?: any;
-    cssHeading?: {};
-    css?: {};
+    text?: string;
+    cssHeading?: CSS;
+    css?: CSS;
 }
 
 const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
@@ -207,50 +207,5 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
             ))}
         </Box>
     </Flex>
-
-    // <Flex
-    //     direction="column"
-    //     css={{
-    //         backgroundColor: '$surfaceDefault',
-    //         padding: '$10',
-    //         width: '$52',
-    //         borderRadius: '$3',
-    //         gap: '$10'
-    //     }}>
-    //     <Item
-    //         logo={logo}
-    //         text={text}
-    //         textVariant="body1"
-    //         endLogo={null}
-    //         textCSS={{ color: 'white' }}
-    //     />
-    //     {/* <hr style={{ width: '48px', height: '8px' }} /> */}
-    //     {sdkItems[sdk].map((value) => (
-    //         <Link key={value.id} href="/docs">
-    //             <a>
-    //                 <Box
-    //                     css={{
-    //                         color: '#E0ECFF',
-
-    //                         '&:hover': {
-    //                             color: '$primaryLight'
-    //                         }
-    //                     }}>
-    //                     <Item
-    //                         logo={itemList[value.id]}
-    //                         textCSS={{ color: '$textMedEmp' }}
-    //                         text={itemId[value.id]}
-    //                         textVariant="body2"
-    //                         endLogo={
-    //                             <ChevronRightIcon
-    //                                 style={{ height: '14px', color: '$textMedEmp' }}
-    //                             />
-    //                         }
-    //                     />
-    //                 </Box>
-    //             </a>
-    //         </Link>
-    //     ))}
-    // </Flex>
 );
 export default SdkItem;

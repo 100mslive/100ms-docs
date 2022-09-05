@@ -11,7 +11,7 @@ interface TabObject {
 interface Props {
     tabs: TabObject[];
     activeTab: string;
-    setActiveTab: any;
+    setActiveTab: Function;
 }
 
 const Switcher: React.FC<Props> = ({ tabs, setActiveTab, activeTab }) => (

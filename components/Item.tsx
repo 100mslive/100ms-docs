@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChevronRightIcon } from '@100mslive/react-icons';
-import { Flex, Text } from '@100mslive/react-ui';
+import { CSS, Flex, Text } from '@100mslive/react-ui';
 import React from 'react';
 
 interface Props {
     logo?: React.SVGProps<SVGSVGElement>;
     endLogo?: React.SVGProps<SVGSVGElement> | null;
-    css?: {};
-    textCSS?: {};
+    css?: CSS;
+    textCSS?: CSS;
     text: string;
     textVariant?: any;
 }

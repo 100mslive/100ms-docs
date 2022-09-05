@@ -7,8 +7,7 @@ import Link from 'next/link';
 import React from 'react';
 
 interface Props {
-    docs?: { url: string; title: string; description: string; nav: number; content: string }[];
-    currentDocSlug?: string;
+    docs: { url: string; title: string; description: string; nav: number; content: string }[];
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
