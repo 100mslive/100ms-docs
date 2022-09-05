@@ -66,15 +66,11 @@ with type `METADATA_UPDATED` and [HMSPeer](../../../api-reference/javascript/v2/
 object as notification data.
 
 ```js
-hmsNotifications.onNotification((notification) => {
-    switch (notification.type) {
-        case HMSNotificationTypes.METADATA_UPDATED:
-            const peer = notification.data;
-            const { isHandRaised } = hmsStore.getState(selectPeerMetadata(peer.id));
-            if (isHandRaised && !peer.isLocal) {
-                toast(`${peer.name} raised their hand.`);
-            }
-            break;
+hmsNotifications.onNotification((notification,HMSNotificationsTypes.METADATA_UPDATED) => {
+    const peer = notification.data;
+    const { isHandRaised } = hmsStore.getState(selectPeerMetadata(peer.id));
+    if (isHandRaised && !peer.isLocal) {
+        toast(`${peer.name} raised their hand.`);
     }
 });
 ```
