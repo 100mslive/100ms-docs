@@ -1,8 +1,4 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { Box, Button, Flex, Text } from '@100mslive/react-ui';
-import Footer from '@/components/Footer';
-import HomeDropDown from '@/components/HomeDropDown';
-import { getAllDocs } from '@/lib/mdxUtils';
 import {
     AndroidIcon,
     AppleIcon,
@@ -20,6 +16,10 @@ import {
     ServerIcon,
     ViewIcon
 } from '@100mslive/react-icons';
+import { Box, Button, Flex, Text } from '@100mslive/react-ui';
+import { getAllDocs } from '@/lib/mdxUtils';
+import HomeDropDown from '@/components/HomeDropDown';
+import Footer from '@/components/Footer';
 import { Card, Item, SdkItem } from 'components';
 import Header from 'components/Header';
 import Switcher from 'components/Switcher';
