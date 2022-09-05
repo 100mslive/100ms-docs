@@ -1,6 +1,4 @@
 /* eslint-disable react/react-in-jsx-scope */
-import { Box, Button, Flex, Text } from '@100mslive/react-ui';
-import { Card, Item, SdkItem } from 'components';
 import Footer from '@/components/Footer';
 import HomeDropDown from '@/components/HomeDropDown';
 import { getAllDocs } from '@/lib/mdxUtils';
@@ -21,6 +19,8 @@ import {
     ServerIcon,
     ViewIcon
 } from '@100mslive/react-icons';
+import { Box, Button, Flex, Text } from '@100mslive/react-ui';
+import { Card, Item, SdkItem } from 'components';
 import Header from 'components/Header';
 import Switcher from 'components/Switcher';
 import Link from 'next/link';
@@ -594,7 +594,7 @@ const Homepage = ({ allDocs }) => {
                             Explore our guides and examples to integrate 100ms.
                         </Text>
                     </Flex>
-                    <Flex gap="2" align="center" css={{ marginBottom: '$8' }}>
+                    <Flex align="center" css={{ marginBottom: '$8', gap: '1' }}>
                         <ComputerIcon style={{ height: '14px' }} />
                         <Text variant="sub2" css={{ fontWeight: '$semiBold' }}>
                             Web SDK
@@ -646,7 +646,7 @@ const Homepage = ({ allDocs }) => {
                             sdk="react"
                         />
                     </Flex>
-                    <Flex gap="2" align="center" css={{ marginTop: '$12', marginBottom: '$8' }}>
+                    <Flex align="center" css={{ marginTop: '$12', marginBottom: '$8', gap: '1' }}>
                         <PhoneIcon style={{ height: '14px' }} />
                         <Text variant="sub2" css={{ fontWeight: '$semiBold' }}>
                             Mobile SDK
@@ -679,7 +679,7 @@ const Homepage = ({ allDocs }) => {
                             />
                         ))}
                     </Flex>
-                    <Flex gap="2" align="center" css={{ marginTop: '$12', marginBottom: '$8' }}>
+                    <Flex align="center" css={{ marginTop: '$12', marginBottom: '$8', gap: '1' }}>
                         <ServerIcon style={{ height: '14px' }} />
                         <Text variant="sub2" css={{ fontWeight: '$semiBold' }}>
                             Server-side API
