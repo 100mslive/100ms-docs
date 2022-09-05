@@ -116,14 +116,14 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 <DividerIcon style={{ strokeWidth: '2px' }} />
                 <div>
                     <Link href={`/${currentTech}/`}>
-                        <Text
-                            css={{
-                                color: '$textMedEmp',
+                        <p
+                            className="company"
+                            style={{
                                 cursor: 'pointer',
-                                fontWeight: '700'
+                                fontSize: '1rem'
                             }}>
                             Docs
-                        </Text>
+                        </p>
                     </Link>
                 </div>
             </div>
