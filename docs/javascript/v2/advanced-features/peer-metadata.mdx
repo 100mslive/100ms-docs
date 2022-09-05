@@ -41,12 +41,20 @@ async function toggleRaiseHand() {
 <Tab id='meta-1'>
 
 ```jsx
-async function toggleRaiseHand() {
+const RaiseHand = () => {
     const localPeerId = useHMSStore(selectLocalPeerID);
     const metaData = useHMSStore(selectPeerMetadata(localPeerId));
-    const newMetadata = { ...metadata, isHandRaised: !metadata.isHandRaised };
-    await hmsActions.changeMetadata(newMetadata);
-}
+    const hmsActions = useHMSActions();
+    const toggleRaiseHand = useCallback(async () => {
+        const newMetadata = { ...metaData, isHandRaised: !metaData.isHandRaised };
+        await hmsActions.changeMetadata(newMetadata);
+    }, [hmsActions, metaData]);
+    return (
+        <button onClick={toggleRaiseHand}>
+            {metaData.isHandRaised ? 'Hand Raised' : 'Hand not Raised'}
+        </button>
+    );
+};
 ```
 
 </Tab>
