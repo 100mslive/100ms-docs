@@ -142,7 +142,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 <div className="search-ctx">
                     <button onClick={() => setModal(true)} type="button" className="search-btn">
                         <SearchIcon />
-                        <span>Quick search for anything</span>
+                        <span>Search docs</span>
                         <span className="hot-key">/</span>
                     </button>
                 </div>
@@ -254,32 +254,36 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     font-size: 24px;
                 }
                 .logo-ctx img {
-                    margin-left: 1rem;
-                    margin-right: 1rem;
+                    margin: 0 1rem;
                 }
                 .search-ctx {
                     border-radius: 5px;
-                    border-color: var(--border_light);
+                    width: 320px;
+                    border: 1px solid var(--border_light);
+                    margin-right: 20px;
                     background: var(--surface_light);
                     position: relative;
-                    padding: 5px 12px;
+                    padding: 5px 16px 5px 10px;
                 }
                 .search-btn {
+                    opacity: 0.6;
                     background-color: transparent;
                     display: flex;
+                    width: 100%;
                     align-items: center;
-                    border: none;
                     border-radius: 5px;
                     cursor: pointer;
                     border-bottom-width: 1px;
                 }
                 .search-btn span {
                     margin-left: 1rem;
+                    text-align: left;
                 }
                 .hot-key {
-                    margin-left: 1rem;
+                    margin-left: auto !important; 
                     border-radius: 5px;
-                    padding: 0 8px;
+                    padding: 0 5px;
+                    color: var(--text_high_emp);
                     border: 1px solid var(--gray6);
                 }
                 .search-btn:hover {
