@@ -21,7 +21,7 @@ interface Props {
     docs: { url: string; title: string; description: string; nav: number; content: string }[];
     currentDocSlug: string;
     modal: boolean;
-    showMobileMenu: boolean;
+    showMobileMenu?: boolean;
 }
 
 const Header: React.FC<Props> = ({
@@ -340,5 +340,7 @@ const Header: React.FC<Props> = ({
         </div>
     );
 };
+
+Header.defaultProps = { showMobileMenu: true };
 
 export default Header;
