@@ -59,8 +59,6 @@ to decide colors
     --warning: #f5a623;
 
     --surface_default: #13161B;
-    --surface_light: #1E232A;
-    --surface_lighter: #282F39;
 
     --border_default: #1B1F26;
     --border_light:#2D3440;
@@ -70,11 +68,23 @@ to decide colors
     --code: #061937;
     --code_text: var(--primary_light);
 
+    --sidebar_bg: #0B0C0F;
+    --header_bg: #13161B;
+    --article_bg: #13161B;
+    --new_surface_light: #171B21;
+    --new_surface_lighter: #1B2027;
+
     --text_med_emp: hsla(217, 100%, 94%, 0.8);
     --text_high_emp: hsla(216, 100%, 98%, 0.95);
 }
 
 [data-theme='light'] {
+    --sidebar_bg: #EDEFF3;
+    --header_bg: #EDEFF3;
+    --article_bg: #F6F7F9;
+    --new_surface_light: #FFF;
+    --new_surface_lighter: #FFF;
+
     --gray1: hsl(0 0% 99%);
     --gray2: hsl(0 0% 97.3%);
     --gray3: hsl(0 0% 95.1%);
@@ -101,8 +111,6 @@ to decide colors
     --warning: #f5a623;
     
     --surface_default: #F0F2F5;
-    --surface_light: #F9FAFB;
-    --surface_lighter: #E8EAED;
     
     --border_default: #E9ECF1;
     --border_light: #DFE4EC;
@@ -573,7 +581,7 @@ table tr td {
 }
 
 table td {
-    border: 1px solid var(--border_default);
+    border: 1px solid red;
 }
 tr {
     color: var(--text_high_emp);
@@ -597,15 +605,15 @@ table tr:last-of-type td:last-of-type {
 }
 
 table th {
-    background: var(--surface_lighter) !important;
+    background: var(--new_surface_lighter) !important;
 }
 
 table td{
-    background: var(--surface_light) !important;
+    background: var(--new_surface_light) !important;
 }
 
 table th,tr,td {
-    border-color: var(--border_light) !important;
+    border-color: var(--border_default) !important;
 }
 
 .token.comment,
@@ -781,7 +789,7 @@ h3:hover .copy-anchor {
     border: none;
     width: 200px;
     height: 24px;
-    background-color: var(--surface_default);
+    background-color: var(--new_surface_light);
     color: var(--text_high_emp);
     border-radius: 8px;
     margin: 8px 0 15px 1rem;
@@ -791,7 +799,7 @@ h3:hover .copy-anchor {
     font-weight: 600;
 }
 .dropdown:hover{
-    background-color: var(--surface_lighter);
+    background-color: var(--new_surface_lighter);
 }
 .dropdown:focus-visible {
     box-shadow: 0 0 0 3px var(--blue5);
@@ -807,7 +815,7 @@ ul.dropdown-options{
 .dropdown-options {
     z-index: 100;
     border-radius: 5px;
-    background: var(--surface_default);
+    background: var(--new_surface_light);
     position: absolute;
     left: 25px;
     width: 230px;
@@ -823,12 +831,16 @@ ul.dropdown-options{
     padding-left: 10px;
 }
 
+.dropdown-option:hover{
+    background-color: var(--surface_default);
+}
+
 .dropdown-option:first-of-type{
     margin-top: 5px;
 }
 
 .dropdown-option-active {
-    background: var(--surface_lighter);
+    background: var(--new_surface_lighter);
 }
 .flex {
     display: flex;

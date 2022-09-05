@@ -176,7 +176,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     top: ${menu ? '10px' : '80px'};
                     left: 0;
                     position: ${menu ? 'absolute' : 'sticky'};
-                    background: var(--background_default);
+                    background: var(--sidebar_bg);
                     z-index: 40;
                 }
                 ::-webkit-scrollbar {
@@ -244,7 +244,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                         height: calc(100vh - 60px);
                     }
                     :global(.page) {
-                        height: ${menu ? '100vh !important' : ''};
+                        height: ${menu ? '100vh `!important' : ''};
                         overflow: ${menu ? 'hidden !important' : ''};
                         padding-right: 1rem;
                     }

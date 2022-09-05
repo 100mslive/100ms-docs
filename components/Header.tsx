@@ -197,7 +197,7 @@ const Header: React.FC<Props> = ({
                     margin: 0 auto;
                     top: 0;
                     padding: 0.5rem;
-                    background-color: var(--surface_default);
+                    background-color: var(--header_bg);
                     border-bottom: 1px solid var(--border_default);
                 }
                 .res-ctx {
@@ -267,7 +267,7 @@ const Header: React.FC<Props> = ({
                     width: 320px;
                     border: 1px solid var(--border_light);
                     margin-right: 20px;
-                    background: var(--surface_light);
+                    background: var(--new_surface_light);
                     position: relative;
                     padding: 5px 16px 5px 10px;
                 }

@@ -146,7 +146,9 @@ const DocLayout: React.FC<Props> = ({
                 <div className="ctx">
                     <div
                         className="sidebar-container"
-                        style={{ borderRight: '1px solid var(--border_default)' }}>
+                        style={{
+                            borderRight: '1px solid var(--border_default)'
+                        }}>
                         <Sidebar menu={menu} nav={newNav} />
                     </div>
                     <div className="content-wrapper">
@@ -177,9 +179,10 @@ const DocLayout: React.FC<Props> = ({
                         display: flex;
                         width: 100%;
                         filter: blur(${modal ? '10px' : '0px'});
+                        background-color: var(--sidebar_bg) !important;
                     }
                     .sidebar-container {
-                        background-color: var(--background_default);
+                        background-color: var(--sidebar_bg) !important;
                     }
                     .wrapper-ctx {
                         display: flex;
@@ -198,6 +201,7 @@ const DocLayout: React.FC<Props> = ({
                         width: 100%;
                         display: flex;
                         justify-content: space-between;
+                        background-color: var(--article_bg);
                     }
                     .mobile-menu {
                         display: none;
