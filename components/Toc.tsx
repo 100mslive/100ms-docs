@@ -45,6 +45,7 @@ const TocContainer = ({ activeHeading, activeSubHeading }) => {
                     right: 0;
                     height: calc(100vh - 80px);
                     overflow-y: auto;
+                    margin-left: 16px;
                     padding-left: 10px;
                 }
                 .head {
