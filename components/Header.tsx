@@ -198,7 +198,7 @@ const Header: React.FC<Props> = ({
                     top: 0;
                     padding: 0.5rem;
                     background-color: var(--header_bg);
-                    border-bottom: 1px solid var(--border_default);
+                    border-bottom: 2px solid var(--new_border_default);
                 }
                 .res-ctx {
                     background-color: var(--gray2);
@@ -272,7 +272,7 @@ const Header: React.FC<Props> = ({
                     padding: 5px 16px 5px 10px;
                 }
                 .search-btn {
-                    opacity: 0.6;
+                    opacity: 1;
                     background-color: transparent;
                     display: flex;
                     width: 100%;

@@ -45,8 +45,8 @@ const TocContainer = ({ activeHeading, activeSubHeading }) => {
                     right: 0;
                     height: calc(100vh - 80px);
                     overflow-y: auto;
-                    max-width: 250px;
-                    margin-right: 40px;
+                    width: 296px;
+                    box-sizing: border-box;
                     padding-left: 10px;
                 }
                 .head {
@@ -66,7 +66,7 @@ const TocContainer = ({ activeHeading, activeSubHeading }) => {
                     display: block;
                 }
                 .child {
-                    margin-left: 1rem;
+                    margin-left: 2rem;
                 }
                 ::-webkit-scrollbar {
                     width: 0px;

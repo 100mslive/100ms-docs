@@ -72,7 +72,10 @@ to decide colors
     --header_bg: #13161B;
     --article_bg: #13161B;
     --new_surface_light: #171B21;
+    --new_border_default: var(--border_default);
     --new_surface_lighter: #1B2027;
+
+    --dropdown_hover: var(--new_surface_lighter);
 
     --text_med_emp: hsla(217, 100%, 94%, 0.8);
     --text_high_emp: hsla(216, 100%, 98%, 0.95);
@@ -82,8 +85,10 @@ to decide colors
     --sidebar_bg: #EDEFF3;
     --header_bg: #EDEFF3;
     --article_bg: #F6F7F9;
-    --new_surface_light: #FFF;
+    --new_surface_light: #FCFCFC;
     --new_surface_lighter: #FFF;
+    --new_border_default: #E0E4EB;
+    --dropdown_hover: #DFE2E7;
 
     --gray1: hsl(0 0% 99%);
     --gray2: hsl(0 0% 97.3%);
@@ -227,18 +232,10 @@ span a{
 }
 
 /* body3 */
-span.text.child {
-    font-size: 0.8125rem !important;
+span.text.child, span.text {
+    font-size: 13px !important;
     color: var(--text_med_emp);
     margin-top: 0 !important;
-    line-height: 24px;
-}
-
-/* body2 */
-span.text:not(.child) > a{
-    font-weight: 400;
-    font-size: 0.9375rem;
-    color: var(--text_med_emp);
     line-height: 24px;
 }
 
@@ -255,6 +252,11 @@ span.text:not(.child) > a{
     color: var(--primary_light);
     font-weight: 500 !important;
     border-left: 2px solid var(--primary_light);
+}
+
+.menu-container a {
+    position: relative;
+    left: 4px;
 }
 
 .menu-container:first-of-type{
@@ -278,6 +280,8 @@ span.child.active-sublink {
 .menu-title{
     line-height: 24px;
     font-size: 1rem !important;
+    position: relative;
+    left: 4px;
     text-transform: capitalize;
 }
 
@@ -348,7 +352,7 @@ h1 {
 
 h2 {
     font-size: 22px;
-    margin-top: 32px;
+    margin-top: 16px;
     margin-bottom: 16px;
     line-height: 1.5rem;
     letter-spacing: 0.02rem;
@@ -356,15 +360,15 @@ h2 {
 }
 
 p + h2{
-    margin-top: 48px;
+    margin-top: 32px;
 }
 
 ol + h2{
-    margin-top: 48px;
+    margin-top: 32px;
 }
 
 ul + h2{
-    margin-top: 48px;
+    margin-top: 32px;
 }
 
 h3 {
@@ -482,7 +486,7 @@ pre {
 }
 
 pre + h2 {
-    margin-top: 32px;
+    margin-top: 16px;
 }
 
 .note {
@@ -490,7 +494,7 @@ pre + h2 {
 }
 
 .note + h2 {
-    margin-top: 48px;
+    margin-top: 32px;
 }
 
 code {
@@ -540,10 +544,18 @@ blockquote :global(*:last-child) {
 }
 
 table {
-    margin: 2rem 0;
+    margin-bottom: 2rem;
     border-collapse: separate;
     border-spacing: 0;
     width: 100%;
+}
+
+ul + h2 {
+    margin-top: 16px;
+}
+
+ol + h2 {
+    margin-top: 16px;
 }
 
 table th,
@@ -789,7 +801,7 @@ h3:hover .copy-anchor {
     border: none;
     width: 200px;
     height: 24px;
-    background-color: var(--surface_default);
+    background-color: var(--new_surface_light);
     color: var(--text_high_emp);
     border-radius: 8px;
     margin: 8px 0 15px 1rem;
@@ -799,7 +811,7 @@ h3:hover .copy-anchor {
     font-weight: 600;
 }
 .dropdown:hover{
-    background-color: var(--new_surface_lighter);
+    background-color: var(--dropdown_hover)
 }
 .dropdown:focus-visible {
     box-shadow: 0 0 0 3px var(--blue5);
@@ -815,7 +827,7 @@ ul.dropdown-options{
 .dropdown-options {
     z-index: 100;
     border-radius: 5px;
-    background-color: var(--surface_default);
+    background-color: var(--new_surface_light);
     position: absolute;
     left: 25px;
     width: 230px;
@@ -831,11 +843,11 @@ ul.dropdown-options{
 }
 
 .dropdown-option:hover{
-    background-color: var(--new_surface_lighter);
+    background-color: var(--dropdown_hover);
 }
 
 .dropdown-option:first-of-type{
-    margin-top: 5px;
+    margin-top: 1rem;
 }
 
 .dropdown-option-active {

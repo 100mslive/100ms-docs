@@ -144,14 +144,14 @@ const DocLayout: React.FC<Props> = ({
                     currentDocSlug={currentDocSlug}
                 />
                 <div className="ctx">
-                    <div
-                        className="sidebar-container"
-                        style={{
-                            borderRight: '1px solid var(--border_default)'
-                        }}>
-                        <Sidebar menu={menu} nav={newNav} />
-                    </div>
                     <div className="content-wrapper">
+                        <div
+                            className="sidebar-container"
+                            style={{
+                                borderRight: '1px solid var(--new_border_default)'
+                            }}>
+                            <Sidebar menu={menu} nav={newNav} />
+                        </div>
                         <article>
                             <h1>{frontMatter.title}</h1>
                             {children}
@@ -188,7 +188,7 @@ const DocLayout: React.FC<Props> = ({
                         display: flex;
                     }
                     article {
-                        max-width: 900px;
+                        max-width: 960px;
                         width: 100%;
                         padding: 0 2rem;
                         min-height: calc(100vh - 140px);
