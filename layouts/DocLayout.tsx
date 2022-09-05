@@ -190,6 +190,7 @@ const DocLayout: React.FC<Props> = ({
                     article {
                         max-width: 960px;
                         width: 100%;
+                        box-sizing: border-box;
                         padding: 0 2rem;
                         min-height: calc(100vh - 140px);
                         padding-bottom: 80px;

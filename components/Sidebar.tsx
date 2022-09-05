@@ -103,7 +103,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
         <div className="sidebar">
             {/* Sidebar Version Section */}
             <section className="menu-container">
-                <div className="menu-title">Platform</div>
+                <div className="menu-title">PLATFORM</div>
                 <Listbox value={tech} onChange={changeTech}>
                     <Listbox.Button className="dropdown">
                         <div style={{ display: 'flex ', alignItems: 'center' }}>
@@ -230,6 +230,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 }
                 .menu-title {
                     padding-left: 1rem;
+                    text-transform: uppercase;
                     font-weight: 700;
                     font-size: 15px;
                     margin: 5px 0;
