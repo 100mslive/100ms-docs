@@ -164,7 +164,7 @@ const DocLayout: React.FC<Props> = ({
                     @media screen and (max-width: 1000px) {
                         article {
                             padding: 2rem 1rem;
-                            max-width: 100%;
+                            box-sizing: border-box;
                             width: 100%;
                         }
                     }

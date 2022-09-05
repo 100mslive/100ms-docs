@@ -1,4 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
+import { Box, Button, Flex, Text } from '@100mslive/react-ui';
+import { Card, Item, SdkItem } from 'components';
 import Footer from '@/components/Footer';
 import HomeDropDown from '@/components/HomeDropDown';
 import { getAllDocs } from '@/lib/mdxUtils';
@@ -19,43 +21,10 @@ import {
     ServerIcon,
     ViewIcon
 } from '@100mslive/react-icons';
-import { Box, Button, Flex, Text } from '@100mslive/react-ui';
-import { Card, Item, SdkItem } from 'components';
 import Header from 'components/Header';
 import Switcher from 'components/Switcher';
 import Link from 'next/link';
 import { useState } from 'react';
-
-// const quickLinks = [
-//     {
-//         title: 'Fundamentals',
-//         link: '/javascript/v2/foundation/basics'
-//     },
-//     {
-//         title: 'Quickstart',
-//         link: '/javascript/v2/guides/javascript-quickstart'
-//     },
-//     {
-//         title: 'Guides',
-//         link: '#guides'
-//     },
-//     {
-//         title: 'Features',
-//         link: '/javascript/v2/features/integration'
-//     },
-//     {
-//         title: 'Debugging',
-//         link: '/javascript/v2/debugging/debugging'
-//     },
-//     {
-//         title: 'Changelog',
-//         link: '/javascript/v2/release-notes/release-notes'
-//     },
-//     {
-//         title: 'API reference',
-//         link: '/api-reference/javascript/v2/home/content'
-//     }
-// ];
 
 const mobileSDK = [
     {
@@ -591,7 +560,13 @@ const Homepage = ({ allDocs }) => {
 
     return (
         <>
-            <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} />
+            <Header
+                modal={modal}
+                setModal={setModal}
+                docs={allDocs}
+                showMobileMenu={false}
+                menuState={menuState}
+            />
             <Flex
                 onClick={() => setShowDropDown(false)}
                 justify="center"
