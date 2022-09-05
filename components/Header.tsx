@@ -126,7 +126,9 @@ const Header: React.FC<Props> = ({
                             className="company"
                             style={{
                                 cursor: 'pointer',
-                                fontSize: '1rem'
+                                fontSize: '1rem',
+                                position: 'relative',
+                                top: '1px'
                             }}>
                             Docs
                         </p>
