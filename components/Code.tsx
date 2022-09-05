@@ -76,8 +76,8 @@ const Code: React.FC = ({ children }) => {
                     z-index: 45;
                     outline: none;
                     cursor: pointer;
-                    width: 25px;
-                    height: 25px;
+                    width: 36px;
+                    height: 36px;
                     padding: 5px;
                     border: 1px solid var(--gray3);
                     background: var(--gray1);

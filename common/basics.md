@@ -11,6 +11,7 @@ Any application built using 100ms' SDK has 2 components.
 -   **Server:** Use 100ms' APIs or dashboard to create rooms, setup room templates, trigger recording or RTMP streaming, access events.
 
 ![Architecture](/docs/docs/v2/arch.png)
+
 ## Basic Concepts
 
 -   `Room` A room is the basic object that 100ms SDKs return on successful connection. This contains references to peers, tracks and everything you need to render a live a/v app

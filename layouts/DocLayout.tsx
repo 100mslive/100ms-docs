@@ -188,7 +188,7 @@ const DocLayout: React.FC<Props> = ({
                         display: flex;
                     }
                     article {
-                        max-width: 960px;
+                        max-width: 1200px;
                         width: 100%;
                         box-sizing: border-box;
                         padding: 0 2rem;
