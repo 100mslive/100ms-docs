@@ -6,8 +6,10 @@ import {
     CrossIcon,
     HamburgerMenuIcon,
     SunIcon,
-    NightIcon
+    NightIcon,
+    DividerIcon
 } from '@100mslive/react-icons';
+import { Text } from '@100mslive/react-ui';
 import { useRouter } from 'next/router';
 import SearchModal from './SearchModal';
 
@@ -108,11 +110,22 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 <a href="/docs/javascript/v2/foundation/basics">
                     <div className="logo-ctx">
                         <img width={36} src="/docs/logo.svg" alt="100ms Logo" />
-                        <p className="company">
-                            100ms<span>.docs</span>
-                        </p>
+                        <p className="company">100ms</p>
                     </div>
                 </a>
+                <DividerIcon style={{ strokeWidth: '2px' }} />
+                <div>
+                    <Link href={`/${currentTech}/`}>
+                        <Text
+                            css={{
+                                color: '$textMedEmp',
+                                cursor: 'pointer',
+                                fontWeight: '700'
+                            }}>
+                            Docs
+                        </Text>
+                    </Link>
+                </div>
             </div>
             <div className="left-content">
                 <div className="nav-links">
