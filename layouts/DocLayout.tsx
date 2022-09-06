@@ -188,7 +188,7 @@ const DocLayout: React.FC<Props> = ({
                         display: flex;
                     }
                     article {
-                        max-width: 1200px;
+                        max-width: 960px;
                         width: 100%;
                         box-sizing: border-box;
                         padding: 0 2rem;
@@ -208,10 +208,18 @@ const DocLayout: React.FC<Props> = ({
                         display: none;
                         position: absolute;
                     }
+                    @media screen and (max-width: 1536px) {
+                        article {
+                            width: 50%;
+                        }
+                    }
+                    @media screen and (max-width: 1250px) {
+                        article {
+                            width: 70%;
+                        }
+                    }
                     @media screen and (max-width: 1000px) {
                         article {
-                            padding: 2rem 1rem;
-                            max-width: 100%;
                             width: 100%;
                         }
                     }
