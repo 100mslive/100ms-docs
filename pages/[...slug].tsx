@@ -1,18 +1,19 @@
 /* eslint-disable global-require */
+import React from 'react';
+import { useRouter } from 'next/router';
+import fs from 'fs';
+import matter from 'gray-matter';
+import mdxPrism from 'mdx-prism';
+import hydrate from 'next-mdx-remote/hydrate';
+import renderToString from 'next-mdx-remote/render-to-string';
+import path from 'path';
+import setValue from 'set-value';
 import components from '@/components/MDXComponents';
 import DocLayout from '@/layouts/DocLayout';
 import getPagination from '@/lib/getPagination';
 import imagePlugin from '@/lib/image';
 import { DOCS_PATH, getAllDocs, getDocsPaths } from '@/lib/mdxUtils';
 import withTableofContents from '@/lib/withTableofContents';
-import fs from 'fs';
-import matter from 'gray-matter';
-import mdxPrism from 'mdx-prism';
-import hydrate from 'next-mdx-remote/hydrate';
-import renderToString from 'next-mdx-remote/render-to-string';
-import { useRouter } from 'next/router';
-import path from 'path';
-import setValue from 'set-value';
 
 const DocSlugs = ({ source, allDocs, nav, frontMatter }) => {
     const {
