@@ -41,11 +41,8 @@ const Code: React.FC = ({ children }) => {
     };
     const [copy, setCopy] = React.useState(false);
 
-    const onExit = () => {
-        setCopy(false);
-    };
     return (
-        <div className="code-block" onMouseLeave={onExit}>
+        <div className="code-block">
             {!copy ? (
                 <button
                     aria-label="Copy to Clipboard"
