@@ -93,6 +93,23 @@ interface Props {
     css?: CSS;
 }
 
+// type Props = React.ComponentProps<{
+//     logo?: React.SVGProps<SVGElement>;
+//     sdk?: any;
+//     text?: string;
+//     cssheading?: CSS;
+//     css?: CSS;
+// }>;
+
+// type Props = React.ComponentProps<
+//     typeof Flex & {
+//         logo?: React.SVGProps<SVGElement>;
+//         sdk?: any;
+//         text?: string;
+//         cssheading?: CSS;
+//     }
+// >;
+
 const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
     <Flex
         css={merge(

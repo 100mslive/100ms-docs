@@ -3,10 +3,10 @@ import { Box, CSS, Flex, Text, useTheme } from '@100mslive/react-ui';
 import React from 'react';
 
 interface Props {
-    body: any;
+    body: React.FC | string;
     css?: CSS;
-    endComponent?: any;
-    titleComponent?: any;
+    endComponent?: React.ReactNode;
+    titleComponent?: React.ReactNode;
 }
 
 const Card: React.FC<Props> = ({ body, endComponent, titleComponent, css }) => (
