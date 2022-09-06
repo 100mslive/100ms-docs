@@ -51,7 +51,7 @@ const sdkItems = {
         { id: 5, link: '/javascript/v2/release-notes/release-notes' }
     ],
     serverSide: [
-        { id: 1, link: '/server-side/v2/guides/quickstart' },
+        // { id: 1, link: '/server-side/v2/guides/quickstart' },
         { id: 4, link: '/server-side/v2/foundation/templates-and-roles#api-reference' },
         { id: 6, link: '/server-side/v2/foundation/webhook' },
         { id: 7, link: '/server-side/v2/foundation/firewall-and-ports' }
@@ -92,23 +92,6 @@ interface Props {
     cssHeading?: CSS;
     css?: CSS;
 }
-
-// type Props = React.ComponentProps<{
-//     logo?: React.SVGProps<SVGElement>;
-//     sdk?: any;
-//     text?: string;
-//     cssheading?: CSS;
-//     css?: CSS;
-// }>;
-
-// type Props = React.ComponentProps<
-//     typeof Flex & {
-//         logo?: React.SVGProps<SVGElement>;
-//         sdk?: any;
-//         text?: string;
-//         cssheading?: CSS;
-//     }
-// >;
 
 const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
     <Flex
