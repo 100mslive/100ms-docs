@@ -12,18 +12,60 @@ description: Release Notes for 100ms JavaScript SDK
 | @100mslive/react-sdk                   | [![npm version](https://badge.fury.io/js/%40100mslive%2Freact-sdk.svg)](https://badge.fury.io/js/%40100mslive%2Freact-sdk)             |
 | @100mslive/hms-video-react(deprecated) | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-react.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-react) |
 
+## 2022-08-01
+
+Released: `@100mslive/hms-video-store@0.5.0`, `@100mslive/react-sdk@0.3.0`
+
+Added:
+
+-   retry calls for all the websocket messages
+-   params are now optional in `startHLSStreaming`
+
+Breaking:
+
+-   react-ui theme colors have been updated
+-   react-ui, styling for components is updated
+
+## 2022-07-11
+
+Released: `@100mslive/hms-video-store@0.4.0`, `@100mslive/react-sdk@0.2.0`
+
+Added:
+
+-   `leaveOnUnload` prop to `HMSRoomProvider` to make leave on page load optional. Defaults to `true`.
+-   Video/Audio Plugins can be added in preview now.
+
+Fixed:
+
+-   `Error in getting track stats` when Audio/Video plugin is added in preview
+
+Breaking:
+
+-   react-ui theme colors have been updated
+
+## 2022-06-22
+
+Released: `@100mslive/hms-video-store@0.3.4`, `@100mslive/react-sdk@0.1.4`
+
+Added:
+
+-   `clearList` and `removeItem` actions in playlist
+-   `getContextType` in video plugin interface
+-   joining without webrtc connection for hls stream viewer
+
 ## 2022-06-14
 
 Released: `@100mslive/hms-video-store@0.3.2`, `@100mslive/react-sdk@0.1.2`, `@100mslive/hms-video-react@0.4.2`
 
 Added:
+
 -   Codec in track stats
 
 Fixed:
+
 -   System denied permission error for camera and microphone
 -   Duplicate tile in server recording on role change from AV to audio to AV
 -   Retry in join
-
 
 ## 2022-06-08
 
@@ -192,7 +234,7 @@ Released: `@100mslive/hms-video@0.1.39`, `@100mslive/hms-video-store@0.2.85`, `@
 Added:
 
 -   [HLS streaming](../features/hls) for streaming a room to a large number of viewers
--   Support for Multiple [video plugins](../plugins/custom-video-plugin)
+-   Support for Multiple [video plugins](../plugins/custom-video-plugins)
 -   `startedAt` field in room to know since when the call is running
 -   An additional boolean `showTileForAllPeers` in VideoList component to show peers with no tiles.
 

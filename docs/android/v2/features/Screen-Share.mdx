@@ -1,5 +1,5 @@
 ---
-title: Screen Share (Beta)
+title: Screen Share
 nav: 12
 ---
 
@@ -132,7 +132,7 @@ SDK also stops the foreground service on calling this method.
         }
 
         override fun onSuccess() {
-          // started successfully
+          // stopped successfully
         }
 
       } )
@@ -142,8 +142,8 @@ SDK also stops the foreground service on calling this method.
 </Tab>
 
 
->   `stopScreenshare` should also be called from `onDestroy()` of the `activity`/ `fragment` that is
-    starting the screenshare otherwise the foreground service will be running if even user kills the
+>   It is advisable to call `leave` API from the `onDestroy()` of the `activity`/ `fragment` that
+    started the screenshare otherwise the foreground service will be running if even user kills the
     app from the Recents tab.
 
 >   DONOT forget to add the permission for foreground service

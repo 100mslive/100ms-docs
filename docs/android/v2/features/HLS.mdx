@@ -11,9 +11,56 @@ Behind the scenes, this will be achieved by having a bot join your room and stre
 > Note that the media server serving the content in this case is owned by 100ms. If you're looking for a way to stream
 on YouTube, Twitch etc., please have a look at our RTMP streaming docs [here](./RTMP-recording).
 
-## Starting HLS
+## Starting 
 
-To start HLS you'll need to pass in a meeting URL. The 100ms bot will open this URL to join your room, so
+HLS can be started in two ways depending on the level of customization you need.
+1. Default View: The simplest view to just begin a stream with default UI and parameters.
+2. Custom Views: To use your own UI for HLS streaming, you need to provide your own webapp URL for our bot to join and stream.
+
+#### Default View
+
+Begins a stream with default parameters.
+
+<Tabs id="hls-default-view" items={['Kotlin', 'Java']} />
+
+<Tab id='hls-default-view-0'>
+
+```kotlin
+hmsSdkHost.startHLSStreaming(hmsActionResultListener = object : HMSActionResultListener {
+    override fun onSuccess() {
+        // hls was started successfully
+    }
+
+    override fun onError(error: HMSException) {
+        // hls failed to start with error $error
+    }
+
+})
+```
+
+</Tab>
+
+<Tab id='hls-default-view-1'>
+
+```java
+hmsSdkHost.startHLSStreaming(null, new HMSActionResultListener() {
+    @Override
+    public void onSuccess() {
+        // hls was started successfully
+    }
+
+    @Override
+    public void onError(@NonNull HMSException error) {
+        // hls failed to start with error $error
+    }
+});
+
+```
+
+</Tab>
+
+#### Custom View
+To use our own browser UI for HLS, you'll need to pass in a meeting URL. The 100ms bot will open this URL to join your room, so
 it must allow access without any user level interaction. In the future it'll be possible to start HLS for multiple such URLs for the same room.
 
 For this purpose the API supports taking in an array, although currently only the first element of the array will be used. To distinguish between multiple urls an additional field `metadata` can be optionally passed. The `meetingURL` and `metadata` are clubbed together to form what we'll call a `variant`.

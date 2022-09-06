@@ -3,6 +3,67 @@ title: Android SDK
 nav: 15
 description: Release Notes for 100ms Android SDK
 ---
+## v2.4.7 - 2022-07-28
+### Fixed
+* Calling `switchCamera` API leads trigerring of `onSuccess` callback twice
+* `onRoomUpdate` with type `HMSRoomUpdate.ROOM_PEER_COUNT_UPDATED` not getting called when peer count changes in the room
+* Peer not able to publish tracks when updated to webrtc from HLS if rejoins after a reconnection in webrtc Mode
+
+### Changed
+* `HMSHLSConfig` is now an optional parameter while calling `startHLSStreaming` and `stopHLSStreaming`
+* The `meetingUrl` parameter while creating `HMSHLSMeetingURLVariant` instance for `HMSHLSConfig` is optional now. If nothing is provided
+HMS system will take the default meetingUrl for starting HLS stream
+* `changeRoleForce` permission in `HMSRole` is now removed and no longer used
+* `recording` permission in `HMSRole` is now broken into - `browserRecording` and `rtmpStreaming`
+* `streaming` permission in `HMSRole` is now `hlsStreaming`
+
+## v2.4.6 - 2022-07-15
+### Fixed
+* Checking for targetApiVersion along with Device SDK version while initializing Bluetooth manager
+
+## v2.4.5 - 2022-07-14
+### Fixed
+* `peer_list_time` calculation
+* Audio device switch issues
+* Bluetooth issues in HLS mode
+* Removed additional Bluetooth permission in SDK for android 30 and above
+
+### Added
+* `Join response time` to analytics
+* Support to enable or disable webrtc's AutoResize option while publishing video track
+
+## v2.4.4 - 2022-07-07
+### Fixed
+* Web-Socket reconnection not working for non webrtc peers
+
+## v2.4.3 - 2022-07-01
+### Fixed
+* `cameraFacing` field in `HMSVideoTrackSettings` not getting updated on calling `switchCamera` API
+* Issue of 'peer is not joined' error while joining and SDK reconnection
+* Automatic proguard rules were fixed. No app-side proguard configuration is required for production builds with 100ms.
+
+### Added
+* APIs to stream device audio in different modes
+* APIs to view and change the output speaker selected by the SDK to playout
+* Analytics events to measure `retry` counts of JOIN calls
+
+## v2.4.2 - 2022-06-22
+### Fixed
+* Webrtc not able to find Camera from Android Camera Manager leading to `CantAccessCaptureDevice` error while calling preview or join API
+* Assertion Crash in Network Monitor while trying to create new instane of HMSSDK while a call is in progress
+* Chances of Multiple socket connection getting created incase there is network disconnection in preview screen and join gets called during that time
+
+### Added
+* `setAudioMode` API to change the Audio out mode manually between in-call volume and media volume
+* Retry on 5xx and 429 errors in all RPC calls
+* Analytics events to measure `peer-list` time
+* Join optimization by not sending offer for non webrtc peers
+
+### Changed
+* Made TrackError while switching camera non-terminal
+* Removed recreation of Lists happening in SDK, leading to slowness while calling certain APIs in big rooms. Affected APIs by this change are :-
+`getPeers()` , `getRemotePeers()`, `getPlugins()` - now return `List` instead of `Array`
+
 ## v2.4.1 - 2022-06-14
 ### Fixed
 * Made SDK compatible for compileSDKversion 30 by reducing version of Room lib to 2.3.0

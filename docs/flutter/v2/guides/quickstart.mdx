@@ -176,7 +176,7 @@ abstract class HMSUpdateListener {
   /// This will be called when there is an error in the system
   /// and SDK has already retried to fix the error
   /// [error]: the error that occurred
-  void onError({required HMSException error});
+  void onHMSError({required HMSException error});
 
   /// This is called when there is a new broadcast message from any other peer in the room
   ///
@@ -280,13 +280,23 @@ To leave a video call, just call leave on HMSSDK.
 hmsSDK.leave();
 ```
 
-## Where to go from here
-
-Checkout the [simple version](https://github.com/100mslive/100ms-flutter/tree/main/example) of the project.
-
 ## Glossary
 
 -   `Room`: When you join a particular video call, all the peers said to be in a video call `room`
 -   `Track`: Media. Can be the audio track or the video track.
 -   `Peer`: One participant in the video call. Local peers are you, remote peers are others.
 -   `Broadcast`: Chat messages are broadcasts.
+
+
+## Where to go from here
+
+Checkout the [simple version](https://github.com/100mslive/100ms-flutter/tree/main/example) of the project.
+
+
+### 100ms Flutter app
+
+You can download & check out the 100ms Flutter app - 
+
+🤖 The Flutter Android app from [Google Play Store here](https://play.google.com/store/apps/details?id=live.hms.flutter)
+
+📱 Flutter iOS app from [Apple App Store here](https://apps.apple.com/app/100ms-live/id1576541989)

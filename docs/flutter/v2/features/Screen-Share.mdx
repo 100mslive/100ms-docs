@@ -5,7 +5,147 @@ nav: 3.18
 
 Flutter SDK provides support for sharing the entire screen of the device to the room.
 
-Please note that for a peer to share their screen, their role must have screenshare enabled in the dashboard. Also select the appropriate resolution that you desire the screenshare track should be of.
+Please note that for a peer to share their screen, their role must have screenshare enabled in the dashboard. Also select the appropriate resolution for the Screen share quality. 1080p is recommended for better text readability.
+
+## Android Setup
+
+You also need to pass the intent from android native side to HMS SDK in the following way :
+
+In your app's `MainActivity` add -
+
+```kotlin
+import live.hms.hmssdk_flutter.HmssdkFlutterPlugin
+import android.app.Activity
+import android.content.Intent
+import live.hms.hmssdk_flutter.Constants
+
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+super.onActivityResult(requestCode, resultCode, data)
+
+    if (requestCode == Constants.SCREEN_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+        HmssdkFlutterPlugin.hmssdkFlutterPlugin?.requestScreenShare(data)
+    }
+
+}
+
+```
+> DONOT forget to add the permission for foreground service in AndroidManifest.xml
+
+```kotlin
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+```
+
+## iOS Setup
+
+You need to create an iOS broadcast upload extension. It uses Apple's ReplayKit framework to record the device screen and delivers frame samples to your broadcast extension. You can share not only your own app but also the entire device sceeen including other apps on the device.
+
+### Step 1 - Open project
+Open your iOS Xcode project, such as `ios/Runner.xcworkspace` for full-Flutter apps.
+
+### Step 2 - Add Broadcast Upload Extension
+Click on your project in the Project Navigator to show the project settings. 
+Press + at the bottom of the target list to add a new target.
+
+![AddExtension](/docs/v2/flutter-xcode.png)
+
+Select the `Broadcast Upload Extension` type for your new target.
+
+![SelectExtension](/docs/v2/flutter-select-extension.png)
+
+Enter your new target detail in the dialog.
+Uncheck Include UI Extension option.
+
+![DetailExtension](/docs/v2/flutter-extension-detail.png)
+
+In the following dialog, activate the new scheme for the new target.
+
+![ActivateExtension](/docs/v2/flutter-activate-extension.png)
+
+### Step 3 - Add App Group
+
+Click + icon in `Signing & Capabilities` section.
+Select `App Group` from the list of Capabilities.
+
+![AddAppgroup](/docs/v2/flutter-add-appgroup.png)
+
+New section should be added under `Signing & Capabilities` named App Groups. Click + icon under that.
+
+![Appgroup](/docs/v2/flutter-appgroup.png)
+
+Enter App group name (create unique app group name ex: group.your.domain.name)
+
+![AppgroupDetail](/docs/v2/flutter-appgroup-detail.png)
+
+### Step 4 - Edit Podfile
+In ios folder of your flutter project and open `Podfile`.
+Paste the following code and replace the extension name you just created:
+```
+target 'Your Extension Name here' do
+  use_modular_headers!
+  pod 'HMSBroadcastExtensionSDK'
+end
+```
+![Podfile](/docs/v2/flutter-podfile.png)
+
+In terminal change directory to ios and run `pod install` command.
+
+### Step 5 - Edit SampleHandler
+Expand `Runner > ExtensionName` and open SampleHandler file.
+
+![SampleHandler](/docs/v2/flutter-sample-handler.png)
+
+Replace the code with the code below and pass app group name to the respected field:
+
+```swift
+import ReplayKit
+import HMSBroadcastExtensionSDK
+
+class SampleHandler: RPBroadcastSampleHandler {
+
+    let screenRenderer = HMSScreenRenderer(appGroup: "Enter App Group Name")
+
+    override func broadcastStarted(withSetupInfo setupInfo: [String : NSObject]?) {
+        // User has requested to start the broadcast. Setup info from the UI extension can be supplied but optional.
+    }
+
+    override func broadcastPaused() {
+        // User has requested to pause the broadcast. Samples will stop being delivered.
+    }
+
+    override func broadcastResumed() {
+        // User has requested to resume the broadcast. Samples delivery will resume.
+    }
+
+    override func broadcastFinished() {
+        // User has requested to finish the broadcast.
+        screenRenderer.invalidate()
+    }
+
+    override func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType) {
+        switch sampleBufferType {
+        case RPSampleBufferType.video:
+            // Handle video sample buffer
+            if let error = screenRenderer.process(sampleBuffer) {
+                if error.code == .noActiveMeeting {
+                    finishBroadcastWithError(NSError(domain: "ScreenShare",
+                                                     code: error.code.rawValue,
+                                                     userInfo: [NSLocalizedFailureReasonErrorKey : "You are not in a meeting."]))
+                }
+            }
+            break
+        case RPSampleBufferType.audioApp:
+            // Handle audio sample buffer for app audio
+            break
+        case RPSampleBufferType.audioMic:
+            // Handle audio sample buffer for mic audio
+            break
+        @unknown default:
+            // Handle other sample buffer types
+            fatalError("Unknown type of sample buffer")
+        }
+    }
+}
+```
 
 ## How to start screenshare from the app
 
@@ -13,37 +153,18 @@ To start screen share, app needs to call the `startScreenshare` method of `HMSSD
 
 Following is the snippet on how to use this:
 
-<Tabs id="startscreenshare" items={["Dart"]} />
+```dart
+hmsSDK.startScreenShare(hmsActionResultListener: hmsActionResultListener);
+```
 
-<Tab id='startscreenshare-0'>
+To start screen share in iOS you need to pass `App Group` and `Extension` name to `HMSSDK` as follows:
 
 ```dart
-hmsSDK.startScreenShare();
+HMSSDK(appGroup: "group.name", preferredExtension: "your.extension.name")
 ```
+You can find `app group` and `extension` name in Xcode under `Signing and Capabilities` section under `target > yourExtensionName`.
 
-you also need to pass the intent from android native side to HMS SDK in the following way :
-
-
-In your app's `MainActivity` add -
-
-```kotlin
-import live.hms.hmssdk_flutter.HmssdkFlutterPlugin
-import android.app.Activity 
-import android.content.Intent
-import live.hms.hmssdk_flutter.Constants
-```
-
-```kotlin
-override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
-
-    if (requestCode == Constants.SCREEN_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK){
-        HmssdkFlutterPlugin.hmssdkFlutterPlugin?.requestScreenShare(data)
-    }
-}
-```
-
-</Tab>
+![parameter](/docs/v2/flutter-dart-help.png)
 
 ## How to get Screen Share Status
 
@@ -51,15 +172,15 @@ Application needs to call the `isScreenShareActive` method of `HMSSDK`.
 
 This method returns a `Boolean` which will be true inscase ScreenShare is currently active and being used, and False for inactive state.
 
-<Tabs id="screensharestatus" items={["Dart"]} />
-
-<Tab id='screensharestatus-0'>
-
 ```dart
 hmsSDK.isScreenShareActive();
 ```
 
-</Tab>
+To start Screen share in iOS you need to pass appGroup and preferred Extension name to HMSSDK:
+
+```dart
+HMSSDK(appGroup: appGroup, preferredExtension: preferredExtension);
+```
 
 ## How to stop screenshare
 
@@ -67,18 +188,6 @@ To stop the screenshare, you need to invoke `stopscreenShare` method of `HMSSDK`
 
 Following is the snippet on how to use this:
 
-<Tabs id="stopscreenshare" items={["Dart"]} />
-
-<Tab id='stopscreenshare-0'>
-
 ```dart
-hmsSDK.stopScreenShare();
-```
-
-</Tab>
-
-> DONOT forget to add the permission for foreground service in AndroidManifest.xml
-
-```kotlin
-<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+hmsSDK.stopScreenShare(hmsActionResultListener: hmsActionResultListener);
 ```
