@@ -23,7 +23,6 @@ interface Props {
     modal: boolean;
     showMobileMenu?: boolean;
     showReference?: boolean;
-    currentDocSlug: string;
 }
 
 const Header: React.FC<Props> = ({
@@ -31,7 +30,6 @@ const Header: React.FC<Props> = ({
     modal,
     setModal,
     docs,
-    currentDocSlug,
     showReference = true,
     showMobileMenu = true
 }) => {
@@ -163,7 +161,7 @@ const Header: React.FC<Props> = ({
             </div>
 
             {modal ? (
-                <SearchModal setModal={setModal} docs={docs} currentDocSlug={currentDocSlug} />
+                <SearchModal setModal={setModal} docs={docs} />
             ) : null}
 
             <div className="menu-btn">

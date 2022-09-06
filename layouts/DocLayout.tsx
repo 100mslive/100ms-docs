@@ -129,7 +129,7 @@ const DocLayout: React.FC<Props> = ({ frontMatter, nav, children, pagination, al
             <div className="page">
                 <NextSeo {...SEO} />
                 <SegmentAnalytics options={{}} title={frontMatter.title} />
-                <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} currentDocSlug={''} />
+                <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} />
                 <div className="ctx">
                     <div className="content-wrapper">
                         <div
