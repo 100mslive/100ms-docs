@@ -566,6 +566,7 @@ const Homepage = ({ allDocs }) => {
                 docs={allDocs}
                 showMobileMenu={false}
                 menuState={menuState}
+                showReference={false}
             />
             <Flex
                 onClick={() => setShowDropDown(false)}

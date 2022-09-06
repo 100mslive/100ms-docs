@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import {
     CrossIcon,
     DividerIcon,
@@ -10,7 +11,6 @@ import {
 import { useTheme } from '@100mslive/react-ui';
 import Link from 'next/link';
 import useKeyPress from '@/lib/useKeyPress';
-import { useRouter } from 'next/router';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -22,6 +22,7 @@ interface Props {
     docs: { url: string; title: string; description: string; nav: number; content: string }[];
     modal: boolean;
     showMobileMenu?: boolean;
+    showReference?: boolean;
     currentDocSlug: string;
 }
 
@@ -31,6 +32,7 @@ const Header: React.FC<Props> = ({
     setModal,
     docs,
     currentDocSlug,
+    showReference = true,
     showMobileMenu = true
 }) => {
     const escPressed = useKeyPress('Escape');
@@ -133,7 +135,7 @@ const Header: React.FC<Props> = ({
             <div className="left-content">
                 <div className="nav-links">
                     <span style={{ marginRight: '1rem' }} />
-                    {isNonApiRef ? null : (
+                    {isNonApiRef || !showReference ? null : (
                         <button className={isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
                             <Link href={routeAPIRef()}>API Reference</Link>
                         </button>
@@ -312,6 +314,11 @@ const Header: React.FC<Props> = ({
                     outline: none;
                     border: none;
                 }
+                @media screen and (max-width: 1024px) {
+                    .nav-links {
+                        display: none;
+                    }
+                }
                 @media screen and (max-width: 768px) {
                     .search-ctx {
                         display: none;
@@ -347,7 +354,7 @@ const Header: React.FC<Props> = ({
 
 Header.defaultProps = {
     showMobileMenu: true,
-    currentDocSlug: ''
+    showReference: true
 };
 
 export default Header;
