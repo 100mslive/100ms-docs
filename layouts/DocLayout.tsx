@@ -188,8 +188,9 @@ const DocLayout: React.FC<Props> = ({
                         display: flex;
                     }
                     article {
-                        max-width: 960px;
-                        width: 100%;
+                        max-width: 1200px;
+                        width: calc(100vw - 590px);
+                        flex-grow: 1;
                         box-sizing: border-box;
                         padding: 0 2rem;
                         min-height: calc(100vh - 140px);
@@ -207,21 +208,6 @@ const DocLayout: React.FC<Props> = ({
                     .mobile-menu {
                         display: none;
                         position: absolute;
-                    }
-                    @media screen and (max-width: 1536px) {
-                        article {
-                            width: 50%;
-                        }
-                    }
-                    @media screen and (max-width: 1250px) {
-                        article {
-                            width: 70%;
-                        }
-                    }
-                    @media screen and (max-width: 1000px) {
-                        article {
-                            width: 100%;
-                        }
                     }
                 `}</style>
             </div>
