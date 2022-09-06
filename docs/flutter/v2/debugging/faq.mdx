@@ -1,0 +1,59 @@
+---
+title: Frequently Asked Questions
+nav: 5.1
+---
+
+This page lists down frequently asked questions. If you want to add a new question or edit an older one, feel free to
+[send us a PR](https://github.com/100mslive/100ms-docs/blob/main/docs/flutter/v2/debugging/faq.mdx).
+
+## Not getting event updates after hot reload/restart
+This is caused because platform channel needs to be reinitialized again,hence this is intended behaviour.
+The solution for this is to re-run the app.
+
+Practices for faster development :
+
+* Perform the intended changes.
+* Leave the room.
+* Perform hot reload/restart and rejoin the room.
+* Verify the changes.
+
+The permanent solution for this is in pipeline, we will update once it's done.
+
+## Issues while using `hmssdk_flutter` with flutter 3.x.x 
+Flutter 3.x.x has some issues related to [Platform View](https://github.com/flutter/flutter/issues/107313).
+So, it is recommended to use 2.10.x flutter versions with `hmssdk_flutter`. 
+
+## Videos are not getting rendered at the correct position or video screen is coming over the buttons
+Please check the flutter version this issue is likely happening due to usage of Flutter 3.x.x series.
+This is due to an ongoing issue in Flutter 3.x.x which causes Native Platform Views to be drawn at incorrect position.
+Refer: [Android Platform View](https://github.com/flutter/flutter/issues/107313) & [Platform View bug](https://github.com/flutter/flutter/issues/103630)
+
+Use a version of the 2.x.x series, 2.10.5 or lower. We are actively tracking these issues & once they are released on flutter `stable` branch, we'll release a compatible `hmssdk_flutter` version.
+## Do you have any implementation with other state management libraries than provider
+Please find the implementations below:
+* [Bloc](https://github.com/100mslive/100ms-flutter/tree/main/demo_app_with_100ms_and_bloc)
+* [Getx](https://github.com/100mslive/100ms-flutter/tree/main/demo_with_getx_and_100ms)
+* [Riverpod](https://github.com/100mslive/100ms-flutter/tree/main/example_riverpod)
+* [Mobx](https://github.com/100mslive/100ms-flutter/tree/main/mobx-example-app)
+
+## Not able to get room updates after joining the room
+To listen to the room updates please attach `HMSUpdateListener` as:
+```dart
+hmsSDK.addUpdateListener(updateListener);
+```
+You can find more details about HMSUpdateListener [here](../features/update-listeners)
+
+## Getting updates multiple time in the room
+Please ensure removing the `HMSUpdateListener` while leaving the room.
+```dart
+ hmsSDK.removeUpdateListener(updateListener);
+ ```
+You can find more details about HMSUpdateListener [here](../features/update-listeners)
+
+## Can I create room using API?
+Yes,please find the link [here](/server-side/v2/features/room).
+
+
+## I want to suggest a new feature.
+Awesome, we're always looking out for new ideas and feature. Please reach out to us over [discord](https://100ms.live/discord).
+

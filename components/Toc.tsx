@@ -6,7 +6,7 @@ export type TocItem = {
     title: string;
 };
 
-const TocContainer = () => {
+const TocContainer = ({ activeHeading, activeSubHeading }) => {
     const [toc, setToc] = React.useState<TocItem[] | []>([]);
     React.useEffect(() => {
         const list: TocItem[] = [];
@@ -23,10 +23,15 @@ const TocContainer = () => {
     return (
         <div className="toc-ctx">
             {toc.length !== 0 ? <p className="head">On This Page</p> : null}
-
             {toc.map((item) =>
                 item.title !== '' ? (
-                    <span className={`text ${item.depth === 3 ? 'child' : ''}`} key={item.slug}>
+                    <span
+                        className={`${item.slug === activeHeading ? 'active-toc' : ''} text ${
+                            item.depth === 3
+                                ? `child ${item.slug === activeSubHeading ? 'active-sublink' : ''}`
+                                : ''
+                        }`}
+                        key={item.slug}>
                         <a href={`#${item.slug}`}>{item.title}</a>
                     </span>
                 ) : null
@@ -40,13 +45,11 @@ const TocContainer = () => {
                     right: 0;
                     height: calc(100vh - 80px);
                     overflow-y: auto;
-                    max-width: 250px;
-                    margin-right: 40px;
+                    margin-left: 16px;
                     padding-left: 10px;
                 }
                 .head {
                     font-weight: bold;
-                    color: var(--gray12);
                     text-transform: uppercase;
                 }
                 a {
@@ -56,10 +59,13 @@ const TocContainer = () => {
                 .text {
                     font-size: 14px;
                     margin: 0.5rem 0;
-                    color: var(--gray11);
+                }
+                .text a {
+                    padding-left: 1rem !important;
+                    display: block;
                 }
                 .child {
-                    margin-left: 1rem;
+                    margin-left: 2rem;
                 }
                 ::-webkit-scrollbar {
                     width: 0px;

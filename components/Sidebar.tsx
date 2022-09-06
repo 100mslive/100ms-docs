@@ -100,10 +100,10 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
         // }
     ];
     return (
-        <div className="ctx">
+        <div className="sidebar">
             {/* Sidebar Version Section */}
             <section className="menu-container">
-                <div className="menu-title">TECHNOLOGY</div>
+                <div className="menu-title">PLATFORM</div>
                 <Listbox value={tech} onChange={changeTech}>
                     <Listbox.Button className="dropdown">
                         <div style={{ display: 'flex ', alignItems: 'center' }}>
@@ -132,7 +132,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
             {/* Sidebar Menu Section */}
             {Object.entries(nav).map(([key, children], index) => (
                 <section className="menu-container" key={`${key}-${index}`}>
-                    <div className="menu-title">{key.replace(/-/g, ' ').toUpperCase()}</div>
+                    <div className="menu-title">{key.replace(/-/g, ' ')}</div>
                     {Object.entries(children).map(([_, route]) =>
                         Object.prototype.hasOwnProperty.call(route, 'title') ? (
                             <Link
@@ -153,12 +153,12 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                         <>
                             {aliasMenu.map((a) => (
                                 <Link href={a.url} key={a.url}>
-                                    <div
+                                    <a
                                         className={`menu-item ${
                                             a.url === router.asPath ? 'active-link' : ''
                                         }`}>
                                         {a.title}
-                                    </div>
+                                    </a>
                                 </Link>
                             ))}
                         </>
@@ -166,18 +166,17 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 </section>
             ))}
             <style jsx>{`
-                .ctx {
-                    width: calc((100% - 1448px) / 2 + 298px);
+                .sidebar {
+                    width: 288px;
                     display: flex;
                     flex-direction: column;
                     align-items: stretch;
                     height: calc(100vh - 80px);
-                    min-width: 298px;
                     overflow-y: scroll;
                     top: ${menu ? '10px' : '80px'};
                     left: 0;
                     position: ${menu ? 'absolute' : 'sticky'};
-                    background: var(--gray1);
+                    background: var(--sidebar_bg);
                     z-index: 40;
                 }
                 ::-webkit-scrollbar {
@@ -187,17 +186,24 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     outline: 0px;
                 }
                 .menu-container {
-                    margin: 10px 0;
+                    margin-top: 2px;
+                    margin-left: 0.5rem;
+                    margin-bottom: 9px;
+                    margin-right: 1.5rem;
+                }
+                .menu-container:first-of-type {
+                    margin-bottom: 10px;
                 }
                 .menu-item {
                     cursor: pointer;
-                    padding: 8px 0;
+                    padding: 4px 0;
                     color: var(--gray11);
                     font-weight: 400;
                     font-size: 13px;
                     display: flex;
                     align-items: center;
-                    padding-left: 20px;
+                    padding-left: 1rem;
+                    margin-left: 1rem;
                 }
                 .sub-title {
                     padding-left: 30px;
@@ -216,34 +222,27 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     align-items: center;
                     padding-left: 30px;
                 }
-
                 a {
                     text-decoration: none;
-                }
-                .active-link {
-                    color: var(--gray12);
-                    background-color: var(--blue6);
-                }
-                .menu-item:hover {
-                    background-color: var(--blue5);
-                }
                 }
                 .sub-menu-item:hover {
                     background-color: var(--blue5);
                 }
                 .menu-title {
-                    padding-left: 20px;
+                    padding-left: 1rem;
+                    text-transform: uppercase;
                     font-weight: 700;
                     font-size: 15px;
                     margin: 5px 0;
                 }
                 @media screen and (max-width: 1000px) {
-                    .ctx {
-                        display: ${menu ? 'flex' : 'none'};
-                        top:20px;
+                    .sidebar {
+                        display: ${menu ? 'absolute' : 'none'};
+                        top: 0;
+                        height: calc(100vh - 60px);
                     }
                     :global(.page) {
-                        height: ${menu ? '100vh !important' : ''};
+                        height: ${menu ? '100vh `!important' : ''};
                         overflow: ${menu ? 'hidden !important' : ''};
                     }
                 }
@@ -260,12 +259,12 @@ const ChevronDown = () => (
         width="24"
         height="24"
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"
         shapeRendering="geometricPrecision"
-        style={{ color: 'var(--gray10)' }}>
+        style={{ color: 'var(--text_high_emp)' }}>
         <path d="M6 9l6 6 6-6" />
     </svg>
 );

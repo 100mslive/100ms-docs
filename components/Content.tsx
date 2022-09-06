@@ -10,6 +10,7 @@ import Token from '../common/token.md';
 import TemplatesRoles from '../common/templates-and-roles.md';
 import SecurityTokens from '../common/security-tokens.md';
 import DomainsPorts from '../common/firewall-and-ports.md';
+import LiveStreaming from '../common/live-streaming.md';
 
 const data = {
     basics: Basics,
@@ -17,7 +18,8 @@ const data = {
     network: Network,
     token: Token,
     securityAndTokens: SecurityTokens,
-    domainsAndPorts: DomainsPorts
+    domainsAndPorts: DomainsPorts,
+    liveStreaming: LiveStreaming,
 };
 
 interface Props {

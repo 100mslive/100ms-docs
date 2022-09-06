@@ -1,4 +1,4 @@
-import useKeyPress from '@/lib/useKeyPress';
+import React from 'react';
 import {
     CrossIcon,
     DividerIcon,
@@ -9,8 +9,8 @@ import {
 } from '@100mslive/react-icons';
 import { useTheme } from '@100mslive/react-ui';
 import Link from 'next/link';
+import useKeyPress from '@/lib/useKeyPress';
 import { useRouter } from 'next/router';
-import React from 'react';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -22,9 +22,17 @@ interface Props {
     docs: { url: string; title: string; description: string; nav: number; content: string }[];
     modal: boolean;
     showMobileMenu?: boolean;
+    currentDocSlug: string;
 }
 
-const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, showMobileMenu = true }) => {
+const Header: React.FC<Props> = ({
+    menuState,
+    modal,
+    setModal,
+    docs,
+    currentDocSlug,
+    showMobileMenu = true
+}) => {
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
     const router = useRouter();
@@ -103,17 +111,19 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, showMobileM
                 <a href="/docs/javascript/v2/foundation/basics">
                     <div className="logo-ctx">
                         <img width={36} src="/docs/logo.svg" alt="100ms Logo" />
-                        <p className="company">100ms</p>
+                        <p className="company hide-content">100ms</p>
                     </div>
                 </a>
-                <DividerIcon style={{ strokeWidth: '2px' }} />
+                <DividerIcon style={{ strokeWidth: '2px', marginLeft: '-16px' }} />
                 <div>
                     <Link href={`/${currentTech}/`}>
                         <p
                             className="company"
                             style={{
                                 cursor: 'pointer',
-                                fontSize: '1rem'
+                                fontSize: '1rem',
+                                position: 'relative',
+                                top: '1px'
                             }}>
                             Docs
                         </p>
@@ -150,7 +160,9 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, showMobileM
                 </span>
             </div>
 
-            {modal ? <SearchModal setModal={setModal} docs={docs} /> : null}
+            {modal ? (
+                <SearchModal setModal={setModal} docs={docs} currentDocSlug={currentDocSlug} />
+            ) : null}
 
             <div className="menu-btn">
                 <button
@@ -180,11 +192,9 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, showMobileM
                     position: sticky;
                     margin: 0;
                     top: 0;
-                    background-color: var(--surface_default);
-                    border-bottom: 1px solid var(--border_default);
-                }
-                .header {
-                    padding: 0.5rem 0;
+                    padding: 0.5rem;
+                    background-color: var(--header_bg);
+                    border-bottom: 2px solid var(--new_border_default);
                 }
                 .res-ctx {
                     background-color: var(--gray2);
@@ -215,6 +225,9 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, showMobileM
                 }
                 .res-box span {
                     margin-right: 1rem;
+                }
+                p.hide-content {
+                    margin-right: 16px;
                 }
                 button a {
                     color: var(--gray11) !important;
@@ -253,7 +266,7 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, showMobileM
                     width: 320px;
                     border: 1px solid var(--border_light);
                     margin-right: 20px;
-                    background: var(--surface_light);
+                    background: var(--new_surface_light);
                     position: relative;
                     padding: 5px 16px 5px 10px;
                 }
@@ -261,7 +274,6 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, showMobileM
                     opacity: 1;
                     background-color: transparent;
                     display: flex;
-                    color: var(--text_high_emp);
                     width: 100%;
                     align-items: center;
                     border-radius: 5px;
@@ -311,13 +323,31 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, showMobileM
                         display: none;
                     }
                 }
+                @media screen and (max-width: 600px) {
+                    .ctx {
+                        justify-content: flex-end;
+                    }
+                    .head-left {
+                        width: unset;
+                        margin-right: auto;
+                    }
+                    .theme-btn {
+                        margin-left: auto;
+                    }
+                }
+                @media screen and (max-width: 375px) {
+                    p.hide-content {
+                        display: none !important;
+                    }
+                }
             `}</style>
         </div>
     );
 };
 
 Header.defaultProps = {
-    showMobileMenu: true
+    showMobileMenu: true,
+    currentDocSlug: ''
 };
 
 export default Header;

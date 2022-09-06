@@ -3,18 +3,24 @@ title: Set Volume
 nav: 3.98
 ---
 
-It allows you to locally vary the volume level of the remote peer's audio track.
-
+It allows you to vary the volume level of the remote peer's audio track. The change in volume level is only effective locally, remote peers remain unaffected. It can only be called on remote audio tracks.
 
 Suppose a remote peer is too loud compared to others you can reduce their volume level and vice versa.
-
 
 Volume can vary from 0(min) to 10(max). The default value for volume would be 1.0
 
 ```js
-const volume: Float = 1.0;
-const track: HMSTrack = remotePeer.audioTrack as HMSTrack;
-
-//hms instance acquired by build method
-instance?.setVolume(track, volume);
+const onTrackListener = ({
+  peer,
+  track,
+  type,
+}: {
+  peer: HMSPeer;
+  track: HMSTrack;
+  type: HMSTrackUpdate;
+}) => {
+  if(type === HMSTrackUpdate.TRACK_ADDED && track.type === HMSTrackType.AUDIO && peer.isLocal === false){
+    hmsInstance?.setVolume(track, 10.0);
+  }
+};
 ```

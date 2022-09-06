@@ -23,6 +23,10 @@ const DocSlugs = ({ source, allDocs, nav, frontMatter }) => {
     const { previousPost, nextPost } = getPagination(currentDocs, slug as string[]);
     const pagination = { previousPost, nextPost };
     const content = hydrate(source, { components });
+    React.useEffect(() => {
+        if (!window.location.href.includes('#')) window.scrollTo(0, 0);
+    }, []);
+
     return (
         <DocLayout
             frontMatter={frontMatter}

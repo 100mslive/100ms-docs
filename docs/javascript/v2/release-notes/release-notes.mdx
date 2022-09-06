@@ -12,20 +12,32 @@ description: Release Notes for 100ms JavaScript SDK
 | @100mslive/react-sdk                   | [![npm version](https://badge.fury.io/js/%40100mslive%2Freact-sdk.svg)](https://badge.fury.io/js/%40100mslive%2Freact-sdk)             |
 | @100mslive/hms-video-react(deprecated) | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-react.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-react) |
 
+## 2022-08-01
+
+Released: `@100mslive/hms-video-store@0.5.0`, `@100mslive/react-sdk@0.3.0`
+
+#### Added:
+-   retry calls for all the websocket messages
+-   params are now optional in `startHLSStreaming`
+
+#### Breaking:
+-   react-ui theme colors have been updated
+-   react-ui, styling for components is updated
+
 ## 2022-07-11
 
 Released: `@100mslive/hms-video-store@0.4.0`, `@100mslive/react-sdk@0.2.0`
 
-Added:
+#### Added:
 
 -   `leaveOnUnload` prop to `HMSRoomProvider` to make leave on page load optional. Defaults to `true`.
 -   Video/Audio Plugins can be added in preview now.
 
-Fixed:
+#### Fixed:
 
 -   `Error in getting track stats` when Audio/Video plugin is added in preview
 
-Breaking:
+#### Breaking:
 
 -   react-ui theme colors have been updated
 
@@ -33,7 +45,7 @@ Breaking:
 
 Released: `@100mslive/hms-video-store@0.3.4`, `@100mslive/react-sdk@0.1.4`
 
-Added:
+#### Added:
 
 -   `clearList` and `removeItem` actions in playlist
 -   `getContextType` in video plugin interface
@@ -43,11 +55,11 @@ Added:
 
 Released: `@100mslive/hms-video-store@0.3.2`, `@100mslive/react-sdk@0.1.2`, `@100mslive/hms-video-react@0.4.2`
 
-Added:
+#### Added:
 
 -   Codec in track stats
 
-Fixed:
+#### Fixed:
 
 -   System denied permission error for camera and microphone
 -   Duplicate tile in server recording on role change from AV to audio to AV
@@ -57,7 +69,7 @@ Fixed:
 
 Released: `@100mslive/hms-video-store@0.3.1`, `@100mslive/react-sdk@0.1.1`, `@100mslive/hms-video-react@0.4.1`
 
-Fixed:
+#### Fixed:
 
 -   Analytics events
 -   Reconnected notification not being triggered in some cases
@@ -66,12 +78,12 @@ Fixed:
 
 Released: `@100mslive/hms-video-store@0.3.0`, `@100mslive/react-sdk@0.1.0`, `@100mslive/hms-video-react@0.4.0`
 
-Fixed:
+#### Fixed:
 
 -   Video freezing when same video track is played in multiple video elements and one of them is removed
 -   Incorrect device showing in device selection when initially joined as muted and then unmuted.
 
-Breaking:
+#### Breaking:
 
 -   All the requests will have the sender as optional now.
     Examples:
@@ -128,7 +140,7 @@ Released: `@100mslive/hms-video-store@0.2.94`, `@100mslive/react-sdk@0.0.11`, `@
 
 Released: `@100mslive/hms-video-store@0.2.93`, `@100mslive/react-sdk@0.0.10`, `@100mslive/hms-video-react@0.3.123`
 
-Fixed:
+#### Fixed:
 
 -   Redundant events sent to analytics
 
@@ -136,7 +148,7 @@ Fixed:
 
 Released: `@100mslive/hms-video-store@0.2.91`, `@100mslive/react-sdk@0.0.8`, `@100mslive/hms-video-react@0.3.121`
 
-Added:
+#### Added:
 
 -   `useCustomEvent` hook in react-sdk
 -   Subscribing to specific notification types
@@ -145,7 +157,7 @@ Added:
 -   Video Only mode for screenshare
 -   `joinedAt` in HMSPeer
 
-Fixed:
+#### Fixed:
 
 -   Fix turning on recording with hls
 
@@ -153,12 +165,12 @@ Fixed:
 
 Released: `@100mslive/hms-video-store@0.2.90`, `@100mslive/react-sdk@0.0.7`, `@100mslive/hms-video-react@0.3.119`
 
-Added:
+#### Added:
 
 -   PeerList in preview
 -   HLS recording status will be available
 
-Breaking(react-sdk):
+#### Breaking(react-sdk):
 
 -   input/output interfaces of `useVideo` has been changed. check [react quickstart](../guides/react-quickstart) for reference.
 
@@ -166,7 +178,7 @@ Breaking(react-sdk):
 
 Released: `@100mslive/hms-video-store@0.2.89`, `@100mslive/react-sdk@0.0.6`, `@100mslive/hms-video-react@0.3.116`
 
-Added:
+#### Added:
 
 -   startedAt fields for rtmp and recording
 -   A exception will be thrown when preview/join is called if there is no WebRTC support now(for e.g. disable via an extension)
@@ -174,7 +186,7 @@ Added:
 -   A new `@100mslive/react-sdk` beta package for primitive hooks to build React UI components
 -   A new disconnecting room state which happens from the moment leave is clicked till it's successful
 
-Fixed:
+#### Fixed:
 
 -   Fix for wrong video mute state in a corner case after high frequency updates
 -   Fix for vb-background video overlaying
@@ -186,11 +198,11 @@ Fixed:
 
 Released: `@100mslive/hms-video@0.1.41`, `@100mslive/hms-video-store@0.2.87`, `@100mslive/hms-video-react@0.3.115`
 
-Added:
+#### Added:
 
 -   Terminal error for insecure contexts(http://)
 
-Fixed:
+#### Fixed:
 
 -   Type errors in few selectors
 -   iOS video getting stuck when custom plugins are enabled.
@@ -200,16 +212,16 @@ Fixed:
 
 Released: `@100mslive/hms-video@0.1.40`, `@100mslive/hms-video-store@0.2.86`, `@100mslive/hms-video-react@0.3.114`
 
-Added:
+#### Added:
 
 -   server errors are marked as terminal, SDK will automatically leave and give a terminal error
 
-Fixed:
+#### Fixed:
 
 -   process is not defined error when using with CRA5, webpack5 or with react-scripts@5
 -   update recording/streaming status when they are actually started
 
-### Breaking:
+#### Breaking:
 
 -   requestedBy is now optional in HMSRoleChangeRequest, HMSChangeTrackStateRequest, HMSChangeMultiTrackStateRequest
 
@@ -217,14 +229,14 @@ Fixed:
 
 Released: `@100mslive/hms-video@0.1.39`, `@100mslive/hms-video-store@0.2.85`, `@100mslive/hms-video-react@0.3.113`
 
-Added:
+#### Added:
 
 -   [HLS streaming](../features/hls) for streaming a room to a large number of viewers
 -   Support for Multiple [video plugins](../plugins/custom-video-plugins)
 -   `startedAt` field in room to know since when the call is running
 -   An additional boolean `showTileForAllPeers` in VideoList component to show peers with no tiles.
 
-Fixed:
+#### Fixed:
 
 -   Type in custom events not getting passed for direct messages
 -   Camera selection showing wrong device in some cases
@@ -233,12 +245,12 @@ Fixed:
 
 Released: `@100mslive/hms-video@0.1.37`, `@100mslive/hms-video-store@0.2.83`, `@100mslive/hms-video-react@0.3.112`
 
-Added:
+#### Added:
 
 -   Support for Multiple Audio Plugins(alpha)
 -   Notification when user updates peer info(name or metadata)
 
-Fixed:
+#### Fixed:
 
 -   Throw proper error with error code and description for firefox when network is blocked/disconnected.
 -   Resolve preview promise correctly.
@@ -251,13 +263,13 @@ Fixed:
 
 Released: `@100mslive/hms-video@0.1.36`, `@100mslive/hms-video-store@0.2.82`, `@100mslive/hms-video-react@0.3.111`
 
-Added:
+#### Added:
 
 -   [Change Name](../features/peer-name) post Joining the room
 -   [Change Metadata](../advanced-features/peer-metadata) post Joining the room
 -   Notifications for track [degraded and restored](../features/sub-degradation)
 
-### Breaking Changes
+#### Breaking
 
 -   `peer.customerDescription` is now renamed to `peer.metadata`
 
@@ -272,7 +284,7 @@ Added:
 -   `selectPeerSharingAudioPlaylist` selector to get peer who is sharing audioplaylist
 -   `selectPeersByRole(role: string)` selector to get peers by role
 
-Fixed:
+#### Fixed:
 
 -   Not able to change respective devices when audio/video is muted
 -   Devicelist empty if permissions are denied while joining and enabled later on unmuting.
@@ -303,7 +315,7 @@ Released: `@100mslive/hms-video@0.1.16`, `@100mslive/hms-video-store@0.2.71`, `@
 -   Optimise video tile, participant list rerenders
 -   Add feedback component
 
-# Breaking Changes:
+#### Breaking:
 
 -   ParticipantsInView component removed. Use UiSettings component instead
 
@@ -331,11 +343,11 @@ Released: `@100mslive/hms-video@0.0.204`, `@100mslive/hms-video-store@0.2.57`, `
 -   Fix addSink issue in videoTrack.
     Sometimes, addSink not sending correct data to backend, which leads to black tile
 
-### Breaking:
+#### Breaking:
 
 -   onPeerUpdate is called with HMSPeer[] for initial peer list instead of calling onPeerUdpate for each peer
 
-### Experiemental:
+#### Experiemental:
 
 -   Add/remove sink for audio element with feature flag.
 -   Join before publish with feature flag
@@ -344,7 +356,7 @@ Released: `@100mslive/hms-video@0.0.204`, `@100mslive/hms-video-store@0.2.57`, `
 
 Released: `@100mslive/hms-video@0.0.185`, `@100mslive/hms-video-store@0.2.43`, `@100mslive/hms-video-react@0.3.64`
 
-### Added
+#### Added
 
 -   Support for Audio/Video Playlist from remote urls
 -   Support for AudioOnly screenshare

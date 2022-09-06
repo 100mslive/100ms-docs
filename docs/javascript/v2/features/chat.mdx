@@ -7,6 +7,8 @@ What's a video call without being able to send messages to each other too? 100ms
 
 ![Chat](/guides/chat.png)
 
+> Note: Chat messages are not persistent. For example, if you joined a call, received some messages and got disconnected and rejoin the call, you won't be able to see the previous messages
+
 ## Sending Chat Messages
 
 ### Broadcast Message:
@@ -150,8 +152,8 @@ It returns an object containing `sendEvent` which helps to send the event data t
 Let's understand the hook with an example where we're showing a button on UI to send emoji reactions.
 
 ```jsx
-import { useCustomEvent, useHMSActions } from '@100mslive/react-sdk';
 import { useCallback } from 'react';
+import { useCustomEvent, useHMSActions } from '@100mslive/react-sdk';
 
 const Confetti = () => {
     const actions = useHMSActions();
@@ -164,10 +166,10 @@ const Confetti = () => {
 
     const { sendEvent } = useCustomEvent({
         type: 'EMOJI_REACTION',
-        onEvent,
+        onEvent: onEvent
     });
 
-    return <button onClick={() => sendEvent({emoji: "🚀"})}>Rockets</button>;
+    return <button onClick={() => sendEvent({ emoji: '🚀' })}>Rockets</button>;
 };
 
 export default Confetti;
