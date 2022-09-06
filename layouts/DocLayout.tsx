@@ -176,7 +176,7 @@ const DocLayout: React.FC<Props> = ({ frontMatter, nav, children, pagination, al
                     }
                     article {
                         max-width: 1200px;
-                        width: calc(100vw - 590px);
+                        width: calc(100vw - 630px);
                         flex-grow: 1;
                         box-sizing: border-box;
                         padding: 0 2rem;
