@@ -39,18 +39,11 @@ const Code: React.FC = ({ children }) => {
             setCopy(false);
         }, 2000);
     };
-    const [hovered, setHovered] = React.useState(false);
     const [copy, setCopy] = React.useState(false);
-    const onEnter = () => {
-        setHovered(true);
-    };
-    const onExit = () => {
-        setHovered(false);
-        setCopy(false);
-    };
+
     return (
-        <div className="code-block" onMouseEnter={onEnter} onMouseLeave={onExit}>
-            {hovered && !copy ? (
+        <div className="code-block">
+            {!copy ? (
                 <button
                     aria-label="Copy to Clipboard"
                     onClick={() => copyFunction()}
@@ -58,8 +51,7 @@ const Code: React.FC = ({ children }) => {
                     className="copied">
                     <CopyIcon />
                 </button>
-            ) : null}
-            {copy ? (
+            ) : (
                 <button
                     aria-label="Copy to Clipboard"
                     onClick={() => copyFunction()}
@@ -67,11 +59,12 @@ const Code: React.FC = ({ children }) => {
                     className="copied">
                     <CheckIcon />
                 </button>
-            ) : null}{' '}
-            <div ref={textRef}>{children}</div>
+            )}
+            <div ref={textRef}>{children}</div>{' '}
             <style jsx>{`
                 .code-block {
                     position: relative;
+                    padding-top: 1rem;
                 }
                 button:hover {
                     opacity: 0.8;
@@ -80,14 +73,15 @@ const Code: React.FC = ({ children }) => {
                     z-index: 45;
                     outline: none;
                     cursor: pointer;
-                    width: 25px;
-                    height: 25px;
+                    width: 36px;
+                    height: 36px;
                     padding: 5px;
                     border: 1px solid var(--gray3);
                     background: var(--gray1);
                     border-radius: 5px;
-                    position: fixed;
-                    margin: 10px 0 0 clamp(150px, 690px, 80vw);
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
                 }
             `}</style>
         </div>

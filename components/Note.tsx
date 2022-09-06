@@ -7,7 +7,7 @@ interface Props {
 const Note: React.FC<Props> = ({ type = 'success', children }) => {
     const resolveColor = () => `var(--${type})`;
     return (
-        <div>
+        <div className="note">
             {children}
             <style jsx>{`
                 div {
