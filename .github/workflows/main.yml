@@ -11,6 +11,14 @@ jobs:
     name: runner / vale
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v29.0.3
+
       - uses: actions/checkout@v2
       - uses: errata-ai/vale-action@reviewdog
         env:
@@ -21,7 +29,7 @@ jobs:
           # The Vale CLI version to install.
           # version: # optional, default is latest
           # The files to lint: "all" or "<some_folder>".
-          files: __onlyModified
+          files: '{{steps.changed-files.outputs.all_changed_files}}'
           # Log debugging information to stdout.
           # debug: # optional, default is false
           # Reporter of reviewdog command [github-pr-check,github-pr-review,github-check].
