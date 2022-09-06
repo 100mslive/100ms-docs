@@ -26,14 +26,11 @@ jobs:
           # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         with:
-          # The Vale CLI version to install.
-          # version: # optional, default is latest
-          # The files to lint: "all" or "<some_folder>".
           files: '${{steps.changed-files.outputs.all_changed_files}}'
           # Log debugging information to stdout.
           # debug: # optional, default is false
           # Reporter of reviewdog command [github-pr-check,github-pr-review,github-check].
-          reporter: github-pr-review # optional, default is github-pr-check
+          reporter: github-pr-check # optional, default is github-pr-check
           # Exit code for reviewdog when errors are found [true,false]
           # Default is `false`.
 
@@ -43,6 +40,6 @@ jobs:
           # Filtering for the reviewdog command [added,diff_context,file,nofilter].
           # Default is added.
 
-          # filter_mode: # optional, default is added
+          filter_mode: diff_context # optional, default is added
           # Space-delimited list of flags for the Vale CLI.
           # vale_flags: # optional, default is 
