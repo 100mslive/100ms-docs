@@ -3,20 +3,31 @@ title: Release Notes
 nav: 99
 ---
 
+## 0.7.5 - 2022-08-18
+
+- Added support on iOS for sharing audio from local files on your device & from other audio playing apps
+- Added ability to apply local peer track settings while initializing HMSSDK
+- Added APIs to fetch local peer track settings
+- Fixed an issue where exiting from Preview without joining room was not releasing camera access
+- Added `destroy` API to cleanup Native HMSSDK instance correctly
+- Disabled Hardware Scaler on Android to correct intermittent Video tile flickering 
+- Updated to Native Android SDK 2.4.8 & Native iOS SDK 0.3.3
+
+
 ## 0.7.4 - 2022-07-29
 
-### Added
+#### Added
 - Added APIs to stream device audio in different modes
 - Added  APIs to view and change the output speaker selected by the SDK to playout
 - setAudioMode API to change the Audio out mode manually between in-call volume and media volume
 
 
-### Fixed
+#### Fixed
 - Calling `switchCamera` API leads to triggering of onSuccess callback twice
 - onRoomUpdate with type `HMSRoomUpdate.ROOM_PEER_COUNT_UPDATED` not getting called when peer count changes in the room
 - Peer not able to publish tracks when updated to WebRTC from HLS if rejoins after a reconnection in WebRTC Mode
 
-### Changed 
+#### Changed 
 - `HMSHLSConfig` is now an optional parameter while calling startHLSStreaming and stopHLSStreaming
 - The `meetingUrl` parameter is optional while creating the `HMSHLSMeetingURLVariant` instance for HMSHLSConfig. If nothing is provided HMS system will take the default meetingUrl for starting HLS stream
 - changeRoleForce permission in HMSRole is now removed and no longer used
@@ -50,7 +61,7 @@ nav: 99
 
 ## 0.7.0 - 2022-04-19
 
-### Added
+#### Added
 
 - Network Quality in preview. Network quality reports can now be requested at the preview screen. Use the returned value to determine if you should suggest people's internet is too slow to join with video etc.
 
@@ -62,7 +73,7 @@ nav: 99
 
 - Added `startedAt` and `stoppedAt` field for Browser and SFU recording
 
-### Fixed
+#### Fixed
 
 - Error Analytics events not being sent
 
@@ -80,24 +91,24 @@ nav: 99
 
 
 ## 0.6.0 - 2022-01-25
-### Breaking Change 
+#### Breaking Change 
 - Updated Change Role APIs argument types
 - Changed Messaging APIs argument types
 - Updated argument types of `changeTrackState`, `changeRole`, `acceptRoleChange`, `changeTrackStateForRoles` APIs
 
-### Added
+#### Added
 - Added HLS Support. Now you can Start/Stop HLS Streaming from Flutter SDK
 - Added support to do ScreenShare from Android device
 
-### Changed
+#### Changed
 - Updated callbacks for Permission based action APIs
 
 ## 0.5.0 - 2022-01-15
-### Breaking Change 
+#### Breaking Change 
 - Renamed SDK Public interface to `HMSSDK` class
 - Updated HMSConfig object which is used to join the room
 
-### Added 
+#### Added 
 - Added APIs to change remote track status
 - Added APIs to start/stop Recording
 - Added APIs to change metadata of local peer which can be used to implement raise hand functionality
@@ -108,14 +119,14 @@ nav: 99
 - Added volume setter & getter APIs on audio tracks
 - Added Action Result Listeners to notify success or failure of API invocations
 
-### Changed
+#### Changed
 - Updated `HMSException` object with `isTerminal` 
 - Changed `sendMessage` API to `sendBroadcastMessage` to send a message to all peers in room
 - Changed `HMSMessageResultListener` to `HMSActionResultListener` in Messaging APIs
 - Video Rendering flow for Android & iOS video tracks
 - Preview API implementation
 
-### Fixed 
+#### Fixed 
 - Reconnection issues wherein even when network recovered, peer could not rejoin the room 
 - Cleaning up config object whenever room is joined/left
 

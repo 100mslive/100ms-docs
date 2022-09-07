@@ -144,14 +144,19 @@ abstract class HMSUpdateListener {
   ///when someone kicks you out or when someone ends the room at that time it is triggered
   /// [hmsPeerRemovedFromPeer] it consists info about who removed you and why.
   void onRemovedFromRoom({required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer});
+
+  ///whenever a new audio device gets connected to the device or audio device is switched this is triggered
+  void onAudioDeviceChanged(
+     {HMSAudioDevice? currentAudioDevice,
+     List<HMSAudioDevice>? availableAudioDevice});
 }
 
 ```
 
-HMSUpdateListener: a class conforming to HMSUpdateListener interface.
+>HMSUpdateListener: A class conforming to HMSUpdateListener interface.
 The methods of HMSUpdateListener are invoked to notify updates happening in the room like a peer joins/leaves, a track got muted/unmutes, etc.
 
-Add this `updateListener` instance to 
+Add this `updateListener` instance to hmsSDK : 
 ```dart
 HMSSDK hmsSDK = new HMSSDK();
 hmsSDK.build();
