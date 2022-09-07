@@ -3,12 +3,14 @@ title: Screen Share
 nav: 3.993
 ---
 
-Android provides support for sharing the entire screen of the device to the room. Please note that for a peer to share their screen, 
-their role must have screenshare enabled in the dashboard. Also select the appropriate resolution that you desire the screenshare track should be of.
+
+React SDK provides support for sharing the entire screen of the device to the room. Please note that for a peer to share their screen, their role must have screenshare enabled in the dashboard. Also select the appropriate resolution for the Screen share quality. 1080p is recommended for better text readability.
 
 ![ScreenshareDashboard](/docs/v2/screenshare-dashboard.png)
 
-## Adding activity to AndroidManifest.xml
+## Android Setup
+
+Adding activity to AndroidManifest.xml
 Add `HmsScreenshareActivity` to manifest located at `android/app/src/main/AndroidManifest.xml`.
 ```js
 <activity
@@ -16,8 +18,133 @@ Add `HmsScreenshareActivity` to manifest located at `android/app/src/main/Androi
   android:label="@string/app_name" />
 ```
 
+## iOS Setup
+
+You need to create an iOS broadcast upload extension. It uses Apple's ReplayKit framework to record the device screen and delivers frame samples to your broadcast extension. You can share not only your own app but also the entire device sceeen including other apps on the device.
+
+### Step 1 - Open project
+Open your iOS Xcode project `xed ios`.
+
+### Step 2 - Add Broadcast Upload Extension
+Click on your project in the Project Navigator to show the project settings. 
+Press + at the bottom of the target list to add a new target.
+
+![AddExtension](/docs/v2/RNAddExtension.png)
+
+Select the `Broadcast Upload Extension` type for your new target.
+
+![SelectExtension](/docs/v2/RNSelectExtension.png)
+
+Enter your new target detail in the dialog.
+Uncheck Include UI Extension option.
+
+![DetailExtension](/docs/v2/RNDetailExtension.png)
+
+In the following dialog, activate the new scheme for the new target.
+
+![ActivateExtension](/docs/v2/RNActivateExtension.png)
+
+### Step 3 - Add App Group
+
+Click + icon in `Signing & Capabilities` section.
+Select `App Group` from the list of Capabilities.
+
+![AddAppgroup](/docs/v2/RNSelectAppGroup.png)
+
+New section should be added under `Signing & Capabilities` named App Groups. Click + icon under that.
+
+![Appgroup](/docs/v2/RNAddAppGroup.png)
+
+Enter App group name (create unique app group name ex: group.your.domain.name)
+
+![AppgroupDetail](/docs/v2/RNAddAppGroupName.png)
+
+### Step 4 - Edit Podfile
+In ios folder of your react project and open `Podfile`.
+Paste the following code and replace the extension name you just created:
+```
+target 'RNHMSExampleBroadcastUpload' do
+  use_modular_headers!
+  pod 'HMSBroadcastExtensionSDK'
+end
+```
+![Podfile](/docs/v2/RNPodfile.png)
+
+In terminal change directory to ios and run `pod install` command.
+
+### Step 5 - Edit SampleHandler
+Expand `Runner > ExtensionName` and open SampleHandler file.
+
+![SampleHandler](/docs/v2/RNSampleHandler.png)
+
+Replace the code with the code below and pass app group name to the respected field:
+
+```swift
+import ReplayKit
+import HMSBroadcastExtensionSDK
+
+class SampleHandler: RPBroadcastSampleHandler {
+
+    let screenRenderer = HMSScreenRenderer(appGroup: "group.reactnativehms")
+
+    override func broadcastStarted(withSetupInfo setupInfo: [String : NSObject]?) {
+        // User has requested to start the broadcast. Setup info from the UI extension can be supplied but optional.
+    }
+
+    override func broadcastPaused() {
+        // User has requested to pause the broadcast. Samples will stop being delivered.
+    }
+
+    override func broadcastResumed() {
+        // User has requested to resume the broadcast. Samples delivery will resume.
+    }
+
+    override func broadcastFinished() {
+        // User has requested to finish the broadcast.
+        screenRenderer.invalidate()
+    }
+
+    override func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType) {
+        switch sampleBufferType {
+        case RPSampleBufferType.video:
+            // Handle video sample buffer
+            if let error = screenRenderer.process(sampleBuffer) {
+                if error.code == .noActiveMeeting {
+                    finishBroadcastWithError(NSError(domain: "ScreenShare",
+                                                     code: error.code.rawValue,
+                                                     userInfo: [NSLocalizedFailureReasonErrorKey : "You are not in a meeting."]))
+                }
+            }
+            break
+        case RPSampleBufferType.audioApp:
+            // Handle audio sample buffer for app audio
+            break
+        case RPSampleBufferType.audioMic:
+            // Handle audio sample buffer for mic audio
+            break
+        @unknown default:
+            // Handle other sample buffer types
+            fatalError("Unknown type of sample buffer")
+        }
+    }
+}
+```
+
 ## How to start screenshare from the app
 To start screen share, app needs to call the `startScreenshare` method of `HMSSDK`.
+
+To start screen share in iOS you need to pass App Group and Preferred Extension name while creating HMSSDK instance as follows:
+```js
+const hmsInstance = await HMSSDK.build({
+    appGroup: 'group.reactnativehms',
+    preferredExtension: 'RHHMSExampleBroadcastUpload',
+});
+```
+
+You can find `app group` and `extension` name in Xcode under `Signing and Capabilities` section under `target > yourExtensionName`.
+
+![Parameter](/docs/v2/RNParameter.png)
+
 Following is the snippet on how to use this:
 ```js
 // hms instance acquired from build method
