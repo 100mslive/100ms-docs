@@ -3,4 +3,101 @@ title: Create via API
 nav: 2.2
 ---
 
-<Content alias="Create via API" />
+Creates a new room. This provides a more scalable way of creating a room.
+
+## API Endpoint
+
+<PostRequest title="https://api.100ms.live/v2/rooms" />
+
+## Request/Response
+
+<Tabs items={['Request', 'Response']} id="req" />
+
+<Tab id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/rooms' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "new-room-1662534780"
+}'
+```
+
+</Tab>
+
+<Tab id="req-1">
+<Response res="200: OK" />
+
+```json
+{
+    "id": "631844793ee9b3c0d21ffcb0",
+    "name": "new-room-1662534777",
+    "enabled": true,
+    "description": "",
+    "customer_id": "627cdddff2e4e30487862ad1",
+    "recording_source_template": true,
+    "enabled_source_template": true,
+    "recording": null,
+    "template_id": "",
+    "template": "",
+    "region": "",
+    "created_at": "2022-09-07T07:12:57.006Z",
+    "updated_at": "2022-09-07T07:12:56.991Z",
+    "active": true
+}
+```
+
+</Tab>
+
+## Arguments
+
+| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                    | Required |
+| :------------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| name <br/>           | `string` | A unique identifier you can assign to 100ms rooms. This is `case-insensitive`. <br/><br/>Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/>**Note**: `create Room` is called with an existing room name, then the corresponding room ID is returned <br/><br/> | No       |
+| description <br/>    | `string` | A string to describe your room's usage. E.g. "9PM English Class Batch 2"                                                                                                                                                                                                                                                       | No       |
+| template <br/>       | `string` | [Template](../foundation/templates-and-roles) of the room. You can get template name from room details section on dashboard                                                                                                                                                                                                    | No       |
+| recording_info <br/> | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings. <br/><br/>Check the [recording_info object](#recording-info) below for more information.                                                                                                     | No       |
+| region <br/>         | `string` | Region in which you want to create room. <br/><br/> `in` - India <br/> `us` - United States <br/> `eu` - European Union <br/> `auto` - Automatic region selection (default, and in case this parameter is not provided)                                                                                                        | No       |
+
+## Objects
+
+### recording_info
+
+| Name        | Type      | Description                                                                                                                                                                                                                                                                                   | Required |
+| :---------- | :-------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| enabled     | `boolean` | Enable SFU recording. Disabled by default                                                                                                                                                                                                                                                     | No       |
+| upload_info | `object`  | Object of type `upload_info`. This object contains information on recordings storage location. <br/><br/>If you want to store recording with 100ms, and not use your own s3, don't add this to the object. <br/><br/>Check the [upload_info object](#upload-info) below for more information. | No       |
+
+`recording_info` in the room acts as an atomic property. The Following describes the way `recording_info` depends on recording settings defined in a template.
+
+-   If the `recording_info` key is not provided in the API, the room will fill it with recording settings from the template. And the response body will include `recording_source_template: true`. This means, that whenever recording info is changed in the template, it will also be reflected in the room's recording settings.
+-   If the `recording_info` key is provided in the API, the room's recording settings will not depend on the template at all.
+
+To know more about recording please visit [Recording](./recording)
+
+### upload_info
+
+| Name        | Type     | Description                                                                                                                                                                               | Required |
+| :---------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| type        | `string` | Upload Destination type. Currently, only `s3` is supported                                                                                                                                | Yes      |
+| location    | `string` | Name of the AWS s3 bucket in which you want to store all recordings                                                                                                                       | Yes      |
+| prefix      | `string` | Upload prefix path                                                                                                                                                                        | No       |
+| options     | `object` | Additional configurations of type `Options` to be used for uploading. <br/><br/>Check the [options object](#options) below for more information.                                          | No       |
+| credentials | `object` | Object of type `Credentials`. This is used to share AWS credentials to access the s3 bucket specified. <br/><br/>Check the [credentials object](#credentials) below for more information. | No       |
+
+### Options
+
+| Name   | Type     | Description                                                                                                              | Required |
+| :----- | :------- | :----------------------------------------------------------------------------------------------------------------------- | :------- |
+| region | `string` | Region of the AWS account hosting the s3 bucket for storing recordings. If not provided it is assumed to be `ap-south-1` | No       |
+
+### Credentials
+
+| Name   | Type     | Description                                                                          | Required |
+| :----- | :------- | :----------------------------------------------------------------------------------- | :------- |
+| key    | `string` | `access key ID` for the AWS account hosting the s3 bucket for storing recordings     | Yes      |
+| secret | `string` | `secret access key` for the AWS account hosting the s3 bucket for storing recordings | Yes      |
+
+The access keys should have read(GetObject) and write(PutObject) permissions for the s3 bucket.
+For more details check - https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html

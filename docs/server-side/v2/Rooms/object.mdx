@@ -3,4 +3,31 @@ title: Object
 nav: 2.1
 ---
 
-<Content alias="Object" />
+## Overview
+Room is a virtual space that holds conferencing of the people. To allow users to join a 100ms video conferencing session inside your app, you first need to create a room.
+
+Room APIs can be used to
+
+1. Create a room
+2. Get details of existing rooms based on id/name/enabled/created-time or combinations of these
+3. Disable an existing room
+
+## Base URI
+
+<PostRequest title="https://api.100ms.live/v2/rooms" />
+
+## Object
+
+| Argument                  | Description                                                          |
+| ------------------------- | -------------------------------------------------------------------- |
+| id                        | Unique identifier for this room                                      |
+| name                      | Alias for the room                                                   |
+| enabled                   | Indicates whether the room is enabled or disabled                    |
+| description               | Description for the room                                             |
+| customer_id               | Unique identifier for your account                                   |
+| recording_source_template | Indicates whether the recording is enabled via room template or not. |
+| user_id                   | Unique identifier for the user                                       |
+| recording                 | Indicates whether the recording is enabled or disabled               |
+| template_id               | Identifier for the template used for this room                       |
+| template                  | Alias for the template                                               |
+| region                    | The region in which the room has to be created                       |

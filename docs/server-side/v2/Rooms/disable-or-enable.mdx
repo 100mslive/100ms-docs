@@ -1,6 +1,37 @@
 ---
 title: Disable/Enable a room
-nav: 2.9
+nav: 2.6
 ---
 
-<Content alias="Disable/Enable a room" />
+Trigger this request to disable a specific room.
+
+## API Endpoint
+
+<DeleteRequest title="https://api.100ms.live/v2/rooms/<room_id>" />
+
+## Arguments
+
+| Name                       | Type      | Description                                                                                                         | Required |
+| :------------------------- | :-------- | :------------------------------------------------------------------------------------------------------------------ | :------- |
+| id <br/> — path param      | `string`  | Unique identifier of the room you wish to disable. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                  | Yes      |
+| enabled <br/> — path param | `boolean` | Status of the room to be set. <br/>`Allowed values`: true, false. <br/>Should be set to `false` to disable the room | Yes      |
+
+## Response
+
+```json
+{
+    "id": "62bbcXXXXXXXXX390a6aa1a",
+    "name": "test-room",
+    "enabled": false,
+    "description": "This is a test room",
+    "customer_id": "627cdXXXXXXXXX39291b",
+    "recording_source_template": true,
+    "user_id": "627cdaXXXXXXXXX7a39291a",
+    "template_id": "627cdXXXXXXXXX784227d3",
+    "template": "default_createown_XXXXXXXXX-XXXX-XXXX-XXXX-ae9e95891e31",
+    "region": "in",
+    "created_at": "2022-06-29T03:34:30.194Z",
+    "key": "627cda54ffXXXXXXXXX291b:test-room",
+    "updated_at": "2022-06-29T05:52:22.431Z"
+}
+```

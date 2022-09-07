@@ -1,0 +1,59 @@
+---
+title: Retrieve a specific room
+nav: 2.4
+---
+
+Retrieves the details of a specific room. 100ms provides options to retrieve details of a room with their ID or name.
+
+## Retrieve a specific room - by ID
+
+### API endpoint
+
+<GetRequest title="https://api.100ms.live/v2/rooms/<room_id>" />
+
+### Arguments
+
+| Name                  | Type     | Description                                                                                                  | Required |
+| :-------------------- | :------- | :----------------------------------------------------------------------------------------------------------- | :------- |
+| id <br/> — path param | `string` | Unique identifier of the room you wish to fetch details for. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33 | No       |
+
+## Retrieve a specific room - by name
+
+### API endpoint
+
+<GetRequest title="https://api.100ms.live/v2/rooms?name=<room_name>" />
+
+### Arguments
+
+| Name                    | Type     | Description                                                                       | Required |
+| :---------------------- | :------- | :-------------------------------------------------------------------------------- | :------- |
+| name <br/> — path param | `string` | Alias of the room you wish to fetch details for. <br/><br/>**Example**: test-room | No       |
+
+## Response
+
+```json
+{
+    "limit": 10,
+    "data": [
+        {
+            "id": "627cda81ab4f3b56a077dc33",
+            "name": "4b2705aa-4a42-4a9b-9ecc-f470c06d0c03",
+            "enabled": true,
+            "description": "This is a test room",
+            "customer_id": "627cXXXXXXXXXX39291b",
+            "recording_source_template": false,
+            "user_id": "627cXXXXXXXXX37a39291a",
+            "recording": {
+                "enabled": false
+            },
+            "template_id": "627XXXXXXXXXXXX4227d3",
+            "template": "default_createown_eXXXXXXX-XXXX-XXXX-XXXX-ae9e95891e31",
+            "region": "in",
+            "created_at": "2022-05-12T09:59:29.343Z",
+            "key": "627XXXXXXXXXXXXX91b:4b2705aa-XXXX-XXXX-XXXX-f470c06d0c03",
+            "updated_at": "0001-01-01T00:00:00Z"
+        }
+    ],
+    "last": "627XXXXXXXXXXXX7bc33"
+}
+```
