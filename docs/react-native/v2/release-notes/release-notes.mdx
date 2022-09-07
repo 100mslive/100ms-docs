@@ -3,6 +3,21 @@ title: Release Notes
 nav: 4.1
 ---
 
+## 0.9.91 - 2022-08-18
+
+- Starting HLS streaming can now be done without HLSConfig object
+- Added ability to do custom audio routing on Android
+- Added the ability to share audio from local files on Android
+- Updated permissions available to roles
+- Corrected properties available in `HMSException` class
+- Fixed an issue where exiting from Preview without joining the room was not releasing camera access
+- Correct RTC Stats updates on Android
+- `minifyEnabled` is set to `true` for Android release builds
+- Updated to Native Android SDK 2.4.8 & Native iOS SDK 0.3.3
+
+**Full Changelog**: [0.9.9...0.9.91](https://github.com/100mslive/react-native-hms/compare/0.9.9...0.9.91)
+
+
 ## 0.9.9 - 2022-07-11
 
 - `leave` functions fails when invoked in Reconnecting (No Internet) state
@@ -109,18 +124,18 @@ nav: 4.1
 
 ## 0.8.0 - 2021-11-19
 
-### Breaking
+#### Breaking
 - `build` function of HMSSDK will not create a singleton now.
 - `requestedBy` field has been made optional for HMSChangeTrackStateRequest, HMSRemovedFromRoomNotification, HMSRoleChangeRequest. It will be nil if the request originated from the REST API.
 - `leave` function is now asynchronous. Join another room only when the previous leave call has been completed.
 
-### Changed
+#### Changed
 - Corrected a bug where userId was not being passed.
 - Sending full error description when any error/exceptions occur.
 - `isMute` function of HMSTrack now returns correct status.
 - `HMSView` is now exported from HMSSDK class.
 
-### Added
+#### Added
 - Added `isPlaybackAllowed` & `setPlaybackAllowed` for Remote Audio/Video tracks.
 - Added `getRoom` function on HMSSDK which returns the currently joined room. Returns null if the peer is not in a room.
 - Added `changeTrackStateForRole` API with which you can mute/unmute audio/video of all peers of a particular Role.

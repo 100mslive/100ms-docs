@@ -7,7 +7,7 @@ When you make various function calls through HmsInstance, it may return errors w
 
 These are returned as HMSException in the onError callback of the HMSUpdateListner.
 
-On Android we receive `isTerminal` property in HMSException - Use this property to determine whether peer can continue in the room or not
+On Android we receive `isTerminal` property in HMSException - Use this property to determine whether the API is still retrying or not. 
 
 ```js
 // import HMSUpdateListenerActions class
@@ -19,12 +19,12 @@ hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
 const onError = (error: HMSException) => {
     // console.log(error);
     if (Platform.OS === 'android') {
-      if (error?.isTerminal === true) {
-        // navigate to home screen
+      if (data?.code === 4005 || data?.code === 1003) {
+        destroy();
       }
     } else {
-      if (error?.code === 4005 || error?.code === 2000) {
-        // navigate to home screen
+      if (data?.code === 2000) {
+        destroy();
       }
     }
 };

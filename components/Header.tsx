@@ -1,11 +1,14 @@
-import SearchIcon from '@/assets/icons/SearchIcon';
-import SvgMoon from '@/assets/icons/Moon';
-import SvgSun from '@/assets/icons/Sun';
-import CrossIcon from '@/assets/icons/CrossIcon';
-import MenuIcon from '@/assets/icons/MenuIcon';
 import React from 'react';
-import useKeyPress from '@/lib/useKeyPress';
 import Link from 'next/link';
+import useKeyPress from '@/lib/useKeyPress';
+import {
+    SearchIcon,
+    CrossIcon,
+    HamburgerMenuIcon,
+    SunIcon,
+    NightIcon,
+    DividerIcon
+} from '@100mslive/react-icons';
 import { useRouter } from 'next/router';
 import SearchModal from './SearchModal';
 
@@ -18,28 +21,41 @@ interface Props {
     docs: { url: string; title: string; description: string; nav: number; content: string }[];
     currentDocSlug: string;
     modal: boolean;
+    showMobileMenu?: boolean;
 }
 
-const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocSlug }) => {
+const Header: React.FC<Props> = ({
+    menuState,
+    modal,
+    setModal,
+    docs,
+    currentDocSlug,
+    showMobileMenu = true
+}) => {
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
     const router = useRouter();
+
     React.useEffect(() => {
         if (escPressed) {
             setModal(false);
         }
     }, [escPressed]);
+
     React.useEffect(() => {
         if (slashPressed) {
             setModal(true);
         }
     }, [slashPressed]);
+
     const { menu, setMenu } = menuState;
     const [isDark, setIsDark] = React.useState<boolean>(true);
+
     React.useEffect(() => {
         const docHtml = document.documentElement.dataset;
         setIsDark(docHtml.theme === 'dark');
     }, []);
+
     const toggleTheme = () => {
         const docHtml = document.documentElement.dataset;
         // toggle theme
@@ -100,18 +116,27 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 <a href="/docs/javascript/v2/foundation/basics">
                     <div className="logo-ctx">
                         <img width={36} src="/docs/logo.svg" alt="100ms Logo" />
-                        <p className="company">
-                            100ms<span>.docs</span>
-                        </p>
+                        <p className="company hide-content">100ms</p>
                     </div>
                 </a>
+                <DividerIcon style={{ strokeWidth: '2px', marginLeft: '-16px' }} />
+                <div>
+                    <Link href={`/${currentTech}/`}>
+                        <p
+                            className="company"
+                            style={{
+                                cursor: 'pointer',
+                                fontSize: '1rem',
+                                position: 'relative',
+                                top: '1px'
+                            }}>
+                            Docs
+                        </p>
+                    </Link>
+                </div>
             </div>
-
-            <div className="head-right">
+            <div className="left-content">
                 <div className="nav-links">
-                    <button className={!isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
-                        <Link href={`/${currentTech}/`}> Docs</Link>
-                    </button>
                     <span style={{ marginRight: '1rem' }} />
                     {/* @ts-ignore */}
                     {isNonApiRef ? null : (
@@ -120,35 +145,48 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                         </button>
                     )}
                 </div>
-
+            </div>
+            <div className="head-right">
                 <div className="search-ctx">
                     <button onClick={() => setModal(true)} type="button" className="search-btn">
                         <SearchIcon />
-                        <span>Quick search for anything</span>
+                        <span>Search docs</span>
                         <span className="hot-key">/</span>
                     </button>
                 </div>
+                <span
+                    aria-label="theme-toggle-button"
+                    className="pointer theme-btn"
+                    role="button"
+                    style={{ paddingTop: '8px', paddingLeft: '10px', margin: '0 2rem 0 1rem' }}
+                    tabIndex={0}
+                    onKeyPress={() => {}}
+                    onClick={() => toggleTheme()}>
+                    {isDark ? <NightIcon /> : <SunIcon style={{ color: '#ECC502' }} />}
+                </span>
             </div>
-
-            <span
-                aria-label="theme-toggle-button"
-                className="pointer"
-                role="button"
-                style={{ paddingTop: '8px', paddingLeft: '10px', margin: '0 2rem 0 1rem' }}
-                tabIndex={0}
-                onKeyPress={() => {}}
-                onClick={() => toggleTheme()}>
-                {isDark ? <SvgMoon /> : <SvgSun />}
-            </span>
 
             {modal ? (
                 <SearchModal setModal={setModal} docs={docs} currentDocSlug={currentDocSlug} />
             ) : null}
 
             <div className="menu-btn">
-                <button aria-label="menu-button" type="button" onClick={() => setMenu(!menu)}>
-                    {menu ? <CrossIcon /> : <MenuIcon />}
+                <button
+                    onClick={() => setModal(true)}
+                    style={{ marginRight: '0.5rem', marginLeft: '-1rem' }}
+                    type="button"
+                    className="search-btn">
+                    <SearchIcon style={{ width: '24px' }} />
                 </button>
+                {showMobileMenu && (
+                    <button
+                        style={{ width: '24px', marginTop: '8px' }}
+                        aria-label="menu-button"
+                        type="button"
+                        onClick={() => setMenu(!menu)}>
+                        {menu ? <CrossIcon /> : <HamburgerMenuIcon />}
+                    </button>
+                )}
             </div>
             <style jsx>{`
                 .ctx {
@@ -161,8 +199,8 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     margin: 0 auto;
                     top: 0;
                     padding: 0.5rem;
-                    background-color: var(--gray1);
-                    border-bottom: 1px solid var(--gray6);
+                    background-color: var(--header_bg);
+                    border-bottom: 2px solid var(--new_border_default);
                 }
                 .res-ctx {
                     background-color: var(--gray2);
@@ -180,10 +218,6 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 .res-box:hover {
                     opacity: 1;
                 }
-                .nav-links {
-                    display: flex;
-                    align-items: center;
-                }
                 .res-box {
                     margin: 0.5rem 0;
                     border-radius: 5px;
@@ -198,6 +232,9 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 .res-box span {
                     margin-right: 1rem;
                 }
+                p.hide-content {
+                    margin-right: 16px;
+                }
                 button a {
                     color: var(--gray11) !important;
                     text-decoration: none;
@@ -208,13 +245,18 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                 .head-left {
                     display: flex;
                     align-items: center;
-                    width: 250px;
+                    width: auto;
+                    margin-right: 0.5rem;
+                }
+                .left-content {
+                    display: flex;
+                    align-items: center;
+                    width: auto;
+                    justify-content: space-between;
                 }
                 .head-right {
                     display: flex;
-                    align-items: center;
-                    width: 100%;
-                    justify-content: space-between;
+                    margin-left: auto;
                 }
                 .logo-ctx {
                     display: flex;
@@ -223,41 +265,45 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     font-size: 24px;
                 }
                 .logo-ctx img {
-                    margin-left: 1rem;
-                    margin-right: 1rem;
+                    margin: 0 1rem;
                 }
                 .search-ctx {
                     border-radius: 5px;
-                    background: var(--gray3);
+                    width: 320px;
+                    border: 1px solid var(--border_light);
+                    margin-right: 20px;
+                    background: var(--new_surface_light);
                     position: relative;
-                    padding: 5px 12px;
+                    padding: 5px 16px 5px 10px;
                 }
                 .search-btn {
-                    opacity: 0.6;
+                    opacity: 1;
                     background-color: transparent;
                     display: flex;
+                    width: 100%;
                     align-items: center;
-                    border: none;
                     border-radius: 5px;
-
                     cursor: pointer;
                     border-bottom-width: 1px;
                 }
                 .search-btn span {
                     margin-left: 1rem;
+                    text-align: left;
                 }
                 .hot-key {
-                    margin-left: 1rem;
+                    margin-left: auto !important;
                     border-radius: 5px;
-                    padding: 0 8px;
+                    padding: 0 5px;
+                    color: var(--text_high_emp);
                     border: 1px solid var(--gray6);
                 }
                 .search-btn:hover {
-                    opacity: 1;
+                    opacity: 0.8;
                 }
                 .company {
                     font-size: 1.2rem;
                     font-weight: 700;
+                    margin: 0;
                 }
                 .company span {
                     font-size: 1rem;
@@ -272,27 +318,39 @@ const Header: React.FC<Props> = ({ menuState, modal, setModal, docs, currentDocS
                     outline: none;
                     border: none;
                 }
-                @media screen and (max-width: 600px) {
+                @media screen and (max-width: 768px) {
                     .search-ctx {
                         display: none;
                     }
+                    .menu-btn {
+                        display: flex;
+                    }
+                    .left-content {
+                        display: none;
+                    }
+                }
+                @media screen and (max-width: 600px) {
                     .ctx {
-                        justify-content: space-between;
+                        justify-content: flex-end;
                     }
                     .head-left {
                         width: unset;
+                        margin-right: auto;
                     }
-                    .head-right {
-                        display: none;
+                    .theme-btn {
+                        margin-left: auto;
                     }
-                    .menu-btn {
-                        margin-top: 0.5rem;
-                        display: block;
+                }
+                @media screen and (max-width: 375px) {
+                    p.hide-content {
+                        display: none !important;
                     }
                 }
             `}</style>
         </div>
     );
 };
+
+Header.defaultProps = { showMobileMenu: true };
 
 export default Header;

@@ -51,10 +51,6 @@ const Pagination: React.FC<Props> = ({ prev, next }) => (
                 flex-wrap: wrap;
                 justify-content: space-between;
             }
-            a:hover {
-                background-color: var(--gray4);
-                border-radius: 5px;
-            }
             a {
                 text-decoration: none;
                 padding: 5px;
