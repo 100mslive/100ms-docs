@@ -3,4 +3,54 @@ title: Retrieve a session
 nav: 4.2
 ---
 
-<Content alias="Retrieve a session" />
+## How to calculate session duration
+
+You can calculate additional information from session data using the received information. Redundant information like peer duration/session duration is not provided since they can be calculated from the provided response. You can calculate peer duration by subtracting joined_at timestamp from left_at for a given peer. Similarly, you can calculate session duration by adding all peers' duration.
+
+## Retrieve a specific session - by ID
+
+### API endpoint
+
+<GetRequest title="https://api.100ms.live/v2/sessions/<session_id>" />
+
+### Arguments
+
+| Name                  | Type     | Description                                                                                                     | Required |
+| :-------------------- | :------- | :-------------------------------------------------------------------------------------------------------------- | :------- |
+| id <br/> — path param | `string` | Unique identifier of the session you wish to fetch details for. <br/><br/>**Example**: 63172c2d3e3d9fdb008322e1 | No       |
+
+## Retrieve a specific session - by room ID
+
+### API endpoint
+
+<GetRequest title="https://api.100ms.live/v2/sessions/<room_id>" />
+
+### Arguments
+
+| Name                       | Type     | Description                                                                                                          | Required |
+| :------------------------- | :------- | :------------------------------------------------------------------------------------------------------------------- | :------- |
+| room_id <br/> — path param | `string` | Unique identifier of the room you wish to fetch session details for. <br/><br/>**Example**: 627ce5b8f2e4e30487862adb | No       |
+
+## Response
+
+```json
+{
+    "id": "63172c2d3e3d9fdb008322e1",
+    "room_id": "627ce5b8f2e4e30487862adb",
+    "customer_id": "627cdddff2e4e30487862ad1",
+    "active": false,
+    "peers": {
+        "2d873b0a-c2c9-41dc-ac72-c6ea9b2f2cc3": {
+            "id": "2d873b0a-c2c9-41dc-ac72-c6ea9b2f2cc3",
+            "session_id": "63172c2d3e3d9fdb008322e1",
+            "name": "Nixon K",
+            "role": "backstage",
+            "user": "ba71cf83-dfbf-4a41-b9e6-945ed12d237c",
+            "joined_at": "2022-09-06T11:17:01.816Z",
+            "left_at": "2022-09-06T11:17:03.643Z"
+        }
+    },
+    "created_at": "2022-09-06T11:17:01.817Z",
+    "updated_at": "2022-09-06T11:17:03.65Z"
+}
+```

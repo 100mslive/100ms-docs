@@ -1,0 +1,250 @@
+---
+title: Retrieve a specific template
+nav: 3.3
+---
+
+Retrieves the details of a specific tempate. 100ms provides options to retrieve details of a room with their ID.
+
+## API endpoint
+
+<GetRequest title="https://api.100ms.live/v2/templates/<template_id>" />
+
+## Arguments
+
+| Name                  | Type     | Description                                                                                                      | Required |
+| :-------------------- | :------- | :--------------------------------------------------------------------------------------------------------------- | :------- |
+| id <br/> — path param | `string` | Unique identifier of the template you wish to fetch details for. <br/><br/>**Example**: 627ce5b637300e55a72ba7ed | No       |
+
+## Response
+
+```json
+{
+    "id": "627ce5b637300e55a72ba7ed",
+    "name": "nixon-samuel_eventapp_bf337846-259e-40c1-97bd-52ac0e876d55",
+    "customerId": "627cdddff2e4e30487862ad1",
+    "roles": {
+        "backstage": {
+            "name": "backstage",
+            "publishParams": {
+                "allowed": [
+                    "audio",
+                    "video",
+                    "screen"
+                ],
+                "audio": {
+                    "bitRate": 32,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 400,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 640,
+                    "height": 480
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": [
+                    "stage",
+                    "backstage",
+                    "invitee",
+                    "viewer"
+                ],
+                "maxSubsBitRate": 5200,
+                "subscribeDegradation": {
+                    "packetLossThreshold": 25,
+                    "degradeGracePeriodSeconds": 1,
+                    "recoverGracePeriodSeconds": 4
+                }
+            },
+            "permissions": {
+                "endRoom": true,
+                "removeOthers": true,
+                "mute": true,
+                "unmute": true,
+                "changeRole": true,
+                "rtmpStreaming": true,
+                "hlsStreaming": true,
+                "browserRecording": true,
+                "sendRoomState": false
+            },
+            "priority": 1,
+            "maxPeerCount": 0
+        },
+        "invitee": {
+            "name": "invitee",
+            "publishParams": {
+                "allowed": [
+                    "audio",
+                    "video",
+                    "screen"
+                ],
+                "audio": {
+                    "bitRate": 32,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 400,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 640,
+                    "height": 480
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": [
+                    "stage",
+                    "invitee",
+                    "backstage"
+                ],
+                "maxSubsBitRate": 5200,
+                "subscribeDegradation": {
+                    "packetLossThreshold": 25,
+                    "degradeGracePeriodSeconds": 1,
+                    "recoverGracePeriodSeconds": 4
+                }
+            },
+            "permissions": {
+                "rtmpStreaming": true,
+                "hlsStreaming": true,
+                "browserRecording": true,
+                "sendRoomState": false
+            },
+            "priority": 1,
+            "maxPeerCount": 0
+        },
+        "stage": {
+            "name": "stage",
+            "publishParams": {
+                "allowed": [
+                    "audio",
+                    "video",
+                    "screen"
+                ],
+                "audio": {
+                    "bitRate": 32,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 400,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 640,
+                    "height": 480
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": [
+                    "stage",
+                    "invitee",
+                    "backstage"
+                ],
+                "maxSubsBitRate": 5200,
+                "subscribeDegradation": {
+                    "packetLossThreshold": 25,
+                    "degradeGracePeriodSeconds": 1,
+                    "recoverGracePeriodSeconds": 4
+                }
+            },
+            "permissions": {
+                "endRoom": true,
+                "changeRole": true,
+                "rtmpStreaming": true,
+                "hlsStreaming": true,
+                "browserRecording": true,
+                "sendRoomState": false
+            },
+            "priority": 1,
+            "maxPeerCount": 0
+        },
+        "viewer": {
+            "name": "viewer",
+            "publishParams": {
+                "audio": {
+                    "bitRate": 32,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 400,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 640,
+                    "height": 480
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": [
+                    "stage",
+                    "invitee",
+                    "backstage"
+                ],
+                "maxSubsBitRate": 5200,
+                "subscribeDegradation": {
+                    "packetLossThreshold": 25,
+                    "degradeGracePeriodSeconds": 1,
+                    "recoverGracePeriodSeconds": 4
+                }
+            },
+            "permissions": {
+                "rtmpStreaming": true,
+                "hlsStreaming": true,
+                "browserRecording": true,
+                "sendRoomState": false
+            },
+            "priority": 1,
+            "maxPeerCount": 0
+        }
+    },
+    "settings": {
+        "region": "in",
+        "subscribeDegradation": {},
+        "screenSimulcastLayers": {},
+        "videoSimulcastLayers": {},
+        "recording": null,
+        "roomState": {
+            "messageInterval": 5,
+            "sendPeerList": false,
+            "stopRoomStateOnJoin": true,
+            "enabled": false
+        },
+        "retry": {}
+    },
+    "destinations": {},
+    "createdAt": "2022-05-12T10:47:18.588Z",
+    "updatedAt": "2022-05-12T10:47:18.588Z",
+    "_id": "627ce5b637300e55a72ba7ed",
+    "customer": "627cdddff2e4e30487862ad1"
+}
+```

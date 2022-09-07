@@ -50,19 +50,17 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
 
 </Tab>
 
-## Arguments
+## Main Arguments
 
 | Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                    | Required |
 | :------------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | name <br/>           | `string` | A unique identifier you can assign to 100ms rooms. This is `case-insensitive`. <br/><br/>Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/>**Note**: `create Room` is called with an existing room name, then the corresponding room ID is returned <br/><br/> | No       |
 | description <br/>    | `string` | A string to describe your room's usage. E.g. "9PM English Class Batch 2"                                                                                                                                                                                                                                                       | No       |
 | template <br/>       | `string` | [Template](../foundation/templates-and-roles) of the room. You can get template name from room details section on dashboard                                                                                                                                                                                                    | No       |
-| recording_info <br/> | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings. <br/><br/>Check the [recording_info object](#recording-info) below for more information.                                                                                                     | No       |
+| recording_info <br/> | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings. <br/><br/>Check the [recording_info arguments](#recording-info) below for more information.                                                                                                     | No       |
 | region <br/>         | `string` | Region in which you want to create room. <br/><br/> `in` - India <br/> `us` - United States <br/> `eu` - European Union <br/> `auto` - Automatic region selection (default, and in case this parameter is not provided)                                                                                                        | No       |
 
-## Objects
-
-### recording_info
+## recording_info arguments
 
 | Name        | Type      | Description                                                                                                                                                                                                                                                                                   | Required |
 | :---------- | :-------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
@@ -76,23 +74,23 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
 
 To know more about recording please visit [Recording](./recording)
 
-### upload_info
+### upload_info arguments
 
 | Name        | Type     | Description                                                                                                                                                                               | Required |
 | :---------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | type        | `string` | Upload Destination type. Currently, only `s3` is supported                                                                                                                                | Yes      |
 | location    | `string` | Name of the AWS s3 bucket in which you want to store all recordings                                                                                                                       | Yes      |
 | prefix      | `string` | Upload prefix path                                                                                                                                                                        | No       |
-| options     | `object` | Additional configurations of type `Options` to be used for uploading. <br/><br/>Check the [options object](#options) below for more information.                                          | No       |
-| credentials | `object` | Object of type `Credentials`. This is used to share AWS credentials to access the s3 bucket specified. <br/><br/>Check the [credentials object](#credentials) below for more information. | No       |
+| options     | `object` | Additional configurations of type `Options` to be used for uploading. <br/><br/>Check the [options arguments](#options) below for more information.                                          | No       |
+| credentials | `object` | Object of type `Credentials`. This is used to share AWS credentials to access the s3 bucket specified. <br/><br/>Check the [credentials arguments](#credentials) below for more information. | No       |
 
-### Options
+#### Options arguments
 
 | Name   | Type     | Description                                                                                                              | Required |
 | :----- | :------- | :----------------------------------------------------------------------------------------------------------------------- | :------- |
 | region | `string` | Region of the AWS account hosting the s3 bucket for storing recordings. If not provided it is assumed to be `ap-south-1` | No       |
 
-### Credentials
+#### Credentials arguments
 
 | Name   | Type     | Description                                                                          | Required |
 | :----- | :------- | :----------------------------------------------------------------------------------- | :------- |

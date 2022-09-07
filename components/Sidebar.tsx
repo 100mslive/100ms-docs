@@ -54,10 +54,10 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
             apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
         },
         {
-            link: '/server-side/v2/foundation/basics',
+            link: '/server-side/v2/introduction/overview',
             name: 'Server-Side',
             icon: <ServerIcon />,
-            apiRef: '/server-side/v2/foundation/basics'
+            apiRef: '/server-side/v2/introduction/overview'
         }
     ];
     // @ts-ignore

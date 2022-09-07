@@ -22,10 +22,10 @@ This API retrieves details of all the rooms in your account.
 
 ### Arguments
 
-| Name        | Type     | Description                                                                                                                                             | Required |
-| :---------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
-| limit <br/> | `int`    | Determines the number of room objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 1, **Max**: 20               | No       |
-| start <br/> | `string` | Determines the starting point. <br/>"last" field of the response can be used as start for the subsequent request. <br/>E.g. "627cda81ab4f3b56a077dc33". | No       |
+| Name        | Type     | Description                                                                                                                                                  | Required |
+| :---------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| limit <br/> | `int`    | Determines the number of room objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 1, **Max**: 20                    | No       |
+| start <br/> | `string` | Determines the starting point. <br/>"last" field of the response can be used as start for the subsequent request. <br/><br/>E.g. "627cda81ab4f3b56a077dc33". | No       |
 
 ## List all active rooms
 
@@ -35,11 +35,11 @@ This API retrieves details of all the rooms in your account.
 
 ### Arguments
 
-| Name          | Type      | Description                                                                                                                                             | Required |
-| :------------ | :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
-| enabled <br/> | `boolean` | Flag to indicate if the room is enabled. <br/><br/>`Default`: true, <br/>`Allowed values`: true, false                                                  | No       |
-| limit <br/>   | `int`     | Determines the number of room objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 1, **Max**: 20               | No       |
-| start <br/>   | `string`  | Determines the starting point. <br/>"last" field of the response can be used as start for the subsequent request. <br/>E.g. "627cda81ab4f3b56a077dc33". | No       |
+| Name          | Type      | Description                                                                                                                                                  | Required |
+| :------------ | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| enabled <br/> | `boolean` | Flag to indicate if the room is enabled. <br/><br/>`Default`: true, <br/>`Allowed values`: true, false                                                       | No       |
+| limit <br/>   | `int`     | Determines the number of room objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 1, **Max**: 20                    | No       |
+| start <br/>   | `string`  | Determines the starting point. <br/>"last" field of the response can be used as start for the subsequent request. <br/><br/>E.g. "627cda81ab4f3b56a077dc33". | No       |
 
 ## List rooms created in a specific timerange
 
@@ -49,53 +49,53 @@ This API retrieves details of all the rooms in your account.
 
 ### Arguments
 
-| Name         | Type     | Description                                                                                                                                             | Required |
-| :----------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
-| after <br/>  | `string` | Check for rooms created with a timestamp greater than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.s+z.                                  | No       |
-| before <br/> | `string` | Check for rooms created with a timestamp less than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.s+z.                                     | No       |
-| limit <br/>  | `int`    | Determines the number of room objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 1, **Max**: 20               | No       |
-| start <br/>  | `string` | Determines the starting point. <br/>`last` field of the response can be used as start for the subsequent request. <br/>**E.g.** "627cda81ab4f3b56a077dc33". | No       |
+| Name         | Type     | Description                                                                                                                                                      | Required |
+| :----------- | :------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| after <br/>  | `string` | Check for rooms created with a timestamp greater than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.s+z.                                           | No       |
+| before <br/> | `string` | Check for rooms created with a timestamp less than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.s+z.                                              | No       |
+| limit <br/>  | `int`    | Determines the number of room objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 1, **Max**: 20                        | No       |
+| start <br/>  | `string` | Determines the starting point. <br/>`last` field of the response can be used as start for the subsequent request. <br/><br/>**E.g.** "627cda81ab4f3b56a077dc33". | No       |
 
 ## Response
 
 ```json
 {
-   "limit": 10,
-   "data": [
-       {
-           "id": "62bbc84XXXXXXXX0a6aa1a",
-           "name": "test-room",
-           "enabled": true,
-           "description": "This is a test room",
-           "customer_id": "627cdaXXXXXXXa39291b",
-           "recording_source_template": true,
-           "user_id": "627cdaXXXXXXc037a39291a",
-           "template_id": "627cdXXXXXXX784227d3",
-           "template": "default_createown_e319635a-XXXX-XXXX-XXXX-ae9e95891e31",
-           "region": "in",
-           "created_at": "2022-06-29T03:34:30.194Z",
-           "key": "627XXXXXXXXXXXa39291b:test-room",
-           "updated_at": "0001-01-01T00:00:00Z"
-       },
-       {
-           "id": "627cda81XXXXXXXX6b077bc33",
-           "name": "4b2705aa-XXXX-XXXX-XXXX-f470c06d0c03",
-           "enabled": true,
-           "description": "This is a test room",
-           "customer_id": "627cdXXXXXXX037a39291b",
-           "recording_source_template": false,
-           "user_id": "627cdaXXXXXXX7a39291a",
-           "recording": {
-               "enabled": false
-           },
-           "template_id": "627cdaXXXXXXXXXX84227d3",
-           "template": "default_createown_e319635a-XXXX-XXXX-XXXX-ae9e95891e31",
-           "region": "in",
-           "created_at": "2022-05-12T09:59:29.343Z",
-           "key": "627cdaXXXXXXX037a39291b:4b2705aa-XXXX-XXXX-XXXX-f470c06d0c03",
-           "updated_at": "0001-01-01T00:00:00Z"
-       }
-   ],
-   "last": "627cda81bd4f3b56b077bc33"
+    "limit": 10,
+    "data": [
+        {
+            "id": "62bbc84XXXXXXXX0a6aa1a",
+            "name": "test-room",
+            "enabled": true,
+            "description": "This is a test room",
+            "customer_id": "627cdaXXXXXXXa39291b",
+            "recording_source_template": true,
+            "user_id": "627cdaXXXXXXc037a39291a",
+            "template_id": "627cdXXXXXXX784227d3",
+            "template": "default_createown_e319635a-XXXX-XXXX-XXXX-ae9e95891e31",
+            "region": "in",
+            "created_at": "2022-06-29T03:34:30.194Z",
+            "key": "627XXXXXXXXXXXa39291b:test-room",
+            "updated_at": "0001-01-01T00:00:00Z"
+        },
+        {
+            "id": "627cda81XXXXXXXX6b077bc33",
+            "name": "4b2705aa-XXXX-XXXX-XXXX-f470c06d0c03",
+            "enabled": true,
+            "description": "This is a test room",
+            "customer_id": "627cdXXXXXXX037a39291b",
+            "recording_source_template": false,
+            "user_id": "627cdaXXXXXXX7a39291a",
+            "recording": {
+                "enabled": false
+            },
+            "template_id": "627cdaXXXXXXXXXX84227d3",
+            "template": "default_createown_e319635a-XXXX-XXXX-XXXX-ae9e95891e31",
+            "region": "in",
+            "created_at": "2022-05-12T09:59:29.343Z",
+            "key": "627cdaXXXXXXX037a39291b:4b2705aa-XXXX-XXXX-XXXX-f470c06d0c03",
+            "updated_at": "0001-01-01T00:00:00Z"
+        }
+    ],
+    "last": "627cda81bd4f3b56b077bc33"
 }
 ```

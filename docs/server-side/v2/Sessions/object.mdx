@@ -3,4 +3,28 @@ title: Object
 nav: 4.1
 ---
 
-<Content alias="Object" />
+## Overview
+
+Session is a single continuous call in a [room](https://www.100ms.live/docs/server-side/v2/features/room). To allow users to join a 100ms video conferencing session inside your app, you first need to create a room. A single room can have multiple sessions. You will need a [management token](https://www.100ms.live/docs/server-side/v2/foundation/authentication-and-tokens) as a bearer token for your requests.
+
+This API retrieves details of a list of sessions in your account. 100ms provides options to
+
+1. retrieve the complete list of sessions or
+2. sessions based on the room_id or id or
+3. sessions that are active or
+4. sessions based on their creation time range or
+5. combinations of these.
+
+## Base URI
+
+<PostRequest title="https://api.100ms.live/v2/sessions" />
+
+## Object
+
+| Argument    | Description                                                                                                |
+| ----------- | ---------------------------------------------------------------------------------------------------------- |
+| id          | Unique identifier for the session.                                                                         |
+| room_id     | Unique identifier for the room used for the particular session.                                            |
+| customer_id | Unique identifier for your account                                                                         |
+| active      | Indicates whether the session is active or inactive                                                          |
+| peers       | Array of peer objects with arguments such as `id`, `session_id`, `name`, `role`, `joined_at`, `left_at`, etc. |

@@ -1,0 +1,290 @@
+---
+title: Create a template
+nav: 3.2
+---
+
+## Create a template
+
+This endpoint is used to create a template. A recommended way is to provide a list of roles with empty objects to get default values for various options corresponding to those roles, then update those roles by modifying them using create/update role API.
+
+## API Endpoint
+
+<PostRequest title="https://api.100ms.live/v2/templates" />
+
+<Tabs items={['Request', 'Response']} id="req" />
+
+<Tab id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/templates' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "new-template-1662551191",
+    "default": false,
+    "roles": {
+        "guest": {
+            "name": "guest",
+            "publishParams": {},
+            "subscribeParams": {},
+            "permissions": {},
+            "priority": 1,
+            "maxPeerCount": 0
+        },
+        "host": {},
+    },
+    "settings": {},
+    "destinations": {}
+}'
+```
+
+</Tab>
+<Tab id="req-1">
+
+<Response res="200: OK" />
+
+```json
+{
+    "id": "63188115d11d6db790c73c60",
+    "name": "new-template-1662550293",
+    "customerId": "627cdddff2e4e30487862ad1",
+    "roles": {
+        "guest": {
+            "name": "guest",
+            "publishParams": {
+                "allowed": ["audio", "video", "screen"],
+                "audio": {
+                    "bitRate": 32,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 300,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 480,
+                    "height": 360
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": ["host", "guest"],
+                "maxSubsBitRate": 3200,
+                "subscribeDegradation": {
+                    "packetLossThreshold": 25,
+                    "degradeGracePeriodSeconds": 1,
+                    "recoverGracePeriodSeconds": 4
+                }
+            },
+            "permissions": {
+                "rtmpStreaming": true,
+                "hlsStreaming": true,
+                "browserRecording": true,
+                "sendRoomState": false
+            },
+            "priority": 1,
+            "maxPeerCount": 0
+        },
+        "host": {
+            "name": "host",
+            "publishParams": {
+                "allowed": ["audio", "video", "screen"],
+                "audio": {
+                    "bitRate": 32,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 300,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 480,
+                    "height": 360
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": ["guest", "host"],
+                "maxSubsBitRate": 3200,
+                "subscribeDegradation": {
+                    "packetLossThreshold": 25,
+                    "degradeGracePeriodSeconds": 1,
+                    "recoverGracePeriodSeconds": 4
+                }
+            },
+            "permissions": {
+                "endRoom": true,
+                "removeOthers": true,
+                "mute": true,
+                "unmute": true,
+                "changeRole": true,
+                "rtmpStreaming": true,
+                "hlsStreaming": true,
+                "browserRecording": true,
+                "sendRoomState": false
+            },
+            "priority": 1,
+            "maxPeerCount": 0
+        }
+    },
+    "settings": {
+        "region": "in",
+        "subscribeDegradation": {},
+        "screenSimulcastLayers": {},
+        "videoSimulcastLayers": {},
+        "recording": null,
+        "roomState": {
+            "messageInterval": 5,
+            "sendPeerList": false,
+            "stopRoomStateOnJoin": true,
+            "enabled": false
+        },
+        "retry": {}
+    },
+    "destinations": {},
+    "createdAt": "2022-09-07T11:31:33.618Z",
+    "updatedAt": "2022-09-07T11:31:33.618Z",
+    "_id": "63188115d11d6db790c73c60",
+    "customer": "627cdddff2e4e30487862ad1"
+}
+```
+
+</Tab>
+
+## Main arguments
+
+| Name               | Type      | Description                                                                                                                                                                                                                                                                                           | Required |
+| :----------------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| name <br/>         | `string`  | A unique identifier you can assign to 100ms templates. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Notes**: <br/>If `create Template` is called with an existing template name, then that template will be overwritten.<br/> | No       |
+| default <br/>      | `boolean` | Whether this is default template for a customer. Default template for a customer is used when no template is provided in `create Room` api.                                                                                                                                                           | No       |
+| roles <br/>        | `object`  | Map of `{roleName:roleObject}`. Some sane defaults are set for values that are not provided in the roles object.                                                                                                                                                                                      | No       |
+| settings <br/>     | `object`  | Global settings for this template.                                                                                                                                                                                                                                                                    | No       |
+| destinations <br/> | `object`  | Object of type `destinations`. This object contains information for enabling/configuring features like `browserRecordings`, `rtmpDestinations`, & `hlsDestinations`.                                                                                                                                  | No       |
+
+## roles object arguments
+
+| Name            | Type     | Description                                                           | Required |
+| :-------------- | :------- | :-------------------------------------------------------------------- | :------- |
+| publishParams   | `object` | Publish parameters for this role.                                     | No       |
+| subscribeParams | `object` | Subscribe parameters for this role.                                   | No       |
+| permissions     | `object` | Permissions for this role.                                            | No       |
+| priority        | `int`    | Priority of the role for subscription/publishing.<br/>Range: `1`-`10` | No       |
+
+### publishParams object arguments
+
+| Name    | Type     | Description                                               | Required |
+| :------ | :------- | :-------------------------------------------------------- | :------- |
+| allowed | `array`  | Allowed tracks. Subarray of [`audio`, `video`, `screen`]. | No       |
+| audio   | `object` | Audio publish parameters.                                 | No       |
+| video   | `object` | Video publish parameters.                                 | No       |
+| screen  | `object` | Screenshare publish parameters.                           | No       |
+
+#### audio object arguments
+
+| Name    | Type     | Description                                                                       | Required |
+| :------ | :------- | :-------------------------------------------------------------------------------- | :------- |
+| bitRate | `int`    | Audio Max bitrate of audio track in kbps.<br/>Range: `16`-`128`<br/>Default: `32` | No       |
+| codec   | `string` | Codec for the audio track.<br/>Options: [`opus`] <br/>Default: `opus`             | No       |
+
+#### video object arguments
+
+| Name      | Type     | Description                                                                   | Required |
+| :-------- | :------- | :---------------------------------------------------------------------------- | :------- |
+| bitRate   | `int`    | Max bitrate of video track in kbps.<br/>Range: `30`-`2000`<br/>Default: `256` | No       |
+| codec     | `string` | Codec for the video track.<br/>Options: [`vp8`]<br/>Default: `vp8`            | No       |
+| frameRate | `int`    | Max number of video frames per second.<br/>Range: `1`-`30`<br/>Default: `25`  | No       |
+| height    | `int`    | Height of the video track.<br/>Range: `50`-`1080`<br/>Default: `180`          | No       |
+| width     | `int`    | Width of the video track.<br/>Range: `50`-`1920`<br/>Default: `320`           | No       |
+
+#### screen object arguments
+
+| Name      | Type     | Description                                                                  | Required |
+| :-------- | :------- | :--------------------------------------------------------------------------- | :------- |
+| bitRate   | `int`    | Max bitrate of screen track in kbps.<br/>Range: `>=500` <br/>Default: `1024` | No       |
+| codec     | `string` | Codec for the screen track.<br/>Options: [`vp8`]<br/>Default: `vp8`          | No       |
+| frameRate | `int`    | Max number of screen frames per second<br/>Range: `1`-`30`<br/>Default: `10` | No       |
+| height    | `int`    | Height of the screen track.<br/>Range: `270`-`1080`<br/>Default: `720`       | No       |
+| width     | `int`    | Width of the screen track.<br/>Range: `480`-`1920`<br/>Default: `1280`       | No       |
+
+### subscribeParams object arguments
+
+| Name                 | Type     | Description                                                              | Required |
+| :------------------- | :------- | :----------------------------------------------------------------------- | :------- |
+| maxSubsBitRate       | `int`    | Maximum bitrate (in kbps) that can subscribed.                           | No       |
+| subscribeToRoles     | `array`  | List of roles which can be subscribed to.                                | No       |
+| subscribeDegradation | `object` | Subscribe degradation parameters (adding this enables screen simulcast). | No       |
+
+#### subscribeDegradation object arguments
+
+| Name                      | Type  | Description                                                             | Required |
+| :------------------------ | :---- | :---------------------------------------------------------------------- | :------- |
+| packetLossThreshold       | `int` | Threshold for packet loss.<br/>Range: `1`-`100`<br/>Default: `50`       | No       |
+| degradeGracePeriodSeconds | `int` | Degrade grace period (in seconds).<br/>Range: `1`-`10`<br/>Default: `1` | No       |
+| recoverGracePeriodSeconds | `int` | Recover grace period (in seconds).<br/>Range: `1`-`10`<br/>Default: `4` | No       |
+
+## permissions object arguments
+
+| Name             | Type      | Description                                                         | Required | Default |
+| :--------------- | :-------- | :------------------------------------------------------------------ | :------- | :------ |
+| endRoom          | `boolean` | Permission to end room for all.                                     | No       | `false` |
+| removeOthers     | `boolean` | Permission to remove others from the room.                          | No       | `false` |
+| mute             | `boolean` | Permission to request others to mute them.                          | No       | `false` |
+| unmute           | `boolean` | Permission to request others to unmute them.                        | No       | `false` |
+| changeRole       | `boolean` | Permission to request others to change their role.                  | No       | `false` |
+| sendRoomState    | `boolean` | Permission to receive room state like peer-count and peer-list      | No       | `false` |
+| browserRecording | `boolean` | Permission to start/stop browser (beam) recording.                  | No       | `true`  |
+| rtmpStreaming    | `boolean` | Permission to start/stop RTMP streaming.                            | No       | `true`  |
+| hlsStreaming     | `boolean` | Permission to start/stop HLS streaming (with or without recording). | No       | `true`  |
+
+> Note: `hlsStreaming` is also required to - pause/unpause HLS recording or insert metadata in HLS stream
+
+> Note: Starting/Stopping rtmp + browser recording will need both `browserRecording` and `rtmpStreaming` permissions
+
+## settings object arguments
+
+| Name      | Type     | Description                                                                                                                           | Required |
+| :-------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| region    | `string` | Region in which the room will be hosted by default. Possible values could be `in`, `us`, `eu` or `auto` (automatic region selection). | No       |
+| recording | `object` | Object of type `recording`. This object contains information for enabling recording/setting storage location for recordings.          | No       |
+
+### recording object arguments
+
+| Name    | Type      | Description                                                                                                                                                                                | Required |
+| :------ | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| enabled | `boolean` | Enable the SFU recording for its rooms. Disabled by default.                                                                                                                               | No       |
+| upload  | `object`  | Object of type `upload`. This object contains information on recordings storage location. If you want to store recording with 100ms, and not use your own s3, don't add this to the object | No       |
+
+#### upload object arguments
+
+| Name        | Type     | Description                                                                                            | Required |
+| :---------- | :------- | :----------------------------------------------------------------------------------------------------- | :------- |
+| type        | `string` | Upload Destination type. Currently, only s3 is supported.                                              | Yes      |
+| location    | `string` | Name of the AWS s3 bucket in which you want to store all recordings                                    | Yes      |
+| prefix      | `string` | Upload prefix path                                                                                     | Yes      |
+| options     | `object` | Additional configurations of type Options to be used for uploading                                     | No       |
+| credentials | `object` | Object of type `Credentials`. This is used to share AWS credentials to access the s3 bucket specified. | No       |
+
+#### options object arguments
+
+| Name   | Type     | Description                                                                                       | Required |
+| :----- | :------- | :------------------------------------------------------------------------------------------------ | :------- |
+| region | `string` | Region of the AWS account hosting the s3 bucket. If not provided it is assumed to be `ap-south-1` | No       |
+
+#### Credentials object arguments
+
+| Name   | Type     | Description                                                                          | Required |
+| :----- | :------- | :----------------------------------------------------------------------------------- | :------- |
+| key    | `string` | `access key ID` for the AWS account hosting the s3 bucket for storing recordings     | Yes      |
+| secret | `string` | `secret access key` for the AWS account hosting the s3 bucket for storing recordings | Yes      |
