@@ -1,9 +1,10 @@
 ---
-title: Object
+title: Room object
 nav: 2.1
 ---
 
 ## Overview
+
 Room is a virtual space that holds conferencing of the people. To allow users to join a 100ms video conferencing session inside your app, you first need to create a room.
 
 Room APIs can be used to
@@ -12,22 +13,22 @@ Room APIs can be used to
 2. Get details of existing rooms based on id/name/enabled/created-time or combinations of these
 3. Disable an existing room
 
-## Base URI
+## API Endpoint
 
-<PostRequest title="https://api.100ms.live/v2/rooms" />
+<BaseRequest title="https://api.100ms.live/v2/rooms" />
 
 ## Object
 
-| Argument                  | Description                                                          |
-| ------------------------- | -------------------------------------------------------------------- |
-| id                        | Unique identifier for this room                                      |
-| name                      | Alias for the room                                                   |
-| enabled                   | Indicates whether the room is enabled or disabled                    |
-| description               | Description for the room                                             |
-| customer_id               | Unique identifier for your account                                   |
-| recording_source_template | Indicates whether the recording is enabled via room template or not. |
-| user_id                   | Unique identifier for the user                                       |
-| recording                 | Indicates whether the recording is enabled or disabled               |
-| template_id               | Identifier for the template used for this room                       |
-| template                  | Alias for the template                                               |
-| region                    | The region in which the room has to be created                       |
+| Argument                  | Description                                                                                                                                                                                                                                                                                                                       |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id                        | Unique identifier for the room                                                                                                                                                                                                                                                                                                    |
+| name                      | Alias for the room                                                                                                                                                                                                                                                                                                                |
+| enabled                   | Indicates whether the room is enabled or disabled. <br/><br/> **Note:** If you disable a room, that room can be used for only the current session and users will not be able to join the room later. You can use the [Disable/Enable a room API](/server-side/v2/rooms/disable-or-enable) with the `enabled` param set to `true`. |
+| description               | Description for the room                                                                                                                                                                                                                                                                                                          |
+| customer_id               | Unique identifier for your account                                                                                                                                                                                                                                                                                                |
+| recording_source_template | Indicates whether the recording is enabled via room template or not.                                                                                                                                                                                                                                                              |
+| user_id                   | Unique identifier for the user                                                                                                                                                                                                                                                                                                    |
+| recording                 | Indicates whether the recording is enabled or disabled                                                                                                                                                                                                                                                                            |
+| template_id               | Identifier for the template used for this room                                                                                                                                                                                                                                                                                    |
+| template                  | Alias for the template                                                                                                                                                                                                                                                                                                            |
+| region                    | The region in which the room has to be created                                                                                                                                                                                                                                                                                    |

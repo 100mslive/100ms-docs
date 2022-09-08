@@ -18,35 +18,7 @@ All requests return one of these standard HTTP status codes
 | 404 - Not Found    | The request resource was not found.                               |
 | 500 - Server Error | Something went wrong with 100ms servers. (These are rare).        |
 
-## Examples
-
-### Successful requests
-
-1.  **POST requests**: The response will contain a JSON object with parameters like the ID of the object, created time, updated time, status of the object, and some useful params.
-2.  **GET requests**
-    - Fetch a single resource: similar to POST requests.
-    - List requests: The response will contain an array of objects with response arguments grouped specifically to each object.
-3.  **Example**: Create a Room API response
-    ```json
-    {
-        "id": "6316d5cfae8c4271df5d0554",
-        "name": "new-room-1662440912",
-        "enabled": true,
-        "description": "",
-        "customer_id": "627cdddff2e4e30487862ad1",
-        "recording_source_template": true,
-        "enabled_source_template": true,
-        "recording": null,
-        "template_id": "",
-        "template": "",
-        "region": "",
-        "created_at": "2022-09-06T05:08:31.935Z",
-        "updated_at": "2022-09-06T05:08:31.922Z",
-        "active": true
-    }
-    ```
-
-### Failed requests
+## Errors
 
 * API responses with `4XX` and `5XX HTTP status codes` indicate that the request has failed.
 * `4XX`: This can be either 401 or 403 or 404. You can refer to the [status codes section](#http-status-codes) for more information. Also, the response body will contain the error message that will help to resolve the error and resend the request.
@@ -63,4 +35,3 @@ All requests return one of these standard HTTP status codes
     ```
 
 * `5XX`: Server errors. This happens when something is wrong with 100ms servers(these are rare).
-

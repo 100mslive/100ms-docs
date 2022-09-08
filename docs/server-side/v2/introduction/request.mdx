@@ -7,7 +7,7 @@ nav: 1.2
 
 Our REST APIs enable you to access various capabilities to complete your integration based on the requirements for your use case.
 
-<PostRequest title="https://api.100ms.live/v2/" />
+<BaseRequest title="https://api.100ms.live/v2/" />
 
 You can leverage these requests using the common HTTP methods:
 
@@ -18,14 +18,7 @@ You can leverage these requests using the common HTTP methods:
 ## Authentication and tokens
 
 ### Management Token
-100ms uses management tokens to authenticate REST APIs. The service required to generate this token should be hosted on your server. You must use the `app_secret_key` and `app_secret` from the [developer section](https://dashboard.100ms.live/developer) in your 100ms dashboard to create the management token.
-
-<Note>
-
-**Warning**
-
-Your app key and secret carry many privileges, please ensure to keep them secure. All requests must be made over HTTPS. Requests made over plain HTTP and without a management token will fail.
-</Note>
+100ms uses management tokens to authenticate REST APIs. The service required to generate this token should be hosted on your server. You must use the `app_access_key` and `app_secret` from the [developer section](https://dashboard.100ms.live/developer) in your 100ms dashboard to create the management token.
 
 #### Code sample: Generate management token
 
@@ -180,9 +173,16 @@ $token = JWT::encode($payload, $app_secret, 'HS256');
 
 </Tab>
 
+<Note>
+
+**Warning**
+
+Your app key and secret carry many privileges, please ensure to keep them secure. All requests must be made over HTTPS. Requests made over plain HTTP and without a management token will fail.
+</Note>
+
 ### App token
 
-For setting up app tokens for client apps, please refer to the [authentication guide](https://www.100ms.live/docs/javascript/v2/foundation/security-and-tokens) in client SDK section.
+For setting up app tokens for client apps, please refer to the [authentication guide](/javascript/v2/foundation/security-and-tokens) in client SDK section.
 
 ## Content type
 
