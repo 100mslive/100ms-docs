@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import Header from '@/components/Header';
 import Pagination from '@/components/Pagination';
-import Footer from '@/components/Footer';
 import Sidebar from '@/components/Sidebar';
 import Toc from '@/components/Toc';
 import { PaginationType } from '@/lib/getPagination';
@@ -197,7 +196,6 @@ const DocLayout: React.FC<Props> = ({ frontMatter, nav, children, pagination, al
                         position: absolute;
                     }
                 `}</style>
-                <Footer />
             </div>
         </>
     );
