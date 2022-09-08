@@ -29,7 +29,7 @@ nav: 10
     //Optionally you can pass in params to have it in a particular aspect ratio. more info [https://developer.android.com/develop/ui/views/picture-in-picture]
   ```
   
-3. Once you enter pip mode, you'll recieve a callback. Over there you can put your own custom logic, to show which custom video tracks should be visibile while in PiP. To hide videos while in PiP you can call `removeTrack(surfaceViewRender)`
+3. Once you enter pip mode, you'll recieve a callback. Over there you can put your own custom logic, to show which custom video tracks should be visibile while in PiP. To hide videos while in PiP you can call `videoTrack.removeSink(surfaceViewRender)`
 
 ```kotlin
    override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean) {
