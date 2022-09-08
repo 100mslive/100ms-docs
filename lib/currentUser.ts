@@ -12,7 +12,8 @@ export const currentUser = () => {
     let authUser;
     try {
         const cookieKey = createCookieKey();
-        authUser = JSON.parse(cookies.get(cookieKey);
+        // @ts-ignore
+        authUser = JSON.parse(cookies.get(cookieKey));
     } catch {
         authUser = null;
     }
