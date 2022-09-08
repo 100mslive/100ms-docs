@@ -5,12 +5,9 @@ nav: 2.6
 
 Trigger this request to disable a specific room.
 
-> **Note:** If you disable a room, that room can be used for only the current session and users will not be able to join the room later. You can use this API with the `enabled `param set to `true`  to enable the room again.
+> **Note:** If you disable a room, that room can be used for only the current session and users will not be able to join the room later. You can use this API with the `enabled `param set to `true` to enable the room again.
 
 <PostRequest title="https://api.100ms.live/v2/rooms/<room_id>" />
-
-## Request/Response
-
 <Tabs items={['Request', 'Response']} id="req" />
 
 <Tab id="req-0">
@@ -56,4 +53,3 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms/<room_id>' \
 | :------------------------- | :-------- | :------------------------------------------------------------------------------------------------------------------ | :------- |
 | id <br/> — path param      | `string`  | Unique identifier of the room you wish to disable. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                  | Yes      |
 | enabled <br/> — body param | `boolean` | Status of the room to be set. <br/>`Allowed values`: true, false. <br/>Should be set to `false` to disable the room | Yes      |
-

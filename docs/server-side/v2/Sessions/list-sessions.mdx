@@ -3,50 +3,51 @@ title: List sessions
 nav: 3.3
 ---
 
-## List all sessions
-
-This API retrieves details of all the sessions in your account.
+This API retrieves details of a list of sessions in your account.
 
 <GetRequest title="https://api.100ms.live/v2/sessions/" />
 
-### Arguments
+<Tabs items={['Request', 'Response']} id="req" />
 
-| Name        | Type     | Description                                                                                                                                             | Required |
-| :---------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
-| limit <br/> | `int`    | Determines the number of session objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 1, **Max**: 20            | No       |
-| start <br/> | `string` | Determines the starting point. <br/>"last" field of the response can be used as start for the subsequent request. <br/><br/>E.g. "63172c2d3e3d9fdb008322e1". | No       |
+<Tab id="req-0">
 
-## List all active sessions
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/sessions' \
+--header 'Authorization: Bearer <management_token>'
+```
 
-<GetRequest title="https://api.100ms.live/v2/sessions?active={false/true}" />
+</Tab>
 
-### Arguments
-
-| Name         | Type      | Description                                                                                                                                             | Required |
-| :----------- | :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
-| active <br/> | `boolean` | Flag to indicate if the session is acive. <br/><br/>`Default`: true, <br/>`Allowed values`: true, false                                                 | No       |
-| limit <br/>  | `int`     | Determines the number of room objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 1, **Max**: 20               | No       |
-| start <br/>  | `string`  | Determines the starting point. <br/>"last" field of the response can be used as start for the subsequent request. <br/><br/>E.g. "63172c2d3e3d9fdb008322e1". | No       |
-
-## List sessions started in a specific timerange
-
-<GetRequest title="https://api.100ms.live/v2/sessions?after=2022-01-01T01:00:00.000Z&before=2022-03-31T01:00:00.000Z" />
-
-### Arguments
-
-| Name         | Type     | Description                                                                                                                                                 | Required |
-| :----------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| after <br/>  | `string` | Check for sessions started with a timestamp greater than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.s+z.                                   | No       |
-| before <br/> | `string` | Check for sessions started with a timestamp less than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.s+z.                                      | No       |
-| limit <br/>  | `int`    | Determines the number of session objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 1, **Max**: 20                | No       |
-| start <br/>  | `string` | Determines the starting point. <br/>`last` field of the response can be used as start for the subsequent request. <br/><br/>**E.g.** "63172c2d3e3d9fdb008322e1". | No       |
-
-## Response
+<Tab id="req-1">
+<Response res="200: OK" />
 
 ```json
 {
     "limit": 10,
     "data": [
+        {
+            "id": "631a0fa23e3d9fdb00832596",
+            "room_id": "631a0f990e6ffae22efa610c",
+            "customer_id": "627cdddff2e4e30487862ad1",
+            "active": false,
+            "peers": {
+                "a24687bb-de68-4276-9758-e1efa5e7e4d8": {
+                    "id": "a24687bb-de68-4276-9758-e1efa5e7e4d8",
+                    "session_id": "631a0fa23e3d9fdb00832596",
+                    "name": "asdas",
+                    "role": "host",
+                    "user": "16a868ef-670d-4ad2-ac62-a6966f608d8a",
+                    "joined_at": "2022-09-08T15:52:02.194Z",
+                    "left_at": "2022-09-08T15:52:04.009Z"
+                }
+            },
+            "created_at": "2022-09-08T15:52:02.197Z",
+            "updated_at": "2022-09-08T15:52:04.015Z"
+        },
+        ......
+        ......
+        ......
+        ......
         {
             "id": "63172c2d3e3d9fdb008322e1",
             "room_id": "627ce5b8f2e4e30487862adb",
@@ -70,3 +71,15 @@ This API retrieves details of all the sessions in your account.
     "last": "63172c2d3e3d9fdb008322e1"
 }
 ```
+
+</Tab>
+
+## Allowed filters
+
+| Name         | Type      | Description                                                                                                                                                      | Required |
+| :----------- | :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| active <br/> | `boolean` | Flag to fetch the list of active sessions. <br/><br/>`Default`: true, <br/>`Allowed values`: true, false                                                         | No       |
+| after <br/>  | `string`  | Check for sessions started with a timestamp greater than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.s+z.                                        | No       |
+| before <br/> | `string`  | Check for sessions started with a timestamp less than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.s+z.                                           | No       |
+| limit <br/>  | `int`     | Determines the number of session objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 1, **Max**: 20                     | No       |
+| start <br/>  | `string`  | Determines the starting point. <br/>`last` field of the response can be used as start for the subsequent request. <br/><br/>**E.g.** "63172c2d3e3d9fdb008322e1". | No       |
