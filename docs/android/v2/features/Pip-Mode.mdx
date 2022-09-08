@@ -1,0 +1,50 @@
+---
+title: PiP Mode (Picture-in-picture)
+nav: 10
+---
+
+Android SDK provides support for creating Picture in Picture mode experience for video calls.
+
+## Minimum Requirements
+
+-   Minimum version required to support PiP is Android 8.0 (API level 26)
+
+### How to add PiP support
+
+1. You need to update the activity tag in the `AndroidManifest.xml`
+
+```xml
+        <activity
+            ....
+            android:supportsPictureInPicture="true"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+            ... />
+  ```
+
+2. Pip mode resized you whole activity to a small conatiner. Inorder to show elements in PiP you would like to hide the visibility of views you don't want to show.
+
+```kotlin
+    //To launch pip-mode you can call this 
+    activity.enterPictureInPictureMode()
+    //Optionally you can pass in params to have it in a particular aspect ratio. more info [https://developer.android.com/develop/ui/views/picture-in-picture]
+  ```
+  
+3. Once you enter pip mode, you'll recieve a callback. Over there you can put your own custom logic, to show which custom video tracks should be visibile while in PiP. To hide videos while in PiP you can call `removeTrack(surfaceViewRender)`
+
+```kotlin
+   override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean) {
+    ...
+    //hiding views for pip/non-pip layout !
+    if (isInPictureInPictureMode) {
+      //add logic here to show video tracks which would be visible   
+      supportActionBar?.hide()
+    } else {
+      //add logic here to restore video tracks here
+      supportActionBar?.show()
+    }
+  }
+  ```
+
+You can refer to this [PR](https://github.com/100mslive/100ms-android/pull/247/files) in our sample app to see the implementation of the Pip mode
+
+👀 To see an example Android Picture in Picture implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-android).
