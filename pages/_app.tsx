@@ -4,7 +4,6 @@ import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import { DefaultSeo } from 'next-seo';
 import { useRouter } from 'next/router';
-import _ from 'lodash-es';
 import { currentUser } from '@/lib/currentUser';
 import SEO from '../next-seo.config';
 
@@ -22,7 +21,7 @@ const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
     const userDetails = currentUser();
     const [count, setCount] = useState(0);
     useEffect(() => {
-        if (!_.isEmpty(userDetails) && count === 0) {
+        if (Object.keys(userDetails).length !== 0 && count === 0) {
             window.analytics.identify(userDetails.customer_id, {
                 email: userDetails.email,
                 first_name: userDetails.first_name,
