@@ -7,11 +7,11 @@ nav: 1.3
 
 ## App Token
 
-App Token will be used by _Client-side_ apps while instantiating 100ms' SDKs. It is used to perform one of the most basic functionality, i.e [joining the room](/react-native/v2/features/join). You must host this token-generating service on your server.
+100ms _client-side SDKs_ use App Tokens to authenticate a peer (participant) while [joining a room](/react-native/v2/features/join). Generate this token on the server-side and make it available for your client-side apps that use the 100ms SDKs.
 
--   You must use the `app_access_key` and `app_secret` from the [developer section](https://dashboard.100ms.live/developer) in your 100ms dashboard to create the management token.
--   **room_id:** You can get the room_id from the [rooms page](https://dashboard.100ms.live/rooms) in your dashboard or from your database that was stored while the [room was created using the API](/server-side/v2/rooms/create-via-api).
--   **user_id:** This will be associated with the peer object at all times. You can use this to build the business logic for `user <> peer` mapping. For example, any webhook related to the peer (e.g. [peer.join.success](/server-side/v2/introduction/webhook#peer-join-success)) will contain info for the peer, including the user_id. You can use values like **customer-id** from your database or some other business information as you wish. 
+- To create the App Token, use the `app_access_key` and `app_secret` from the [developer section](https://dashboard.100ms.live/developer) in your 100ms dashboard.
+- **room_id**: This is the unique identifier for your room. You can get it from the [rooms page](https://dashboard.100ms.live/rooms) in your dashboard or in the response payload of the [create room server-side API](/server-side/v2/rooms/create-via-api).
+- **user_id**: This identifier can be used to map a 100ms peer to your own internal user object for business logic. Specify your internal user identifier as the peer’s user_id. If not available, use any random string.
 
 ### Code sample: Generate app token
 <Tabs id="client-code-token" items={['Node.js', 'Python', 'Java', 'Ruby', 'PHP']} />
