@@ -7,21 +7,13 @@ nav: 1.3
 
 ## App Token
 
-App Token will be used by Client-side apps while instantiating 100ms' SDKs. It is used for joining the conference. The service required to generate this token should be hosted on your server. 
+App Token will be used by _Client-side_ apps while instantiating 100ms' SDKs. It is used to perform one of the most basic functionality, i.e [joining the room](/react-native/v2/features/join). You must host this token-generating service on your server.
 
-- You must use the `app_access_key` and `app_secret` from the [developer section](https://dashboard.100ms.live/developer) in your 100ms dashboard to create the management token.
-- 
-<Note>
+-   You must use the `app_access_key` and `app_secret` from the [developer section](https://dashboard.100ms.live/developer) in your 100ms dashboard to create the management token.
+-   **room_id:** You can get the room_id from the [rooms page](https://dashboard.100ms.live/rooms) in your dashboard or from your database that was stored while the [room was created using the API](/server-side/v2/rooms/create-via-api).
+-   **user_id:** This will be associated with the peer object at all times. You can use this to build the business logic for `user <> peer` mapping. For example, any webhook related to the peer (e.g. [peer.join.success](/server-side/v2/introduction/webhook#peer-join-success)) will contain info for the peer, including the user_id. You can use values like **customer-id** from your database or some other business information as you wish. 
 
-**Warning**
-
-Your app key and secret carry many privileges, please ensure to keep them secure. All requests must be made over HTTPS. Requests made over plain HTTP and without a management token will fail.
-</Note>
-
-App Token will be used by _Client-side_ apps while instantiating 100ms' SDKs. It is used for joining the conference. This token generating service should be hosted on your server
-
-### Sample app token generation code
-
+### Code sample: Generate app token
 <Tabs id="client-code-token" items={['Node.js', 'Python', 'Java', 'Ruby', 'PHP']} />
 
 <Tab id='client-code-token-0'>
@@ -202,6 +194,14 @@ $token = JWT::encode(
 ```
 
 </Tab>
+
+<Note>
+
+**Warning**
+
+Your app key and secret carry many privileges, please ensure to keep them secure.
+
+</Note>
 
 ## Management Token
 

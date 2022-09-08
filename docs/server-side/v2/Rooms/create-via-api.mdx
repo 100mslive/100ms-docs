@@ -5,12 +5,7 @@ nav: 2.2
 
 Creates a new room. This provides a more scalable way of creating a room.
 
-## API Endpoint
-
 <PostRequest title="https://api.100ms.live/v2/rooms" />
-
-## Request/Response
-
 <Tabs items={['Request', 'Response']} id="req" />
 
 <Tab id="req-0">
@@ -20,7 +15,25 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
 --header 'Authorization: Bearer <management_token>' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "name": "new-room-1662534780"
+    "name": "new-room-{{$timestamp}}",
+    "description": "This is a sample description for the room",
+    "template_id": "<template_id of the template you wish to associate with the room>",
+    "recording_info": {
+        "enabled": true,
+        "upload_info": {
+        "type": "s3",
+        "location": "<Name of the AWS s3 bucket>",
+        "prefix": "<Upload prefix path>",
+        "options": {
+            "region": "<region of the s3 bucket>"
+        },
+        "credentials": {
+            "key": "<access key ID for the AWS account/S3 bucket>",
+            "secret": "<secret access key for the AWS account/S3 bucket>"
+            }
+        }
+    },
+    "region": "in"
 }'
 ```
 
@@ -52,13 +65,13 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
 
 ## Main Arguments
 
-| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                    | Required |
-| :------------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name <br/>           | `string` | A unique identifier you can assign to 100ms rooms. This is `case-insensitive`. <br/><br/>Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/>**Note**: `create Room` is called with an existing room name, then the corresponding room ID is returned <br/><br/> | No       |
-| description <br/>    | `string` | A string to describe your room's usage. E.g. "9PM English Class Batch 2"                                                                                                                                                                                                                                                       | No       |
-| template <br/>       | `string` | [Template](../foundation/templates-and-roles) of the room. You can get template name from room details section on dashboard                                                                                                                                                                                                    | No       |
-| recording_info <br/> | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings. <br/><br/>Check the [recording_info arguments](#recording-info) below for more information.                                                                                                     | No       |
-| region <br/>         | `string` | Region in which you want to create room. <br/><br/> `in` - India <br/> `us` - United States <br/> `eu` - European Union <br/> `auto` - Automatic region selection (default, and in case this parameter is not provided)                                                                                                        | No       |
+| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                         | Required |
+| :------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| name <br/>           | `string` | An alias you can assign to 100ms rooms. This is `case-insensitive`. <br/><br/>Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/>**Note**: `Create room` is called with an existing room name, then the corresponding room ID is returned <br/><br/> | Yes      |
+| description <br/>    | `string` | A string to describe your room's usage. E.g. "9PM English Class Batch 2"                                                                                                                                                                                                                                            | No       |
+| template_id <br/>    | `string` | Template ID of template you wish to associate with the room. You can get template ID either from the templates section on the [dashboard](https://dashboard.100ms.live/dashboard) or use the [Template API](../policy/retrieve-a-template).                                                                         | No       |
+| recording_info <br/> | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings. <br/><br/>Check the [recording_info arguments](#recording-info) below for more information.                                                                                       | No       |
+| region <br/>         | `string` | Region in which you want to create room. <br/><br/> `in` - India <br/> `us` - United States <br/> `eu` - European Union <br/> `auto` - Automatic region selection (default, and in case this parameter is not provided)                                                                                             | No       |
 
 ## recording_info arguments
 
@@ -76,11 +89,11 @@ To know more about recording please visit [Recording](./recording)
 
 ### upload_info arguments
 
-| Name        | Type     | Description                                                                                                                                                                               | Required |
-| :---------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| type        | `string` | Upload Destination type. Currently, only `s3` is supported                                                                                                                                | Yes      |
-| location    | `string` | Name of the AWS s3 bucket in which you want to store all recordings                                                                                                                       | Yes      |
-| prefix      | `string` | Upload prefix path                                                                                                                                                                        | No       |
+| Name        | Type     | Description                                                                                                                                                                                  | Required |
+| :---------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| type        | `string` | Upload Destination type. Currently, only `s3` is supported                                                                                                                                   | Yes      |
+| location    | `string` | Name of the AWS s3 bucket in which you want to store all recordings                                                                                                                          | Yes      |
+| prefix      | `string` | Upload prefix path                                                                                                                                                                           | No       |
 | options     | `object` | Additional configurations of type `Options` to be used for uploading. <br/><br/>Check the [options arguments](#options) below for more information.                                          | No       |
 | credentials | `object` | Object of type `Credentials`. This is used to share AWS credentials to access the s3 bucket specified. <br/><br/>Check the [credentials arguments](#credentials) below for more information. | No       |
 

@@ -1,26 +1,12 @@
 ---
-title: Request
-nav: 1.2
+title: Authentication and tokens
+nav: 1.3
 ---
 
-## Overview
-
-Our REST APIs enable you to access various capabilities to complete your integration based on the requirements for your use case.
-
-<BaseRequest title="https://api.100ms.live/v2/" />
-
-You can leverage these requests using the common HTTP methods:
-
-1. **GET** - retrieves data from 100ms server. **Example**: Retrieve details of a specific room
-2. **POST** - sends new data to 100ms server. **Example**: Create a room
-3. **DELETE** - removes existing data from 100ms server. **Example**: Delete a role from a template.
-
-## Authentication and tokens
-
-### Management Token
+## Management Token
 100ms uses management tokens to authenticate REST APIs. The service required to generate this token should be hosted on your server. You must use the `app_access_key` and `app_secret` from the [developer section](https://dashboard.100ms.live/developer) in your 100ms dashboard to create the management token.
 
-#### Code sample: Generate management token
+### Code sample: Generate management token
 
 <Tabs id="test-code" items={['Node.js', 'Python', 'Java', 'Ruby', 'PHP']} />
 
@@ -180,35 +166,6 @@ $token = JWT::encode($payload, $app_secret, 'HS256');
 Your app key and secret carry many privileges, please ensure to keep them secure. All requests must be made over HTTPS. Requests made over plain HTTP and without a management token will fail.
 </Note>
 
-### App token
+## App token
 
 For setting up app tokens for client apps, please refer to the [authentication guide](/javascript/v2/foundation/security-and-tokens) in client SDK section.
-
-## Content type
-
-The input of the request should be of the type application/json. The payload for all POST requests should be passed as a JSON object with the Content-Type as `application/json.
-
-Most of the GET request arguments must be passed as a path param whereas some of the APIs accept it as a query param.
-
-DELETE request arguments should be passed as a path param.
-
-### Headers
-
-| Name                | Value                       | Required |
-| :------------------ | :-------------------------- | :------- |
-| Content-type <br/>  | application/json            | Yes      |
-| Authorization <br/> | Bearer `<management token>` | Yes      |
-
-## Pagination
-
-All the API resources have support for bulk fetches via “list” API methods. For instance, list all rooms, list all sessions, and list all templates. These list APIs share a common structure, taking at least three parameters: limit, start, and last. You can use these parameters to easily traverse all pages of a list.
-
-For instance, if a search request has a result of 20 objects with `limit = 10` and `start = <objectID of the last object from your first 'list request'>`, then objects with indices 11 through 20 are returned.
-
-### Params used for pagination
-
-| Name  | Type     | Description                                                                                |
-|:------|:---------|:-------------------------------------------------------------------------------------------|
-| limit | `int`    | A limit on the number of objects to be returned.<br/> `Default value`: 10<br/> `Allowed range`: 1-20 |
-| start | `object` | Determines the starting point in the list of objects to be returned in the response.       |
-| last | `object` | The last object in the list of objects in the response. Can be used as `start` for subsequent request.|

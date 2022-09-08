@@ -7,31 +7,22 @@ nav: 3.2
 
 You can calculate additional information from session data using the received information. Redundant information like peer duration/session duration is not provided since they can be calculated from the provided response. You can calculate peer duration by subtracting joined_at timestamp from left_at for a given peer. Similarly, you can calculate session duration by adding all peers' duration.
 
-## Retrieve a specific session - by ID
-
-### API endpoint
+## Retrieve a specific session
 
 <GetRequest title="https://api.100ms.live/v2/sessions/<session_id>" />
+<Tabs items={['Request', 'Response']} id="req" />
 
-### Arguments
+<Tab id="req-0">
 
-| Name                  | Type     | Description                                                                                                     | Required |
-| :-------------------- | :------- | :-------------------------------------------------------------------------------------------------------------- | :------- |
-| id <br/> — path param | `string` | Unique identifier of the session you wish to fetch details for. <br/><br/>**Example**: 63172c2d3e3d9fdb008322e1 | No       |
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/sessions/<session_id>' \
+--header 'Authorization: Bearer <management_token>'
+```
 
-## Retrieve a specific session - by room ID
+</Tab>
 
-### API endpoint
-
-<GetRequest title="https://api.100ms.live/v2/sessions/<room_id>" />
-
-### Arguments
-
-| Name                       | Type     | Description                                                                                                          | Required |
-| :------------------------- | :------- | :------------------------------------------------------------------------------------------------------------------- | :------- |
-| room_id <br/> — path param | `string` | Unique identifier of the room you wish to fetch session details for. <br/><br/>**Example**: 627ce5b8f2e4e30487862adb | No       |
-
-## Response
+<Tab id="req-1">
+<Response res="200: OK" />
 
 ```json
 {
@@ -54,3 +45,12 @@ You can calculate additional information from session data using the received in
     "updated_at": "2022-09-06T11:17:03.65Z"
 }
 ```
+
+</Tab>
+
+## Arguments
+
+| Name                        | Type     | Description                                                                                                          | Required |
+| :-------------------------- | :------- | :------------------------------------------------------------------------------------------------------------------- | :------- |
+| id <br/> — path param       | `string` | Unique identifier of the session you wish to fetch details for. <br/><br/>**Example**: 63172c2d3e3d9fdb008322e1      | Yes      |
+| room_id <br/> — query param | `string` | Unique identifier of the room you wish to fetch session details for. <br/><br/>**Example**: 627ce5b8f2e4e30487862adb | No       |
