@@ -9,6 +9,31 @@ Template is the blueprint of the room. It defines the settings of the room along
 Room will inherit the properties from a template that you have specified while creating it. If you have not specified any template then it will pick the default template.
 Each template will be identified by its id or name. E.g. `default_videoconf_7e450ffc-8ef1-4572-ab28-b32474107b89`
 
+<h2> sample JSON: object &lt;&gt; sub-objects mapping </h2>
+
+```json
+{
+    "name": "new-template-1662552998",
+    "default": false,
+    "roles": {
+        "guest": {
+            "name": "guest",
+            "publishParams": {},
+            "subscribeParams": {},
+            "permissions": {
+                "sendRoomState": true
+            },
+            "priority": 1,
+            "maxPeerCount": 0
+        },
+        "host": {}
+    },
+    "settings": {}
+}
+```
+
+## Templates configuration - Dashboard
+
 Users can see or modify the templates by visiting [Templates on Dashboard](https://dashboard.100ms.live/templates) or via API(see below). After updating a template or some part of its like permissions, you need to rejoin or restart the session for the template updates to take place.
 
 ![Template](/docs/v2/template.png)
@@ -17,26 +42,26 @@ Users can see or modify the templates by visiting [Templates on Dashboard](https
 
 ## Template object
 
-| Argument     | Description                                                                                                                                                                              |
-| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| id           | Unique identifier for the template.                                                                                                                                                      |
-| name         | Alias for the template                                                                                                                                                                   |
-| customer_id  | Unique identifier for your account                                                                                                                                                       |
+| Argument     | Description                                                                                                                                                                            |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id           | Unique identifier for the template.                                                                                                                                                    |
+| name         | Alias for the template                                                                                                                                                                 |
+| customer_id  | Unique identifier for your account                                                                                                                                                     |
 | roles        | Array of [roles objects](#roles-object) with a collection of arguments and objects such as `name`, `publishParams`, `subscribeParams`, `permissions`, `priority`, `maxPeerCount`, etc. |
 | settings     | Object of type [settings](#settings-object) with the collection of arguments and objects such as `region`, `subscribeDegradation`, `recording`, `roomState`, etc.                      |
-| destinations | Object of type `destinations`. This object contains information for enabling/configuring features like `browserRecordings`, `rtmpDestinations`, & `hlsDestinations`.                     |
+| destinations | Object of type `destinations`. This object contains information for enabling/configuring features like `browserRecordings`, `rtmpDestinations`, & `hlsDestinations`.                   |
 
 ### Roles object
 
 Role is a collection of permissions that allows you to perform certain set of operations while being part of the room. It has the following attributes
 
-| Argument        | Description                                                                                                                                                     |
-| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| name            | Alias for the role associated with a particular template.                                                                                                       |
+| Argument        | Description                                                                                                                                                   |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| name            | Alias for the role associated with a particular template.                                                                                                     |
 | publishParams   | Object of type [publishParams](#publish-strategy) with the collection of objects such as `allowed`, `audio`, `video`, `screen`, etc                           |
 | subscribeParams | Object of type [subscribeParams](#subscribe-strategy) with a mix of arguments and objects like `subscribeToRoles`, `maxSubsBitRate`, & `subscribeDegradation` |
 | permissions     | Object of type [permission](#permissions) with collection of objects like `browserRecordings`, `rtmpDestinations`, & `hlsDestinations`.                       |
-| priority        | Priority will determine the order in which the roles will be degraded. A lower number represents a higher priority.                                             |
+| priority        | Priority will determine the order in which the roles will be degraded. A lower number represents a higher priority.                                           |
 
 #### Publish Strategies
 

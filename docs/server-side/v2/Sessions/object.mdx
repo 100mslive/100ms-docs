@@ -7,13 +7,12 @@ nav: 3.1
 
 Session is a single continuous call in a [room](/server-side/v2/rooms/create-via-api). To allow users to join a 100ms video conferencing session inside your app, you first need to create a room. A single room can have multiple sessions. You will need a [management token](/server-side/v2/introduction/request#authentication-and-tokens) as a bearer token for your requests.
 
-This API retrieves details of a list of sessions in your account. 100ms provides options to
+This API retrieves details of a list of sessions in your account. 100ms provides actions to
 
-1. retrieve the complete list of sessions or
-2. sessions based on the room_id or id or
-3. sessions that are active or
-4. sessions based on their creation time range or
-5. combinations of these.
+1. retrieve a specific session 
+2. retrieve a list of sessions based on filters like:
+    - status(active/inactive)
+    - started timerange
 
 <BaseRequest title="https://api.100ms.live/v2/sessions" />
 

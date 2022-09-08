@@ -3,11 +3,7 @@ title: Retrieve a specific session
 nav: 3.2
 ---
 
-## How to calculate session duration
-
-You can calculate additional information from session data using the received information. Redundant information like peer duration/session duration is not provided since they can be calculated from the provided response. You can calculate peer duration by subtracting joined_at timestamp from left_at for a given peer. Similarly, you can calculate session duration by adding all peers' duration.
-
-## Retrieve a specific session
+Retrieves the details of a specific session. 100ms provides options to retrieve details of a session with their ID or room ID.
 
 <GetRequest title="https://api.100ms.live/v2/sessions/<session_id>" />
 <Tabs items={['Request', 'Response']} id="req" />
@@ -54,3 +50,7 @@ curl --location --request GET 'https://api.100ms.live/v2/sessions/<session_id>' 
 | :-------------------------- | :------- | :------------------------------------------------------------------------------------------------------------------- | :------- |
 | id <br/> — path param       | `string` | Unique identifier of the session you wish to fetch details for. <br/><br/>**Example**: 63172c2d3e3d9fdb008322e1      | Yes      |
 | room_id <br/> — query param | `string` | Unique identifier of the room you wish to fetch session details for. <br/><br/>**Example**: 627ce5b8f2e4e30487862adb | No       |
+
+## How to calculate session duration
+
+You can calculate peer duration by subtracting joined_at timestamp from left_at for a given peer. Similarly, you can calculate session duration by adding all peers' duration.
