@@ -97,7 +97,7 @@ const Footer: React.FC<Props> = ({ css = {} }) => (
                                 backgroundColor: '$surfaceDefault',
                                 gap: '12px',
                                 padding: '8px 24px 8px 16px',
-                                maxWidth: '214px',
+                                width: 'fit-content',
                                 borderRadius: '20px'
                             }}>
                             <Box
