@@ -1,4 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
+import Footer from '@/components/Footer';
+import HomeDropDown from '@/components/HomeDropDown';
+import { getAllDocs } from '@/lib/mdxUtils';
+import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import {
     AndroidIcon,
     AppleIcon,
@@ -17,9 +21,6 @@ import {
     ViewIcon
 } from '@100mslive/react-icons';
 import { Box, Button, Flex, Text } from '@100mslive/react-ui';
-import { getAllDocs } from '@/lib/mdxUtils';
-import HomeDropDown from '@/components/HomeDropDown';
-import Footer from '@/components/Footer';
 import { Card, Item, SdkItem } from 'components';
 import Header from 'components/Header';
 import Switcher from 'components/Switcher';
@@ -557,6 +558,8 @@ const Homepage = ({ allDocs }) => {
     const [showDropDown, setShowDropDown] = useState(false);
     const [dropDownSelection, setDropDownSelection] = useState('JavaScript');
     const menuState = { menu, setMenu };
+
+    useLockBodyScroll(modal);
 
     return (
         <>
