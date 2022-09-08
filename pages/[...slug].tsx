@@ -20,7 +20,7 @@ const DocSlugs = ({ source, allDocs, nav, frontMatter }) => {
         query: { slug }
     } = useRouter();
     const [currentDocSlug] = slug as string[];
-    const currentDocs = allDocs.filter((doc) => doc.url.includes(`/${currentDocSlug}/`));
+    const currentDocs = allDocs.filter((doc) => slug ? doc.url.includes(`/${slug.join('/')}/`) : false);
     const { previousPost, nextPost } = getPagination(currentDocs, slug as string[]);
     const pagination = { previousPost, nextPost };
     const content = hydrate(source, { components });
