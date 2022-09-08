@@ -18,7 +18,7 @@ import View from './View';
 import Content from './Content';
 import DownloadCollection from './DownloadCollection';
 
-const CodeCustom = (props: any) => <Code>{props.children}</Code>;
+const CodeCustom = (props: any) => <Code {...props}>{props.children}</Code>;
 
 const NoteCustom = (props: any) => <Note type="success">{props.children}</Note>;
 
