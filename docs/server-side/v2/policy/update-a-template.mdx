@@ -3,7 +3,7 @@ title: Update a template
 nav: 4.5
 ---
 
-This endpoint is used to modify a Template. Providing the same name as a previous template overrides that template. You need to provide all options for roles and settings to which you want to apply.
+This endpoint is used to modify a Template. You need to provide all options for roles and settings to which you want to apply.
 
 ## API Endpoint
 
@@ -164,9 +164,10 @@ curl --location --request POST 'https://api.100ms.live/v2/templates/6316d5ca5a26
 
 ## Arguments
 
-| Name           | Type      | Description                                                                                                                                                                                                                                                                                                | Required |
-| :------------- | :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name <br/>     | `string`  | If you don't provide the `name`, earlier provided name is used. Trying to modify a template's name to match another existing template's name produces overwrite error.                                                                                                                                     | No       |
-| default <br/>  | `boolean` | Whether this is default template for customer. The default template for a customer is used when no template is provided in create room API.                                                                                                                                                                | No       |
-| roles <br/>    | `object`  | Modified map of `{roleName:roleObject}`. Since this is a POST request, you need to provide the whole roles object to modify/persist/override it. <br/><br/>check the [`roles object arguments section`](/server-side/v2/policy/create-template#roles-object-arguments) for the list of arguments supported | Yes      |
-| settings <br/> | `object`  | Modified settings. Since this is a POST request, you need to provide the whole settings object to modify/persist/override it. <br/><br/>check the [`settings object arguments section`](/server-side/v2/policy/create-template#settings-object-arguments) for the list of arguments supported              | Yes      |
+| Name                  | Type      | Description                                                                                                                                                                                                                                                                                                | Required |
+| :-------------------- | :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| id <br/> — path param | `string`  | Unique identifier of the template you wish to update. <br/><br/>**Example**: 627ce5b637300e55a72ba7ed                                                                                                                                                                                                      | Yes      |
+| name <br/>            | `string`  | If you don't provide the `name`, earlier provided name is used. Trying to modify a template's name to match another existing template's name produces overwrite error.                                                                                                                                     | No       |
+| default <br/>         | `boolean` | Whether this is default template for customer. The default template for a customer is used when no template is provided in create room API.                                                                                                                                                                | No       |
+| roles <br/>           | `object`  | Modified map of `{roleName:roleObject}`. Since this is a POST request, you need to provide the whole roles object to modify/persist/override it. <br/><br/>check the [`roles object arguments section`](/server-side/v2/policy/create-template#roles-object-arguments) for the list of arguments supported | Yes      |
+| settings <br/>        | `object`  | Modified settings. Since this is a POST request, you need to provide the whole settings object to modify/persist/override it. <br/><br/>check the [`settings object arguments section`](/server-side/v2/policy/create-template#settings-object-arguments) for the list of arguments supported              | Yes      |
