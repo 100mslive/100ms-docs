@@ -34,10 +34,6 @@ const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
             setCount(count + 1);
         }
     }, [userDetails]);
-    useEffect(() => {
-        window.analytics.identify();
-    }, []);
-
     return (
         <>
             <DefaultSeo {...SEO} />
