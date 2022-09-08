@@ -16,47 +16,20 @@ This API retrieves details of a list of rooms in your account. 100ms provides op
 
 This API retrieves details of all the rooms in your account.
 
-### API Endpoint
-
 <GetRequest title="https://api.100ms.live/v2/rooms" />
+<Tabs items={['Request', 'Response']} id="req" />
 
-### Arguments
+<Tab id="req-0">
 
-| Name        | Type     | Description                                                                                                                                                  | Required |
-| :---------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| limit <br/> | `int`    | Determines the number of room objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 1, **Max**: 20                    | No       |
-| start <br/> | `string` | Determines the starting point. <br/>"last" field of the response can be used as start for the subsequent request. <br/><br/>E.g. "627cda81ab4f3b56a077dc33". | No       |
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/rooms' \
+--header 'Authorization: Bearer <management_token>'
+```
 
-## List all active rooms
+</Tab>
 
-### API Endpoint
-
-<GetRequest title="https://api.100ms.live/v2/rooms?enabled={false/true}" />
-
-### Arguments
-
-| Name          | Type      | Description                                                                                                                                                  | Required |
-| :------------ | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| enabled <br/> | `boolean` | Flag to indicate if the room is enabled. <br/><br/>`Default`: true, <br/>`Allowed values`: true, false                                                       | No       |
-| limit <br/>   | `int`     | Determines the number of room objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 1, **Max**: 20                    | No       |
-| start <br/>   | `string`  | Determines the starting point. <br/>"last" field of the response can be used as start for the subsequent request. <br/><br/>E.g. "627cda81ab4f3b56a077dc33". | No       |
-
-## List rooms created in a specific timerange
-
-### API Endpoint
-
-<GetRequest title="https://api.100ms.live/v2/rooms?after=2022-01-01T01:00:00.000Z&before=2022-03-31T01:00:00.000Z" />
-
-### Arguments
-
-| Name         | Type     | Description                                                                                                                                                      | Required |
-| :----------- | :------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| after <br/>  | `string` | Check for rooms created with a timestamp greater than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.s+z.                                           | No       |
-| before <br/> | `string` | Check for rooms created with a timestamp less than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.s+z.                                              | No       |
-| limit <br/>  | `int`    | Determines the number of room objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 1, **Max**: 20                        | No       |
-| start <br/>  | `string` | Determines the starting point. <br/>`last` field of the response can be used as start for the subsequent request. <br/><br/>**E.g.** "627cda81ab4f3b56a077dc33". | No       |
-
-## Response
+<Tab id="req-1">
+<Response res="200: OK" />
 
 ```json
 {
@@ -97,3 +70,15 @@ This API retrieves details of all the rooms in your account.
     "last": "627cda81bd4f3b56b077bc33"
 }
 ```
+
+</Tab>
+
+## Allowed filters
+
+| Name          | Type      | Description                                                                                                                                                      | Required |
+| :------------ | :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| enabled <br/> | `boolean` | Flag to indicate if the room is enabled. <br/><br/>`Default`: true, <br/>`Allowed values`: true, false                                                           | No       |
+| after <br/>   | `string`  | Check for rooms created with a timestamp greater than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.s+z.                                           | No       |
+| before <br/>  | `string`  | Check for rooms created with a timestamp less than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.s+z.                                              | No       |
+| limit <br/>   | `int`     | Determines the number of room objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 1, **Max**: 20                        | No       |
+| start <br/>   | `string`  | Determines the starting point. <br/>`last` field of the response can be used as start for the subsequent request. <br/><br/>**E.g.** "627cda81ab4f3b56a077dc33". | No       |
