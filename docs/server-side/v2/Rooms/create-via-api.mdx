@@ -9,23 +9,66 @@ Creates a new room. This provides a more scalable way of creating a room.
 <Tabs items={['Response']} id="req" />
 
 <Tab id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/rooms' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "new-room-1662723668",
+    "description": "This is a sample description for the room",
+    "template_id": "<template_id of the template you wish to associate with the room>",
+    "recording_info": {
+        "enabled": true,
+        "upload_info": {
+        "type": "s3",
+        "location": "<Name of the AWS s3 bucket>",
+        "prefix": "<Upload prefix path>",
+        "options": {
+            "region": "<region of the s3 bucket>"
+        },
+        "credentials": {
+            "key": "<access key ID for the AWS account/S3 bucket>",
+            "secret": "<secret access key for the AWS account/S3 bucket>"
+            }
+        }
+    },
+    "region": "in"
+}'
+```
+
+</Tab>
+
+<Tab id="req-1">
 <Response res="200: OK" />
 
 ```json
 {
-    "id": "631844793ee9b3c0d21ffcb0",
-    "name": "new-room-1662534777",
+    "id": "631b2654f771854d9bf633df",
+    "name": "new-room-1662723668",
     "enabled": true,
-    "description": "",
-    "customer_id": "627cdddff2e4e30487862ad1",
-    "recording_source_template": true,
-    "enabled_source_template": true,
-    "recording": null,
-    "template_id": "",
-    "template": "",
-    "region": "",
-    "created_at": "2022-09-07T07:12:57.006Z",
-    "updated_at": "2022-09-07T07:12:56.991Z",
+    "description": "This is a sample description for the room",
+    "customer": "627cdddff2e4e30487862ad1",
+    "recording_info": {
+        "enabled": true,
+        "upload_info": {
+            "type": "s3",
+            "location": "<Name of the AWS s3 bucket>",
+            "prefix": "<Upload prefix path>",
+            "credentials": {
+                "key": "<access key ID for the AWS account/S3 bucket>",
+                "secret": "<secret access key for the AWS account/S3 bucket>"
+            },
+            "options": {
+                "region": "<region of the s3 bucket>"
+            }
+        }
+    },
+    "template_id": "63188115d11d6db790c73c60",
+    "template": "new-template-1662550293",
+    "region": "in",
+    "created_at": "2022-09-09T11:41:08.082Z",
+    "updated_at": "2022-09-09T11:41:08.074Z",
     "active": true
 }
 ```
@@ -34,13 +77,13 @@ Creates a new room. This provides a more scalable way of creating a room.
 
 ## Main Arguments
 
-| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                    | Required |
-| :------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name <br/>           | `string` | An alias you can assign to 100ms rooms. This is `case-insensitive`. <br/><br/>Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/>**Note**: `Create room` is called with an existing room name, then the corresponding room ID is returned.                                                      | Yes      |
-| description <br/>    | `string` | A string to describe your room's usage. E.g. "9PM English Class Batch 2"                                                                                                                                                                                                                                                                                       | No       |
-| template_id <br/>    | `string` | Template ID of template you wish to associate with the room. You can get template ID either from the templates section on the [dashboard](https://dashboard.100ms.live/dashboard) or use the [Template API](../policy/retrieve-a-template). <br/><br/>**Note**: `default template` will be assigned if template is not specified in the `create room request`. | No       |
-| recording_info <br/> | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings. <br/><br/>Check the [recording_info arguments](#recording-info) below for more information.                                                                                                                                  | No       |
-| region <br/>         | `string` | Region in which you want to create room. <br/><br/> `in` - India <br/> `us` - United States <br/> `eu` - European Union <br/> `auto` - Automatic region selection (default, and in case this parameter is not provided)                                                                                                                                        | No       |
+| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Required |
+| :------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| name <br/>           | `string` | An alias you can assign to 100ms rooms. This is `case-insensitive`. <br/><br/>Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/>**Note**: `Create room` is called with an existing room name, then the corresponding room ID is returned.                                                                                                                                                                                                | Yes      |
+| description <br/>    | `string` | A string to describe your room's usage. E.g. "9PM English Class Batch 2"                                                                                                                                                                                                                                                                                                                                                                                                                                 | No       |
+| template_id <br/>    | `string` | Template ID of template you wish to associate with the room. You can get template ID either from the templates section on the [dashboard](https://dashboard.100ms.live/dashboard) or use the [Template API](../policy/retrieve-a-template). <br/><br/>**Note**: `default template` will be assigned if template is not specified in the `create room request`.                                                                                                                                           | No       |
+| recording_info <br/> | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings. <br/><br/>Check the [recording_info arguments](#recording-info) below for more information. <br/><br/> **Note:** This argument is only applicable to enable/disable [SFU recording](/server-side/v2/destinations/recording). Refer to [RTMP Streaming & Browser Recording](/server-side/v2/destinations/rtmp-streaming-and-browser-recording) guide for other options. | No       |
+| region <br/>         | `string` | Region in which you want to create room. <br/><br/> `in` - India <br/> `us` - United States <br/> `eu` - European Union <br/> `auto` - Automatic region selection (default, and in case this parameter is not provided)                                                                                                                                                                                                                                                                                  | No       |
 
 ## recording_info arguments
 

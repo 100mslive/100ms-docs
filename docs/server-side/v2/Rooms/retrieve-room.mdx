@@ -22,19 +22,25 @@ curl --location --request GET 'https://api.100ms.live/v2/rooms/<room_id>' \
 
 ```json
 {
-    "id": "6319803b56d5673d541b9b17",
-    "name": "new-room-1662615611",
+    "id": "631a05390e6ffae22efa610b",
+    "name": "sampleroom",
     "enabled": true,
-    "description": "",
-    "customer_id": "627cdddff2e4e30487862ad1",
-    "recording_source_template": true,
-    "enabled_source_template": true,
-    "recording_info": null,
-    "template_id": "",
-    "template": "",
-    "region": "",
-    "created_at": "2022-09-08T05:40:11.63Z",
-    "updated_at": "2022-09-08T05:40:11.62Z",
+    "description": "This is sample description for room",
+    "customer": "627cdddff2e4e30487862ad1",
+    "recording_source_template": false,
+    "recording_info": {
+        "enabled": true,
+        "upload_info": {
+            "type": "s3",
+            "location": "brytecam-test-bucket-ap-south-1",
+            "prefix": "dev/627cdddff2e4e30487862ad1"
+        }
+    },
+    "template_id": "63188115d11d6db790c73c60",
+    "template": "new-template-1662550293",
+    "region": "in",
+    "created_at": "2022-09-08T15:07:37.83Z",
+    "updated_at": "2022-09-08T15:07:37.83Z",
     "active": true
 }
 ```
@@ -47,32 +53,3 @@ curl --location --request GET 'https://api.100ms.live/v2/rooms/<room_id>' \
 | :----------------------- | :------- | :----------------------------------------------------------------------------------------------------------- | :------- |
 | id <br/> — path param    | `string` | Unique identifier of the room you wish to fetch details for. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33 | Yes      |
 | name <br/> — query param | `string` | Alias of the room you wish to fetch details for. <br/><br/>**Example**: test-room                            | No       |
-
-## Response
-
-```json
-{
-    "limit": 10,
-    "data": [
-        {
-            "id": "627cda81ab4f3b56a077dc33",
-            "name": "4b2705aa-4a42-4a9b-9ecc-f470c06d0c03",
-            "enabled": true,
-            "description": "This is a test room",
-            "customer_id": "627cXXXXXXXXXX39291b",
-            "recording_source_template": false,
-            "user_id": "627cXXXXXXXXX37a39291a",
-            "recording_info": {
-                "enabled": false
-            },
-            "template_id": "627XXXXXXXXXXXX4227d3",
-            "template": "default_createown_eXXXXXXX-XXXX-XXXX-XXXX-ae9e95891e31",
-            "region": "in",
-            "created_at": "2022-05-12T09:59:29.343Z",
-            "key": "627XXXXXXXXXXXXX91b:4b2705aa-XXXX-XXXX-XXXX-f470c06d0c03",
-            "updated_at": "0001-01-01T00:00:00Z"
-        }
-    ],
-    "last": "627XXXXXXXXXXXX7bc33"
-}
-```

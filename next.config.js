@@ -35,6 +35,56 @@ const nextConfig = {
         permanent: true,
         basePath: false,
       },
+      {
+        source: "/server-side/v2/foundation/basics",
+        destination: "/server-side/v2/introduction/basics",
+        permanent: true
+      },
+      {
+        source: "/server-side/v2/foundation/templates-and-roles",
+        destination: "/server-side/v2/policy/template-object",
+        permanent: true
+      },
+      {
+        source: "/server-side/v2/foundation/webhook",
+        destination: "/server-side/v2/introduction/webhook",
+        permanent: true
+      },
+      {
+        source: "/server-side/v2/foundation/authentication-and-tokens",
+        destination: "/server-side/v2/introduction/authentication-and-tokens",
+        permanent: true
+      },
+      {
+        source: "/server-side/v2/foundation/firewall-and-ports",
+        destination: "/server-side/v2/introduction/firewall-and-ports",
+        permanent: true
+      },
+      {
+        source: "/server-side/v2/guides/quickstart",
+        destination: "/docs/server-side/v2/introduction/basics",
+        permanent: true
+      },
+      {
+        source: "/server-side/v2/features/room",
+        destination: "/server-side/v2/rooms/object",
+        permanent: true
+      },
+      {
+        source: "/server-side/v2/sessions/object",
+        destination: "/server-side/v2/rooms/object",
+        permanent: true
+      },
+      {
+        source: "/server-side/v2/features/recording",
+        destination: "/server-side/v2/destinations/recording",
+        permanent: true
+      },
+      {
+        source: "/server-side/v2/features/rtmp-streaming-and-browser-recording",
+        destination: "/server-side/v2/destinations/rtmp-streaming-and-browser-recording",
+        permanent: true
+      },
     ];
   },
 };
