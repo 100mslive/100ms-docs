@@ -16,10 +16,11 @@ To handle a webhook, you must create a listener to accept these HTTP requests fr
     -   Capture HTTP requests
     -   Respond to the requests
 -   When 100ms sends the HTTP request callbacks to the webhook during an event, you should capture the request and respond with a 200 OK response. You can store the webhook data in your database for later processing.
-> **Note:** 100ms automatically retries webhooks three times if your server does not return an HTTP 200 status code.
-> - First at 1 second after the original attempt.
-> - Second at 3 seconds after the first retry attempt.
-> - Third at 10 seconds after the second retry attempt.
+    > **Note:** 100ms automatically retries webhooks three times if your server does not return an HTTP 200 status code.
+    >
+    > -   First at 1 second after the original attempt.
+    > -   Second at 3 seconds after the first retry attempt.
+    > -   Third at 10 seconds after the second retry attempt.
 
 ## How to secure webhooks
 
@@ -78,7 +79,7 @@ Here's the list of events available on the 100ms platform.
 | session                            | Triggered during the start and end of a session. <br/><br/>**Events:** [session.open.success](#session-open-success), [session.close.success](#session-close-success)                                                                                                                        |
 | peer                               | Triggered when a peer join/leave succeeds/fails. <br/><br/>**Events:** [peer.join.success](#peer-join-success), [peer.leave.success](#peer-leave-success), [peer.join.failure](#peer-join-failure), [peer.leave.failure](#peer-leave-failure)                                                |
 | room                               | Triggered when a room ends. <br/><br/>**Events:** [room.end.success](#room-end-success)                                                                                                                                                                                                      |
-| SFU recording                      | Triggered during the start, end, and failure of a SFU recording. <br/><br/>**Events:** [recording.success](#recording-success), [recording.failed](#recording-failed)                                                                                                                       |
+| SFU recording                      | Triggered during the start, end, and failure of a SFU recording. <br/><br/>**Events:** [recording.success](#recording-success), [recording.failed](#recording-failed)                                                                                                                        |
 | RTMP Streaming & Browser Recording | Triggered during the start, end, and failure of RTMP streaming and/or browser recording.<br/><br/>**Events:** [beam.started.success](#beam-started-success), [beam.stopped.success](#beam-stopped-success), [beam.recording.success](#beam-recording-success), [beam.failure](#beam-failure) |
 | HLS Streaming Events               | Triggered during the start, end, and failure of HLS streaming and/or HLS recording.<br/><br/>**Events:** [hls.started.success](#hls-started-success), [hls.stopped.success](#hls-stopped-success), [hls.recording.success](#hls-recording-success), [hls.failure](#hls-failure)              |
 | Role change Events                 | Triggered when a role is updated. <br/><br/>**Events:** [role.change.success](#role-change-success)                                                                                                                                                                                          |
@@ -415,6 +416,54 @@ This event will be sent when room end is called and the it is successfull
         "lock_room": false,
         "reason": "****************",
         "source": "peer",
+        "session_started_at": "2021-11-30T12:58:49.97291247Z"
+    }
+}
+```
+
+## Role change Events
+
+### role.change.success
+
+This event will be sent when peer changes role successfully.
+
+#### Attributes
+
+| Name               | Type        | Description                                    | Example                              |
+| :----------------- | :---------- | :--------------------------------------------- | :----------------------------------- |
+| room_id            | `string`    | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
+| room_name          | `string`    | Room name provided when creating the room      | Test Room                            |
+| session_id         | `string`    | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df             |
+| template_id        | `string`    | Template ID of the room                        | 66112497abcd52312556c4gg             |
+| peer_id            | `string`    | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
+| user_id            | `string`    | User id assigned by the customer               | user.001                             |
+| user_name          | `string`    | User name of the user                          | Test user                            |
+| user_data          | `string`    | User data of the user                          | {"isHandRaised":true}                |
+| role               | `string`    | New role of the user                           | host                                 |
+| joined_at          | `timestamp` | Timestamp when user joined                     | 2020-11-11T16:32:17Z                 |
+| session_started_at | `timestamp` | Timestamp when session started                 | 2020-11-11T16:32:17Z                 |
+
+#### Sample `role.change.success` event
+
+```json
+{
+    "version": "2.0",
+    "id": "********-****-****-****-***********",
+    "account_id": "************************",
+    "app_id": "************************",
+    "timestamp": "2021-11-30T12:58:49Z",
+    "type": "role.change.success",
+    "data": {
+        "joined_at": "2021-11-30T12:58:49.97291247Z",
+        "peer_id": "********-****-****-****-***********",
+        "role": "********",
+        "room_id": "************************",
+        "room_name": "**********",
+        "session_id": "************************",
+        "template_id": "************************",
+        "user_id": "************************",
+        "user_name": "********",
+        "user_data": "",
         "session_started_at": "2021-11-30T12:58:49.97291247Z"
     }
 }
@@ -960,54 +1009,6 @@ This event will be sent when hls recordings are successfull and uploaded to the 
         "created_at": "2021-11-30T12:59:57.672493658Z",
         "started_at": "2021-11-30T12:59:57.797972469Z",
         "stopped_at": "2021-11-30T12:59:57.797972469Z",
-        "session_started_at": "2021-11-30T12:58:49.97291247Z"
-    }
-}
-```
-
-## Role change Events
-
-### role.change.success
-
-This event will be sent when peer changes role successfully.
-
-#### Attributes
-
-| Name               | Type        | Description                                    | Example                              |
-| :----------------- | :---------- | :--------------------------------------------- | :----------------------------------- |
-| room_id            | `string`    | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
-| room_name          | `string`    | Room name provided when creating the room      | Test Room                            |
-| session_id         | `string`    | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df             |
-| template_id        | `string`    | Template ID of the room                        | 66112497abcd52312556c4gg             |
-| peer_id            | `string`    | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| user_id            | `string`    | User id assigned by the customer               | user.001                             |
-| user_name          | `string`    | User name of the user                          | Test user                            |
-| user_data          | `string`    | User data of the user                          | {"isHandRaised":true}                |
-| role               | `string`    | New role of the user                           | host                                 |
-| joined_at          | `timestamp` | Timestamp when user joined                     | 2020-11-11T16:32:17Z                 |
-| session_started_at | `timestamp` | Timestamp when session started                 | 2020-11-11T16:32:17Z                 |
-
-#### Sample `role.change.success` event
-
-```json
-{
-    "version": "2.0",
-    "id": "********-****-****-****-***********",
-    "account_id": "************************",
-    "app_id": "************************",
-    "timestamp": "2021-11-30T12:58:49Z",
-    "type": "role.change.success",
-    "data": {
-        "joined_at": "2021-11-30T12:58:49.97291247Z",
-        "peer_id": "********-****-****-****-***********",
-        "role": "********",
-        "room_id": "************************",
-        "room_name": "**********",
-        "session_id": "************************",
-        "template_id": "************************",
-        "user_id": "************************",
-        "user_name": "********",
-        "user_data": "",
         "session_started_at": "2021-11-30T12:58:49.97291247Z"
     }
 }

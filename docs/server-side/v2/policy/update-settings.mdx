@@ -1,20 +1,29 @@
 ---
 title: Update settings
-nav:
+nav: 11
 ---
 
-This endpoint is used to fetch settings.
+This endpoint is used to update settings.
 
 <GetRequest title="https://api.100ms.live/v2/templates/<template_id>/settings" />
 
-## Arguments
+<Tabs items={['Request', 'Response']} id="req6" />
 
-| Name                           | Type     | Description                                                                                                                                                                                                             | Required |
-| :----------------------------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| template_id <br/> — path param | `string` | Unique identifier of the template you wish to update settings details for. <br/> **Example:** 6316d5ca5a2635a5849a0216                                                                                                  | Yes      |
-| settingsObject <br/>           | `object` | Settings object corresponding to the given template_id. <br/><br/>check the [`settings object arguments section`](/server-side/v2/policy/create-template#settings-object-arguments) for the list of arguments supported | Yes      |
+<Tab id="req6-0">
 
-## Response
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/<template_id>/settings' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "region": "eu"
+}'
+```
+
+</Tab>
+<Tab id="req6-1">
+
+<Response res="200: OK" />
 
 ```json
 {
@@ -32,3 +41,12 @@ This endpoint is used to fetch settings.
     "retry": {}
 }
 ```
+
+</Tab>
+
+## Arguments
+
+| Name                           | Type     | Description                                                                                                                                                                                                                     | Required |
+| :----------------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| template_id <br/> — path param | `string` | Unique identifier of the template you wish to update settings details for. <br/> **Example:** 6316d5ca5a2635a5849a0216                                                                                                          | Yes      |
+| settingsObject <br/>           | `object` | Settings object corresponding to the given template_id. <br/><br/>check the [`settings object arguments section`](/server-side/v2/policy/create-template-via-api#settings-object-arguments) for the list of arguments supported | Yes      |

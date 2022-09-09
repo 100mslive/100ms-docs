@@ -1,19 +1,25 @@
 ---
 title: Retrieve settings
-nav: 4.9
+nav: 10
 ---
 
 This endpoint is used to fetch settings.
 
 <GetRequest title="https://api.100ms.live/v2/templates/<template_id>/settings" />
 
-### Arguments
+<Tabs items={['Request', 'Response']} id="req" />
 
-| Name                           | Type     | Description                                                                                                           | Required |
-| :----------------------------- | :------- | :-------------------------------------------------------------------------------------------------------------------- | :------- |
-| template_id <br/> — path param | `string` | Unique identifier of the template you wish to fetch settings details for. <br/> **Example:** 6316d5ca5a2635a5849a0216 | Yes      |
+<Tab id="req-0">
 
-## Response
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/templates/<template_id>/settings' \
+--header 'Authorization: Bearer <management_token>'
+```
+
+</Tab>
+
+<Tab id="req-1">
+<Response res="200: OK" />
 
 ```json
 {
@@ -31,3 +37,11 @@ This endpoint is used to fetch settings.
     "retry": {}
 }
 ```
+
+</Tab>
+
+## Arguments
+
+| Name                           | Type     | Description                                                                                                           | Required |
+| :----------------------------- | :------- | :-------------------------------------------------------------------------------------------------------------------- | :------- |
+| template_id <br/> — path param | `string` | Unique identifier of the template you wish to fetch settings details for. <br/> **Example:** 6316d5ca5a2635a5849a0216 | Yes      |

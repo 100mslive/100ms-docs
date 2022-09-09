@@ -17,7 +17,7 @@ You can leverage these requests using the common HTTP methods:
 
 ### Content type
 
-The input of the request should be of the type application/json. The payload for all POST requests should be passed as a JSON object with the Content-Type as `application/json.
+The input of the request should be of the type application/json. The payload for all POST requests should be passed as a JSON object with the Content-Type as `application/json`.
 
 Most of the GET request arguments must be passed as a path param whereas some of the APIs accept it as a query param.
 
@@ -29,20 +29,6 @@ DELETE request arguments should be passed as a path param.
 | :------------------ | :-------------------------- | :------- |
 | Content-type <br/>  | application/json            | Yes      |
 | Authorization <br/> | Bearer `<management token>` | Yes      |
-
-## Pagination
-
-All the API resources have support for bulk fetches via “list” API methods. For instance, list all rooms, list all sessions, and list all templates. These list APIs share a common structure, taking at least three parameters: limit, start, and last. You can use these parameters to easily traverse all pages of a list.
-
-For instance, if a search request has a result of 20 objects with `limit = 10` and `start = <last objectID from result of the previous request>`, then objects with indices 11 through 20 are returned.
-
-### Params used for pagination
-
-| Name  | Type     | Description                                                                                            |
-| :---- | :------- | :----------------------------------------------------------------------------------------------------- |
-| limit | `int`    | A limit on the number of objects to be returned.<br/> `Default value`: 10<br/> `Allowed range`: 1-20   |
-| start | `object` | Determines the starting point in the list of objects to be returned in the response.                   |
-| last  | `object` | The last object in the list of objects in the response. Can be used as `start` for subsequent request. |
 
 ## Response
 
@@ -79,3 +65,26 @@ All requests return one of these standard HTTP status codes
     ```
 
 -   `5XX`: Server errors. This happens when something is wrong with 100ms servers(these are rare).
+
+## Pagination
+
+All API resources support bulk fetches via “list” API methods (e.g. list all rooms). These APIs use query parameters - limit, start, and last - to support pagination.
+
+To fetch the first page of 10 objects, set `limit=10` as a query param. This API will respond with a list of objects in key `data`. The response also has key `last` with the unique identifier for the last object in `data`.
+
+To fetch the second page of 10 objects (11 to 20), pass the previous `last` value as the `start` query param. Set `limit = 10` and `start = &lt;last value from previous response&gt;`.
+
+### List API response variables
+
+| Name        | Type       | Description                                                                                                            |
+| :---------- | :--------- | :--------------------------------------------------------------------------------------------------------------------- |
+| limit <br/> | `int`      | Number of objects the API tried to find. If returned array has lesser number of results, only those number were found. |
+| data <br/>  | `array`    | Array of objects.                                                                                                      |
+| last <br/>  | `ObjectID` | The last object in the list of objects in the response. Can be used as `start` for subsequent request.                 |
+
+### Params used for pagination
+
+| Name  | Type     | Description                                                                                          |
+| :---- | :------- | :--------------------------------------------------------------------------------------------------- |
+| limit | `int`    | A limit on the number of objects to be returned.<br/> `Default value`: 10<br/> `Allowed range`: 1-20 |
+| start | `object` | Determines the starting point in the list of objects to be returned in the response.                 |

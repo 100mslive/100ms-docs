@@ -1,19 +1,25 @@
 ---
 title: Retrieve a specific template
-nav: 4.3
+nav: 4.4
 ---
 
 Retrieves the details of a specific tempate. 100ms provides options to retrieve details of a room with their ID.
 
 <GetRequest title="https://api.100ms.live/v2/templates/<template_id>" />
 
-## Arguments
+<Tabs items={['Request', 'Response']} id="req" />
 
-| Name                  | Type     | Description                                                                                                      | Required |
-| :-------------------- | :------- | :--------------------------------------------------------------------------------------------------------------- | :------- |
-| id <br/> — path param | `string` | Unique identifier of the template you wish to fetch details for. <br/><br/>**Example**: 627ce5b637300e55a72ba7ed | No       |
+<Tab id="req-0">
 
-## Response
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/templates/<template_id>' \
+--header 'Authorization: Bearer <management_token>'
+```
+
+</Tab>
+
+<Tab id="req-1">
+<Response res="200: OK" />
 
 ```json
 {
@@ -246,3 +252,11 @@ Retrieves the details of a specific tempate. 100ms provides options to retrieve 
     "customer": "627cdddff2e4e30487862ad1"
 }
 ```
+
+</Tab>
+
+## Arguments
+
+| Name                  | Type     | Description                                                                                                      | Required |
+| :-------------------- | :------- | :--------------------------------------------------------------------------------------------------------------- | :------- |
+| id <br/> — path param | `string` | Unique identifier of the template you wish to fetch details for. <br/><br/>**Example**: 627ce5b637300e55a72ba7ed | Yes       |

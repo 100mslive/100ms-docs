@@ -51,7 +51,7 @@ const GetRequest: React.FC<Props> = ({ title }) => {
     return (
         <div className="post-ctx">
             <div>
-                <div className="header">API Endpoint</div>
+                <div className="header">Endpoint</div>
                 <div className="container">
                     <span className="badge">Get</span>
                     <span className="title">{title}</span>

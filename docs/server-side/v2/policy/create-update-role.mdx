@@ -1,20 +1,76 @@
 ---
 title: Create/update a role
-nav: 4.6
+nav: 4.7
 ---
 
 This endpoint is used to create/modify a role.
 
 <PostRequest title="https://api.100ms.live/v2/templates/<template_id>/roles/<role_name>" />
 
-### Arguments
+<Tabs items={['Request', 'Response']} id="req" />
 
-| Name                    | Type     | Description                                                                                                                                                                                            | Required |
-| :---------------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| roleObject <br/>        | `object` | Role object corresponding to the given role. <br/><br/>check the [`roles object arguments section`](/server-side/v2/policy/create-template#roles-object-arguments) for the list of arguments supported | Yes      |
-| name <br/> — path param | `string` | Providing a name renames the role to the provided name. If a role with the same name already exists, it gives an overwrite error.                                                                      | No       |
+<Tab id="req-0">
 
-### Response
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/templates/<template_id>/roles/<role_name>' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "publishParams": {
+        "allowed": [
+            "audio",
+            "video",
+            "screen"
+        ],
+        "audio": {
+            "bitRate": 32,
+            "codec": "opus"
+        },
+        "video": {
+            "bitRate": 310,
+            "codec": "vp8",
+            "frameRate": 30,
+            "width": 480,
+            "height": 360
+        },
+        "screen": {
+            "codec": "vp8",
+            "frameRate": 10,
+            "width": 1920,
+            "height": 1080
+        },
+        "videoSimulcastLayers": {},
+        "screenSimulcastLayers": {}
+    },
+    "subscribeParams": {
+        "subscribeToRoles": [
+            "guest",
+            "host"
+        ],
+        "maxSubsBitRate": 3200,
+        "subscribeDegradation": {
+            "packetLossThreshold": 25,
+            "degradeGracePeriodSeconds": 1,
+            "recoverGracePeriodSeconds": 4
+        }
+    },
+    "permissions": {
+        "endRoom": true,
+        "removeOthers": true,
+        "mute": true,
+        "unmute": true,
+        "changeRole": true,
+        "sendRoomState": false
+    },
+    "priority": 1,
+    "maxPeerCount": 0
+}'
+```
+
+</Tab>
+
+<Tab id="req-1">
+<Response res="200: OK" />
 
 ```json
 {
@@ -65,3 +121,12 @@ This endpoint is used to create/modify a role.
     "maxPeerCount": 0
 }
 ```
+
+</Tab>
+
+## Arguments
+
+| Name                    | Type     | Description                                                                                                                                                                                                    | Required |
+| :---------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| roleObject <br/>        | `object` | Role object corresponding to the given role. <br/><br/>check the [`roles object arguments section`](/server-side/v2/policy/create-template-via-api#roles-object-arguments) for the list of arguments supported | Yes      |
+| name <br/> — path param | `string` | Providing a name renames the role to the provided name. If a role with the same name already exists, it gives an overwrite error.                                                                              | Yes      |

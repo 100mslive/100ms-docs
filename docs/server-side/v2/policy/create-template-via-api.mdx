@@ -1,11 +1,19 @@
 ---
-title: Create a template
+title: Create a template via API
 nav: 4.2
 ---
 
-## Create a template
-
 This endpoint is used to create a template. A recommended way is to provide a list of roles with empty objects to get default values for various options corresponding to those roles, then update those roles by modifying them using create/update role API.
+
+## Understand sub-objects hierarchy
+
+-   Template object
+    -   roles object
+        -   publishParams object
+        -   subscribeParams object
+        -   permissions object
+    -   settings object
+    -   destinations object
 
 <PostRequest title="https://api.100ms.live/v2/templates" />
 
@@ -166,19 +174,20 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | Name               | Type      | Description                                                                                                                                                                                                                                                                                           | Required |
 | :----------------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | name <br/>         | `string`  | A unique identifier you can assign to 100ms templates. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Notes**: <br/>If `create Template` is called with an existing template name, then that template will be overwritten.<br/> | No       |
-| default <br/>      | `boolean` | Whether this is default template for a customer. Default template for a customer is used when no template is provided in `create Room` api.                                                                                                                                                           | No       |
+| default <br/>      | `boolean` | Whether this is default template for a customer. Default template for a customer is used when no template is provided in [create room API](/server-side/v2/rooms/create-via-api).                                                                                                                                                           | No       |
 | roles <br/>        | `object`  | Map of `{roleName:roleObject}`. Some sane defaults are set for values that are not provided in the roles object.                                                                                                                                                                                      | No       |
 | settings <br/>     | `object`  | Global settings for this template.                                                                                                                                                                                                                                                                    | No       |
 | destinations <br/> | `object`  | Object of type `destinations`. This object contains information for enabling/configuring features like `browserRecordings`, `rtmpDestinations`, & `hlsDestinations`.                                                                                                                                  | No       |
 
 ## roles object arguments
 
-| Name            | Type     | Description                                                           | Required |
-| :-------------- | :------- | :-------------------------------------------------------------------- | :------- |
-| publishParams   | `object` | Publish parameters for this role.                                     | No       |
-| subscribeParams | `object` | Subscribe parameters for this role.                                   | No       |
-| permissions     | `object` | Permissions for this role.                                            | No       |
-| priority        | `int`    | Priority of the role for subscription/publishing.<br/>Range: `1`-`10` | No       |
+| Name            | Type     | Description                                                                                                                                                                                                         | Required |
+| --------------- | :------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| name            | `string` | Alias for the role associated with a particular template.                                                                                                                                                           | No       |
+| publishParams   | `object` | Publish parameters for this role. <br/><br/>Object of type [publishParams](#publishparams-object-arguments) with the collection of objects such as `allowed`, `audio`, `video`, `screen`, etc                       | No       |
+| subscribeParams | `object` | Subscribe parameters for this role. <br/><br/>Object of type [subscribeParams](#subscribe-object-arguments) with a mix of arguments and objects like `subscribeToRoles`, `maxSubsBitRate`, & `subscribeDegradation` | No       |
+| permissions     | `object` | Permissions for this role. <br/><br/>Object of type [permission](#permissions-object-arguments) with collection of objects like `browserRecordings`, `rtmpDestinations`, & `hlsDestinations`.                       | No       |
+| priority        | `int`    | Priority of the role for subscribing/publishing. <br/><br/>Priority will determine the order in which the roles will be degraded. A lower number represents a higher priority.                                      | No       |
 
 ### publishParams object arguments
 
@@ -234,21 +243,17 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 ## permissions object arguments
 
-| Name             | Type      | Description                                                         | Required | Default |
-| :--------------- | :-------- | :------------------------------------------------------------------ | :------- | :------ |
-| endRoom          | `boolean` | Permission to end room for all.                                     | No       | `false` |
-| removeOthers     | `boolean` | Permission to remove others from the room.                          | No       | `false` |
-| mute             | `boolean` | Permission to request others to mute them.                          | No       | `false` |
-| unmute           | `boolean` | Permission to request others to unmute them.                        | No       | `false` |
-| changeRole       | `boolean` | Permission to request others to change their role.                  | No       | `false` |
-| sendRoomState    | `boolean` | Permission to receive room state like peer-count and peer-list      | No       | `false` |
-| browserRecording | `boolean` | Permission to start/stop browser (beam) recording.                  | No       | `true`  |
-| rtmpStreaming    | `boolean` | Permission to start/stop RTMP streaming.                            | No       | `true`  |
-| hlsStreaming     | `boolean` | Permission to start/stop HLS streaming (with or without recording). | No       | `true`  |
-
-> Note: `hlsStreaming` is also required to - pause/unpause HLS recording or insert metadata in HLS stream
-
-> Note: Starting/Stopping rtmp + browser recording will need both `browserRecording` and `rtmpStreaming` permissions
+| Name             | Type      | Description                                                                                                                                                                 | Required | Default |
+| :--------------- | :-------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- | :------ |
+| endRoom          | `boolean` | Permission to end room for all.                                                                                                                                             | No       | `false` |
+| removeOthers     | `boolean` | Permission to remove others from the room.                                                                                                                                  | No       | `false` |
+| mute             | `boolean` | Permission to request others to mute them.                                                                                                                                  | No       | `false` |
+| unmute           | `boolean` | Permission to request others to unmute them.                                                                                                                                | No       | `false` |
+| changeRole       | `boolean` | Permission to request others to change their role.                                                                                                                          | No       | `false` |
+| sendRoomState    | `boolean` | Permission to receive room state like peer-count and peer-list                                                                                                              | No       | `false` |
+| browserRecording | `boolean` | Permission to start/stop browser (beam) recording. <br/><br/> This is also required to start/stop RTMP + browser recording in conjunction with `rtmpStreaming` permissions. | No       | `true`  |
+| rtmpStreaming    | `boolean` | Permission to start/stop RTMP streaming. <br/><br/> This is also required to start/stop RTMP + browser recording in conjunction with `browserRecording` permissions.        | No       | `true`  |
+| hlsStreaming     | `boolean` | Permission to start/stop HLS streaming (with or without recording). <br/><br/>This is also required to - pause/unpause HLS recording or insert metadata in HLS stream.      | No       | `true`  |
 
 ## settings object arguments
 
@@ -268,11 +273,11 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 | Name        | Type     | Description                                                                                            | Required |
 | :---------- | :------- | :----------------------------------------------------------------------------------------------------- | :------- |
-| type        | `string` | Upload Destination type. Currently, only s3 is supported.                                              | Yes      |
+| type        | `string` | Upload destination type. Currently, only s3 is supported.                                              | Yes      |
 | location    | `string` | Name of the AWS s3 bucket in which you want to store all recordings                                    | Yes      |
 | prefix      | `string` | Upload prefix path                                                                                     | Yes      |
 | options     | `object` | Additional configurations of type Options to be used for uploading                                     | No       |
-| credentials | `object` | Object of type `Credentials`. This is used to share AWS credentials to access the s3 bucket specified. | No       |
+| credentials | `object` | Object of type `credentials`. This is used to share AWS credentials to access the s3 bucket specified. | No       |
 
 #### options object arguments
 
@@ -280,7 +285,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | :----- | :------- | :------------------------------------------------------------------------------------------------ | :------- |
 | region | `string` | Region of the AWS account hosting the s3 bucket. If not provided it is assumed to be `ap-south-1` | No       |
 
-#### Credentials object arguments
+#### credentials object arguments
 
 | Name   | Type     | Description                                                                          | Required |
 | :----- | :------- | :----------------------------------------------------------------------------------- | :------- |
