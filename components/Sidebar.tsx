@@ -1,14 +1,14 @@
 /* eslint-disable react/no-array-index-key */
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import React from 'react';
-import JavascriptIcon from '@/assets/icons/JavascriptIcon';
+import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
-import ServerIcon from '@/assets/icons/ServerIcon';
-import FlutterIcon from '@/assets/FlutterIcon';
-import { Listbox } from '@headlessui/react';
+import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import ReactIcon from '@/assets/icons/ReactIcon';
+import ServerIcon from '@/assets/icons/ServerIcon';
+import { Listbox } from '@headlessui/react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React from 'react';
 
 type NavRoute = {
     url: string;
@@ -171,7 +171,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     display: flex;
                     flex-direction: column;
                     align-items: stretch;
-                    height: calc(100vh - 80px);
+                    height: 100vh;
                     overflow-y: scroll;
                     top: ${menu ? '10px' : '80px'};
                     left: 0;
