@@ -77,6 +77,8 @@ to decide colors
     --new_border_default: var(--border_default);
     --new_surface_lighter: #1B2027;
 
+    --code_highlight: var(--new_surface_lighter);
+
     --dropdown_hover: var(--new_surface_lighter);
 
     --text_med_emp: hsla(217, 100%, 94%, 0.8);
@@ -134,6 +136,7 @@ to decide colors
     
     --code: #E0ECFF;
     --code_text: var(--text_high_emp);
+    --code_highlight: #E6E8EA;
 
     --badge_base: var(--new_surface_lighter);
     --badge_get: rgba(38, 107, 217, 0.1);
@@ -524,15 +527,15 @@ pre + h2 {
 
 code {
     display: inline;
-    color: var(--text_med_emp);
-    background-color: var(--new_surface_light);
+    color: var(--text_high_emp);
+    background-color: var(--code_highlight);
     border: 1px solid var(--border_light);
     border-radius: 4px;
     font-family: 'Source Code Pro', menlo, monospace;
     font-size: 0.875rem;
-    line-height: 24px;
+    line-height: 1.5rem !important;
     white-space: pre-wrap;
-    padding: 0px 8px;
+    padding: 2px 8px;
 }
 
 hr {
