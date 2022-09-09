@@ -6,40 +6,9 @@ nav: 2.2
 Creates a new room. This provides a more scalable way of creating a room.
 
 <PostRequest title="https://api.100ms.live/v2/rooms" />
-<Tabs items={['Request', 'Response']} id="req" />
+<Tabs items={['Response']} id="req" />
 
 <Tab id="req-0">
-
-```bash
-curl --location --request POST 'https://api.100ms.live/v2/rooms' \
---header 'Authorization: Bearer <management_token>' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "name": "new-room-{{$timestamp}}",
-    "description": "This is a sample description for the room",
-    "template_id": "<template_id of the template you wish to associate with the room>",
-    "recording_info": {
-        "enabled": true,
-        "upload_info": {
-        "type": "s3",
-        "location": "<Name of the AWS s3 bucket>",
-        "prefix": "<Upload prefix path>",
-        "options": {
-            "region": "<region of the s3 bucket>"
-        },
-        "credentials": {
-            "key": "<access key ID for the AWS account/S3 bucket>",
-            "secret": "<secret access key for the AWS account/S3 bucket>"
-            }
-        }
-    },
-    "region": "in"
-}'
-```
-
-</Tab>
-
-<Tab id="req-1">
 <Response res="200: OK" />
 
 ```json
