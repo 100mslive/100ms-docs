@@ -37,7 +37,7 @@ const nextConfig = {
       },
       {
         source: "/server-side/v2/foundation/basics",
-        destination: "/docs/server-side/v2/introduction/basics",
+        destination: "/server-side/v2/introduction/basics",
         permanent: true
       },
       {

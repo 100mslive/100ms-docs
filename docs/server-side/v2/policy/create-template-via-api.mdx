@@ -400,9 +400,9 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 #### credentials object arguments
 
-| Name   | Type     | Description                                                                          | Required |
-| :----- | :------- | :----------------------------------------------------------------------------------- | :------- |
-| key    | `string` | `access key ID` for the AWS account hosting the s3 bucket for storing recordings     | Yes      |
+| Name      | Type     | Description                                                                          | Required |
+| :-------- | :------- | :----------------------------------------------------------------------------------- | :------- |
+| key       | `string` | `access key ID` for the AWS account hosting the s3 bucket for storing recordings     | Yes      |
 | secretKey | `string` | `secret access key` for the AWS account hosting the s3 bucket for storing recordings | Yes      |
 
 ### roomState object arguments
@@ -411,5 +411,4 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | :------------------ | :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | messageInterval     | `int`     | Room-state data will be sent over a regular interval of these many seconds. <br/><br/>Consequently, the room state displayed on the preview screen will refresh accordingly. <br/><br/>This value must be a multiple of 5, between 5 and 3600 seconds, both inclusive. | No       |
 | sendPeerList        | `boolean` | Enabling this will send peer-list info of the room. If disabled, only the peer count is sent.                                                                                                                                                                          | No       |
-| stopRoomStateOnJoin | `boolean` | If enabled, room-state data will be sent to the preview screen. If disabled, no such room-state data will be sent.                                                                                                                                                     | No       |
 | enabled             | `boolean` | This is the list of all the roles which will get the room-state data. You can also individually toggle these settings in the Roles tab under the Permissions section.                                                                                                  | No       |
