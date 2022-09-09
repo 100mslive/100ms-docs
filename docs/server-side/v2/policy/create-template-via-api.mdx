@@ -26,21 +26,134 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 --header 'Authorization: Bearer <management_token>' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "name": "new-template-1662551191",
+    "name": "new-template-{{$timestamp}}",
     "default": false,
     "roles": {
         "guest": {
             "name": "guest",
-            "publishParams": {},
-            "subscribeParams": {},
-            "permissions": {},
+            "publishParams": {
+                "allowed": [
+                    "audio",
+                    "video",
+                    "screen"
+                ],
+                "audio": {
+                    "bitRate": 32,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 300,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 480,
+                    "height": 360
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": [
+                    "host",
+                    "guest"
+                ],
+                "maxSubsBitRate": 3200,
+                "subscribeDegradation": {
+                    "packetLossThreshold": 25,
+                    "degradeGracePeriodSeconds": 1,
+                    "recoverGracePeriodSeconds": 4
+                }
+            },
+            "permissions": {
+                "sendRoomState": false
+            },
             "priority": 1,
             "maxPeerCount": 0
         },
-        "host": {},
+        "host": {
+            "name": "host",
+            "publishParams": {
+                "allowed": [
+                    "audio",
+                    "video",
+                    "screen"
+                ],
+                "audio": {
+                    "bitRate": 32,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 300,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 480,
+                    "height": 360
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": [
+                    "guest",
+                    "host"
+                ],
+                "maxSubsBitRate": 3200,
+                "subscribeDegradation": {
+                    "packetLossThreshold": 25,
+                    "degradeGracePeriodSeconds": 1,
+                    "recoverGracePeriodSeconds": 4
+                }
+            },
+            "permissions": {
+                "endRoom": true,
+                "removeOthers": true,
+                "mute": true,
+                "unmute": true,
+                "changeRole": true,
+                "sendRoomState": false
+            },
+            "priority": 1,
+            "maxPeerCount": 0
+        }
     },
-    "settings": {},
-    "destinations": {}
+    "settings": {
+        "region": "in",
+        "subscribeDegradation": {},
+        "recording": {
+            "enabled": true,
+            "upload": {
+                "type": "s3",
+                "location": "<Name of the AWS s3 bucket>",
+                "prefix": "<Upload prefix path>",
+                "options": {
+                    "region": "<region of the s3 bucket>"
+                },
+                "credentials": {
+                    "key": "<access key ID for the AWS account/S3 bucket>",
+                    "secret": "<secret access key for the AWS account/S3 bucket>"
+                }
+            }
+        },
+        "screenSimulcastLayers": {},
+        "videoSimulcastLayers": {},
+        "roomState": {
+            "messageInterval": 5,
+            "sendPeerList": false,
+            "stopRoomStateOnJoin": true,
+            "enabled": false
+        }
+    }
 }'
 ```
 
@@ -174,7 +287,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | Name               | Type      | Description                                                                                                                                                                                                                                                                                           | Required |
 | :----------------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | name <br/>         | `string`  | A unique identifier you can assign to 100ms templates. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Notes**: <br/>If `create Template` is called with an existing template name, then that template will be overwritten.<br/> | No       |
-| default <br/>      | `boolean` | Whether this is default template for a customer. Default template for a customer is used when no template is provided in [create room API](/server-side/v2/rooms/create-via-api).                                                                                                                                                           | No       |
+| default <br/>      | `boolean` | Whether this is default template for a customer. Default template for a customer is used when no template is provided in [create room API](/server-side/v2/rooms/create-via-api).                                                                                                                     | No       |
 | roles <br/>        | `object`  | Map of `{roleName:roleObject}`. Some sane defaults are set for values that are not provided in the roles object.                                                                                                                                                                                      | No       |
 | settings <br/>     | `object`  | Global settings for this template.                                                                                                                                                                                                                                                                    | No       |
 | destinations <br/> | `object`  | Object of type `destinations`. This object contains information for enabling/configuring features like `browserRecordings`, `rtmpDestinations`, & `hlsDestinations`.                                                                                                                                  | No       |
@@ -291,3 +404,12 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | :----- | :------- | :----------------------------------------------------------------------------------- | :------- |
 | key    | `string` | `access key ID` for the AWS account hosting the s3 bucket for storing recordings     | Yes      |
 | secret | `string` | `secret access key` for the AWS account hosting the s3 bucket for storing recordings | Yes      |
+
+### roomState object arguments
+
+| Name                | Type      | Description                                                                                                                                                                                                                                                            | Required |
+| :------------------ | :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| messageInterval     | `int`     | Room-state data will be sent over a regular interval of these many seconds. <br/><br/>Consequently, the room state displayed on the preview screen will refresh accordingly. <br/><br/>This value must be a multiple of 5, between 5 and 3600 seconds, both inclusive. | No       |
+| sendPeerList        | `boolean` | Enabling this will send peer-list info of the room. If disabled, only the peer count is sent.                                                                                                                                                                          | No       |
+| stopRoomStateOnJoin | `boolean` | If enabled, room-state data will be sent to the preview screen. If disabled, no such room-state data will be sent.                                                                                                                                                     | No       |
+| enabled             | `boolean` | This is the list of all the roles which will get the room-state data. You can also individually toggle these settings in the Roles tab under the Permissions section.                                                                                                  | No       |
