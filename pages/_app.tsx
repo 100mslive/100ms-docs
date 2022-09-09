@@ -5,10 +5,12 @@ import { AppProps } from 'next/app';
 import { DefaultSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import { currentUser } from '@/lib/currentUser';
+import NProgress from 'nprogress';
 import SEO from '../next-seo.config';
 
 import 'inter-ui/inter.css';
 import '@/styles/theme.css';
+import '@/styles/nprogress.css';
 
 declare global {
     interface Window {
@@ -33,6 +35,13 @@ const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
             setCount(count + 1);
         }
     }, [userDetails]);
+
+    useEffect(() => {
+        router.events.on('routeChangeStart', () => NProgress.start());
+        router.events.on('routeChangeComplete', () => NProgress.done());
+        router.events.on('routeChangeError', () => NProgress.done());
+    }, []);
+
     return (
         <>
             <DefaultSeo {...SEO} />
