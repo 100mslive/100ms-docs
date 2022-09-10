@@ -14,6 +14,7 @@ import DeleteRequest from './DeleteRequest';
 
 import Response from './Response';
 import Request from './Request';
+import ResponseBox from './ResponseBox';
 import Codesandbox from './Codesandbox';
 import Text from './Text';
 import View from './View';
@@ -63,6 +64,7 @@ const MDXComponents = {
     DeleteRequest,
     GetRequest,
     Request,
+    ResponseBox,
     Note,
     Image,
     blockquote: NoteCustom,

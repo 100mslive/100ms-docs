@@ -760,8 +760,36 @@ pre[class*='language-'] {
 .request pre[class*='language-'] .copied svg {
     stroke: var(--request_code);
 }
+
+.request .code-block > div {
+    color: var(--request_code) !important;
+}
+
+.response-box code[class*='language-'],
+.response-box pre[class*='language-'] {
+    border-radius: 0 0 8px 8px;
+    margin: 0;
+    border-color: var(--api_surface_light_1);
+    background-color: var(--api_surface_default);
+}
+
+.response-box code[class*='language-'],
+.response-box pre[class*='language-'] .copied{
+    background-color: var(--api_surface_light_2);
+    border: none;
+}
+
+.response-box code[class*='language-'],
+.response-box pre[class*='language-'] .copied {
+    display: none;
+}
+
 .request span.token{
     color: var(--request_code) !important;
+}
+
+.response-box span.token{
+    color: var(--text_med_emp) !important;
 }
 
 .pointer {
