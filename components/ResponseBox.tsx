@@ -3,15 +3,22 @@ import React, { PropsWithChildren } from 'react';
 interface ResponseBoxProps {
     id: string;
     status: string;
+    resText?: string;
 }
 
-const ResponseBox: React.FC<PropsWithChildren<ResponseBoxProps>> = ({ id, status, children }) => (
+const ResponseBox: React.FC<PropsWithChildren<ResponseBoxProps>> = ({
+    id,
+    status,
+    resText = '',
+    children
+}) => (
     <div id={id} className="response-box">
         <div className="response-header">
             RESPONSE{' '}
             <div className="status">
                 Status: <span className="status-text">{status}</span>
             </div>
+            {resText}
         </div>
         {children}
         <style jsx>{`
