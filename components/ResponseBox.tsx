@@ -22,8 +22,9 @@ const ResponseBox: React.FC<PropsWithChildren<ResponseBoxProps>> = ({ id, status
             .response-header {
                 display: flex;
                 gap: 16px;
-                border-radius: 8px 8px 0 0;
-                padding: 8px 16px;
+                font-size: 13px;
+                border-radius: ${children ? '8px 8px 0 0' : '8px'};
+                padding: 10px 16px;
                 background-color: var(--api_surface_light_1);
                 color: var(--text_med_emp);
             }
