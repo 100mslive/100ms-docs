@@ -23,9 +23,7 @@ const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
     const [count, setCount] = useState(0);
     useEffect(() => {
         if (!!userDetails && Object.keys(userDetails).length !== 0 && count === 0) {
-            window.analytics.identify(userDetails.customer_id, {
-                user_id: userDetails.user_id
-            });
+            window.analytics.identify(userDetails.customer_id, {});
             setCount(count + 1);
         }
     }, [userDetails]);
