@@ -88,6 +88,17 @@ to decide colors
     --badge_get: rgba(102, 161, 255, 0.1);
     --badge_post: rgba(20, 184, 129, 0.1);
     --badge_delete: rgba(204, 82, 95, 0.1);
+
+    --api_surface_light_default: #171B21;
+    --api_surface_light_1: #1B2027;
+    --api_surface_light_2: #1B2027;
+    --api_surface_light_3: #222730;
+
+    --endpoint_url: var(--primary_light);
+
+    --base_text: var(--text_high_emp);
+
+    --request_code: var(--text_med_emp);
 }
 
 [data-theme='light'] {
@@ -142,6 +153,16 @@ to decide colors
     --badge_get: rgba(38, 107, 217, 0.1);
     --badge_post: rgba(54, 179, 126, 0.1);
     --badge_delete: rgba(204, 82, 95, 0.1);
+
+    --api_surface_light_default: #F0F2F5;
+    --api_surface_light_1: #E1E4EA;
+    --api_surface_light_2: #505A69;
+    --api_surface_light_3: #3D4655;
+
+    --endpoint_url: #8FBAFF;
+    --base_text: #E0ECFFCC;
+
+    --request_code: #E0ECFFCC;
 }
 
 *,
@@ -716,6 +737,63 @@ code[class*='language-'],
 pre[class*='language-'] {
     color: var(--token_code_class);
 }
+
+.request {
+    border-radius: 0 0 8px 8px;
+}
+
+.request code[class*='language-'],
+.request pre[class*='language-'] {
+    border-radius: 0 0 8px 8px;
+    margin: 0;
+    font-weight: 500;
+    border-color: var(--api_surface_light_2);
+    background-color: var(--api_surface_light_2);
+}
+
+.request code[class*='language-'],
+.request pre[class*='language-'] .copied{
+    background-color: var(--api_surface_light_2);
+    border: none;
+}
+
+.request code[class*='language-'],
+.request pre[class*='language-'] .copied svg {
+    stroke: var(--request_code);
+}
+
+.request .code-block > div {
+    color: var(--request_code) !important;
+}
+
+.response-box code[class*='language-'],
+.response-box pre[class*='language-'] {
+    border-radius: 0 0 8px 8px;
+    margin: 0;
+    font-weight: 500;
+    border-color: var(--api_surface_light_1);
+    background-color: var(--api_surface_default);
+}
+
+.response-box code[class*='language-'],
+.response-box pre[class*='language-'] .copied{
+    background-color: var(--api_surface_light_2);
+    border: none;
+}
+
+.response-box code[class*='language-'],
+.response-box pre[class*='language-'] .copied {
+    display: none;
+}
+
+.request span.token{
+    color: var(--request_code) !important;
+}
+
+.response-box span.token{
+    color: var(--text_med_emp) !important;
+}
+
 .pointer {
     cursor: pointer;
 }
@@ -933,6 +1011,16 @@ p:has(img) + h2 {
 
 p:has(img) + h3 {
     margin-top: 0px;
+}
+
+li ul {
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+
+
+li ul li {
+    margin-bottom: 8px;
 }
 
 div#hs-eu-cookie-confirmation {
