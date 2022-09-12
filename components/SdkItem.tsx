@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     BookIcon,
     ChevronRightIcon,
@@ -87,7 +86,7 @@ const sdkItems = {
 
 interface Props {
     logo?: React.SVGProps<SVGSVGElement>;
-    sdk?: any;
+    sdk?: string;
     text?: string;
     cssHeading?: CSS;
     css?: CSS;

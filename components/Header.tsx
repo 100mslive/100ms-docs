@@ -1,5 +1,4 @@
-import React from 'react';
-import { useRouter } from 'next/router';
+import useKeyPress from '@/lib/useKeyPress';
 import {
     CrossIcon,
     DividerIcon,
@@ -8,9 +7,10 @@ import {
     SearchIcon,
     SunIcon
 } from '@100mslive/react-icons';
-import { useTheme } from '@100mslive/react-ui';
+import { Box, useTheme } from '@100mslive/react-ui';
 import Link from 'next/link';
-import useKeyPress from '@/lib/useKeyPress';
+import { useRouter } from 'next/router';
+import React from 'react';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -141,18 +141,35 @@ const Header: React.FC<Props> = ({
                 </div>
             </div>
             <div className="head-right">
-                <div className="search-ctx">
+                <Box
+                    css={{
+                        borderRadius: '$0',
+                        width: '$80',
+                        border: '1px solid $borderLight2',
+                        marginRight: '$9',
+                        background: '$surfaceLight',
+                        position: 'relative',
+                        padding: '$3 $8 $3 $5',
+                        '@md': {
+                            display: 'none'
+                        }
+                    }}>
                     <button onClick={() => setModal(true)} type="button" className="search-btn">
                         <SearchIcon />
                         <span>Search docs</span>
                         <span className="hot-key">/</span>
                     </button>
-                </div>
+                </Box>
                 <span
                     aria-label="theme-toggle-button"
                     className="pointer theme-btn"
                     role="button"
-                    style={{ paddingTop: '8px', paddingLeft: '10px', margin: '0 2rem 0 1rem' }}
+                    style={{
+                        paddingTop: '8px',
+                        paddingLeft: '10px',
+                        margin: '0 2rem 0 1rem',
+                        cursor: 'pointer'
+                    }}
                     tabIndex={0}
                     onKeyPress={() => {}}
                     onClick={() => buttonToggleTheme()}>
@@ -160,9 +177,7 @@ const Header: React.FC<Props> = ({
                 </span>
             </div>
 
-            {modal ? (
-                <SearchModal setModal={setModal} docs={docs} />
-            ) : null}
+            {modal ? <SearchModal setModal={setModal} docs={docs} /> : null}
 
             <div className="menu-btn">
                 <button
@@ -261,15 +276,6 @@ const Header: React.FC<Props> = ({
                 .logo-ctx img {
                     margin: 0 1rem;
                 }
-                .search-ctx {
-                    border-radius: 5px;
-                    width: 320px;
-                    border: 1px solid var(--border_light);
-                    margin-right: 20px;
-                    background: var(--new_surface_light);
-                    position: relative;
-                    padding: 5px 16px 5px 10px;
-                }
                 .search-btn {
                     opacity: 1;
                     background-color: transparent;
@@ -314,17 +320,6 @@ const Header: React.FC<Props> = ({
                 }
                 @media screen and (max-width: 1024px) {
                     .nav-links {
-                        display: none;
-                    }
-                }
-                @media screen and (max-width: 768px) {
-                    .search-ctx {
-                        display: none;
-                    }
-                    .menu-btn {
-                        display: flex;
-                    }
-                    .left-content {
                         display: none;
                     }
                 }

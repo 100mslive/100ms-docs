@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChevronRightIcon } from '@100mslive/react-icons';
 import { CSS, Flex, Text } from '@100mslive/react-ui';
 import React from 'react';

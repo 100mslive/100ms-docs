@@ -219,7 +219,7 @@ const more = {
                 { name: 'Mute / unmute', link: '/javascript/v2/features/mute' },
                 {
                     name: 'View all features',
-                    link: '/javascript/v2/foundation/basics',
+                    link: '/javascript/v2/features/integration',
                     viewAll: true
                 }
             ]
@@ -301,7 +301,7 @@ const more = {
                 { name: 'Mute / unmute', link: '/javascript/v2/features/mute' },
                 {
                     name: 'View all features',
-                    link: '/javascript/v2/foundation/basics',
+                    link: '/javascript/v2/features/integration',
                     viewAll: true
                 }
             ]
@@ -582,7 +582,8 @@ const Homepage = ({ allDocs }) => {
                         justify="center"
                         css={{
                             paddingBottom: '$16',
-                            backgroundColor: '$backgroundDefault'
+                            backgroundColor: '$backgroundDefault',
+                            filter: `blur(${modal ? '10px' : '0'})`
                         }}>
                         <Box css={{ width: '90%', maxWidth: '1248px' }}>
                             <Flex
@@ -824,11 +825,15 @@ const Homepage = ({ allDocs }) => {
                                                                 text={item.guideTitle}
                                                                 logo={
                                                                     <BookIcon
-                                                                        style={{ height: '18px' }}
+                                                                        style={{
+                                                                            height: '18px'
+                                                                        }}
                                                                     />
                                                                 }
                                                                 textVariant="body2"
-                                                                css={{ gap: '$4' }}
+                                                                css={{
+                                                                    gap: '$4'
+                                                                }}
                                                             />
                                                         </Box>
                                                     }

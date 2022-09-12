@@ -1,5 +1,3 @@
-/* eslint-disable react/no-deprecated */
-/* eslint-disable react/react-in-jsx-scope */
 import {
     ChatIcon,
     DiscordIcon,
@@ -80,7 +78,7 @@ const Footer: React.FC<Props> = ({ css = {} }) => (
                         </Box>
                     </Box>
                     <Box className="details">
-                        <Flex align="center" gap="1" css={{ '@sm': { marginBottom: '16px' } }}>
+                        <Flex align="center" gap="1" css={{ '@sm': { marginBottom: '$8' } }}>
                             <ChatIcon />
                             <a href="https://www.100ms.live/contact">
                                 <Text css={{ color: '$textHighEmp', fontWeight: '$semiBold' }}>
@@ -96,16 +94,16 @@ const Footer: React.FC<Props> = ({ css = {} }) => (
                             css={{
                                 backgroundColor: '$surfaceDefault',
                                 gap: '12px',
-                                padding: '8px 24px 8px 16px',
+                                padding: '$4 $10 $4 $8',
                                 width: 'fit-content',
                                 borderRadius: '20px'
                             }}>
                             <Box
                                 css={{
-                                    height: '16px',
-                                    width: '16px',
+                                    height: '$8',
+                                    width: '$8',
                                     backgroundColor: useStatusPage()[0].colour,
-                                    margin: '4px',
+                                    margin: '$2',
                                     borderRadius: '50%'
                                 }}
                             />

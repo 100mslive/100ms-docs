@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, CSS, Flex, Text, useTheme } from '@100mslive/react-ui';
 import React from 'react';
 
