@@ -1,0 +1,319 @@
+---
+title: Virtual Background (Beta)
+nav: 12
+---
+
+## Introduction
+
+Virtual Background plugin helps in customising one’s background i.e. replacing the background with a static image.
+This guide provides an overview of usage of the Virtual Background plugin of 100ms.
+
+<div style={{textAlign: 'center'}}>
+
+![VirtualBackground](/docs/v2/android-vb.gif)
+
+</div>
+
+## Supported Devices/Versions/Resolutions
+
+-   Minimum Android api level required to support Virtual Background plugin is 21, same as that required to use 100ms SDK
+-   Minimum 100ms SDK version it can work with is `2.2.8`
+-   Virtual background plugin is built for armeabi-v7a, arm64-v8a, x86 and x86_64 architectures
+-   Maximum supported resolution for this feature is 480p
+-   We recommend that you use this feature on a high performance device for smooth experience
+
+## Size Increase Per Architecture
+
+-   `x86_64` - 9.2 MB
+-   `x86` - 9.5 MB
+-   `arm64-v8a` - 7.6 MB
+-   `armeabi-v7a` - 5 MB
+
+## Common Terms
+
+-   `plugin` - We are calling virtual background feature as a plugin
+-   `image background` - The image which the plugin should replace the background with in the user's video.
+-   `plugin load time` - The time taken by the plugin to load the machine learning model for the first time. The machine learning model will identify that what part of the image the background is and is essential to virtual background working.
+
+## Add dependency
+
+-   Adding the Virtual Background plugin and sdk dependency to your app-level `build.gradle`.
+
+```json{3,4}:build.gradle
+dependencies {
+ // See the latest version in the jitpack badge above.
+  implementation 'com.github.100mslive.android-sdk:lib:2.2.8'
+  implementation 'com.github.100mslive.android-sdk:virtualBackground:2.2.8'
+    }
+```
+
+## How to Integrate Virtual Background
+
+### Instantiate VirtualBackgroundPlugin
+
+Instantiate the 100ms Virtual Background plugin like this:
+
+<Tabs id="instanstiate-VirtualBackgroundPlugin" items={['Kotlin', 'Java']} />
+
+<Tab id='instanstiate-VirtualBackgroundPlugin-0'>
+
+```kotlin
+val hmsSdk = HMSSDK
+      .Builder(application)
+      .build()
+val virtualBackgroundPlugin = HMSVirtualBackground(hmsSdk, imageBitmap)
+```
+
+</Tab>
+
+<Tab id='instanstiate-VirtualBackgroundPlugin-1'>
+
+```java
+HMSSDK hmsSdk = new HMSSDK
+                       .Builder(application)
+                       .build();
+HMSVirtualBackground virtualBackgroundPlugin = new HMSVirtualBackground(hmsSdk, imageBitmap);
+```
+
+</Tab>
+
+That's it. You have instantiated Virtual Background plugin successfully. 🥳
+
+Now let's take a look at the method signature of HMSVirtualBackground.
+
+`HMSVirtualBackground` accepts 2 argument -
+
+-   `hmsSdk`: the `HMSSDK` instance you have used to join the room
+-   `imageBitmap`- Bitmap - The image that the background will be replaced with. We are supporting JPG/PNG/JPEG type images.
+
+### Check if plugin is supported
+
+`HMSVirtualBackground.isSupported` can be used to check if the API level/Resolution of device is supported or not.
+If the input resolution is set more than 480p we are not supporting the feature
+It will return True/False based on these parameters.
+
+<Tabs id="Check-plugin-support" items={['Kotlin', 'Java']} />
+
+<Tab id='Check-plugin-support-0'>
+
+```kotlin
+if(virtualBackgroundPlugin.isSupported()){
+    // Device/Resolution is supported
+}else{
+    // Device/Resolution is not supported, check Supported Devices/Versions/Resolutions section
+}
+```
+
+</Tab>
+
+<Tab id='Check-plugin-support-1'>
+
+```java
+if(virtualBackgroundPlugin.isSupported()){
+    // Device/Resolution is supported
+}else{
+   // Device/Resolution is not supported, check Supported Devices/Versions/Resolutions section
+}
+```
+
+</Tab>
+
+### Init(Optional)
+
+Init is used to load the machine learning model of Virtual Background for the first time.
+It takes on an average 50-200 ms. Calling init is handled internally by SDK if not done by user, in this case addPlugin call will
+take 50-200 ms for the first time and then less than 10ms in the subsequent calls.
+Check [this section](#add-plugin) for addPlugin API usage
+
+<Tabs id="Init" items={['Kotlin', 'Java']} />
+
+<Tab id='Init-0'>
+
+```kotlin
+try{
+   virtualBackgroundPlugin.init()
+}catch(err){
+    // failed to init Plugin
+}
+```
+
+</Tab>
+
+<Tab id='Init-1'>
+
+```java
+try{
+   virtualBackgroundPlugin.init();
+}catch(err){
+   // failed to init Plugin
+}
+```
+
+</Tab>
+
+### Change Background
+
+Call `setBackground` on the `HMSVirtualBackground` instance to update the background again later if required.
+It accepts imageBitmap as a parameter
+
+-   `imageBitmap`- Bitmap - The image that the background will be replaced with.
+
+Image will be scaled to fit to the video. Scaling will maintain image aspect ratio.
+If the aspect ratio of the background image is not the same as the video, the image will be cropped to fit in the background.
+
+<Tabs id="Change-Background" items={['Kotlin', 'Java']} />
+
+<Tab id='Change-Background-0'>
+
+```kotlin
+//Use this function to get imageBitmap from a JPG/PNG Image
+fun getBitmapFromAsset(context: Context, filename: String): Bitmap? {
+  val assetManager = context.assets
+  val instr: InputStream
+  var bitmap: Bitmap? = null
+  try {
+    instr = assetManager.open(filename)
+    bitmap = BitmapFactory.decodeStream(istr)
+  } catch (e: IOException) {
+    // error reading virtual background image
+  }
+  return bitmap
+}
+```
+
+```kotlin
+//BACKGROUND_FILE_PATH is the background image file location
+val imageBitmap = getBitmapFromAsset(context, BACKGROUND_FILE_PATH)
+//To set background as imageBitmap, Use
+virtualBackgroundPlugin.setBackground(imageBitmap)
+```
+
+</Tab>
+
+<Tab id='Change-Background-1'>
+
+```java
+//Use this function to get imageBitmap from a JPG/PNG Image
+Bitmap getBitmapFromAsset(context: Context, filename: String) {
+  AssetManager assetManager = context.assets;
+  InputStream instr;
+  Bitmap bitmap;
+  try {
+    instr = assetManager.open(filename);
+    bitmap = BitmapFactory.decodeStream(istr);
+  } catch (e: IOException) {
+     // error reading virtual background image
+  }
+  return bitmap;
+}
+```
+
+```java
+//BACKGROUND_FILE_PATH is the background image file location
+Bitmap imageBitmap = getBitmapFromAsset(context, BACKGROUND_FILE_PATH);
+//To set background as imageBitmap, Use
+virtualBackgroundPlugin.setBackground(imageBitmap);
+```
+
+</Tab>
+
+### Tuning pluginFrameRate(Optional)
+
+`pluginFrameRate` - pluginFrameRate helps in controlling the performance and experience of Virtual Background plugin.
+pluginFrameRate translates to the number of frames for which background is detected. Higher value will use more resources
+(cpu/memory/battery), while making the Virtual Background experience smooth. Lower value will be generous on resources,
+while lowering the Virtual Background smoothness. Recommended value is 15. Values higher than this will not significantly
+improve Virtual Background smoothness but will be heavy on resources. For lower end devices value can be in the range of 7-10.
+
+## Add Plugin
+
+To add Virtual background plugin app needs to call `addPlugin` method of `HMSSDK` which takes in 3 parameters -
+
+1. `virtualBackgroundPlugin`: An instance of the plugin.
+2. `HMSActionResultListener`: A callback for success or failure of adding the virtual background.
+3. `pluginFrameRate`: An optional parameter for how many frames per second the virtual background image replacement should be updated.
+   `Default=15` if not set by user
+
+<Tabs id="add-plugin" items={['Kotlin', 'Java']} />
+
+<Tab id='add-plugin-0'>
+
+```kotlin
+// This will apply the Virtual Background effect to the local video
+// pluginFrameRate is an optional parameter
+hmsSdk.addPlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
+       override fun onError(error: HMSException) {
+         // an error occurred
+       }
+       override fun onSuccess() {
+         // added successfully
+       }
+      },
+      pluginFrameRate)
+```
+
+</Tab>
+
+<Tab id='add-plugin-1'>
+
+```Java
+// This will apply the Virtual Background effect to the local video
+// pluginFrameRate is an optional parameter
+hmsSdk.addPlugin(virtualBackgroundPlugin, new HMSActionResultListener {
+       @Override
+       public void onError(error: HMSException) {
+         // an error occurred
+       }
+       @Override
+       public void onSuccess() {
+         // added successfully
+       }
+     },
+     pluginFrameRate)
+```
+
+</Tab>
+
+## Remove Plugin
+
+To remove the virtual background plugin the app needs to call `removePlugin` method of `HMSSDK` which takes in 2 parameters.
+
+1. `virtualBackgroundPlugin`: An instance of the plugin.
+2. `HMSActionResultListener`: A callback for success or failure of adding the virtual background.
+
+<Tabs id="remove-plugin" items={['Kotlin', 'Java']} />
+
+<Tab id='remove-plugin-0'>
+
+```kotlin
+//This will remove the virtual background effect from the video
+hmsSdk.removePlugin(virtualBackgroundPlugin, object : HMSActionResultListener {
+       override fun onError(error: HMSException) {
+         // an error occurred
+       }
+       override fun onSuccess() {
+         // added successfully
+       }
+      })
+```
+
+</Tab>
+
+<Tab id='remove-plugin-1'>
+
+```Java
+//This will remove the virtual background effect from the video
+hmsSdk.removePlugin(virtualBackgroundPlugin, new HMSActionResultListener {
+       @Override
+       public void onError(error: HMSException) {
+         // an error occurred
+       }
+       @Override
+       public void onSuccess() {
+         // added successfully
+       }
+     }
+    )
+```
+
+</Tab>
