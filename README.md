@@ -195,7 +195,7 @@ All CSS Variables prefixed with `token` control the Syntax Highlighting.
 
 ## 📇 Linting
 
-- Add tokens in `.github/workflows/styles/Vocab/HMSVocab` which you want to whitelist during the linting.
+- Add tokens in `.github/workflows/styles/Vocab/HMSVocab/accept.txt` which you want to whitelist during the linting.
 - code blocks are already whitelisted.
 
 ## 🙏🏽 Acknowledgement
