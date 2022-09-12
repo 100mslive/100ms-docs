@@ -99,6 +99,7 @@ to decide colors
     --base_text: var(--text_high_emp);
 
     --request_code: var(--text_med_emp);
+    --response_json: var(--token_selector);
 }
 
 [data-theme='light'] {
@@ -130,7 +131,6 @@ to decide colors
     --blue11: hsl(211 100% 43.2%);
 
     --cyan11: hsl(192 85% 31%);
-
     
     --success: var(--primary_light);
     --warning: #f5a623;
@@ -164,6 +164,8 @@ to decide colors
 
     --request_code: #E0ECFFCC;
     --token_selector: hsl(180, 60%, 70%);
+    --token_func_cn: var(--endpoint_url);
+    --response_json: hsl(180, 59%, 45%);
 }
 
 *,
@@ -709,6 +711,10 @@ table th,tr,td {
     color: var(--token_selector);
 }
 
+.response-box .token.string {
+    color: var(--response_json);
+}
+
 .token.operator,
 .token.entity,
 .token.url,
@@ -793,10 +799,11 @@ pre[class*='language-'] {
 .request span.token{
     color: var(--request_code) !important;
 }
+*/
 
-.response-box span.token{
-    color: var(--text_med_emp) !important;
-} */
+.response-box span.token.string{
+    color: hsl(180, 59%, 45%) !important;
+} 
 
 .pointer {
     cursor: pointer;
