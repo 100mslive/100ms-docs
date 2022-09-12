@@ -42,6 +42,7 @@ const ResponseBox: React.FC<PropsWithChildren<ResponseBoxProps>> = ({
             }
             .status-text {
                 color: var(--twin_green);
+                font-weight: 500;
             }
         `}</style>
     </div>
