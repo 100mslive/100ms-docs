@@ -1,0 +1,41 @@
+name: Vale linter
+
+# vale linter important docs
+# https://vale.sh/docs/vale-cli/overview/
+
+# run this workflow only
+on:
+  pull_request:
+    branches:
+      - vale_linter
+      - qa
+      - main
+
+jobs:
+  vale:
+    name: runner / vale
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: errata-ai/vale-action@reviewdog
+        env:
+          # Required, set by GitHub actions automatically:
+          # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          # Reporter of reviewdog command [github-pr-check,github-pr-review,github-check].
+          reporter: github-pr-check # optional, default is github-pr-check
+          
+          # Exit code for reviewdog when errors are found [true,false]
+          # Default is `false`.
+          fail_on_error: true # optional, default is false
+
+          # Report level for reviewdog [info,warning,error].
+          # level: # optional, default is error
+
+          # Filtering for the reviewdog command [added,diff_context,file,nofilter].
+          # Default is added.
+          filter_mode: diff_context # optional, default is added
+          
+          # Space-delimited list of flags for the Vale CLI.
+          # vale_flags: # optional, default is 
