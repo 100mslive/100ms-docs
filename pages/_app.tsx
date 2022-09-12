@@ -23,7 +23,7 @@ const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
     const userDetails = currentUser();
     const [count, setCount] = useState(0);
     useEffect(() => {
-        if (Object.keys(userDetails).length !== 0 && count === 0) {
+        if (!!userDetails && Object.keys(userDetails).length !== 0 && count === 0) {
             window.analytics.identify(userDetails.customer_id, {
                 email: userDetails.email,
                 first_name: userDetails.first_name,
