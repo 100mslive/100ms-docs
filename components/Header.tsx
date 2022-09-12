@@ -145,7 +145,7 @@ const Header: React.FC<Props> = ({
                     css={{
                         borderRadius: '$0',
                         width: '$80',
-                        border: '1px solid $borderLight2',
+                        border: '1px solid $borderLighter',
                         marginRight: '$9',
                         background: '$surfaceLight',
                         position: 'relative',

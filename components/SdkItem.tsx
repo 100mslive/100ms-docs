@@ -86,7 +86,7 @@ const sdkItems = {
 
 interface Props {
     logo?: React.SVGProps<SVGSVGElement>;
-    sdk?: string;
+    sdk: string;
     text?: string;
     cssHeading?: CSS;
     css?: CSS;
@@ -149,7 +149,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
                         '@lg': {
                             display: 'none'
                         },
-                        backgroundColor: '$borderLight2'
+                        backgroundColor: '$borderLighter'
                     }}
                 />
             </Flex>
@@ -178,7 +178,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
                     gridTemplateColumns: 'repeat(1, minmax(0, 1fr))'
                 }
             }}>
-            {sdkItems[sdk].map((value) => (
+            {sdkItems[sdk as keyof typeof sdkItems].map((value) => (
                 <Link key={value.id} href={value.link}>
                     <a style={{ width: 'fit-content' }}>
                         <Box
