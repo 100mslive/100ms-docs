@@ -373,14 +373,14 @@ const more = {
         {
             heading: 'Features',
             items: [
-                { name: 'Integrating the SDK', link: '/android/v2/features/Integration' },
-                { name: 'Join room', link: '/android/v2/features/Join' },
-                { name: 'Leave room', link: '/android/v2/features/Leave' },
-                { name: 'End room', link: '/android/v2/features/End-Room' },
-                { name: 'Mute / unmute', link: '/android/v2/features/Mute' },
+                { name: 'Integrating the SDK', link: '/android/v2/features/integration' },
+                { name: 'Join room', link: '/android/v2/features/join' },
+                { name: 'Leave room', link: '/android/v2/features/leave' },
+                { name: 'End room', link: '/android/v2/features/end-room' },
+                { name: 'Mute / unmute', link: '/android/v2/features/mute' },
                 {
                     name: 'View all features',
-                    link: '/android/v2/features/Integration',
+                    link: '/android/v2/features/integration',
                     viewAll: true
                 }
             ]
@@ -410,19 +410,19 @@ const more = {
         },
         {
             heading: 'Plugins',
-            items: [{ name: 'Virtual background', link: '/android/v2/plugins/Virtual-Background' }]
+            items: [{ name: 'Virtual background', link: '/android/v2/plugins/virtual-background' }]
         }
     ],
     iOS: [
         {
             heading: 'Features',
             items: [
-                { name: 'Integrating the SDK', link: '/ios/v2/features/Integration' },
-                { name: 'Join room', link: '/ios/v2/features/Join' },
-                { name: 'Leave room', link: '/ios/v2/features/Leave' },
-                { name: 'Mute / unmute', link: '/ios/v2/features/Mute' },
-                { name: 'Chat', link: '/ios/v2/features/Chat' },
-                { name: 'View all features', link: '/ios/v2/features/Integration', viewAll: true }
+                { name: 'Integrating the SDK', link: '/ios/v2/features/integration' },
+                { name: 'Join room', link: '/ios/v2/features/join' },
+                { name: 'Leave room', link: '/ios/v2/features/leave' },
+                { name: 'Mute / unmute', link: '/ios/v2/features/mute' },
+                { name: 'Chat', link: '/ios/v2/features/chat' },
+                { name: 'View all features', link: '/ios/v2/features/integration', viewAll: true }
             ]
         },
         {
@@ -437,7 +437,7 @@ const more = {
         {
             heading: 'Plugins',
             items: [
-                { name: 'Virtual background (Beta)', link: '/ios/v2/plugins/Virtual-Background' },
+                { name: 'Virtual background (Beta)', link: '/ios/v2/plugins/virtual-background' },
                 {
                     name: 'Custom video plugins (Beta)',
                     link: '/ios/v2/plugins/custom-video-plugins'
@@ -482,7 +482,7 @@ const more = {
                 },
                 {
                     name: 'Echo cancellation',
-                    link: '/flutter/v2/advanced%20features/Echo-Cancellation'
+                    link: '/flutter/v2/advanced%20features/echo-cancellation'
                 }
             ]
         },

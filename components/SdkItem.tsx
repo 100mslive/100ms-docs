@@ -56,16 +56,16 @@ const sdkItems = {
         { id: 7, link: '/server-side/v2/foundation/firewall-and-ports' }
     ],
     android: [
-        { id: 1, link: '/android/v2/guides/Quickstart' },
+        { id: 1, link: '/android/v2/guides/quickstart' },
         { id: 3, link: 'https://github.com/100mslive/100ms-android' },
         { id: 4, link: '/api-reference/android/v2/index.html' },
-        { id: 5, link: '/android/v2/release-notes/Release-Notes' }
+        { id: 5, link: '/android/v2/release-notes/release-notes' }
     ],
     ios: [
-        { id: 1, link: '/ios/v2/guides/Quickstart' },
+        { id: 1, link: '/ios/v2/guides/quickstart' },
         { id: 3, link: 'https://github.com/100mslive/100ms-ios-sdk' },
         { id: 4, link: '/api-reference/ios/v2/home/content' },
-        { id: 5, link: '/ios/v2/release-notes/Release-Notes' }
+        { id: 5, link: '/ios/v2/release-notes/release-notes' }
     ],
     flutter: [
         { id: 1, link: '/flutter/v2/guides/quickstart' },
