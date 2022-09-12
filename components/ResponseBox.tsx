@@ -25,6 +25,7 @@ const ResponseBox: React.FC<PropsWithChildren<ResponseBoxProps>> = ({
             .response-box {
                 margin-bottom: 24px;
                 border-radius: 8px;
+                background-color: var(--api_surface_light_default);
             }
             .response-header {
                 display: flex;
