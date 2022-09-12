@@ -1,9 +1,8 @@
-/* eslint-disable import/no-extraneous-dependencies */
+import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
 import { DefaultSeo } from 'next-seo';
 import NProgress from 'nprogress';
 import SEO from '../next-seo.config';

@@ -1,10 +1,10 @@
+import React from 'react';
 import EnterIcon from '@/assets/icons/EnterIcon';
 import SearchIcon from '@/assets/icons/SearchIcon';
 import useClickOutside from '@/lib/useClickOutside';
 import useKeyPress from '@/lib/useKeyPress';
 import useSearch from '@/lib/useSearch';
 import Link from 'next/link';
-import React from 'react';
 
 interface Props {
     docs: { url: string; title: string; description: string; nav: number; content: string }[];

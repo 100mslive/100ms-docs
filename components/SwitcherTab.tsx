@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Flex, Text } from '@100mslive/react-ui';
 import React from 'react';
+import { Flex, Text } from '@100mslive/react-ui';
 
 interface Props {
     value: string;

@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Flex } from '@100mslive/react-ui';
 import React from 'react';
+import { Flex } from '@100mslive/react-ui';
 import SwitcherTab from './SwitcherTab';
 
 interface TabObject {
