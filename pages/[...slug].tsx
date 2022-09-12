@@ -22,7 +22,7 @@ const DocSlugs = ({ source, allDocs, nav, frontMatter }) => {
     const [currentDocSlug] = slug as string[];
     const currentDocs = allDocs.filter((doc) =>
         slug
-            ? doc.url.includes(`/${typeof slug !== typeof '' ? (slug as []).join('/') : slug}/`)
+            ? doc.url.includes(`/${typeof slug === typeof [] ? (slug as []).join('/') : slug}/`)
             : false
     );
     const { previousPost, nextPost } = getPagination(currentDocs, slug as string[]);
