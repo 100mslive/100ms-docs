@@ -7,6 +7,7 @@ import { Tabs, Tab } from './Tabs';
 import Code from './Code';
 import Note from './Note';
 import BaseRequest from './BaseRequest';
+import EndpointRequest from './EndpointRequest';
 import PostRequest from './PostRequest';
 import GetRequest from './GetRequest';
 
@@ -60,6 +61,7 @@ const LinkCustom = (props) => {
 const MDXComponents = {
     Response,
     BaseRequest,
+    EndpointRequest,
     PostRequest,
     DeleteRequest,
     GetRequest,
