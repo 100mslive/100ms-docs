@@ -1,6 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import Footer from '@/components/Footer';
 import HomeDropDown from '@/components/HomeDropDown';
+import SegmentAnalytics from '@/components/SegmentAnalytics';
 import { getAllDocs } from '@/lib/mdxUtils';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import {
@@ -569,6 +570,7 @@ const Homepage = ({ allDocs }) => {
         <>
             {renderComponents ? (
                 <>
+                    <SegmentAnalytics options={{}} title="100ms Docs" />
                     <Header
                         modal={modal}
                         setModal={setModal}
