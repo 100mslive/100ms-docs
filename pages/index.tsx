@@ -28,6 +28,396 @@ import Switcher from 'components/Switcher';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
+const tabs = [
+    { name: 'Web', id: 0 },
+    { name: 'Mobile', id: 1 }
+];
+
+const Homepage = ({ allDocs }) => {
+    const [activeTab, setActiveTab] = useState('Web');
+    const [menu, setMenu] = useState(false);
+    const [modal, setModal] = useState(false);
+    const [showDropDown, setShowDropDown] = useState(false);
+    const [dropDownSelection, setDropDownSelection] = useState('JavaScript');
+    const menuState = { menu, setMenu };
+    const [renderComponents, setRenderComponents] = useState(false);
+    useEffect(() => {
+        setRenderComponents(true);
+    }, []);
+
+    useLockBodyScroll(modal);
+
+    return (
+        <>
+            {renderComponents ? (
+                <>
+                    <SegmentAnalytics options={{}} title="100ms Docs" />
+                    <Header
+                        modal={modal}
+                        setModal={setModal}
+                        docs={allDocs}
+                        showMobileMenu={false}
+                        menuState={menuState}
+                        showReference={false}
+                    />
+                    <Flex
+                        onClick={() => setShowDropDown(false)}
+                        justify="center"
+                        css={{
+                            paddingBottom: '$16',
+                            backgroundColor: '$backgroundDefault',
+                            filter: `blur(${modal ? '10px' : '0'})`
+                        }}>
+                        <Box css={{ width: '90%', maxWidth: '1248px' }}>
+                            <Flex
+                                justify="center"
+                                direction="column"
+                                align="center"
+                                css={{
+                                    marginTop: '$md',
+                                    marginBottom: '$12'
+                                }}>
+                                <h1 style={{ marginBottom: '0' }}>
+                                    <Text variant="h4" css={{ zIndex: '0', color: '$textHighEmp' }}>
+                                        Documentation
+                                    </Text>
+                                </h1>
+                                <Text
+                                    variant="body2"
+                                    css={{
+                                        color: '$textMedEmp',
+                                        textAlign: 'center',
+                                        marginTop: '$4'
+                                    }}>
+                                    Explore our guides and examples to integrate 100ms.
+                                </Text>
+                            </Flex>
+                            <Flex align="center" css={{ marginBottom: '$8', gap: '$1' }}>
+                                <ComputerIcon style={{ height: '16px', width: '16px' }} />
+                                <Text
+                                    variant="sub2"
+                                    css={{ fontWeight: '$semiBold', color: '$textMedEmp' }}>
+                                    Web SDK
+                                </Text>
+                            </Flex>
+                            <Flex
+                                css={{
+                                    flexWrap: 'wrap',
+                                    justify: 'between',
+                                    '@lg': {
+                                        gap: '$8'
+                                    },
+                                    '@md': {
+                                        justify: 'start'
+                                    }
+                                }}>
+                                <SdkItem
+                                    logo={
+                                        <JavascriptIcon
+                                            style={{
+                                                color: '#F0DB4F'
+                                            }}
+                                        />
+                                    }
+                                    text="JavaScript"
+                                    sdk="javascript"
+                                    css={{
+                                        borderRadius: '$3 $3 0 0',
+                                        '@lg': {
+                                            borderRadius: '$3'
+                                        }
+                                    }}
+                                />
+                                <SdkItem
+                                    logo={
+                                        <ReactIcon
+                                            style={{
+                                                color: 'DodgerBlue'
+                                            }}
+                                        />
+                                    }
+                                    css={{
+                                        borderRadius: '0 0 $3 $3',
+                                        '@lg': {
+                                            borderRadius: '$3'
+                                        }
+                                    }}
+                                    text="ReactJS"
+                                    sdk="react"
+                                />
+                            </Flex>
+                            <Flex
+                                align="center"
+                                css={{ marginTop: '$12', marginBottom: '$8', gap: '$1' }}>
+                                <PhoneIcon style={{ height: '16px', width: '16px' }} />
+                                <Text
+                                    variant="sub2"
+                                    css={{ fontWeight: '$semiBold', color: '$textMedEmp' }}>
+                                    Mobile SDK
+                                </Text>
+                            </Flex>
+                            <Flex
+                                css={{
+                                    flexWrap: 'wrap',
+
+                                    justifyContent: 'space-between',
+                                    '@xl': {
+                                        justifyContent: 'flex-start'
+                                    },
+                                    '@lg': {
+                                        gap: '$8'
+                                    }
+                                }}>
+                                {mobileSDK.map((value, index) => (
+                                    <SdkItem
+                                        key={value.id}
+                                        logo={value.icon}
+                                        text={value.title}
+                                        sdk={value.id}
+                                        css={{
+                                            borderRadius: `${index !== 0 ? '0 0' : '$3 $3'} ${
+                                                mobileSDK.length - 1 !== index ? '0 0' : '$3 $3'
+                                            }`
+                                        }}
+                                        // listView={true}
+                                    />
+                                ))}
+                            </Flex>
+                            <Flex
+                                align="center"
+                                css={{ marginTop: '$12', marginBottom: '$8', gap: '$1' }}>
+                                <ServerIcon style={{ height: '16px', width: '16px' }} />
+                                <Text
+                                    variant="sub2"
+                                    css={{ fontWeight: '$semiBold', color: '$textMedEmp' }}>
+                                    Server-side API
+                                </Text>
+                            </Flex>
+                            <Flex>
+                                <SdkItem
+                                    logo={<ServerIcon style={{ color: '#66A1FF' }} />}
+                                    text="Server-side"
+                                    sdk="serverSide"
+                                />
+                            </Flex>
+                            <Flex
+                                direction="column"
+                                css={{ marginTop: '$24', marginBottom: '$10' }}>
+                                <h2 style={{ marginTop: '0', marginBottom: '4px' }}>
+                                    <Text variant="h5">Fundamentals</Text>
+                                </h2>
+                                <Text
+                                    variant="body2"
+                                    css={{ color: '$textMedEmp', marginTop: '0' }}>
+                                    Learn how to integrate live video in your app with 100ms.
+                                </Text>
+                            </Flex>
+                            <Box
+                                css={{
+                                    gap: '$12',
+                                    display: 'grid',
+                                    gridTemplateColumns: '1fr 1fr 1fr',
+                                    '@xl': {
+                                        gap: '$10'
+                                    },
+                                    '@md': {
+                                        gridTemplateColumns: '1fr',
+                                        gridTemplateRows: '1fr 1fr 1fr',
+                                        gap: '$8'
+                                    }
+                                }}>
+                                {fundamentals.map((item) => (
+                                    <Link href={item.link} key={item.title}>
+                                        <a style={{ all: 'unset', cursor: 'pointer' }}>
+                                            <Card
+                                                css={{ width: '100%' }}
+                                                body={item.body}
+                                                titleComponent={
+                                                    <h3
+                                                        style={{
+                                                            margin: '0'
+                                                        }}>
+                                                        <Item
+                                                            logo={item.logo}
+                                                            text={item.title}
+                                                            textCSS={{
+                                                                color: '$textHighEmp',
+                                                                fontSize: '$h6',
+                                                                '@lg': { fontSize: '$md' }
+                                                            }}
+                                                            textVariant="body1"
+                                                            endLogo={
+                                                                <ChevronRightIcon
+                                                                    style={{
+                                                                        marginLeft: '8px'
+                                                                    }}
+                                                                />
+                                                            }
+                                                        />
+                                                    </h3>
+                                                }
+                                            />
+                                        </a>
+                                    </Link>
+                                ))}
+                            </Box>
+                            <Flex
+                                direction="column"
+                                css={{ marginTop: '$24', marginBottom: '$10' }}>
+                                <h2 style={{ marginTop: '0', marginBottom: '4px' }}>
+                                    <Text variant="h5" id="guide">
+                                        Guides
+                                    </Text>
+                                </h2>
+                                <Text variant="body2" css={{ color: '$textMedEmp' }}>
+                                    Walk through implementations of common use-cases with 100ms.
+                                </Text>
+                            </Flex>
+                            <Switcher
+                                tabs={tabs}
+                                setActiveTab={setActiveTab}
+                                activeTab={activeTab}
+                            />
+                            <Box
+                                css={{
+                                    gap: '$12',
+                                    marginTop: '$12',
+                                    display: 'grid',
+                                    gridTemplateColumns: '1fr 1fr 1fr 1fr',
+                                    '@lg': { gridTemplateColumns: '1fr 1fr 1fr', gap: '$10' },
+                                    '@md': { gridTemplateColumns: '1fr', gap: '$8' }
+                                }}>
+                                {guides.map((item) =>
+                                    item.platform === activeTab ? (
+                                        <Link href={item.link} key={item.title + item.link}>
+                                            <a style={{ all: 'unset', cursor: 'pointer' }}>
+                                                <Card
+                                                    body={item.body}
+                                                    titleComponent={
+                                                        <Item
+                                                            text={item.title}
+                                                            textVariant="h6"
+                                                            textCSS={{ color: '$textHighEmp' }}
+                                                            endLogo={null}
+                                                        />
+                                                    }
+                                                    endComponent={
+                                                        <Box
+                                                            css={{
+                                                                color: '$textMedEmp',
+                                                                marginTop: '$8',
+                                                                '&:hover': {
+                                                                    color: '$primaryLight'
+                                                                }
+                                                            }}>
+                                                            <Item
+                                                                text={item.guideTitle}
+                                                                logo={<BookIcon />}
+                                                                textVariant="body2"
+                                                                css={{
+                                                                    gap: '$4'
+                                                                }}
+                                                            />
+                                                        </Box>
+                                                    }
+                                                />
+                                            </a>
+                                        </Link>
+                                    ) : null
+                                )}
+                            </Box>
+                            <Flex
+                                css={{
+                                    gap: '$10',
+                                    marginBottom: '$10',
+                                    marginTop: '$24'
+                                }}
+                                align="center">
+                                <h2 style={{ marginTop: '0', marginBottom: '0' }}>
+                                    <Text variant="h5">All Pages</Text>
+                                </h2>
+                                <Flex direction="column" css={{ position: 'relative' }}>
+                                    <Button
+                                        variant="standard"
+                                        css={{
+                                            borderRadius: '20px',
+                                            cursor: 'pointer',
+                                            color: '$textHighEmp',
+                                            backgroundColor: '$surfaceDefault',
+                                            borderColor: '$borderDefault'
+                                        }}
+                                        onClick={(e) => {
+                                            setShowDropDown((prev) => !prev);
+                                            e.stopPropagation();
+                                        }}>
+                                        <FilterOneIcon style={{ marginRight: '7px' }} />{' '}
+                                        {dropDownSelection}
+                                    </Button>
+                                    {showDropDown && (
+                                        <HomeDropDown setDropDownSelection={setDropDownSelection} />
+                                    )}
+                                </Flex>
+                            </Flex>
+                            <Flex css={{ flexWrap: 'wrap', gap: '$20' }}>
+                                {more[dropDownSelection].map((section) => (
+                                    <Flex
+                                        direction="column"
+                                        key={section.heading}
+                                        css={{ gap: '$5', width: '200px' }}>
+                                        <Text variant="body1" css={{ marginBottom: '$4' }}>
+                                            {section.heading}
+                                        </Text>
+                                        {section.items.map((item) => (
+                                            <Link key={item.name} href={item.link}>
+                                                <a>
+                                                    <Box
+                                                        css={{
+                                                            '&:hover': {
+                                                                color: '$primaryLight'
+                                                            },
+                                                            ':active': { color: '$primaryDark' },
+                                                            marginTop: item?.viewAll ? '$3' : '0'
+                                                        }}>
+                                                        <Text
+                                                            variant="body1"
+                                                            css={{
+                                                                display: 'flex',
+                                                                gap: '$1',
+                                                                color: '$primaryDefault',
+                                                                fontWeight: '$regular'
+                                                            }}>
+                                                            {item.name}{' '}
+                                                            {item?.viewAll ? (
+                                                                <ArrowRightIcon />
+                                                            ) : null}
+                                                        </Text>
+                                                    </Box>
+                                                </a>
+                                            </Link>
+                                        ))}
+                                    </Flex>
+                                ))}
+                            </Flex>
+                        </Box>
+                    </Flex>
+                    <Footer css={{ backgroundColor: '$backgroundDefault' }} />
+                </>
+            ) : null}
+        </>
+    );
+};
+
+export const getStaticProps = async () => {
+    const allDocs = await getAllDocs();
+    return {
+        props: {
+            allDocs
+        }
+    };
+};
+
+export default Homepage;
+
 const mobileSDK = [
     {
         icon: <AndroidIcon style={{ color: '#6BDEB6' }} />,
@@ -76,11 +466,6 @@ const fundamentals = [
         link: '/javascript/v2/foundation/security-and-tokens',
         logo: <GameIcon className="childLogo" style={style} />
     }
-];
-
-const tabs = [
-    { name: 'Web', id: 0 },
-    { name: 'Mobile', id: 1 }
 ];
 
 const guides = [
@@ -551,388 +936,3 @@ const more = {
         }
     ]
 };
-
-const Homepage = ({ allDocs }) => {
-    const [activeTab, setActiveTab] = useState('Web');
-    const [menu, setMenu] = useState(false);
-    const [modal, setModal] = useState(false);
-    const [showDropDown, setShowDropDown] = useState(false);
-    const [dropDownSelection, setDropDownSelection] = useState('JavaScript');
-    const menuState = { menu, setMenu };
-    const [renderComponents, setRenderComponents] = useState(false);
-    useEffect(() => {
-        setRenderComponents(true);
-    }, []);
-
-    useLockBodyScroll(modal);
-
-    return (
-        <>
-            {renderComponents ? (
-                <>
-                    <SegmentAnalytics options={{}} title="100ms Docs" />
-                    <Header
-                        modal={modal}
-                        setModal={setModal}
-                        docs={allDocs}
-                        showMobileMenu={false}
-                        menuState={menuState}
-                        showReference={false}
-                    />
-                    <Flex
-                        onClick={() => setShowDropDown(false)}
-                        justify="center"
-                        css={{
-                            paddingBottom: '$16',
-                            backgroundColor: '$backgroundDefault',
-                            filter: `blur(${modal ? '10px' : '0'})`
-                        }}>
-                        <Box css={{ width: '90%', maxWidth: '1248px' }}>
-                            <Flex
-                                justify="center"
-                                direction="column"
-                                align="center"
-                                css={{
-                                    marginTop: '$md',
-                                    marginBottom: '$12'
-                                }}>
-                                <h1 style={{ marginBottom: '0' }}>
-                                    <Text variant="h4" css={{ zIndex: '0', color: '$textHighEmp' }}>
-                                        Documentation
-                                    </Text>
-                                </h1>
-                                <Text
-                                    variant="body2"
-                                    css={{
-                                        color: '$textMedEmp',
-                                        textAlign: 'center',
-                                        marginTop: '$4'
-                                    }}>
-                                    Explore our guides and examples to integrate 100ms.
-                                </Text>
-                            </Flex>
-                            <Flex align="center" css={{ marginBottom: '$8', gap: '$1' }}>
-                                <ComputerIcon style={{ height: '16px', width: '16px' }} />
-                                <Text
-                                    variant="sub2"
-                                    css={{ fontWeight: '$semiBold', color: '$textMedEmp' }}>
-                                    Web SDK
-                                </Text>
-                            </Flex>
-                            <Flex
-                                css={{
-                                    flexWrap: 'wrap',
-                                    justify: 'between',
-                                    '@lg': {
-                                        gap: '$8'
-                                    },
-                                    '@md': {
-                                        justify: 'start'
-                                    }
-                                }}>
-                                <SdkItem
-                                    logo={
-                                        <JavascriptIcon
-                                            style={{
-                                                color: '#F0DB4F'
-                                            }}
-                                        />
-                                    }
-                                    text="JavaScript"
-                                    sdk="javascript"
-                                    css={{
-                                        borderRadius: '$3 $3 0 0',
-                                        '@lg': {
-                                            borderRadius: '$3'
-                                        }
-                                    }}
-                                />
-                                <SdkItem
-                                    logo={
-                                        <ReactIcon
-                                            style={{
-                                                color: 'DodgerBlue'
-                                            }}
-                                        />
-                                    }
-                                    css={{
-                                        borderRadius: '0 0 $3 $3',
-                                        '@lg': {
-                                            borderRadius: '$3'
-                                        }
-                                    }}
-                                    text="ReactJS"
-                                    sdk="react"
-                                />
-                            </Flex>
-                            <Flex
-                                align="center"
-                                css={{ marginTop: '$12', marginBottom: '$8', gap: '$1' }}>
-                                <PhoneIcon style={{ height: '16px', width: '16px' }} />
-                                <Text
-                                    variant="sub2"
-                                    css={{ fontWeight: '$semiBold', color: '$textMedEmp' }}>
-                                    Mobile SDK
-                                </Text>
-                            </Flex>
-                            <Flex
-                                css={{
-                                    flexWrap: 'wrap',
-
-                                    justifyContent: 'space-between',
-                                    '@xl': {
-                                        justifyContent: 'flex-start'
-                                    },
-                                    '@lg': {
-                                        gap: '$8'
-                                    }
-                                }}>
-                                {mobileSDK.map((value, index) => (
-                                    <SdkItem
-                                        key={value.id}
-                                        logo={value.icon}
-                                        text={value.title}
-                                        sdk={value.id}
-                                        css={{
-                                            borderRadius: `${index !== 0 ? '0 0' : '$3 $3'} ${
-                                                mobileSDK.length - 1 !== index ? '0 0' : '$3 $3'
-                                            }`
-                                        }}
-                                        // listView={true}
-                                    />
-                                ))}
-                            </Flex>
-                            <Flex
-                                align="center"
-                                css={{ marginTop: '$12', marginBottom: '$8', gap: '$1' }}>
-                                <ServerIcon style={{ height: '16px', width: '16px' }} />
-                                <Text
-                                    variant="sub2"
-                                    css={{ fontWeight: '$semiBold', color: '$textMedEmp' }}>
-                                    Server-side API
-                                </Text>
-                            </Flex>
-                            <Flex>
-                                <SdkItem
-                                    logo={<ServerIcon style={{ color: '#66A1FF' }} />}
-                                    text="Server-side"
-                                    sdk="serverSide"
-                                />
-                            </Flex>
-                            <Flex
-                                direction="column"
-                                css={{ marginTop: '$24', marginBottom: '$10' }}>
-                                <h2 style={{ marginTop: '0', marginBottom: '4px' }}>
-                                    <Text variant="h5">Fundamentals</Text>
-                                </h2>
-                                <Text
-                                    variant="body2"
-                                    css={{ color: '$textMedEmp', marginTop: '0' }}>
-                                    Learn how to integrate live video in your app with 100ms.
-                                </Text>
-                            </Flex>
-                            <Box
-                                css={{
-                                    gap: '$12',
-                                    display: 'grid',
-                                    gridTemplateColumns: '1fr 1fr 1fr',
-                                    '@xl': {
-                                        gap: '$10'
-                                    },
-                                    '@md': {
-                                        gridTemplateColumns: '1fr',
-                                        gridTemplateRows: '1fr 1fr 1fr',
-                                        gap: '$8'
-                                    }
-                                }}>
-                                {fundamentals.map((item) => (
-                                    <Link href={item.link} key={item.title}>
-                                        <a style={{ all: 'unset', cursor: 'pointer' }}>
-                                            <Card
-                                                css={{ width: '100%' }}
-                                                body={item.body}
-                                                titleComponent={
-                                                    <h3
-                                                        style={{
-                                                            margin: '0'
-                                                        }}>
-                                                        <Item
-                                                            logo={item.logo}
-                                                            text={item.title}
-                                                            textCSS={{
-                                                                color: '$textHighEmp',
-                                                                fontSize: '$h6',
-                                                                '@lg': { fontSize: '$md' }
-                                                            }}
-                                                            textVariant="body1"
-                                                            endLogo={
-                                                                <ChevronRightIcon
-                                                                    style={{
-                                                                        marginLeft: '8px'
-                                                                    }}
-                                                                />
-                                                            }
-                                                        />
-                                                    </h3>
-                                                }
-                                            />
-                                        </a>
-                                    </Link>
-                                ))}
-                            </Box>
-                            <Flex
-                                direction="column"
-                                css={{ marginTop: '$24', marginBottom: '$10' }}>
-                                <h2 style={{ marginTop: '0', marginBottom: '4px' }}>
-                                    <Text variant="h5" id="guide">
-                                        Guides
-                                    </Text>
-                                </h2>
-                                <Text variant="body2" css={{ color: '$textMedEmp' }}>
-                                    Walk through implementations of common use-cases with 100ms.
-                                </Text>
-                            </Flex>
-                            <Switcher
-                                tabs={tabs}
-                                setActiveTab={setActiveTab}
-                                activeTab={activeTab}
-                            />
-                            <Box
-                                css={{
-                                    gap: '$12',
-                                    marginTop: '$12',
-                                    display: 'grid',
-                                    gridTemplateColumns: '1fr 1fr 1fr 1fr',
-                                    '@lg': { gridTemplateColumns: '1fr 1fr 1fr', gap: '$10' },
-                                    '@md': { gridTemplateColumns: '1fr', gap: '$8' }
-                                }}>
-                                {guides.map((item) =>
-                                    item.platform === activeTab ? (
-                                        <Link href={item.link} key={item.title + item.link}>
-                                            <a style={{ all: 'unset', cursor: 'pointer' }}>
-                                                <Card
-                                                    body={item.body}
-                                                    titleComponent={
-                                                        <Item
-                                                            text={item.title}
-                                                            textVariant="h6"
-                                                            textCSS={{ color: '$textHighEmp' }}
-                                                            endLogo={null}
-                                                        />
-                                                    }
-                                                    endComponent={
-                                                        <Box
-                                                            css={{
-                                                                color: '$textMedEmp',
-                                                                marginTop: '$8',
-                                                                '&:hover': {
-                                                                    color: '$primaryLight'
-                                                                }
-                                                            }}>
-                                                            <Item
-                                                                text={item.guideTitle}
-                                                                logo={<BookIcon />}
-                                                                textVariant="body2"
-                                                                css={{
-                                                                    gap: '$4'
-                                                                }}
-                                                            />
-                                                        </Box>
-                                                    }
-                                                />
-                                            </a>
-                                        </Link>
-                                    ) : null
-                                )}
-                            </Box>
-                            <Flex
-                                css={{
-                                    gap: '$10',
-                                    marginBottom: '$10',
-                                    marginTop: '$24'
-                                }}
-                                align="center">
-                                <h2 style={{ marginTop: '0', marginBottom: '0' }}>
-                                    <Text variant="h5">All Pages</Text>
-                                </h2>
-                                <Flex direction="column" css={{ position: 'relative' }}>
-                                    <Button
-                                        variant="standard"
-                                        css={{
-                                            borderRadius: '20px',
-                                            cursor: 'pointer',
-                                            color: '$textHighEmp',
-                                            backgroundColor: '$surfaceDefault',
-                                            borderColor: '$borderDefault'
-                                        }}
-                                        onClick={(e) => {
-                                            setShowDropDown((prev) => !prev);
-                                            e.stopPropagation();
-                                        }}>
-                                        <FilterOneIcon style={{ marginRight: '7px' }} />{' '}
-                                        {dropDownSelection}
-                                    </Button>
-                                    {showDropDown && (
-                                        <HomeDropDown setDropDownSelection={setDropDownSelection} />
-                                    )}
-                                </Flex>
-                            </Flex>
-                            <Flex css={{ flexWrap: 'wrap', gap: '$20' }}>
-                                {more[dropDownSelection].map((section) => (
-                                    <Flex
-                                        direction="column"
-                                        key={section.heading}
-                                        css={{ gap: '$5', width: '200px' }}>
-                                        <Text variant="body1" css={{ marginBottom: '$4' }}>
-                                            {section.heading}
-                                        </Text>
-                                        {section.items.map((item) => (
-                                            <Link key={item.name} href={item.link}>
-                                                <a>
-                                                    <Box
-                                                        css={{
-                                                            '&:hover': {
-                                                                color: '$primaryLight'
-                                                            },
-                                                            ':active': { color: '$primaryDark' },
-                                                            marginTop: item?.viewAll ? '$3' : '0'
-                                                        }}>
-                                                        <Text
-                                                            variant="body1"
-                                                            css={{
-                                                                display: 'flex',
-                                                                gap: '$1',
-                                                                color: '$primaryDefault',
-                                                                fontWeight: '$regular'
-                                                            }}>
-                                                            {item.name}{' '}
-                                                            {item?.viewAll ? (
-                                                                <ArrowRightIcon />
-                                                            ) : null}
-                                                        </Text>
-                                                    </Box>
-                                                </a>
-                                            </Link>
-                                        ))}
-                                    </Flex>
-                                ))}
-                            </Flex>
-                        </Box>
-                    </Flex>
-                    <Footer css={{ backgroundColor: '$backgroundDefault' }} />
-                </>
-            ) : null}
-        </>
-    );
-};
-
-export const getStaticProps = async () => {
-    const allDocs = await getAllDocs();
-    return {
-        props: {
-            allDocs
-        }
-    };
-};
-
-export default Homepage;
