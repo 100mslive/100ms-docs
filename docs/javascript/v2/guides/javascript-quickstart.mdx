@@ -53,6 +53,8 @@ The config object must be passed the following fields:
 
 For our application, let us collect both of these fields from the user using a form.
 
+> Note: join is async from this [version](../release-notes/release-notes#2022-09-13)
+
 <Tabs id="join-form" items={['HTML', 'JS']} />
 
 <Tab id="join-form-0">
@@ -76,8 +78,8 @@ For our application, let us collect both of these fields from the user using a f
 
 ```jsx:script.js section=JoiningRoom sectionIndex=1 tab=JS
 const joinBtn = document.getElementById("join-btn");
-joinBtn.addEventListener('click', () => {
-    hmsActions.join({
+joinBtn.addEventListener('click', async () => {
+    await hmsActions.join({
         userName: document.getElementById('name').value,
         authToken: document.getElementById('token').value
     });
