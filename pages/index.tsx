@@ -504,13 +504,13 @@ const guides = [
         platform: 'Web',
         guideTitle: 'React Guide'
     },
-    {
-        title: 'Video Streaming Server',
-        body: 'Put together a production-ready video streaming server with Node.js',
-        link: 'https://www.100ms.live/blog/create-video-streaming-server-nodejs',
-        platform: 'Web',
-        guideTitle: 'Node.js Guide'
-    },
+    // {
+    //     title: 'Video Streaming Server',
+    //     body: 'Put together a production-ready video streaming server with Node.js',
+    //     link: 'https://www.100ms.live/blog/create-video-streaming-server-nodejs',
+    //     platform: 'Web',
+    //     guideTitle: 'Node.js Guide'
+    // },
     {
         title: 'Google Classroom Clone',
         body: 'Build a blended learning platform, like Google Classroom, with React.',
@@ -525,13 +525,13 @@ const guides = [
         platform: 'Web',
         guideTitle: 'JavaScript Guide'
     },
-    {
-        title: 'Video Chatting App',
-        body: 'Create a video chatting app with VueJS, and Golang',
-        link: 'https://www.100ms.live/blog/video-chat-app-with-vuejs-and-golang',
-        platform: 'Web',
-        guideTitle: 'Vue.js Guide'
-    },
+    // {
+    //     title: 'Video Chatting App',
+    //     body: 'Create a video chatting app with VueJS, and Golang',
+    //     link: 'https://www.100ms.live/blog/video-chat-app-with-vuejs-and-golang',
+    //     platform: 'Web',
+    //     guideTitle: 'Vue.js Guide'
+    // },
     {
         title: 'Clubhouse Clone',
         body: 'Develop a drop-in audio room, like Clubhouse, using Svelte, and 100ms.',
