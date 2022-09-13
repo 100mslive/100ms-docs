@@ -21,7 +21,7 @@ When your app goes into the background, it can no longer access camera and publi
 
 ```swift
     let pipVideoCallViewController = AVPictureInPictureVideoCallViewController()
-    pipVideoCallViewController.view.add(subview: ...)
+    pipVideoCallViewController.view.addSubview(...)
   ```
 
 2. Next, you create a content source from pipVideoCallViewController, passing the target view that PiP window will use as anchor view to animate from (you can optionally set PiP preferred size):
@@ -67,7 +67,7 @@ AVPictureInPictureController requires source content to use AVSampleBufferDispla
     
     ...
     // As in step 1 in 'How to add PiP support'
-    pipVideoCallViewController.view.add(subview: trackVideoView)
+    pipVideoCallViewController.view.addSubview(trackVideoView)
   ```
   
 2. Set trackVideoView to beging drawing by making it enabled when PiP window is shown (Make it false when PiP window is closed to save resources)

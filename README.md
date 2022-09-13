@@ -193,6 +193,11 @@ All CSS Tokens , Baseline , Reset can be found in [theme.css](https://github.com
 
 All CSS Variables prefixed with `token` control the Syntax Highlighting.
 
+## 📇 Linting
+
+- Add tokens in `.github/workflows/styles/Vocab/HMSVocab/accept.txt` which you want to whitelist during the linting.
+- code blocks are already whitelisted.
+
 ## 🙏🏽 Acknowledgement
 
 -   Nextjs

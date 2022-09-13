@@ -3,8 +3,9 @@ title: Virtual Background
 nav: 7.01
 ---
 
-<Note type='warning'>
-    This feature is still in Beta. To know more or report any issues, feel free to reach out to us over <a href={'https://discord.com/invite/kGdmszyzq2'}>Discord</a>.
+<Note type="warning">
+    This feature is still in Beta. To know more or report any issues, feel free to reach out to us
+    over <a href={'https://discord.com/invite/kGdmszyzq2'}>Discord</a>.
 </Note>
 
 ## Introduction
@@ -29,13 +30,13 @@ We have not extended support for Mobile browsers in this release.
 
 **Get the 100ms VirtualBackground Package**
 
-```bash
+```bash section=GetHMSVirtualBackgroundPackage sectionIndex=1
 npm install --save @100mslive/hms-virtual-background@latest
 ```
 
 ## Import plugin
 
-```jsx
+```jsx section=ImportPlugin sectionIndex=1
 import HMSVirtualBackgroundPlugin from '@100mslive/hms-virtual-background';
 ```
 
@@ -47,7 +48,7 @@ This accepts background as a parameter, It can be of 3 types:
 -   `image` - HTMLImageElement - This will replace the background to the image provide
 -   `none` - String - This will remove the background effect from the video
 
-```jsx
+```jsx section=InstantiateVirtualBackground sectionIndex=1
 // background : {'blur' | image | 'none'}
 const virtualBackground = new HMSVirtualBackgroundPlugin(background : {'blur' | image | 'none'});
 ```
@@ -59,8 +60,7 @@ const virtualBackground = new HMSVirtualBackgroundPlugin(background : {'blur' | 
 validateVideoPluginSupport can be used to check if the browser/input device is supported or not.
 It will return True in case of plugin is supported and return error message if it is not.
 
-```jsx
-
+```jsx section=CheckIfPluginIsSupported sectionIndex=1
 import { hmsActions } from './hms';
 
 const pluginSupport = hmsActions.validateVideoPluginSupport(virtualBackground);
@@ -80,13 +80,13 @@ Calling init is handled internally by SDK if not done by user, in this case addP
 take 3-5 seconds for the first time and then less than 100 milliseconds in the subsequent calls.
 Check [this section](#start-and-stop-virtual-background) for addPlugin API usage
 
-```jsx
+```jsx section=Init sectionIndex=1
 virtualBackground.init();
 ```
 
 Init can also be used by user to show a loader icon for background selector component during the plugin loading stage
 
-```jsx
+```jsx section=Init sectionIndex=2
 virtualBackground.init().then(() => console.log('background can be changed now'));
 ```
 
@@ -98,7 +98,7 @@ Check [this section](#tuning-plugin-frame-rate-optional) to use custom pluginFra
 
 <Tab id='plugin-code-0'>
 
-```js
+```js section=StartAndStopVirtualBackground sectionIndex=1 tab=JS
 import { hmsActions, hmsStore } from './hms';
 import { selectIsLocalVideoPluginPresent } from '@100mslive/hms-video-store';
 
@@ -126,7 +126,7 @@ async function toggleVB() {
 
 <Tab id='plugin-code-1'>
 
-```jsx
+```jsx section=StartAndStopVirtualBackground sectionIndex=1 tab=React
 import { useHMSStore, useHMSActions, selectIsLocalVideoPluginPresent } from '@100mslive/react-sdk';
 
 function VirtualBackground() {
@@ -162,7 +162,7 @@ It accepts string or HTMLImageElement as a parameter
 Image will get fit to the video by maintaining the aspect ratio.
 If the aspect ratio of the background image is not the same as the video, the image will be cropped to fit in the background.
 
-```jsx
+```jsx section=ChangeBackground sectionIndex=1
 // background parameter is explained in Instantiate Virtual Background section
 try{
   virtualBackground.setBackground(background : {'blur' | image | 'none'});
