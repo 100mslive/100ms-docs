@@ -57,9 +57,7 @@ const Footer: React.FC<Props> = ({ css = {} }) => (
                                         style={{
                                             width: '27px',
                                             height: '27px',
-                                            color: 'inherit',
-                                            position: 'relative',
-                                            top: '5px'
+                                            color: 'inherit'
                                         }}
                                     />
                                 </Box>
@@ -68,8 +66,8 @@ const Footer: React.FC<Props> = ({ css = {} }) => (
                                 <Box css={{ color: '$textMedEmp' }}>
                                     <DiscordIcon
                                         style={{
-                                            width: '36px',
-                                            height: '36px',
+                                            width: '27px',
+                                            height: '27px',
                                             color: 'inherit'
                                         }}
                                     />
