@@ -3,8 +3,9 @@ title: Custom Audio Plugins
 nav: 7.02
 ---
 
-<Note type='warning'>
-    This feature is still in Beta. To know more or report any issues, feel free to reach out to us over <a href={'https://discord.com/invite/kGdmszyzq2'}>Discord</a>.
+<Note type="warning">
+    This feature is still in Beta. To know more or report any issues, feel free to reach out to us
+    over <a href={'https://discord.com/invite/kGdmszyzq2'}>Discord</a>.
 </Note>
 
 Custom audio plugins allow you to hook into 100ms' video lifecycle and add your own audio processing
@@ -14,52 +15,51 @@ Note that this page is about creating custom new plugins than using existing one
 
 ## Prerequisites
 
-* Basic Knowledge about 100ms SDK, follow our quickstart guides.
-* Knowledge about [Audio nodes](https://developer.mozilla.org/en-US/docs/Web/API/AudioNode)
+-   Basic Knowledge about 100ms SDK, follow our quickstart guides.
+-   Knowledge about [Audio nodes](https://developer.mozilla.org/en-US/docs/Web/API/AudioNode)
 
 ## Audio Plugin Interface
 
 The plugin needs to implement the below interface post which it can be added to the processing pipeline for the local peer's audio.
 
-```ts
+```ts section=AudioPluginInterface sectionIndex=1
 interface HMSAudioPlugin {
-  /**
-   * The name is meant to uniquely specify a plugin instance. This will be used to track number of plugins
-   * added to the track, and same name won't be allowed twice for the same audio track.
-   */
-  getName(): string;
-
-  /**
-   * This function will be called before the call to init, it is used to check whether the plugin supports current
-   * OS and device or not. An error will be thrown back to the user if they try to use an unsupported plugin.
-   */
-  isSupported(): boolean;
-
-  /**
-   * This function will be called in the beginning for initialization which may include tasks like setting up
-   * variables, loading ML models etc. This can be used by a plugin to ensure it's prepared at the time
-   * processAudio is called.
-   */
-  init(): Promise<void>;
-
-  /**
-   * @see HMSAudioPluginType below
-   */
-  getPluginType(): HMSVideoPluginType;
+    /**
+     * The name is meant to uniquely specify a plugin instance. This will be used to track number of plugins
+     * added to the track, and same name won't be allowed twice for the same audio track.
+     */
+    getName(): string;
 
     /**
-   * This function will be called by the SDK for audio track which the plugin needs to process.
-   * The reason audio context is also part of the interface is that it's recommeneded to reuse on audio context
-   * instead of creating new for every use - https://developer.mozilla.org/en-US/docs/Web/API/AudioContext
-   */
-   processAudioTrack(ctx: AudioContext, source: AudioNode): Promise<AudioNode>;
+     * This function will be called before the call to init, it is used to check whether the plugin supports current
+     * OS and device or not. An error will be thrown back to the user if they try to use an unsupported plugin.
+     */
+    isSupported(): boolean;
 
+    /**
+     * This function will be called in the beginning for initialization which may include tasks like setting up
+     * variables, loading ML models etc. This can be used by a plugin to ensure it's prepared at the time
+     * processAudio is called.
+     */
+    init(): Promise<void>;
 
-  /**
-   * The plugin can implement this function to dispose off its resources. It'll be called when the processor instance is
-   * no longer needed and the plugin is removed.
-   */
-  stop(): void;
+    /**
+     * @see HMSAudioPluginType below
+     */
+    getPluginType(): HMSVideoPluginType;
+
+    /**
+     * This function will be called by the SDK for audio track which the plugin needs to process.
+     * The reason audio context is also part of the interface is that it's recommeneded to reuse on audio context
+     * instead of creating new for every use - https://developer.mozilla.org/en-US/docs/Web/API/AudioContext
+     */
+    processAudioTrack(ctx: AudioContext, source: AudioNode): Promise<AudioNode>;
+
+    /**
+     * The plugin can implement this function to dispose off its resources. It'll be called when the processor instance is
+     * no longer needed and the plugin is removed.
+     */
+    stop(): void;
 }
 
 /**
@@ -68,19 +68,20 @@ interface HMSAudioPlugin {
  * For analyse plugins, you can return the source node passed to plugin.processTrack to not modify anything
  */
 export enum HMSAudioPluginType {
-  TRANSFORM = 'TRANSFORM',
-  ANALYZE = 'ANALYZE',
+    TRANSFORM = 'TRANSFORM',
+    ANALYZE = 'ANALYZE'
 }
 ```
 
 ## Adding and Removing Plugins
 
 Once a plugin implementation is ready, it can be added and removed from local peer's audio track as below -
+
 <Tabs id="add-remove-plugin" items={['Usage', 'CustomPlugin']} />
 
 <Tab id='add-remove-plugin-0'>
 
-```js
+```js section=AddingAndRemovingPlugins sectionIndex=1 tab=Usage
 const myPlugin = new MyCustomPlugin();
 if (myPlugin.isSupported()) {
     // myPlugin.init(); // optional, recommended if plugin implements it, you can show a loader here in the UI
@@ -99,64 +100,62 @@ if (myPlugin.isSupported()) {
 
 <Tab id='add-remove-plugin-1'>
 
-```ts
-class MyCustomPlugin implements HMSAudioPlugin {
-}
+```ts section=AddingAndRemovingPlugins sectionIndex=1 tab=CustomPlugin
+class MyCustomPlugin implements HMSAudioPlugin {}
 ```
 
 </Tab>
-
 
 ## Implementation Example - Gain effect Plugin
 
 Below is a sample implementation of the above interface which can be used to control the overall gain (or volume) of the audio.
 
-```ts
+```ts section=ImplementationExample sectionIndex=1
 class GainPlugin implements HMSAudioPlugin {
-  private gainNode?: GainNode;
-  private gainValue = 0.25;
-  private name = 'gain-plugin';
+    private gainNode?: GainNode;
+    private gainValue = 0.25;
+    private name = 'gain-plugin';
 
-  constructor(gainValue?: number, name?: string) {
-    if (gainValue !== undefined) {
-      this.gainValue = gainValue;
+    constructor(gainValue?: number, name?: string) {
+        if (gainValue !== undefined) {
+            this.gainValue = gainValue;
+        }
+        if (name) {
+            this.name = name;
+        }
     }
-    if (name) {
-      this.name = name;
+
+    async processAudioTrack(ctx: AudioContext, source: AudioNode) {
+        if (!ctx) {
+            throw new Error('Audio context is not created');
+        }
+        if (!source) {
+            throw new Error('source is not defined');
+        }
+        this.gainNode = ctx.createGain();
+        this.gainNode.gain.value = this.gainValue;
+        source.connect(this.gainNode);
+        return this.gainNode;
     }
-  }
 
-  async processAudioTrack(ctx: AudioContext, source: AudioNode) {
-    if (!ctx) {
-      throw new Error('Audio context is not created');
+    isSupported() {
+        return true;
     }
-    if (!source) {
-      throw new Error('source is not defined');
+
+    init() {}
+
+    getName() {
+        return this.name;
     }
-    this.gainNode = ctx.createGain();
-    this.gainNode.gain.value = this.gainValue;
-    source.connect(this.gainNode);
-    return this.gainNode;
-  }
 
-  isSupported() {
-    return true;
-  }
+    getPluginType() {
+        return HMSAudioPluginType.TRANSFORM;
+    }
 
-  init() {}
-
-  getName() {
-    return this.name;
-  }
-
-  getPluginType() {
-    return HMSAudioPluginType.TRANSFORM;
-  }
-
-  stop() {
-    this.gainNode?.disconnect();
-    this.gainNode = undefined;
-  }
+    stop() {
+        this.gainNode?.disconnect();
+        this.gainNode = undefined;
+    }
 }
 
 // to add the plugin to local audio
@@ -165,7 +164,6 @@ hmsActions.addPluginToAudioTrack(new GainPlugin());
 
 ## Plugin Guidelines
 
-* If your plugin involves a cpu intensive task such as initialising a ML model, ensure that it's done as part of the init method.
-As a bonus, ensure that the plugin remembers the model initialisation across instances, so in case user leaves and joins the room again
-without closing the tab they don't see a delay the second time.
-
+-   If your plugin involves a cpu intensive task such as initialising a ML model, ensure that it's done as part of the init method.
+    As a bonus, ensure that the plugin remembers the model initialisation across instances, so in case user leaves and joins the room again
+    without closing the tab they don't see a delay the second time.
