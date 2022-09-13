@@ -611,8 +611,8 @@ const Homepage = ({ allDocs }) => {
                                     Explore our guides and examples to integrate 100ms.
                                 </Text>
                             </Flex>
-                            <Flex align="center" css={{ marginBottom: '$8', gap: '1' }}>
-                                <ComputerIcon style={{ height: '16px' }} />
+                            <Flex align="center" css={{ marginBottom: '$8', gap: '$1' }}>
+                                <ComputerIcon style={{ height: '16px', width: '16px' }} />
                                 <Text
                                     variant="sub2"
                                     css={{ fontWeight: '$semiBold', color: '$textMedEmp' }}>
@@ -667,8 +667,8 @@ const Homepage = ({ allDocs }) => {
                             </Flex>
                             <Flex
                                 align="center"
-                                css={{ marginTop: '$12', marginBottom: '$8', gap: '1' }}>
-                                <PhoneIcon style={{ height: '16px' }} />
+                                css={{ marginTop: '$12', marginBottom: '$8', gap: '$1' }}>
+                                <PhoneIcon style={{ height: '16px', width: '16px' }} />
                                 <Text
                                     variant="sub2"
                                     css={{ fontWeight: '$semiBold', color: '$textMedEmp' }}>
@@ -704,8 +704,8 @@ const Homepage = ({ allDocs }) => {
                             </Flex>
                             <Flex
                                 align="center"
-                                css={{ marginTop: '$12', marginBottom: '$8', gap: '1' }}>
-                                <ServerIcon style={{ height: '16px' }} />
+                                css={{ marginTop: '$12', marginBottom: '$8', gap: '$1' }}>
+                                <ServerIcon style={{ height: '16px', width: '16px' }} />
                                 <Text
                                     variant="sub2"
                                     css={{ fontWeight: '$semiBold', color: '$textMedEmp' }}>
