@@ -9,7 +9,7 @@ This API retrieves details of a list of rooms in your account. 100ms provides op
 
 -   retrieve the complete list of rooms or
 -   rooms that are active or
--   rooms based on their creation time range or
+-   rooms based on their creation time-range or
 -   combinations of these.
 
 ## List all rooms
@@ -82,4 +82,4 @@ curl --location --request GET 'https://api.100ms.live/v2/rooms' \
 | after <br/>   | `string`  | Check for rooms created with a timestamp greater than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.s+z.                                           | No       |
 | before <br/>  | `string`  | Check for rooms created with a timestamp less than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.s+z.                                              | No       |
 | limit <br/>   | `int`     | Determines the number of room objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 10, **Max**: 100                        | No       |
-| start <br/>   | `string`  | Determines the starting point. <br/>`last` field of the response can be used as start for the subsequent request. <br/><br/>**E.g.** "627cda81ab4f3b56a077dc33". | No       |
+| start <br/>   | `string`  | Determines the starting point. <br/>`last` field of the response can be used as start for the subsequent request. <br/><br/>**For example** "627cda81ab4f3b56a077dc33". | No       |
