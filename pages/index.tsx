@@ -612,8 +612,10 @@ const Homepage = ({ allDocs }) => {
                                 </Text>
                             </Flex>
                             <Flex align="center" css={{ marginBottom: '$8', gap: '1' }}>
-                                <ComputerIcon style={{ height: '14px' }} />
-                                <Text variant="sub2" css={{ fontWeight: '$semiBold' }}>
+                                <ComputerIcon style={{ height: '16px' }} />
+                                <Text
+                                    variant="sub2"
+                                    css={{ fontWeight: '$semiBold', color: '$textMedEmp' }}>
                                     Web SDK
                                 </Text>
                             </Flex>
@@ -666,8 +668,10 @@ const Homepage = ({ allDocs }) => {
                             <Flex
                                 align="center"
                                 css={{ marginTop: '$12', marginBottom: '$8', gap: '1' }}>
-                                <PhoneIcon style={{ height: '14px' }} />
-                                <Text variant="sub2" css={{ fontWeight: '$semiBold' }}>
+                                <PhoneIcon style={{ height: '16px' }} />
+                                <Text
+                                    variant="sub2"
+                                    css={{ fontWeight: '$semiBold', color: '$textMedEmp' }}>
                                     Mobile SDK
                                 </Text>
                             </Flex>
@@ -701,8 +705,10 @@ const Homepage = ({ allDocs }) => {
                             <Flex
                                 align="center"
                                 css={{ marginTop: '$12', marginBottom: '$8', gap: '1' }}>
-                                <ServerIcon style={{ height: '14px' }} />
-                                <Text variant="sub2" css={{ fontWeight: '$semiBold' }}>
+                                <ServerIcon style={{ height: '16px' }} />
+                                <Text
+                                    variant="sub2"
+                                    css={{ fontWeight: '$semiBold', color: '$textMedEmp' }}>
                                     Server-side API
                                 </Text>
                             </Flex>
@@ -825,13 +831,7 @@ const Homepage = ({ allDocs }) => {
                                                             }}>
                                                             <Item
                                                                 text={item.guideTitle}
-                                                                logo={
-                                                                    <BookIcon
-                                                                        style={{
-                                                                            height: '18px'
-                                                                        }}
-                                                                    />
-                                                                }
+                                                                logo={<BookIcon />}
                                                                 textVariant="body2"
                                                                 css={{
                                                                     gap: '$4'

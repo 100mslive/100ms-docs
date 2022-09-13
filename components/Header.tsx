@@ -1,4 +1,4 @@
-import React from 'react';
+import useKeyPress from '@/lib/useKeyPress';
 import {
     CrossIcon,
     DividerIcon,
@@ -10,7 +10,7 @@ import {
 import { Box, useTheme } from '@100mslive/react-ui';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import useKeyPress from '@/lib/useKeyPress';
+import React from 'react';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -173,7 +173,7 @@ const Header: React.FC<Props> = ({
                     tabIndex={0}
                     onKeyPress={() => {}}
                     onClick={() => buttonToggleTheme()}>
-                    {isDark ? <NightIcon /> : <SunIcon style={{ color: '#ECC502' }} />}
+                    {!isDark ? <NightIcon /> : <SunIcon style={{ color: '#ECC502' }} />}
                 </span>
             </div>
 

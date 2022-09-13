@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     BookIcon,
     ChevronRightIcon,
@@ -13,6 +12,7 @@ import { Box, CSS, Flex, HorizontalDivider, VerticalDivider } from '@100mslive/r
 import { Item } from 'components';
 import merge from 'lodash/merge';
 import Link from 'next/link';
+import React from 'react';
 
 interface Props {
     logo?: React.SVGProps<SVGSVGElement>;
@@ -122,7 +122,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
                             <Item
                                 logo={itemList[value.id]}
                                 text={itemId[value.id]}
-                                endLogo={<ChevronRightIcon style={{ height: '14px' }} />}
+                                endLogo={<ChevronRightIcon style={{ height: '16px' }} />}
                                 textCSS={{
                                     color: '$textMedEmp',
                                     '&:hover': {
@@ -149,7 +149,7 @@ const itemId = {
     7: 'Domain and port whitelisting'
 };
 
-const iconStyle = { height: '20px', color: '$textMedEmp' };
+const iconStyle = { color: '$textMedEmp' };
 
 const itemList = {
     1: <BookIcon style={iconStyle} />,

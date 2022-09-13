@@ -16,7 +16,7 @@ const Item: React.FC<Props> = ({
     text,
     textVariant = 'body2',
     textCSS,
-    endLogo = <ChevronRightIcon style={{ height: '14px' }} />,
+    endLogo = <ChevronRightIcon style={{ height: '$8    ' }} />,
     css
 }) => (
     <Flex css={{ ...css }} align="center">
