@@ -7,7 +7,7 @@ import {
     SearchIcon,
     SunIcon
 } from '@100mslive/react-icons';
-import { Box, useTheme } from '@100mslive/react-ui';
+import { Box, Flex, useTheme } from '@100mslive/react-ui';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -141,25 +141,29 @@ const Header: React.FC<Props> = ({
                 </div>
             </div>
             <div className="head-right">
-                <Box
+                <Flex
+                    onClick={() => setModal(true)}
                     css={{
                         borderRadius: '$1',
                         width: '$80',
+                        gap: '$8',
+                        color: '$textMedEmp',
                         border: '1px solid $borderLighter',
                         marginRight: '$9',
                         background: '$surfaceLight',
-                        position: 'relative',
                         padding: '$3 $8 $3 $5',
                         '@md': {
                             display: 'none'
+                        },
+                        ':hover': {
+                            opacity: '0.8',
+                            cursor: 'pointer'
                         }
                     }}>
-                    <button onClick={() => setModal(true)} type="button" className="search-btn">
-                        <SearchIcon />
-                        <span>Search docs</span>
-                        <span className="hot-key">/</span>
-                    </button>
-                </Box>
+                    <SearchIcon />
+                    <Box>Search docs</Box>
+                    <span className="hot-key">/</span>
+                </Flex>
                 <span
                     aria-label="theme-toggle-button"
                     className="pointer theme-btn"
@@ -290,15 +294,15 @@ const Header: React.FC<Props> = ({
                     margin-left: 1rem;
                     text-align: left;
                 }
+                .search-btn:hover {
+                    opacity: 0.8;
+                }
                 .hot-key {
                     margin-left: auto !important;
                     border-radius: 5px;
                     padding: 0 5px;
                     color: var(--text_high_emp);
                     border: 1px solid var(--gray6);
-                }
-                .search-btn:hover {
-                    opacity: 0.8;
                 }
                 .company {
                     font-size: 1.2rem;
