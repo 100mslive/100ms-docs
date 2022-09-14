@@ -159,7 +159,6 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 <ResponseBox id="res-0" status="200 OK">
 
-
 ```json
 {
     "id": "63188115d11d6db790c73c60",
@@ -311,30 +310,30 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 #### audio object arguments
 
-| Name    | Type     | Description                                                                       | Required |
-| :------ | :------- | :-------------------------------------------------------------------------------- | :------- |
-| bitRate | `int`    | Audio Max bitrate of audio track in kbps.<br/>Range: `16`-`128`<br/>Default: `32` | No       |
-| codec   | `string` | Codec for the audio track.<br/>Options: [`opus`] <br/>Default: `opus`             | No       |
+| Name    | Type     | Description                                                     | Default | Required |
+| :------ | :------- | :-------------------------------------------------------------- | :------ | :------- |
+| bitRate | `int`    | Audio Max bitrate of audio track in kbps.<br/>Range: `16`-`128` | 32      | No       |
+| codec   | `string` | Codec for the audio track.<br/>Options: [`opus`]                | opus    | No       |
 
 #### video object arguments
 
-| Name      | Type     | Description                                                                   | Required |
-| :-------- | :------- | :---------------------------------------------------------------------------- | :------- |
-| bitRate   | `int`    | Max bitrate of video track in kbps.<br/>Range: `30`-`2000`<br/>Default: `256` | No       |
-| codec     | `string` | Codec for the video track.<br/>Options: [`vp8`]<br/>Default: `vp8`            | No       |
-| frameRate | `int`    | Max number of video frames per second.<br/>Range: `1`-`30`<br/>Default: `25`  | No       |
-| height    | `int`    | Height of the video track.<br/>Range: `50`-`1080`<br/>Default: `180`          | No       |
-| width     | `int`    | Width of the video track.<br/>Range: `50`-`1920`<br/>Default: `320`           | No       |
+| Name      | Type     | Description                                                | Default | Required |
+| :-------- | :------- | :--------------------------------------------------------- | :------ | :------- |
+| bitRate   | `int`    | Max bitrate of video track in kbps.<br/>Range: `30`-`2000` | 256     | No       |
+| codec     | `string` | Codec for the video track.<br/>Options: [`vp8`]            | vp8     | No       |
+| frameRate | `int`    | Max number of video frames per second.<br/>Range: `1`-`30` | 25      | No       |
+| height    | `int`    | Height of the video track.<br/>Range: `50`-`1080`          | 180     | No       |
+| width     | `int`    | Width of the video track.<br/>Range: `50`-`1920`           | 320     | No       |
 
 #### screen object arguments
 
-| Name      | Type     | Description                                                                  | Required |
-| :-------- | :------- | :--------------------------------------------------------------------------- | :------- |
-| bitRate   | `int`    | Max bitrate of screen track in kbps.<br/>Range: `>=500` <br/>Default: `1024` | No       |
-| codec     | `string` | Codec for the screen track.<br/>Options: [`vp8`]<br/>Default: `vp8`          | No       |
-| frameRate | `int`    | Max number of screen frames per second<br/>Range: `1`-`30`<br/>Default: `10` | No       |
-| height    | `int`    | Height of the screen track.<br/>Range: `270`-`1080`<br/>Default: `720`       | No       |
-| width     | `int`    | Width of the screen track.<br/>Range: `480`-`1920`<br/>Default: `1280`       | No       |
+| Name      | Type     | Description                                                | Default | Required |
+| :-------- | :------- | :--------------------------------------------------------- | :------ | :------- |
+| bitRate   | `int`    | Max bitrate of screen track in kbps.<br/>Range: `>=500` `  | 1024    | No       |
+| codec     | `string` | Codec for the screen track.<br/>Options: [`vp8`]           | vp8     | No       |
+| frameRate | `int`    | Max number of screen frames per second<br/>Range: `1`-`30` | 10      | No       |
+| height    | `int`    | Height of the screen track.<br/>Range: `270`-`1080`        | 720     | No       |
+| width     | `int`    | Width of the screen track.<br/>Range: `480`-`1920`         | 1280    | No       |
 
 ### subscribeParams object arguments
 
@@ -346,11 +345,11 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 #### subscribeDegradation object arguments
 
-| Name                      | Type  | Description                                                             | Required |
-| :------------------------ | :---- | :---------------------------------------------------------------------- | :------- |
-| packetLossThreshold       | `int` | Threshold for packet loss.<br/>Range: `1`-`100`<br/>Default: `50`       | No       |
-| degradeGracePeriodSeconds | `int` | Degrade grace period (in seconds).<br/>Range: `1`-`10`<br/>Default: `1` | No       |
-| recoverGracePeriodSeconds | `int` | Recover grace period (in seconds).<br/>Range: `1`-`10`<br/>Default: `4` | No       |
+| Name                      | Type  | Description                                            | Default | Required |
+| :------------------------ | :---- | :----------------------------------------------------- | :------ | :------- |
+| packetLossThreshold       | `int` | Threshold for packet loss.<br/>Range: `1`-`100`        | 50      | No       |
+| degradeGracePeriodSeconds | `int` | Degrade grace period (in seconds).<br/>Range: `1`-`10` | 1       | No       |
+| recoverGracePeriodSeconds | `int` | Recover grace period (in seconds).<br/>Range: `1`-`10` | 4       | No       |
 
 ## permissions object arguments
 
@@ -405,8 +404,8 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 ### roomState object arguments
 
-| Name                | Type      | Description                                                                                                                                                                                                                                                            | Required |
-| :------------------ | :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| messageInterval     | `int`     | Room-state data will be sent over a regular interval of these many seconds. <br/><br/>Consequently, the room state displayed on the preview screen will refresh accordingly. <br/><br/>This value must be a multiple of 5, between 5 and 3600 seconds, both inclusive. | No       |
-| sendPeerList        | `boolean` | Enabling this will send peer-list info of the room. If disabled, only the peer count is sent.                                                                                                                                                                          | No       |
-| enabled             | `boolean` | This is the list of all the roles which will get the room-state data. You can also individually toggle these settings in the Roles tab under the Permissions section.                                                                                                  | No       |
+| Name            | Type      | Description                                                                                                                                                                                                                                                            | Required |
+| :-------------- | :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| messageInterval | `int`     | Room-state data will be sent over a regular interval of these many seconds. <br/><br/>Consequently, the room state displayed on the preview screen will refresh accordingly. <br/><br/>This value must be a multiple of 5, between 5 and 3600 seconds, both inclusive. | No       |
+| sendPeerList    | `boolean` | Enabling this will send peer-list info of the room. If disabled, only the peer count is sent.                                                                                                                                                                          | No       |
+| enabled         | `boolean` | This is the list of all the roles which will get the room-state data. You can also individually toggle these settings in the Roles tab under the Permissions section.                                                                                                  | No       |
