@@ -1,0 +1,130 @@
+---
+title: Create/update a role
+nav: 4.7
+---
+
+This endpoint is used to create/modify a role.
+
+<PostRequest title="https://api.100ms.live/v2/templates/<template_id>/roles/<role_name>" />
+
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/templates/<template_id>/roles/<role_name>' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "publishParams": {
+        "allowed": [
+            "audio",
+            "video",
+            "screen"
+        ],
+        "audio": {
+            "bitRate": 32,
+            "codec": "opus"
+        },
+        "video": {
+            "bitRate": 310,
+            "codec": "vp8",
+            "frameRate": 30,
+            "width": 480,
+            "height": 360
+        },
+        "screen": {
+            "codec": "vp8",
+            "frameRate": 10,
+            "width": 1920,
+            "height": 1080
+        },
+        "videoSimulcastLayers": {},
+        "screenSimulcastLayers": {}
+    },
+    "subscribeParams": {
+        "subscribeToRoles": [
+            "guest",
+            "host"
+        ],
+        "maxSubsBitRate": 3200,
+        "subscribeDegradation": {
+            "packetLossThreshold": 25,
+            "degradeGracePeriodSeconds": 1,
+            "recoverGracePeriodSeconds": 4
+        }
+    },
+    "permissions": {
+        "endRoom": true,
+        "removeOthers": true,
+        "mute": true,
+        "unmute": true,
+        "changeRole": true,
+        "sendRoomState": false
+    },
+    "priority": 1,
+    "maxPeerCount": 0
+}'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "name": "testurlpath",
+    "publishParams": {
+        "allowed": ["audio", "video", "screen"],
+        "audio": {
+            "bitRate": 32,
+            "codec": "opus"
+        },
+        "video": {
+            "bitRate": 310,
+            "codec": "vp8",
+            "frameRate": 30,
+            "width": 480,
+            "height": 360
+        },
+        "screen": {
+            "codec": "vp8",
+            "frameRate": 10,
+            "width": 1920,
+            "height": 1080
+        },
+        "videoSimulcastLayers": {},
+        "screenSimulcastLayers": {}
+    },
+    "subscribeParams": {
+        "subscribeToRoles": ["guest", "host"],
+        "maxSubsBitRate": 3200,
+        "subscribeDegradation": {
+            "packetLossThreshold": 25,
+            "degradeGracePeriodSeconds": 1,
+            "recoverGracePeriodSeconds": 4
+        }
+    },
+    "permissions": {
+        "endRoom": true,
+        "removeOthers": true,
+        "mute": true,
+        "unmute": true,
+        "changeRole": true,
+        "rtmpStreaming": true,
+        "hlsStreaming": true,
+        "browserRecording": true,
+        "sendRoomState": false
+    },
+    "priority": 1,
+    "maxPeerCount": 0
+}
+```
+
+</ResponseBox>
+
+## Arguments
+
+| Name                           | Type     | Description                                                                                                                                                                                                  | Required |
+| :----------------------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| roleObject <br/>               | `object` | Role object corresponding to the given role. <br/><br/>check the [roles object arguments section](/server-side/v2/policy/create-template-via-api#roles-object-arguments) for the list of arguments supported | Yes      |
+| name <br/> — path param        | `string` | Providing a name renames the role to the provided name. If a role with the same name already exists, it gives an overwrite error.                                                                            | Yes      |
+| template_id <br/> — path param | `string` | Unique identifier of the template you wish to associate the role. <br/><br/>**Example**: 627ce5b637300e55a72ba7ed                                                                                            | Yes      |

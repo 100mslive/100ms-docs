@@ -6,12 +6,16 @@ import Link from 'next/link';
 import { Tabs, Tab } from './Tabs';
 import Code from './Code';
 import Note from './Note';
+import BaseRequest from './BaseRequest';
+import EndpointRequest from './EndpointRequest';
 import PostRequest from './PostRequest';
 import GetRequest from './GetRequest';
 
 import DeleteRequest from './DeleteRequest';
 
 import Response from './Response';
+import Request from './Request';
+import ResponseBox from './ResponseBox';
 import Codesandbox from './Codesandbox';
 import Text from './Text';
 import View from './View';
@@ -56,9 +60,13 @@ const LinkCustom = (props) => {
 
 const MDXComponents = {
     Response,
+    BaseRequest,
+    EndpointRequest,
     PostRequest,
     DeleteRequest,
     GetRequest,
+    Request,
+    ResponseBox,
     Note,
     Image,
     blockquote: NoteCustom,
