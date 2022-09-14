@@ -4,7 +4,7 @@ nav: 3.35
 ---
 
 HLS Streaming allows for scaling to millions of viewers in near real time. You can give a link of your
-webapp which will be converted to a HLS feed by our server and can be played across devices for consumption.
+web-app which will be converted to a HLS feed by our server and can be played across devices for consumption.
 Behind the scenes, this will be achieved by having a bot join your room and stream what it sees and hears. Once the feed
 is ready, the server will give a url which can be played using any HLS Player.
 
@@ -171,9 +171,9 @@ function HLSView({ hlsUrl }) {
 
 </Tab>
 
-## Testing with the Dashboard WebApp
+## Testing with the Dashboard web-app
 
-You may want to try out the end to end flow on our dashboard webapp before moving ahead with building in your app. To do
+You may want to try out the end to end flow on our dashboard web-app before moving ahead with building in your app. To do
 this, you can create an additional role named `hls-viewer` which will be presented with the hls stream when they join the room.
 
 ![Streaming](/docs/v2/web-hamburger.png)
@@ -184,9 +184,9 @@ see the hls stream.
 
 ## Tips
 
--   If you're using the dashboard webapp from 100ms, please make sure to use a role which doesn't have publish permissions for beam tile to not show up.
+-   If you're using the dashboard web-app from 100ms, please make sure to use a role which doesn't have publish permissions for beam tile to not show up.
     The meeting url can be edited in the streaming/recording popup to join with a recording specific role configured as such.
--   If using your own webapp, do put in place retries for API calls like tokens etc. just in case any call fails. As human users we're
+-   If using your own web-app, do put in place retries for API calls like tokens etc. just in case any call fails. As human users we're
     used to reloading the page in these scenarios which is difficult to achieve in the automated case.
 -   Make sure to not disable the logs for the passed in meeting URL. This will allow for us to have more visibility into the room, refreshing the page
     if join doesn't happen within a time interval.

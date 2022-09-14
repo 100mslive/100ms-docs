@@ -7,7 +7,7 @@ This page lists down frequently asked questions. If you want to add a new questi
 [send us a PR](https://github.com/100mslive/100ms-docs/blob/main/docs/javascript/v2/debugging/faq.mdx).
 
 ## What does HMS stand for in the SDK name?
-Hundred(100) Milli Seconds 😊. [Why?](https://www.nngroup.com/articles/response-times-3-important-limits/)
+Hundred(100) Milliseconds 😊. [Why?](https://www.nngroup.com/articles/response-times-3-important-limits/)
 
 ## Can I listen to webhooks on server side?
 Yes, please check [webhooks](/server-side/v2/introduction/webhook).
@@ -41,7 +41,7 @@ Please check this [stackoverflow answer](https://stackoverflow.com/questions/488
 
 - Check that the role is being [subscribed to](../foundation/templates-and-roles#subscribe-strategies) properly in [dashboard's](https://dashboard.100ms.live/) templates section.
 
-- If your webapp doesn't require a user click to join the room, you might run into autoplay issues. Browsers don't allow a website to play audio if user hasn't interacted with the page till that point in time. Fortunately, we have inbuilt support to detect and resolve this given in more details [here](../features/error-handling#handling-autoplay-error).
+- If your web-app doesn't require a user click to join the room, you might run into autoplay issues. Browsers don't allow a website to play audio if user hasn't interacted with the page till that point in time. Fortunately, we have inbuilt support to detect and resolve this given in more details [here](../features/error-handling#handling-autoplay-error).
 
 - If you're using the [setVolume](../advanced-features/volume-control) API, it's possible that even though the audio is available it has been locally muted.
 
@@ -49,22 +49,22 @@ Please check this [stackoverflow answer](https://stackoverflow.com/questions/488
 ## Is it possible to do RTMP out, live stream a room to YouTube, Twitch, Wowza?
 Yes, you can achieve it both from [server-side APIs](/server-side/v2/destinations/rtmp-streaming-and-browser-recording) or [SDK](../features/rtmp-recording).
 
-## What should I do to hide the beam tile showing up in 100ms webapp for browser based recording/streaming?
+## What should I do to hide the beam tile showing up in 100ms web-app for browser based recording/streaming?
 You can use a viewer role which doesn't have any publish permissions.
 
-## How do I make the beam bot join with a custom role for dashboard webapp?
-You can append a query param in the end of the url for the custom role - `<custom_role_url>?skip_preview=true`. This
-will tell the webapp to skip preview screen and join directly.
+## How do I make the beam bot join with a custom role for dashboard web-app?
+You can append a query param in the end of the URL for the custom role - `<custom_role_url>?skip_preview=true`. This
+will tell the web-app to skip preview screen and join directly.
 
 ## Why does YouTube dashboard shows that the video bitrate is less than the recommended bitrate when using RTMP Out?
-You can safely ignore this, this will happen if there is no activity happening on the url being streamed. For example, there is nobody in
+You can safely ignore this, this will happen if there is no activity happening on the URL being streamed. For example, there is nobody in
 the room with their video turned on.
 
 ## Can I get HLS out for a room?
 Not yet, but we're working on this.
 
-## How do I join an API created room from dashboard webapp?
-You won't see the join room button on the dashboard, but it's possible to form an url which you can use. The format is
+## How do I join an API created room from dashboard web-app?
+You won't see the join room button on the dashboard, but it's possible to form an URL which you can use. The format is
 `https://<subdomain>.app.100ms.live/preview/<room_id>/<role>`, For example `https://myroomlink.app.100ms.live/preview/123456/teacher`.
 All of these, the subdomain, room_id and role are available on the dashboard.
 
