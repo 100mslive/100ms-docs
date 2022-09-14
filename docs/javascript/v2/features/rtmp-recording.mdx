@@ -9,7 +9,7 @@ Or live stream it out to millions of viewers on YouTube, Twitch, Facebook, MUX o
 Turn on RTMP streaming or recording!
 
 In 100ms, recording and streaming is usually achieved by having a bot join your room
-and stream what it sees and hears to a file (recording) or to an rtmp ingest url (streaming).
+and stream what it sees and hears to a file (recording) or to an RTMP ingest url (streaming).
 It's also possible to start streaming and recording from [server side APIs](/server-side/v2/destinations/rtmp-streaming-and-browser-recording).
 
 > There is another type
@@ -18,12 +18,12 @@ It's also possible to start streaming and recording from [server side APIs](/ser
 
 ## Starting and Stopping streaming / recording
 
-These are the options which need to be passed to start rtmp or recording -
+These are the options which need to be passed to start RTMP or recording -
 
 1. **meetingURL**: _string_. The url the 100ms bot user will open to join your room. It must allow access without any user level interaction.
 2. **rtmpURLs**: _string[]_. Optional, if streaming is required, this has to be one or more RTMP Ingest Urls with max limit of 3 urls where the stream should go.
 3. **record**: _bool_. Optional, If recording is required this can be set as true. This value has no effect on streaming.
-4. **resolution**: _{ width: number, height: number }_. Optional, if passed the recording or rtmp will be done in the passed in resolution.
+4. **resolution**: _{ width: number, height: number }_. Optional, if passed the recording or RTMP will be done in the passed in resolution.
 
 -   If both rtmpURLs and record = true are provided, both streaming and recording will begin.
 -   If only rtmpURLs are provided, only streaming will begin.
@@ -44,7 +44,7 @@ async start() {
     try {
         await hmsActions.startRTMPOrRecording(params);
     } catch(err) {
-        console.error("failed to start rtmp/recording", err);
+        console.error("failed to start RTMP/recording", err);
     }
 }
 
@@ -52,7 +52,7 @@ async stop() {
     try {
         await hmsActions.stopRTMPAndRecording();
     } catch (err) {
-        console.error("failed to stop rtmp/recording", err);
+        console.error("failed to stop RTMP/recording", err);
     }
 }
 
@@ -76,9 +76,9 @@ if (recordingState.browser.running) {
 }
 
 if (rtmpState.running) {
-    console.log('time when rtmp was started - ', rtmpState.startedAt);
+    console.log('time when RTMP was started - ', rtmpState.startedAt);
 } else if (rtmpState.error) {
-    console.error('error in rtmp streaming - ', rtmpState.error);
+    console.error('error in RTMP streaming - ', rtmpState.error);
 }
 ```
 
