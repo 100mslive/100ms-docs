@@ -231,7 +231,7 @@ const Homepage = ({ allDocs }) => {
                                         <a style={{ all: 'unset', cursor: 'pointer' }}>
                                             <Card
                                                 onClick={() =>
-                                                    window.analytics.track('onClick', {
+                                                    window.analytics.track('link.click', {
                                                         page: 'docsHome',
                                                         ...item.analytics
                                                     })
@@ -299,7 +299,7 @@ const Homepage = ({ allDocs }) => {
                                             <a style={{ all: 'unset', cursor: 'pointer' }}>
                                                 <Card
                                                     onClick={() =>
-                                                        window.analytics.track('onClick', {
+                                                        window.analytics.track('link.click', {
                                                             page: 'docsHome',
                                                             ...item.analytics
                                                         })

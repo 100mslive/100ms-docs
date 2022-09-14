@@ -115,7 +115,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
                             className="hoverParent"
                             role="link"
                             onClick={() =>
-                                window.analytics.track('onClick', {
+                                window.analytics.track('link.click', {
                                     btnId: itemId[value.id],
                                     page: 'docsHome',
                                     framework: sdk,
