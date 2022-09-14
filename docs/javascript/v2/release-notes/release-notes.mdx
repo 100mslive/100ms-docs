@@ -12,6 +12,23 @@ description: Release Notes for 100ms JavaScript SDK
 | @100mslive/react-sdk                   | [![npm version](https://badge.fury.io/js/%40100mslive%2Freact-sdk.svg)](https://badge.fury.io/js/%40100mslive%2Freact-sdk)             |
 | @100mslive/hms-video-react(deprecated) | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-react.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-react) |
 
+## 2022-09-13
+
+Released: `@100mslive/hms-video-store@0.6.0`, `@100mslive/react-sdk@0.4.0`
+
+#### Added:
+- `join` is now async
+- An error will be returned if `validateVideoPluginSupport` is called before video track is available
+- [facingMode](https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackSettings/facingMode) property for local videoTrack.(Note: This will be useful on mobile browsers)
+
+#### Fixed:
+- Cleanup on leave
+- Improved logging for browser recording
+
+#### Breaking:
+- A `HMSNotificationTypes.PEER_LIST` will be sent after join even if there are no peers already in the room
+- Specific types are added to Notifications
+
 ## 2022-08-01
 
 Released: `@100mslive/hms-video-store@0.5.0`, `@100mslive/react-sdk@0.3.0`
