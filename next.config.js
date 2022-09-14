@@ -71,8 +71,8 @@ const nextConfig = {
         permanent: false
       },
       {
-        source: "/server-side/v2/sessions/object",
-        destination: "/server-side/v2/Rooms/object",
+        source: "/server-side/v2/features/session",
+        destination: "/server-side/v2/Sessions/object",
         permanent: false
       },
       {
