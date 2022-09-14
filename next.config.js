@@ -67,22 +67,22 @@ const nextConfig = {
       },
       {
         source: "/server-side/v2/features/room",
-        destination: "/server-side/v2/rooms/object",
+        destination: "/server-side/v2/Rooms/object",
         permanent: false
       },
       {
         source: "/server-side/v2/sessions/object",
-        destination: "/server-side/v2/rooms/object",
+        destination: "/server-side/v2/Rooms/object",
         permanent: false
       },
       {
         source: "/server-side/v2/features/recording",
-        destination: "/server-side/v2/destinations/recording",
+        destination: "/server-side/v2/Destinations/recording",
         permanent: false
       },
       {
         source: "/server-side/v2/features/rtmp-streaming-and-browser-recording",
-        destination: "/server-side/v2/destinations/rtmp-streaming-and-browser-recording",
+        destination: "/server-side/v2/Destinations/rtmp-streaming-and-browser-recording",
         permanent: false
       },
     ];
