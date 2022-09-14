@@ -6,11 +6,14 @@ interface Props {
     css?: CSS;
     endComponent?: React.ReactNode;
     titleComponent?: React.ReactNode;
+    onClick?: Function;
 }
 
-const Card: React.FC<Props> = ({ body, endComponent, titleComponent, css }) => (
+const Card: React.FC<Props> = ({ body, endComponent, titleComponent, css, onClick }) => (
     <Box
         className="hoverParent"
+        onClick={onClick}
+        role="button"
         css={{
             height: '100%',
             borderRadius: '$3',

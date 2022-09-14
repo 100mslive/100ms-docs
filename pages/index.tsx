@@ -92,7 +92,7 @@ const Homepage = ({ allDocs }) => {
                                     Explore our guides and examples to integrate 100ms.
                                 </Text>
                             </Flex>
-                            <Flex align="center" css={{ marginBottom: '$8', gap: '$1' }}>
+                            <Flex align="center" css={{ marginBottom: '$8', gap: '$2' }}>
                                 <ComputerIcon style={{ height: '16px', width: '16px' }} />
                                 <Text
                                     variant="sub2"
@@ -148,7 +148,7 @@ const Homepage = ({ allDocs }) => {
                             </Flex>
                             <Flex
                                 align="center"
-                                css={{ marginTop: '$12', marginBottom: '$8', gap: '$1' }}>
+                                css={{ marginTop: '$12', marginBottom: '$8', gap: '$2' }}>
                                 <PhoneIcon style={{ height: '16px', width: '16px' }} />
                                 <Text
                                     variant="sub2"
@@ -185,7 +185,7 @@ const Homepage = ({ allDocs }) => {
                             </Flex>
                             <Flex
                                 align="center"
-                                css={{ marginTop: '$12', marginBottom: '$8', gap: '$1' }}>
+                                css={{ marginTop: '$12', marginBottom: '$8', gap: '$2' }}>
                                 <ServerIcon style={{ height: '16px', width: '16px' }} />
                                 <Text
                                     variant="sub2"
@@ -230,6 +230,12 @@ const Homepage = ({ allDocs }) => {
                                     <Link href={item.link} key={item.title}>
                                         <a style={{ all: 'unset', cursor: 'pointer' }}>
                                             <Card
+                                                onClick={() =>
+                                                    window.analytics.track('onClick', {
+                                                        page: 'docsHome',
+                                                        ...item.analytics
+                                                    })
+                                                }
                                                 css={{ width: '100%' }}
                                                 body={item.body}
                                                 titleComponent={
@@ -292,6 +298,12 @@ const Homepage = ({ allDocs }) => {
                                         <Link href={item.link} key={item.title + item.link}>
                                             <a style={{ all: 'unset', cursor: 'pointer' }}>
                                                 <Card
+                                                    onClick={() =>
+                                                        window.analytics.track('onClick', {
+                                                            page: 'docsHome',
+                                                            ...item.analytics
+                                                        })
+                                                    }
                                                     body={item.body}
                                                     titleComponent={
                                                         <Item
@@ -452,19 +464,28 @@ const fundamentals = [
         title: 'Architecture',
         body: 'Learn the basic architecture to understand how your application communicates with 100ms servers.',
         link: '/javascript/v2/foundation/basics#architecture',
-        logo: <ViewIcon className="childLogo" style={style} />
+        logo: <ViewIcon className="childLogo" style={style} />,
+        analytics: {
+            btnId: 'fundamentalsArchitecture'
+        }
     },
     {
         title: 'Templates and Roles',
         body: 'A collection of roles and video settings that are used by the SDK to decide what happens when a room is created.',
         link: '/javascript/v2/foundation/templates-and-roles',
-        logo: <LegoIcon className="childLogo" style={style} />
+        logo: <LegoIcon className="childLogo" style={style} />,
+        analytics: {
+            btnId: 'fundamentalsTemplatesRoles'
+        }
     },
     {
         title: 'Authentication',
         body: 'A way to control the permissions and capabilities of users in a room.',
         link: '/javascript/v2/foundation/security-and-tokens',
-        logo: <GameIcon className="childLogo" style={style} />
+        logo: <GameIcon className="childLogo" style={style} />,
+        analytics: {
+            btnId: 'fundamentalsAuthentication'
+        }
     }
 ];
 
@@ -474,35 +495,60 @@ const guides = [
         body: 'Add audio calling similar to Slack Huddle to your app using React, and Tailwind.',
         link: 'https://www.100ms.live/blog/building-slack-huddle-clone',
         platform: 'Web',
-        guideTitle: 'React Guide'
+        guideTitle: 'React Guide',
+        analytics: {
+            btnid: 'slackHuddle',
+            platform: 'web',
+            framework: 'react'
+        }
     },
     {
         title: 'Discord Stage Clone',
         body: 'Build an audio-only channel, like Discord Stages, in your app using Next.js.',
         link: 'https://www.100ms.live/blog/build-discord-stage-channel-clone-hms',
         platform: 'Web',
-        guideTitle: 'Next.js Guide'
+        guideTitle: 'Next.js Guide',
+        analytics: {
+            btnid: 'discordClone',
+            platform: 'web',
+            framework: 'nextjs'
+        }
     },
     {
         title: 'Twitch Clone',
         body: 'Create a live streaming platform, live Twitch, using React, and Tailwind.',
         link: 'https://www.100ms.live/blog/twitch-clone-in-react',
         platform: 'Web',
-        guideTitle: 'React Guide'
+        guideTitle: 'React Guide',
+        analytics: {
+            btnid: 'twichClone',
+            platform: 'web',
+            framework: 'react'
+        }
     },
     {
         title: 'Clubhouse Clone',
         body: 'Build a drop-in audio room, like Clubhouse, using Parcel, and Tailwind CSS.',
         link: 'https://www.100ms.live/blog/clubhouse-clone-with-javascript',
         platform: 'Web',
-        guideTitle: 'JavaScript Guide'
+        guideTitle: 'JavaScript Guide',
+        analytics: {
+            btnid: 'clubhouseClone',
+            platform: 'web',
+            framework: 'javascript'
+        }
     },
     {
         title: 'Skype Clone',
         body: 'Model a video conferencing and file sharing app, like Skype, with 100ms.',
         link: 'https://www.100ms.live/blog/skype-clone-react',
         platform: 'Web',
-        guideTitle: 'React Guide'
+        guideTitle: 'React Guide',
+        analytics: {
+            btnid: 'skypeClone',
+            platform: 'web',
+            framework: 'react'
+        }
     },
     // {
     //     title: 'Video Streaming Server',
@@ -516,14 +562,24 @@ const guides = [
         body: 'Build a blended learning platform, like Google Classroom, with React.',
         link: 'https://www.100ms.live/blog/google-classroom-clone-react-100ms',
         platform: 'Web',
-        guideTitle: 'React Guide'
+        guideTitle: 'React Guide',
+        analytics: {
+            btnid: 'gclassroomClone',
+            platform: 'web',
+            framework: 'react'
+        }
     },
     {
         title: 'Cisco Webex Clone',
         body: 'Jerry-build an online calling app, like Cisco Webex, with 100ms.',
         link: 'https://www.100ms.live/blog/create-webex-clone-100ms',
         platform: 'Web',
-        guideTitle: 'JavaScript Guide'
+        guideTitle: 'JavaScript Guide',
+        analytics: {
+            btnid: 'webexClone',
+            platform: 'web',
+            framework: 'javascript'
+        }
     },
     // {
     //     title: 'Video Chatting App',
@@ -537,56 +593,96 @@ const guides = [
         body: 'Develop a drop-in audio room, like Clubhouse, using Svelte, and 100ms.',
         link: 'https://www.100ms.live/blog/clubhouse-clone-with-svelte',
         platform: 'Web',
-        guideTitle: 'Svelte Guide'
+        guideTitle: 'Svelte Guide',
+        analytics: {
+            btnid: 'clubhouseClone',
+            platform: 'web',
+            framework: 'svelte'
+        }
     },
     {
         title: 'Google Meet Clone',
         body: 'Model a Google Meet like video conferencing app with 100ms.',
         link: 'https://www.100ms.live/blog/google-meet',
         platform: 'Mobile',
-        guideTitle: 'Flutter Guide'
+        guideTitle: 'Flutter Guide',
+        analytics: {
+            btnid: 'gmeetClone',
+            platform: 'mobile',
+            framework: 'flutter'
+        }
     },
     {
         title: 'Clubhouse Clone',
         body: 'Build a drop-in audio room for iOS, like Clubhouse, with 100ms.',
         link: 'https://www.100ms.live/blog/building-an-audio-app-like-clubhouse-for-ios',
         platform: 'Mobile',
-        guideTitle: 'Swift Guide'
+        guideTitle: 'Swift Guide',
+        analytics: {
+            btnid: 'clubhouseClone',
+            platform: 'mobile',
+            framework: 'swift'
+        }
     },
     {
         title: 'Clubhouse Clone',
         body: 'Put together a drop-in audio room for mobile, like Clubhouse, with Flutter.',
         link: 'https://www.100ms.live/blog/building-clubhouse-clone-using-100ms-in-flutter',
         platform: 'Mobile',
-        guideTitle: 'Flutter Guide'
+        guideTitle: 'Flutter Guide',
+        analytics: {
+            btnid: 'clubhouseClone',
+            platform: 'mobile',
+            framework: 'flutter'
+        }
     },
     {
         title: 'Zoom Clone',
         body: 'Create a Zoom like video conferencing app for mobile with Flutter.',
         link: 'https://www.100ms.live/blog/zoom-clone-in-flutter',
         platform: 'Mobile',
-        guideTitle: 'Flutter Guide'
+        guideTitle: 'Flutter Guide',
+        analytics: {
+            btnid: 'zoomClone',
+            platform: 'mobile',
+            framework: 'flutter'
+        }
     },
     {
         title: 'Omegle Clone',
         body: 'Build an online chat website, like Omegle, with Flutter.',
         link: 'https://www.100ms.live/blog/omegle-clone-in-flutter',
         platform: 'Mobile',
-        guideTitle: 'Flutter Guide'
+        guideTitle: 'Flutter Guide',
+        analytics: {
+            btnid: 'omegleClone',
+            platform: 'mobile',
+            framework: 'react'
+        }
     },
     {
         title: 'Twitter Spaces Clone',
         body: 'Build a Twitter Spaces like app for Android with 100ms.',
         link: 'https://www.100ms.live/blog/twitter-spaces-clone',
         platform: 'Mobile',
-        guideTitle: 'Android Guide'
+        guideTitle: 'Android Guide',
+        analytics: {
+            btnid: 'twitterClone',
+            platform: 'mobile',
+            framework: 'flutter'
+        }
     },
     {
         title: 'Telehealth App',
         body: 'Develop a telehealth app with Flutter.',
         link: 'https://www.100ms.live/blog/telehealth-app-development-flutter-100ms',
         platform: 'Mobile',
-        guideTitle: 'Flutter Guide'
+        guideTitle: 'Flutter Guide',
+        analytics: {
+            btnid: 'TelehealthApp',
+            platform: 'mobile',
+            framework: 'flutter'
+        }
     }
 ];
 

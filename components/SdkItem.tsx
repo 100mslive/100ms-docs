@@ -109,10 +109,19 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
                 }
             }}>
             {sdkItems[sdk as keyof typeof sdkItems].map((value) => (
-                <Link key={value.id} href={value.link}>
+                <Link key={value.id} href={value.link} passHref>
                     <a style={{ width: 'fit-content' }}>
                         <Box
                             className="hoverParent"
+                            role="link"
+                            onClick={() =>
+                                window.analytics.track('onClick', {
+                                    btnId: itemId[value.id],
+                                    page: 'docsHome',
+                                    framework: sdk,
+                                    ...analytics[sdk]
+                                })
+                            }
                             css={{
                                 '&:hover .hoverChild': {
                                     right: '-$11'
@@ -159,6 +168,16 @@ const itemList = {
     5: <RocketIcon style={iconStyle} />,
     6: <WebhookIcon style={iconStyle} />,
     7: <ListCheckIcon style={iconStyle} />
+};
+
+const analytics = {
+    javascript: { platform: 'web' },
+    react: { platform: 'web' },
+    serverSide: { platform: 'web' },
+    android: { platform: 'web' },
+    ios: { platform: 'web' },
+    flutter: { platform: 'web' },
+    reactNative: { platform: 'web' }
 };
 
 const sdkItems = {
