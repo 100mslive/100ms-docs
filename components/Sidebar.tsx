@@ -84,7 +84,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const aliasMenu = [
         {
             title: 'Room APIs',
-            url: '/server-side/v2/rooms/object'
+            url: '/server-side/v2/Rooms/object'
         },
         {
             title: 'Webhooks',
@@ -92,7 +92,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
         },
         {
             title: 'SFU Recording',
-            url: '/server-side/v2/destinations/recording'
+            url: '/server-side/v2/Destinations/recording'
         }
         // {
         //     title: 'Simulcast',
