@@ -17,6 +17,8 @@ You can also optionally pass these fields -
 
 We'll call the `join` method on `hmsActions` object with a config containing above fields to join the room.
 
+> Note: join is async from this [version](../release-notes/release-notes#2022-09-13)
+
 <Tabs id="join" items={['JavaScript', 'React']} />{' '}
 
 <Tab id='join-0'>
@@ -35,7 +37,7 @@ const config = {
     rememberDeviceSelection: true,  // remember manual device change
 };
 
-hmsActions.join(config);
+await hmsActions.join(config);
 
 ```
 
@@ -60,8 +62,8 @@ function Join() {
     rememberDeviceSelection: true,  // remember manual device change
   };
 
-  function onJoinClick() {
-    hmsActions.join(config)
+  async function onJoinClick() {
+    await hmsActions.join(config)
   }
 
   return <
