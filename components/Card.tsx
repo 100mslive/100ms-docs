@@ -6,7 +6,8 @@ interface Props {
     css?: CSS;
     endComponent?: React.ReactNode;
     titleComponent?: React.ReactNode;
-    onClick?: Function;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    onClick?: any;
 }
 
 const Card: React.FC<Props> = ({ body, endComponent, titleComponent, css, onClick }) => (
