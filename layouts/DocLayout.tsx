@@ -1,15 +1,15 @@
-import React from 'react';
-import { useRouter } from 'next/router';
-import { NextSeo } from 'next-seo';
+import EditFile from '@/components/EditFile';
 import Header from '@/components/Header';
 import Pagination from '@/components/Pagination';
+import SegmentAnalytics from '@/components/SegmentAnalytics';
 import Sidebar from '@/components/Sidebar';
 import Toc from '@/components/Toc';
 import { PaginationType } from '@/lib/getPagination';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
-import EditFile from '@/components/EditFile';
-import SegmentAnalytics from '@/components/SegmentAnalytics';
+import { NextSeo } from 'next-seo';
+import { useRouter } from 'next/router';
+import React from 'react';
 
 type NavRoute = {
     url: string;
@@ -35,17 +35,9 @@ interface Props {
         nextPost: PaginationType;
     };
     allDocs: AllDocsType[];
-    currentDocSlug: string;
 }
 
-const DocLayout: React.FC<Props> = ({
-    frontMatter,
-    nav,
-    children,
-    pagination,
-    allDocs,
-    currentDocSlug
-}) => {
+const DocLayout: React.FC<Props> = ({ frontMatter, nav, children, pagination, allDocs }) => {
     const router = useRouter();
     const SEO = {
         title: `${
@@ -136,13 +128,7 @@ const DocLayout: React.FC<Props> = ({
             <div className="page">
                 <NextSeo {...SEO} />
                 <SegmentAnalytics options={{}} title={frontMatter.title} />
-                <Header
-                    modal={modal}
-                    setModal={setModal}
-                    menuState={menuState}
-                    docs={allDocs}
-                    currentDocSlug={currentDocSlug}
-                />
+                <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} />
                 <div className="ctx">
                     <div className="content-wrapper">
                         <div
@@ -189,7 +175,7 @@ const DocLayout: React.FC<Props> = ({
                     }
                     article {
                         max-width: 1200px;
-                        width: calc(100vw - 590px);
+                        width: calc(100vw - 630px);
                         flex-grow: 1;
                         box-sizing: border-box;
                         padding: 0 2rem;

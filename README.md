@@ -3,7 +3,6 @@
     <img src="public/logo.svg" alt="Logo" width="200" >
 </p>
 
-
 [![Discord](https://img.shields.io/discord/843749923060711464?label=Join%20on%20Discord)](https://100ms.live/discord)
 
 <br />
@@ -195,8 +194,12 @@ All CSS Variables prefixed with `token` control the Syntax Highlighting.
 
 ## 📇 Linting
 
-- Add tokens in `.github/workflows/styles/Vocab/HMSVocab/accept.txt` which you want to whitelist during the linting.
-- code blocks are already whitelisted.
+-   Vale testing
+    -   `brew install vale`
+    -   `vale sync`
+    -   `vale docs/*`
+-   Add tokens in `.github/workflows/styles/Vocab/HMSVocab/accept.txt` which you want to whitelist during the linting.
+-   code blocks are already whitelisted.
 
 ## 🙏🏽 Acknowledgement
 

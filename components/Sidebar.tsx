@@ -244,7 +244,6 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     :global(.page) {
                         height: ${menu ? '100vh `!important' : ''};
                         overflow: ${menu ? 'hidden !important' : ''};
-                        padding-right: 1rem;
                     }
                 }
             `}</style>

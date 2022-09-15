@@ -11,11 +11,11 @@ const SegmentAnalytics = ({ title, options }) => {
                     return Object.assign(acc, { [k]: v });
                 }, {});
             // @ts-ignore
-            var url = new URL(window.location.href);
+            const url = new URL(window.location.href);
             window.analytics.page(title, {
                 ...params,
                 ...options,
-                title: title,
+                title,
                 referrer: document.referrer,
                 path: window.location.hostname,
                 pathname: window.location.pathname,
