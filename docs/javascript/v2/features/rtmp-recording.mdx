@@ -6,24 +6,24 @@ nav: 3.35
 Want to preserve your video call for posterity in a recording?
 Or live stream it out to millions of viewers on YouTube, Twitch, Facebook, MUX or whatever gives you an RTMP ingest URL?
 
-Turn on RTMP streaming or recording!
+Turn on RTMP streaming or recording.
 
 In 100ms, recording and streaming is usually achieved by having a bot join your room
-and stream what it sees and hears to a file (recording) or to an rtmp ingest url (streaming).
-It's also possible to start streaming and recording from [server side APIs](/server-side/v2/features/rtmp-streaming-and-browser-recording).
+and stream what it sees and hears to a file (recording) or to an RTMP ingest URL (streaming).
+It's also possible to start streaming and recording from [server side APIs](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording).
 
 > There is another type
 > of SFU based recording as well which allows for all the tracks to be recorded individually, you can find more details about it
-> [here](/server-side/v2/features/recording).
+> [here](/server-side/v2/Destinations/recording).
 
 ## Starting and Stopping streaming / recording
 
-These are the options which need to be passed to start rtmp or recording -
+These are the options which need to be passed to start RTMP or recording -
 
-1. **meetingURL**: _string_. The url the 100ms bot user will open to join your room. It must allow access without any user level interaction.
-2. **rtmpURLs**: _string[]_. Optional, if streaming is required, this has to be one or more RTMP Ingest Urls with max limit of 3 urls where the stream should go.
-3. **record**: _bool_. Optional, If recording is required this can be set as true. This value has no effect on streaming.
-4. **resolution**: _{ width: number, height: number }_. Optional, if passed the recording or rtmp will be done in the passed in resolution.
+1. **meetingURL**: _string_. The URL the 100ms bot user will open to join your room. It must allow access without any user level interaction.
+2. **rtmpURLs**: _string[]_. Optional, if streaming is required, this has to be one or more RTMP Ingest URLs with max limit of 3 URLs where the stream should go.
+3. **record**: _boolean_. Optional, If recording is required this can be set as true. This value has no effect on streaming.
+4. **resolution**: _{ width: number, height: number }_. Optional, if passed the recording or RTMP will be done in the passed in resolution.
 
 -   If both rtmpURLs and record = true are provided, both streaming and recording will begin.
 -   If only rtmpURLs are provided, only streaming will begin.
@@ -32,7 +32,7 @@ These are the options which need to be passed to start rtmp or recording -
 If either one is started, the other can't be started without first stopping whatever is running.
 Eg: Only streaming is started. Recording can't be started unless streaming is stopped first.
 
-If both are required, they have to be started together by providing both RTMP Ingest Urls and recording = true.
+If both are required, they have to be started together by providing both RTMP Ingest URLs and recording = true.
 
 ```js
 async start() {
@@ -44,7 +44,7 @@ async start() {
     try {
         await hmsActions.startRTMPOrRecording(params);
     } catch(err) {
-        console.error("failed to start rtmp/recording", err);
+        console.error("failed to start RTMP/recording", err);
     }
 }
 
@@ -52,7 +52,7 @@ async stop() {
     try {
         await hmsActions.stopRTMPAndRecording();
     } catch (err) {
-        console.error("failed to stop rtmp/recording", err);
+        console.error("failed to stop RTMP/recording", err);
     }
 }
 
@@ -76,17 +76,17 @@ if (recordingState.browser.running) {
 }
 
 if (rtmpState.running) {
-    console.log('time when rtmp was started - ', rtmpState.startedAt);
+    console.log('time when RTMP was started - ', rtmpState.startedAt);
 } else if (rtmpState.error) {
-    console.error('error in rtmp streaming - ', rtmpState.error);
+    console.error('error in RTMP streaming - ', rtmpState.error);
 }
 ```
 
 ## Tips
 
--   If you're using the dashboard webapp from 100ms, please make sure to use a role which doesn't have publish permissions for beam tile to not show up.
-    The meeting url can be edited in the streaming/recording popup to join with a recording specific role configured as such.
--   If using your own webapp, do put in place retries for API calls like tokens etc. just in case any call fails. As human users we're
+-   If you're using the dashboard web-app from 100ms, please make sure to use a role which doesn't have publish permissions for beam tile to not show up.
+    The meeting URL can be edited in the streaming/recording popup to join with a recording specific role configured as such.
+-   If using your own web-app, do put in place retries for API calls like tokens etc. just in case any call fails. As human users we're
     used to reloading the page in these scenarios which is difficult to achieve in the automated case.
 -   Make sure to not disable the logs for the passed in meeting URL. This will allow for us to have more visibility into the room, refreshing the page
     if join doesn't happen within a time interval.

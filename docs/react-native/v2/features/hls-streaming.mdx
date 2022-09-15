@@ -3,9 +3,9 @@ title: HLS Streaming & Recording
 nav: 3.992
 ---
 
-HLS Streaming allows for scaling to millions of viewers in near real time. You can give a link of your webapp which will be converted to a HLS feed by our server and can be played across devices for consumption.
+HLS Streaming allows for scaling to millions of viewers in near real time. You can give a link of your web-app which will be converted to a HLS feed by our server and can be played across devices for consumption.
 
-Behind the scenes, this will be achieved by having a bot join your room and stream what it sees and hears. Once the feed is ready, the server will give a url which can be played using any HLS Player.
+Behind the scenes, this will be achieved by having a bot join your room and stream what it sees and hears. Once the feed is ready, the server will give a URL which can be played using any HLS Player.
 
 > Note that the media server serving the content in this case is owned by 100ms. If you're looking for a way to stream on YouTube, Twitch, etc. then please have a look at our RTMP streaming docs [here](recording).
 
@@ -19,7 +19,7 @@ const hlsStreaming: boolean = peer.role.permissions.hlsStreaming;
 HLS can be started in two ways depending on the level of customization you need.
 
 1. Default View: The simplest view to just begin a stream with default UI and parameters.
-2. Custom Views: To use your own UI for HLS streaming, you need to provide your own webapp URL for our bot to join and stream.
+2. Custom Views: To use your own UI for HLS streaming, you need to provide your own web-app URL for our bot to join and stream.
 
 #### Default View
 
@@ -35,7 +35,7 @@ You can call `hmsSDK.startHLSStreaming` with a `HMSHLSConfig` having either an a
 To use our own browser UI for HLS, you'll need to pass in a meeting URL. The 100ms bot will open this URL to join your room, so
 it must allow access without any user level interaction. In the future it'll be possible to start HLS for multiple such URLs for the same room.
 
-For this purpose the API supports taking in an array, although currently only the first element of the array will be used. To distinguish between multiple urls an additional field `metadata` can be passed.
+For this purpose the API supports taking in an array, although currently only the first element of the array will be used. To distinguish between multiple URLs an additional field `metadata` can be passed.
 
 Here's what the `HMSHLSMeetingURLVariant` looks like
 ```js
@@ -113,7 +113,7 @@ class HMSHLSStreamingState {
 }
 ```
 
-This represents a livestream to one or more HLS urls in the container of `HMSHLSVariant`. Which looks like:
+This represents a livestream to one or more HLS URLs in the container of `HMSHLSVariant`. Which looks like:
 ```js
 class HMSHLSVariant {
   hlsStreamUrl: string;
@@ -132,8 +132,8 @@ The room status should be checked in following two places -
 
 ## Tips
 
-* If you're using the dashboard webapp from 100ms, please make sure to use a role which doesn't have publish permissions for beam tile to not show up.
+* If you're using the dashboard web-app from 100ms, please make sure to use a role which doesn't have publish permissions for beam tile to not show up.
 
-* If using your own webapp, do put in place retries for API calls like tokens etc. just in case any call fails. As human users we're used to reloading the page in these scenarios which is difficult to achieve in the automated case.
+* If using your own web-app, do put in place retries for API calls like tokens etc. just in case any call fails. As human users we're used to reloading the page in these scenarios which is difficult to achieve in the automated case.
 
 * Make sure to not disable the logs for the passed in meeting URL. This will allow for us to have more visibility into the room, refreshing the page if join doesn't happen within a time interval.

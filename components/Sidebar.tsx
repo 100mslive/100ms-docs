@@ -54,10 +54,10 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
             apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
         },
         {
-            link: '/server-side/v2/foundation/basics',
+            link: '/server-side/v2/introduction/basics',
             name: 'Server-Side',
             icon: <ServerIcon />,
-            apiRef: '/server-side/v2/foundation/basics'
+            apiRef: '/server-side/v2/introduction/basics'
         }
     ];
     // @ts-ignore
@@ -84,15 +84,15 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const aliasMenu = [
         {
             title: 'Room APIs',
-            url: '/server-side/v2/features/room'
+            url: '/server-side/v2/Rooms/object'
         },
         {
             title: 'Webhooks',
-            url: '/server-side/v2/foundation/webhook'
+            url: '/server-side/v2/introduction/webhook'
         },
         {
             title: 'SFU Recording',
-            url: '/server-side/v2/features/recording'
+            url: '/server-side/v2/Destinations/recording'
         }
         // {
         //     title: 'Simulcast',
@@ -177,7 +177,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     left: 0;
                     position: ${menu ? 'absolute' : 'sticky'};
                     background: var(--sidebar_bg);
-                    z-index: 40;
+                    z-index: 100;
                 }
                 ::-webkit-scrollbar {
                     width: 0px;
