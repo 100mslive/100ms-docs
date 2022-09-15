@@ -7,7 +7,7 @@ Sometimes you need a way to capture certain metrics related to a call. This may 
 
 To begin getting callbacks for statistics, call `hmsSDK.addRtcStatsObserver(HMSStatsObserver)` with your implementation of `HMSStatsObserver`.
 
-> 💡 Note: Gathering stats takes several ms and can be a large operation if requested on a room with thousands of peers. Consider whether the addtional load is necessary.
+> 💡 Note: Gathering stats takes several ms and can be a large operation if requested on a room with thousands of peers. Consider whether the additional load is necessary.
 
 Here is the full list of callbacks:
 
@@ -145,6 +145,7 @@ data class HMSRemoteVideoStats(
 ## Hierarchy
 
 Here's the hierarchy for the sealed classes for stats
+
 ```kotlin
 sealed class HMSStats {
     sealed class HMSLocalStats : HMSStats()
