@@ -7,7 +7,7 @@ interface Props {
     endComponent?: React.ReactNode;
     titleComponent?: React.ReactNode;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onClick?: any;
+    onClick?: () => void;
 }
 
 const Card: React.FC<Props> = ({ body, endComponent, titleComponent, css, onClick }) => (
