@@ -9,13 +9,14 @@ It can be helpful to measure a user's connection speed before joining a room in 
 
 The 100ms SDK provides a way to measure the user's downlink speed in the preview screen.
 
-> ⚠️ The downlink speed is measured by having the user download a file (1mb as of this writing) after the websocket connection is established during a preview.
+> ⚠️ The downlink speed is measured by having the user download a file (1mb as of this writing) after the WebSocket connection is established during a preview.
 
-The download will be continued for at most a fixed number of seconds (eg: 10 seconds) and the speed during that interval is calculated. The entire file may not be downloaded if it exceeds the timeout.
+The download will be continued for at most a fixed number of seconds (For example 10 seconds) and the speed during that interval is calculated. The entire file may not be downloaded if it exceeds the timeout.
 
-DNS time is not counted in this, only throughput is measured. 
+DNS time is not counted in this, only throughput is measured.
 
 ## Requesting/Reading a Network Quality Update in Preview
+
 When creating an `HMSConfig` object to request a preview, set the `captureNetworkQualityInPreview` to `true` to measure the user's downlink network quality.
 
 When available, the information will be returned in `onPeerUpdate` of the `HMSPreviewListener` in the update type `HMSPeerUpdate.NETWORK_QUALITY_UPDATED`. It can be retrieved out of the `HMSPeer` object's `networkQuality` property.
@@ -52,6 +53,7 @@ fun requestPreviewWithNetworkQuality(hmsSdk: HMSSDK,
     hmsSdk.preview(config, hmsPreviewListener)
 }
 ```
+
 </Tab>
 
 <Tab id='network-quality-preview-1'>
@@ -98,11 +100,13 @@ data class HMSNetworkQuality(
 ```
 
 ## Interpreting the Values
+
 `peer.networkQuality?.downlinkQuality` will be a value between -1 and 5.
-- -1 -> Test timeout.
-- 0 -> Very bad network or network check failure.
-- 1 -> Poor network.
-- 2 -> Bad network.
-- 3 -> Average.
-- 4 -> Good.
-- 5 -> Best.
+
+-   -1 -> Test timeout.
+-   0 -> Very bad network or network check failure.
+-   1 -> Poor network.
+-   2 -> Bad network.
+-   3 -> Average.
+-   4 -> Good.
+-   5 -> Best.

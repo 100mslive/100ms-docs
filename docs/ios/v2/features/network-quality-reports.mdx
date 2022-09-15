@@ -11,11 +11,12 @@ The 100ms SDK provides a way to measure the user's downlink speed in the preview
 
 > ⚠️ The downlink speed is measured by having the SDK download a file (1mb as of this writing).
 
-The download will be continued for at most a fixed number of seconds (eg: 10 seconds) and the speed during that interval is calculated. The entire file may not be downloaded if it exceeds the timeout.
+The download will be continued for at most a fixed number of seconds (For example 10 seconds) and the speed during that interval is calculated. The entire file may not be downloaded if it exceeds the timeout.
 
-DNS time is not counted in this, only throughput is measured. 
+DNS time is not counted in this, only throughput is measured.
 
 ## Receiving a Network Quality Update in Preview
+
 When creating an `HMSConfig` object to request a preview, set the `captureNetworkQualityInPreview` to `true` to measure the user's downlink network quality.
 
 When available, the information will be returned in the `on(peer: HMSPeer, update: HMSPeerUpdate)` callback of the `HMSPreviewListener` with the `networkQualityUpdated` update type. It can be retrieved out of the `HMSPeer` object's `networkQuality` property. In case of preview, the peer will be local peer.
@@ -34,16 +35,18 @@ public class HMSNetworkQuality {
 ```
 
 ## Receiving Network Quality Update During a Call
+
 After the room has been joined, it might be useful to give users an indication of network health of other participants in the room. In case of network issues this can reduce confusion regarding wether it is my network at fault or the other party's.
 No special configuration is required to enable network health callbacks. Starting with iOS SDK version 0.2.9 this information will be sent via `on(peer: HMSPeer, update: HMSPeerUpdate)` callback of `HMSUpdateListener`. The peer will signify which peer the network health is being reported for.
 
-
 ## Interpreting the Values
+
 `peer.networkQuality?.downlinkQuality` will be a value between -1 and 5.
-- -1 -> Test timeout.
-- 0 -> Very bad network or network check failure.
-- 1 -> Poor network.
-- 2 -> Bad network.
-- 3 -> Average.
-- 4 -> Good.
-- 5 -> Best.
+
+-   -1 -> Test timeout.
+-   0 -> Very bad network or network check failure.
+-   1 -> Poor network.
+-   2 -> Bad network.
+-   3 -> Average.
+-   4 -> Good.
+-   5 -> Best.

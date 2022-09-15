@@ -13,7 +13,7 @@ Muting can apply to both audio and video.
 
 You may also decide that you want to let someone else speak who was currently muted. Or may want to ask someone to turn on their video.
 
-You can request people to unmute themselves as well.
+You can request people to un-mute themselves as well.
 
 ### Permissions
 
@@ -29,7 +29,7 @@ To mute a track:
 
 Get the audio or video track of the peer whom you want to mute and pass it as the first parameter to `hmsSdk.changeTrackState`.
 
-The second parameter is a boolean for muting. If true, the track will be muted. If false the track will be requested to unmute.
+The second parameter is a boolean for muting. If true, the track will be muted. If false the track will be requested to un-mute.
 
 Finally you can pass a completion handler to check whether changeTrackState succeeded or failed as the third parameter.
 
@@ -37,7 +37,8 @@ Finally you can pass a completion handler to check whether changeTrackState succ
 
 Muting is automatically applied to the receiver tracks. No action is required.
 
-### Handling an unmute callback
+### Handling an un-mute callback
+
 Unmute callbacks are received in the target peer's `on(changeTrackStateRequest:)` callback of `HMSUpdateListener`.
 
 The target peer will receive an object of `HMSChangeTrackStateRequest`.

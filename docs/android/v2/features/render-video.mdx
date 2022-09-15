@@ -3,14 +3,14 @@ title: Render Video
 nav: 9
 ---
 
-At the very least for rendering video you'll need an instance of `org.webrtc.SurfaceViewRenderer` and a `HMSVideoTrack` instance from a peer.
+At the very least for rendering video you'll need an instance of `org.WebRTC.SurfaceViewRenderer` and a `HMSVideoTrack` instance from a peer.
 
-For the `SurfaceViewRenderer`, as of `2.0.9` of the 100ms Android SDK, only adding the sdk is enough to receive webrtc objects including the SurfaceViewRenderer. In versions prior to this, add the dependency `implementation 'org.webrtc:google-webrtc:1.0.32006'` to receive SurfaceViewRenderer.
+For the `SurfaceViewRenderer`, as of `2.0.9` of the 100ms Android SDK, only adding the SDK is enough to receive WebRTC objects including the SurfaceViewRenderer. In versions prior to this, add the dependency `implementation 'org.WebRTC:google-WebRTC:1.0.32006'` to receive SurfaceViewRenderer.
 
-In xml layouts it would look like
+In XML layouts it would look like
 
 ```xml
-    <org.webrtc.SurfaceViewRenderer
+    <org.WebRTC.SurfaceViewRenderer
         android:id="@+id/peerVideo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@ Get an instance of the SurfaceView.
 val surfaceView : SurfaceViewRenderer = findViewById(R.id.surface_view)
 ```
 
-Set the scaling to whatever you prefer. Aspect Fit is recommended for common use cases. See more scale types [here](https://chromium.googlesource.com/external/webrtc/trunk/talk/+/cdd35e557b600d1f7dbe9c99531a42adf194f973/app/webrtc/java/android/org/webrtc/RendererCommon.java#37).
+Set the scaling to whatever you prefer. Aspect Fit is recommended for common use cases. See more scale types [here](https://chromium.googlesource.com/external/WebRTC/trunk/talk/+/cdd35e557b600d1f7dbe9c99531a42adf194f973/app/WebRTC/java/android/org/WebRTC/RendererCommon.java#37).
 
 ```kotlin
 surfaceView.setEnableHardwareScaler(true)
