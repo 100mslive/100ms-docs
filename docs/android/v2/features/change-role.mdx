@@ -12,13 +12,14 @@ Each `HMSPeer` instance has a `role` property which returns an `HMSRole` instanc
 
 > 💡 Anyone with the role change permission can change anyone's role. Including their own role. As of version 2.0.9 of the Android SDK.
 
-In certain scenarios you may want to change someone's role. Imagine an audio room with 2 roles "speaker" and "listener". Only someone with a "speaker" role can publish audio to the room while "listener" can only subscribe. Now at some point "speaker" may decide to nominate some "listener" to become a "speaker". This is where the `changeRole` API comes in.
+In certain scenarios you may want to change someone's role. Imagine an audio room with 2 roles "speaker" and "listener." Only someone with a "speaker" role can publish audio to the room while "listener" can only subscribe. Now at some point "speaker" may decide to nominate some "listener" to become a "speaker." This is where the `changeRole` API comes in.
 
 To invoke the api you will need 3 things.
-- `peer`: An instance of `HMSPeer` of the peer who's role you want to change.
-- `toRole`: The `HMSRole` instance for the target role. 
-- `force`: Whether you want to change their role without asking them or give them a chance to accept/reject.
-- `hmsActionResultListener`: The `HMSActionResultListener` that will get a success or failure callback depending on the result of the request. Note: success doesn't mean that the role was changed, just that the server accepted the request as valid.
+
+-   `peer`: An instance of `HMSPeer` of the peer who's role you want to change.
+-   `toRole`: The `HMSRole` instance for the target role.
+-   `force`: Whether you want to change their role without asking them or give them a chance to accept/reject.
+-   `hmsActionResultListener`: The `HMSActionResultListener` that will get a success or failure callback depending on the result of the request. Note: success doesn't mean that the role was changed, just that the server accepted the request as valid.
 
 All the peers that are in the current room are accessible via `getPeers` method of `HMSSDK` instance after a successful room join.
 
@@ -30,7 +31,7 @@ Once you have all you can invoke:
 fun changeRole(forPeer: HMSPeer, toRole: HMSRole, force: Boolean, hmsActionResultListener: HMSActionResultListener)
     hmsSDK.changeRole(peer, toRole, force, object : HMSActionResultListener {
         override fun onSuccess() {
-            // The request was sent successfully 
+            // The request was sent successfully
         }
 
         override fun onError(error: HMSException) {
@@ -48,18 +49,18 @@ fun onPeerUpdate(type: HMSPeerUpdate, peer: HMSPeer)
 
 with the the same peer you passed as targetPeer and a `ROLE_CHANGED` update type.
 
-The `force` parameter in `changeRole`, when false, is basically a polite request: "Would you like to change you role from listener to speaker?" which can be ignored by the other party. The way it works is the other party will first receive a 
+The `force` parameter in `changeRole`, when false, is basically a polite request: "Would you like to change you role from listener to speaker?" which can be ignored by the other party. The way it works is the other party will first receive a
 
 ```kotlin
 fun onRoleChangeRequest(request: HMSRoleChangeRequest)
 ```
 
-callback in `HMSUpdateListener`. At which point the app can choose to show a prompt to the user asking for permission. If the user accepts, app should call 
+callback in `HMSUpdateListener`. At which point the app can choose to show a prompt to the user asking for permission. If the user accepts, app should call
 
 ```kotlin
 hmsSDK.acceptChangeRole(hmsRoleChangeRequest)
 ```
 
-with the same request which it received in `onRoleChangeRequest` which completes the `changeRole` loop. Both parties will receive a `roleUpdated` callback so that they both can do necessary UI updates. Now the user actually becomes a speaker and the audio publishing will start automatically. 
+with the same request which it received in `onRoleChangeRequest` which completes the `changeRole` loop. Both parties will receive a `roleUpdated` callback so that they both can do necessary UI updates. Now the user actually becomes a speaker and the audio publishing will start automatically.
 
 Now lets imagine the newly nominated speaker is not behaving nicely and we want to move him back to listener without a prompt. This is where the `force` parameter comes in. When it is set to `true` the other party will not receive a confirmation `roleChangeRequest` but instead will straight away receive a new set of updated permissions and stop publishing. `roleUpdated` callback will still be fired so that the app can update the user's UI state.

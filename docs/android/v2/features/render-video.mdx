@@ -5,7 +5,7 @@ nav: 9
 
 At the very least for rendering video you'll need an instance of `org.webrtc.SurfaceViewRenderer` and a `HMSVideoTrack` instance from a peer.
 
-For the `SurfaceViewRenderer`, as of `2.0.9` of the 100ms Android SDK, only adding the sdk is enough to receive webrtc objects including hte SurfaceViewRenderer. In versions prior to this, add the dependency `implementation 'org.webrtc:google-webrtc:1.0.32006'` to receive SurfaceViewRenderer.
+For the `SurfaceViewRenderer`, as of `2.0.9` of the 100ms Android SDK, only adding the sdk is enough to receive webrtc objects including the SurfaceViewRenderer. In versions prior to this, add the dependency `implementation 'org.webrtc:google-webrtc:1.0.32006'` to receive SurfaceViewRenderer.
 
 In xml layouts it would look like
 
@@ -63,6 +63,7 @@ It's very important to remove the video when you're done showing it, or before y
 hmsVideoTrack.removeSink(this)
 surfaceView.release()
 ```
+
 There is a limit to the number of `SharedEglContext`'s that can be bound per mobile device. It's normally high enough to easily accomodate all the videos that will reasonably fit on a screen. If the video's aren't released however, it becomes very easy to exceed this limit and the app will crash.
 
 Until you call `removeSink` the video is being streamed over the device's data so it's also important remove sinks.
@@ -171,4 +172,3 @@ The adapter stops the surface every time it binds. Starts it when the view is at
     }
 
 ```
-
