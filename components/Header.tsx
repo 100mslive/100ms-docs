@@ -110,7 +110,7 @@ const Header: React.FC<Props> = ({
     return (
         <div className="ctx header">
             <div className="head-left">
-                <a href="/docs">
+                <a href="https://100ms.live/">
                     <div className="logo-ctx">
                         <img width={36} src="/docs/logo.svg" alt="100ms Logo" />
                         <p className="company hide-content">100ms</p>
@@ -118,7 +118,7 @@ const Header: React.FC<Props> = ({
                 </a>
                 <DividerIcon style={{ strokeWidth: '2px', marginLeft: '-16px' }} />
                 <div>
-                    <Link href={`/${currentTech}/`}>
+                    <Link href="/">
                         <p
                             className="company"
                             style={{
