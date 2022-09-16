@@ -110,7 +110,7 @@ const Header: React.FC<Props> = ({
     return (
         <div className="ctx header">
             <div className="head-left">
-                <a href="https://100ms.live/">
+                <a href="https://www.100ms.live">
                     <div className="logo-ctx">
                         <img width={36} src="/docs/logo.svg" alt="100ms Logo" />
                         <p className="company hide-content">100ms</p>
