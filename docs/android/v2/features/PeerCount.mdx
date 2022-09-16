@@ -17,6 +17,7 @@ To receive these values even if no peer joins the room, look into the webhooks f
 
 ```kotlin
 hmsSDK.join(config, object : HMSUpdateListener {
+    
     override fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) {
 
         when (type) {
@@ -34,7 +35,6 @@ hmsSDK.join(config, object : HMSUpdateListener {
 <Tab id='peer-count-1'>
 
 ```java
-
 hmsSdk.join(config, new HMSUpdateListener() {
 
     @Override
