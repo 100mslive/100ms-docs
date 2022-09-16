@@ -188,14 +188,17 @@ const sdkItems = {
         { id: 5, link: '/javascript/v2/release-notes/release-notes' }
     ],
     react: [
-        { id: 1, link: '/javascript/v2/guides/javascript-quickstart' },
+        { id: 1, link: '/javascript/v2/guides/react-quickstart' },
         { id: 3, link: 'https://github.com/100mslive/100ms-web' },
         { id: 4, link: '/api-reference/javascript/v2/home/content' },
         { id: 5, link: '/javascript/v2/release-notes/release-notes' }
     ],
     serverSide: [
         // { id: 1, link: '/server-side/v2/guides/quickstart' },
-        { id: 4, link: '/server-side/v2/foundation/templates-and-roles#api-reference' },
+        {
+            id: 4,
+            link: '/server-side/v2/foundation/templates-and-roles#api-reference'
+        },
         { id: 6, link: '/server-side/v2/foundation/webhook' },
         { id: 7, link: '/server-side/v2/foundation/firewall-and-ports' }
     ],
@@ -213,7 +216,10 @@ const sdkItems = {
     ],
     flutter: [
         { id: 1, link: '/flutter/v2/guides/quickstart' },
-        { id: 3, link: 'https://github.com/100mslive/100ms-flutter/tree/main/example' },
+        {
+            id: 3,
+            link: 'https://github.com/100mslive/100ms-flutter/tree/main/example'
+        },
         {
             id: 4,
             link: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
