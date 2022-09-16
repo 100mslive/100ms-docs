@@ -7,7 +7,7 @@ class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
-                    <link href="/docs/static/favicons/favicon.ico" rel="shortcut icon" />
+                    <link href="/docs/logo.svg" rel="shortcut icon" />
                     <link href="/docs/static/favicons/site.webmanifest" rel="manifest" />
                     <link rel="preconnect" href="https://cdn.usefathom.com" crossOrigin="" />
                     <link
