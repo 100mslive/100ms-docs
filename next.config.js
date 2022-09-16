@@ -3,9 +3,6 @@
  */
 const nextConfig = {
     basePath: '/docs',
-    experimental: {
-        optimizeCss: true
-    },
     webpack: (config, { isServer, dev }) => {
         // Fixes npm packages that depend on `fs` module
         if (!isServer) {

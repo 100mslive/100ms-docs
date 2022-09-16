@@ -54,20 +54,22 @@ const Header: React.FC<Props> = ({
     const { toggleTheme, themeType } = useTheme();
 
     React.useEffect(() => {
+        const theme = window.localStorage.getItem('theme') || 'dark';
         const docHtml = document.documentElement.dataset;
-        setIsDark(docHtml.theme === 'dark');
-        if (docHtml.theme !== themeType) toggleTheme();
+        setIsDark(theme === 'dark');
+        docHtml.theme = theme;
+        if (themeType !== theme) toggleTheme();
     }, []);
 
     const buttonToggleTheme = () => {
+        // update the html data
         const docHtml = document.documentElement.dataset;
-        // toggle theme
+        docHtml.theme = `${!isDark ? 'dark' : 'light'}`;
         // set local storage
         window.localStorage.setItem('theme', `${!isDark ? 'dark' : 'light'}`);
-        // update the html data
-        docHtml.theme = `${!isDark ? 'dark' : 'light'}`;
         // update the state
         setIsDark(!isDark);
+        // toggle theme
         toggleTheme();
     };
 
@@ -108,7 +110,7 @@ const Header: React.FC<Props> = ({
     return (
         <div className="ctx header">
             <div className="head-left">
-                <a href="/docs/javascript/v2/foundation/basics">
+                <a href="/docs">
                     <div className="logo-ctx">
                         <img width={36} src="/docs/logo.svg" alt="100ms Logo" />
                         <p className="company hide-content">100ms</p>
