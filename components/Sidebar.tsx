@@ -1,14 +1,14 @@
 /* eslint-disable react/no-array-index-key */
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import React from 'react';
-import JavascriptIcon from '@/assets/icons/JavascriptIcon';
+import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
-import ServerIcon from '@/assets/icons/ServerIcon';
-import FlutterIcon from '@/assets/FlutterIcon';
-import { Listbox } from '@headlessui/react';
+import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import ReactIcon from '@/assets/icons/ReactIcon';
+import ServerIcon from '@/assets/icons/ServerIcon';
+import { Listbox } from '@headlessui/react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React from 'react';
 
 type NavRoute = {
     url: string;
@@ -24,13 +24,13 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const router = useRouter();
     const menuItem = [
         {
-            link: '/android/v2/foundation/Basics',
+            link: '/android/v2/foundation/basics',
             name: 'Android',
             icon: <AndroidIcon />,
             apiRef: '/api-reference/android/v2/index.html'
         },
         {
-            link: '/ios/v2/foundation/Basics',
+            link: '/ios/v2/foundation/basics',
             name: 'iOS',
             icon: <IosIcon />,
             apiRef: '/api-reference/ios/v2/home/content'
