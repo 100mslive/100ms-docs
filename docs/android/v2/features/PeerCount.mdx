@@ -1,0 +1,54 @@
+---
+title: Peer Count
+nav: 17
+---
+
+The `HMSRoom` object has a property called `peerCount`.
+
+This property will be updated in the background and can be read when the `HMSUpdateListener`'s `onRoomUpdate` is called specifically the type `HMSRoomUpdate.ROOM_PEER_COUNT_UPDATED`
+
+The android SDK will update these values whenever a peer joins or leaves.
+
+To receive these values even if no peer joins the room, look into the webhooks for the peer join events.
+
+<Tabs id="peer-count" items={['Kotlin', 'Java']} />
+
+<Tab id='peer-count-0'>
+
+```kotlin
+hmsSDK.join(config, object : HMSUpdateListener {
+    override fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) {
+
+        when (type) {
+            HMSRoomUpdate.ROOM_PEER_COUNT_UPDATED -> {
+                val count = hmsRoom.peerCount
+            }
+        }
+    }
+}
+
+```
+
+</Tab>
+
+<Tab id='peer-count-1'>
+
+```java
+
+hmsSdk.join(config, new HMSUpdateListener() {
+
+    @Override
+    public void onRoomUpdate(@NonNull HMSRoomUpdate type, @NonNull HMSRoom hmsRoom) {
+        switch (type){
+            case ROOM_PEER_COUNT_UPDATED:
+                hmsRoom.getPeerCount();
+            break;
+        }
+    }
+
+}
+
+```
+
+</Tab>
+
