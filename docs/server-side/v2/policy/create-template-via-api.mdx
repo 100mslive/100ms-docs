@@ -7,13 +7,13 @@ This endpoint is used to create a template. A recommended way is to provide a li
 
 ## Understand sub-objects hierarchy
 
--   Template object
-    -   roles object
-        -   publishParams object
-        -   subscribeParams object
-        -   permissions object
-    -   settings object
-    -   destinations object
+    -   Template object
+        -   roles object
+            -   publishParams object
+            -   subscribeParams object
+            -   permissions object
+        -   settings object
+        -   destinations object
 
 <PostRequest title="https://api.100ms.live/v2/templates" />
 
@@ -151,6 +151,82 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
             "stopRoomStateOnJoin": true,
             "enabled": false
         }
+    },
+    "destinations": {
+        "browserRecordings": {
+            "test": {
+                "name": "test",
+                "width": 1920,
+                "height": 1080,
+                "maxDuration": 1800,
+                "thumbnails": {
+                    "width": 0,
+                    "height": 0
+                },
+                "presignDuration": 3600
+            }
+        },
+        "rtmpDestinations": {
+            "test": {
+                "name": "test",
+                "width": 1080,
+                "height": 1920,
+                "maxDuration": 1800,
+                "rtmpUrls": [
+                    "url",
+                    "ashdas",
+                    "ddsfsdf"
+                ],
+                "recordingEnabled": true
+            }
+        },
+        "hlsDestinations": {
+            "test": {
+                "name": "test",
+                "maxDuration": 28800,
+                "layers": [
+                    {
+                        "width": 1080,
+                        "height": 720,
+                        "videoBitrate": 1100,
+                        "audioBitrate": 32
+                    },
+                    {
+                        "width": 720,
+                        "height": 720,
+                        "videoBitrate": 600
+                    },
+                    {}
+                ],
+                "playlistType": "event",
+                "numPlaylistSegments": 12,
+                "videoFrameRate": 25,
+                "enableMetadataInsertion": true,
+                "enableStaticUrl": true,
+                "recording": {
+                    "hlsVod": true,
+                    "singleFilePerLayer": true,
+                    "layers": [
+                        {
+                            "width": 720,
+                            "height": 1920,
+                            "videoBitrate": 2000,
+                            "audioBitrate": 64
+                        }
+                    ],
+                    "thumbnails": {
+                        "enabled": true,
+                        "width": 720,
+                        "height": 1920,
+                        "offsets": [
+                            2
+                        ],
+                        "fps": 60
+                    },
+                    "presignDuration": 604800
+                }
+            }
+        }
     }
 }'
 ```
@@ -161,9 +237,9 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 ```json
 {
-    "id": "63188115d11d6db790c73c60",
-    "name": "new-template-1662550293",
-    "customerId": "627cdddff2e4e30487862ad1",
+    "id": "6324661c4da877930beaecaa",
+    "name": "new-template-1663329820",
+    "customerId": "627cda54ff688c037a39291b",
     "roles": {
         "guest": {
             "name": "guest",
@@ -260,7 +336,21 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
         "subscribeDegradation": {},
         "screenSimulcastLayers": {},
         "videoSimulcastLayers": {},
-        "recording": null,
+        "recording": {
+            "enabled": true,
+            "upload": {
+                "location": "<Name of the AWS s3 bucket>",
+                "type": "s3",
+                "prefix": "<Upload prefix path>",
+                "credentials": {
+                    "key": "<access key ID for the AWS account/S3 bucket>",
+                    "secretKey": "<secret access key for the AWS account/S3 bucket>"
+                },
+                "options": {
+                    "region": "<region of the s3 bucket>"
+                }
+            }
+        },
         "roomState": {
             "messageInterval": 5,
             "sendPeerList": false,
@@ -269,11 +359,80 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
         },
         "retry": {}
     },
-    "destinations": {},
-    "createdAt": "2022-09-07T11:31:33.618Z",
-    "updatedAt": "2022-09-07T11:31:33.618Z",
-    "_id": "63188115d11d6db790c73c60",
-    "customer": "627cdddff2e4e30487862ad1"
+    "destinations": {
+        "browserRecordings": {
+            "test": {
+                "name": "test",
+                "width": 1920,
+                "height": 1080,
+                "maxDuration": 1800,
+                "thumbnails": {
+                    "width": 0,
+                    "height": 0
+                },
+                "presignDuration": 3600
+            }
+        },
+        "rtmpDestinations": {
+            "test": {
+                "name": "test",
+                "width": 1080,
+                "height": 1920,
+                "maxDuration": 1800,
+                "rtmpUrls": ["url", "ashdas", "ddsfsdf"],
+                "recordingEnabled": true
+            }
+        },
+        "hlsDestinations": {
+            "test": {
+                "name": "test",
+                "maxDuration": 28800,
+                "layers": [
+                    {
+                        "width": 1080,
+                        "height": 720,
+                        "videoBitrate": 1100,
+                        "audioBitrate": 32
+                    },
+                    {
+                        "width": 720,
+                        "height": 720,
+                        "videoBitrate": 600
+                    },
+                    {}
+                ],
+                "playlistType": "event",
+                "numPlaylistSegments": 12,
+                "videoFrameRate": 25,
+                "enableMetadataInsertion": true,
+                "enableStaticUrl": true,
+                "recording": {
+                    "hlsVod": true,
+                    "singleFilePerLayer": true,
+                    "layers": [
+                        {
+                            "width": 720,
+                            "height": 1920,
+                            "videoBitrate": 2000,
+                            "audioBitrate": 64
+                        }
+                    ],
+                    "thumbnails": {
+                        "enabled": true,
+                        "width": 720,
+                        "height": 1920,
+                        "offsets": [2],
+                        "fps": 60
+                    },
+                    "presignDuration": 604800
+                }
+            }
+        }
+    },
+    "createdAt": "2022-09-16T12:03:40.068Z",
+    "updatedAt": "2022-09-16T12:03:40.068Z",
+    "_id": "6324661c4da877930beaecaa",
+    "customer": "627cda54ff688c037a39291b"
 }
 ```
 
@@ -289,17 +448,19 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | settings <br/>     | `object`  | Global settings for this template.                                                                                                                                                                                                                                                                    | No       |
 | destinations <br/> | `object`  | Object of type `destinations`. This object contains information for enabling/configuring features like `browserRecordings`, `rtmpDestinations`, & `hlsDestinations`.                                                                                                                                  | No       |
 
-## roles object arguments
+## Sub-objects arguments
 
-| Name            | Type     | Description                                                                                                                                                                                                         | Required |
-| --------------- | :------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name            | `string` | Alias for the role associated with a particular template.                                                                                                                                                           | No       |
-| publishParams   | `object` | Publish parameters for this role. <br/><br/>Object of type [publishParams](#publishparams-object-arguments) with the collection of objects such as `allowed`, `audio`, `video`, `screen`, etc                       | No       |
-| subscribeParams | `object` | Subscribe parameters for this role. <br/><br/>Object of type [subscribeParams](#subscribe-object-arguments) with a mix of arguments and objects like `subscribeToRoles`, `maxSubsBitRate`, & `subscribeDegradation` | No       |
-| permissions     | `object` | Permissions for this role. <br/><br/>Object of type [permission](#permissions-object-arguments) with collection of objects like `browserRecordings`, `rtmpDestinations`, & `hlsDestinations`.                       | No       |
-| priority        | `int`    | Priority of the role for subscribing/publishing. <br/><br/>Priority will determine the order in which the roles will be degraded. A lower number represents a higher priority.                                      | No       |
+### roles object
 
-### publishParams object arguments
+| Name            | Type     | Description                                                                                                                                                                                               | Required |
+| --------------- | :------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| name            | `string` | Alias for the role associated with a particular template.                                                                                                                                                 | No       |
+| publishParams   | `object` | Publish parameters for this role. <br/><br/>Object of type [publishParams](#publishparams-object) with the collection of objects such as `allowed`, `audio`, `video`, `screen`, etc                       | No       |
+| subscribeParams | `object` | Subscribe parameters for this role. <br/><br/>Object of type [subscribeParams](#subscribe-object) with a mix of arguments and objects like `subscribeToRoles`, `maxSubsBitRate`, & `subscribeDegradation` | No       |
+| permissions     | `object` | Permissions for this role. <br/><br/>Object of type [permission](#permissions-object) with collection of objects like `browserRecordings`, `rtmpDestinations`, & `hlsDestinations`.                       | No       |
+| priority        | `int`    | Priority of the role for subscribing/publishing. <br/><br/>Priority will determine the order in which the roles will be degraded. A lower number represents a higher priority.                            | No       |
+
+### publishParams object
 
 | Name    | Type     | Description                                               | Required |
 | :------ | :------- | :-------------------------------------------------------- | :------- |
@@ -308,14 +469,14 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | video   | `object` | Video publish parameters.                                 | No       |
 | screen  | `object` | Screenshare publish parameters.                           | No       |
 
-#### audio object arguments
+### audio object
 
 | Name    | Type     | Description                                                     | Default | Required |
 | :------ | :------- | :-------------------------------------------------------------- | :------ | :------- |
 | bitRate | `int`    | Audio Max bitrate of audio track in kbps.<br/>Range: `16`-`128` | 32      | No       |
 | codec   | `string` | Codec for the audio track.<br/>Options: [`opus`]                | opus    | No       |
 
-#### video object arguments
+### video object
 
 | Name      | Type     | Description                                                | Default | Required |
 | :-------- | :------- | :--------------------------------------------------------- | :------ | :------- |
@@ -325,7 +486,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | height    | `int`    | Height of the video track.<br/>Range: `50`-`1080`          | 180     | No       |
 | width     | `int`    | Width of the video track.<br/>Range: `50`-`1920`           | 320     | No       |
 
-#### screen object arguments
+### screen object
 
 | Name      | Type     | Description                                                | Default | Required |
 | :-------- | :------- | :--------------------------------------------------------- | :------ | :------- |
@@ -335,7 +496,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | height    | `int`    | Height of the screen track.<br/>Range: `270`-`1080`        | 720     | No       |
 | width     | `int`    | Width of the screen track.<br/>Range: `480`-`1920`         | 1280    | No       |
 
-### subscribeParams object arguments
+### subscribeParams object
 
 | Name                 | Type     | Description                                                              | Required |
 | :------------------- | :------- | :----------------------------------------------------------------------- | :------- |
@@ -343,7 +504,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | subscribeToRoles     | `array`  | List of roles which can be subscribed to.                                | No       |
 | subscribeDegradation | `object` | Subscribe degradation parameters (adding this enables screen simulcast). | No       |
 
-#### subscribeDegradation object arguments
+### subscribeDegradation object
 
 | Name                      | Type  | Description                                            | Default | Required |
 | :------------------------ | :---- | :----------------------------------------------------- | :------ | :------- |
@@ -351,7 +512,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | degradeGracePeriodSeconds | `int` | Degrade grace period (in seconds).<br/>Range: `1`-`10` | 1       | No       |
 | recoverGracePeriodSeconds | `int` | Recover grace period (in seconds).<br/>Range: `1`-`10` | 4       | No       |
 
-## permissions object arguments
+### permissions object
 
 | Name             | Type      | Description                                                                                                                                                                 | Required | Default |
 | :--------------- | :-------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- | :------ |
@@ -365,21 +526,22 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | rtmpStreaming    | `boolean` | Permission to start/stop RTMP streaming. <br/><br/> This is also required to start/stop RTMP + browser recording in conjunction with `browserRecording` permissions.        | No       | `true`  |
 | hlsStreaming     | `boolean` | Permission to start/stop HLS streaming (with or without recording). <br/><br/>This is also required to - pause/unpause HLS recording or insert metadata in HLS stream.      | No       | `true`  |
 
-## settings object arguments
+### settings object
 
-| Name      | Type     | Description                                                                                                                           | Required |
-| :-------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------ | :------- |
-| region    | `string` | Region in which the room will be hosted by default. Possible values could be `in`, `us`, `eu` or `auto` (automatic region selection). | No       |
-| recording | `object` | Object of type `recording`. This object contains information for enabling recording/setting storage location for recordings.          | No       |
+| Name      | Type     | Description                                                                                                                                                                                                                                               | Required |
+| :-------- | :------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| region    | `string` | Region in which the room will be hosted by default. Possible values could be `in`, `us`, `eu` or `auto` (automatic region selection).                                                                                                                     | No       |
+| recording | `object` | Object of type `recording`. This object contains information for enabling recording/setting storage location for recordings.                                                                                                                              | No       |
+| roomState | `object` | Object of type `roomState`. This object will help you to define strategy of sending state updates to client SDKs. <br/><br/>Also, enables you to build a "preview" screen which shows the state of the room before joining by providing the list of peers | No       |
 
-### recording object arguments
+### recording object
 
 | Name    | Type      | Description                                                                                                                                                                                | Required |
 | :------ | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | enabled | `boolean` | Enable the SFU recording for its rooms. Disabled by default.                                                                                                                               | No       |
 | upload  | `object`  | Object of type `upload`. This object contains information on recordings storage location. If you want to store recording with 100ms, and not use your own s3, don't add this to the object | No       |
 
-#### upload object arguments
+### upload object
 
 | Name        | Type     | Description                                                                                            | Required |
 | :---------- | :------- | :----------------------------------------------------------------------------------------------------- | :------- |
@@ -389,23 +551,31 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | options     | `object` | Additional configurations of type Options to be used for uploading                                     | No       |
 | credentials | `object` | Object of type `credentials`. This is used to share AWS credentials to access the s3 bucket specified. | No       |
 
-#### options object arguments
+### options object
 
 | Name   | Type     | Description                                                                                       | Required |
 | :----- | :------- | :------------------------------------------------------------------------------------------------ | :------- |
 | region | `string` | Region of the AWS account hosting the s3 bucket. If not provided it is assumed to be `ap-south-1` | No       |
 
-#### credentials object arguments
+### credentials object
 
 | Name      | Type     | Description                                                                          | Required |
 | :-------- | :------- | :----------------------------------------------------------------------------------- | :------- |
 | key       | `string` | `access key ID` for the AWS account hosting the s3 bucket for storing recordings     | Yes      |
 | secretKey | `string` | `secret access key` for the AWS account hosting the s3 bucket for storing recordings | Yes      |
 
-### roomState object arguments
+### roomState object
 
 | Name            | Type      | Description                                                                                                                                                                                                                                                            | Required |
 | :-------------- | :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | messageInterval | `int`     | Room-state data will be sent over a regular interval of these many seconds. <br/><br/>Consequently, the room state displayed on the preview screen will refresh accordingly. <br/><br/>This value must be a multiple of 5, between 5 and 3600 seconds, both inclusive. | No       |
 | sendPeerList    | `boolean` | Enabling this will send peer-list info of the room. If disabled, only the peer count is sent.                                                                                                                                                                          | No       |
 | enabled         | `boolean` | This is the list of all the roles which will get the room-state data. You can also individually toggle these settings in the Roles tab under the Permissions section.                                                                                                  | No       |
+
+### destinations object
+
+| Name              | Type     | Description                                                                                                                                            | Required |
+| :---------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| browserRecordings | `object` | Object of type `browserRecordings`. This can be used to record your sessions to a file, for subsequent access.                                         | No       |
+| rtmpDestinations  | `object` | Object of type `rtmpDestinations`. This can be used to live stream your video conferencing apps to platforms like YouTube, Twitch, Facebook, MUX, etc. | No       |
+| hlsDestinations   | `object` | Object of type `hlsDestinations`. This can be used to configure arguments for your HLS live streaming                                                  | No       |
