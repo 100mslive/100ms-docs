@@ -3,7 +3,6 @@
     <img src="public/logo.svg" alt="Logo" width="200" >
 </p>
 
-
 [![Discord](https://img.shields.io/discord/843749923060711464?label=Join%20on%20Discord)](https://100ms.live/discord)
 
 <br />
@@ -36,7 +35,7 @@ Suppose you wanna add a new section `VUE SDK` in `/v2` docs
 Now you wanna add docs in section
 
 -   Create .mdx files in `v2/vue-sdk/file-name.mdx`
--   Avoid decimal numbers (eg: `v-1.3.2.mdx`) in filename (doesn't cause any loss)
+-   Avoid decimal numbers (For example `v-1.3.2.mdx`) in filename (doesn't cause any loss)
 -   Avoid adding `ampersand` / `&` in filenames as it breaks Sitemaps generation
 -   It's important to add `FrontMatter` to the MDX File on top
 
@@ -67,10 +66,10 @@ in the File add the following
 ```jsx
 import redirect from '@/lib/redirect';
 
-export default redirect('/v3/100ms-v3/Basics');
+export default redirect('/v3/100ms-v3/basics');
 ```
 
-This is needed because we need it to route somewhere if someone hits `/v3` this would redirect it to `/v3/100ms-v3/Basics` i.e the MDX file `/v3/100ms-v3/Basics.mdx`
+This is needed because we need it to route somewhere if someone hits `/v3` this would redirect it to `/v3/100ms-v3/basics` i.e the MDX file `/v3/100ms-v3/basics.mdx`
 
 Then Follow the Steps in 1. to add docs to it.
 
@@ -173,8 +172,8 @@ Super easy just get the `id`
 
 ## ❌ Don't
 
--   Don't use Bold in Header (eg: ** ## Don't ** )
--   Dont't Keep the File Names with Decimals (eg: Don't android-v2.0.0.mdx) instead keep it as `title` in frontMatter
+-   Don't use Bold in Header (For example ** ## Don't ** )
+-   Dont't Keep the File Names with Decimals (For example Don't android-v2.0.0.mdx) instead keep it as `title` in frontMatter
 
 ## 🎨 Customization
 
@@ -195,8 +194,12 @@ All CSS Variables prefixed with `token` control the Syntax Highlighting.
 
 ## 📇 Linting
 
-- Add tokens in `.github/workflows/styles/Vocab/HMSVocab/accept.txt` which you want to whitelist during the linting.
-- code blocks are already whitelisted.
+-   Vale testing
+    -   `brew install vale`
+    -   `vale sync`
+    -   `vale docs/*`
+-   Add tokens in `.github/workflows/styles/Vocab/HMSVocab/accept.txt` which you want to whitelist during the linting.
+-   code blocks are already whitelisted.
 
 ## 🙏🏽 Acknowledgement
 
