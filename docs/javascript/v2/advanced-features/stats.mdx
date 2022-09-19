@@ -3,7 +3,12 @@ title: Stats
 nav: 5.07
 ---
 
-After setting up a video conferencing application, you'd want metrics to measure the call quality - what caused choppy audio, lost video frames, or who had a bad network. <APILink type="class" name="HMSReactiveStore#get-stats">`getStats`</APILink> saves the day here.
+<Note type="warning">
+    This feature is still in Beta. To know more or report any issues, feel free to reach out to us
+    over <a href={'https://discord.com/invite/kGdmszyzq2'}>Discord</a>.
+</Note>
+
+Sometimes you need a way to capture certain metrics related to a call. This may be helpful if you want to tailor the experience to your users or debug issues. Typical metrics of interest are audio/video bitrate, round trip time, total consumed bandwidth and packet loss. <APILink type="class" name="HMSReactiveStore#get-stats">`getStats`</APILink> has got your back.
 
 With <APILink type="class" name="HMSReactiveStore#get-stats">`getStats`</APILink> you could get statistics for the whole session and individual tracks of all the peers in the room.
 
@@ -15,7 +20,7 @@ With <APILink type="class" name="HMSReactiveStore#get-stats">`getStats`</APILink
 const hmsStats = hms.getStats();
 ```
 
-This initializes the SDK to collect stats from WebRTC every 1 second and stores it in a Zustand store called <APILink>`HMSStatsStore`</APILink>. This is similar to <APILink>`HMSStore`</APILink> in terms of retrieving data from the store.
+This initializes the SDK to collect stats from WebRTC periodically and store it in a Redux store called <APILink>`HMSStatsStore`</APILink>. This is similar to <APILink>`HMSStore`</APILink> in terms of retrieving data from the store.
 
 If you have [Redux Devtools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en) installed(which is highly recommended), you could open the HMSStatsStore to get a quick sense of the quality of the call by looking at the bitrate, packets lost, jitter, etc...
 
@@ -29,7 +34,7 @@ You have `getState` and `subscribe` methods, if you're using our JS SDK and `use
 
 ### Global Level Stats for Local Peer
 
-Use the `selectHMSStats.localPeerStats` selector to get the global level stats about the whole session from the local peer's perspective.
+Use the `selectHMSStats.localPeerStats` selector to get the combined stats for the room for local peer.
 
 <Tabs id="local-peer-stats" items={['Javascript', 'React']} />
 
@@ -72,7 +77,7 @@ const renderLocalPeerStats = (localPeerStats) => {
 
 const LocalPeerStats = () => {
     const localPeerStats = useHMSStatsStore(selectHMSStats.localPeerStats);
-    React.useEffect(() => {
+    useEffect(() => {
         renderLocalPeerStats(localPeerStats);
     }, [localPeerStats]);
 };
