@@ -2,12 +2,11 @@
 title: Render Video
 nav: 3.6
 ---
-
 It all comes down to this. All the setup so far has been done so that we can show live streaming video in our beautiful apps.
 
+The React Native SDK provides a Component `HmsView` that renders the video on the screen.
 
-The React Native SDK provides a Component `HmsView` that renders the video on screen.
-We can pass video trackId, scaleType, mirror and sink to this component.
+We can pass video `trackId`, `scaleType` and `mirror` to `HmsView` component.
 
 ```js
 import { HMSVideoViewMode } from '@100mslive/react-native-hms';
@@ -20,21 +19,35 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 });
-<HmsView trackId={trackId} scaleType={HMSVideoViewMode.ASPECT_FILL} style={styles.hmsView} mirror={true} sink={true} />
+<HmsView trackId={trackId} scaleType={HMSVideoViewMode.ASPECT_FILL} style={styles.hmsView} mirror={true} />
 ...
 ```
 
 
 ## Track Id
-There are 2 types of Peers remotePeers and a localPeer to extract trackId from peers we can use following code snippet. These track IDs can directly be passed to HmsView component
+It is a required prop in the `HmsView` component. There are 2 types of peers - a `localPeer` & `remotePeer`, to extract `trackId` from peers use the following code snippet. These track IDs can directly be passed to `HmsView` component.
+
 ```js
 const localTrackId = hmsInstance.localPeer.videoTrack.trackId;
 const remoteTrackId = hmsInstance.remotePeers[index].videoTrack.trackId;
 ```
 
+Make sure the trackId passed in the HMSView is not null because once a trackId is linked to HMSView, it can not be unlinked. 
+
+You can make sure the trackId is not null by checking the onTrackListener type as `TRACK_ADDED` and track type as `VIDEO` of that peer. 
+
+If a null trackId is passed in HMSView you have to unmount the HMSView component and mount it with a new `trackId`.
+
+This can be done using a `key` prop and passing `trackId` as its value in the `HmsView` component.
+
+```js
+<HmsView key={trackId} trackId={trackId} />
+```
+
+> Pro Tip: Try to render only 2 to 4 videos on a screen and set sink false for other videos. This will stop downloading video data of tiles which are not visible on the screen.
 
 ## Scale Type
-There are 3 scale types you can pass to render a video 
+It is an optional prop in the `HmsView` component. By default value of scale type is set to `HMSVideoViewMode.ASPECT_FILL`. There are 3 scale types you can pass to render a video. 
 ```js
 import { HMSVideoViewMode } from '@100mslive/react-native-hms';
 
@@ -43,32 +56,22 @@ const ASPECT_FIT = HMSVideoViewMode.ASPECT_FIT
 const ASPECT_BALANCED = HMSVideoViewMode.ASPECT_BALANCED
 ```
 
-
 ## Mirror
-You can mirror the videos as well. By default the mirror prop is set to false. For an attractive rendering you can set mirror true for the videos rendered to the left of the camera.
-
-
-
-## Sink
-This is a extremely important prop which is set to true by default. In android if the video is off the screen the sink is automatically set to false and vice versa on the other hand user has to manually manage it for iOS.
-
-
-
-## Manage sink
-Whenever the video is off the screen or isPlaybackAllowed is set to false for a peer remove sink of the following track in order to get a better experience for other videos.
-
-> A Pro tip: Try to render only 2 to 4 videos on a screen and set sink false for other videos. This will stop downloading video data of tiles which are not visible on screen.
+It is an optional prop in the `HmsView` component. You can mirror the videos as well. By default, the mirror prop is set to false. For a beautiful rendering, you can set mirror true for the videos rendered to the left of the camera.
 
 
 ## Is Degraded
-Sometimes people have bad internet connections but everyone deserves a good meeting.When the network is too slow to support audio and video conversations together, the 100ms SDK can automatically turn off downloading other peer's videos, which may improve the audio quality and avoid disconnections.If the network quality improves, the videos will be restored automatically as well.
-Show a black tile with avatar or initials when isDegraded is true.
+Sometimes people have bad internet connections but everyone deserves a good meeting. When the network is too slow to support audio and video conversations together, the 100ms SDK can automatically turn off downloading other peers' videos, which may improve the audio quality and avoid disconnections. 
+
+If the network quality improves, the videos will be restored automatically as well.
+
+Show a black tile with avatar or initials when `isDegraded` is true.
 ```js
 const isDegraded: boolean = peer.videoTrack.isDegraded
 ```
 
+> Pro Tip: Always use ON_PEER_UPDATE and ON_TRACK_UPDATE listeners, these listeners get updated `localPeer` and `remotePeers` whenever there is any event related to these values.
 
-> A Pro tip: For fastest updates we can use ON_PEER_UPDATE and ON_TRACK_UPDATE listeners, these listeners get updated localPeer and remotePeers whenever there is any event related to these values.
 
 ```js
 HmsInstance.addEventListener(
@@ -79,34 +82,43 @@ HmsInstance.addEventListener(
   HMSUpdateListenerActions.ON_TRACK_UPDATE,
   onTrackListener
 );
+
 const onPeerListener = ({
   remotePeers,
   localPeer,
 }: {
-  room?: any,
-  localPeer: any,
-  remotePeers: any,
+  peer: HMSPeer;
+  room?: HMSRoom;
+  type?: HMSPeerUpdate;
+  localPeer: HMSLocalPeer;
+  remotePeers: HMSRemotePeer[];
 }) => {
   updateVideoIds(remotePeers, localPeer); // this function can be used to update local and remotePeers on React-Native side
 };
+
 const onTrackListener = ({
   remotePeers,
   localPeer,
 }: {
-  room?: any,
-  localPeer: any,
-  remotePeers: any,
+  peer: HMSPeer;
+  track: HMSTrack;
+  room?: HMSRoom;
+  type?: HMSTrackUpdate;
+  localPeer: HMSLocalPeer;
+  remotePeers: HMSRemotePeer[];
 }) => {
   updateVideoIds(remotePeers, localPeer);
 };
 ```
 
-
-
 ## Troubleshooting in HmsView
 
 If a video renders for the first time and then it doesn't appear at all this can be due to the usage of multiple instances.
 
-However we will recommend you to use a single instance approach if possible, which means once you call a build method and get a hms instance from that save that instance in a global state. Do not call the build method again and again as it will return a new hms instance every time.
+It's possible to create multiple instances of SDK which is required in some niche requirements.
 
-If you need to use a multiple instance approach according to your usage then we recommend you to use the HmsView from the instance as shown above. Do not use the HmsView from the exports of the package, this export will be discarded in the upcoming versions.
+In most cases, prefer to use a single instance of SDK. That means once you call the `build` method and get an hms instance, save the instance in a global state.
+
+Do not call the `build` method again, as it will return a new hms instance every time. 
+
+So in this way you can ensure that only a single instance of the SDK is created.

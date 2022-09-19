@@ -1,0 +1,29 @@
+---
+title: FAQ
+nav: 2.4
+---
+
+## Could not invoke HMSManager.build
+
+![error](https://user-images.githubusercontent.com/56931905/174788439-53a39a54-847e-46f7-9104-7524b1547992.jpg)
+
+This error generally appears in development mode due to hot reloading. When the peer has joined the room and then the app is hot reloaded from the terminal, the peer is still in the room and when he tries to join back this error occurs. To make sure this error does not occur you have to remove your peer from the room.
+
+-   To avoid you can add `instance.leave()` function on the unmounting of the Home Screen, so whenever the app is hot reloaded which leads to unmounting of the Home screen the leave function is called.
+
+```js section=CouldNotInvokeHMSManagerBuild sectionIndex=1
+const onLeavePress = async () => {
+    await instance
+        ?.leave()
+        .then((d) => console.log('Leave Success: ', d))
+        .catch((e) => console.log('Leave Error: ', e));
+};
+
+useEffect(() => {
+    return () => {
+        onLeavePress();
+    };
+}, []);
+```
+
+-   If this error occurred you can either join through web app and remove the peer which is still present due to hot reloading or you can kill the app and rebuild it.

@@ -20,6 +20,15 @@ hmsInstance.addEventListener(
   HMSUpdateListenerActions.ON_PREVIEW,
   onPreview, // function that will be called on Preview success
 );
+// attach room and peer update listeners for current status
+hmsInstance?.addEventListener(
+  MSUpdateListenerActions.ON_ROOM_UPDATE,
+  onRoomListener,
+);
+hmsInstance?.addEventListener(
+  HMSUpdateListenerActions.ON_PEER_UPDATE,
+  onPeerListener,
+);
 
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
 ```

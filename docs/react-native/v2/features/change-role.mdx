@@ -32,8 +32,12 @@ const peer: HMSRemotePeer = hmsInstance?.remotePeers[0]
 const force = false
 
 // instance acquired from build() method
-hmsInstance.changeRole(peer, newRole, force); // request role change
-hmsInstance.changeRole(peer, newRole, !force); // force role change
+await hmsInstance.changeRole(peer, newRole, force) // request role change
+    .then(d => console.log('Change Role Success: ', d))
+    .catch(e => console.log('Change Role Error: ', e));
+await hmsInstance.changeRole(peer, newRole, !force) // force role change
+    .then(d => console.log('Change Role Success: ', d))
+    .catch(e => console.log('Change Role Error: ', e));
 ```
 
 ## Request Role Change Listener
@@ -57,5 +61,7 @@ Once the peer with adequate permissions calls change role, you can either accept
 
 ```js
 // call this if you accept role change else close the prompt
-hmsInstance.acceptRoleChange();
+await hmsInstance.acceptRoleChange()
+    .then(d => console.log('Accept change role Success: ', d))
+    .catch(e => console.log('Accept change role Error: ', e));
 ```

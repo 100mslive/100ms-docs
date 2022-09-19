@@ -1,0 +1,129 @@
+---
+title: Store AppData
+nav: 3.36
+---
+
+## Introduction
+
+If your app doesn't already use a global store, you can use a part of hmsStore to store simple states that needs sharing between your components. You might want to do this for improved performance and cleaner code on the app layer(avoiding prop drilling). Note that this is not a replacement for external global store. It's limited by design and only suitable for straightforward use cases.
+
+> Note that this is not suitable for -
+>  - storing large amount of data
+>  - data changing at a high frequency
+>  - complex interlinked state
+
+## Usage
+
+### Setting up initial appData
+
+[`initAppData`](/api-reference/javascript/v2/interfaces/HMSActions#init-app-data) takes an object of key value pairs to set the intial app data in store.
+
+```ts
+const data: Record<string,any> = {uiMode: "activeSpeaker", toasts: {message: false, errors: true}};
+hmsActions.initAppData(data);
+```
+
+### Updating State
+
+[`setAppData`](/api-reference/javascript/v2/interfaces/HMSActions#set-app-data) takes in key and value and update the state in store. If key doesn't already exist, it is added.
+
+```ts
+hmsActions.setAppData("uiMode", "gallery");
+// new value => {uiMode: "gallery", toasts: {message: false, errors: true}}
+```
+
+If your value is also an object, there is an additional boolean option which can be used to merge(instead of replace) the new value with existing value.
+
+#### With Merge as true
+
+```ts
+hmsActions.setAppData("toasts", {message: true}, true);
+// new value => {uiMode: "gallery", toasts: {message: true, errors: true}}
+```
+
+#### Without merge as true
+
+```ts
+hmsActions.setAppData("toasts", {message: true});
+// new value => {uiMode: "gallery", toasts: {message: true}}
+```
+
+### Reading App Data
+The selector [`selectAppData`](/api-reference/javascript/v2/home/content#select-app-data) can be used for this. You can pass it the key
+you want to get, and it'll give the value. The component using it will only be rendered if the value actually changes.
+
+```ts
+console.log(hmsStore.getState("uiMode")); // "gallery"
+console.log(hmsStore.getState("toasts")); // {message: false, errors: true}
+```
+
+### Example
+
+<Tabs id="appData" items={['JavaScript', 'React']} />{' '}
+
+<Tab id='appData-0'>
+
+```js:app.js
+function initAppData() {
+    const initialAppData = {
+      uiMode: "activeSpeaker",
+      toasts: {
+          message: false,
+          errors: true,
+      }
+    };
+
+    hmsActions.initAppData(initialAppData);
+    console.log("inital toasts to show", hmsStore.getState(selectAppData("toasts"))); // { message: false, errors: true }
+    hmsActions.setAppData("toasts", {message: true}, true); // merge this value in current value
+    console.log("merged new toasts", hmsStore.getState(selectAppData("toasts"))); // { message: true, errors: true }
+    hmsActions.setAppData("toasts", {message: true}, true); // replace current value
+    console.log("replaced new toasts, hmsStore.getState(selectAppData("toasts"))); // { message: true }
+    
+    console.log("uiMode", hmsStore.getState(selectAppData("uiMode")); // activeSpeaker
+    hmsActions.setAppData("uiMode", "gallery");
+    console.log("uiMode", hmsStore.getState(selectAppData("uiMode")); // gallery
+}
+
+```
+
+</Tab>
+
+<Tab  id='appData-1'>
+
+```jsx:app.jsx
+export function myComponent() {
+  const toasts = useHMSStore(selectAppData("toasts"));
+  const uiMode = useHMSStore(selectAppData("uiMode"));
+    
+  const hmsActions = useHMSActions();
+  useEffect(() => {
+    const initialAppData = {
+      uiMode: "activeSpeaker",
+      toasts: {
+          message: false,
+          errors: true,
+      }
+    };
+
+    hmsActions.initAppData(initialAppData);
+  }, [hmsActions]); // runs only once
+
+  // toasts becomes { message: true, errors: true } after first call to toggle
+  toggleMessageToast = useCallback(()=> {
+    hmsActions.setAppData("toasts", { message: !toasts.message }, true);
+  }, [hmsActions]);
+
+  // toasts becomes { message: false, errors: true } after call to this method
+  resetToasts = useCallback((newValue)=> {
+    hmsActions.setAppData("toasts",{
+          message: false,
+          errors: true,
+      });
+  }, [hmsActions]);
+
+  return <> {/* components */} </>;
+}
+```
+
+</Tab>

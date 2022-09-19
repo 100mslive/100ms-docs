@@ -1,0 +1,51 @@
+---
+title: Strict Privacy Applications
+nav: 4.5
+---
+
+Strict Privacy Applications are those applications which ask for permissions as & when required thus following something
+similar to principle of least privilege.
+
+## Steps to create a strict privacy application:
+
+1. Join in a role without video permissions.
+
+Create three roles with permissions as:
+
+- Host 
+
+![host](/docs/v2/flutter-host.png)
+
+- Guest
+
+![guest](/docs/v2/flutter-guest.png)
+
+- Viewer
+
+![viewer](/docs/v2/flutter-viewer.png)
+
+> These roles are just for examples. User can create their own roles based on use cases.
+
+2. If role of user is changed to a role which has audio-video publishing permission then ask for permissions as:
+
+```dart
+@override
+void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest}) {
+    if(roleChangeRequest.suggestedRole.publishSettings?.allowed.contains("video")??false){
+        //if video permissions are not available
+        await Permission.camera.request();
+    }
+    if(roleChangeRequest.suggestedRole.publishSettings?.allowed.contains("audio")??false){
+        //if audio permissions are not available
+        await Permission.microphone.request();
+        //if bluetooth permissions are not available
+        await Permission.bluetoothConnect.request();
+    }
+
+    //if the application have required permissions
+    hmsSDK.acceptChangeRole(roleChangeRequest);
+}
+```
+
+> This is applicable only when user asks for permission while changing role. In case of force role change
+> the application is required to have permissions before the role change. 

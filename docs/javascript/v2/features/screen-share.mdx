@@ -20,11 +20,27 @@ try {
 
 ## AudioOnly Screenshare
 
-To start audio only screenshare, you can pass a boolean as second argument. it defaults to false
+To start audio only screenshare, you can pass a config as second argument.
 
 ```js
 try {
-    await hmsActions.setScreenShareEnabled(true, true);
+    await hmsActions.setScreenShareEnabled(true, {
+        audioOnly: true
+    });
+} catch (error) {
+    // an error will be thrown if user didn't give access to share screen
+}
+```
+
+## VideoOnly Screenshare
+
+To start video only screenshare, you can pass a config as second argument.
+
+```js
+try {
+    await hmsActions.setScreenShareEnabled(true, {
+        videoOnly: true
+    });
 } catch (error) {
     // an error will be thrown if user didn't give access to share screen
 }

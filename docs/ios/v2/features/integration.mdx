@@ -1,0 +1,37 @@
+---
+title: Integrating The SDK
+nav: 3.1
+---
+
+
+HMSSDK is distributed via [Cocoapods](https://cocoapods.org/) and Swift Package Manager. 
+
+## Swift Package Manager
+Use https://github.com/100mslive/100ms-ios-sdk.git as the package source.
+
+## Cocoapods
+Add the `pod 'HMSSDK'` to your Podfile as follows:
+  
+  ```
+  // Podfile
+  
+  platform :ios, '12.0'
+
+  target 'MyAwesomeApp' do
+    use_frameworks!
+    pod 'HMSSDK'
+  end
+  ```
+
+then run `pod install --repo-update`
+
+Add the entitlements for video, audio and network access to your `Info.plist`
+
+```xml
+<key>NSCameraUsageDescription</key>
+<string>Allow access to camera to enable video calling.</string>
+<key>NSLocalNetworkUsageDescription</key>
+<string>Allow access to local network to enable video calling.</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>Allow access to mic to enable video calling.</string>
+```

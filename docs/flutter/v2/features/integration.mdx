@@ -1,6 +1,6 @@
 ---
 title: 100ms Flutter SDK Integration Guide
-nav: 3.0
+nav: 3.01
 ---
 
 ## Installing our libraries
@@ -16,6 +16,10 @@ dependencies:
 
   hmssdk_flutter:
 ```
+
+> At this moment, Flutter 3.0 or higher is not supported due to ongoing issues in Flutter 3.x release for Platform Views. Refer issues: [107313](https://github.com/flutter/flutter/issues/107313) & [103630](https://github.com/flutter/flutter/issues/103630). We are actively monitoring these issues & once [Flutter](https://github.com/flutter/flutter) team releases a fix for these issues on [stable](https://github.com/flutter/flutter/tree/stable) branch, we'll release a compatible version of 100ms SDK.
+> 
+> Until then, please use Flutter version `2.10.5` or any other 2.x series.
 
 ## Setting up the library
 
@@ -83,22 +87,24 @@ You will also need to request Camera and Record Audio permissions at runtime bef
 
 
 ## Debugging Tools
- 
+
 You can use [Android Studio](https://developer.android.com/studio), [VS Code](https://code.visualstudio.com/) & [Xcode](https://developer.apple.com/xcode/) to develop application with 100ms.
 
 ## Proguard configuration
 
-### 100ms Android SDK 2.1.2 or higher
-
-If using 100ms Android SDK version 2.1.2 and higher proguard configuration is bundled inside it. No additional code is required.
-
-### Prior to Android SDK version 2.1.2
-Prior to Android SDK version 2.1.2, the following configuration was needed in release builds.
-
-Add it to your proguard-rules.pro
+Add this to your proguard-rules.pro
 
 ```kotlin
 # 100ms proguard rules
 -keep class org.webrtc.** { *; }
 -keep class live.hms.video.** { *; }
 ```
+
+
+### 100ms Flutter app
+
+You can download & check out the 100ms Flutter app - 
+
+🤖 The Flutter Android app from [Google Play Store here](https://play.google.com/store/apps/details?id=live.hms.flutter)
+
+📱 Flutter iOS app from [Apple App Store here](https://apps.apple.com/app/100ms-live/id1576541989)

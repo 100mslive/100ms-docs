@@ -12,6 +12,18 @@ auth credentials are valid so that if everything is in order the subsequent room
 To invoke this API call
 
 ```js
+const config = {
+    userName: 'Jon Snow',
+    authToken: '<Auth token>', // client-side token generated from your token service
+    settings: {
+        // initial states
+        isAudioMuted: true,
+        isVideoMuted: false
+    },
+    metaData: JSON.stringify({ city: 'Winterfell', knowledge: 'nothing' }),
+    rememberDeviceSelection: true, // remember manual device change
+    captureNetworkQualityInPreview: false // whether to measure network score in preview
+};
 await hmsActions.preview(config);
 ```
 
@@ -25,6 +37,7 @@ You would need the same config object that you would pass to [join API](./join).
 Once you have made the preview call, these things will happen -
 
 -   SDK will connect with the 100ms backend to ensure that the token is correct and fetch the permissions for the role.
+-   Network speed will be measured and a connection score will be notified to the UI if [turned on](../advanced-features/connection-quality).
 -   One peer for the local peer will be added to the store, accessible via `selectLocalPeer` selector.
 -   Permission prompt will be given to the user for camera/mic if permissions are not there
 -   Audio, Video tracks will be created as per the role permissions.
@@ -42,3 +55,30 @@ tracks will be carry forwarded when user enters the room.
 
 -   You can't preview and join with two different roles, in case you do need to do this, you can call leave and wait on the promise
     to resolve before calling join.
+
+## Know Others in the room
+
+It's also possible to know about the room state and other peers in the room, if the permission to receive room state is given for the
+role in dashboard. The peers present in the room can be known by using the `selectPeers` selector as given [here](../guides/useful-selectors#who-all-are-in-my-room).
+
+<Tabs id="peers" items={['Javascript', 'React']} />
+
+<Tab id='peers-0'>
+
+```js
+const peers = hmsStore.getState(selectRemotePeers);
+```
+
+</Tab>
+
+<Tab id='peers-1'>
+
+```jsx
+const peers = useHMSStore(selectRemotePeers);
+```
+
+</Tab>
+
+## Network Quality in preview
+
+Follow [this section](../advanced-features/connection-quality#connection-quality-score-in-preview) to get a sense of user's network quality in preview.

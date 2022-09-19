@@ -3,6 +3,110 @@ title: Release Notes
 nav: 4.1
 ---
 
+## 0.9.92- 2022-09-13
+- Added ability to set track settings while building the SDK
+- Added capability to start screen share from iOS devices
+- Added more descriptive error messages
+
+**Full Changelog**: [0.9.91...0.9.92](https://github.com/100mslive/react-native-hms/compare/0.9.91...0.9.92)
+
+
+## 0.9.91 - 2022-08-18
+
+- Starting HLS streaming can now be done without HLSConfig object
+- Added ability to do custom audio routing on Android
+- Added the ability to share audio from local files on Android
+- Updated permissions available to roles
+- Corrected properties available in `HMSException` class
+- Fixed an issue where exiting from Preview without joining the room was not releasing camera access
+- Correct RTC Stats updates on Android
+- `minifyEnabled` is set to `true` for Android release builds
+- Updated to Native Android SDK 2.4.8 & Native iOS SDK 0.3.3
+
+**Full Changelog**: [0.9.9...0.9.91](https://github.com/100mslive/react-native-hms/compare/0.9.9...0.9.91)
+
+
+## 0.9.9 - 2022-07-11
+
+- `leave` functions fails when invoked in Reconnecting (No Internet) state
+- Added ability to remove logger after attaching
+- `changeMetadata` & `remoteMuteAllAudio` functions is now async
+
+**Full Changelog**: [0.9.8...0.9.9](https://github.com/100mslive/react-native-hms/compare/0.9.8...0.9.9)
+
+
+## 0.9.8 - 2022-07-08
+- Added resolution option in HMSRTMPConfig
+- Added granular error information when incorrect/missing params found in API invocations
+- Corrected current audio playback status when new tracks are added
+- Updated to Native Android SDK 2.4.4 & Native iOS SDK 0.3.2
+
+**Full Changelog**: [0.9.7...0.9.8](https://github.com/100mslive/react-native-hms/compare/0.9.7...0.9.8)
+
+
+## 0.9.7 - 2022-06-16
+- Corrected parsing of time in HMSMessage objects
+- Made sender peer nullable in HMSMessage. The sender will be null when messages are triggered from Server.
+- Updated to Native Android SDK 2.4.1 & Native iOS SDK 0.3.1
+
+**Full Changelog**: [0.9.6...0.9.7](https://github.com/100mslive/react-native-hms/compare/0.9.6...0.9.7)
+
+## 0.9.6 - 2022-06-09
+- Corrected HLSRecordingState updates received via room update events
+- Corrected return types of Browser/Server Recording & RTMP Streaming APIs 
+- Fixed incorrect source type being passed for some tracks 
+- Added function & missing param details on receiving`REQUIRED_KEYS_NOT_FOUND` errors
+- Added `destroy` API which will de-initialize all HMSSDK instances, even for multiple instances scenarios
+- Added sessionId to HMSRoom class
+- Updated to Native Android SDK 2.3.9 & Native iOS SDK 0.3.1
+
+## 0.9.5 - 2022-05-11
+- Added the ability to take capture video frame (screenshot) of an individual video track 
+- Resolved circular dependency warnings
+- Updated HMSView params - removed `sink` & `id` keys, made `style` optional
+- Corrected `serverReceiveTime` param type in `HMSMessage`
+- Updated to Native Android SDK 2.3.7 & Native iOS SDK 0.2.11
+
+
+## 0.9.4 - 2022-04-20
+- Added ability to overlay HMS Views in z-index via `setZOrderMediaOverlay` on `HmsView` [to enable Mini-view type of layouts](https://www.100ms.live/docs/react-native/v2/advanced-features/mini-view)
+- Added the ability to take screenshots of [individual video tiles using `screenshot` on `HmsView`](https://www.100ms.live/docs/react-native/v2/advanced-features/capture-hmsView)
+- Sending error callback when a user denies permission to start screen-share from an Android device
+- Updated to Native Android SDK 2.3.5 & Native iOS SDK 0.2.9
+
+
+## 0.9.3 - 2022-04-05
+- Added Network Quality Reports measuring a user's connection speed
+- Added the ability to render local auxiliary tracks on Android
+- Updated to Native Android SDK 2.3.4 & Native iOS SDK 0.2.9
+
+
+## 0.9.2 - 2022-03-28
+- Added `hlsRecordingConfig?: HMSHLSRecordingConfig` to allow HLS Recording 
+- Added `hlsRecordingState?: HMSHLSRecordingState` to `HMSRoom` for fetching the HLS Recording state of the room
+- Added `sender: HMSPeer` & `recipient: HMSMessageRecipient` properties on `HMSMessage`
+- Added promise to `startScreenshare` API so that clients can perform an action when screen share from an android mobile device
+- Fixed an issue where muting audio/video of a remote peer does not work
+- Updated to Native Android SDK 2.3.4 & Native iOS SDK 0.2.8
+
+
+
+## 0.9.1 - 2022-03-02
+- Added room update & peer update callbacks on Preview. So before joining the room, you can know the peers already in the room & current room state like recording/streaming, etc
+- Added RTC Call Stats to show info about packet loss, bitrate, jitter, fps, resolution, etc for video tracks
+- Added start & stop timestamps in Server / Browser Recording & RTMP / HLS Streaming
+- Added streaming allowed attribute to peer's role permission
+- Added peer count attribute on HMSRoom object
+- Updated Native iOS SDK to 0.2.7, Native Android SDK to 2.3.1
+
+
+## 0.9.0 - 2022-01-28
+- Added support for HLS Streaming - You can now start / stop / view HLS from the package
+- Added support for Android Screenshare - From an android device, you can do a screen share in the meeting room
+- Updated API parameter types
+- Updated to Native iOS SDK version 0.2.6 & Native Android SDK version 2.2.8
+
+
 ## 0.8.4 - 2022-01-07
 - Added check for Preview in progress before invoking join
 - Added support React Native version 0.63
@@ -28,18 +132,18 @@ nav: 4.1
 
 ## 0.8.0 - 2021-11-19
 
-### Breaking
+#### Breaking
 - `build` function of HMSSDK will not create a singleton now.
 - `requestedBy` field has been made optional for HMSChangeTrackStateRequest, HMSRemovedFromRoomNotification, HMSRoleChangeRequest. It will be nil if the request originated from the REST API.
 - `leave` function is now asynchronous. Join another room only when the previous leave call has been completed.
 
-### Changed
+#### Changed
 - Corrected a bug where userId was not being passed.
 - Sending full error description when any error/exceptions occur.
 - `isMute` function of HMSTrack now returns correct status.
 - `HMSView` is now exported from HMSSDK class.
 
-### Added
+#### Added
 - Added `isPlaybackAllowed` & `setPlaybackAllowed` for Remote Audio/Video tracks.
 - Added `getRoom` function on HMSSDK which returns the currently joined room. Returns null if the peer is not in a room.
 - Added `changeTrackStateForRole` API with which you can mute/unmute audio/video of all peers of a particular Role.

@@ -1,10 +1,17 @@
 ---
 title: Leave Room
-nav: 4
+nav: 3.03
 ---
 
-Once you're done with a call and want to exit, call leave on the HMSSDK instance you created to join it.
+Once you're done with the meeting and want to exit, call leave on the HMSSDK instance you created to join it.
 
+
+Before calling leave,remove the `HMSUpdateListener` instance as:
+```dart
+hmsSDK.removeUpdateListener(updateListener);
+```
+
+To leave the meeting,call `leave` method of `HMSSDK` as :
 ```dart
 hmsSDK.leave();
 ```

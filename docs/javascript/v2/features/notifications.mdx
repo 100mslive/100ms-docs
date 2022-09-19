@@ -20,10 +20,6 @@ In order to subscribe for notifications we can use the hmsNotifications object c
 import { hmsNotifications } from './hms';
 
 hmsNotifications.onNotification((notification) => {
-    if (!notification) {
-        return;
-    }
-
     // This function will be called when a notification is received
     console.log('notification type', notification.type);
 
@@ -37,7 +33,7 @@ hmsNotifications.onNotification((notification) => {
 <Tab id="notification-initialize-1">
 
 ```jsx
-import { useHMSNotifications } from '@100mslive/hms-video-react';
+import { useHMSNotifications } from '@100mslive/react-sdk';
 
 function Notification() {
     const notification = useHMSNotifications();
@@ -72,14 +68,10 @@ The data in notification depends on the notification type. You can use the `swit
 
 <Tab id="notification-types-0">
 
-```jsx{14-44}
+```jsx
 import { hmsNotifications } from './hms';
 
 const unsubscribe = hmsNotifications.onNotification((notification) => {
-    if (!notification) {
-        return;
-    }
-
     console.log('notification type', notification.type);
     console.log('data', notification.data);
 
@@ -139,8 +131,8 @@ const unsubscribe = hmsNotifications.onNotification((notification) => {
 
 <Tab id="notification-types-1">
 
-```jsx{14-44}
-import { useHMSNotifications } from '@100mslive/hms-video-react';
+```jsx
+import { useHMSNotifications } from '@100mslive/react-sdk';
 
 function Notification() {
     const notification = useHMSNotifications();
@@ -207,6 +199,72 @@ function Notification() {
 
 </Tab>
 
+## Listening to specific notifications
+
+You can pass a single notification or array of notifications from one of `HMSNotificationTypes`.
+
+<Tabs id="notification-specific-types" items={['JavaScript', 'React']} />
+
+<Tab id="notification-specific-types-0">
+
+```jsx
+import { hmsNotifications } from './hms';
+
+const unsubscribe = hmsNotifications.onNotification((notification) => {
+    console.log('notification type', notification.type);
+    console.log('data', notification.data);
+}, HMSNotificationTypes.PEER_JOINED);
+
+const unsubscribePeerNotifications = hmsNotifications.onNotification(
+    (notification) => {
+        if (!notification) {
+            return;
+        }
+        // this will be called when one of HMSNotificationTypes.PEER_JOINED, HMSNotificationTypes.PEER_LEFT is arrived
+        console.log('notification type', notification.type);
+        console.log('data', notification.data);
+    },
+    [HMSNotificationTypes.PEER_JOINED, HMSNotificationTypes.PEER_LEFT]
+);
+```
+
+</Tab>
+
+<Tab id="notification-specific-types-1">
+
+```jsx
+import { useHMSNotifications } from '@100mslive/react-sdk';
+
+function Notification() {
+    const notification = useHMSNotifications(HMSNotificationTypes.PEER_JOINED);
+    const peerNotification = useHMSNotifications([
+        HMSNotificationTypes.PEER_JOINED,
+        HMSNotificationTypes.PEER_LEFT
+    ]);
+
+    React.useEffect(() => {
+        if (!notification) {
+            return;
+        }
+
+        console.log('notification type', notification.type);
+        console.log('data', notification.data);
+    }, [notification]);
+
+    React.useEffect(() => {
+        if (!peerNotification) {
+            return;
+        }
+        console.log('notification type', notification.type);
+        console.log('data', notification.data);
+    }, [peerNotification]);
+
+    return <div>Notification: {notification?.type}</div>;
+}
+```
+
+</Tab>
+
 ## Unsubscribing from notifications
 
 You can unsubscribe to the notifications by calling the method returned by the `hmsNotifications.onNotification` function.
@@ -237,6 +295,6 @@ unsubscribe();
 ## Ideas
 
 You can create notifications with buttons in them, to make it easier for the end user to respond to those notifications.
-For e.g. -
+For example -
 
 ![Screenshare Notification](/guides/notification-screen.png)

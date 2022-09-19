@@ -1,6 +1,6 @@
 ---
 title: Remove Peer
-nav: 12
+nav: 3.13
 ---
 
 Someone's overstayed their welcome and now you need to remove a peer from the video call room. Just call `meeting.removePeer`.
@@ -28,7 +28,6 @@ Once the permissions are checked to ensure the caller has the permission to remo
 The parameters are:
 
 peer: is the `HMSRemotePeer` that you'd like to be removed from the video call room.
-
 
 ```dart
 void removePeer(
@@ -59,6 +58,6 @@ class HMSRemovedFromRoom {
 
 `peerWhoRemoved`: Is an `HMSRemotePeer` instance containing the details of the person who called `removePeerRequest`. This can be used to show the name of the person who removed them.
 
-`roomWasEnded`: This will be false if the peer was removed. If true, it indicates that the peer was not removed, but the entire room was ended. See [End Room](End-Room) for details.
+`roomWasEnded`: This will be false if the peer was removed. If true, it indicates that the peer was not removed, but the entire room was ended. See [End Room](/flutter/v2/features/end-room) for details.
 
 When this callback is received, the UI should be cleaned up from the client side. The video call room would be ended from the SDK once this callback is sent.

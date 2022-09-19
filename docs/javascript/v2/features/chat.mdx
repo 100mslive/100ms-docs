@@ -7,27 +7,32 @@ What's a video call without being able to send messages to each other too? 100ms
 
 ![Chat](/guides/chat.png)
 
+> Note: Chat messages are not persistent. For example, if you joined a call, received some messages and got disconnected and rejoin the call, you won't be able to see the previous messages
+
 ## Sending Chat Messages
 
 ### Broadcast Message:
+
 This will be received by everyone in the room.
 
 ```js
-hmsActions.sendBroadcastMessage("hello everyone!"); // yes it's that simple 😉
+hmsActions.sendBroadcastMessage('hello everyone!'); // yes it's that simple 😉
 ```
 
 ### Group Message:
-This will be received by every peer who is part of the passed in roles.
+
+This will be received by every peer who is part of the passed-in roles.
 
 ```js
-hmsActions.sendGroupMessage("hi folks!", ["moderator", "host"]);
+hmsActions.sendGroupMessage('hi folks!', ['moderator', 'host']);
 ```
 
 ### Direct Message:
-This will only be received by the peer whom the message was sent to.
+
+This will only be received by the peer to whom the message was sent to.
 
 ```js
-hmsActions.sendDirectMessage("keep this message a secret!", peer.id);
+hmsActions.sendDirectMessage('keep this message a secret!', peer.id);
 ```
 
 ## Showing the messages
@@ -41,14 +46,14 @@ more specific messages.
 
 ```js
 import {
-  selectHMSMessages,
-  selectBroadcastMessages,
-  selectMessagesByRole,
-  selectMessagesByPeerID
+    selectHMSMessages,
+    selectBroadcastMessages,
+    selectMessagesByRole,
+    selectMessagesByPeerID
 } from '@100mslive/hms-video-store';
 
 function renderMessages(messages) {
-    console.log("messages - ", messages);
+    console.log('messages - ', messages);
 }
 
 hmsStore.subscribe(renderMessages, selectHMSMessages); // get all messages
@@ -64,24 +69,26 @@ hmsStore.subscribe(renderMessages, selectMessagesByPeerID(peer.id)); // get priv
 ```jsx
 import { Message } from './components';
 import {
-  selectHMSMessages,
-  selectBroadcastMessages,
-  selectMessagesByRole,
-  selectMessagesByPeerID
-} from '@100mslive/hms-video-react';
+    selectHMSMessages,
+    selectBroadcastMessages,
+    selectMessagesByRole,
+    selectMessagesByPeerID
+} from '@100mslive/react-sdk';
 
 function Chat() {
-  // use only the selectors that are required for the corresponding UI
-  const allMessages = useHMSStore(selectMessages); // get all messages
-  const brodacastMessages = useHMSStore(selectBroadcastMessages); // get all broadcasted messages
-  const groupMessagesByRole = useHMSStore(selectMessagesByRole('host')); // get conversation with the host role
-  const directMessages = useHMSStore(selectMessagesByPeerID(peer.id)); // get private conversation with peer
+    // use only the selectors that are required for the corresponding UI
+    const allMessages = useHMSStore(selectMessages); // get all messages
+    const brodacastMessages = useHMSStore(selectBroadcastMessages); // get all broadcasted messages
+    const groupMessagesByRole = useHMSStore(selectMessagesByRole('host')); // get conversation with the host role
+    const directMessages = useHMSStore(selectMessagesByPeerID(peer.id)); // get private conversation with peer
 
-  return <>
-    {
-        messages.map(msg => <Message key={msg.id} message={msg} />)
-    }
-  </>
+    return (
+        <>
+            {messages.map((msg) => (
+                <Message key={msg.id} message={msg} />
+            ))}
+        </>
+    );
 }
 ```
 
@@ -95,37 +102,75 @@ We also have a boolean `read` field with every message which can be optionally u
 has seen the message. You can set the read status for a message with the following interface.
 
 ```js
-const readStatus = true;                         // true/false
-hmsActions.setMessageRead(readStatus);           // set status for all messages
-hmsActions.setMessageRead(readStatus, msg.id);   // set status for a specific message
+const readStatus = true; // true/false
+hmsActions.setMessageRead(readStatus); // set status for all messages
+hmsActions.setMessageRead(readStatus, msg.id); // set status for a specific message
 ```
 
 ## Message Notification
 
-When a peer receives a message they'll get a [notification](./notifications) with type `HMSNotificationTypes.NEW_MESSAGE`. 
+When a peer receives a message they'll get a [notification](./notifications) with type `HMSNotificationTypes.NEW_MESSAGE`.
 The `HMSMessage` object will be present in `notification.data`.
 
 ## Custom Events
 
 It's also possible to utilise the above system for sending custom messages across the room. All the above methods
 take `type` as an optional last param. The `type` is `chat` by default but can be changed to any valid string. This can
-be used to differentiate between different types of messages. For e.g.
+be used to differentiate between different types of messages. For example.
 
 ```js
 // broadcast a message to the whole room
-hmsActions.sendBroadcastMessage("START", "GAME_EVENT");
-hmsActions.sendBroadcastMessage("🚀", "EMOJI_REACTION");
+hmsActions.sendBroadcastMessage('START', 'GAME_EVENT');
+hmsActions.sendBroadcastMessage('🚀', 'EMOJI_REACTION');
 
 // Send a message to role groups
-hmsActions.sendGroupMessage("🔥", ["stage", "backstage"], "EMOJI_REACTION");
+hmsActions.sendGroupMessage('🔥', ['stage', 'backstage'], 'EMOJI_REACTION');
 
 // Send a message to a specific peer
-hmsActions.sendDirectMessage("❤️", peer.id, "EMOJI_REACTION");
-hmsActions.sendDirectMessage("STOP_SCREENSHARE", peer.id, "MODERATOR_EVENT");
+hmsActions.sendDirectMessage('❤️', peer.id, 'EMOJI_REACTION');
+hmsActions.sendDirectMessage('STOP_SCREENSHARE', peer.id, 'MODERATOR_EVENT');
+```
+
+Suppose you have a custom event for sending "EMOJI_REACTION" and you don't want these messages to be stored in the store. In such cases `ignoreMessageTypes` action methods comes in handy. Notifications for the ignored messages will still be sent, it'll only not be put in the store.
+
+```js
+hmsActions.ignoreMessageTypes(['EMOJI_REACTION']);
 ```
 
 Do note that the messages are not persistent and won't be available to a person joining the room after the event
 was sent. So even though the above is good for emoji reactions,
-if you're looking for implementing something like raise hand do checkout our documentation for [peer metadata](../advanced-features/peer-metadata).
+if you're looking for implementing something like raise hand do check out our documentation for [peer metadata](../advanced-features/peer-metadata).
 
 > In case you want to send information in a more structured way than a simple string, you can send a stringified JSON object.
+
+## useCustomEvent
+
+This is a react hook that eases firing & listening to custom events. It takes in a config of `type` which is the type of your event and `onEvent` a handler function that is fired when an event comes.
+
+It returns an object containing `sendEvent` which helps to send the event data to others in the room who will receive it in the `onEvent` handler.
+
+Let's understand the hook with an example where we're showing a button on UI to send emoji reactions.
+
+```jsx
+import { useCallback } from 'react';
+import { useCustomEvent, useHMSActions } from '@100mslive/react-sdk';
+
+const Confetti = () => {
+    const actions = useHMSActions();
+
+    // onEvent should use useCallback
+    const onEvent = useCallback((msg) => {
+        console.log(msg); // {emoji: "🚀"}
+        // show emoji reactions on UI
+    }, []);
+
+    const { sendEvent } = useCustomEvent({
+        type: 'EMOJI_REACTION',
+        onEvent: onEvent
+    });
+
+    return <button onClick={() => sendEvent({ emoji: '🚀' })}>Rockets</button>;
+};
+
+export default Confetti;
+```

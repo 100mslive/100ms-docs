@@ -1,14 +1,14 @@
 /* eslint-disable react/no-array-index-key */
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import React from 'react';
-import JavascriptIcon from '@/assets/icons/JavascriptIcon';
+import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
-import ServerIcon from '@/assets/icons/ServerIcon';
-import FlutterIcon from '@/assets/FlutterIcon';
-import { Listbox } from '@headlessui/react';
+import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import ReactIcon from '@/assets/icons/ReactIcon';
+import ServerIcon from '@/assets/icons/ServerIcon';
+import { Listbox } from '@headlessui/react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React from 'react';
 
 type NavRoute = {
     url: string;
@@ -23,12 +23,42 @@ interface Props {
 const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const router = useRouter();
     const menuItem = [
-        { link: '/android/v2/foundation/Basics', name: 'Android', icon: <AndroidIcon /> },
-        { link: '/ios/v2/foundation/Basics', name: 'iOS', icon: <IosIcon /> },
-        { link: '/javascript/v2/foundation/basics', name: 'JavaScript', icon: <JavascriptIcon /> },
-        { link: '/react-native/v2/foundation/basics', name: 'React-Native', icon: <ReactIcon /> },
-        { link: '/flutter/v2/foundation/basics', name: 'Flutter', icon: <FlutterIcon /> },
-        { link: '/server-side/v2/foundation/basics', name: 'Server-Side', icon: <ServerIcon /> }
+        {
+            link: '/android/v2/foundation/basics',
+            name: 'Android',
+            icon: <AndroidIcon />,
+            apiRef: '/api-reference/android/v2/index.html'
+        },
+        {
+            link: '/ios/v2/foundation/basics',
+            name: 'iOS',
+            icon: <IosIcon />,
+            apiRef: '/api-reference/ios/v2/home/content'
+        },
+        {
+            link: '/javascript/v2/foundation/basics',
+            name: 'JavaScript',
+            icon: <JavascriptIcon />,
+            apiRef: '/api-reference/javascript/v2/home/content'
+        },
+        {
+            link: '/react-native/v2/foundation/basics',
+            name: 'React-Native',
+            icon: <ReactIcon />,
+            apiRef: '/api-reference/react-native/v2/modules.html'
+        },
+        {
+            link: '/flutter/v2/foundation/basics',
+            name: 'Flutter',
+            icon: <FlutterIcon />,
+            apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
+        },
+        {
+            link: '/server-side/v2/introduction/basics',
+            name: 'Server-Side',
+            icon: <ServerIcon />,
+            apiRef: '/server-side/v2/introduction/basics'
+        }
     ];
     // @ts-ignore
     let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === router.query.slug[0]);
@@ -44,7 +74,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
         // @ts-ignore
         if (router.query.slug[0] === 'api-reference') {
             // @ts-ignore
-            router.push(`/api-reference/${s.name.toLowerCase()}/v2/home/content`, undefined, {
+            router.push(s.apiRef, undefined, {
                 shallow: false
             });
         } else {
@@ -54,26 +84,26 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const aliasMenu = [
         {
             title: 'Room APIs',
-            url: '/server-side/v2/features/room'
+            url: '/server-side/v2/Rooms/object'
         },
         {
             title: 'Webhooks',
-            url: '/server-side/v2/foundation/webhook'
+            url: '/server-side/v2/introduction/webhook'
         },
         {
             title: 'SFU Recording',
-            url: '/server-side/v2/features/recording'
-        },
-        {
-            title: 'Simulcast',
-            url: '/server-side/v2/features/simulcast'
+            url: '/server-side/v2/Destinations/recording'
         }
+        // {
+        //     title: 'Simulcast',
+        //     url: '/docs/server-side/v2/features/simulcast'
+        // }
     ];
     return (
-        <div className="ctx">
+        <div className="sidebar">
             {/* Sidebar Version Section */}
             <section className="menu-container">
-                <div className="menu-title">TECHNOLOGY</div>
+                <div className="menu-title">PLATFORM</div>
                 <Listbox value={tech} onChange={changeTech}>
                     <Listbox.Button className="dropdown">
                         <div style={{ display: 'flex ', alignItems: 'center' }}>
@@ -102,16 +132,19 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
             {/* Sidebar Menu Section */}
             {Object.entries(nav).map(([key, children], index) => (
                 <section className="menu-container" key={`${key}-${index}`}>
-                    <div className="menu-title">{key.replace(/-/g, ' ').toUpperCase()}</div>
+                    <div className="menu-title">{key.replace(/-/g, ' ')}</div>
                     {Object.entries(children).map(([_, route]) =>
                         Object.prototype.hasOwnProperty.call(route, 'title') ? (
-                            <Link href={route.url || ''} key={`${route.url}-${index}`}>
-                                <div
+                            <Link
+                                scroll={false}
+                                href={route.url || ''}
+                                key={`${route.url}-${index}`}>
+                                <a
                                     className={`menu-item ${
                                         route.url === router.asPath ? 'active-link' : ''
                                     }`}>
                                     {route.title}
-                                </div>
+                                </a>
                             </Link>
                         ) : null
                     )}
@@ -120,12 +153,12 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                         <>
                             {aliasMenu.map((a) => (
                                 <Link href={a.url} key={a.url}>
-                                    <div
+                                    <a
                                         className={`menu-item ${
                                             a.url === router.asPath ? 'active-link' : ''
                                         }`}>
                                         {a.title}
-                                    </div>
+                                    </a>
                                 </Link>
                             ))}
                         </>
@@ -133,19 +166,18 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 </section>
             ))}
             <style jsx>{`
-                .ctx {
-                    width: calc((100% - 1448px) / 2 + 298px);
+                .sidebar {
+                    width: 288px;
                     display: flex;
                     flex-direction: column;
                     align-items: stretch;
                     height: calc(100vh - 80px);
-                    min-width: 298px;
                     overflow-y: scroll;
                     top: ${menu ? '10px' : '80px'};
                     left: 0;
                     position: ${menu ? 'absolute' : 'sticky'};
-                    background: var(--gray1);
-                    z-index: 40;
+                    background: var(--sidebar_bg);
+                    z-index: 100;
                 }
                 ::-webkit-scrollbar {
                     width: 0px;
@@ -154,17 +186,24 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     outline: 0px;
                 }
                 .menu-container {
-                    margin: 10px 0;
+                    margin-top: 2px;
+                    margin-left: 0.5rem;
+                    margin-bottom: 9px;
+                    margin-right: 1.5rem;
+                }
+                .menu-container:first-of-type {
+                    margin-bottom: 10px;
                 }
                 .menu-item {
                     cursor: pointer;
-                    padding: 8px 0;
+                    padding: 4px 0;
                     color: var(--gray11);
                     font-weight: 400;
                     font-size: 13px;
                     display: flex;
                     align-items: center;
-                    padding-left: 20px;
+                    padding-left: 1rem;
+                    margin-left: 1rem;
                 }
                 .sub-title {
                     padding-left: 30px;
@@ -183,36 +222,28 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     align-items: center;
                     padding-left: 30px;
                 }
-
                 a {
                     text-decoration: none;
-                }
-                .active-link {
-                    color: var(--gray12);
-                    background-color: var(--blue6);
-                }
-                .menu-item:hover {
-                    background-color: var(--blue5);
-                }
                 }
                 .sub-menu-item:hover {
                     background-color: var(--blue5);
                 }
                 .menu-title {
-                    padding-left: 20px;
+                    padding-left: 1rem;
+                    text-transform: uppercase;
                     font-weight: 700;
                     font-size: 15px;
                     margin: 5px 0;
                 }
                 @media screen and (max-width: 1000px) {
-                    .ctx {
-                        display: ${menu ? 'flex' : 'none'};
-                        top:20px;
+                    .sidebar {
+                        display: ${menu ? 'absolute' : 'none'};
+                        top: 0;
+                        height: calc(100vh - 60px);
                     }
                     :global(.page) {
-                        height: ${menu ? '100vh !important' : ''};
+                        height: ${menu ? '100vh `!important' : ''};
                         overflow: ${menu ? 'hidden !important' : ''};
-                        padding-right: 1rem;
                     }
                 }
             `}</style>
@@ -228,12 +259,12 @@ const ChevronDown = () => (
         width="24"
         height="24"
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
         fill="none"
         shapeRendering="geometricPrecision"
-        style={{ color: 'var(--gray10)' }}>
+        style={{ color: 'var(--text_high_emp)' }}>
         <path d="M6 9l6 6 6-6" />
     </svg>
 );

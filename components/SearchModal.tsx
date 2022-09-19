@@ -1,18 +1,17 @@
 import React from 'react';
-import SearchIcon from '@/assets/icons/SearchIcon';
-import useSearch from '@/lib/useSearch';
 import EnterIcon from '@/assets/icons/EnterIcon';
+import SearchIcon from '@/assets/icons/SearchIcon';
 import useClickOutside from '@/lib/useClickOutside';
-import Link from 'next/link';
 import useKeyPress from '@/lib/useKeyPress';
+import useSearch from '@/lib/useSearch';
+import Link from 'next/link';
 
 interface Props {
     docs: { url: string; title: string; description: string; nav: number; content: string }[];
-    currentDocSlug: string;
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
+const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
     const paletteTrack = React.useRef(-1);
     const [search, setSearch] = React.useState('');
     const ref = React.useRef();
@@ -25,7 +24,6 @@ const SearchModal: React.FC<Props> = ({ docs, currentDocSlug, setModal }) => {
     }, []);
     const res = useSearch({
         search,
-        folder: currentDocSlug,
         docs
     });
     // reset if result is 0

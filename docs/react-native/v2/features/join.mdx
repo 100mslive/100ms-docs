@@ -88,3 +88,42 @@ After calling join your app will be provided an update from the 100ms SDK.
 ✅ If successful, the `HMSUpdateListenerActions.ON_JOIN` callback of HMSUpdateListener will be invoked with information about the room encapsulated in the HMSRoom object.
 
 ❌ If failure, the `HMSUpdateListenerActions.ON_ERROR` callback will be invoked with exact failure reason.
+
+## Joining room audio/video muted
+
+There are 2 ways to join the room with muted state. First one is with change role which does not require mic and camera permissions. Second one is calling mic and camera mute in onPreview and onJoin which asks for camera and mic permissions.
+
+To join room with audio & video muted using change role, you need to create 2 roles. First role with no audio & video permissions. Second role with audio & video permissions. Join the room using viewer role. Since viewer doesn’t have permissions no need to preview, directly call join and navigate to meeting screen. Once you have joined the room and now you need to speak or share video, call change role API. How to call change role API [here](./change-role).
+
+![Viewer Audio & Video Publish Settings](/docs/v2/audio-video-publish.png)
+
+If you want to join the room with preview, call setMute on localPeer's audio and video tracks in the onPreview event listener
+which is called after the preview is successful. 
+
+```js
+const onPreview = () => {
+    // instance acquired from build() method
+    hmsInstance?.localPeer?.localVideoTrack()?.setMute(true);
+    hmsInstance?.localPeer?.localAudioTrack()?.setMute(true);
+}
+``` 
+
+If you want to join the room directly without preview, call setMute on localPeer's audio and video tracks in the onJoin event listener
+which is called after the join is successful.
+
+```js
+const onJoin = () => {
+    // instance acquired from build() method
+    hmsInstance?.localPeer?.localVideoTrack()?.setMute(true);
+    hmsInstance?.localPeer?.localAudioTrack()?.setMute(true);
+}
+``` 
+
+## Get Room
+
+`getRoom` is an async function on HMSSDK which returns the currently joined room. Returns null if the peer is not in a room.
+
+```js
+// instance acquired from build() method
+await hmsInstance.getRoom(); 
+```
