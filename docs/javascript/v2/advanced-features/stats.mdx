@@ -3,7 +3,7 @@ title: Stats
 nav: 5.07
 ---
 
-After setting up a video conferencing application, you'd want metrics to measure the call quality - what caused choppy audio, lost video frames, or who had a bad network. <APILink type="class" name="HMSReactiveStore#get-stats">`getStats`</APILink> has got your back.
+After setting up a video conferencing application, you'd want metrics to measure the call quality - what caused choppy audio, lost video frames, or who had a bad network. <APILink type="class" name="HMSReactiveStore#get-stats">`getStats`</APILink> saves the day here.
 
 With <APILink type="class" name="HMSReactiveStore#get-stats">`getStats`</APILink> you could get statistics for the whole session and individual tracks of all the peers in the room.
 
@@ -15,7 +15,7 @@ With <APILink type="class" name="HMSReactiveStore#get-stats">`getStats`</APILink
 const hmsStats = hms.getStats();
 ```
 
-This initializes the SDK to collect stats from WebRTC every 1 second and stores it in a Redux store called <APILink>`HMSStatsStore`</APILink>. This is similar to <APILink>`HMSStore`</APILink> in terms of retrieving data from the store.
+This initializes the SDK to collect stats from WebRTC every 1 second and stores it in a Zustand store called <APILink>`HMSStatsStore`</APILink>. This is similar to <APILink>`HMSStore`</APILink> in terms of retrieving data from the store.
 
 If you have [Redux Devtools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en) installed(which is highly recommended), you could open the HMSStatsStore to get a quick sense of the quality of the call by looking at the bitrate, packets lost, jitter, etc...
 
