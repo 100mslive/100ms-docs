@@ -186,12 +186,12 @@ const Header: React.FC<Props> = ({
             <Box css={{
                 display: 'none',
                 '@md': {
-                    display: 'block'
+                    display: 'flex'
                 }
             }}>
                 <button
                     onClick={() => setModal(true)}
-                    style={{ marginRight: '0.5rem', marginLeft: '-1rem' }}
+                    style={{ marginRight: '0.5rem', marginLeft: '-1rem', marginTop: '0.5rem' }}
                     type="button"
                 >
                     <SearchIcon style={{ width: '24px' }} />
