@@ -1,14 +1,14 @@
 /* eslint-disable react/no-array-index-key */
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import React from 'react';
-import JavascriptIcon from '@/assets/icons/JavascriptIcon';
+import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
-import ServerIcon from '@/assets/icons/ServerIcon';
-import FlutterIcon from '@/assets/FlutterIcon';
-import { Listbox } from '@headlessui/react';
+import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import ReactIcon from '@/assets/icons/ReactIcon';
+import ServerIcon from '@/assets/icons/ServerIcon';
+import { Listbox } from '@headlessui/react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React from 'react';
 
 type NavRoute = {
     url: string;
@@ -24,13 +24,13 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const router = useRouter();
     const menuItem = [
         {
-            link: '/android/v2/foundation/Basics',
+            link: '/android/v2/foundation/basics',
             name: 'Android',
             icon: <AndroidIcon />,
             apiRef: '/api-reference/android/v2/index.html'
         },
         {
-            link: '/ios/v2/foundation/Basics',
+            link: '/ios/v2/foundation/basics',
             name: 'iOS',
             icon: <IosIcon />,
             apiRef: '/api-reference/ios/v2/home/content'
@@ -54,10 +54,10 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
             apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
         },
         {
-            link: '/server-side/v2/foundation/basics',
+            link: '/server-side/v2/introduction/basics',
             name: 'Server-Side',
             icon: <ServerIcon />,
-            apiRef: '/server-side/v2/foundation/basics'
+            apiRef: '/server-side/v2/introduction/basics'
         }
     ];
     // @ts-ignore
@@ -84,15 +84,15 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
     const aliasMenu = [
         {
             title: 'Room APIs',
-            url: '/server-side/v2/features/room'
+            url: '/server-side/v2/Rooms/object'
         },
         {
             title: 'Webhooks',
-            url: '/server-side/v2/foundation/webhook'
+            url: '/server-side/v2/introduction/webhook'
         },
         {
             title: 'SFU Recording',
-            url: '/server-side/v2/features/recording'
+            url: '/server-side/v2/Destinations/recording'
         }
         // {
         //     title: 'Simulcast',
@@ -177,7 +177,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     left: 0;
                     position: ${menu ? 'absolute' : 'sticky'};
                     background: var(--sidebar_bg);
-                    z-index: 40;
+                    z-index: 100;
                 }
                 ::-webkit-scrollbar {
                     width: 0px;
@@ -244,7 +244,6 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     :global(.page) {
                         height: ${menu ? '100vh `!important' : ''};
                         overflow: ${menu ? 'hidden !important' : ''};
-                        padding-right: 1rem;
                     }
                 }
             `}</style>

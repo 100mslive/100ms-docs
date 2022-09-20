@@ -1,0 +1,87 @@
+---
+title: Update settings
+nav: 11
+---
+
+This endpoint is used to update settings.
+
+<GetRequest title="https://api.100ms.live/v2/templates/<template_id>/settings" />
+
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/<template_id>/settings' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "region": "eu",
+    "subscribeDegradation": {},
+    "recording": {
+        "enabled": true,
+        "upload": {
+            "type": "s3",
+            "location": "<Name of the AWS s3 bucket>",
+            "prefix": "<Upload prefix path>",
+            "options": {
+                "region": "<region of the s3 bucket>"
+            },
+            "credentials": {
+                "key": "<access key ID for the AWS account/S3 bucket>",
+                "secretKey": "<secret access key for the AWS account/S3 bucket>"
+            }
+        }
+    },
+    "screenSimulcastLayers": {},
+    "videoSimulcastLayers": {},
+    "roomState": {
+        "messageInterval": 5,
+        "sendPeerList": false,
+        "stopRoomStateOnJoin": true,
+        "enabled": false
+    }
+}'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "region": "eu",
+    "subscribeDegradation": {},
+    "screenSimulcastLayers": {},
+    "videoSimulcastLayers": {},
+    "recording": {
+        "enabled": true,
+        "upload": {
+            "location": "<Name of the AWS s3 bucket>",
+            "type": "s3",
+            "prefix": "<Upload prefix path>",
+            "credentials": {
+                "key": "<access key ID for the AWS account/S3 bucket>",
+                "secret": "<secret access key for the AWS account/S3 bucket>"
+            },
+            "options": {
+                "region": "<region of the s3 bucket>"
+            }
+        }
+    },
+    "roomState": {
+        "messageInterval": 5,
+        "sendPeerList": false,
+        "stopRoomStateOnJoin": true,
+        "enabled": false
+    },
+    "retry": {}
+}
+```
+
+</ResponseBox>
+
+## Arguments
+
+| Name                           | Type     | Description                                                                                                                                                                                                                     | Required |
+| :----------------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| template_id <br/> — path param | `string` | Unique identifier of the template you wish to update settings details for. <br/> **Example:** 6316d5ca5a2635a5849a0216                                                                                                          | Yes      |
+| settingsObject <br/>           | `object` | Settings object corresponding to the given template_id. <br/><br/>check the [settings object arguments section](/server-side/v2/policy/create-template-via-api#settings-object-arguments) for the list of arguments supported | Yes      |

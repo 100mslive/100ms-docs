@@ -1,0 +1,94 @@
+---
+title: 0.3.x to 0.4.x Migration Guide
+nav: 7.1
+---
+
+# Error Type Changes
+
+The error type in the public SDK interface has been changed to  `Error` (`NSError` in case of ObjC) from  `HMSError`.  This is to align with platform conventions. In swift the error can be type casted to either `HMSError` or `NSError` for getting additional details like error code. 
+
+### Error Handling Example
+
+```swift
+func on(error: Error) {
+    guard let error = error as? HMSError else { return }
+    
+    //Example using error constants
+    switch error.code {
+    case .websocketConnectionLost, .iceFailure, .endpointUnreachable:
+        retryConnection()
+    default:
+		showErrorAndExitMeeting(errorMessage: error.localizedDescription)
+        break
+    }
+    
+    //Example using error codes
+    switch error.code.rawValue {
+    case 1003, 4005, 2003:
+        retryConnection()
+    default:
+		showErrorAndExitMeeting(errorMessage: error.localizedDescription)
+        break
+    }
+}
+```
+
+# Error Property Changes
+
+### isTerminal
+
+The `HMSError` struct in swift will now have an `isTerminal` property which denotes wether error has caused the current session to terminate and the app will need to call `join` again to reconnect. Same will be available via `is_terminal` (`HMSIsTerminalUserInfoKey` constant) key in `userInfo` dictionary of `NSError`
+
+### canRetry
+
+The `HMSError` struct in swift will now have an `canRetry` property which denotes wether app can call `join` again with the same configuration it has used before. The value be false in cases like token expiring or room getting locked. You can use this property while implementing infinite retry in your app. Same will be available via `can_retry` (`HMSCanRetryUserInfoKey` constant) key in `userInfo` dictionary of `NSError`
+
+### Removed properties
+
+Error properties: id, action, info, message, params have been removed. `localizedDescription` property will contain all the necessary info. 
+
+### Error Handling Example Using Properties
+
+This example shows the minimal error handling you can have in the app without worrying about error codes.
+
+```swift
+func on(error: Error) {
+    guard let error = error as? HMSError else { return }
+    
+    if error.isTerminal {
+        if error.canRetry && isInfiniteRetryEnabledInApp  {
+            retryConnection()
+        } else {
+            showErrorAndExitMeeting(errorMessage: error.localizedDescription)
+        }
+    } else {
+        logError(message: error.localizedDescription)
+    }
+}
+```
+
+# Error Code Changes
+
+Previously upon loosing connection and failing to reconnect as well as in case initial connection could not be established SDK would return error code `2000` (`initServerError`). Starting from 0.4.1 SDK will return error `1003` (`websocketConnectionLost`) if the connection was previously there but got lost in the middle of the session. If the SDK can not connect in the first place it will return error code `2003` (`endpointUnreachable`). This change makes makes error codes consistent between platforms
+
+# Error Constant Name Changes
+
+| **Code** | **Old Name** | **New Name** |
+| :--- | :--- | :--- |
+| 2002 | initHTTPErrorInvalidEndpointURL | invalidEndpointUrl |
+| 2003 | initHTTPErrorEndpointUnreachable | endpointUnreachable |
+| 3000 | tracksErrorGeneric | genericTrack |
+| 3001 | tracksErrorCantAccessCaptureDevice | cantAccessCaptureDevice |
+| 3005 | tracksErrorNothingToReturn | nothingToReturn |
+| 3007 | tracksErrorCodecChangeNotPermitted | codecChangeNotPermitted |
+| 3008 | tracksErrorAudioVideoSubsystemFailure | audiovideoSubsystemFailure |
+| 3011 | tracksErrorMicCaptureFailed | micCaptureFailed |
+| 4001 | webrtcErrorCreateOfferFailed | createOfferFailed |
+| 4002 | webrtcErrorCreateAnswerFailed | createAnswerFailed |
+| 4003 | webrtcErrorSetLocalDescriptionFailed | setLocalDescriptionFailed |
+| 4004 | webrtcErrorSetRemoteDescriptionFailed | setRemoteDescriptionFailed |
+| 4005 | webrtcErrorICEFailure | iceFailure |
+| 5001 | joinErrorAlreadyJoined | alreadyJoined |
+| 6000 | genericErrorNotConnected | notConnected |
+| 6002 | genericErrorUnknown | unknown |
+| 6004 | genericErrorJsonParsingFailed | jsonParsingFailed |

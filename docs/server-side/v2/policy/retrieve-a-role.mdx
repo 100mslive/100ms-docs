@@ -1,0 +1,78 @@
+---
+title: Retrieve a specific role
+nav: 4.8
+---
+
+Retrieves the details of a specific role. 100ms provides options to retrieve details of a role with their name.
+
+<GetRequest title="https://api.100ms.live/v2/templates/<template_id>/roles/<role_name>" />
+
+<Request id="req-0">
+
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/templates/<template_id>/roles/<role_name>' \
+--header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "name": "testurlpath",
+    "publishParams": {
+        "allowed": ["audio", "video", "screen"],
+        "audio": {
+            "bitRate": 32,
+            "codec": "opus"
+        },
+        "video": {
+            "bitRate": 310,
+            "codec": "vp8",
+            "frameRate": 30,
+            "width": 480,
+            "height": 360
+        },
+        "screen": {
+            "codec": "vp8",
+            "frameRate": 10,
+            "width": 1920,
+            "height": 1080
+        },
+        "videoSimulcastLayers": {},
+        "screenSimulcastLayers": {}
+    },
+    "subscribeParams": {
+        "subscribeToRoles": ["guest", "host"],
+        "maxSubsBitRate": 3200,
+        "subscribeDegradation": {
+            "packetLossThreshold": 25,
+            "degradeGracePeriodSeconds": 1,
+            "recoverGracePeriodSeconds": 4
+        }
+    },
+    "permissions": {
+        "endRoom": true,
+        "removeOthers": true,
+        "mute": true,
+        "unmute": true,
+        "changeRole": true,
+        "rtmpStreaming": true,
+        "hlsStreaming": true,
+        "browserRecording": true,
+        "sendRoomState": false
+    },
+    "priority": 1,
+    "maxPeerCount": 0
+}
+```
+
+</ResponseBox>
+
+## Arguments
+
+| Name                           | Type     | Description                                                                                                        | Required |
+| :----------------------------- | :------- | :----------------------------------------------------------------------------------------------------------------- | :------- |
+| name <br/> — path param        | `string` | Alias of the role you wish to fetch details for.                                                                   | Yes      |
+| template_id <br/> — path param | `string` | Unique identifier of the template to which the role is associated. <br/><br/>**Example**: 627ce5b637300e55a72ba7ed | Yes      |

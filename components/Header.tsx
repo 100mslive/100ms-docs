@@ -1,15 +1,16 @@
-import React from 'react';
-import Link from 'next/link';
 import useKeyPress from '@/lib/useKeyPress';
 import {
-    SearchIcon,
     CrossIcon,
+    DividerIcon,
     HamburgerMenuIcon,
-    SunIcon,
     NightIcon,
-    DividerIcon
+    SearchIcon,
+    SunIcon
 } from '@100mslive/react-icons';
+import { Box, Flex, useTheme } from '@100mslive/react-ui';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import React from 'react';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -19,9 +20,9 @@ interface Props {
     };
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
     docs: { url: string; title: string; description: string; nav: number; content: string }[];
-    currentDocSlug: string;
     modal: boolean;
     showMobileMenu?: boolean;
+    showReference?: boolean;
 }
 
 const Header: React.FC<Props> = ({
@@ -29,7 +30,7 @@ const Header: React.FC<Props> = ({
     modal,
     setModal,
     docs,
-    currentDocSlug,
+    showReference = true,
     showMobileMenu = true
 }) => {
     const escPressed = useKeyPress('Escape');
@@ -50,21 +51,26 @@ const Header: React.FC<Props> = ({
 
     const { menu, setMenu } = menuState;
     const [isDark, setIsDark] = React.useState<boolean>(true);
+    const { toggleTheme, themeType } = useTheme();
 
     React.useEffect(() => {
+        const theme = window.localStorage.getItem('theme') || 'dark';
         const docHtml = document.documentElement.dataset;
-        setIsDark(docHtml.theme === 'dark');
+        setIsDark(theme === 'dark');
+        docHtml.theme = theme;
+        if (themeType !== theme) toggleTheme();
     }, []);
 
-    const toggleTheme = () => {
+    const buttonToggleTheme = () => {
+        // update the html data
         const docHtml = document.documentElement.dataset;
-        // toggle theme
+        docHtml.theme = `${!isDark ? 'dark' : 'light'}`;
         // set local storage
         window.localStorage.setItem('theme', `${!isDark ? 'dark' : 'light'}`);
-        // update the html data
-        docHtml.theme = `${!isDark ? 'dark' : 'light'}`;
         // update the state
         setIsDark(!isDark);
+        // toggle theme
+        toggleTheme();
     };
 
     const getCurrentTech = () => {
@@ -81,39 +87,30 @@ const Header: React.FC<Props> = ({
         return currentTech || 'javascript';
     };
     const currentTech = getCurrentTech();
-    // @ts-ignore
     const routeAPIRef = () => {
-        // @ts-ignore
         if (currentTech === 'react-native') {
             return `/api-reference/react-native/v2/modules.html`;
         }
-        // @ts-ignore
         if (currentTech === 'flutter') {
             return `https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html`;
         }
-        // @ts-ignore
         if (currentTech === 'android') {
             return `/api-reference/android/v2/index.html`;
         }
-        // @ts-ignore
         const routeLink = `/api-reference/${currentTech}/v2/home/content`;
-        // @ts-ignore
-        if (router.query.slug[0] === 'api-reference') {
+        if (router.query.slug && router.query.slug[0] === 'api-reference') {
             return router.asPath;
         }
         return routeLink;
     };
-    // @ts-ignore
-    const isApiRef = router.query.slug[0] === 'api-reference';
 
-    const isNonApiRef =
-        // @ts-ignore
-        router.query.slug[0] === 'server-side';
+    const isApiRef = router.query.slug && router.query.slug[0] === 'api-reference';
+    const isNonApiRef = router.query.slug && router.query.slug[0] === 'server-side';
 
     return (
-        <div className="ctx">
+        <div className="ctx header">
             <div className="head-left">
-                <a href="/docs/javascript/v2/foundation/basics">
+                <a href="https://www.100ms.live">
                     <div className="logo-ctx">
                         <img width={36} src="/docs/logo.svg" alt="100ms Logo" />
                         <p className="company hide-content">100ms</p>
@@ -121,7 +118,7 @@ const Header: React.FC<Props> = ({
                 </a>
                 <DividerIcon style={{ strokeWidth: '2px', marginLeft: '-16px' }} />
                 <div>
-                    <Link href={`/${currentTech}/`}>
+                    <Link href="/">
                         <p
                             className="company"
                             style={{
@@ -138,8 +135,7 @@ const Header: React.FC<Props> = ({
             <div className="left-content">
                 <div className="nav-links">
                     <span style={{ marginRight: '1rem' }} />
-                    {/* @ts-ignore */}
-                    {isNonApiRef ? null : (
+                    {isNonApiRef || !showReference ? null : (
                         <button className={isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
                             <Link href={routeAPIRef()}>API Reference</Link>
                         </button>
@@ -147,28 +143,47 @@ const Header: React.FC<Props> = ({
                 </div>
             </div>
             <div className="head-right">
-                <div className="search-ctx">
-                    <button onClick={() => setModal(true)} type="button" className="search-btn">
-                        <SearchIcon />
-                        <span>Search docs</span>
-                        <span className="hot-key">/</span>
-                    </button>
-                </div>
+                <Flex
+                    onClick={() => setModal(true)}
+                    css={{
+                        borderRadius: '$1',
+                        width: '$80',
+                        gap: '$8',
+                        color: '$textMedEmp',
+                        border: '1px solid $borderLighter',
+                        marginRight: '$9',
+                        background: '$surfaceLight',
+                        padding: '$3 $8 $3 $5',
+                        '@md': {
+                            display: 'none'
+                        },
+                        ':hover': {
+                            opacity: '0.8',
+                            cursor: 'pointer'
+                        }
+                    }}>
+                    <SearchIcon />
+                    <Box>Search docs</Box>
+                    <span className="hot-key">/</span>
+                </Flex>
                 <span
                     aria-label="theme-toggle-button"
                     className="pointer theme-btn"
                     role="button"
-                    style={{ paddingTop: '8px', paddingLeft: '10px', margin: '0 2rem 0 1rem' }}
+                    style={{
+                        paddingTop: '8px',
+                        paddingLeft: '10px',
+                        margin: '0 2rem 0 1rem',
+                        cursor: 'pointer'
+                    }}
                     tabIndex={0}
                     onKeyPress={() => {}}
-                    onClick={() => toggleTheme()}>
-                    {isDark ? <NightIcon /> : <SunIcon style={{ color: '#ECC502' }} />}
+                    onClick={() => buttonToggleTheme()}>
+                    {!isDark ? <NightIcon /> : <SunIcon style={{ color: '#ECC502' }} />}
                 </span>
             </div>
 
-            {modal ? (
-                <SearchModal setModal={setModal} docs={docs} currentDocSlug={currentDocSlug} />
-            ) : null}
+            {modal ? <SearchModal setModal={setModal} docs={docs} /> : null}
 
             <div className="menu-btn">
                 <button
@@ -196,7 +211,7 @@ const Header: React.FC<Props> = ({
                     height: 3rem;
                     z-index: 50;
                     position: sticky;
-                    margin: 0 auto;
+                    margin: 0;
                     top: 0;
                     padding: 0.5rem;
                     background-color: var(--header_bg);
@@ -267,15 +282,6 @@ const Header: React.FC<Props> = ({
                 .logo-ctx img {
                     margin: 0 1rem;
                 }
-                .search-ctx {
-                    border-radius: 5px;
-                    width: 320px;
-                    border: 1px solid var(--border_light);
-                    margin-right: 20px;
-                    background: var(--new_surface_light);
-                    position: relative;
-                    padding: 5px 16px 5px 10px;
-                }
                 .search-btn {
                     opacity: 1;
                     background-color: transparent;
@@ -290,15 +296,15 @@ const Header: React.FC<Props> = ({
                     margin-left: 1rem;
                     text-align: left;
                 }
+                .search-btn:hover {
+                    opacity: 0.8;
+                }
                 .hot-key {
                     margin-left: auto !important;
                     border-radius: 5px;
                     padding: 0 5px;
                     color: var(--text_high_emp);
                     border: 1px solid var(--gray6);
-                }
-                .search-btn:hover {
-                    opacity: 0.8;
                 }
                 .company {
                     font-size: 1.2rem;
@@ -318,14 +324,8 @@ const Header: React.FC<Props> = ({
                     outline: none;
                     border: none;
                 }
-                @media screen and (max-width: 768px) {
-                    .search-ctx {
-                        display: none;
-                    }
-                    .menu-btn {
-                        display: flex;
-                    }
-                    .left-content {
+                @media screen and (max-width: 1024px) {
+                    .nav-links {
                         display: none;
                     }
                 }
@@ -351,6 +351,9 @@ const Header: React.FC<Props> = ({
     );
 };
 
-Header.defaultProps = { showMobileMenu: true };
+Header.defaultProps = {
+    showMobileMenu: true,
+    showReference: true
+};
 
 export default Header;
