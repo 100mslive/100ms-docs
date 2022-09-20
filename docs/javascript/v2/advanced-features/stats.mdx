@@ -1,5 +1,5 @@
 ---
-title: Stats
+title: Stats For Nerds
 nav: 5.07
 ---
 
@@ -16,11 +16,37 @@ With <APILink type="class" name="HMSReactiveStore#get-stats">`getStats`</APILink
 
 ## Initialization
 
+<Tabs id="stats-init" items={['Javascript', 'React']} />
+
+<Tab id="stats-init-0">
+
 ```jsx
-const hmsStats = hms.getStats();
+import { HMSReactiveStore } from '@100mslive/hms-video-store';
+
+const hms = new HMSReactiveStore();
+
+export const hmsStats = hms.getStats();
 ```
 
-This initializes the SDK to collect stats from WebRTC periodically and store it in a Redux store called <APILink>`HMSStatsStore`</APILink>. This is similar to <APILink>`HMSStore`</APILink> in terms of retrieving data from the store.
+</Tab>
+
+<Tab id="stats-init-1">
+
+```jsx
+import { HMSRoomProvider } from '@100mslive/react-sdk';
+
+export function App() {
+    return (
+        <HMSRoomProvider isHMSStatsOn={true}>
+            <MyApp />
+        </HMSRoomProvider>
+    );
+}
+```
+
+</Tab>
+
+This initializes the SDK to collect stats from WebRTC periodically and store it in a reactive Zustand store called <APILink>`HMSStatsStore`</APILink>. This is similar to <APILink>`HMSStore`</APILink> in terms of retrieving data from the store.
 
 If you have [Redux Devtools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en) installed(which is highly recommended), you could open the HMSStatsStore to get a quick sense of the quality of the call by looking at the bitrate, packets lost, jitter, etc...
 
@@ -62,7 +88,7 @@ hmsStats.subscribe(renderLocalPeerStats, selectHMSStats.localPeerStats);
 <Tab id="local-peer-stats-1">
 
 ```jsx
-import { selectHMSStats, useHMSStatsStore } from '@100mslive/hms-video-react';
+import { selectHMSStats, useHMSStatsStore } from '@100mslive/react-sdk';
 
 const renderLocalPeerStats = (localPeerStats) => {
     if (!localPeerStats) return;
@@ -131,7 +157,7 @@ hmsStats.subscribe(renderTrackStats, selectHMSStats.trackStatsByID('some-track-i
 <Tab id="track-stats-1">
 
 ```jsx
-import { selectHMSStats, useHMSStatsStore } from '@100mslive/hms-video-store';
+import { selectHMSStats, useHMSStatsStore } from '@100mslive/react-sdk';
 
 const renderTrackStats = (trackStats) => {
     if (!trackStats) return;
