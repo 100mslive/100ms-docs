@@ -59,26 +59,15 @@ hmsStore.subscribe(renderPeers, selectPeers);
 import { useRef, useEffect } from 'react';
 import {
     useHMSStore,
-    useHMSActions,
+    useVideo,
     selectPeers,
-    selectCameraStreamByPeerID
 } from '@100mslive/react-sdk';
 
 function VideoTile({ peer }) {
-    const videoRef = useRef(null);
-    const hmsActions = useHMSActions();
-    // get the camera track to render
-    const videoTrack = useHMSStore(selectCameraStreamByPeerID(peer.id));
-    useEffect(() => {
-        if (videoRef.current && videoTrack) {
-            if (videoTrack.enabled) {
-                hmsActions.attachVideo(videoTrack.id, videoRef.current);
-            } else {
-                hmsActions.detachVideo(videoTrack.id, videoRef.current);
-            }
-        }
-    }, [videoTrack, hmsActions]);
-
+    const { videoRef } = useVideo({
+        trackId: peer.videoTrack
+    });
+    
     return <video ref={videoRef} autoPlay muted playsInline></video>;
 }
 
@@ -106,6 +95,8 @@ The videos will now be rendered & start playing on your screen. 🥳
 You can call `detachVideo` on the `hmsActions` to unsubscribe a track and not fetch it's data. This can be done
 for example when a video goes out of view. This should also be called when the component is going to be unmounted
 for proper cleanups of the video elements.
+
+> Note that if you're using the `useVideo` hook from `react-sdk` this is already being taken care of.
 
 ```js
 hmsActions.detachVideo(videoTrack.id, videoElement);
