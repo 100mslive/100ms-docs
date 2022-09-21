@@ -28,6 +28,18 @@ const onError = (error: HMSException) => {
 ```
 ## HMSException Properties
 
+### isTerminal
+
+The isTerminal property denotes wether error has caused the current session to terminate and the app will need to call join again to reconnect. 
+
+### description
+
+The description property denotes what is the source of the error.
+
+### code
+
+The code property denotes error code which a unique identifier for the error.
+
 ### canRetry
 
 It is a `iOS` only property. The canRetry property denotes wether app can call join again with the same configuration it has used before. The value be false in cases like token expiring or room getting locked. You can use this property while implementing infinite retry in your app.
@@ -43,18 +55,6 @@ It is a `android` only property. The name property denotes error name.
 ### action
 
 It is a `android` only property. The action property tells what to do when a error occurs. For example `SEND_ALL_REQUIRED_KEYS` means you have not sent some required key in the API call
-
-### isTerminal
-
-The isTerminal property denotes wether error has caused the current session to terminate and the app will need to call join again to reconnect. 
-
-### description
-
-The description property denotes what is the source of the error.
-
-### code
-
-The code property denotes error code which a unique identifier for the error.
 
 Following are the different error codes that are returned in the callback . Before returning any error code, it retries the errors (whichever is possible).
 
