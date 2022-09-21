@@ -14,6 +14,7 @@ import DeleteRequest from './DeleteRequest';
 import Codesandbox from './Codesandbox';
 import Content from './Content';
 import DownloadCollection from './DownloadCollection';
+import APILink from './APILink';
 import Request from './Request';
 import Response from './Response';
 import ResponseBox from './ResponseBox';
@@ -50,10 +51,19 @@ const LinkCustom = (props) => {
     }
 
     return (
-        <a target="_blank" rel="noopener noreferrer" href={href} onClick={() => window.analytics.track('link.clicked', {
-            btnId: typeof props?.children === typeof '' ? props?.children : props?.children?.props?.alt,
-            page: window?.location?.pathname
-        })}>
+        <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={href}
+            onClick={() =>
+                window.analytics.track('link.clicked', {
+                    btnId:
+                        typeof props?.children === typeof ''
+                            ? props?.children
+                            : props?.children?.props?.alt,
+                    page: window?.location?.pathname
+                })
+            }>
             {props.children}
         </a>
     );
@@ -81,7 +91,8 @@ const MDXComponents = {
     View,
     a: LinkCustom,
     Content,
-    DownloadCollection
+    DownloadCollection,
+    APILink
 };
 
 export default MDXComponents;
