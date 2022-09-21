@@ -195,6 +195,11 @@ const DocLayout: React.FC<Props> = ({ frontMatter, nav, children, pagination, al
                         display: none;
                         position: absolute;
                     }
+                    @media screen and (max-width: 768px) {
+                        .ctx {
+                            overflow-x: hidden;
+                        }
+                    }
                 `}</style>
             </div>
         </>
