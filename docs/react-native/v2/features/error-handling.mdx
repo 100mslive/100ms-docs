@@ -15,8 +15,14 @@ import { HMSUpdateListenerActions, HMSException } from '@100mslive/react-native-
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
 
 const onError = (error: HMSException) => {
-    if (error.isTerminal) {
+    if (Platform.OS === 'android') {
+      if (data?.code === 4005 || data?.code === 1003) {
         destroy();
+      }
+    } else {
+      if (data?.code === 2000) {
+        destroy();
+      }
     }
 };
 ```
