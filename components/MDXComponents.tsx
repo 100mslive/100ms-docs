@@ -4,6 +4,7 @@ import React from 'react';
 import { camelCase } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
+import APILink from './APILink';
 import BaseRequest from './BaseRequest';
 import Code from './Code';
 import Codesandbox from './Codesandbox';
@@ -82,7 +83,8 @@ const MDXComponents = {
     View,
     a: LinkCustom,
     Content,
-    DownloadCollection
+    DownloadCollection,
+    APILink
 };
 
 export default MDXComponents;
