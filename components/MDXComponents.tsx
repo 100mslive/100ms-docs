@@ -1,23 +1,24 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
+import { camelCase } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
+import APILink from './APILink';
 import BaseRequest from './BaseRequest';
 import Code from './Code';
+import Codesandbox from './Codesandbox';
+import Content from './Content';
+import DeleteRequest from './DeleteRequest';
+import DownloadCollection from './DownloadCollection';
 import EndpointRequest from './EndpointRequest';
 import GetRequest from './GetRequest';
 import Note from './Note';
 import PostRequest from './PostRequest';
-import { Tab, Tabs } from './Tabs';
-import DeleteRequest from './DeleteRequest';
-import Codesandbox from './Codesandbox';
-import Content from './Content';
-import DownloadCollection from './DownloadCollection';
-import APILink from './APILink';
 import Request from './Request';
 import Response from './Response';
 import ResponseBox from './ResponseBox';
+import { Tab, Tabs } from './Tabs';
 import Text from './Text';
 import View from './View';
 
@@ -51,19 +52,10 @@ const LinkCustom = (props) => {
     }
 
     return (
-        <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href={href}
-            onClick={() =>
-                window.analytics.track('link.clicked', {
-                    btnId:
-                        typeof props?.children === typeof ''
-                            ? props?.children
-                            : props?.children?.props?.alt,
-                    page: window?.location?.pathname
-                })
-            }>
+        <a target="_blank" rel="noopener noreferrer" href={href} onClick={() => window.analytics.track('link.clicked', {
+            btnId: camelCase(typeof props?.children === typeof '' ? props?.children : props?.children?.props?.alt),
+            page: window?.location?.pathname
+        })}>
             {props.children}
         </a>
     );
