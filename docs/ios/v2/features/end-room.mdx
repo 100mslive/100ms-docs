@@ -11,7 +11,7 @@ Can't let just anyone end a call. First you need to create a [role](../foundatio
 
 The permission to end a room is called `endRoom` and you should check for that within the `permissions` property of `HMSRole` of the peer to see if they have it.
 
- 
+
 ### Ending the Room
 
 Once you're sure the peer has the permissions to end the room they can call for the room to end when they're ready with `hmsSdk.endRoom`.
@@ -48,7 +48,7 @@ class HMSRemovedFromRoomNotification {
 }
 ```
 
-> 💡 This is the same callback that will be triggered if a peer was [removed from a room](Remove-Peer) as well. Except that `roomEnded` will be true when the entire room was ended.
+> 💡 This is the same callback that will be triggered if a peer was [removed from a room](remove-peer) as well. Except that `roomEnded` will be true when the entire room was ended.
 
 reason: The string message detailing why the room was ended.
 
