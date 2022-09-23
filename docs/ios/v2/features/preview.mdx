@@ -17,7 +17,7 @@ You would need the same config object that you would pass to [join API](Join). T
 func onPreview(room: HMSRoom, localTracks: [HMSTrack])
 ```
 
-Which is called when SDK has passed all its preflight checks and established the connection to 100ms server. This will pass an array of local tracks that you can display to the user (see [Render Video](Render-Video) and [Mute](Mute) sections for more details).
+Which is called when SDK has passed all its preflight checks and established the connection to 100ms server. This will pass an array of local tracks that you can display to the user (see [Render Video](render-video) and [Mute](mute) sections for more details).
 
 If however there was some error related to getting the input sources or some preflight check has failed 
 
@@ -25,7 +25,7 @@ If however there was some error related to getting the input sources or some pre
 func on(error: HMSError)
 ```
 
-delegate callback will be fired with the HMSError instance you can use to find what went wrong (see [Error Handling](Error-Handling)).
+delegate callback will be fired with the HMSError instance you can use to find what went wrong (see [Error Handling](error-handling)).
 
 ```swift
 func on(room: HMSRoom, update: HMSRoomUpdate)
