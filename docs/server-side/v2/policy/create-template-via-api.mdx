@@ -7,13 +7,7 @@ This endpoint is used to create a template. A recommended way is to provide a li
 
 ## Understand sub-objects hierarchy
 
-    -   Template object
-        -   roles object
-            -   publishParams object
-            -   subscribeParams object
-            -   permissions object
-        -   settings object
-        -   destinations object
+![Template sub-objects hierarchy](/docs/v2/template-object-hierarchy.png)
 
 <PostRequest title="https://api.100ms.live/v2/templates" />
 
@@ -334,8 +328,6 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
     "settings": {
         "region": "in",
         "subscribeDegradation": {},
-        "screenSimulcastLayers": {},
-        "videoSimulcastLayers": {},
         "recording": {
             "enabled": true,
             "upload": {
@@ -579,3 +571,49 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | browserRecordings | `object` | Object of type `browserRecordings`. This can be used to record your sessions to a file, for subsequent access.                                         | No       |
 | rtmpDestinations  | `object` | Object of type `rtmpDestinations`. This can be used to live stream your video conferencing apps to platforms like YouTube, Twitch, Facebook, MUX, etc. | No       |
 | hlsDestinations   | `object` | Object of type `hlsDestinations`. This can be used to configure arguments for your HLS live streaming                                                  | No       |
+
+### browserRecordings object
+
+| Name            | Type     | Description                                                                                 | Required |
+| :-------------- | :------- | :------------------------------------------------------------------------------------------ | :------- |
+| name            | `string` | The name you can assign to identify the browser recording                                   | No       |
+| width           | `int`    | Indicates the width of the screen to be recorded in pixels. For example, 1280 pixels        | No       |
+| height          | `int`    | Indicates the height of the screen to be recorded in pixels. For example, 720 pixels        | No       |
+| maxDuration     | `int`    | Sets the maximum duration, in seconds, of the recording. For example, 1800 seconds(30 mins) | No       |
+| thumbnails      | `object` | Object of type `thumbnails`. This can be used to configure thumbnail's dimension            | No       |
+| presignDuration | `int`    |                                                                                             | No       |
+
+### rtmpDestinations object
+
+| Name             | Type      | Description                                                                                                        | Required |
+| :--------------- | :-------- | :----------------------------------------------------------------------------------------------------------------- | :------- |
+| name             | `string`  | The name you can assign to identify the RTMP destination                                                           | No       |
+| width            | `int`     | Indicates the width of the screen to be recorded in pixels. For example, 1280 pixels                               | No       |
+| height           | `int`     | Indicates the height of the screen to be recorded in pixels. For example, 720 pixels                               | No       |
+| maxDuration      | `int`     | Sets the maximum duration, in seconds, of the recording. For example, 1800 seconds(30 mins)                        | No       |
+| rtmpUrls         | `object`  | Object of type `rtmpUrls`. This can be used to configure the RTMP URLs(max 3) you wish to broadcast the stream to. | No       |
+| recordingEnabled | `boolean` | If recording is required this can be set as true. This value has no effect on streaming.                           | No       |
+
+### hlsDestinations object
+
+| Name                    | Type      | Description                                                                                                      | Required |
+| :---------------------- | :-------- | :--------------------------------------------------------------------------------------------------------------- | :------- |
+| name                    | `string`  | The name you can assign to identify the HLS destination                                                          | No       |
+| maxDuration             | `int`     | Sets the maximum duration, in seconds, of the recording. For example, 1800 seconds(30 mins)                      | No       |
+| layers                  | `object`  | Object of type `layers`. This can be used to configure the various dimensions to be supported for HLS streaming. | No       |
+| playlistType            | `string`  |                                                                                                                  | No       |
+| numPlaylistSegments     | `int`     |                                                                                                                  | No       |
+| videoFrameRate          | `int`     | Set this argument to configure the frames per second (or FPS) for your stream. For example, 25                   | No       |
+| enableMetadataInsertion | `boolean` | Set this to true to enable metadata insertion along with the stream.                                             | No       |
+| enableStaticUrl         | `boolean` | If recording is required this can be set as true. This value has no effect on streaming.                         | No       |
+| recording               | `object`  | Object of type `recording`. This can be used to enable HLS recording and configure the layers, thumbnails, etc.  | No       |
+
+### HLS - recording object
+
+| Name               | Type      | Description                                                                                                      | Required |
+| :----------------- | :-------- | :--------------------------------------------------------------------------------------------------------------- | :------- |
+| hlsVod             | `boolean` | The name you can assign to identify the HLS destination                                                          | No       |
+| singleFilePerLayer | `boolean` | Sets the maximum duration, in seconds, of the recording. For example, 1800 seconds(30 mins)                      | No       |
+| layers             | `object`  | Object of type `layers`. This can be used to configure the various dimensions to be supported for HLS recording. | No       |
+| thumbnails         | `object`  | Object of type `thumbnails`. This can be used to configure thumbnail's dimension                                 | No       |
+| presignDuration    | `int`     |                                                                                                                  | No       |
