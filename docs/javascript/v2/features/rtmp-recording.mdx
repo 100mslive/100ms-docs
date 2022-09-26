@@ -21,12 +21,12 @@ It's also possible to start streaming and recording from [server side APIs](/ser
 These are the options which need to be passed to start RTMP or recording -
 
 1. **meetingURL**: _string_. The URL the 100ms bot user will open to join your room. It must allow access without any user level interaction.
-2. **rtmpUrls**: _string[]_. Optional, if streaming is required, this has to be one or more RTMP Ingest URLs with max limit of 3 URLs where the stream should go.
+2. **rtmpURLs**: _string[]_. Optional, if streaming is required, this has to be one or more RTMP Ingest URLs with max limit of 3 URLs where the stream should go.
 3. **record**: _boolean_. Optional, If recording is required this can be set as true. This value has no effect on streaming.
 4. **resolution**: _{ width: number, height: number }_. Optional, if passed the recording or RTMP will be done in the passed in resolution.
 
--   If both rtmpUrls and record = true are provided, both streaming and recording will begin.
--   If only rtmpUrls are provided, only streaming will begin.
+-   If both rtmpURLs and record = true are provided, both streaming and recording will begin.
+-   If only rtmpURLs are provided, only streaming will begin.
 -   If only record true is provided, only recording will begin.
 
 If either one is started, the other can't be started without first stopping whatever is running.
@@ -38,7 +38,7 @@ If both are required, they have to be started together by providing both RTMP In
 async start() {
     const params = {
         meetingURL: "",
-        rtmpUrls: [""],
+        rtmpURLs: [""],
         record: true
     };
     try {
