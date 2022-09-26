@@ -34,6 +34,8 @@ const TableCustom = (props: any) => (
 
 const LinkCustom = (props) => {
     const { href } = props;
+
+    console.log(props);
     const isInternalLink =
         href &&
         (href.startsWith('/') ||
@@ -51,11 +53,22 @@ const LinkCustom = (props) => {
         );
     }
 
+    let btnId = camelCase(
+        typeof props?.children === typeof '' ? props?.children : props?.children?.props?.alt
+    );
+    btnId = props.href.includes('codesandbox') ? 'codesandbox.viewed' : btnId;
+
     return (
-        <a target="_blank" rel="noopener noreferrer" href={href} onClick={() => window.analytics.track('link.clicked', {
-            btnId: camelCase(typeof props?.children === typeof '' ? props?.children : props?.children?.props?.alt),
-            page: window?.location?.pathname
-        })}>
+        <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={href}
+            onClick={() =>
+                window.analytics.track('link.clicked', {
+                    btnId,
+                    page: window?.location?.pathname
+                })
+            }>
             {props.children}
         </a>
     );
