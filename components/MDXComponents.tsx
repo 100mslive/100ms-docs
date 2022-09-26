@@ -1,7 +1,6 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import { camelCase } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
 import APILink from './APILink';
@@ -34,8 +33,6 @@ const TableCustom = (props: any) => (
 
 const LinkCustom = (props) => {
     const { href } = props;
-
-    console.log(props);
     const isInternalLink =
         href &&
         (href.startsWith('/') ||
@@ -52,12 +49,8 @@ const LinkCustom = (props) => {
             </Link>
         );
     }
-
-    let btnId = camelCase(
-        typeof props?.children === typeof '' ? props?.children : props?.children?.props?.alt
-    );
-    btnId = props.href.includes('codesandbox') ? 'codesandbox.viewed' : btnId;
-
+    const { hostname } = new URL(href)
+    const btnId = `${hostname.split('.').slice(0, -1).join('.')}.viewed`;
     return (
         <a
             target="_blank"
@@ -66,6 +59,7 @@ const LinkCustom = (props) => {
             onClick={() =>
                 window.analytics.track('link.clicked', {
                     btnId,
+                    componentId: window?.location?.pathname.split('/')[2],
                     page: window?.location?.pathname
                 })
             }>
