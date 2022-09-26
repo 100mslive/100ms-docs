@@ -1,26 +1,26 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Image from 'next/image';
 import React from 'react';
+import { camelCase } from 'lodash';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Tabs, Tab } from './Tabs';
-import Code from './Code';
-import Note from './Note';
+import APILink from './APILink';
 import BaseRequest from './BaseRequest';
-import EndpointRequest from './EndpointRequest';
-import PostRequest from './PostRequest';
-import GetRequest from './GetRequest';
-
-import DeleteRequest from './DeleteRequest';
-
-import Response from './Response';
-import Request from './Request';
-import ResponseBox from './ResponseBox';
+import Code from './Code';
 import Codesandbox from './Codesandbox';
+import Content from './Content';
+import DeleteRequest from './DeleteRequest';
+import DownloadCollection from './DownloadCollection';
+import EndpointRequest from './EndpointRequest';
+import GetRequest from './GetRequest';
+import Note from './Note';
+import PostRequest from './PostRequest';
+import Request from './Request';
+import Response from './Response';
+import ResponseBox from './ResponseBox';
+import { Tab, Tabs } from './Tabs';
 import Text from './Text';
 import View from './View';
-import Content from './Content';
-import DownloadCollection from './DownloadCollection';
 
 const CodeCustom = (props: any) => <Code {...props}>{props.children}</Code>;
 
@@ -52,7 +52,10 @@ const LinkCustom = (props) => {
     }
 
     return (
-        <a target="_blank" rel="noopener noreferrer" href={href}>
+        <a target="_blank" rel="noopener noreferrer" href={href} onClick={() => window.analytics.track('link.clicked', {
+            btnId: camelCase(typeof props?.children === typeof '' ? props?.children : props?.children?.props?.alt),
+            page: window?.location?.pathname
+        })}>
             {props.children}
         </a>
     );
@@ -80,7 +83,8 @@ const MDXComponents = {
     View,
     a: LinkCustom,
     Content,
-    DownloadCollection
+    DownloadCollection,
+    APILink
 };
 
 export default MDXComponents;
