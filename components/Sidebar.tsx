@@ -117,10 +117,9 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                                 key={m.link}
                                 value={m}
                                 className={({ active }) =>
-                                    `${
-                                        active
-                                            ? 'dropdown-option dropdown-option-active'
-                                            : 'dropdown-option'
+                                    `${active
+                                        ? 'dropdown-option dropdown-option-active'
+                                        : 'dropdown-option'
                                     }`
                                 }>
                                 {m.icon} <span style={{ marginLeft: '1rem' }}>{m.name}</span>
@@ -137,12 +136,12 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                         Object.prototype.hasOwnProperty.call(route, 'title') ? (
                             <Link
                                 scroll={false}
+                                prefetch={false}
                                 href={route.url || ''}
                                 key={`${route.url}-${index}`}>
                                 <a
-                                    className={`menu-item ${
-                                        route.url === router.asPath ? 'active-link' : ''
-                                    }`}>
+                                    className={`menu-item ${route.url === router.asPath ? 'active-link' : ''
+                                        }`}>
                                     {route.title}
                                 </a>
                             </Link>
@@ -154,9 +153,8 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                             {aliasMenu.map((a) => (
                                 <Link href={a.url} key={a.url}>
                                     <a
-                                        className={`menu-item ${
-                                            a.url === router.asPath ? 'active-link' : ''
-                                        }`}>
+                                        className={`menu-item ${a.url === router.asPath ? 'active-link' : ''
+                                            }`}>
                                         {a.title}
                                     </a>
                                 </Link>
