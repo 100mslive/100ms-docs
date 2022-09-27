@@ -82,6 +82,11 @@ const nextConfig = {
                 source: '/server-side/v2/features/rtmp-streaming-and-browser-recording',
                 destination: '/server-side/v2/Destinations/rtmp-streaming-and-browser-recording',
                 permanent: false
+            },
+            {
+                source: '/ios/v2/release-notes/Release-Notes',
+                destination: '/ios/v2/release-notes/release-notes',
+                permanent: false
             }
         ];
     }
