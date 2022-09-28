@@ -1,0 +1,115 @@
+---
+title: Session
+nav: 6.2
+---
+
+## Introduction
+
+Session is a single continuous call in a [room](room). To allow users to join a 100ms video conferencing session inside your app, you first need to create a `room`. A single room can have multiple sessions. You will need a [management token](../foundation/authentication-and-tokens) as a bearer token for your requests.
+
+## Get Session Data using API
+
+You can query session data using API.
+
+<GetRequest
+    title="Get Session API"
+    desp="This endpoint is used to get sessions. "
+    url="https://api.100ms.live/v2/sessions"
+/>
+
+<Tabs items={['Request', 'Response']} id="req" />
+
+<Tab id="req-0">
+
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/sessions?room_id=61652b404e556e35f2179759' -H 'Authorization: Bearer {{management_token}}'
+```
+
+</Tab>
+<Tab id="req-1">
+
+<Response res="200: OK" />
+
+```json
+{
+    "limit": 10,
+    "data": [
+        {
+            "id": "6205e9826d83bc36e6e761e2",
+            "room_id": "61652b404e556e35f2179759",
+            "customer_id": "60b8e1d96eb86d8101b5735a",
+            "user_id": "60b8e1d96eb86d8101b57359",
+            "active": true,
+            "peers": {
+                "860aa563-6f18-4a04-b7ad-a2cb41ba883e": {
+                    "name": "Sagar",
+                    "role": "host",
+                    "joined_at": "2022-02-11T04:43:46.306Z"
+                }
+            },
+            "created_at": "2022-02-11T04:43:46.294Z",
+            "updated_at": "2022-02-11T04:43:46.75Z"
+        },
+        {
+            "id": "6205e9376d83bc36e6e761e1",
+            "room_id": "6204fea00c108fa49d599d79",
+            "customer_id": "60c1ea9a6eb86d8101b57570",
+            "user_id": "60c1ea9a6eb86d8101b5756f",
+            "active": false,
+            "peers": {
+                "210e5175-4816-4c65-a985-07b366f571cc": {
+                    "name": "Deep2",
+                    "role": "teacher",
+                    "joined_at": "2022-02-11T04:42:36.595Z",
+                    "left_at": "2022-02-11T04:42:42.126Z"
+                },
+                "2d3ab4d3-cc04-426e-b7aa-6f7952169509": {
+                    "name": "Deep2",
+                    "role": "teacher",
+                    "joined_at": "2022-02-11T04:42:31.027Z",
+                    "left_at": "2022-02-11T04:42:42.738Z"
+                }
+            },
+            "created_at": "2022-02-11T04:42:31.018Z",
+            "updated_at": "2022-02-11T04:42:42.785Z"
+        }
+    ],
+    "last": "6205e9376d83bc36e6e761e1"
+}
+```
+
+</Tab>
+
+### Headers
+
+| Name                | Value                       | Required |
+| :------------------ | :-------------------------- | :------- |
+| Authorization <br/> | Bearer `<management token>` | Yes      |
+
+### URL Parameters
+
+| Name          | Type     | Description                                                                                                             | Required |
+| :------------ | :------- | :---------------------------------------------------------------------------------------------------------------------- | :------- |
+| id <br/>      | `string` | ID of the session if known.                                                                                             | No       |
+| room_id <br/> | `string` | Room ID of the session if known.                                                                                        | No       |
+| active <br/>  | `bool`   | Session is currently going on or not.                                                                                   | No       |
+| before <br/>  | `time`   | Timestamp before(inclusive) which session is created in RFC3339 format e.g. `2022-02-09T05:53:23.375Z`.                 | No       |
+| after <br/>   | `time`   | Timestamp after(inclusive) which session is created in RFC3339 format e.g. `2022-02-09T05:53:23.375Z`.                  | No       |
+| limit <br/>   | `int`    | Number of sessions returned by response. Range `10`-`20`                                                                | No       |
+| start <br/>   | `string` | ID of the session after which to start the response. Sessions are returned in decreasing IDs or `created_at` timestamp. | No       |
+
+### Response
+
+| Name        | Type       | Description                                                                                                                      | Required |
+| :---------- | :--------- | :------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| limit <br/> | `int`      | Number of sessions the API tried to find. If returned array has lesser number of results, only those number were found.          | No       |
+| data <br/>  | `array`    | Array of sessions or `null` if no session was found.                                                                             | No       |
+| last <br/>  | `ObjectID` | Sessions are returned in decreasing IDs or `created_at` timestamp. Last represent the earliest session returned by the response. | No       |
+
+### How to calculate session duration
+
+You can calculate additional information from session data using given information. Redundant information like peer duration/ session duration is not provided since they can be calculated from provided response. You can calculate `peer duration` by subtracting `joined_at` timestamp from `left_at` for a given peer. Similarly you can calculate `session duration` by adding all peers' duration.
+
+## Postman Collection
+
+<DownloadCollection type="rooms" />
