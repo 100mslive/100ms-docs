@@ -85,7 +85,27 @@ const nextConfig = {
             },
             {
                 source: '/ios/v2/release-notes/Release-Notes',
-                destination: '/ios/v2/release-notes/release-notes',
+                destination: '/ios/v2/changelog/release-notes',
+                permanent: false
+            },
+            {
+                source: '/android/v2/release-notes/release-notes',
+                destination: '/android/v2/changelog/release-notes',
+                permanent: false
+            },
+            {
+                source: '/javascript/v2/release-notes/release-notes',
+                destination: '/javascript/v2/changelog/release-notes',
+                permanent: false
+            },
+            {
+                source: '/react-native/v2/release-notes/release-notes',
+                destination: '/react-native/v2/changelog/release-notes',
+                permanent: false
+            },
+            {
+                source: '/flutter/v2/release-notes/release-notes',
+                destination: '/flutter/v2/changelog/release-notes',
                 permanent: false
             }
         ];
