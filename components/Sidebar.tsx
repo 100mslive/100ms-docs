@@ -241,7 +241,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                         width: 100vw;
                         top: 20px;
                         display: ${menu ? 'flex' : 'none'};
-                        height: calc(100vh - 60px);
+                        height: 100%;
                     }
                 }
             `}</style>

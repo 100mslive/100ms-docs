@@ -138,7 +138,7 @@ const DocLayout: React.FC<Props> = ({ frontMatter, nav, children, pagination, al
                             }}>
                             <Sidebar menu={menu} nav={newNav} />
                         </div>
-                        <article>
+                        {!menu ? <article>
                             <h1>{frontMatter.title}</h1>
                             {children}
                             <hr />
@@ -149,7 +149,7 @@ const DocLayout: React.FC<Props> = ({ frontMatter, nav, children, pagination, al
                                 />
                             )}
                             <EditFile slug={router.asPath} />
-                        </article>
+                        </article> : null }
                         <Toc activeHeading={activeHeading} activeSubHeading={activeSubHeading} />
                     </div>
                 </div>
