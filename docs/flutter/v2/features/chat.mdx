@@ -36,7 +36,7 @@ The parameters are:
 
 
 ```dart
-hmsSDK.sendBroadcastMessage("Hi");
+hmsSDK.sendBroadcastMessage(message: "Hi", type: "chat", hmsActionResultListener: hmsActionResultListener);
 ```
 
 #### Sending Direct Messages
@@ -58,7 +58,11 @@ The parameters are:
 
 
 ```dart
-hmsSDK.sendDirectMessage(String message, HMSPeer peer);
+hmsSDK.sendDirectMessage(
+        message: "Hi",
+        peerTo: peerTo,
+        type: "chat",
+        hmsActionResultListener: hmsActionResultListener);
 ```
 
 
@@ -79,7 +83,10 @@ The parameters are:
 >Also it's important to make a new callback per message because it will only contain the results of that particular call for sending a message.
 
 ```dart
-hmsSDK.sendGroupMessage(String message, String roleName);
+hmsSDK.sendGroupMessage(message: "Hi",
+        hmsRolesTo: hmsRolesTo,
+        type: "chat",
+        hmsActionResultListener: hmsActionResultListener);
 ```
 
 ### Receiving Chat Messages
