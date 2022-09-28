@@ -166,3 +166,20 @@ void onMessage({required HMSMessage message}) {
   messages.add(message);
 }
 ```
+
+### Filter Chat Messages
+
+You can filter chat message by creating a separate list of `HMSMessage`.
+
+```dart
+List<HMSMessage> filterList = [];
+
+List<HMSMessage> messageFilter(List<HMSMessage> messages, HMSMessageRecipientType type) {
+  filterList = [];
+  for(HMSMessage message in messages) {
+    if(message.hmsMessageRecipient.hmsMessageRecipientType == type) {
+      filterList.add(message);
+    }
+  }
+}
+```
