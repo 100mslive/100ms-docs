@@ -43,7 +43,7 @@ joinRoom();
 Add event listeners for all the events such as onPreview, onJoin, onError etc. The actions can be found in HMSUpdateListenerActions class. The event handlers are the way of handling any update happening in hms.
 
 ```js
-import { HMSSDK, HMSUpdateListenerActions } from 'react-native-hms';
+import { HMSUpdateListenerActions } from 'react-native-hms';
 
 // instance acquired from build() method
 hmsInstance.addEventListener(
@@ -69,7 +69,7 @@ When user indicates that they want to join the room, your app should have -
 Joining the room connects you to the remote peer and broadcasts your stream to other peers, we need instance of HMSConfig in order to pass the details of room and user to join function
 
 ```js
-import { HMSSDK, HMSUpdateListenerActions, HMSConfig } from '@100mslive/react-native-hms';
+import { HMSConfig } from '@100mslive/react-native-hms';
 
 // instance acquired from build() method
 const HmsConfig = new HMSConfig({ authToken, userName });
