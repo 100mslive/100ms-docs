@@ -6,7 +6,8 @@ nav: 3.7
 You can easily add or remove an event listener by using the addEventListener() or removeEventListener() method. HMSUpdateListenerActions is an enum class which has all the types of event listeners.
 
 ```js
-import HmsManager, {
+import {
+  HMSSDK,
   HMSUpdateListenerActions,
   HMSException,
   HMSMessage,
@@ -16,7 +17,7 @@ import HmsManager, {
   HMSTrack
 } from '@100mslive/react-native-hms';
 
-const hmsInstance = await HmsManager.build();
+const hmsInstance = await HMSSDK.build();
 
 hmsInstance.addEventListener(
   HMSUpdateListenerActions.ON_PREVIEW,
