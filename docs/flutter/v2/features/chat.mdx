@@ -166,3 +166,26 @@ void onMessage({required HMSMessage message}) {
   messages.add(message);
 }
 ```
+
+### Advance use cases  
+
+Sometimes the app requires to show messages in different styles.Something similar to this:
+
+![Chat](/docs/v2/flutter-chat.gif)
+
+HMSSDK provides the `type` parameter of `HMSMessage` object to take care of such use cases.Just filter out the messages based on `type` 
+parameter and handle the UI accordingly.
+
+```dart
+//Example to show emoticons when the message type is set to `emoji`
+@override
+void onMessage({required HMSMessage message}) {
+  if(message.type=="emoji"){
+      //Show as emoticons on UI
+  }
+  else{
+    //Handle other cases
+  }
+}
+```
+
