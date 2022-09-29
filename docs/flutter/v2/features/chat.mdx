@@ -201,14 +201,22 @@ List<HMSMessage> messageFilter(List<HMSMessage> messages, HMSMessageRecipientTyp
   }
 }
 ```
+
 ### Advanced Use-Cases
 
 Sometimes the app requires to show messages in different styles. Something similar to this:
 
 ![Chat](/docs/v2/flutter-chat.gif)
 
-HMSSDK provides the `type` parameter of `HMSMessage` object to take care of such use cases.Just filter out the messages based on `type` 
-parameter and handle the UI accordingly.
+HMSSDK provides the `type` parameter of `HMSMessage` object to take care of such use cases.
+
+You can send message as:
+
+```dart
+hmsSDK.sendBroadcastMessage(message: "😁", type: "emoji", hmsActionResultListener: hmsActionResultListener);
+```
+
+Filter out the messages based on `type` parameter and handle the UI accordingly.
 
 ```dart
 //Example to show emoticons when the message type is set to `emoji`
