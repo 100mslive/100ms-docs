@@ -36,7 +36,7 @@ The parameters are:
 
 
 ```dart
-hmsSDK.sendBroadcastMessage(message: "Hi", type: "chat", hmsActionResultListener: hmsActionResultListener);
+hmsSDK.sendBroadcastMessage(message: "Hi", hmsActionResultListener: hmsActionResultListener);
 ```
 
 #### Sending Direct Messages
@@ -46,7 +46,7 @@ Got secrets to share? Send a message directly to a single person in the chat wit
 The parameters are:
 
 1. *message*: The text of the message.
-2. *peerId*: The `HMSPeer` instance id  who should receive message.
+2. *peerTo*: The `HMSPeer` instance id  who should receive message.
 
 
 > 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error.
@@ -61,7 +61,6 @@ The parameters are:
 hmsSDK.sendDirectMessage(
         message: "Hi",
         peerTo: peerTo,
-        type: "chat",
         hmsActionResultListener: hmsActionResultListener);
 ```
 
@@ -73,7 +72,7 @@ Need to call attention to all the hosts? All the teachers? All the developers? C
 The parameters are:
 
 1. *message*: The text of the message.
-2. *roleName*: The name of the role.
+2. *hmsRolesTo*: The name of the role.
 
 
 > 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error.
@@ -85,7 +84,6 @@ The parameters are:
 ```dart
 hmsSDK.sendGroupMessage(message: "Hi",
         hmsRolesTo: hmsRolesTo,
-        type: "chat",
         hmsActionResultListener: hmsActionResultListener);
 ```
 
@@ -179,13 +177,26 @@ void onMessage({required HMSMessage message}) {
 You can filter chat message by creating a separate list of `HMSMessage`.
 
 ```dart
-List<HMSMessage> filterList = [];
+List<HMSMessage> broadcastList = [];
+List<HMSMessage> rolesList = [];
+List<HMSMessage> peerList = [];
 
 List<HMSMessage> messageFilter(List<HMSMessage> messages, HMSMessageRecipientType type) {
   filterList = [];
   for(HMSMessage message in messages) {
-    if(message.hmsMessageRecipient.hmsMessageRecipientType == type) {
-      filterList.add(message);
+    // Filter list on the basis of Broadcast chat.
+    if(message.hmsMessageRecipient.hmsMessageRecipientType == HMSMessageRecipientType.BROADCAST) {
+      broadcastList.add(message);
+    }
+
+    // Filter list on the basis of Roles chat.
+    if(message.hmsMessageRecipient.hmsMessageRecipientType == HMSMessageRecipientType.ROLES) {
+      rolesList.add(message);
+    }
+
+    // Filter list on the basis of Peer chat.
+    if(message.hmsMessageRecipient.hmsMessageRecipientType == HMSMessageRecipientType.PEER) {
+      peerList.add(message);
     }
   }
 }
