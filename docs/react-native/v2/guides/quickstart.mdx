@@ -62,9 +62,9 @@ Add following lines in `Info.plist` file
 Call the function given below to initialise the SDK
 
 ```js section=InitializingTheSDK sectionIndex=1
-import HmsManager from '@100mslive/react-native-hms';
+import { HMSSDK } from '@100mslive/react-native-hms';
 
-const hmsInstance = await HmsManager.build();
+const hmsInstance = await HMSSDK.build();
 ```
 
 This function will return the instance of HMSSDK that will be used for calling various functions and accessing data.
@@ -76,7 +76,7 @@ Add event listeners for all the events you want updates from such as onPreview, 
 The event handlers are the way of handling any update happening in hms. It is advised to attach all the event listeners so you don't miss any update.
 
 ```js section=AddEventListeners sectionIndex=1
-import HmsManager, { HMSUpdateListenerActions } from 'react-native-hms';
+import { HMSUpdateListenerActions } from 'react-native-hms';
 
 // instance acquired from build() method
 hmsInstance.addEventListener(
@@ -99,7 +99,7 @@ To join a room 3 fields are required:
 -   `roomID` (optional): The ID of the room that you wanna join
 
 ```js section=JoinRoom sectionIndex=1
-import HmsManager, { HMSUpdateListenerActions, HMSConfig } from 'react-native-hms';
+import { HMSConfig } from 'react-native-hms';
 
 // instance acquired from build() method
 const HmsConfig = new HMSConfig({ authToken, userID, roomID, userName });
