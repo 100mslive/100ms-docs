@@ -110,16 +110,16 @@ const hmsInstance = await HMSSDK.build({
 ```
 That's all you need to setup the sdk to use your custom audio source.
 
-4. You call `play` function on audioFilePlayerNode to play a file on local device in meeting room with it's file url like below:
+4. You can call `play` function on audioFilePlayerNode to play a file on local device in meeting room with it's file url like below:
 ```js
-audioFilePlayerNode
+new HMSAudioFilePlayerNode('audio_file_player_node')
   .play(fileUrl)
   .then(d => console.log('Start Audioshare Success: ', d))
   .catch(e => console.log('Start Audioshare Error: ', e));
 ```
 Note the parameter value in HMSAudioFilePlayerNode must be same as define at time of initializing HMSSDK.
 
-### How to change mix volume of different nodes
+### How to change mic volume of different nodes
 
 You can use `setVolume` property on nodes to control the volume.
 ```js
@@ -147,8 +147,8 @@ const audioMixerSource = new HMSAudioMixerSource({
 ```
 Now, you can play a looping background music at low volume and an audio file at the same time by passing second parameter `loops` in play function as true. Like below:
 ```js
-backgroundMusicNode.play(fileUrl, true)
-audioFilePlayerNode.play(fileUrl)
+backgroundMusicNode.play(fileUrl, true, true)
+audioFilePlayerNode.play(fileUrl, false, true)
 ```
 Note default value of loops parameter is false
 
