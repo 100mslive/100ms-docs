@@ -9,10 +9,10 @@ It is important to attach preview listener and error listener before calling the
 function in order to get updates if preview got executed successfully or if it failed.
 
 ```js section=AttachingPreviewAndErrorListeners sectionIndex=1
-import HmsManager, { HMSUpdateListenerActions } from '@100mslive/react-native-hms';
+import { HMSSDK, HMSUpdateListenerActions } from '@100mslive/react-native-hms';
 
 const build = () => {
-    const hmsInstance = HmsManager.build(); // save this hms instance
+    const hmsInstance = HMSSDK.build(); // save this hms instance
 
     hmsInstance.addEventListener(
         HMSUpdateListenerActions.ON_PREVIEW,
