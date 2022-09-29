@@ -151,7 +151,8 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     {key === 'features' && router.query.slug[0] !== 'server-side' ? (
                         <>
                             {aliasMenu.map((a) => (
-                                <Link href={a.url} key={a.url}>
+                                <Link scroll={false}
+                                    prefetch={false} href={a.url} key={a.url}>
                                     <a
                                         className={`menu-item ${a.url === router.asPath ? 'active-link' : ''
                                             }`}>
