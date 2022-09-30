@@ -316,7 +316,7 @@ if key is not passed, full data is returned.
 
 ### selectAudioPlaylistTrackByPeerID
 
-▸ **selectAudioPlaylistTrackByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
+▸ **selectAudioPlaylistTrackByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
 
 takes in a normal selector which has store and id as input and curries it to make it easier to use.
 Before: store.getState((store) => normalSelector(store, peerID))
@@ -330,7 +330,7 @@ After: store.getState(curriedSelector(peerID))
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
+`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
 
 ---
 
@@ -413,7 +413,7 @@ Select the local audio volume of the primary audio track of a peer given a peer 
 
 ### selectAuxiliaryAudioByPeerID
 
-▸ **selectAuxiliaryAudioByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSTrack`](/api-reference/javascript/v2/modules#hmstrack)\>
+▸ **selectAuxiliaryAudioByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
 
 Select the first auxiliary audio track of a peer given a peer ID.
 
@@ -425,7 +425,7 @@ Select the first auxiliary audio track of a peer given a peer ID.
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSTrack`](/api-reference/javascript/v2/modules#hmstrack)\>
+`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
 
 ---
 
@@ -1770,7 +1770,7 @@ Select the [HMSScreenAudioTrack](/api-reference/javascript/v2/interfaces/HMSScre
 
 ### selectScreenShareAudioByPeerID
 
-▸ **selectScreenShareAudioByPeerID**(`id?`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack), (`res`: { `audio`: `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) = audioTrack; `video`: `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) = videoTrack }) => `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
+▸ **selectScreenShareAudioByPeerID**(`id?`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack), (`res`: { `audio`: [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) ; `video`: [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) }) => [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack)\>
 
 Select the screen share audio track of a peer given a peer ID.
 
@@ -1782,13 +1782,13 @@ Select the screen share audio track of a peer given a peer ID.
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack), (`res`: { `audio`: `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) = audioTrack; `video`: `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) = videoTrack }) => `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
+`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack), (`res`: { `audio`: [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) ; `video`: [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) }) => [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack)\>
 
 ---
 
 ### selectScreenShareByPeerID
 
-▸ **selectScreenShareByPeerID**(`id?`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack), (`res`: { `audio`: `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) = audioTrack; `video`: `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) = videoTrack }) => `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
+▸ **selectScreenShareByPeerID**(`id?`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack), (`res`: { `audio`: [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) ; `video`: [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) }) => [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
 
 Select the screen share video track of a peer given a peer ID.
 
@@ -1800,13 +1800,13 @@ Select the screen share video track of a peer given a peer ID.
 
 #### Returns
 
-`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack), (`res`: { `audio`: `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) = audioTrack; `video`: `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) = videoTrack }) => `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
+`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack), (`res`: { `audio`: [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) ; `video`: [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) }) => [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
 
 ---
 
 ### selectScreenSharesByPeerId
 
-▸ **selectScreenSharesByPeerId**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), { `audio`: `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) = audioTrack; `video`: `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) = videoTrack }\>
+▸ **selectScreenSharesByPeerId**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), { `audio`: [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) ; `video`: [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) }\>
 
 takes in a normal selector which has store and id as input and curries it to make it easier to use.
 Before: store.getState((store) => normalSelector(store, peerID))
@@ -1820,7 +1820,7 @@ After: store.getState(curriedSelector(peerID))
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), { `audio`: `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) = audioTrack; `video`: `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) = videoTrack }\>
+`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), { `audio`: [`HMSScreenAudioTrack`](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack) ; `video`: [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack) }\>
 
 ---
 
@@ -1982,7 +1982,7 @@ Select the number of unread messages.
 
 ### selectVideoPlaylistAudioTrackByPeerID
 
-▸ **selectVideoPlaylistAudioTrackByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
+▸ **selectVideoPlaylistAudioTrackByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
 
 takes in a normal selector which has store and id as input and curries it to make it easier to use.
 Before: store.getState((store) => normalSelector(store, peerID))
@@ -1996,13 +1996,13 @@ After: store.getState(curriedSelector(peerID))
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
+`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack)\>
 
 ---
 
 ### selectVideoPlaylistVideoTrackByPeerID
 
-▸ **selectVideoPlaylistVideoTrackByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
+▸ **selectVideoPlaylistVideoTrackByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
 
 takes in a normal selector which has store and id as input and curries it to make it easier to use.
 Before: store.getState((store) => normalSelector(store, peerID))
@@ -2016,7 +2016,7 @@ After: store.getState(curriedSelector(peerID))
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
+`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack)\>
 
 ---
 
