@@ -14,9 +14,16 @@ You can click on this button to fork the 100ms API collection.
 ## Add management token
 
 100ms uses management tokens to authenticate REST APIs. To create the management token, you must use the `app_access_key` and `app_secret` from the developer section in your 100ms dashboard. Refer to the [authentication and tokens guide](https://100ms.live/docs/server-side/v2/introduction/authentication-and-tokens#code-sample-generate-management-token) for more information on generating the management token.
-Once you have generated the management token you can use the same as an `environment variable` in the forked Postman collection.
+Once you have generated the management token you can use the same as an `environment variable` in the forked Postman collection. 
 
-![Add-token](/docs/v2/token.png)
+To use environment variables for the collection:
+1. Go to **Environments > 100ms API Environment** -- replace the placeholder `<YOUR_MANAGEMENT_TOKEN>` with the management token generated as recommended above and save the changes.
+    
+    ![Add-token](/docs/v2/token.png)
+
+2. Next, choose the updated environment from the `environment selector` on top right in the Postman instance. 
+    
+    ![Select Environment](/docs/v2/env_selector.png)
 
 Once you've done that, you can access your Token by writing {{TOKEN}} within your Postman collection. We've already done that for you for all the APIs in the 100ms collection.
 
