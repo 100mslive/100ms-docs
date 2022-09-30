@@ -1,4 +1,3 @@
-import React from 'react';
 import EditFile from '@/components/EditFile';
 import components from '@/components/MDXComponents';
 import Pagination from '@/components/Pagination';
@@ -16,6 +15,7 @@ import hydrate from 'next-mdx-remote/hydrate';
 import renderToString from 'next-mdx-remote/render-to-string';
 import { useRouter } from 'next/router';
 import path from 'path';
+import React from 'react';
 import setValue from 'set-value';
 
 
@@ -125,7 +125,6 @@ export default DocSlugs;
 export const getStaticProps = async ({ params }) => {
     // Absolute path of the docs file
     const postFilePath = path.join(DOCS_PATH, `${path.join(...params.slug)}.mdx`);
-
     // Raw Mdx File Data Buffer
     const source = fs.readFileSync(postFilePath);
 
@@ -146,7 +145,11 @@ export const getStaticProps = async ({ params }) => {
         setValue(n, pathV, file);
         return n;
     }, {});
-
+    const sdks = Object.keys(nav)
+    const sdk = nav[params.slug[0]]
+    sdks.forEach(item => { nav[item] = { v2: null } })
+    nav[params.slug[0]] = sdk
+    // console.log(nav)
     const toc = [];
     const mdxSource = await renderToString(content, {
         components,
@@ -162,14 +165,14 @@ export const getStaticProps = async ({ params }) => {
         },
         scope: data
     });
-
+    const file = `/${params.slug.join('/')}`
     return {
         props: {
             toc,
             nav,
             source: mdxSource,
             frontMatter: data,
-            allDocs
+            allDocs: allDocs.filter(doc => doc.url.includes(file))
         }
     };
 };
