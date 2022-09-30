@@ -1,10 +1,10 @@
-import React from 'react';
 import Header from '@/components/Header';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
 import Sidebar from '@/components/Sidebar';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
+import React from 'react';
 
 export default function Layout({ children }) {
     const { frontMatter, allDocs } = children.props
@@ -51,7 +51,8 @@ export default function Layout({ children }) {
             <div style={{ margin: "0" }}>
                 <NextSeo {...SEO} />
                 <SegmentAnalytics options={{}} title={frontMatter.title} />
-                <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} />
+                {false ?
+                    <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} /> : null}
                 <div className="ctx" >
                     <div className="content-wrapper">
                         <div

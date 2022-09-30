@@ -149,6 +149,7 @@ export const getStaticProps = async ({ params }) => {
     const sdk = nav[params.slug[0]]
     sdks.forEach(item => { nav[item] = { v2: null } })
     nav[params.slug[0]] = sdk
+    rec(nav);
     // console.log(nav)
     const toc = [];
     const mdxSource = await renderToString(content, {
@@ -170,7 +171,7 @@ export const getStaticProps = async ({ params }) => {
         props: {
             toc,
             nav,
-            source: mdxSource,
+            source: { compiledSource: mdxSource.compiledSource },
             frontMatter: data,
             allDocs: allDocs.filter(doc => doc.url.includes(file))
         }
@@ -199,3 +200,17 @@ DocSlugs.getLayout = function getLayout(page) {
         </DocLayout>
     )
 }
+
+const rec = (item) => {
+    if (typeof item == typeof {}) {
+        for (const i in item) {
+            console.log(i, item);
+            if (i === "content" && typeof item[i] !== typeof {}) item[i] = null;
+            else {
+                rec(item[i]);
+            }
+            console.log(i, item);
+        }
+    }
+};
+
