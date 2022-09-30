@@ -3,6 +3,20 @@ title: Release Notes
 nav: 15
 description: Release Notes for 100ms Android SDK
 ---
+## v2.4.9 - 2022-09-30
+### Added
+* Session Metadata API(alpha version)
+* Added better Telemetrics for analytics
+
+### Changed
+* Deprecated `ROOM_NAME_UPDATED` and `ROOM_ID_UPDATED` types of `HMSRoomUpdate` as they are no longer used
+
+### Fixed
+* SDK calling `leave()` on being removed from the room leading to `peer.leave.failure` webhook along with `peer.leave.success`
+* LetterBoxing(Black borders on top and bottom) observed when sharing screen in landscape mode
+* NPE fix in performance measurement while calling join and no websocket connection
+* Send offline analytics events to the right environment
+
 ## v2.4.8 - 2022-08-12
 #### Fixed
 * `removeSink` will only stop the download of a `videoTrack` if all the sinks attached to it are removed
