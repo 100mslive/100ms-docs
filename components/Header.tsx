@@ -118,7 +118,7 @@ const Header: React.FC<Props> = ({
                 </a>
                 <DividerIcon style={{ strokeWidth: '2px', marginLeft: '-16px' }} />
                 <div>
-                    <Link href="/">
+                    <Link prefetch={false} href="/">
                         <p
                             className="company"
                             style={{
@@ -137,7 +137,7 @@ const Header: React.FC<Props> = ({
                     <span style={{ marginRight: '1rem' }} />
                     {isNonApiRef || !showReference ? null : (
                         <button className={isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
-                            <Link href={routeAPIRef()}>API Reference</Link>
+                            <Link prefetch={false} href={routeAPIRef()}>API Reference</Link>
                         </button>
                     )}
                 </div>
@@ -177,7 +177,7 @@ const Header: React.FC<Props> = ({
                         cursor: 'pointer'
                     }}
                     tabIndex={0}
-                    onKeyPress={() => {}}
+                    onKeyPress={() => { }}
                     onClick={() => buttonToggleTheme()}>
                     {!isDark ? <NightIcon /> : <SunIcon style={{ color: '#ECC502' }} />}
                 </span>

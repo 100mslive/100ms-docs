@@ -51,8 +51,7 @@ export default function Layout({ children }) {
             <div style={{ margin: "0" }}>
                 <NextSeo {...SEO} />
                 <SegmentAnalytics options={{}} title={frontMatter.title} />
-                {false ?
-                    <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} /> : null}
+                <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} />
                 <div className="ctx" >
                     <div className="content-wrapper">
                         <div
