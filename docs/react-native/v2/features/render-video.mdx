@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
 ...
 ```
 
+Note: One HmsView can only be connected with one video trackId, once the requirement of that HmsView is finshed it should be disposed. To display multiple videos you have to create multiple instances of HmsView and same HmsView can not be reused. Every HmsView should be unique, which can be done by passing a `key` property and value as trackId. A maximum of 2 to 4 HmsViews should be displayed on one screen as it avoids lagging and data consumption which is automatically managed by the sdk once the HmsView is out of the viewport area. For listening to the audio you have to do absolutely nothing, it is automatically played once you join the room. To mute & unmute audio & video refer [here](./mute). To manipulate volume level refer [here](../advanced-features/set-volume).
 
 ## Track Id
 It is a required prop in the `HmsView` component. There are 2 types of peers - a `localPeer` & `remotePeer`, to extract `trackId` from peers use the following code snippet. These track IDs can directly be passed to `HmsView` component.
