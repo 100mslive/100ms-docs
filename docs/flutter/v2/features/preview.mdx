@@ -1,13 +1,13 @@
 ---
 title: Preview
-nav: 10
+nav: 3.06
 ---
 
 Preview screen is a frequently used UX element which allows users to check if their input devices are working properly and set the initial state (mute/unmute) of their audio and video tracks before joining. 
 
-100ms SDKs provide an easy-to-use API to back this feature. Additionally, the SDK will try to establish a connection to 100ms server to verify there are no network issues and that the auth credentials are valid so that if everything is in order the subsequent room join is instant.
+100ms SDKs provide an easy-to-use API to back this feature. Additionally, the SDK will try to establish a connection to 100ms server to verify there are no network issues and that the auth credentials are valid so that if everything is in order the subsequent room join will be much faster.
 
-create an object of HMSConfig class using the available  joining configurations
+Create an object of HMSConfig class using the available join configurations
 
    ```dart
    HMSConfig config = HMSConfig(authToken: token,
@@ -22,7 +22,7 @@ hmsSDK.build();
 hmsSDK.preview(onfig);
 ```
 
-You need HMSConfig instance which you have created.
+You need HMSConfig instance which you have created above.
 
 Now you have started preview you need to listen to the updates. You get this via `PreviewUpdateListener`.
 
@@ -36,11 +36,11 @@ abstract class HMSPreviewListener {
   ///   - localTracks: local audio/video tracks list
   void onPreview({required HMSRoom room, required List<HMSTrack>localTracks});
 
-  /// when an error is caught [onError] will be called
+  /// when an error is caught [onHMSError] will be called
   ///
   /// - Parameters:
   ///   - error: error which you get.
-  void onError({required HMSError error});
+  void onHMSError({required HMSError error});
     
   /// This is called when there is a change in any property of the Room
   ///
@@ -62,11 +62,11 @@ abstract class HMSPreviewListener {
 
 This will pass an array of local tracks that you can display to the user (see [Render Video](render-video) and [Mute](mute) sections for more details).
 
-If however there was some error related to getting the input sources or some preflight check has failed delegate callback will be fired with the HMSError instance you can use to find what went wrong (see [Error Handling](error-handling)).
+If however there was some error related to getting the input sources or some preflight check has failed delegate callback will be fired with the `HMSException` instance you can use the object to find what went wrong (see [Error Handling](error-handling)).
 
 
 Add the `previewListener` instance to 
 
 ```dart
-PlatformService.addPreviewListener(previewListener);
+hmsSDK.addPreviewListener(previewListener);
 ```

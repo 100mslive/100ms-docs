@@ -1,42 +1,88 @@
 ---
-title: HLS Streaming
+title: HLS Streaming & Recording
 nav: 3.992
 ---
 
-HLS Streaming allows for scaling to millions of viewers in near real time. You can give a link of your webapp which will be converted to a HLS feed by our server and can be played across devices for consumption.
+HLS Streaming allows for scaling to millions of viewers in near real time. You can give a link of your web-app which will be converted to a HLS feed by our server and can be played across devices for consumption.
 
-Behind the scenes, this will be achieved by having a bot join your room and stream what it sees and hears. Once the feed is ready, the server will give a url which can be played using any HLS Player.
+Behind the scenes, this will be achieved by having a bot join your room and stream what it sees and hears. Once the feed is ready, the server will give a URL which can be played using any HLS Player.
 
-Note that the media server serving the content in this case is owned by 100ms. If you're looking for a way to stream on YouTube, Twitch, etc. then please have a look at our [RTMP streaming docs here](recording).
+> Note that the media server serving the content in this case is owned by 100ms. If you're looking for a way to stream on YouTube, Twitch, etc. then please have a look at our RTMP streaming docs [here](recording).
 
 
 ## Starting HLS
 
-To start HLS you'll need to pass in a meeting URL. The 100ms bot will open this URL to join your room, so it must allow access without any user level interaction. In the future it'll be possible to start HLS for multiple such URLs for the same room.
+Check if user has permissions
+```js
+const hlsStreaming: boolean = peer.role.permissions.hlsStreaming;
+```
+HLS can be started in two ways depending on the level of customization you need.
 
-For this purpose the API supports taking in an array, although currently only the first element of the array will be used. To distinguish between multiple urls an additional field metadata can be optionally passed. The meetingURL and metadata are clubbed together to form what we'll call a variant.
+1. Default View: The simplest view to just begin a stream with default UI and parameters.
+2. Custom Views: To use your own UI for HLS streaming, you need to provide your own web-app URL for our bot to join and stream.
 
-You can call hmsInstance.startHLSStreaming with a HMSHLSConfig having an array of such variants.
+#### Default View
+
+Begins a stream with default parameters.
+
+```js
+await hmsInstance.startHLSStreaming()
+```
+
+#### Custom View
+You can call `hmsSDK.startHLSStreaming` with a `HMSHLSConfig` having either an array of `meetingURLVariants` or `hlsRecordingConfig`.
+
+To use our own browser UI for HLS, you'll need to pass in a meeting URL. The 100ms bot will open this URL to join your room, so
+it must allow access without any user level interaction. In the future it'll be possible to start HLS for multiple such URLs for the same room.
+
+For this purpose the API supports taking in an array, although currently only the first element of the array will be used. To distinguish between multiple URLs an additional field `metadata` can be passed.
+
+Here's what the `HMSHLSMeetingURLVariant` looks like
+```js
+class HMSHLSMeetingURLVariant {
+  meetingUrl: string;
+  metadata: string;
+}
+```
+
+To record the HLS stream you may specify an `HMSHLSRecordingConfig` within the `HMSHLSConfig`.
+
+Here's what the `HMSHLSRecordingConfig` looks like
+```js
+class HMSHLSRecordingConfig {
+  singleFilePerLayer: boolean;
+  videoOnDemand: boolean;
+}
+```
+1. `singleFilePerLayer` if the desired end result is a mp4 file per HLS layer, false by default.
+2. `videoOnDemand` if the desired end result is a zip of m3u8 and all the chunks, false by default.
 
 ```js 
 import {
+  HMSHLSRecordingConfig,
   HMSHLSMeetingURLVariant,
   HMSHLSConfig,
 } from '@100mslive/react-native-hms';
 
 const startHLSStreaming = () => {
   const hmsHLSMeetingURLVariant = new HMSHLSMeetingURLVariant({
-    meetingUrl: 'https://yogi.app.100ms.live/preview/nih-bkn-vek?token=beam_recording',
+    meetingUrl: 'https://yogi.app.100ms.live/preview/nih-bkn-vek?skip_preview=true',
     metadata: '',
   });
   
+  const hmsHLSRecordingConfig = new HMSHLSRecordingConfig({
+    singleFilePerLayer: false,
+    videoOnDemand: false,
+  });
+  
   const hmsHLSConfig = new HMSHLSConfig({
+    hlsRecordingConfig: hmsHLSRecordingConfig,
     meetingURLVariants: [hlsStreamingDetails],
   });
   
-  hmsInstance.startHLSStreaming(hmsHLSConfig)
-    .then(r => console.log(r))
-    .catch(e => console.log(e));
+  await hmsInstance.startHLSStreaming(hmsHLSConfig)
+    .then(d => console.log('Start Hls Success: ', d))
+    .catch(e => console.log('Start Hls Error: ', e));
 };
 ```
 
@@ -45,9 +91,9 @@ You can call hmsInstance.stopHLSStreaming to stop HLS Streaming which will stop 
 
 ```js 
 const stopHLSStreaming = () => {  
-  hmsInstance.stopHLSStreaming()
-    .then(r => console.log(r))
-    .catch(e => console.log(e));
+  await hmsInstance.stopHLSStreaming()
+    .then(d => console.log('Stop Hls Success: ', d))
+    .catch(e => console.log('Stop Hls Error: ', e));
 };
 ```
 Want to see how this works in a live project? Take a look at our advanced sample app.
@@ -67,7 +113,7 @@ class HMSHLSStreamingState {
 }
 ```
 
-This represents a livestream to one or more HLS urls in the container of `HMSHLSVariant`. Which looks like:
+This represents a livestream to one or more HLS URLs in the container of `HMSHLSVariant`. Which looks like:
 ```js
 class HMSHLSVariant {
   hlsStreamUrl: string;
@@ -84,9 +130,10 @@ The room status should be checked in following two places -
 
 2. In the onRoomUpdate({ type, room }: { type: HMSRoomUpdate, room: HMSRoom }) callback of HMSUpdateListener. The HMSRoomUpdate type will be HMSRoomUpdate.HLS_STREAMING_STATE_UPDATED.
 
-> Tips
-* If you're using the dashboard webapp from 100ms, please make sure to use a role which doesn't have publish permissions for beam tile to not show up.
+## Tips
 
-* If using your own webapp, do put in place retries for API calls like tokens etc. just in case any call fails. As human users we're used to reloading the page in these scenarios which is difficult to achieve in the automated case.
+* If you're using the dashboard web-app from 100ms, please make sure to use a role which doesn't have publish permissions for beam tile to not show up.
+
+* If using your own web-app, do put in place retries for API calls like tokens etc. just in case any call fails. As human users we're used to reloading the page in these scenarios which is difficult to achieve in the automated case.
 
 * Make sure to not disable the logs for the passed in meeting URL. This will allow for us to have more visibility into the room, refreshing the page if join doesn't happen within a time interval.

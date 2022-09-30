@@ -11,14 +11,14 @@ To invoke this API, call `preview` with `HMSConfig` and `HMSPreviewListener` as 
 hmsSDK.preview(config, hmsPreviewListener)
 ```
 
-You would need the same config object that you would pass to [join API](Join).
+You would need the same config object that you would pass to [join API](join).
 
 `HMSPreviewListener` has three callbacks:
 
 ```kotlin
 fun onPreview(room: HMSRoom, localTracks: Array<HMSTrack>)
 ```
-Which is called when SDK has passed all its pre-flight checks and established the connection to 100ms server. This will pass an array of local audio/video tracks that you can display to the user (see [Render Video](Render-Video) and [Mute](Mute) sections for more details).
+Which is called when SDK has passed all its pre-flight checks and established the connection to 100ms server. This will pass an array of local audio/video tracks that you can display to the user (see [Render Video](render-video) and [Mute](mute) sections for more details).
 
 
 ```kotlin
@@ -38,4 +38,4 @@ This is called when `Peer` information is updated, such as `PEER_JOINED` or `PEE
 
 
 ## Network Quality Reports
-A network quality report can be requested on preview. Additional details [here](Network-Quality-Reports).
+A network quality report can be requested on preview. Additional details [here](network-quality-reports).

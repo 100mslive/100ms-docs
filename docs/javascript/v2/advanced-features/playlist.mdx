@@ -33,7 +33,7 @@ interface HMSPlaylistItem<T> {
     name: string;
     type: HMSPlaylistType;
     /**
-     * the url to play from, local files are not supported currently.
+     * the url to play from, can also be a url created from local file eg: URL.createObjectURL(file)
      */
     url: string;
     /**
@@ -118,6 +118,15 @@ export interface IHMSPlaylistActions {
      * @param playbackRate - value from 0.25 and 2.0
      */
     setPlaybackRate(playbackRate: number): void;
+    /**
+     * Remove a single item from the playlist. This will stop the track if it is the current playing one and remove the item
+     * returns a promise that resolves to true if the item was removed
+     */
+    removeItem(id: string): Promise<boolean>;
+    /**
+     * Clear the entire playlist. This will stop the playing track(if any)
+     */
+    clearList(): Promise<void>;
 }
 ```
 
@@ -220,7 +229,7 @@ function Playlist() {
 
 </Tab>
 
-# Playing Next item in the playlist
+## Playing Next item in the playlist
 
 By default, when the current item ends, the next item is played automatically. if you wish to control what you play next,
 you can do the following.
@@ -249,5 +258,4 @@ The notification also contains the playlist item that has ended.
 
 ## Limitations
 
--   Playing from local file is not yet supported.
 -   No custom encoders/decoders, only file formats supported by native audio and video tags will work.

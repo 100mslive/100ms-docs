@@ -1,6 +1,6 @@
 ---
 title: RTMP Streaming / Recording
-nav: 14
+nav: 3.16
 ---
 
 Want to preserve your video call for posterity in a recording? Or live stream it out to millions of viewers on Twitch or YouTube or whatever gives you an RTMP injest URL?
@@ -22,15 +22,18 @@ To start recording, streaming or both, create an instance of `HMSRecordingConfig
 1. **meetingUrl**: *String*. The url the 100ms bot user will open to join your room. It must allow access without any user level interaction.
 2. **rtmpUrls**: *List<String\>*. If streaming is required, this has to be one or more RTMP Injest Urls with a max limit of 3 urls where the stream should go. If only recording, this can be an empty list.
 3. **record**: *Boolean*. If recording is required, set true. If recording is not required, set false. This value has no effect on streaming.
+4. **resolution**: *HMSResolution*. An optional value for the output resolution of the stream. For instance default is landscape at 1280x720 but this could be set for a portrait mode of 720x1280. Or smaller values like 480x80.
+
+The `HMSResolution` takes Width and Height.
 
 * If both rtmpUrls and record = true are provided, both streaming and recording will begin.
 * If only rtmpUrls are provided, only streaming will begin.
 * If only record true is provided, only recording will begin.
 
-If either one is started, the other can't be started without first stopping whatever is running.
-Eg: Only streaming is started. Recording can't be started unless streaming is stopped first.
+If either one is started, the other can't be started without stopping whatever is running.
+Eg: If only streaming is started then recording can't be started unless streaming is stopped first.
 
-If both are required, they have to be started together by providing both RTMP Injest Urls and recording = true.
+If both are required, they have to be started together by providing both `RTMP Ingest Urls` and `recording = true`.
 
 [hmsActionResultListener] is the callback that would be called by SDK in case of a success or failure.
 

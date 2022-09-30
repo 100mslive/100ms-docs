@@ -1,5 +1,7 @@
+import EditFile from '@/components/EditFile';
 import Header from '@/components/Header';
 import Pagination from '@/components/Pagination';
+import SegmentAnalytics from '@/components/SegmentAnalytics';
 import Sidebar from '@/components/Sidebar';
 import Toc from '@/components/Toc';
 import { PaginationType } from '@/lib/getPagination';
@@ -8,8 +10,6 @@ import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import React from 'react';
-import EditFile from '@/components/EditFile';
-import SegmentAnalytics from '@/components/SegmentAnalytics'
 
 type NavRoute = {
     url: string;
@@ -35,17 +35,10 @@ interface Props {
         nextPost: PaginationType;
     };
     allDocs: AllDocsType[];
-    currentDocSlug: string;
 }
 
-const DocLayout: React.FC<Props> = ({
-    frontMatter,
-    nav,
-    children,
-    pagination,
-    allDocs,
-    currentDocSlug
-}) => {
+const DocLayout: React.FC<Props> = ({ frontMatter, nav, children, pagination, allDocs }) => {
+    const router = useRouter();
     const SEO = {
         title: `${
             frontMatter.title || '100ms Docs'
@@ -54,13 +47,18 @@ const DocLayout: React.FC<Props> = ({
             title: `${
                 frontMatter.title || '100ms Docs'
             } | 100ms - Video conferencing infrastructure for a video-first world`
-        }
+        },
+        canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${
+            router.asPath === '/' ? '' : router.asPath.split('?')[0]
+        }`
     };
     const [menu, setMenu] = React.useState(false);
     const [modal, setModal] = React.useState(false);
     const menuState = { menu, setMenu };
+    const [activeHeading, setActiveHeading] = React.useState('');
+    const [activeSubHeading, setActiveSubHeading] = React.useState('');
+
     useLockBodyScroll(modal);
-    const router = useRouter();
     let newNav;
     // if 3 levels of directory
     let showPagination = true;
@@ -87,27 +85,60 @@ const DocLayout: React.FC<Props> = ({
     } else {
         newNav = nav;
     }
-    setTimeout(() => {
-        scrollToUrlHash(router.asPath);
-    }, 500);
+
+    React.useEffect(() => {
+        setTimeout(() => {
+            scrollToUrlHash(router.asPath);
+        }, 500);
+    }, [router.asPath]);
+
+    React.useEffect(() => {
+        const getTopIndex = (arr) => {
+            for (let i = arr.length - 1; i >= 0; i--)
+                if (Math.floor(arr[i].getBoundingClientRect().top) < 200) return i;
+            return -1;
+        };
+
+        const getActiveLinks = () => {
+            const h2Array = document.getElementsByTagName('h2');
+            const h3Array = document.getElementsByTagName('h3');
+
+            const h2Index = getTopIndex(h2Array);
+            const h3Index = getTopIndex(h3Array);
+
+            if (h2Index >= 0) {
+                setActiveHeading(h2Array[h2Index].id);
+                if (
+                    h3Index >= 0 &&
+                    h3Array[h3Index].getBoundingClientRect().top >
+                        h2Array[h2Index].getBoundingClientRect().top
+                )
+                    setActiveSubHeading(h3Array[h3Index].id);
+                else setActiveSubHeading('');
+            }
+        };
+        getActiveLinks();
+        window.addEventListener('scroll', getActiveLinks);
+
+        return () => window.removeEventListener('scroll', getActiveLinks);
+    }, []);
+
     return (
         <>
             <div className="page">
                 <NextSeo {...SEO} />
                 <SegmentAnalytics options={{}} title={frontMatter.title} />
-                <Header
-                    modal={modal}
-                    setModal={setModal}
-                    menuState={menuState}
-                    docs={allDocs}
-                    currentDocSlug={currentDocSlug}
-                />
+                <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} />
                 <div className="ctx">
-                    <div style={{ borderRight: '1px solid var(--gray6)' }}>
-                        <Sidebar menu={menu} nav={newNav} />
-                    </div>
                     <div className="content-wrapper">
-                        <article>
+                        <div
+                            className="sidebar-container"
+                            style={{
+                                borderRight: '1px solid var(--new_border_default)'
+                            }}>
+                            <Sidebar menu={menu} nav={newNav} />
+                        </div>
+                        {!menu ? <article>
                             <h1>{frontMatter.title}</h1>
                             {children}
                             <hr />
@@ -118,52 +149,55 @@ const DocLayout: React.FC<Props> = ({
                                 />
                             )}
                             <EditFile slug={router.asPath} />
-                        </article>
-                        <Toc />
+                        </article> : null }
+                        <Toc activeHeading={activeHeading} activeSubHeading={activeSubHeading} />
                     </div>
                 </div>
                 <style jsx>{`
                     html {
+                        height: 100%;
                         scroll-behavior: smooth !important;
-                        scroll-padding-top: 120px !important;
                     }
                     .page {
-                        max-width: 1600px;
-                        margin: 0 auto;
+                        margin: 0;
                     }
                     .ctx {
                         display: flex;
+                        width: 100%;
                         filter: blur(${modal ? '10px' : '0px'});
+                        background-color: var(--sidebar_bg) !important;
+                    }
+                    .sidebar-container {
+                        background-color: var(--sidebar_bg) !important;
                     }
                     .wrapper-ctx {
                         display: flex;
-                        width: 100%;
                     }
                     article {
-                        max-width: 760px;
-                        width: 100%;
-                        padding: 2rem 3rem;
+                        max-width: 1200px;
+                        width: calc(100vw - 630px);
+                        flex-grow: 1;
+                        box-sizing: border-box;
+                        padding: 0 2rem;
+                        min-height: calc(100vh - 140px);
+                        padding-bottom: 80px;
                         display: flex;
                         flex-direction: column;
                         align-items: stretch;
-                    }
-                    .content-ctx {
-                        min-height: 100vh;
                     }
                     .content-wrapper {
                         width: 100%;
                         display: flex;
                         justify-content: space-between;
+                        background-color: var(--article_bg);
                     }
                     .mobile-menu {
                         display: none;
                         position: absolute;
                     }
-                    @media screen and (max-width: 1000px) {
-                        article {
-                            padding: 2rem 1rem;
-                            max-width: 100%;
-                            width: 100%;
+                    @media screen and (max-width: 768px) {
+                        .ctx {
+                            overflow-x: hidden;
                         }
                     }
                 `}</style>

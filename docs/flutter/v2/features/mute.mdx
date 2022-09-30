@@ -1,6 +1,6 @@
 ---
 title: Mute / Unmute
-nav: 8
+nav: 3.04
 ---
 
 Mute is something that applies to both audio and video.
@@ -13,9 +13,9 @@ It can be called on local (you) or remote (other people) peer's audio or video t
 
 You get a reference to your own local peer from `getLocalPeer` on HMSSDK.
 
-You can do the same for remote peers and HMSRemoteVideoTrack and HMSRemoteAudioTrack. Get other people's peers by calling `hmsSDK.getRemotePeers()`
+You can do the same for remote peers and HMSRemoteVideoTrack and HMSRemoteAudioTrack. Get other peers by calling `hmsSDK.getRemotePeers()`
 
-> 💡 You may get null for any track if they were not allowed to publish that track according to their HMSRole.
+> 💡 You may get null for any track if the peer was not allowed to publish the track according to its role permissions.
 
 
 ```dart
@@ -30,4 +30,24 @@ hmsSDK.stopCapturing();
 
 hmsSDK.startCapturing();
 ````
- 
+
+### Setting video and mic off while joining
+
+If you want to join room with audio and video off. you can follow this
+In `onJoin` you can call `switchAudio` and `switchVideo`.if you want both audio and video to be off while joining.
+
+```dart
+
+    HMSSDK hmssdk = new HMSSDK();
+
+    @override
+    void onJoin({required HMSRoom room}) async {
+
+        this.isLocalPeerVideoOn = false;
+        this.isLocalPeerMicOn = false;
+
+        hmssdk.switchAudio(isOn: true);
+        hmssdk.switchVideo(isOn: true);
+    }
+
+```

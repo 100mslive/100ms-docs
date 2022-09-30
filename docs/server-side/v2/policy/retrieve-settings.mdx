@@ -1,0 +1,44 @@
+---
+title: Retrieve settings
+nav: 10
+---
+
+This endpoint is used to fetch settings.
+
+<GetRequest title="https://api.100ms.live/v2/templates/<template_id>/settings" />
+
+<Request id="req-0">
+
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/templates/<template_id>/settings' \
+--header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "region": "in",
+    "subscribeDegradation": {},
+    "screenSimulcastLayers": {},
+    "videoSimulcastLayers": {},
+    "recording": null,
+    "roomState": {
+        "messageInterval": 5,
+        "sendPeerList": false,
+        "stopRoomStateOnJoin": true,
+        "enabled": false
+    },
+    "retry": {}
+}
+```
+
+</ResponseBox>
+
+## Arguments
+
+| Name                           | Type     | Description                                                                                                           | Required |
+| :----------------------------- | :------- | :-------------------------------------------------------------------------------------------------------------------- | :------- |
+| template_id <br/> — path param | `string` | Unique identifier of the template you wish to fetch settings details for. <br/> **Example:** 6316d5ca5a2635a5849a0216 | Yes      |

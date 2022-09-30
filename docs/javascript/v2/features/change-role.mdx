@@ -42,37 +42,38 @@ the below interface.
 hmsActions.changeRole(forPeerId, toRoleName, force);
 ```
 
--   `forPeerId`: The peer ID whose role needs to be changed, the peer can be either of local or remote.
--   `toRoleName`: The target role name.
--   `force`(optional): The other peer gets a request by default to accept a role change, by setting force to true, the role can be changed
-                        without requesting for approval.
+- `forPeerId`: The peer ID whose role needs to be changed, the peer can be either of local or remote.
+- `toRoleName`: The target role name.
+- `force`(optional): The other peer gets a request by default to accept a role change, by setting force to true, the role can be changed
+  without requesting for approval.
 
 > 💡 A list of all available role names in the current room can be accessed via the `selectAvailableRoleNames` selector. Further the `selectRoleByRoleName`
-selector can be used to get the full [HMSRole](/api-reference/javascript/v2/interfaces/HMSRole) object for a role name.
+> selector can be used to get the full [HMSRole](/api-reference/javascript/v2/interfaces/HMSRole) object for a role name.
 
 ### Handling a Role Change Request
 
 The `force` parameter in `changeRole`, when false, is a polite request: "Would you like to change your role from listener to speaker?" which can be ignored by the other party.
 The way it works is the other party will first receive a [request](/api-reference/javascript/v2/interfaces/HMSRoleChangeRequest) which they can accept or reject.
 
-
-<Tabs id="roleChange" items={['Javascript', 'React']} />{' '}
+<Tabs id="roleChange" items={["Javascript", "React"]} />{" "}
 
 <Tab id='roleChange-0'>
 
 ```js
 function handleRoleChangeRequest(request) {
-    if (!request) {
-        return;
-    }
-    console.log(`${request.requestedBy.name} requested role change to - ${request.role.name}`);
-    // shouldAccept can for example present a pop up to the user for deciding how to act on the request
-    const accept = shouldAccept(request);
-    if (accept) {
-        hmsActions.acceptChangeRole(request);
-    } else {
-        hmsActions.rejectChangeRole(request);
-    }
+  if (!request) {
+    return;
+  }
+  console.log(
+    `${request.requestedBy.name} requested role change to - ${request.role.name}`
+  );
+  // shouldAccept can for example present a pop up to the user for deciding how to act on the request
+  const accept = shouldAccept(request);
+  if (accept) {
+    hmsActions.acceptChangeRole(request);
+  } else {
+    hmsActions.rejectChangeRole(request);
+  }
 }
 
 hmsStore.subscribe(handleRoleChangeRequest, selectRoleChangeRequest);
@@ -84,21 +85,23 @@ hmsStore.subscribe(handleRoleChangeRequest, selectRoleChangeRequest);
 
 ```jsx
 function handleRoleChangeRequest(request) {
-    const request = useHMSStore(selectRoleChangeRequest);
-    const hmsActions = useHMSActions();
+  const request = useHMSStore(selectRoleChangeRequest);
+  const hmsActions = useHMSActions();
 
-    useEffect(() => {
-        console.log(`${request.requestedBy.name} requested role change to - ${request.role.name}`);
-        // shouldAccept can for example present a pop up to the user for deciding how to act on the request
-        const accept = shouldAccept(request);
-        if (accept) {
-            hmsActions.acceptChangeRole(request);
-        } else {
-            hmsActions.rejectChangeRole(request);
-        }
-    }, [request, hmsActions])
+  useEffect(() => {
+    console.log(
+      `${request.requestedBy.name} requested role change to - ${request.role.name}`
+    );
+    // shouldAccept can for example present a pop up to the user for deciding how to act on the request
+    const accept = shouldAccept(request);
+    if (accept) {
+      hmsActions.acceptChangeRole(request);
+    } else {
+      hmsActions.rejectChangeRole(request);
+    }
+  }, [request, hmsActions]);
 
-    return null;
+  return null;
 }
 ```
 
@@ -114,11 +117,10 @@ but instead will straight away receive a new set of updated permissions and stop
 
 ![Listener Role](/guides/role-listener.png)
 
-
 ### Notifications
 
 You'll get a notification of type `ROLE_UPDATED` when role change happens for the local peer. When a peer's role change
-happens in a way where the updated role has new publish permissions, the track will be muted by default. So for e.g., if a viewer(no audio/video)
+happens in a way where the updated role has new publish permissions, the track will be muted by default. So for example, if a viewer(no audio/video)
 is changed to a host, their tracks will be muted right after the role change. They'll be able to manually unmute post role change though.
 If you want this unmuting to happen automatically, you can listen to the notification to call the action.
 

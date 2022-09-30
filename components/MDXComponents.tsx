@@ -1,24 +1,28 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Image from 'next/image';
 import React from 'react';
+import { camelCase } from 'lodash';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Tabs, Tab } from './Tabs';
+import APILink from './APILink';
+import BaseRequest from './BaseRequest';
 import Code from './Code';
+import Codesandbox from './Codesandbox';
+import Content from './Content';
+import DeleteRequest from './DeleteRequest';
+import DownloadCollection from './DownloadCollection';
+import EndpointRequest from './EndpointRequest';
+import GetRequest from './GetRequest';
 import Note from './Note';
 import PostRequest from './PostRequest';
-import GetRequest from './GetRequest';
-
-import DeleteRequest from './DeleteRequest';
-
+import Request from './Request';
 import Response from './Response';
-import Codesandbox from './Codesandbox';
+import ResponseBox from './ResponseBox';
+import { Tab, Tabs } from './Tabs';
 import Text from './Text';
 import View from './View';
-import Content from './Content';
-import DownloadCollection from './DownloadCollection';
 
-const CodeCustom = (props: any) => <Code>{props.children}</Code>;
+const CodeCustom = (props: any) => <Code {...props}>{props.children}</Code>;
 
 const NoteCustom = (props: any) => <Note type="success">{props.children}</Note>;
 
@@ -48,7 +52,10 @@ const LinkCustom = (props) => {
     }
 
     return (
-        <a target="_blank" rel="noopener noreferrer" href={href}>
+        <a target="_blank" rel="noopener noreferrer" href={href} onClick={() => window.analytics.track('link.clicked', {
+            btnId: camelCase(typeof props?.children === typeof '' ? props?.children : props?.children?.props?.alt),
+            page: window?.location?.pathname
+        })}>
             {props.children}
         </a>
     );
@@ -56,9 +63,13 @@ const LinkCustom = (props) => {
 
 const MDXComponents = {
     Response,
+    BaseRequest,
+    EndpointRequest,
     PostRequest,
     DeleteRequest,
     GetRequest,
+    Request,
+    ResponseBox,
     Note,
     Image,
     blockquote: NoteCustom,
@@ -72,7 +83,8 @@ const MDXComponents = {
     View,
     a: LinkCustom,
     Content,
-    DownloadCollection
+    DownloadCollection,
+    APILink
 };
 
 export default MDXComponents;

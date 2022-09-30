@@ -1,5 +1,5 @@
 ---
-title: RTMP Streaming / Recording
+title: RTMP Streaming & Recording
 nav: 3.991
 ---
 
@@ -17,6 +17,11 @@ The topics covered in this doc are:
 
 ### Starting Streaming / Recording
 
+Check if user has permissions
+```js
+const browserRecording: boolean = peer.role.permissions.browserRecording;
+const rtmpStreaming: boolean = peer.role.permissions.rtmpStreaming;
+```
 
 To start recording, streaming or both, create an instance of HMSRTMPConfig.
 
@@ -45,7 +50,9 @@ const recordingDetails = HMSRTMPConfig({
   rtmpURLs: [],
 });
   
-const result = await instance?.startRTMPOrRecording(recordingDetails);
+await instance?.startRTMPOrRecording(recordingDetails)
+    .then(d => console.log('Start Recording Success: ', d))
+    .catch(e => console.log('Start Recording Error: ', e));
 ```
 
 
@@ -61,7 +68,9 @@ The result of the action is returned. On failure to start then an error will be 
 
 
 ```js
-const result = await instance?.stopRtmpAndRecording();
+await instance?.stopRtmpAndRecording()
+    .then(d => console.log('Stop Recording Success: ', d))
+    .catch(e => console.log('Stop Recording Error: ', e));
 ```
 
 

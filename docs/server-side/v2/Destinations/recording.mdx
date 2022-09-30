@@ -1,0 +1,87 @@
+---
+title: SFU Recording
+nav: 5.1
+---
+
+## Introduction
+
+SFU recording can be used to save audio/video calls for offline viewing. SFU recording supports both individual and composite recordings.
+
+## Types of SFU recording
+
+### Individual recording
+
+Media for each peer is provided as a separate mp4 file. This file will have both audio and video of the peer. These files can be used for offline review or in implementing custom composition.
+
+### Composite recording
+
+Audio and video of all peers is composed as per their joining/leaving the meeting and provided as a single mp4. This file can be used for offline viewing of the meeting.
+
+## How to enable SFU recording
+
+### Using Dashboard
+
+There are two ways to enable SFU recording for a room.
+
+#### First way (recommended)
+
+This requires two steps-
+
+1. Provide upload info in the template and enable the SFU recording.
+
+![Enable recording from a template](/docs/v2/recording.png)
+
+2. Choose `Auto` for recording while creating a room.
+
+![Choose auto recording while creating a room](/docs/v2/create-a-room-recording-auto.png)
+
+    > **Note**: Choosing `Auto` for recording will make room's recording settings depends on template.
+    >    That means -
+    >   - Enabling/Disabling SFU recording in template will also enable/disable it for the room.
+    >   - Changes made in upload settings in template, will also be reflected for the room.
+
+#### Second way
+
+Another way to enable SFU recording for a room is to choose `Enabled` for recording settings while creating it.
+
+![Enable recording when creating a room](/docs/v2/create-a-room-recording-enabled.png)
+
+> **Note**: Choosing `Enabled/Disabled` explicitly for recording while creating a room, will make the recording settings in room not depend on template.
+> That means-
+>
+> -   Enabling/Disabling SFU recording in template will have no effect this template.
+> -   Room will have its own upload info. By default, they will be uploaded to 100ms storage. More on this below.
+
+### Using API
+
+-   [See detailed API](/server-side/v2/Rooms/create-via-api)
+
+### Uploading destination configuration
+
+By default recordings will be uploaded to 100ms storage and a pre-signed URL for the same will be provided to customers via a webhook. The pre-signed URL will expire in 12 hours.
+Customers can also configure the recordings to be stored in their cloud storage. Following are the configurations for the same.
+
+| Name        | Type     | Description                                                                                           | Required |
+| :---------- | :------- | :---------------------------------------------------------------------------------------------------- | :------- |
+| type        | `string` | Upload Destination type. Currently, only `s3` is supported                                            | Yes      |
+| location    | `string` | Name of the AWS s3 bucket in which you want to store all recordings                                   | Yes      |
+| prefix      | `string` | Upload prefix path                                                                                    | No       |
+| options     | `object` | Additional configurations of type `Options` to be used for uploading                                  | No       |
+| credentials | `object` | Object of type `Credentials`. This is used to share AWS credentials to access the s3 bucket specified | No       |
+
+Where `Options` is
+
+| Name   | Type     | Description                                                                                                              | Required |
+| :----- | :------- | :----------------------------------------------------------------------------------------------------------------------- | :------- |
+| region | `string` | Region of the AWS account hosting the s3 bucket for storing recordings. If not provided it is assumed to be `ap-south-1` | No       |
+
+Where `Credentials` is
+
+| Name   | Type     | Description                                                                 | Required |
+| :----- | :------- | :-------------------------------------------------------------------------- | :------- |
+| key    | `string` | Access Key for the AWS account hosting the s3 bucket for storing recordings | Yes      |
+| secret | `string` | Secret for the AWS account hosting the s3 bucket for storing recordings     | Yes      |
+
+Composite recording mp4 will be placed at - `s3://<location>/<prefix>/<room_id>/<start_date>/<session_id>/Rec-<session_id>-<epoch>.mp4`. Example `s3://test-bucket/test-prefix/61101349d0f56e684b608c08/20210721/5fccb7dc72909272bf999014/Rec-5fccb7dc72909272bf999014-1626898422000.mp4`
+
+Individual recording mp4s will be placed at - `s3://<location>/<prefix>/<room_id>/<start_date>/<session_id>/<peer_id>/<stream-id>/<stream-id>.mp4`. Example `s3://test-bucket/test-prefix/61101349d0f56e684b608c08/20210721/5fccb7dc72909272bf999014/76539d6b-d10d-4790-bdd2-ab57fa7facb0/9aeec8db-524d-4129-874d-7a71d340bdec/9aeec8db-524d-4129-874d-7a71d340bdec.mp4`

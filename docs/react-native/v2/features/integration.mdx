@@ -18,10 +18,10 @@ Add following lines in `Info.plist` file
 ```xml
 <key>NSCameraUsageDescription</key>
 <string>Please allow access to Camera to enable video conferencing</string>
-<key>NSLocalNetworkUsageDescription</key>
-<string>Please allow access to network usage to enable video conferencing</string>
 <key>NSMicrophoneUsageDescription</key>
 <string>Please allow access to Microphone to enable video conferencing</string>
+<key>NSLocalNetworkUsageDescription</key>
+<string>Please allow access to network usage to enable video conferencing</string>
 ```
 
 ### For Android
@@ -29,22 +29,25 @@ Add following lines in `Info.plist` file
 Add following permissions in `AndroidManifest.xml`
 
 ```xml
-<uses-permission android:name="android.permission.CAMERA" />
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.RECORD_AUDIO" />
-<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-<uses-permission android:name="android.permission.BLUETOOTH" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-<uses-feature android:name="android.hardware.camera" />
-<uses-feature android:name="android.hardware.camera.autofocus" />
+<uses-feature android:name="android.hardware.camera"/>
+<uses-feature android:name="android.hardware.camera.autofocus"/>
+<uses-permission android:name="android.permission.CAMERA"/>
+<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+<uses-permission android:name="android.permission.RECORD_AUDIO"/>
+<uses-permission android:name="android.permission.BLUETOOTH"/>
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 ```
 
 You will also need to request Camera and Record Audio permissions at runtime before you join a call or display a preview. Please follow [Android Documentation](https://developer.android.com/training/permissions/requesting#request-permission) for runtime permissions.
 
 We suggest using [react-native-permission](https://www.npmjs.com/package/react-native-permissions) to acquire permissions from both platforms.
 
-#### Proguard configuration
+> Note: Compiling with Kotlin for compileSdkVersion 30 requires JDK 11 or above
+
+### Proguard configuration
 
 ##### 100ms Android SDK 2.1.2 or higher
 If using 100ms Android SDK version 2.1.2 and higher proguard configuration is bundled inside it. No additional code is required.
@@ -59,3 +62,47 @@ Add it to your proguard-rules.pro
 -keep class org.webrtc.** { *; }
 -keep class live.hms.video.** { *; }
 ```
+
+### Expo Setup
+
+100ms React Native SDK supports development with [Expo](https://expo.dev/). Following is a guide to set it up -
+
+1. Install node modules
+```bash
+npm install
+```
+
+2. Install expo-cli globally to run the Expo commands
+```bash
+npm install --global expo-cli
+```
+
+3. Install Expo Dev Client
+```bash
+expo install expo-dev-client
+```
+
+4. Now we can run on iOS and Android
+```bash
+expo run: ios -d
+```
+```bash
+expo run: android -d
+```
+
+Alternatively, you can run it from IDE of your choice (VS Code, Android Studio, Xcode, etc) and start the dev server from terminal (it will help running on devices). To start the server use the following command -
+```bash
+expo start --dev-client
+```
+
+
+### [Github Repo](https://github.com/100mslive/react-native-hms/)
+You can checkout the 100ms React Native SDK Github repo which also contains a fully fledged [Example app implementation here](https://github.com/100mslive/react-native-hms/) 
+
+
+
+### [Example App](https://github.com/100mslive/react-native-hms/tree/develop/example)
+
+In the [100ms Example App](https://github.com/100mslive/react-native-hms/tree/main/example) we have shown how to setup the various listeners, what data to store in the redux and what all features you can implement.
+
+We have also implemented multiple views which are commonly used. Checkout the [videos & relevant code in the Example app](https://github.com/100mslive/react-native-hms/tree/main/example#additional-features).

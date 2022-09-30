@@ -1,0 +1,75 @@
+---
+title: Change Track State For Roles
+nav: 3.92
+---
+
+You're running a video call room and decide that someone who's currently talking shouldn't be talking.
+
+You'd prefer they'd stay mute. Or perhaps you want their video turned off as well as their audio. You're looking for a remote mute.
+
+Muting can apply to both audio and video.
+
+## Unmuting
+You may also decide that you want to let someone else speak who was currently muted. Or may want to ask someone to turn on their video.
+
+You can request people to unmute themselves as well.
+
+## Check if user has permissions
+Can't let just anyone mute others. First you need to create a role with the permissions to mute others and also to ask them to unmute.
+
+The permission to mute others is within PermissionsParams mute and you should check for that within the HMSRole of the peer to see if they have it.
+
+Similarly the permission to unmute other peers is within PermissionsParams unmute.
+
+Here's how to check whether the local peer has the permission to mute or unmute others:
+
+```js
+const mute: boolean = peer.role.permissions.mute;
+const unmute: boolean = peer.role.permissions.unmute;
+```
+
+## Example
+
+Imagine a room with 10 people having 7 listeners & 3 speakers. You want to unmute audio/video of all the speakers and mute audio/video of all the listeners.
+
+## Muting/Unmuting
+There are two APIs for muting/unmuting.
+
+* One which only works on a single track (audio/video) for a single peer at a time. [Learn more about API here.](./change-track-state)
+
+* One which can mute multiple tracks for multiple peers. Either by their role, or track source or track type or any combination of the above.
+
+## Multiple Peers or Tracks
+
+Once you have checked that the caller has permissions to mute another peer's audio or video, call `hmsInstance.changeTrackStateForRoles`.
+
+To mute audio for a multiple peers or tracks:
+
+`hmsInstance.changeTrackStateForRoles` takes four parameters
+
+* `Mute` Boolean true if the track needs to be muted, false otherwise
+* `Type` Optional, the HMSTrackType which should be affected. If this and source are specified, it is considered an `AND operation`. If null, all track sources are affected.
+* `Source` Optional, the HMSTrackSource which should be affected. If this and type are specified, it is considered an `AND operation`. If null, all track sources are affected.
+* `Roles` Array of HMSRole optional, may have a single item in a array, whose tracks should be affected. If null, all roles are affected.
+
+Here's an example of how you would check if the caller was allowed to mute peers and then call for a mute/unmute on all peers in the chat.
+
+```js
+// instance acquired from build() method
+await hmsInstance?.changeTrackStateForRoles(true, undefined, undefined, [
+  hmsInstance?.knownRoles,
+]).then(d => console.log('Change Track State Roles Success: ', d))
+  .catch(e => console.log('Change Track State Roles Error: ', e));
+```
+This can be further narrowed by specifying only those tracks of type Audio.
+
+Note that `HMSTrackSource.REGULAR` is the peer's own audio and video as opposed to one provided by screenshare or a plugin.
+```js
+import { HMSTrackType, HMSTrackSource } from '@100mslive/react-native-hms';
+
+// instance acquired from build() method
+await hmsInstance?.changeTrackStateForRoles(true, HMSTrackType.AUDIO, HMSTrackSource.REGULAR, [
+  hmsInstance?.knownRoles,
+]).then(d => console.log('Change Track State Roles Success: ', d))
+  .catch(e => console.log('Change Track State Roles Error: ', e));
+```

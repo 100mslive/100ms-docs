@@ -1,0 +1,181 @@
+---
+title: Audio Share (Beta)
+nav: 3.982
+---
+
+iOS SDK provides support for sharing audio from audio files on your device or sharing audio that's playing on iOS device (for example, from another app like spotify) while sharing the screen of your device in the room.
+
+## Minimum Requirements
+
+-   Minimum iOS version required to support Audio Share is iOS 13
+-   Minimum 100ms SDK version required is `0.3.3`
+
+## How audio sharing works in iOS SDK
+
+The audio that you share goes to other peers through the mic channel. To be able to share audio you need to setup the sdk to use a custom audio source instead of default mic. To do that you pass an instance of custom audio source to HMSAudioTrackSettings on your hmssdk instance.
+
+### How to use hmssdk to share audio from a file
+
+1. You create an instance of HMSAudioFilePlayerNode and an instance of HMSMicNode like below:
+
+```swift
+    let audioFilePlayerNode = HMSAudioFilePlayerNode()
+    let micNode = HMSMicNode()
+  ```
+
+2. Next, you create an instance of HMSAudioMixerSource, passing an array of nodes that we created in the step above like below:
+
+```swift
+    let audioMixerSource = try HMSAudioMixerSource(nodes: [audioFilePlayerNode, micNode])
+  ```
+  
+3. Next, you pass this custom audio source to the 'audioSource' parameter of HMSAudioTrackSettings that you set on hmssdk instance like so:
+
+```swift
+    let audioSettings = HMSAudioTrackSettings(..., audioSource: audioMixerSource)
+    hmsSDK.trackSettings = HMSTrackSettings(..., audioSettings: audioSettings)
+  ```
+
+That's all you need to setup the sdk to use your custom audio source.
+
+4. You call play function on audioFilePlayerNode to play a file on local device with it's file url like below:
+
+```swift
+    try audioFilePlayerNode.play(fileUrl: ...)
+  ```
+
+### How to know when file playback is finished
+
+You pass a completion handler to the play function. CompletionHandler gets called when file is finished playing.
+
+```swift
+    try audioFilePlayerNode.play(fileUrl: ...) {
+        print("File finished playing")
+    }
+  ```
+  
+### How to change mix volume of different nodes
+
+You can use volume property on nodes to control the volume.
+
+```swift
+    audioFilePlayerNode.volume = 0.5
+    micNode.volume = 0.9
+  ```
+
+### How to schedule multiple audio files for back-to-back playback
+
+You can set 'interrupts' parameter to false to tell audioFilePlayerNode to not interrupt the current file playback, but schedule the file after the current file is finished. Like below:
+
+```swift
+    try audioFilePlayerNode.play(fileUrl: url to file 1)
+    try audioFilePlayerNode.play(fileUrl: url to file 2, interrupts: false)
+    try audioFilePlayerNode.play(fileUrl: url to file 3, interrupts: false)
+    ...
+  ```
+
+### How to play multiple files concurrently
+
+You can pass multiple instances of audioFilePlayerNode and pass them as nodes when creating audioMixerSource like so:
+
+```swift
+    let backgroundMusicNode = HMSAudioFilePlayerNode()
+    backgroundMusicNode.volume = 0.2
+    let audioFilePlaybackNode = HMSAudioFilePlayerNode()
+    audioFilePlaybackNode.volume = 0.5
+    let micNode = HMSMicNode()
+    
+    let audioMixerSource = try HMSAudioMixerSource(nodes: [backgroundMusicNode, audioFilePlaybackNode, micNode])
+  ```
+
+Now, you can play a looping background music at low volume and an audio file at the same time:
+
+```swift
+    try backgroundMusicNode.play(fileUrl: ..., loops: true)
+    try audioFilePlayerNode.play(fileUrl: ...)
+  ```
+  
+### How to pause, resume, stop playback and more
+
+You can use following interfaces on HMSAudioFilePlayerNode to pause, resume or stop playback and more:
+
+```swift
+    audioFilePlayerNode.pause()
+    audioFilePlayerNode.resume()
+    audioFilePlayerNode.stop()
+    
+    let isPlaying = audioFilePlayerNode.isPlaying()
+    let currentPlaybackTime = audioFilePlayerNode.currentTime
+    let totalPlaybackDuration = audioFilePlayerNode.duration
+  ```
+  
+  
+### How to share audio that's playing on your iPhone
+
+Note: iOS allows to get access to audio playing on iOS device (for example, from another app like spotify) only while broadcating your entire iPhone screen. So for this to work you should implement screen sharing in your app. You can follow along here to set it up [Screen Share](./../features/screen-share)
+
+Now once you have implemented the screen share feature from above. You can follow below steps to enable system audio broadcasting while sharing your screen:
+
+1. You get an instance of HMSScreenBroadcastAudioNode and add it to your mixer.
+
+```swift
+    let screenAudioNode = try sdk.screenBroadcastAudioReceiverNode()
+    let audioMixerSource = try HMSAudioMixerSource(nodes: [audioFilePlaybackNode, micNode, screenAudioNode])
+  ```
+ 
+Note: you can pass only a single instance of HMSMicNode and HMSScreenBroadcastAudioNode to HMSAudioMixerSource, else you will receive an error.
+
+Now your mixer source is set to receive audio from your broadcast extension.
+
+2. Next, you need to setup broadcast extension to send audio to the main app.
+
+Broadcast extension receives audio that's playing on your iOS device in processSampleBuffer function in your RPBroadcastSampleHandler class. To send audio from broadcast extension to main app, you call process(audioSampleBuffer) function on HMSScreenRenderer:
+
+```swift
+    let screenRenderer = HMSScreenRenderer(appGroup: "group.live.100ms.videoapp")
+    
+    override func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType) {
+        ...
+        
+        case RPSampleBufferType.audioApp:
+            self.screenRenderer.process(audioSampleBuffer: sampleBuffer)
+            break
+        ...
+    }
+  ```
+  
+Now your broadcast extension is set to be send audio to the main app.
+
+And that's it. Now your custom mixer source in the main app can receive the audio from broadcast extension as well.
+
+## Advanced use cases
+
+### Play AVAudioPCMBuffer
+
+You add HMSAudioBufferPlayerNode to the mixer. And call play with passing AVAudioPCMBuffer.
+
+```swift
+    let streamPlayer = HMSAudioBufferPlayerNode()
+    let audioMixerSource = try HMSAudioMixerSource(nodes: [audioFilePlaybackNode, micNode, streamPlayer])
+    ...
+    
+    try streamPlayer.play(buffer: ...)
+  ```
+
+### You own custom audio implementation
+
+If you want to create your own custom audio implementation and just need hmssdk to forward your audio buffers to other peers in the room, you can use HMSAudioBufferSource (supported iOS 12+) as custom audio source. Use enqueue(buffer: AVAudioBuffer) function on HMSAudioBufferSource to send audio to remote peers.
+
+```swift
+    let audioBufferSource = HMSAudioBufferSource()
+    
+    let audioSettings = HMSAudioTrackSettings(..., audioSource: audioBufferSource)
+    hmsSDK.trackSettings = HMSTrackSettings(..., audioSettings: audioSettings)
+    ...
+    
+    audioBufferSource.enqueue(buffer: ...)
+  ```
+
+👀 To see an example audio shareing implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
+
+📲 Download the 100ms fully-featured Sample iOS app here: https://testflight.apple.com/join/dhUSE7N8

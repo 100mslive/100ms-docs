@@ -17,5 +17,7 @@ The peer who wants to change their name should call the following method on an H
 const newName: string = "new name"
 
 // hms instance acquired by build method
-hmsInstance.changeName(newName);
+await hmsInstance.changeName(newName)
+    .then(d => console.log('Change Name Success: ', d))
+    .catch(e => console.log('Change Name Error: ', e));
 ```

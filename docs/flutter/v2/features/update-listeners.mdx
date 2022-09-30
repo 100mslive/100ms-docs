@@ -1,9 +1,9 @@
 ---
 title: Update Listeners
-nav: 6
+nav: 3.09
 ---
 
-Now, let's take a look at the listener class you have to implement.
+Now, let's take a look at the listener class to be implemented.
 
 ```dart
 abstract class HMSUpdateListener {
@@ -67,7 +67,7 @@ abstract class HMSUpdateListener {
   ///
   /// and SDK has already retried to fix the error
   /// - Parameter error: the error that occurred
-  void onError({required HMSError error});
+  void onHMSError({required HMSException error});
 
 
   /// This is called when there is a change in any property of the Room
@@ -94,11 +94,19 @@ abstract class HMSUpdateListener {
   ///- Paramter hmsPeerRemovedFromPeer - it consists info about who removed you and why.
   void onRemovedFromRoom(
      {required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer});
+
+  ///whenever a new audio device gets connected to the device or audio device is switched this is triggered
+  ///- Parameters
+  ///  - currentAudioDevice - current audio output device
+  ///  - availableAudioDevice - list of available audio output devices
+  void onAudioDeviceChanged(
+     {HMSAudioDevice? currentAudioDevice,
+     List<HMSAudioDevice>? availableAudioDevice});
 }
 ```
 
-HMSUpdateListener: a class conforming to HMSUpdateListener interface.
-The methods of HMSUpdateListener are invoked to notify updates happening in the room like a peer joins/leaves, a track got muted/unmutes, etc.
+> `HMSUpdateListener` : A class conforming to HMSUpdateListener interface.
+The methods of HMSUpdateListener are invoked to notify updates happening in the room like a peer join/leave, track mute/unmute etc.
 
 Add this `updateListener` instance to
 ```dart
@@ -109,6 +117,12 @@ hmsSDK.addUpdateListener(updateListener);
 
 After calling join your app will be provided an update from the 100ms SDK.
 
-✅ If successful, the `fun onJoin(room: HMSRoom)` method of HMSUpdateListener will be invoked with information about the room encapsulated in the HMSRoom object.
+✅ If successful, the `onJoin({required HMSRoom room})` method of HMSUpdateListener will be invoked with information about the room encapsulated in the HMSRoom object.
 
-❌ If failure, the `fun onError(error: HMSException)` method will be invoked with exact failure reason.
+❌ If failure, the `onHMSError({required HMSException error})` method will be invoked with exact failure reason.
+
+Remove the `updateListener` instance as:
+
+```dart
+hmsSDK.removeUpdateListener(updateListener);
+```

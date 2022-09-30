@@ -25,11 +25,11 @@ const isAudioPlaybackAllowed = remotePeer.remoteAudioTrack().setPlaybackAllowed(
 const isVideoPlaybackAllowed = remotePeer.remoteVideoTrack().setPlaybackAllowed(true);
 ```
 
-## Mute all remote peers
+## Local mute all remote peers audio
 
 ```js
 // instance acquired from build method
 
-hmsInstance.muteAllPeersAudio(true)  // mute
-hmsInstance.muteAllPeersAudio(false) // unmute
+hmsInstance.setPlaybackForAllAudio(true)  // mute
+hmsInstance.setPlaybackForAllAudio(false) // unmute
 ```

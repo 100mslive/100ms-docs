@@ -1,6 +1,6 @@
 ---
 title: Join Room
-nav: 3.1
+nav: 3.02
 ---
 
 Joining a room is one of the most basic functionalities so we at 100ms have built an easy, developer friendly API to get you started.
@@ -104,7 +104,7 @@ abstract class HMSUpdateListener {
   /// This will be called when there is an error in the system
   /// and SDK has already retried to fix the error
   /// [error]: the error that occurred
-  void onError({required HMSException error});
+  void onHMSError({required HMSException error});
 
   /// This is called when there is a new broadcast message from any other peer in the room
   ///
@@ -144,14 +144,19 @@ abstract class HMSUpdateListener {
   ///when someone kicks you out or when someone ends the room at that time it is triggered
   /// [hmsPeerRemovedFromPeer] it consists info about who removed you and why.
   void onRemovedFromRoom({required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer});
+
+  ///whenever a new audio device gets connected to the device or audio device is switched this is triggered
+  void onAudioDeviceChanged(
+     {HMSAudioDevice? currentAudioDevice,
+     List<HMSAudioDevice>? availableAudioDevice});
 }
 
 ```
 
-HMSUpdateListener: a class conforming to HMSUpdateListener interface.
+>HMSUpdateListener: A class conforming to HMSUpdateListener interface.
 The methods of HMSUpdateListener are invoked to notify updates happening in the room like a peer joins/leaves, a track got muted/unmutes, etc.
 
-Add this `updateListener` instance to 
+Add this `updateListener` instance to hmsSDK : 
 ```dart
 HMSSDK hmsSDK = new HMSSDK();
 hmsSDK.build();
@@ -160,6 +165,6 @@ hmsSDK.addUpdateListener(updateListener);
 
 After calling join your app will be provided an update from the 100ms SDK.
 
-✅ If successful, the `fun onJoin(room: HMSRoom)` method of HMSUpdateListener will be invoked with information about the room encapsulated in the HMSRoom object.
+✅ If successful, the `onJoin({required HMSRoom room})` method of HMSUpdateListener will be invoked with information about the room encapsulated in the HMSRoom object.
 
-❌ If failure, the `fun onError(error: HMSException)` method will be invoked with exact failure reason.
+❌ If failure, the `onHMSError({required HMSException error})` method will be invoked with exact failure reason.

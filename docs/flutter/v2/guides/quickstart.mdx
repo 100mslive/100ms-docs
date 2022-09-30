@@ -11,8 +11,8 @@ This overview shows the major steps involved in creating a Demo Flutter Project 
 
 Jump to a section you're interested in or read top down to get the overview
 
--   [Getting the video call joining link](#getting-the-video-call-joining-link)
--   [Add the sdk dependencies](#add-sdk-dependencies)
+-   [Get an instant video call joining link](#getting-the-video-call-joining-link)
+-   [Add the SDK dependencies](#add-sdk-dependencies)
 -   [Create a login token to authenticate the user](#login)
 -   [Add permissions](#add-permissions)
 -   [Create an instance of the `HMSSDK`](#instantiate-hmssdk)
@@ -29,7 +29,9 @@ Jump to a section you're interested in or read top down to get the overview
 
 Familiarity with the [fundamentals](https://flutter.dev/docs/reference/tutorials) of Flutter apps.
 
-### Getting the video call joining link
+> HMSSDK requires flutter 2.10.x or above versions
+
+### Get an instant video call joining link
 
 To join a video call you need an authentication token and a room id. Or a server that will translate the link into them. The [100ms Dashboard](https://dashboard.100ms.live/register) is one way to generate these auth tokens. In production your own server will generate these and manage user authentication.
 
@@ -47,7 +49,7 @@ From either the dashboard, or your own server once implemented, you need to gene
 
 Add the `hmssdk_flutter` plugin in dependencies of pubspec.yaml
 
-```dart
+```dart section=AddSDKDependencies sectionIndex=1
 #pubspec.yaml
 
 dependencies:
@@ -83,7 +85,7 @@ The 100ms server will respond with an auth token like this `{"token":"some-token
 
 Camera, Recording Audio and Internet permissions are required. Add them to your AndroidManifest.xml.
 
-```xml
+```xml section=AndroidPermissions sectionIndex=1
 <uses-feature android:name="android.hardware.camera"/>
 <uses-feature android:name="android.hardware.camera.autofocus"/>
 <uses-permission android:name="android.permission.CAMERA"/>
@@ -101,7 +103,7 @@ You will also need to request Camera and Record Audio permissions at runtime bef
 
 Add following permissions in iOS Info.plist file
 
-```xml
+```xml section=iOSPermissions sectionIndex=1
 <key>NSMicrophoneUsageDescription</key>
 <string>{YourAppName} wants to use your microphone</string>
 
@@ -114,7 +116,7 @@ Add following permissions in iOS Info.plist file
 
 ### Join a Video Call
 
-To join a video call, call join method on HMSSDK with the config settings. To listen the updates, call addUpdateListener on HMSSDK.
+To join a video call, call join method on HMSSDK with the config settings. To listen the updates, call `addUpdateListener` on HMSSDK.
 
 These are some listener's callback functions:
 
@@ -128,7 +130,7 @@ These are some listener's callback functions:
 
 > 💡 It's essential that this callback is listened to or you may have peers without video.
 
-```dart
+```dart section=JoinVideoCall sectionIndex=1
 HMSConfig config = HMSConfig(userName: this.userName, authToken: this.authToken);
 hmsSDK = HMSSDK();
 hmsSDK.build()
@@ -136,7 +138,7 @@ hmsSDK.join(config: this.config);
 hmsSDK.addUpdateListener(listener);
 ```
 
-```dart
+```dart section=JoinVideoCall sectionIndex=2
 /// 100ms SDK provides callbacks to the client app about any change or update happening in the room after a user has joined by implementing HMSUpdateListener.
 /// These updates can be used to render the video on screen or to display other info regarding the room.
 abstract class HMSUpdateListener {
@@ -173,7 +175,7 @@ abstract class HMSUpdateListener {
   /// This will be called when there is an error in the system
   /// and SDK has already retried to fix the error
   /// [error]: the error that occurred
-  void onError({required HMSException error});
+  void onHMSError({required HMSException error});
 
   /// This is called when there is a new broadcast message from any other peer in the room
   ///
@@ -213,6 +215,16 @@ abstract class HMSUpdateListener {
   ///when someone kicks you out or when someone ends the room at that time it is triggered
   /// [hmsPeerRemovedFromPeer] it consists info about who removed you and why.
   void onRemovedFromRoom({required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer});
+
+  ///whenever a new audio device is plugged in or audio output is changed we
+  ///get the onAudioDeviceChanged update
+  ///This callback is only fired on Android devices. On iOS, this callback will not be triggered.
+  /// - Parameters:
+  ///   - currentAudioDevice: Current audio output route
+  ///   - availableAudioDevice: List of available audio output devices
+  void onAudioDeviceChanged(
+      {HMSAudioDevice? currentAudioDevice,
+      List<HMSAudioDevice>? availableAudioDevice});
 }
 
 ```
@@ -238,7 +250,7 @@ A peer represents one person in the video call.
 
 A peer's video track is in hmsPeer.videoTrack. ScreenShares can be found in auxilary tracks of peer i.e the auxiliary tracks is a list of tracks, one of which can be a ScreenShare if they have chosen to share their screen.
 
-```dart
+```dart section=ShowingVideos sectionIndex=1
 peer.auxiliaryTracks
           ?.where((each) => each.kind == HMSTrackKind.kHMSTrackKindVideo);
 ```
@@ -247,7 +259,7 @@ peer.auxiliaryTracks
 
 You can mute/unmute audio by calling switchAudio on HMSSDK. `isOn` is state variable. If `isOn` is true then audio will unmute and if its false then audio will mute.
 
-```dart
+```dart section=MuteUnMuteAudio sectionIndex=1
 
 /// audio unmute
 hmsSDK.switchAudio(isOn: true);
@@ -260,7 +272,7 @@ hmsSDK.switchAudio(isOn: false);
 
 You can mute/unmute video by calling switchVideo on HMSSDK. `isOn` is state variable. If `isOn` is true then video will turn on and if its false then video will turn off.
 
-```dart
+```dart section=MuteUnMuteVideo sectionIndex=1
 
 /// video on
 hmsSDK.switchVideo(isOn: true);
@@ -273,13 +285,9 @@ hmsSDK.switchVideo(isOn: false);
 
 To leave a video call, just call leave on HMSSDK.
 
-```dart
+```dart section=LeaveVideoCall sectionIndex=1
 hmsSDK.leave();
 ```
-
-## Where to go from here
-
-Checkout the [simple version](https://github.com/100mslive/100ms-flutter/tree/main/example) of the project.
 
 ## Glossary
 
@@ -287,3 +295,26 @@ Checkout the [simple version](https://github.com/100mslive/100ms-flutter/tree/ma
 -   `Track`: Media. Can be the audio track or the video track.
 -   `Peer`: One participant in the video call. Local peers are you, remote peers are others.
 -   `Broadcast`: Chat messages are broadcasts.
+
+## Where to go from here
+
+Checkout the [simple version](https://github.com/100mslive/100ms-flutter/tree/main/example) of the project.This uses provider as the state
+management library.
+
+For implementations with other state management libraries visit : 
+* [Bloc](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/bloc)
+* [Getx](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/getx)
+* [Riverpod](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/riverpod)
+* [Mobx](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/mobx)
+
+### 100ms Flutter app
+
+You can download & check out the 100ms Flutter app -
+
+🤖 The Flutter Android app from [Google Play Store here](https://play.google.com/store/apps/details?id=live.hms.flutter)
+
+📱 Flutter iOS app from [Apple App Store here](https://apps.apple.com/app/100ms-live/id1576541989)
+
+
+### Github Repo 
+You can checkout the 100ms Flutter SDK Github repo which also contains a fully fledged [Example app implementation here](https://github.com/100mslive/100ms-flutter/) 
