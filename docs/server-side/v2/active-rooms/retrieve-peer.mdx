@@ -1,0 +1,53 @@
+---
+title: Retrieve a specific peer
+nav: 3.3
+---
+
+Retrieves the details of a specific room. 100ms provides options to retrieve details of a room with their ID or name.
+
+<GetRequest title="https://api.100ms.live/v2/rooms/<room_id>" />
+<Request id="req-0">
+
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/rooms/<room_id>' \
+--header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "631a05390e6ffae22efa610b",
+    "name": "sampleroom",
+    "enabled": true,
+    "description": "This is sample description for room",
+    "customer": "627cdddff2e4e30487862ad1",
+    "recording_source_template": false,
+    "recording_info": {
+        "enabled": true,
+        "upload_info": {
+            "type": "s3",
+            "location": "brytecam-test-bucket-ap-south-1",
+            "prefix": "dev/627cdddff2e4e30487862ad1"
+        }
+    },
+    "template_id": "63188115d11d6db790c73c60",
+    "template": "new-template-1662550293",
+    "region": "in",
+    "created_at": "2022-09-08T15:07:37.83Z",
+    "updated_at": "2022-09-08T15:07:37.83Z",
+    "active": true
+}
+```
+
+</ResponseBox>
+
+
+## Arguments
+
+| Name                     | Type     | Description                                                                                                  | Required |
+| :----------------------- | :------- | :----------------------------------------------------------------------------------------------------------- | :------- |
+| id <br/> — path param    | `string` | Unique identifier of the room you wish to fetch details for. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33 | Yes      |
+| name <br/> — query param | `string` | Alias of the room you wish to fetch details for. <br/><br/>**Example**: test-room                            | No       |
