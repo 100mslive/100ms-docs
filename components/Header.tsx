@@ -108,7 +108,7 @@ const Header: React.FC<Props> = ({
     const isNonApiRef = router.query.slug && router.query.slug[0] === 'server-side';
 
     return (
-        <div className="ctx header">
+        <div className="ctx">
             <div className="head-left">
                 <a href="https://www.100ms.live">
                     <div className="logo-ctx">
@@ -172,8 +172,7 @@ const Header: React.FC<Props> = ({
                     role="button"
                     style={{
                         paddingTop: '8px',
-                        paddingLeft: '10px',
-                        margin: '0 2rem 0 1rem',
+                        margin: '0 2rem 0 0',
                         cursor: 'pointer'
                     }}
                     tabIndex={0}
@@ -216,7 +215,7 @@ const Header: React.FC<Props> = ({
                     position: sticky;
                     margin: 0;
                     top: 0;
-                    padding: 0.5rem;
+                    padding: 0.5rem 0 0.5rem 0;
                     background-color: var(--header_bg);
                     border-bottom: 2px solid var(--new_border_default);
                 }
@@ -263,13 +262,10 @@ const Header: React.FC<Props> = ({
                 .head-left {
                     display: flex;
                     align-items: center;
-                    width: auto;
-                    margin-right: 0.5rem;
                 }
                 .left-content {
                     display: flex;
                     align-items: center;
-                    width: auto;
                     justify-content: space-between;
                 }
                 .head-right {
@@ -332,10 +328,6 @@ const Header: React.FC<Props> = ({
                 @media screen and (max-width: 600px) {
                     .ctx {
                         justify-content: flex-end;
-                    }
-                    .head-left {
-                        width: unset;
-                        margin-right: auto;
                     }
                     .theme-btn {
                         margin-left: auto;
