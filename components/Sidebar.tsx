@@ -20,7 +20,7 @@ interface Props {
 }
 
 const Sidebar: React.FC<Props> = ({ nav, menu }) => {
-    const router = useRouter();
+    const router = useRouter() as any;
     const menuItem = [
         {
             link: '/android/v2/foundation/basics',
@@ -139,7 +139,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                             //     href={route.url || ''}
                             //     key={`${route.url}-${index}`}>
                             <a
-                                href={route.url || ''}
+                                href={`/docs${route.url}` || ''}
                                 key={`${route.url}-${index}`}
                                 className={`menu-item ${route.url === router.asPath ? 'active-link' : ''
                                     }`}>
@@ -148,14 +148,13 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
 
                         ) : null
                     )}
-                    {/* @ts-ignore */}
                     {key === 'features' && router.query.slug[0] !== 'server-side' ? (
                         <>
                             {aliasMenu.map((a) => (
                                 // <Link scroll={false}
                                 //     prefetch={false} href={a.url} key={a.url}>
                                 <a
-                                    href={a.url} key={a.url}
+                                    href={`/docs${a.url}`} key={a.url}
                                     className={`menu-item ${a.url === router.asPath ? 'active-link' : ''
                                         }`}>
                                     {a.title}

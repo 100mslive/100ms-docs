@@ -139,9 +139,6 @@ export const getStaticProps = async ({ params }) => {
     const nav = allDocs.reduce((n, file) => {
         const [lib, ...rest] = file.url.split('/').filter(Boolean);
         const pathV = `${lib}${rest.length === 1 ? '..' : '.'}${rest.join('.')}`;
-        // Set nested properties on an object using dot-notation.
-        // set(obj, 'a.b.c', 'd');
-        // => { a: { b: { c: 'd' } } }
         setValue(n, pathV, file);
         return n;
     }, {});
@@ -149,8 +146,8 @@ export const getStaticProps = async ({ params }) => {
     const sdk = nav[params.slug[0]]
     sdks.forEach(item => { nav[item] = { v2: null } })
     nav[params.slug[0]] = sdk
-    // rec(nav);
-    // console.log(nav)
+    rec(nav);
+    // console.log("heelo", JSON.stringify(nav.javascript))
     const toc = [];
     const mdxSource = await renderToString(content, {
         components,
@@ -173,7 +170,10 @@ export const getStaticProps = async ({ params }) => {
             nav,
             source: { compiledSource: mdxSource.compiledSource }, // : { compiledSource: mdxSource.compiledSource },
             frontMatter: data,
-            allDocs: allDocs.filter(doc => doc.url.includes(file))
+            allDocs: allDocs.filter(doc => {
+                doc.content = null as unknown as string;
+                return doc.url.includes(file)
+            })
         }
     };
 };
@@ -186,7 +186,6 @@ export const getStaticPaths = async () => {
             slug: slug.split(path.sep).filter(Boolean)
         }
     }));
-
     return {
         paths,
         fallback: false
@@ -204,12 +203,10 @@ DocSlugs.getLayout = function getLayout(page) {
 const rec = (item) => {
     if (typeof item == typeof {}) {
         for (const i in item) {
-            console.log(i, item);
             if (i === "content" && typeof item[i] !== typeof {}) item[i] = null;
             else {
                 rec(item[i]);
             }
-            console.log(i, item);
         }
     }
 };
