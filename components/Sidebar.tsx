@@ -6,7 +6,6 @@ import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import ReactIcon from '@/assets/icons/ReactIcon';
 import ServerIcon from '@/assets/icons/ServerIcon';
 import { Listbox } from '@headlessui/react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
 
@@ -134,31 +133,34 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     <div className="menu-title">{key.replace(/-/g, ' ')}</div>
                     {Object.entries(children).map(([_, route]) =>
                         Object.prototype.hasOwnProperty.call(route, 'title') ? (
-                            <Link
-                                scroll={false}
-                                prefetch={false}
+                            // <Link
+                            //     scroll={false}
+                            //     prefetch={false}
+                            //     href={route.url || ''}
+                            //     key={`${route.url}-${index}`}>
+                            <a
                                 href={route.url || ''}
-                                key={`${route.url}-${index}`}>
-                                <a
-                                    className={`menu-item ${route.url === router.asPath ? 'active-link' : ''
-                                        }`}>
-                                    {route.title}
-                                </a>
-                            </Link>
+                                key={`${route.url}-${index}`}
+                                className={`menu-item ${route.url === router.asPath ? 'active-link' : ''
+                                    }`}>
+                                {route.title}
+                            </a>
+
                         ) : null
                     )}
                     {/* @ts-ignore */}
                     {key === 'features' && router.query.slug[0] !== 'server-side' ? (
                         <>
                             {aliasMenu.map((a) => (
-                                <Link scroll={false}
-                                    prefetch={false} href={a.url} key={a.url}>
-                                    <a
-                                        className={`menu-item ${a.url === router.asPath ? 'active-link' : ''
-                                            }`}>
-                                        {a.title}
-                                    </a>
-                                </Link>
+                                // <Link scroll={false}
+                                //     prefetch={false} href={a.url} key={a.url}>
+                                <a
+                                    href={a.url} key={a.url}
+                                    className={`menu-item ${a.url === router.asPath ? 'active-link' : ''
+                                        }`}>
+                                    {a.title}
+                                </a>
+
                             ))}
                         </>
                     ) : null}

@@ -171,7 +171,7 @@ export const getStaticProps = async ({ params }) => {
         props: {
             toc,
             nav,
-            source: mdxSource, // : { compiledSource: mdxSource.compiledSource },
+            source: { compiledSource: mdxSource.compiledSource }, // : { compiledSource: mdxSource.compiledSource },
             frontMatter: data,
             allDocs: allDocs.filter(doc => doc.url.includes(file))
         }
