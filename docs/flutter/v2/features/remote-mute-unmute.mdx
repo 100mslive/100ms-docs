@@ -1,0 +1,131 @@
+---
+title: Remote Mute/Unmute
+nav: 3.14
+---
+
+You're running a video call room and decide that someone who's currently talking shouldn't be talking.
+
+You'd prefer they'd stay mute. Or perhaps you want their video turned off as well as their audio. You're looking for a remote mute.
+
+Muting can apply to both audio and video.
+
+### Permissions
+
+Can't let just anyone mute others. First, you need to create a [role](../foundation/templates-and-roles) with the permissions to mute others and also to ask them to unmute.
+
+The permission to mute others is within  `PermissionsParams` `mute` and you should check for that within the `HMSRole` of the peer to see if they have it.
+
+Similarly, the permission to unmute other peers is within `PermissionsParams` `unmute`.
+
+Here's how to check whether the local peer has permission to mute or unmute others. You can do it like this:
+
+```dart
+Future<bool> isAllowedToMuteOthers() async{
+    return (await hmsSDK.getLocalPeer()).role.permission!.mute;
+}
+
+Future<bool> isAllowedToUnMuteOthers(){
+    return (await hmsSDK.getLocalPeer()).role.permission!.unMute;
+}
+
+```
+
+`hmsSDK.getLocalPeer()` will not return null as long as you're in a preview or in a meeting room. Since you likely won't need to check for permissions if you're not in one So, it would be ok.
+
+### Mute/Unmute other peers
+
+`HMSSDK` provides dedicated methods to mute/unmute:
+- Individual peer
+- Specific role
+
+These methods will only work if the peer has permission to mute/unmute another peer's audio/video. The permission can be checked as the steps mentioned
+above.
+
+
+Let's look at each of them:
+
+- Individual peer
+
+We can use the `changeTrackState` method to mute/unmute remote peer's audio/video
+
+```dart
+// [forRemoteTrack] : track whose state needs to be changed
+// Set [mute] to true if the track needs to be muted, false otherwise.
+if(
+    //peer has permission to change track state
+    localPeer?.role.permissions.mute
+  )
+HMSSDK.changeTrackState(
+        forRemoteTrack: forRemoteTrack,
+        mute: mute,
+        hmsActionResultListener: this);
+```
+If the `changeTrackState` method is successful we will get the `onSuccess` callback and track update in `onTrackUpdate`.
+
+- Specific role
+
+We can use the `changeTrackStateForRole` method to mute/unmute peers under specific roles.
+
+```dart
+// Set [mute] true if the track needs to be muted, false otherwise
+  // [type] is the HMSTrackType which should be affected. If this and the source are specified, it is considered an AND operation. If not specified, all track sources are affected.
+  // [source] is the HMSTrackSource that should be affected. If this and type are specified, it is considered an AND operation. If not specified, all track types are affected.
+  // [roles] is a list of roles, that may have a single item in a list, whose tracks should be affected. 
+  //If not specified, all roles are affected.
+  // [hmsActionResultListener] - the callback that would be called by SDK in case of success or failure.
+  /// `this` is used here since MeetingStore already implements 
+  if(
+    //peer has permission to change track state
+    localPeer?.role.permissions.mute
+    )
+    HMSSDK.changeTrackStateForRole(
+        mute: mute,
+        kind: kind,
+        source: source,
+        roles: roles,
+        hmsActionResultListener: this);
+```
+If the `changeTrackStateForRole` method is successful we will get the `onSuccess` callback and track update in `onTrackUpdate` similar to `changeTrackState`.
+
+> If *roles* is passed as an empty list then all the roles will get affected.
+
+### Handling a mute callback
+
+Mute callbacks are automatically applied to the receiver. No action is required.
+
+### Handling an unmute callback
+
+Let's turn the table now to what happens if a remote peer wishes to mute/unmute our audio/video.
+
+- In case when remote peer mutes our audio/video `HMSSDK` performs it automatically without asking permission In another case, we get the `onChangeTrackStateRequest` if 
+we accept the request we need to call `switchVideo` or `switchAudio` according to the request.
+
+```dart
+ @override
+  void onChangeTrackStateRequest(
+      {required HMSTrackChangeRequest hmsTrackChangeRequest}){}
+```
+
+How this is implemented in the example app can be found [here](https://github.com/100mslive/100ms-flutter/blob/main/example/lib/data_store/meeting_store.dart)
+
+Let's look at the `HMSTrackChangeRequest` structure :
+
+```dart
+class HMSTrackChangeRequest {
+  bool mute;
+  HMSPeer requestBy;
+  HMSTrack track;
+}
+```
+
+This contains information on which track is requested for unmuting. Check the track type and inform the user accordingly.
+
+```dart
+public void checkTrack(HMSTrackKind track) {
+    if( track.getType() == HMSTrackType.kHMSTrackKindAudio) {
+
+    } else if (track.getType() == HMSTrackType.kHMSTrackKindVideo) {
+        
+    }
+}
+```

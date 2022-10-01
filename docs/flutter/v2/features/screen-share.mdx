@@ -3,13 +3,13 @@ title: Screen Share
 nav: 3.18
 ---
 
-Flutter SDK provides support for sharing the entire screen of the device to the room.
+Flutter SDK provides support for sharing the entire screen of the device with the room.
 
-Please note that for a peer to share their screen, their role must have screenshare enabled in the dashboard. Also select the appropriate resolution for the Screen share quality. 1080p is recommended for better text readability.
+Please note that for a peer to share their screen, their role must have screenshare enabled in the dashboard. Also, select the appropriate resolution for the Screen share quality. 1080p is recommended for better text readability.
 
 ## Android Setup
 
-You also need to pass the intent from android native side to HMS SDK in the following way :
+You also need to pass the intent from the android native side to HMS SDK in the following way :
 
 In your app's `MainActivity` add -
 
@@ -68,7 +68,7 @@ Select `App Group` from the list of Capabilities.
 
 ![AddAppgroup](/docs/v2/flutter-add-appgroup.png)
 
-New section should be added under `Signing & Capabilities` named App Groups. Click + icon under that.
+A new section should be added under `Signing & Capabilities` named App Groups. Click + icon under that.
 
 ![Appgroup](/docs/v2/flutter-appgroup.png)
 
@@ -77,7 +77,7 @@ Enter App group name (create unique app group name ex: group.your.domain.name)
 ![AppgroupDetail](/docs/v2/flutter-appgroup-detail.png)
 
 ### Step 4 - Edit Podfile
-In ios folder of your flutter project and open `Podfile`.
+In the ios folder of your flutter project and open `Podfile`.
 Paste the following code and replace the extension name you just created:
 ```
 target 'Your Extension Name here' do
@@ -87,14 +87,14 @@ end
 ```
 ![Podfile](/docs/v2/flutter-podfile.png)
 
-In terminal change directory to ios and run `pod install` command.
+In the terminal change directory to ios and run the `pod install` command.
 
 ### Step 5 - Edit SampleHandler
 Expand `Runner > ExtensionName` and open SampleHandler file.
 
 ![SampleHandler](/docs/v2/flutter-sample-handler.png)
 
-Replace the code with the code below and pass app group name to the respected field:
+Replace the code with the code below and pass the app group name to the respected field:
 
 ```swift
 import ReplayKit
@@ -105,7 +105,7 @@ class SampleHandler: RPBroadcastSampleHandler {
     let screenRenderer = HMSScreenRenderer(appGroup: "Enter App Group Name")
 
     override func broadcastStarted(withSetupInfo setupInfo: [String : NSObject]?) {
-        // User has requested to start the broadcast. Setup info from the UI extension can be supplied but optional.
+        // User has requested to start the broadcast. Setup info from the UI extension can be supplied but is optional.
     }
 
     override func broadcastPaused() {
@@ -149,7 +149,7 @@ class SampleHandler: RPBroadcastSampleHandler {
 
 ## How to start screenshare from the app
 
-To start screen share, app needs to call the `startScreenshare` method of `HMSSDK`.
+To start screen share, the app needs to call the `startScreenshare` method of `HMSSDK`.
 
 Following is the snippet on how to use this:
 
@@ -168,9 +168,9 @@ You can find `app group` and `extension` name in Xcode under `Signing and Capabi
 
 ## How to get Screen Share Status
 
-Application needs to call the `isScreenShareActive` method of `HMSSDK`.
+The application needs to call the `isScreenShareActive` method of `HMSSDK`.
 
-This method returns a `Boolean` which will be true inscase ScreenShare is currently active and being used, and False for inactive state.
+This method returns a `Boolean` which will be true in case ScreenShare is currently active and being used, and False for an inactive state.
 
 ```dart
 hmsSDK.isScreenShareActive();
@@ -184,7 +184,7 @@ HMSSDK(appGroup: appGroup, preferredExtension: preferredExtension);
 
 ## How to stop screenshare
 
-To stop the screenshare, you need to invoke `stopscreenShare` method of `HMSSDK`
+To stop the screen share, you need to invoke the `stopscreenShare` method of `HMSSDK`
 
 Following is the snippet on how to use this:
 
@@ -220,15 +220,15 @@ void onTrackUpdate(
 
 ## Screenshare track from auxiliaryTracks
 
-The peer's screenshare can also be found in `auxiliaryTracks` property of peer. `auxiliaryTracks` is of type `List<HMSTrack>?`.
+The peer's screen share can also be found in the `auxiliaryTracks` property of peer. `auxiliaryTracks` is of type `List<HMSTrack>?`.
 
-To get screenshare track from `auxiliaryTracks` the implementation is as follows:
+To get the screen share track from `auxiliaryTracks` the implementation is as follows:
 
 ```dart
 HMSTrack? screenShareTrack =
         peer.auxiliaryTracks?.firstWhere((track) => track.source == "SCREEN");
 if(screenShareTrack != null){
-  //The user is sharing the screen and has screenshare track.
+  //The user is sharing the screen and has a screen share track.
   HMSVideoView(track: screenShareTrack);
 }
 ```

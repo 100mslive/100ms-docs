@@ -46,7 +46,7 @@ Got secrets to share? Send a message directly to a single person in the chat wit
 The parameters are:
 
 1. *message*: The text of the message.
-2. *peerTo*: The `HMSPeer` instance id  who should receive message.
+2. *peerTo*: The `HMSPeer` instance id who should receive the message.
 
 
 > 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error.
@@ -91,7 +91,7 @@ hmsSDK.sendGroupMessage(message: "Hi",
 
 When you called `hmsSDK.join(config)` to join a room, the `HMSUpdateListener` implementation that was passed in had the callback `void onMessage({required HMSMessage message});`.
 
-This where you'll receive new messages as `HMSMessage` during the call. It contains:
+This is where you'll receive new messages as `HMSMessage` during the call. It contains:
 
 ```dart
 class HMSMessage(
@@ -113,14 +113,14 @@ class HMSMessage(
 ```
 
 * *message*: Content of the text message or the text description of the raw message.
-* *type*: Type of message sent. Default value is `chat`.
+* *type*: Type of message sent. The default value is `chat`.
 * *hmsMessageRecipient*: The intended recipient(s) of this message as a `HMSMessageRecipient`.
 * *time*: DateTime of when the messaging server receives this message. Update the time in your own messages when this comes back from the server in `HMSUpdateListener.onMessageReceived` for accurate ordering of your own messages.
 * *sender*: The `HMSPeer` who is sending this message.
 
 `Identifying Senders`:
 
-The sender of a message is always contained in the `sender` field of HMSMessage. This lets you get the name and peer id for any message sender.
+The sender of a message is always contained in the `sender` field of HMSMessage. This lets you get the name and peer id of any message sender.
 
 `Message Body`:
 
@@ -174,7 +174,7 @@ void onMessage({required HMSMessage message}) {
 
 ### Filter Chat Messages
 
-You can filter chat message by creating a separate list of `HMSMessage`.
+You can filter chat messages by creating a separate list of `HMSMessage`.
 
 ```dart
 List<HMSMessage> broadcastList = [];
@@ -208,15 +208,15 @@ Sometimes the app requires to show messages in different styles. Something simil
 
 ![Chat](/docs/v2/flutter-chat.gif)
 
-HMSSDK provides the `type` parameter of `HMSMessage` object to take care of such use cases.
+HMSSDK provides the `type` parameter of the `HMSMessage` object to take care of such use cases.
 
-You can send message as:
+You can send messages as:
 
 ```dart
 hmsSDK.sendBroadcastMessage(message: "😁", type: "emoji", hmsActionResultListener: hmsActionResultListener);
 ```
 
-Filter out the messages based on `type` parameter and handle the UI accordingly.
+Filter out the messages based on the `type` parameter and handle the UI accordingly.
 
 ```dart
 //Example to show emoticons when the message type is set to `emoji`

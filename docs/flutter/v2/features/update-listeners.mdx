@@ -9,7 +9,7 @@ Now, let's take a look at the listener class to be implemented.
 abstract class HMSUpdateListener {
   /// This will be called on a successful JOIN of the room by the user
   ///
-  /// This is the point where applications can stop showing its loading state
+  /// This is the point where applications can stop showing their loading state
   /// - Parameter room: the room which was joined
   void onJoin({required HMSRoom room});
 
@@ -40,14 +40,14 @@ abstract class HMSUpdateListener {
 
   /// This is called when there is a new broadcast message from any other peer in the room
   ///
-  /// This can be used to implement chat is the room
+  /// This can be used to implement chat in the room
   /// - Parameter message: the received broadcast message
   void onMessage({required HMSMessage message});
 
 
-  /// This is called when someone asks for change or role
+  /// This is called when someone asks for a change or role
   ///
-  /// for eg. admin can ask a peer to become host from guest.
+  /// for eg. the admin can ask a peer to become a host from a guest.
   /// this triggers this call on peer's app
   void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest});
 
@@ -85,17 +85,17 @@ abstract class HMSUpdateListener {
   ///when you are back in the room after reconnection
   void onReconnected();
 
-  ///when someone requests for track change of yours be it video or audio this will be triggered
+  ///when someone requests for a track change of yours be it video or audio this will be triggered
   /// - Parameter hmsTrackChangeRequest: request instance consisting of all the required info about track change
   void onChangeTrackStateRequest(
      {required HMSTrackChangeRequest hmsTrackChangeRequest});
 
   ///when someone kicks you out or when someone ends the room at that time it is triggered
-  ///- Paramter hmsPeerRemovedFromPeer - it consists info about who removed you and why.
+  ///- Parameter hmsPeerRemovedFromPeer - it consists of info about who removed you and why.
   void onRemovedFromRoom(
      {required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer});
 
-  ///whenever a new audio device gets connected to the device or audio device is switched this is triggered
+  ///whenever a new audio device gets connected to the device or the audio device is switched this is triggered
   ///- Parameters
   ///  - currentAudioDevice - current audio output device
   ///  - availableAudioDevice - list of available audio output devices
@@ -119,7 +119,7 @@ After calling join your app will be provided an update from the 100ms SDK.
 
 ✅ If successful, the `onJoin({required HMSRoom room})` method of HMSUpdateListener will be invoked with information about the room encapsulated in the HMSRoom object.
 
-❌ If failure, the `onHMSError({required HMSException error})` method will be invoked with exact failure reason.
+❌ If failure, the `onHMSError({required HMSException error})` method will be invoked with the exact failure reason.
 
 Remove the `updateListener` instance as:
 
