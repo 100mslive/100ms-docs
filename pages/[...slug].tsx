@@ -149,7 +149,7 @@ export const getStaticProps = async ({ params }) => {
     const sdk = nav[params.slug[0]]
     sdks.forEach(item => { nav[item] = { v2: null } })
     nav[params.slug[0]] = sdk
-    rec(nav);
+    // rec(nav);
     // console.log(nav)
     const toc = [];
     const mdxSource = await renderToString(content, {
