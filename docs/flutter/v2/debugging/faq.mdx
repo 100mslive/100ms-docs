@@ -10,7 +10,7 @@ This page lists down frequently asked questions. If you want to add a new questi
 HMSSDK works with flutter 2.10.x or above.
 
 ## Not getting event updates after hot reload/restart
-This is caused because platform channel needs to be reinitialized again,hence this is intended behaviour.
+This is caused because the platform channel needs to be reinitialized again, hence this is intended behavior.
 The solution for this is to re-run the app.
 
 Practices for faster development :
@@ -26,14 +26,19 @@ The permanent solution for this is in pipeline, we will update once it's done.
 Flutter 3.0.x has some issues related to [Platform View](https://github.com/flutter/flutter/issues/107313).
 Please update the flutter version to 3.3.x and it should work fine after that.
 
-## Videos are not getting rendered at the correct position or video screen is coming over the buttons
-Please check the flutter version this issue is likely happening due to usage of Flutter 3.0.x series.
-This is due to an ongoing issue in Flutter 3.0.x which causes Native Platform Views to be drawn at incorrect position.
+## Videos are not getting rendered at the correct position or the video screen is coming over the buttons
+Please check the flutter version this issue is likely happening due to the usage of the Flutter 3.0.x series.
+This is due to an ongoing issue in Flutter 3.0.x which causes Native Platform Views to be drawn at the incorrect position.
 Refer: [Android Platform View](https://github.com/flutter/flutter/issues/107313) & [Platform View bug](https://github.com/flutter/flutter/issues/103630)
 
 Update the flutter version to 3.3.x and it should work fine.
 
-## Do you have any implementation with other state management libraries than provider
+## Is there any limit to the number of HMSVideoView on-screen at a time 
+
+`HMSVideoView` internally uses `SurfaceView` in android and `UiKitView` in iOS.It is recommended to render at most 4-6 videos at a time on-screen and 
+rest should be paginated for better performance. 
+
+## Do you have any implementation with other state management libraries than the provider
 Please find the implementations below:
 * [Bloc](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/bloc)
 * [Getx](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/getx)
@@ -47,17 +52,17 @@ hmsSDK.addUpdateListener(updateListener);
 ```
 You can find more details about HMSUpdateListener [here](../features/update-listeners)
 
-## Getting updates multiple time in the room
+## Getting updates multiple times in the room
 Please ensure removing the `HMSUpdateListener` while leaving the room.
 ```dart
  hmsSDK.removeUpdateListener(updateListener);
  ```
 You can find more details about HMSUpdateListener [here](../features/update-listeners)
 
-## Can I create room using API?
+## Can I create a room using API?
 Yes,please find the link [here](/server-side/v2/Rooms/create-via-api).
 
 
 ## I want to suggest a new feature.
-Awesome, we're always looking out for new ideas and feature. Please reach out to us over [discord](https://100ms.live/discord).
+Awesome, we're always looking out for new ideas and features. Please reach out to us over [discord](https://100ms.live/discord).
 
