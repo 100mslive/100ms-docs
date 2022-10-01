@@ -137,7 +137,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                             <Link
                                 scroll={false}
                                 prefetch={false}
-                                href={`/docs${route.url}` || ''}
+                                href={route.url}
                                 key={`${route.url}-${index}`}
                                 passHref
                             >
@@ -153,7 +153,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                         <>
                             {aliasMenu.map((a) => (
                                 <Link scroll={false}
-                                    prefetch={false} href={`/docs${a.url}`} key={a.url} passHref>
+                                    prefetch={false} href={a.url} key={a.url} passHref>
                                     <a
 
                                         className={`menu-item ${a.url === router.asPath ? 'active-link' : ''
