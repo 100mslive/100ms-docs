@@ -3,11 +3,11 @@ title: Change Role
 nav: 3.12
 ---
 
-The role is a powerful concept that takes a lot of complexity away in handling permissions and supporting features like breakout rooms. 
+`Role` is a powerful concept that takes a lot of complexity away in handling permissions and supporting features like breakout rooms. 
 
 Each `HMSPeer` instance has a `role` property which returns an `HMSRole` instance. You can use this property to do the following:
 
-Check what this role is allowed to publish i.e can it send video (and at what resolution)? can it send audio? can it share a screen? Who can this role subscribe to? (I.e students can only see the teacher's video).
+Check what this role is allowed to publish. Can it publish video (and at what resolution)? Can it publish audio? Can it share a screen? Who can this role subscribe to?
 
 This is can be discovered by checking the `publishSettings` and `subscribeSettings` properties.
 
@@ -18,7 +18,7 @@ Check what actions this role can perform. i.e can it change someone else current
 In certain scenarios, you may want to change someone's role. Imagine an audio room with 2 roles `speaker` and `listener`. Only someone with a `speaker` role can publish audio to the room while a `listener` can only subscribe. Now at some point, `speaker` may decide to nominate some `listener` to become a `speaker`. This is where the `changeRole` API comes in.
 
 
-To invoke the API you will need 2 things.
+To invoke the API you will need 2 things - 
 
 An instance of the `HMSPeer` of the peer whose role you want to change and the `HMSRole` instance for the target role. 
 
@@ -36,38 +36,38 @@ hmsSDK.changeRole(peerId,roleName,forceChange);
 
 `roleName`: name of the role.
 
-`forceChange`: it is optional. if you are forcing the change to happen.
+`forceChange`: Optional boolean value. Set to `true` if you want to force the role change without the peer's explicit acceptance.
 
 
-If the change role succeeds you will get an update in the `HMSUpdateListener`:
+If the change role succeeds you will get an update in the `HMSUpdateListener` of `ROLE_CHANGED` update type:
 
 ```dart
 void onPeerUpdate({required HMSPeer peer, 
 required HMSPeerUpdate update});
 ```
 
-With the same peer, you passed as targetPeer and a `ROLE_CHANGED` update type.
+With the same peer, you passed as targetPeer and a `HMSPeerUpdate.roleUpdated` update type.
 
-The `force` parameter in `changeRole`, when false, is basically a polite request: "Would you like to change your role from listener to speaker?" which can be ignored by the other party. The way it works is the other party will first receive a
+The `force` parameter in `changeRole`, when false, is basically a polite request: "Would you like to change your role from listener to speaker?" Which can be ignored by the peer. The way it works is the other peer will first receive a `onRoleChangeRequest` callback in `HMSUpdateListener`:
 
 
 ```dart
 void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest});
 ```
 
-callback in HMSUpdateListener. At this point, the app can choose to show a prompt to the user asking for permission. 
+At this point, the app should show a prompt to the user asking for permission to accept or deny role change. 
 
-If the user accepts, the app should call
+If the user wants to accepts the request, the app should invoke `acceptRoleChangeRequest` on `HMSSDK` instance:
 
- ```dart
+```dart
 hmsSDK.acceptRoleChangeRequest();
- ```
+```
 
- with the same request that it received in `onRoleChangeRequest` which completes the `changeRole` loop. Both parties will receive a `roleUpdated` callback so that they both can do necessary UI updates. Now the user actually becomes a speaker and the audio publishing will start automatically.
+Now, both all peers in room will receive a `HMSPeerUpdate.roleUpdated` callback so that they both can do necessary UI updates. Now the user actually becomes a speaker and the audio publishing will start automatically.
 
 {/* Now let's imagine the newly nominated speaker is not behaving nicely and we want to move him back to the listener without a prompt. This is where the force parameter comes in. */}
 
 When it is set to true the other party will not receive a confirmation `roleChangeRequest` but instead will straight away receive a new set of updated permissions and stop publishing. 
 
 
-`roleUpdated` callback will still be fired so that the app can update the user's UI state.
+`HMSPeerUpdate.roleUpdated` callback will still be fired so that the app can update the user's UI state.
