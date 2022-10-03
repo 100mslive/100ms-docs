@@ -1,15 +1,15 @@
+import '@/styles/nprogress.css';
+import '@/styles/theme.css';
+import 'inter-ui/inter.css';
 import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
+import { DefaultSeo } from 'next-seo';
 import { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { DefaultSeo } from 'next-seo';
 import NProgress from 'nprogress';
-import SEO from '../next-seo.config';
 import { currentUser } from '../lib/currentUser';
-import 'inter-ui/inter.css';
-import '@/styles/theme.css';
-import '@/styles/nprogress.css';
+import SEO from '../next-seo.config';
 
 declare global {
     interface Window {
@@ -18,15 +18,15 @@ declare global {
 }
 
 const HMSThemeProvider = dynamic(
-  () => import("@100mslive/react-ui").then((mod) => mod.HMSThemeProvider),
-  { ssr: true }
+    () => import("@100mslive/react-ui").then((mod) => mod.HMSThemeProvider),
+    { ssr: true }
 );
 
 const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
     const router = useRouter();
     const userDetails = currentUser();
     const [count, setCount] = useState(0);
-    useEffect(() => {
+    React.useEffect(() => {
         if (!!userDetails && Object.keys(userDetails).length !== 0 && count === 0) {
             window.analytics.identify(userDetails.customer_id);
             setCount(count + 1);
@@ -38,12 +38,14 @@ const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
         router.events.on('routeChangeComplete', () => NProgress.done());
         router.events.on('routeChangeError', () => NProgress.done());
     }, []);
-
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const getLayout = (Component as any)?.getLayout || ((page) => page)
     return (
         <>
             <DefaultSeo {...SEO} />
             <HMSThemeProvider>
-                <Component {...pageProps} key={router.asPath} />
+                {getLayout(<Component {...pageProps} key={router.asPath} />)}
+                {/* <Component {...pageProps} key={router.asPath} /> */}
             </HMSThemeProvider>
         </>
     );
