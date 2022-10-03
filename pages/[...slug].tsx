@@ -18,9 +18,35 @@ import { useRouter } from 'next/router';
 import path from 'path';
 import setValue from 'set-value';
 
+// type NavRoute = {
+//     url: string;
+//     title: string;
+// };
+
+export type AllDocsType = {
+    url: string;
+    title: string;
+    description: string;
+    nav: number;
+    content: string;
+};
+
+interface Props {
+    frontMatter: {
+        title: string;
+        nav: number;
+    };
+    // nav: Record<string, Record<string, NavRoute>>;
+    // pagination: {
+    //     previousPost: PaginationType;
+    //     nextPost: PaginationType;
+    // };
+    allDocs: AllDocsType[];
+    source: { compiledSource: string, renderedOutput: string, scope: { title: string, nav: number } }
+}
 
 
-const DocSlugs = ({ source, allDocs, frontMatter }) => {
+const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
     const {
         query: { slug }
     } = useRouter();
