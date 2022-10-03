@@ -172,9 +172,9 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     align-items: stretch;
                     height: calc(100vh - 80px);
                     overflow-y: scroll;
-                    top: ${menu ? '10px' : '80px'};
+                    top: ${menu ? '' : '80px'};
                     left: 0;
-                    position: ${menu ? 'absolute' : 'sticky'};
+                    position: sticky;
                     background: var(--sidebar_bg);
                     z-index: 100;
                 }
@@ -234,15 +234,13 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     font-size: 15px;
                     margin: 5px 0;
                 }
-                @media screen and (max-width: 1000px) {
+                @media screen and (max-width: 768px) {
                     .sidebar {
-                        display: ${menu ? 'absolute' : 'none'};
-                        top: 0;
-                        height: calc(100vh - 60px);
-                    }
-                    :global(.page) {
-                        height: ${menu ? '100vh `!important' : ''};
-                        overflow: ${menu ? 'hidden !important' : ''};
+                        position: sticky;
+                        width: 100vw;
+                        top: 20px;
+                        display: ${menu ? 'flex' : 'none'};
+                        height: 100%;
                     }
                 }
             `}</style>

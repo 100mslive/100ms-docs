@@ -177,32 +177,35 @@ const Header: React.FC<Props> = ({
                         cursor: 'pointer'
                     }}
                     tabIndex={0}
-                    onKeyPress={() => {}}
+                    onKeyPress={() => { }}
                     onClick={() => buttonToggleTheme()}>
                     {!isDark ? <NightIcon /> : <SunIcon style={{ color: '#ECC502' }} />}
                 </span>
             </div>
-
             {modal ? <SearchModal setModal={setModal} docs={docs} /> : null}
-
-            <div className="menu-btn">
+            <Box css={{
+                display: 'none',
+                '@md': {
+                    display: 'flex'
+                }
+            }}>
                 <button
                     onClick={() => setModal(true)}
-                    style={{ marginRight: '0.5rem', marginLeft: '-1rem' }}
+                    style={{ marginRight: '0.5rem', marginLeft: '-1rem', marginTop: '0.5rem' }}
                     type="button"
-                    className="search-btn">
+                >
                     <SearchIcon style={{ width: '24px' }} />
                 </button>
                 {showMobileMenu && (
                     <button
-                        style={{ width: '24px', marginTop: '8px' }}
+                        style={{ width: '24px', marginTop: '8px', marginRight: '8px' }}
                         aria-label="menu-button"
                         type="button"
                         onClick={() => setMenu(!menu)}>
                         {menu ? <CrossIcon /> : <HamburgerMenuIcon />}
                     </button>
                 )}
-            </div>
+            </Box>
             <style jsx>{`
                 .ctx {
                     display: flex;
@@ -316,9 +319,6 @@ const Header: React.FC<Props> = ({
                     font-weight: 500;
                     color: var(--gray9);
                 }
-                .menu-btn {
-                    display: none;
-                }
                 button {
                     background: transparent;
                     outline: none;
@@ -347,7 +347,7 @@ const Header: React.FC<Props> = ({
                     }
                 }
             `}</style>
-        </div>
+        </div >
     );
 };
 

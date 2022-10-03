@@ -36,7 +36,7 @@ The parameters are:
 
 
 ```dart
-hmsSDK.sendBroadcastMessage("Hi");
+hmsSDK.sendBroadcastMessage(message: "Hi", hmsActionResultListener: hmsActionResultListener);
 ```
 
 #### Sending Direct Messages
@@ -46,7 +46,7 @@ Got secrets to share? Send a message directly to a single person in the chat wit
 The parameters are:
 
 1. *message*: The text of the message.
-2. *peerId*: The `HMSPeer` instance id  who should receive message.
+2. *peerTo*: The `HMSPeer` instance id  who should receive message.
 
 
 > 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error.
@@ -58,7 +58,10 @@ The parameters are:
 
 
 ```dart
-hmsSDK.sendDirectMessage(String message, HMSPeer peer);
+hmsSDK.sendDirectMessage(
+        message: "Hi",
+        peerTo: peerTo,
+        hmsActionResultListener: hmsActionResultListener);
 ```
 
 
@@ -69,7 +72,7 @@ Need to call attention to all the hosts? All the teachers? All the developers? C
 The parameters are:
 
 1. *message*: The text of the message.
-2. *roleName*: The name of the role.
+2. *hmsRolesTo*: The name of the role.
 
 
 > 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error.
@@ -79,7 +82,9 @@ The parameters are:
 >Also it's important to make a new callback per message because it will only contain the results of that particular call for sending a message.
 
 ```dart
-hmsSDK.sendGroupMessage(String message, String roleName);
+hmsSDK.sendGroupMessage(message: "Hi",
+        hmsRolesTo: hmsRolesTo,
+        hmsActionResultListener: hmsActionResultListener);
 ```
 
 ### Receiving Chat Messages
@@ -91,10 +96,10 @@ This where you'll receive new messages as `HMSMessage` during the call. It conta
 ```dart
 class HMSMessage(
 
-  final String sender;
+  final HMSPeer? sender;
   final String message;
   final String type;
-  final String time;
+  final DateTime time;
   HMSMessageRecipient? hmsMessageRecipient;
 
   HMSMessage({
@@ -107,30 +112,30 @@ class HMSMessage(
 )
 ```
 
-* message: Content of the text message or the text description of the raw message.
-* type: Type of message sent. Default value is `chat`.
-* recipient: The intended recipient(s) of this message as a `HMSMessageRecipient`.
-* serverReceiveTime: timestamp of when the messaging server receives this message. Update the time in your own messages when this comes back from the server in `HMSUpdateListener.onMessageReceived` for accurate ordering of your own messages.
-* sender: The `HMSPeer` who is sending this message.
+* *message*: Content of the text message or the text description of the raw message.
+* *type*: Type of message sent. Default value is `chat`.
+* *hmsMessageRecipient*: The intended recipient(s) of this message as a `HMSMessageRecipient`.
+* *time*: DateTime of when the messaging server receives this message. Update the time in your own messages when this comes back from the server in `HMSUpdateListener.onMessageReceived` for accurate ordering of your own messages.
+* *sender*: The `HMSPeer` who is sending this message.
 
-Identifying Senders:
+`Identifying Senders`:
 
 The sender of a message is always contained in the `sender` field of HMSMessage. This lets you get the name and peer id for any message sender.
 
-Message Body:
+`Message Body`:
 
 The body of the message is in `message` as a String.
 
-Time:
+`Time`:
 
-The time the message was sent is contained in `time` as a Java Date.
+The time the message was sent is contained in `time` as a DateTime datatype.
 
 ### Putting together a list of chat messages.
 The UI is completely up to you to decide! You'll also need to hold onto all the received messages if you want to display history.
 
 #### Identifying who the message was for
 
-The HMSMessageRecipient contained in the `recipient` field of `HMSMessage` lets you know who the message was for.
+The HMSMessageRecipient contained in the `hmsMessageRecipient` field of `HMSMessage` lets you know who the message was for.
 
 The `HMSMessageRecipient` contains:
 
@@ -142,12 +147,86 @@ class HMSMessageRecipient{
 }
 ```
 
-recipientPeer: Only contains a peer when a specific single peer is being direct messaged.
+`recipientPeer`: Only contains a peer when a specific single peer is being direct messaged.
 
-recipientRoles: Only contains values when a group message is being sent to many roles.
+`recipientRoles`: Only contains values when a group message is being sent to many roles.
 
-recipientType: Will be `HMSMessageRecipientType.BROADCAST` for a message being sent to everyone. If this is true, the other two fields will be null and empty respectively.
+`hmsMessageRecipientType`: Can contain enum value `BROADCAST`, `PEER` and `ROLES`.
 
-`HMSMessageRecipientType.PEER` will be set when it's a direct message.
+- `HMSMessageRecipientType.BROADCAST` for a message being sent to everyone. If this is true, the other two fields will be null and empty respectively.
 
-`HMSMessageRecipientType.ROLES` will be set when it's a message to one or many roles.
+- `HMSMessageRecipientType.PEER` will be set when it's a direct message.
+
+- `HMSMessageRecipientType.ROLES` will be set when it's a message to one or many roles.
+
+### Store Chat Messages
+
+You can store chat message by creating a list of `HMSMessage` and append new messages from the callback `onMessage({required HMSMessage message})` as follow:
+
+```dart
+List<HMSMessage> messages = [];
+
+@override
+void onMessage({required HMSMessage message}) {
+  messages.add(message);
+}
+```
+
+### Filter Chat Messages
+
+You can filter chat message by creating a separate list of `HMSMessage`.
+
+```dart
+List<HMSMessage> broadcastList = [];
+List<HMSMessage> rolesList = [];
+List<HMSMessage> peerList = [];
+
+List<HMSMessage> messageFilter(List<HMSMessage> messages, HMSMessageRecipientType type) {
+  filterList = [];
+  for(HMSMessage message in messages) {
+    // Filter list on the basis of Broadcast chat.
+    if(message.hmsMessageRecipient.hmsMessageRecipientType == HMSMessageRecipientType.BROADCAST) {
+      broadcastList.add(message);
+    }
+
+    // Filter list on the basis of Roles chat.
+    if(message.hmsMessageRecipient.hmsMessageRecipientType == HMSMessageRecipientType.ROLES) {
+      rolesList.add(message);
+    }
+
+    // Filter list on the basis of Peer chat.
+    if(message.hmsMessageRecipient.hmsMessageRecipientType == HMSMessageRecipientType.PEER) {
+      peerList.add(message);
+    }
+  }
+}
+```
+
+### Advanced Use-Cases
+
+Sometimes the app requires to show messages in different styles. Something similar to this:
+
+![Chat](/docs/v2/flutter-chat.gif)
+
+HMSSDK provides the `type` parameter of `HMSMessage` object to take care of such use cases.
+
+You can send message as:
+
+```dart
+hmsSDK.sendBroadcastMessage(message: "😁", type: "emoji", hmsActionResultListener: hmsActionResultListener);
+```
+
+Filter out the messages based on `type` parameter and handle the UI accordingly.
+
+```dart
+//Example to show emoticons when the message type is set to `emoji`
+@override
+void onMessage({required HMSMessage message}) {
+  if(message.type=="emoji"){
+      //Show as emoticons on UI
+  }
+  else{
+    //Handle other cases
+  }
+}
+```
