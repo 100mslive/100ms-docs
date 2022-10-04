@@ -117,10 +117,9 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                                 key={m.link}
                                 value={m}
                                 className={({ active }) =>
-                                    `${
-                                        active
-                                            ? 'dropdown-option dropdown-option-active'
-                                            : 'dropdown-option'
+                                    `${active
+                                        ? 'dropdown-option dropdown-option-active'
+                                        : 'dropdown-option'
                                     }`
                                 }>
                                 {m.icon} <span style={{ marginLeft: '1rem' }}>{m.name}</span>
@@ -137,12 +136,12 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                         Object.prototype.hasOwnProperty.call(route, 'title') ? (
                             <Link
                                 scroll={false}
+                                prefetch={false}
                                 href={route.url || ''}
                                 key={`${route.url}-${index}`}>
                                 <a
-                                    className={`menu-item ${
-                                        route.url === router.asPath ? 'active-link' : ''
-                                    }`}>
+                                    className={`menu-item ${route.url === router.asPath ? 'active-link' : ''
+                                        }`}>
                                     {route.title}
                                 </a>
                             </Link>
@@ -152,11 +151,11 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     {key === 'features' && router.query.slug[0] !== 'server-side' ? (
                         <>
                             {aliasMenu.map((a) => (
-                                <Link href={a.url} key={a.url}>
+                                <Link scroll={false}
+                                    prefetch={false} href={a.url} key={a.url}>
                                     <a
-                                        className={`menu-item ${
-                                            a.url === router.asPath ? 'active-link' : ''
-                                        }`}>
+                                        className={`menu-item ${a.url === router.asPath ? 'active-link' : ''
+                                            }`}>
                                         {a.title}
                                     </a>
                                 </Link>
@@ -173,9 +172,9 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     align-items: stretch;
                     height: calc(100vh - 80px);
                     overflow-y: scroll;
-                    top: ${menu ? '10px' : '80px'};
+                    top: ${menu ? '' : '80px'};
                     left: 0;
-                    position: ${menu ? 'absolute' : 'sticky'};
+                    position: sticky;
                     background: var(--sidebar_bg);
                     z-index: 100;
                 }
@@ -235,15 +234,13 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     font-size: 15px;
                     margin: 5px 0;
                 }
-                @media screen and (max-width: 1000px) {
+                @media screen and (max-width: 768px) {
                     .sidebar {
-                        display: ${menu ? 'absolute' : 'none'};
-                        top: 0;
-                        height: calc(100vh - 60px);
-                    }
-                    :global(.page) {
-                        height: ${menu ? '100vh `!important' : ''};
-                        overflow: ${menu ? 'hidden !important' : ''};
+                        position: sticky;
+                        width: 100vw;
+                        top: 20px;
+                        display: ${menu ? 'flex' : 'none'};
+                        height: 100%;
                     }
                 }
             `}</style>

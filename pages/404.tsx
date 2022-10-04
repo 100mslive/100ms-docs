@@ -1,6 +1,5 @@
-import React from 'react';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const NotFound = () => {
     const router = useRouter();
@@ -39,3 +38,7 @@ const NotFound = () => {
 };
 
 export default NotFound;
+
+NotFound.getLayout = function getLayout(page) {
+    return page
+}

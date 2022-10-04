@@ -197,10 +197,10 @@ const sdkItems = {
         // { id: 1, link: '/server-side/v2/guides/quickstart' },
         {
             id: 4,
-            link: '/server-side/v2/foundation/templates-and-roles#api-reference'
+            link: '/server-side/v2/introduction/basics'
         },
-        { id: 6, link: '/server-side/v2/foundation/webhook' },
-        { id: 7, link: '/server-side/v2/foundation/firewall-and-ports' }
+        { id: 6, link: '/server-side/v2/introduction/webhook' },
+        { id: 7, link: '/server-side/v2/introduction/firewall-and-ports' }
     ],
     android: [
         { id: 1, link: '/android/v2/guides/quickstart' },

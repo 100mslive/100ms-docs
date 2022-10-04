@@ -108,7 +108,7 @@ const Header: React.FC<Props> = ({
     const isNonApiRef = router.query.slug && router.query.slug[0] === 'server-side';
 
     return (
-        <div className="ctx header">
+        <div className="ctx">
             <div className="head-left">
                 <a href="https://www.100ms.live">
                     <div className="logo-ctx">
@@ -172,37 +172,39 @@ const Header: React.FC<Props> = ({
                     role="button"
                     style={{
                         paddingTop: '8px',
-                        paddingLeft: '10px',
-                        margin: '0 2rem 0 1rem',
+                        margin: '0 2rem 0 0',
                         cursor: 'pointer'
                     }}
                     tabIndex={0}
-                    onKeyPress={() => {}}
+                    onKeyPress={() => { }}
                     onClick={() => buttonToggleTheme()}>
                     {!isDark ? <NightIcon /> : <SunIcon style={{ color: '#ECC502' }} />}
                 </span>
             </div>
-
             {modal ? <SearchModal setModal={setModal} docs={docs} /> : null}
-
-            <div className="menu-btn">
+            <Box css={{
+                display: 'none',
+                '@md': {
+                    display: 'flex'
+                }
+            }}>
                 <button
                     onClick={() => setModal(true)}
-                    style={{ marginRight: '0.5rem', marginLeft: '-1rem' }}
+                    style={{ marginRight: '0.5rem', marginLeft: '-1rem', marginTop: '0.5rem' }}
                     type="button"
-                    className="search-btn">
+                >
                     <SearchIcon style={{ width: '24px' }} />
                 </button>
                 {showMobileMenu && (
                     <button
-                        style={{ width: '24px', marginTop: '8px' }}
+                        style={{ width: '24px', marginTop: '8px', marginRight: '8px' }}
                         aria-label="menu-button"
                         type="button"
                         onClick={() => setMenu(!menu)}>
                         {menu ? <CrossIcon /> : <HamburgerMenuIcon />}
                     </button>
                 )}
-            </div>
+            </Box>
             <style jsx>{`
                 .ctx {
                     display: flex;
@@ -213,7 +215,7 @@ const Header: React.FC<Props> = ({
                     position: sticky;
                     margin: 0;
                     top: 0;
-                    padding: 0.5rem;
+                    padding: 0.5rem 0 0.5rem 0;
                     background-color: var(--header_bg);
                     border-bottom: 2px solid var(--new_border_default);
                 }
@@ -260,13 +262,10 @@ const Header: React.FC<Props> = ({
                 .head-left {
                     display: flex;
                     align-items: center;
-                    width: auto;
-                    margin-right: 0.5rem;
                 }
                 .left-content {
                     display: flex;
                     align-items: center;
-                    width: auto;
                     justify-content: space-between;
                 }
                 .head-right {
@@ -316,9 +315,6 @@ const Header: React.FC<Props> = ({
                     font-weight: 500;
                     color: var(--gray9);
                 }
-                .menu-btn {
-                    display: none;
-                }
                 button {
                     background: transparent;
                     outline: none;
@@ -333,10 +329,6 @@ const Header: React.FC<Props> = ({
                     .ctx {
                         justify-content: flex-end;
                     }
-                    .head-left {
-                        width: unset;
-                        margin-right: auto;
-                    }
                     .theme-btn {
                         margin-left: auto;
                     }
@@ -347,7 +339,7 @@ const Header: React.FC<Props> = ({
                     }
                 }
             `}</style>
-        </div>
+        </div >
     );
 };
 
