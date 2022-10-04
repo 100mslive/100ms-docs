@@ -1,0 +1,65 @@
+---
+title: Session Metadata
+nav: 3.22
+---
+
+Session Metadata is an alpha feature that allows you to set and get metadata on a given session.
+
+> A session is defined as the period from when the first peer joins an empty room till the last peer leaves. 
+
+The same room can have multiple sessions. During one session the metadata will be preserved. Once a session ends the session metadata will also be cleared, that is, when the last peer leaves.
+
+### Limits
+
+Since session metadata is an alpha feature, it does not have the following:
+1. Locks to ensure consistency of the data. If two peers update it at the same time, it will be a race condition for which one succeeds last, overwriting whatever was before.
+2. SDKs are not made aware of session metadata updates on their own. This has to be done manually. One suggested way is listed [below](#updating-session-metadata-manually).
+
+#### Set Session Metadata
+Any peer can set the session metadata by calling `setSessionMetadata` and pass `String` value to its metadata parameter.
+
+```dart
+hmsSDK.setSessionMetadata(metadata: "ENTER METADATA HERE", hmsActionResultListener: hmsActionResultListener);
+```
+> You will receive an update on `onSuccess` Callback after successfully setting metadata in `HMSActionResultListenerMethod.setSessionMetadata`.
+
+### Get Session Metadata
+Any peer can get metadata by calling `getSessionMetadata`.
+
+```dart
+String? metadata = await hmsSDK.getSessionMetadata();
+```
+
+### Updating session metadata manually
+
+Since no updates are sent for session metadata as it is an alpha feature, here is one suggested way of getting peers to receive it once set.
+
+One way to notify other apps of a change in session metadata is to send a custom broadcast message when a set succeeds. The type can be set to something like "metadata" or whatever you choose and this should then be handled in the `onMessage` of all apps. To `getSessionMetadata` at that time instead of showing a message for that type.
+
+`onSuccess` callback send an broadcast message as follows:
+
+```dart
+ @override
+  void onSuccess(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments}) {
+        switch (methodType){
+            case HMSActionResultListenerMethod.setSessionMetadata:
+                hmssdk.sendBroadcastMessage(message:"refresh", type: "metadata", hmsActionResultListener:hmsActionResultListener);
+                break;
+        }
+      }
+```
+
+`onMessage` callback check for message type and update session Metadata value.
+
+```dart
+  @override
+  void onMessage({required HMSMessage message}) {
+    if(message.type=="metadata") {
+        getSessionMetadata();
+        return;
+    }
+  }
+```
