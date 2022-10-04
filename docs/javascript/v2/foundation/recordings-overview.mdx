@@ -1,5 +1,5 @@
 ---
-title: Recording
+title: Recordings Overview
 nav: 1.6
 ---
 
@@ -13,6 +13,7 @@ nav: 1.6
 
 **Based on your end goal, you can choose one of the recording types and its implementation:
 
+Below is a more detailed understanding of each of these:
 **
 **Browser Recording [Recommended]**
 
@@ -20,10 +21,10 @@ Browser recording is built to give users a participant-first recording experienc
 
 **Use cases:** Archival Recording, Record a Sales Meeting, Record an ongoing Live Stream, Record a Class, etc.
 
-**This is how output from Browser Recording looks like:**
+**Resources**
 
-Implementation Link: [https://www.100ms.live/docs/server-side/v2/Destinations/rtmp-streaming-and-browser-recording](https://www.100ms.live/docs/server-side/v2/Destinations/rtmp-streaming-and-browser-recording)
-
+- **Example Output of Broswer Recording:**
+- **How to implement Browser Recording**: [Click here](https://www.100ms.live/docs/server-side/v2/Destinations/rtmp-streaming-and-browser-recording)
 
 **SFU Recording [Advanced]** (in beta)
 
@@ -37,10 +38,11 @@ You can get track recording in two forms:
 
 **e.g.** Recording a live podcast, Recording only a teacher in a classroom, recording for rooms with very high number of participants, etc.
 
-**This is how output from SFU Recording looks like:**
+**Resources**
 
-Implementation link here: [https://www.100ms.live/docs/server-side/v2/Destinations/recording](https://www.100ms.live/docs/server-side/v2/Destinations/recording)
-
+- **Example Output of Broswer Recording:**
+- **How to implement SFU Recording**: [Click here](https://www.100ms.live/docs/server-side/v2/Destinations/recording)
+****
 
 **VOD Recording**
 
@@ -54,36 +56,35 @@ A multiresolution recording is available for Interactive Live Streaming product.
 
 ---
 
-1. Generate your credentials, for this example, you can check out a guide **here**. You can skip this step if you already have credentials.
+1. Generate your credentials, for this example, you can check out a guide **[here](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)**. You can skip this step if you already have credentials.
 
 2. Go to 100ms Dashboard and go to template **configuration by selecting the select icon**.
 
-![Screenshot 2022-09-28 at 1.21.23 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fdaf33ff-955c-4da7-ac2b-05b62ac4043f/Screenshot_2022-09-28_at_1.21.23_PM.png)
+  ![Screenshot 2022-09-28 at 1.21.23 PM.png](https://100msscreenshotbucket.s3.ap-south-1.amazonaws.com/Screenshot+2022-09-28+at+1.21.23+PM.png)
 
-1. Head over to the **Destinations** tab.
+3. Head over to the **Destinations** tab.
 
+  ![Screenshot 2022-09-28 at 1.24.09 PM.png](https://100msscreenshotbucket.s3.ap-south-1.amazonaws.com/Screenshot+2022-09-28+at+1.24.09+PM.png)
 
-    ![Screenshot 2022-09-28 at 1.24.09 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bce12832-6866-4c88-9cb9-30913924cf65/Screenshot_2022-09-28_at_1.24.09_PM.png)
-
-2. Key in your credentials like (using an example of S3 bucket here):
+4. Key in your credentials like (using an example of an S3 bucket here):
 
 
     `Access Key: (Access Key generated from AWS IAM Console)
      Secret Key: (Access Key generated from AWS IAM Console)
      Bucket: Name of the bucket in S3
      Region: Name of the region e.g ap-south1
-     Prefix for Upload Path: You can use this option to configure the upload path in your bucket`
+     Prefix for Upload Path: You can use this option to configure the upload path in    your bucket`
 
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3c4ec5c9-31c6-45f5-b1a5-30a516459921/Untitled.png)
+  ![Untitled](https://100msscreenshotbucket.s3.ap-south-1.amazonaws.com/Untitled+(1).png)
 
-3. Use the **Validate Config** button to test your storage setup.
-
-
-    ![Screenshot 2022-09-28 at 2.33.33 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e13eb283-0892-45a8-9ff4-c05be92e5a9e/Screenshot_2022-09-28_at_2.33.33_PM.png)
-
-4. You will see a message that the AWS **configuration was successfully validated.**
+5. Use the **Validate Config** button to test your storage setup.
 
 
-    ![Screenshot 2022-09-28 at 2.34.36 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/95d4dde1-c5fb-4de0-aa53-a925bf0ae6d9/Screenshot_2022-09-28_at_2.34.36_PM.png)
+    ![Screenshot 2022-09-28 at 2.33.33 PM.png](https://100msscreenshotbucket.s3.ap-south-1.amazonaws.com/Screenshot+2022-09-28+at+2.33.33+PM.png)
+
+6. You will see a message that the AWS **configuration was successfully validated.**
+
+
+    ![Screenshot 2022-09-28 at 2.34.36 PM.png](https://100msscreenshotbucket.s3.ap-south-1.amazonaws.com/Screenshot+2022-09-28+at+2.34.36+PM.png)
 
     The above message ensures that your configuration is successful now, and all your recordings will start collecting in your configured destination.
