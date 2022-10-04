@@ -1,6 +1,5 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import APILink from './APILink';
@@ -33,15 +32,7 @@ const TableCustom = (props: any) => (
 
 const LinkCustom = (props) => {
     const { href } = props;
-    const isInternalLink =
-        href &&
-        (href.startsWith('/') ||
-            href.startsWith('#') ||
-            href.startsWith('../lib') ||
-            href.startsWith('.') ||
-            href.startsWith('index') ||
-            href.startsWith('-'));
-
+    const isInternalLink = href && !href.startsWith('http');
     if (isInternalLink) {
         return (
             <Link href={href}>
