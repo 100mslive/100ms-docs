@@ -1,0 +1,106 @@
+---
+title: Session Metadata
+nav: 18
+---
+
+Session Metadata is an alpha feature that allows you to set and get metdata on a given session.
+
+> A session is defined as the period from when the first peer joins an empty room till the last peer leaves. 
+
+The same room can have multiple sessions. During one session the metadata will be preserved. Once a session ends the session metadata will also be cleared, that is, when the last peer leaves.
+
+### Limits
+
+Since session metadata is an alpha feature, it does not have the following:
+1. Locks to ensure consistency of the data. If two peers update it at the same time, it will be a race condition for which one suceeds last, overwriting whatever was before.
+2. SDKs are not made aware of session metadata updates on their own. This has to be done manually. One suggested way is listed [below](#updating-session-metadata-manually).
+
+#### Set Session Metadata
+Any peer can set the session metadata by calling `setSessionMetadata`.
+
+> ⚠️ There will be no notification by the sdk for session metadata being set since this is still an alpha feature. Here's one way to do it [manually](#updating-session-metadata-manually).
+
+<Tabs id="setsessionmetadata" items={['Kotlin', 'Java']} />
+
+<Tab id='setsessionmetadata-0'>
+
+```kotlin
+hmsSDK.setSessionMetaData("some data", object : HMSActionResultListener {
+      override fun onError(error: HMSException) {
+      }
+
+      override fun onSuccess() {          
+      }
+})
+```
+
+</Tab>
+
+<Tab id='setsessionmetadata-1'>
+
+```java
+hmsSdk.setSessionMetaData("some data", new HMSActionResultListener() {
+    @Override
+    public void onSuccess() {
+    }
+
+    @Override
+    public void onError(@NonNull HMSException e) {
+    }
+});
+
+```
+
+</Tab>
+
+
+
+### Get Mession Metadata
+Any peer can get metadata by calling `getSessionMetaData`.
+
+<Tabs id="getsessionmetadata" items={['Kotlin', 'Java']} />
+
+<Tab id='getsessionmetadata-0'>
+
+```kotlin
+hmsSDK.getSessionMetaData(object :HMSSessionMetadataListener {
+    override fun onSuccess(sessionMetadata: String?) {
+        // Use the metadata
+        Log.d("Data","The data is $sessionMetadata")
+    }
+
+    override fun onError(error: HMSException) {
+    }
+})
+```
+
+</Tab>
+
+<Tab id='getsessionmetadata-1'>
+
+```java
+hmsSdk.getSessionMetaData(new HMSSessionMetadataListener() {
+    @Override
+    public void onSuccess(@Nullable String metadata) {
+        // Use the metadata
+        Log.d("Metadata","The data is" + metadata);
+    }
+
+    @Override
+    public void onError(@NonNull HMSException e) {
+    }
+});
+
+```
+
+</Tab>
+
+### Updating session metadata manually
+
+Since no updates are sent for session metadata as it is an alpha feature, here is one suggested way of getting peers to receive it once set.
+
+One way to notify other apps of a change in session metadata is to send a custom broadcast message when a set succeeds. The type can be set to something like "metadata" or whatever you choose and this should then be handled in the `onMessagereceived` of all apps. To `getMetaData` at that time instead of showing a message for that type.
+
+1. [Example Set](https://github.com/100mslive/100ms-android/blob/236a34ec8ade318a164765b7ae41dee694039cbc/app/src/main/java/live/hms/app2/ui/meeting/MeetingViewModel.kt#L1379) of how we do it in the sample app. By sending a particular broadcast message when a set succeeds.
+2. [When](https://github.com/100mslive/100ms-android/blob/236a34ec8ade318a164765b7ae41dee694039cbc/app/src/main/java/live/hms/app2/ui/meeting/MeetingViewModel.kt#L621) the broadcast message is received, if it's of the custom type we set it then don't show the message and get metadata instead. 
+3. It is also recommended to get the metadata in the `onJoin` method so existing metadata is shown to peers to have just joined the room.
