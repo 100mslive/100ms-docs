@@ -3,7 +3,7 @@ title: Session Metadata
 nav: 18
 ---
 
-Session Metadata is an alpha feature that allows you to set and get metdata on a given session.
+Session Metadata is an alpha feature that allows you to set and get metadata on a given session.
 
 > A session is defined as the period from when the first peer joins an empty room till the last peer leaves. 
 
@@ -12,13 +12,13 @@ The same room can have multiple sessions. During one session the metadata will b
 ### Limits
 
 Since session metadata is an alpha feature, it does not have the following:
-1. Locks to ensure consistency of the data. If two peers update it at the same time, it will be a race condition for which one suceeds last, overwriting whatever was before.
+1. Locks to ensure consistency of the data. If two peers update it at the same time, it will be a race condition for which one succeeds last, overwriting whatever was before.
 2. SDKs are not made aware of session metadata updates on their own. This has to be done manually. One suggested way is listed [below](#updating-session-metadata-manually).
 
 #### Set Session Metadata
 Any peer can set the session metadata by calling `setSessionMetadata`.
 
-> ⚠️ There will be no notification by the sdk for session metadata being set since this is still an alpha feature. Here's one way to do it [manually](#updating-session-metadata-manually).
+> ⚠️ There will be no notification by the SDK for session metadata being set since this is still an alpha feature. Here's one way to do it [manually](#updating-session-metadata-manually).
 
 <Tabs id="setsessionmetadata" items={['Kotlin', 'Java']} />
 
