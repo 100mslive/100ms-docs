@@ -3,26 +3,13 @@ title: Recordings Overview
 nav: 1.6
 ---
 
-### Recordings Overview
-
----
-
 **Recordings** are a very important part of the live video stack as they convert the *live, ephemeral content* into a *long-term asset.* But the use of this asset varies from business to business depending on their respective use case.
 
 **For e.g, one of the common use cases for recording is for archival purposes versus, for some, its content to be publicised.
 
-**Based on your end goal, you can choose one of the recording types and its implementation:
+**Based on your end goal, you can choose one of the recording types and its implementation. You can understand some key differences using the comparison table below.
 
-| Recording Features  | Browser Recording [Recommended] | SFU Recording [Advanced] |
-| --- | --- | --- |
-| Resolution | Upto 1080p | Only 720p |
-| Individual Audio/Video Tracks  | Not Available | Available |
-| Known Issues | No | Yes |
-| Portrait/Landscape Mode  | Available | Not Available |
-| Start/Stop Recording | On-demand | Auto Start/Stop |
-| Custom Layout | Available | Not Available |
-| Role Specific Recording | Available | Not Available |
-| Recording Output | MP4, M3U8 | MP4 |
+**Overview Comparison**
 
 Below is a more detailed understanding of each of these:
 **
@@ -34,7 +21,7 @@ Browser recording is built to give users a participant-first recording experienc
 
 **Resources**
 
-- **Example Output of Broswer Recording:**
+- **Example Output of Browser Recording:**
 - **How to implement Browser Recording**: [Click here](https://www.100ms.live/docs/server-side/v2/Destinations/rtmp-streaming-and-browser-recording)
 
 **SFU Recording [Advanced]** (in beta)
@@ -51,7 +38,7 @@ You can get track recording in two forms:
 
 **Resources**
 
-- **Example Output of Broswer Recording:**
+- **Example Output of Browser Recording:**
 - **How to implement SFU Recording**: [Click here](https://www.100ms.live/docs/server-side/v2/Destinations/recording)
 ****
 
@@ -63,9 +50,9 @@ Video on-demand recording is available for our Interactive Live Streaming produc
 
 A multiresolution recording is available for Interactive Live Streaming product. This type of recording will have a multi-file structure for all available resolutions of the stream. The output will be multiple MP4 files with these resolutions: 240p, 480p, 720p and 1080p. For an implementation of this type of recording, please contact us [here](https://www.100ms.live/contact).
 
-### How to configure recording storage?
-
 ---
+
+### How to configure recording storage?
 
 1. Generate your credentials, for this example, you can check out a guide **[here](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)**. You can skip this step if you already have credentials.
 
@@ -75,9 +62,12 @@ A multiresolution recording is available for Interactive Live Streaming product.
   ![Screenshot 2022-09-28 at 1.21.23 PM.png](https://100msscreenshotbucket.s3.ap-south-1.amazonaws.com/Screenshot+2022-09-28+at+1.21.23+PM.png)
 
 
+
 3. Head over to the **Destinations** tab.
 
   ![Screenshot 2022-09-28 at 1.24.09 PM.png](https://100msscreenshotbucket.s3.ap-south-1.amazonaws.com/Screenshot+2022-09-28+at+1.24.09+PM.png)
+
+
 
 
 4. Key in your credentials like (using an example of an S3 bucket here):
@@ -91,14 +81,20 @@ A multiresolution recording is available for Interactive Live Streaming product.
   ![Untitled](https://100msscreenshotbucket.s3.ap-south-1.amazonaws.com/Untitled+(1).png)
 
 
+
+
 5. Use the **Validate Config** button to test your storage setup.
 
     ![Screenshot 2022-09-28 at 2.33.33 PM.png](https://100msscreenshotbucket.s3.ap-south-1.amazonaws.com/Screenshot+2022-09-28+at+2.33.33+PM.png)
 
 
+
+
 6. You will see a message that the AWS **configuration was successfully validated.**
 
     ![Screenshot 2022-09-28 at 2.34.36 PM.png](https://100msscreenshotbucket.s3.ap-south-1.amazonaws.com/Screenshot+2022-09-28+at+2.34.36+PM.png)
+
+
 
 
 The above message ensures that your configuration is successful now, and all your recordings will start collecting in your configured destination.
