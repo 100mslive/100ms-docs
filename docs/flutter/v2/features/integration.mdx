@@ -67,6 +67,16 @@ defaultConfig{
 }
 ```
 
+## Proguard configuration
+
+Add this to your proguard-rules.pro
+
+```kotlin
+# 100ms proguard rules
+-keep class org.webrtc.** { *; }
+-keep class live.hms.video.** { *; }
+```
+
 ### iOS
 
 Add the entitlements for video, audio and network access to your Info.plist
@@ -80,22 +90,51 @@ Add the entitlements for video, audio and network access to your Info.plist
 <string>Allow access to Camera to mic to enable video calling.</string>
 ```
 
-You will also need to request Camera and Record Audio permissions at runtime before you join a call or display a preview.
+### Update target iOS version
 
+Update the iOS version to 12 or later by navigating to the directory and updating the ios/Podfile file.
+
+```
+platform :ios, '12.0'
+```
+
+### flutter
+
+You will need to request Camera and Record Audio permissions at runtime before you join a call or display a preview as follows:
+
+1. Add `permission_handler` plugin in pubspec.yaml file under dependencies.
+
+```yaml
+permission_handler:
+```
+
+2. Before navigating to the preview or meeting screen ask permission using the following code:
+
+> If android version is greater than android 12 then bluetoothConnect permission is also required.
+
+```dart
+Future<bool> getPermissions() async {
+  if (Platform.isIOS) return true;
+  await Permission.camera.request();
+  await Permission.microphone.request();
+  await Permission.bluetoothConnect.request();
+
+  while ((await Permission.camera.isDenied)) {
+    await Permission.camera.request();
+  }
+  while ((await Permission.microphone.isDenied)) {
+    await Permission.microphone.request();
+  }
+  while ((await Permission.bluetoothConnect.isDenied)) {
+    await Permission.bluetoothConnect.request();
+  }
+  return true;
+}
+```
 
 ## Debugging Tools
 
 You can use [Android Studio](https://developer.android.com/studio), [VS Code](https://code.visualstudio.com/) & [Xcode](https://developer.apple.com/xcode/) to develop application with 100ms.
-
-## Proguard configuration
-
-Add this to your proguard-rules.pro
-
-```kotlin
-# 100ms proguard rules
--keep class org.webrtc.** { *; }
--keep class live.hms.video.** { *; }
-```
 
 
 ### 100ms Flutter app
