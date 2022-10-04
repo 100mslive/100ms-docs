@@ -11,7 +11,7 @@ iOS SDK works well with Apple Callkit framework. With Apple's Callkit framework,
 
 ## What is Apple Callkit framework?
 
-Callkit is generally used to support making and receiving Voip calls in your audio/video app.
+Callkit is generally used when you want to support making and receiving Voip calls in your audio/video app using iOS system-calling UI.
 
 When one person calls another person, your backend can push a silent Voip notification to the callee on their iOS device using APNS (Apple Push Notification Service). You iOS Voip app registers to listen for this notitification using Apple's Pushkit framework. Upon receiving this notification, iOS calls your registered pushkit delegate to handle the notification. You handle the voip notificaiton by reporting an incoming call to the Callkit. Callkit shows the native incoming caller id screen for your app. Once user accepts the call, your callkit delegate is called. At that point you join the meeting with the information in the notification payload.
 
