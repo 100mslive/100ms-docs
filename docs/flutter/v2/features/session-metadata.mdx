@@ -34,7 +34,7 @@ String? metadata = await hmsSDK.getSessionMetadata();
 
 Since no updates are sent for session metadata as it is an alpha feature, here is one suggested way of getting peers to receive it once set.
 
-One way to notify other apps of a change in session metadata is to send a custom broadcast message when a set succeeds. The type can be set to something like "metadata" or whatever you choose and this should then be handled in the `onMessagereceived` of all apps. To `getSessionMetadata` at that time instead of showing a message for that type.
+One way to notify other apps of a change in session metadata is to send a custom broadcast message when a set succeeds. The type can be set to something like "metadata" or whatever you choose and this should then be handled in the `onMessage` of all apps. To `getSessionMetadata` at that time instead of showing a message for that type.
 
 `onSuccess` callback send an broadcast message as follows:
 
