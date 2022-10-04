@@ -24,9 +24,16 @@ npm install --save @100mslive/react-native-hms
 Add following permissions in `AndroidManifest.xml`
 
 ```xml section=ForAndroidPermissions sectionIndex=1
-<uses-permission android:name="android.permission.CAMERA" />
-<uses-permission android:name="android.permission.RECORD_AUDIO" />
-<uses-permission android:name="android.permission.INTERNET" />
+<uses-feature android:name="android.hardware.camera"/>
+<uses-feature android:name="android.hardware.camera.autofocus"/>
+<uses-permission android:name="android.permission.CAMERA"/>
+<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+<uses-permission android:name="android.permission.RECORD_AUDIO"/>
+<uses-permission android:name="android.permission.BLUETOOTH"/>
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 ```
 
 You will also need to request Camera and Record Audio permissions at runtime before you join a call or display a preview. Please follow [Android Documentation](https://developer.android.com/training/permissions/requesting#request-permission) for runtime permissions.
@@ -38,10 +45,10 @@ Add following lines in `Info.plist` file
 ```xml section=ForIOSPermissions sectionIndex=1
 <key>NSCameraUsageDescription</key>
 <string>Please allow access to Camera to enable video conferencing</string>
-<key>NSLocalNetworkUsageDescription</key>
-<string>Please allow access to network usage to enable video conferencing</string>
 <key>NSMicrophoneUsageDescription</key>
 <string>Please allow access to Microphone to enable video conferencing</string>
+<key>NSLocalNetworkUsageDescription</key>
+<string>Please allow access to network usage to enable video conferencing</string>
 ```
 
 ## Concepts
@@ -55,9 +62,9 @@ Add following lines in `Info.plist` file
 Call the function given below to initialise the SDK
 
 ```js section=InitializingTheSDK sectionIndex=1
-import HmsManager from '@100mslive/react-native-hms';
+import { HMSSDK } from '@100mslive/react-native-hms';
 
-const hmsInstance = await HmsManager.build();
+const hmsInstance = await HMSSDK.build();
 ```
 
 This function will return the instance of HMSSDK that will be used for calling various functions and accessing data.
@@ -69,7 +76,7 @@ Add event listeners for all the events you want updates from such as onPreview, 
 The event handlers are the way of handling any update happening in hms. It is advised to attach all the event listeners so you don't miss any update.
 
 ```js section=AddEventListeners sectionIndex=1
-import HmsManager, { HMSUpdateListenerActions } from 'react-native-hms';
+import { HMSUpdateListenerActions } from 'react-native-hms';
 
 // instance acquired from build() method
 hmsInstance.addEventListener(
@@ -92,7 +99,7 @@ To join a room 3 fields are required:
 -   `roomID` (optional): The ID of the room that you wanna join
 
 ```js section=JoinRoom sectionIndex=1
-import HmsManager, { HMSUpdateListenerActions, HMSConfig } from 'react-native-hms';
+import { HMSConfig } from 'react-native-hms';
 
 // instance acquired from build() method
 const HmsConfig = new HMSConfig({ authToken, userID, roomID, userName });
@@ -196,5 +203,13 @@ hmsInstance.localPeer.localVideoTrack().setMute(true); // video track
 ```
 
 
-### Github Repo 
+### [Github Repo](https://github.com/100mslive/react-native-hms/)
 You can checkout the 100ms React Native SDK Github repo which also contains a fully fledged [Example app implementation here](https://github.com/100mslive/react-native-hms/) 
+
+
+
+### [Example App](https://github.com/100mslive/react-native-hms/tree/develop/example)
+
+In the [100ms Example App](https://github.com/100mslive/react-native-hms/tree/main/example) we have shown how to setup the various listeners, what data to store in the redux and what all features you can implement.
+
+We have also implemented multiple views which are commonly used. Checkout the [videos & relevant code in the Example app](https://github.com/100mslive/react-native-hms/tree/main/example#additional-features).

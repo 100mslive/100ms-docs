@@ -10,11 +10,12 @@ Preview screen is a frequently used UX element which allows users to check if th
 We can call preview method in HMSSDK Instance. it is advised to attach error listener and preview listener before calling that function in order to get updates if preview got executed successfully or if it failed.
 
 ```js
-import HmsManager, {
+import {
+  HMSSDK,
   HMSUpdateListenerActions,
 } from '@100mslive/react-native-hms';
 
-const hmsInstance = HmsManager.build()
+const hmsInstance = HMSSDK.build()
 
 hmsInstance.addEventListener(
   HMSUpdateListenerActions.ON_PREVIEW,
@@ -36,7 +37,7 @@ hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
 once listeners are attached we can call preview method as shown in following snippet.
 
 ```js
-import HmsManager, { HMSUpdateListenerActions, HMSConfig } from '@100mslive/react-native-hms';
+import { HMSConfig } from '@100mslive/react-native-hms';
 
 // instance acquired from build() method
 const HmsConfig = new HMSConfig({ authToken, username });
