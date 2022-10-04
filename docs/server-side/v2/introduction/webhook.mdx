@@ -127,12 +127,13 @@ This event will be sent when session closes successfully.
 #### Attributes
 
 | Name               | Type        | Description                               | Example                  |
-| :----------------- | :---------- | :---------------------------------------- | :----------------------- |
+|:-------------------|:------------|:------------------------------------------|:-------------------------|
 | room_id            | `string`    | 100ms assigned room id                    | 5f9edc6ac238215aec2312df |
 | room_name          | `string`    | Room name provided when creating the room | Test Room                |
 | session_id         | `string`    | 100ms assigned id to identify the session | 5f9edc6bd238215aec7700df |
 | template_id        | `string`    | Template ID of the room                   | 66112497abcd52312556c4gg |
 | session_started_at | `timestamp` | Timestamp when session started            | 2020-11-11T16:32:17Z     |
+| session_stopped_at | `timestamp` | Timestamp when session ended              | 2020-11-11T16:32:17Z     |
 
 #### Sample `session.close.success` event
 
@@ -149,7 +150,8 @@ This event will be sent when session closes successfully.
         "room_name": "**********",
         "session_id": "************************",
         "template_id": "************************",
-        "session_started_at": "2021-11-30T12:58:49.97291247Z"
+        "session_started_at": "2021-11-30T12:58:49.97291247Z",
+        "session_stopped_at": "2021-11-30T12:58:49.97291247Z"
     }
 }
 ```
