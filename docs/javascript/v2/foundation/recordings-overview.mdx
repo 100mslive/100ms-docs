@@ -3,26 +3,38 @@ title: Recordings Overview
 nav: 1.6
 ---
 
-**Recordings** are a very important part of the live video stack as they convert the *live, ephemeral content* into a *long-term asset.* But the use of this asset varies from business to business depending on their respective use case.
+**Recordings** are a very important part of the live video stack as they convert the live, ephemeral content into a long-term asset. But the use of this asset varies from business to business depending on their respective use case.
 
-**For e.g, one of the common use cases for recording is for archival purposes versus, for some, its content to be publicised.
+For e.g, one of the common use cases for recording is for archival purposes versus, for some, its content to be publicised.
 
-**Based on your end goal, you can choose one of the recording types and its implementation. You can understand some key differences using the comparison table below.
+Based on your end goal, you can choose one of the recording types and its implementation. You can understand some key differences using the comparison table below.
 
 **Overview Comparison**
 
+| Recording Features  | Browser Recording [Recommended] | SFU Recording [Advanced] |
+| --- | --- | --- |
+| Resolution | Upto 1080p | Only 720p |
+| Individual Audio/Video Tracks  | Not Available | Available |
+| Known Issues | No | Yes |
+| Portrait/Landscape Mode  | Available | Not Available |
+| Start/Stop Recording | On-demand | Auto Start/Stop |
+| Custom Layout | Available | Not Available |
+| Role Specific Recording | Available | Not Available |
+| Recording Output | MP4, M3U8 | MP4 |
+
+
 Below is a more detailed understanding of each of these:
-**
+
 **Browser Recording [Recommended]**
 
 Browser recording is built to give users a participant-first recording experience. When enabled, our browser-based bot Beam joins a meeting or a stream to record the room just like any other participant. The output is an MP4 file that captures the room's published audio/video tracks together into one single file. This option removes the complexity of syncing various audio/video tracks and offers an intuitive, participant-first recording experience.
 
 **Use cases:** Archival Recording, Record a Sales Meeting, Record an ongoing Live Stream, Record a Class, etc.
 
-**Resources**
+Resources
 
-- **Example Output of Browser Recording:**
-- **How to implement Browser Recording**: [Click here](https://www.100ms.live/docs/server-side/v2/Destinations/rtmp-streaming-and-browser-recording)
+- Example Output of Browser Recording:
+- How to implement Browser Recording: [Click here](https://www.100ms.live/docs/server-side/v2/Destinations/rtmp-streaming-and-browser-recording)
 
 **SFU Recording [Advanced]** (in beta)
 
@@ -36,10 +48,10 @@ You can get track recording in two forms:
 
 **e.g.** Recording a live podcast, Recording only a teacher in a classroom, recording for rooms with very high number of participants, etc.
 
-**Resources**
+Resources
 
-- **Example Output of Browser Recording:**
-- **How to implement SFU Recording**: [Click here](https://www.100ms.live/docs/server-side/v2/Destinations/recording)
+- Example Output of Browser Recording:
+- How to implement SFU Recording: [Click here](https://www.100ms.live/docs/server-side/v2/Destinations/recording)
 ****
 
 **VOD Recording**
@@ -54,47 +66,51 @@ A multiresolution recording is available for Interactive Live Streaming product.
 
 ### How to configure recording storage?
 
-1. Generate your credentials, for this example, you can check out a guide **[here](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)**. You can skip this step if you already have credentials.
+This section shows how to configure a cloud destination (e.g AWS S3) for all your recordings.
 
+1. Generate your credentials, for this example, you can check out a guide **[here](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)**. You can skip this step if you already have credentials.
+&nbsp;
 
 2. Go to 100ms Dashboard and go to template **configuration by selecting the select icon**.
+&nbsp;
 
   ![Screenshot 2022-09-28 at 1.21.23 PM.png](https://100msscreenshotbucket.s3.ap-south-1.amazonaws.com/Screenshot+2022-09-28+at+1.21.23+PM.png)
-
-
+&nbsp;
+&nbsp;
 
 3. Head over to the **Destinations** tab.
+&nbsp;
 
   ![Screenshot 2022-09-28 at 1.24.09 PM.png](https://100msscreenshotbucket.s3.ap-south-1.amazonaws.com/Screenshot+2022-09-28+at+1.24.09+PM.png)
-
-
-
+&nbsp;
+&nbsp;
 
 4. Key in your credentials like (using an example of an S3 bucket here):
+  &nbsp;
 
     Access Key: (Access Key generated from AWS IAM Console)
     Secret Key: (Access Key generated from AWS IAM Console)
     Bucket: Name of the bucket in S3
     Region: Name of the region e.g ap-south1
     Prefix for Upload Path: You can use this option to configure the upload path in your bucket.
+&nbsp;
 
   ![Untitled](https://100msscreenshotbucket.s3.ap-south-1.amazonaws.com/Untitled+(1).png)
-
-
-
+&nbsp;
+&nbsp;
 
 5. Use the **Validate Config** button to test your storage setup.
+&nbsp;
 
     ![Screenshot 2022-09-28 at 2.33.33 PM.png](https://100msscreenshotbucket.s3.ap-south-1.amazonaws.com/Screenshot+2022-09-28+at+2.33.33+PM.png)
-
-
-
+&nbsp;
+&nbsp;
 
 6. You will see a message that the AWS **configuration was successfully validated.**
+&nbsp;
 
     ![Screenshot 2022-09-28 at 2.34.36 PM.png](https://100msscreenshotbucket.s3.ap-south-1.amazonaws.com/Screenshot+2022-09-28+at+2.34.36+PM.png)
-
-
-
+&nbsp;
+&nbsp;
 
 The above message ensures that your configuration is successful now, and all your recordings will start collecting in your configured destination.
