@@ -50,7 +50,7 @@ const LinkCustom = (props) => {
             onClick={() =>
                 window.analytics.track('link.clicked', {
                     btnId,
-                    componentId: window?.location?.pathname.split('/')[2],
+                    componentId: window?.location?.pathname.split('/')?.[2], // splitArr = ['', 'docs', 'sdk']
                     page: window?.location?.pathname
                 })
             }>
