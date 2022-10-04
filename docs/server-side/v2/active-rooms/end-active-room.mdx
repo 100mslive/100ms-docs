@@ -3,19 +3,18 @@ title: End an active room session
 nav: 3.6
 ---
 
-Trigger this request to disable a specific room.
+Trigger this request to end an active room session.
 
-> **Note:** If you disable a room, that room can be used for only the current session and users will not be able to join the room later. You can use this API with the `enabled` param set to `true` to enable the room again.
-
-<PostRequest title="https://api.100ms.live/v2/rooms/<room_id>" />
+<PostRequest title="https://api.100ms.live/v2/active-rooms/<room_id>" />
 <Request id="req-0">
 
 ```bash
-curl --location --request POST 'https://api.100ms.live/v2/rooms/<room_id>' \
+curl --location --request POST 'https://api.100ms.live/v2/rooms/<room_id>/end-room' \
 --header 'Authorization: Bearer <management_token>' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "enabled": false
+    "reason": "Class has ended",
+    "lock": false
 }'
 ```
 
@@ -24,20 +23,7 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms/<room_id>' \
 
 ```json
 {
-    "id": "6316d5cfae8c4271df5d0554",
-    "name": "new-room-1662440912",
-    "enabled": false,
-    "description": "",
-    "customer_id": "627cdddff2e4e30487862ad1",
-    "recording_source_template": true,
-    "enabled_source_template": true,
-    "recording": null,
-    "template_id": "",
-    "template": "",
-    "region": "",
-    "created_at": "2022-09-06T05:08:31.935Z",
-    "updated_at": "2022-09-08T14:58:25.629819038Z",
-    "active": false
+    "message": "session is ending"
 }
 ```
 
@@ -45,7 +31,10 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms/<room_id>' \
 
 ## Arguments
 
-| Name                       | Type      | Description                                                                                                         | Required |
-| :------------------------- | :-------- | :------------------------------------------------------------------------------------------------------------------ | :------- |
-| id <br/> — path param      | `string`  | Unique identifier of the room you wish to disable. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                  | Yes      |
-| enabled <br/> — body param | `boolean` | Status of the room to be set. <br/>`Allowed values`: true, false. <br/>Should be set to `false` to disable the room | Yes      |
+| Name                      | Type      | Description                                                                                                                   | Required |
+| :------------------------ | :-------- | :---------------------------------------------------------------------------------------------------------------------------- | :------- |
+| id <br/> — path param     | `string`  | Unique identifier of the room you wish to disable. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                            | Yes      |
+| reason <br/> — body param | `string`  | Description to indicate the reason for ending the active room session.                                                        | Yes      |
+| lock <br/> — body param   | `boolean` | Status of the room to be set. <br/>`Allowed values`: true, false. <br/>`Default`: false(ends the current active session only) | Yes      |
+
+> **Warning:** If you set the lock argument to `true`, it will end the active room session and users will not be able to join the room later as well. You can use [enable a room API](/server-side/v2/Rooms/disable-or-enable) or [dashboard](https://dashboard.100ms.live/rooms) to enable the room again.

@@ -3,36 +3,16 @@ title: Retrieve active room state
 nav: 3.2
 ---
 
-Creates a new room. This provides a more scalable way of creating a room.
+Retrieves the details of a specific active room. 100ms provides options to retrieve details of an active room with their ID.
 
-<PostRequest title="https://api.100ms.live/v2/rooms" />
+> **Note**: You can also use this API to check if a room has any active sessions or not.
+
+<PostRequest title="https://api.100ms.live/v2/active-rooms" />
 <Request id="req-comp-0">
 
 ```bash
-curl --location --request POST 'https://api.100ms.live/v2/rooms' \
---header 'Authorization: Bearer <management_token>' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "name": "new-room-1662723668",
-    "description": "This is a sample description for the room",
-    "template_id": "<template_id of the template you wish to associate with the room>",
-    "recording_info": {
-        "enabled": true,
-        "upload_info": {
-        "type": "s3",
-        "location": "<Name of the AWS s3 bucket>",
-        "prefix": "<Upload prefix path>",
-        "options": {
-            "region": "<region of the s3 bucket>"
-        },
-        "credentials": {
-            "key": "<access key ID for the AWS account/S3 bucket>",
-            "secret": "<secret access key for the AWS account/S3 bucket>"
-            }
-        }
-    },
-    "region": "in"
-}'
+curl --location --request GET 'https://api.100ms.live/v2/active-rooms/<room_id>' \
+--header 'Authorization: Bearer <management_token>'
 ```
 
 </Request>
@@ -40,83 +20,37 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
 
 ```json
 {
-    "id": "631b2654f771854d9bf633df",
-    "name": "new-room-1662723668",
-    "enabled": true,
-    "description": "This is a sample description for the room",
-    "customer": "627cdddff2e4e30487862ad1",
-    "recording_info": {
-        "enabled": true,
-        "upload_info": {
-            "type": "s3",
-            "location": "<Name of the AWS s3 bucket>",
-            "prefix": "<Upload prefix path>",
-            "credentials": {
-                "key": "<access key ID for the AWS account/S3 bucket>",
-                "secret": "<secret access key for the AWS account/S3 bucket>"
+    "id": "631a0f990e6ffae22efa610c",
+    "name": "5d971abb-8e51-4c86-9d35-8e619c3d8877",
+    "customer_id": "627cdddff2e4e30487862ad1",
+    "session": {
+        "id": "633bdce1a08ba0d532834077",
+        "created_at": 1664867553,
+        "peers": ["df3e1073-816e-4877-b160-7f6dfbb21e24", "d65c95f6-8738-431c-a0de-66ebed9908d9"],
+        "recording": {
+            "sfu": {
+                "enabled": false
             },
-            "options": {
-                "region": "<region of the s3 bucket>"
+            "browser": {
+                "enabled": false
+            }
+        },
+        "streaming": {
+            "hls": {
+                "enabled": false
+            },
+            "rtmp": {
+                "enabled": false
             }
         }
-    },
-    "template_id": "63188115d11d6db790c73c60",
-    "template": "new-template-1662550293",
-    "region": "in",
-    "created_at": "2022-09-09T11:41:08.082Z",
-    "updated_at": "2022-09-09T11:41:08.074Z",
-    "active": true
+    }
 }
 ```
 
 </ResponseBox>
 
-## Main Arguments
+## Arguments
 
-| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Required |
-| :------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name <br/>           | `string` | An alias you can assign to 100ms rooms. This is `case-insensitive`. <br/><br/>Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/>**Note**: `Create room` is called with an existing room name, then the corresponding room ID is returned.                                                                                                                                                                                                | No       |
-| description <br/>    | `string` | A string to describe your room's usage. For example "9PM English Class Batch 2"                                                                                                                                                                                                                                                                                                                                                                                                                          | No       |
-| template_id <br/>    | `string` | Template ID of template you wish to associate with the room. You can get template ID either from the templates section on the [dashboard](https://dashboard.100ms.live/dashboard) or use the [Template API](../policy/retrieve-a-template). <br/><br/>**Note**: `default template` will be assigned if template is not specified in the `create room request`.                                                                                                                                           | No       |
-| recording_info <br/> | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings. <br/><br/>Check the [recording_info arguments](#recording-info-arguments) below for more information. <br/><br/> **Note:** This argument is only applicable to enable/disable [SFU recording](/server-side/v2/Destinations/recording). Refer to [RTMP Streaming & Browser Recording](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording) guide for other options. | No       |
-| region <br/>         | `string` | Region in which you want to create room. <br/><br/> `in` - India <br/> `us` - United States <br/> `eu` - European Union <br/> `auto` - Automatic region selection (default, and in case this parameter is not provided)                                                                                                                                                                                                                                                                                  | No       |
-
-## recording_info arguments
-
-| Name        | Type      | Description                                                                                                                                                                                                                                                                                             | Required |
-| :---------- | :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
-| enabled     | `boolean` | Enable SFU recording. Disabled by default                                                                                                                                                                                                                                                               | No       |
-| upload_info | `object`  | Object of type `upload_info`. This object contains information on recordings storage location. <br/><br/>If you want to store recording with 100ms, and not use your own s3, don't add this to the object. <br/><br/>Check the [upload_info object](#upload-info-arguments) below for more information. | No       |
-
-`recording_info` in the room acts as an atomic property. It depends on the recording settings defined in a template as below:
-
--   If the `recording_info` key is not provided in the API, the room will fill it with recording settings from the template. And the response body will include `recording_source_template: true`. This implies that whenever recording info is modified in the template, the recording settings for the room will also be updated.
--   If the `recording_info` key is provided in the API, the recording settings of the room won't be affected by the template at all.
-
-To know more about recording please visit [Recording](/server-side/v2/Destinations/recording).
-
-### upload_info arguments
-
-| Name        | Type     | Description                                                                                                                                                                  | Required |
-| :---------- | :------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| type        | `string` | Upload Destination type. Currently, only `s3` is supported                                                                                                                   | Yes      |
-| location    | `string` | Name of the AWS s3 bucket in which you want to store all recordings                                                                                                          | Yes      |
-| prefix      | `string` | Upload prefix path                                                                                                                                                           | No       |
-| options     | `object` | Additional configurations of type `Options` to be used for uploading. <br/><br/>Check the options arguments below for more information.                                      | No       |
-| credentials | `object` | Object of type `Credentials`. This is used to share AWS credentials to access the s3 bucket specified. <br/><br/>Check the credentials arguments below for more information. | No       |
-
-#### Options arguments
-
-| Name   | Type     | Description                                                                                                              | Required |
-| :----- | :------- | :----------------------------------------------------------------------------------------------------------------------- | :------- |
-| region | `string` | Region of the AWS account hosting the s3 bucket for storing recordings. If not provided it is assumed to be `ap-south-1` | No       |
-
-#### Credentials arguments
-
-| Name   | Type     | Description                                                                          | Required |
-| :----- | :------- | :----------------------------------------------------------------------------------- | :------- |
-| key    | `string` | `access key ID` for the AWS account hosting the s3 bucket for storing recordings     | Yes      |
-| secret | `string` | `secret access key` for the AWS account hosting the s3 bucket for storing recordings | Yes      |
-
-The access keys should have read(GetObject) and write(PutObject) permissions for the s3 bucket.
-For more details check - https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html
+| Name                  | Type     | Description                                                                                                         | Required |
+| :-------------------- | :------- | :------------------------------------------------------------------------------------------------------------------ | :------- |
+| id <br/> — path param | `string` | Unique identifier of the active room you wish to fetch details for. <br/><br/>**Example**: 631a0f990e6ffae22efa610c | Yes      |

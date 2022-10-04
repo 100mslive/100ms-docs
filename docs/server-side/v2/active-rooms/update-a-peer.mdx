@@ -3,34 +3,19 @@ title: Update a peer
 nav: 3.4
 ---
 
-You can use this API to update various details of the room such as name, description, recording_info and region.
+You can use this API to update details of an active peer such as name, role, and metadata(custom/additional information).
 
 <PostRequest title="https://api.100ms.live/v2/rooms/<room_id>" />
 <Request id="req-0">
 
 ```bash
-curl --location --request POST 'https://api.100ms.live/v2/rooms/<room_id>' \
+curl --location --request POST 'https://api.100ms.live/v2/active-rooms/<room_id>/peers/<peer_id>' \
 --header 'Authorization: Bearer <management_token>' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "name": "update-room-name",
-    "description": "Updated description for the room",
-    "recording_info": {
-        "enabled": true,
-        "upload_info": {
-            "type": "s3",
-            "location": "<Updated Name of the AWS s3 bucket>",
-            "prefix": "<Updated Upload prefix path>",
-            "options": {
-                "region": "<Updated region of the s3 bucket>"
-            },
-            "credentials": {
-                "key": "<Updated access key ID for the AWS account/S3 bucket>",
-                "secret": "<Updated secret access key for the AWS account/S3 bucket>"
-            }
-        }
-    },
-    "region": "us"
+    "name": "nixon-test2",
+    "role":"backstage",
+    "metadata": {"business_user_id": "XYZ_1234", "Lower_hand": true}
 }'
 ```
 
@@ -39,35 +24,35 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms/<room_id>' \
 
 ```json
 {
-    "id": "63215ea14354ff09328378c6",
-    "name": "update-room-name",
-    "enabled": true,
-    "description": "Updated description for the room",
-    "customer_id": "627cda54ff688c037a39291b",
-    "recording_source_template": false,
-    "enabled_source_template": false,
-    "recording_info": {
-        "enabled": true,
-        "upload_info": {
-            "type": "s3",
-            "location": "<Updated Name of the AWS s3 bucket>",
-            "prefix": "<Upload prefix path>",
-            "credentials": {
-                "key": "<Updated access key ID for the AWS account/S3 bucket>",
-                "secret": "<Updated secret access key for the AWS account/S3 bucket>"
-            },
-            "options": {
-                "region": "<Updated region of the s3 bucket>"
-            }
-        }
+    "id": "29c9f2b4-1029-486e-bb5b-b2740234ae2a",
+    "name": "nixon-test2",
+    "user_id": "18e6ffaa-792e-4700-b121-d88244905e12",
+    "metadata": {
+        "Lower_hand": true,
+        "business_user_id": "XYZ_1234"
     },
-    "template_id": "6311c9b3ba3f6f0133f899ee",
-    "template": "new-template-1662110132",
-    "region": "us",
-    "created_at": "2022-09-14T04:54:57.707Z",
-    "updated_at": "2022-09-26T12:17:48.37Z",
-    "active": true,
-    "customer": "627cda54ff688c037a39291b"
+    "role": "backstage",
+    "joined_at": 1664871951,
+    "tracks": {
+        "454b5c0c-e998-4140-afe5-45d5eb612078": {
+            "id": "454b5c0c-e998-4140-afe5-45d5eb612078",
+            "stream_id": "97142a29-d3f0-4211-a58d-17727a3a7e61",
+            "mute": true,
+            "type": "audio",
+            "source": "regular",
+            "started_at": 1664871951,
+            "description": ""
+        },
+        "efde2dec-1f96-4615-afd2-4c714626a36c": {
+            "id": "efde2dec-1f96-4615-afd2-4c714626a36c",
+            "stream_id": "97142a29-d3f0-4211-a58d-17727a3a7e61",
+            "mute": false,
+            "type": "video",
+            "source": "regular",
+            "started_at": 1664871951,
+            "description": ""
+        }
+    }
 }
 ```
 
@@ -75,9 +60,10 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms/<room_id>' \
 
 ## Arguments
 
-| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Required |
-| :------------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name <br/>           | `string` | An alias you can assign to 100ms rooms. This is `case-insensitive`. <br/><br/>Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/>**Note**: `Create room` is called with an existing room name, then the corresponding room ID is returned.                                                                                                                                                                                                          | No       |
-| description <br/>    | `string` | A string to describe your room's usage. For example "9PM English Class Batch 2"                                                                                                                                                                                                                                                                                                                                                                                                                                    | No       |
-| recording_info <br/> | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings. <br/><br/>Check the [recording_info arguments](/server-side/v2/Rooms/create-via-api#recording-info-arguments) below for more information. <br/><br/> **Note:** This argument is only applicable to enable/disable [SFU recording](/server-side/v2/Destinations/recording). Refer to [RTMP Streaming & Browser Recording](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording) guide for other options. | No       |
-| region <br/>         | `string` | Region in which you want to create room. <br/><br/> `in` - India <br/> `us` - United States <br/> `eu` - European Union <br/> `auto` - Automatic region selection (default, and in case this parameter is not provided)                                                                                                                                                                                                                                                                                            | No       |
+| Name                        | Type     | Description                                                                                                                                           | Required |
+| :-------------------------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| room_id <br/> — path param  | `string` | Unique identifier of the active room in which the peer is currently active. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                           | Yes      |
+| peer_id <br/> — path param  | `string` | Unique identifier of the peer/participant for which you wish to update details. <br/><br/>**Example**: 1038fa72-9345-4651-beab-436f9242ebf4           | Yes      |
+| name <br/> — body param     | `string` | The name of the peer used in the active session.                                                                                                      | No       |
+| role <br/> — body param     | `string` | You can use this to update the role type of the peer. For example, to take the peer to a breakout room.                                               | No       |
+| metadata <br/> — body param | `object` | You can use a stringfied JSON to update various custom/addtional information to a peer such as business_user_id, raise_hand/lower_hand info, and more | No       |

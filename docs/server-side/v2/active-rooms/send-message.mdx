@@ -3,26 +3,26 @@ title: Send message
 nav: 3.5
 ---
 
-## Overview
+You can use this API to send messages to a single peer, a set of peers(a particular role), or all active peers in the active room. This API supports arguments such as `peer_id` and `role` to implement this.
 
-This API retrieves details of a list of rooms in your account. 100ms provides options to
+1. If `peer_id` is defined -- message will be sent only to the peer_id mentioned.
+2. If the `role` is defined -- message will be sent to all the active peers assigned with that particular role.
+3. If `peer_id` and `role` are not defined -- message(broadcast) will be sent to all the active peers.
 
--   retrieve the complete list of rooms or
--   rooms that are active or
--   rooms based on their creation time-range or
--   combinations of these.
-
-## List all rooms
-
-This API retrieves details of all the rooms in your account.
-
-<GetRequest title="https://api.100ms.live/v2/rooms" />
+<GetRequest title="https://api.100ms.live/v2/active-rooms/<room_id>/send-message" />
 
 <Request id="req-0">
 
 ```bash
-curl --location --request GET 'https://api.100ms.live/v2/rooms' \
---header 'Authorization: Bearer <management_token>'
+curl --location --request GET 'https://api.100ms.live/v2/active-rooms/<room_id>/send-message' \
+--header 'Authorization: Bearer <management_token>' \
+    --header 'Content-Type: application/json' \
+--data-raw '{
+    "peer_id":"018b84da-0786-48c5-a3a6-02961d9eac03",
+    "role":"",
+    "message": "hi",
+    "type":"chat"
+}'
 ```
 
 </Request>
@@ -31,55 +31,18 @@ curl --location --request GET 'https://api.100ms.live/v2/rooms' \
 
 ```json
 {
-    "limit": 10,
-    "data": [
-        {
-            "id": "62bbc84********0a6aa1a",
-            "name": "test-room",
-            "enabled": true,
-            "description": "This is a test room",
-            "customer": "627cda********a39291b",
-            "recording_source_template": true,
-            "template_id": "627cd********784227d3",
-            "template": "default_createown_e319635a-****-****-****-ae9e95891e31",
-            "region": "in",
-            "created_at": "2022-06-29T03:34:30.194Z",
-            "key": "627***********a39291b:test-room",
-            "updated_at": "0001-01-01T00:00:00Z"
-        },
-        {
-            "id": "627cda81********6b077bc33",
-            "name": "4b2705aa-****-****-****-f470c06d0c03",
-            "enabled": true,
-            "description": "This is a test room",
-            "customer": "627cd********037a39291b",
-            "recording_source_template": false,
-            "recording": {
-                "enabled": false
-            },
-            "template_id": "627cda********84227d3",
-            "template": "default_createown_e319635a-****-****-****-ae9e95891e31",
-            "region": "in",
-            "created_at": "2022-05-12T09:59:29.343Z",
-            "key": "627cda********037a39291b:4b2705aa-****-****-****-f470c06d0c03",
-            "updated_at": "0001-01-01T00:00:00Z"
-        }
-    ],
-    "last": "627cda81bd4f3b56b077bc33"
+    "message": "message sent"
 }
 ```
 
 </ResponseBox>
 
+## Arguments
 
-
-
-## Allowed filters
-
-| Name          | Type      | Description                                                                                                                                                      | Required |
-| :------------ | :-------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| enabled <br/> | `boolean` | Flag to indicate if the room is enabled. <br/><br/>`Default`: true, <br/>`Allowed values`: true, false                                                           | No       |
-| after <br/>   | `string`  | Check for rooms created with a timestamp greater than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.s+z.                                           | No       |
-| before <br/>  | `string`  | Check for rooms created with a timestamp less than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.s+z.                                              | No       |
-| limit <br/>   | `int`     | Determines the number of room objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 10, **Max**: 100                        | No       |
-| start <br/>   | `string`  | Determines the starting point. <br/>`last` field of the response can be used as start for the subsequent request. <br/><br/>**For example** "627cda81ab4f3b56a077dc33". | No       |
+| Name                       | Type     | Description                                                                                                                                   | Required |
+| :------------------------- | :------- | :-------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| room_id <br/> — path param | `string` | Unique identifier of the active room in which the peer is currently active. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                   | Yes      |
+| message <br/> — body param | `string` | Actual message to be sent.                                                                                                                    | Yes      |
+| peer_id <br/> — path param | `string` | Unique identifier of the peer/participant for which you wish to send the message. <br/><br/>**Example**: 1038fa72-9345-4651-beab-436f9242ebf4 | No       |
+| role <br/> — body param    | `string` | You can use this to send the message to a set of peers(a particular role).                                                                    | No       |
+| type <br/> — body param    | `string` | Indicates the type of message sent, for example, chat or emoji.                                                                               | No       |
