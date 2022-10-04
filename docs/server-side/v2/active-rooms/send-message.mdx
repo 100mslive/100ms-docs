@@ -9,12 +9,12 @@ You can use this API to send messages to a single peer, a set of peers(a particu
 2. If the `role` is defined -- message will be sent to all the active peers assigned with that particular role.
 3. If `peer_id` and `role` are not defined -- message(broadcast) will be sent to all the active peers.
 
-<GetRequest title="https://api.100ms.live/v2/active-rooms/<room_id>/send-message" />
+<PostRequest title="https://api.100ms.live/v2/active-rooms/<room_id>/send-message" />
 
 <Request id="req-0">
 
 ```bash
-curl --location --request GET 'https://api.100ms.live/v2/active-rooms/<room_id>/send-message' \
+curl --location --request POST 'https://api.100ms.live/v2/active-rooms/<room_id>/send-message' \
 --header 'Authorization: Bearer <management_token>' \
     --header 'Content-Type: application/json' \
 --data-raw '{
