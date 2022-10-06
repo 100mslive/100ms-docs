@@ -14,7 +14,7 @@ By default `HMSSDK` keeps the microphone and camera on but by using this feature
 To use this we need to set the `hmsVideoTrackInitState` property for video and `hmsAudioTrackInitState` in the `hmsTrackSetting`
 of the `HMSSDK` constructor.
 
-Here `hmsVideoTrackInitState` property of `HMSVideoTrackSetting` and `hmsAudioTrackInitState` property of `HMSAudioTrackSetting` is Enum of type `HMSTrackInitState` which has the possible values as:
+Here `trackInitialState` property of `HMSVideoTrackSetting` and `HMSAudioTrackSetting` is Enum of type `HMSTrackInitState` which has the possible values as:
 
 ```dart
 enum HMSTrackInitState {
@@ -33,8 +33,8 @@ enum HMSTrackInitState {
 ```dart
 HMSTrackSetting trackSetting = HMSTrackSetting(
         //This is for joining with muted audio and unmuted video
-        audioTrackSetting: HMSAudioTrackSetting(hmsAudioTrackInitState: HMSTrackInitState.MUTED),
-        videoTrackSetting: HMSVideoTrackSetting(hmsVideoTrackInitState: HMSTrackInitState.UNMUTED));
+        audioTrackSetting: HMSAudioTrackSetting(trackInitialState: HMSTrackInitState.MUTED),
+        videoTrackSetting: HMSVideoTrackSetting(trackInitialState: HMSTrackInitState.UNMUTED));
 ```
 2. While creating the `HMSSDK` object pass the `HMSTrackSetting` object created above :
 
