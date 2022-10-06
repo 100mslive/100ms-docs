@@ -1,11 +1,11 @@
 ---
 title: Update a peer
-nav: 3.4
+nav: 3.5
 ---
 
-You can use this API to update details of an active peer such as name, role, and metadata(custom/additional information).
+You can use this API to update details of an connected peer such as name, role, and metadata(custom/additional information).
 
-<PostRequest title="https://api.100ms.live/v2/rooms/<room_id>" />
+<PostRequest title="https://api.100ms.live/v2/active-rooms/<room_id>/peers/<peer_id>" />
 <Request id="req-0">
 
 ```bash
@@ -62,7 +62,7 @@ curl --location --request POST 'https://api.100ms.live/v2/active-rooms/<room_id>
 
 | Name                        | Type     | Description                                                                                                                                           | Required |
 | :-------------------------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| room_id <br/> — path param  | `string` | Unique identifier of the active room in which the peer is currently active. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                           | Yes      |
+| room_id <br/> — path param  | `string` | Unique identifier of the room where the peer is active. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                           | Yes      |
 | peer_id <br/> — path param  | `string` | Unique identifier of the peer/participant for which you wish to update details. <br/><br/>**Example**: 1038fa72-9345-4651-beab-436f9242ebf4           | Yes      |
 | name <br/> — body param     | `string` | The name of the peer used in the active session.                                                                                                      | No       |
 | role <br/> — body param     | `string` | You can use this to update the role type of the peer. For example, to take the peer to a breakout room.                                               | No       |

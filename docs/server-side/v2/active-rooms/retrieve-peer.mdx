@@ -1,13 +1,13 @@
 ---
 title: Retrieve a specific peer
-nav: 3.3
+nav: 3.4
 ---
 
-Retrieves the details of a specific peer in an active room. You can use the peer_id to get the list of active peers) to retrieve the details. Use [retrieve active room state API](/server-side/v2/active-rooms/retrieve-active-room-state
+Retrieves the details of a specific peer in an active room. You can use the peer_id to retrieve the details of the list of connected peers. Use [retrieve active room state API](/server-side/v2/active-rooms/retrieve-active-room to get the list of connected peers in an active room.
 
-> **Note:** You can leverage this API to retrieve the details of active peers in an active room session only. To retrieve details of the peers that left the session already, use the [Retrieve a specific session API](/server-side/v2/Sessions/retrieve-a-session)
+> **Note:** You can leverage this API to retrieve the details of connected peers in an active room only. To retrieve details of the peers that left the session already, use the [Retrieve a specific session API](/server-side/v2/Sessions/retrieve-a-session)
 
-<GetRequest title="https://api.100ms.live/v2/rooms/<room_id>" />
+<GetRequest title="https://api.100ms.live/v2/active-rooms/<room_id>/peers/<peer_id>" />
 <Request id="req-0">
 
 ```bash
@@ -21,29 +21,32 @@ curl --location --request GET 'https://api.100ms.live/v2/active-rooms/<room_id>/
 
 ```json
 {
-    "id": "161d2478-1535-49a0-b48b-326aaa26dcd0",
-    "name": "nixon1",
-    "user_id": "46d77503-425c-41ff-bfb6-71f6d13e0c65",
-    "metadata": "",
-    "role": "host",
-    "joined_at": "2022-10-04T12:10:28.939012572Z",
+    "id": "2e8fc83e-6aef-4ca8-9124-bedc253f3529",
+    "name": "nixon-test2",
+    "user_id": "4c661446-f6f2-49c2-a317-16892756a2fa",
+    "metadata": {
+        "Lower_hand": true,
+        "business_user_id": "XYZ_1234"
+    },
+    "role": "backstage",
+    "joined_at": "2022-10-06T05:22:41.635589462Z",
     "tracks": {
-        "643b9039-9afd-44a1-b740-4d7404776d77": {
-            "id": "643b9039-9afd-44a1-b740-4d7404776d77",
-            "stream_id": "c8c917ed-8d05-4b4a-b582-400aa23aebb1",
+        "780a28e0-f2df-450b-9954-70307a440530": {
+            "id": "780a28e0-f2df-450b-9954-70307a440530",
+            "stream_id": "2cc4afed-20ba-4793-a223-d4c76c331456",
             "mute": false,
             "type": "video",
             "source": "regular",
-            "started_at": "2022-10-04T12:10:29.055516787Z",
+            "started_at": "2022-10-06T05:22:41.752327705Z",
             "description": ""
         },
-        "fc6df132-c74e-4dc3-8038-3b48655eb547": {
-            "id": "fc6df132-c74e-4dc3-8038-3b48655eb547",
-            "stream_id": "c8c917ed-8d05-4b4a-b582-400aa23aebb1",
+        "d6831044-3584-42aa-92be-efd051cae353": {
+            "id": "d6831044-3584-42aa-92be-efd051cae353",
+            "stream_id": "2cc4afed-20ba-4793-a223-d4c76c331456",
             "mute": true,
             "type": "audio",
             "source": "regular",
-            "started_at": "2022-10-04T12:10:29.055516787Z",
+            "started_at": "2022-10-06T05:22:41.752327705Z",
             "description": ""
         }
     }
@@ -56,5 +59,5 @@ curl --location --request GET 'https://api.100ms.live/v2/active-rooms/<room_id>/
 
 | Name                        | Type     | Description                                                                                                                          | Required |
 | :-------------------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| room_id <br/> — path param  | `string` | Unique identifier of the active room you wish to fetch details for. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                  | Yes      |
+| room_id <br/> — path param  | `string` | Unique identifier of the room where the peer is active. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                  | Yes      |
 | peer_id <br/> — query param | `string` | Unique identifier of the peer/participant you wish to fetch details for. <br/><br/>**Example**: 1038fa72-9345-4651-beab-436f9242ebf4 | Yes      |

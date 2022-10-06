@@ -1,11 +1,11 @@
 ---
-title: End an active room session
-nav: 3.6
+title: End an active room
+nav: 3.8
 ---
 
-Trigger this request to end an active room session.
+Trigger this request to end an active room.
 
-<PostRequest title="https://api.100ms.live/v2/active-rooms/<room_id>" />
+<PostRequest title="https://api.100ms.live/v2/rooms/<room_id>/end-room" />
 <Request id="req-0">
 
 ```bash
@@ -34,7 +34,7 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms/<room_id>/end-ro
 | Name                      | Type      | Description                                                                                                                   | Required |
 | :------------------------ | :-------- | :---------------------------------------------------------------------------------------------------------------------------- | :------- |
 | id <br/> — path param     | `string`  | Unique identifier of the room you wish to disable. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                            | Yes      |
-| reason <br/> — body param | `string`  | Description to indicate the reason for ending the active room session.                                                        | Yes      |
+| reason <br/> — body param | `string`  | Description to indicate the reason for ending the active room.                                                                | Yes      |
 | lock <br/> — body param   | `boolean` | Status of the room to be set. <br/>`Allowed values`: true, false. <br/>`Default`: false(ends the current active session only) | Yes      |
 
-> **Warning:** If you set the lock argument to `true`, it will end the active room session and users will not be able to join the room later as well. You can use [enable a room API](/server-side/v2/Rooms/disable-or-enable) or [dashboard](https://dashboard.100ms.live/rooms) to enable the room again.
+> **Warning:** If you set the lock argument to `true`, it will end the active room and users will not be able to join the room later as well. You can use [enable a room API](/server-side/v2/Rooms/disable-or-enable) or [dashboard](https://dashboard.100ms.live/rooms) to enable the room again.

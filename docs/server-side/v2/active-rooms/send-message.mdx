@@ -1,13 +1,14 @@
 ---
 title: Send message
-nav: 3.5
+nav: 3.6
 ---
 
-You can use this API to send messages to a single peer, a set of peers(a particular role), or all active peers in the active room. This API supports arguments such as `peer_id` and `role` to implement this.
+You can use this API to send messages to a single peer, a set of peers(a particular role), or all connected peers in the active room. This API supports arguments such as `peer_id` and `role` to implement this.
 
-1. If `peer_id` is defined -- message will be sent only to the peer_id mentioned.
-2. If the `role` is defined -- message will be sent to all the active peers assigned with that particular role.
-3. If `peer_id` and `role` are not defined -- message(broadcast) will be sent to all the active peers.
+1. If `peer_id` is defined -- message will be sent only to the specified connected peer.
+2. If the `role` is defined -- message will be sent to all the connected peers assigned with that particular role.
+3. If both `peer_id` and `role` are defined -- preference will be given to the peer_id and the message will be sent only to the specified connected peer.
+4. If both `peer_id` and `role` are not defined -- message(broadcast) will be sent to all the connected peers.
 
 <PostRequest title="https://api.100ms.live/v2/active-rooms/<room_id>/send-message" />
 
@@ -41,7 +42,7 @@ curl --location --request POST 'https://api.100ms.live/v2/active-rooms/<room_id>
 
 | Name                       | Type     | Description                                                                                                                                   | Required |
 | :------------------------- | :------- | :-------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| room_id <br/> — path param | `string` | Unique identifier of the active room in which the peer is currently active. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                   | Yes      |
+| room_id <br/> — path param | `string` | Unique identifier of the room where the peer is active. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                   | Yes      |
 | message <br/> — body param | `string` | Actual message to be sent.                                                                                                                    | Yes      |
 | peer_id <br/> — path param | `string` | Unique identifier of the peer/participant for which you wish to send the message. <br/><br/>**Example**: 1038fa72-9345-4651-beab-436f9242ebf4 | No       |
 | role <br/> — body param    | `string` | You can use this to send the message to a set of peers(a particular role).                                                                    | No       |

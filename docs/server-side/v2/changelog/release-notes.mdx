@@ -1,9 +1,21 @@
 ---
 title: Release Notes
-nav: 8.1
+nav: 7.1
 ---
 
-This Changelog highlights notable changes to the 100ms server-side API.
+This Changelog highlights notable changes to the 100ms server-side API, such as API additions, improvements, and deprecations. Also, we've included developer experience improvements to this page to keep you on track with items that will enhance your integration journey.
+
+## October 06, 2022.
+
+#### Additions
+
+-   A new set of [Active room APIs](/server-side/v2/active-rooms/object) enables you to remotely control your active rooms by performing actions such as [retrieving details of an active session](/server-side/v2/active-rooms/retrieve-active-room), [retrieving](/server-side/v2/active-rooms/retrieve-peer)/[updating](/server-side/v2/active-rooms/update-a-peer) peer information, [sending messages](/server-side/v2/active-rooms/send-message), and [ending an active session](/server-side/v2/active-rooms/end-active-room).
+
+#### Developer experience
+
+-   **Simplified generation of management token within Postman collection** -- we've added a pre-request script in our collection to help you generate the management token without creating a token management service at your end for testing. Refer to the [Postman guide](/server-side/v2/introduction/postman-guide#add-management-token) for more details.
+-   As environment variables created some confusion, we've removed the environment from our Postman collection. We recommend you use the collection variables going forward. Refer to the [Postman guide](/server-side/v2/introduction/postman-guide#add-management-token) for more details.
+-   Added the [API reference documentation](/server-side/v2/deprecated/templates-and-roles#api-reference) for legacy APIs(V1).
 
 ## September 24, 2022.
 
@@ -12,39 +24,26 @@ This Changelog highlights notable changes to the 100ms server-side API.
 -   The API is now available in the production environment, using the following base URL:
     `https://api.100ms.live/v2/`
 
--   **RESTful adherence** - params are now URL params and not query params.
-
 #### Additions
 
--   A new set of [Room APIs](https://www.100ms.live/docs/server-side/v2/Rooms/object)
--   A new set of [Session APIs](https://www.100ms.live/docs/server-side/v2/Sessions/object)
--   A new set of [Policy APIs](https://www.100ms.live/docs/server-side/v2/policy/template-object)
--   [Destinations object](https://www.100ms.live/docs/server-side/v2/policy/create-template-via-api#destinations-object) is added to the template object.
--   **Virtual controlled Postman collection** -- you can fork our [Postman collection](https://www.100ms.live/docs/server-side/v2/introduction/postman-guide) to stay up to date with the latest API improvements. This will enable you to get familiar with and interact more seamlessly with our product.
+-   A new set of [Room APIs](/server-side/v2/Rooms/object)
+-   A new set of [Session APIs](/server-side/v2/Sessions/object)
+-   A new set of [Policy APIs](/server-side/v2/policy/template-object)
+-   [Destinations object](/server-side/v2/policy/create-template-via-api#destinations-object) is added to the template object.
 
-#### Improvements
+#### API Improvements
 
--   **Detailed API reference** -- We have improved our [documentation](https://www.100ms.live/docs/server-side/v2/introduction/basics), so it's easier to get started and stay up to date with the latest API improvements.
+-   **RESTful adherence** - params are now URL params and not query params.
 -   **Extended pagination for all endpoints** -- We paginate the responses with a list of objects ranging from 10 to 100 to ensure they are easier to handle.
 
-#### Deprecations
+#### Developer experience
 
--   In the template object, the fields \_id, and customer, supported with the [old API](https://www.100ms.live/docs/server-side/v2/deprecated/templates-and-roles#api-reference), is deprecated. You can continue to use them as id and customer_id with the new API. Refer to the [template object section](https://www.100ms.live/docs/server-side/v2/policy/template-object#template-object) for more information.
--   In the room object, the field template supported with the template name in the [old API](https://www.100ms.live/docs/server-side/v2/deprecated/room#body-paramters) will not be supported in the new API. Instead, you can use the [template_id](https://www.100ms.live/docs/server-side/v2/Rooms/create-via-api#main-arguments) field.
-
-> **Note**: We recommend you use our new API to leverage the new functionalities and features and stay up to date with future releases. <br/> <br/>The old API will remain fully functional until the subsequent notice. Currently, there's no end of life for them; you can continue to check the docs for the old APIs [here](https://www.100ms.live/docs/server-side/v2/deprecated/templates-and-roles).
-
-## October 06, 2022.
-
-#### Additions
-
--   A new set of [Active room APIs](https://www.100ms.live/docs/server-side/v2/active-rooms/object) enables you to remotely control your active room sessions by performing actions such as [retrieving details of an active session](https://www.100ms.live/docs/server-side/v2/active-rooms/retrieve-active-room-state), [retrieving](https://www.100ms.live/docs/server-side/v2/active-rooms/retrieve-peer)/[updating](https://www.100ms.live/docs/server-side/v2/active-rooms/update-a-peer) peer information, [sending messages](https://www.100ms.live/docs/server-side/v2/active-rooms/send-message), and [ending an active session](https://www.100ms.live/docs/server-side/v2/active-rooms/end-active-room).
--   Added the [API reference documentation](https://www.100ms.live/docs/server-side/v2/deprecated/templates-and-roles#api-reference) for old APIs.
-
-#### Improvements
-
--   **Simplified generation of management token within Postman collection** -- we've added a pre-request script in our collection to help you generate the management token without creating a token management service at your end for testing. Refer to the [Postman guide](https://www.100ms.live/docs/server-side/v2/introduction/postman-guide#add-management-token) for more details.
+-   **Virtual controlled Postman collection** -- you can fork our [Postman collection](/server-side/v2/introduction/postman-guide) to stay up to date with the latest API improvements. This will enable you to get familiar with and interact more seamlessly with our product.
+-   **Detailed API reference** -- We have improved our [documentation](/server-side/v2/introduction/basics), so it's easier to get started and stay up to date with the latest API improvements.
 
 #### Deprecations
 
--   As environment variables created some confusion, we've removed the environment from our Postman collection. We recommend you use the collection variables going forward. Refer to the [Postman guide](https://www.100ms.live/docs/server-side/v2/introduction/postman-guide#add-management-token) for more details.
+-   In the template object, the fields \_id, and customer, supported with the [Legacy API (V1)](/server-side/v2/deprecated/templates-and-roles#api-reference), is deprecated. You can continue to use them as id and customer_id with the new API. Refer to the [template object section](/server-side/v2/policy/template-object#template-object) for more information.
+-   In the room object, the field template supported with the template name in the [Legacy API (V1)](/server-side/v2/deprecated/room#body-paramters) will not be supported in the new API. Instead, you can use the [template_id](/server-side/v2/Rooms/create-via-api#main-arguments) field.
+
+> **Note**: We recommend you use our new API to leverage the new functionalities and features and stay up to date with future releases. <br/> <br/>The Legacy API (V1) will remain fully functional until the subsequent notice. Currently, there's no end of life for them; you can continue to check the docs for the Legacy API (V1)s [here](/server-side/v2/deprecated/templates-and-roles).
