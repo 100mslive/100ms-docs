@@ -1,10 +1,10 @@
-import React from 'react';
 import Header from '@/components/Header';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
 import Sidebar from '@/components/Sidebar';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
+import React from 'react';
 
 interface Props {
     children: JSX.Element
@@ -65,7 +65,7 @@ export default function Layout({ children }: Props) {
                             }}>
                             <Sidebar menu={menu} nav={newNav} />
                         </div>
-                        {children}
+                        {!menu ? children : null}
                     </div>
                 </div>
             </div>

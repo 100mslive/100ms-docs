@@ -1,4 +1,3 @@
-import React from 'react';
 import EditFile from '@/components/EditFile';
 import components from '@/components/MDXComponents';
 import Pagination from '@/components/Pagination';
@@ -16,6 +15,7 @@ import hydrate from 'next-mdx-remote/hydrate';
 import renderToString from 'next-mdx-remote/render-to-string';
 import { useRouter } from 'next/router';
 import path from 'path';
+import React from 'react';
 import setValue from 'set-value';
 
 // type NavRoute = {
@@ -117,16 +117,9 @@ const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
             </article>
             <Toc activeHeading={activeHeading} activeSubHeading={activeSubHeading} />
             <style jsx>{`
-                 html {
-                     height: 100%;
-                     scroll-behavior: smooth !important;
-                 }
-                 .wrapper-ctx {
-                     display: flex;
-                 }
                  article {
                      max-width: 1200px;
-                     width: calc(100vw - 630px);
+                    // width: calc(100vw - 630px);
                      flex-grow: 1;
                      box-sizing: border-box;
                      padding: 0 2rem;
@@ -134,14 +127,8 @@ const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
                      padding-bottom: 80px;
                      display: flex;
                      flex-direction: column;
-                     align-items: stretch;
-                 }
-                 .mobile-menu {
-                     display: none;
-                     position: absolute;
                  }
              `}</style>
-
         </>
     );
 };
