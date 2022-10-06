@@ -41,7 +41,11 @@ curl --location --request POST 'https://api.100ms.live/v2/active-rooms/<room_id>
 | :------------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------- |
 | room_id <br/> — path param | `string` | Unique identifier of the room to which the peer is connected. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                                            | Yes         |
 | peer_id <br/> — body param | `string` | Unique identifier of the connected peer/participant you wish to remove from the active room. <br/><br/>**Example**: fd9e87d8-5c7b-4750-932f-d8d2ff18b70b | Conditional |
-| role <br/> — body param    | `string` | You can use this to remove all connected peers with the specified role type from the active room.                                                        | Conditional |
+| role <br/> — body param    | `string` | You can use this to remove a list of connected peers with the specified role type from the active room.                                                  | Conditional |
 | reason <br/> — body param  | `string` | You can specify the message to be passed to other connected peers in the active room.                                                                    | No          |
 
 > **Note: Conditional Arguments** <br/><br/> You should define either of these arguments(peer_id or role) in the payload for the request to be successful.
+
+## Why would you use this API?
+
+-   If you wish to disconnect a particular peer from an active room and block them for upcoming joins due to some misconduct(abusive chat), you can leverage this API. You can build a custom logic at your end to not generate an app token for the specific user for upcoming join requests.

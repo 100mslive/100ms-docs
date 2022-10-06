@@ -59,5 +59,11 @@ curl --location --request GET 'https://api.100ms.live/v2/active-rooms/<room_id>/
 
 | Name                        | Type     | Description                                                                                                                          | Required |
 | :-------------------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| room_id <br/> — path param  | `string` | Unique identifier of the room where the peer is active. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                  | Yes      |
+| room_id <br/> — path param  | `string` | Unique identifier of the room where the peer is active. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                              | Yes      |
 | peer_id <br/> — query param | `string` | Unique identifier of the peer/participant you wish to fetch details for. <br/><br/>**Example**: 1038fa72-9345-4651-beab-436f9242ebf4 | Yes      |
+
+## Why would you use this API?
+
+-   To check if a specific peer has enabled/disabled their audio/video/screen-share at a given time in an active room.
+-   To check if a specific peer is on-stage and backstage at a particular time.
+-   You can also use this API to retrieve some stored peer metadata from your database for an abruptly disconnected peer once they join the session again.

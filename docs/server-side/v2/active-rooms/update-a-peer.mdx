@@ -15,7 +15,7 @@ curl --location --request POST 'https://api.100ms.live/v2/active-rooms/<room_id>
 --data-raw '{
     "name": "nixon-test2",
     "role":"backstage",
-    "metadata": {"business_user_id": "XYZ_1234", "Lower_hand": true}
+    "metadata": {"isHandraise": false, "isBrbon": true}
 }'
 ```
 
@@ -62,8 +62,37 @@ curl --location --request POST 'https://api.100ms.live/v2/active-rooms/<room_id>
 
 | Name                        | Type     | Description                                                                                                                                           | Required |
 | :-------------------------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| room_id <br/> — path param  | `string` | Unique identifier of the room where the peer is active. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                           | Yes      |
+| room_id <br/> — path param  | `string` | Unique identifier of the room where the peer is active. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                                               | Yes      |
 | peer_id <br/> — path param  | `string` | Unique identifier of the peer/participant for which you wish to update details. <br/><br/>**Example**: 1038fa72-9345-4651-beab-436f9242ebf4           | Yes      |
 | name <br/> — body param     | `string` | The name of the peer used in the active session.                                                                                                      | No       |
 | role <br/> — body param     | `string` | You can use this to update the role type of the peer. For example, to take the peer to a breakout room.                                               | No       |
 | metadata <br/> — body param | `object` | You can use a stringfied JSON to update various custom/addtional information to a peer such as business_user_id, raise_hand/lower_hand info, and more | No       |
+
+## Why would you use this API?
+
+### Scenario1 - Poker handler
+
+-   You can build a handler for a multiplayer game like Poker using this API in conjunction with Update peer API and the "peer.join.success" webhook event. Let's consider below scenario:
+-   Four users join the game and start playing -- your app server stores the user_id for each user.
+-   Individual card visibility -- sent as a private custom event(pop-up) to show the data only to the particular player.
+    **Example payload**:
+    ```json
+    {
+        "metadata": { "card_reveal": "<CARD_REVEAL_DATA>", "visibility": "private" }
+    }
+    ```
+-   Showdown -- sent as a broadcast custom event(pop-up) to show the data to all the players.
+    **Example payload**:
+    ```json
+    {
+        "metadata": { "card_reveal": "<CARD_REVEAL_DATA>", "visibility": "public" }
+    }
+    ```
+-   If one of the players leaves the active room and joins back after a while, your app server can still fetch the user_id and retrieve the data stored based on the earlier peer metadata, allowing the user to resume the game.
+
+### Scenario2 - Custom Avatar
+
+-   You can use these APIs to update various properties of the connected peer, such as avatar, BRB status, hand-raise status, etc.
+-   **Custom Avatar:**
+    -   A user updates their profile information on your app/ongoing session; the data is stored in your data store.
+    -   Use Update peer API and pass the profile picture data from your data store to your client app to display it as the respective connected peer's avatar(based on user_id mapping).
