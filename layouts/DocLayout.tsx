@@ -4,6 +4,7 @@ import Sidebar from '@/components/Sidebar';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
+import React from 'react';
 
 interface Props {
     children: JSX.Element
