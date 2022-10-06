@@ -93,13 +93,12 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
             {res.length > 0 ? (
                 <div className="res-ctx">
                     {res.map((e, i) => (
-                        <Link href={e.url} key={e.url}>
-                            <a id={`res-box-${i}`} className="res-box">
+                        <Link href={e.url} key={e.url} passHref>
+                            <a id={`res-box-${i}`} className="res-box" onClick={() => setModal(false)}>
                                 <div>
                                     <span>{e.title}</span>
                                     <span className="slug">{e.url}</span>
                                 </div>
-
                                 <EnterIcon />
                             </a>
                         </Link>

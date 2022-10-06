@@ -16,10 +16,7 @@ dependencies:
 
   hmssdk_flutter:
 ```
-
-> At this moment, Flutter 3.0 or higher is not supported due to ongoing issues in Flutter 3.x release for Platform Views. Refer issues: [107313](https://github.com/flutter/flutter/issues/107313) & [103630](https://github.com/flutter/flutter/issues/103630). We are actively monitoring these issues & once [Flutter](https://github.com/flutter/flutter) team releases a fix for these issues on [stable](https://github.com/flutter/flutter/tree/stable) branch, we'll release a compatible version of 100ms SDK.
-> 
-> Until then, please use Flutter version `2.10.5` or any other 2.x series.
+> HMSSDK is supported with flutter 2.10.x or above versions.
 
 ## Setting up the library
 
@@ -70,6 +67,16 @@ defaultConfig{
 }
 ```
 
+## Proguard configuration
+
+Add this to your proguard-rules.pro
+
+```kotlin
+# 100ms proguard rules
+-keep class org.webrtc.** { *; }
+-keep class live.hms.video.** { *; }
+```
+
 ### iOS
 
 Add the entitlements for video, audio and network access to your Info.plist
@@ -83,22 +90,51 @@ Add the entitlements for video, audio and network access to your Info.plist
 <string>Allow access to Camera to mic to enable video calling.</string>
 ```
 
-You will also need to request Camera and Record Audio permissions at runtime before you join a call or display a preview.
+### Update target iOS version
 
+Update the iOS version to 12 or later by navigating to the directory and updating the ios/Podfile file.
+
+```
+platform :ios, '12.0'
+```
+
+### Flutter
+
+You will need to request Camera and Record Audio permissions at runtime before you join a call or display a preview as follows:
+
+1. Add `permission_handler` plugin in pubspec.yaml file under dependencies.
+
+```yaml
+permission_handler:
+```
+
+2. Before navigating to the preview or meeting screen ask permission using the following code:
+
+> If android version is greater than android 12 then bluetoothConnect permission is also required.
+
+```dart
+Future<bool> getPermissions() async {
+  if (Platform.isIOS) return true;
+  await Permission.camera.request();
+  await Permission.microphone.request();
+  await Permission.bluetoothConnect.request();
+
+  while ((await Permission.camera.isDenied)) {
+    await Permission.camera.request();
+  }
+  while ((await Permission.microphone.isDenied)) {
+    await Permission.microphone.request();
+  }
+  while ((await Permission.bluetoothConnect.isDenied)) {
+    await Permission.bluetoothConnect.request();
+  }
+  return true;
+}
+```
 
 ## Debugging Tools
 
 You can use [Android Studio](https://developer.android.com/studio), [VS Code](https://code.visualstudio.com/) & [Xcode](https://developer.apple.com/xcode/) to develop application with 100ms.
-
-## Proguard configuration
-
-Add this to your proguard-rules.pro
-
-```kotlin
-# 100ms proguard rules
--keep class org.webrtc.** { *; }
--keep class live.hms.video.** { *; }
-```
 
 
 ### 100ms Flutter app

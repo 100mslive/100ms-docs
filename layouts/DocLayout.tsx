@@ -4,9 +4,12 @@ import Sidebar from '@/components/Sidebar';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
-import React from 'react';
 
-export default function Layout({ children }) {
+interface Props {
+    children: JSX.Element
+}
+
+export default function Layout({ children }: Props) {
     const { frontMatter, allDocs } = children.props
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const router = useRouter() as any;

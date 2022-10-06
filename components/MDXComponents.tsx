@@ -1,7 +1,5 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
-import { camelCase } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
 import APILink from './APILink';
@@ -34,15 +32,7 @@ const TableCustom = (props: any) => (
 
 const LinkCustom = (props) => {
     const { href } = props;
-    const isInternalLink =
-        href &&
-        (href.startsWith('/') ||
-            href.startsWith('#') ||
-            href.startsWith('../lib') ||
-            href.startsWith('.') ||
-            href.startsWith('index') ||
-            href.startsWith('-'));
-
+    const isInternalLink = href && !href.startsWith('http');
     if (isInternalLink) {
         return (
             <Link href={href}>
@@ -50,12 +40,20 @@ const LinkCustom = (props) => {
             </Link>
         );
     }
-
+    const { hostname } = new URL(href)
+    const btnId = `${hostname.split('.').slice(0, -1).join('.')}.viewed`;
     return (
-        <a target="_blank" rel="noopener noreferrer" href={href} onClick={() => window.analytics.track('link.clicked', {
-            btnId: camelCase(typeof props?.children === typeof '' ? props?.children : props?.children?.props?.alt),
-            page: window?.location?.pathname
-        })}>
+        <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={href}
+            onClick={() =>
+                window.analytics.track('link.clicked', {
+                    btnId,
+                    componentId: window?.location?.pathname.split('/')?.[2], // splitArr = ['', 'docs', 'sdk']
+                    page: window?.location?.pathname
+                })
+            }>
             {props.children}
         </a>
     );

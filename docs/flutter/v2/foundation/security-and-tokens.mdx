@@ -103,7 +103,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 private void generateHmsClientToken() {
-    Map<String, Object> payload = new HashMap<>();
+    Map<String, Object> payload = HashMap<>();
     payload.put("access_key", "<app_access_key>");
     payload.put("room_id", "<room_id>");
     payload.put("user_id", "<user_id>");
@@ -111,9 +111,9 @@ private void generateHmsClientToken() {
     payload.put("type", "app");
     payload.put("version", 2);
     String token = Jwts.builder().setClaims(payload).setId(UUID.randomUUID().toString())
-        .setExpiration(new Date(System.currentTimeMillis() + 86400 * 1000))
+        .setExpiration(Date(System.currentTimeMillis() + 86400 * 1000))
         .setIssuedAt(Date.from(Instant.ofEpochMilli(System.currentTimeMillis() - 60000)))
-        .setNotBefore(new Date(System.currentTimeMillis()))
+        .setNotBefore(Date(System.currentTimeMillis()))
         .signWith(SignatureAlgorithm.HS256, "<app_secret>".getBytes()).compact();
   }
 ```
@@ -164,7 +164,7 @@ puts generateAppToken "<room_id>", "<user_id>", "<role>"
 use Firebase\JWT\JWT;
 use Ramsey\Uuid\Uuid;
 
-$issuedAt  = new DateTimeImmutable();
+$issuedAt  = DateTimeImmutable();
 $expire    = $issuedAt->modify('+24 hours')->getTimestamp();
 $accessKey = "<app_access_key>";
 $secret = "<app_secret>";
