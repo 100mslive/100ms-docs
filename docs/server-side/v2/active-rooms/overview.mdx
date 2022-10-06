@@ -11,7 +11,29 @@ Active room APIs allow you to perform various actions on an ongoing session at t
 2. [Retrieve details of an active room](/server-side/v2/active-rooms/retrieve-active-room),
 3. [Retrieve details of a peer](/server-side/v2/active-rooms/retrieve-peer),
 4. [Update the details of peers](/server-side/v2/active-rooms/update-a-peer), such as name, role, and metadata(additional/custom information),
-5. [Send messages](/server-side/v2/active-rooms/send-message) to a single peer, a set of peers(a particular role), or all connected peers in the active room,
-6. [End an active room](/server-side/v2/active-rooms/end-active-room).
+5. [Send messages](/server-side/v2/active-rooms/send-message) to a single peer, a set of connected peers(a particular role), or all connected peers in the active room,
+6. [Remove](/server-side/v2/active-rooms/remove-peers) a single peer(with peer_id) or a set of connected peers(a particular role).
+7. [End an active room](/server-side/v2/active-rooms/end-active-room).
 
-This will enable you to script complex actions depending on the use case such as remotely controlling a room and more. 
+This will enable you to script complex actions depending on the use case such as remotely controlling a room and more.
+
+## Rooms vs Active rooms
+
+You might struggle to understand the difference between rooms and active rooms, we have got it covered for you!
+You need to understand two aspects regarding rooms and active rooms:
+
+1. What's the difference between an active and an inactive room and an enabled and a disabled room?
+
+    -   _Active room: When at least one or more peers are connected to a room in an ongoing session, then it's called an active room_
+    -   _Inactive room: When no peers are connected to a room to start a session, then it's called an inactive room_
+    -   _Enabled room: A room configuration is updated via dashboard or API to allow peers to join; it's an enabled room._
+    -   _Disabled room: A room configuration is updated via dashboard or API not to allow any peers to join; it's a disabled room._
+
+    ![Room types](/docs/v2/room-types.png)
+
+2. When should I use room APIs and Active room APIs?
+
+    -   Room APIs: You can use room APIs to create a room, update its configuration such as publish permissions, subscribe permissions, other permissions(layout, room preview state, etc), and destinations(Recording & Streaming).
+    -   Active room APIs: You can use these APIs to manage an ongoing sessions by performing various actions like managing peers(send messages, update role, etc), build interactivity scenarios(like polls, quizzes, games, etc).
+
+    ![room APIs vs active room APIs](/docs/v2/rooms-active-rooms.png)
