@@ -84,7 +84,7 @@ await hmsActions.join({ ...joinConfig, rememberDeviceSelection: true });
 ```jsx
 const App = () => {
     const hmsActions = useHMSActions();
-    const join = (() => {
+    const join = useCallback(() => {
        hmsActions.join({ ...joinConfig, rememberDeviceSelection: true });
     }, [hmsActions]);
 
