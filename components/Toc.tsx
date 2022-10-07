@@ -36,7 +36,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                     </span>
                 ) : null
             )}
-            {CurrentDocsSlug === "server-side" ? (
+            {CurrentDocsSlug === 'server-side' ? (
                 <>
                     <hr />
                     <div>

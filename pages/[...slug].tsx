@@ -42,9 +42,12 @@ interface Props {
     //     nextPost: PaginationType;
     // };
     allDocs: AllDocsType[];
-    source: { compiledSource: string, renderedOutput: string, scope: { title: string, nav: number } }
+    source: {
+        compiledSource: string;
+        renderedOutput: string;
+        scope: { title: string; nav: number };
+    };
 }
-
 
 const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
     const {
@@ -59,7 +62,6 @@ const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
     const { previousPost, nextPost } = getPagination(currentDocs, slug as string[]);
     const pagination = { previousPost, nextPost };
     const content = hydrate(source, { components });
-
 
     React.useEffect(() => {
         setTimeout(() => {
@@ -85,7 +87,7 @@ const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
                 if (
                     h3Index >= 0 &&
                     h3Array[h3Index].getBoundingClientRect().top >
-                    h2Array[h2Index].getBoundingClientRect().top
+                        h2Array[h2Index].getBoundingClientRect().top
                 )
                     setActiveSubHeading(h3Array[h3Index].id);
                 else setActiveSubHeading('');
@@ -216,9 +218,5 @@ export const getStaticPaths = async () => {
 };
 
 DocSlugs.getLayout = function getLayout(page) {
-    return (
-        <DocLayout>
-            {page}
-        </DocLayout>
-    )
-}
+    return <DocLayout>{page}</DocLayout>;
+};
