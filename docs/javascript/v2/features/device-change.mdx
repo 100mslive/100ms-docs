@@ -21,6 +21,7 @@ You may still want to allow users to see the currently selected devices and chan
 <Tabs id="devicechange" items={['JavaScript', 'React']} />
 
 <Tab id='devicechange-0'>
+
 ```js
 // {audioInput, audioOutput, videoInput}
 const devices = hmsStore.getState(selectDevices);
@@ -42,24 +43,23 @@ hmsActions.setAudioOutputDevice(selectedAudioOutputDeviceID);
 </Tab>
 
 <Tab id='devicechange-1'>
+
 ```jsx
+import {
+  useDevices,
+  DeviceType,
+} from '@100mslive/react-sdk';
+
 const DeviceSettings = () => {
-    const { allDevices, selectedDeviceIDs, updateDevice } = useDevices();
-    const { videoInput, audioInput, audioOutput } = allDevices;
-    const {videoInput: selectedVideoInput, audioInput: selectedAudioInput, audioOutput: selectedAudioOutput} = selectedDeviceIds;
+  const { allDevices, selectedDeviceIDs, updateDevice } = useDevices();
+   // Call the updateDevice function like below to update the videoInput device. Similarly for audio input and output pass corresponding deviceId and DeviceType
+   updateDevice({
+      deviceId,
+      deviceType: DeviceType.videoInput
+   });
 
-    /* To update selection, call the below with corresponding device id and device type on selection
-        updateDevice({
-        deviceId,
-        deviceType:
-            DeviceType.videoInput | DeviceType.audioInput | DeviceType.audioOutput,
-        });
-    */
-
-    return (
-        ...render ui for devices with above info.
-        ...on click of the device call 
-    )  
+  // render devices and selection from allDevices and selectedDeviceIDs
+  return <div />
 }
 ```
 
@@ -81,17 +81,16 @@ await hmsActions.join({ ...joinConfig, rememberDeviceSelection: true });
 </Tab>
 
 <Tab id='rememberdeviceselection-1'>
+
 ```jsx
 const JoinCall = () => {
-    const hmsActions = useHMSActions();
-    const join = useCallback(async () => {
-       await hmsActions.join({ ...joinConfig, rememberDeviceSelection: true });
-    }, [hmsActions]);
+  const hmsActions = useHMSActions();
+  const join = useCallback(async () => {
+    await hmsActions.join({ ...joinConfig, rememberDeviceSelection: true });
+  }, [hmsActions]);
 
-    return (
-        <button onClick={join}>Join</button>
-    )
-}
+  return <button onClick={join}>Join</button>;
+};
 
 ```
 </Tab>
