@@ -108,40 +108,40 @@ const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
                 {content}
                 <hr />
                 {pagination.previousPost && showPagination && (
-                    <Pagination
-                        next={pagination.nextPost}
-                        prev={pagination.previousPost}
-                    />
+                    <Pagination next={pagination.nextPost} prev={pagination.previousPost} />
                 )}
                 <EditFile slug={router.asPath} />
             </article>
-            <Toc activeHeading={activeHeading} activeSubHeading={activeSubHeading} />
+            <Toc
+                activeHeading={activeHeading}
+                activeSubHeading={activeSubHeading}
+                CurrentDocsSlug={currentDocSlug}
+            />
             <style jsx>{`
-                 html {
-                     height: 100%;
-                     scroll-behavior: smooth !important;
-                 }
-                 .wrapper-ctx {
-                     display: flex;
-                 }
-                 article {
-                     max-width: 1200px;
-                     width: calc(100vw - 630px);
-                     flex-grow: 1;
-                     box-sizing: border-box;
-                     padding: 0 2rem;
-                     min-height: calc(100vh - 140px);
-                     padding-bottom: 80px;
-                     display: flex;
-                     flex-direction: column;
-                     align-items: stretch;
-                 }
-                 .mobile-menu {
-                     display: none;
-                     position: absolute;
-                 }
-             `}</style>
-
+                html {
+                    height: 100%;
+                    scroll-behavior: smooth !important;
+                }
+                .wrapper-ctx {
+                    display: flex;
+                }
+                article {
+                    max-width: 1200px;
+                    width: calc(100vw - 630px);
+                    flex-grow: 1;
+                    box-sizing: border-box;
+                    padding: 0 2rem;
+                    min-height: calc(100vh - 140px);
+                    padding-bottom: 80px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: stretch;
+                }
+                .mobile-menu {
+                    display: none;
+                    position: absolute;
+                }
+            `}</style>
         </>
     );
 };
