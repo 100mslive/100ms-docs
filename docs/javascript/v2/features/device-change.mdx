@@ -82,10 +82,10 @@ await hmsActions.join({ ...joinConfig, rememberDeviceSelection: true });
 
 <Tab id='rememberdeviceselection-1'>
 ```jsx
-const App = () => {
+const JoinCall = () => {
     const hmsActions = useHMSActions();
-    const join = useCallback(() => {
-       hmsActions.join({ ...joinConfig, rememberDeviceSelection: true });
+    const join = useCallback(async () => {
+       await hmsActions.join({ ...joinConfig, rememberDeviceSelection: true });
     }, [hmsActions]);
 
     return (
