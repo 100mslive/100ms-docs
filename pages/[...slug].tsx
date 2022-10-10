@@ -119,7 +119,7 @@ const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
             <style jsx>{`
                  article {
                      max-width: 1200px;
-                    // width: calc(100vw - 630px);
+                     width: calc(100vw - 630px);
                      flex-grow: 1;
                      box-sizing: border-box;
                      padding: 0 2rem;

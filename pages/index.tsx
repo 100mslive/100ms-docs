@@ -175,11 +175,10 @@ const Homepage = ({ allDocs }) => {
                                         text={value.title}
                                         sdk={value.id}
                                         css={{
-                                            borderRadius: `${index !== 0 ? '0 0' : '$3 $3'} ${
-                                                mobileSDK.length - 1 !== index ? '0 0' : '$3 $3'
-                                            }`
+                                            borderRadius: `${index !== 0 ? '0 0' : '$3 $3'} ${mobileSDK.length - 1 !== index ? '0 0' : '$3 $3'
+                                                }`
                                         }}
-                                        // listView={true}
+                                    // listView={true}
                                     />
                                 ))}
                             </Flex>

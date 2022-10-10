@@ -106,6 +106,10 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
                 '@sm': {
                     gridAutoFlow: 'row',
                     gridTemplateColumns: 'repeat(1, minmax(0, 1fr))'
+                },
+                '@media (max-width: 396px)': {
+                    gridAutoFlow: 'row',
+                    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
                 }
             }}>
             {sdkItems[sdk as keyof typeof sdkItems].map((value) => (
