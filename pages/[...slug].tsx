@@ -1,4 +1,3 @@
-import React from 'react';
 import EditFile from '@/components/EditFile';
 import components from '@/components/MDXComponents';
 import Pagination from '@/components/Pagination';
@@ -16,6 +15,7 @@ import hydrate from 'next-mdx-remote/hydrate';
 import renderToString from 'next-mdx-remote/render-to-string';
 import { useRouter } from 'next/router';
 import path from 'path';
+import React from 'react';
 import setValue from 'set-value';
 
 // type NavRoute = {
@@ -87,7 +87,7 @@ const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
                 if (
                     h3Index >= 0 &&
                     h3Array[h3Index].getBoundingClientRect().top >
-                        h2Array[h2Index].getBoundingClientRect().top
+                    h2Array[h2Index].getBoundingClientRect().top
                 )
                     setActiveSubHeading(h3Array[h3Index].id);
                 else setActiveSubHeading('');
@@ -120,30 +120,18 @@ const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
                 CurrentDocsSlug={currentDocSlug}
             />
             <style jsx>{`
-                html {
-                    height: 100%;
-                    scroll-behavior: smooth !important;
-                }
-                .wrapper-ctx {
-                    display: flex;
-                }
-                article {
-                    max-width: 1200px;
-                    width: calc(100vw - 630px);
-                    flex-grow: 1;
-                    box-sizing: border-box;
-                    padding: 0 2rem;
-                    min-height: calc(100vh - 140px);
-                    padding-bottom: 80px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: stretch;
-                }
-                .mobile-menu {
-                    display: none;
-                    position: absolute;
-                }
-            `}</style>
+                 article {
+                     max-width: 1200px;
+                     width: calc(100vw - 630px);
+                     flex-grow: 1;
+                     box-sizing: border-box;
+                     padding: 0 2rem;
+                     min-height: calc(100vh - 140px);
+                     padding-bottom: 80px;
+                     display: flex;
+                     flex-direction: column;
+                 }
+             `}</style>
         </>
     );
 };
