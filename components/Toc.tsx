@@ -76,7 +76,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                     display: block;
                 }
                 .child {
-                    margin-left: 2rem;
+                    margin-left: 1.25rem;
                 }
                 ::-webkit-scrollbar {
                     width: 0px;
