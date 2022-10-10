@@ -3,7 +3,7 @@ title: Update a peer
 nav: 3.5
 ---
 
-You can use this API to update details of an connected peer such as name, role, and metadata(custom/additional information).
+You can use this API to update the details of a connected peer, such as name, role, and metadata(custom/additional information to build real-time interactivity scenarios).
 
 <PostRequest title="https://api.100ms.live/v2/active-rooms/<room_id>/peers/<peer_id>" />
 <Request id="req-0">
@@ -74,11 +74,11 @@ curl --location --request POST 'https://api.100ms.live/v2/active-rooms/<room_id>
 
 -   You can build a handler for a multiplayer game like Poker using this API in conjunction with Update peer API and the "peer.join.success" webhook event. Let's consider below scenario:
 -   Four users join the game and start playing -- your app server stores the user_id for each user.
--   Individual card visibility -- sent as a private custom event(pop-up) to show the data only to the particular player.
+-   Bid value -- sent as a private custom event(pop-up) to show the data only to the particular player.
     **Example payload**:
     ```json
     {
-        "metadata": { "card_reveal": "<CARD_REVEAL_DATA>", "visibility": "private" }
+        "metadata": { "bid_value": "<ACTUAL_BID_VALUE>", "visibility": "private" }
     }
     ```
 -   Showdown -- sent as a broadcast custom event(pop-up) to show the data to all the players.

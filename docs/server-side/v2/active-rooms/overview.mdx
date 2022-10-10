@@ -3,36 +3,39 @@ title: Overview
 nav: 3.1
 ---
 
-You might struggle to understand the difference between rooms and active rooms, we have got it covered for you!
-You need to understand two aspects regarding rooms and active rooms:
+## When does a room become active?
 
-1. When should I use room APIs and Active room APIs?
-2. What's the difference between an active and an inactive room and an enabled and a disabled room?
+A room becomes active when one or more peers join a room to start real-time video/audio interactions in a video conferencing or live streaming session.
 
-## When should I use room APIs and Active room APIs?
-
--   **[Room APIs](/server-side/v2/Rooms/object):** You can use room APIs to create a room, link a template, and update room properties such as recording configuration and server region.
--   **[Active room APIs](/server-side/v2/active-rooms/object):** You can use these APIs to manage an ongoing sessions by performing various actions like managing peers(send messages, update role, etc), build interactivity scenarios(like polls, quizzes, games, etc).
-
-![room APIs vs active room APIs](/docs/v2/rooms-active-rooms.png)
-
-## Room statuses
-
-What's the difference between an active and an inactive room and an enabled and a disabled room?
-
--   _**Active room**: When at least one or more peers are connected to a room in an ongoing session, then it's called an active room_
--   _**Inactive room**: When no peers are connected to a room to start a session, then it's called an inactive room_
--   _**Enabled room**: A room configuration is updated via dashboard or API to allow peers to join; it's an enabled room._
--   _**Disabled room**: A room configuration is updated via dashboard or API not to allow any peers to join; it's a disabled room._
-
-![Room statuses](/docs/v2/room-types.png)
+![Active room](/docs/v2/active-room.png)
 
 ## Active room APIs
 
-Active room APIs allow you to perform various actions in a room with an ongoing session, such as:
+Use Active Room APIs to perform server-to-server actions that automate your business logic in 100ms rooms. These actions can be used to control peer behavior and build interactivity scenarios
 
--   [Retrieve an active room](/server-side/v2/active-rooms/retrieve-active-room) to get the list of connected peers at a given time.
--   Manage connected peers by [retrieving specific peer details](/server-side/v2/active-rooms/retrieve-peer) and performing actions such as [updating peers](/server-side/v2/active-rooms/update-a-peer), [sending messages](/server-side/v2/active-rooms/send-message), and [removing peers](/server-side/v2/active-rooms/remove-peers).
--   You can also [end an active room](/server-side/v2/active-rooms/end-active-room).
+-   Control peers by [changing roles](/server-side/v2/active-rooms/update-a-peer), [removing peers](/server-side/v2/active-rooms/remove-peers), and [ending the room](/server-side/v2/active-rooms/end-active-room)
+-   Build interactivity scenarios by [updating peer metadata](/server-side/v2/active-rooms/update-a-peer) and [sending broadcast/direct messages](/server-side/v2/active-rooms/send-message)
+-   [Retrieving the details of an active room](/server-side/v2/active-rooms/retrieve-active-room) and [a specific peer](/server-side/v2/active-rooms/retrieve-peer) will act as supporting pillars to implement the abovementioned actions.
 
-These APIs will enable you to script complex actions depending on the use case such as remotely controlling a room, building interactivity scenarios and more.
+### When should I use room APIs and Active room APIs?
+
+-   **Room APIs**: You can use room APIs to create a room, link a template, and update room properties such as recording configuration and server region.
+-   **Active room APIs**: You can use these APIs to control peer behavior and build interactivity scenarios in an active room.
+
+### What can I build?
+
+We have drafted some examples to help you understand how active room APIs will enable you to control peer behavior and build interactivity scenarios:
+
+-   [Fetch the list of peers](/server-side/v2/active-rooms/retrieve-active-room) in an active room and perform actions like:
+    -   Nudge a specific peer if their [video is turned off](/server-side/v2/active-rooms/retrieve-peer#why-would-you-use-this-api).
+    -   Send a broadcast message to all peers to inform the speaker's unavailability. For [example](/server-side/v2/active-rooms/send-message#why-would-you-use-this-api), send a message to all the students if the teacher cannot join the session at the last minute.
+    -   [Kick a peer](/server-side/v2/active-rooms/remove-peer#why-would-you-use-this-api) in case of any misconduct(abusive chat).
+-   To build real-time interactivity, like [updating a custom avatar](/server-side/v2/active-rooms/update-a-peer#scenario2-custom-avatar) in the video tile, [virtual poker handler](/server-side/v2/active-rooms/update-a-peer#scenario1-poker-handler) for a multiplayer game, and more.
+
+## Postman collection
+
+You can use our Postman collection to start exploring 100ms APIs.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a?action=collection%2Ffork&collection-url=entityId%3D22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a%26entityType%3Dcollection%26workspaceId%3Dd9145dd6-337b-4761-81d6-21a30b4147a2)
+
+Refer to the [Postman guide](/server-side/v2/introduction/postman-guide) to get started with 100ms API collection.

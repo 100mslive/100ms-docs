@@ -3,7 +3,7 @@ title: Retrieve a specific peer
 nav: 3.4
 ---
 
-Retrieves the details of a specific peer in an active room. You can use the peer_id to retrieve the details of the list of connected peers. Use [retrieve active room state API](/server-side/v2/active-rooms/retrieve-active-room to get the list of connected peers in an active room.
+Retrieves the details of a specific peer in an active room. You can use the peer_id to retrieve the details of the peer. Use [retrieve active room state API](/server-side/v2/active-rooms/retrieve-active-room) to get the list of connected peers in an active room.
 
 > **Note:** You can leverage this API to retrieve the details of connected peers in an active room only. To retrieve details of the peers that left the session already, use the [Retrieve a specific session API](/server-side/v2/Sessions/retrieve-a-session)
 
@@ -60,10 +60,10 @@ curl --location --request GET 'https://api.100ms.live/v2/active-rooms/<room_id>/
 | Name                        | Type     | Description                                                                                                                          | Required |
 | :-------------------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | room_id <br/> — path param  | `string` | Unique identifier of the room where the peer is active. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                              | Yes      |
-| peer_id <br/> — query param | `string` | Unique identifier of the peer/participant you wish to fetch details for. <br/><br/>**Example**: 1038fa72-9345-4651-beab-436f9242ebf4 | Yes      |
+| peer_id <br/> — path param | `string` | Unique identifier of the peer/participant you wish to fetch details for. <br/><br/>**Example**: 1038fa72-9345-4651-beab-436f9242ebf4 | Yes      |
 
 ## Why would you use this API?
 
 -   To check if a specific peer has enabled/disabled their audio/video/screen-share at a given time in an active room.
 -   To check if a specific peer is on-stage and backstage at a particular time.
--   You can also use this API to retrieve some stored peer metadata from your database for an abruptly disconnected peer once they join the session again.
+-   You can also use this API to store peer metadata in your database and retrieve it for an abruptly disconnected peer once they join the session again. For example, to enable the user to resume playing the multiplayer game.

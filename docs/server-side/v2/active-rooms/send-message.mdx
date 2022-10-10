@@ -5,10 +5,10 @@ nav: 3.6
 
 You can use this API to send messages to a single peer, a set of peers(a particular role), or all connected peers in the active room. This API supports arguments such as `peer_id` and `role` to implement this.
 
-1. If `peer_id` is defined -- message will be sent only to the specified connected peer.
-2. If the `role` is defined -- message will be sent to all the connected peers assigned with that particular role.
-3. If both `peer_id` and `role` are defined -- preference will be given to the peer_id and the message will be sent only to the specified connected peer.
-4. If both `peer_id` and `role` are not defined -- message(broadcast) will be sent to all the connected peers.
+1. If `peer_id` is specified -- message will be sent only to the specified connected peer.
+2. If the `role` is specified -- message will be sent to all the connected peers assigned with that particular role.
+3. If both `peer_id` and `role` are specified -- preference will be given to the peer_id and the message will be sent only to the specified connected peer.
+4. If both `peer_id` and `role` are not specified -- message(broadcast) will be sent to all the connected peers.
 
 <PostRequest title="https://api.100ms.live/v2/active-rooms/<room_id>/send-message" />
 
@@ -51,4 +51,4 @@ curl --location --request POST 'https://api.100ms.live/v2/active-rooms/<room_id>
 ## Why would you use this API?
 
 -   Based on your requirements, you can use this API to send a broadcast message, private message, or reactions like emojis.
--   For example, Suppose a teacher cannot attend a virtual classroom at the last minute. In that case, you can inform all the connected peers(students) by sending a broadcast message to inform the teacher's unavailability.
+-   For example, Suppose a teacher cannot attend a virtual classroom session at the last minute. In that case, you can inform all the connected peers(students) by sending a broadcast message to inform the teacher's unavailability.

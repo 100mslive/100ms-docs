@@ -3,6 +3,8 @@ title: Active room object
 nav: 3.2
 ---
 
+The active room object is the existing room object with additional information like the session object (with an array of peer identifiers). This is not a new object.
+
 <EndpointRequest title="https://api.100ms.live/v2/active-rooms" />
 
 ## Object
@@ -16,13 +18,13 @@ nav: 3.2
 
 ### Session object
 
-| Argument   | Description                                                                                                                                                                                                                                                              |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| id         | Unique identifier for the session                                                                                                                                                                                                                                        |
-| created_at | Timestamp when the session started.                                                                                                                                                                                                                                      |
-| peers      | This object contains array of unique identifier of the peers                                                                                                                                                                                                             |
-| recording  | Indicates whether recording(SFU & browser) is enabled or not. Refer to [SFU recording guide](/server-side/v2/Destinations/recording) and [Browser recording guide](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording) for more information.              |
-| streaming  | Indicates whether streaming(HLS & RTMP) is started or not. Refer to [RTMP streaming guide](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording) and [HLS streaming guide](/server-side/v2/Destinations/live-streaming-via-dashboard) for more information. |
+| Argument   | Description                                                                                                                                 |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| id         | Unique identifier for the session                                                                                                           |
+| created_at | Timestamp when the session started.                                                                                                         |
+| peers      | This object contains array of unique identifier of the peers                                                                                |
+| recording  | **Note:** We are working on bringing more improvements to this object, we will update more information once the improvements are available. |
+| streaming  | **Note:** We are working on bringing more improvements to this object, we will update more information once the improvements are available. |
 
 ## Postman collection
 
