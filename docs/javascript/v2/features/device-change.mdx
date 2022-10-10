@@ -18,6 +18,10 @@ You may still want to allow users to see the currently selected devices and chan
 
 > Note that changing audio output device is available only in chromium based browsers.
 
+<Tabs id="devicechange" items={['JavaScript', 'React']} />
+
+<Tab id='devicechange-0'>
+
 ```js
 // {audioInput, audioOutput, videoInput}
 const devices = hmsStore.getState(selectDevices);
@@ -36,11 +40,57 @@ hmsActions.setVideoSettings({ deviceId: selecedVideoDeviceID });
 hmsActions.setAudioOutputDevice(selectedAudioOutputDeviceID);
 ```
 
+</Tab>
+
+<Tab id='devicechange-1'>
+
+```jsx
+import {
+  useDevices,
+  DeviceType,
+} from '@100mslive/react-sdk';
+
+const DeviceSettings = () => {
+  const { allDevices, selectedDeviceIDs, updateDevice } = useDevices();
+   // Call the updateDevice function like below to update the videoInput device. Similarly for audio input and output pass corresponding deviceId and DeviceType
+   updateDevice({
+      deviceId,
+      deviceType: DeviceType.videoInput
+   });
+
+  // render devices and selection from allDevices and selectedDeviceIDs
+  return <div />
+}
+```
+
+</Tab>
+
 ## Remember manually selected devices
 
 We support an additional boolean in join config which can be passed in to let sdk use the localstorage to remember
 manual device selections for future room [join](./join).
 
+<Tabs id="rememberdeviceselection" items={['JavaScript', 'React']} />
+
+<Tab id='rememberdeviceselection-0'>
+
 ```js
-hmsActions.join({ ...joinConfig, rememberDeviceSelection: true });
+await hmsActions.join({ ...joinConfig, rememberDeviceSelection: true });
 ```
+
+</Tab>
+
+<Tab id='rememberdeviceselection-1'>
+
+```jsx
+const JoinCall = () => {
+  const hmsActions = useHMSActions();
+  const join = useCallback(async () => {
+    await hmsActions.join({ ...joinConfig, rememberDeviceSelection: true });
+  }, [hmsActions]);
+
+  return <button onClick={join}>Join</button>;
+};
+
+```
+</Tab>

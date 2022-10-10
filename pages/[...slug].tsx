@@ -42,9 +42,12 @@ interface Props {
     //     nextPost: PaginationType;
     // };
     allDocs: AllDocsType[];
-    source: { compiledSource: string, renderedOutput: string, scope: { title: string, nav: number } }
+    source: {
+        compiledSource: string;
+        renderedOutput: string;
+        scope: { title: string; nav: number };
+    };
 }
-
 
 const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
     const {
@@ -59,7 +62,6 @@ const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
     const { previousPost, nextPost } = getPagination(currentDocs, slug as string[]);
     const pagination = { previousPost, nextPost };
     const content = hydrate(source, { components });
-
 
     React.useEffect(() => {
         setTimeout(() => {
@@ -108,14 +110,15 @@ const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
                 {content}
                 <hr />
                 {pagination.previousPost && showPagination && (
-                    <Pagination
-                        next={pagination.nextPost}
-                        prev={pagination.previousPost}
-                    />
+                    <Pagination next={pagination.nextPost} prev={pagination.previousPost} />
                 )}
                 <EditFile slug={router.asPath} />
             </article>
-            <Toc activeHeading={activeHeading} activeSubHeading={activeSubHeading} />
+            <Toc
+                activeHeading={activeHeading}
+                activeSubHeading={activeSubHeading}
+                CurrentDocsSlug={currentDocSlug}
+            />
             <style jsx>{`
                  article {
                      max-width: 1200px;
@@ -203,9 +206,5 @@ export const getStaticPaths = async () => {
 };
 
 DocSlugs.getLayout = function getLayout(page) {
-    return (
-        <DocLayout>
-            {page}
-        </DocLayout>
-    )
-}
+    return <DocLayout>{page}</DocLayout>;
+};

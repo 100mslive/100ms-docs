@@ -17,8 +17,8 @@ When user indicates that they want to join the room, your app should have -
 
 Now that you have aforementioned data, you can proceed to join a room.
 
-1. First, generate an auth token using any http request package 
-   available on [pub.dev](https://pub.dev/) we are using [http](https://pub.dev/packages/http) package.
+1. First, generate an auth token using any Http request package 
+   available on [pub.dev](https://pub.dev/) we are using [Http](https://pub.dev/packages/http) package.
 
    ```dart
    Future<String> getToken({required String user, required String room}) async {
@@ -45,7 +45,8 @@ Now that you have aforementioned data, you can proceed to join a room.
 
 3. You'll want to handle the callbacks from joining the room by making your ViewModel, Presenter or whatever you're using to handle business logic implement the HMSUpdateListener interface and overriding the methods.
 
-4. Now, we are primed to join the room. All you have to do is pass the config object to `join` present in `HMSSDK` class.
+4. Now, we are primed to join the room. All you have to do is pass the config object to `join` present in `HMSSDK` class.To join room with audio/video muted 
+   please follow the docs [here](../features/join-with-muted-audio-video)
 
    Create instance of HMSSDK -
    ```dart 
