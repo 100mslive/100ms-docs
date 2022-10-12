@@ -1,0 +1,79 @@
+---
+title: Send message
+nav: 3.6
+---
+
+You can use this API to send messages to a single peer, a set of peers (a particular role), or all connected peers in the active room. This API supports arguments such as `peer_id` and `role` to implement this.
+
+1. If `peer_id` is specified -- message will be sent only to the specified connected peer.
+2. If the `role` is specified -- message will be sent to all the connected peers assigned with that particular role.
+3. If both `peer_id` and `role` are specified -- preference will be given to the peer_id and the message will be sent only to the specified connected peer.
+4. If both `peer_id` and `role` are not specified -- message(broadcast) will be sent to all the connected peers.
+
+<PostRequest title="https://api.100ms.live/v2/active-rooms/<room_id>/send-message" />
+
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/active-rooms/<room_id>/send-message' \
+--header 'Authorization: Bearer <management_token>' \
+    --header 'Content-Type: application/json' \
+--data-raw '{
+    "peer_id":"018b84da-0786-48c5-a3a6-02961d9eac03",
+    "role":"",
+    "message": "hi",
+    "type":"chat"
+}'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "message": "message sent"
+}
+```
+
+</ResponseBox>
+
+## Arguments
+
+| Name                       | Type     | Description                                                                                                                                   | Required |
+| :------------------------- | :------- | :-------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| room_id <br/> — path param | `string` | Unique identifier of the room where the peer is active. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                                       | Yes      |
+| message <br/> — body param | `string` | Actual message to be sent.                                                                                                                    | Yes      |
+| peer_id <br/> — path param | `string` | Unique identifier of the peer/participant for which you wish to send the message. <br/><br/>**Example**: 1038fa72-9345-4651-beab-436f9242ebf4 | No       |
+| role <br/> — body param    | `string` | You can use this to send the message to a set of peers (a particular role).                                                                   | No       |
+| type <br/> — body param    | `string` | Indicates the type of message sent, for example, chat or emoji.                                                                               | No       |
+
+## Why would you use this API?
+
+-   Based on your requirements, you can use this API to send a broadcast message, private message, or reactions like emojis.
+
+### Example1 - Inform unavailability of teacher
+
+-   Suppose a teacher cannot attend a virtual classroom session at the last minute; you can inform all the connected peers (students) by sending a broadcast message to inform the teacher's unavailability.
+
+### Example2 - Poker handler
+
+-   You can build a handler for a multiplayer game like Poker using this API in conjunction with the "peer.join.success" [webhook event](/server-side/v2/introduction/webhook#peer-join-success). Let's consider below scenario:
+-   Four users join the game and start playing -- your app server stores the user_id for each user.
+-   Total bet amount -- create a custom event to show the data only to the particular player.
+    **Example payload**:
+    ```json
+    {
+        "peer_id": "018b84da-0786-48c5-a3a6-02961d9eac03", // will send the data only to peer_id specified.
+        "message": "<TOTAL_BET_AMOUNT>",
+        "type": "custom_event"
+    }
+    ```
+-   Showdown -- create a custom event to show the data to all the players.
+    **Example payload**:
+    ```json
+    {
+        "message": "<ACTUAL_CARD_REVEAL_DATA>", // will send the data to all the peers in the active room as peer_id or role is not specified. 
+        "type": "custom_event"
+    }
+    ```
