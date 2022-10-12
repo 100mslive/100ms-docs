@@ -200,7 +200,8 @@ const sdkItems = {
             link: '/server-side/v2/introduction/basics'
         },
         { id: 6, link: '/server-side/v2/introduction/webhook' },
-        { id: 7, link: '/server-side/v2/introduction/firewall-and-ports' }
+        { id: 7, link: '/server-side/v2/introduction/firewall-and-ports' },
+        { id: 5, link: '/server-side/v2/changelog/release-notes' }
     ],
     android: [
         { id: 1, link: '/android/v2/guides/quickstart' },
