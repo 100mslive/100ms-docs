@@ -31,11 +31,11 @@ curl --location --request POST 'https://api.100ms.live/v2/active-rooms/<room_id>
 
 ## Arguments
 
-| Name                      | Type      | Description                                                                                                                   | Required |
-| :------------------------ | :-------- | :---------------------------------------------------------------------------------------------------------------------------- | :------- |
-| id <br/> — path param     | `string`  | Unique identifier of the room you wish to disable. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                            | Yes      |
-| reason <br/> — body param | `string`  | Description to indicate the reason for ending the active room.                                                                | No       |
-| lock <br/> — body param   | `boolean` | Status of the room to be set. <br/>`Allowed values`: true, false. <br/>`Default`: false (ends the current active session only) | No       |
+| Name                       | Type      | Description                                                                                                                    | Required |
+| :------------------------- | :-------- | :----------------------------------------------------------------------------------------------------------------------------- | :------- |
+| room_id <br/> — path param | `string`  | Unique identifier of the room you wish to disable. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                             | Yes      |
+| reason <br/> — body param  | `string`  | Description to indicate the reason for ending the active room.                                                                 | No       |
+| lock <br/> — body param    | `boolean` | Status of the room to be set. <br/>`Allowed values`: true, false. <br/>`Default`: false (ends the current active session only) | No       |
 
 > **Warning:** If you set the lock argument to `true`, it will end the active room and users will not be able to join the room later as well. You can use [enable a room API](/server-side/v2/Rooms/disable-or-enable) or [dashboard](https://dashboard.100ms.live/rooms) to enable the room again.
 

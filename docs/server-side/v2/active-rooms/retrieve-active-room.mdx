@@ -5,10 +5,12 @@ nav: 3.3
 
 Retrieves the details of a specific active room. 100ms allows you to retrieve details of an active room with their ID.
 
-- You can use this API to check if a room is currently active or not. 
-- You can also use this in conjunction with [retrieve peer API](/server-side/v2/active-rooms/retrieve-peer) and perform actions such as [updating peers](/server-side/v2/active-rooms/update-a-peer), [sending messages](/server-side/v2/active-rooms/send-message), and [removing peers](/server-side/v2/active-rooms/remove-peers) based on your use case requirements. 
+-   You can use this API to check if a room is currently active or not.
+-   You can also use this in conjunction with [retrieve peer API](/server-side/v2/active-rooms/retrieve-peer) and perform actions such as [updating peers](/server-side/v2/active-rooms/update-a-peer), [sending messages](/server-side/v2/active-rooms/send-message), and [removing peers](/server-side/v2/active-rooms/remove-peers) based on your use case requirements.
 
-<PostRequest title="https://api.100ms.live/v2/active-rooms/<room_id>" />
+If you need to get the list of all active sessions, you can use the [list sessions API](/server-side/v2/Sessions/list-sessions) with the filter `active` as `true`.
+
+<GetRequest title="https://api.100ms.live/v2/active-rooms/<room_id>" />
 <Request id="req-comp-0">
 
 ```bash
@@ -40,6 +42,6 @@ curl --location --request GET 'https://api.100ms.live/v2/active-rooms/<room_id>'
 
 ## Arguments
 
-| Name                  | Type     | Description                                                                                                         | Required |
-| :-------------------- | :------- | :------------------------------------------------------------------------------------------------------------------ | :------- |
-| id <br/> — path param | `string` | Unique identifier of the active room you wish to fetch details for. <br/><br/>**Example**: 631a0f990e6ffae22efa610c | Yes      |
+| Name                       | Type     | Description                                                                                                         | Required |
+| :------------------------- | :------- | :------------------------------------------------------------------------------------------------------------------ | :------- |
+| room_id <br/> — path param | `string` | Unique identifier of the active room you wish to fetch details for. <br/><br/>**Example**: 631a0f990e6ffae22efa610c | Yes      |

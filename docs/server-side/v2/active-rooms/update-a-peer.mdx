@@ -14,8 +14,7 @@ curl --location --request POST 'https://api.100ms.live/v2/active-rooms/<room_id>
 --header 'Content-Type: application/json' \
 --data-raw '{
     "name": "nixon-test2",
-    "role":"backstage",
-    "metadata": {"isHandraise": false, "isBrbon": true}
+    "metadata": "{\"isHandRaised\":false,\"isBRBOn\":true}"
 }'
 ```
 
@@ -24,32 +23,29 @@ curl --location --request POST 'https://api.100ms.live/v2/active-rooms/<room_id>
 
 ```json
 {
-    "id": "161d2478-1535-49a0-b48b-326aaa26dcd0",
+    "id": "2b8bee10-5733-43af-a2f3-ecce623cbb90",
     "name": "nixon-test2",
-    "user_id": "46d77503-425c-41ff-bfb6-71f6d13e0c65",
-    "metadata": {
-        "Lower_hand": true,
-        "business_user_id": "XYZ_1234"
-    },
-    "role": "backstage",
-    "joined_at": "2022-10-04T12:10:28.939012572Z",
+    "user_id": "4f33d87f-e86b-4f58-97c6-d07fc476d936",
+    "metadata": "{\"isHandRaised\":false,\"isBRBOn\":true}",
+    "role": "host",
+    "joined_at": "2022-10-12T12:56:17.759148635Z",
     "tracks": {
-        "643b9039-9afd-44a1-b740-4d7404776d77": {
-            "id": "643b9039-9afd-44a1-b740-4d7404776d77",
-            "stream_id": "c8c917ed-8d05-4b4a-b582-400aa23aebb1",
-            "mute": false,
-            "type": "video",
-            "source": "regular",
-            "started_at": "2022-10-04T12:10:29.055516787Z",
-            "description": ""
-        },
-        "fc6df132-c74e-4dc3-8038-3b48655eb547": {
-            "id": "fc6df132-c74e-4dc3-8038-3b48655eb547",
-            "stream_id": "c8c917ed-8d05-4b4a-b582-400aa23aebb1",
+        "a22befac-b77c-49bf-82ff-7b93c9f49fef": {
+            "id": "a22befac-b77c-49bf-82ff-7b93c9f49fef",
+            "stream_id": "b90ef533-2af9-412c-9442-52cd70e758b6",
             "mute": true,
             "type": "audio",
             "source": "regular",
-            "started_at": "2022-10-04T12:10:29.055516787Z",
+            "started_at": "2022-10-12T12:56:17.932404678Z",
+            "description": ""
+        },
+        "a8cfe2d3-9fd8-47a0-b5ca-3203fd84bbd7": {
+            "id": "a8cfe2d3-9fd8-47a0-b5ca-3203fd84bbd7",
+            "stream_id": "b90ef533-2af9-412c-9442-52cd70e758b6",
+            "mute": true,
+            "type": "video",
+            "source": "regular",
+            "started_at": "2022-10-12T12:56:17.932404678Z",
             "description": ""
         }
     }
@@ -60,12 +56,12 @@ curl --location --request POST 'https://api.100ms.live/v2/active-rooms/<room_id>
 
 ## Arguments
 
-| Name                        | Type     | Description                                                                                                                                           | Required |
-| :-------------------------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| room_id <br/> — path param  | `string` | Unique identifier of the room where the peer is active. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                                               | Yes      |
-| peer_id <br/> — path param  | `string` | Unique identifier of the peer/participant for which you wish to update details. <br/><br/>**Example**: 1038fa72-9345-4651-beab-436f9242ebf4           | Yes      |
-| name <br/> — body param     | `string` | The name of the peer used in the active session.                                                                                                      | No       |
-| role <br/> — body param     | `string` | You can use this to update the role type of the peer. For example, to take the peer to a breakout room.                                               | No       |
+| Name                        | Type     | Description                                                                                                                                             | Required |
+| :-------------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| room_id <br/> — path param  | `string` | Unique identifier of the room where the peer is active. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                                                 | Yes      |
+| peer_id <br/> — path param  | `string` | Unique identifier of the peer/participant for which you wish to update details. <br/><br/>**Example**: 1038fa72-9345-4651-beab-436f9242ebf4             | Yes      |
+| name <br/> — body param     | `string` | The name of the peer used in the active session.                                                                                                        | No       |
+| role <br/> — body param     | `string` | You can use this to update the role type of the peer. For example, to take the peer to a breakout room.                                                 | No       |
 | metadata <br/> — body param | `object` | You can use a stringified JSON to update various custom/additional information to a peer such as business_user_id, raise_hand/lower_hand info, and more | No       |
 
 ## Why would you use this API?
