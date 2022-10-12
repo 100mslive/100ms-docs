@@ -6,7 +6,11 @@
 
 - After you have created your account you have to Confirm your Email , check the promotions tab in your Mail Box if you can't find it.
 
-- Then login again and you would see this Section with the list of starter kits, hover over one of the starter kits and click `Deploy`. We will choose "Video Conferencing" for now.
+- Login to the Dashboard and you will see an option to Create your first app. Click on it.
+
+![Create your first app](/docs/guides/token/starter-kit-initialize-first-step.png)
+
+- Then you would see this popup with multiple starter kits, hover over one of the starter kits and click `Deploy`. We will choose "Video Conferencing" for now.
 
 ![Initialize Started Kit](/docs/guides/token/starter-kit-initialize.png)
 
