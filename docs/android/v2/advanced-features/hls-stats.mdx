@@ -15,8 +15,8 @@ It can also be used as a standalone dependency if required and has no dependency
 ```json{3,4}:build.gradle
 dependencies {
  // See the latest version in the jitpack badge above.
-  implementation 'com.github.100mslive.android-sdk:lib:2.2.8'
-  implementation 'com.github.100mslive.android-sdk:player-stats:2.2.8'
+  implementation 'com.github.100mslive.android-sdk:lib:x.x.x'
+  implementation 'com.github.100mslive.android-sdk:player-stats:x.x.x'
     }
 ```
 
@@ -113,6 +113,14 @@ An Existing exoplayer instance can be directly attached to PlayerEventsCollector
 
 </Tab>
 
+<Note>
+
+**Note**
+
+    removeListener() must be called when view listening to it is destroyed
+
+</Note>
+
 ## Interpretting the values : 
 
 
@@ -126,4 +134,4 @@ An Existing exoplayer instance can be directly attached to PlayerEventsCollector
 | video height | The height of the video | px | Used to know the resolution being played |
 | video frameRate | The frame rate | frames per second | Used to know the FPS |
 | droppedFrames | The number of dropped frames since the last call to this method | Int | Used to calculate the total num of dropped frames  |
-| dropped frames elapsedMs | The duration over which the frames were dropped since the last callback | ms | Used to calculate rate at which frames are being dropped |
+| distanceFromLiveEdge | Distance of current playing position from live edge | Int | Used to calculate how far current player position is from live edge of content. |
