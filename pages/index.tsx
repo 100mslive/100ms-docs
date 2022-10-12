@@ -226,7 +226,7 @@ const Homepage = ({ allDocs }) => {
                                     }
                                 }}>
                                 {fundamentals.map((item) => (
-                                    <Link href={item.link} key={item.title}>
+                                    <Link href={item.link} key={item.title} prefetch={false}>
                                         <a style={{ all: 'unset', cursor: 'pointer' }}>
                                             <Card
                                                 onClick={() =>
@@ -294,7 +294,7 @@ const Homepage = ({ allDocs }) => {
                                 }}>
                                 {guides.map((item) =>
                                     item.platform === activeTab ? (
-                                        <Link href={item.link} key={item.title + item.link}>
+                                        <Link href={item.link} key={item.title + item.link} prefetch={false}>
                                             <a style={{ all: 'unset', cursor: 'pointer' }}>
                                                 <Card
                                                     onClick={() =>
@@ -379,7 +379,7 @@ const Homepage = ({ allDocs }) => {
                                             {section.heading}
                                         </Text>
                                         {section.items.map((item) => (
-                                            <Link key={item.name} href={item.link}>
+                                            <Link key={item.name} href={item.link} prefetch={false}>
                                                 <a>
                                                     <Box
                                                         css={{

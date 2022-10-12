@@ -1,9 +1,9 @@
 import EditFile from '@/components/EditFile';
 import components from '@/components/MDXComponents';
-import Pagination from '@/components/Pagination';
+// import Pagination from '@/components/Pagination';
+// import getPagination from '@/lib/getPagination';
 import Toc from '@/components/Toc';
 import DocLayout from '@/layouts/DocLayout';
-import getPagination from '@/lib/getPagination';
 import imagePlugin from '@/lib/image';
 import { DOCS_PATH, getAllDocs, getDocsPaths } from '@/lib/mdxUtils';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
@@ -41,7 +41,7 @@ interface Props {
     //     previousPost: PaginationType;
     //     nextPost: PaginationType;
     // };
-    allDocs: AllDocsType[];
+    // allDocs: AllDocsType[];
     source: {
         compiledSource: string;
         renderedOutput: string;
@@ -49,7 +49,7 @@ interface Props {
     };
 }
 
-const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
+const DocSlugs = ({ source, frontMatter }: Props) => {
     const {
         query: { slug }
     } = useRouter();
@@ -58,9 +58,9 @@ const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
     const [currentDocSlug] = slug as string[];
     const [activeHeading, setActiveHeading] = React.useState('');
     const [activeSubHeading, setActiveSubHeading] = React.useState('');
-    const currentDocs = allDocs.filter((doc) => doc.url.includes(`/${currentDocSlug}/`));
-    const { previousPost, nextPost } = getPagination(currentDocs, slug as string[]);
-    const pagination = { previousPost, nextPost };
+    // const currentDocs = allDocs.filter((doc) => doc.url.includes(`/${currentDocSlug}/`));
+    // const { previousPost, nextPost } = getPagination(currentDocs, slug as string[]);
+    // const pagination = { previousPost, nextPost };
     const content = hydrate(source, { components });
 
     React.useEffect(() => {
@@ -98,10 +98,10 @@ const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
 
         return () => window.removeEventListener('scroll', getActiveLinks);
     }, []);
-    let showPagination = true;
+    // let showPagination = true;
     // Don't show Pagination for Android
     if (router.query.slug[1] === 'android') {
-        showPagination = false;
+        // showPagination = false;
     }
     return (
         <>
@@ -109,9 +109,9 @@ const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
                 <h1>{frontMatter.title}</h1>
                 {content}
                 <hr />
-                {pagination.previousPost && showPagination && (
+                {/* {pagination.previousPost && showPagination && (
                     <Pagination next={pagination.nextPost} prev={pagination.previousPost} />
-                )}
+                )} */}
                 <EditFile slug={router.asPath} />
             </article>
             <Toc
@@ -183,7 +183,7 @@ export const getStaticProps = async ({ params }) => {
         props: {
             toc,
             nav,
-            source: mdxSource,
+            source: { compiledSource: mdxSource.compiledSource },
             frontMatter: data,
             allDocs
         }
