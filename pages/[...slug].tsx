@@ -5,7 +5,7 @@ import Toc from '@/components/Toc';
 import DocLayout from '@/layouts/DocLayout';
 import getPagination from '@/lib/getPagination';
 import imagePlugin from '@/lib/image';
-import { DOCS_PATH, getAllDocs, getDocsPaths, getNavfromDocs } from '@/lib/mdxUtils';
+import { DOCS_PATH, getAllDocs, getDocsPaths } from '@/lib/mdxUtils';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import withTableofContents from '@/lib/withTableofContents';
 import fs from 'fs';
@@ -16,6 +16,7 @@ import renderToString from 'next-mdx-remote/render-to-string';
 import { useRouter } from 'next/router';
 import path from 'path';
 import React from 'react';
+import setValue from 'set-value';
 
 // type NavRoute = {
 //     url: string;
@@ -151,7 +152,15 @@ export const getStaticProps = async ({ params }) => {
     const { content, data } = matter(source);
 
     const allDocs = getAllDocs();
-    const nav = getNavfromDocs(allDocs);
+    const nav = allDocs.reduce((n, file) => {
+        const [lib, ...rest] = file.url.split('/').filter(Boolean);
+        const pathV = `${lib}${rest.length === 1 ? '..' : '.'}${rest.join('.')}`;
+        // Set nested properties on an object using dot-notation.
+        // set(obj, 'a.b.c', 'd');
+        // => { a: { b: { c: 'd' } } }
+        setValue(n, pathV, file);
+        return n;
+    }, {});
     const toc = [];
     const mdxSource = await renderToString(content, {
         components,
@@ -171,7 +180,7 @@ export const getStaticProps = async ({ params }) => {
         props: {
             toc,
             nav,
-            source: { compiledSource: mdxSource.compiledSource },
+            source: mdxSource,
             frontMatter: data,
             allDocs
         }
