@@ -33,7 +33,6 @@ const getFileList = (dirName) => {
 
 export const getDocsPaths = async () => {
     const files = getFileList(DOCS_PATH);
-    console.log(files[0]);
     return files
         .filter((path) => MARKDOWN_REGEX.test(path))
         .map((path) => path.replace(MARKDOWN_REGEX, ''));
