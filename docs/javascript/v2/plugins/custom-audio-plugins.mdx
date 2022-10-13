@@ -95,7 +95,8 @@ Once a plugin implementation is ready, it can be added and removed from local pe
 
 ```js section=AddingAndRemovingPlugins sectionIndex=1 tab=Usage
 const myPlugin = new MyCustomPlugin();
-if (myPlugin.isSupported()) {
+const checkSupport = myPlugin.checkSupport();
+if (checkSupport.isSupported) {
     // myPlugin.init(); // optional, recommended if plugin implements it, you can show a loader here in the UI
     const isPluginAdded = hmsStore.getState(
         selectIsLocalAudioPluginPresent(myPlugin.getName());
@@ -105,6 +106,8 @@ if (myPlugin.isSupported()) {
     } else {
         hmsActions.removePluginFromAudioTrack(myPlugin);
     }
+} else {
+    console.log('plugin not supported', checkSupport.errMsg, checkSupport.errType)
 }
 ```
 
