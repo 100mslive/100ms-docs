@@ -151,7 +151,6 @@ export const getStaticProps = async ({ params }) => {
     const { content, data } = matter(source);
 
     const allDocs = getAllDocs();
-
     const nav = getNavfromDocs(allDocs);
 
     const toc = [];
@@ -174,7 +173,7 @@ export const getStaticProps = async ({ params }) => {
         props: {
             toc,
             nav,
-            source: { compiledSource: mdxSource.compiledSource },
+            source: mdxSource, // { compiledSource: mdxSource.compiledSource }
             frontMatter: data,
             allDocs
         }
