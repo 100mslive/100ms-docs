@@ -168,7 +168,6 @@ export const getStaticProps = async ({ params }) => {
         },
         scope: data
     });
-
     return {
         props: {
             toc,
