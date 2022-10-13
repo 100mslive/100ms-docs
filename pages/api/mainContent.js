@@ -1,6 +1,10 @@
 import setValue from 'set-value';
 import { getAllDocs } from '../../lib/mdxUtils';
 
+// export const config = {
+//     runtime: 'experimental-edge'
+// };
+
 export default async function handler(req, res) {
     res.setHeader('Cache-Control', 's-maxage=669600'); // 31 days limit by vercel
     // const params = { slug: ['javascript', 'v2', 'guides', 'javascript-quickstart'] };
