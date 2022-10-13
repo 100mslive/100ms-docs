@@ -6,9 +6,9 @@ const nextConfig = {
     webpack: (config, { isServer, dev }) => {
         // Fixes npm packages that depend on `fs` module
 
-        config.node = {
-            fs: 'empty'
-        };
+        // config.node = {
+        //     fs: 'empty'
+        // };
 
         // if (!dev && !isServer) {
         //     Object.assign(config.resolve.alias, {
