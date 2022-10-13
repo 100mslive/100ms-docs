@@ -107,6 +107,11 @@ const nextConfig = {
                 source: '/flutter/v2/release-notes/release-notes',
                 destination: '/flutter/v2/changelog/release-notes',
                 permanent: false
+            },
+            {
+                source: '/api-reference/server-side/v2/home/content',
+                destination: '/server-side/v2/introduction/basics',
+                permanent: false
             }
         ];
     }
