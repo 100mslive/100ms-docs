@@ -129,7 +129,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 </Listbox>
             </section>
             {/* Sidebar Menu Section */}
-            {Object.entries(nav).map(([key, children], index) => (
+            {nav ? Object.entries(nav).map(([key, children], index) => (
                 <section className="menu-container" key={`${key}-${index}`}>
                     <div className="menu-title">{key.replace(/-/g, ' ')}</div>
                     {Object.entries(children).map(([_, route]) =>
@@ -163,7 +163,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                         </>
                     ) : null}
                 </section>
-            ))}
+            )) : null}
             <style jsx>{`
                 .sidebar {
                     width: 288px;

@@ -59,7 +59,6 @@ export const getAllDocs = () => {
                 title: data.title || pathname!.replace(/-/g, ' '),
                 description: data.description || '',
                 nav: data.nav ?? Infinity,
-                // Include Content for search func
                 content
             };
         })
@@ -67,13 +66,13 @@ export const getAllDocs = () => {
     return docs;
 };
 
-export const getNavfromDocs = (docs) =>
-    // const filteredDocs = docs.map((article) => {
-    //     const articleClone = { ...article };
-    //     delete articleClone.content;
-    //     return articleClone;
-    // });
-    docs.reduce((n, file) => {
+export const getNavfromDocs = (docs) => {
+    const filteredDocs = docs.map((article) => {
+        const articleClone = { ...article };
+        delete articleClone.content;
+        return articleClone;
+    });
+    return filteredDocs.reduce((n, file) => {
         const [lib, ...rest] = file.url.split('/').filter(Boolean);
         const pathV = `${lib}${rest.length === 1 ? '..' : '.'}${rest.join('.')}`;
         // Set nested properties on an object using dot-notation.
@@ -82,3 +81,4 @@ export const getNavfromDocs = (docs) =>
         setValue(n, pathV, file);
         return n;
     }, {});
+};

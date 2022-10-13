@@ -14,6 +14,6 @@ export default async function handler(req, res) {
     res.status(200).json({
         nav,
         allDocs,
-        lastCachedTime: new Date().toTimeString()
+        lastCachedTime: new Date().toUTCString()
     });
 }

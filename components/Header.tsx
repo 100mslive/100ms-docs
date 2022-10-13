@@ -19,7 +19,7 @@ interface Props {
         setMenu: React.Dispatch<React.SetStateAction<boolean>>;
     };
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
-    docs: { url: string; title: string; description: string; nav: number; content: string }[];
+    // docs: { url: string; title: string; description: string; nav: number; content: string }[];
     modal: boolean;
     showMobileMenu?: boolean;
     showReference?: boolean;
@@ -29,14 +29,12 @@ const Header: React.FC<Props> = ({
     menuState,
     modal,
     setModal,
-    docs,
     showReference = true,
     showMobileMenu = true
 }) => {
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
     const router = useRouter();
-
     React.useEffect(() => {
         if (escPressed) {
             setModal(false);
@@ -51,9 +49,11 @@ const Header: React.FC<Props> = ({
 
     const { menu, setMenu } = menuState;
     const [isDark, setIsDark] = React.useState<boolean>(true);
+    const [docs, setAllDocs] = React.useState();
     const { toggleTheme, themeType } = useTheme();
 
     React.useEffect(() => {
+        fetch('/docs/api/mainContent?filter=docs').then(res => res.json()).then(data => setAllDocs(data.allDocs)).catch()
         const theme = window.localStorage.getItem('theme') || 'dark';
         const docHtml = document.documentElement.dataset;
         setIsDark(theme === 'dark');
