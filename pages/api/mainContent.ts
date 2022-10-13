@@ -1,4 +1,4 @@
-import { getAllDocs, getNavfromDocs } from '../../lib/mdxUtils';
+import { getAllDocs, getNavfromDocs } from '@/lib/mdxUtils';
 
 // export const config = {
 //     runtime: 'experimental-edge'
