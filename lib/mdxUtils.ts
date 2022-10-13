@@ -21,7 +21,7 @@ const getFileList = (dirName) => {
     let files: string[] = [];
     console.log(dirName);
     const items = readdirSync(dirName, { withFileTypes: true });
-    console.log(items);
+    console.log('items');
     for (const item of items) {
         if (item.isDirectory()) {
             files = [...files, ...getFileList(`${dirName}/${item.name}`)];
@@ -35,6 +35,7 @@ const getFileList = (dirName) => {
 
 export const getDocsPaths = () => {
     const files = getFileList(DOCS_PATH);
+    console.log(files.filter((path) => !MARKDOWN_REGEX.test(path)));
     return files
         .filter((path) => MARKDOWN_REGEX.test(path))
         .map((path) => path.replace(MARKDOWN_REGEX, ''));
