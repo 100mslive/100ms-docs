@@ -152,7 +152,6 @@ export const getStaticProps = async ({ params }) => {
 
     const allDocs = getAllDocs();
     const nav = getNavfromDocs(allDocs);
-
     const toc = [];
     const mdxSource = await renderToString(content, {
         components,
