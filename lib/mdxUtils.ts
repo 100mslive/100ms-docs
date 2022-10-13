@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from 'fs';
 import matter from 'gray-matter';
 import { join } from 'path';
+import setValue from 'set-value';
 
 /**
  * Checks for the MDX file extension
@@ -31,7 +32,7 @@ const getFileList = (dirName) => {
     return files;
 };
 
-export const getDocsPaths = async () => {
+export const getDocsPaths = () => {
     const files = getFileList(DOCS_PATH);
     return files
         .filter((path) => MARKDOWN_REGEX.test(path))
@@ -41,8 +42,8 @@ export const getDocsPaths = async () => {
 /**
  * Gets a list of all docs and their meta in the `DOCS_PATH` directory
  */
-export const getAllDocs = async () => {
-    const docs = (await getDocsPaths())
+export const getAllDocs = () => {
+    const docs = getDocsPaths()
         .map((path) => {
             // Get frontMatter from markdown
             const source = readFileSync(join(DOCS_PATH, `${path}.mdx`));
@@ -65,3 +66,20 @@ export const getAllDocs = async () => {
         .sort((a, b) => (a.nav > b.nav ? 1 : -1));
     return docs;
 };
+
+export const getNavfromDocs = (docs) =>
+    docs
+        .map((article) => {
+            const articleClone = { ...article };
+            delete articleClone.content;
+            return articleClone;
+        })
+        .reduce((n, file) => {
+            const [lib, ...rest] = file.url.split('/').filter(Boolean);
+            const pathV = `${lib}${rest.length === 1 ? '..' : '.'}${rest.join('.')}`;
+            // Set nested properties on an object using dot-notation.
+            // set(obj, 'a.b.c', 'd');
+            // => { a: { b: { c: 'd' } } }
+            setValue(n, pathV, file);
+            return n;
+        }, {});
