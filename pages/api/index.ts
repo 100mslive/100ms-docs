@@ -1,7 +1,7 @@
 import { readdirSync } from 'fs';
 import path from 'path';
 
-export default async function handler(req, res) {
+export default async function handler(_req, res) {
     // Find the absolute path of the json directory
     const jsonDirectory = path.join(process.cwd());
     const first = readdirSync(jsonDirectory, { withFileTypes: true });
