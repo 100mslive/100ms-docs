@@ -49,7 +49,7 @@ const Header: React.FC<Props> = ({
 
     const { menu, setMenu } = menuState;
     const [isDark, setIsDark] = React.useState<boolean>(true);
-    const [docs, setAllDocs] = React.useState();
+    const [docs, setAllDocs] = React.useState({} as any);
     const { toggleTheme, themeType } = useTheme();
 
     React.useEffect(() => {

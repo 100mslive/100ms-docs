@@ -30,16 +30,15 @@ export default function Layout({ children }: Props) {
     };
     const [menu, setMenu] = React.useState(false);
     const [modal, setModal] = React.useState(false);
-    const [nav, setnavAPI] = useState();
+    const [nav, setnavAPI] = useState({});
     const menuState = { menu, setMenu };
     useEffect(() => {
         fetch('/docs/api/mainContent?filter=nav').then(res => res.json()).then(data => setnavAPI(data.nav)).catch()
     }, [])
 
     let newNav;
-    if (nav) {
+    if (Object.keys(nav).length) {
         const platform = nav[currentDocSlug];
-        //  console.log(nav, platform)
         if (router.query.slug[0] !== 'v1' && router.query.slug[0] !== 'v2') {
             if (router.query.slug?.length > 3) {
                 newNav = platform[router.query.slug[1]];
