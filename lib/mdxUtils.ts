@@ -1,7 +1,6 @@
-import { readFileSync } from 'fs';
+import { readdirSync, readFileSync } from 'fs';
 import matter from 'gray-matter';
-import { join, sep } from 'path';
-import recursiveReaddir from 'recursive-readdir';
+import { join } from 'path';
 
 /**
  * Checks for the MDX file extension
@@ -17,24 +16,27 @@ export const DOCS_PATH = join(process.cwd(), 'docs');
  * Gets a list of all mdx files inside the `DOCS_PATH` directory
  */
 
-const Console = (...args) => {
-    args.map((x) => console.log(x));
+const getFileList = (dirName) => {
+    let files: string[] = [];
+    const items = readdirSync(dirName, { withFileTypes: true });
+
+    for (const item of items) {
+        if (item.isDirectory()) {
+            files = [...files, ...getFileList(`${dirName}/${item.name}`)];
+        } else {
+            const fullPath = `${dirName}/${item.name}`;
+            files.push(fullPath.replace(DOCS_PATH, ''));
+        }
+    }
+    return files;
 };
 
 export const getDocsPaths = async () => {
-    Console('firts', DOCS_PATH, MARKDOWN_REGEX, process.cwd(), sep);
-    console.log((await recursiveReaddir(DOCS_PATH)) as string[]);
-    const paths = ((await recursiveReaddir(DOCS_PATH)) as string[])
-        // Filter to only doc markdown
+    const files = getFileList(DOCS_PATH);
+    console.log(files[0]);
+    return files
         .filter((path) => MARKDOWN_REGEX.test(path))
-        // Get local path
-        .map((path) => path.replace(process.cwd(), ''))
-        // Remove file extensions for page paths
-        .map((path) => path.replace(MARKDOWN_REGEX, ''))
-        // Remove redundant docs prefix
-        .map((path) => path.replace(`${sep}docs`, ''));
-    console.log('second');
-    return paths;
+        .map((path) => path.replace(MARKDOWN_REGEX, ''));
 };
 
 /**
