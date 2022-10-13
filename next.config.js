@@ -5,11 +5,11 @@ const nextConfig = {
     basePath: '/docs',
     webpack: (config, { isServer, dev }) => {
         // Fixes npm packages that depend on `fs` module
-        // if (!isServer) {
-        //     config.node = {
-        //         fs: 'empty'
-        //     };
-        // }
+
+        config.node = {
+            fs: 'empty'
+        };
+
         // if (!dev && !isServer) {
         //     Object.assign(config.resolve.alias, {
         //         react: 'preact/compat',
