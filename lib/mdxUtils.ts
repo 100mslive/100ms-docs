@@ -33,7 +33,9 @@ const getFileList = (dirName) => {
 };
 
 export const getDocsPaths = () => {
+    console.log('start');
     const files = getFileList(DOCS_PATH);
+    console.log('files', files);
     return files
         .filter((path) => MARKDOWN_REGEX.test(path))
         .map((path) => path.replace(MARKDOWN_REGEX, ''));
@@ -43,6 +45,7 @@ export const getDocsPaths = () => {
  * Gets a list of all docs and their meta in the `DOCS_PATH` directory
  */
 export const getAllDocs = () => {
+    console.log('getall', getDocsPaths());
     const docs = getDocsPaths()
         .map((path) => {
             // Get frontMatter from markdown
