@@ -177,7 +177,7 @@ export const getStaticProps = async ({ params }) => {
         props: {
             toc,
             pagination,
-            source: mdxSource,
+            source: { compiledSource: mdxSource.compiledSource },
             frontMatter: data,
         }
     };
