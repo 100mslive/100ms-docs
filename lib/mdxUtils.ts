@@ -16,8 +16,14 @@ export const DOCS_PATH = join(process.cwd(), 'docs');
 /**
  * Gets a list of all mdx files inside the `DOCS_PATH` directory
  */
+
+const Console = (...args) => {
+    args.map((x) => console.log(x));
+};
+
 export const getDocsPaths = async () => {
-    console.log('first');
+    Console('firts', DOCS_PATH, MARKDOWN_REGEX, process.cwd(), sep);
+    console.log((await recursiveReaddir(DOCS_PATH)) as string[]);
     const paths = ((await recursiveReaddir(DOCS_PATH)) as string[])
         // Filter to only doc markdown
         .filter((path) => MARKDOWN_REGEX.test(path))
@@ -38,7 +44,6 @@ export const getAllDocs = async () => {
     const docs = (await getDocsPaths())
         .map((path) => {
             // Get frontMatter from markdown
-            console.log('third');
             const source = readFileSync(join(DOCS_PATH, `${path}.mdx`));
             const { data, content } = matter(source);
             // Normalize paths for web
