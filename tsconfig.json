@@ -1,50 +1,44 @@
 {
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/components/*": ["components/*"],
-      "@/layouts/*": ["layouts/*"],
-      "@/lib/*": ["lib/*"],
-      "@/typings/*": ["typings/*"],
-      "@/styles/*": ["styles/*"],
-      "@/theme/*": ["theme/*"],
-      "@/assets/*": ["assets/*"],
-      "@/data/*": ["data/*"],
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@/components/*": ["components/*"],
+            "@/layouts/*": ["layouts/*"],
+            "@/lib/*": ["lib/*"],
+            "@/typings/*": ["typings/*"],
+            "@/styles/*": ["styles/*"],
+            "@/theme/*": ["theme/*"],
+            "@/assets/*": ["assets/*"],
+            "@/data/*": ["data/*"]
+        },
+        "strictNullChecks": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "jsx": "preserve",
+        "noUnusedParameters": true,
+        "noUnusedLocals": true,
+        "noImplicitAny": false,
+        "target": "es6",
+        "lib": ["dom", "es2017"],
+        "skipLibCheck": true,
+        "allowJs": true,
+        "strict": false,
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": true,
+        "module": "esnext",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "typeRoots": ["node_modules/@types", "./typings"]
     },
-    "strictNullChecks": true,
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "jsx": "preserve",
-    "noUnusedParameters": true,
-    "noUnusedLocals": true,
-    "noImplicitAny": false,
-    "target": "es6",
-    "lib": [
-      "dom",
-      "es2017",
-    ],
-    "skipLibCheck": true,
-    "allowJs": true,
-    "strict": false,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "module": "esnext",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "typeRoots": [
-      "node_modules/@types",
-      "./typings"
+    "exclude": ["node_modules", "es", "pages/api/**/*"],
+    "include": [
+        "**/*.ts",
+        "**/*.tsx",
+        "lib/**/*.tsx",
+        "components/**/*.tsx",
+        "pages/notes/[slug].js",
+        "pages/blogs.js",
+        "data/data.js"
     ]
-  },
-  "exclude": [
-    "node_modules",
-    "es"
-  ],
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "lib/**/*.tsx",
-    "components/**/*.tsx",
-    "pages/notes/[slug].js", "pages/blogs.js", "data/data.js"  ]
 }
