@@ -53,7 +53,7 @@ const Header: React.FC<Props> = ({
     const { toggleTheme, themeType } = useTheme();
 
     React.useEffect(() => {
-        fetch('/docs/api/mainContent?filter=docs').then(res => res.json()).then(data => setAllDocs(data.allDocs)).catch()
+        fetch('/docs/api/content?query=docs').then(res => res.json()).then(data => setAllDocs(data.allDocs)).catch()
         const theme = window.localStorage.getItem('theme') || 'dark';
         const docHtml = document.documentElement.dataset;
         setIsDark(theme === 'dark');

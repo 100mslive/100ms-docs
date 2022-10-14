@@ -5,7 +5,7 @@ import Toc from '@/components/Toc';
 import DocLayout from '@/layouts/DocLayout';
 import getPagination from '@/lib/getPagination';
 import imagePlugin from '@/lib/image';
-import { DOCS_PATH, getAllDocs, getDocsPaths } from '@/lib/mdxUtils';
+import { DOCS_PATH, getAllDocs, getDocsPaths, getNavfromDocs } from '@/lib/mdxUtils';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import withTableofContents from '@/lib/withTableofContents';
 import fs from 'fs';
@@ -154,6 +154,7 @@ export const getStaticProps = async ({ params }) => {
     const { content, data } = matter(source);
 
     const allDocs = getAllDocs();
+    const nav = getNavfromDocs(allDocs);
     const [currentDocSlug] = params.slug as string[];
     const currentDocs = allDocs.filter((doc) => doc.url.includes(`/${currentDocSlug}/`));
     const { previousPost, nextPost } = getPagination(currentDocs, params.slug as string[]);
@@ -177,6 +178,7 @@ export const getStaticProps = async ({ params }) => {
         props: {
             toc,
             pagination,
+            nav: { [currentDocSlug]: nav[currentDocSlug] },
             source: mdxSource, // { compiledSource: mdxSource.compiledSource },
             frontMatter: data,
         }

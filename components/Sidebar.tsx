@@ -20,8 +20,34 @@ interface Props {
     nav: Record<string, Record<string, NavRoute>>;
 }
 
-const Sidebar: React.FC<Props> = ({ nav, menu }) => {
-    const router = useRouter();
+const Sidebar: React.FC<Props> = ({ menu, nav: currentNav }) => {
+    const router = useRouter() as any;
+    const {
+        query: { slug }
+    } = useRouter();
+    const [currentDocSlug] = slug as string[];
+    const [navAPI, setNavAPI] = React.useState(currentNav);
+    React.useEffect(() => {
+        fetch('/docs/api/content?query=nav').then(res => res.json()).then(result => setNavAPI(result.nav)).catch()
+    }, [])
+
+    let nav;
+    if (Object.keys(navAPI).length) {
+        const platform = navAPI[currentDocSlug];
+        if (router.query.slug[0] !== 'v1' && router.query.slug[0] !== 'v2') {
+            if (router.query.slug?.length > 3) {
+                nav = platform[router.query.slug[1]];
+                if (router.query.slug[0] === 'api-reference') {
+                    // if (router.query.slug[1] === 'android') {
+                    //     showPagination = false;
+                    // }
+                    nav = platform[router.query.slug[1]][router.query.slug[2]];
+                }
+            }
+        } else {
+            nav = platform;
+        }
+    }
     const menuItem = [
         {
             link: '/android/v2/foundation/basics',
@@ -132,7 +158,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
             {nav ? Object.entries(nav).map(([key, children], index) => (
                 <section className="menu-container" key={`${key}-${index}`}>
                     <div className="menu-title">{key.replace(/-/g, ' ')}</div>
-                    {Object.entries(children).map(([_, route]) =>
+                    {Object.entries(children as {}).map(([_, route]: [unknown, any]) =>
                         Object.prototype.hasOwnProperty.call(route, 'title') ? (
                             <Link
                                 scroll={false}

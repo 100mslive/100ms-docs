@@ -4,20 +4,16 @@ import Sidebar from '@/components/Sidebar';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 interface Props {
     children: JSX.Element;
 }
 
 export default function Layout({ children }: Props) {
-    const { frontMatter } = children.props;
+    const { frontMatter, nav } = children.props;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const router = useRouter() as any;
-    const {
-        query: { slug }
-    } = useRouter();
-    const [currentDocSlug] = slug as string[];
     const SEO = {
         title: `${frontMatter.title || '100ms Docs'
             } | 100ms - Video conferencing infrastructure for a video-first world`,
@@ -30,29 +26,7 @@ export default function Layout({ children }: Props) {
     };
     const [menu, setMenu] = React.useState(false);
     const [modal, setModal] = React.useState(false);
-    const [nav, setnavAPI] = useState({});
     const menuState = { menu, setMenu };
-    useEffect(() => {
-        fetch('/docs/api/mainContent?filter=nav').then(res => res.json()).then(data => setnavAPI(data.nav)).catch()
-    }, [])
-
-    let newNav;
-    if (Object.keys(nav).length) {
-        const platform = nav[currentDocSlug];
-        if (router.query.slug[0] !== 'v1' && router.query.slug[0] !== 'v2') {
-            if (router.query.slug?.length > 3) {
-                newNav = platform[router.query.slug[1]];
-                if (router.query.slug[0] === 'api-reference') {
-                    // if (router.query.slug[1] === 'android') {
-                    //     showPagination = false;
-                    // }
-                    newNav = platform[router.query.slug[1]][router.query.slug[2]];
-                }
-            }
-        } else {
-            newNav = platform;
-        }
-    }
 
     useLockBodyScroll(modal);
     return (
@@ -68,7 +42,7 @@ export default function Layout({ children }: Props) {
                             style={{
                                 borderRight: '1px solid var(--new_border_default)'
                             }}>
-                            <Sidebar menu={menu} nav={newNav} />
+                            <Sidebar menu={menu} nav={nav} />
                         </div>
                         {!menu ? children : null}
                     </div>
