@@ -1,9 +1,8 @@
 import { getAllDocs, getNavfromDocs } from '@/lib/mdxUtils';
-import Cors from "cors";
-// import fs from 'fs';
+import Cors from 'cors';
 
 const cors = Cors({
-    methods: ["GET", "HEAD"],
+    methods: ['GET', 'HEAD']
 });
 
 function runMiddleware(req, res, fn) {
