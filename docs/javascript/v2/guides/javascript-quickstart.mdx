@@ -19,10 +19,16 @@ You can initialize a project using `npm init` or `yarn init`. While initializing
 
 ### Install ParcelJS & 100ms SDK
 
-Then, install ParcelJS and 100ms SDK into your app:
+Then, install ParcelJS and 100ms SDK into your app using yarn or npm like below:
 
--   using Yarn `yarn add --dev parcel @100mslive/hms-video-store` or
--   when using npm run `npm install --save-dev parcel-bundler @100mslive/hms-video-store`.
+```bash section=InstallingTheDependencies sectionIndex=1
+yarn add --dev parcel @100mslive/hms-video-store
+```
+or
+
+```bash section=InstallingTheDependencies sectionIndex=2
+npm install --save-dev parcel-bundler @100mslive/hms-video-store
+```
 
 ### Project setup
 
@@ -52,7 +58,7 @@ Let's look at some basic concepts to understand how a video conferencing app wor
 
 Let us start with initializing the libraries. We need an instance of [HMSStore](/api-reference/javascript/v2/interfaces/HMSStore) and [HMSActions](/api-reference/javascript/v2/interfaces/HMSActions) to get started. Copy the code snippet below and paste it into your project.
 
-```jsx:index.js
+```jsx:index.js section=InitializingTheSDK sectionIndex=1
 import {
   HMSReactiveStore,
   selectIsLocalAudioEnabled,
@@ -75,7 +81,7 @@ const hmsActions = hmsManager.getHMSActions();
 
 Now, let's initialize all the HTML elements required such as tile for local and remote peers, join and leave button, mute and unmute button, etc.
 
-```jsx:index.js
+```jsx:index.js section=InitializingTheSDK sectionIndex=2
 // HTML elements
 const form = document.getElementById("join");
 const joinBtn = document.getElementById("join-btn");
@@ -103,7 +109,7 @@ Also, let's add a way to leave the room as well. We can call the [leave](/api-re
 
 <Tab id="join-form-0">
 
-```jsx:index.js
+```jsx:index.js section=JoiningRoom sectionIndex=1 tab=JS
 // Joining the room
 joinBtn.onclick = () => {
   hmsActions.join({
@@ -126,7 +132,7 @@ leaveBtn.onclick = leaveRoom;
 
 <Tab id="join-form-1">
 
-```html:index.html
+```html:index.html section=JoiningRoom sectionIndex=1 tab=HTML
 <!DOCTYPE html>
 <html>
   <head>
@@ -161,7 +167,7 @@ leaveBtn.onclick = leaveRoom;
 
 <Tab id="join-form-2">
 
-```css:styles.css
+```css:styles.css section=JoiningRoom sectionIndex=1 tab=CSS
 * {
     margin: 0;
     padding: 0;
@@ -258,7 +264,7 @@ Let us next add a way to show a tile for every participant in the room. We'll ne
 
 <Tab id="render-peers-0">
 
-```jsx:index.js
+```jsx:index.js section=SubscribingToTheState sectionIndex=1 tab=JS
 // helper function to create html elements
 function createElementWithClass(tag, className) {
   const newElement = document.createElement(tag);
@@ -301,7 +307,7 @@ hmsStore.subscribe(renderPeers, selectPeers);
 
 <Tab id="render-peers-1">
 
-```html:index.html
+```html:index.html section=SubscribingToTheState sectionIndex=1 tab=HTML
 <div id="conference" class="conference-section hide">
     <h2>Conference</h2>
     <div id="peers-container"></div>
@@ -312,7 +318,7 @@ hmsStore.subscribe(renderPeers, selectPeers);
 
 <Tab id="render-peers-2">
 
-```css:styles.css
+```css:styles.css section=SubscribingToTheState sectionIndex=1 tab=CSS
   form h2,
   .conference-section h2 {
     margin-bottom: 20px;
@@ -374,7 +380,7 @@ Let's add 2 buttons on the bottom of the page and call the [setLocalAudioEnabled
 
 <Tab id="mute-unmute-0">
 
-```jsx:index.js
+```jsx:index.js section=MutingUnmutingLocalTracks sectionIndex=1 tab=JS
 // Mute and unmute audio
 muteAud.onclick = () => {
   const audioEnabled = !hmsStore.getState(selectIsLocalAudioEnabled);
@@ -394,7 +400,7 @@ muteVid.onclick = () => {
 
 </Tab>
 
-<Tab id="mute-unmute-1">
+<Tab id="mute-unmute-1"> section=MutingUnmutingLocalTracks sectionIndex=1 tab=HTML
 
 ```html
 <div id="controls" class="control-bar">
@@ -407,7 +413,7 @@ muteVid.onclick = () => {
 
 <Tab id="mute-unmute-2">
 
-```css:styles.css
+```css:styles.css section=MutingUnmutingLocalTracks sectionIndex=1 tab=CSS
   .control-bar {
     display: flex;
     position: fixed;
@@ -445,7 +451,7 @@ Right now, our join form will show up even after we have joined the room. We nee
 
 We can do this by subscribing to the store with the [selectIsConnectedToRoom](/api-reference/javascript/v2/home/content#select-is-connected-to-room) selector from `hmsStore`.
 
-```jsx:index.js
+```jsx:index.js section=ChangingUIBasedOnConnectionState sectionIndex=1
 // Showing the required elements on connection/disconnection
 function onConnection(isConnected) {
   if (isConnected) {
