@@ -54,21 +54,31 @@ import {
     selectDominantSpeaker
 } from '@100mslive/react-sdk';
 
-/** get localpeer from store */
-const localpeer = useHMSStore(selectLocalPeer);
-/** get a given peer's audio level. */
-const peerAudioLevel = useHMSStore(selectPeerAudioByID(localpeer.id));
-console.log(`audio level for peer - ${localpeer.id} is ${peerAudioLevel}`);
+const AudioLevelInfo = () => {
+    /** get localpeer from store */
+    const localpeer = useHMSStore(selectLocalPeer);
+    /** get a given peer's audio level. */
+    const peerAudioLevel = useHMSStore(selectPeerAudioByID(localpeer.id));
+    console.log(`audio level for peer - ${localpeer.id} is ${peerAudioLevel}`);
 
-/** get all speakers. Gives back a list of all peers who are not muted. */
-const allSpeakers = useHMSStore(selectSpeakers);
-console.log('all speakers', allSpeakers);
+    /** get all speakers. Gives back a list of all peers who are not muted. */
+    const allSpeakers = useHMSStore(selectSpeakers);
+    console.log('all speakers', allSpeakers);
 
-/** gets the active speaker */
-const dominantSpeaker = useHMSStore(selectDominantSpeaker);
-console.log(
-    `current active speaker - ${dominantSpeaker.name} with role - ${dominantSpeaker.roleName}`
-);
+    /** gets the active speaker */
+    const dominantSpeaker = useHMSStore(selectDominantSpeaker);
+    console.log(
+        `current active speaker - ${dominantSpeaker.name} with role - ${dominantSpeaker.roleName}`
+    );
+    return (
+        <>
+            <h1>Active Speaker</h1>
+            <span>
+                {dominantSpeaker.name}: {dominantSpeaker.id}
+            </span>
+        </>
+    );
+};
 ```
 
 </Tab>
