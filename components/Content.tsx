@@ -11,6 +11,7 @@ import TemplatesRoles from '../common/templates-and-roles.md';
 import SecurityTokens from '../common/security-tokens.md';
 import DomainsPorts from '../common/firewall-and-ports.md';
 import LiveStreaming from '../common/live-streaming.md';
+import Recordings from '../common/basic_recording.md';
 
 const data = {
     basics: Basics,
@@ -20,6 +21,7 @@ const data = {
     securityAndTokens: SecurityTokens,
     domainsAndPorts: DomainsPorts,
     liveStreaming: LiveStreaming,
+    Recordings: Recordings,
 };
 
 interface Props {
