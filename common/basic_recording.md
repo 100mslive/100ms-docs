@@ -69,8 +69,14 @@ Storage for your recordings can be configured via Destinations in your template 
 
 4. Key in your credentials like (using an example of an S3 bucket here):
 
-`Access Key: (Access Key generated from AWS IAM Console) `Secret Key: (Access Key generated from AWS IAM Console)
-`Bucket: Name of the bucket in S3 `Region: Name of the region e.g ap-south1
+`Access Key: (Access Key generated from AWS IAM Console)
+<br>
+`Secret Key: (Access Key generated from AWS IAM Console)
+<br>
+`Bucket: Name of the bucket in S3
+<br>
+`Region: Name of the region e.g ap-south1
+<br>
 `Prefix for Upload Path: You can use this option to configure the upload path in your bucket
 
 ![Destinations](/docs/docs/v2/recording-storage-settings-step4.png)
