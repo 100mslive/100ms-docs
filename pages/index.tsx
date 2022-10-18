@@ -2,7 +2,6 @@
 import Footer from '@/components/Footer';
 import HomeDropDown from '@/components/HomeDropDown';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
-import { getAllDocs } from '@/lib/mdxUtils';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import {
     AndroidIcon,
@@ -33,7 +32,7 @@ const tabs = [
     { name: 'Mobile', id: 1 }
 ];
 
-const Homepage = ({ allDocs }) => {
+const Homepage = () => {
     const [activeTab, setActiveTab] = useState('Web');
     const [menu, setMenu] = useState(false);
     const [modal, setModal] = useState(false);
@@ -55,7 +54,6 @@ const Homepage = ({ allDocs }) => {
                     <Header
                         modal={modal}
                         setModal={setModal}
-                        docs={allDocs}
                         showMobileMenu={false}
                         menuState={menuState}
                         showReference={false}
@@ -416,15 +414,6 @@ const Homepage = ({ allDocs }) => {
             ) : null}
         </>
     );
-};
-
-export const getStaticProps = async () => {
-    const allDocs = await getAllDocs();
-    return {
-        props: {
-            allDocs
-        }
-    };
 };
 
 export default Homepage;

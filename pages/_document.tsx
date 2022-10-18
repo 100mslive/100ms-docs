@@ -8,7 +8,6 @@ class MyDocument extends Document {
             <Html lang="en">
                 <Head>
                     <link href="/docs/logo.svg" rel="shortcut icon" />
-                    <link href="/docs/static/favicons/site.webmanifest" rel="manifest" />
                     <link rel="preconnect" href="https://cdn.usefathom.com" crossOrigin="" />
                     <link
                         href="/docs/static/favicons/apple-touch-icon.png"
