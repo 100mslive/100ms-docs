@@ -82,6 +82,11 @@ const nextConfig = {
                 source: '/server-side/v2/features/rtmp-streaming-and-browser-recording',
                 destination: '/server-side/v2/Destinations/rtmp-streaming-and-browser-recording',
                 permanent: false
+            },
+            {
+                source: '/api-reference/server-side/v2/home/content',
+                destination: '/server-side/v2/introduction/basics',
+                permanent: false
             }
         ];
     }
