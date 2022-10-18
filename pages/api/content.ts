@@ -1,5 +1,6 @@
 import { getAllDocs, getNavfromDocs } from '@/lib/mdxUtils';
 import Cors from 'cors';
+import { readdirSync } from 'fs';
 
 const cors = Cors({
     methods: ['GET', 'HEAD']
@@ -18,15 +19,16 @@ function runMiddleware(req, res, fn) {
 
 export default async function handler(req, res) {
     await runMiddleware(req, res, cors);
-    const { query, section } = req.query;
-    console.log(req.query);
+    const sdks = readdirSync(`${process.cwd()}/docs`, { withFileTypes: true });
+    const { query, section, noCache } = req.query;
     const metaData = { lastQueryTime: new Date().toUTCString(), cache: 'MISS' };
     const data = getData({ filter: query, section });
-    if (Object.values(data).length) {
+    if (Object.values(data).length && noCache !== 'true') {
         metaData.cache = 'HIT';
         res.setHeader('Cache-Control', 's-maxage=669600'); // 31 days limit by vercel
     }
     res.status(200).json({ metaData, ...data });
+    console.log(sdks.map((file) => file.name));
 }
 
 const getData = ({ filter, section }) => {

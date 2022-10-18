@@ -57,10 +57,9 @@ interface Props {
 
 const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
     const {
-        query: { slug }
-    } = useRouter();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const router = useRouter() as any;
+        query: { slug },
+        asPath
+    } = useRouter() as any;
     const [currentDocSlug] = slug as string[];
     const [activeHeading, setActiveHeading] = React.useState('');
     const [activeSubHeading, setActiveSubHeading] = React.useState('');
@@ -68,9 +67,9 @@ const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
 
     React.useEffect(() => {
         setTimeout(() => {
-            scrollToUrlHash(router.asPath);
+            scrollToUrlHash(asPath);
         }, 500);
-    }, [router.asPath]);
+    }, [asPath]);
     React.useEffect(() => {
         if (!window.location.href.includes('#')) window.scrollTo(0, 0);
         const getTopIndex = (arr) => {
@@ -103,7 +102,7 @@ const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
     }, []);
     let showPagination = true;
     // Don't show Pagination for Android
-    if (router.query.slug[1] === 'android') {
+    if (slug[1] === 'android') {
         showPagination = false;
     }
     return (
@@ -115,7 +114,7 @@ const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
                 {pagination.previousPost && showPagination && (
                     <Pagination next={pagination.nextPost} prev={pagination.previousPost} />
                 )}
-                <EditFile slug={router.asPath} />
+                <EditFile slug={asPath} />
             </article>
             <Toc
                 activeHeading={activeHeading}

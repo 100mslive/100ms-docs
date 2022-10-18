@@ -53,7 +53,7 @@ const Header: React.FC<Props> = ({
     const { toggleTheme, themeType } = useTheme();
 
     React.useEffect(() => {
-        fetch('/docs/api/content?query=docs').then(res => res.json()).then(data => setAllDocs(data.docs)).catch()
+        fetch('/docs/api/content?query=docs').then(res => res.json()).then(data => setAllDocs(data.docs)).catch((e) => console.error('fetch api/content?query=docs failed', e))
         const theme = window.localStorage.getItem('theme') || 'dark';
         const docHtml = document.documentElement.dataset;
         setIsDark(theme === 'dark');
