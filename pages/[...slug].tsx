@@ -5,16 +5,15 @@ import Toc from '@/components/Toc';
 import DocLayout from '@/layouts/DocLayout';
 import getPagination from '@/lib/getPagination';
 import imagePlugin from '@/lib/image';
-import { DOCS_PATH } from '@/lib/mdxUtils';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import withTableofContents from '@/lib/withTableofContents';
-import fs from 'fs';
+import { readFileSync } from 'fs';
 import matter from 'gray-matter';
 import mdxPrism from 'mdx-prism';
 import hydrate from 'next-mdx-remote/hydrate';
 import renderToString from 'next-mdx-remote/render-to-string';
 import { useRouter } from 'next/router';
-import path from 'path';
+import { join } from 'path';
 import React from 'react';
 
 // type NavRoute = {
@@ -142,10 +141,11 @@ export default DocSlugs;
 
 export const getStaticProps = async ({ params }) => {
     // Absolute path of the docs file
-    const postFilePath = path.join(DOCS_PATH, `${path.join(...params.slug)}.mdx`);
+    const DOCS_PATH = join(process.cwd()) + '/docs';
+    const postFilePath = join(DOCS_PATH, `${join(...params.slug)}.mdx`);
     // Raw Mdx File Data Buffer
-    const source = fs.readFileSync(postFilePath);
-
+    console.log('source', postFilePath)
+    const source = readFileSync(postFilePath);
     /**
      * Content: Mdx Data
      * data: FrontMatter Data

@@ -10,11 +10,6 @@ class MyDocument extends Document {
                     <link href="/docs/logo.svg" rel="shortcut icon" />
                     <link rel="preconnect" href="https://cdn.usefathom.com" crossOrigin="" />
                     <link
-                        href="/docs/static/favicons/apple-touch-icon.png"
-                        rel="apple-touch-icon"
-                        sizes="180x180"
-                    />
-                    <link
                         href="/docs/static/favicons/favicon-32x32.png"
                         rel="icon"
                         sizes="32x32"
