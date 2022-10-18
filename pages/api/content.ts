@@ -21,6 +21,7 @@ function runMiddleware(req, res, fn) {
 export default async function handler(req, res) {
     await runMiddleware(req, res, cors);
     const jsonDirectory = path.join(process.cwd());
+    // @ts-ignore
     const sdks = readdirSync(`${jsonDirectory}/docs`, { withFileTypes: true });
     const { query, section, noCache } = req.query;
     const metaData = { lastQueryTime: new Date().toUTCString(), cache: 'MISS' };
@@ -30,7 +31,7 @@ export default async function handler(req, res) {
         res.setHeader('Cache-Control', 's-maxage=669600'); // 31 days limit by vercel
     }
     res.status(200).json({ metaData, ...data });
-    console.log(sdks.map((file) => file.name));
+    // console.log(sdks.map((file) => file.name));
 }
 
 const getData = ({ filter, section }) => {
