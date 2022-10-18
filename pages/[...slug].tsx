@@ -5,7 +5,7 @@ import Toc from '@/components/Toc';
 import DocLayout from '@/layouts/DocLayout';
 import getPagination from '@/lib/getPagination';
 import imagePlugin from '@/lib/image';
-import { DOCS_PATH, getAllDocs, getDocsPaths, getNavfromDocs } from '@/lib/mdxUtils';
+import { DOCS_PATH, getDocsPaths } from '@/lib/mdxUtils';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import withTableofContents from '@/lib/withTableofContents';
 import fs from 'fs';
@@ -151,9 +151,8 @@ export const getStaticProps = async ({ params }) => {
      * data: FrontMatter Data
      */
     const { content, data } = matter(source);
-
-    const allDocs = getAllDocs();
-    const nav = getNavfromDocs(allDocs);
+    const url = !process.env.VERCEL_URL || process.env.VERCEL_URL === 'localhost' ? `http://localhost:${process.env.PORT}` : `https://${process.env.VERCEL_URL}`;
+    const { docs: allDocs, nav } = (await (await fetch(`${url}/docs/api/content?query=*`)).json())
     const [currentDocSlug] = params.slug as string[];
     const currentDocs = allDocs.filter((doc) => doc.url.includes(`/${currentDocSlug}/`));
     const { previousPost, nextPost } = getPagination(currentDocs, params.slug as string[]);
