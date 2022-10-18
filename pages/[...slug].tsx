@@ -5,7 +5,7 @@ import Toc from '@/components/Toc';
 import DocLayout from '@/layouts/DocLayout';
 import getPagination from '@/lib/getPagination';
 import imagePlugin from '@/lib/image';
-import { DOCS_PATH, getDocsPaths } from '@/lib/mdxUtils';
+import { DOCS_PATH } from '@/lib/mdxUtils';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import withTableofContents from '@/lib/withTableofContents';
 import fs from 'fs';
@@ -183,20 +183,19 @@ export const getStaticProps = async ({ params }) => {
     };
 };
 
-export const getStaticPaths = async () => {
-    // Map the path into the static paths object required by Next.js
-    // Would Contains all slugs for files inside Docs
-    const paths = getDocsPaths().map((slug) => ({
-        params: {
-            slug: slug.split(path.sep).filter(Boolean)
-        }
-    }));
+export const getStaticPaths = async () =>
+// Map the path into the static paths object required by Next.js
+// Would Contains all slugs for files inside Docs
+// const paths = getDocsPaths().map((slug) => ({
+//     params: {
+//         slug: slug.split(path.sep).filter(Boolean)
+//     }
+// }));
 
-    return {
-        paths,
-        fallback: false
-    };
-};
+({
+    paths: [],
+    fallback: "blocking"
+});
 
 DocSlugs.getLayout = function getLayout(page) {
     return <DocLayout>{page}</DocLayout>;
