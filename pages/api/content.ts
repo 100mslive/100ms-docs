@@ -1,6 +1,7 @@
 import { getAllDocs, getNavfromDocs } from '@/lib/mdxUtils';
 import Cors from 'cors';
 import { readdirSync } from 'fs';
+import path from 'path';
 
 const cors = Cors({
     methods: ['GET', 'HEAD']
@@ -19,7 +20,8 @@ function runMiddleware(req, res, fn) {
 
 export default async function handler(req, res) {
     await runMiddleware(req, res, cors);
-    const sdks = readdirSync(`${process.cwd()}/docs`, { withFileTypes: true });
+    const jsonDirectory = path.join(process.cwd());
+    const sdks = readdirSync(`${jsonDirectory}/docs`, { withFileTypes: true });
     const { query, section, noCache } = req.query;
     const metaData = { lastQueryTime: new Date().toUTCString(), cache: 'MISS' };
     const data = getData({ filter: query, section });
