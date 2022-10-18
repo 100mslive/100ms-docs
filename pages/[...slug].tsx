@@ -7,8 +7,6 @@ import getPagination from '@/lib/getPagination';
 import imagePlugin from '@/lib/image';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import withTableofContents from '@/lib/withTableofContents';
-import { readFileSync } from 'fs';
-import matter from 'gray-matter';
 import mdxPrism from 'mdx-prism';
 import hydrate from 'next-mdx-remote/hydrate';
 import renderToString from 'next-mdx-remote/render-to-string';
@@ -140,17 +138,6 @@ const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
 export default DocSlugs;
 
 export const getStaticProps = async ({ params }) => {
-    // Absolute path of the docs file
-    const DOCS_PATH = join(process.cwd()) + '/docs';
-    const postFilePath = join(DOCS_PATH, `${join(...params.slug)}.mdx`);
-    // Raw Mdx File Data Buffer
-    console.log('source', postFilePath)
-    const source = readFileSync(postFilePath);
-    /**
-     * Content: Mdx Data
-     * data: FrontMatter Data
-     */
-    const { content, data } = matter(source);
     const url = !process.env.VERCEL_URL || process.env.VERCEL_URL === 'localhost' ? `http://localhost:${process.env.PORT}` : `https://${process.env.VERCEL_URL}`;
     const { docs: allDocs, nav } = (await (await fetch(`${url}/docs/api/content?query=*`)).json())
     const [currentDocSlug] = params.slug as string[];
@@ -158,6 +145,12 @@ export const getStaticProps = async ({ params }) => {
     const { previousPost, nextPost } = getPagination(currentDocs, params.slug as string[]);
     const pagination = { previousPost, nextPost };
     const toc = [];
+    const [currentNavDoc] = allDocs.filter((doc) => doc.url.includes(`/${join(...params.slug)}`));
+    const { content } = currentNavDoc
+    const data = {
+        ...currentNavDoc
+    }
+    delete data.content;
     const mdxSource = await renderToString(content, {
         components,
         // Optionally pass remark/rehype plugins
