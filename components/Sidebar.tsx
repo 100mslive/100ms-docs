@@ -8,7 +8,7 @@ import ServerIcon from '@/assets/icons/ServerIcon';
 import { Listbox } from '@headlessui/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 type NavRoute = {
     url: string;
@@ -20,8 +20,35 @@ interface Props {
     nav: Record<string, Record<string, NavRoute>>;
 }
 
-const Sidebar: React.FC<Props> = ({ nav, menu }) => {
-    const router = useRouter();
+const Sidebar: React.FC<Props> = ({ menu, nav: currentNav }) => {
+    const router = useRouter() as any;
+    const {
+        query: { slug },
+        asPath
+    } = router;
+    const [currentDocSlug] = slug as string[];
+    const [navAPI, setNavAPI] = useState(currentNav);
+    useEffect(() => {
+        fetch('/docs/api/content?query=nav').then(res => res.json()).then(result => setNavAPI(result.nav)).catch()
+    }, [])
+
+    let nav;
+    if (Object.keys(navAPI).length) {
+        const platform = navAPI[currentDocSlug];
+        if (slug[0] !== 'v1' && slug[0] !== 'v2') {
+            if (slug?.length > 3) {
+                nav = platform[slug[1]];
+                if (slug[0] === 'api-reference') {
+                    // if (slug[1] === 'android') {
+                    //     showPagination = false;
+                    // }
+                    nav = platform[slug[1]][slug[2]];
+                }
+            }
+        } else {
+            nav = platform;
+        }
+    }
     const menuItem = [
         {
             link: '/android/v2/foundation/basics',
@@ -61,18 +88,18 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
         }
     ];
     // @ts-ignore
-    let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === router.query.slug[0]);
+    let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]);
     // @ts-ignore
-    if (router.query.slug[0] === 'api-reference') {
+    if (slug[0] === 'api-reference') {
         // @ts-ignore
-        indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === router.query.slug[1]);
+        indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[1]);
     }
     indexOf = indexOf === -1 ? 0 : indexOf;
-    const [tech, setTech] = React.useState(menuItem[indexOf]);
+    const [tech, setTech] = useState(menuItem[indexOf]);
     const changeTech = (s) => {
         setTech(s);
         // @ts-ignore
-        if (router.query.slug[0] === 'api-reference') {
+        if (slug[0] === 'api-reference') {
             // @ts-ignore
             router.push(s.apiRef, undefined, {
                 shallow: false
@@ -129,10 +156,10 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 </Listbox>
             </section>
             {/* Sidebar Menu Section */}
-            {Object.entries(nav).map(([key, children], index) => (
+            {nav ? Object.entries(nav).map(([key, children], index) => (
                 <section className="menu-container" key={`${key}-${index}`}>
                     <div className="menu-title">{key.replace(/-/g, ' ')}</div>
-                    {Object.entries(children).map(([_, route]) =>
+                    {Object.entries(children as {}).map(([_, route]: [unknown, any]) =>
                         Object.prototype.hasOwnProperty.call(route, 'title') ? (
                             <Link
                                 scroll={false}
@@ -140,7 +167,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                                 href={route.url || ''}
                                 key={`${route.url}-${index}`}>
                                 <a
-                                    className={`menu-item ${route.url === router.asPath ? 'active-link' : ''
+                                    className={`menu-item ${route.url === asPath ? 'active-link' : ''
                                         }`}>
                                     {route.title}
                                 </a>
@@ -148,13 +175,13 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                         ) : null
                     )}
                     {/* @ts-ignore */}
-                    {key === 'features' && router.query.slug[0] !== 'server-side' ? (
+                    {key === 'features' && slug[0] !== 'server-side' ? (
                         <>
                             {aliasMenu.map((a) => (
                                 <Link scroll={false}
                                     prefetch={false} href={a.url} key={a.url}>
                                     <a
-                                        className={`menu-item ${a.url === router.asPath ? 'active-link' : ''
+                                        className={`menu-item ${a.url === asPath ? 'active-link' : ''
                                             }`}>
                                         {a.title}
                                     </a>
@@ -163,7 +190,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                         </>
                     ) : null}
                 </section>
-            ))}
+            )) : null}
             <style jsx>{`
                 .sidebar {
                     width: 288px;
