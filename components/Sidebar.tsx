@@ -49,58 +49,16 @@ const Sidebar: React.FC<Props> = ({ menu, nav: currentNav }) => {
             nav = platform;
         }
     }
-    const menuItem = [
-        {
-            link: '/android/v2/foundation/basics',
-            name: 'Android',
-            icon: <AndroidIcon />,
-            apiRef: '/api-reference/android/v2/index.html'
-        },
-        {
-            link: '/ios/v2/foundation/basics',
-            name: 'iOS',
-            icon: <IosIcon />,
-            apiRef: '/api-reference/ios/v2/home/content'
-        },
-        {
-            link: '/javascript/v2/foundation/basics',
-            name: 'JavaScript',
-            icon: <JavascriptIcon />,
-            apiRef: '/api-reference/javascript/v2/home/content'
-        },
-        {
-            link: '/react-native/v2/foundation/basics',
-            name: 'React-Native',
-            icon: <ReactIcon />,
-            apiRef: '/api-reference/react-native/v2/modules.html'
-        },
-        {
-            link: '/flutter/v2/foundation/basics',
-            name: 'Flutter',
-            icon: <FlutterIcon />,
-            apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
-        },
-        {
-            link: '/server-side/v2/introduction/basics',
-            name: 'Server-Side',
-            icon: <ServerIcon />,
-            apiRef: '/server-side/v2/introduction/basics'
-        }
-    ];
-    // @ts-ignore
+
     let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]);
-    // @ts-ignore
     if (slug[0] === 'api-reference') {
-        // @ts-ignore
         indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[1]);
     }
     indexOf = indexOf === -1 ? 0 : indexOf;
     const [tech, setTech] = useState(menuItem[indexOf]);
     const changeTech = (s) => {
         setTech(s);
-        // @ts-ignore
         if (slug[0] === 'api-reference') {
-            // @ts-ignore
             router.push(s.apiRef, undefined, {
                 shallow: false
             });
@@ -108,24 +66,7 @@ const Sidebar: React.FC<Props> = ({ menu, nav: currentNav }) => {
             router.push(s.link, undefined, { shallow: false });
         }
     };
-    const aliasMenu = [
-        {
-            title: 'Room APIs',
-            url: '/server-side/v2/Rooms/object'
-        },
-        {
-            title: 'Webhooks',
-            url: '/server-side/v2/introduction/webhook'
-        },
-        {
-            title: 'SFU Recording',
-            url: '/server-side/v2/Destinations/recording'
-        }
-        // {
-        //     title: 'Simulcast',
-        //     url: '/docs/server-side/v2/features/simulcast'
-        // }
-    ];
+
     return (
         <div className="sidebar">
             {/* Sidebar Version Section */}
@@ -174,7 +115,6 @@ const Sidebar: React.FC<Props> = ({ menu, nav: currentNav }) => {
                             </Link>
                         ) : null
                     )}
-                    {/* @ts-ignore */}
                     {key === 'features' && slug[0] !== 'server-side' ? (
                         <>
                             {aliasMenu.map((a) => (
@@ -199,7 +139,7 @@ const Sidebar: React.FC<Props> = ({ menu, nav: currentNav }) => {
                     align-items: stretch;
                     height: calc(100vh - 80px);
                     overflow-y: scroll;
-                    top: ${menu ? '' : '80px'};
+                    padding-top: ${menu ? '' : '14px'};
                     left: 0;
                     position: sticky;
                     background: var(--sidebar_bg);
@@ -292,3 +232,61 @@ const ChevronDown = () => (
         <path d="M6 9l6 6 6-6" />
     </svg>
 );
+
+const menuItem = [
+    {
+        link: '/android/v2/foundation/basics',
+        name: 'Android',
+        icon: <AndroidIcon />,
+        apiRef: '/api-reference/android/v2/index.html'
+    },
+    {
+        link: '/ios/v2/foundation/basics',
+        name: 'iOS',
+        icon: <IosIcon />,
+        apiRef: '/api-reference/ios/v2/home/content'
+    },
+    {
+        link: '/javascript/v2/foundation/basics',
+        name: 'JavaScript',
+        icon: <JavascriptIcon />,
+        apiRef: '/api-reference/javascript/v2/home/content'
+    },
+    {
+        link: '/react-native/v2/foundation/basics',
+        name: 'React-Native',
+        icon: <ReactIcon />,
+        apiRef: '/api-reference/react-native/v2/modules.html'
+    },
+    {
+        link: '/flutter/v2/foundation/basics',
+        name: 'Flutter',
+        icon: <FlutterIcon />,
+        apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
+    },
+    {
+        link: '/server-side/v2/introduction/basics',
+        name: 'Server-Side',
+        icon: <ServerIcon />,
+        apiRef: '/server-side/v2/introduction/basics'
+    }
+];
+
+const aliasMenu = [
+    {
+        title: 'Room APIs',
+        url: '/server-side/v2/Rooms/object'
+    },
+    {
+        title: 'Webhooks',
+        url: '/server-side/v2/introduction/webhook'
+    },
+    {
+        title: 'SFU Recording',
+        url: '/server-side/v2/Destinations/recording'
+    }
+    // {
+    //     title: 'Simulcast',
+    //     url: '/docs/server-side/v2/features/simulcast'
+    // }
+];
