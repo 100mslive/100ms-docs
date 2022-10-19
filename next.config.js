@@ -5,18 +5,18 @@ const nextConfig = {
     basePath: '/docs',
     webpack: (config, { isServer, dev }) => {
         // Fixes npm packages that depend on `fs` module
-        if (!isServer) {
-            config.node = {
-                fs: 'empty'
-            };
-        }
-        if (!dev && !isServer) {
-            Object.assign(config.resolve.alias, {
-                react: 'preact/compat',
-                'react-dom/test-utils': 'preact/test-utils',
-                'react-dom': 'preact/compat'
-            });
-        }
+
+        // config.node = {
+        //     fs: 'empty'
+        // };
+
+        // if (!dev && !isServer) {
+        //     Object.assign(config.resolve.alias, {
+        //         react: 'preact/compat',
+        //         'react-dom/test-utils': 'preact/test-utils',
+        //         'react-dom': 'preact/compat'
+        //     });
+        // }
 
         config.module.rules.push({
             test: /\.md$/,
@@ -81,31 +81,6 @@ const nextConfig = {
             {
                 source: '/server-side/v2/features/rtmp-streaming-and-browser-recording',
                 destination: '/server-side/v2/Destinations/rtmp-streaming-and-browser-recording',
-                permanent: false
-            },
-            {
-                source: '/ios/v2/release-notes/Release-Notes',
-                destination: '/ios/v2/changelog/release-notes',
-                permanent: false
-            },
-            {
-                source: '/android/v2/release-notes/release-notes',
-                destination: '/android/v2/changelog/release-notes',
-                permanent: false
-            },
-            {
-                source: '/javascript/v2/release-notes/release-notes',
-                destination: '/javascript/v2/changelog/release-notes',
-                permanent: false
-            },
-            {
-                source: '/react-native/v2/release-notes/release-notes',
-                destination: '/react-native/v2/changelog/release-notes',
-                permanent: false
-            },
-            {
-                source: '/flutter/v2/release-notes/release-notes',
-                destination: '/flutter/v2/changelog/release-notes',
                 permanent: false
             },
             {

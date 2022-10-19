@@ -5,7 +5,7 @@ import Toc from '@/components/Toc';
 import DocLayout from '@/layouts/DocLayout';
 import getPagination from '@/lib/getPagination';
 import imagePlugin from '@/lib/image';
-import { DOCS_PATH, getAllDocs, getDocsPaths } from '@/lib/mdxUtils';
+import { DOCS_PATH, getAllDocs, getDocsPaths, getNavfromDocs } from '@/lib/mdxUtils';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import withTableofContents from '@/lib/withTableofContents';
 import fs from 'fs';
@@ -16,7 +16,6 @@ import renderToString from 'next-mdx-remote/render-to-string';
 import { useRouter } from 'next/router';
 import path from 'path';
 import React from 'react';
-import setValue from 'set-value';
 
 // type NavRoute = {
 //     url: string;
@@ -31,17 +30,24 @@ export type AllDocsType = {
     content: string;
 };
 
+export interface PaginationType {
+    url: string;
+    title: string;
+    description: string;
+    nav: number;
+    content: unknown;
+}
 interface Props {
     frontMatter: {
         title: string;
         nav: number;
     };
     // nav: Record<string, Record<string, NavRoute>>;
-    // pagination: {
-    //     previousPost: PaginationType;
-    //     nextPost: PaginationType;
-    // };
-    allDocs: AllDocsType[];
+    pagination: {
+        previousPost: PaginationType;
+        nextPost: PaginationType;
+    };
+    // allDocs: AllDocsType[];
     source: {
         compiledSource: string;
         renderedOutput: string;
@@ -49,25 +55,21 @@ interface Props {
     };
 }
 
-const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
+const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
     const {
-        query: { slug }
-    } = useRouter();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const router = useRouter() as any;
+        query: { slug },
+        asPath
+    } = useRouter() as any;
     const [currentDocSlug] = slug as string[];
     const [activeHeading, setActiveHeading] = React.useState('');
     const [activeSubHeading, setActiveSubHeading] = React.useState('');
-    const currentDocs = allDocs.filter((doc) => doc.url.includes(`/${currentDocSlug}/`));
-    const { previousPost, nextPost } = getPagination(currentDocs, slug as string[]);
-    const pagination = { previousPost, nextPost };
     const content = hydrate(source, { components });
 
     React.useEffect(() => {
         setTimeout(() => {
-            scrollToUrlHash(router.asPath);
+            scrollToUrlHash(asPath);
         }, 500);
-    }, [router.asPath]);
+    }, [asPath]);
     React.useEffect(() => {
         if (!window.location.href.includes('#')) window.scrollTo(0, 0);
         const getTopIndex = (arr) => {
@@ -100,7 +102,7 @@ const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
     }, []);
     let showPagination = true;
     // Don't show Pagination for Android
-    if (router.query.slug[1] === 'android') {
+    if (slug[1] === 'android') {
         showPagination = false;
     }
     return (
@@ -112,7 +114,7 @@ const DocSlugs = ({ source, allDocs, frontMatter }: Props) => {
                 {pagination.previousPost && showPagination && (
                     <Pagination next={pagination.nextPost} prev={pagination.previousPost} />
                 )}
-                <EditFile slug={router.asPath} />
+                <EditFile slug={asPath} />
             </article>
             <Toc
                 activeHeading={activeHeading}
@@ -141,7 +143,6 @@ export default DocSlugs;
 export const getStaticProps = async ({ params }) => {
     // Absolute path of the docs file
     const postFilePath = path.join(DOCS_PATH, `${path.join(...params.slug)}.mdx`);
-
     // Raw Mdx File Data Buffer
     const source = fs.readFileSync(postFilePath);
 
@@ -151,18 +152,12 @@ export const getStaticProps = async ({ params }) => {
      */
     const { content, data } = matter(source);
 
-    const allDocs = await getAllDocs();
-
-    const nav = allDocs.reduce((n, file) => {
-        const [lib, ...rest] = file.url.split('/').filter(Boolean);
-        const pathV = `${lib}${rest.length === 1 ? '..' : '.'}${rest.join('.')}`;
-        // Set nested properties on an object using dot-notation.
-        // set(obj, 'a.b.c', 'd');
-        // => { a: { b: { c: 'd' } } }
-        setValue(n, pathV, file);
-        return n;
-    }, {});
-
+    const allDocs = getAllDocs();
+    const nav = getNavfromDocs(allDocs);
+    const [currentDocSlug] = params.slug as string[];
+    const currentDocs = allDocs.filter((doc) => doc.url.includes(`/${currentDocSlug}/`));
+    const { previousPost, nextPost } = getPagination(currentDocs, params.slug as string[]);
+    const pagination = { previousPost, nextPost };
     const toc = [];
     const mdxSource = await renderToString(content, {
         components,
@@ -178,14 +173,13 @@ export const getStaticProps = async ({ params }) => {
         },
         scope: data
     });
-
     return {
         props: {
             toc,
-            nav,
-            source: mdxSource,
+            pagination,
+            nav: { [currentDocSlug]: nav[currentDocSlug] },
+            source: mdxSource, // { compiledSource: mdxSource.compiledSource },
             frontMatter: data,
-            allDocs
         }
     };
 };
@@ -193,7 +187,7 @@ export const getStaticProps = async ({ params }) => {
 export const getStaticPaths = async () => {
     // Map the path into the static paths object required by Next.js
     // Would Contains all slugs for files inside Docs
-    const paths = (await getDocsPaths()).map((slug) => ({
+    const paths = getDocsPaths().map((slug) => ({
         params: {
             slug: slug.split(path.sep).filter(Boolean)
         }

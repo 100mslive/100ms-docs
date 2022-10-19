@@ -11,46 +11,22 @@ interface Props {
 }
 
 export default function Layout({ children }: Props) {
-    const { frontMatter, allDocs } = children.props;
+    const { frontMatter, nav } = children.props;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const router = useRouter() as any;
-    const {
-        query: { slug }
-    } = useRouter();
-    const [currentDocSlug] = slug as string[];
     const SEO = {
-        title: `${
-            frontMatter.title || '100ms Docs'
-        } | 100ms - Video conferencing infrastructure for a video-first world`,
+        title: `${frontMatter.title || '100ms Docs'
+            } | 100ms - Video conferencing infrastructure for a video-first world`,
         openGraph: {
-            title: `${
-                frontMatter.title || '100ms Docs'
-            } | 100ms - Video conferencing infrastructure for a video-first world`
+            title: `${frontMatter.title || '100ms Docs'
+                } | 100ms - Video conferencing infrastructure for a video-first world`
         },
-        canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${
-            router.asPath === '/' ? '' : router.asPath.split('?')[0]
-        }`
+        canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${router.asPath === '/' ? '' : router.asPath.split('?')[0]
+            }`
     };
     const [menu, setMenu] = React.useState(false);
     const [modal, setModal] = React.useState(false);
     const menuState = { menu, setMenu };
-
-    let newNav;
-    let { nav } = children.props;
-    nav = nav[currentDocSlug];
-    if (router.query.slug[0] !== 'v1' && router.query.slug[0] !== 'v2') {
-        if (router.query.slug?.length > 3) {
-            newNav = nav[router.query.slug[1]];
-            if (router.query.slug[0] === 'api-reference') {
-                // if (router.query.slug[1] === 'android') {
-                //     showPagination = false;
-                // }
-                newNav = nav[router.query.slug[1]][router.query.slug[2]];
-            }
-        }
-    } else {
-        newNav = nav;
-    }
 
     useLockBodyScroll(modal);
     return (
@@ -58,7 +34,7 @@ export default function Layout({ children }: Props) {
             <div style={{ margin: '0' }}>
                 <NextSeo {...SEO} />
                 <SegmentAnalytics options={{}} title={frontMatter.title} />
-                <Header modal={modal} setModal={setModal} menuState={menuState} docs={allDocs} />
+                <Header modal={modal} setModal={setModal} menuState={menuState} />
                 <div className="ctx">
                     <div className="content-wrapper">
                         <div
@@ -66,7 +42,7 @@ export default function Layout({ children }: Props) {
                             style={{
                                 borderRight: '1px solid var(--new_border_default)'
                             }}>
-                            <Sidebar menu={menu} nav={newNav} />
+                            <Sidebar menu={menu} nav={nav} />
                         </div>
                         {!menu ? children : null}
                     </div>
