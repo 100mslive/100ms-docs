@@ -6,9 +6,7 @@ Each template will be identified by its id or name. For example `default_videoco
 
 Users can see or modify the templates by visiting [Templates on Dashboard](https://dashboard.100ms.live/templates) or via API(see below). After updating a template or some part of its like permissions, you need to rejoin or restart the session for the template updates to take place.
 
-
 ![Template](/docs/docs/v2/template.png)
-
 
 ## Roles
 
@@ -65,11 +63,11 @@ As the name suggests, Advanced Settings section contains more settings and contr
 
 ![Template](/docs/docs/v2/advanced-settings.png)
 
-### Pre-join room state
+### Preview room state
 
-Pre-join room state enables you to build a "preview" screen which shows the state of the room before joining. This room state includes a list of peers, which can be used to show who is in the room. Pre-join room state also includes recording and streaming state.
+Preview room state enables you to build a "preview" screen which shows the state of the room before joining. This room state includes a list of peers, which can be used to show who is in the room. Preview room state also includes recording and streaming state.
 
-Pre-join room state settings define strategy of sending state updates to client SDKs.
+Preview room state settings define strategy of sending state updates to client SDKs.
 
 | Setting                                  | Description                                                                                                                                                                                                                                        |
 | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
