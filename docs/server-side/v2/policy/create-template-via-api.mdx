@@ -572,56 +572,55 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 ### browserRecordings object
 
-| Name            | Type     | Description                                                                                                                                                                                     | Required |
-| :-------------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name            | `string` | The name you can assign to identify the browser recording                                                                                                                                       | No       |
-| width           | `int`    | Indicates the width of the screen to be recorded in pixels. For example, 1280 pixels. <br/><br/> **Min, max, default** = 500, 1280, 1920.                                                       | No       |
-| height          | `int`    | Indicates the height of the screen to be recorded in pixels. For example, 720 pixels. <br/><br/> **Min, max, default** = 480, 720, 1920.                                                        | No       |
-| maxDuration     | `int`    | Sets the maximum duration, in seconds, of the recording. For example, 1800 seconds (30 mins). <br/><br/> **Min, max, default** = 1800 (30 mins), 14,400 (4 hours), 28,800 (8 hours)             | No       |
-| thumbnails      | `object` | Object of type `thumbnails`. This can be used to configure thumbnail's dimension                                                                                                                | No       |
-| presignDuration | `int`    | Indicates the expiry of the pre-signed URLs—the duration for which the pre-signed URL should be signed. <br/><br/> **Min, max, default** = 3,600 (1 hour), 2,59,200 (3 days), 6,04,800 (7 days) | No       |
+| Name            | Type     | Description                                                                                                                                                                                       | Required |
+| :-------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| name            | `string` | The name you can assign to identify the browser recording                                                                                                                                         | No       |
+| width           | `int`    | Indicates the width of the screen to be recorded in pixels. For example, 1280 pixels. <br/><br/> **Min, default, & max** = 500, 1280, 1920.                                                       | No       |
+| height          | `int`    | Indicates the height of the screen to be recorded in pixels. For example, 720 pixels. <br/><br/> **Min, default, & max** = 480, 720, 1920.                                                        | No       |
+| maxDuration     | `int`    | Sets the maximum duration, in seconds, of the recording. For example, 1800 seconds (30 mins). <br/><br/> **Min, default, & max** = 1800 (30 mins), 14,400 (4 hours), 28,800 (8 hours)             | No       |
+| thumbnails      | `object` | Object of type `thumbnails`. This can be used to configure thumbnail's dimension                                                                                                                  | No       |
+| presignDuration | `int`    | Indicates the expiry of the pre-signed URLs—the duration for which the pre-signed URL should be signed. <br/><br/> **Min, default, & max** = 3,600 (1 hour), 2,59,200 (3 days), 6,04,800 (7 days) | No       |
 
 ### rtmpDestinations object
 
-| Name             | Type      | Description                                                                                                                                      | Required |
-| :--------------- | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name             | `string`  | The name you can assign to identify the RTMP destination                                                                                         | No       |
-| width            | `int`     | Indicates the width of the screen to be recorded in pixels. For example, 1280 pixels                                                             | No       |
-| height           | `int`     | Indicates the height of the screen to be recorded in pixels. For example, 720 pixels                                                             | No       |
-| maxDuration      | `int`     | Sets the maximum duration, in seconds, of the recording. For example, 1800 seconds(30 mins)                                                      | No       |
-| rtmpUrls         | `object`  | Object of type `rtmpUrls`. This can be used to configure the RTMP URLs(max 3) you wish to broadcast the stream to. intentionally making a mistke | No       |
-| recordingEnabled | `boolean` | If recording is required this can be set as true. This value has no effect on streaming.                                                         | No       |
+| Name             | Type      | Description                                                                                                                                                                          | Required |
+| :--------------- | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| name             | `string`  | The name you can assign to identify the RTMP destination                                                                                                                             | No       |
+| width            | `int`     | Indicates the width of the screen to be recorded in pixels. For example, 1280 pixels. <br/><br/> **Min, default, & max** = 500, 1280, 1920.                                          | No       |
+| height           | `int`     | Indicates the height of the screen to be recorded in pixels. For example, 720 pixels. <br/><br/> **Min, default, & max** = 480, 720, 1920.                                           | No       |
+| maxDuration      | `int`     | Sets the maximum duration, in seconds, of the recording. For example, 1800 seconds(30 mins). <br/><br/> **Min, default, & max** = 1800 (30 mins), 14,400 (4 hours), 28,800 (8 hours) | No       |
+| rtmpUrls         | `object`  | Object of type `rtmpUrls`. This can be used to configure the RTMP URLs (max 3) you wish to broadcast the stream to.                                                                  | No       |
+| recordingEnabled | `boolean` | If recording is required this can be set as true. This value has no effect on streaming.                                                                                             | No       |
 
 ### hlsDestinations object
 
-| Name                    | Type      | Description                                                                                                                | Required |
-| :---------------------- | :-------- | :------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name                    | `string`  | The name you can assign to identify the HLS destination                                                                    | No       |
-| maxDuration             | `int`     | Sets the maximum duration, in seconds, of the recording. For example, 1800 seconds(30 mins)                                | No       |
-| layers                  | `object`  | Object of type `layers`. This can be used to configure the various dimensions to be supported for HLS streaming.           | No       |
-| playlistType            | `string`  | Indicates the type of playlist. Can be of type `event` or `live`.                                                          | No       |
-| numPlaylistSegments     | `int`     | Indicates the number of media segments in the playlist. Applicable only for `live` playlistType. Min/max/default = 3/12/5. | No       |
-| videoFrameRate          | `int`     | Set this argument to configure the frames per second (or FPS) for your stream. For example, 25                             | No       |
-| enableMetadataInsertion | `boolean` | Set this to true to enable metadata insertion along with the stream.                                                       | No       |
-| enableStaticUrl         | `boolean` | If recording is required this can be set as true. This value has no effect on streaming.                                   | No       |
-| recording               | `object`  | Object of type `recording`. This can be used to enable HLS recording and configure the layers, thumbnails, etc.            | No       |
+| Name                    | Type      | Description                                                                                                                                                                           | Required |
+| :---------------------- | :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| name                    | `string`  | The name you can assign to identify the HLS destination                                                                                                                               | No       |
+| maxDuration             | `int`     | Sets the maximum duration, in seconds, of the recording. For example, 1800 seconds (30 mins). <br/><br/> **Min, default, & max** = 1800 (30 mins), 14,400 (4 hours), 28,800 (8 hours) | No       |
+| layers                  | `object`  | Object of type `layers`. This can be used to configure the various dimensions to be supported for HLS streaming.                                                                      | No       |
+| playlistType            | `string`  | Indicates the type of playlist. Can be of type `event` or `live`.                                                                                                                     | No       |
+| numPlaylistSegments     | `int`     | Indicates the number of media segments in the playlist. Applicable only for `live` playlistType. <br/><br/> **Min, default, & max** = 3, 5, 12.                                       | No       |
+| videoFrameRate          | `int`     | Set this argument to configure the frames per second (or FPS) for your stream. For example, 25. <br/><br/> **Min, default, & max** = 10, 20, 30.                                      | No       |
+| enableMetadataInsertion | `boolean` | Set this to true to enable metadata insertion along with the stream.                                                                                                                  | No       |
+| enableStaticUrl         | `boolean` | If recording is required this can be set as true. This value has no effect on streaming.                                                                                              | No       |
+| recording               | `object`  | Object of type `recording`. This can be used to enable HLS recording and configure the layers, thumbnails, etc.                                                                       | No       |
 
 #### HLS - recording object
 
 | Name               | Type      | Description                                                                                                      | Required |
 | :----------------- | :-------- | :--------------------------------------------------------------------------------------------------------------- | :------- |
 | hlsVod             | `boolean` | The name you can assign to identify the HLS destination                                                          | No       |
-| singleFilePerLayer | `boolean` | Sets the maximum duration, in seconds, of the recording. For example, 1800 seconds(30 mins)                      | No       |
+| singleFilePerLayer | `boolean` | Set this to true if the desired result is an mp4 file per HLS layer. Defaults to false.                          | No       |
 | layers             | `object`  | Object of type `layers`. This can be used to configure the various dimensions to be supported for HLS recording. | No       |
 | thumbnails         | `object`  | Object of type `thumbnails`. This can be used to configure thumbnail's dimension                                 | No       |
 | presignDuration    | `int`     | Indicates the expiry of the pre-signed URLs—the duration for which the pre-signed URL should be signed.          | No       |
 
-#### HLS recording - layers object
+#### HLS - layers object
 
-| Name               | Type      | Description                                                                                                      | Required |
-| :----------------- | :-------- | :--------------------------------------------------------------------------------------------------------------- | :------- |
-| width              | `int`     | Indicates the width of the screen to be recorded in pixels. For example, 1280 pixels                             | No       |
-| singleFilePerLayer | `boolean` | Sets the maximum duration, in seconds, of the recording. For example, 1800 seconds(30 mins)                      | No       |
-| layers             | `object`  | Object of type `layers`. This can be used to configure the various dimensions to be supported for HLS recording. | No       |
-| thumbnails         | `object`  | Object of type `thumbnails`. This can be used to configure thumbnail's dimension                                 | No       |
-| presignDuration    | `int`     | Indicates the expiry of the pre-signed URLs—the duration for which the pre-signed URL should be signed.          | No       |
+| Name         | Type  | Description                                                                                                                              | Required |
+| :----------- | :---- | :--------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| width        | `int` | Indicates the width of the screen to be recorded in pixels. For example, 1280 pixels. <br/><br/> **Min, default, & max** = 240, -, 1920. | No       |
+| height       | `int` | Indicates the height of the screen to be recorded in pixels. For example, 720 pixels. <br/><br/> **Min, default, & max** = 240, -, 1920. | No       |
+| videoBitrate | `int` | Bitrate of video track in kbps. For example, 200 kbps. <br/><br/> **Min, default, & max** = 200, -, 5500.                                | No       |
+| audioBitrate | `int` | Bitrate of audio track in kbps. For example, 32 kbps. <br/><br/> **Min, default, & max** = 32, 64, 128.                                  | No       |
