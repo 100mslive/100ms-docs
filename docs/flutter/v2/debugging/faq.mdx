@@ -65,8 +65,10 @@ You can find more details about HMSUpdateListener [here](../features/update-list
 ## Can I create a room using API?
 Yes,please find the link [here](/server-side/v2/Rooms/create-via-api).
 
-## Screenshare not working in the background iOS?
-Yes, for iOS 16 and above screenshare will not work in the background. (will be fixed in the next release)
+## Screenshare not working in the background on iOS?
+On iOS 16, if you start Screenshare from an iPhone/iPad running iOS 16 version, then if the app is in foreground then Screenshare will work fine. But if you start Screenshare & background the app, then Screenshare pauses as the SDK is unable to send video frames using IPC. This results in other peers in room seeing stuck frame. We are actively working to resolve this issue. On iOS 15 or below, this issue does not exists. 
+
+Note that viewing Screenshare on iOS 16 devices is unaffected by this & works fine.
 
 ## I want to suggest a new feature.
 Awesome, we're always looking out for new ideas and features. Please reach out to us over [discord](https://100ms.live/discord).
