@@ -24,12 +24,13 @@ interface Props {
 }
 
 const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
-    const { menu, setMenu } = menuState;
     const router = useRouter() as any;
     const {
         query: { slug },
         asPath
     } = router;
+    const { menu, setMenu } = menuState;
+    useEffect(() => { setMenu(false) }, [router])
     const [currentDocSlug] = slug as string[];
     const [navAPI, setNavAPI] = useState(currentNav);
     useEffect(() => {
@@ -112,7 +113,6 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                                 href={route.url || ''}
                                 key={`${route.url}-${index}`}>
                                 <a
-                                    onClick={() => setMenu(false)}
                                     className={`menu-item ${route.url === asPath ? 'active-link' : ''
                                         }`}>
                                     {route.title}
@@ -126,7 +126,6 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                                 <Link scroll={false}
                                     prefetch={false} href={a.url} key={a.url}>
                                     <a
-                                        onClick={() => setMenu(false)}
                                         className={`menu-item ${a.url === asPath ? 'active-link' : ''
                                             }`}>
                                         {a.title}
