@@ -16,16 +16,21 @@ type NavRoute = {
 };
 
 interface Props {
-    menu: boolean;
+    menuState: {
+        menu: boolean;
+        setMenu: React.Dispatch<React.SetStateAction<boolean>>;
+    };
     nav: Record<string, Record<string, NavRoute>>;
 }
 
-const Sidebar: React.FC<Props> = ({ menu, nav: currentNav }) => {
+const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
     const router = useRouter() as any;
     const {
         query: { slug },
         asPath
     } = router;
+    const { menu, setMenu } = menuState;
+    useEffect(() => { setMenu(false) }, [router])
     const [currentDocSlug] = slug as string[];
     const [navAPI, setNavAPI] = useState(currentNav);
     useEffect(() => {
@@ -139,7 +144,7 @@ const Sidebar: React.FC<Props> = ({ menu, nav: currentNav }) => {
                     align-items: stretch;
                     height: calc(100vh - 80px);
                     overflow-y: scroll;
-                    padding-top: ${menu ? '' : '14px'};
+                    top: ${menu ? '' : '14px'};
                     left: 0;
                     position: sticky;
                     background: var(--sidebar_bg);
