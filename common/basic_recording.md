@@ -1,16 +1,17 @@
 Recordings are an important part of the live video stack as they convert live, ephemeral content into a long-term asset. But the use of this asset varies from business to business depending on their respective use case.
 
-For e.g, one of the common use cases for recording is for archival purposes versus, for some, its content to be publicised.
+For example, one of the common use cases for recording is for archival purposes versus, for some, its content to be publicised.
 
 Based on your end goal, you can choose one of the recording types and its implementation. You can understand some key differences using the comparison table below.
 
+
 # Recording types
 
-- [Browser recording](#browser-recording-recommended): ...
-- SFU recording: ...
-- Recordings for [Live Streaming](live-streaming) use-cases
-  - Video-on-demand
-  - Multi-resolution
+- [Browser recording](#browser-recording-recommended)
+- [SFU recording](#sfu-recording-advanced)
+- Recordings for [Live Streaming](live-streaming) use-cases:
+  - [Video-on-demand](#video-on-demand-recording)
+  - [Multiresolution](#multiresolution-recording)
 
 ## Quick comparison
 
@@ -22,13 +23,12 @@ Based on your end goal, you can choose one of the recording types and its implem
 | Start/Stop Recording                 | On-demand                       | Auto start/stop with the session|
 | Custom Layout                        | Available                       | Not Available                   |
 | Role Specific Recording              | Available                       | Not Available                   |
-| Recording Output                     | MP4.                            | MP4, WebM                       |
+| Recording Output                     | MP4                             | MP4, WebM                       |
+
 
 ## Browser Recording [Recommended]
 
-Browser recording is built to give users a participant-first recording experience. When enabled, our browser-based bot Beam joins a room to record the viewport like any other participant. The output is an MP4 file that captures the room's published audio/video tracks together into one single file. This option removes the complexity of syncing various audio/video tracks and offers an intuitive, participant-first recording experience.
-
-**Use cases:** Record a sales meeting, record a class, etc.
+Browser recording is built to give users a participant-first recording experience. When enabled, our browser-based bot Beam joins a room to record the viewport like any other participant. The output is an MP4 file that captures the room's published audio/video tracks together into one single file. This option removes the complexity of syncing various audio/video tracks and offers an intuitive, participant-first recording experience. An example use case is to record a sales meeting for later usage.
 
 **Resources**
 
@@ -36,7 +36,7 @@ Browser recording is built to give users a participant-first recording experienc
 
 ## SFU Recording [Advanced]
 
-SFU recording is built for advanced use cases which require individual audio and video tracks for each participant. This recording option allows you to isolate recording at a participant level. Track recording allows you to record audio and video streams separately, making it easier to edit, layer, or reuse each of them.
+SFU recording is built for advanced use cases which require individual audio and video tracks for each participant. This recording option allows you to isolate recording at a participant level. Track recording allows you to record audio and video streams separately, making it easier to edit, layer, or reuse each of them. An example use case is to record a live podcast and later edit it for publishing.
 
 You can get track recordings in two forms:
 
@@ -44,11 +44,9 @@ You can get track recordings in two forms:
 
 -   Composite [currently in beta]: Audio and video of all peers are composed as per their joining/leaving the meeting and provided as a single mp4. This file can be used for offline viewing of the meeting.
 
-**Use-cases:** Recording a live podcast, recording a room with high number of participants, etc.
-
 **Resources**
 
--   **How to implement SFU Recording**: [Click here](https://www.100ms.live/docs/server-side/v2/Destinations/recording)
+-   [How to implement SFU Recording](https://www.100ms.live/docs/server-side/v2/Destinations/recording)
 
 ## Recordings for Live Streaming use-cases
 
@@ -56,9 +54,10 @@ You can get track recordings in two forms:
 
 Video on-demand recording is available for our Interactive Live Streaming capability. This recording will be a file with an M3U8 file (same playback format as HLS), which can be used for replaying your HLS stream. This option is more suitable for Video-on-Demand use cases. For the implementation of this type of recording, please [contact us](https://www.100ms.live/contact).
 
-### Multi-resolution Recording
+### Multiresolution Recording
 
 A multi-resolution recording is available for Interactive Live Streaming capability. This type of recording will have a multi-file structure for all available resolutions of the stream. The output will be multiple MP4 files with these resolutions: 240p, 480p, 720p and 1080p. For an implementation of this type of recording, please [contact us](https://www.100ms.live/contact).
+
 
 # Configure storage
 
@@ -66,7 +65,7 @@ You can specify a cloud storage location for your recording files in your in you
 
 ## How to configure recording storage?
 
-1. Generate your credentials, for this example, you can check out a [guide from AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html). You can skip this step if you already have credentials. Please note that if you are running Browser recording you need to give just upload permission to your keys, but if you are running SFU recordings, you need to give both upload and download permission.
+1. Generate your credentials, for this example, you can check out a [guide from AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html). You can skip this step if you already have credentials. Please note that if you are running a Browser recording you need to give an upload permission to your key, but if you are running a SFU recording, you need to give both upload and download permission.
 
 2. Go to 100ms Dashboard and go to template **configuration by selecting the configure icon**.
 
