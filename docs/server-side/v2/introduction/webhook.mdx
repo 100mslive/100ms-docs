@@ -556,22 +556,22 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
 
 #### Attributes
 
-| Name               | Type                 | Description                                    | Example                              |
-| :----------------- | :------------------- | :--------------------------------------------- | :----------------------------------- |
-| beam_id            | `string`             | Unique beam id                                 | 61d3def54b616982bd80ed83             |
-| job_id             | `string`             | Beam job id                                    | 60b8e1d96eb86d8101b57359             |
-| room_id            | `string`             | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| session_id         | `string`             | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df             |
-| metadata_id        | `string`             | Webhook metadata ID                            | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| template_id        | `string`             | Template ID of the room                        | 66112497abcd52312556c4gg             |
-| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp             | 2020-11-11T17:32:17Z                 |
-| start_delay        | `number`             | Time taken by beam to start recording          | 12                                   |
-| state_name         | `string`             | Beam state identifier                          | Started                              |
-| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed          | 2020-11-11T17:32:18Z                 |
-| meeting_url        | `string`             | meeting_url provided at rtmp start             | "https://app.100ms.live/room_id"     |
-| rtmp               | `array`              | List of RTMP objects provided at rtmp start    | [{"url": "http://test.com"}]         |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started                 | 2020-11-11T16:32:17Z                 |
+| Name                                         | Description                                                                                             |
+| :------------------------------------------- | :------------------------------------------------------------------------------------------------------ |
+| beam_id <br/>`string`                        | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                             |
+| job_id <br/>`string`                         | Beam job id <br/><br/> Example: 60b8e1d96eb86d8101b57359                                                |
+| room_id <br/>`string`                        | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                     |
+| peer_id <br/>`string`                        | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
+| session_id <br/>`string`                     | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                  |
+| metadata_id <br/>`string`                    | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                            |
+| template_id <br/>`string`                    | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                    |
+| metadata_timestamp <br/>`timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> Example: 2020-11-11T17:32:17Z                             |
+| start_delay <br/>`number`                    | Time taken by beam to start recording <br/><br/> Example: 12                                            |
+| state_name <br/>`string`                     | Beam state identifier <br/><br/> Example: Started                                                       |
+| state_timestamp <br/>`timestamp (in UTC)`    | Timestamp at which beam state changed <br/><br/> Example: 2020-11-11T17:32:18Z                          |
+| meeting_url <br/>`string`                    | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                 |
+| rtmp <br/>`array`                            | List of RTMP objects provided at rtmp start <br/><br/> Example: [{"url": "http://test.com"}]            |
+| session_started_at <br/>`timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                 |
 
 #### Sample `beam.started.success` event
 
@@ -607,22 +607,24 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
 
 #### Attributes
 
-| Name               | Type                 | Description                                       | Example                              |
-| :----------------- | :------------------- | :------------------------------------------------ | :----------------------------------- |
-| beam_id            | `string`             | Unique beam id                                    | 61d3def54b616982bd80ed83             |
-| job_id             | `string`             | Beam job id                                       | 60b8e1d96eb86d8101b57359             |
-| room_id            | `string`             | 100ms assigned room id                            | 5f9edc6ac238215aec2312df             |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user    | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| session_id         | `string`             | 100ms assigned id to identify the session         | 5f9edc6bd238215aec7700df             |
-| metadata_id        | `string`             | Webhook metadata ID                               | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| template_id        | `string`             | Template ID of the room                           | 66112497abcd52312556c4gg             |
-| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp                | 2020-11-11T17:32:17Z                 |
-| state_name         | `string`             | Beam state identifier                             | Stopped                              |
-| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed             | 2020-11-11T17:32:18Z                 |
-| duration           | `number`             | Duration of RTMP streaming / recording in seconds | 12                                   |
-| meeting_url        | `string`             | meeting_url provided at rtmp start                | "https://app.100ms.live/room_id"     |
-| rtmp               | `array`              | List of RTMP objects provided at rtmp start       | [{"url": "http://test.com"}]         |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started                    | 2020-11-11T16:32:17Z                 |
+| Name               | Type                 | Description                                                                | Example                              |
+| :----------------- | :------------------- | :------------------------------------------------------------------------- | :----------------------------------- |
+| beam_id            | `string`             | Unique beam id                                                             | 61d3def54b616982bd80ed83             |
+| job_id             | `string`             | Beam job id                                                                | 60b8e1d96eb86d8101b57359             |
+| room_id            | `string`             | 100ms assigned room id                                                     | 5f9edc6ac238215aec2312df             |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user                             | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
+| session_id         | `string`             | 100ms assigned id to identify the session                                  | 5f9edc6bd238215aec7700df             |
+| metadata_id        | `string`             | Webhook metadata ID                                                        | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
+| template_id        | `string`             | Template ID of the room                                                    | 66112497abcd52312556c4gg             |
+| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp                                         | 2020-11-11T17:32:17Z                 |
+| state_name         | `string`             | Beam state identifier                                                      | Stopped                              |
+| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed                                      | 2020-11-11T17:32:18Z                 |
+| duration           | `number`             | Duration of RTMP streaming / recording in seconds                          | 12                                   |
+| max_width          | `int`                | Maximum width of the screen supported for streaming / recording in pixels  | 1280                                 |
+| max_height         | `int`                | Maximum height of the screen supported for streaming / recording in pixels | 720                                  |
+| meeting_url        | `string`             | meeting_url provided at rtmp start                                         | "https://app.100ms.live/room_id"     |
+| rtmp               | `array`              | List of RTMP objects provided at rtmp start                                | [{"url": "http://test.com"}]         |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started                                             | 2020-11-11T16:32:17Z                 |
 
 #### Sample `beam.stopped.success` event
 
@@ -645,6 +647,8 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
         "state_name": "Stopped",
         "state_timestamp": "2021-11-30T12:59:57.685503281Z",
         "duration": 56,
+        "max_height": 720,
+        "max_width": 1280,
         "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
         "rtmp": [{ "url": "http://test.com" }],
         "session_started_at": "2021-11-30T12:58:49.97291247Z"
@@ -658,23 +662,25 @@ This event is sent when beam successfully records the room and uploads the video
 
 #### Attributes
 
-| Name               | Type                 | Description                                     | Example                              |
-| :----------------- | :------------------- | :---------------------------------------------- | :----------------------------------- |
-| beam_id            | `string`             | Unique beam id                                  | 61d3def54b616982bd80ed83             |
-| room_id            | `string`             | 100ms assigned room id                          | 5f9edc6ac238215aec2312df             |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user  | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| metadata_id        | `string`             | Webhook metadata ID                             | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp              | 2020-11-11T17:32:17Z                 |
-| session_id         | `string`             | 100ms assigned id to identify the session       | 5f9edc6bd238215aec7700df             |
-| template_id        | `string`             | Template ID of the room                         | 66112497abcd52312556c4gg             |
-| created_at         | `timestamp (in UTC)` | Timestamp at which recording was created        | 2020-11-11T17:12:17Z                 |
-| duration           | `number`             | Duration of beam recording (seconds)            | 79                                   |
-| location           | `string`             | HTTPS url to recorded session file on S3 bucket | https://s3-loc/bucket/beam/ac.mp4    |
-| started_at         | `timestamp (in UTC)` | Beam recording started at                       | 2020-11-11T17:12:27Z                 |
-| stopped_at         | `timestamp (in UTC)` | Beam recording stopped at                       | 2020-11-11T17:32:15Z                 |
-| meeting_url        | `string`             | meeting_url provided at rtmp start              | "https://app.100ms.live/room_id"     |
-| rtmp               | `array`              | List of RTMP objects provided at rtmp start     | [{"url": "http://test.com"}]         |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started                  | 2020-11-11T16:32:17Z                 |
+| Name               | Type                 | Description                                                    | Example                              |
+| :----------------- | :------------------- | :------------------------------------------------------------- | :----------------------------------- |
+| beam_id            | `string`             | Unique beam id                                                 | 61d3def54b616982bd80ed83             |
+| room_id            | `string`             | 100ms assigned room id                                         | 5f9edc6ac238215aec2312df             |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user                 | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
+| metadata_id        | `string`             | Webhook metadata ID                                            | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
+| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp                             | 2020-11-11T17:32:17Z                 |
+| session_id         | `string`             | 100ms assigned id to identify the session                      | 5f9edc6bd238215aec7700df             |
+| template_id        | `string`             | Template ID of the room                                        | 66112497abcd52312556c4gg             |
+| created_at         | `timestamp (in UTC)` | Timestamp at which recording was created                       | 2020-11-11T17:12:17Z                 |
+| duration           | `number`             | Duration of beam recording (seconds)                           | 79                                   |
+| location           | `string`             | HTTPS url to recorded session file on S3 bucket                | https://s3-loc/bucket/beam/ac.mp4    |
+| started_at         | `timestamp (in UTC)` | Beam recording started at                                      | 2020-11-11T17:12:27Z                 |
+| stopped_at         | `timestamp (in UTC)` | Beam recording stopped at                                      | 2020-11-11T17:32:15Z                 |
+| max_width          | `int`                | Maximum width of the screen supported for recording in pixels  | 1280                                 |
+| max_height         | `int`                | Maximum height of the screen supported for recording in pixels | 720                                  |
+| meeting_url        | `string`             | meeting_url provided at rtmp start                             | "https://app.100ms.live/room_id"     |
+| rtmp               | `array`              | List of RTMP objects provided at rtmp start                    | [{"url": "http://test.com"}]         |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started                                 | 2020-11-11T16:32:17Z                 |
 
 #### Sample `beam.recording.success` event
 
@@ -698,6 +704,8 @@ This event is sent when beam successfully records the room and uploads the video
         "stopped_at": "2021-11-30T12:59:56.778Z",
         "session_id": "************************",
         "template_id": "************************",
+        "max_height": 720,
+        "max_width": 1280,
         "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
         "rtmp": [{ "url": "http://test.com" }],
         "session_started_at": "2021-11-30T12:58:49.97291247Z"
@@ -716,25 +724,27 @@ This event will be sent when there are failures in RTMP streaming and/or browser
 
 #### Attributes
 
-| Name               | Type                 | Description                                       | Example                              |
-| :----------------- | :------------------- | :------------------------------------------------ | :----------------------------------- |
-| beam_id            | `string`             | Unique beam id                                    | 61d3def54b616982bd80ed83             |
-| job_id             | `string`             | Beam job id                                       | 60b8e1d96eb86d8101b57359             |
-| room_id            | `string`             | 100ms assigned room id                            | 5f9edc6ac238215aec2312df             |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user    | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| session_id         | `string`             | 100ms assigned id to identify the session         | 5f9edc6bd238215aec7700df             |
-| template_id        | `string`             | Template ID of the room                           | 66112497abcd52312556c4gg             |
-| error_code         | `number`             | Beam error code                                   | 1                                    |
-| error_message      | `string`             | Beam error message (description)                  | Failed to resolve hostname           |
-| error_type         | `string`             | Beam error type                                   | BeamFailed                           |
-| metadata_id        | `string`             | Webhook metadata ID                               | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp                | 2020-11-11T17:32:17Z                 |
-| state_name         | `string`             | Beam state identifier                             | Failed                               |
-| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed             | 2020-11-11T17:32:18Z                 |
-| duration           | `number`             | Duration of RTMP streaming / recording in seconds | 12                                   |
-| meeting_url        | `string`             | meeting_url provided at rtmp start                | "https://app.100ms.live/room_id"     |
-| rtmp               | `array`              | List of RTMP objects provided at rtmp start       | [{"url": "http://test.com"}]         |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started                    | 2020-11-11T16:32:17Z                 |
+| Name               | Type                 | Description                                                                | Example                              |
+| :----------------- | :------------------- | :------------------------------------------------------------------------- | :----------------------------------- |
+| beam_id            | `string`             | Unique beam id                                                             | 61d3def54b616982bd80ed83             |
+| job_id             | `string`             | Beam job id                                                                | 60b8e1d96eb86d8101b57359             |
+| room_id            | `string`             | 100ms assigned room id                                                     | 5f9edc6ac238215aec2312df             |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user                             | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
+| session_id         | `string`             | 100ms assigned id to identify the session                                  | 5f9edc6bd238215aec7700df             |
+| template_id        | `string`             | Template ID of the room                                                    | 66112497abcd52312556c4gg             |
+| error_code         | `number`             | Beam error code                                                            | 1                                    |
+| error_message      | `string`             | Beam error message (description)                                           | Failed to resolve hostname           |
+| error_type         | `string`             | Beam error type                                                            | BeamFailed                           |
+| metadata_id        | `string`             | Webhook metadata ID                                                        | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
+| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp                                         | 2020-11-11T17:32:17Z                 |
+| state_name         | `string`             | Beam state identifier                                                      | Failed                               |
+| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed                                      | 2020-11-11T17:32:18Z                 |
+| duration           | `number`             | Duration of RTMP streaming / recording in seconds                          | 12                                   |
+| max_width          | `int`                | Maximum width of the screen supported for streaming / recording in pixels  | 1280                                 |
+| max_height         | `int`                | Maximum height of the screen supported for streaming / recording in pixels | 720                                  |
+| meeting_url        | `string`             | meeting_url provided at rtmp start                                         | "https://app.100ms.live/room_id"     |
+| rtmp               | `array`              | List of RTMP objects provided at rtmp start                                | [{"url": "http://test.com"}]         |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started                                             | 2020-11-11T16:32:17Z                 |
 
 #### Sample `beam.failure` event
 
@@ -760,6 +770,8 @@ This event will be sent when there are failures in RTMP streaming and/or browser
         "state_message": "[tcp @ 0x55f6cc5f5780] Failed to resolve hostname rvs-isr: Name or service not known",
         "state_name": "Failed",
         "state_timestamp": "2021-11-30T20:36:55.799192444Z",
+        "max_height": 720,
+        "max_width": 1280,
         "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
         "rtmp": [{ "url": "http://test.com" }],
         "duration": 56,
@@ -784,14 +796,14 @@ This event is sent when HLS streaming is successfully triggered
 | peer_id            | `string`             | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | session_id         | `string`             | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df             |
 | template_id        | `string`             | Template ID of the room                        | 66112497abcd52312556c4gg             |
-| meeting_url        | `string`             | meeting_url provided at hls start              | "https://app.100ms.live/room_id"     |
+| meeting_url        | `string`             | meeting_url provided at HLS start              | "https://app.100ms.live/room_id"     |
 | metadata_id        | `string`             | Webhook metadata ID                            | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
 | metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp             | 2020-11-11T17:32:17Z                 |
 | start_delay        | `number`             | Time taken by beam to start streaming          | 12                                   |
 | state_name         | `string`             | Beam state identifier                          | HLSStarted                           |
 | state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed          | 2020-11-11T17:32:18Z                 |
 | url                | `string`             | HLS live streaming url                         | https://100ms-live.m3u8              |
-| started_at         | `timestamp (in UTC)` | Timestamp at which hls started                 | 2020-11-11T17:32:18Z                 |
+| started_at         | `timestamp (in UTC)` | Timestamp at which HLS started                 | 2020-11-11T17:32:18Z                 |
 | session_started_at | `timestamp (in UTC)` | Timestamp when session started                 | 2020-11-11T16:32:17Z                 |
 
 #### Sample `hls.started.success` event
@@ -829,24 +841,26 @@ This event is sent when HLS streaming is successfully stopped
 
 #### Attributes
 
-| Name               | Type                 | Description                                    | Example                              |
-| :----------------- | :------------------- | :--------------------------------------------- | :----------------------------------- |
-| beam_id            | `string`             | Unique beam id                                 | 61d3def54b616982bd80ed83             |
-| job_id             | `string`             | Beam job id                                    | 60b8e1d96eb86d8101b57359             |
-| room_id            | `string`             | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| session_id         | `string`             | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df             |
-| template_id        | `string`             | Template ID of the room                        | 66112497abcd52312556c4gg             |
-| meeting_url        | `string`             | meeting_url provided at hls start              | "https://app.100ms.live/room_id"     |
-| metadata_id        | `string`             | Webhook metadata ID                            | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp             | 2020-11-11T17:32:17Z                 |
-| state_name         | `string`             | Beam state identifier                          | HLSStopped                           |
-| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed          | 2020-11-11T17:32:18Z                 |
-| url                | `string`             | HLS live streaming url                         | https://100ms-live.m3u8              |
-| duration           | `number`             | Duration of HLS streaming in seconds           | 12                                   |
-| started_at         | `timestamp (in UTC)` | Timestamp at which hls started                 | 2020-11-11T17:32:18Z                 |
-| stopped_at         | `timestamp (in UTC)` | Timestamp at which hls stopped                 | 2020-11-11T17:32:18Z                 |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started                 | 2020-11-11T16:32:17Z                 |
+| Name               | Type                 | Description                                                                    | Example                              |
+| :----------------- | :------------------- | :----------------------------------------------------------------------------- | :----------------------------------- |
+| beam_id            | `string`             | Unique beam id                                                                 | 61d3def54b616982bd80ed83             |
+| job_id             | `string`             | Beam job id                                                                    | 60b8e1d96eb86d8101b57359             |
+| room_id            | `string`             | 100ms assigned room id                                                         | 5f9edc6ac238215aec2312df             |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user                                 | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
+| session_id         | `string`             | 100ms assigned id to identify the session                                      | 5f9edc6bd238215aec7700df             |
+| template_id        | `string`             | Template ID of the room                                                        | 66112497abcd52312556c4gg             |
+| max_width          | `int`                | Maximum width of the screen supported for HLS streaming / recording in pixels  | 1280                                 |
+| max_height         | `int`                | Maximum height of the screen supported for HLS streaming / recording in pixels | 720                                  |
+| meeting_url        | `string`             | meeting_url provided at HLS start                                              | "https://app.100ms.live/room_id"     |
+| metadata_id        | `string`             | Webhook metadata ID                                                            | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
+| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp                                             | 2020-11-11T17:32:17Z                 |
+| state_name         | `string`             | Beam state identifier                                                          | HLSStopped                           |
+| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed                                          | 2020-11-11T17:32:18Z                 |
+| url                | `string`             | HLS live streaming url                                                         | https://100ms-live.m3u8              |
+| duration           | `number`             | Duration of HLS streaming in seconds                                           | 12                                   |
+| started_at         | `timestamp (in UTC)` | Timestamp at which HLS started                                                 | 2020-11-11T17:32:18Z                 |
+| stopped_at         | `timestamp (in UTC)` | Timestamp at which HLS stopped                                                 | 2020-11-11T17:32:18Z                 |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started                                                 | 2020-11-11T16:32:17Z                 |
 
 #### Sample `hls.stopped.success` event
 
@@ -864,6 +878,8 @@ This event is sent when HLS streaming is successfully stopped
         "metadata_timestamp": "2021-11-30T12:59:57.797972469Z",
         "peer_id": "********-****-****-****-***********",
         "room_id": "************************",
+        "max_height": 720,
+        "max_width": 1280,
         "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
         "session_id": "************************",
         "template_id": "************************",
@@ -879,32 +895,33 @@ This event is sent when HLS streaming is successfully stopped
 
 ### hls.failure
 
-This event will be sent when there are failures in HLS streaming. This can occur when,
+This event will be sent when there are failures in HLS streaming and/or recording. This can occur when,
 
-1. Browser failed to load the web-app
-2. Other unexpected errors
+1. The meeting_url is invalid
+2. Other unexpected errors with HLS streaming / recording.
 
 #### Attributes
 
-| Name               | Type                 | Description                                    | Example                              |
-| :----------------- | :------------------- | :--------------------------------------------- | :----------------------------------- |
-| beam_id            | `string`             | Unique beam id                                 | 61d3def54b616982bd80ed83             |
-| job_id             | `string`             | Beam job id                                    | 60b8e1d96eb86d8101b57359             |
-| room_id            | `string`             | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| session_id         | `string`             | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df             |
-| template_id        | `string`             | Template ID of the room                        | 66112497abcd52312556c4gg             |
-| meeting_url        | `string`             | meeting_url provided at hls start              | "https://app.100ms.live/room_id"     |
-| error_code         | `number`             | Beam error code                                | 1                                    |
-| error_message      | `string`             | Beam error message (description)               | Failed to resolve hostname           |
-| error_type         | `string`             | Beam error type                                | BeamFailed                           |
-| metadata_id        | `string`             | Webhook metadata ID                            | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp             | 2020-11-11T17:32:17Z                 |
-| state_name         | `string`             | Beam state identifier                          | Started                              |
-| state_message      | `string`             | Beam state change message                      | Failed to resolve hostname           |
-| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed          | 2020-11-11T17:32:18Z                 |
-| duration           | `number`             | Duration of HLS streaming in seconds           | 12                                   |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started                 | 2020-11-11T16:32:17Z                 |
+| Name               | Type                 | Description                                                                    | Example                              |
+| :----------------- | :------------------- | :----------------------------------------------------------------------------- | :----------------------------------- |
+| beam_id            | `string`             | Unique beam id                                                                 | 61d3def54b616982bd80ed83             |
+| job_id             | `string`             | Beam job id                                                                    | 60b8e1d96eb86d8101b57359             |
+| room_id            | `string`             | 100ms assigned room id                                                         | 5f9edc6ac238215aec2312df             |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user                                 | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
+| session_id         | `string`             | 100ms assigned id to identify the session                                      | 5f9edc6bd238215aec7700df             |
+| template_id        | `string`             | Template ID of the room                                                        | 66112497abcd52312556c4gg             |
+| max_width          | `int`                | Maximum width of the screen supported for HLS streaming / recording in pixels  | 1280                                 |
+| max_height         | `int`                | Maximum height of the screen supported for HLS streaming / recording in pixels | 720                                  |
+| meeting_url        | `string`             | meeting_url provided at HLS start                                              | "https://app.100ms.live/room_id"     |
+| error_code         | `number`             | Beam error code                                                                | 1                                    |
+| error_message      | `string`             | Beam error message (description)                                               | Beam failed with unknown error       |
+| error_type         | `string`             | Beam error type                                                                | BeamFailed                           |
+| metadata_id        | `string`             | Webhook metadata ID                                                            | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
+| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp                                             | 2020-11-11T17:32:17Z                 |
+| state_name         | `string`             | Beam state identifier                                                          | HLSFailed                            |
+| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed                                          | 2020-11-11T17:32:18Z                 |
+| duration           | `number`             | Duration of HLS streaming in seconds                                           | 12                                   |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started                                                 | 2020-11-11T16:32:17Z                 |
 
 #### Sample `hls.failure` event
 
@@ -918,17 +935,18 @@ This event will be sent when there are failures in HLS streaming. This can occur
     "data": {
         "beam_id": "************************",
         "error_code": 1,
-        "error_message": "[tcp @ 0x55f6cc5f5780] Failed to resolve hostname rvs-isr: Name or service not known",
+        "error_message": "Beam failed with unknown error",
         "error_type": "BeamFailed",
         "job_id": "************************",
         "metadata_id": "********-****-****-****-***********",
         "metadata_timestamp": "2021-11-30T20:36:55.807155801Z",
         "peer_id": "********-****-****-****-***********",
         "room_id": "************************",
+        "max_height": 720,
+        "max_width": 1280,
         "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
         "session_id": "************************",
         "template_id": "************************",
-        "state_message": "[tcp @ 0x55f6cc5f5780] Failed to resolve hostname rvs-isr: Name or service not known",
         "state_name": "HLSFailed",
         "state_timestamp": "2021-11-30T20:36:55.799192444Z",
         "duration": 56,
@@ -952,12 +970,14 @@ This event will be sent when HLS recordings are successful and uploaded to the s
 | duration                            | `number`             | Duration of HLS recording in seconds                                        | 12                                   |
 | session_id                          | `string`             | 100ms assigned id to identify the session                                   | 5f9edc6bd238215aec7700df             |
 | template_id                         | `string`             | Template ID of the room                                                     | 66112497abcd52312556c4gg             |
-| meeting_url                         | `string`             | meeting_url provided at hls start                                           | "https://app.100ms.live/room_id"     |
+| max_width                           | `int`                | Maximum width of the screen supported for HLS recording in pixels           | 1280                                 |
+| max_height                          | `int`                | Maximum height of the screen supported for HLS recording in pixels          | 720                                  |
+| meeting_url                         | `string`             | meeting_url provided at HLS start                                           | "https://app.100ms.live/room_id"     |
 | recording_created_at                | `timestamp (in UTC)` | Timestamp at which recording was created                                    | 2020-11-11T17:12:17Z                 |
-| started_at                          | `timestamp (in UTC)` | Timestamp at which hls started                                              | 2020-11-11T17:32:18Z                 |
-| stopped_at                          | `timestamp (in UTC)` | Timestamp at which hls stopped                                              | 2020-11-11T17:32:18Z                 |
+| started_at                          | `timestamp (in UTC)` | Timestamp at which HLS started                                              | 2020-11-11T17:32:18Z                 |
+| stopped_at                          | `timestamp (in UTC)` | Timestamp at which HLS stopped                                              | 2020-11-11T17:32:18Z                 |
 | recording_single_files              | `array`              | List of recording details per layer. layer="0" is the highest quality layer | < see below >                        |
-| recording_hls_vod_playlist_location | `string`             | Pre signed url for hls vod playlist url                                     | < see below >                        |
+| recording_hls_vod_playlist_location | `string`             | Pre signed url for HLS vod playlist url                                     | < see below >                        |
 | recording_thumbnails                | `array`              | List of thumbnails generated                                                | < see below >                        |
 | session_started_at                  | `timestamp (in UTC)` | Timestamp when session started                                              | 2020-11-11T16:32:17Z                 |
 
@@ -978,6 +998,8 @@ This event will be sent when HLS recordings are successful and uploaded to the s
         "metadata_timestamp": "2021-11-30T20:36:55.807155801Z",
         "room_id": "************************",
         "duration": 56,
+        "max_height": 720,
+        "max_width": 1280,
         "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
         "recording_hls_vod_playlist_location": "https://<hls-vod-access-url>?<signature>",
         "recording_single_files": [
