@@ -1,8 +1,29 @@
 ---
-title: Android SDK
+title: Release Notes
 nav: 15
 description: Release Notes for 100ms Android SDK
 ---
+## v2.5.0 - 2022-10-14
+### Added
+* SFN module that can be used to receive periodic player stats about HLS playback
+* Option in `HMSVideoTrackSettings` to force device to use `software decoder`
+
+## v2.4.9 - 2022-09-30
+### Added
+* Session Metadata API(alpha version)
+* Added better Telemetrics for analytics
+* Initial states(Muted/Unmuted) for local video and audio track can be mentioned while joining using the `HMSVideoTrackSettings` and `HMSAudioTrackSettings` in the builder of `HMSSDK`
+
+### Changed
+* Deprecated `ROOM_NAME_UPDATED` and `ROOM_ID_UPDATED` types of `HMSRoomUpdate` as they are no longer used
+* Updated WebRTC to m104 from m97
+
+### Fixed
+* SDK calling `leave()` on being removed from the room leading to `peer.leave.failure` webhook along with `peer.leave.success`
+* LetterBoxing(Black borders on top and bottom) observed when sharing screen in landscape mode
+* NPE fix in performance measurement while calling join and no websocket connection
+* Send offline analytics events to the right environment
+
 ## v2.4.8 - 2022-08-12
 #### Fixed
 * `removeSink` will only stop the download of a `videoTrack` if all the sinks attached to it are removed
@@ -134,7 +155,7 @@ HMS system will take the default meetingUrl for starting HLS stream
 * Rare crash when cameras are unavailable and it seemed to the app like none exist.
 
 #### Added
-* Network Quality in preview. [Network quality](../features/Network-Quality-Reports) reports can now be requested at the preview screen. Use the returned value to determine if you should suggest people's internet is too slow to join with video etc.
+* Network Quality in preview. [Network quality](../features/network-quality-reports) reports can now be requested at the preview screen. Use the returned value to determine if you should suggest people's internet is too slow to join with video etc.
 * Network Quality during calls. [Peer Network Quality](../advanced-features/peer-network-quality) updates are now received during the call. Use this to show how strong any peer's internet is during the call.
 
 ## 2.3.3 - 2022-03-17

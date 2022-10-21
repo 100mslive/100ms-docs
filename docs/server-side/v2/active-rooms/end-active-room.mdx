@@ -1,0 +1,47 @@
+---
+title: End an active room
+nav: 3.8
+---
+
+Trigger this request to end an active room.
+
+<PostRequest title="https://api.100ms.live/v2/active-rooms/<room_id>/end-room" />
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/active-rooms/<room_id>/end-room' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "reason": "Class has ended",
+    "lock": false
+}'
+```
+
+</Request>
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "message": "session is ending"
+}
+```
+
+</ResponseBox>
+
+## Arguments
+
+| Name                       | Type      | Description                                                                                                                    | Required |
+| :------------------------- | :-------- | :----------------------------------------------------------------------------------------------------------------------------- | :------- |
+| room_id <br/> — path param | `string`  | Unique identifier of the room you wish to disable. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                             | Yes      |
+| reason <br/> — body param  | `string`  | Description to indicate the reason for ending the active room.                                                                 | No       |
+| lock <br/> — body param    | `boolean` | Status of the room to be set. <br/>`Allowed values`: true, false. <br/>`Default`: false (ends the current active session only) | No       |
+
+> **Warning:** If you set the lock argument to `true`, it will end the active room and users will not be able to join the room later as well. You can use [enable a room API](/server-side/v2/Rooms/disable-or-enable) or [dashboard](https://dashboard.100ms.live/rooms) to enable the room again.
+
+## Why would you use this API?
+
+-   To disconnect all connected peers at a pre-defined timestamp if you wish to add a hard stop for any sessions.
+-   Use this to allow peers to join the room only once daily for a respective time slot.
+    -   Trigger this API at the end of the session with the lock argument as `true`,
+    -   The next day, one minute before the schedule - use the [enable a room API](/server-side/v2/Rooms/disable-or-enable) to enable the room to allow the users to join the session.

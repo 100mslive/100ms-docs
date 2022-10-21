@@ -1,0 +1,145 @@
+---
+title: Stats for HLS Player
+nav: 8.04
+---
+
+## Stats Information
+
+Statistics for an on-going stream can be viewed by user for debugging purposes.
+It can also be used as a standalone dependency if required and has no dependency on 100ms SDK.
+
+## Add dependency
+
+-   Adding the Player-Stats plugin and SDK dependency to your app-level `build.gradle`.
+[![Latest Version](https://jitpack.io/v/100mslive/android-sdk.svg)](https://docs.100ms.live/android/v2/release-notes/Release-Notes)
+```json{3,4}:build.gradle
+dependencies {
+ // See the latest version in the jitpack badge above.
+  implementation 'com.github.100mslive.android-sdk:lib:x.x.x'
+  implementation 'com.github.100mslive.android-sdk:stats:x.x.x'
+    }
+```
+
+<Note>
+
+**Note**
+
+    This Plugin supports Exoplayer versions 2.15.0 and above.
+
+</Note>
+
+## Instantiate PlayerEventsCollector
+
+An Existing exoplayer instance can be directly attached to PlayerEventsCollector as follows : 
+
+<Tabs id="instanstiate-PlayerStatsPlugin" items={['Kotlin', 'Java']} />
+
+<Tab id='instanstiate-PlayerStatsPlugin-0'>
+
+```kotlin
+            // an existing exoplayer instance
+            val exoplayer : Exoplayer 
+
+            // this is an optional configuration provided while instantiated while creating the object, where 
+            // @param `eventRate` is the rate in milliseconds at which client wants to recieve the events.(default set to 2000 i.e 2 seconds) 
+            val initConfig = InitConfig(eventRate = 2000)
+
+            playerEventsCollector = PlayerEventsCollector(exoplayer : exoplayer)
+
+```
+
+</Tab>
+
+<Tab id='instanstiate-PlayerStatsPlugin-1'>
+
+```java
+            // an existing exoplayer instance
+            Exoplayer exoplayer; 
+
+            // this is an optional configuration provided while instantiated while creating the object, where 
+            // @param `eventRate` is the rate in milliseconds at which client wants to recieve the events.(default set to 2000 i.e 2 seconds) 
+            InitConfig initConfig = new InitConfig(2000);
+
+            PlayerEventsCollector playerEventsCollector = PlayerEventsCollector(exoplayer,initConfig);
+
+```
+
+</Tab>
+
+## Listening to updates from PlayerEventsCollector
+
+ To start listeneing updates from the plugin , listener can be attached as follows : 
+
+<Tabs id="addListener-PlayerStatsPlugin" items={['Kotlin', 'Java']} />
+
+<Tab id='addListener-PlayerStatsPlugin-0'>
+
+```kotlin
+           playerEventsCollector.addListener(object : PlayerEventsListener {
+                override fun onEventUpdate(playerStats: PlayerStats) {
+                    // playerStats object contains information for all the stats provided by the plugin.
+                    // more information for this object is mentioned at the end of the document.
+                }
+            })
+
+```
+
+</Tab>
+
+<Tab id='addListener-PlayerStatsPlugin-1'>
+
+```java
+            playerEventsCollector.addListener(new PlayerEventsListener() {
+                @Override
+                public void onEventUpdate(@NonNull PlayerStats playerStats) {
+                    
+                }
+            });
+```
+
+</Tab>
+
+ To stop listeneing updates from the plugin , listener can be removed as follows : 
+
+<Tabs id="removeListener-PlayerStatsPlugin" items={['Kotlin', 'Java']} />
+
+<Tab id='removeListener-PlayerStatsPlugin-0'>
+
+```kotlin
+            playerEventsCollector.removeListener()
+
+```
+
+</Tab>
+
+<Tab id='removeListener-PlayerStatsPlugin-1'>
+
+```java
+            playerEventsCollector.removeListener();
+
+```
+
+</Tab>
+
+<Note>
+
+**Note**
+
+    removeListener() must be called when view listening to it is destroyed
+
+</Note>
+
+## Interpretting the values : 
+
+
+| Name | Description | Unit | Usage |
+| --- | --- | --- | --- |
+| bandwidthEstimate | The current bandwidth, as estimated by the player | bytes per second | Use this to show the current network speed of the user |
+| bytesDownloaded | The total bytes downloaded within the given poll duration | Bytes | Use this to calculate the total Bytes downloaded in a session or to show the network activity |
+| bitrate | bitrate of the current layer being played | bytes per second | Use to show a bitrate chart to the user |
+| currentBuffer | An estimate of the total buffered duration from the current position | ms | This can be used to show how much data is already buffered |
+| video width | The width of the video  | pixels | Used to know the resolution being played |
+| video height | The height of the video | pixels | Used to know the resolution being played |
+| video frameRate | The frame rate | frames per second | Used to know the FPS |
+| droppedFrames | The number of dropped frames since the last call to this method | Int | Used to calculate the total number of dropped frames  |
+| distanceFromLiveEdge | Distance of current playing position from live edge | Int | Used to calculate how far current player position is from live edge of content. |
