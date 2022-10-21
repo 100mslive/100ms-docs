@@ -4,7 +4,6 @@ For example, one of the common use cases for recording is for archival purposes 
 
 Based on your end goal, you can choose one of the recording types and its implementation. You can understand some key differences using the comparison table below.
 
-
 # Recording types
 
 - [Browser recording](#browser-recording-recommended)
@@ -48,7 +47,7 @@ You can get track recordings in two forms:
 
 -   [How to implement SFU Recording](https://www.100ms.live/docs/server-side/v2/Destinations/recording)
 
-## Recordings for Live Streaming use-cases
+## Recordings for Live Streaming Use-cases
 
 ### Video-on-demand Recording
 
