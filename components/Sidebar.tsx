@@ -16,11 +16,15 @@ type NavRoute = {
 };
 
 interface Props {
-    menu: boolean;
+    menuState: {
+        menu: boolean;
+        setMenu: React.Dispatch<React.SetStateAction<boolean>>;
+    };
     nav: Record<string, Record<string, NavRoute>>;
 }
 
-const Sidebar: React.FC<Props> = ({ menu, nav: currentNav }) => {
+const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
+    const { menu, setMenu } = menuState;
     const router = useRouter() as any;
     const {
         query: { slug },
@@ -108,6 +112,7 @@ const Sidebar: React.FC<Props> = ({ menu, nav: currentNav }) => {
                                 href={route.url || ''}
                                 key={`${route.url}-${index}`}>
                                 <a
+                                    onClick={() => setMenu(false)}
                                     className={`menu-item ${route.url === asPath ? 'active-link' : ''
                                         }`}>
                                     {route.title}
@@ -121,6 +126,7 @@ const Sidebar: React.FC<Props> = ({ menu, nav: currentNav }) => {
                                 <Link scroll={false}
                                     prefetch={false} href={a.url} key={a.url}>
                                     <a
+                                        onClick={() => setMenu(false)}
                                         className={`menu-item ${a.url === asPath ? 'active-link' : ''
                                             }`}>
                                         {a.title}
@@ -139,7 +145,7 @@ const Sidebar: React.FC<Props> = ({ menu, nav: currentNav }) => {
                     align-items: stretch;
                     height: calc(100vh - 80px);
                     overflow-y: scroll;
-                    padding-top: ${menu ? '' : '14px'};
+                    top: ${menu ? '' : '14px'};
                     left: 0;
                     position: sticky;
                     background: var(--sidebar_bg);
