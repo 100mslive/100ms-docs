@@ -2,12 +2,14 @@ import LazyLoad from 'react-lazyload';
 import React from 'react';
 
 export default function Codesandbox({ id, tests }) {
+    const hasQueryParam = id.includes("?");
+    const paramSeparator = hasQueryParam ? "&" : "?";
     return (
         <div>
             <LazyLoad height={400} once>
                 <iframe
                     title="Code Sandbox"
-                    src={`https://codesandbox.io/embed/${id}?codemirror=1&fontsize=14&hidenavigation=1&theme=dark&hidedevtools=1${
+                    src={`https://codesandbox.io/embed/${id}${paramSeparator}codemirror=1&fontsize=14&hidenavigation=1&theme=dark&hidedevtools=1${
                         tests ? '&previewwindow=tests' : ''
                     }`}
                     allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
