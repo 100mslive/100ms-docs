@@ -36,16 +36,16 @@ Event is a JSON dictionary which has the following keys.
 
 ### Event Attributes
 
-| Name        | Type                 | Description                                                         | Example                              |
-| :---------- | :------------------- | :------------------------------------------------------------------ | :----------------------------------- |
-| version     | `string`             | Version of the event                                                | 2.0                                  |
-| id          | `string`             | Id of the event                                                     | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| app_id      | `string`             | App ID from which this event is generated                           | 5ff5881b80b66969e1fb35f6             |
-| account_id  | `string`             | Customer ID from which this event is generated                      | 5ff5881b80b66969e1fb35f4             |
-| template_id | `string`             | Template ID of the room                                             | 66112497abcd52312556c4gg             |
-| timestamp   | `timestamp (in UTC)` | Timestamp of the event                                              | 2020-11-11T16:32:17Z                 |
-| type        | `string`             | Type of the event                                                   | peer.join.success                    |
-| data        | `dict`               | Event data. Its keys will be different for different type of event. | < See description below >            |
+| Name        | Type                 | Description                                                                                                        |
+| :---------- | :------------------- | :----------------------------------------------------------------------------------------------------------------- |
+| version     | `string`             | Version of the event <br/><br/> _Example: 2.0_                                                                     |
+| id          | `string`             | Id of the event <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4_                                         |
+| app_id      | `string`             | App ID from which this event is generated <br/><br/> _Example: 5ff5881b80b66969e1fb35f6_                           |
+| account_id  | `string`             | Customer ID from which this event is generated <br/><br/> _Example: 5ff5881b80b66969e1fb35f4_                      |
+| template_id | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg_                                             |
+| timestamp   | `timestamp (in UTC)` | Timestamp of the event <br/><br/> _Example: 2020-11-11T16:32:17Z_                                                  |
+| type        | `string`             | Type of the event <br/><br/> _Example: peer.join.success_                                                          |
+| data        | `dict`               | Event data. Its keys will be different for different type of event.<br/><br/> _Example: < See description below >_ |
 
 ### Sample Event Payload
 
@@ -92,13 +92,13 @@ This event will be sent when session opens successfully.
 
 #### Attributes
 
-| Name               | Type                 | Description                               | Example                  |
-| :----------------- | :------------------- | :---------------------------------------- | :----------------------- |
-| room_id            | `string`             | 100ms assigned room id                    | 5f9edc6ac238215aec2312df |
-| room_name          | `string`             | Room name provided when creating the room | Test Room                |
-| session_id         | `string`             | 100ms assigned id to identify the session | 5f9edc6bd238215aec7700df |
-| template_id        | `string`             | Template ID of the room                   | 66112497abcd52312556c4gg |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started            | 2020-11-11T16:32:17Z     |
+| Name               | Type                 | Description                                                                              |
+| :----------------- | :------------------- | :--------------------------------------------------------------------------------------- |
+| room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df_                    |
+| room_name          | `string`             | Room name provided when creating the room <br/><br/> _Example: Test Room _               |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df_ |
+| template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg_                   |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _               |
 
 #### Sample `session.open.success` event
 
@@ -126,14 +126,14 @@ This event will be sent when session closes successfully.
 
 #### Attributes
 
-| Name               | Type                 | Description                               | Example                  |
-| :----------------- | :------------------- | :---------------------------------------- | :----------------------- |
-| room_id            | `string`             | 100ms assigned room id                    | 5f9edc6ac238215aec2312df |
-| room_name          | `string`             | Room name provided when creating the room | Test Room                |
-| session_id         | `string`             | 100ms assigned id to identify the session | 5f9edc6bd238215aec7700df |
-| template_id        | `string`             | Template ID of the room                   | 66112497abcd52312556c4gg |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started            | 2020-11-11T16:32:17Z     |
-| session_stopped_at | `timestamp (in UTC)` | Timestamp when session ended              | 2020-11-11T16:32:17Z     |
+| Name               | Type                 | Description                                                                              |
+| :----------------- | :------------------- | :--------------------------------------------------------------------------------------- |
+| room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df_                    |
+| room_name          | `string`             | Room name provided when creating the room <br/><br/> _Example: Test Room _               |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df_ |
+| template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg_                   |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _               |
+| session_stopped_at | `timestamp (in UTC)` | Timestamp when session ended <br/><br/> _Example: 2020-11-11T16:32:17Z _                 |
 
 #### Sample `session.close.success` event
 
@@ -164,19 +164,19 @@ This event will be sent when any peer joins the room successfully
 
 #### Attributes
 
-| Name               | Type                 | Description                                    | Example                              |
-| :----------------- | :------------------- | :--------------------------------------------- | :----------------------------------- |
-| room_id            | `string`             | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
-| room_name          | `string`             | Room name provided when creating the room      | Test Room                            |
-| session_id         | `string`             | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df             |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| user_id            | `string`             | User id assigned by the customer               | user.001                             |
-| template_id        | `string`             | Template ID of the room                        | 66112497abcd52312556c4gg             |
-| user_name          | `string`             | User name of the joining user                  | Test user                            |
-| user_data          | `string`             | User data of the joining user                  | {"isHandRaised":true}                |
-| role               | `string`             | Role of the joining user                       | host                                 |
-| joined_at          | `timestamp (in UTC)` | Timestamp when user joined                     | 2020-11-11T16:32:17Z                 |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started                 | 2020-11-11T16:32:17Z                 |
+| Name               | Type                 | Description                                                                                                |
+| :----------------- | :------------------- | :--------------------------------------------------------------------------------------------------------- |
+| room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
+| room_name          | `string`             | Room name provided when creating the room <br/><br/> _Example: Test Room _                                 |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                  |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _ |
+| user_id            | `string`             | User id assigned by the customer <br/><br/> _Example: user.001 _                                           |
+| template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                    |
+| user_name          | `string`             | User name of the joining user <br/><br/> _Example: Test user _                                             |
+| user_data          | `string`             | User data of the joining user <br/><br/> _Example: {"isHandRaised":true} _                                 |
+| role               | `string`             | Role of the joining user <br/><br/> _Example: host _                                                       |
+| joined_at          | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> _Example: 2020-11-11T16:32:17Z _                                     |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                 |
 
 #### Sample `peer.join.success` event
 
@@ -209,21 +209,21 @@ This event will be sent when peer leaves the room
 
 #### Attributes
 
-| Name               | Type                 | Description                                         | Example                              |
-| :----------------- | :------------------- | :-------------------------------------------------- | :----------------------------------- |
-| room_id            | `string`             | 100ms assigned room id                              | 5f9edc6ac238215aec2312df             |
-| room_name          | `string`             | Room name provided when creating the room           | Test Room                            |
-| session_id         | `string`             | 100ms assigned id to identify the session           | 5f9edc6bd238215aec7700df             |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user      | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| user_id            | `string`             | User id assigned by the customer                    | user.001                             |
-| template_id        | `string`             | Template ID of the room                             | 66112497abcd52312556c4gg             |
-| user_name          | `string`             | User name of the user                               | Test user                            |
-| user_data          | `string`             | User data of the user                               | {"isHandRaised":true}                |
-| role               | `string`             | Role of the user                                    | host                                 |
-| left_at            | `timestamp (in UTC)` | Timestamp when user left                            | 2020-11-11T17:32:17Z                 |
-| duration           | `number`             | Duration the user spent in the room in seconds      | 36000                                |
-| reason             | `string`             | Reason for the peer leaving, see more details below | client request                       |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started                      | 2020-11-11T16:32:17Z                 |
+| Name               | Type                 | Description                                                                                                |
+| :----------------- | :------------------- | :--------------------------------------------------------------------------------------------------------- |
+| room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
+| room_name          | `string`             | Room name provided when creating the room <br/><br/> _Example: Test Room _                                 |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                  |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _ |
+| user_id            | `string`             | User id assigned by the customer <br/><br/> _Example: user.001 _                                           |
+| template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                    |
+| user_name          | `string`             | User name of the user <br/><br/> _Example: Test user _                                                     |
+| user_data          | `string`             | User data of the user <br/><br/> _Example: {"isHandRaised":true} _                                         |
+| role               | `string`             | Role of the user <br/><br/> _Example: host _                                                               |
+| left_at            | `timestamp (in UTC)` | Timestamp when user left <br/><br/> _Example: 2020-11-11T17:32:17Z _                                       |
+| duration           | `number`             | Duration the user spent in the room in seconds <br/><br/> _Example: 36000 _                                |
+| reason             | `string`             | Reason for the peer leaving, see more details below <br/><br/> _Example: client request _                  |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                 |
 
 #### Peer Leave Reason
 
@@ -275,18 +275,18 @@ This event will be sent when a peer fails to join a room. This can occur when,
 
 #### Attributes
 
-| Name          | Type                 | Description                                    | Example                              |
-| :------------ | :------------------- | :--------------------------------------------- | :----------------------------------- |
-| room_id       | `string`             | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
-| room_name     | `string`             | Room name provided when creating the room      | Test Room                            |
-| peer_id       | `string`             | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| user_id       | `string`             | User id assigned by the customer               | user.001                             |
-| template_id   | `string`             | Template ID of the room                        | 66112497abcd52312556c4gg             |
-| user_name     | `string`             | User name of the user                          | Test user                            |
-| user_data     | `string`             | User data of the user                          | {"isHandRaised":true}                |
-| role          | `string`             | Role of the user                               | host                                 |
-| joined_at     | `timestamp (in UTC)` | Timestamp when user joined                     | 2020-11-11T16:32:17Z                 |
-| error_message | `string`             | Reason for failure                             | Peer not joined                      |
+| Name          | Type                 | Description                                                                                                |
+| :------------ | :------------------- | :--------------------------------------------------------------------------------------------------------- |
+| room_id       | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
+| room_name     | `string`             | Room name provided when creating the room <br/><br/> _Example: Test Room _                                 |
+| peer_id       | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _ |
+| user_id       | `string`             | User id assigned by the customer <br/><br/> _Example: user.001 _                                           |
+| template_id   | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                    |
+| user_name     | `string`             | User name of the user <br/><br/> _Example: Test user _                                                     |
+| user_data     | `string`             | User data of the user <br/><br/> _Example: {"isHandRaised":true} _                                         |
+| role          | `string`             | Role of the user <br/><br/> _Example: host _                                                               |
+| joined_at     | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> _Example: 2020-11-11T16:32:17Z _                                     |
+| error_message | `string`             | Reason for failure <br/><br/> _Example: Peer not joined _                                                  |
 
 #### Peer join failure Reason
 
@@ -328,19 +328,19 @@ This event will be sent when the peer leave fails. This can occur when,
 
 #### Attributes
 
-| Name          | Type                 | Description                                    | Example                              |
-| :------------ | :------------------- | :--------------------------------------------- | :----------------------------------- |
-| room_id       | `string`             | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
-| room_name     | `string`             | Room name provided when creating the room      | Test Room                            |
-| peer_id       | `string`             | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| user_id       | `string`             | User id assigned by the customer               | user.001                             |
-| template_id   | `string`             | Template ID of the room                        | 66112497abcd52312556c4gg             |
-| user_name     | `string`             | User name of the user                          | Test user                            |
-| user_data     | `string`             | User data of the user                          | {"isHandRaised":true}                |
-| role          | `string`             | Role of the user                               | host                                 |
-| left_at       | `timestamp (in UTC)` | Timestamp when user left                       | 2020-11-11T17:32:17Z                 |
-| duration      | `number`             | Duration the user spent in the room in seconds | 36000                                |
-| error_message | `string`             | Reason for failure                             | Peer not joined                      |
+| Name          | Type                 | Description                                                                                                |
+| :------------ | :------------------- | :--------------------------------------------------------------------------------------------------------- |
+| room_id       | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
+| room_name     | `string`             | Room name provided when creating the room <br/><br/> _Example: Test Room _                                 |
+| peer_id       | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _ |
+| user_id       | `string`             | User id assigned by the customer <br/><br/> _Example: user.001 _                                           |
+| template_id   | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                    |
+| user_name     | `string`             | User name of the user <br/><br/> _Example: Test user _                                                     |
+| user_data     | `string`             | User data of the user <br/><br/> _Example: {"isHandRaised":true} _                                         |
+| role          | `string`             | Role of the user <br/><br/> _Example: host _                                                               |
+| left_at       | `timestamp (in UTC)` | Timestamp when user left <br/><br/> _Example: 2020-11-11T17:32:17Z _                                       |
+| duration      | `number`             | Duration the user spent in the room in seconds <br/><br/> _Example: 36000 _                                |
+| error_message | `string`             | Reason for failure <br/><br/> _Example: Peer not joined _                                                  |
 
 #### Peer leave failure Reason
 
@@ -379,20 +379,20 @@ This event will be sent when room end is called and the it is successful
 
 #### Attributes
 
-| Name               | Type                 | Description                                    | Example                              |
-| :----------------- | :------------------- | :--------------------------------------------- | :----------------------------------- |
-| room_id            | `string`             | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
-| room_name          | `string`             | Room name provided when creating the room      | Test Room                            |
-| session_id         | `string`             | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df             |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| user_id            | `string`             | User id assigned by the customer               | user.001                             |
-| template_id        | `string`             | Template ID of the room                        | 66112497abcd52312556c4gg             |
-| user_name          | `string`             | User name of the user                          | Test user                            |
-| role               | `string`             | Role of the user                               | host                                 |
-| lock_room          | bool                 | Flag to indicate if the room was lock          | false                                |
-| reason             | `string`             | Reason specified with end room call            | End Room by admin                    |
-| source             | `string`             | Source of end room api call                    | peer                                 |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started                 | 2020-11-11T16:32:17Z                 |
+| Name               | Type                 | Description                                                                                                |
+| :----------------- | :------------------- | :--------------------------------------------------------------------------------------------------------- |
+| room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
+| room_name          | `string`             | Room name provided when creating the room <br/><br/> _Example: Test Room _                                 |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                  |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _ |
+| user_id            | `string`             | User id assigned by the customer <br/><br/> _Example: user.001 _                                           |
+| template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                    |
+| user_name          | `string`             | User name of the user <br/><br/> _Example: Test user _                                                     |
+| role               | `string`             | Role of the user <br/><br/> _Example: host _                                                               |
+| lock_room          | bool                 | Flag to indicate if the room was lock <br/><br/> _Example: false _                                         |
+| reason             | `string`             | Reason specified with end room call <br/><br/> _Example: End Room by admin _                               |
+| source             | `string`             | Source of end room api call <br/><br/> _Example: peer _                                                    |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                 |
 
 #### Sample `room.end.success` event
 
@@ -428,19 +428,19 @@ This event will be sent when peer changes role successfully.
 
 #### Attributes
 
-| Name               | Type                 | Description                                    | Example                              |
-| :----------------- | :------------------- | :--------------------------------------------- | :----------------------------------- |
-| room_id            | `string`             | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
-| room_name          | `string`             | Room name provided when creating the room      | Test Room                            |
-| session_id         | `string`             | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df             |
-| template_id        | `string`             | Template ID of the room                        | 66112497abcd52312556c4gg             |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| user_id            | `string`             | User id assigned by the customer               | user.001                             |
-| user_name          | `string`             | User name of the user                          | Test user                            |
-| user_data          | `string`             | User data of the user                          | {"isHandRaised":true}                |
-| role               | `string`             | New role of the user                           | host                                 |
-| joined_at          | `timestamp (in UTC)` | Timestamp when user joined                     | 2020-11-11T16:32:17Z                 |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started                 | 2020-11-11T16:32:17Z                 |
+| Name               | Type                 | Description                                                                                                |
+| :----------------- | :------------------- | :--------------------------------------------------------------------------------------------------------- |
+| room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
+| room_name          | `string`             | Room name provided when creating the room <br/><br/> _Example: Test Room _                                 |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                  |
+| template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                    |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _ |
+| user_id            | `string`             | User id assigned by the customer <br/><br/> _Example: user.001 _                                           |
+| user_name          | `string`             | User name of the user <br/><br/> _Example: Test user _                                                     |
+| user_data          | `string`             | User data of the user <br/><br/> _Example: {"isHandRaised":true} _                                         |
+| role               | `string`             | New role of the user <br/><br/> _Example: host _                                                           |
+| joined_at          | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> _Example: 2020-11-11T16:32:17Z _                                     |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                 |
 
 #### Sample `role.change.success` event
 
@@ -476,17 +476,17 @@ This event will be sent when final composed recording is generated and uploaded 
 
 #### Attributes
 
-| Name               | Type                 | Description                                                               | Example                           |
-| :----------------- | :------------------- | :------------------------------------------------------------------------ | :-------------------------------- |
-| room_id            | `string`             | 100ms assigned room id                                                    | 5f9edc6ac238215aec2312df          |
-| room_name          | `string`             | Room name assigned by you when creating room                              | class-9-batch-2                   |
-| session_id         | `string`             | 100ms assigned id to identify the session                                 | 5f9edc6bd238215aec7700df          |
-| template_id        | `string`             | Template ID of the room                                                   | 66112497abcd52312556c4gg          |
-| location           | `string`             | s3 URI of the recorded video                                              | s3://bucket/prefix/ac.mp4         |
-| URL                | `string`             | Presigned s3 URL for the recorded video, for download. Valid for 24 hours | https://s3-location/bucket/ac.mp4 |
-| duration           | `number`             | Duration the user spent in the room in seconds                            | 3600                              |
-| size               | `number`             | Size of the recorded video (in bytes)                                     | 10024                             |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started                                            | 2020-11-11T16:32:17Z              |
+| Name               | Type                 | Description                                                                                                                        |
+| :----------------- | :------------------- | :--------------------------------------------------------------------------------------------------------------------------------- |
+| room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                                             |
+| room_name          | `string`             | Room name assigned by you when creating room <br/><br/> _Example: class-9-batch-2 _                                                |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                                          |
+| template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                                            |
+| location           | `string`             | s3 URI of the recorded video <br/><br/> _Example: s3://bucket/prefix/ac.mp4 _                                                      |
+| URL                | `string`             | Presigned s3 URL for the recorded video, for download. Valid for 24 hours <br/><br/> _Example: https://s3-location/bucket/ac.mp4 _ |
+| duration           | `number`             | Duration the user spent in the room in seconds <br/><br/> _Example: 3600 _                                                         |
+| size               | `number`             | Size of the recorded video (in bytes) <br/><br/> _Example: 10024 _                                                                 |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                                         |
 
 #### Sample `recording.success` event
 
@@ -518,14 +518,14 @@ This event will be sent when failure occurs during final recording composition o
 
 #### Attributes
 
-| Name               | Type                 | Description                                  | Example                  |
-| :----------------- | :------------------- | :------------------------------------------- | :----------------------- |
-| room_id            | `string`             | 100ms assigned room id                       | 5f9edc6ac238215aec2312df |
-| room_name          | `string`             | Room name assigned by you when creating room | class-9-batch-2          |
-| session_id         | `string`             | 100ms assigned id to identify the session    | 5f9edc6bd238215aec7700df |
-| template_id        | `string`             | Template ID of the room                      | 66112497abcd52312556c4gg |
-| error              | `string`             | Error message                                | Upload Failure           |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started               | 2020-11-11T16:32:17Z     |
+| Name               | Type                 | Description                                                                               |
+| :----------------- | :------------------- | :---------------------------------------------------------------------------------------- |
+| room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                    |
+| room_name          | `string`             | Room name assigned by you when creating room <br/><br/> _Example: class-9-batch-2 _       |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _ |
+| template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                   |
+| error              | `string`             | Error message <br/><br/> _Example: Upload Failure _                                       |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                |
 
 #### Sample `recording.failed` event
 
@@ -556,22 +556,22 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
 
 #### Attributes
 
-| Name                                         | Description                                                                                             |
-| :------------------------------------------- | :------------------------------------------------------------------------------------------------------ |
-| beam_id <br/>`string`                        | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                             |
-| job_id <br/>`string`                         | Beam job id <br/><br/> Example: 60b8e1d96eb86d8101b57359                                                |
-| room_id <br/>`string`                        | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                     |
-| peer_id <br/>`string`                        | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| session_id <br/>`string`                     | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                  |
-| metadata_id <br/>`string`                    | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                            |
-| template_id <br/>`string`                    | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                    |
-| metadata_timestamp <br/>`timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> Example: 2020-11-11T17:32:17Z                             |
-| start_delay <br/>`number`                    | Time taken by beam to start recording <br/><br/> Example: 12                                            |
-| state_name <br/>`string`                     | Beam state identifier <br/><br/> Example: Started                                                       |
-| state_timestamp <br/>`timestamp (in UTC)`    | Timestamp at which beam state changed <br/><br/> Example: 2020-11-11T17:32:18Z                          |
-| meeting_url <br/>`string`                    | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                 |
-| rtmp <br/>`array`                            | List of RTMP objects provided at rtmp start <br/><br/> Example: [{"url": "http://test.com"}]            |
-| session_started_at <br/>`timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                 |
+| Name               | Type                 | Description                                                                                               |
+| :----------------- | :------------------- | :-------------------------------------------------------------------------------------------------------- |
+| beam_id            | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83_                                             |
+| job_id             | `string`             | Beam job id <br/><br/> _Example: 60b8e1d96eb86d8101b57359_                                                |
+| room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df_                                     |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4_ |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df_                  |
+| metadata_id        | `string`             | Webhook metadata ID <br/><br/> _Example: 14f350f5-18c4-46ca-8a33-71cbcc836600_                            |
+| template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg_                                    |
+| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> _Example: 2020-11-11T17:32:17Z_                             |
+| start_delay        | `number`             | Time taken by beam to start recording <br/><br/> _Example: 12_                                            |
+| state_name         | `string`             | Beam state identifier <br/><br/> _Example: Started_                                                       |
+| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed <br/><br/> _Example: 2020-11-11T17:32:18Z_                          |
+| meeting_url        | `string`             | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                   |
+| rtmp               | `array`              | List of RTMP objects provided at rtmp start <br/><br/> _Example: [{"url": "http://test.com"}]_            |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z_                                 |
 
 #### Sample `beam.started.success` event
 
@@ -607,24 +607,24 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
 
 #### Attributes
 
-| Name               | Type                 | Description                                                                | Example                              |
-| :----------------- | :------------------- | :------------------------------------------------------------------------- | :----------------------------------- |
-| beam_id            | `string`             | Unique beam id                                                             | 61d3def54b616982bd80ed83             |
-| job_id             | `string`             | Beam job id                                                                | 60b8e1d96eb86d8101b57359             |
-| room_id            | `string`             | 100ms assigned room id                                                     | 5f9edc6ac238215aec2312df             |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user                             | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| session_id         | `string`             | 100ms assigned id to identify the session                                  | 5f9edc6bd238215aec7700df             |
-| metadata_id        | `string`             | Webhook metadata ID                                                        | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| template_id        | `string`             | Template ID of the room                                                    | 66112497abcd52312556c4gg             |
-| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp                                         | 2020-11-11T17:32:17Z                 |
-| state_name         | `string`             | Beam state identifier                                                      | Stopped                              |
-| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed                                      | 2020-11-11T17:32:18Z                 |
-| duration           | `number`             | Duration of RTMP streaming / recording in seconds                          | 12                                   |
-| max_width          | `int`                | Maximum width of the screen supported for streaming / recording in pixels  | 1280                                 |
-| max_height         | `int`                | Maximum height of the screen supported for streaming / recording in pixels | 720                                  |
-| meeting_url        | `string`             | meeting_url provided at rtmp start                                         | "https://app.100ms.live/room_id"     |
-| rtmp               | `array`              | List of RTMP objects provided at rtmp start                                | [{"url": "http://test.com"}]         |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started                                             | 2020-11-11T16:32:17Z                 |
+| Name               | Type                 | Description                                                                                                |
+| :----------------- | :------------------- | :--------------------------------------------------------------------------------------------------------- |
+| beam_id            | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                             |
+| job_id             | `string`             | Beam job id <br/><br/> _Example: 60b8e1d96eb86d8101b57359 _                                                |
+| room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _ |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                  |
+| metadata_id        | `string`             | Webhook metadata ID <br/><br/> _Example: 14f350f5-18c4-46ca-8a33-71cbcc836600 _                            |
+| template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                    |
+| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> _Example: 2020-11-11T17:32:17Z _                             |
+| state_name         | `string`             | Beam state identifier <br/><br/> _Example: Stopped _                                                       |
+| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed <br/><br/> _Example: 2020-11-11T17:32:18Z _                          |
+| duration           | `number`             | Duration of RTMP streaming / recording in seconds <br/><br/> _Example: 12 _                                |
+| max_width          | `int`                | Maximum width of the screen supported for streaming / recording in pixels <br/><br/> _Example: 1280 _      |
+| max_height         | `int`                | Maximum height of the screen supported for streaming / recording in pixels <br/><br/> _Example: 720 _      |
+| meeting_url        | `string`             | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                    |
+| rtmp               | `array`              | List of RTMP objects provided at rtmp start <br/><br/> _Example: [{"url": "http://test.com"}] _            |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                 |
 
 #### Sample `beam.stopped.success` event
 
@@ -662,25 +662,25 @@ This event is sent when beam successfully records the room and uploads the video
 
 #### Attributes
 
-| Name               | Type                 | Description                                                    | Example                              |
-| :----------------- | :------------------- | :------------------------------------------------------------- | :----------------------------------- |
-| beam_id            | `string`             | Unique beam id                                                 | 61d3def54b616982bd80ed83             |
-| room_id            | `string`             | 100ms assigned room id                                         | 5f9edc6ac238215aec2312df             |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user                 | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| metadata_id        | `string`             | Webhook metadata ID                                            | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp                             | 2020-11-11T17:32:17Z                 |
-| session_id         | `string`             | 100ms assigned id to identify the session                      | 5f9edc6bd238215aec7700df             |
-| template_id        | `string`             | Template ID of the room                                        | 66112497abcd52312556c4gg             |
-| created_at         | `timestamp (in UTC)` | Timestamp at which recording was created                       | 2020-11-11T17:12:17Z                 |
-| duration           | `number`             | Duration of beam recording (seconds)                           | 79                                   |
-| location           | `string`             | HTTPS url to recorded session file on S3 bucket                | https://s3-loc/bucket/beam/ac.mp4    |
-| started_at         | `timestamp (in UTC)` | Beam recording started at                                      | 2020-11-11T17:12:27Z                 |
-| stopped_at         | `timestamp (in UTC)` | Beam recording stopped at                                      | 2020-11-11T17:32:15Z                 |
-| max_width          | `int`                | Maximum width of the screen supported for recording in pixels  | 1280                                 |
-| max_height         | `int`                | Maximum height of the screen supported for recording in pixels | 720                                  |
-| meeting_url        | `string`             | meeting_url provided at rtmp start                             | "https://app.100ms.live/room_id"     |
-| rtmp               | `array`              | List of RTMP objects provided at rtmp start                    | [{"url": "http://test.com"}]         |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started                                 | 2020-11-11T16:32:17Z                 |
+| Name               | Type                 | Description                                                                                                |
+| :----------------- | :------------------- | :--------------------------------------------------------------------------------------------------------- |
+| beam_id            | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                             |
+| room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _ |
+| metadata_id        | `string`             | Webhook metadata ID <br/><br/> _Example: 14f350f5-18c4-46ca-8a33-71cbcc836600 _                            |
+| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> _Example: 2020-11-11T17:32:17Z _                             |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                  |
+| template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                    |
+| created_at         | `timestamp (in UTC)` | Timestamp at which recording was created <br/><br/> _Example: 2020-11-11T17:12:17Z _                       |
+| duration           | `number`             | Duration of beam recording (seconds) <br/><br/> _Example: 79 _                                             |
+| location           | `string`             | HTTPS url to recorded session file on S3 bucket <br/><br/> _Example: https://s3-loc/bucket/beam/ac.mp4 _   |
+| started_at         | `timestamp (in UTC)` | Beam recording started at <br/><br/> _Example: 2020-11-11T17:12:27Z _                                      |
+| stopped_at         | `timestamp (in UTC)` | Beam recording stopped at <br/><br/> _Example: 2020-11-11T17:32:15Z _                                      |
+| max_width          | `int`                | Maximum width of the screen supported for recording in pixels <br/><br/> _Example: 1280 _                  |
+| max_height         | `int`                | Maximum height of the screen supported for recording in pixels <br/><br/> _Example: 720 _                  |
+| meeting_url        | `string`             | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                    |
+| rtmp               | `array`              | List of RTMP objects provided at rtmp start <br/><br/> _Example: [{"url": "http://test.com"}] _            |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                 |
 
 #### Sample `beam.recording.success` event
 
@@ -724,27 +724,27 @@ This event will be sent when there are failures in RTMP streaming and/or browser
 
 #### Attributes
 
-| Name               | Type                 | Description                                                                | Example                              |
-| :----------------- | :------------------- | :------------------------------------------------------------------------- | :----------------------------------- |
-| beam_id            | `string`             | Unique beam id                                                             | 61d3def54b616982bd80ed83             |
-| job_id             | `string`             | Beam job id                                                                | 60b8e1d96eb86d8101b57359             |
-| room_id            | `string`             | 100ms assigned room id                                                     | 5f9edc6ac238215aec2312df             |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user                             | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| session_id         | `string`             | 100ms assigned id to identify the session                                  | 5f9edc6bd238215aec7700df             |
-| template_id        | `string`             | Template ID of the room                                                    | 66112497abcd52312556c4gg             |
-| error_code         | `number`             | Beam error code                                                            | 1                                    |
-| error_message      | `string`             | Beam error message (description)                                           | Failed to resolve hostname           |
-| error_type         | `string`             | Beam error type                                                            | BeamFailed                           |
-| metadata_id        | `string`             | Webhook metadata ID                                                        | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp                                         | 2020-11-11T17:32:17Z                 |
-| state_name         | `string`             | Beam state identifier                                                      | Failed                               |
-| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed                                      | 2020-11-11T17:32:18Z                 |
-| duration           | `number`             | Duration of RTMP streaming / recording in seconds                          | 12                                   |
-| max_width          | `int`                | Maximum width of the screen supported for streaming / recording in pixels  | 1280                                 |
-| max_height         | `int`                | Maximum height of the screen supported for streaming / recording in pixels | 720                                  |
-| meeting_url        | `string`             | meeting_url provided at rtmp start                                         | "https://app.100ms.live/room_id"     |
-| rtmp               | `array`              | List of RTMP objects provided at rtmp start                                | [{"url": "http://test.com"}]         |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started                                             | 2020-11-11T16:32:17Z                 |
+| Name               | Type                 | Description                                                                                                |
+| :----------------- | :------------------- | :--------------------------------------------------------------------------------------------------------- |
+| beam_id            | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                             |
+| job_id             | `string`             | Beam job id <br/><br/> _Example: 60b8e1d96eb86d8101b57359 _                                                |
+| room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _ |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                  |
+| template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                    |
+| error_code         | `number`             | Beam error code <br/><br/> _Example: 1 _                                                                   |
+| error_message      | `string`             | Beam error message (description) <br/><br/> _Example: Failed to resolve hostname _                         |
+| error_type         | `string`             | Beam error type <br/><br/> _Example: BeamFailed _                                                          |
+| metadata_id        | `string`             | Webhook metadata ID <br/><br/> _Example: 14f350f5-18c4-46ca-8a33-71cbcc836600 _                            |
+| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> _Example: 2020-11-11T17:32:17Z _                             |
+| state_name         | `string`             | Beam state identifier <br/><br/> _Example: Failed _                                                        |
+| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed <br/><br/> _Example: 2020-11-11T17:32:18Z _                          |
+| duration           | `number`             | Duration of RTMP streaming / recording in seconds <br/><br/> _Example: 12 _                                |
+| max_width          | `int`                | Maximum width of the screen supported for streaming / recording in pixels <br/><br/> _Example: 1280 _      |
+| max_height         | `int`                | Maximum height of the screen supported for streaming / recording in pixels <br/><br/> _Example: 720 _      |
+| meeting_url        | `string`             | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                    |
+| rtmp               | `array`              | List of RTMP objects provided at rtmp start <br/><br/> _Example: [{"url": "http://test.com"}] _            |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                 |
 
 #### Sample `beam.failure` event
 
@@ -788,23 +788,23 @@ This event is sent when HLS streaming is successfully triggered
 
 #### Attributes
 
-| Name               | Type                 | Description                                    | Example                              |
-| :----------------- | :------------------- | :--------------------------------------------- | :----------------------------------- |
-| beam_id            | `string`             | Unique beam id                                 | 61d3def54b616982bd80ed83             |
-| job_id             | `string`             | Beam job id                                    | 60b8e1d96eb86d8101b57359             |
-| room_id            | `string`             | 100ms assigned room id                         | 5f9edc6ac238215aec2312df             |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| session_id         | `string`             | 100ms assigned id to identify the session      | 5f9edc6bd238215aec7700df             |
-| template_id        | `string`             | Template ID of the room                        | 66112497abcd52312556c4gg             |
-| meeting_url        | `string`             | meeting_url provided at HLS start              | "https://app.100ms.live/room_id"     |
-| metadata_id        | `string`             | Webhook metadata ID                            | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp             | 2020-11-11T17:32:17Z                 |
-| start_delay        | `number`             | Time taken by beam to start streaming          | 12                                   |
-| state_name         | `string`             | Beam state identifier                          | HLSStarted                           |
-| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed          | 2020-11-11T17:32:18Z                 |
-| url                | `string`             | HLS live streaming url                         | https://100ms-live.m3u8              |
-| started_at         | `timestamp (in UTC)` | Timestamp at which HLS started                 | 2020-11-11T17:32:18Z                 |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started                 | 2020-11-11T16:32:17Z                 |
+| Name               | Type                 | Description                                                                                                |
+| :----------------- | :------------------- | :--------------------------------------------------------------------------------------------------------- |
+| beam_id            | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                             |
+| job_id             | `string`             | Beam job id <br/><br/> _Example: 60b8e1d96eb86d8101b57359 _                                                |
+| room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _ |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                  |
+| template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                    |
+| meeting_url        | `string`             | meeting_url provided at HLS start <br/><br/> Example: "https://app.100ms.live/room_id"                     |
+| metadata_id        | `string`             | Webhook metadata ID <br/><br/> _Example: 14f350f5-18c4-46ca-8a33-71cbcc836600 _                            |
+| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> _Example: 2020-11-11T17:32:17Z _                             |
+| start_delay        | `number`             | Time taken by beam to start streaming <br/><br/> _Example: 12 _                                            |
+| state_name         | `string`             | Beam state identifier <br/><br/> _Example: HLSStarted _                                                    |
+| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed <br/><br/> _Example: 2020-11-11T17:32:18Z _                          |
+| url                | `string`             | HLS live streaming url <br/><br/> _Example: https://100ms-live.m3u8 _                                      |
+| started_at         | `timestamp (in UTC)` | Timestamp at which HLS started <br/><br/> _Example: 2020-11-11T17:32:18Z _                                 |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                 |
 
 #### Sample `hls.started.success` event
 
@@ -841,26 +841,26 @@ This event is sent when HLS streaming is successfully stopped
 
 #### Attributes
 
-| Name               | Type                 | Description                                                                    | Example                              |
-| :----------------- | :------------------- | :----------------------------------------------------------------------------- | :----------------------------------- |
-| beam_id            | `string`             | Unique beam id                                                                 | 61d3def54b616982bd80ed83             |
-| job_id             | `string`             | Beam job id                                                                    | 60b8e1d96eb86d8101b57359             |
-| room_id            | `string`             | 100ms assigned room id                                                         | 5f9edc6ac238215aec2312df             |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user                                 | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| session_id         | `string`             | 100ms assigned id to identify the session                                      | 5f9edc6bd238215aec7700df             |
-| template_id        | `string`             | Template ID of the room                                                        | 66112497abcd52312556c4gg             |
-| max_width          | `int`                | Maximum width of the screen supported for HLS streaming / recording in pixels  | 1280                                 |
-| max_height         | `int`                | Maximum height of the screen supported for HLS streaming / recording in pixels | 720                                  |
-| meeting_url        | `string`             | meeting_url provided at HLS start                                              | "https://app.100ms.live/room_id"     |
-| metadata_id        | `string`             | Webhook metadata ID                                                            | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp                                             | 2020-11-11T17:32:17Z                 |
-| state_name         | `string`             | Beam state identifier                                                          | HLSStopped                           |
-| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed                                          | 2020-11-11T17:32:18Z                 |
-| url                | `string`             | HLS live streaming url                                                         | https://100ms-live.m3u8              |
-| duration           | `number`             | Duration of HLS streaming in seconds                                           | 12                                   |
-| started_at         | `timestamp (in UTC)` | Timestamp at which HLS started                                                 | 2020-11-11T17:32:18Z                 |
-| stopped_at         | `timestamp (in UTC)` | Timestamp at which HLS stopped                                                 | 2020-11-11T17:32:18Z                 |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started                                                 | 2020-11-11T16:32:17Z                 |
+| Name               | Type                 | Description                                                                                                |
+| :----------------- | :------------------- | :--------------------------------------------------------------------------------------------------------- |
+| beam_id            | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                             |
+| job_id             | `string`             | Beam job id <br/><br/> _Example: 60b8e1d96eb86d8101b57359 _                                                |
+| room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _ |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                  |
+| template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                    |
+| max_width          | `int`                | Maximum width of the screen supported for HLS streaming / recording in pixels <br/><br/> _Example: 1280 _  |
+| max_height         | `int`                | Maximum height of the screen supported for HLS streaming / recording in pixels <br/><br/> _Example: 720 _  |
+| meeting_url        | `string`             | meeting_url provided at HLS start <br/><br/> Example: "https://app.100ms.live/room_id"                     |
+| metadata_id        | `string`             | Webhook metadata ID <br/><br/> _Example: 14f350f5-18c4-46ca-8a33-71cbcc836600 _                            |
+| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> _Example: 2020-11-11T17:32:17Z _                             |
+| state_name         | `string`             | Beam state identifier <br/><br/> _Example: HLSStopped _                                                    |
+| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed <br/><br/> _Example: 2020-11-11T17:32:18Z _                          |
+| url                | `string`             | HLS live streaming url <br/><br/> _Example: https://100ms-live.m3u8 _                                      |
+| duration           | `number`             | Duration of HLS streaming in seconds <br/><br/> _Example: 12 _                                             |
+| started_at         | `timestamp (in UTC)` | Timestamp at which HLS started <br/><br/> _Example: 2020-11-11T17:32:18Z _                                 |
+| stopped_at         | `timestamp (in UTC)` | Timestamp at which HLS stopped <br/><br/> _Example: 2020-11-11T17:32:18Z _                                 |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                 |
 
 #### Sample `hls.stopped.success` event
 
@@ -902,26 +902,26 @@ This event will be sent when there are failures in HLS streaming and/or recordin
 
 #### Attributes
 
-| Name               | Type                 | Description                                                                    | Example                              |
-| :----------------- | :------------------- | :----------------------------------------------------------------------------- | :----------------------------------- |
-| beam_id            | `string`             | Unique beam id                                                                 | 61d3def54b616982bd80ed83             |
-| job_id             | `string`             | Beam job id                                                                    | 60b8e1d96eb86d8101b57359             |
-| room_id            | `string`             | 100ms assigned room id                                                         | 5f9edc6ac238215aec2312df             |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user                                 | bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| session_id         | `string`             | 100ms assigned id to identify the session                                      | 5f9edc6bd238215aec7700df             |
-| template_id        | `string`             | Template ID of the room                                                        | 66112497abcd52312556c4gg             |
-| max_width          | `int`                | Maximum width of the screen supported for HLS streaming / recording in pixels  | 1280                                 |
-| max_height         | `int`                | Maximum height of the screen supported for HLS streaming / recording in pixels | 720                                  |
-| meeting_url        | `string`             | meeting_url provided at HLS start                                              | "https://app.100ms.live/room_id"     |
-| error_code         | `number`             | Beam error code                                                                | 1                                    |
-| error_message      | `string`             | Beam error message (description)                                               | Beam failed with unknown error       |
-| error_type         | `string`             | Beam error type                                                                | BeamFailed                           |
-| metadata_id        | `string`             | Webhook metadata ID                                                            | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp                                             | 2020-11-11T17:32:17Z                 |
-| state_name         | `string`             | Beam state identifier                                                          | HLSFailed                            |
-| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed                                          | 2020-11-11T17:32:18Z                 |
-| duration           | `number`             | Duration of HLS streaming in seconds                                           | 12                                   |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started                                                 | 2020-11-11T16:32:17Z                 |
+| Name               | Type                 | Description                                                                                                |
+| :----------------- | :------------------- | :--------------------------------------------------------------------------------------------------------- |
+| beam_id            | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                             |
+| job_id             | `string`             | Beam job id <br/><br/> _Example: 60b8e1d96eb86d8101b57359 _                                                |
+| room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _ |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                  |
+| template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                    |
+| max_width          | `int`                | Maximum width of the screen supported for HLS streaming / recording in pixels <br/><br/> _Example: 1280 _  |
+| max_height         | `int`                | Maximum height of the screen supported for HLS streaming / recording in pixels <br/><br/> _Example: 720 _  |
+| meeting_url        | `string`             | meeting_url provided at HLS start <br/><br/> Example: "https://app.100ms.live/room_id"                     |
+| error_code         | `number`             | Beam error code <br/><br/> _Example: 1 _                                                                   |
+| error_message      | `string`             | Beam error message (description) <br/><br/> _Example: Beam failed with unknown error _                     |
+| error_type         | `string`             | Beam error type <br/><br/> _Example: BeamFailed _                                                          |
+| metadata_id        | `string`             | Webhook metadata ID <br/><br/> _Example: 14f350f5-18c4-46ca-8a33-71cbcc836600 _                            |
+| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> _Example: 2020-11-11T17:32:17Z _                             |
+| state_name         | `string`             | Beam state identifier <br/><br/> _Example: HLSFailed _                                                     |
+| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed <br/><br/> _Example: 2020-11-11T17:32:18Z _                          |
+| duration           | `number`             | Duration of HLS streaming in seconds <br/><br/> _Example: 12 _                                             |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                 |
 
 #### Sample `hls.failure` event
 
@@ -961,25 +961,25 @@ This event will be sent when HLS recordings are successful and uploaded to the s
 
 #### Attributes
 
-| Name                                | Type                 | Description                                                                 | Example                              |
-| :---------------------------------- | :------------------- | :-------------------------------------------------------------------------- | :----------------------------------- |
-| beam_id                             | `string`             | Unique beam id                                                              | 61d3def54b616982bd80ed83             |
-| room_id                             | `string`             | 100ms assigned room id                                                      | 5f9edc6ac238215aec2312df             |
-| metadata_id                         | `string`             | Webhook metadata ID                                                         | 14f350f5-18c4-46ca-8a33-71cbcc836600 |
-| metadata_timestamp                  | `timestamp (in UTC)` | Webhook message creation timestamp                                          | 2020-11-11T17:32:17Z                 |
-| duration                            | `number`             | Duration of HLS recording in seconds                                        | 12                                   |
-| session_id                          | `string`             | 100ms assigned id to identify the session                                   | 5f9edc6bd238215aec7700df             |
-| template_id                         | `string`             | Template ID of the room                                                     | 66112497abcd52312556c4gg             |
-| max_width                           | `int`                | Maximum width of the screen supported for HLS recording in pixels           | 1280                                 |
-| max_height                          | `int`                | Maximum height of the screen supported for HLS recording in pixels          | 720                                  |
-| meeting_url                         | `string`             | meeting_url provided at HLS start                                           | "https://app.100ms.live/room_id"     |
-| recording_created_at                | `timestamp (in UTC)` | Timestamp at which recording was created                                    | 2020-11-11T17:12:17Z                 |
-| started_at                          | `timestamp (in UTC)` | Timestamp at which HLS started                                              | 2020-11-11T17:32:18Z                 |
-| stopped_at                          | `timestamp (in UTC)` | Timestamp at which HLS stopped                                              | 2020-11-11T17:32:18Z                 |
-| recording_single_files              | `array`              | List of recording details per layer. layer="0" is the highest quality layer | < see below >                        |
-| recording_hls_vod_playlist_location | `string`             | Pre signed url for HLS vod playlist url                                     | < see below >                        |
-| recording_thumbnails                | `array`              | List of thumbnails generated                                                | < see below >                        |
-| session_started_at                  | `timestamp (in UTC)` | Timestamp when session started                                              | 2020-11-11T16:32:17Z                 |
+| Name                                | Type                 | Description                                                                                                      |
+| :---------------------------------- | :------------------- | :--------------------------------------------------------------------------------------------------------------- |
+| beam_id                             | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                                   |
+| room_id                             | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                           |
+| metadata_id                         | `string`             | Webhook metadata ID <br/><br/> _Example: 14f350f5-18c4-46ca-8a33-71cbcc836600 _                                  |
+| metadata_timestamp                  | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> _Example: 2020-11-11T17:32:17Z _                                   |
+| duration                            | `number`             | Duration of HLS recording in seconds <br/><br/> _Example: 12 _                                                   |
+| session_id                          | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                        |
+| template_id                         | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                          |
+| max_width                           | `int`                | Maximum width of the screen supported for HLS recording in pixels <br/><br/> _Example: 1280 _                    |
+| max_height                          | `int`                | Maximum height of the screen supported for HLS recording in pixels <br/><br/> _Example: 720 _                    |
+| meeting_url                         | `string`             | meeting_url provided at HLS start <br/><br/> Example: "https://app.100ms.live/room_id"                           |
+| recording_created_at                | `timestamp (in UTC)` | Timestamp at which recording was created <br/><br/> _Example: 2020-11-11T17:12:17Z _                             |
+| started_at                          | `timestamp (in UTC)` | Timestamp at which HLS started <br/><br/> _Example: 2020-11-11T17:32:18Z _                                       |
+| stopped_at                          | `timestamp (in UTC)` | Timestamp at which HLS stopped <br/><br/> _Example: 2020-11-11T17:32:18Z _                                       |
+| recording_single_files              | `array`              | List of recording details per layer. layer="0" is the highest quality layer <br/><br/> _Example: < see below > _ |
+| recording_hls_vod_playlist_location | `string`             | Pre signed url for HLS vod playlist url <br/><br/> _Example: < see below > _                                     |
+| recording_thumbnails                | `array`              | List of thumbnails generated <br/><br/> _Example: < see below > _                                                |
+| session_started_at                  | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                       |
 
 #### Sample `hls.recording.success` event
 
