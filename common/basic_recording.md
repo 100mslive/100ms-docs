@@ -48,7 +48,7 @@ You can get track recordings in two forms:
 -   [How to implement SFU Recording](https://www.100ms.live/docs/server-side/v2/Destinations/recording)
 
 ## Recordings for Live Streaming Use-cases
-There are the types of live streaming recordings: 
+There are the types of live streaming recordings:
 
 ### Video-on-demand Recording
 
@@ -77,11 +77,11 @@ You can specify a cloud storage location for your recording files in your in you
 
 4. Key in your credentials like (using an example of an S3 bucket here):
 
-Access Key: (Access Key generated from AWS IAM Console)
-Secret Key: (Access Key generated from AWS IAM Console)
-Bucket: Name of the bucket in S3
-Region: Name of the region e.g ap-south1
-Prefix for Upload Path: You can use this option to configure the upload path in your bucket.
+- Access Key: Access Key generated from AWS IAM Console
+- Secret Key: Secret Key generated from AWS IAM Console
+- Bucket: Name of the bucket in S3
+- Region: Name of the region e.g ap-south1
+- Prefix for Upload Path: Define the directory name (optional)
 
 ![Destinations](/docs/docs/v2/recording-storage-settings-step4.png)
 
