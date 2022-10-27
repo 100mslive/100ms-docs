@@ -77,11 +77,11 @@ You can specify a cloud storage location for your recording files in your in you
 
 4. Key in your credentials like (using an example of an S3 bucket here):
 
-- Access Key: Access Key generated from AWS IAM Console
-- Secret Key: Secret Key generated from AWS IAM Console
-- Bucket: Name of the bucket in S3
-- Region: Name of the region e.g ap-south1
-- Prefix for Upload Path: Define the directory name (optional)
+    - Access Key: Access Key generated from AWS IAM Console
+    - Secret Key: Secret Key generated from AWS IAM Console
+    - Bucket: Name of the bucket in S3
+    - Region: Name of the region e.g ap-south1
+    - Prefix for Upload Path: Define the directory name (optional)
 
 ![Destinations](/docs/docs/v2/recording-storage-settings-step4.png)
 
