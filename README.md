@@ -199,11 +199,11 @@ All CSS Variables prefixed with `token` control the Syntax Highlighting.
     -   `vale sync`
     -   `vale docs/*`
 -   Add tokens in `.github/workflows/styles/Vocab/HMSVocab/accept.txt` which you want to whitelist during the linting.
--   code blocks are already whitelisted.
--   Vale extensions 
+-   code blocks are already whitelisted. reference: https://www.regextester.com/65535
+-   Vale extensions
     -   VSCode : [Vale](https://marketplace.visualstudio.com/items?itemName=errata-ai.vale-server)
     -   Android Studio/IntelliJ : [Vale-CLI](https://plugins.jetbrains.com/plugin/19613-vale-cli)
-    
+
 ## 🙏🏽 Acknowledgement
 
 -   Nextjs
