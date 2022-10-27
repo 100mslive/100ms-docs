@@ -48,7 +48,7 @@ You can get track recordings in two forms:
 -   [How to implement SFU Recording](https://www.100ms.live/docs/server-side/v2/Destinations/recording)
 
 ## Recordings for Live Streaming Use-cases
-There are the type of live streaming recordings: 
+There are the types of live streaming recordings: 
 
 ### Video-on-demand Recording
 
