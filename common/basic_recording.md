@@ -49,6 +49,7 @@ You can get track recordings in two forms:
 
 ## Recordings for Live Streaming Use-cases
 
+
 ### Video-on-demand Recording
 
 Video on-demand recording is available for our Interactive Live Streaming capability. This recording will be a file with an M3U8 file (same playback format as HLS), which can be used for replaying your HLS stream. This option is more suitable for Video-on-Demand use cases. For the implementation of this type of recording, please [contact us](https://www.100ms.live/contact).
