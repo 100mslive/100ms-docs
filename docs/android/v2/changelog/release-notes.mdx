@@ -3,214 +3,275 @@ title: Release Notes
 nav: 15
 description: Release Notes for 100ms Android SDK
 ---
+
 ## v2.5.0 - 2022-10-14
+
 ### Added
-* SFN module that can be used to receive periodic player stats about HLS playback
-* Option in `HMSVideoTrackSettings` to force device to use `software decoder`
+
+-   SFN module that can be used to receive periodic player stats about HLS playback
+-   Option in `HMSVideoTrackSettings` to force device to use `software decoder`
 
 ## v2.4.9 - 2022-09-30
+
 ### Added
-* Session Metadata API(alpha version)
-* Added better Telemetrics for analytics
-* Initial states(Muted/Unmuted) for local video and audio track can be mentioned while joining using the `HMSVideoTrackSettings` and `HMSAudioTrackSettings` in the builder of `HMSSDK`
+
+-   Session Metadata API(alpha version)
+-   Added better Telemetrics for analytics
+-   Initial states(Muted/Unmuted) for local video and audio track can be mentioned while joining using the `HMSVideoTrackSettings` and `HMSAudioTrackSettings` in the builder of `HMSSDK`
 
 ### Changed
-* Deprecated `ROOM_NAME_UPDATED` and `ROOM_ID_UPDATED` types of `HMSRoomUpdate` as they are no longer used
-* Updated WebRTC to m104 from m97
+
+-   Deprecated `ROOM_NAME_UPDATED` and `ROOM_ID_UPDATED` types of `HMSRoomUpdate` as they are no longer used
+-   Updated WebRTC to m104 from m97
 
 ### Fixed
-* SDK calling `leave()` on being removed from the room leading to `peer.leave.failure` webhook along with `peer.leave.success`
-* LetterBoxing(Black borders on top and bottom) observed when sharing screen in landscape mode
-* NPE fix in performance measurement while calling join and no websocket connection
-* Send offline analytics events to the right environment
+
+-   SDK calling `leave()` on being removed from the room leading to `peer.leave.failure` webhook along with `peer.leave.success`
+-   LetterBoxing(Black borders on top and bottom) observed when sharing screen in landscape mode
+-   NPE fix in performance measurement while calling join and no websocket connection
+-   Send offline analytics events to the right environment
 
 ## v2.4.8 - 2022-08-12
+
 #### Fixed
-* `removeSink` will only stop the download of a `videoTrack` if all the sinks attached to it are removed
-* Stop camera capturer on calling `leave` on Preview page
-* Setting the correct audio output device when a Bluetooth headset is in `connecting` state
+
+-   `removeSink` will only stop the download of a `videoTrack` if all the sinks attached to it are removed
+-   Stop camera capturer on calling `leave` on Preview page
+-   Setting the correct audio output device when a Bluetooth headset is in `connecting` state
 
 ## v2.4.7 - 2022-07-28
+
 #### Fixed
-* Calling `switchCamera` API leads trigerring of `onSuccess` callback twice
-* `onRoomUpdate` with type `HMSRoomUpdate.ROOM_PEER_COUNT_UPDATED` not getting called when peer count changes in the room
-* Peer not able to publish tracks when updated to webrtc from HLS if rejoins after a reconnection in webrtc Mode
+
+-   Calling `switchCamera` API leads trigerring of `onSuccess` callback twice
+-   `onRoomUpdate` with type `HMSRoomUpdate.ROOM_PEER_COUNT_UPDATED` not getting called when peer count changes in the room
+-   Peer not able to publish tracks when updated to webrtc from HLS if rejoins after a reconnection in webrtc Mode
 
 #### Changed
-* `HMSHLSConfig` is now an optional parameter while calling `startHLSStreaming` and `stopHLSStreaming`
-* The `meetingUrl` parameter while creating `HMSHLSMeetingURLVariant` instance for `HMSHLSConfig` is optional now. If nothing is provided
-HMS system will take the default meetingUrl for starting HLS stream
-* `changeRoleForce` permission in `HMSRole` is now removed and no longer used
-* `recording` permission in `HMSRole` is now broken into - `browserRecording` and `rtmpStreaming`
-* `streaming` permission in `HMSRole` is now `hlsStreaming`
+
+-   `HMSHLSConfig` is now an optional parameter while calling `startHLSStreaming` and `stopHLSStreaming`
+-   The `meetingUrl` parameter while creating `HMSHLSMeetingURLVariant` instance for `HMSHLSConfig` is optional now. If nothing is provided
+    HMS system will take the default meetingUrl for starting HLS stream
+-   `changeRoleForce` permission in `HMSRole` is now removed and no longer used
+-   `recording` permission in `HMSRole` is now broken into - `browserRecording` and `rtmpStreaming`
+-   `streaming` permission in `HMSRole` is now `hlsStreaming`
 
 ## v2.4.6 - 2022-07-15
+
 #### Fixed
-* Checking for targetApiVersion along with Device SDK version while initializing Bluetooth manager
+
+-   Checking for targetApiVersion along with Device SDK version while initializing Bluetooth manager
 
 ## v2.4.5 - 2022-07-14
+
 #### Fixed
-* `peer_list_time` calculation
-* Audio device switch issues
-* Bluetooth issues in HLS mode
-* Removed additional Bluetooth permission in SDK for android 30 and above
+
+-   `peer_list_time` calculation
+-   Audio device switch issues
+-   Bluetooth issues in HLS mode
+-   Removed additional Bluetooth permission in SDK for android 30 and above
 
 #### Added
-* `Join response time` to analytics
-* Support to enable or disable webrtc's AutoResize option while publishing video track
+
+-   `Join response time` to analytics
+-   Support to enable or disable webrtc's AutoResize option while publishing video track
 
 ## v2.4.4 - 2022-07-07
+
 #### Fixed
-* Web-Socket reconnection not working for non webrtc peers
+
+-   Web-Socket reconnection not working for non webrtc peers
 
 ## v2.4.3 - 2022-07-01
+
 #### Fixed
-* `cameraFacing` field in `HMSVideoTrackSettings` not getting updated on calling `switchCamera` API
-* Issue of 'peer is not joined' error while joining and SDK reconnection
-* Automatic proguard rules were fixed. No app-side proguard configuration is required for production builds with 100ms.
+
+-   `cameraFacing` field in `HMSVideoTrackSettings` not getting updated on calling `switchCamera` API
+-   Issue of 'peer is not joined' error while joining and SDK reconnection
+-   Automatic proguard rules were fixed. No app-side proguard configuration is required for production builds with 100ms.
 
 #### Added
-* APIs to stream device audio in different modes
-* APIs to view and change the output speaker selected by the SDK to playout
-* Analytics events to measure `retry` counts of JOIN calls
+
+-   APIs to stream device audio in different modes
+-   APIs to view and change the output speaker selected by the SDK to playout
+-   Analytics events to measure `retry` counts of JOIN calls
 
 ## v2.4.2 - 2022-06-22
+
 #### Fixed
-* Webrtc not able to find Camera from Android Camera Manager leading to `CantAccessCaptureDevice` error while calling preview or join API
-* Assertion Crash in Network Monitor while trying to create new instane of HMSSDK while a call is in progress
-* Chances of Multiple socket connection getting created incase there is network disconnection in preview screen and join gets called during that time
+
+-   Webrtc not able to find Camera from Android Camera Manager leading to `CantAccessCaptureDevice` error while calling preview or join API
+-   Assertion Crash in Network Monitor while trying to create new instane of HMSSDK while a call is in progress
+-   Chances of Multiple socket connection getting created incase there is network disconnection in preview screen and join gets called during that time
 
 #### Added
-* `setAudioMode` API to change the Audio out mode manually between in-call volume and media volume
-* Retry on 5xx and 429 errors in all RPC calls
-* Analytics events to measure `peer-list` time
-* Join optimization by not sending offer for non webrtc peers
+
+-   `setAudioMode` API to change the Audio out mode manually between in-call volume and media volume
+-   Retry on 5xx and 429 errors in all RPC calls
+-   Analytics events to measure `peer-list` time
+-   Join optimization by not sending offer for non webrtc peers
 
 #### Changed
-* Made TrackError while switching camera non-terminal
-* Removed recreation of Lists happening in SDK, leading to slowness while calling certain APIs in big rooms. Affected APIs by this change are :-
-`getPeers()` , `getRemotePeers()`, `getPlugins()` - now return `List` instead of `Array`
+
+-   Made TrackError while switching camera non-terminal
+-   Removed recreation of Lists happening in SDK, leading to slowness while calling certain APIs in big rooms. Affected APIs by this change are :-
+    `getPeers()` , `getRemotePeers()`, `getPlugins()` - now return `List` instead of `Array`
 
 ## v2.4.1 - 2022-06-14
+
 #### Fixed
-* Made SDK compatible for compileSDKversion 30 by reducing version of Room lib to 2.3.0
+
+-   Made SDK compatible for compileSDKversion 30 by reducing version of Room lib to 2.3.0
 
 #### Added
-* Analytics events to measure join and preview time
-* Retry on 5xx errors in internal join message
+
+-   Analytics events to measure join and preview time
+-   Retry on 5xx errors in internal join message
 
 ## v2.4.0 - 2022-06-09
+
 #### Fixed
-* Update the width and height of screen-share video track being published based on the rotation of device
-* Crash fix on Android 12 if app does not provide Bluetooth Connect permission. SDK now sends a non-terminal error
-* Crash fix on Android 12 on calling the `HMSScreenCaptureService.getStopScreenSharePendingIntent` API while starting screenshare
-* Un-necessarily sending `HLS_RECORDING_STATE_UPDATED` in `onRoomUpdate` callback when HLS Streaming is enabled
+
+-   Update the width and height of screen-share video track being published based on the rotation of device
+-   Crash fix on Android 12 if app does not provide Bluetooth Connect permission. SDK now sends a non-terminal error
+-   Crash fix on Android 12 on calling the `HMSScreenCaptureService.getStopScreenSharePendingIntent` API while starting screenshare
+-   Un-necessarily sending `HLS_RECORDING_STATE_UPDATED` in `onRoomUpdate` callback when HLS Streaming is enabled
 
 #### Changed
-* Socket close from cancel, which ensures the leave api does not wait for server response hence initiating internal teardown immediately
+
+-   Socket close from cancel, which ensures the leave api does not wait for server response hence initiating internal teardown immediately
 
 #### Added
-* Offline storage of Analytics event. Events that cannot be send immediately via websockets would be persisted in a db and will be sent later when connection returns
-* Remove height/width check for rtmp and browser recording in SDK
-* RemoveRtcStatsObserver API is added
+
+-   Offline storage of Analytics event. Events that cannot be send immediately via websockets would be persisted in a db and will be sent later when connection returns
+-   Remove height/width check for rtmp and browser recording in SDK
+-   RemoveRtcStatsObserver API is added
 
 ## v2.3.9 - 2022-05-18
+
 #### Fixed
-* Screen Share not starting in highest resolution
-* Serverside Subscribe degradation fix - marking track not degraded after removeSink is called
-* IO Exception Crash in Android 12, in the alarm manager of Log Util
-* NPE Crash fix in webrtc stats monitor
-* Crash in LogUtils
+
+-   Screen Share not starting in highest resolution
+-   Serverside Subscribe degradation fix - marking track not degraded after removeSink is called
+-   IO Exception Crash in Android 12, in the alarm manager of Log Util
+-   NPE Crash fix in webrtc stats monitor
+-   Crash in LogUtils
 
 #### Changed
-* `serverReceiveTime` data type in `HMSMessage` is not of type `Long` instead of `Date`
+
+-   `serverReceiveTime` data type in `HMSMessage` is not of type `Long` instead of `Date`
 
 ## v2.3.7 - 2022-05-09
+
 #### Fixed
-* A crash in some rare cases where analytics events were being sent while the room was ending.
+
+-   A crash in some rare cases where analytics events were being sent while the room was ending.
 
 #### Added
-* `sessionId` is a new parameter in HMSRoom. It is updated with the current sessionId when a room is joined.
+
+-   `sessionId` is a new parameter in HMSRoom. It is updated with the current sessionId when a room is joined.
 
 ## 2.3.6 - 2022-04-28
+
 #### Fixed
-* Fixed bug: Local peer being null in stats callbacks
-* Fixed bug: `onSuccess` callback not called from `preview`/`join` if network goes off BEFORE ws-connect and comes back after sometime
+
+-   Fixed bug: Local peer being null in stats callbacks
+-   Fixed bug: `onSuccess` callback not called from `preview`/`join` if network goes off BEFORE ws-connect and comes back after sometime
 
 #### Added
-* Server Side Subscribe Degradation
+
+-   Server Side Subscribe Degradation
 
 ## 2.3.5 - 2022-04-20
+
 #### Fixed
-* Crash fix: `InvalidTokenFormat` exeception. This would be thrown in the `onError` callback instead
-* Fixed bug: Sending `TRACK_DEGRADED` when not required in some cases
+
+-   Crash fix: `InvalidTokenFormat` exeception. This would be thrown in the `onError` callback instead
+-   Fixed bug: Sending `TRACK_DEGRADED` when not required in some cases
 
 #### Added
-* Apps can now add resolution(w*h) when starting `RTMP` Streaming
-* SDK has the capability to write logs in the filesystem of devices. Apps can enable or disable while initializing the SDK
+
+-   Apps can now add resolution(w\*h) when starting `RTMP` Streaming
+-   SDK has the capability to write logs in the filesystem of devices. Apps can enable or disable while initializing the SDK
 
 ## 2.3.4 - 2022-03-28
+
 #### Fixed
-* HLS recording status wasn't always updated when stopped.
-* Rare crash when cameras are unavailable and it seemed to the app like none exist.
+
+-   HLS recording status wasn't always updated when stopped.
+-   Rare crash when cameras are unavailable and it seemed to the app like none exist.
 
 #### Added
-* Network Quality in preview. [Network quality](../features/network-quality-reports) reports can now be requested at the preview screen. Use the returned value to determine if you should suggest people's internet is too slow to join with video etc.
-* Network Quality during calls. [Peer Network Quality](../advanced-features/peer-network-quality) updates are now received during the call. Use this to show how strong any peer's internet is during the call.
+
+-   Network Quality in preview. [Network quality](../features/network-quality-reports) reports can now be requested at the preview screen. Use the returned value to determine if you should suggest people's internet is too slow to join with video etc.
+-   Network Quality during calls. [Peer Network Quality](../advanced-features/peer-network-quality) updates are now received during the call. Use this to show how strong any peer's internet is during the call.
 
 ## 2.3.3 - 2022-03-17
-#### Fixed
-* `Leave` not finishing if SDK is in reconnection state. Hence all `join` calls after that was getting queued up if called on the same HMSSDK instance
-* Improved subscribe degradation so that new add sinks are handled properly when SDK is already in degraded state
-* Crash fix on starting/stopping HLS where `HlsStartRecording` was null
 
+#### Fixed
+
+-   `Leave` not finishing if SDK is in reconnection state. Hence all `join` calls after that was getting queued up if called on the same HMSSDK instance
+-   Improved subscribe degradation so that new add sinks are handled properly when SDK is already in degraded state
+-   Crash fix on starting/stopping HLS where `HlsStartRecording` was null
 
 #### Added
-* Added Hls Recording to initial PeerList
-* Ignore `room-state` updates after joining
+
+-   Added Hls Recording to initial PeerList
+-   Ignore `room-state` updates after joining
 
 ## 2.3.2 - 2022-03-14
+
 #### Fixed
-* ERROR Analytics events not being sent
+
+-   ERROR Analytics events not being sent
 
 ## 2.3.1 - 2022-02-25
+
 #### Fixed
-* NPE in `OnPeerUpdateManager` when sometimes `room-sate` message comes before `policy-change` message. Ignoring the first `room-sate` message in such cases
+
+-   NPE in `OnPeerUpdateManager` when sometimes `room-sate` message comes before `policy-change` message. Ignoring the first `room-sate` message in such cases
 
 ## 2.3.0 - 2022-02-23
+
 #### Added
-* `HlsRecordingConfig` to `HMSHLSConfig` object
-* `onPeerUpdate` and `onRoomUpdate` callbacks in 'HMSPreviewListener' to get info about the room at Preview screen
-*  Server will send a timeout error if a peer stays on preview page for too along
-*  Calling `preview` API again without a `leave` call would result in an error
+
+-   `HlsRecordingConfig` to `HMSHLSConfig` object
+-   `onPeerUpdate` and `onRoomUpdate` callbacks in 'HMSPreviewListener' to get info about the room at Preview screen
+-   Server will send a timeout error if a peer stays on preview page for too along
+-   Calling `preview` API again without a `leave` call would result in an error
 
 #### Changed
-* Synced leave function
-* Make `leave` API call to server sync instead of async
+
+-   Synced leave function
+-   Make `leave` API call to server sync instead of async
 
 #### Fixed
-* Socket is now cancelled instead of close, which was causing queued messages to be processed after
-  teardown leading to crashes and `Failed to set remote offer sdp: Called in wrong state: closed` error
-* NPE in `sendMessage` API
+
+-   Socket is now cancelled instead of close, which was causing queued messages to be processed after
+    teardown leading to crashes and `Failed to set remote offer sdp: Called in wrong state: closed` error
+-   NPE in `sendMessage` API
 
 ## 2.2.9 - 2022-02-08
+
 #### Added
-* Local track updates like mute/unmute will be send as well via `onTrackUpdate`
-* Added `startedAt` and `stoppedAt` field for `Browser` and `SFU` recording
+
+-   Local track updates like mute/unmute will be send as well via `onTrackUpdate`
+-   Added `startedAt` and `stoppedAt` field for `Browser` and `SFU` recording
 
 #### Changed
-* Upgraded kotlin version to `1.6.10`
-* Upgraded webrtc version to `m97`
-* `customerUserID` can be null
+
+-   Upgraded kotlin version to `1.6.10`
+-   Upgraded webrtc version to `m97`
+-   `customerUserID` can be null
 
 #### Fixed
-* Crash Fix when joining without mic permission
-* Stop screenshare on calling `leave()` API if screenshare is going on
-* Potential fix for `ClassCastException` on accesing `localPeer` while publishing
-* Fix for `HMSException: Network connection lost` crash when connection failed while joining
-* Improved time taken for YUV conversion for virtual background
-* Fixed background image overlay
 
+-   Crash Fix when joining without mic permission
+-   Stop screenshare on calling `leave()` API if screenshare is going on
+-   Potential fix for `ClassCastException` on accesing `localPeer` while publishing
+-   Fix for `HMSException: Network connection lost` crash when connection failed while joining
+-   Improved time taken for YUV conversion for virtual background
+-   Fixed background image overlay
 
 ## 2.2.8 - 2022-01-24
 

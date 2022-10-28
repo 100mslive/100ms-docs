@@ -4,7 +4,7 @@ For example, one of the common use cases for recording is for archival purposes 
 
 Based on your end goal, you can choose one of the recording types and its implementation. You can understand some key differences using the comparison table below.
 
-# Recording types
+## Recording types
 
 - [Browser recording](#browser-recording-recommended)
 - [SFU recording](#sfu-recording-advanced)
@@ -14,15 +14,15 @@ Based on your end goal, you can choose one of the recording types and its implem
 
 ## Quick comparison
 
-| Recording Features                   | Browser Recording [Recommended] | SFU Recording [Advanced]        |
-| ------------------------------------ | ------------------------------- | ------------------------------- |
-| Resolution                           | Upto 1080p                      | Only 720p                       |
-| Participant-level Audio/Video Tracks | Not Available                   | Available                       |
-| Portrait/Landscape Mode              | Available                       | Not Available                   |
-| Start/Stop Recording                 | On-demand                       | Auto start/stop with the session|
-| Custom Layout                        | Available                       | Not Available                   |
-| Role Specific Recording              | Available                       | Not Available                   |
-| Recording Output                     | MP4                             | MP4, WebM                       |
+| Recording Features                   | Browser Recording [Recommended] | SFU Recording [Advanced]         |
+| ------------------------------------ | ------------------------------- | -------------------------------- |
+| Resolution                           | Upto 1080p                      | Only 720p                        |
+| Participant-level Audio/Video Tracks | Not Available                   | Available                        |
+| Portrait/Landscape Mode              | Available                       | Not Available                    |
+| Start/Stop Recording                 | On-demand                       | Auto start/stop with the session |
+| Custom Layout                        | Available                       | Not Available                    |
+| Role Specific Recording              | Available                       | Not Available                    |
+| Recording Output                     | MP4                             | MP4, WebM                        |
 
 
 ## Browser Recording [Recommended]
