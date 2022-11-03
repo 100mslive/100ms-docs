@@ -1,7 +1,6 @@
 import '@/styles/nprogress.css';
-// import '@/styles/theme.css';
+import '@/styles/theme.css';
 import 'inter-ui/inter.css';
-import '@/styles/test.css';
 import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import { DefaultSeo } from 'next-seo';
