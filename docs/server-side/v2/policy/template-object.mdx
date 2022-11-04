@@ -1,0 +1,38 @@
+---
+title: Template object
+nav: 5.1
+---
+
+## Overview
+
+Template is the blueprint of the room. It defines the settings of the room along with the behavior of users who are part of it.
+Room will inherit the properties from a template that you have specified while creating it. If you have not specified any template then it will pick the default template.
+Each template will be identified by its id or name. For example `default_videoconf_7e450ffc-8ef1-4572-ab28-b32474107b89`
+
+<EndpointRequest title="https://api.100ms.live/v2/templates" />
+
+## Template object
+
+| Argument     | Description                                                                                                                                                                                                                                    |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id           | Unique identifier for the template. <br/><br/> **Deprecation notice**: `_id` argument which was available in the previous version has been deprecated.                                                                                       |
+| name         | Alias for the template                                                                                                                                                                                                                         |
+| customer_id  | Unique identifier for your account. <br/><br/> **Deprecation notice**: `customer` argument which was available in the previous version has been deprecated.                                                                                  |
+| roles        | Array of [roles objects](/server-side/v2/policy/create-template-via-api#roles-object) with a collection of arguments and objects such as `name`, `publishParams`, `subscribeParams`, `permissions`, `priority`, `maxPeerCount`, etc. |
+| settings     | Object of type [settings](/server-side/v2/policy/create-template-via-api#settings-object) with the collection of arguments and objects such as `region`, `subscribeDegradation`, `recording`, `roomState`, etc.                      |
+| destinations | Object of type `destinations`. This object contains information for enabling/configuring features like `browserRecordings`, `rtmpDestinations`, & `hlsDestinations`.                                                                           |
+| default      | Whether this is default template for a customer. Default template for a customer is used when no template is provided in [create room API](/server-side/v2/Rooms/create-via-api).                                                              |
+
+## Understand sub-objects hierarchy
+
+![Template sub-objects hierarchy](/docs/v2/template-object-hierarchy.png)
+
+Refer to the sub-objects attributes [here](/server-side/v2/policy/create-template-via-api#main-arguments)
+
+## Postman collection
+
+You can use our Postman collection to start exploring 100ms APIs.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a?action=collection%2Ffork&collection-url=entityId%3D22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a%26entityType%3Dcollection%26workspaceId%3Dd9145dd6-337b-4761-81d6-21a30b4147a2)
+
+Refer to the [Postman guide](/server-side/v2/introduction/postman-guide) to get started with 100ms API collection. 

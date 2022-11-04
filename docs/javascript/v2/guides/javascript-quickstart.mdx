@@ -16,7 +16,7 @@ To get started you must be familiar with rudimentary JavaScript and have [nodejs
 
 ### Installing the dependencies
 
-```bash
+```bash section=InstallingTheDependencies sectionIndex=1
 npm install --save @100mslive/hms-video-store@latest
 ```
 
@@ -24,7 +24,7 @@ npm install --save @100mslive/hms-video-store@latest
 
 Let us start with initializing the libraries. We need an instance of `HMSStore` and `HMSActions` to get started. Copy the code snippet below and paste it into your project.
 
-```jsx:script.js
+```jsx:script.js section=InitializingTheSDK sectionIndex=1
 import { HMSReactiveStore } from '@100mslive/hms-video-store';
 
 const hms = new HMSReactiveStore();
@@ -53,11 +53,13 @@ The config object must be passed the following fields:
 
 For our application, let us collect both of these fields from the user using a form.
 
+> Note: join is async from this [version](../changelog/release-notes#2022-09-13)
+
 <Tabs id="join-form" items={['HTML', 'JS']} />
 
 <Tab id="join-form-0">
 
-```html:index.html
+```html:index.html section=JoiningRoom sectionIndex=1 tab=HTML
 <form id="join">
     <h2>Join Room</h2>
     <div class="input-container">
@@ -74,10 +76,10 @@ For our application, let us collect both of these fields from the user using a f
 
 <Tab id="join-form-1">
 
-```jsx:script.js
+```jsx:script.js section=JoiningRoom sectionIndex=1 tab=JS
 const joinBtn = document.getElementById("join-btn");
-joinBtn.addEventListener('click', () => {
-    hmsActions.join({
+joinBtn.addEventListener('click', async () => {
+    await hmsActions.join({
         userName: document.getElementById('name').value,
         authToken: document.getElementById('token').value
     });
@@ -96,7 +98,7 @@ Before we go ahead with adding video, let us add a way to leave the room as well
 
 We'll set up the `leave` method to be called whenever the user closes the window or refreshes the tab.
 
-```jsx:script.js
+```jsx:script.js section=LeavingTheRoom sectionIndex=1
 function leaveRoom() {
     hmsActions.leave();
 }
@@ -112,7 +114,7 @@ Let us next add a way to show a tile for every participant in the room. We'll ne
 
 At any point in time we can get a list of peers with:
 
-```jsx
+```jsx section=FetchingInformationFromState sectionIndex=1
 import { selectPeers } from '@100mslive/hms-video-store';
 
 const peers = hmsStore.getState(selectPeers);
@@ -134,7 +136,7 @@ We'll subscribe to the `peers` state and render the tiles whenever something rel
 
 <Tab id="render-peers-0">
 
-```jsx:script.js
+```jsx:script.js section=SubscribingToTheState sectionIndex=1 tab=JS
 import {
     HMSReactiveStore,
     selectPeers
@@ -156,7 +158,7 @@ hmsStore.subscribe(renderPeers, selectPeers);
 
 <Tab id="render-peers-1">
 
-```html:index.html
+```html:index.html section=SubscribingToTheState sectionIndex=1 tab=HTML
 <div id="conference" class="conference-section">
     <h2>Conference</h2>
 
@@ -169,7 +171,7 @@ hmsStore.subscribe(renderPeers, selectPeers);
 For each peer, we'll render a `<video>` element and a `<div>` element with their name.
 We'll also make a helper function to create these DOM elements and add it to the `peersContainer`
 
-```jsx{3-16,20-20,23-47}:script.js
+```jsx{3-16,20-20,23-47}:script.js section=SubscribingToTheState sectionIndex=2
 const peersContainer = document.getElementById('peers-container');
 
 // helper function to create html elements
@@ -237,7 +239,7 @@ Right now, our join form shows even after we have joined the room. We need a way
 
 We can do this by subscribing to the store with the `selectIsConnectedToRoom` selector.
 
-```jsx:script.js
+```jsx:script.js section=ChangingUIBasedOnConnectionState sectionIndex=1
 import {
   selectIsConnectedToRoom,
 } from "@100mslive/hms-video-store";
@@ -269,7 +271,7 @@ Let's add 2 buttons on the bottom of the page and call the methods on `hmsAction
 
 <Tab id="mute-unmute-0">
 
-```jsx:script.js
+```jsx:script.js section=MutingUnmutingLocalTracks sectionIndex=1 tab=JS
 import {
   selectIsLocalAudioEnabled,
   selectIsLocalVideoEnabled,
@@ -299,7 +301,7 @@ muteVid.addEventListener("click", () => {
 
 <Tab id="mute-unmute-1">
 
-```html
+```html section=MutingUnmutingLocalTracks sectionIndex=1 tab=HTML
 <div id="controls" class="control-bar">
     <button id="mute-aud" class="btn-control">Mute</button>
     <button id="mute-vid" class="btn-control">Hide</button>
@@ -314,7 +316,7 @@ If you try it out now, you may notice that turning off the video makes the tile 
 This is due to a change in video track requiring a call to attach again. To fix it let's
 call our `renderPeers` function whenever we change the state of the local video.
 
-```jsx{8}:script.js
+```jsx{8}:script.js section=MutingUnmutingLocalTracks sectionIndex=2
 muteVid.addEventListener("click", () => {
   const videoEnabled = hmsStore.getState(selectIsLocalVideoEnabled);
 
@@ -337,7 +339,7 @@ When looping over the peer list we can use this property to decide whether to mi
 
 <Tab id="mirror-0" >
 
-```jsx{10,28}:script.js
+```jsx{10,28}:script.js section=MirroringLocalVideo sectionIndex=1 tab=JS
 function renderPeers(peers) {
   peersContainer.innerHTML = "";
 
@@ -378,7 +380,7 @@ function renderPeers(peers) {
 
 <Tab id="mirror-1">
 
-```css:styles.css
+```css:styles.css section=MirroringLocalVideo sectionIndex=1 tab=CSS
 .local.peer-video {
     transform: scaleX(-1);
 }

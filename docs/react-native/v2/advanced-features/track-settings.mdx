@@ -34,7 +34,8 @@ Video resolution is the number of pixels contained in each frame.
 Video resolution determines the amount of detail in your video or how realistic and clear the video appears.
 
 ```js
-import HmsManager, {
+import {
+  HMSSDK,
   HMSAudioTrackSettings,
   HMSAudioCodec,
   HMSVideoTrackSettings,
@@ -68,7 +69,7 @@ const getTrackSettings = () => {
 }
 
 const trackSettings = getTrackSettings();
-const build = await HmsManager.build({trackSettings});
+const build = await HMSSDK.build({trackSettings});
 ```
 
 
@@ -84,7 +85,7 @@ const getTrackSettings = () => {
 
   const setupBuild = async () => {
     const trackSettings = getTrackSettings();
-    const build = await HmsManager.build({ trackSettings });
+    const build = await HMSSDK.build({ trackSettings });
     setInstance(build);
     updateHms({hmsInstance: build});
   };

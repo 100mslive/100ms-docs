@@ -23,7 +23,7 @@ Note that this page is about creating custom new plugins than using existing one
 
 The plugin needs to implement the below interface post which it can be added to the processing pipeline for the local peer's video.
 
-```ts
+```ts section=VideoPluginInterface sectionIndex=1
 interface HMSVideoPlugin {
     /**
      * The name is meant to uniquely specify a plugin instance. This will be used to track number of plugins
@@ -125,7 +125,7 @@ Once a plugin implementation is ready, it can be added and removed from local pe
 
 <Tab id='add-remove-plugin-0'>
 
-```js
+```js section=AddingAndRemovePlugins sectionIndex=1 tab=Usage
 
 import { hmsActions } from './hms';
 
@@ -152,7 +152,7 @@ else{
 
 <Tab id='add-remove-plugin-1'>
 
-```ts
+```ts section=AddingAndRemovePlugins sectionIndex=1 tab=CustomPlugin
 class MyCustomPlugin implements HMSVideoPlugin {}
 ```
 
@@ -162,7 +162,7 @@ class MyCustomPlugin implements HMSVideoPlugin {}
 
 Below is a sample implementation of the above interface which converts the local video in grayscale.
 
-```js
+```js section=ImplementationExample sectionIndex=1
 class GrayscalePlugin {
   getName() {
     return "grayscale-plugin";
@@ -217,9 +217,9 @@ hmsActions.addPluginToVideoTrack(new GrayscalePlugin());
 ## Plugin Guidelines
 
 -   Feel free to implement more methods outside the interface, options passed in plugin's constructor etc. as required for
-    the users of the plugin to give more interaction points. For e.g., our Virtual background plugin exposes a method to change
+    the users of the plugin to give more interaction points. For example, our Virtual background plugin exposes a method to change
     the background as required.
--   If your plugin involves a cpu intensive task such as initialising a ML model, ensure that it's done as part of the init method.
+-   If your plugin involves a CPU intensive task such as initialising a ML model, ensure that it's done as part of the init method.
     As a bonus, ensure that the plugin remembers the model initialisation across instances, so in case user leaves and joins the room again
     without closing the tab they don't see a delay the second time.
 -   The `addPlugin` method takes a second parameter to control the framerate. This can be used to reduce the amount of processing

@@ -65,6 +65,10 @@ Once the metadata is updated, all the peers will receive a notification
 with type `METADATA_UPDATED` and [HMSPeer](../../../api-reference/javascript/v2/interfaces/HMSPeer)
 object as notification data.
 
+<Tabs id="meta-notif" items={['Javascript', 'React']} />
+
+<Tab id='meta-notif-0'>
+
 ```js
 hmsNotifications.onNotification((notification) => {
     const peer = notification.data;
@@ -75,6 +79,24 @@ hmsNotifications.onNotification((notification) => {
 }, HMSNotificationsTypes.METADATA_UPDATED);
 ```
 
+</Tab>
+
+<Tab id='meta-notif-1'>
+
+```jsx
+const notification = useHMSNotifications(HMSNotificationsTypes.METADATA_UPDATED)
+const peer = notification?.data
+const isHandRaised = useHMSStore(selectPeerMetadata(peer?.id ?? ""))?.isHandRaised
+
+useEffect(() => {
+    if (isHandRaised && peer && !peer.isLocal) {
+        toast(`${peer.name} raised their hand.`);
+    }
+}, [isHandRaised, peer])
+```
+
+</Tab>
+
 ## Updating Remote Peer Metadata
 
 Say if a guest has raised hand, host might want to lower their hand after a while. We
@@ -82,13 +104,17 @@ don't have a direct method available to do this currently but it can be done usi
 [custom events](../features/chat#custom-events). The host can send a message to the peer
 who raised their hand, and the peer can lower their hand on getting the message.
 
+<Tabs id="meta-update" items={['Javascript', 'React']} />
+
+<Tab id='meta-update-0'>
+
 ```js
 const LOWER_HAND = 'LOWER_HAND';
 // don't save messages with this type in store
 hmsActions.ignoreMessageTypes([LOWER_HAND]);
 
 // host can send a custom message to the peer who has raised hand
-hmsActions.sendDirectMessage('', peerIdWithRaisedHand, LOWER_HAND);
+await hmsActions.sendDirectMessage('', peerIdWithRaisedHand, LOWER_HAND);
 
 // the peer on receiving the event can lower their hand
 hmsNotifications.onNotification((notification) => {
@@ -101,6 +127,39 @@ hmsNotifications.onNotification((notification) => {
     }
 }, HMSNotificationTypes.NEW_MESSAGE);
 ```
+
+</Tab>
+
+<Tab id='meta-update-1'>
+
+```jsx
+const LOWER_HAND = 'LOWER_HAND';
+// don't save messages with this type in store
+hmsActions.ignoreMessageTypes([LOWER_HAND]);
+
+// host can send a custom message to the peer who has raised hand
+await hmsActions.sendDirectMessage('', peerIdWithRaisedHand, LOWER_HAND);
+
+// the peer on receiving the event can lower their hand
+const hmsActions = useHMSActions();
+const notification = useHMSNotifications(HMSNotificationsTypes.NEW_MESSAGE);
+const localPeerId = useHMSStore(selectLocalPeerID);
+const metadata = useHMSStore(selectPeerMetadata(localPeerId));
+
+useEffect(() => {
+    if (!notification) {
+        return;
+    }
+
+    const message = notification.data;
+    if (message?.type === LOWER_HAND) {
+        const newMetadata = { ...metadata, isHandRaised: false };
+        hmsActions.changeMetadata(newMetadata);
+    }
+}, [notification])
+```
+
+</Tab>
 
 ## Ideas
 

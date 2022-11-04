@@ -6,32 +6,39 @@ interface Props {
     url: string;
 }
 
-const PostRequest: React.FC<Props> = ({ title, desp, url, children }) => (
+const PostRequest: React.FC<Props> = ({ title }) => (
     <div className="post-ctx">
-        <div className="head">
+        <div className="header">
             <span className="badge">POST</span>
             <span className="title">{title}</span>
         </div>
-        <code style={{ display: 'inline-block' }}>{url}</code>
-        <p>{desp}</p>
-        {children}
+
         <style jsx>{`
-            .head {
-                margin: 2rem 0;
+            .container {
+                padding: 24px;
+                position: relative;
+                border: 1px solid var(--border_default);
+                border-radius: 0 0 8px 8px;
+                margin-bottom: 16px;
+            }
+            .header {
+                background-color: var(--api_surface_light_3);
+                border-radius: 8px 8px 0 0;
+                padding: 8px 16px;
             }
             .badge {
-                padding: 5px 10px;
-                border-radius: 12px;
-                background-color: var(--token_property);
+                font-size: 13px;
+                font-weight: 500;
+                line-height: 24px;
+                margin: auto 0;
                 margin-right: 1rem;
-                color: var(--gray4);
+                color: var(--twin_green);
             }
             .title {
-                font-size: 20px;
-                font-weight: bold;
-            }
-            code {
-                display: flex;
+                margin: auto 0;
+                color: var(--endpoint_url);
+                font-size: 13px;
+                font-weight: 400;
             }
         `}</style>
     </div>

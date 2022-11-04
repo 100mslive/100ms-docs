@@ -7,31 +7,78 @@ nav: 5.01
 
 You can also show audio levels in your UI corresponding to every peer so it's easier to see who is speaking currently.
 You can retrieve all the speaker object which will contain peerID,
-trackID and their audioLevel using `selectSpeakers` selector. You can fetch audio level for a particular peer using `selectPeerAudioByID` 
+trackID and their audioLevel using `selectSpeakers` selector. You can fetch audio level for a particular peer using `selectPeerAudioByID`
 and for a particular track using `selectTrackAudioByID` selector.
 
 You can also fetch the current active speaker using the `selectDominantSpeaker` selector.
 
+<Tabs id="audio-level" items={['JavaScript', 'React']} />{' '}
+
+<Tab id='audio-level-0'>
+
 ```js
 import {
-  selectPeerAudioByID,
-  selectDominantSpeaker,
-  selectSpeakers,
+    selectPeerAudioByID,
+    selectDominantSpeaker,
+    selectSpeakers
 } from '@100mslive/hms-video-store';
 
-const peerId = "..";
+const peerId = '..';
 function updateAudioLevel(audioLevel) {
-    console.log(`audio level for peer - ${peerID} is ${audioLevel}`)
+    console.log(`audio level for peer - ${peerID} is ${audioLevel}`);
 }
 
 hmsStore.subscribe(updateAudioLevel, selectPeerAudioByID(peerId));
 
-console.log("all speakers", hmsStore.getState(selectSpeakers));
+console.log('all speakers', hmsStore.getState(selectSpeakers));
 
 function activeSpeaker(peer, prevPeer) {
-    console.log(`previous active speaker - ${prevPeer.name} with role - ${prevPeer.roleName}`)
-    console.log(`current active speaker - ${peer.name} with role - ${peer.roleName}`)
+    console.log(`previous active speaker - ${prevPeer.name} with role - ${prevPeer.roleName}`);
+    console.log(`current active speaker - ${peer.name} with role - ${peer.roleName}`);
 }
 
 hmsStore.subscribe(activeSpeaker, selectDominantSpeaker);
 ```
+
+</Tab>
+
+<Tab id='audio-level-1'>
+
+```jsx
+import {
+    useHMSStore,
+    useHMSActions,
+    selectLocalPeer,
+    selectPeerAudioByID,
+    selectSpeakers,
+    selectDominantSpeaker
+} from '@100mslive/react-sdk';
+
+const AudioLevelInfo = () => {
+    /** get localpeer from store */
+    const localpeer = useHMSStore(selectLocalPeer);
+    /** get a given peer's audio level. */
+    const peerAudioLevel = useHMSStore(selectPeerAudioByID(localpeer.id));
+    console.log(`audio level for peer - ${localpeer.id} is ${peerAudioLevel}`);
+
+    /** get all speakers. Gives back a list of all peers who are not muted. */
+    const allSpeakers = useHMSStore(selectSpeakers);
+    console.log('all speakers', allSpeakers);
+
+    /** gets the active speaker */
+    const dominantSpeaker = useHMSStore(selectDominantSpeaker);
+    console.log(
+        `current active speaker - ${dominantSpeaker.name} with role - ${dominantSpeaker.roleName}`
+    );
+    return (
+        <>
+            <h1>Active Speaker</h1>
+            <span>
+                {dominantSpeaker.name}: {dominantSpeaker.id}
+            </span>
+        </>
+    );
+};
+```
+
+</Tab>

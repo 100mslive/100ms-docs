@@ -7,13 +7,13 @@ This page lists down frequently asked questions. If you want to add a new questi
 [send us a PR](https://github.com/100mslive/100ms-docs/blob/main/docs/javascript/v2/debugging/faq.mdx).
 
 ## What does HMS stand for in the SDK name?
-Hundred(100) Milli Seconds 😊. [Why?](https://www.nngroup.com/articles/response-times-3-important-limits/)
+Hundred(100) Milliseconds 😊. [Why?](https://www.nngroup.com/articles/response-times-3-important-limits/)
 
 ## Can I listen to webhooks on server side?
-Yes, please check [webhooks](/server-side/v2/foundation/webhook).
+Yes, please check [webhooks](/server-side/v2/introduction/webhook).
 
 ## How do I record a room?
-We have two types of recordings available, [SFU](/server-side/v2/features/recording) and [Browser](/server-side/v2/features/rtmp-streaming-and-browser-recording).
+We have two types of recordings available, [SFU](/server-side/v2/Destinations/recording) and [Browser](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording).
 You can also start the latter from the [SDK](../features/rtmp-recording).
 
 ## How do I debug blank video tile while rendering?
@@ -28,44 +28,44 @@ the track. This should ideally be the `trackId` or `peerId-trackType`, where tra
 - [Angular] Not using the [trackBy](https://angular.io/api/core/TrackByFunction) field properly while rendering the list of components displaying
 the track. This should ideally be the `trackId` or `peerId-trackType`, where track type is video or screen.
 
-## Why is the video not autoplaying on page load?
-For the video to autoplay please make sure these fields are set on the video element - `autoplay`, `muted`, `playsinline`. Please check
+## Why is the video not auto-playing on page load?
+For the video to auto-play please make sure these fields are set on the video element - `auto-play`, `muted`, `playsinline`. Please check
 the docs for [render video](../features/render-video) for more details.
 
-## (Angular) Why is video not autoplaying even though muted is set as true?
-Angular 2+ is sometimes not able to translate the `muted` field correctly. Instead of setting the muted and autoplay property as
+## (Angular) Why is video not auto-playing even though muted is set as true?
+Angular 2+ is sometimes not able to translate the `muted` field correctly. Instead of setting the muted and auto-play property as
 `<video muted>` doing `<video [muted]="true">` should work.
-Please check this [stackoverflow answer](https://stackoverflow.com/questions/48856562/chrome-android-video-autoplay-inside-angular-2-component) for more details.
+Please check this [Stack Overflow answer](https://stackoverflow.com/questions/48856562/chrome-android-video-autoplay-inside-angular-2-component) for more details.
 
 ## How do I debug no audio coming in the room?
 
 - Check that the role is being [subscribed to](../foundation/templates-and-roles#subscribe-strategies) properly in [dashboard's](https://dashboard.100ms.live/) templates section.
 
-- If your webapp doesn't require a user click to join the room, you might run into autoplay issues. Browsers don't allow a website to play audio if user hasn't interacted with the page till that point in time. Fortunately, we have inbuilt support to detect and resolve this given in more details [here](../features/error-handling#handling-autoplay-error).
+- If your web-app doesn't require a user click to join the room, you might run into auto-play issues. Browsers don't allow a website to play audio if user hasn't interacted with the page till that point in time. Fortunately, we have inbuilt support to detect and resolve this given in more details [here](../features/error-handling#handling-autoplay-error).
 
 - If you're using the [setVolume](../advanced-features/volume-control) API, it's possible that even though the audio is available it has been locally muted.
 
 
 ## Is it possible to do RTMP out, live stream a room to YouTube, Twitch, Wowza?
-Yes, you can achieve it both from [server-side APIs](/server-side/v2/features/rtmp-streaming-and-browser-recording) or [SDK](../features/rtmp-recording).
+Yes, you can achieve it both from [server-side APIs](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording) or [SDK](../features/rtmp-recording).
 
-## What should I do to hide the beam tile showing up in 100ms webapp for browser based recording/streaming?
+## What should I do to hide the beam tile showing up in 100ms web-app for browser based recording/streaming?
 You can use a viewer role which doesn't have any publish permissions.
 
-## How do I make the beam bot join with a custom role for dashboard webapp?
-You can append a query param in the end of the url for the custom role - `<custom_role_url>?skip_preview=true`. This
-will tell the webapp to skip preview screen and join directly.
+## How do I make the beam bot join with a custom role for dashboard web-app?
+You can append a query param in the end of the URL for the custom role - `<custom_role_url>?skip_preview=true`. This
+will tell the web-app to skip preview screen and join directly.
 
 ## Why does YouTube dashboard shows that the video bitrate is less than the recommended bitrate when using RTMP Out?
-You can safely ignore this, this will happen if there is no activity happening on the url being streamed. For e.g., there is nobody in
+You can safely ignore this, this will happen if there is no activity happening on the URL being streamed. For example, there is nobody in
 the room with their video turned on.
 
 ## Can I get HLS out for a room?
 Not yet, but we're working on this.
 
-## How do I join an API created room from dashboard webapp?
-You won't see the join room button on the dashboard, but it's possible to form an url which you can use. The format is
-`https://<subdomain>.app.100ms.live/preview/<room_id>/<role>`, e.g. `https://myroomlink.app.100ms.live/preview/123456/teacher`.
+## How do I join an API created room from dashboard web-app?
+You won't see the join room button on the dashboard, but it's possible to form an URL which you can use. The format is
+`https://<subdomain>.app.100ms.live/preview/<room_id>/<role>`, For example `https://myroomlink.app.100ms.live/preview/123456/teacher`.
 All of these, the subdomain, room_id and role are available on the dashboard.
 
 ## Do I need to do anything to handle poor internet connection?
@@ -80,7 +80,7 @@ and can be modified post join.
 You can do using [peer metadata](../advanced-features/peer-metadata).
 
 ## Why do I see videos getting stuck or frozen?
-If you have enabled subscribe degradation from the dashboard, the sdk might go in the degradation mode on poor internet connection
+If you have enabled subscribe degradation from the dashboard, the SDK might go in the degradation mode on poor internet connection
 turning off some videos to ensure good call quality. When this is done, a flag on the track will be turned on to let the UI know. The UI
 should treat it similar to the track turning off for purpose of displaying avatar etc. More details [here](../features/sub-degradation).
 
@@ -88,8 +88,8 @@ should treat it similar to the track turning off for purpose of displaying avata
 Not yet, but it's work in progress for react. Do let us know on discord if you want to sign up for beta and we'll hit you up soon.
 
 ## Can I use the SDK with NextJS, Angular, Svelte, VueJS etc.?
-Yes, the core sdk is framework agnostic, you can follow the [JS Quickstart](../guides/javascript-quickstart) to learn the basics. The quickstart
-guide is with vanilla js and doesn't assume any framework.
+Yes, the core SDK is framework agnostic, you can follow the [JS Quickstart](../guides/javascript-quickstart) to learn the basics. The quickstart
+guide is with vanilla JS and doesn't assume any framework.
 
 ## I want to suggest a new feature.
 Awesome, we're always on the lookout for new ideas and feature. Please reach out to us over [discord](https://100ms.live/discord).
@@ -98,13 +98,13 @@ Awesome, we're always on the lookout for new ideas and feature. Please reach out
 Please see [reaching out](../debugging/debugging#reaching-out).
 
 ## Can I create room using API?
-[Yes](/server-side/v2/features/room).
+[Yes](/server-side/v2/Rooms/create-via-api).
 
 ## Can I disable a room?
-[Yes](/server-side/v2/features/room#disable-room). You can also do this while ending the room using the [sdk](../features/end-room).
+[Yes](/server-side/v2/Rooms/disable-or-enable). You can also do this while ending the room using the [SDK](../features/end-room).
 
 ## Is it possible to create and manage roles using APIs?
-[Yes](/server-side/v2/foundation/templates-and-roles).
+[Yes](/server-side/v2/policy/template-object).
 
 ## Does the SDK remembers input/output device selection for future joins?
 Yes, just make sure you pass the `rememberDeviceSelection` as true in the [join config](../features/join).

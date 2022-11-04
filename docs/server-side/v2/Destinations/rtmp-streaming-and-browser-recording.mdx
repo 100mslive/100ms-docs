@@ -1,0 +1,163 @@
+---
+title: RTMP Streaming & Browser Recording
+nav: 6.2
+---
+
+## Introduction
+
+RTMP Streaming can be used to live stream your video conferencing apps to platforms like YouTube, Twitch, Facebook, MUX, etc.
+Browser Recording can be used to record your video conferencing apps to a file, for subsequent access.
+You can start either RTMP Streaming or Browser Recording or both for any room
+
+## Pre-requisites
+
+1. Management token
+
+    - [Click here to see how to generate management token](/server-side/v2/introduction/authentication-and-tokens)
+
+2. Single click meeting URL to directly enter a room
+
+3. 100ms SDK logs should be logged to console for the web-app URL provided above. The SDK logs will be analysed to detect any room join failures and retries will be attempted to fix the same. If SDK logs are not enabled then the server will stop recording/streaming and return error (after fixed number of retries).
+
+## APIs
+
+### Start Streaming/Recording
+
+<PostRequest title="https://prod-in2.100ms.live/api/v2/beam" />
+
+<Request id="req-0">
+
+```bash
+curl \
+    --location \
+    --request POST 'https://prod-in2.100ms.live/api/v2/beam' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer <management_token>' \
+    --data-raw '{
+        "operation": "start",
+        "room_id": <rooom_id>,
+        "meeting_url": <meeting_url>,
+        "rtmp_urls": [<rtmp_url_1>, <rtmp_url_2>],
+        "record": true,
+        "resolution" : {"width": 1280, "height": 720}
+    }'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="200 OK" resText="Beam has started successfully" />
+
+<div id="start-0">
+
+#### Headers
+
+| Name                | Value                       | Required |
+| :------------------ | :-------------------------- | :------- |
+| Content-type <br/>  | application/json            | Yes      |
+| Authorization <br/> | Bearer `<management token>` | Yes      |
+
+#### Body Parameters
+
+| Name              | Type     | Description                                                                                                                                                               | Required |
+| :---------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| operation <br/>   | `string` | Must be "start"                                                                                                                                                           | Yes      |
+| room_id <br/>     | `string` | The room id of the room which we need to start streaming/recording                                                                                                        | Yes      |
+| meeting_url <br/> | `string` | Single click meeting URL which we need to start streaming/recording (see below for more details)                                                                          | Yes      |
+| rtmp_urls <br/>   | `array`  | List of RTMP output URLs to which the meeting will be streamed. <br/> Required when RTMP streaming needs to be started. <br/> Supports upto 3 `rtmp://` / `rtmps://` urls | No       |
+| record <br/>      | `bool`   | Flag to enable browser recording                                                                                                                                          | No       |
+| resolution <br/>  | `object` | Video resolution for streaming/recording                                                                                                                                  | No       |
+
+##### meeting_url
+
+This is a URL which lands into the meeting directly. If you are using 100ms apps then this will be like - `https://<domain>.app.100ms.live/preview/<room_id>/<role>?skip_preview=true`.
+
+There are also a few additional query params which can be used for the 100ms app link -
+
+-   `auth_token=token1234`: this can be used to pass auth token generated on your side to the recording web-app
+-   `ui_mode=activespeaker`: this can be used to open active speaker mode by default for recording. In active speaker mode,
+    the current speaker will show up in center, and rest of the peers will show up in the sidebar.
+
+Example - `https://myname.app.100ms.live/preview/61101349d0f56e684b608c08/__internal_recorder?skip_preview=true&auth_token=token1234&ui_mode=activespeaker`
+
+##### resolution
+
+Minimum Resolution supported from 500x480 (in landscape mode) and 500x500 (in portrait mode)
+Maximum Resolution supported upto 1920x1080 (in landscape mode) and 1080x1920 (in portrait mode)
+
+| Name         | Type  | Description                                                                                             | Required |
+| :----------- | :---- | :------------------------------------------------------------------------------------------------------ | :------- |
+| width <br/>  | `int` | Width of the video. <br/> Range: `500`-`1920`. If height>1080 then max width=1080. <br/>Default: `1280` | Yes      |
+| height <br/> | `int` | Height of the video. <br/> Range: `480`-`1920`. If width>1080 then max height=1080. <br/>Default: `720` | Yes      |
+
+</div>
+
+---
+
+### Stop Streaming/Recording
+
+<PostRequest title="https://prod-in2.100ms.live/api/v2/beam" />
+
+<Request id="req-1">
+
+```bash
+curl \
+    --location \
+    --request POST 'https://prod-in2.100ms.live/api/v2/beam' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer <management_token>' \
+    --data-raw '{
+        "operation": "stop",
+        "room_id": <rooom_id>
+    }'
+```
+
+</Request>
+
+<ResponseBox id="res-1" status="200 OK" resText="Beam has stopped successfully" />
+
+<div id="stop-0">
+
+#### Headers
+
+| Name                | Value                       | Required |
+| :------------------ | :-------------------------- | :------- |
+| Content-type <br/>  | application/json            | Yes      |
+| Authorization <br/> | Bearer `<management token>` | Yes      |
+
+#### Body Paramters
+
+| Name            | Type     | Description                                                           | Required |
+| :-------------- | :------- | :-------------------------------------------------------------------- | :------- |
+| operation <br/> | `string` | Must be "stop"                                                        | Yes      |
+| room_id <br/>   | `string` | The room id of the room for which we need to stop streaming/recording | Yes      |
+
+</div>
+
+### Error messages in RTMP API
+
+| Message                                                   | Code | Description                                              |
+| :-------------------------------------------------------- | :--- | :------------------------------------------------------- |
+| Error: beam already started                               | 1    | RTMP streaming or Recording already running for the room |
+| Error: internal server error                              | 2    | server error                                             |
+| Error: room_id missing                                    | 3    | room id is missing in the request payload                |
+| Error: room_id invalid                                    | 4    | Room id provided is invalid                              |
+| Error: rtmp_url and record missing                        | 5    | RTMP URLs or record flag is required                     |
+| Error: meeting_url missing                                | 6    | Meeting URL is missing in the request payload            |
+| Error: meeting_url invalid                                | 7    | Meeting URL is invalid                                   |
+| Error: operation invalid                                  | 8    | Operation provided is invalid                            |
+| Error: operation missing                                  | 9    | Operation field is missing in the request payload        |
+| Error: no active beam found for the passed in identifiers | 10   | No Active beam running in the room                       |
+| Error: Resolution not supported                           | 11   | Input Resolution not Supported                           |
+
+## Recording upload destination
+
+By default recordings will be uploaded to 100ms storage and a pre-signed URL for the same will be provided to customers via a webhook. The pre-signed URL will expire in 12hours.
+Customers can also configure the recordings to be stored in their cloud storage. The configuration for the same can be provided when creating the room.
+
+[Create Room](/server-side/v2/Rooms/create-via-api)
+
+Recording mp4 will be placed at - `s3://<location>/<prefix>/beam/<room_id>/<start_date>/Rec-<room_id>-<epoch>.mp4`. Example `s3://test-bucket/test-prefix/beam/61101349d0f56e684b608c08/20210721/Rec-61101349d0f56e684b608c08-1626898422000.mp4`
+
+## Postman Collection
+
+<DownloadCollection type="rtmp" />

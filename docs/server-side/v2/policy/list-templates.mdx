@@ -1,0 +1,299 @@
+---
+title: List all templates
+nav: 5.5
+---
+
+This API retrieves details of all the templates in your account.
+
+<GetRequest title="https://api.100ms.live/v2/templates" />
+
+<Request id="req-0">
+
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/templates' \
+--header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "limit": 10,
+    "data": [
+        {
+            "id": "63188115d11d6db790c73c60",
+            "name": "new-template-1662550293",
+            "customerId": "627cdddff2e4e30487862ad1",
+            "roles": {
+                "guest": {
+                    "name": "guest",
+                    "publishParams": {
+                        "allowed": [
+                            "audio",
+                            "video",
+                            "screen"
+                        ],
+                        "audio": {
+                            "bitRate": 32,
+                            "codec": "opus"
+                        },
+                        "video": {
+                            "bitRate": 300,
+                            "codec": "vp8",
+                            "frameRate": 30,
+                            "width": 480,
+                            "height": 360
+                        },
+                        "screen": {
+                            "codec": "vp8",
+                            "frameRate": 10,
+                            "width": 1920,
+                            "height": 1080
+                        },
+                        "videoSimulcastLayers": {},
+                        "screenSimulcastLayers": {}
+                    },
+                    "subscribeParams": {
+                        "subscribeToRoles": [
+                            "host",
+                            "guest"
+                        ],
+                        "maxSubsBitRate": 3200,
+                        "subscribeDegradation": {
+                            "packetLossThreshold": 25,
+                            "degradeGracePeriodSeconds": 1,
+                            "recoverGracePeriodSeconds": 4
+                        }
+                    },
+                    "permissions": {
+                        "rtmpStreaming": true,
+                        "hlsStreaming": true,
+                        "browserRecording": true,
+                        "sendRoomState": false
+                    },
+                    "priority": 1,
+                    "maxPeerCount": 0
+                },
+                "host": {
+                    "name": "host",
+                    "publishParams": {
+                        "allowed": [
+                            "audio",
+                            "video",
+                            "screen"
+                        ],
+                        "audio": {
+                            "bitRate": 32,
+                            "codec": "opus"
+                        },
+                        "video": {
+                            "bitRate": 300,
+                            "codec": "vp8",
+                            "frameRate": 30,
+                            "width": 480,
+                            "height": 360
+                        },
+                        "screen": {
+                            "codec": "vp8",
+                            "frameRate": 10,
+                            "width": 1920,
+                            "height": 1080
+                        },
+                        "videoSimulcastLayers": {},
+                        "screenSimulcastLayers": {}
+                    },
+                    "subscribeParams": {
+                        "subscribeToRoles": [
+                            "guest",
+                            "host"
+                        ],
+                        "maxSubsBitRate": 3200,
+                        "subscribeDegradation": {
+                            "packetLossThreshold": 25,
+                            "degradeGracePeriodSeconds": 1,
+                            "recoverGracePeriodSeconds": 4
+                        }
+                    },
+                    "permissions": {
+                        "endRoom": true,
+                        "removeOthers": true,
+                        "mute": true,
+                        "unmute": true,
+                        "changeRole": true,
+                        "rtmpStreaming": true,
+                        "hlsStreaming": true,
+                        "browserRecording": true,
+                        "sendRoomState": false
+                    },
+                    "priority": 1,
+                    "maxPeerCount": 0
+                }
+            },
+            "settings": {
+                "region": "in",
+                "subscribeDegradation": {},
+                "screenSimulcastLayers": {},
+                "videoSimulcastLayers": {},
+                "recording": null,
+                "roomState": {
+                    "messageInterval": 5,
+                    "sendPeerList": false,
+                    "stopRoomStateOnJoin": true,
+                    "enabled": false
+                },
+                "retry": {}
+            },
+            "destinations": {},
+            "createdAt": "2022-09-07T11:31:33.618Z",
+            "updatedAt": "2022-09-07T11:31:33.618Z",
+            "_id": "63188115d11d6db790c73c60",
+            "customer": "627cdddff2e4e30487862ad1"
+        },
+        .....
+        .....
+        .....
+        .....
+        .....
+        {
+            "id": "627ce39e37300e55a72b6339",
+            "name": "nixon_edtech_93d47c52-d1fd-43ce-bed1-5b2df2cdabe0",
+            "customerId": "627cdddff2e4e30487862ad1",
+            "roles": {
+                "student": {
+                    "name": "student",
+                    "publishParams": {
+                        "allowed": [
+                            "audio",
+                            "video"
+                        ],
+                        "audio": {
+                            "bitRate": 32,
+                            "codec": "opus"
+                        },
+                        "video": {
+                            "bitRate": 300,
+                            "codec": "vp8",
+                            "frameRate": 30,
+                            "width": 480,
+                            "height": 360
+                        },
+                        "screen": {
+                            "codec": "vp8",
+                            "frameRate": 10,
+                            "width": 1920,
+                            "height": 1080
+                        },
+                        "videoSimulcastLayers": {},
+                        "screenSimulcastLayers": {}
+                    },
+                    "subscribeParams": {
+                        "subscribeToRoles": [
+                            "teacher",
+                            "student"
+                        ],
+                        "maxSubsBitRate": 3200,
+                        "subscribeDegradation": {
+                            "packetLossThreshold": 25,
+                            "degradeGracePeriodSeconds": 1,
+                            "recoverGracePeriodSeconds": 4
+                        }
+                    },
+                    "permissions": {
+                        "rtmpStreaming": true,
+                        "hlsStreaming": true,
+                        "browserRecording": true,
+                        "sendRoomState": false
+                    },
+                    "priority": 1,
+                    "maxPeerCount": 0
+                },
+                "teacher": {
+                    "name": "teacher",
+                    "publishParams": {
+                        "allowed": [
+                            "audio",
+                            "video",
+                            "screen"
+                        ],
+                        "audio": {
+                            "bitRate": 32,
+                            "codec": "opus"
+                        },
+                        "video": {
+                            "bitRate": 300,
+                            "codec": "vp8",
+                            "frameRate": 30,
+                            "width": 480,
+                            "height": 360
+                        },
+                        "screen": {
+                            "codec": "vp8",
+                            "frameRate": 10,
+                            "width": 1920,
+                            "height": 1080
+                        },
+                        "videoSimulcastLayers": {},
+                        "screenSimulcastLayers": {}
+                    },
+                    "subscribeParams": {
+                        "subscribeToRoles": [
+                            "student",
+                            "teacher"
+                        ],
+                        "maxSubsBitRate": 3200,
+                        "subscribeDegradation": {
+                            "packetLossThreshold": 25,
+                            "degradeGracePeriodSeconds": 1,
+                            "recoverGracePeriodSeconds": 4
+                        }
+                    },
+                    "permissions": {
+                        "endRoom": true,
+                        "removeOthers": true,
+                        "mute": true,
+                        "unmute": true,
+                        "changeRole": true,
+                        "rtmpStreaming": true,
+                        "hlsStreaming": true,
+                        "browserRecording": true,
+                        "sendRoomState": false
+                    },
+                    "priority": 1,
+                    "maxPeerCount": 0
+                }
+            },
+            "settings": {
+                "region": "in",
+                "subscribeDegradation": {},
+                "screenSimulcastLayers": {},
+                "videoSimulcastLayers": {},
+                "recording": null,
+                "roomState": {
+                    "messageInterval": 5,
+                    "sendPeerList": false,
+                    "stopRoomStateOnJoin": true,
+                    "enabled": false
+                },
+                "retry": {}
+            },
+            "destinations": {},
+            "createdAt": "2022-05-12T10:38:22.193Z",
+            "updatedAt": "2022-05-12T10:38:22.23Z",
+            "_id": "627ce39e37300e55a72b6339",
+            "customer": "627cdddff2e4e30487862ad1"
+        }
+    ],
+    "last": "627ce39e37300e55a72b6339"
+}
+```
+
+</ResponseBox>
+
+## Arguments
+
+| Name        | Type     | Description                                                                                                                                                  | Required |
+| :---------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| limit <br/> | `int`    | Determines the number of template objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 10, **Max**: 100                | No       |
+| start <br/> | `string` | Determines the starting point. <br/>"last" field of the response can be used as start for the subsequent request. <br/><br/>For example "627cda81ab4f3b56a077dc33". | No       |

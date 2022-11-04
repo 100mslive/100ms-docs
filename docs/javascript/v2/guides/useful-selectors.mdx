@@ -15,7 +15,7 @@ Knowing if you're in the room or not is the barest model information you need. `
 
 <Tab id='connect-0'>
 
-```js
+```js section=AmIConnectedToTheRoom sectionIndex=1 tab=JS
 const isConnected = hmsStore.getState(selectIsConnectedToRoom);
 ```
 
@@ -23,7 +23,7 @@ const isConnected = hmsStore.getState(selectIsConnectedToRoom);
 
 <Tab id='connect-1'>
 
-```jsx
+```jsx section=AmIConnectedToTheRoom sectionIndex=1 tab=React
 const isConnected = useHMSStore(selectIsConnectedToRoom);
 ```
 
@@ -37,7 +37,7 @@ const isConnected = useHMSStore(selectIsConnectedToRoom);
 
 <Tab id='preview-0'>
 
-```js
+```js section=AmIInThePreview sectionIndex=1 tab=JS
 const isInPreview = hmsStore.getState(selectIsInPreview);
 ```
 
@@ -45,7 +45,7 @@ const isInPreview = hmsStore.getState(selectIsInPreview);
 
 <Tab id='preview-1'>
 
-```jsx
+```jsx section=AmIInThePreview sectionIndex=1 tab=React
 const isInPreview = useHMSStore(selectIsInPreview);
 ```
 
@@ -60,7 +60,7 @@ peer list in preview, this count won't include the local peer if they're still i
 
 <Tab id='peerCount-0'>
 
-```js
+```js section=HowManyPeopleHaveJoinedTheRoom sectionIndex=1 tab=JS
 const count = hmsStore.getState(selectPeerCount);
 ```
 
@@ -68,7 +68,7 @@ const count = hmsStore.getState(selectPeerCount);
 
 <Tab id='peerCount-1'>
 
-```jsx
+```jsx section=HowManyPeopleHaveJoinedTheRoom sectionIndex=1 tab=React
 const count = useHMSStore(selectPeerCount);
 ```
 
@@ -83,7 +83,7 @@ include the local peer in preview phase.
 
 <Tab id='peers-0'>
 
-```js
+```js section=WhoAllAreInMyRoom sectionIndex=1 tab=JS
 const peers = hmsStore.getState(selectPeers);
 ```
 
@@ -91,7 +91,7 @@ const peers = hmsStore.getState(selectPeers);
 
 <Tab id='peers-1'>
 
-```jsx
+```jsx section=WhoAllAreInMyRoom sectionIndex=1 tab=React
 const peers = useHMSStore(selectPeers);
 ```
 
@@ -105,7 +105,7 @@ What if you fail to join the room? How do you know if the user is reconnecting? 
 
 <Tab id='roomState-0'>
 
-```js
+```js section=WhatIsMyCurrentStateOfRoom sectionIndex=1 tab=JS
 const roomState = hmsStore.getState(selectRoomState);
 ```
 
@@ -113,7 +113,7 @@ const roomState = hmsStore.getState(selectRoomState);
 
 <Tab id='roomState-1'>
 
-```jsx
+```jsx section=WhatIsMyCurrentStateOfRoom sectionIndex=1 tab=React
 const roomState = useHMSStore(selectRoomState);
 ```
 
@@ -127,7 +127,7 @@ Mic/Video being turned on can lead to a lot of blunders, therefore it's critical
 
 <Tab id='av-0'>
 
-```js
+```js section=HowDoIKnowIfMyMicVideoIsOn sectionIndex=1 tab=JS
 const audioOn = hmsStore.getState(selectIsLocalAudioEnabled);
 const videoOn = hmsStore.getState(selectIsLocalVideoEnabled);
 ```
@@ -136,7 +136,7 @@ const videoOn = hmsStore.getState(selectIsLocalVideoEnabled);
 
 <Tab id='av-1'>
 
-```jsx
+```jsx section=HowDoIKnowIfMyMicVideoIsOn sectionIndex=1 tab=React
 const audioOn = useHMSStore(selectIsLocalAudioEnabled);
 const videoOn = useHMSStore(selectIsLocalVideoEnabled);
 ```
@@ -151,7 +151,7 @@ const videoOn = useHMSStore(selectIsLocalVideoEnabled);
 
 <Tab id='rm-0'>
 
-```js
+```js section=HowDoIKnowTheStatusOfRemoteMicVideoStatus sectionIndex=1 tab=JS
 const audioOn = hmsStore.getState(selectIsPeerAudioEnabled(peerId));
 const videoOn = hmsStore.getState(selectIsPeerVideoEnabled(peerId));
 ```
@@ -160,7 +160,7 @@ const videoOn = hmsStore.getState(selectIsPeerVideoEnabled(peerId));
 
 <Tab id='rm-1'>
 
-```jsx
+```jsx section=MicVideoStatus sectionIndex=1 tab=React
 const audioOn = useHMSStore(selectIsPeerAudioEnabled(peerId));
 const videoOn = useHMSStore(selectIsPeerVideoEnabled(peerId));
 ```
@@ -169,13 +169,13 @@ const videoOn = useHMSStore(selectIsPeerVideoEnabled(peerId));
 
 ## How do I get the video stream of a user?
 
-You can get video stream of a user using `selectCameraStreamByPeer` it returns [HMSTrack](/api-reference/javascript/v2/interfaces/HMSTrack) which you can use to call [attach/detach](/javascript/v2/features/render-video) actions.
+You can get video stream of a user using `selectCameraStreamByPeer` it returns [HMSVideoTrack](/api-reference/javascript/v2/interfaces/HMSVideoTrack) which you can use to call [attach/detach](/javascript/v2/features/render-video) actions.
 
 <Tabs id="cam" items={['Javascript', 'React']} />
 
 <Tab id='cam-0'>
 
-```js
+```js section=HowDoIGetTheVideoStreamOfAUser sectionIndex=1 tab=JS
 const videoTrack = hmsStore.getState(selectCameraStreamByPeer(peerId));
 ```
 
@@ -183,7 +183,7 @@ const videoTrack = hmsStore.getState(selectCameraStreamByPeer(peerId));
 
 <Tab id='cam-1'>
 
-```jsx
+```jsx section=HowDoIGetTheVideoStreamOfAUser sectionIndex=1 tab=React
 const videoTrack = useHMSStore(selectCameraStreamByPeer(peerId));
 ```
 

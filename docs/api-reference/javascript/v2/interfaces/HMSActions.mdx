@@ -11,7 +11,8 @@ and out of box components which you can use to setup your website in minutes. Ou
 components have in built integration with this interface and you won't have to worry
 about passing props if you use them.
 
-**`remarks`**
+**`Remarks`**
+
 There is a one to one mapping between an instance of this class and a 100ms room,
 in case you're creating multiple rooms please create new instance per room.
 
@@ -23,6 +24,49 @@ in case you're creating multiple rooms please create new instance per room.
 
 audio Playlist contains all actions that can be performed on the audio playlist
 This will be available after joining the room
+
+---
+
+### endRoom
+
+• **endRoom**: (`lock`: `boolean`, `reason`: `string`) => `Promise`<`void`\>
+
+#### Type declaration
+
+▸ (`lock`, `reason`): `Promise`<`void`\>
+
+If you have the **endRoom** permission, you can end the room. That means everyone will be kicked out.
+If lock is passed as true, the room cannot be used further.
+
+##### Parameters
+
+| Name     | Type      |
+| :------- | :-------- |
+| `lock`   | `boolean` |
+| `reason` | `string`  |
+
+##### Returns
+
+`Promise`<`void`\>
+
+---
+
+### unblockAudio
+
+• **unblockAudio**: () => `Promise`<`void`\>
+
+#### Type declaration
+
+▸ (): `Promise`<`void`\>
+
+Method to be called with some UI interaction after autoplay error is received
+Most browsers have limitations where an audio can not be played if there was no user interaction.
+SDK throws an autoplay error in this case, this method can be called after an UI interaction
+to resolve the autoplay error
+
+##### Returns
+
+`Promise`<`void`\>
 
 ---
 
@@ -58,9 +102,11 @@ Accept the role change request received
 ▸ **addPluginToAudioTrack**(`plugin`): `Promise`<`void`\>
 
 Add or remove a audio plugin from/to the local peer audio track. Eg. gain filter, noise suppression etc.
-Audio plugins can be added/removed at any time after the join is successful.
+Audio plugins can be added/removed at any time after the audio track is available
 
-**`see`** HMSAudioPlugin
+**`See`**
+
+HMSAudioPlugin
 
 #### Parameters
 
@@ -79,10 +125,12 @@ Audio plugins can be added/removed at any time after the join is successful.
 ▸ **addPluginToVideoTrack**(`plugin`, `pluginFrameRate?`): `Promise`<`void`\>
 
 Add or remove a video plugin from/to the local peer video track. Eg. Virtual Background, Face Filters etc.
-Video plugins can be added/removed at any time after the join is successful.
+Video plugins can be added/removed at any time after the video track is available.
 pluginFrameRate is the rate at which the output plugin will do processing
 
-**`see`** HMSVideoPlugin
+**`See`**
+
+HMSVideoPlugin
 
 #### Parameters
 
@@ -184,11 +232,11 @@ Request for a role change of a remote peer. Can be forced.
 
 #### Parameters
 
-| Name        | Type      | Description                                       |
-| :---------- | :-------- | :------------------------------------------------ |
-| `forPeerId` | `string`  | The remote peer id whose role needs to be changed |
-| `toRole`    | `string`  | The name of the new role.                         |
-| `force?`    | `boolean` | -                                                 |
+| Name        | Type      | Description                                                                    |
+| :---------- | :-------- | :----------------------------------------------------------------------------- |
+| `forPeerId` | `string`  | The remote peer id whose role needs to be changed                              |
+| `toRole`    | `string`  | The name of the new role.                                                      |
+| `force?`    | `boolean` | this being true would mean that user won't get a request to accept role change |
 
 #### Returns
 
@@ -200,7 +248,9 @@ Request for a role change of a remote peer. Can be forced.
 
 ▸ **detachVideo**(`localTrackID`, `videoElement`): `Promise`<`void`\>
 
-**`see`** attachVideo
+**`See`**
+
+attachVideo
 
 #### Parameters
 
@@ -208,26 +258,6 @@ Request for a role change of a remote peer. Can be forced.
 | :------------- | :----------------- |
 | `localTrackID` | `string`           |
 | `videoElement` | `HTMLVideoElement` |
-
-#### Returns
-
-`Promise`<`void`\>
-
----
-
-### endRoom
-
-▸ **endRoom**(`lock`, `reason`): `Promise`<`void`\>
-
-If you have the **endRoom** permission, you can end the room. That means everyone will be kicked out.
-If lock is passed as true, the room cannot be used further.
-
-#### Parameters
-
-| Name     | Type      |
-| :------- | :-------- |
-| `lock`   | `boolean` |
-| `reason` | `string`  |
 
 #### Returns
 
@@ -276,12 +306,13 @@ Notifications for the ignored messages will still be sent, it'll only not be put
 
 ### join
 
-▸ **join**(`config`): `void`
+▸ **join**(`config`): `Promise`<`void`\>
 
 join function can be used to join the room, if the room join is successful,
 current details of participants and track details are populated in the store.
 
-**`remarks`**
+**`Remarks`**
+
 If join is called while an earlier join is in progress for the room id, it
 is ignored
 
@@ -293,7 +324,7 @@ is ignored
 
 #### Returns
 
-`void`
+`Promise`<`void`\>
 
 ---
 
@@ -302,6 +333,20 @@ is ignored
 ▸ **leave**(): `Promise`<`void`\>
 
 This function can be used to leave the room, if the call is repeated it's ignored.
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### populateSessionMetadata
+
+▸ **populateSessionMetadata**(): `Promise`<`void`\>
+
+Fetch the current room metadata from the server and populate it in store
+
+- the API is not stable and might have breaking changes later
 
 #### Returns
 
@@ -376,6 +421,10 @@ If you have **removeOthers** permission, you can remove a peer from the room.
 
 ▸ **removePluginFromAudioTrack**(`plugin`): `Promise`<`void`\>
 
+**`See`**
+
+addPluginToAudioTrack
+
 #### Parameters
 
 | Name     | Type             |
@@ -392,7 +441,9 @@ If you have **removeOthers** permission, you can remove a peer from the room.
 
 ▸ **removePluginFromVideoTrack**(`plugin`): `Promise`<`void`\>
 
-**`see`** addPluginToVideoTrack
+**`See`**
+
+addPluginToVideoTrack
 
 #### Parameters
 
@@ -484,7 +535,6 @@ Send a plain text message to all the other participants in the room.
 
 ▸ **sendHLSTimedMetadata**(`metadataList`): `Promise`<`void`\>
 
-**`alpha`**
 Used to define date range metadata in a media playlist.
 This api adds EXT-X-DATERANGE tags to the media playlist.
 It is useful for defining timed metadata for interstitial regions such as advertisements,
@@ -516,9 +566,13 @@ sendHLSTimedMetadata(metadataList);
 
 ▸ **sendMessage**(`message`): `void`
 
-**`deprecated`** The method should not be used
+**`Deprecated`**
 
-**`see`** sendBroadcastMessage
+The method should not be used
+
+**`See`**
+
+sendBroadcastMessage
 Send a plain text message to all the other participants in the room.
 
 #### Parameters
@@ -539,33 +593,36 @@ Send a plain text message to all the other participants in the room.
 
 use it for updating a particular property in the appdata
 
-**`example`**
+**`Example`**
+
+```ts
 assume appdata is initially
-{
-mySettings: {
-setting1: 'val1',
-setting2: 'val2',
-},
-mySettings2: 43,
-mySettings3: false,
-};
+ {
+    mySettings: {
+      setting1: 'val1',
+      setting2: 'val2',
+    },
+    mySettings2: 43,
+    mySettings3: false,
+  };
 
 after calling,
 setAppData("mySettings", {setting1:'val1-edit', setting3:'val3'}, true);
 it becomes
-{
-mySettings: {
-setting1: 'val1-edit',
-setting2: 'val2',
-setting3: 'val3',
-},
-mySettings2: 43,
-mySettings3: false,
-};
+ {
+    mySettings: {
+      setting1: 'val1-edit',
+      setting2: 'val2',
+      setting3: 'val3',
+    },
+    mySettings2: 43,
+    mySettings3: false,
+  };
 
 Note: This is not suitable for keeping large data or data which updates
 at a high frequency, it is recommended to use app side store for those
 cases.
+```
 
 #### Parameters
 
@@ -596,7 +653,7 @@ cases.
 
 ### setAudioOutputDevice
 
-▸ **setAudioOutputDevice**(`deviceId`): `void`
+▸ **setAudioOutputDevice**(`deviceId`): `Promise`<`void`\>
 
 Set the audio output(speaker) device
 
@@ -608,7 +665,7 @@ Set the audio output(speaker) device
 
 #### Returns
 
-`void`
+`Promise`<`void`\>
 
 ---
 
@@ -741,8 +798,6 @@ found in store, no change in store will take place.
 
 set the quality of the selected videoTrack for simulcast.
 
-**`alpha`**
-
 #### Parameters
 
 | Name      | Type                                                                        |
@@ -815,6 +870,30 @@ react component if our hook is used) will be notified/rerendered
 
 ---
 
+### setSessionMetadata
+
+▸ **setSessionMetadata**(`metadata`): `Promise`<`void`\>
+
+If you want to update the metadata of the session. If an object is passed, it should be serializable using
+JSON.stringify.
+
+Session metadata is available to every peer in the room and is persisted throughout a session
+till the last peer leaves a room
+
+- the API is not stable and might have breaking changes later
+
+#### Parameters
+
+| Name       | Type  |
+| :--------- | :---- |
+| `metadata` | `any` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
 ### setVideoSettings
 
 ▸ **setVideoSettings**(`settings`): `Promise`<`void`\>
@@ -854,15 +933,16 @@ Set the output volume of audio tracks(overall/particular audio track)
 
 ### startHLSStreaming
 
-▸ **startHLSStreaming**(`params`): `Promise`<`void`\>
+▸ **startHLSStreaming**(`params?`): `Promise`<`void`\>
 
-If you want to start HLS streaming.
+If you have configured HLS streaming from dashboard, no params are required.
+otherwise
 
 #### Parameters
 
-| Name     | Type                                                             |
-| :------- | :--------------------------------------------------------------- |
-| `params` | [`HLSConfig`](/api-reference/javascript/v2/interfaces/HLSConfig) |
+| Name      | Type                                                             |
+| :-------- | :--------------------------------------------------------------- |
+| `params?` | [`HLSConfig`](/api-reference/javascript/v2/interfaces/HLSConfig) |
 
 #### Returns
 
@@ -918,28 +998,15 @@ If you want to stop both RTMP streaming and recording.
 
 ---
 
-### unblockAudio
-
-▸ **unblockAudio**(): `Promise`<`void`\>
-
-Method to be called with some UI interaction after autoplay error is received
-Most browsers have limitations where an audio can not be played if there was no user interaction.
-SDK throws an autoplay error in this case, this method can be called after an UI interaction
-to resolve the autoplay error
-
-#### Returns
-
-`Promise`<`void`\>
-
----
-
 ### validateAudioPluginSupport
 
 ▸ **validateAudioPluginSupport**(`plugin`): `HMSPluginSupportResult`
 
 To check the support of the plugin, based on browser, os and audio devices
 
-**`see`** HMSPluginSupportResult
+**`See`**
+
+HMSPluginSupportResult
 
 #### Parameters
 
@@ -959,7 +1026,9 @@ To check the support of the plugin, based on browser, os and audio devices
 
 To check the support of the plugin, based on browser, os and audio devices
 
-**`see`** HMSPluginSupportResult
+**`See`**
+
+HMSPluginSupportResult
 
 #### Parameters
 

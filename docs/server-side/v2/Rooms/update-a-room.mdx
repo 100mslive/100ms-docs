@@ -1,0 +1,83 @@
+---
+title: Update a room
+nav: 2.7
+---
+
+You can use this API to update various details of the room such as name, description, recording_info and region.
+
+<PostRequest title="https://api.100ms.live/v2/rooms/<room_id>" />
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/rooms/<room_id>' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "update-room-name",
+    "description": "Updated description for the room",
+    "recording_info": {
+        "enabled": true,
+        "upload_info": {
+            "type": "s3",
+            "location": "<Updated Name of the AWS s3 bucket>",
+            "prefix": "<Updated Upload prefix path>",
+            "options": {
+                "region": "<Updated region of the s3 bucket>"
+            },
+            "credentials": {
+                "key": "<Updated access key ID for the AWS account/S3 bucket>",
+                "secret": "<Updated secret access key for the AWS account/S3 bucket>"
+            }
+        }
+    },
+    "region": "us"
+}'
+```
+
+</Request>
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "63215ea14354ff09328378c6",
+    "name": "update-room-name",
+    "enabled": true,
+    "description": "Updated description for the room",
+    "customer_id": "627cda54ff688c037a39291b",
+    "recording_source_template": false,
+    "enabled_source_template": false,
+    "recording_info": {
+        "enabled": true,
+        "upload_info": {
+            "type": "s3",
+            "location": "<Updated Name of the AWS s3 bucket>",
+            "prefix": "<Upload prefix path>",
+            "credentials": {
+                "key": "<Updated access key ID for the AWS account/S3 bucket>",
+                "secret": "<Updated secret access key for the AWS account/S3 bucket>"
+            },
+            "options": {
+                "region": "<Updated region of the s3 bucket>"
+            }
+        }
+    },
+    "template_id": "6311c9b3ba3f6f0133f899ee",
+    "template": "new-template-1662110132",
+    "region": "us",
+    "created_at": "2022-09-14T04:54:57.707Z",
+    "updated_at": "2022-09-26T12:17:48.37Z",
+    "active": true,
+    "customer": "627cda54ff688c037a39291b"
+}
+```
+
+</ResponseBox>
+
+## Arguments
+
+| Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Required |
+| :------------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| name <br/>           | `string` | An alias you can assign to 100ms rooms. This is `case-insensitive`. <br/><br/>Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/>**Note**: `Update room request` is triggered with an existing room name, then the corresponding room ID is returned.                                                                                                                                                                                                          | No       |
+| description <br/>    | `string` | A string to describe your room's usage. For example "9PM English Class Batch 2"                                                                                                                                                                                                                                                                                                                                                                                                                                    | No       |
+| recording_info <br/> | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings. <br/><br/>Check the [recording_info arguments](/server-side/v2/Rooms/create-via-api#recording-info-arguments) below for more information. <br/><br/> **Note:** This argument is only applicable to enable/disable [SFU recording](/server-side/v2/Destinations/recording). Refer to [RTMP Streaming & Browser Recording](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording) guide for other options. | No       |
+| region <br/>         | `string` | Region in which you want to create room. <br/><br/> `in` - India <br/> `us` - United States <br/> `eu` - European Union <br/> `auto` - Automatic region selection (default, and in case this parameter is not provided)                                                                                                                                                                                                                                                                                            | No       |

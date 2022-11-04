@@ -1,0 +1,15 @@
+---
+title: Interruption Handling
+nav: 3.8
+---
+
+You're chatting away on your video call and, uh-oh, a phone call comes in. No worries, the 100ms SDK abstracts away handling this situation for you.
+
+When a telephonic voice call comes in and the user accepts the following happens.
+
+-   You and all the other parties are muted.
+-   If the app goes to background your video will be muted
+
+When the call ends the SDK will restore the audio, taking care not to un-mute you if you had muted yourself before the call came in. Neither will it un-mute all the peers if you had muted them from the app.
+
+No code required, this happens automatically for all calls.

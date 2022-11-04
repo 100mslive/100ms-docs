@@ -1,14 +1,14 @@
 /* eslint-disable react/no-array-index-key */
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import React from 'react';
-import JavascriptIcon from '@/assets/icons/JavascriptIcon';
+import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
-import ServerIcon from '@/assets/icons/ServerIcon';
-import FlutterIcon from '@/assets/FlutterIcon';
-import { Listbox } from '@headlessui/react';
+import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import ReactIcon from '@/assets/icons/ReactIcon';
+import ServerIcon from '@/assets/icons/ServerIcon';
+import { Listbox } from '@headlessui/react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 
 type NavRoute = {
     url: string;
@@ -16,64 +16,54 @@ type NavRoute = {
 };
 
 interface Props {
-    menu: boolean;
+    menuState: {
+        menu: boolean;
+        setMenu: React.Dispatch<React.SetStateAction<boolean>>;
+    };
     nav: Record<string, Record<string, NavRoute>>;
 }
 
-const Sidebar: React.FC<Props> = ({ nav, menu }) => {
-    const router = useRouter();
-    const menuItem = [
-        {
-            link: '/android/v2/foundation/Basics',
-            name: 'Android',
-            icon: <AndroidIcon />,
-            apiRef: '/api-reference/android/v2/index.html'
-        },
-        {
-            link: '/ios/v2/foundation/Basics',
-            name: 'iOS',
-            icon: <IosIcon />,
-            apiRef: '/api-reference/ios/v2/home/content'
-        },
-        {
-            link: '/javascript/v2/foundation/basics',
-            name: 'JavaScript',
-            icon: <JavascriptIcon />,
-            apiRef: '/api-reference/javascript/v2/home/content'
-        },
-        {
-            link: '/react-native/v2/foundation/basics',
-            name: 'React-Native',
-            icon: <ReactIcon />,
-            apiRef: '/api-reference/react-native/v2/modules.html'
-        },
-        {
-            link: '/flutter/v2/foundation/basics',
-            name: 'Flutter',
-            icon: <FlutterIcon />,
-            apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
-        },
-        {
-            link: '/server-side/v2/foundation/basics',
-            name: 'Server-Side',
-            icon: <ServerIcon />,
-            apiRef: '/server-side/v2/foundation/basics'
+const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
+    const router = useRouter() as any;
+    const {
+        query: { slug },
+        asPath
+    } = router;
+    const { menu, setMenu } = menuState;
+    useEffect(() => { setMenu(false) }, [router])
+    const [currentDocSlug] = slug as string[];
+    const [navAPI, setNavAPI] = useState(currentNav);
+    useEffect(() => {
+        fetch('/docs/api/content?query=nav').then(res => res.json()).then(result => setNavAPI(result.nav)).catch()
+    }, [])
+
+    let nav;
+    if (Object.keys(navAPI).length) {
+        const platform = navAPI[currentDocSlug];
+        if (slug[0] !== 'v1' && slug[0] !== 'v2') {
+            if (slug?.length > 3) {
+                nav = platform[slug[1]];
+                if (slug[0] === 'api-reference') {
+                    // if (slug[1] === 'android') {
+                    //     showPagination = false;
+                    // }
+                    nav = platform[slug[1]][slug[2]];
+                }
+            }
+        } else {
+            nav = platform;
         }
-    ];
-    // @ts-ignore
-    let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === router.query.slug[0]);
-    // @ts-ignore
-    if (router.query.slug[0] === 'api-reference') {
-        // @ts-ignore
-        indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === router.query.slug[1]);
+    }
+
+    let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]);
+    if (slug[0] === 'api-reference') {
+        indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[1]);
     }
     indexOf = indexOf === -1 ? 0 : indexOf;
-    const [tech, setTech] = React.useState(menuItem[indexOf]);
+    const [tech, setTech] = useState(menuItem[indexOf]);
     const changeTech = (s) => {
         setTech(s);
-        // @ts-ignore
-        if (router.query.slug[0] === 'api-reference') {
-            // @ts-ignore
+        if (slug[0] === 'api-reference') {
             router.push(s.apiRef, undefined, {
                 shallow: false
             });
@@ -81,24 +71,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
             router.push(s.link, undefined, { shallow: false });
         }
     };
-    const aliasMenu = [
-        {
-            title: 'Room APIs',
-            url: '/server-side/v2/features/room'
-        },
-        {
-            title: 'Webhooks',
-            url: '/server-side/v2/foundation/webhook'
-        },
-        {
-            title: 'SFU Recording',
-            url: '/server-side/v2/features/recording'
-        }
-        // {
-        //     title: 'Simulcast',
-        //     url: '/docs/server-side/v2/features/simulcast'
-        // }
-    ];
+
     return (
         <div className="sidebar">
             {/* Sidebar Version Section */}
@@ -117,10 +90,9 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                                 key={m.link}
                                 value={m}
                                 className={({ active }) =>
-                                    `${
-                                        active
-                                            ? 'dropdown-option dropdown-option-active'
-                                            : 'dropdown-option'
+                                    `${active
+                                        ? 'dropdown-option dropdown-option-active'
+                                        : 'dropdown-option'
                                     }`
                                 }>
                                 {m.icon} <span style={{ marginLeft: '1rem' }}>{m.name}</span>
@@ -130,33 +102,32 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                 </Listbox>
             </section>
             {/* Sidebar Menu Section */}
-            {Object.entries(nav).map(([key, children], index) => (
+            {nav ? Object.entries(nav).map(([key, children], index) => (
                 <section className="menu-container" key={`${key}-${index}`}>
                     <div className="menu-title">{key.replace(/-/g, ' ')}</div>
-                    {Object.entries(children).map(([_, route]) =>
+                    {Object.entries(children as {}).map(([_, route]: [unknown, any]) =>
                         Object.prototype.hasOwnProperty.call(route, 'title') ? (
                             <Link
                                 scroll={false}
+                                prefetch={false}
                                 href={route.url || ''}
                                 key={`${route.url}-${index}`}>
                                 <a
-                                    className={`menu-item ${
-                                        route.url === router.asPath ? 'active-link' : ''
-                                    }`}>
+                                    className={`menu-item ${route.url === asPath ? 'active-link' : ''
+                                        }`}>
                                     {route.title}
                                 </a>
                             </Link>
                         ) : null
                     )}
-                    {/* @ts-ignore */}
-                    {key === 'features' && router.query.slug[0] !== 'server-side' ? (
+                    {key === 'features' && slug[0] !== 'server-side' ? (
                         <>
                             {aliasMenu.map((a) => (
-                                <Link href={a.url} key={a.url}>
+                                <Link scroll={false}
+                                    prefetch={false} href={a.url} key={a.url}>
                                     <a
-                                        className={`menu-item ${
-                                            a.url === router.asPath ? 'active-link' : ''
-                                        }`}>
+                                        className={`menu-item ${a.url === asPath ? 'active-link' : ''
+                                            }`}>
                                         {a.title}
                                     </a>
                                 </Link>
@@ -164,7 +135,7 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                         </>
                     ) : null}
                 </section>
-            ))}
+            )) : null}
             <style jsx>{`
                 .sidebar {
                     width: 288px;
@@ -173,11 +144,11 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     align-items: stretch;
                     height: calc(100vh - 80px);
                     overflow-y: scroll;
-                    top: ${menu ? '10px' : '80px'};
+                    top: ${menu ? '' : '14px'};
                     left: 0;
-                    position: ${menu ? 'absolute' : 'sticky'};
+                    position: sticky;
                     background: var(--sidebar_bg);
-                    z-index: 40;
+                    z-index: 100;
                 }
                 ::-webkit-scrollbar {
                     width: 0px;
@@ -235,16 +206,13 @@ const Sidebar: React.FC<Props> = ({ nav, menu }) => {
                     font-size: 15px;
                     margin: 5px 0;
                 }
-                @media screen and (max-width: 1000px) {
+                @media screen and (max-width: 768px) {
                     .sidebar {
-                        display: ${menu ? 'absolute' : 'none'};
-                        top: 0;
-                        height: calc(100vh - 60px);
-                    }
-                    :global(.page) {
-                        height: ${menu ? '100vh `!important' : ''};
-                        overflow: ${menu ? 'hidden !important' : ''};
-                        padding-right: 1rem;
+                        position: sticky;
+                        width: 100vw;
+                        top: 20px;
+                        display: ${menu ? 'flex' : 'none'};
+                        height: 100%;
                     }
                 }
             `}</style>
@@ -269,3 +237,61 @@ const ChevronDown = () => (
         <path d="M6 9l6 6 6-6" />
     </svg>
 );
+
+const menuItem = [
+    {
+        link: '/android/v2/foundation/basics',
+        name: 'Android',
+        icon: <AndroidIcon />,
+        apiRef: '/api-reference/android/v2/index.html'
+    },
+    {
+        link: '/ios/v2/foundation/basics',
+        name: 'iOS',
+        icon: <IosIcon />,
+        apiRef: '/api-reference/ios/v2/home/content'
+    },
+    {
+        link: '/javascript/v2/foundation/basics',
+        name: 'JavaScript',
+        icon: <JavascriptIcon />,
+        apiRef: '/api-reference/javascript/v2/home/content'
+    },
+    {
+        link: '/react-native/v2/foundation/basics',
+        name: 'React-Native',
+        icon: <ReactIcon />,
+        apiRef: '/api-reference/react-native/v2/modules.html'
+    },
+    {
+        link: '/flutter/v2/foundation/basics',
+        name: 'Flutter',
+        icon: <FlutterIcon />,
+        apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
+    },
+    {
+        link: '/server-side/v2/introduction/basics',
+        name: 'Server-Side',
+        icon: <ServerIcon />,
+        apiRef: '/server-side/v2/introduction/basics'
+    }
+];
+
+const aliasMenu = [
+    {
+        title: 'Room APIs',
+        url: '/server-side/v2/Rooms/object'
+    },
+    {
+        title: 'Webhooks',
+        url: '/server-side/v2/introduction/webhook'
+    },
+    {
+        title: 'SFU Recording',
+        url: '/server-side/v2/Destinations/recording'
+    }
+    // {
+    //     title: 'Simulcast',
+    //     url: '/docs/server-side/v2/features/simulcast'
+    // }
+];

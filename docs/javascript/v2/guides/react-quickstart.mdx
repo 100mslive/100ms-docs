@@ -10,13 +10,15 @@ components with the powerful hooks provided by our SDK and build an app where yo
 
 TL;DR - You can find the link to the complete example over [here](https://codesandbox.io/s/100ms-react-quickstart-kh0hy?file=/src/App.jsx).
 
+> If you get stuck at any point or need help in understanding a concept, you can put your query in our [Discord Channel](https://100ms.live/discord).
+
 ### Prerequisites
 
 To get started you should be familiar with the basics of [React](https://reactjs.org/).
 
 ### Installing the dependencies
 
-```bash
+```bash section=InstallingTheDependencies sectionIndex=1
 ## npm
 npm install --save @100mslive/react-sdk@latest
 ## yarn
@@ -29,7 +31,7 @@ Let us start with initializing the libraries. We need to wrap the entire applica
 
 This will let us use the hooks for state and actions.
 
-```jsx:src/index.js
+```jsx:src/index.js section=InitializingTheSDK sectionIndex=1
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import { HMSRoomProvider } from "@100mslive/react-sdk";
@@ -69,7 +71,9 @@ The config object must be passed the following fields:
 
 For our application, let us collect both of these fields from the user using a form. Let's create a `JoinForm` component and add it to the application.
 
-```jsx:src/JoinForm.jsx
+> Note: join is async from this [version](../changelog/release-notes#2022-09-13)
+
+```jsx:src/JoinForm.jsx section=JoiningRoom sectionIndex=1
 import { useState } from "react";
 import { useHMSActions } from "@100mslive/react-sdk";
 
@@ -87,9 +91,9 @@ function JoinForm() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    hmsActions.join({
+    await hmsActions.join({
       userName: inputValues.name,
       authToken: inputValues.token
     });
@@ -130,7 +134,7 @@ export default JoinForm;
 
 Let's add this form to our `<App>` component.
 
-```jsx:src/App.jsx
+```jsx:src/App.jsx section=JoiningRoom sectionIndex=2
 export default function App() {
     return (
         <div className="App">
@@ -150,7 +154,7 @@ Before we go ahead with adding video, let us add a way to leave the room as well
 
 We'll set up the `leave` method to be called whenever the user closes the window or refreshes the tab.
 
-```jsx{2-8}:src/App.jsx
+```jsx{2-8}:src/App.jsx section=LeavingTheRoom sectionIndex=1
 export default function App() {
   const hmsActions = useHMSActions();
 
@@ -176,7 +180,7 @@ Let us next add a way to show a tile for every participant in the room. We'll ne
 
 At any point in time we can get a list of peers with:
 
-```jsx
+```jsx section=FetchingInformation sectionIndex=1
 import { useHMSStore, selectPeers } from '@100mslive/react-sdk';
 
 function Component() {
@@ -195,7 +199,7 @@ This allows us to write [declarative](https://en.wikipedia.org/wiki/Declarative_
 Let us now create a `Conference` component that will render a list of peers. We'll get the peers from the store and render them.
 Our component will get rerendered if this list of peers changes.
 
-```jsx:src/Conference.jsx
+```jsx:src/Conference.jsx section=FetchingInformation sectionIndex=2
 import { selectPeers, useHMSStore } from "@100mslive/react-sdk";
 import React from "react";
 import Peer from "./Peer";
@@ -224,7 +228,7 @@ To render the video, we need to call `attachVideo` method of `hmsActions`, which
 
 But we have abstracted this implementation inside `useVideo` hook for ease. This hook will return an object videoRef given a video `trackId`. The returned `videoRef` can be used to set on a video element meant to display the video. The hook will take care of attaching and detaching video, and will automatically detach when the video goes out of view to save on bandwidth.
 
-```jsx:src/Peer.jsx
+```jsx:src/Peer.jsx section=FetchingInformation sectionIndex=3
 import { useVideo } from "@100mslive/react-sdk";
 
 function Peer({ peer }) {
@@ -252,13 +256,15 @@ export default Peer;
 
 > Note that `height` and `width` CSS properties need to be set on the `<video>` element to render the peer's video.
 
+> In case you aren't seeing the remote video after this step, do ensure that the role is [subscribing](https://www.100ms.live/docs/javascript/v2/foundation/templates-and-roles#subscribe-strategies) to itself in the [dashboard](https://dashboard.100ms.live/dashboard) template.
+
 ## Changing UI based on connection state
 
 Right now, our join form shows even after we have joined the room. We need a way to know the connection state of the room and hide the form after we've connected.
 
 We can do this with `selectIsConnectedToRoom` selector.
 
-```jsx{5,8,13,17,22-26}:src/App.jsx
+```jsx{5,8,13,17,22-26}:src/App.jsx section=ChangingUIBasedOnConnectionState sectionIndex=1
 import "./styles.css";
 import JoinForm from "./JoinForm";
 import Conference from "./Conference";
@@ -304,7 +310,7 @@ If you specifically need granular data like knowing the current video status you
 
 In this case, we can use `useAVToggle` hook which will give us the current audio/video status of the user and also give us functions to toggle them.
 
-```jsx:src/Footer.jsx
+```jsx:src/Footer.jsx section=MutingUnmutingLocalTracks sectionIndex=1
 import { useAVToggle } from "@100mslive/react-sdk";
 
 function Footer() {
@@ -335,7 +341,7 @@ We fetch the current state of the local audio and video and toggle them whenever
 
 And finally, let's add this component to the `<App>` component to render the buttons only when we are connected to the room.
 
-```jsx{1,19-22}:src/App.js
+```jsx{1,19-22}:src/App.js section=MutingUnmutingLocalTracks sectionIndex=2
 import Footer from './Footer';
 
 export default function App() {

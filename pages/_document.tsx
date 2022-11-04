@@ -1,14 +1,13 @@
 /* eslint-disable react/no-danger */
-import Document, { Html, Head, Main, NextScript } from 'next/document';
 import React from 'react';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 
 class MyDocument extends Document {
     render() {
         return (
             <Html lang="en">
                 <Head>
-                    <link href="/docs/static/favicons/favicon.ico" rel="shortcut icon" />
-                    <link href="/docs/static/favicons/site.webmanifest" rel="manifest" />
+                    <link href="/docs/logo.svg" rel="shortcut icon" />
                     <link rel="preconnect" href="https://cdn.usefathom.com" crossOrigin="" />
                     <link
                         href="/docs/static/favicons/apple-touch-icon.png"
@@ -39,7 +38,6 @@ class MyDocument extends Document {
                         name="msapplication-config"
                     />
                     {/* To Avoid Flickering */}
-                    <script type="text/javascript" src="/docs/static/theme.js" />
                     <script
                         dangerouslySetInnerHTML={{
                             __html: `

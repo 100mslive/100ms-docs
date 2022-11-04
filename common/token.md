@@ -6,7 +6,11 @@
 
 - After you have created your account you have to Confirm your Email , check the promotions tab in your Mail Box if you can't find it.
 
-- Then login again and you would see this Section with the list of starter kits, hover over one of the starter kits and click `Deploy`. We will choose "Video Conferencing" for now.
+- Login to the Dashboard and you will see an option to Create your first app. Click on it.
+
+![Create your first app](/docs/guides/token/starter-kit-initialize-first-step.png)
+
+- Then you would see this popup with multiple starter kits, hover over one of the starter kits and click `Deploy`. We will choose "Video Conferencing" for now.
 
 ![Initialize Started Kit](/docs/guides/token/starter-kit-initialize.png)
 
@@ -30,7 +34,7 @@
 
 ## Token Generation
 
-Any client connecting calling 100ms' service needs to authenticate using an auth token. In production you would have your own servers generating the tokens (see more [here](/docs/server-side/v2/foundation/authentication-and-tokens)), but for a quick start you can use the dashboard to create a token for you. The token will expire in 24hrs and should not be hardcoded into a production app.
+Any client connecting calling 100ms' service needs to authenticate using an auth token. In production you would have your own servers generating the tokens (see more [here](/docs/javascript/v2/foundation/security-and-tokens)), but for a quick start you can use the dashboard to create a token for you. The token will expire in 24 hours and should not be hard-coded into a production app.
 
 ### Getting a Temporary Token
 

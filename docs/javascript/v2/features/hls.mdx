@@ -4,9 +4,9 @@ nav: 3.35
 ---
 
 HLS Streaming allows for scaling to millions of viewers in near real time. You can give a link of your
-webapp which will be converted to a HLS feed by our server and can be played across devices for consumption.
+web-app which will be converted to a HLS feed by our server and can be played across devices for consumption.
 Behind the scenes, this will be achieved by having a bot join your room and stream what it sees and hears. Once the feed
-is ready, the server will give a url which can be played using any HLS Player.
+is ready, the server will give a URL which can be played using any HLS Player.
 
 > Note that the media server serving the content in this case is owned by 100ms. If you're looking for a way to stream
 > on YouTube, Twitch etc., please have a look at our RTMP streaming docs [here](./rtmp-recording).
@@ -16,7 +16,7 @@ is ready, the server will give a url which can be played using any HLS Player.
 To start HLS, you'll need to pass in a meeting URL or configure the HLS settings from dashboard in the template in destinations tab. The 100ms bot will open this URL to join your room, so
 it must allow access without any user level interaction. In the future, it'll be possible to start HLS for multiple such URLs for the same room.
 For this purpose, the API supports taking in an array, although currently only the first element of the array will be respected. To distinguish between
-multiple urls, an additional field `metadata` can be optionally passed. The `meetingURL` and `metadata` are clubbed together to form what we'll call
+multiple URLs, an additional field `metadata` can be optionally passed. The `meetingURL` and `metadata` are clubbed together to form what we'll call
 a `variant`.
 
 If everything is configured in the dashboard, you can directly call `hmsActions.startHLSStreaming` once you join the room.
@@ -111,7 +111,7 @@ Not all browsers support HLS [natively](https://caniuse.com/?search=hls), howeve
 [Shaka Player](https://github.com/google/shaka-player). In case you need more UI side customisations you can go with something like
 [videojs](https://videojs.com/) which internally uses `hls.js` for the hls piece.
 
-Here is a simple example of using `hls.js` to play the hls url given by the SDK. Make sure you've installed the library(`npm i hls.js`) before using this code.
+Here is a simple example of using `hls.js` to play the hls URL given by the SDK. Make sure you've installed the library(`npm i hls.js`) before using this code.
 
 <Tabs id="hlsview" items={['JavaScript', 'React']} />{' '}
 
@@ -171,9 +171,9 @@ function HLSView({ hlsUrl }) {
 
 </Tab>
 
-## Testing with the Dashboard WebApp
+## Testing with the Dashboard web-app
 
-You may want to try out the end to end flow on our dashboard webapp before moving ahead with building in your app. To do
+You may want to try out the end to end flow on our dashboard web-app before moving ahead with building in your app. To do
 this, you can create an additional role named `hls-viewer` which will be presented with the hls stream when they join the room.
 
 ![Streaming](/docs/v2/web-hamburger.png)
@@ -184,9 +184,9 @@ see the hls stream.
 
 ## Tips
 
--   If you're using the dashboard webapp from 100ms, please make sure to use a role which doesn't have publish permissions for beam tile to not show up.
+-   If you're using the dashboard web-app from 100ms, please make sure to use a role which doesn't have publish permissions for beam tile to not show up.
     The meeting url can be edited in the streaming/recording popup to join with a recording specific role configured as such.
--   If using your own webapp, do put in place retries for API calls like tokens etc. just in case any call fails. As human users we're
+-   If using your own web-app, do put in place retries for API calls like tokens etc. just in case any call fails. As human users we're
     used to reloading the page in these scenarios which is difficult to achieve in the automated case.
 -   Make sure to not disable the logs for the passed in meeting URL. This will allow for us to have more visibility into the room, refreshing the page
     if join doesn't happen within a time interval.

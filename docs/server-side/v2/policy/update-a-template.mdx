@@ -1,0 +1,173 @@
+---
+title: Update a template
+nav: 5.6
+---
+
+This endpoint is used to modify a Template. You need to provide all options for roles and settings to which you want to apply.
+
+## Understand sub-objects hierarchy
+
+![Template sub-objects hierarchy](/docs/v2/template-object-hierarchy.png)
+Refer to the sub-objects attributes [here](/server-side/v2/policy/create-template-via-api#main-arguments)
+
+<PostRequest title="https://api.100ms.live/v2/templates/<template_id>" />
+
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/templates/6316d5ca5a2635a5849a0216' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "new-template-1662552998",
+    "default": false,
+    "roles": {
+        "guest": {
+            "name": "guest",
+            "publishParams": {},
+            "subscribeParams": {},
+            "permissions": {
+                "sendRoomState": true
+            },
+            "priority": 1,
+            "maxPeerCount": 0
+        },
+        "host": {}
+    },
+    "settings": {}
+}'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "6316d5ca5a2635a5849a0216",
+    "name": "new-template-1662552988",
+    "customerId": "627cdddff2e4e30487862ad1",
+    "roles": {
+        "guest": {
+            "name": "guest",
+            "publishParams": {
+                "allowed": ["audio", "video", "screen"],
+                "audio": {
+                    "bitRate": 32,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 300,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 480,
+                    "height": 360
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": ["host", "guest"],
+                "maxSubsBitRate": 3200,
+                "subscribeDegradation": {
+                    "packetLossThreshold": 25,
+                    "degradeGracePeriodSeconds": 1,
+                    "recoverGracePeriodSeconds": 4
+                }
+            },
+            "permissions": {
+                "rtmpStreaming": true,
+                "hlsStreaming": true,
+                "browserRecording": true,
+                "sendRoomState": false
+            },
+            "priority": 1,
+            "maxPeerCount": 0
+        },
+        "host": {
+            "name": "host",
+            "publishParams": {
+                "allowed": ["audio", "video", "screen"],
+                "audio": {
+                    "bitRate": 32,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 300,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 480,
+                    "height": 360
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "videoSimulcastLayers": {},
+                "screenSimulcastLayers": {}
+            },
+            "subscribeParams": {
+                "subscribeToRoles": ["guest", "host"],
+                "maxSubsBitRate": 3200,
+                "subscribeDegradation": {
+                    "packetLossThreshold": 25,
+                    "degradeGracePeriodSeconds": 1,
+                    "recoverGracePeriodSeconds": 4
+                }
+            },
+            "permissions": {
+                "endRoom": true,
+                "removeOthers": true,
+                "mute": true,
+                "unmute": true,
+                "changeRole": true,
+                "rtmpStreaming": true,
+                "hlsStreaming": true,
+                "browserRecording": true,
+                "sendRoomState": false
+            },
+            "priority": 1,
+            "maxPeerCount": 0
+        }
+    },
+    "settings": {
+        "region": "in",
+        "subscribeDegradation": {},
+        "screenSimulcastLayers": {},
+        "videoSimulcastLayers": {},
+        "recording": null,
+        "roomState": {
+            "messageInterval": 5,
+            "sendPeerList": false,
+            "stopRoomStateOnJoin": true,
+            "enabled": false
+        },
+        "retry": {}
+    },
+    "destinations": {},
+    "createdAt": "0001-01-01T00:00:00Z",
+    "updatedAt": "0001-01-01T00:00:00Z",
+    "_id": "6316d5ca5a2635a5849a0216",
+    "customer": "627cdddff2e4e30487862ad1"
+}
+```
+
+</ResponseBox>
+
+## Arguments
+
+| Name                           | Type      | Description                                                                                                                                                                                                                                                                                            | Required |
+| :----------------------------- | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| template_id <br/> — path param | `string`  | Unique identifier of the template you wish to update. <br/><br/>**Example**: 627ce5b637300e55a72ba7ed                                                                                                                                                                                                  | Yes      |
+| roles <br/>                    | `object`  | Modified map of `{roleName:roleObject}`. Since this is a POST request, you need to provide the whole roles object to modify/persist/override it. <br/><br/>check the [roles object arguments section](/server-side/v2/policy/create-template-via-api#roles-object) for the list of arguments supported | Yes      |
+| settings <br/>                 | `object`  | Modified settings. Since this is a POST request, you need to provide the whole settings object to modify/persist/override it. <br/><br/>check the [settings object arguments section](/server-side/v2/policy/create-template-via-api#settings-object) for the list of arguments supported              | Yes      |
+| name <br/>                     | `string`  | If you don't provide the `name`, earlier provided name is used. Trying to modify a template's name to match another existing template's name produces overwrite error.                                                                                                                                 | No       |
+| default <br/>                  | `boolean` | Whether this is default template for customer. The default template for a customer is used when no template is provided in create room API.                                                                                                                                                            | No       |

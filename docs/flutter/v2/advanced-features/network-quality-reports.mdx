@@ -1,0 +1,95 @@
+---
+title: Network Quality Reports
+nav: 4.3
+---
+
+![Network Icons](https://www.100ms.live/docs/docs/v2/network-icons.png)
+
+Video/Audio conferencing is by nature a data intensive operation. The 100ms SDK attempts to stabilize connections especially if subscribe degradation is turned on in the template but it's possible for really bad connections that users will still have problems.
+
+It can be helpful to measure a user's connection speed before joining a room in order to set expectations or decide to have them join with video off etc.
+
+The 100ms SDK provides a way to measure the user's downlink speed in the preview screen.
+
+> ⚠️ The downlink speed is measured by having the user download a file (1mb as of this writing) after the websocket connection is established during a preview.
+
+The download will be continued for at most a fixed number of seconds (eg: 10 seconds) and the speed during that interval is calculated. The entire file may not be downloaded if it exceeds the timeout.
+
+DNS time is not counted in this, only throughput is measured.
+
+## Requesting/Reading a Network Quality Update in Preview
+When creating an `HMSConfig` object to request a preview, set the `captureNetworkQualityInPreview` to `true` to measure the user's downlink network quality.
+
+When available, the information will be returned in `onPeerUpdate` of the `HMSPreviewListener` and `HMSUpdateListener` in the update type `HMSPeerUpdate.networkQualityUpdated`. It can be retrieved out of the `HMSPeer` object's `networkQuality` property.
+
+
+```dart
+
+void requestPreviewWithNetworkQuality(String authToken,String metadata,HMSPreviewListener previewListener) {
+
+    bool requestNetworkQuality = true;
+    hmsSDK = HMSSDK();
+    HMSConfig config = HMSConfig(
+            "Name",
+            authToken,
+            metadata,
+            requestNetworkQuality
+    );
+
+    hmsSDK.preview(config);
+    hmsSDK.addPreviewListener(previewListener);
+}
+```
+
+
+
+Here's the class definition of `HMSNetworkQuality`, which is a property on the `HMSPeer`.
+
+```dart
+class HMSNetworkQuality(
+    int quality;
+)
+```
+
+## In Preview
+
+you can find the updates through onPeerUpdate callback in `HMSPreviewListener`
+
+```dart
+
+@override
+void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) {
+    if (update == HMSPeerUpdate.networkQualityUpdated) {
+      print("Network Quality in Preview ${peer.networkQuality?.quality}");
+    }
+  }
+
+```
+
+## In Room
+
+you can find the updates through onPeerUpdate callback in `HMSUpdateListener`
+
+```dart
+
+@override
+void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) {
+    if (update == HMSPeerUpdate.networkQualityUpdated) {
+      print("Network Quality in Room  ${peer.networkQuality?.quality}");
+    }
+  }
+
+```
+
+
+
+
+## Interpreting the Values
+`peer.networkQuality?.quality` will be a value between -1 and 5.
+- -1 -> Test timeout.
+- 0 -> Very bad network or network check failure.
+- 1 -> Poor network.
+- 2 -> Bad network.
+- 3 -> Average.
+- 4 -> Good.
+- 5 -> Best.

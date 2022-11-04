@@ -1,0 +1,48 @@
+---
+title: Postman Guide
+nav: 1.6
+---
+
+100ms collection includes API for rooms, sessions, policies, etc., packaged and ready to use with Postman, along with documentation for each API to help you learn about them. You can import/fork these APIs and start using them instantly.
+
+The API collection comes with predefined collection variables and a pre-request script that generates the management token to help you get started immediately.
+
+## Fork the collection
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a?action=collection%2Ffork&collection-url=entityId%3D22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a%26entityType%3Dcollection%26workspaceId%3Dd9145dd6-337b-4761-81d6-21a30b4147a2)
+
+You can click on this button to fork the 100ms API collection.
+
+## Authentication
+
+100ms uses management tokens to authenticate REST APIs. To create the management token, you must use the `App Access Key` and `App Secret` from the [developer section](https://dashboard.100ms.live/developer) in your 100ms dashboard.
+
+![Copy app secret and key](/docs/v2/app-key-secret.png)
+
+### Simplified token generation
+
+We have simplified the process of management token generation for you within this collection:
+
+-   All you have to do is update the **collection variables** `APP_ACCESS_KEY` and `APP_SECRET`;
+-   We have added a pre-request script within the collection, which will generate the management token and set the same as a `collection variable` (TOKEN) in the forked Postman collection.
+-   Automatically, this will be used as authentication for all the APIs in the 100ms collection.
+
+![Add-token](/docs/v2/token.png)
+
+> **Note:** Refer to the [authentication and tokens guide](https://100ms.live/docs/server-side/v2/introduction/authentication-and-tokens#code-sample-generate-management-token) for more generating the management token in your preferred programming language for your development/production environment.
+
+## Example: Create a room
+
+Let's try to create a room to see how the 100ms collection works. From the forked REST API collection, select the folder named **Room APIs **and select the request to `create room`. Replace the placeholders like name, description, template_id, etc with the desired values. Click the `Send` button once done.
+
+## API Reference
+
+You can refer to the detailed[ API reference](/server-side/v2/Rooms/object) to understand the request/response structure better, request arguments, response variables, webhooks, etc.
+
+## Stay up to date
+
+Similar to how the forked repository on GitHub works, you can stay up to date with the 100ms master collection by pulling the changes.
+
+In the forked collection of your Postman instance, Click on the 'three-dots(...) menu' next to the 'Save' button in the top right section and select `Pull changes` from the drop-down menu.
+
+![pulling the changes](/docs/v2/pull-changes.png)
