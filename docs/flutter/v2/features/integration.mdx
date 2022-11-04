@@ -18,6 +18,10 @@ dependencies:
 ```
 > HMSSDK is supported with flutter 2.10.x or above versions.
 
+> There are 2 ways of adding plugin in pubspec.yaml file with and without version locking.
+> Without version locking flutter will fetch the latest compatible package with your project.
+> Lock version will load the specific version written in pubspec.yaml file.
+
 ## Setting up the library
 
 Run following in command in terminal.
@@ -28,6 +32,17 @@ flutter build apk
 flutter build ios
 flutter run
 ```
+## Update Version
+
+2 ways of upgrade version
+
+1. Find the latest version of `hmssdk_flutter` at [here](https://pub.dev/packages/hmssdk_flutter) and update pubspec.yaml file.
+2. Using the following command in terminal:
+
+```bash
+flutter pub upgrade
+```
+
 ## Device Permissions
 
 ### Android 
