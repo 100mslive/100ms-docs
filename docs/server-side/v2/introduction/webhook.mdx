@@ -24,7 +24,39 @@ To handle a webhook, you must create a listener to accept these HTTP requests fr
 
 ## How to secure webhooks
 
-Additionally, you can specify headers which will be passed transparently to your webhook endpoint. This can be used for securing or tracing the origin of the request.
+You can secure webhooks in two ways:
+
+1. Whitelisting 100ms NAT gateway IP addresses,
+2. Specifying unique headers while configuring webhook endpoint in 100ms.
+
+### IP whitelisting
+
+Your infrastructure might be secured by a firewall that monitors and filters incoming requests. To ensure that your firewall does not block the event-based webhooks sent by 100ms, allow traffic from these 100ms NAT gateway IP addresses to your webhook endpoint.
+
+```
+34.100.213.146/32
+35.200.143.211/32
+34.100.191.162/32
+34.100.132.35/32
+34.93.93.114/32
+34.131.109.150/32
+34.131.52.47/32
+34.131.200.41/32
+34.131.13.182/32
+34.131.24.136/32
+34.138.143.222/32
+35.242.196.203/32
+35.200.222.156/32
+34.93.74.33/32
+34.93.142.55/32
+34.93.176.177/32
+34.93.210.177/32
+34.93.175.47/32
+```
+
+### Specifying headers
+
+Additionally, you can specify headers that will be passed transparently to your webhook endpoint. This can be used for securing or tracing the origin of the request.
 
 ## How to configure Webhook
 
