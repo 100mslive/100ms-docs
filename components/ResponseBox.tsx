@@ -13,8 +13,8 @@ const ResponseBox: React.FC<PropsWithChildren<ResponseBoxProps>> = ({
     children
 }) => (
     <div id={id} className="response-box">
-        <div className="response-header">
-            RESPONSE{' '}
+        <div>
+            <span className="response-header">RESPONSE </span>
             <div className="status">
                 Status: <span className="status-text">{status}</span>
             </div>
@@ -25,6 +25,7 @@ const ResponseBox: React.FC<PropsWithChildren<ResponseBoxProps>> = ({
             .response-box {
                 margin-bottom: 24px;
                 border-radius: 8px;
+                font-size: 13px;
                 background-color: var(--api_surface_light_default);
             }
             .response-header {
