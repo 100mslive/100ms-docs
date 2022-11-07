@@ -36,13 +36,19 @@ By default iOS camera uses **autofocus** mode. That means it constantly tries to
 To enable 'Tap-to-focus' mode, you can pass one of the two tap-to-focus modes as a param to the HMSVideoSettings like below:
 
 ```swift
-videoSettingsBuilder.cameraFocusMode = .focusModeTapToAutoFocus
+sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettingsBuilder in
+    videoSettingsBuilder.cameraFocusMode = .focusModeTapToAutoFocus
+    ...
+}
   ```
   
   OR
   
-  ```swift
-videoSettingsBuilder.cameraFocusMode = .focusModeTapToLockFocus
+```swift
+sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettingsBuilder in
+    videoSettingsBuilder.cameraFocusMode = .focusModeTapToLockFocus
+    ...
+}
   ```
 
 That's all you need to do. These camera modes are integrated into the **HMSVideoView** that you use to create video tiles. Now whenever user taps on the local camera view (HMSVideoView), the tapped object in the camere scene gets focused according to the focus mode that has been set.
