@@ -28,19 +28,19 @@ const nextConfig = {
     async rewrites() {
         return [
             {
-                source: '/ios/v2/foundation/Security-and-tokens',
+                source: '/ios/v2/foundation/(S|s)ecurity-and-tokens',
                 destination: '/ios/v2/foundation/security-and-tokens'
             },
             {
-                source: '/ios/v2/features/Integration#swift-package-manager',
+                source: '/ios/v2/features/(I|i)ntegration#swift-package-manager',
                 destination: '/ios/v2/features/integration#swift-package-manager'
             },
             {
-                source: '/ios/v2/features/Integration#swift-package-manager',
-                destination: '/ios/v2/features/integration#swift-package-manager'
+                source: '/ios/v2/guides/(T|t)oken',
+                destination: '/ios/v2/guides/token'
             },
             {
-                source: '/ios/v2/guides/Quickstart',
+                source: '/ios/v2/guides/(Q|q)uickstart',
                 destination: '/ios/v2/guides/quickstart'
             }
         ];
