@@ -25,6 +25,26 @@ const nextConfig = {
 
         return config;
     },
+    async rewrites() {
+        return [
+            {
+                source: '/ios/v2/foundation/Security-and-tokens',
+                destination: '/ios/v2/foundation/security-and-tokens'
+            },
+            {
+                source: '/ios/v2/features/Integration#swift-package-manager',
+                destination: '/ios/v2/features/integration#swift-package-manager'
+            },
+            {
+                source: '/ios/v2/features/Integration#swift-package-manager',
+                destination: '/ios/v2/features/integration#swift-package-manager'
+            },
+            {
+                source: '/ios/v2/guides/Quickstart',
+                destination: '/ios/v2/guides/quickstart'
+            }
+        ];
+    },
     async redirects() {
         return [
             {
