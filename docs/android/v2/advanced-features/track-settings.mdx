@@ -1,0 +1,121 @@
+---
+title: Set Track Settings(Video/Audio)
+nav: 13.4
+---
+
+You can customize local peer's Audio & Video track settings while creating instance of 100ms SDK.
+
+
+These settings are a optional parameter and meant to be passed in the `build` function as `trackSettings` parameter which is a `HMSTrackSettings` object.
+
+```kotlin
+HMSSDK
+        .Builder(application)
+        .setTrackSettings(trackSettings) // track setting
+         ...
+        .build()
+```
+
+
+You can set the quality and description of the Audio tracks with setiings like `maxBitrate()`, `setUseHardwareAcousticEchoCanceler()` etc
+
+```kotlin
+val trackSettings = HMSTrackSettings.Builder()
+        .audio(
+            HMSAudioTrackSettings.Builder()
+                .setUseHardwareAcousticEchoCanceler(true/false)
+                .initialState(MUTED/UNMUTED)
+                .build())
+```
+
+
+Similarly, for Video tracks you can use like `maxBitrate()`, `maxFrameRate()`, `cameraFacing(), `resolution()`, `forceSoftwareDecoding()` etc
+
+```kotlin
+val trackSettings = HMSTrackSettings.Builder()
+      .video(
+        .disableAutoResize(true/false)
+        .forceSoftwareDecoder(true/false)
+        .initialState(MUTED/UNMUTED)
+        .build())
+```
+
+
+## maxBitrate
+Property specifies the maximum number of bits per second to allow a track. Applicable for both Video and Audio.
+
+## maxFrameRate
+Frames Per Second is used to measure frame rate – the number of consecutive full-screen images that are displayed each second. Applicable for Video only.
+
+## cameraFacing
+Property specifies which camera to open while joining. It can be toggled later on.
+
+```kotlin
+HMSCameraFacing.FRONT
+HMSCameraFacing.BACK
+```
+
+## resolution
+Video resolution is the number of pixels contained in each frame. 
+Video resolution determines the amount of detail in your video or how realistic and clear the video appears.
+
+## forceSoftwareDecoding
+This can be used when alot of video is rendered at a single time. It is known that hardware decoder on certain phones don't tend to work well with large grids.
+This may cause adverse effect like phone heating up, use this flag only when required
+```kotlin
+ HMSVideoTrackSettings.Builder()
+.forceSoftwareDecoder(true)
+...
+```
+
+## disableAutoResize
+The SDK intelligently downscales the resolution when, publisher's bandwidth is flaky or is cpu bound. This resuls in a low resolution to the viewers. But if the viewers are persistent they want highest resolution at all times, then this setting comes in handy
+```kotlin
+ HMSVideoTrackSettings.Builder()
+.disableAutoResize(true)
+...
+```
+
+## initialState
+This keeps the inital state for a particular/when new role is assigned. Usecase : user might want to turn on/off before joining the call. 
+
+```kotlin
+.initialState(HMSTrackSettings.InitState.MUTED)
+...
+HMSTrackSettings.InitState.MUTED/ HMSTrackSettings.InitState.UNMUTED
+```
+
+## setUseHardwareAcousticEchoCanceler
+
+This setting use's the phone's Acoustic echo Cancellation instead of relying on the SDK's software's implementation.
+```kotlin
+ HMSVideoTrackSettings.Builder()
+.setUseHardwareAcousticEchoCanceler(true)
+...
+```
+
+Here's a sample implementation of adding track settings while initializing 100ms SDK -
+
+```kotlin
+
+val hmsTrackSettings = HMSTrackSettings.Builder()
+        .audio(
+            HMSAudioTrackSettings.Builder()
+                .setUseHardwareAcousticEchoCanceler(true)
+                .initialState(HMSTrackSettings.InitState.MUTED)
+                .build()
+        )
+        .video(
+            HMSVideoTrackSettings.Builder().disableAutoResize(false)
+                .forceSoftwareDecoder(true)
+                .initialState(HMSTrackSettings.InitState.MUTED)
+                .build()
+        )
+        .build()
+
+HMSSDK
+        .Builder(application)
+        .setTrackSettings(hmsTrackSettings) 
+        .build()
+```
+
