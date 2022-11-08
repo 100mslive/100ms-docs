@@ -138,42 +138,55 @@ const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
 export default DocSlugs;
 
 export const getStaticProps = async ({ params }) => {
-    const url = !process.env.VERCEL_URL || process.env.VERCEL_URL === 'localhost' ? `http://localhost:${process.env.PORT}` : `https://${process.env.VERCEL_URL}`;
-    const { docs: allDocs, nav } = (await (await fetch(`${url}/docs/api/content?query=*`)).json())
-    const [currentDocSlug] = params.slug as string[];
-    const currentDocs = allDocs.filter((doc) => doc.url.includes(`/${currentDocSlug}/`));
-    const { previousPost, nextPost } = getPagination(currentDocs, params.slug as string[]);
-    const pagination = { previousPost, nextPost };
-    const toc = [];
-    const [currentNavDoc] = allDocs.filter((doc) => doc.url.includes(`/${join(...params.slug)}`));
-    const { content } = currentNavDoc
-    const data = {
-        ...currentNavDoc
-    }
-    delete data.content;
-    const mdxSource = await renderToString(content, {
-        components,
-        // Optionally pass remark/rehype plugins
-        mdxOptions: {
-            remarkPlugins: [
-                require('@/lib/remark-code-header'),
-                require('@fec/remark-a11y-emoji'),
-                withTableofContents(toc),
-                imagePlugin
-            ],
-            rehypePlugins: [mdxPrism]
-        },
-        scope: data
-    });
-    return {
-        props: {
-            toc,
-            pagination,
-            nav: { [currentDocSlug]: nav[currentDocSlug] },
-            source: mdxSource, // { compiledSource: mdxSource.compiledSource },
-            frontMatter: data,
+    try {
+        if (params.slug.join('/') !== params.slug.join('/').toLowerCase())
+            return {
+                redirect: {
+                    destination: `/${params.slug.join('/').toLowerCase()}`,
+                    permanent: true,
+                },
+            }
+        const url = !process.env.VERCEL_URL || process.env.VERCEL_URL === 'localhost' ? `http://localhost:${process.env.PORT}` : `https://${process.env.VERCEL_URL}`;
+        const { docs: allDocs, nav } = (await (await fetch(`${url}/docs/api/content?query=*`)).json())
+        const [currentDocSlug] = params.slug as string[];
+        const currentDocs = allDocs.filter((doc) => doc.url.includes(`/${currentDocSlug}/`));
+        const { previousPost, nextPost } = getPagination(currentDocs, params.slug as string[]);
+        const pagination = { previousPost, nextPost };
+        const toc = [];
+        const [currentNavDoc] = allDocs.filter((doc) => doc.url.includes(`/${join(...params.slug)}`));
+        const { content } = currentNavDoc
+        const data = {
+            ...currentNavDoc
         }
-    };
+        delete data.content;
+        const mdxSource = await renderToString(content, {
+            components,
+            // Optionally pass remark/rehype plugins
+            mdxOptions: {
+                remarkPlugins: [
+                    require('@/lib/remark-code-header'),
+                    require('@fec/remark-a11y-emoji'),
+                    withTableofContents(toc),
+                    imagePlugin
+                ],
+                rehypePlugins: [mdxPrism]
+            },
+            scope: data
+        });
+        return {
+            props: {
+                toc,
+                pagination,
+                nav: { [currentDocSlug]: nav[currentDocSlug] },
+                source: mdxSource, // { compiledSource: mdxSource.compiledSource },
+                frontMatter: data,
+            }
+        };
+    } catch {
+        return {
+            notFound: true,
+        }
+    }
 };
 
 export const getStaticPaths = async () =>
