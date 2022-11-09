@@ -7,24 +7,15 @@ nav: 8.3
 
 ## Create Template API
 
-<PostRequest
-    title="/policy/v1/templates"
-    desp="This endpoint is used to create a template. A recommended way is to provide a list of roles with empty objects to get default values for various options corresponding to those roles, then update those roles by modifying them by create/modify role API."
-    url="https://prod-policy.100ms.live/policy/v1/templates"
-/>
-
-<Tabs items={['Request', 'Response']} id="req" />
-
-<Tab id="req-0">
+<PostRequest title="/policy/v1/templates" />
+<Request id="req-comp-0">
 
 ```bash
 curl 'https://prod-policy.100ms.live/policy/v1/templates' -H 'Authorization: Bearer {{management_token}}' -X POST -H 'Content-Type: application/json' -d '{ "name": "test-template", "default": true, "roles":{ "student": {}, "teacher": {}, "admin": {} } }'
 ```
 
-</Tab>
-<Tab id="req-1">
-
-<Response res="200: OK" />
+</Request>
+<ResponseBox id="resp-0" status="200 OK">
 
 ```json
 {
@@ -123,8 +114,7 @@ curl 'https://prod-policy.100ms.live/policy/v1/templates' -H 'Authorization: Bea
     }
 }
 ```
-
-</Tab>
+</ResponseBox>
 
 #### Body Parameters
 
