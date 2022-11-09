@@ -159,11 +159,12 @@ This event will be sent when session closes successfully.
 #### Attributes
 
 | Name               | Type                 | Description                                                                              |
-| :----------------- | :------------------- | :--------------------------------------------------------------------------------------- |
+|:-------------------|:---------------------|:-----------------------------------------------------------------------------------------|
 | room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df_                    |
 | room_name          | `string`             | Room name provided when creating the room <br/><br/> _Example: Test Room _               |
 | session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df_ |
 | template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg_                   |
+| session_duration   | `number`             | Duration the user spent in the room in seconds <br/><br/> _Example: 36000 _              |
 | session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _               |
 | session_stopped_at | `timestamp (in UTC)` | Timestamp when session ended <br/><br/> _Example: 2020-11-11T16:32:17Z _                 |
 
@@ -182,6 +183,7 @@ This event will be sent when session closes successfully.
         "room_name": "**********",
         "session_id": "************************",
         "template_id": "************************",
+        "duration": 40,
         "session_started_at": "2021-11-30T12:58:49.97291247Z",
         "session_stopped_at": "2021-11-30T12:58:49.97291247Z"
     }
@@ -255,6 +257,7 @@ This event will be sent when peer leaves the room
 | left_at            | `timestamp (in UTC)` | Timestamp when user left <br/><br/> _Example: 2020-11-11T17:32:17Z _                                       |
 | duration           | `number`             | Duration the user spent in the room in seconds <br/><br/> _Example: 36000 _                                |
 | reason             | `string`             | Reason for the peer leaving, see more details below <br/><br/> _Example: client request _                  |
+| joined_at          | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> _Example: 2020-11-11T16:32:17Z _                                     |
 | session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                 |
 
 #### Peer Leave Reason
@@ -282,6 +285,7 @@ Note:
     "type": "peer.leave.success",
     "data": {
         "duration": 40,
+        "joined_at": "2021-11-30T12:58:49.97291247Z",
         "left_at": "2021-11-30T12:58:58.500451704Z",
         "peer_id": "********-****-****-****-***********",
         "reason": "client request",
@@ -373,6 +377,7 @@ This event will be sent when the peer leave fails. This can occur when,
 | left_at       | `timestamp (in UTC)` | Timestamp when user left <br/><br/> _Example: 2020-11-11T17:32:17Z _                                       |
 | duration      | `number`             | Duration the user spent in the room in seconds <br/><br/> _Example: 36000 _                                |
 | error_message | `string`             | Reason for failure <br/><br/> _Example: Peer not joined _                                                  |
+| joined_at     | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> _Example: 2020-11-11T16:32:17Z _                                     |
 
 #### Peer leave failure Reason
 
@@ -390,6 +395,7 @@ This event will be sent when the peer leave fails. This can occur when,
     "data": {
         "duration": 0,
         "left_at": "0001-01-01T00:00:00Z",
+        "joined_at": "2021-11-30T12:58:49.97291247Z",
         "peer_id": "********-****-****-****-***********",
         "role": "********",
         "room_id": "************************",
@@ -512,7 +518,7 @@ This event will be sent when peer changes role successfully.
 #### Attributes
 
 | Name               | Type                 | Description                                                                                                |
-| :----------------- | :------------------- | :--------------------------------------------------------------------------------------------------------- |
+|:-------------------|:---------------------|:-----------------------------------------------------------------------------------------------------------|
 | room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
 | room_name          | `string`             | Room name provided when creating the room <br/><br/> _Example: Test Room _                                 |
 | session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                  |
@@ -521,9 +527,11 @@ This event will be sent when peer changes role successfully.
 | user_id            | `string`             | User id assigned by the customer <br/><br/> _Example: user.001 _                                           |
 | user_name          | `string`             | User name of the user <br/><br/> _Example: Test user _                                                     |
 | user_data          | `string`             | User data of the user <br/><br/> _Example: {"isHandRaised":true} _                                         |
+| previous_role      | `string`             | Previous role of the peer <br/><br/> _Example: host _                                                      |
 | role               | `string`             | New role of the user <br/><br/> _Example: host _                                                           |
 | joined_at          | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> _Example: 2020-11-11T16:32:17Z _                                     |
 | session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                 |
+| role_changed_at    | `timestamp (in UTC)` | Timestamp when role changed <br/><br/> _Example: 2020-10-11T16:32:17Z _                                    |
 
 #### Sample `role.change.success` event
 
@@ -546,7 +554,9 @@ This event will be sent when peer changes role successfully.
         "user_id": "************************",
         "user_name": "********",
         "user_data": "",
-        "session_started_at": "2021-11-30T12:58:49.97291247Z"
+        "previous_role": "********",
+        "session_started_at": "2021-11-30T12:58:49.97291247Z",
+        "role_changed_at": "2021-11-30T12:58:49.97291247Z"
     }
 }
 ```
@@ -567,9 +577,11 @@ This event will be sent when final composed recording is generated and uploaded 
 | template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                                            |
 | location           | `string`             | s3 URI of the recorded video <br/><br/> _Example: s3://bucket/prefix/ac.mp4 _                                                      |
 | URL                | `string`             | Presigned s3 URL for the recorded video, for download. Valid for 24 hours <br/><br/> _Example: https://s3-location/bucket/ac.mp4 _ |
-| duration           | `number`             | Duration the user spent in the room in seconds <br/><br/> _Example: 3600 _                                                         |
+| duration           | `number`             | Duration of recording in seconds <br/><br/> _Example: 3600 _                                                         |
+| session_duration   | `number`             | Duration the user spent in the room in seconds <br/><br/> _Example: 36000 _              |
 | size               | `number`             | Size of the recorded video (in bytes) <br/><br/> _Example: 10024 _                                                                 |
 | session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                                         |
+| session_stopped_at | `timestamp (in UTC)` | Timestamp when session ended <br/><br/> _Example: 2020-11-11T16:32:17Z _                 |
 
 #### Sample `recording.success` event
 
@@ -584,13 +596,15 @@ This event will be sent when final composed recording is generated and uploaded 
     "data": {
         "URL": "https://<file-access-url>?<signature>",
         "duration": 351,
+        "session_duration": 20.132,
         "location": "s3://<file-bucket-address>.mp4",
         "room_id": "************************",
         "room_name": "TestRoom1",
         "session_id": "************************",
         "template_id": "************************",
         "size": 13933649,
-        "session_started_at": "2021-11-30T12:58:49.97291247Z"
+        "session_started_at": "2021-11-30T12:58:49.97291247Z",
+        "session_stopped_at": "2021-11-30T12:58:49.97291247Z"
     }
 }
 ```
@@ -609,6 +623,7 @@ This event will be sent when failure occurs during final recording composition o
 | template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                   |
 | error              | `string`             | Error message <br/><br/> _Example: Upload Failure _                                       |
 | session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                |
+| session_stopped_at | `timestamp (in UTC)` | Timestamp when session ended <br/><br/> _Example: 2020-11-11T16:32:17Z _                 |
 
 #### Sample `recording.failed` event
 
@@ -626,7 +641,8 @@ This event will be sent when failure occurs during final recording composition o
         "room_name": "TestRoom1",
         "session_id": "************************",
         "template_id": "************************",
-        "session_started_at": "2021-11-30T12:58:49.97291247Z"
+        "session_started_at": "2021-11-30T12:58:49.97291247Z",
+        "session_stopped_at": "2021-11-30T12:58:49.97291247Z"
     }
 }
 ```
@@ -674,7 +690,7 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
         "metadata_id": "********-****-****-****-***********",
         "metadata_timestamp": "2021-11-30T12:58:46.400759043Z",
         "peer_id": "********-****-****-****-***********",
-        "recording_enabled": True,
+        "recording_enabled": true,
         "room_id": "************************",
         "session_id": "************************",
         "template_id": "************************",
@@ -729,7 +745,7 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
         "metadata_id": "********-****-****-****-***********",
         "metadata_timestamp": "2021-11-30T12:59:57.797972469Z",
         "peer_id": "********-****-****-****-***********",
-        "recording_enabled": True,
+        "recording_enabled": true,
         "room_id": "************************",
         "session_id": "************************",
         "template_id": "************************",
@@ -854,7 +870,7 @@ This event will be sent when there are failures in RTMP streaming and/or browser
         "metadata_id": "********-****-****-****-***********",
         "metadata_timestamp": "2021-11-30T20:36:55.807155801Z",
         "peer_id": "********-****-****-****-***********",
-        "recording_enabled": True,
+        "recording_enabled": true,
         "room_id": "************************",
         "session_id": "************************",
         "template_id": "************************",
@@ -914,8 +930,8 @@ This event is sent when HLS streaming is successfully triggered
         "metadata_id": "********-****-****-****-***********",
         "metadata_timestamp": "2021-11-30T12:58:46.400759043Z",
         "peer_id": "********-****-****-****-***********",
-        "recording_single_file_per_layer_enabled": False,
-        "recording_vod_playlist_enabled": False,
+        "recording_single_file_per_layer_enabled": false,
+        "recording_vod_playlist_enabled": false,
         "room_id": "************************",
         "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
         "session_id": "************************",
@@ -974,8 +990,8 @@ This event is sent when HLS streaming is successfully stopped
         "metadata_id": "********-****-****-****-***********",
         "metadata_timestamp": "2021-11-30T12:59:57.797972469Z",
         "peer_id": "********-****-****-****-***********",
-        "recording_single_file_per_layer_enabled": False,
-        "recording_vod_playlist_enabled": False,
+        "recording_single_file_per_layer_enabled": false,
+        "recording_vod_playlist_enabled": false,
         "room_id": "************************",
         "max_height": 720,
         "max_width": 1280,
@@ -1042,8 +1058,8 @@ This event will be sent when there are failures in HLS streaming and/or recordin
         "metadata_id": "********-****-****-****-***********",
         "metadata_timestamp": "2021-11-30T20:36:55.807155801Z",
         "peer_id": "********-****-****-****-***********",
-        "recording_single_file_per_layer_enabled": False,
-        "recording_vod_playlist_enabled": False,
+        "recording_single_file_per_layer_enabled": false,
+        "recording_vod_playlist_enabled": false,
         "room_id": "************************",
         "max_height": 720,
         "max_width": 1280,
