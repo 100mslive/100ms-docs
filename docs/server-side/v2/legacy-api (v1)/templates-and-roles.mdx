@@ -7,24 +7,15 @@ nav: 8.3
 
 ## Create Template API
 
-<PostRequest
-    title="/policy/v1/templates"
-    desp="This endpoint is used to create a template. A recommended way is to provide a list of roles with empty objects to get default values for various options corresponding to those roles, then update those roles by modifying them by create/modify role API."
-    url="https://prod-policy.100ms.live/policy/v1/templates"
-/>
-
-<Tabs items={['Request', 'Response']} id="req" />
-
-<Tab id="req-0">
+<PostRequest title="/policy/v1/templates" />
+<Request id="req-comp-0">
 
 ```bash
 curl 'https://prod-policy.100ms.live/policy/v1/templates' -H 'Authorization: Bearer {{management_token}}' -X POST -H 'Content-Type: application/json' -d '{ "name": "test-template", "default": true, "roles":{ "student": {}, "teacher": {}, "admin": {} } }'
 ```
 
-</Tab>
-<Tab id="req-1">
-
-<Response res="200: OK" />
+</Request>
+<ResponseBox id="resp-0" status="200 OK">
 
 ```json
 {
@@ -124,7 +115,7 @@ curl 'https://prod-policy.100ms.live/policy/v1/templates' -H 'Authorization: Bea
 }
 ```
 
-</Tab>
+</ResponseBox>
 
 #### Body Parameters
 
@@ -245,24 +236,15 @@ curl 'https://prod-policy.100ms.live/policy/v1/templates' -H 'Authorization: Bea
 
 ## Create/Modify Role API
 
-<PostRequest
-    title="/policy/v1/templates/:id/roles/:name"
-    desp="This endpoint is used to create/modify a role."
-    url="https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/roles/{{roleName}}"
-/>
-
-<Tabs items={['Request', 'Response']} id="req1" />
-
-<Tab id="req1-0">
+<PostRequest title="/policy/v1/templates/:id/roles/:name" />
+<Request id="req-comp-1">
 
 ```bash
 curl 'https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/roles/{{roleName}}' -H 'Authorization: Bearer {{management_token}}' -X POST -H 'Content-Type: application/json' -d '{ "name": "listener3", "publishParams": { "allowed": [ "video", "screen", "audio" ], "audio": { "bitRate": 40, "codec": "opus" }, "video": { "bitRate": 400, "codec": "vp8", "frameRate": 30, "width": 480, "height": 360 }, "screen": { "codec": "vp8", "frameRate": 10, "width": 1920, "height": 1080 } }, "subscribeParams": { "subscribeToRoles": [ "speaker", "moderator", "new-role-9880" ], "maxSubsBitRate": 3200, "subscribeDegradation": {} }, "permissions": {}, "priority": 1 }'
 ```
 
-</Tab>
-<Tab id="req1-1">
-
-<Response res="200: OK" />
+</Request>
+<ResponseBox id="resp-1" status="200 OK">
 
 ```json
 {
@@ -297,7 +279,7 @@ curl 'https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/roles/{{
 }
 ```
 
-</Tab>
+</ResponseBox>
 
 #### Body Parameters
 
@@ -308,24 +290,15 @@ curl 'https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/roles/{{
 
 ## Update Settings API
 
-<PostRequest
-    title="/policy/v1/templates/:id/settings"
-    desp="This endpoint is used to update settings. "
-    url="https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/setings"
-/>
-
-<Tabs items={['Request', 'Response']} id="req2" />
-
-<Tab id="req2-0">
+<PostRequest title="/policy/v1/templates/:id/settings" />
+<Request id="req-comp-2">
 
 ```bash
 curl 'https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/settings' -H 'Authorization: Bearer {{management_token}}' -X POST -H 'Content-Type: application/json' -d '{ "region": "us" }'
 ```
 
-</Tab>
-<Tab id="req2-1">
-
-<Response res="200: OK" />
+</Request>
+<ResponseBox id="resp-2" status="200 OK">
 
 ```json
 {
@@ -333,7 +306,7 @@ curl 'https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/settings
 }
 ```
 
-</Tab>
+</ResponseBox>
 
 #### Body Parameters
 
@@ -343,24 +316,16 @@ curl 'https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/settings
 
 ## Get Templates API
 
-<GetRequest
-    title="/policy/v1/templates?id=ID"
-    desp="This endpoint is used to fetch a template. This API can be used to fetch a template. Instead of id, URL param name can be provided to fetch by name. Providing no URL params fetches all templates for the customer. You can provide start/limit params for pagination."
-    url="https://prod-policy.100ms.live/policy/v1/templates?id={{templateID}}"
-/>
-
-<Tabs items={['Request', 'Response']} id="req3" />
-
-<Tab id="req3-0">
+<GetRequest title="/policy/v1/templates?id=ID" />
+<Request id="req-3">
 
 ```bash
 curl 'https://prod-policy.100ms.live/policy/v1/templates?id={{templateID}}' -H 'Authorization: Bearer {{management_token}}'
 ```
 
-</Tab>
-<Tab id="req3-1">
+</Request>
 
-<Response res="200: OK" />
+<ResponseBox id="res-3" status="200 OK">
 
 ```json
 {
@@ -411,7 +376,7 @@ curl 'https://prod-policy.100ms.live/policy/v1/templates?id={{templateID}}' -H '
 }
 ```
 
-</Tab>
+</ResponseBox>
 
 #### URL Parameters
 
@@ -425,24 +390,16 @@ curl 'https://prod-policy.100ms.live/policy/v1/templates?id={{templateID}}' -H '
 
 ## Get Role API
 
-<GetRequest
-    title="/policy/v1/templates/:id/roles/:name"
-    desp="This endpoint is used to fetch a role. "
-    url="https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/roles/{{roleName}}"
-/>
-
-<Tabs items={['Request', 'Response']} id="req4" />
-
-<Tab id="req4-0">
+<GetRequest title="/policy/v1/templates/:id/roles/:name" />
+<Request id="req-4">
 
 ```bash
 curl 'https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/roles/{{roleName}}' -H 'Authorization: Bearer {{management_token}}'
 ```
 
-</Tab>
-<Tab id="req4-1">
+</Request>
 
-<Response res="200: OK" />
+<ResponseBox id="res-4" status="200 OK">
 
 ```json
 {
@@ -477,28 +434,20 @@ curl 'https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/roles/{{
 }
 ```
 
-</Tab>
+</ResponseBox>
 
 ## Get Settings API
 
-<GetRequest
-    title="/policy/v1/templates/:id/settings"
-    desp="This endpoint is used to fetch settings. "
-    url="https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/settings"
-/>
-
-<Tabs items={['Request', 'Response']} id="req5" />
-
-<Tab id="req5-0">
+<GetRequest title="/policy/v1/templates/:id/settings" />
+<Request id="req-5">
 
 ```bash
 curl 'https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/settings' -H 'Authorization: Bearer {{management_token}}'
 ```
 
-</Tab>
-<Tab id="req5-1">
+</Request>
 
-<Response res="200: OK" />
+<ResponseBox id="res-5" status="200 OK">
 
 ```json
 {
@@ -506,7 +455,7 @@ curl 'https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/settings
 }
 ```
 
-</Tab>
+</ResponseBox>
 
 ## Modify Template API
 
@@ -515,19 +464,14 @@ curl 'https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/settings
     desp="This endpoint is used to modify a Template. You can also use the URL parameter name instead of id to modify a template by name. Providing the same name as a previous template overrides that template. You need to provide all options for roles and settings which you want to apply."
     url="https://prod-policy.100ms.live/policy/v1/templates?id={{tempalateID}}"
 />
-
-<Tabs items={['Request', 'Response']} id="req6" />
-
-<Tab id="req6-0">
+<Request id="req-6">
 
 ```bash
 curl 'https://prod-policy.100ms.live/policy/v1/templates?id={{templateID}}' -H 'Authorization: Bearer {{management_token}}' -X POST -H 'Content-Type: application/json' -d '{ "roles":{ "student":{ "name":"student", "publishParams":{ "allowed":[ "screen", "audio" ], "audio":{ "bitRate":42, "codec":"opus" }, "video":{ "bitRate":250, "codec":"vp8", "frameRate":30, "width":480, "height":270 }, "screen":{ "codec":"vp8", "frameRate":10, "width":1920, "height":1086 } }, "subscribeParams":{ "subscribeToRoles":[ "teacher", "student" ], "maxSubsBitRate":2000 }, "priority":1 } }, "settings":{ "region":"eu" } }'
 ```
 
-</Tab>
-<Tab id="req6-1">
-
-<Response res="200: OK" />
+</Request>
+<ResponseBox id="res-6" status="200 OK">
 
 ```json
 {
@@ -572,7 +516,7 @@ curl 'https://prod-policy.100ms.live/policy/v1/templates?id={{templateID}}' -H '
 }
 ```
 
-</Tab>
+</ResponseBox>
 
 #### Body Parameters
 
@@ -591,21 +535,11 @@ curl 'https://prod-policy.100ms.live/policy/v1/templates?id={{templateID}}' -H '
     url="https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/roles/{{roleName}}"
 />
 
-<Tabs items={['Request', 'Response']} id="req7" />
-
-<Tab id="req7-0">
+<Request id="req-7">
 
 ```bash
 curl 'https://prod-policy.100ms.live/policy/v1/templates/{{templateID}}/roles/{{roleName}}' -H 'Authorization: Bearer {{management_token}}' -X DELETE -H 'Content-Type: application/json'
 ```
 
-</Tab>
-<Tab id="req7-1">
-
-<Response res="204: No Content" />
-
-```json
-
-```
-
-</Tab>
+</Request>
+<ResponseBox id="res-7" status="204 No Content"></ResponseBox>
