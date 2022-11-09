@@ -183,7 +183,7 @@ This event will be sent when session closes successfully.
         "room_name": "**********",
         "session_id": "************************",
         "template_id": "************************",
-        "duration": 40,
+        "session_duration": 40,
         "session_started_at": "2021-11-30T12:58:49.97291247Z",
         "session_stopped_at": "2021-11-30T12:58:49.97291247Z"
     }
@@ -577,8 +577,7 @@ This event will be sent when final composed recording is generated and uploaded 
 | template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                                            |
 | location           | `string`             | s3 URI of the recorded video <br/><br/> _Example: s3://bucket/prefix/ac.mp4 _                                                      |
 | URL                | `string`             | Presigned s3 URL for the recorded video, for download. Valid for 24 hours <br/><br/> _Example: https://s3-location/bucket/ac.mp4 _ |
-| duration           | `number`             | Duration of recording in seconds <br/><br/> _Example: 3600 _                                                         |
-| session_duration   | `number`             | Duration the user spent in the room in seconds <br/><br/> _Example: 36000 _              |
+| duration           | `number`             | Duration the user spent in the room in seconds <br/><br/> _Example: 3600 _                                                         |
 | size               | `number`             | Size of the recorded video (in bytes) <br/><br/> _Example: 10024 _                                                                 |
 | session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                                         |
 | session_stopped_at | `timestamp (in UTC)` | Timestamp when session ended <br/><br/> _Example: 2020-11-11T16:32:17Z _                 |
@@ -596,7 +595,6 @@ This event will be sent when final composed recording is generated and uploaded 
     "data": {
         "URL": "https://<file-access-url>?<signature>",
         "duration": 351,
-        "session_duration": 20.132,
         "location": "s3://<file-bucket-address>.mp4",
         "room_id": "************************",
         "room_name": "TestRoom1",
