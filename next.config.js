@@ -32,6 +32,10 @@ const nextConfig = {
                 destination: '/ios/v2/foundation/security-and-tokens'
             },
             {
+                source: '/ios/v2/foundation/Basics',
+                destination: '/ios/v2/foundation/basics'
+            },
+            {
                 source: '/ios/v2/features/Integration#swift-package-manager',
                 destination: '/ios/v2/features/integration#swift-package-manager'
             },
