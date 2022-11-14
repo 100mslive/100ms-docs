@@ -14,8 +14,10 @@ TL;DR - Try out this complete example in [CodeSandbox](https://codesandbox.io/s/
 Let's look at some [basic concepts](/javascript/v2/foundation/basics) to understand how a video conferencing app works.
 
 -   `Room`: A `room` is a virtual space where one or more peers communicate with each other. It is a central entity that provides real-time communication capabilities for any video conferencing or live streaming session. To allow users to join a 100ms video conferencing or a live streaming session inside your app, you first need to create a room.
+-   `Template` A template is a collection of roles, room settings, recording, HLS (Live streaming) and RTMP settings (if used), that are used by the SDK to decide which geography to connect to, which tracks to return to the client, whether to turn on recording when a room is created, etc. Each room is associated with a template.
 -   `Peer`: A participant in the video call. You are the `local peer` while others are `remote peers`.
 -   `Track`: Media. There are two types of track a peer can have - audio and video.
+-   `Role` A role defines who can a peer see/hear, the quality at which they publish their video, whether they have permissions to publish video/screenshare, mute someone, change someone's role.
 
 ## Create a sample app locally
 
@@ -31,14 +33,14 @@ You can initialize a project using `npm init` or `yarn init`. While initializing
 
 Then, install ParcelJS and 100ms SDK into your app like below
 
-- using yarn:
-  ```bash section=InstallingTheDependencies sectionIndex=1
-  yarn add --dev parcel @100mslive/hms-video-store
-  ```
-- using npm:
-  ```bash section=InstallingTheDependencies sectionIndex=2
-  npm install --save-dev parcel @100mslive/hms-video-store
-  ```
+-   using yarn:
+    ```bash section=InstallingTheDependencies sectionIndex=1
+    yarn add --dev parcel @100mslive/hms-video-store
+    ```
+-   using npm:
+    ```bash section=InstallingTheDependencies sectionIndex=2
+    npm install --save-dev parcel @100mslive/hms-video-store
+    ```
 
 ### Project setup
 
@@ -54,7 +56,7 @@ Now that the dependencies are installed, let's create basic source files for our
 
 ### Complete code example
 
-Next, copy the below code snippets and paste it into the respective files created in the above step. 
+Next, copy the below code snippets and paste it into the respective files created in the above step.
 
 <Tabs id="join-form" items={['JS', 'HTML', 'CSS']} />
 
@@ -174,6 +176,7 @@ function onConnection(isConnected) {
 // listen to the connection state
 hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
 ```
+
 </Tab>
 
 <Tab id="join-form-1">
@@ -230,14 +233,14 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
     padding: 0;
     box-sizing: border-box;
   }
-  
+
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
       Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     background-color: #263238;
     color: white;
   }
-  
+
   h1,
   h2,
   h3,
@@ -245,14 +248,14 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
   h5 {
     font-weight: normal;
   }
-  
+
   header {
     padding: 10px;
     display: flex;
     align-items: end;
     justify-content: space-between;
   }
-  
+
   .btn-danger {
     border: 1px solid transparent;
     border-radius: 4px;
@@ -274,7 +277,7 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
     border-radius: 8px;
     padding: 20px;
   }
-  
+
   input {
     display: block;
     width: 100%;
@@ -286,15 +289,15 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
     color: inherit;
     font-family: inherit;
   }
-  
+
   input::placeholder {
     color: #aaa;
   }
-  
+
   .input-container {
     margin-bottom: 20px;
   }
-  
+
   .btn-primary {
     border: 1px solid transparent;
     border-radius: 4px;
@@ -304,32 +307,32 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
     font-family: inherit;
     font-size: 14px;
   }
-  
+
   form h2,
   .conference-section h2 {
     margin-bottom: 20px;
   }
-  
+
   .conference-section {
     padding: 20px 30px;
     max-width: 960px;
     margin: 0 auto;
   }
-  
+
   .conference-section h2 {
     text-align: center;
     font-size: 32px;
     padding-bottom: 10px;
     border-bottom: 1px solid #546e7a;
   }
-  
+
   #peers-container {
     display: grid;
     grid-template-columns: repeat(3, minmax(min-content, 1fr));
     place-items: center;
     grid-gap: 10px;
   }
-  
+
   .peer-video {
     height: 250px;
     width: 250px;
@@ -337,20 +340,20 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
     object-fit: cover;
     margin-bottom: 10px;
   }
-  
+
   .local.peer-video {
     transform: scaleX(-1);
   }
-  
+
   .peer-name {
     font-size: 14px;
     text-align: center;
   }
-  
+
   .peer-tile {
     padding: 10px;
   }
-  
+
   .control-bar {
     display: flex;
     position: fixed;
@@ -360,11 +363,11 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
     justify-content: center;
     z-index: 10;
   }
-  
+
   .control-bar > *:not(:first-child) {
     margin-left: 8px;
   }
-  
+
   .btn-control {
     font-size: 12px;
     text-transform: uppercase;
@@ -379,11 +382,10 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
     color: white;
   }
 ```
+
 </Tab>
 
-> **Note:** Please ensure to add the Javascript and CSS dependencies to your HTML file. <br/><br/>
-> `<link rel="stylesheet" href="src/styles.css" />` <br/>
-> `<script type="module" src="src/index.js"></script>`
+> **Note:** Please ensure to add the Javascript and CSS dependencies to your HTML file. <br/><br/> > `<link rel="stylesheet" href="src/styles.css" />` <br/> > `<script type="module" src="src/index.js"></script>`
 
 ### Test the app
 
@@ -394,7 +396,7 @@ To test the application, run the application using:
 
 This will start your development server in http://localhost:3000/. Open this in your browser to test the video conferencing app you created above.
 
-#### Test audio/video in your app
+#### Fetch token to join the room
 
 To test audio/video functionality, you need to connect to a 100ms room; please check following steps for the same:
 
@@ -405,11 +407,9 @@ To test audio/video functionality, you need to connect to a 100ms room; please c
 
     ![Join room key](/guides/join_room_key.png)
 
-Now, after you click `join`, you should be able to see yourself! 
+Now, after you click `join`, you should be able to see yourself!
 
 You can open the app in another tab in the browser to join as the second peer to check audio/video transactions between two or more peers.
-
-![Mute/Unmute](/guides/two-peers.gif)
 
 **We have a fully functional video conferencing application now** 🎉🚀
 
@@ -421,8 +421,8 @@ In this section, let's walk through what the code does.
 
 Let us start with initializing the libraries. We need two instances to get started:
 
-- An instance of [HMSStore](/api-reference/javascript/v2/interfaces/HMSStore) that holds the complete state of the application such as details of all the participants. We can also visualize this state at any time using the [DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en) extension.
-- And an instance of [HMSActions](/api-reference/javascript/v2/interfaces/HMSActions) that will help us perform actions such as joining the room, muting our audio, and sending messages. Please copy the code snippet below and paste it into your project.
+-   An instance of [HMSStore](/api-reference/javascript/v2/interfaces/HMSStore) that holds the complete state of the application such as details of all the participants. We can also visualize this state at any time using the [DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en) extension.
+-   And an instance of [HMSActions](/api-reference/javascript/v2/interfaces/HMSActions) that will help us perform actions such as joining the room, muting our audio, and sending messages. Please copy the code snippet below and paste it into your project.
 
 ```jsx:index.js section=InitializingTheSDK sectionIndex=1
 import {
@@ -459,6 +459,7 @@ const muteAudio = document.getElementById("mute-aud");
 const muteVideo = document.getElementById("mute-vid");
 const controls = document.getElementById("controls");
 ```
+
 </Tab>
 
 <Tab id="join-form-1">
@@ -515,14 +516,14 @@ const controls = document.getElementById("controls");
     padding: 0;
     box-sizing: border-box;
   }
-  
+
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
       Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     background-color: #263238;
     color: white;
   }
-  
+
   h1,
   h2,
   h3,
@@ -530,14 +531,14 @@ const controls = document.getElementById("controls");
   h5 {
     font-weight: normal;
   }
-  
+
   header {
     padding: 10px;
     display: flex;
     align-items: end;
     justify-content: space-between;
   }
-  
+
   .btn-danger {
     border: 1px solid transparent;
     border-radius: 4px;
@@ -559,7 +560,7 @@ const controls = document.getElementById("controls");
     border-radius: 8px;
     padding: 20px;
   }
-  
+
   input {
     display: block;
     width: 100%;
@@ -571,15 +572,15 @@ const controls = document.getElementById("controls");
     color: inherit;
     font-family: inherit;
   }
-  
+
   input::placeholder {
     color: #aaa;
   }
-  
+
   .input-container {
     margin-bottom: 20px;
   }
-  
+
   .btn-primary {
     border: 1px solid transparent;
     border-radius: 4px;
@@ -589,32 +590,32 @@ const controls = document.getElementById("controls");
     font-family: inherit;
     font-size: 14px;
   }
-  
+
   form h2,
   .conference-section h2 {
     margin-bottom: 20px;
   }
-  
+
   .conference-section {
     padding: 20px 30px;
     max-width: 960px;
     margin: 0 auto;
   }
-  
+
   .conference-section h2 {
     text-align: center;
     font-size: 32px;
     padding-bottom: 10px;
     border-bottom: 1px solid #546e7a;
   }
-  
+
   #peers-container {
     display: grid;
     grid-template-columns: repeat(3, minmax(min-content, 1fr));
     place-items: center;
     grid-gap: 10px;
   }
-  
+
   .peer-video {
     height: 250px;
     width: 250px;
@@ -622,20 +623,20 @@ const controls = document.getElementById("controls");
     object-fit: cover;
     margin-bottom: 10px;
   }
-  
+
   .local.peer-video {
     transform: scaleX(-1);
   }
-  
+
   .peer-name {
     font-size: 14px;
     text-align: center;
   }
-  
+
   .peer-tile {
     padding: 10px;
   }
-  
+
   .control-bar {
     display: flex;
     position: fixed;
@@ -645,11 +646,11 @@ const controls = document.getElementById("controls");
     justify-content: center;
     z-index: 10;
   }
-  
+
   .control-bar > *:not(:first-child) {
     margin-left: 8px;
   }
-  
+
   .btn-control {
     font-size: 12px;
     text-transform: uppercase;
@@ -664,6 +665,7 @@ const controls = document.getElementById("controls");
     color: white;
   }
 ```
+
 </Tab>
 
 ### Step 3: Join/leave a room
@@ -1044,7 +1046,7 @@ function onConnection(isConnected) {
 hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
 ```
 
-Refer to [Test the app section](/javascript/v2/guides/javascript-quickstart#test-the-app) above to test your sample app locally. 
+Refer to [Test the app section](/javascript/v2/guides/javascript-quickstart#test-the-app) above to test your sample app locally.
 
 ## Next steps
 
