@@ -58,9 +58,9 @@ Now that the dependencies are installed, let's create basic source files for our
 
 Next, copy the below code snippets and paste it into the respective files created in the above step.
 
-<Tabs id="join-form" items={['JS', 'HTML', 'CSS']} />
+<Tabs id="complete-code" items={['JS', 'HTML', 'CSS']} />
 
-<Tab id="join-form-0">
+<Tab id="complete-code-0">
 
 ```jsx:index.js section=completeCodeExample sectionIndex=1 tab=JS
 import {
@@ -179,7 +179,7 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
 
 </Tab>
 
-<Tab id="join-form-1">
+<Tab id="complete-code-1">
 
 ```html:index.html section=completeCodeExample sectionIndex=1 tab=HTML
 <!DOCTYPE html>
@@ -225,7 +225,7 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
 
 </Tab>
 
-<Tab id="join-form-2">
+<Tab id="complete-code-2">
 
 ```css:styles.css section=completeCodeExample sectionIndex=1 tab=CSS
 * {
@@ -409,7 +409,17 @@ To test audio/video functionality, you need to connect to a 100ms room; please c
 
 Now, after you click `join`, you should be able to see yourself!
 
+<video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
+    <source src="/guides/peer-1.mp4" type="video/mp4" />
+</video>
+<br />
+
 You can open the app in another tab in the browser to join as the second peer to check audio/video transactions between two or more peers.
+
+<video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
+    <source src="/guides/peer-2.mp4" type="video/mp4" />
+</video>
+<br />
 
 **We have a fully functional video conferencing application now** 🎉🚀
 
@@ -444,9 +454,9 @@ const hmsActions = hmsManager.getHMSActions();
 
 Now, let's initialize all the HTML elements required such as tile for local and remote peers, join and leave button, mute and unmute button, etc.
 
-<Tabs id="join-form" items={['JS', 'HTML', 'CSS']} />
+<Tabs id="initialize-html-elements" items={['JS', 'HTML', 'CSS']} />
 
-<Tab id="join-form-0">
+<Tab id="initialize-html-elements-0">
 
 ```jsx:index.js section=InitializingTheSDK sectionIndex=2 tab=JS
 // HTML elements
@@ -462,7 +472,7 @@ const controls = document.getElementById("controls");
 
 </Tab>
 
-<Tab id="join-form-1">
+<Tab id="initialize-html-elements-1">
 
 ```html:index.html section=InitializingTheSDK sectionIndex=2 tab=HTML
 <!DOCTYPE html>
@@ -508,7 +518,7 @@ const controls = document.getElementById("controls");
 
 </Tab>
 
-<Tab id="join-form-2">
+<Tab id="initialize-html-elements-2">
 
 ```css:styles.css section=InitializingTheSDK sectionIndex=2 tab=CSS
 * {
@@ -975,9 +985,9 @@ muteVideo.onclick = () => {
 
 </Tab>
 
-<Tab id="mute-unmute-1"> section=MutingUnmutingLocalTracks sectionIndex=1 tab=HTML
+<Tab id="mute-unmute-1">
 
-```html
+```html:index.html section=MutingUnmutingLocalTracks sectionIndex=1 tab=HTML
 <div id="controls" class="control-bar">
     <button id="mute-aud" class="btn-control">Mute</button>
     <button id="mute-vid" class="btn-control">Hide</button>
