@@ -183,8 +183,8 @@ This event will be sent when session closes successfully.
         "room_name": "**********",
         "session_id": "************************",
         "template_id": "************************",
-        "session_duration": 40,
-        "session_started_at": "2021-11-30T12:58:49.97291247Z",
+        "session_duration": 600,
+        "session_started_at": "2021-11-30T12:48:49.97291247Z",
         "session_stopped_at": "2021-11-30T12:58:49.97291247Z"
     }
 }
@@ -555,7 +555,7 @@ This event will be sent when peer changes role successfully.
         "user_name": "********",
         "user_data": "",
         "previous_role": "********",
-        "session_started_at": "2021-11-30T12:58:49.97291247Z",
+        "session_started_at": "2021-11-30T12:48:49.97291247Z",
         "role_changed_at": "2021-11-30T12:58:49.97291247Z"
     }
 }
@@ -595,7 +595,7 @@ This event will be sent when final composed recording is generated and uploaded 
     "timestamp": "2021-11-30T20:12:35Z",
     "type": "recording.success",
     "data": {
-        "duration": 351,
+        "duration": 600,
         "room_id": "************************",
         "room_name": "TestRoom1",
         "session_id": "************************",
@@ -603,7 +603,7 @@ This event will be sent when final composed recording is generated and uploaded 
         "recording_path": "s3://<file-bucket-address>.mp4",
         "recording_presigned_url": "https://<file-access-url>?<signature>",
         "size": 13933649,
-        "session_started_at": "2021-11-30T12:58:49.97291247Z",
+        "session_started_at": "2021-11-30T12:48:49.97291247Z",
         "session_stopped_at": "2021-11-30T12:58:49.97291247Z"
     }
 }
@@ -641,7 +641,7 @@ This event will be sent when failure occurs during final recording composition o
         "room_name": "TestRoom1",
         "session_id": "************************",
         "template_id": "************************",
-        "session_started_at": "2021-11-30T12:58:49.97291247Z",
+        "session_started_at": "2021-11-30T12:48:49.97291247Z",
         "session_stopped_at": "2021-11-30T12:58:49.97291247Z"
     }
 }
@@ -659,7 +659,7 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
 |:-------------------|:---------------------|:----------------------------------------------------------------------------------------------------------|
 | beam_id            | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83_                                             |
 | job_id             | `string`             | Beam job id <br/><br/> _Example: 60b8e1d96eb86d8101b57359_                                                |
-| recording_enabled  | `bool`               | Indicates whether recording is enabled or not <br/><br/> _Example: True_                                  |
+| recording_enabled  | `bool`               | Indicates whether recording is enabled or not <br/><br/> _Example: true_                                  |
 | room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df_                                     |
 | peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4_ |
 | session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df_                  |
@@ -716,7 +716,7 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
 |:-------------------|:---------------------|:-----------------------------------------------------------------------------------------------------------|
 | beam_id            | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                             |
 | job_id             | `string`             | Beam job id <br/><br/> _Example: 60b8e1d96eb86d8101b57359 _                                                |
-| recording_enabled  | `bool`               | Indicates whether recording is enabled or not <br/><br/> _Example: True_                                   |
+| recording_enabled  | `bool`               | Indicates whether recording is enabled or not <br/><br/> _Example: true_                                   |
 | room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
 | peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _ |
 | session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                  |
@@ -838,7 +838,7 @@ This event will be sent when there are failures in RTMP streaming and/or browser
 |:-------------------|:---------------------|:-----------------------------------------------------------------------------------------------------------|
 | beam_id            | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                             |
 | job_id             | `string`             | Beam job id <br/><br/> _Example: 60b8e1d96eb86d8101b57359 _                                                |
-| recording_enabled  | `bool`               | Indicates whether recording is enabled or not <br/><br/> _Example: True_                                   |
+| recording_enabled  | `bool`               | Indicates whether recording is enabled or not <br/><br/> _Example: true_                                   |
 | room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
 | peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _ |
 | session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                  |
@@ -904,8 +904,8 @@ This event is sent when HLS streaming is successfully triggered
 |:----------------------------------------|:---------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | beam_id                                 | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                                                                                                        |
 | job_id                                  | `string`             | Beam job id <br/><br/> _Example: 60b8e1d96eb86d8101b57359 _                                                                                                                           |
-| recording_single_file_per_layer_enabled | `bool`               | Indicates whether HLS recording should be available as separate files for various dimensions supported. Output will be Individual mp4 file per HLS layer. <br/><br/> _Example: False_ |
-| recording_vod_playlist_enabled          | `bool`               | Indicates whether Video on Demand is enabled or not. Output will be a ZIP file of m3u8 format with all the chunks. <br/><br/> _Example: False_                                        |
+| recording_single_file_per_layer_enabled | `bool`               | Indicates whether HLS recording should be available as separate files for various dimensions supported. Output will be Individual mp4 file per HLS layer. <br/><br/> _Example: false_ |
+| recording_vod_playlist_enabled          | `bool`               | Indicates whether Video on Demand is enabled or not. Output will be a ZIP file of m3u8 format with all the chunks. <br/><br/> _Example: false_                                        |
 | room_id                                 | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                                                                                                |
 | peer_id                                 | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _                                                                            |
 | session_id                              | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                                                                                             |
@@ -965,8 +965,8 @@ This event is sent when HLS streaming is successfully stopped
 |:----------------------------------------|:---------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | beam_id                                 | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                                                                                                        |
 | job_id                                  | `string`             | Beam job id <br/><br/> _Example: 60b8e1d96eb86d8101b57359 _                                                                                                                           |
-| recording_single_file_per_layer_enabled | `bool`               | Indicates whether HLS recording should be available as separate files for various dimensions supported. Output will be Individual mp4 file per HLS layer. <br/><br/> _Example: False_ |
-| recording_vod_playlist_enabled          | `bool`               | Indicates whether Video on Demand is enabled or not. Output will be a ZIP file of m3u8 format with all the chunks. <br/><br/> _Example: False_                                        |
+| recording_single_file_per_layer_enabled | `bool`               | Indicates whether HLS recording should be available as separate files for various dimensions supported. Output will be Individual mp4 file per HLS layer. <br/><br/> _Example: false_ |
+| recording_vod_playlist_enabled          | `bool`               | Indicates whether Video on Demand is enabled or not. Output will be a ZIP file of m3u8 format with all the chunks. <br/><br/> _Example: false_                                        |
 | room_id                                 | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                                                                                                |
 | peer_id                                 | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _                                                                            |
 | session_id                              | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                                                                                             |
@@ -1030,8 +1030,8 @@ This event will be sent when there are failures in HLS streaming and/or recordin
 |:----------------------------------------|:---------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | beam_id                                 | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                                                                                                        |
 | job_id                                  | `string`             | Beam job id <br/><br/> _Example: 60b8e1d96eb86d8101b57359 _                                                                                                                           |
-| recording_single_file_per_layer_enabled | `bool`               | Indicates whether HLS recording should be available as separate files for various dimensions supported. Output will be Individual mp4 file per HLS layer. <br/><br/> _Example: False_ |
-| recording_vod_playlist_enabled          | `bool`               | Indicates whether Video on Demand is enabled or not. Output will be a ZIP file of m3u8 format with all the chunks. <br/><br/> _Example: False_                                        |
+| recording_single_file_per_layer_enabled | `bool`               | Indicates whether HLS recording should be available as separate files for various dimensions supported. Output will be Individual mp4 file per HLS layer. <br/><br/> _Example: false_ |
+| recording_vod_playlist_enabled          | `bool`               | Indicates whether Video on Demand is enabled or not. Output will be a ZIP file of m3u8 format with all the chunks. <br/><br/> _Example: false_                                        |
 | room_id                                 | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                                                                                                |
 | peer_id                                 | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _                                                                            |
 | session_id                              | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                                                                                             |
