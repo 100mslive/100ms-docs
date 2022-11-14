@@ -697,6 +697,8 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
         "start_delay": 12,
         "state_name": "Started",
         "state_timestamp": "2021-11-30T12:58:46.385555859Z",
+        "max_width": 1280,
+        "max_height": 720,
         "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
         "rtmp": [{ "url": "http://test.com" }],
         "session_started_at": "2021-11-30T12:58:49.97291247Z"
@@ -914,6 +916,8 @@ This event is sent when HLS streaming is successfully triggered
 | start_delay                             | `int`                | Time taken by beam to start streaming <br/><br/> _Example: 12 _                                                                                                                       |
 | state_name                              | `string`             | Beam state identifier <br/><br/> _Example: HLSStarted _                                                                                                                               |
 | state_timestamp                         | `timestamp (in UTC)` | Timestamp at which beam state changed <br/><br/> _Example: 2020-11-11T17:32:18Z _                                                                                                     |
+| max_width                               | `int`                | Maximum width of the screen supported for streaming / recording in pixels <br/><br/> _Example: 1280 _                                                                                             |
+| max_height                              | `int`                | Maximum height of the screen supported for streaming / recording in pixels <br/><br/> _Example: 720 _                                                                                             |
 | url                                     | `string`             | HLS live streaming url <br/><br/> _Example: https://100ms-live.m3u8 _                                                                                                                 |
 | started_at                              | `timestamp (in UTC)` | Timestamp at which HLS started <br/><br/> _Example: 2020-11-11T17:32:18Z _                                                                                                            |
 | session_started_at                      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                                                                                            |
@@ -942,6 +946,8 @@ This event is sent when HLS streaming is successfully triggered
         "start_delay": 12,
         "state_name": "HLSStarted",
         "state_timestamp": "2021-11-30T12:58:46.385555859Z",
+        "max_width" : 1280,
+        "max_height": 720,
         "url": "https://100ms-live.m3u8",
         "started_at": "2021-11-30T12:58:46.400759043Z",
         "session_started_at": "2021-11-30T12:58:49.97291247Z"
