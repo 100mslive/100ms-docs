@@ -70,6 +70,7 @@ title: Web SDK API Reference
 - [HMSRoleChangeStoreRequest](/api-reference/javascript/v2/interfaces/HMSRoleChangeStoreRequest)
 - [HMSRoom](/api-reference/javascript/v2/interfaces/HMSRoom)
 - [HMSScreenAudioTrack](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack)
+- [HMSScreenShareConfig](/api-reference/javascript/v2/interfaces/HMSScreenShareConfig)
 - [HMSScreenVideoTrack](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)
 - [HMSSpeaker](/api-reference/javascript/v2/interfaces/HMSSpeaker)
 - [HMSStatsStore](/api-reference/javascript/v2/interfaces/HMSStatsStore)
@@ -83,6 +84,7 @@ title: Web SDK API Reference
 - [IHMSStatsStore](/api-reference/javascript/v2/interfaces/IHMSStatsStore)
 - [IHMSStore](/api-reference/javascript/v2/interfaces/IHMSStore)
 - [RTMPRecordingConfig](/api-reference/javascript/v2/interfaces/RTMPRecordingConfig)
+- [ScreenCaptureHandle](/api-reference/javascript/v2/interfaces/ScreenCaptureHandle)
 - [SimulcastLayerDefinition](/api-reference/javascript/v2/interfaces/SimulcastLayerDefinition)
 
 ## References
@@ -188,7 +190,16 @@ Renames and re-exports [HMSNotifications](/api-reference/javascript/v2/interface
 
 ### HMSTrackDisplaySurface
 
-Ƭ **HMSTrackDisplaySurface**: `"application"` \| `"browser"` \| `"monitor"` \| `"window"`
+Ƭ **HMSTrackDisplaySurface**: `"application"` \| `"browser"` \| `"selfBrowser"` \| `"monitor"` \| `"window"`
+
+Use this to identify what is being screenshared, not all browsers will support
+everything.
+
+application - all windows of an application are shared
+window - a particular window is being shared
+monitor - full screen share of a monitor display
+browser - a browser tab is shared
+selfBrowser - the current browser tab is being shared
 
 ---
 
