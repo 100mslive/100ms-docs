@@ -20,13 +20,17 @@ For smooth call experience add following domains and ports to your firewall whit
 
 ### Minimum requirement
 
-| Ports                  | Protocol  | Description                   |
-| :--------------------- | :-------- | :---------------------------- |
-| 80, 443                | TCP       | API, WebSocket, TURN/TLS      |
+| Ports   | Protocol | Description              |
+| :------ | :------- | :----------------------- |
+| 80, 443 | TCP      | API, WebSocket, TURN/TLS |
 
 ### Requirements for best experience
 
-| Ports                  | Protocol  | Description                   |
-| :--------------------- | :-------- | :---------------------------- |
-| 80, 443, 3478          | TCP       | API, WebSocket, TURN/TLS      |
-| 443, 3478, 41000-65535 | UDP       | TURN/UDP, ICE, Media traffic  |
+| Ports                  | Protocol | Description                  |
+| :--------------------- | :------- | :--------------------------- |
+| 80, 443, 3478          | TCP      | API, WebSocket, TURN/TLS     |
+| 443, 3478, 41000-65535 | UDP      | TURN/UDP, ICE, Media traffic |
+
+### NAT gateway IP address whitelisting for webhooks
+
+Please refer to [how to secure webhooks section](/server-side/v2/introduction/webhook#how-to-secure-webhooks) in webhooks guide fore more details.

@@ -608,10 +608,10 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 #### HLS - recording object
 
-| Name               | Type      | Description                                                                                                      | Required |
-| :----------------- | :-------- | :--------------------------------------------------------------------------------------------------------------- | :------- |
-| hlsVod             | `boolean` | The name you can assign to identify the HLS destination                                                          | No       |
-| singleFilePerLayer | `boolean` | Sets the maximum duration, in seconds, of the recording. For example, 1800 seconds(30 mins)                      | No       |
-| layers             | `object`  | Object of type `layers`. This can be used to configure the various dimensions to be supported for HLS recording. | No       |
-| thumbnails         | `object`  | Object of type `thumbnails`. This can be used to configure thumbnail's dimension                                 | No       |
-| presignDuration    | `int`     | Indicates the expiry of the pre-signed URLs—the duration for which the pre-signed URL should be signed.          | No       |
+| Name               | Type      | Description                                                                                                                                                   | Required |
+| :----------------- | :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| hlsVod             | `boolean` | Set this to `True` to enabled Video on Demand. Output will be a ZIP file of m3u8 format with all the chunks.                                                  | No       |
+| singleFilePerLayer | `boolean` | Set this to `True` if HLS recording should be available as separate files for various dimensions supported. Output will be Individual mp4 file per HLS layer. | No       |
+| layers             | `object`  | Object of type `layers`. This can be used to configure the various dimensions to be supported for HLS recording.                                              | No       |
+| thumbnails         | `object`  | Object of type `thumbnails`. This can be used to configure thumbnail's dimension                                                                              | No       |
+| presignDuration    | `int`     | Indicates the expiry of the pre-signed URLs—the duration for which the pre-signed URL should be signed.                                                       | No       |
