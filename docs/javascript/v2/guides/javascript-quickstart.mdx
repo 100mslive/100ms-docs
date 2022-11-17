@@ -5,19 +5,10 @@ nav: 2.1
 
 ## Overview
 
-Hello there, In this guide, we'll walk you through step-by-step instructions to create a video conferencing application using the 100ms JavaScript SDK and test it locally on your device. In case you plan to use React, do check our [React quickstart](https://www.100ms.live/docs/javascript/v2/guides/react-quickstart) as well.
+This guide will walk you through step-by-step instructions to create a video conferencing application using the 100ms JavaScript SDK and test it locally on your device. If you plan to use React, do check our [React quickstart](https://www.100ms.live/docs/javascript/v2/guides/react-quickstart) as well.
+Please check our [basic concepts](/javascript/v2/foundation/basics) guide to understand the 100ms-specific concepts like rooms, templates, peers, etc.
 
 TL;DR - Try out this complete example in [CodeSandbox](https://codesandbox.io/s/hms-js-quickstart-5rmes).
-
-### Concepts
-
-Let's look at some [basic concepts](/javascript/v2/foundation/basics) to understand how a video conferencing app works.
-
--   `Room`: A `room` is a virtual space where one or more peers communicate with each other. It is a central entity that provides real-time communication capabilities for any video conferencing or live streaming session. To allow users to join a 100ms video conferencing or a live streaming session inside your app, you first need to create a room.
--   `Template` A template is a collection of roles, room settings, recording, HLS (Live streaming) and RTMP settings (if used), that are used by the SDK to decide which geography to connect to, which tracks to return to the client, whether to turn on recording when a room is created, etc. Each room is associated with a template.
--   `Peer`: A participant in the video call. You are the `local peer` while others are `remote peers`.
--   `Track`: Media. There are two types of track a peer can have - audio and video.
--   `Role` A role defines who can a peer see/hear, the quality at which they publish their video, whether they have permissions to publish video/screenshare, mute someone, change someone's role.
 
 ## Create a sample app locally
 
@@ -35,11 +26,13 @@ Then, install ParcelJS and 100ms SDK into your app like below
 
 -   using yarn:
     ```bash section=InstallingTheDependencies sectionIndex=1
-    yarn add --dev parcel @100mslive/hms-video-store
+    yarn add --dev parcel
+    yarn add @100mslive/hms-video-store
     ```
 -   using npm:
     ```bash section=InstallingTheDependencies sectionIndex=2
-    npm install --save-dev parcel @100mslive/hms-video-store
+    npm install --save-dev parcel
+    npm install @100mslive/hms-video-store
     ```
 
 ### Project setup
@@ -104,14 +97,14 @@ function leaveRoom() {
 window.onunload = window.onbeforeunload = leaveRoom;
 leaveBtn.onclick = leaveRoom;
 
-// helper function to create html elements
+// Helper function to create html elements
 function createElementWithClass(tag, className) {
     const newElement = document.createElement(tag);
     newElement.className = className;
     return newElement;
 }
 
-// render a single peer
+// Render a single peer
 function renderPeer(peer) {
     const peerTileDiv = createElementWithClass("div", "peer-tile");
     const videoElement = createElementWithClass("video", "peer-video");
@@ -138,18 +131,18 @@ function renderPeers() {
     });
 }
 
-// reactive state - renderPeers is called whenever there is a change in the peer-list
+// Reactive state - renderPeers is called whenever there is a change in the peer-list
 hmsStore.subscribe(renderPeers, selectPeers);
 
 
-//Mute and unmute audio
+// Mute and unmute audio
 muteAudio.onclick = () => {
     const audioEnabled = !hmsStore.getState(selectIsLocalAudioEnabled);
     hmsActions.setLocalAudioEnabled(audioEnabled);
     muteAudio.textContent = audioEnabled ? "Mute" : "Unmute";
 };
 
-//Mute and unmute video
+// Mute and unmute video
 muteVideo.onclick = () => {
     const videoEnabled = !hmsStore.getState(selectIsLocalVideoEnabled);
     hmsActions.setLocalVideoEnabled(videoEnabled);
@@ -158,7 +151,7 @@ muteVideo.onclick = () => {
     renderPeers();
 };
 
-//Showing the required elements on connection/disconnection
+// Showing the required elements on connection/disconnection
 function onConnection(isConnected) {
     if (isConnected) {
         form.classList.add("hide");
@@ -173,7 +166,7 @@ function onConnection(isConnected) {
     }
 }
 
-// listen to the connection state
+// Listen to the connection state
 hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
 ```
 
@@ -686,7 +679,7 @@ The config object must be passed the following fields:
 
 Let's use a form to request both of these fields from the user for our application.
 
-Let's include a way for people to leave the room as well. To leave the room, we can use the hmsActions [leave](/api-reference/javascript/v2/interfaces/HMSActions#leave) method. We'll set up the `leave` method to be called whenever the user closes the window or refreshes the tab.
+Let's include a way for people to leave the room as well. To leave the room, we can use the `hmsActions` [leave](/api-reference/javascript/v2/interfaces/HMSActions#leave) method. We'll set up the `leave` method to be called whenever the user closes the window or refreshes the tab.
 
 > Note: join is async from [this version](../changelog/release-notes#2022-09-13)
 
@@ -848,14 +841,14 @@ Let us next add a way to show a tile for every participant in the room. We'll ne
 <Tab id="render-peers-0">
 
 ```jsx:index.js section=SubscribingToTheState sectionIndex=1 tab=JS
-// helper function to create html elements
+// Helper function to create html elements
 function createElementWithClass(tag, className) {
   const newElement = document.createElement(tag);
   newElement.className = className;
   return newElement;
 }
 
-// render a single peer
+// Render a single peer
 function renderPeer(peer) {
   const peerTileDiv = createElementWithClass("div", "peer-tile");
   const videoElement = createElementWithClass("video", "peer-video");
@@ -870,7 +863,7 @@ function renderPeer(peer) {
   return peerTileDiv;
 }
 
-// display a tile for each peer in the peer list
+// Display a tile for each peer in the peer list
 function renderPeers() {
   peersContainer.innerHTML = "";
   const peers = hmsStore.getState(selectPeers);
@@ -882,7 +875,7 @@ function renderPeers() {
   });
 }
 
-// reactive state - renderPeers is called whenever there is a change in the peer-list
+// Reactive state - renderPeers is called whenever there is a change in the peer-list
 hmsStore.subscribe(renderPeers, selectPeers);
 ```
 
@@ -1050,7 +1043,7 @@ function onConnection(isConnected) {
   }
 }
 
-// listen to the connection state
+// Listen to the connection state
 hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
 ```
 
