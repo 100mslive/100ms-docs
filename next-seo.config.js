@@ -1,5 +1,5 @@
 export default {
-    title: '100ms',
+    title: '100ms - Video conferencing infrastructure for a video-first world',
     description:
         'Quick to integrate native iOS, Android & Web SDKs to add live video & audio conferencing to your applications.',
     author: '100ms',
