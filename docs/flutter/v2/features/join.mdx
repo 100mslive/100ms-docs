@@ -171,7 +171,7 @@ After calling join your app will be provided an update from the 100ms SDK.
 
 
 
-## Setting video and mic off while joining
+## Setting video and mic off while Joining
 
 Joining with muted audio/video is a customization that sets the microphone and camera state before joining the room.
 
@@ -212,3 +212,16 @@ HMSSDK hmsSDK = HMSSDK(
 3. Perform the other steps as usual i.e call the `build` method.
 
 Now, the user should be able to join the room with the microphone and the camera turned off.
+
+
+## Get Room 
+
+The `getRoom` function on HMSSDK instance returns the currently joined room. Returns null if the local peer is not in a room.
+
+Future<HMSRoom?> getRoom() async
+
+```dart
+// instance acquired from build() method
+await hmsSDK.getRoom(); 
+```
+
