@@ -1,0 +1,20 @@
+---
+title: Getter APIs
+nav: 3.26
+---
+
+List of all the getter APIs:
+
+`getRoom()`: Get the `HMSRoom` room object which the local peer has currently joined. Returns null if no room is joined.
+
+`getLocalPeer()`: Get an instance of the local peer if one existed. A local peer only exists during a preview and an active call. Returns null if no room is joined.
+
+`getRemotePeers()`: Get list of remote peers. The peer's own instance will not be included in this. To get all peers including the local one consider getPeers or for only the local one consider getLocalPeer. Returns null if no room is joined.
+
+`getPeers()`: Get all peers, remote and local. Returns null if no room is joined.
+
+`getAudioDevicesList()`: Method to get available audio devices(Android Only).
+
+`getCurrentAudioDevice()`: Method to get current audio output device(Android Only).
+
+`getSessionMetadata()`: Method to fetches the latest metadata from the server and returns it.
