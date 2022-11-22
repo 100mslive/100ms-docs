@@ -16,10 +16,10 @@ export default function Layout({ children }: Props) {
     const router = useRouter() as any;
     const SEO = {
         title: `${frontMatter.title || '100ms Docs'
-            } | 100ms - Video conferencing infrastructure for a video-first world`,
+            } | 100ms`,
         openGraph: {
             title: `${frontMatter.title || '100ms Docs'
-                } | 100ms - Video conferencing infrastructure for a video-first world`
+                } | 100ms`
         },
         canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${router.asPath === '/' ? '' : router.asPath.split('?')[0]
             }`
