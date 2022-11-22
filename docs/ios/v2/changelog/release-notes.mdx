@@ -4,6 +4,28 @@ nav: 6.1
 description: Release Notes for 100ms iOS SDK
 ---
 
+## 0.4.7 - 2022-11-04
+### Added
+- Tap to focus local camera API 
+### Fixed
+- iOS 16 screen share failing if the app went into background without PIP mode
+- Sending chat message from REST API resulted in peer joined update getting fired
+### Changed
+- Bitcode support has been deprecated
+
+
+## 0.4.6 - 2022-10-21
+### Added
+- HMSVideoTrackSettings and HMSAudioTrackSettings now have initialMuteState property that controls wether user will have tracks muted or unmuted on join 
+- HMSAudioTrackSettingsBuilder and HMSVideoTrackSettingsBuilder are provided to simplify settings creation. Example:
+```swift
+sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettingsBuilder in
+   videoSettingsBuilder.initialMuteState =  .mute
+   audioSettingsBuilder.initialMuteState =  .mute
+}
+```
+
+
 ## 0.4.5 - 2022-10-06
 ### Fixed
 - Screenshare compatibility for iOS 16

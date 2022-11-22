@@ -14,17 +14,18 @@ const ResponseBox: React.FC<PropsWithChildren<ResponseBoxProps>> = ({
 }) => (
     <div id={id} className="response-box">
         <div className="response-header">
-            RESPONSE{' '}
+            RESPONSE
             <div className="status">
                 Status: <span className="status-text">{status}</span>
             </div>
-            {resText}
+            <span className="fontSize">{resText}</span>
         </div>
         {children}
         <style jsx>{`
             .response-box {
                 margin-bottom: 24px;
                 border-radius: 8px;
+                font-size: 13px;
                 background-color: var(--api_surface_light_default);
             }
             .response-header {
@@ -40,6 +41,9 @@ const ResponseBox: React.FC<PropsWithChildren<ResponseBoxProps>> = ({
                 padding: 0 8px;
                 border-radius: 4px;
                 background-color: var(--badge_post);
+            }
+            .fontSize{
+                font-size: 13px;
             }
             .status-text {
                 color: var(--twin_green);

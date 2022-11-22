@@ -53,7 +53,10 @@ const Header: React.FC<Props> = ({
     const { toggleTheme, themeType } = useTheme();
 
     React.useEffect(() => {
-        fetch('/docs/api/content?query=docs').then(res => res.json()).then(data => setAllDocs(data.docs)).catch((e) => console.error('fetch api/content?query=docs failed', e))
+        fetch('/docs/api/content?query=docs')
+            .then((res) => res.json())
+            .then((data) => setAllDocs(data.docs))
+            .catch((e) => console.error('fetch api/content?query=docs failed', e));
         const theme = window.localStorage.getItem('theme') || 'dark';
         const docHtml = document.documentElement.dataset;
         setIsDark(theme === 'dark');
@@ -132,16 +135,16 @@ const Header: React.FC<Props> = ({
                     </Link>
                 </div>
             </div>
-            <div className="left-content">
-                <div className="nav-links">
-                    <span style={{ marginRight: '1rem' }} />
-                    {isNonApiRef || !showReference ? null : (
-                        <button className={isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
-                            <Link href={routeAPIRef()}>API Reference</Link>
-                        </button>
-                    )}
-                </div>
+
+            <div className="nav-links">
+                <span style={{ marginRight: '1rem' }} />
+                {isNonApiRef || !showReference ? null : (
+                    <button className={isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
+                        <Link href={routeAPIRef()}>API Reference</Link>
+                    </button>
+                )}
             </div>
+
             <div className="head-right">
                 <Flex
                     onClick={() => setModal(true)}
@@ -176,23 +179,23 @@ const Header: React.FC<Props> = ({
                         cursor: 'pointer'
                     }}
                     tabIndex={0}
-                    onKeyPress={() => { }}
+                    onKeyPress={() => {}}
                     onClick={() => buttonToggleTheme()}>
                     {!isDark ? <NightIcon /> : <SunIcon style={{ color: '#ECC502' }} />}
                 </span>
             </div>
             {modal ? <SearchModal setModal={setModal} docs={docs} /> : null}
-            <Box css={{
-                display: 'none',
-                '@md': {
-                    display: 'flex'
-                }
-            }}>
+            <Box
+                css={{
+                    display: 'none',
+                    '@md': {
+                        display: 'flex'
+                    }
+                }}>
                 <button
                     onClick={() => setModal(true)}
                     style={{ marginRight: '0.5rem', marginLeft: '-1rem', marginTop: '0.5rem' }}
-                    type="button"
-                >
+                    type="button">
                     <SearchIcon style={{ width: '24px' }} />
                 </button>
                 {showMobileMenu && (
@@ -320,6 +323,11 @@ const Header: React.FC<Props> = ({
                     outline: none;
                     border: none;
                 }
+                .nav-links {
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                }
                 @media screen and (max-width: 1024px) {
                     .nav-links {
                         display: none;
@@ -339,7 +347,7 @@ const Header: React.FC<Props> = ({
                     }
                 }
             `}</style>
-        </div >
+        </div>
     );
 };
 

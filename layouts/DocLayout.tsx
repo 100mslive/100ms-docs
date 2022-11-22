@@ -4,7 +4,7 @@ import Sidebar from '@/components/Sidebar';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
-import React from 'react';
+import { useState } from 'react';
 
 interface Props {
     children: JSX.Element;
@@ -16,18 +16,17 @@ export default function Layout({ children }: Props) {
     const router = useRouter() as any;
     const SEO = {
         title: `${frontMatter.title || '100ms Docs'
-            } | 100ms - Video conferencing infrastructure for a video-first world`,
+            } | 100ms`,
         openGraph: {
             title: `${frontMatter.title || '100ms Docs'
-                } | 100ms - Video conferencing infrastructure for a video-first world`
+                } | 100ms`
         },
         canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${router.asPath === '/' ? '' : router.asPath.split('?')[0]
             }`
     };
-    const [menu, setMenu] = React.useState(false);
-    const [modal, setModal] = React.useState(false);
+    const [menu, setMenu] = useState(false);
+    const [modal, setModal] = useState(false);
     const menuState = { menu, setMenu };
-
     useLockBodyScroll(modal);
     return (
         <>
@@ -42,7 +41,7 @@ export default function Layout({ children }: Props) {
                             style={{
                                 borderRight: '1px solid var(--new_border_default)'
                             }}>
-                            <Sidebar menu={menu} nav={nav} />
+                            <Sidebar menuState={menuState} nav={nav} />
                         </div>
                         {!menu ? children : null}
                     </div>
