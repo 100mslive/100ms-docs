@@ -5,6 +5,19 @@ nav: 7.1
 
 This Changelog highlights notable changes to the 100ms server-side API, such as API additions, improvements, and deprecations. Also, we've included developer experience improvements to this page to keep you on track with items that will enhance your integration journey.
 
+## November 03, 2022.
+
+#### Additions
+
+-   Added support for securing webhooks by whitelisting 100ms [NAT gateway IP addresses](/server-side/v2/introduction/webhook#ip-whitelisting).
+-   Added new fields in [Beam events](/server-side/v2/introduction/webhook#rtmp-streaming-and-browser-recording-events): `recording_enabled`, `max_width`, and `max_height`
+-   Added new fields in [HLS events](/server-side/v2/introduction/webhook#hls-streaming-events): `recording_single_file_per_layer_enabled` and `recording_vod_playlist_enabled`
+-   Added `hlsDestination` response object in [retrieve a specific template API](/server-side/v2/policy/retrieve-a-template)
+
+#### Developer experience
+
+-   Documentation improvements in [webhooks guide](/server-side/v2/introduction/webhook) -- merged description and example columns to provide better readability.
+
 ## October 06, 2022.
 
 #### Additions
@@ -47,7 +60,7 @@ This Changelog highlights notable changes to the 100ms server-side API, such as 
 
 #### Deprecations
 
--   In the template object, the fields \_id, and customer, supported with the [Legacy API (V1)](/server-side/v2/legacy-api%20(v1)/templates-and-roles), is deprecated. You can continue to use them as id and customer_id with the new API. Refer to the [template object section](/server-side/v2/policy/template-object#template-object) for more information.
--   In the room object, the field template supported with the template name in the [Legacy API (V1)](/server-side/v2/legacy-api%20(v1)/room) will not be supported in the new API. Instead, you can use the [template_id](/server-side/v2/Rooms/create-via-api#main-arguments) field.
+-   In the template object, the fields \_id, and customer, supported with the [Legacy API (V1)](</server-side/v2/legacy-api%20(v1)/templates-and-roles>), is deprecated. You can continue to use them as id and customer_id with the new API. Refer to the [template object section](/server-side/v2/policy/template-object#template-object) for more information.
+-   In the room object, the field template supported with the template name in the [Legacy API (V1)](</server-side/v2/legacy-api%20(v1)/room>) will not be supported in the new API. Instead, you can use the [template_id](/server-side/v2/Rooms/create-via-api#main-arguments) field.
 
-> **Note**: The Legacy API (V1) will remain fully functional. However, we recommend you use our new API to leverage the new functionalities and features and stay up to date with future releases; you can continue to check the docs for the Legacy API (V1)s [here](/server-side/v2/legacy-api%20(v1)/room).
+> **Note**: The Legacy API (V1) will remain fully functional. However, we recommend you use our new API to leverage the new functionalities and features and stay up to date with future releases; you can continue to check the docs for the Legacy API (V1)s [here](</server-side/v2/legacy-api%20(v1)/room>).

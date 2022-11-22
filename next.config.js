@@ -25,6 +25,30 @@ const nextConfig = {
 
         return config;
     },
+    async rewrites() {
+        return [
+            {
+                source: '/ios/v2/foundation/Security-and-tokens',
+                destination: '/ios/v2/foundation/security-and-tokens'
+            },
+            {
+                source: '/ios/v2/foundation/Basics',
+                destination: '/ios/v2/foundation/basics'
+            },
+            {
+                source: '/ios/v2/features/Integration',
+                destination: '/ios/v2/features/integration'
+            },
+            {
+                source: '/ios/v2/guides/Token',
+                destination: '/ios/v2/guides/token'
+            },
+            {
+                source: '/ios/v2/guides/Quickstart',
+                destination: '/ios/v2/guides/quickstart'
+            }
+        ];
+    },
     async redirects() {
         return [
             {

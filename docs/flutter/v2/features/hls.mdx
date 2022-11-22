@@ -69,6 +69,19 @@ The room status should be checked in following two places -
 2. In the `onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom)` callback of `HMSUpdateListener`.
     The `HMSRoomUpdate` type will be `HMSRoomUpdate.HLS_STREAMING_STATE_UPDATED`.
 
+## Display HLS Stream 
+
+To display HLS Stream we will need to get the stream URL. We can get the stream URL from `HMSRoom` object of `onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom)` callback.
+Stream URL can be fetched from the HMSHLSStreamingState's `variants` property as: 
+
+```dart
+//If HLS Stream is running
+//variants : List of HMSHLSVariant
+String streamUrl = room.hmshlsStreamingState?.variants[0]?.hlsStreamUrl
+```
+
+This URL can be passed to the video player to display HLS Stream.
+
 ## Tips
 
 * If you're using the dashboard web-app from 100ms, please make sure to use a role which doesn't have publish permissions for beam tile to not show up.
