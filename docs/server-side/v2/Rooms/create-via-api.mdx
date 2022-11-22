@@ -5,6 +5,8 @@ nav: 2.3
 
 Creates a new room. This provides a more scalable way of creating a room.
 
+> **Note**: [recording_info](#recording-info-arguments) object enables recording and configuring storage during room creation. But we recommend configuring it at a template level through the [Dashboard](https://dashboard.100ms.live/dashboard), where the config validator can help with validating inputs proactively.
+
 <PostRequest title="https://api.100ms.live/v2/rooms" />
 <Request id="req-comp-0">
 
@@ -16,21 +18,6 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
     "name": "new-room-1662723668",
     "description": "This is a sample description for the room",
     "template_id": "<template_id of the template you wish to associate with the room>",
-    "recording_info": {
-        "enabled": true,
-        "upload_info": {
-        "type": "s3",
-        "location": "<Name of the AWS s3 bucket>",
-        "prefix": "<Upload prefix path>",
-        "options": {
-            "region": "<region of the s3 bucket, example `ap-south-1`>"
-        },
-        "credentials": {
-            "key": "<access key ID for the AWS account/S3 bucket>",
-            "secret": "<secret access key for the AWS account/S3 bucket>"
-            }
-        }
-    },
     "region": "us"
 }'
 ```
@@ -45,21 +32,6 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
     "enabled": true,
     "description": "This is a sample description for the room",
     "customer": "627cdddff2e4e30487862ad1",
-    "recording_info": {
-        "enabled": true,
-        "upload_info": {
-            "type": "s3",
-            "location": "<Name of the AWS s3 bucket>",
-            "prefix": "<Upload prefix path>",
-            "credentials": {
-                "key": "<access key ID for the AWS account/S3 bucket>",
-                "secret": "<secret access key for the AWS account/S3 bucket>"
-            },
-            "options": {
-                "region": "<region of the s3 bucket, example `ap-south-1`>"
-            }
-        }
-    },
     "template_id": "63188115d11d6db790c73c60",
     "template": "new-template-1662550293",
     "region": "in",
