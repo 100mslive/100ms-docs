@@ -11,6 +11,8 @@ Please check our [basic concepts](/javascript/v2/foundation/basics) guide to und
 
 TL;DR - Try out this complete example in [CodeSandbox](https://codesandbox.io/s/hms-js-quickstart-5rmes).
 
+<Codesandbox id="5rmes" />
+
 ## Create a sample app locally
 
 In this section, we will walk you through a complete code example that will enable you to create a local video-conferencing application in under 10 minutes and test audio/video functionality along with a couple of other essential functionalities like mute/unmute audio and video.
@@ -415,7 +417,7 @@ You can open the app in another tab in the browser to join as the second peer to
 
 **We have a fully functional video conferencing application now** 🎉🚀
 
-## A review of the code
+## Building step-by-step
 
 In this section, let's walk through what the code does.
 
@@ -424,7 +426,7 @@ In this section, let's walk through what the code does.
 Let us start with initializing the libraries. We need two instances to get started:
 
 -   An instance of [HMSStore](/api-reference/javascript/v2/interfaces/HMSStore) that holds the complete state of the application such as details of all the participants. We can also visualize this state at any time using the [DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en) extension.
--   And an instance of [HMSActions](/api-reference/javascript/v2/interfaces/HMSActions) that will help us perform actions such as joining the room, muting our audio, and sending messages. Please copy the code snippet below and paste it into your project.
+-   And an instance of [HMSActions](/api-reference/javascript/v2/interfaces/HMSActions) that will help us perform actions such as joining the room, muting our audio, and sending messages.
 
 ```jsx:index.js section=InitializingTheSDK sectionIndex=1
 import {
@@ -681,8 +683,6 @@ The config object must be passed the following fields:
 Let's use a form to request both of these fields from the user for our application.
 
 Let's include a way for people to leave the room as well. To leave the room, we can use the `hmsActions` [leave](/api-reference/javascript/v2/interfaces/HMSActions#leave) method. We'll set up the `leave` method to be called whenever the user closes the window or refreshes the tab.
-
-> Note: join is async from [this version](../changelog/release-notes#2022-09-13)
 
 <Tabs id="join-form" items={['JS', 'HTML', 'CSS']} />
 
