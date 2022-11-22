@@ -16,22 +16,7 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
     "name": "new-room-1662723668",
     "description": "This is a sample description for the room",
     "template_id": "<template_id of the template you wish to associate with the room>",
-    "recording_info": {
-        "enabled": true,
-        "upload_info": {
-        "type": "s3",
-        "location": "<Name of the AWS s3 bucket>",
-        "prefix": "<Upload prefix path>",
-        "options": {
-            "region": "<region of the s3 bucket>"
-        },
-        "credentials": {
-            "key": "<access key ID for the AWS account/S3 bucket>",
-            "secret": "<secret access key for the AWS account/S3 bucket>"
-            }
-        }
-    },
-    "region": "in"
+    "region": "us"
 }'
 ```
 
@@ -46,26 +31,13 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
     "description": "This is a sample description for the room",
     "customer": "627cdddff2e4e30487862ad1",
     "recording_info": {
-        "enabled": true,
-        "upload_info": {
-            "type": "s3",
-            "location": "<Name of the AWS s3 bucket>",
-            "prefix": "<Upload prefix path>",
-            "credentials": {
-                "key": "<access key ID for the AWS account/S3 bucket>",
-                "secret": "<secret access key for the AWS account/S3 bucket>"
-            },
-            "options": {
-                "region": "<region of the s3 bucket>"
-            }
-        }
+        "enabled": false
     },
     "template_id": "63188115d11d6db790c73c60",
     "template": "new-template-1662550293",
-    "region": "in",
+    "region": "us",
     "created_at": "2022-09-09T11:41:08.082Z",
-    "updated_at": "2022-09-09T11:41:08.074Z",
-    "active": true
+    "updated_at": "2022-09-09T11:41:08.074Z"
 }
 ```
 
@@ -84,6 +56,8 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
 > **Warning:** If you create a room with the name of an existing room, the same room will be updated with the new configuration passed in the request payload. <br/> For example, if the existing room was assigned to template-ABC earlier and in the request payload you've used template-DEF, then template-DEF will be assigned to the existing room.
 
 ## recording_info arguments
+
+> **Note**: This object enables recording and configuring storage during room creation. But we recommend configuring it at a template level through the [Dashboard](https://dashboard.100ms.live/dashboard), where the config validator can help with validating inputs proactively.
 
 | Name        | Type      | Description                                                                                                                                                                                                                                                                                                           | Required |
 | :---------- | :-------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
