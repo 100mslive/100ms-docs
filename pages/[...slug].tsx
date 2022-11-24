@@ -123,8 +123,7 @@ const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
             />
             <style jsx>{`
                  article {
-                     max-width: 1200px;
-                     width: calc(100vw - 630px);
+                     min-width: 100px;
                      flex-grow: 1;
                      box-sizing: border-box;
                      padding: 0 2rem;
