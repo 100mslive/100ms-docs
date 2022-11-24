@@ -138,16 +138,17 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
             )) : null}
             <style jsx>{`
                 .sidebar {
-                    width: 288px;
+                    width: 304px;
+                    padding-top: 24px;
+                    padding-bottom: 32px;
                     display: flex;
                     flex-direction: column;
                     align-items: stretch;
-                    height: calc(100vh - 80px);
+                    height: calc(100vh - 136px);
                     overflow-y: scroll;
-                    top: ${menu ? '' : '14px'};
+                    top: ${menu ? '' : '80px'};
                     left: 0;
                     position: sticky;
-                    background: var(--sidebar_bg);
                     z-index: 100;
                 }
                 ::-webkit-scrollbar {

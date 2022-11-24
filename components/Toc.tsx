@@ -22,7 +22,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
     }, []);
     return (
         <div className="toc-ctx">
-            {toc.length !== 0 ? <p className="head">On This Page</p> : null}
+            {toc.length !== 0 ? <p className="menu-title">ON THIS PAGE</p> : null}
             {toc.map((item) =>
                 item.title !== '' ? (
                     <span
@@ -51,13 +51,18 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                 .toc-ctx {
                     display: flex;
                     flex-direction: column;
+                    padding-top: 16px;
                     position: sticky;
-                    top: 80px;
+                    top: 96px;
                     right: 0;
-                    height: calc(100vh - 80px);
+                    height: calc(100vh - 96px);
                     overflow-y: auto;
+                    overflow-x: clip;
                     margin-left: 16px;
                     padding-left: 10px;
+                }
+                .menu-title{
+                    margin-left: -8px;
                 }
                 .head {
                     font-weight: bold;
@@ -66,10 +71,12 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                 a {
                     color: inherit;
                     text-decoration: none;
+                    color: var(--text_docs_secondary);
                 }
                 .text {
                     font-size: 14px;
                     margin: 0.5rem 0;
+                    color: var(--text_docs_secondary);
                 }
                 .text a {
                     padding-left: 1rem !important;

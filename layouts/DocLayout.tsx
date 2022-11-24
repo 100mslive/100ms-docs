@@ -37,10 +37,7 @@ export default function Layout({ children }: Props) {
                 <div className="ctx">
                     <div className="content-wrapper">
                         <div
-                            className="sidebar-container"
-                            style={{
-                                borderRight: '1px solid var(--new_border_default)'
-                            }}>
+                            className="sidebar-container">
                             <Sidebar menuState={menuState} nav={nav} />
                         </div>
                         {!menu ? children : null}
@@ -50,6 +47,8 @@ export default function Layout({ children }: Props) {
             <style jsx>{`
                 .ctx {
                     display: flex;
+                    padding-top: 16px;
+                    justify-content: center;
                     width: 100%;
                     filter: blur(${modal ? '10px' : '0px'});
                     background-color: var(--sidebar_bg) !important;
@@ -57,6 +56,7 @@ export default function Layout({ children }: Props) {
                 .content-wrapper {
                     width: 100%;
                     display: flex;
+                    max-width: 1500px;
                     justify-content: space-between;
                     background-color: var(--article_bg);
                 }

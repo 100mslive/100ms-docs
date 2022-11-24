@@ -128,7 +128,7 @@ const Header: React.FC<Props> = ({
                                 cursor: 'pointer',
                                 fontSize: '1rem',
                                 position: 'relative',
-                                top: '1px'
+                                top: '1px',
                             }}>
                             Docs
                         </p>
@@ -220,7 +220,7 @@ const Header: React.FC<Props> = ({
                     top: 0;
                     padding: 0.5rem 0 0.5rem 0;
                     background-color: var(--header_bg);
-                    border-bottom: 2px solid var(--new_border_default);
+                    border-bottom: 1px solid var(--new_border_default);
                 }
                 .res-ctx {
                     background-color: var(--gray2);
