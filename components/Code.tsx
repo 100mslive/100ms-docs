@@ -3,8 +3,8 @@ import React, { PropsWithChildren } from 'react';
 export const CopyIcon = () => (
     <svg
         viewBox="0 0 24 24"
-        width="24"
-        height="24"
+        width="20"
+        height="20"
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
@@ -17,8 +17,8 @@ export const CopyIcon = () => (
 );
 export const CheckIcon = () => (
     <svg
-        width="24"
-        height="24"
+        width="20"
+        height="20"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -86,15 +86,15 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                         z-index: 45;
                         outline: none;
                         cursor: pointer;
-                        width: 36px;
-                        height: 36px;
-                        padding: 5px;
-                        border: 1px solid var(--gray3);
-                        background: var(--gray1);
-                        border-radius: 5px;
+                        width: 40px;
+                        height: 40px;
+                        padding: 9px;
+                        border: 1px solid var(--docs_border_strong);
+                        background: transparent;
+                        border-radius: 20px;
                         position: absolute;
-                        top: 10px;
-                        right: 10px;
+                        top: 12px;
+                        right: 12px;
                     }
                 `}</style>
             </div>
