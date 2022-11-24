@@ -219,8 +219,8 @@ const Header: React.FC<Props> = ({
                     margin: 0;
                     top: 0;
                     padding: 0.5rem 0 0.5rem 0;
-                    background-color: var(--header_bg);
-                    border-bottom: 1px solid var(--new_border_default);
+                    background-color: var(--docs_bg_header);
+                    border-bottom: 1px solid var(--docs_border_default);
                 }
                 .res-ctx {
                     background-color: var(--gray2);
