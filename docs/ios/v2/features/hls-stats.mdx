@@ -3,7 +3,7 @@ title: HLS Stats (Beta)
 nav: 3.986
 ---
 
-If you use Apple's AVPlayer to play HLS stream, you can utilise 100ms SDK to monitor statistics of your HLS playback. You can use these stats to help you debug issues or show useful statistics about for your HLS playback.
+If you use Apple's AVPlayer to play HLS stream, you can utilise 100ms SDK to monitor statistics of your HLS playback. You can use these stats to help you debug issues or show useful statistics about your HLS playback.
 
 ## Minimum Requirements
 
@@ -22,20 +22,20 @@ let player = AVPlayer(playerItem: item)
 statMonitor = HMSHLSStatsMonitor(player: player)
   ```
 
-That's all. Now you can check the property exposed by HMSHLSStatsMonitor at any moment to get various stats about the current HLS playback.
+That's all. Now you can check the properties exposed by HMSHLSStatsMonitor at any moment to get various stats about the current HLS playback.
   
-HMSHLSStatsMonitor exposes following property to give you stats of current HLS playback:
+HMSHLSStatsMonitor exposes following properties to give you stats of current HLS playback:
 
 1. **estimatedBandwidth** - The network bandwidth estimated by the player. This is the bitrate observed by the player in current network conditions (bits per second)
 2. **bitrate** - The bitrate of current HLS stream (layer) indicated by the server (bits per second)
-3. **bytesDownloaded** - Total number of bytes downloaded till this moment (bytes)
+3. **bytesDownloaded** - Total number of bytes downloaded till this moment
 4. **bufferedDuration** - The duration of forward buffer that player has downloaded and ready to play (milliseconds)
 5. **distanceFromLiveEdge** - The distance of current playback position from the live edge of HLS stream (milliseconds)
 6. **droppedFrames** - The total number of frames dropped till this moment
 7. **videoSize** - The resolution of the HLS stream
-8. **watchDuration** - Total duration that the user has watched the stream in milliseconds includes any rewatch time (milliseconds)
+8. **watchDuration** - Total duration that the user has watched the stream includes any rewatch time (milliseconds)
 
-## How can I keep monitoring these stats in a time interval
+## How can I keep monitoring these stats continuously
 
 You use a timer to check the stats you are interested in like below:
 
@@ -48,11 +48,11 @@ Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
 }
   ```
 
-## What properties can be observed?
+## Observing playback state
 
-You use HMSHLSPlaybackDelegate on HMSHLSStatsMonitor to listen to some important changes during HLS playback.
+Set the delegate property of HMSHLSStatsMonitor to an instance conforming to HMSHLSPlaybackDelegate protocol to listen to some important changes during HLS playback.
 
-You can have following optional functions as part of your delegate:
+Following delegate callbacks are available:
 
 1. **playerDidStall** - Player has stalled because it can't continue - this can happen when player does not have enough buffer for playback
 2. **playerDidChangeResolution** - Player has switched to different resolution layer of HLS stream - due to improved/degraded network condition or when user manually picks a different resolution
@@ -78,4 +78,4 @@ class YourClass: HMSHLSPlaybackDelegate {
 
   ```
 
-👀 To see an example iOS tap to focus implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
+👀 To see an example iOS HLS Stats implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
