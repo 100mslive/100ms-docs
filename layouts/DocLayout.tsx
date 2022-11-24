@@ -51,17 +51,17 @@ export default function Layout({ children }: Props) {
                     justify-content: center;
                     width: 100%;
                     filter: blur(${modal ? '10px' : '0px'});
-                    background-color: var(--sidebar_bg) !important;
+                    background-color: var(--docs_bg_content) !important;
                 }
                 .content-wrapper {
                     width: 100%;
                     display: flex;
                     max-width: 1500px;
                     justify-content: space-between;
-                    background-color: var(--article_bg);
+                    background-color: var(--docs_bg_content);
                 }
                 .sidebar-container {
-                    background-color: var(--sidebar_bg) !important;
+                    background-color: var(--docs_bg_content) !important;
                 }
             `}</style>
         </>
