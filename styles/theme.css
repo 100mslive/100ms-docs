@@ -122,6 +122,21 @@ to decide colors
     --docs_bg_table_header: hsla(217, 20%, 6%, 1);
     --docs_bg_table_body: hsla(217, 20%, 8%, 1);
     --docs_bg_code_highlight: hsla(217, 20%, 15%, 1);
+
+    --docs_border_radius_xs: 4px;
+    --docs_border_radius_s: 8px;
+    --docs_border_radius_md: 16px;
+
+    --docs_spacing_1: 8px;
+    --docs_spacing_2: 16px;
+    --docs_spacing_3: 24px;
+    --docs_spacing_4: 32px;
+    --docs_spacing_5: 48px;
+    --docs_spacing_6: 64px;
+    --docs_spacing_7: 80px;
+    --docs_spacing_8: 96px;
+    --docs_spacing_9: 104px;
+    --docs_spacing_10: 120px;
 }
 
 [data-theme='light'] {
@@ -534,7 +549,7 @@ textarea:focus {
 pre {
     background-color: transparent;
     border: 1px solid var(--docs_border_strong);
-    border-radius: 8px;
+    border-radius: var(--docs_border_radius_s);
     padding-left: 1rem;
     font-family: 'Söhne Mono', menlo, monospace;
     white-space: pre;
@@ -595,7 +610,7 @@ code {
     color: var(--text_high_emp);
     background-color: var(--docs_bg_code_highlight);
     border: 1px solid var(--docs_border_strong);
-    border-radius: 4px;
+    border-radius: var(--docs_border_radius_xs);
     font-family: 'Source Code Pro', menlo, monospace;
     font-size: 0.875rem;
     font-weight: 400;
@@ -614,7 +629,7 @@ blockquote {
     padding: calc(0.667 * 16pt) 16pt;
     color: var(--text_high_emp);
     background-color: var(--gray3);
-    border-radius: 5px;
+    border-radius: var(--docs_border_radius_xs);
     margin: 1.5rem 0;
     border: 1px solid var(--gray6);
     border-left: 5px solid var(--gray10);
@@ -790,12 +805,12 @@ pre[class*='language-'] {
 }
 
 .request {
-    border-radius: 0 0 8px 8px;
+    border-radius: 0 0 var(--docs_border_radius_s) var(--docs_border_radius_s);
 }
 
 .request code[class*='language-'],
 .request pre[class*='language-'] {
-    border-radius: 0 0 8px 8px;
+    border-radius: 0 0 var(--docs_border_radius_s) var(--docs_border_radius_s);
     margin: 0;
     font-weight: 500;
     border-color: var(--api_surface_light_2);
@@ -822,7 +837,7 @@ pre[class*='language-'] {
 
 .response-box code[class*='language-'],
 .response-box pre[class*='language-'] {
-    border-radius: 0 0 8px 8px;
+    border-radius: 0 0 var(--docs_border_radius_s) var(--docs_border_radius_s);
     margin: 0;
     font-weight: 500;
     border-color: var(--api_surface_light_1);
@@ -893,17 +908,17 @@ input {
     padding: 2px;
     color: var(--gray1);
     background-color: var(--code);
-    border-radius: 5px;
+    border-radius: var(--docs_border_radius_xs);
 }
 
 /* Reamark Code Header / Title */
 .remark-code-title {
     color: var(--docs_text_primary);
-    padding: 5px 10px;
-    border: 0.5px solid var(--docs_border_strong);
+    padding: 4px 10px;
+    border: 1px solid var(--docs_border_strong);
     border-bottom-width: 0px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    border-top-left-radius: var(--docs_border_radius_s);
+    border-top-right-radius: var(--docs_border_radius_s);
     font-size: 0.8rem;
     font-weight: bold;
 }
@@ -957,7 +972,7 @@ h3:hover .copy-anchor {
     height: 24px;
     background-color: var(--new_surface_light);
     color: var(--text_high_emp);
-    border-radius: 8px;
+    border-radius: var(--docs_border_radius_s);
     margin: 8px 0 15px 1rem;
     position: relative;
     padding: 16px;
@@ -981,7 +996,7 @@ ul.dropdown-options{
 
 .dropdown-options {
     z-index: 100;
-    border-radius: 8px;
+    border-radius: var(--docs_border_radius_s);
     background-color: var(--new_surface_light);
     position: absolute;
     left: 24px;
@@ -1030,7 +1045,7 @@ ul.dropdown-options{
 p img {
     max-width: 100%;
     margin: 0px 0px 8px 0;
-    border-radius: 8px;
+    border-radius: var(--docs_border_radius_s);
     border: 1px solid var(--docs_border_default);
 }
 
@@ -1053,7 +1068,7 @@ h1 + h2 {
     color: var(--text_high_emp);
     width: 300px;
     height: 40px;
-    border-radius: 5px;
+    border-radius: var(--docs_border_radius_s);
     outline: none;
     border: none;
     cursor: pointer;
@@ -1066,7 +1081,7 @@ div.home-dropdown-option{
 }
 div.home-dropdown-option:hover{
     background-color: var(--secondary_default);
-    border-radius: 8px;
+    border-radius: var(--docs_border_radius_s);
 }
 
 .footer-wrapper{
