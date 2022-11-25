@@ -5,7 +5,7 @@ nav: 5.3
 
 ## Introduction
 
-You can use Camera Frame Capture Plugin to capture the current frame from the local camera in hight quality. This can be useful if you want to implement a remote KYC photo capture use-case where an agent can capture a high quality photo from the client device.
+You can use Camera Frame Capture Plugin to capture the current frame from the local camera in hight quality. This can be useful if you want to implement a remote KYC (know-your-customer) use-case to capture high quality photos of client's documents.
 
 ## Minimum Requirements
 
@@ -27,19 +27,16 @@ You can use Camera Frame Capture Plugin to capture the current frame from the lo
      videoPlugins.append(frameCapturePlugin)
 ```
 
-3. Next, create an instance of HMSVideoTrackSettings passing videoPlugins array
+3. Next, assign videoPlugins array to videoPlugins property of videoSettingsBuilder:
 
 ```swift
-     let videoSettings = HMSVideoTrackSettings(... videoPlugins: self.videoPlugins)
-```
+let hmsSDK = HMSSDK.build { sdk in
 
-4. Use this videoSettings instance while setting the trackSettings on HMSSDK
-
-```swift
-     hmsSDK = HMSSDK.build { sdk in
-            sdk.trackSettings = HMSTrackSettings(videoSettings: videoSettings, audioSettings: ...)
-            ...
-        }
+     sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettingsBuilder in
+          videoSettingsBuilder.videoPlugins = videoPlugins
+          ...
+     }
+}
 ```
 
 That is all the setup you need to do. Now, you can call **capture** method on your frameCapturePlugin instance to get the current camera frame as a UIImage:
