@@ -91,7 +91,7 @@ If this is [true] it denotes that the error has removed user from the room
 
 
 Hence `isTerminal` property can be used to handle the UI as if `isTerminal:true` we can navigate user back to home screen or show them a popup.
-While in other case the error can be handled accrodingly.
+While in other case the error can be handled accordingly.
 
 Terminal error example:
 
@@ -101,3 +101,43 @@ Above error(`errorCode:1003`) occurs when the reconnection fails.The SDK returns
 In such cases the `isTerminal` property can be used to handle the UI updates.
 
 > 🔑  More info on reconnection handling can be found [here](./reconnection-handling)
+
+## Setting log levels in SDK
+
+`HMSSDK` sends all the logs from SDK by default.This makes debugging difficult.`HMSSDK` provides log levels to only receive logs 
+which are relevant.Log levels can be set as:
+
+```dart
+//To turn off logs set HMSLogLevel as OFF
+HMSLogSettings hmsLogSettings = HMSLogSettings(
+        maxDirSizeInBytes: 1000000,
+        isLogStorageEnabled: true,
+        level: HMSLogLevel.OFF);
+
+hmsSDK = HMSSDK(
+    appGroup: appGroup,
+    preferredExtension: preferredExtension,
+    hmsLogSettings: hmsLogSettings,//Pass the settings while creating HMSSDK instance
+    hmsTrackSetting: trackSetting);
+```
+
+`HMSLogLevel` is an enum with values:
+
+```dart
+enum HMSLogLevel {
+
+  //To receive all the logs
+  VERBOSE,
+
+  //To receive warnings
+  WARN,
+
+  //To receive errors
+  ERROR,
+
+  //To turn OFF logs from SDK
+  OFF,
+
+  Unknown
+}
+```
