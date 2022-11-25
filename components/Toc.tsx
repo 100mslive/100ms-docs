@@ -99,7 +99,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                 button {
                     width: max-content;
                     background-color: #f16b16;
-                    border-radius: 4px;
+                    border-radius: var(--docs_border_radius_s);
                     padding: 8px;
                     font-size: 12px;
                 }

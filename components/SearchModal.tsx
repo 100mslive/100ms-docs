@@ -113,7 +113,7 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
                     top: 150px;
                     left: 50%;
                     transform: translate(-50%, 0%);
-                    border-radius: 5px;
+                    border-radius: var(--docs_border_radius_xs);
                     border: 1px solid var(--gray5);
                     background-color: var(--gray1);
                     z-index: 10;
@@ -126,7 +126,7 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
                 }
                 .esc {
                     color: var(--gray8);
-                    border-radius: 5px;
+                    border-radius: var(--docs_border_radius_xs);
                     padding: 0 8px;
                     border: 1px solid var(--gray6);
                 }

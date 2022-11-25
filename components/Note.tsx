@@ -14,7 +14,7 @@ const Note: React.FC<Props> = ({ type = 'success', children }) => {
                     padding: 16px;
                     padding-left: 24px;
                     margin: 24px 0;
-                    border-radius: 4px;
+                    border-radius: var(--docs_border_radius_s);
                     border 1px solid var(--docs_border_strong);
                     border-left: 8px solid ${resolveColor()};
                 }
