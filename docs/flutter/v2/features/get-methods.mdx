@@ -1,0 +1,106 @@
+---
+title: HMSSDK GET Methods
+nav: 3.26
+---
+
+Sometimes we need to refresh data to update the stale data, HMSSDK provides GET methods to get the data from SDK.
+Let's look at the methods one by one :
+
+### getRoom
+
+This is used to get info on the room that we are currently using. It returns `HMSRoom?` object as:
+
+```dart
+Future<HMSRoom?> getRoom() async {
+    //returns null if we are not in a room
+    return await hmsSDK.getRoom();
+}
+```
+
+### getSessionMetadata
+
+This is used to get the currently set session metadata. This can be used to get some info attached to the session.
+This returns a `String?` as:
+
+```dart
+Future<String?> getSessionMetadata() {
+    //returns null if no metadata is set
+    return hmsSDK.getSessionMetadata();
+} 
+```
+
+To set the session metadata `setSessionMetadata` method can be used.
+
+### getTrackSettings
+
+This is used to get the current track setting of the room. This returns an object of `HMSTrackSetting` as:
+
+```dart
+Future<HMSTrackSetting> getTrackSettings() async {
+    return await hmsSDK.getTrackSettings();
+}
+```
+
+### getRoles
+
+This is used to get all the roles available in the current room. It returns a list of `HMSRole` objects as:
+
+```dart 
+Future<List<HMSRole>> getRoles() async {
+    return await hmsSDK.getRoles();
+}
+```
+
+### getLocalPeer
+
+This method helps in getting the local peer. It returns an object of `HMSLocalPeer?` object as:
+
+```dart
+Future<HMSLocalPeer?> getLocalPeer() async {
+    //returns null if we haven't joined a room
+    return await hmsSDK.getLocalPeer();
+} 
+```
+
+### getRemotePeers
+
+This method helps in getting the list of remote peers. It returns a list of `HMSPeer` objects as:
+
+```dart
+Future<List<HMSPeer>?> getRemotePeers() async {
+    //returns null if we haven't joined a room
+    return await hmsSDK.getRemotePeers();
+} 
+```
+
+### getPeers
+
+This method returns all the peers in the room.
+
+```dart
+Future<List<HMSPeer>?> getPeers() async {
+    //returns null if we haven't joined a room
+    return await hmsSDK.getPeers();
+} 
+```
+
+### getAudioDevicesList
+
+This is used to get a list of available audio devices. This returns a list of `HMSAudioDevice` as:
+
+```dart
+Future<List<HMSAudioDevice>> getAudioDevicesList() async {
+    return await hmsSDK.getAudioDevicesList();
+}
+```
+
+
+### getCurrentAudioDevice
+
+This is used to get the currently selected audio device. This returns an object of `HMSAudioDevice` as:
+
+```dart
+Future<HMSAudioDevice> getCurrentAudioDevice() async {
+    return await hmsSDK.getCurrentAudioDevice();
+}
+```
