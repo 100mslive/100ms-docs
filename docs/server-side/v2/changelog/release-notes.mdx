@@ -5,6 +5,33 @@ nav: 7.1
 
 This Changelog highlights notable changes to the 100ms server-side API, such as API additions, improvements, and deprecations. Also, we've included developer experience improvements to this page to keep you on track with items that will enhance your integration journey.
 
+## November 23, 2022.
+
+#### Additions
+
+-   Added a new event [role.change.failure](./../introduction/webhook#role-change-failure) to notify role change failures.
+
+## November 18, 2022.
+
+#### Additions
+
+-   Added new fields in HLS, beam, recording, role change, peer leave and session close webhook events.
+
+| Event                                                                      | Fields                                                                                                                         |
+| :------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
+| [hls.recording.success](./../introduction/webhook#hls-recording-success)   | `recording_path`, <br/>`recording_presigned_url`, <br/>`hls_vod_recording_path`, <br/>`hls_vod_recording_presigned_url`. <br/> |
+| [hls.failure](./../introduction/webhook#hls-failure)                       | `recording_single_file_per_layer_enabled`, <br/>`recording_vod_playlist_enabled`. <br/>                                        |
+| [hls.stopped.success](./../introduction/webhook#hls-stopped-success)       | `recording_single_file_per_layer_enabled`, <br/>`recording_vod_playlist_enabled`. <br/>                                        |
+| [hls.started.success](./../introduction/webhook#hls-started-success)       | `recording_single_file_per_layer_enabled`, <br/>`recording_vod_playlist_enabled`, <br/>`max_width`, <br/>`max_height`. <br/>   |
+| [beam.recording.success](./../introduction/webhook#beam-recording-success) | `recording_path` <br/>`recording_presigned_url`. <br/>                                                                         |
+| [beam.started.success](./../introduction/webhook#beam-started-success)     | `max_width`, <br/>`max_height`. <br/>                                                                                          |
+| [recording.failed](./../introduction/webhook#recording-failed)             | `session_stopped_at`.                                                                                                          |
+| [recording.success](./../introduction/webhook#recording-success)           | `recording_path`, <br/>`recording_presigned_url`, <br/>`session_stopped_at`. <br/>                                             |
+| [role.change.success](./../introduction/webhook#role-change-success)       | `previous_role`, <br/>`role_changed_at`. <br/>                                                                                 |
+| [peer.leave.failure](./../introduction/webhook#peer-leave-failure)         | `joined_at`,                                                                                                                   |
+| [peer.leave.success](./../introduction/webhook#peer-leave-success)         | `joined_at`,                                                                                                                   |
+| [session.close.success](./../introduction/webhook#session-close-success)   | `session_duration`.                                                                                                            |
+
 ## November 03, 2022.
 
 #### Additions
