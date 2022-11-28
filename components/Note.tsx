@@ -19,7 +19,7 @@ const Note: React.FC<Props> = ({ type = 'success', children }) => {
                     border-left: 5px solid ${resolveColor()};
                 }
                 .note p {
-                    margin-bottom: 0;
+                    margin-bottom: 0 !important;
                 }
             `}</style>
         </div>
