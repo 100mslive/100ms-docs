@@ -3,14 +3,22 @@ title: Simulcast
 nav: 3.33
 ---
 
+Simulcast is a technique by which a WebRTC client(publisher) encodes the same video stream multipe times in different resolutions and bitrates and sends these to the server(SFU) who then decides who(subscriber) receives which of the published resolutions.
+
 To turn on simulcast in your room, open the [templates](https://dashboard.100ms.live/templates) in the dashboard and enable it for roles there.
 
+![Dashboard Simulcast Option](/docs/v2/simulcast-dashboard.png)
 
-## Responding in the app
+## Setting Simulcast Layer
 
-When using `useVideo` hook from our [react sdk](https://www.npmjs.com/package/@100mslive/react-sdk) the relevant simulcast layer is automatically subscribed to, based on the video tile size if simulcast is enabled from the dahsboard template.
+Available simulcast layers are:
+- HMSSimulcastLayer.HIGH
+- HMSSimulcastLayer.MEDIUM
+- HMSSimulcastLayer.LOW
 
-if you are not using our [react sdk](https://www.npmjs.com/package/@100mslive/react-sdk), you can use the following method to set your preferred layer to subscribe to:
+> Note: The number of layers available will be dependent on the video publish resolution for the role in template settings in the dashboard.
+
+Action to update the layer:
 
 ```jsx
 import { HMSSimulcastLayer } from '@100mslive/hms-video-store';
@@ -21,11 +29,14 @@ import { HMSSimulcastLayer } from '@100mslive/hms-video-store';
  * HMSSimulcastLayer.LOW
  */
 hmsActions.setPreferredLayer(<videoTrackID>, layer);
-
 ```
-By default, it is subscribed to high quality layer(`HMSSimulatorLayer.HIGH`). if you want to customise the layer, you can call the above function with relevant layer.
 
-Note: The number of layers available will be dependent on the template settings in the dashboard.
+## Layer selection based on Video Element's Dimension:
+
+When using `useVideo` hook from our [react sdk](https://www.npmjs.com/package/@100mslive/react-sdk) the relevant simulcast layer is automatically subscribed to, based on the video tile size if simulcast is enabled from the dahsboard template.
+
+
+## Simulcast fields on the track
 
 The [HMSVideoTrack](/api-reference/javascript/v2/interfaces/HMSVideoTrack) has a few fields related to simulcast.
 
