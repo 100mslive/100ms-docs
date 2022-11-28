@@ -251,7 +251,7 @@ const ChevronDown = () => (
     </svg>
 );
 
-const iconStyle = { height: '24px', width: '24px' };
+const iconStyle = { height: '24px', width: '24px', fill: 'var(--gray12)' };
 
 const menuItem = [
     {
