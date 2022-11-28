@@ -377,3 +377,12 @@ $token = JWT::encode(
 Your app key and secret carry many privileges, please ensure to keep them secure.
 
 </Note>
+
+### Using 100ms token endpoint
+
+-   You can use the token endpoint from your 100ms dashboard while building integration with 100ms. This acts as a tool enabling front-end developers to complete the integration without depending on the backend developers to setup a token generation backend service.
+-   For example, if you're using our [sample app](https://github.com/100mslive/100ms-web), you can copy-paste the token endpoint from your 100ms dashboard into the [.env configuration](https://github.com/100mslive/100ms-web/blob/main/example.env) (REACT_APP_TOKEN_GENERATION_ENDPOINT).
+
+![Token endpoint](/guides/token-endpoint.png)
+
+> **Note**: While deploying your app to production, we recommend replacing this with the token endpoint of the backend service you've hosted.
