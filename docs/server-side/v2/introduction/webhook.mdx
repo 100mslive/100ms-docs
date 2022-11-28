@@ -513,7 +513,7 @@ This event will be sent when room end is called and the it is unsuccessful.
 
 ### role.change.success
 
-This event will be sent when peer changes role successfully.
+This event will be sent when the role change for a peer is successful.
 
 #### Attributes
 
@@ -557,6 +557,56 @@ This event will be sent when peer changes role successfully.
         "previous_role": "********",
         "session_started_at": "2021-11-30T12:48:49.97291247Z",
         "role_changed_at": "2021-11-30T12:58:49.97291247Z"
+    }
+}
+```
+
+### role.change.failure
+
+This event will be sent when the role change for a peer fails. For example:
+
+1. When there's an attempt to change peer's role to a specific role whose limit has already been reached.
+
+#### Attributes
+
+| Name               | Type                 | Description                                                                                                |
+|:-------------------|:---------------------|:-----------------------------------------------------------------------------------------------------------|
+| room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
+| room_name          | `string`             | Room name provided when creating the room <br/><br/> _Example: Test Room _                                 |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                  |
+| template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                    |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _ |
+| user_id            | `string`             | User id assigned by the customer <br/><br/> _Example: user.001 _                                           |
+| user_name          | `string`             | User name of the user <br/><br/> _Example: Test user _                                                     |
+| user_data          | `string`             | User data of the user <br/><br/> _Example: {"isHandRaised":true} _                                         |
+| role               | `string`             | New role of the user <br/><br/> _Example: host _                                                           |
+| joined_at          | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> _Example: 2020-11-11T16:32:17Z _                                     |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                 |
+| error_message      | `string`             | Role change error message (description) <br/><br/> _Example: role limit reached _                          |
+
+#### Sample `role.change.failure` event
+
+```json
+{
+    "version": "2.0",
+    "id": "********-****-****-****-***********",
+    "account_id": "************************",
+    "app_id": "************************",
+    "timestamp": "2021-11-30T12:58:49Z",
+    "type": "role.change.failure",
+    "data": {
+        "peer_id": "********-****-****-****-***********",
+        "role": "********",
+        "room_id": "************************",
+        "room_name": "**********",
+        "session_id": "************************",
+        "template_id": "************************",
+        "user_id": "************************",
+        "user_name": "********",
+        "user_data": "",
+        "session_started_at": "2021-11-30T12:48:49.97291247Z",
+        "joined_at": "2021-11-30T12:58:49.97291247Z",
+        "error_message": "role limit reached"
     }
 }
 ```
