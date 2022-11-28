@@ -30,12 +30,17 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
         asPath
     } = router;
     const { menu, setMenu } = menuState;
-    useEffect(() => { setMenu(false) }, [router])
+    useEffect(() => {
+        setMenu(false);
+    }, [router]);
     const [currentDocSlug] = slug as string[];
     const [navAPI, setNavAPI] = useState(currentNav);
     useEffect(() => {
-        fetch('/docs/api/content?query=nav').then(res => res.json()).then(result => setNavAPI(result.nav)).catch()
-    }, [])
+        fetch('/docs/api/content?query=nav')
+            .then((res) => res.json())
+            .then((result) => setNavAPI(result.nav))
+            .catch();
+    }, []);
 
     let nav;
     if (Object.keys(navAPI).length) {
@@ -90,9 +95,10 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                                 key={m.link}
                                 value={m}
                                 className={({ active }) =>
-                                    `${active
-                                        ? 'dropdown-option dropdown-option-active'
-                                        : 'dropdown-option'
+                                    `${
+                                        active
+                                            ? 'dropdown-option dropdown-option-active'
+                                            : 'dropdown-option'
                                     }`
                                 }>
                                 {m.icon} <span style={{ marginLeft: '1rem' }}>{m.name}</span>
@@ -102,40 +108,47 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                 </Listbox>
             </section>
             {/* Sidebar Menu Section */}
-            {nav ? Object.entries(nav).map(([key, children], index) => (
-                <section className="menu-container" key={`${key}-${index}`}>
-                    <div className="menu-title">{key.replace(/-/g, ' ')}</div>
-                    {Object.entries(children as {}).map(([_, route]: [unknown, any]) =>
-                        Object.prototype.hasOwnProperty.call(route, 'title') ? (
-                            <Link
-                                scroll={false}
-                                prefetch={false}
-                                href={route.url || ''}
-                                key={`${route.url}-${index}`}>
-                                <a
-                                    className={`menu-item ${route.url === asPath ? 'active-link' : ''
-                                        }`}>
-                                    {route.title}
-                                </a>
-                            </Link>
-                        ) : null
-                    )}
-                    {key === 'features' && slug[0] !== 'server-side' ? (
-                        <>
-                            {aliasMenu.map((a) => (
-                                <Link scroll={false}
-                                    prefetch={false} href={a.url} key={a.url}>
-                                    <a
-                                        className={`menu-item ${a.url === asPath ? 'active-link' : ''
-                                            }`}>
-                                        {a.title}
-                                    </a>
-                                </Link>
-                            ))}
-                        </>
-                    ) : null}
-                </section>
-            )) : null}
+            {nav
+                ? Object.entries(nav).map(([key, children], index) => (
+                      <section className="menu-container" key={`${key}-${index}`}>
+                          <div className="menu-title">{key.replace(/-/g, ' ')}</div>
+                          {Object.entries(children as {}).map(([_, route]: [unknown, any]) =>
+                              Object.prototype.hasOwnProperty.call(route, 'title') ? (
+                                  <Link
+                                      scroll={false}
+                                      prefetch={false}
+                                      href={route.url || ''}
+                                      key={`${route.url}-${index}`}>
+                                      <a
+                                          className={`menu-item ${
+                                              route.url === asPath ? 'active-link' : ''
+                                          }`}>
+                                          {route.title}
+                                      </a>
+                                  </Link>
+                              ) : null
+                          )}
+                          {key === 'features' && slug[0] !== 'server-side' ? (
+                              <>
+                                  {aliasMenu.map((a) => (
+                                      <Link
+                                          scroll={false}
+                                          prefetch={false}
+                                          href={a.url}
+                                          key={a.url}>
+                                          <a
+                                              className={`menu-item ${
+                                                  a.url === asPath ? 'active-link' : ''
+                                              }`}>
+                                              {a.title}
+                                          </a>
+                                      </Link>
+                                  ))}
+                              </>
+                          ) : null}
+                      </section>
+                  ))
+                : null}
             <style jsx>{`
                 .sidebar {
                     width: 288px;
@@ -238,35 +251,37 @@ const ChevronDown = () => (
     </svg>
 );
 
+const iconStyle = { height: '24px', width: '24px', fill: 'var(--gray12)' };
+
 const menuItem = [
     {
         link: '/android/v2/foundation/basics',
         name: 'Android',
-        icon: <AndroidIcon />,
+        icon: <AndroidIcon style={iconStyle} />,
         apiRef: '/api-reference/android/v2/index.html'
     },
     {
         link: '/ios/v2/foundation/basics',
         name: 'iOS',
-        icon: <IosIcon />,
+        icon: <IosIcon style={iconStyle} />,
         apiRef: '/api-reference/ios/v2/home/content'
     },
     {
         link: '/javascript/v2/foundation/basics',
         name: 'JavaScript',
-        icon: <JavascriptIcon />,
+        icon: <JavascriptIcon style={iconStyle} />,
         apiRef: '/api-reference/javascript/v2/home/content'
     },
     {
         link: '/react-native/v2/foundation/basics',
         name: 'React-Native',
-        icon: <ReactIcon />,
+        icon: <ReactIcon style={iconStyle} />,
         apiRef: '/api-reference/react-native/v2/modules.html'
     },
     {
         link: '/flutter/v2/foundation/basics',
         name: 'Flutter',
-        icon: <FlutterIcon />,
+        icon: <FlutterIcon style={iconStyle} />,
         apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
     },
     {
