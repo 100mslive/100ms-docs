@@ -1,0 +1,44 @@
+---
+title: Stats For Nerds - HLS
+nav: 5.08
+---
+
+<Note type="warning">
+    This feature is still in Beta. To know more or report any issues, feel free to reach out to us
+    over <a href={'https://discord.com/invite/kGdmszyzq2'}>Discord</a>.
+</Note>
+
+`hls-stats` provide a clean API to subscribe to stats of the HLS Stream. This could be used to display an overlay to
+the user or used for debugging/logging.
+
+## Installation
+
+```shell
+yarn add @100mslive/hls-stats
+```
+or
+
+```shell
+npm install --save @100mslive/hls-stats
+```
+
+## Initialization
+`hlsStats` takes in two params. the hls.js instance and the HTML `video` element.
+
+### Subscribing to Stats
+`hlsStats` have a `subscribe` function which takes two parameter. a `callbackFn` and an `interval` in ms.
+The `interval` tells how frequent you want hls-stats to report back to you. Default is 2000ms
+
+<Tabs id="hls-stats" items={['Javascript', 'React']} />
+
+<Tab id="hls-stats-0">
+    ```js
+    function foo() {
+    const a = 2;
+}
+    }```
+</Tab>
+
+<Tab id="hls-stats-1">
+
+</Tab>
