@@ -1,3 +1,5 @@
+const { formatDiagnosticsWithColorAndContext } = require('typescript');
+
 /**
  * @type {import('next').NextConfig}
  */
@@ -110,6 +112,11 @@ const nextConfig = {
             {
                 source: '/api-reference/server-side/v2/home/content',
                 destination: '/server-side/v2/introduction/basics',
+                permanent: false
+            },
+            {
+                source: '/javascript/v2/guides/token',
+                destination: '/javascript/v2/foundation/security-and-tokens',
                 permanent: false
             }
         ];
