@@ -1,0 +1,117 @@
+---
+title: HLS-Stats
+nav: 5.08
+---
+
+<Note type="warning">
+    This feature is still in Beta. To know more or report any issues, feel free to reach out to us
+    over <a href={'https://discord.com/invite/kGdmszyzq2'}>Discord</a>.
+</Note>
+
+`@100ms-live/hls-stats` is a simple library that provides easy to use APIs for acquiring stats
+for your HLS Stream.
+
+## Initialization
+
+Initializing is very simple. Just initialize Hls.js and pass that reference as well as a
+video element to `HLSStats`and you are already done.
+
+<Tabs id="stats-init" items={['Javascript', 'React']} />
+
+<Tab id="stats-init-0">
+
+```js
+import Hls from 'hls.js';
+
+/**
+ * Initialize Hls.js and attach the video element.
+ */
+const hlsUrl = 'http://my-domain/stream.m3u8';
+const hlsInstance = new Hls();
+hlsInstance.loadSource(hlsUrl);
+hlsInstance.attachMedia(videoEl);
+
+/**
+ * initialize HlsStats
+ */
+const hlsStats = new HlsStats(hlsInstance, videoEl);
+```
+
+</Tab>
+
+<Tab id="stats-init-1">
+
+```jsx
+import Hls from "hls.js";
+
+export function MyComponent() {
+    const hls = new Hls(this.getHLSConfig());
+    hls.loadSource(hlsUrl);
+    hls.attachMedia(videoRef.current);
+    hlsStats = new HlsStats(hls, videoEl);
+
+    return (
+       // something
+    );
+}
+```
+
+</Tab>
+
+### Subscribing to Stats
+
+`hlsStats` have a `subscribe` function which takes two parameter. a `callbackFn` and an `interval` in ms.
+The `interval` tells how frequent you want hls-stats to report back to you. Default is 2000ms.
+
+<Tabs id="stats-subscribe" items={['Javascript', 'React']} />
+
+<Tab id="stats-subscribe-0">
+
+```js
+const unsubscribe = hlsStats.subscribe((state) => {
+    // ...
+});
+```
+
+</Tab>
+
+<Tab id="stats-subscribe-1">
+
+```jsx
+import Hls from "hls.js";
+
+export function MyComponent() {
+   ...
+   ...
+    useEffect(() => {
+    const unsubscribe = hlsStats.subscribe(state => {
+        setHlsStatsState(state);
+    });
+
+    return () => {
+      unsubscribe?.();
+    };
+  }, []);
+
+   ...
+   ...
+}
+```
+
+</Tab>
+
+the `subscribe()` also returns a reference to `unsubscribe()` function which could later be used to unsubscribe
+from your subscription
+
+## Exposed Stats
+hls-stats currently exposes the following stats
+
+| Name                             | Description                                             | Unit            | Usage                                                                                         |
+|----------------------------------|---------------------------------------------------------|-----------------|-----------------------------------------------------------------------------------------------|
+| bandwidthEstimate                | The current bandwidth, as seen by the player            | bits per second | Use this to show the current network speed of the user                                        |
+| bitrate                          | server indicated bitrate of current layer of hls stream | bits per second | Use to know the bitrate required for current layer                                            |
+| bufferedDuration                 | buffered duration from the current position             | ms              | This can be used to show how much data is buffered from the current location (forward buffer) |
+| distanceFromLiveEdge             | The distance from the live edge                         | ms              | Used to know currently buffered duration ahead                                                |
+| droppedFrames                    | The number of dropped frames till now                   |                 | Used to calculate the total num of dropped frames                                             | 
+| videoSize.width videoSize.height | The width and height of the video                       | px              | Used to know the resolution being played                                                      |
+| watchDuration                    | Total duration watched                                  | ms              | used to know the overall watch duration (not the stream length)                               |
