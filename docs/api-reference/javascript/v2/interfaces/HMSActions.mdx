@@ -794,20 +794,20 @@ found in store, no change in store will take place.
 
 ### setPreferredLayer
 
-▸ **setPreferredLayer**(`trackId`, `layer`): `void`
+▸ **setPreferredLayer**(`trackId`, `layer`): `Promise`<`void`\>
 
 set the quality of the selected videoTrack for simulcast.
 
 #### Parameters
 
-| Name      | Type                                                                        |
-| :-------- | :-------------------------------------------------------------------------- |
-| `trackId` | `string`                                                                    |
-| `layer`   | [`HMSSimulcastLayer`](/api-reference/javascript/v2/enums/HMSSimulcastLayer) |
+| Name      | Type                                                                                                 |
+| :-------- | :--------------------------------------------------------------------------------------------------- |
+| `trackId` | `string`                                                                                             |
+| `layer`   | [`HMSPreferredSimulcastLayer`](/api-reference/javascript/v2/home/content#hmspreferredsimulcastlayer) |
 
 #### Returns
 
-`void`
+`Promise`<`void`\>
 
 ---
 
@@ -914,7 +914,7 @@ Change settings of the local peer's video track
 
 ### setVolume
 
-▸ **setVolume**(`value`, `trackId?`): `void`
+▸ **setVolume**(`value`, `trackId?`): `Promise`<`void`\>
 
 Set the output volume of audio tracks(overall/particular audio track)
 
@@ -927,7 +927,7 @@ Set the output volume of audio tracks(overall/particular audio track)
 
 #### Returns
 
-`void`
+`Promise`<`void`\>
 
 ---
 
