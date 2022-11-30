@@ -84,7 +84,7 @@ You can specify a cloud storage location for your recording files in your templa
     - Access Key: Access Key generated from AWS IAM Console
     - Secret Key: Secret Key generated from AWS IAM Console
     - Bucket: Name of the bucket in S3
-    - Region: Name of the region e.g. ap-south1
+    - Region: Name of the region, for example, ap-south1
     - Prefix for Upload Path: Define the directory name (optional)
 
 ![Destinations](/docs/docs/v2/recording-storage-settings-step4.png)
