@@ -1,0 +1,87 @@
+---
+title: PIP (Picture-In-Picture) Mode
+nav: 3.9993
+---
+
+100ms React Native SDK provides support for creating Picture in Picture mode experience for video calls.
+
+## Minimum Requirements
+
+-   Minimum version required to support PiP is Android 8.0 (API level 26)
+-   Minimum RN SDK version required is ___
+
+### How to add PiP support
+
+1. You need to update the activity tag in the `AndroidManifest.xml`
+
+```xml
+  <activity
+    ....
+    android:supportsPictureInPicture="true"
+    android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|uiMode"
+    ... />
+```
+
+2. Call `enablePipMode` method on "HMS Instance" when you want to start PIP mode.
+
+```js
+  // You can also check if PIP is supported on device or not.
+  const isPIPSupported = await hmsInstance.isPipModeSupported();
+
+  const isEnabled = await hmsInstance.enablePipMode();
+  if (isEnabled) {
+    // App has entered into PIP Mode
+    setPIPModeActive(true);
+  }
+```
+
+Pip mode resizes your whole activity to a small conatiner. so, you should hide the content that you don't want to show.
+
+3. Detect when App goes to "fullscreen" from PIP mode
+
+```js
+  import { AppState, AppStateStatus } from 'react-native';
+
+  ...
+
+  const appStateRef = useRef(AppState.currentState);
+
+  useEffect(() => {
+    // We will register an AppState listener when App is in PIP Mode
+    if (pipModeActive) {
+      appStateRef.current = AppState.currentState;
+
+      const appStateListener = (nextAppState: AppStateStatus) => {
+        if (
+          appStateRef.current.match(/inactive|background/) &&
+          nextAppState === "active"
+        ) {
+          // Now, App is not in PIP mode
+          setPIPModeActive(false);
+        }
+
+        appStateRef.current = nextAppState;
+      };
+
+      AppState.addEventListener('change', appStateListener);
+
+      return () => {
+        AppState.removeEventListener('change', appStateListener);
+      }
+    }
+  }, [pipModeActive]);
+```
+
+DOUBT: Where to add "We are supporting only `aspectRatio` option for PIP configuration"?
+
+DOUBT: Should we add example of showing one HMSView with one trackId in PIP mode?
+
+DOUBT: Mention that pip mode is only for android right now.
+
+DOUBT: Can we simplify pip listener code? like - User can add listener for PIP mode change on hmsInstance. so that user does not have to add AppState listener and useEffect.
+
+TODO: add correct example app & PR link
+
+You can refer to this [PR](https://github.com/100mslive/100ms-android/pull/247/files) in our sample app to see the implementation of the Pip mode
+
+👀 To see an example Android Picture in Picture implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-android).
