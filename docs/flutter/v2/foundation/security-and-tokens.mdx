@@ -9,22 +9,99 @@ nav: 1.3
 
 In 100ms, two types of tokens are used to authenticate requests coming from your `Client apps` and `Backend application server` into the 100ms platform.
 
--   [App token](#app-token): To authenticate and allow end-users (peers) to join 100ms rooms. An App Token controls `Peer identity` and `Room permissions` in your Real-time video or Interactive live-streaming video application.
--   [Management token](#management-token): To authenticate all the requests to 100ms REST API.
-
-You need to host your server to generate these tokens.
+-   [App token](#app-token) - Used to authenticate and allow end-users (peers) to join 100ms rooms. An App Token controls `Peer identity` and `Room permissions` in your real-time or Interactive live-streaming video application.
+-   [Management token](#management-token) - Used to authenticate all the requests to 100ms REST API.
 
 You can set the expiry to both these tokens; if you follow the code samples from this guide, the expiry will be set as 24 hours. However, a best practice is to set the expiry as short as feasible for your application.
 
+You must host your server to generate these tokens while transitioning your app to production.
+
 ## App Token
 
-100ms _client-side SDKs_ use App Tokens to authenticate a peer (participant) while [joining a room](./../features/join). Generate this token on the server-side and make it available for your client-side apps that use the 100ms SDKs.
+100ms _client-side SDKs_ use App Tokens to authenticate a peer (participant) while [joining a room](./../features/join). Generate this token on the server side and make it available for your client-side apps that use the 100ms SDKs.
 
--   To create the App Token, use the `app_access_key` and `app_secret` from the [developer section](https://dashboard.100ms.live/developer) in your 100ms dashboard.
+To create an App Token, you need to use `app_access_key`, `app_secret`, `room_id`, and `user_id`.
+
+-   You can get the `app_access_key` and `app_secret` from the [developer section](https://dashboard.100ms.live/developer) in your 100ms dashboard.
 -   **room_id**: This is the unique identifier for your room. You can get it from the [rooms page](https://dashboard.100ms.live/rooms) in your dashboard or in the response payload of the [create room server-side API](/server-side/v2/Rooms/create-via-api).
--   **user_id**: This identifier can be used to map a 100ms peer to your own internal user object for business logic. Specify your internal user identifier as the peer’s user_id. If not available, use any random string.
+-   **user_id**: This identifier can be used to map a 100ms peer to your own internal user object for business logic. Specify your internal user identifier as the peer's user_id. If not available, use any random string.
 
-### Code sample: Generate app token
+### Use 100ms token endpoint for building integration
+
+You can use the token endpoint from your 100ms dashboard while building integration with 100ms. This acts as a tool enabling front-end developers to complete the integration without depending on the backend developers to set up a token generation backend service.
+
+**URL format:** `https://prod-in2.100ms.live/hmsapi/<your-100ms-subdomain>.app.100ms.live/api/token`
+
+100ms token endpoint can generate an app token with the inputs passed, such as room_id, role, & user_id (optional - your internal user identifier as the peer's user_id). You can use [jwt.io](https://jwt.io/) to validate whether the app token contains the same input values.
+
+<PostRequest title="https://prod-in2.100ms.live/hmsapi/johndoe.app.100ms.live/api/token" />
+<Request id="req-comp-0">
+
+```bash
+curl --location --request POST 'https://prod-in2.100ms.live/hmsapi/johndoe.app.100ms.live/api/token' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "room_id":"633fcdd84208780bf665346a",
+    "role":"host",
+    "user_id":"1234"
+}'
+```
+
+</Request>
+<ResponseBox id="resp-0" status="200 OK">
+
+```json
+{
+    "token": "***************************",
+    "msg": "token generated successfully",
+    "status": 200,
+    "success": true,
+    "api_version": "2.0.192"
+}
+```
+
+</ResponseBox>
+
+You can directly add this to your client-side implementation, for example:
+
+```dart
+try {
+    http.Response response = await http.post(Constant.tokenEndpoint, body: {
+    room_id: roomID,
+    user_id: userID,
+    role: 'host', // select role from your dashboard
+    });
+
+    var body = json.decode(response.body);
+    return [body['token']];
+    } catch (e) {
+    return null;
+}
+```
+
+### Disable 100ms token endpoint
+
+Due to some security concerns, if you don't wish to use the token endpoint to generate app tokens, then you can disable it on the [Developers page](https://dashboard.100ms.live/developer) on your dashboard by disabling the option "Disable &lt;room_id&gt;/&lt;role&gt; link format."
+
+![Token endpoint](/guides/disable-token-endpoint.png)
+
+#### Error Response
+
+Once you're disabled it on the dashboard, the requests to create an app token using the 100ms token endpoint will throw the below error:
+
+```json
+{
+    "success": false,
+    "msg": "Generating token using the room_id and role is disabled.",
+    "api_version": "2.0.192"
+}
+```
+
+### Transition to production
+
+While transitioning your app to production, we recommend you create your backend service for app token generation; use the code snippet below and set up the token generation service as per your preferred programming language.
+
+#### Code sample: Generate app token
 
 <Tabs id="client-code-token" items={['Node.js', 'Python', 'Java', 'Ruby', 'PHP']} />
 
@@ -215,18 +292,11 @@ Your app key and secret carry many privileges, please ensure to keep them secure
 
 </Note>
 
-### Using 100ms token endpoint
-
--   You can use the token endpoint from your 100ms dashboard while building integration with 100ms. This acts as a tool enabling front-end developers to complete the integration without depending on the backend developers to setup a token generation backend service.
--   For example, if you're using our [sample app](https://github.com/100mslive/100ms-flutter), you can use the token endpoint from your 100ms dashboard.
-
-![Token endpoint](/guides/token-endpoint.png)
-
-> **Note**: While deploying your app to production, we recommend replacing this with the token endpoint of the backend service you've hosted.
-
 ## Management Token
 
 100ms uses management tokens to authenticate REST APIs. The service required to generate this token should be hosted on your server. You must use the `app_access_key` and `app_secret` from the [developer section](https://dashboard.100ms.live/developer) in your 100ms dashboard to create the management token.
+
+If you're evaluating 100ms [server APIs](/server-side/v2/introduction/basics), you can use our public [Postman collection](/server-side/v2/introduction/postman-guide#fork-the-collection), which doesn't require you to create a management token as we've managed it using a [pre-request script](/server-side/v2/introduction/postman-guide#simplified-token-generation) within the collection.
 
 ### Code sample: Generate management token
 
