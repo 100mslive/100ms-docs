@@ -5,10 +5,12 @@ nav: 3.9993
 
 100ms React Native SDK provides support for creating Picture in Picture mode experience for video calls.
 
+Currently this functionality is only available on Android.
+
 ## Minimum Requirements
 
 -   Minimum version required to support PiP is Android 8.0 (API level 26)
--   Minimum RN SDK version required is ___
+-   Minimum `react-native-hms` SDK version required is 1.0.0
 
 ### How to add PiP support
 
@@ -35,7 +37,15 @@ nav: 3.9993
   }
 ```
 
-Pip mode resizes your whole activity to a small conatiner. so, you should hide the content that you don't want to show.
+You can also add `aspectRatio` for Picture in Picture window.
+
+```js
+  ...
+  const isEnabled = await hmsInstance.enablePipMode({ aspectRatio: [16, 9] });
+  ...
+```
+
+Pip mode resizes your whole activity to a small container. So, you should hide the content that you don't want to show.
 
 3. Detect when App goes to "fullscreen" from PIP mode
 
@@ -72,16 +82,33 @@ Pip mode resizes your whole activity to a small conatiner. so, you should hide t
   }, [pipModeActive]);
 ```
 
-DOUBT: Where to add "We are supporting only `aspectRatio` option for PIP configuration"?
+### Example of showing content when App is in PIP Mode
 
-DOUBT: Should we add example of showing one HMSView with one trackId in PIP mode?
+```js
+  // Getting trackId to show in PIP mode
+  // getPreferredTrackId function returns trackId of preferred video track
+  const pipTrackId = getPreferredTrackId()
 
-DOUBT: Mention that pip mode is only for android right now.
+  ...
 
-DOUBT: Can we simplify pip listener code? like - User can add listener for PIP mode change on hmsInstance. so that user does not have to add AppState listener and useEffect.
+  // If PIP mode is active, showing only single peer
+  if (isPipModeActive) {
+    return (
+      <HmsView 
+        ...
+        trackId={pipTrackId}
+        ...
+      />
+    )
+  }
+  
+  // Showing tiles for all the peers
+  return <MultiplePeers />
 
-TODO: add correct example app & PR link
+  ...
+```
 
-You can refer to this [PR](https://github.com/100mslive/100ms-android/pull/247/files) in our sample app to see the implementation of the Pip mode
+## Checkout Video of PIP in Action
+![PIP Video](/docs/v2/rn-android-pip.mp4)
 
-👀 To see an example Android Picture in Picture implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-android).
+👀 To see an example of Picture in Picture implementation in our example app, checkout [our example project](https://github.com/100mslive/react-native-hms/tree/main/example).
