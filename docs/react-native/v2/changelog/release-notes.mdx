@@ -7,8 +7,11 @@ nav: 4.1
 
 #### Added
 - Added support for Picture in Picture mode on Android.
+
     PIP Mode lets the user watch the room video in a small window pinned to a corner of the screen while navigating between apps or browsing content on the main screen.
+
     Example implementation for checking device support & enabling PIP mode:
+    
     ```js
     const isPIPSupported = await hmsInstance.isPipModeSupported();
 
@@ -16,8 +19,12 @@ nav: 4.1
     ```
     
 - Added Session Metadata APIs
-    Session metadata is a shared state that is accessible by everyone in the room. Session metadata can be used to achieve features like pinned text, spotlight(bringing a particular peer into a larger stage), etc.
+    Session metadata is a shared state that is accessible by everyone in the room. 
+    
+    Session metadata can be used to achieve features like pinned text, spotlight(bringing a particular peer into a larger stage), etc.
+    
     Example usage of setting & getting Room's Session Metadata:
+    
     ```js
     // set session metadata for the room
     hmsInstance.setSessionMetaData(value).then(() => {
@@ -25,7 +32,6 @@ nav: 4.1
       // on success, you can send a message to all the peers to fetch metadata
       hmsInstance.sendBroadcastMessage('refresh', HMSMessageType.METADATA);
     });
-
 
     // peers in the room can fetch current Session Metadata any time using `getSessionMetaData` method
     const metadata = await hmsInstance.getSessionMetaData();
