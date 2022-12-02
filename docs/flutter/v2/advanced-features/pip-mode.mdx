@@ -24,57 +24,21 @@ the rescue.100ms flutter SDK provides support for creating a Picture in Picture 
     ... />
 ```
 
-3. PIP mode only works above Android API Level 26(Android 8.0) but to check whether the current device supports PIP mode or not `isPipAvailable` method can be used:
+2. PIP mode only works above Android API Level 26(Android 8.0) but to check whether the current device supports PIP mode or not `isPipAvailable` method can be used:
 
 ```dart
 hmsSDK.isPipAvailable();
 ```
 
-4. PIP mode resizes your whole activity to a small container. To start pip you can use the `enterPipMode` method which requires 
-`HMSPipConfig` object as a parameter.
-
-Let's understand the  `HMSPipConfig` object first:
+3. To show PIP mode in the application:
 
 ```dart
-HMSPipConfig hmsPipConfig = HMSPipConfig(
-    {
-    //[aspectRatio] defines the width and height ratio as [width, height] default is set to 16:9
-    this.aspectRatio = const [16, 9],
-
-    ///[autoEnterPip] flag to provide smoother transitions to PiP mode when swiping up to a home in gesture navigation mode
-    ///only works from Android 12
-    this.autoEnterPip = false,
-
-    ///[addAudioMuteButton] flag to display the local audio mute button while in pip
-    this.addAudioMuteButton = false,
-
-    ///[addVideoMuteButton] flag to display the local video mute button while in pip
-    this.addVideoMuteButton = false,
-
-    ///[addLeaveRoomButton] flag to leave the room while in pip
-    this.addLeaveRoomButton = false,
-
-    ///[leaveRoomListener] object to get an update when the room is left from pip mode
-    ///This should not be null while setting [addLeaveRoomButton] as true because this may lead to a memory leak in the application.
-    this.leaveRoomListener = null});
+hmsSDK.enterPipMode(autoEnterPip: true/false, aspectRatio: [16, 9]);
 ```
-
-> NOTE: If `addLeaveRoomButton` is set to TRUE then `leaveRoomListener` should not be null as the `onSuccess` and `onException` callback for the `leave` method comes via 
->       `leaveRoomListener`.This can be listened to using `HMSActionResultListener` callbacks.
-
-To show PIP mode in the application:
-
-```dart
-hmsSDK.enterPipMode(hmsPipConfig: hmsPipConfig);
-```
-5. To check whether PIP mode is currently active use `isPipActive` method as:
+4. To check whether PIP mode is currently active use `isPipActive` method as:
 
 ```dart
 hmsSDK.isPipActive();
 ```
 
 > To display UI according to PIP use the `isPipActive` to set the state for PIP mode and render the UI accordingly.
-
-# For iOS 
-
-----To be continued
