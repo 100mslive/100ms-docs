@@ -19,7 +19,11 @@ Available simulcast layers are:
 
 **Action to update the layer:**
 
-```jsx
+<Tabs id="simulcast" items={['JavaScript', 'React']} />
+
+<Tab id='simulcast-0'>
+
+```js
 import { HMSSimulcastLayer } from '@100mslive/hms-video-store';
 /*
  * layer can be one of:
@@ -31,6 +35,43 @@ import { HMSSimulcastLayer } from '@100mslive/hms-video-store';
  */
 hmsActions.setPreferredLayer(<videoTrackID>, layer);
 ```
+
+</Tab>
+
+<Tab id='simulcast-1'>
+
+```jsx
+import { HMSSimulcastLayer, selectTrackByID, useHMSStore } from '@100mslive/react-sdk';
+
+const SimulcastLayers = ({ trackId }) => {
+    const track = useHMSStore(selectTrackByID(trackId));
+    const handleLayerChange = (layer) => {
+        /*
+        * layer can be one of:
+        * HMSSimulcastLayer.HIGH
+        * HMSSimulcastLayer.MEDIUM
+        * HMSSimulcastLayer.LOW
+        * Setting preferred layer does not guarantee that the layer will be selected. The server tries to give you that preferred layer when possible. Otheriwse, it will pick the next closest layer.
+        * Some of the reasons for not getting the preferred layer could be publisher is not publishing that layer or your download bandwidth is not good enough to handle that layer.
+        */
+        hmsActions.setPreferredLayer(<videoTrackID>, layer);
+    }
+
+    return (
+        <div>
+        {track.layerDefinitions.map(trackLayer => {
+            return (<div onClick={() => {
+                handleLayerChange(trackLayer.layer);
+            }}>
+                {trackLayer.layer}
+            </div>
+        )}
+        </div>
+    )
+}
+```
+
+</Tab>
 
 **Simulcast fields on the track**
 
