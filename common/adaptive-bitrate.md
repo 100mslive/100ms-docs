@@ -1,42 +1,83 @@
-Adaptive bitrate (ABR) means adjusting video quality based on network and other conditions. This ensures every participant is able to consume the highest possible quality video in conferencing or streaming use-cases based on bandwidth constraints.
+Adaptive bitrate (ABR) refers to features that enable dynamic adjustments to video quality—to optimise for end-user experience under diverse network conditions. ABR ensures that every participant is able to consume the highest possible quality video in conferencing or streaming use-cases, based on their bandwidth constraints.
 
-In addition to network, ABR also helps users consume video quality based on the size of the video element (layout). A larger video element requires a higher quality video track. These adjustments can be made on the fly with Adaptive bitrate.
+In addition to network, ABR can also optimise for the right video quality based on the size of the video element. For example, a video call running on active speaker layout has larger video tiles that require higher quality video track. These adjustments can be made dynamically with adaptive bitrate.
 
-Learn about adaptive bitrate in
+Learn about how 100ms enables adaptive bitrate in:
 
-* [Conferencing](#abr-in-conferencing)
-* [Live streaming](#abr-in-live-streaming)
+* [Conferencing scenarios](#abr-in-conferencing)
+* [Live streaming scenarios](#abr-in-live-streaming)
 
 ## ABR in conferencing
 
-Peers in 100ms rooms can publish multiple video quality levels simultaneously, and this is called “simulcast” internally. Peers that are consuming these video tracks can upgrade or downgrade video quality based on network or layout 
+Peers in 100ms rooms can publish multiple video quality levels simultaneously. This is called “simulcast” in 100ms. Peers that consume these video tracks can upgrade or downgrade video quality.
 
-100ms can dynamically modify the quality of video tracks in a room based on various conditions. This ensures that a peer is able to downgrade or upgrade the quality of video tracks that they have subscribed to.
+You can enable simulcast on the publishing role's template, and use manual or automatic layer changes on the subscriber's side.
 
-For example, a peer with network issues can downgrade remote video tracks to a lower quality level. Alternatively, a peer that has pinned a remote video track can ask for a higher quality level.
+### Publisher-side configuration
 
-This is made possible by publishers uploading multiple quality levels simultaneously, which is called “simulcast”.
+Simulcast configuration is opt-in and can be enabled on the role's template. The role's publish video quality determines video quality layers on simulcast. For example, a role configured to publish at 720p can simulcast 180p, 360p and 720p layers.
 
-## How to use it?
+| Video publish quality | Possible simulcast layers |
+|-----------------------|---------------------------|
+| 180p                  | 180p                      |
+| 240p                  | 240p                      |
+| 360p                  | 180p, 360p                |
+| 480p                  | 240p, 480p                |
+| 720p                  | 180p, 360p, 720p          |
+| 1080p                 | 270p, 540p, 1080p         |
 
-* Publisher
-* Subscriber
+#### Enable via dashboard
 
-### Publisher side configuration
+_This feature is in limited availability._
 
-> This feature is in limited availability.
+Enable "can publish simulcast" on the template page for a particular role. You can also specify how many video quality layers will be simultaneously published by peers of this role. The peer will publish these layers assuming network bandwidth permits.
 
-This behaviour is opt-in currently, and is enabled on the role params 
+![Simulcast configuration](/guides/simulcast-on-dashboard.png)
 
-*[Sections to be expanded]*
+#### Enable via API
 
-- To enable this via API
-    - Update the parameters in the template
-- To enable this via dashboard [limited availability]
+Update role configuration using the [server-side API](/docs/server-side/v2/policy/create-update-role). The simulcast config payload can include 2 or 3 layers that scale down the selected publish layer.
 
-### Subscribe side behavior
+In the example below, the role is configured to publish 720p with 3 simulcast layers:
 
-*[Sections to be expanded]*
+* `f` for full with scale down factor of 1 (= 720p)
+* `h` for half with scale down factor of 2 (= 360p)
+* `q` for quarter with scale down factor of 4 (= 180p)
+
+```js
+{
+    "publishParams": {
+        ...
+        "simulcast": {
+            "video": {
+                "layers": [
+                    {
+                        "rid": "f",
+                        "scaleResolutionDownBy": 1,
+                        "maxBitrate": 700,
+                        "maxFramerate": 30
+                    },
+                    {
+                        "rid": "h",
+                        "scaleResolutionDownBy": 2,
+                        "maxBitrate": 250,
+                        "maxFramerate": 30
+                    },
+                    {
+                        "rid": "q",
+                        "scaleResolutionDownBy": 4,
+                        "maxBitrate": 100,
+                        "maxFramerate": 30
+                    }
+                ]
+            },
+            "screen": {}
+        }
+    }
+}
+```
+
+### Subscribe-side behavior
 
 - Manual set layer
     - Link to API docs
@@ -47,3 +88,7 @@ This behaviour is opt-in currently, and is enabled on the role params
 
 
 ## ABR in live streaming
+
+100ms uses the HTTP Live Streaming (HLS) protocol in live streaming scenarios. HLS supports adaptive bitrate out of the box, and HLS video players can automatically or manually pick appropriate video quality levels.
+
+Learn more on [how HLS works on our blog](https://www.100ms.live/blog/hls-101-beginners-guide).
