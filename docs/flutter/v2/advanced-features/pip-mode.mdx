@@ -6,11 +6,14 @@ nav: 4.9
 Sometimes we want our application to appear in a small floating window as we press the back button or navigate to home PIP comes to 
 the rescue.100ms flutter SDK provides support for creating a Picture in Picture mode experience for video calls.
 
+> PIP for WebRTC calls is currently supported only on android.
+
 # For Android 
 
 ## Minimum Requirements
 
 -   Minimum version required to support PiP is Android 8.0 (API level 26)
+-   To know more about PIP features minimum version requirements please check [Picture-in-picture (PiP) support](https://developer.android.com/develop/ui/views/picture-in-picture)
 
 ### How to add PiP support
 
@@ -33,6 +36,7 @@ hmsSDK.isPipAvailable();
 3. To show PIP mode in the application:
 
 ```dart
+// enterPipMode is a Future<bool> function where true indicates that the application has entered pip mode successfully.
 hmsSDK.enterPipMode(autoEnterPip: true/false, aspectRatio: [16, 9]);
 ```
 4. To check whether PIP mode is currently active use `isPipActive` method as:
@@ -42,3 +46,9 @@ hmsSDK.isPipActive();
 ```
 
 > To display UI according to PIP use the `isPipActive` to set the state for PIP mode and render the UI accordingly.
+
+### Example
+
+How we have added PIP in our example application check [here](https://youtu.be/bufqXPxBG6M): 
+
+![PIP](/docs/v2/flutter-pip-mode.gif)
