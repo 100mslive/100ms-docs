@@ -79,13 +79,19 @@ In the example below, the role is configured to publish 720p with 3 simulcast la
 
 ### Subscribe-side behavior
 
-- Manual set layer
-    - Link to API docs
-- Automatic layer transitions
-    - Based on tile size
-    - Based on network quality [coming soon]
-        - Works with subscribe degradation
+#### Manual layer selection
 
+The 100ms client-side SDKs provide methods to set a preferred quality layer for a remote peer's video track.
+
+* JavaScript SDK
+* [Android SDK](/docs/android/v2/advanced-features/simulcast)
+* iOS SDK
+
+#### Automatic layer selection
+
+- Based on video tile size
+    - The `useVideo` hook in the 100ms React SDK automatically ensures that appropriate video layer is subscribed to, based on the size of the video element. For example, if the video element is 360 px in width, 360p or the closest layer will be selected.
+- Based on network quality: ABR will work alongside subscribe degradation and auto-downgrade video quality for peers
 
 ## ABR in live streaming
 
