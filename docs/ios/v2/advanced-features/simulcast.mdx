@@ -1,0 +1,37 @@
+---
+ title: Simulcast
+ nav: 4.01
+---
+
+## Minimum Requirements
+
+- SDK version 0.5.1 or higher
+- Simulcast enabled in room template
+
+## 100ms SDK Simulcast APIs
+
+You interact with the simulcast feature by setting `HMSRemoteVideoTrack`'s `layer` property. Let's look at the track interface:
+
+```swift
+class HMSRemoteVideoTrack {
+    open var layerDefinitions: [HMSSimulcastLayerDefinition]?
+    open var layer: HMSSimulcastLayer
+}
+
+class HMSSimulcastLayerDefinition : NSObject {
+    open var layer: HMSSimulcastLayer
+    open var resolution: CGSize
+}
+
+enum HMSSimulcastLayer {
+    case high
+    case mid
+    case low
+}
+```
+
+Here `layerDefinitions` property holds an array of currently available layers for the track and `layer` property is the currently selected layer.  Within `HMSSimulcastLayerDefinition` you get its resolution and the layer name such as high/mid/low. 
+
+## Auto Layer Selection
+
+`HMSVideoView` has an automatic simulcast layer selection capability which is enabled by default. It will select a layer that best matches the current view frame size and reacts to frame updates. In case manual layer selection is preferred set `disableAutoSimulcastLayerSelect` property to `true`. By default, the track layer is set to `high`.
