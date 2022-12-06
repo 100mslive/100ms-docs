@@ -19,12 +19,12 @@ Simulcast configuration is opt-in and can be enabled on the role's template. The
 
 | Video publish quality | Possible simulcast layers |
 |-----------------------|---------------------------|
-| 180p                  | 180p                      |
-| 240p                  | 240p                      |
-| 360p                  | 180p, 360p                |
-| 480p                  | 240p, 480p                |
-| 720p                  | 180p, 360p, 720p          |
 | 1080p                 | 270p, 540p, 1080p         |
+| 720p                  | 180p, 360p, 720p          |
+| 480p                  | 240p, 480p                |
+| 360p                  | 180p, 360p                |
+| 240p                  | 240p                      |
+| 180p                  | 180p                      |
 
 #### Enable via dashboard
 
