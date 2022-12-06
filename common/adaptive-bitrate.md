@@ -15,7 +15,7 @@ You can enable simulcast on the publishing role's template, and use manual or au
 
 ### Publisher-side configuration
 
-Simulcast configuration is opt-in and can be enabled on the role's template. The role's publish video quality determines video quality layers on simulcast. For example, a role configured to publish at 720p can simulcast 180p, 360p and 720p layers.
+Simulcast configuration is opt-in and can be enabled on the role's configuration inside your template. The role's publish video quality determines video quality layers on simulcast. For example, a role configured to publish at 720p can simulcast 180p, 360p and 720p layers.
 
 | Video publish quality | Possible simulcast layers |
 |-----------------------|---------------------------|
@@ -28,7 +28,7 @@ Simulcast configuration is opt-in and can be enabled on the role's template. The
 
 #### Enable via dashboard
 
-_This feature is in limited availability._
+_This dashboard feature is currently limited to early adopters only._
 
 Enable "can publish simulcast" on the template page for a particular role. You can also specify how many video quality layers will be simultaneously published by peers of this role. The peer will publish these layers assuming network bandwidth permits.
 
