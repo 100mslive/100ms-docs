@@ -1,6 +1,6 @@
 ---
 title: Simulcast
-nav: 3.33
+nav: 5.09
 ---
 
 ## Minimum requirements
@@ -27,11 +27,15 @@ Available simulcast layers are:
 import { HMSSimulcastLayer } from '@100mslive/hms-video-store';
 /*
  * layer can be one of:
- * HMSSimulcastLayer.HIGH
- * HMSSimulcastLayer.MEDIUM
- * HMSSimulcastLayer.LOW
- * Setting preferred layer does not guarantee that the layer will be selected. The server tries to give you that preferred layer when possible. Otheriwse, it will pick the next closest layer.
- * Some of the reasons for not getting the preferred layer could be publisher is not publishing that layer or your download bandwidth is not good enough to handle that layer.
+ *   HMSSimulcastLayer.HIGH
+ *   HMSSimulcastLayer.MEDIUM
+ *   HMSSimulcastLayer.LOW
+ * 
+ * Setting preferred layer does not guarantee that the layer will be selected.
+ * The server tries to give you that preferred layer when possible.
+ * Otherwise, it will pick the next closest layer. Some of the reasons for
+ * not getting the preferred layer could be publisher is not publishing that
+ * layer or your download bandwidth is not good enough to handle that layer.
  */
 hmsActions.setPreferredLayer(<videoTrackID>, layer);
 ```
