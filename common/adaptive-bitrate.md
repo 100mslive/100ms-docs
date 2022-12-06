@@ -79,6 +79,8 @@ In the example below, the role is configured to publish 720p with 3 simulcast la
 
 ### Subscribe-side behavior
 
+<br/>
+
 #### Manual layer selection
 
 The 100ms client-side SDKs provide methods to set a preferred quality layer for a remote peer's video track. See docs for your preferred platform:
@@ -90,7 +92,7 @@ The 100ms client-side SDKs provide methods to set a preferred quality layer for 
 #### Automatic layer selection
 
 <br/>
-<video loop="true" autoplay="autoPlay" controls="controls" id="vid" muted width="640">
+<video loop="true" controls="controls" id="vid" muted width="640">
     <source src="/docs/guides/simulcast-tile-size-1.mp4" type="video/mp4" />
 </video>
 <br/>
