@@ -21,7 +21,7 @@ const data = {
     securityAndTokens: SecurityTokens,
     domainsAndPorts: DomainsPorts,
     liveStreaming: LiveStreaming,
-    recordings: Recordings,
+    recordings: Recordings
 };
 
 interface Props {

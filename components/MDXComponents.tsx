@@ -18,6 +18,7 @@ import Response from './Response';
 import ResponseBox from './ResponseBox';
 import { Tab, Tabs } from './Tabs';
 import Text from './Text';
+import ABRSnippet from './ABRSnippet';
 import View from './View';
 
 const CodeCustom = (props: any) => <Code {...props}>{props.children}</Code>;
@@ -40,7 +41,7 @@ const LinkCustom = (props) => {
             </Link>
         );
     }
-    const { hostname } = new URL(href)
+    const { hostname } = new URL(href);
     const btnId = `${hostname.split('.').slice(0, -1).join('.')}.viewed`;
     return (
         <a
@@ -77,6 +78,7 @@ const MDXComponents = {
     Tab,
     Tabs,
     Codesandbox,
+    ABRSnippet,
     Text,
     View,
     a: LinkCustom,

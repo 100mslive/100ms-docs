@@ -1,0 +1,35 @@
+const ABRSnippet = () =>
+    `
+    {
+    "publishParams": {
+        ...
+        "simulcast": {
+            "video": {
+                "layers": [
+                    {
+                        "rid": "f",
+                        "scaleResolutionDownBy": 1,
+                        "maxBitrate": 700,
+                        "maxFramerate": 30
+                    },
+                    {
+                        "rid": "h",
+                        "scaleResolutionDownBy": 2,
+                        "maxBitrate": 250,
+                        "maxFramerate": 30
+                    },
+                    {
+                        "rid": "q",
+                        "scaleResolutionDownBy": 4,
+                        "maxBitrate": 100,
+                        "maxFramerate": 30
+                    }
+                ]
+            },
+            "screen": {}
+        }
+    }
+}
+`;
+
+export default ABRSnippet;
