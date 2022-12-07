@@ -4,7 +4,7 @@ If you are building integration with 100ms, you can get app tokens from the 100m
 
 #### Get app tokens from the dashboard
 
-If you are building your first app by following one of our [quickstart guides](/javascript/v2/guides/javascript-quickstart), you can get the app token directly from 100ms dashboard to join a room for the first time. 
+If you are building your first app by following one of our [quickstart guides](/javascript/v2/guides/javascript-quickstart), you can get the app token directly from 100ms dashboard to join a room for the first time. Refer to [this guide](./../guides/token#get-a-temporary-token-from-100ms-dashboard) for more information.
 
 ## Management Token
 
