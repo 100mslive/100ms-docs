@@ -18,7 +18,6 @@ jobs:
           # Required, set by GitHub actions automatically:
           # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          path: docs
 
       - name: Checkout the android-sdk code
         uses: actions/checkout@v3
@@ -45,11 +44,13 @@ jobs:
 
       - name: copy-generated-docs-to-site
         working-directory: ./android-sdk
-        run: cp -r build/dokka/htmlMultiModule/* ../docs/public/api-reference/android/v2/
+        run: cp -r build/dokka/htmlMultiModule/* ../public/api-reference/android/v2/
+
+      - name: delete-android-sdk
+        run: rm -r android-sdk
 
       - name: Create Pull Request to docs
         uses: peter-evans/create-pull-request@v4
-        working-directory: ./docs
         with:
             token: ${{secrets.GITHUB_TOKEN}}
             add-paths: ./public/api-reference/android/v2/
