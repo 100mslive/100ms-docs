@@ -9,12 +9,11 @@ on:
 
 jobs:
   update-docs:
-    
     name: update android
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the docs code
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
         env:
           # Required, set by GitHub actions automatically:
           # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
@@ -22,7 +21,7 @@ jobs:
           path: docs
 
       - name: Checkout the android-sdk code
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
         with:
           repository: 100mslive/android-sdk
           ref: ${{ github.event.inputs.sdkBranchName }}
