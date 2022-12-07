@@ -113,31 +113,6 @@ const nextConfig = {
                 source: '/api-reference/server-side/v2/home/content',
                 destination: '/server-side/v2/introduction/basics',
                 permanent: false
-            },
-            {
-                source: '/javascript/v2/guides/token',
-                destination: '/javascript/v2/foundation/security-and-tokens',
-                permanent: false
-            },
-            {
-                source: '/android/v2/guides/token',
-                destination: '/android/v2/foundation/security-and-tokens',
-                permanent: false
-            },
-            {
-                source: '/ios/v2/guides/token',
-                destination: '/ios/v2/foundation/security-and-tokens',
-                permanent: false
-            },
-            {
-                source: '/flutter/v2/guides/token',
-                destination: '/flutter/v2/foundation/security-and-tokens',
-                permanent: false
-            },
-            {
-                source: '/react-native/v2/guides/token',
-                destination: '/react-native/v2/foundation/security-and-tokens',
-                permanent: false
             }
         ];
     }

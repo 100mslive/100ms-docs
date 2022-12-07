@@ -8,7 +8,8 @@ import Basics from '../common/basics.md';
 import Network from '../common/network.md';
 import Token from '../common/token.md';
 import TemplatesRoles from '../common/templates-and-roles.md';
-import SecurityTokens from '../common/security-tokens.md';
+import SecurityTokens1 from '../common/security-tokens-1.md';
+import SecurityTokens2 from '../common/security-tokens-2.md';
 import DomainsPorts from '../common/firewall-and-ports.md';
 import LiveStreaming from '../common/live-streaming.md';
 import Recordings from '../common/basic_recording.md';
@@ -18,7 +19,8 @@ const data = {
     templatesAndRoles: TemplatesRoles,
     network: Network,
     token: Token,
-    securityAndTokens: SecurityTokens,
+    securityAndTokens1: SecurityTokens1,
+    securityAndTokens2: SecurityTokens2,
     domainsAndPorts: DomainsPorts,
     liveStreaming: LiveStreaming,
     Recordings: Recordings,
