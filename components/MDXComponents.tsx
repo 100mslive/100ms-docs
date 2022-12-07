@@ -18,7 +18,6 @@ import Response from './Response';
 import ResponseBox from './ResponseBox';
 import { Tab, Tabs } from './Tabs';
 import Text from './Text';
-import ABRSnippet from './ABRSnippet';
 import View from './View';
 
 const CodeCustom = (props: any) => <Code {...props}>{props.children}</Code>;
@@ -78,7 +77,6 @@ const MDXComponents = {
     Tab,
     Tabs,
     Codesandbox,
-    ABRSnippet,
     Text,
     View,
     a: LinkCustom,
