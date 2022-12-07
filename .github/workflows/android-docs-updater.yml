@@ -1,0 +1,57 @@
+name: Android Docs Updater
+
+on:
+  workflow_dispatch:
+    inputs:
+      sdkBranchName:
+        description: 'The sdk branch to use'
+        required: true
+
+jobs:
+  update-docs:
+    
+    name: update android
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the docs code
+      - uses: actions/checkout@v3
+        env:
+          # Required, set by GitHub actions automatically:
+          # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          path: docs
+
+      - name: Checkout the android-sdk code
+      - uses: actions/checkout@v3
+        with:
+          repository: 100mslive/android-sdk
+          ref: ${{ github.event.inputs.sdkBranchName }}
+          token: ${{secrets.GITHUB_TOKEN}}
+          path: android-sdk
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Validate Gradle
+        uses: gradle/wrapper-validation-action@v1
+        with:
+          path: android-sdk/
+
+      - name: generate-docs
+        working-directory: ./android-sdk
+        run: ./gradlew clean :dokkaHtmlMultimodule
+
+      - name: copy-generated-docs-to-site
+        working-directory: ./android-sdk
+        run: cp -r build/dokka/htmlMultiModule/* ../docs/public/api-reference/android/v2/
+
+      - name: Create Pull Request to docs
+        uses: peter-evans/create-pull-request@v4
+        working-directory: ./docs
+        with:
+            token: ${{secrets.GITHUB_TOKEN}}
+            add-paths: ./public/api-reference/android/v2/
+            branch: "androdi docs version: ${{ github.event.inputs.sdkBranchName }}"
