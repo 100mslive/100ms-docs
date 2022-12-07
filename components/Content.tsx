@@ -12,7 +12,8 @@ import SecurityTokens from '../common/security-tokens.md';
 import DomainsPorts from '../common/firewall-and-ports.md';
 import LiveStreaming from '../common/live-streaming.md';
 import Recordings from '../common/recordings.md';
-import AdaptiveBitrate from '../common/adaptive-bitrate.md';
+import AdaptiveBitrate1 from "../common/adaptive-bitrate-1.md";
+import AdaptiveBitrate2 from "../common/adaptive-bitrate-2.md";
 
 const data = {
     basics: Basics,
@@ -23,7 +24,8 @@ const data = {
     domainsAndPorts: DomainsPorts,
     liveStreaming: LiveStreaming,
     recordings: Recordings,
-    adaptiveBitrate: AdaptiveBitrate
+    adaptiveBitrate1: AdaptiveBitrate1,
+    adaptiveBitrate2: AdaptiveBitrate2
 };
 
 interface Props {
