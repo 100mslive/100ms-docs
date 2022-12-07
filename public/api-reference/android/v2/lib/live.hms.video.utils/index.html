@@ -1,344 +1,463 @@
+<!doctype html>
 <html>
-  <head>
+<head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>live.hms.video.utils</title>
-<link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script><script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../styles/style.css" rel="Stylesheet"><link href="../../styles/logo-styles.css" rel="Stylesheet"><link href="../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../styles/main.css" rel="Stylesheet"><script type="text/javascript" src="../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../scripts/main.js" async="async"></script>  </head>
-  <body>
-    <div id="container">
-      <div id="leftColumn"><a href="../../index.html">
-          <div id="logo"></div>
-        </a>
-        <div id="paneSearch"></div>
+<link href="../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script>    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../styles/style.css" rel="Stylesheet">
+<link href="../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../styles/main.css" rel="Stylesheet">
+<link href="../../styles/prism.css" rel="Stylesheet">
+<link href="../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+<a href="../../index.html">
+<span>Android SDK 100ms</span>            </a>    </div>
+    <div>
+    </div>
+    <div class="pull-right d-flex">
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
         <div id="sideMenu"></div>
-      </div>
-      <div id="main">
-        <div id="leftToggler"><span class="icon-toggler"></span></div>
-<script type="text/javascript" src="../../scripts/main.js"></script>        <div class="main-content" id="content" pageIds="lib::live.hms.video.utils////PointingToDeclaration//1946847589">
-          <div class="navigation-wrapper" id="navigation-wrapper">
-            <div class="breadcrumbs"><a href="../../index.html">lib</a>/<a href="index.html">live.hms.video.utils</a></div>
-            <div class="pull-right d-flex">
-              <div id="searchBar"></div>
-            </div>
-          </div>
-          <div class="cover ">
-            <h1 class="cover"><span>Package live.</span><wbr></wbr><span>hms.</span><wbr></wbr><span>video.</span><wbr></wbr><span>utils</span></h1>
-          </div>
-          <div class="tabbedcontent">
-            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
-            <div class="tabs-section-body">
-              <h2 class="">Types</h2>
-              <div class="table" data-togglable="Types"><a data-name="593775038%2FClasslikes%2F1946847589" anchor-label="GsonUtils" id="593775038%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="-gson-utils/index.html">GsonUtils</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="593775038%2FClasslikes%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">object <a href="-gson-utils/index.html">GsonUtils</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+    </div>
+    <div id="main">
+<div class="main-content" id="content" pageids="lib::live.hms.video.utils////PointingToDeclaration//1464059712">
+  <div class="breadcrumbs"><a href="../index.html">lib</a><span class="delimiter">/</span><span class="current">live.hms.video.utils</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span></h1>
   </div>
-</div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="850811098%2FClasslikes%2F1946847589" anchor-label="HMSCoroutineScope" id="850811098%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="-h-m-s-coroutine-scope/index.html">HMSCoroutineScope</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="850811098%2FClasslikes%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">object <a href="-h-m-s-coroutine-scope/index.html">HMSCoroutineScope</a> : <span data-unresolved-link="kotlinx.coroutines/CoroutineScope///PointingToDeclaration/">CoroutineScope</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-</div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="-1978364634%2FClasslikes%2F1946847589" anchor-label="HMSLogger" id="-1978364634%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="-h-m-s-logger/index.html">HMSLogger</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1978364634%2FClasslikes%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">object <a href="-h-m-s-logger/index.html">HMSLogger</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-</div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="-2012475525%2FClasslikes%2F1946847589" anchor-label="HMSUtils" id="-2012475525%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="-h-m-s-utils/index.html">HMSUtils</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2012475525%2FClasslikes%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">object <a href="-h-m-s-utils/index.html">HMSUtils</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-</div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="-137079532%2FClasslikes%2F1946847589" anchor-label="SharedEglContext" id="-137079532%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="-shared-egl-context/index.html">SharedEglContext</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-137079532%2FClasslikes%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">object <a href="-shared-egl-context/index.html">SharedEglContext</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-</div>
-</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h2 class="">Functions</h2>
-              <div class="table" data-togglable="Functions"><a data-name="558767298%2FFunctions%2F1946847589" anchor-label="toJson" id="558767298%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="to-json.html">toJson</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="558767298%2FFunctions%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">fun &lt;<a href="to-json.html">T</a>&gt; <a href="to-json.html">T</a>.<a href="to-json.html">toJson</a>(): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-</div>
-</div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="1274718177%2FFunctions%2F1946847589" anchor-label="toJsonObject" id="1274718177%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="to-json-object.html">toJsonObject</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1274718177%2FFunctions%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
-
-  <div>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">fun &lt;<a href="to-json-object.html">T</a>&gt; <a href="to-json-object.html">T</a>.<a href="to-json-object.html">toJsonObject</a>(): <span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-  </div>
-</div>
-</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <h2 class="">Properties</h2>
-              <div class="table" data-togglable="Properties"><a data-name="-257810769%2FProperties%2F1946847589" anchor-label="cApiDataChannelLabel" id="-257810769%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="c-api-data-channel-label.html">cApiDataChannelLabel</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-257810769%2FProperties%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><a data-name="-257810769%2FProperties%2F1946847589" anchor-label="cApiDataChannelLabel" id="-257810769%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="symbol monospace">const val <a href="c-api-data-channel-label.html">cApiDataChannelLabel</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="-909290786%2FProperties%2F1946847589" anchor-label="cDefaultInitEndpoint" id="-909290786%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="c-default-init-endpoint.html">cDefaultInitEndpoint</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-909290786%2FProperties%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><a data-name="-909290786%2FProperties%2F1946847589" anchor-label="cDefaultInitEndpoint" id="-909290786%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="symbol monospace">const val <a href="c-default-init-endpoint.html">cDefaultInitEndpoint</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="-1500710135%2FProperties%2F1946847589" anchor-label="cInconsistencyDetectBufferDelay" id="-1500710135%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="c-inconsistency-detect-buffer-delay.html">cInconsistencyDetectBufferDelay</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1500710135%2FProperties%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><a data-name="-1500710135%2FProperties%2F1946847589" anchor-label="cInconsistencyDetectBufferDelay" id="-1500710135%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="symbol monospace">const val <a href="c-inconsistency-detect-buffer-delay.html">cInconsistencyDetectBufferDelay</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="1409878864%2FProperties%2F1946847589" anchor-label="cInconsistencyDetectTimerDelay" id="1409878864%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="c-inconsistency-detect-timer-delay.html">cInconsistencyDetectTimerDelay</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1409878864%2FProperties%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><a data-name="1409878864%2FProperties%2F1946847589" anchor-label="cInconsistencyDetectTimerDelay" id="1409878864%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="symbol monospace">const val <a href="c-inconsistency-detect-timer-delay.html">cInconsistencyDetectTimerDelay</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="450901855%2FProperties%2F1946847589" anchor-label="cInconsistencyDetectTimerDelayTimeUnit" id="450901855%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="c-inconsistency-detect-timer-delay-time-unit.html">cInconsistencyDetectTimerDelayTimeUnit</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="450901855%2FProperties%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><a data-name="450901855%2FProperties%2F1946847589" anchor-label="cInconsistencyDetectTimerDelayTimeUnit" id="450901855%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="symbol monospace">val <a href="c-inconsistency-detect-timer-delay-time-unit.html">cInconsistencyDetectTimerDelayTimeUnit</a>: <a href="https://developer.android.com/reference/kotlin/java/util/concurrent/TimeUnit.html">TimeUnit</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="430247291%2FProperties%2F1946847589" anchor-label="cJsonRpcVersion" id="430247291%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="c-json-rpc-version.html">cJsonRpcVersion</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="430247291%2FProperties%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><a data-name="430247291%2FProperties%2F1946847589" anchor-label="cJsonRpcVersion" id="430247291%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="symbol monospace">const val <a href="c-json-rpc-version.html">cJsonRpcVersion</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="1405589379%2FProperties%2F1946847589" anchor-label="cMaxTransportRetries" id="1405589379%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="c-max-transport-retries.html">cMaxTransportRetries</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1405589379%2FProperties%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><a data-name="1405589379%2FProperties%2F1946847589" anchor-label="cMaxTransportRetries" id="1405589379%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="symbol monospace">const val <a href="c-max-transport-retries.html">cMaxTransportRetries</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a> = 5<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="1405589379%2FProperties%2F1946847589" anchor-label="cMaxTransportRetries" id="1405589379%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>Maximum number of retries that transport-layer will try before giving up on the connection and returning a failure</div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="165901974%2FProperties%2F1946847589" anchor-label="cMaxTransportRetryDelay" id="165901974%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="c-max-transport-retry-delay.html">cMaxTransportRetryDelay</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="165901974%2FProperties%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><a data-name="165901974%2FProperties%2F1946847589" anchor-label="cMaxTransportRetryDelay" id="165901974%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="symbol monospace">const val <a href="c-max-transport-retry-delay.html">cMaxTransportRetryDelay</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="165901974%2FProperties%2F1946847589" anchor-label="cMaxTransportRetryDelay" id="165901974%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>Maximum time that the reconnection logic waits before starting the next retry sequence.</div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="833484018%2FProperties%2F1946847589" anchor-label="cMaxTransportRetryDelayUnit" id="833484018%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="c-max-transport-retry-delay-unit.html">cMaxTransportRetryDelayUnit</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="833484018%2FProperties%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><a data-name="833484018%2FProperties%2F1946847589" anchor-label="cMaxTransportRetryDelayUnit" id="833484018%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="symbol monospace">val <a href="c-max-transport-retry-delay-unit.html">cMaxTransportRetryDelayUnit</a>: <a href="https://developer.android.com/reference/kotlin/java/util/concurrent/TimeUnit.html">TimeUnit</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="-522048978%2FProperties%2F1946847589" anchor-label="cMaxTransportRetryTimeMillis" id="-522048978%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="c-max-transport-retry-time-millis.html">cMaxTransportRetryTimeMillis</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-522048978%2FProperties%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><a data-name="-522048978%2FProperties%2F1946847589" anchor-label="cMaxTransportRetryTimeMillis" id="-522048978%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="symbol monospace">const val <a href="c-max-transport-retry-time-millis.html">cMaxTransportRetryTimeMillis</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="-822711374%2FProperties%2F1946847589" anchor-label="cPublishRenegotiationCallback" id="-822711374%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="c-publish-renegotiation-callback.html">cPublishRenegotiationCallback</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-822711374%2FProperties%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><a data-name="-822711374%2FProperties%2F1946847589" anchor-label="cPublishRenegotiationCallback" id="-822711374%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="symbol monospace">const val <a href="c-publish-renegotiation-callback.html">cPublishRenegotiationCallback</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="-822711374%2FProperties%2F1946847589" anchor-label="cPublishRenegotiationCallback" id="-822711374%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><span data-unresolved-link="live.hms.video.transport/HMSTransport///PointingToDeclaration/">HMSTransport</span> specific constants</div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="608199608%2FProperties%2F1946847589" anchor-label="cSubscribeIceRestartWaitTimeout" id="608199608%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="c-subscribe-ice-restart-wait-timeout.html">cSubscribeIceRestartWaitTimeout</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="608199608%2FProperties%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><a data-name="608199608%2FProperties%2F1946847589" anchor-label="cSubscribeIceRestartWaitTimeout" id="608199608%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="symbol monospace">const val <a href="c-subscribe-ice-restart-wait-timeout.html">cSubscribeIceRestartWaitTimeout</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="-877952748%2FProperties%2F1946847589" anchor-label="cSubscribeIceRestartWaitTimeoutUnit" id="-877952748%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="c-subscribe-ice-restart-wait-timeout-unit.html">cSubscribeIceRestartWaitTimeoutUnit</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-877952748%2FProperties%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><a data-name="-877952748%2FProperties%2F1946847589" anchor-label="cSubscribeIceRestartWaitTimeoutUnit" id="-877952748%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="symbol monospace">val <a href="c-subscribe-ice-restart-wait-timeout-unit.html">cSubscribeIceRestartWaitTimeoutUnit</a>: <a href="https://developer.android.com/reference/kotlin/java/util/concurrent/TimeUnit.html">TimeUnit</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-<a data-name="-1155405203%2FProperties%2F1946847589" anchor-label="cSubscribeRenegotiationCallback" id="-1155405203%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
-                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
-                  <div class="main-subrow keyValue ">
-                    <div class=""><span class="inline-flex"><a href="c-subscribe-renegotiation-callback.html">cSubscribeRenegotiationCallback</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1155405203%2FProperties%2F1946847589"></span>
-                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                        </span></span></div>
-                    <div>
-                      <div class="title">
-                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><a data-name="-1155405203%2FProperties%2F1946847589" anchor-label="cSubscribeRenegotiationCallback" id="-1155405203%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="symbol monospace">const val <a href="c-subscribe-renegotiation-callback.html">cSubscribeRenegotiationCallback</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+    <div class="tabs-section-body">
+      <h2 class="">Types</h2>
+      <div class="table" data-togglable="Types"><a data-name="819553568%2FClasslikes%2F1464059712" anchor-label="AndroidSDKConstants" id="819553568%2FClasslikes%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-android-s-d-k-constants/index.html"><span>Android</span><wbr><span><span>SDKConstants</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="819553568%2FClasslikes%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="-android-s-d-k-constants/index.html">AndroidSDKConstants</a></div></div></div>
               </div>
             </div>
           </div>
         </div>
-        <div class="footer"><span class="go-to-top-icon"><a href="#content"></a></span><span>© 2021 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+<a data-name="593775038%2FClasslikes%2F1464059712" anchor-label="GsonUtils" id="593775038%2FClasslikes%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-gson-utils/index.html"><span>Gson</span><wbr><span><span>Utils</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="593775038%2FClasslikes%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="-gson-utils/index.html">GsonUtils</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="850811098%2FClasslikes%2F1464059712" anchor-label="HMSCoroutineScope" id="850811098%2FClasslikes%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-h-m-s-coroutine-scope/index.html"><span>HMSCoroutine</span><wbr><span><span>Scope</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="850811098%2FClasslikes%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="-h-m-s-coroutine-scope/index.html">HMSCoroutineScope</a> : <span data-unresolved-link="kotlinx.coroutines/CoroutineScope///PointingToDeclaration/">CoroutineScope</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1978364634%2FClasslikes%2F1464059712" anchor-label="HMSLogger" id="-1978364634%2FClasslikes%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-h-m-s-logger/index.html"><span><span>HMSLogger</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1978364634%2FClasslikes%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="-h-m-s-logger/index.html">HMSLogger</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="241577410%2FClasslikes%2F1464059712" anchor-label="HmsUtilities" id="241577410%2FClasslikes%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-hms-utilities/index.html"><span>Hms</span><wbr><span><span>Utilities</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="241577410%2FClasslikes%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-hms-utilities/index.html">HmsUtilities</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="939728945%2FClasslikes%2F1464059712" anchor-label="LogUtils" id="939728945%2FClasslikes%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-log-utils/index.html"><span>Log</span><wbr><span><span>Utils</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="939728945%2FClasslikes%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="-log-utils/index.html">LogUtils</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1048018787%2FClasslikes%2F1464059712" anchor-label="MicrophoneUtils" id="-1048018787%2FClasslikes%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-microphone-utils/index.html"><span>Microphone</span><wbr><span><span>Utils</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1048018787%2FClasslikes%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-microphone-utils/index.html">MicrophoneUtils</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-137079532%2FClasslikes%2F1464059712" anchor-label="SharedEglContext" id="-137079532%2FClasslikes%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-shared-egl-context/index.html"><span>Shared</span><wbr><span>Egl</span><wbr><span><span>Context</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-137079532%2FClasslikes%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="-shared-egl-context/index.html">SharedEglContext</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1704164470%2FClasslikes%2F1464059712" anchor-label="WertcAudioUtils" id="1704164470%2FClasslikes%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="-wertc-audio-utils/index.html"><span>Wertc</span><wbr><span>Audio</span><wbr><span><span>Utils</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1704164470%2FClasslikes%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="-wertc-audio-utils/index.html">WertcAudioUtils</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Functions</h2>
+      <div class="table" data-togglable="Functions"><a data-name="558767298%2FFunctions%2F1464059712" anchor-label="toJson" id="558767298%2FFunctions%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="to-json.html"><span>to</span><wbr><span><span>Json</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="558767298%2FFunctions%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="to-json.html">T</a><span class="token operator">&gt; </span><a href="to-json.html">T</a><span class="token punctuation">.</span><a href="to-json.html"><span class="token function">toJson</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1274718177%2FFunctions%2F1464059712" anchor-label="toJsonObject" id="1274718177%2FFunctions%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="to-json-object.html"><span>to</span><wbr><span>Json</span><wbr><span><span>Object</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1274718177%2FFunctions%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="to-json-object.html">T</a><span class="token operator">&gt; </span><a href="to-json-object.html">T</a><span class="token punctuation">.</span><a href="to-json-object.html"><span class="token function">toJsonObject</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="com.google.gson/JsonObject///PointingToDeclaration/">JsonObject</span></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="">Properties</h2>
+      <div class="table" data-togglable="Properties"><a data-name="-257810769%2FProperties%2F1464059712" anchor-label="cApiDataChannelLabel" id="-257810769%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="c-api-data-channel-label.html"><span>c</span><wbr><span>Api</span><wbr><span>Data</span><wbr><span>Channel</span><wbr><span><span>Label</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-257810769%2FProperties%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><a data-name="-257810769%2FProperties%2F1464059712" anchor-label="cApiDataChannelLabel" id="-257810769%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="c-api-data-channel-label.html">cApiDataChannelLabel</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-909290786%2FProperties%2F1464059712" anchor-label="cDefaultInitEndpoint" id="-909290786%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="c-default-init-endpoint.html"><span>c</span><wbr><span>Default</span><wbr><span>Init</span><wbr><span><span>Endpoint</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-909290786%2FProperties%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><a data-name="-909290786%2FProperties%2F1464059712" anchor-label="cDefaultInitEndpoint" id="-909290786%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="c-default-init-endpoint.html">cDefaultInitEndpoint</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1500710135%2FProperties%2F1464059712" anchor-label="cInconsistencyDetectBufferDelay" id="-1500710135%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="c-inconsistency-detect-buffer-delay.html"><span>c</span><wbr><span>Inconsistency</span><wbr><span>Detect</span><wbr><span>Buffer</span><wbr><span><span>Delay</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1500710135%2FProperties%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><a data-name="-1500710135%2FProperties%2F1464059712" anchor-label="cInconsistencyDetectBufferDelay" id="-1500710135%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="c-inconsistency-detect-buffer-delay.html">cInconsistencyDetectBufferDelay</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1409878864%2FProperties%2F1464059712" anchor-label="cInconsistencyDetectTimerDelay" id="1409878864%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="c-inconsistency-detect-timer-delay.html"><span>c</span><wbr><span>Inconsistency</span><wbr><span>Detect</span><wbr><span>Timer</span><wbr><span><span>Delay</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1409878864%2FProperties%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><a data-name="1409878864%2FProperties%2F1464059712" anchor-label="cInconsistencyDetectTimerDelay" id="1409878864%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="c-inconsistency-detect-timer-delay.html">cInconsistencyDetectTimerDelay</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="450901855%2FProperties%2F1464059712" anchor-label="cInconsistencyDetectTimerDelayTimeUnit" id="450901855%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="c-inconsistency-detect-timer-delay-time-unit.html"><span>c</span><wbr><span>Inconsistency</span><wbr><span>Detect</span><wbr><span>Timer</span><wbr><span>Delay</span><wbr><span>Time</span><wbr><span><span>Unit</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="450901855%2FProperties%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><a data-name="450901855%2FProperties%2F1464059712" anchor-label="cInconsistencyDetectTimerDelayTimeUnit" id="450901855%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="c-inconsistency-detect-timer-delay-time-unit.html">cInconsistencyDetectTimerDelayTimeUnit</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/util/concurrent/TimeUnit.html">TimeUnit</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="430247291%2FProperties%2F1464059712" anchor-label="cJsonRpcVersion" id="430247291%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="c-json-rpc-version.html"><span>c</span><wbr><span>Json</span><wbr><span>Rpc</span><wbr><span><span>Version</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="430247291%2FProperties%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><a data-name="430247291%2FProperties%2F1464059712" anchor-label="cJsonRpcVersion" id="430247291%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="c-json-rpc-version.html">cJsonRpcVersion</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1162298027%2FProperties%2F1464059712" anchor-label="cMaxJoinAPIRetryTimeMillis" id="-1162298027%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="c-max-join-a-p-i-retry-time-millis.html"><span>c</span><wbr><span>Max</span><wbr><span>Join</span><wbr><span>APIRetry</span><wbr><span>Time</span><wbr><span><span>Millis</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1162298027%2FProperties%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><a data-name="-1162298027%2FProperties%2F1464059712" anchor-label="cMaxJoinAPIRetryTimeMillis" id="-1162298027%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="c-max-join-a-p-i-retry-time-millis.html">cMaxJoinAPIRetryTimeMillis</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="1405589379%2FProperties%2F1464059712" anchor-label="cMaxTransportRetries" id="1405589379%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="c-max-transport-retries.html"><span>c</span><wbr><span>Max</span><wbr><span>Transport</span><wbr><span><span>Retries</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1405589379%2FProperties%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><a data-name="1405589379%2FProperties%2F1464059712" anchor-label="cMaxTransportRetries" id="1405589379%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="c-max-transport-retries.html">cMaxTransportRetries</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">5</span></div><div class="brief "><a data-name="1405589379%2FProperties%2F1464059712" anchor-label="cMaxTransportRetries" id="1405589379%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a><p class="paragraph">Maximum number of retries that transport-layer will try before giving up on the connection and returning a failure</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="165901974%2FProperties%2F1464059712" anchor-label="cMaxTransportRetryDelay" id="165901974%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="c-max-transport-retry-delay.html"><span>c</span><wbr><span>Max</span><wbr><span>Transport</span><wbr><span>Retry</span><wbr><span><span>Delay</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="165901974%2FProperties%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><a data-name="165901974%2FProperties%2F1464059712" anchor-label="cMaxTransportRetryDelay" id="165901974%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="c-max-transport-retry-delay.html">cMaxTransportRetryDelay</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><a data-name="165901974%2FProperties%2F1464059712" anchor-label="cMaxTransportRetryDelay" id="165901974%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a><p class="paragraph">Maximum time that the reconnection logic waits before starting the next retry sequence.</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="833484018%2FProperties%2F1464059712" anchor-label="cMaxTransportRetryDelayUnit" id="833484018%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="c-max-transport-retry-delay-unit.html"><span>c</span><wbr><span>Max</span><wbr><span>Transport</span><wbr><span>Retry</span><wbr><span>Delay</span><wbr><span><span>Unit</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="833484018%2FProperties%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><a data-name="833484018%2FProperties%2F1464059712" anchor-label="cMaxTransportRetryDelayUnit" id="833484018%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="c-max-transport-retry-delay-unit.html">cMaxTransportRetryDelayUnit</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/util/concurrent/TimeUnit.html">TimeUnit</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-522048978%2FProperties%2F1464059712" anchor-label="cMaxTransportRetryTimeMillis" id="-522048978%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="c-max-transport-retry-time-millis.html"><span>c</span><wbr><span>Max</span><wbr><span>Transport</span><wbr><span>Retry</span><wbr><span>Time</span><wbr><span><span>Millis</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-522048978%2FProperties%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><a data-name="-522048978%2FProperties%2F1464059712" anchor-label="cMaxTransportRetryTimeMillis" id="-522048978%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="c-max-transport-retry-time-millis.html">cMaxTransportRetryTimeMillis</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-822711374%2FProperties%2F1464059712" anchor-label="cPublishRenegotiationCallback" id="-822711374%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="c-publish-renegotiation-callback.html"><span>c</span><wbr><span>Publish</span><wbr><span>Renegotiation</span><wbr><span><span>Callback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-822711374%2FProperties%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><a data-name="-822711374%2FProperties%2F1464059712" anchor-label="cPublishRenegotiationCallback" id="-822711374%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="c-publish-renegotiation-callback.html">cPublishRenegotiationCallback</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><a data-name="-822711374%2FProperties%2F1464059712" anchor-label="cPublishRenegotiationCallback" id="-822711374%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a><p class="paragraph"><span data-unresolved-link="live.hms.video.transport/HMSTransport///PointingToDeclaration/">HMSTransport</span> specific constants</p></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="608199608%2FProperties%2F1464059712" anchor-label="cSubscribeIceRestartWaitTimeout" id="608199608%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="c-subscribe-ice-restart-wait-timeout.html"><span>c</span><wbr><span>Subscribe</span><wbr><span>Ice</span><wbr><span>Restart</span><wbr><span>Wait</span><wbr><span><span>Timeout</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="608199608%2FProperties%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><a data-name="608199608%2FProperties%2F1464059712" anchor-label="cSubscribeIceRestartWaitTimeout" id="608199608%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="c-subscribe-ice-restart-wait-timeout.html">cSubscribeIceRestartWaitTimeout</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-877952748%2FProperties%2F1464059712" anchor-label="cSubscribeIceRestartWaitTimeoutUnit" id="-877952748%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="c-subscribe-ice-restart-wait-timeout-unit.html"><span>c</span><wbr><span>Subscribe</span><wbr><span>Ice</span><wbr><span>Restart</span><wbr><span>Wait</span><wbr><span>Timeout</span><wbr><span><span>Unit</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-877952748%2FProperties%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><a data-name="-877952748%2FProperties%2F1464059712" anchor-label="cSubscribeIceRestartWaitTimeoutUnit" id="-877952748%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="c-subscribe-ice-restart-wait-timeout-unit.html">cSubscribeIceRestartWaitTimeoutUnit</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/util/concurrent/TimeUnit.html">TimeUnit</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+<a data-name="-1155405203%2FProperties%2F1464059712" anchor-label="cSubscribeRenegotiationCallback" id="-1155405203%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a>
+        <div class="table-row" data-filterable-current=":lib:dokkaHtmlPartial/release" data-filterable-set=":lib:dokkaHtmlPartial/release">
+          <div class="main-subrow keyValue ">
+            <div class=""><span class="inline-flex">
+                <div><a href="c-subscribe-renegotiation-callback.html"><span>c</span><wbr><span>Subscribe</span><wbr><span>Renegotiation</span><wbr><span><span>Callback</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1155405203%2FProperties%2F1464059712"></span>
+                  <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                </span></span></div>
+            <div>
+              <div class="title">
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-dependent-content" data-active="" data-togglable=":lib:dokkaHtmlPartial/release"><a data-name="-1155405203%2FProperties%2F1464059712" anchor-label="cSubscribeRenegotiationCallback" id="-1155405203%2FProperties%2F1464059712" data-filterable-set=":lib:dokkaHtmlPartial/release"></a><div class="symbol monospace"><span class="token keyword">const </span><span class="token keyword">val </span><a href="c-subscribe-renegotiation-callback.html">cSubscribeRenegotiationCallback</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </body>
-</html>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2022 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+
+</body></html>
 
