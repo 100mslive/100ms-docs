@@ -24,6 +24,11 @@ const data = {
     domainsAndPorts: DomainsPorts,
     liveStreaming: LiveStreaming,
     recordings: Recordings,
+
+    /**
+     * Adaptive bitrate docs are split into 2 parts because 3-backtick
+     * code snippets in `md` files are not rendering well in mdx
+     */
     adaptiveBitrate1: AdaptiveBitrate1,
     adaptiveBitrate2: AdaptiveBitrate2
 };
