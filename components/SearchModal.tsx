@@ -17,19 +17,33 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
     const ref = React.useRef();
     const inputRef = React.useRef();
     // @ts-ignore
-    useClickOutside(ref, () => setModal(false));
+    useClickOutside(ref, () => {
+        if (inputRef.current)
+            window.analytics.track('search.dismissed', {
+                textInSearch: inputRef.current?.value || '',
+                referrer: document.referrer,
+                path: window.location.hostname,
+                pathname: window.location.pathname,
+                href: window.location.href
+            });
+        setModal(false);
+    });
+
     React.useEffect(() => {
         // @ts-ignore
         inputRef.current?.focus();
     }, []);
+
     const res = useSearch({
         search,
         docs
     });
+
     // reset if result is 0
     if (res.length === 0) {
         paletteTrack.current = -1;
     }
+
     const downKeyPressed = useKeyPress('ArrowDown');
     const upKeyPressed = useKeyPress('ArrowUp');
     if (downKeyPressed) {
@@ -94,7 +108,20 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
                 <div className="res-ctx">
                     {res.map((e, i) => (
                         <Link href={e.url} key={e.url} passHref>
-                            <a id={`res-box-${i}`} className="res-box" onClick={() => setModal(false)}>
+                            <a
+                                id={`res-box-${i}`}
+                                className="res-box"
+                                onClick={() => {
+                                    window.analytics.track('search.result.cicked', {
+                                        textInSearch: inputRef.current.value,
+                                        rankOfSearchResult: i+1,
+                                        locationOfSearchResult: window.location.href,
+                                        referrer: document.referrer,
+                                        path: window.location.hostname,
+                                        pathname: window.location.pathname,
+                                    });
+                                    setModal(false);
+                                }}>
                                 <div>
                                     <span>{e.title}</span>
                                     <span className="slug">{e.url}</span>
