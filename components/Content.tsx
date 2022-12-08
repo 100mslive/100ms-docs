@@ -11,7 +11,9 @@ import TemplatesRoles from '../common/templates-and-roles.md';
 import SecurityTokens from '../common/security-tokens.md';
 import DomainsPorts from '../common/firewall-and-ports.md';
 import LiveStreaming from '../common/live-streaming.md';
-import Recordings from '../common/basic_recording.md';
+import Recordings from '../common/recordings.md';
+import AdaptiveBitrate1 from "../common/adaptive-bitrate-1.md";
+import AdaptiveBitrate2 from "../common/adaptive-bitrate-2.md";
 
 const data = {
     basics: Basics,
@@ -21,7 +23,9 @@ const data = {
     securityAndTokens: SecurityTokens,
     domainsAndPorts: DomainsPorts,
     liveStreaming: LiveStreaming,
-    Recordings: Recordings,
+    recordings: Recordings,
+    adaptiveBitrate1: AdaptiveBitrate1,
+    adaptiveBitrate2: AdaptiveBitrate2
 };
 
 interface Props {
