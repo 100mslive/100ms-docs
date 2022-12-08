@@ -14,13 +14,20 @@ interface Props {
 const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
     const paletteTrack = React.useRef(-1);
     const [search, setSearch] = React.useState('');
-    const ref = React.useRef();
-    const inputRef = React.useRef();
+    const ref = React.useRef<HTMLElement | null>();
+    const inputRef = React.useRef<HTMLInputElement>();
     // @ts-ignore
+
+    const res = useSearch({
+        search,
+        docs
+    });
+
     useClickOutside(ref, () => {
         if (inputRef.current)
-            window.analytics.track('search.dismissed', {
+            window.analytics.track('docs.search.dismissed', {
                 textInSearch: inputRef.current?.value || '',
+                totalNumberOfResults: res.length,
                 referrer: document.referrer,
                 path: window.location.hostname,
                 pathname: window.location.pathname,
@@ -33,11 +40,6 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
         // @ts-ignore
         inputRef.current?.focus();
     }, []);
-
-    const res = useSearch({
-        search,
-        docs
-    });
 
     // reset if result is 0
     if (res.length === 0) {
@@ -112,7 +114,8 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
                                 id={`res-box-${i}`}
                                 className="res-box"
                                 onClick={() => {
-                                    window.analytics.track('search.result.cicked', {
+                                    window.analytics.track('docs.search.result.cicked', {
+                                        totalNumberOfResults: res.length,
                                         textInSearch: inputRef.current.value,
                                         rankOfSearchResult: i+1,
                                         locationOfSearchResult: window.location.href,
