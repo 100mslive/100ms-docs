@@ -426,59 +426,33 @@ class _MeetingPageState extends State<MeetingPage>
 }
 ```
 
+### Test the app
+
+To test the application, you need to either connect your physical phone as a device in Android Studio or use an emulator. In this guide, we have connected a phone via USB to test the app.
+
+#### Fetch token to join the room
+
+To test audio/video functionality, you need to connect to a 100ms room; please check following steps for the same:
+
+1. Navigate to your [100ms dashboard](https://dashboard.100ms.live/dashboard) or [create an account](https://dashboard.100ms.live/register) if you don't have one.
+2. Use the `Video Conferencing Starter Kit` to create a room with a default template assigned to it to test this app quickly.
+3. Go to [Rooms page](https://dashboard.100ms.live/rooms) in your dashboard, click on the `Room Id` of the room you created above, and click on the `Join room` button on the top right.
+4. You will see two 100ms demo URLs for two roles created when you deployed the starter kit; you can click on the 'key' icon to copy the token and update the `authToken` in "lib/main.dart" file.
+
+<video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
+    <source src="/docs/guides/update-token-flutter-android.mp4" type="video/mp4" />
+</video>
+<br />
+
+Now, after you click `join`, you should be able to see yourself. You can join the room using a browser to join as the second peer to check audio/video transactions between two or more peers.
+
+<video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
+    <source src="/docs/guides/join-room-flutter-android.mp4" type="video/mp4" />
+</video>
+<br />
+
 </Tab>
 
 <Tab id="sample-app-1">
-
-### Prerequisites
-
-To complete this implementation for Android platform, you must have:
-
--   An [100ms account](https://dashboard.100ms.live/register) if you don't have one already.
--   [Flutter](https://docs.flutter.dev/get-started/install) `3.3.0` or higher
--   Dart `2.12.0` or above
--   [VS code](https://code.visualstudio.com/) or [Android Studio](https://developer.android.com/studio) or any other IDE that supports Flutter. For more information on setting up an IDE, check [Flutter's official guide](https://docs.flutter.dev/get-started/editor).
-
-### Create a Flutter app
-
-Once you have the above prerequisites, you can follow the below steps to create a Flutter app either using terminal or using Android Studio:
-
--   If you wish to create a Flutter app using terminal, you can get the [Flutter SDK](https://docs.flutter.dev/get-started/install/macos#get-sdk) and use the below command:
-
-    ```bash
-    flutter create my_app
-    ```
-
--   If you are using Android Studio, you can create a Flutter project from the welcome screen by clicking on `New Flutter Project` and from the menu bar, File > New > New Flutter Project.
--   Verify the `Flutter SDK path` specifies the SDK's location (select Install SDK… if the text field is blank).
--   Enter a project name (for example, myapp). Then click Next.
--   Click Finish and wait till Android Studio creates the project.
-    <br />
-    <video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
-        <source src="/docs/guides/create-flutter-app.mp4" type="video/mp4" />
-    </video>
-    <br />
-
-### Add 100ms SDK to your project
-
-Once you have created a Flutter app, you must add the 100ms Flutter SDK and permissions_handler (to handle device media permissions) to your app.
-
-```yaml
-# 100ms SDK and permissions_handler
-hmssdk_flutter:
-permission_handler:
-```
-
--   You can add the above snippet to the `pubspec.yaml` from Terminal using some terminal editor like Vim or Nano.
--   Run `flutter pub get` to download these dependencies to your app.
--   In Android Studio, you can update the `pubspec.yaml` and click `Pub get` to download these dependencies to your app.
-
-    <br />
-    <video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
-        <source src="/docs/guides/add-hms-sdk.mp4" type="video/mp4" />
-    </video>
-    <br />
-
-### Complete code example
 
 </Tab>
