@@ -114,7 +114,7 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
                                 id={`res-box-${i}`}
                                 className="res-box"
                                 onClick={() => {
-                                    window.analytics.track('docs.search.result.cicked', {
+                                    window.analytics.track('docs.search.result.clicked', {
                                         totalNumberOfResults: res.length,
                                         // @ts-ignore
                                         textInSearch: inputRef.current?.value || '',
