@@ -30,9 +30,12 @@ HMSRTMPConfig takes the following:
 
 1. meetingUrl: String. The url the 100ms bot user will open to join your room. It must allow access without any user level interaction.
 2. rtmpUrls: `Array<String>`. If streaming is required, this has to be one or more RTMP Injest Urls with a max limit of 3 urls where the stream should go. If only recording, this can be an empty list.
+
     - Format: `rtmp://server.com/app/STREAM_KEY`
-        - "rtmp://server.com/app" - RTMP stream URL.
-        - "STREAM_KEY" - RTMP stream key.
+    - Example: `rtmp://a.rtmp.youtube.com/live2/k0jv-329m-1y7f-ktth-ck48`
+        - "rtmp://a.rtmp.youtube.com/live2/" - RTMP stream URL.
+        - "k0jv-329m-1y7f-ktth-ck48" - RTMP stream key.
+
 3. record: Boolean. If recording is required, set true. If recording is not required, set false. This value has no effect on streaming.
 
 -   If both rtmpUrls and record = true are provided, both streaming and recording will begin.

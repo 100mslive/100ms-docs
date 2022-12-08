@@ -22,9 +22,12 @@ These are the options which need to be passed to start RTMP or recording -
 
 1. **meetingURL**: _string_. The URL the 100ms bot user will open to join your room. It must allow access without any user level interaction.
 2. **rtmpURLs**: _string[]_. Optional, if streaming is required, this has to be one or more RTMP Ingest URLs with max limit of 3 URLs where the stream should go.
+
     - Format: `rtmp://server.com/app/STREAM_KEY`
-        - "rtmp://server.com/app" - RTMP stream URL.
-        - "STREAM_KEY" - RTMP stream key.
+    - Example: `rtmp://a.rtmp.youtube.com/live2/k0jv-329m-1y7f-ktth-ck48`
+        - "rtmp://a.rtmp.youtube.com/live2/" - RTMP stream URL.
+        - "k0jv-329m-1y7f-ktth-ck48" - RTMP stream key.
+
 3. **record**: _boolean_. Optional, If recording is required this can be set as true. This value has no effect on streaming.
 4. **resolution**: _{ width: number, height: number }_. Optional, if passed the recording or RTMP will be done in the passed in resolution.
 

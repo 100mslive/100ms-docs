@@ -7,7 +7,7 @@ nav: 2.3
 
 You can use the token endpoint from your 100ms dashboard while building integration with 100ms. This acts as a tool enabling front-end developers to complete the integration without depending on the backend developers to set up a token generation backend service.
 
-**URL format:** `https://prod-in2.100ms.live/hmsapi/<your-100ms-subdomain>.app.100ms.live/api/token`
+**URL format:** `<YOUR_TOKEN_ENDPOINT>api/token`
 
 100ms token endpoint can generate an app token with the inputs passed, such as room_id, role, & user_id (optional - your internal user identifier as the peer's user_id). You can use [jwt.io](https://jwt.io/) to validate whether the app token contains the same input values.
 
@@ -29,7 +29,7 @@ curl --location --request POST 'https://prod-in2.100ms.live/hmsapi/johndoe.app.1
 
 ```json
 {
-    "token": "***************************",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOi***************************R3tT-Yk",
     "msg": "token generated successfully",
     "status": 200,
     "success": true,
@@ -41,25 +41,13 @@ curl --location --request POST 'https://prod-in2.100ms.live/hmsapi/johndoe.app.1
 
 ### Example client-side implementation
 
-You can directly add this to your client-side implementation, for example:
-
-```jsx
-const response = await fetch(`${tokenEndpoint}api/token`, {
-    method: 'POST',
-    body: JSON.stringify({
-        room_id: '633fcdd84208780bf665346a',
-        role: 'host',
-        user_id: '1234'
-    })
-});
-const { token } = await response.json();
-```
+You can directly add this to your client-side implementation, check our [sample app](https://github.com/100mslive/100ms-flutter/blob/0d4c3b5409003932d80cb19f67027a63424169e7/example/lib/service/room_service.dart#L8) for reference.
 
 ### Disable 100ms token endpoint
 
 Due to some security concerns, if you don't wish to use the token endpoint to generate app tokens, then you can disable it on the [Developers page](https://dashboard.100ms.live/developer) on your dashboard by disabling the option "Disable &lt;room_id&gt;/&lt;role&gt; link format."
 
-![Token endpoint](/guides/disable-token-endpoint.png)
+![Disable Token endpoint](/guides/disable-token-endpoint.png)
 
 #### Error Response
 
