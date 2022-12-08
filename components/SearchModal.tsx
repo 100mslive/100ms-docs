@@ -14,7 +14,7 @@ interface Props {
 const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
     const paletteTrack = React.useRef(-1);
     const [search, setSearch] = React.useState('');
-    const ref = React.useRef<HTMLElement | null>();
+    const ref = React.useRef();
     const inputRef = React.useRef<HTMLInputElement>();
     // @ts-ignore
 
