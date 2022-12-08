@@ -15,21 +15,37 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
     const paletteTrack = React.useRef(-1);
     const [search, setSearch] = React.useState('');
     const ref = React.useRef();
-    const inputRef = React.useRef();
+    const inputRef = React.useRef<HTMLInputElement>();
     // @ts-ignore
-    useClickOutside(ref, () => setModal(false));
-    React.useEffect(() => {
-        // @ts-ignore
-        inputRef.current?.focus();
-    }, []);
+
     const res = useSearch({
         search,
         docs
     });
+    // @ts-ignore
+    useClickOutside(ref, () => {
+        if (inputRef.current)
+            window.analytics.track('docs.search.dismissed', {
+                textInSearch: inputRef.current?.value || '',
+                totalNumberOfResults: res.length,
+                referrer: document.referrer,
+                path: window.location.hostname,
+                pathname: window.location.pathname,
+                href: window.location.href
+            });
+        setModal(false);
+    });
+
+    React.useEffect(() => {
+        // @ts-ignore
+        inputRef.current?.focus();
+    }, []);
+
     // reset if result is 0
     if (res.length === 0) {
         paletteTrack.current = -1;
     }
+
     const downKeyPressed = useKeyPress('ArrowDown');
     const upKeyPressed = useKeyPress('ArrowUp');
     if (downKeyPressed) {
@@ -94,7 +110,22 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
                 <div className="res-ctx">
                     {res.map((e, i) => (
                         <Link href={e.url} key={e.url} passHref>
-                            <a id={`res-box-${i}`} className="res-box" onClick={() => setModal(false)}>
+                            <a
+                                id={`res-box-${i}`}
+                                className="res-box"
+                                onClick={() => {
+                                    window.analytics.track('docs.search.result.clicked', {
+                                        totalNumberOfResults: res.length,
+                                        // @ts-ignore
+                                        textInSearch: inputRef.current?.value || '',
+                                        rankOfSearchResult: i + 1,
+                                        locationOfSearchResult: window.location.href,
+                                        referrer: document.referrer,
+                                        path: window.location.hostname,
+                                        pathname: window.location.pathname
+                                    });
+                                    setModal(false);
+                                }}>
                                 <div>
                                     <span>{e.title}</span>
                                     <span className="slug">{e.url}</span>
