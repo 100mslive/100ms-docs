@@ -18,6 +18,7 @@ The topics covered in this doc are:
 ### Starting Streaming / Recording
 
 Check if user has permissions
+
 ```js
 const browserRecording: boolean = peer.role.permissions.browserRecording;
 const rtmpStreaming: boolean = peer.role.permissions.rtmpStreaming;
@@ -29,11 +30,14 @@ HMSRTMPConfig takes the following:
 
 1. meetingUrl: String. The url the 100ms bot user will open to join your room. It must allow access without any user level interaction.
 2. rtmpUrls: `Array<String>`. If streaming is required, this has to be one or more RTMP Injest Urls with a max limit of 3 urls where the stream should go. If only recording, this can be an empty list.
+    - Format: `rtmp://server.com/app/STREAM_KEY`
+        - "rtmp://server.com/app" - RTMP stream URL.
+        - "STREAM_KEY" - RTMP stream key.
 3. record: Boolean. If recording is required, set true. If recording is not required, set false. This value has no effect on streaming.
 
-* If both rtmpUrls and record = true are provided, both streaming and recording will begin.
-* If only rtmpUrls are provided, only streaming will begin.
-* If only record true is provided, only recording will begin.
+-   If both rtmpUrls and record = true are provided, both streaming and recording will begin.
+-   If only rtmpUrls are provided, only streaming will begin.
+-   If only record true is provided, only recording will begin.
 
 If either one is started, the other can't be started without first stopping whatever is running. Eg: Only streaming is started. Recording can't be started unless streaming is stopped first.
 
@@ -43,36 +47,33 @@ The result of the action is returned. On failure to start then an error will be 
 
 ```js
 import { HMSRTMPConfig } from '@100mslive/react-native-hms';
-  
+
 const recordingDetails = HMSRTMPConfig({
-  record: true,
-  meetingURL: roomID + '/viewer?token=beam_recording',
-  rtmpURLs: [],
+    record: true,
+    meetingURL: roomID + '/viewer?token=beam_recording',
+    rtmpURLs: []
 });
-  
-await instance?.startRTMPOrRecording(recordingDetails)
-    .then(d => console.log('Start Recording Success: ', d))
-    .catch(e => console.log('Start Recording Error: ', e));
+
+await instance
+    ?.startRTMPOrRecording(recordingDetails)
+    .then((d) => console.log('Start Recording Success: ', d))
+    .catch((e) => console.log('Start Recording Error: ', e));
 ```
 
-
 ### Stopping Streaming / Recording
-
 
 To stop streaming AND recording. It is not currently possible to stop just one, whatever is running will be stopped.
 
 Here's how to stop both:
 
 The result of the action is returned. On failure to start then an error will be sent in onError listener.
-  
-
 
 ```js
-await instance?.stopRtmpAndRecording()
-    .then(d => console.log('Stop Recording Success: ', d))
-    .catch(e => console.log('Stop Recording Error: ', e));
+await instance
+    ?.stopRtmpAndRecording()
+    .then((d) => console.log('Stop Recording Success: ', d))
+    .catch((e) => console.log('Stop Recording Error: ', e));
 ```
-
 
 ### Current Room Status
 
@@ -82,33 +83,32 @@ Here are the relevant properties inside the HMSRoom object which you can read to
 
 Each of them are objects which contain a boolean running which lets you know if it's active on the room right now and error which lets you know if there was an error.
 
-Apart from the rtmp stream and the browser recording, which are ones you can start and stop, there is also a serverRecording, which can be turned on for the room for archival purposes and which cannot currently be stopped if enabled for the room from the dashboard.  
+Apart from the rtmp stream and the browser recording, which are ones you can start and stop, there is also a serverRecording, which can be turned on for the room for archival purposes and which cannot currently be stopped if enabled for the room from the dashboard.
 
 1. rtmpHMSRtmpStreamingState an instance of HMSRtmpStreamingState, which looks like:
 
-```js 
+```js
 class HMSRtmpStreamingState(
     val running : Boolean,
     val error : HMSException?
 )
 ```
 
-
 This represents a livestream to one or more RTMP urls.
 
 2. browserRecordingState an instance of HMSBrowserRecordingState, which looks like:
 
-```js 
+```js
 class HMSBrowserRecordingState(
     val running : Boolean,
     val error : HMSException?
 )
 ```
 
-
 This represents the recording that can be requested to start.
 
 3. serverRecordingState an instance of HMSServerRecordingState, which looks like:
+
 ```js
 class HMSServerRecordingState(
     val running : Boolean,
@@ -116,7 +116,4 @@ class HMSServerRecordingState(
 )
 ```
 
-
 This represents that the room was set to be recorded when it was created and all sessions within it will always be recorded for archival by the server.
-  
-  

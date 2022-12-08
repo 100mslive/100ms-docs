@@ -1,4 +1,4 @@
-## Creating Account in 100ms
+## Create an 100ms account
 
 - Create an account at [Dashboard of 100ms](https://dashboard.100ms.live/)
 
@@ -22,7 +22,7 @@
 
 ![Dasboard](/docs/guides/token/go-to-dashboard.png)
 
-## Creating Room
+## Create a room
 
 - Go over to [Room in Dashboard](https://dashboard.100ms.live/rooms) and click on "Create Room" , While creating a room you can specify it's name, roles or enable recording.
 
@@ -32,11 +32,9 @@
 
 ![Room Id](/docs/guides/token/room-id.png)
 
-## Token Generation
+## Get a temporary token from 100ms dashboard
 
 Any client connecting calling 100ms' service needs to authenticate using an auth token. In production you would have your own servers generating the tokens (see more [here](/docs/javascript/v2/foundation/security-and-tokens)), but for a quick start you can use the dashboard to create a token for you. The token will expire in 24 hours and should not be hard-coded into a production app.
-
-### Getting a Temporary Token
 
 - To get a temporary token click on "Join room" button.
 
