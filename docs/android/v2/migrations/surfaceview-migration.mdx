@@ -4,7 +4,11 @@ nav: 14.1
 description: Migrating from SurfaceViewRenderer --> HMSVideoView
 ---
 
-HMSVideoView provides a better abstaraction to render live video, comes with additionaly features like zoom and pan, auto-bitrate adjuster on the playback side.
+### Why should you migrate?
+- HMSVideoView provides a better abstraction to render live video and handles edge cases like managing release and init state. Can prevent accidentally subscribing to video track more than once.
+- Has in-built support for zoom and pan
+- Has in-built support to intelligently subscribe to video of the correct resolution. (Auto-Simulcast)  
+- All the new features will be developed on HMSVideoView and SurfaceViewRenderer will be deprecated.
 
 To use HMSVideoView you'll need to migrate from SurfaceViewRenderer (if you are already using it to render live video), by downloading the dependency from Maven Central
 
