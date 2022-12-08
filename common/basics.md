@@ -14,9 +14,10 @@ Any application built using 100ms' SDK has 2 components.
 
 ## Basic Concepts
 
--   `Room` A room is the basic object that 100ms SDKs return on successful connection. This contains references to peers, tracks and everything you need to render a live a/v app
+-   `Room` A room is the basic object that 100ms SDKs return on successful connection. This contains references to peers, tracks and everything you need to render a live a/v or live streaming app.
 -   `Peer` A peer is the object returned by 100ms SDKs that contains all information about a user - name, role, video track etc.
--   `Track` A track represents either the audio or video that a peer is publishing
+-   `Session` A session depicts activity in a room. A session is created when one or more peers join a room to communicate with each other. A single room can have multiple sessions; a unique ID will be assigned to each session. The maximum allowed duration for a session on the 100ms platform is 12 hours. 
+-   `Track` A track is a segment of media (audio/video) captured from the peer's camera and microphone. Peers in a session publish local tracks and subscribe to remote tracks from other peers. 
 -   `Role` A role defines who can a peer see/hear, the quality at which they publish their video, whether they have permissions to publish video/screenshare, mute someone, change someone's role.
 -   `Template` A template is a collection of roles, room settings, recording and RTMP settings (if used), that are used by the SDK to decide which geography to connect to, which tracks to return to the client, whether to turn on recording when a room is created, etc. Each room is associated with a template.
 -   `Destinations` Destinations is used to save audio/video calls for offline viewing. 100ms supports 2 kinds of recording - SFU recording and Browser recording. Also, `HLS enabled` configuration will allow you to live stream your room over HLS. 

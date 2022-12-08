@@ -40,7 +40,7 @@ const LinkCustom = (props) => {
             </Link>
         );
     }
-    const { hostname } = new URL(href)
+    const { hostname } = new URL(href);
     const btnId = `${hostname.split('.').slice(0, -1).join('.')}.viewed`;
     return (
         <a

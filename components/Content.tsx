@@ -13,7 +13,9 @@ import SecurityTokens1 from '../common/security-tokens-1.md';
 import SecurityTokens2 from '../common/security-tokens-2.md';
 import DomainsPorts from '../common/firewall-and-ports.md';
 import LiveStreaming from '../common/live-streaming.md';
-import Recordings from '../common/basic_recording.md';
+import Recordings from '../common/recordings.md';
+import AdaptiveBitrate1 from "../common/adaptive-bitrate-1.md";
+import AdaptiveBitrate2 from "../common/adaptive-bitrate-2.md";
 
 const data = {
     basics: Basics,
@@ -25,7 +27,14 @@ const data = {
     securityAndTokens2: SecurityTokens2,
     domainsAndPorts: DomainsPorts,
     liveStreaming: LiveStreaming,
-    Recordings: Recordings,
+    recordings: Recordings,
+
+    /**
+     * Adaptive bitrate docs are split into 2 parts because 3-backtick
+     * code snippets in `md` files are not rendering well in mdx
+     */
+    adaptiveBitrate1: AdaptiveBitrate1,
+    adaptiveBitrate2: AdaptiveBitrate2
 };
 
 interface Props {
