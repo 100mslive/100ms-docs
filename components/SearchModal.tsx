@@ -22,7 +22,7 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
         search,
         docs
     });
-
+    // @ts-ignore
     useClickOutside(ref, () => {
         if (inputRef.current)
             window.analytics.track('docs.search.dismissed', {
@@ -117,11 +117,11 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
                                     window.analytics.track('docs.search.result.cicked', {
                                         totalNumberOfResults: res.length,
                                         textInSearch: inputRef.current.value,
-                                        rankOfSearchResult: i+1,
+                                        rankOfSearchResult: i + 1,
                                         locationOfSearchResult: window.location.href,
                                         referrer: document.referrer,
                                         path: window.location.hostname,
-                                        pathname: window.location.pathname,
+                                        pathname: window.location.pathname
                                     });
                                     setModal(false);
                                 }}>
