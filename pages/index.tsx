@@ -1,4 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
+import Feedback from '@/components/Feedback';
 import Footer from '@/components/Footer';
 import HomeDropDown from '@/components/HomeDropDown';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
@@ -409,6 +410,7 @@ const Homepage = () => {
                             </Flex>
                         </Box>
                     </Flex>
+                    <Feedback/>
                     <Footer css={{ backgroundColor: '$backgroundDefault' }} />
                 </>
             ) : null}

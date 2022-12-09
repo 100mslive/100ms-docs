@@ -46,7 +46,6 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                     </div>
                 </>
             ) : null}
-
             <style jsx>{`
                 .toc-ctx {
                     display: flex;
