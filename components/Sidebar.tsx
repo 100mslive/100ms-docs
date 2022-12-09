@@ -29,10 +29,12 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
         query: { slug },
         asPath
     } = router;
+
     const { menu, setMenu } = menuState;
     useEffect(() => {
         setMenu(false);
     }, [router]);
+
     const [currentDocSlug] = slug as string[];
     const [navAPI, setNavAPI] = useState(currentNav);
     useEffect(() => {
@@ -66,6 +68,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
     }
     indexOf = indexOf === -1 ? 0 : indexOf;
     const [tech, setTech] = useState(menuItem[indexOf]);
+    console.log(menuItem)
     const changeTech = (s) => {
         setTech(s);
         if (slug[0] === 'api-reference') {
