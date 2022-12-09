@@ -71,12 +71,12 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                 a {
                     color: inherit;
                     text-decoration: none;
-                    color: var(--docs_text_tertiary);
+                    color: var(--docs_text_secondary);
                 }
                 .text {
                     font-size: 14px;
                     margin: 0.5rem 0;
-                    color: var(--docs_text_tertiary);
+                    color: var(--docs_text_secondary);
                 }
                 .text a {
                     padding-left: 1rem !important;
