@@ -139,14 +139,13 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
             <style jsx>{`
                 .sidebar {
                     width: 304px;
-                    padding-top: 24px;
                     padding-bottom: 32px;
                     display: flex;
                     flex-direction: column;
                     align-items: stretch;
                     height: calc(100vh - 136px);
                     overflow-y: scroll;
-                    top: ${menu ? '' : '80px'};
+                    top: ${menu ? '' : '104px'};
                     left: 0;
                     position: sticky;
                     z-index: 100;
@@ -164,6 +163,11 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                     margin-right: 1.5rem;
                 }
                 .menu-container:first-of-type {
+                    margin-top: 0px;
+                    position: sticky;
+                    top: 0px;
+                    z-index: 100;
+                    background: var(--docs_bg_content);
                     margin-bottom: 10px;
                 }
                 .menu-item {
