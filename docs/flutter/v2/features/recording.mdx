@@ -24,9 +24,12 @@ To start recording, streaming or both, create an instance of `HMSRecordingConfig
 
 1. **meetingUrl**: _String_. The url the 100ms bot user will open to join your room. It must allow access without any user level interaction.
 2. **rtmpUrls**: _List<String\>_. If streaming is required, this has to be one or more RTMP Injest Urls with a max limit of 3 urls where the stream should go. If only recording, this can be an empty list.
+
     - Format: `rtmp://server.com/app/STREAM_KEY`
-        - "rtmp://server.com/app" - RTMP stream URL.
-        - "STREAM_KEY" - RTMP stream key.
+    - Example: `rtmp://a.rtmp.youtube.com/live2/k0jv-329m-1y7f-ktth-ck48`
+        - "rtmp://a.rtmp.youtube.com/live2/" - RTMP stream URL.
+        - "k0jv-329m-1y7f-ktth-ck48" - RTMP stream key.
+
 3. **record**: _Boolean_. If recording is required, set true. If recording is not required, set false. This value has no effect on streaming.
 4. **resolution**: _HMSResolution_. An optional value for the output resolution of the stream. For instance default is landscape at 1280x720 but this could be set for a portrait mode of 720x1280. Or smaller values like 480x80.
 
