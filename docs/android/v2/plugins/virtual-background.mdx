@@ -39,13 +39,39 @@ This guide provides an overview of usage of the Virtual Background plugin of 100
 
 -   Adding the Virtual Background plugin and SDK dependency to your app-level `build.gradle`.
 
-```json{3,4}:build.gradle
+[![](https://jitpack.io/v/100mslive/android-sdk.svg)](https://jitpack.io/#100mslive/android-sdk)
+
+<Tabs id="sdk-imports" items={['Maven Central', 'Jitpack']} />
+
+<Tab id='sdk-imports-0'>
+​
+
+```json{5-8}:settings.gradle section=AddSDKDependencies sectionIndex=1
 dependencies {
- // See the latest version in the jitpack badge above.
-  implementation 'com.github.100mslive.android-sdk:lib:x.x.x'
-  implementation 'com.github.100mslive.android-sdk:virtualBackground:x.x.x'
-    }
+ // See the version in the badge above.
+ // There are separate libraries for the sdk, virtual background and hls-player-stats.
+ //     add just the ones you need.
+ def hmsVersion = "x.x.x"
+ implementation "live.100ms:android-sdk:$hmsVersion"    // Essential
+ implementation "live.100ms:virtual-background:$hmsVersion" // Optional
+}
 ```
+
+</Tab>
+
+
+<Tab id='sdk-imports-1'>
+
+```json:build.gradle section=AddSDKDependencies sectionIndex=2
+dependencies {
+ def hmsVersion = "x.x.x"
+ // See the version in the jitpack badge above.
+ implementation "com.github.100mslive.android-sdk:lib:$hmsVersion"
+ implementation "com.github.100mslive.android-sdk:stats:$hmsVersion"
+}
+```
+
+</Tab>
 
 ## How to Integrate Virtual Background
 
