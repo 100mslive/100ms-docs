@@ -108,8 +108,8 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
             </div>
             {res.length > 0 ? (
                 <div className="res-ctx">
-                    {res.map((e, i) => (
-                        <Link href={e.url} key={e.url} passHref>
+                    {res.map((searchResult, i) => (
+                        <Link href={searchResult.url} key={searchResult.url} passHref>
                             <a
                                 id={`res-box-${i}`}
                                 className="res-box"
@@ -119,7 +119,7 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
                                         // @ts-ignore
                                         textInSearch: inputRef?.current?.value || '',
                                         rankOfSearchResult: i + 1,
-                                        locationOfSearchResult: e.url,
+                                        locationOfSearchResult: searchResult.url,
                                         referrer: document.referrer,
                                         path: window.location.hostname,
                                         pathname: window.location.pathname
@@ -127,8 +127,8 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
                                     setModal(false);
                                 }}>
                                 <div>
-                                    <span>{e.title}</span>
-                                    <span className="slug">{e.url}</span>
+                                    <span>{searchResult.title}</span>
+                                    <span className="slug">{searchResult.url}</span>
                                 </div>
                                 <EnterIcon />
                             </a>
