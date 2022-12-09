@@ -117,9 +117,9 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
                                     window.analytics.track('docs.search.result.clicked', {
                                         totalNumberOfResults: res.length,
                                         // @ts-ignore
-                                        textInSearch: inputRef.current?.value || '',
+                                        textInSearch: inputRef?.current?.value || '',
                                         rankOfSearchResult: i + 1,
-                                        locationOfSearchResult: window.location.href,
+                                        locationOfSearchResult: e.url,
                                         referrer: document.referrer,
                                         path: window.location.hostname,
                                         pathname: window.location.pathname
