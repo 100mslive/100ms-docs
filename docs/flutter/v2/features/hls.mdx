@@ -13,26 +13,88 @@ on YouTube, Twitch etc., please have a look at our RTMP streaming docs [here](./
 
 ## Starting HLS
 
-To start HLS you can call `hmsSDK.startHlsStreaming` method. The 100ms bot will open default meeting URL to join your room, so
-it must allow access without any user level interaction. In the future it'll be possible to start HLS for multiple such URLs for the same room.
+HLS can be started in two ways depending on the level of customization you need.
 
-For this purpose the API supports taking in an array, although currently only the first element of the array will be used. To distinguish between multiple URLs an additional field `metadata` can be optionally passed. The `meetingUrl` and `metadata` are clubbed together to form what we'll call a `variant`.
+1. Default View: The simplest view to just begin a stream with default UI and parameters.
 
-You can call `hmsSDK.startHlsStreaming` with a optional parameter `HMSHLSConfig` having an array of such variants.
+2. Custom Views: To use your own UI for HLS streaming, you need to provide your own web-app URL for our bot to join and stream.
+
+
+### Default View
+
+Begins a stream with default parameters.
+
+To start HLS with Default View, call `hmsSDK.startHlsStreaming` method.
 
 ```dart
-    hmsSDK.startHlsStreaming(hmsActionResultListener: hmsActionResultListener);
+hmsSDK.startHlsStreaming(hmsActionResultListener: hmsActionResultListener);
 ```
 
+### Custom View
+To use our own browser UI for HLS, you'll need to pass in a meeting URL. The 100ms bot will open this URL to join your room, so it must allow access without any user level interaction. 
+
+For this purpose the API supports taking in an array, although currently only the first element of the array will be used. To distinguish between multiple URLs an additional field `metadata` can be optionally passed. The `meetingURL` and `metadata` are clubbed together to form what we'll call a `variant`.
+
+You can call hmsSDK.startHLSStreaming with a `HMSHLSConfig` having an array of such variants. `HMSHlsRecordingConfig` is optional.
+
 ```dart
+// this is the HLS config class
 class HMSHLSConfig {
   List<HMSHLSMeetingURLVariant>? meetingURLVariant;
   HMSHLSRecordingConfig? hmsHLSRecordingConfig;
 }
+
+
+// example usage of HLS Config to start HLS Streaming
+HMSHLSConfig hmshlsConfig = HMSHLSConfig(meetingURLVariant: HMSHLSMeetingURLVariant(meetingUrl: meetingUrl, metadata: "tag for reference"));
+
+hmsSDK.startHlsStreaming(
+        hmshlsConfig: hmshlsConfig,
+        hmsActionResultListener: hmsActionResultListener);
 ```
 
+### Optional HLS Recording
 
-> Want to see how this works in a live project? [Take a look](https://github.com/100mslive/100ms-flutter/blob/37a36b9ce71da8aa007f4212001447f8b16de625/example/lib/hls_viewer/hls_viewer.dart#L18) at our advanced sample app.
+Optionally to record the HLS stream you may specify an `HMSHLSRecordingConfig` within the `HMSHLSConfig`.
+
+Here's what the `HMSHlsRecordingConfig` class looks like -
+
+```dart
+class HMSHLSRecordingConfig {
+  bool singleFilePerLayer;
+  bool videoOnDemand;
+}
+```
+
+1. `singleFilePerLayer`: If the desired end result is a mp4 file per HLS layer, false by default.
+
+2. `enableVOD`: If the desired end result is a zip of m3u8 and all the chunks, false by default.
+
+
+Here's an example of how to create a recording config & start HLS Streaming with Recording -
+
+```dart
+HMSHLSMeetingURLVariant variant = HMSHLSMeetingURLVariant(meetingUrl: meetingUrl, metadata: "tag for reference");
+
+HMSHLSRecordingConfig recordingConfig = HMSHLSRecordingConfig(singleFilePerLayer: false, videoOnDemand: true);
+        
+HMSHLSConfig hmshlsConfig = HMSHLSConfig(
+            meetingURLVariant: [variant],
+            hmsHLSRecordingConfig: recordingConfig);
+
+
+hmsSDK.startHlsStreaming(
+    hmshlsConfig: hmshlsConfig,
+    hmsActionResultListener: hmsActionResultListener);
+```
+
+## Stopping HLS
+
+You can call hmsSDK.stopHLSStreaming to stop HLS Streaming which will stop all the variants.
+
+```dart
+hmsSDK.stopHlsStreaming(hmsActionResultListener: hmsActionResultListener);
+```
 
 ## Current Room Status
 

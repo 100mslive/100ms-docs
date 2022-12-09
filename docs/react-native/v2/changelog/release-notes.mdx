@@ -3,6 +3,63 @@ title: Release Notes
 nav: 4.1
 ---
 
+## 1.0.0 - 2022-12-01
+
+#### Added
+- Added support for Picture in Picture mode on Android.
+
+    PIP Mode lets the user watch the room video in a small window pinned to a corner of the screen while navigating between apps or browsing content on the main screen.
+
+    Example implementation for checking device support & enabling PIP mode:
+    
+    ```js
+    const isPIPSupported = await hmsInstance.isPipModeSupported();
+
+    const isEnabled = await hmsInstance.enablePipMode();
+    ```
+    
+- Added Session Metadata APIs.
+
+    Session metadata is a shared state that is accessible by everyone in the room. 
+    
+    Session metadata can be used to achieve features like pinned text, spotlight(bringing a particular peer into a larger stage), etc.
+    
+    Example usage of setting & getting Room's Session Metadata:
+    
+    ```js
+    // set session metadata for the room
+    hmsInstance.setSessionMetaData(value).then(() => {
+
+      // on success, you can send a message to all the peers to fetch metadata
+      hmsInstance.sendBroadcastMessage('refresh', HMSMessageType.METADATA);
+    });
+
+    // peers in the room can fetch current Session Metadata any time using `getSessionMetaData` method
+    const metadata = await hmsInstance.getSessionMetaData();
+    ```
+
+- Added accessing of the local peer from the `HMSRoom` instance
+    ```js
+    // you can now directly access local peer from HMSRoom object returned in `ON_JOIN` event listener
+    const onJoinSuccess = (data: {room: HMSRoom}) => {
+        console.log('local peer: ', data.room.localPeer);
+    };
+    ```
+
+- Added `HMSMessageType` enum to Message 
+
+
+#### Fixed
+
+- Fixed memory leak on changing props of `HMSView`
+- Importing Native Android SDK dependency from Maven Central instead of Jitpack
+
+Updated to Native Android SDK 2.5.1 & Native iOS SDK 0.4.7
+
+Full Changelog: [0.9.94...1.0.0](https://github.com/100mslive/react-native-hms/compare/0.9.94...1.0.0)
+
+
+
 ## 0.9.94 - 2022-10-31
 #### Breaking Change
 - Removed sending of the list of all peers in `onPeerUpdate` & `onTrackUpdate` event listeners. 

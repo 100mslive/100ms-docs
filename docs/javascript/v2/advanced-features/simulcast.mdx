@@ -1,0 +1,92 @@
+---
+title: Simulcast
+nav: 5.09
+---
+
+Simulcast enables [Adaptive Bitrate](../foundation/adaptive-bitrate) (ABR) in video conferencing scenarios. This means 100ms SDKs can upgrade or downgrade video quality for remote tracks based on user preferences or network conditions.
+
+## Minimum requirements
+
+- SDK versions `@100mslive/hms-video-store@0.8.0`, `@100mslive/react-sdk@0.6.0` or later
+- Simulcast to be enabled from dashboard template
+
+## Simulcast Layer 100ms API's
+
+Available simulcast layers are:
+- `HMSSimulcastLayer.HIGH`
+- `HMSSimulcastLayer.MEDIUM`
+- `HMSSimulcastLayer.LOW`
+
+> Note: The number of layers available will be dependent on the video publish resolution for the role and the available simulcast resolutions, in template settings in the dashboard.
+
+**Action to update the layer:**
+
+<Tabs id="simulcast" items={['JavaScript', 'React']} />
+
+<Tab id='simulcast-0'>
+
+```js
+import { HMSSimulcastLayer } from '@100mslive/hms-video-store';
+/*
+ * layer can be one of:
+ *   HMSSimulcastLayer.HIGH
+ *   HMSSimulcastLayer.MEDIUM
+ *   HMSSimulcastLayer.LOW
+ * 
+ * Setting preferred layer does not guarantee that the layer will be selected.
+ * The server tries to give you that preferred layer when possible.
+ * Otherwise, it will pick the next closest layer. Some of the reasons for
+ * not getting the preferred layer could be publisher is not publishing that
+ * layer or your download bandwidth is not good enough to handle that layer.
+ */
+hmsActions.setPreferredLayer(<videoTrackID>, layer);
+```
+
+</Tab>
+
+<Tab id='simulcast-1'>
+
+```jsx
+import { HMSSimulcastLayer, selectTrackByID, useHMSStore } from '@100mslive/react-sdk';
+
+const SimulcastLayers = ({ trackId }) => {
+    const track = useHMSStore(selectTrackByID(trackId));
+    const handleLayerChange = (layer) => {
+        /*
+        * layer can be one of:
+        * HMSSimulcastLayer.HIGH
+        * HMSSimulcastLayer.MEDIUM
+        * HMSSimulcastLayer.LOW
+        * Setting preferred layer does not guarantee that the layer will be selected. The server tries to give you that preferred layer when possible. Otheriwse, it will pick the next closest layer.
+        * Some of the reasons for not getting the preferred layer could be publisher is not publishing that layer or your download bandwidth is not good enough to handle that layer.
+        */
+        hmsActions.setPreferredLayer(<videoTrackID>, layer);
+    }
+
+    return (
+        <div>
+        {track.layerDefinitions.map(trackLayer => {
+            return (<div onClick={() => {
+                handleLayerChange(trackLayer.layer);
+            }}>
+                {trackLayer.layer}
+            </div>
+        )}
+        </div>
+    )
+}
+```
+
+</Tab>
+
+**Simulcast fields on the track**
+
+The [HMSVideoTrack](/api-reference/javascript/v2/interfaces/HMSVideoTrack) has a few fields related to simulcast.
+
+- `layer` - is the current layer you are receiving from the server
+- `layerDefinitions` - are the available layers for the role based on the template. These will contain layer name and resolution(widthxheight).
+- `preferredLayer` - this will contain the layer that is either manually set or auto selected based on resolution.
+
+## Auto Layer selection:
+
+When using `useVideo` hook from our [React SDK](https://www.npmjs.com/package/@100mslive/react-sdk) the relevant simulcast layer is automatically subscribed to, based on the video element dimensions.

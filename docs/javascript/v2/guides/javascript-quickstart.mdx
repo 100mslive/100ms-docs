@@ -3,154 +3,881 @@ title: JavaScript Quickstart Guide
 nav: 2.1
 ---
 
-## Getting started
+## Overview
 
-Hello there! In this guide, we'll build a video conferencing application using the 100ms JavaScript SDK. This guide doesn't make any assumptions related to
-the framework or library choices. In case you plan to use React, do check our React quickstart as well.
+This guide will walk you through step-by-step instructions to create a video conferencing application using the 100ms JavaScript SDK and test it locally on your device. If you plan to use React, do check our [React quickstart](https://www.100ms.live/docs/javascript/v2/guides/react-quickstart) as well.
 
-TL;DR - You can find the link to the complete example over [here](https://codesandbox.io/s/hms-js-quickstart-5rmes). There is also a version of the quickstart using CDN [here](https://codepen.io/triptu/pen/dymxmoR?editors=0010).
+Please check our [basic concepts](/javascript/v2/foundation/basics) guide to understand the concepts like rooms, templates, peers, etc.
 
-### Prerequisites
+TL;DR - Try out this complete example in [CodeSandbox](https://codesandbox.io/s/hms-js-quickstart-5rmes).
 
-To get started you must be familiar with rudimentary JavaScript and have [nodejs](https://nodejs.org/) installed on your machine.
+<Codesandbox id="5rmes" />
 
-### Installing the dependencies
+## Create a sample app locally
 
-```bash section=InstallingTheDependencies sectionIndex=1
-npm install --save @100mslive/hms-video-store@latest
+In this section, we will walk you through a complete code example that will enable you to create a local video-conferencing application in under 10 minutes and test audio/video functionality along with a couple of other essential functionalities like mute/unmute audio and video.
+
+We will use [ParcelJS](https://parceljs.org/getting-started/webapp/), a web application bundler that requires zero configuration. If you wish to use any other library or framework, you can set up your app using that.
+
+### Initialize a project
+
+You can initialize a project using `npm init` or `yarn init`. While initializing the project you can enter the details for your project as you wish.
+
+### Install ParcelJS & 100ms SDK
+
+Then, install ParcelJS and 100ms SDK into your app like below
+
+-   using yarn:
+    ```bash section=InstallingTheDependencies sectionIndex=1
+    yarn add --dev parcel
+    yarn add @100mslive/hms-video-store
+    ```
+-   using npm:
+    ```bash section=InstallingTheDependencies sectionIndex=2
+    npm install --save-dev parcel
+    npm install @100mslive/hms-video-store
+    ```
+
+### Project setup
+
+Now that the dependencies are installed, let's create basic source files for our video-conferencing application. Let's create the files and folders in the below manner:
+
+```
+100ms-test
+  - index.html
+  - src
+    - index.js
+    - styles.css
 ```
 
-### Initializing the SDK
+### Complete code example
 
-Let us start with initializing the libraries. We need an instance of `HMSStore` and `HMSActions` to get started. Copy the code snippet below and paste it into your project.
+Next, copy the below code snippets and paste it into the respective files created in the above step.
 
-```jsx:script.js section=InitializingTheSDK sectionIndex=1
-import { HMSReactiveStore } from '@100mslive/hms-video-store';
+<Tabs id="complete-code" items={['JS', 'HTML', 'CSS']} />
 
-const hms = new HMSReactiveStore();
-const hmsStore = hms.getStore();
-const hmsActions = hms.getHMSActions();
+<Tab id="complete-code-0">
+
+```jsx:index.js section=completeCodeExample sectionIndex=1 tab=JS
+import {
+    HMSReactiveStore,
+    selectIsLocalAudioEnabled,
+    selectIsLocalVideoEnabled,
+    selectPeers,
+    selectIsConnectedToRoom
+} from "@100mslive/hms-video-store";
+
+// Initialize HMS Store
+const hmsManager = new HMSReactiveStore();
+hmsManager.triggerOnSubscribe();
+const hmsStore = hmsManager.getStore();
+const hmsActions = hmsManager.getActions();
+
+// HTML elements
+const form = document.getElementById("join");
+const joinBtn = document.getElementById("join-btn");
+const conference = document.getElementById("conference");
+const peersContainer = document.getElementById("peers-container");
+const leaveBtn = document.getElementById("leave-btn");
+const muteAudio = document.getElementById("mute-aud");
+const muteVideo = document.getElementById("mute-vid");
+const controls = document.getElementById("controls");
+
+// Joining the room
+joinBtn.onclick = () => {
+    hmsActions.join({
+        userName: document.getElementById("name").value,
+        authToken: document.getElementById("token").value
+    });
+};
+
+// Leaving the room
+function leaveRoom() {
+    hmsActions.leave();
+}
+
+// Cleanup if user refreshes the tab or navigates away
+window.onunload = window.onbeforeunload = leaveRoom;
+leaveBtn.onclick = leaveRoom;
+
+// Helper function to create html elements
+function createElementWithClass(tag, className) {
+    const newElement = document.createElement(tag);
+    newElement.className = className;
+    return newElement;
+}
+
+// Render a single peer
+function renderPeer(peer) {
+    const peerTileDiv = createElementWithClass("div", "peer-tile");
+    const videoElement = createElementWithClass("video", "peer-video");
+    const peerTileName = createElementWithClass("span", "peer-name");
+    videoElement.autoplay = true;
+    videoElement.muted = true;
+    videoElement.playsinline = true;
+    peerTileName.textContent = peer.name;
+    hmsActions.attachVideo(peer.videoTrack, videoElement);
+    peerTileDiv.append(videoElement);
+    peerTileDiv.append(peerTileName);
+    return peerTileDiv;
+}
+
+// display a tile for each peer in the peer list
+function renderPeers() {
+    peersContainer.innerHTML = "";
+    const peers = hmsStore.getState(selectPeers);
+
+    peers.forEach((peer) => {
+        if (peer.videoTrack) {
+            peersContainer.append(renderPeer(peer));
+        }
+    });
+}
+
+// Reactive state - renderPeers is called whenever there is a change in the peer-list
+hmsStore.subscribe(renderPeers, selectPeers);
+
+
+// Mute and unmute audio
+muteAudio.onclick = () => {
+    const audioEnabled = !hmsStore.getState(selectIsLocalAudioEnabled);
+    hmsActions.setLocalAudioEnabled(audioEnabled);
+    muteAudio.textContent = audioEnabled ? "Mute" : "Unmute";
+};
+
+// Mute and unmute video
+muteVideo.onclick = () => {
+    const videoEnabled = !hmsStore.getState(selectIsLocalVideoEnabled);
+    hmsActions.setLocalVideoEnabled(videoEnabled);
+    muteVideo.textContent = videoEnabled ? "Hide" : "Unhide";
+    // Re-render video tile
+    renderPeers();
+};
+
+// Showing the required elements on connection/disconnection
+function onConnection(isConnected) {
+    if (isConnected) {
+        form.classList.add("hide");
+        conference.classList.remove("hide");
+        leaveBtn.classList.remove("hide");
+        controls.classList.remove("hide");
+    } else {
+        form.classList.remove("hide");
+        conference.classList.add("hide");
+        leaveBtn.classList.add("hide");
+        controls.classList.add("hide");
+    }
+}
+
+// Listen to the connection state
+hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
 ```
 
-`hmsStore` will hold the complete state of the application such as details of all the participants. We can also visualize this state at any time using the
-[devtools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en) extension.
+</Tab>
 
-`hmsActions` will help us perform actions such as joining the room, mute our audio and send messages.
+<Tab id="complete-code-1">
 
-### Concepts
+```html:index.html section=completeCodeExample sectionIndex=1 tab=HTML
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Quickstart JS</title>
+    <link rel="stylesheet" href="src/styles.css" />
+    <meta charset="UTF-8" />
+  </head>
 
--   `Room`: When we join a conference call, the participants are said to be in a video call `room`.
--   `Peer`: A participant in the video call. You are the `local peer` while others are `remote peers`.
--   `Track`: Media. There are two types of track a peer can have - audio and video.
+  <body>
+    <header>
+      <img class="logo" src="https://www.100ms.live/assets/logo.svg" />
+      <button id="leave-btn" class="btn-danger hide">Leave Room</button>
+    </header>
+    <form id="join">
+      <h2>Join Room</h2>
+      <div class="input-container">
+        <input id="name" type="text" name="username" placeholder="Your name" />
+      </div>
+      <div class="input-container">
+        <input id="token" type="text" name="token" placeholder="Auth token" />
+      </div>
+      <button type="button" class="btn-primary" id="join-btn">
+        Join
+      </button>
+    </form>
 
-## Joining a room
+    <div id="conference" class="conference-section hide">
+      <h2>Conference</h2>
 
-To join a room (a video call), we need to call the `join` method on `hmsActions` and it requires us to pass a `config` object.
+      <div id="peers-container"></div>
+    </div>
+
+    <div id="controls" class="control-bar hide">
+      <button id="mute-aud" class="btn-control">Mute</button>
+      <button id="mute-vid" class="btn-control">Hide</button>
+    </div>
+
+    <script type="module" src="src/index.js"></script>
+  </body>
+</html>
+```
+
+</Tab>
+
+<Tab id="complete-code-2">
+
+```css:styles.css section=completeCodeExample sectionIndex=1 tab=CSS
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    background-color: #263238;
+    color: white;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-weight: normal;
+  }
+
+  header {
+    padding: 10px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+  }
+
+  .btn-danger {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 6px 14px;
+    background-color: #f44336;
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+  }
+
+  .hide {
+    display: none !important;
+  }
+
+  form {
+    max-width: 450px;
+    margin: 30px auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    height: 34px;
+    padding: 5px;
+    background: #37474f;
+    color: inherit;
+    font-family: inherit;
+  }
+
+  input::placeholder {
+    color: #aaa;
+  }
+
+  .input-container {
+    margin-bottom: 20px;
+  }
+
+  .btn-primary {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 6px 14px;
+    background-color: #1565c0;
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+  }
+
+  form h2,
+  .conference-section h2 {
+    margin-bottom: 20px;
+  }
+
+  .conference-section {
+    padding: 20px 30px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .conference-section h2 {
+    text-align: center;
+    font-size: 32px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #546e7a;
+  }
+
+  #peers-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(min-content, 1fr));
+    place-items: center;
+    grid-gap: 10px;
+  }
+
+  .peer-video {
+    height: 250px;
+    width: 250px;
+    border-radius: 40%;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+
+  .local.peer-video {
+    transform: scaleX(-1);
+  }
+
+  .peer-name {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .peer-tile {
+    padding: 10px;
+  }
+
+  .control-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 15px;
+    justify-content: center;
+    z-index: 10;
+  }
+
+  .control-bar > *:not(:first-child) {
+    margin-left: 8px;
+  }
+
+  .btn-control {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid #37474f;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    text-align: center;
+    background-color: #607d8b;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    color: white;
+  }
+```
+
+</Tab>
+
+### Test the app
+
+To test the application, run the application using:
+
+-   using Yarn `yarn parcel 100ms-test/index.html --port 3000` or
+-   when using npm, run `npx parcel index.html --port 3000`.
+
+This will start your development server in http://localhost:3000/. Open this in your browser to test the video conferencing app you created above.
+
+#### Fetch token to join the room
+
+To test audio/video functionality, you need to connect to a 100ms room; please check following steps for the same:
+
+1. Navigate to your [100ms dashboard](https://dashboard.100ms.live/dashboard) or [create an account](https://dashboard.100ms.live/register) if you don't have one.
+2. Use the `Video Conferencing Starter Kit` to create a room with a default template assigned to it to test this app quickly.
+3. Go to [Rooms page](https://dashboard.100ms.live/rooms) in your dashboard, click on the `Room Id` of the room you created above, and click on the `Join room` button on the top right.
+4. You will see two 100ms demo URLs for two roles created when you deployed the starter kit; you can click on the 'key' icon to copy the token and use the same to join the room in your browser.
+
+    ![Join room key](/guides/join_room_key.png)
+
+Now, after you click `join`, you should be able to see yourself!
+
+<video loop="true" autoplay="autoPlay" controls="controls" id="vid" muted>
+    <source src="/docs/guides/peer-1.mp4" type="video/mp4" />
+</video>
+<br />
+
+You can open the app in another tab in the browser to join as the second peer to check audio/video transactions between two or more peers.
+
+<video loop="true" autoplay="autoPlay" controls="controls" id="vid" muted>
+    <source src="/docs/guides/peer-2.mp4" type="video/mp4" />
+</video>
+<br />
+
+**We have a fully functional video conferencing application now** 🎉🚀
+
+## Building step-by-step
+
+In this section, let's walk through what the code does.
+
+### Step 1: Initialize the SDK
+
+Let us start with initializing the libraries. We need two instances to get started:
+
+-   An instance of [HMSStore](/api-reference/javascript/v2/interfaces/HMSStore) that holds the complete state of the application such as details of all the participants. We can also visualize this state at any time using the [DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en) extension.
+-   And an instance of [HMSActions](/api-reference/javascript/v2/interfaces/HMSActions) that will help us perform actions such as joining the room, muting our audio, and sending messages.
+
+```jsx:index.js section=InitializingTheSDK sectionIndex=1
+import {
+  HMSReactiveStore,
+  selectIsLocalAudioEnabled,
+  selectIsLocalVideoEnabled,
+  selectPeers,
+  selectIsConnectedToRoom
+} from "@100mslive/hms-video-store";
+
+// Initialize HMS Store
+const hmsManager = new HMSReactiveStore();
+hmsManager.triggerOnSubscribe();
+const hmsStore = hmsManager.getStore();
+const hmsActions = hmsManager.getHMSActions();
+```
+
+### Step 2: Initialize the HTML elements
+
+Now, let's initialize all the HTML elements required such as tile for local and remote peers, join and leave button, mute and unmute button, etc.
+
+<Tabs id="initialize-html-elements" items={['JS', 'HTML', 'CSS']} />
+
+<Tab id="initialize-html-elements-0">
+
+```jsx:index.js section=InitializingTheSDK sectionIndex=2 tab=JS
+// HTML elements
+const form = document.getElementById("join");
+const joinBtn = document.getElementById("join-btn");
+const conference = document.getElementById("conference");
+const peersContainer = document.getElementById("peers-container");
+const leaveBtn = document.getElementById("leave-btn");
+const muteAudio = document.getElementById("mute-aud");
+const muteVideo = document.getElementById("mute-vid");
+const controls = document.getElementById("controls");
+```
+
+</Tab>
+
+<Tab id="initialize-html-elements-1">
+
+```html:index.html section=InitializingTheSDK sectionIndex=2 tab=HTML
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Quickstart JS</title>
+    <link rel="stylesheet" href="src/styles.css" />
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <header>
+      <button id="leave-btn" class="btn-danger hide">Leave Room</button>
+    </header>
+    <form id="join">
+      <h2>Join Room</h2>
+      <div class="input-container">
+        <input id="name" type="text" name="username" placeholder="Your name" />
+      </div>
+      <div class="input-container">
+        <input id="token" type="text" name="token" placeholder="Auth token" />
+      </div>
+      <button type="button" class="btn-primary" id="join-btn">
+        Join
+      </button>
+    </form>
+
+    <div id="conference" class="conference-section hide">
+      <h2>Conference</h2>
+
+      <div id="peers-container"></div>
+    </div>
+
+    <div id="controls" class="control-bar hide">
+      <button id="mute-aud" class="btn-control">Mute</button>
+      <button id="mute-vid" class="btn-control">Hide</button>
+    </div>
+
+    <script type="module" src="src/index.js"></script>
+  </body>
+</html>
+```
+
+</Tab>
+
+<Tab id="initialize-html-elements-2">
+
+```css:styles.css section=InitializingTheSDK sectionIndex=2 tab=CSS
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    background-color: #263238;
+    color: white;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-weight: normal;
+  }
+
+  header {
+    padding: 10px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+  }
+
+  .btn-danger {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 6px 14px;
+    background-color: #f44336;
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+  }
+
+  .hide {
+    display: none !important;
+  }
+
+  form {
+    max-width: 450px;
+    margin: 30px auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    height: 34px;
+    padding: 5px;
+    background: #37474f;
+    color: inherit;
+    font-family: inherit;
+  }
+
+  input::placeholder {
+    color: #aaa;
+  }
+
+  .input-container {
+    margin-bottom: 20px;
+  }
+
+  .btn-primary {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 6px 14px;
+    background-color: #1565c0;
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+  }
+
+  form h2,
+  .conference-section h2 {
+    margin-bottom: 20px;
+  }
+
+  .conference-section {
+    padding: 20px 30px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .conference-section h2 {
+    text-align: center;
+    font-size: 32px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #546e7a;
+  }
+
+  #peers-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(min-content, 1fr));
+    place-items: center;
+    grid-gap: 10px;
+  }
+
+  .peer-video {
+    height: 250px;
+    width: 250px;
+    border-radius: 40%;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+
+  .local.peer-video {
+    transform: scaleX(-1);
+  }
+
+  .peer-name {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .peer-tile {
+    padding: 10px;
+  }
+
+  .control-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 15px;
+    justify-content: center;
+    z-index: 10;
+  }
+
+  .control-bar > *:not(:first-child) {
+    margin-left: 8px;
+  }
+
+  .btn-control {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid #37474f;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    text-align: center;
+    background-color: #607d8b;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    color: white;
+  }
+```
+
+</Tab>
+
+### Step 3: Join/leave a room
+
+To join a room (a video call), we need to call the [join](/api-reference/javascript/v2/interfaces/HMSActions#join) method on `hmsActions` and it requires us to pass a `config` object.
 The config object must be passed the following fields:
 
 -   `userName`: The name of the user. This is the value that will be set on the `peer` object and be visible to everyone connected to the room.
 -   `authToken`: A client-side token that is used to authenticate the user. You can read about how to generate this token [here](./token).
 
-For our application, let us collect both of these fields from the user using a form.
+Let's use a form to request both of these fields from the user for our application.
 
-> Note: join is async from this [version](../changelog/release-notes#2022-09-13)
+Let's include a way for people to leave the room as well. To leave the room, we can use the `hmsActions` [leave](/api-reference/javascript/v2/interfaces/HMSActions#leave) method. We'll set up the `leave` method to be called whenever the user closes the window or refreshes the tab.
 
-<Tabs id="join-form" items={['HTML', 'JS']} />
+<Tabs id="join-form" items={['JS', 'HTML', 'CSS']} />
 
 <Tab id="join-form-0">
 
-```html:index.html section=JoiningRoom sectionIndex=1 tab=HTML
-<form id="join">
-    <h2>Join Room</h2>
-    <div class="input-container">
-        <input id="name" type="text" name="username" placeholder="Your name" />
-    </div>
-    <div class="input-container">
-        <input id="token" type="text" name="token" placeholder="Auth token" />
-    </div>
-    <button type="button" class="btn-primary" id="join-btn">Join</button>
-</form>
+```jsx:index.js section=JoiningRoom sectionIndex=1 tab=JS
+// Joining the room
+joinBtn.onclick = () => {
+  hmsActions.join({
+    userName: document.getElementById("name").value,
+    authToken: document.getElementById("token").value
+  });
+};
+
+// Leaving the room
+function leaveRoom() {
+  hmsActions.leave();
+}
+
+// Cleanup if user refreshes the tab or navigates away
+window.onunload = window.onbeforeunload = leaveRoom;
+leaveBtn.onclick = leaveRoom;
 ```
 
 </Tab>
 
 <Tab id="join-form-1">
 
-```jsx:script.js section=JoiningRoom sectionIndex=1 tab=JS
-const joinBtn = document.getElementById("join-btn");
-joinBtn.addEventListener('click', async () => {
-    await hmsActions.join({
-        userName: document.getElementById('name').value,
-        authToken: document.getElementById('token').value
-    });
-});
+```html:index.html section=JoiningRoom sectionIndex=1 tab=HTML
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Quickstart JS</title>
+    <link rel="stylesheet" href="src/styles.css" />
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <header>
+      <button id="leave-btn" class="btn-danger hide">Leave Room</button>
+    </header>
+    <form id="join">
+      <h2>Join Room</h2>
+      <div class="input-container">
+        <input id="name" type="text" name="username" placeholder="Your name" />
+      </div>
+      <div class="input-container">
+        <input id="token" type="text" name="token" placeholder="Auth token" />
+      </div>
+      <button type="button" class="btn-primary" id="join-btn">
+        Join
+      </button>
+    </form>
+
+    <script type="module" src="src/index.js"></script>
+  </body>
+</html>
 ```
 
 </Tab>
 
-![Join form](/guides/join-room.png)
+<Tab id="join-form-2">
 
-Congratulations! **you now have an audio-only conference ready to use**. If you have a friend join from another device, you can have a nice friendly chat with them.
+```css:styles.css section=JoiningRoom sectionIndex=1 tab=CSS
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-### Leaving the room
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    background-color: #263238;
+    color: white;
+  }
 
-Before we go ahead with adding video, let us add a way to leave the room as well. We can call the `leave` method on `hmsActions` to leave the room.
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-weight: normal;
+  }
 
-We'll set up the `leave` method to be called whenever the user closes the window or refreshes the tab.
+  header {
+    padding: 10px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+  }
 
-```jsx:script.js section=LeavingTheRoom sectionIndex=1
-function leaveRoom() {
-    hmsActions.leave();
-}
+  .btn-danger {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 6px 14px;
+    background-color: #f44336;
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+  }
 
-window.onunload = leaveRoom;
+  .hide {
+    display: none !important;
+  }
+
+  form {
+    max-width: 450px;
+    margin: 30px auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    height: 34px;
+    padding: 5px;
+    background: #37474f;
+    color: inherit;
+    font-family: inherit;
+  }
+
+  input::placeholder {
+    color: #aaa;
+  }
+
+  .input-container {
+    margin-bottom: 20px;
+  }
+
+  .btn-primary {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 6px 14px;
+    background-color: #1565c0;
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+  }
 ```
 
-## Adding video tiles
+</Tab>
+
+### Step 4: Render video tiles for peers
 
 Let us next add a way to show a tile for every participant in the room. We'll need a list of peers connected to the room.
 
-### Fetching information from state
+-   We will use the [attachVideo](/api-reference/javascript/v2/interfaces/HMSActions#attach-video) method on `hmsActions` to add the video from an element for a track ID.
+-   And [selectPeers](/api-reference/javascript/v2/home/content#select-peers) selector from `hmsStore`
 
-At any point in time we can get a list of peers with:
-
-```jsx section=FetchingInformationFromState sectionIndex=1
-import { selectPeers } from '@100mslive/hms-video-store';
-
-const peers = hmsStore.getState(selectPeers);
-```
-
-Let's take a moment to discuss how `hmsStore` works. The store maintains the state of the video call which includes
-the list of peers, the connection state of the room, the tracks, track states etc.
-We can use "selectors" that return a slice of the state to get the data piece we're interested in.
-
-### Subscribing to the state
-
-The `hmsStore` is also reactive, and we can subscribe to the state.
-What this means is that we can register a function which will get called whenever the selected state changes.
-This allows us to write [declarative](https://en.wikipedia.org/wiki/Declarative_programming) code.
-
-We'll subscribe to the `peers` state and render the tiles whenever something related to the peers changes.
-
-<Tabs id="render-peers" items={['JS', 'HTML']} />
+<Tabs id="render-peers" items={['JS', 'HTML', 'CSS']} />
 
 <Tab id="render-peers-0">
 
-```jsx:script.js section=SubscribingToTheState sectionIndex=1 tab=JS
-import {
-    HMSReactiveStore,
-    selectPeers
-} from '@100mslive/hms-video-store';
-
-// ...
-
-const peersContainer = document.getElementById('peers-container');
-
-function renderPeers(peers) {
-    // 1. clear the peersContainer
-    // 2. loop through the peers and render a tile for each peer
+```jsx:index.js section=SubscribingToTheState sectionIndex=1 tab=JS
+// Helper function to create html elements
+function createElementWithClass(tag, className) {
+  const newElement = document.createElement(tag);
+  newElement.className = className;
+  return newElement;
 }
 
+// Render a single peer
+function renderPeer(peer) {
+  const peerTileDiv = createElementWithClass("div", "peer-tile");
+  const videoElement = createElementWithClass("video", "peer-video");
+  const peerTileName = createElementWithClass("span", "peer-name");
+  videoElement.autoplay = true;
+  videoElement.muted = true;
+  videoElement.playsinline = true;
+  peerTileName.textContent = peer.name;
+  hmsActions.attachVideo(peer.videoTrack, videoElement);
+  peerTileDiv.append(videoElement);
+  peerTileDiv.append(peerTileName);
+  return peerTileDiv;
+}
+
+// Display a tile for each peer in the peer list
+function renderPeers() {
+  peersContainer.innerHTML = "";
+  const peers = hmsStore.getState(selectPeers);
+
+  peers.forEach((peer) => {
+    if (peer.videoTrack) {
+      peersContainer.append(renderPeer(peer));
+    }
+  });
+}
+
+// Reactive state - renderPeers is called whenever there is a change in the peer-list
 hmsStore.subscribe(renderPeers, selectPeers);
 ```
 
@@ -159,149 +886,101 @@ hmsStore.subscribe(renderPeers, selectPeers);
 <Tab id="render-peers-1">
 
 ```html:index.html section=SubscribingToTheState sectionIndex=1 tab=HTML
-<div id="conference" class="conference-section">
+<div id="conference" class="conference-section hide">
     <h2>Conference</h2>
-
     <div id="peers-container"></div>
 </div>
 ```
 
 </Tab>
 
-For each peer, we'll render a `<video>` element and a `<div>` element with their name.
-We'll also make a helper function to create these DOM elements and add it to the `peersContainer`
+<Tab id="render-peers-2">
 
-```jsx{3-16,20-20,23-47}:script.js section=SubscribingToTheState sectionIndex=2
-const peersContainer = document.getElementById('peers-container');
-
-// helper function to create html elements
-function h(tag, attrs = {}, ...children) {
-  const newElement = document.createElement(tag);
-
-  Object.keys(attrs).forEach((key) => {
-    newElement.setAttribute(key, attrs[key]);
-  });
-
-  children.forEach((child) => {
-    newElement.append(child);
-  });
-
-  return newElement;
-}
-
-function renderPeers(peers) {
-  // 1. clear the peersContainer
-  peersContainer.innerHTML = "";
-
-  // 2. loop through the peers and render a tile for each peer
-  peers.forEach((peer) => {
-    const video = h("video", {
-      class: "peer-video",
-      autoplay: true,
-      muted: true,
-      playsinline: true,
-    });
-
-    hmsActions.attachVideo(peer.videoTrack, video);
-
-    const peerContainer = h(
-      "div",
-      {
-        class: "peer-container"
-      },
-      video,
-      h(
-        "div",
-        {
-          class: "peer-name"
-        },
-        peer.name
-      )
-    );
-
-    peersContainer.append(peerContainer);
-  });
-}
-
-hmsStore.subscribe(renderPeers, selectPeers);
-```
-
-Now after you click join you should be able to see yourself!
-
-![Web Conference](/guides/web-conference.png)
-
-Since we are subscribed to the `peers` state, our tiles will be re-rendered any time a new peer joins or leaves the room.
-**We have a fully functional video conferencing application now** 🎉🚀
-
-## Changing UI based on connection state
-
-Right now, our join form shows even after we have joined the room. We need a way to know the connection state of the room and hide the form after we've connected.
-
-We can do this by subscribing to the store with the `selectIsConnectedToRoom` selector.
-
-```jsx:script.js section=ChangingUIBasedOnConnectionState sectionIndex=1
-import {
-  selectIsConnectedToRoom,
-} from "@100mslive/hms-video-store";
-
-function onConnection(isConnected) {
-  if (isConnected) {
-    form.classList.add("hide");
-    conference.classList.remove("hide");
-    leaveBtn.classList.remove("hide");
-  } else {
-    form.classList.remove("hide");
-    conference.classList.add("hide");
-    leaveBtn.classList.add("hide");
+```css:styles.css section=SubscribingToTheState sectionIndex=1 tab=CSS
+  form h2,
+  .conference-section h2 {
+    margin-bottom: 20px;
   }
-}
 
+  .conference-section {
+    padding: 20px 30px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
 
-hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
+  .conference-section h2 {
+    text-align: center;
+    font-size: 32px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #546e7a;
+  }
+
+  #peers-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(min-content, 1fr));
+    place-items: center;
+    grid-gap: 10px;
+  }
+
+  .peer-video {
+    height: 250px;
+    width: 250px;
+    border-radius: 40%;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+
+  .local.peer-video {
+    transform: scaleX(-1);
+  }
+
+  .peer-name {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .peer-tile {
+    padding: 10px;
+  }
+
 ```
 
-## Muting/unmuting local tracks
+</Tab>
+
+### Step 5: Mute/unmute local tracks
 
 Right now we are publishing both audio and video feed of the user whenever they join the room.
 We may want to allow the user to mute/unmute their own tracks - both audio and video.
 
-Let's add 2 buttons on the bottom of the page and call the methods on `hmsActions` to mute/unmute the local tracks.
+Let's add 2 buttons on the bottom of the page and call the [setLocalAudioEnabled](/api-reference/javascript/v2/interfaces/HMSActions#set-local-audio-enabled) method on `hmsActions` to mute/unmute the local audio tracks and [setLocalVideoEnabled](/api-reference/javascript/v2/interfaces/HMSActions#set-local-video-enabled) method on `hmsActions` to mute/unmute the local video tracks.
 
-<Tabs id="mute-unmute" items={['JS', 'HTML']} />
+<Tabs id="mute-unmute" items={['JS', 'HTML', 'CSS']} />
 
 <Tab id="mute-unmute-0">
 
-```jsx:script.js section=MutingUnmutingLocalTracks sectionIndex=1 tab=JS
-import {
-  selectIsLocalAudioEnabled,
-  selectIsLocalVideoEnabled,
-} from "@100mslive/hms-video-store";
-
-const muteAud = document.getElementById("mute-aud");
-const muteVid = document.getElementById("mute-vid");
-
-muteAud.addEventListener("click", () => {
+```jsx:index.js section=MutingUnmutingLocalTracks sectionIndex=1 tab=JS
+// Mute and unmute audio
+muteAudio.onclick = () => {
   const audioEnabled = !hmsStore.getState(selectIsLocalAudioEnabled);
-
   hmsActions.setLocalAudioEnabled(audioEnabled);
+  muteAudio.textContent = audioEnabled ? "Mute" : "Unmute";
+};
 
-  muteAud.textContent = audioEnabled ? "Mute" : "Unmute";
-});
-
-muteVid.addEventListener("click", () => {
+// Mute and unmute video
+muteVideo.onclick = () => {
   const videoEnabled = !hmsStore.getState(selectIsLocalVideoEnabled);
-
   hmsActions.setLocalVideoEnabled(videoEnabled);
-
-  muteVid.textContent = videoEnabled ? "Hide" : "Unhide";
-});
+  muteVideo.textContent = videoEnabled ? "Hide" : "Unhide";
+  // Re-render video tile
+  renderPeers();
+};
 ```
 
 </Tab>
 
 <Tab id="mute-unmute-1">
 
-```html section=MutingUnmutingLocalTracks sectionIndex=1 tab=HTML
+```html:index.html section=MutingUnmutingLocalTracks sectionIndex=1 tab=HTML
 <div id="controls" class="control-bar">
     <button id="mute-aud" class="btn-control">Mute</button>
     <button id="mute-vid" class="btn-control">Hide</button>
@@ -310,89 +989,76 @@ muteVid.addEventListener("click", () => {
 
 </Tab>
 
-We fetch the current state of the local audio and video and toggle them whenever the buttons are clicked.
+<Tab id="mute-unmute-2">
 
-If you try it out now, you may notice that turning off the video makes the tile go blank but turning it on again doesn't bring it back.
-This is due to a change in video track requiring a call to attach again. To fix it let's
-call our `renderPeers` function whenever we change the state of the local video.
-
-```jsx{8}:script.js section=MutingUnmutingLocalTracks sectionIndex=2
-muteVid.addEventListener("click", () => {
-  const videoEnabled = hmsStore.getState(selectIsLocalVideoEnabled);
-
-  hmsActions.setLocalVideoEnabled(!videoEnabled);
-
-  muteVid.textContent = !videoEnabled ? "Hide" : "Unhide";
-
-  renderPeers(hmsStore.getState(selectPeers));
-});
-```
-
-![Mute/Unmute](/guides/mute-unmute.gif)
-
-## Mirroring local video
-
-Each `peer` object has an `isLocal` property that indicates whether the peer is local or remote.
-When looping over the peer list we can use this property to decide whether to mirror the video or not.
-
-<Tabs id="mirror" items={['JS', 'CSS']} />
-
-<Tab id="mirror-0" >
-
-```jsx{10,28}:script.js section=MirroringLocalVideo sectionIndex=1 tab=JS
-function renderPeers(peers) {
-  peersContainer.innerHTML = "";
-
-  if (!peers) {
-    peers = hmsStore.getState(selectPeers);
+```css:styles.css section=MutingUnmutingLocalTracks sectionIndex=1 tab=CSS
+  .control-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 15px;
+    justify-content: center;
+    z-index: 10;
   }
 
-  peers.forEach((peer) => {
-    const video = h("video", {
-      class: "peer-video" + (peer.isLocal ? " local" : ""),
-      autoPlay: true,
-      muted: true
-    });
+  .control-bar > *:not(:first-child) {
+    margin-left: 8px;
+  }
 
-    hmsActions.attachVideo(peer.videoTrack, video);
-
-    const peerContainer = h(
-      "div",
-      {
-        class: "peer-container"
-      },
-      video,
-      h(
-        "div",
-        {
-          class: "peer-name"
-        },
-        peer.name + (peer.isLocal ? " (You)" : "")
-      )
-    );
-
-    peersContainer.append(peerContainer);
-  });
-}
+  .btn-control {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid #37474f;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    text-align: center;
+    background-color: #607d8b;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    color: white;
+  }
 ```
 
 </Tab>
 
-<Tab id="mirror-1">
+### Step 6: Change UI based on connection state
 
-```css:styles.css section=MirroringLocalVideo sectionIndex=1 tab=CSS
-.local.peer-video {
-    transform: scaleX(-1);
+Right now, our join form will show up even after we have joined the room. We need a way to know the connection state of the room and hide the form after we've connected.
+
+We can do this by subscribing to the store with the [selectIsConnectedToRoom](/api-reference/javascript/v2/home/content#select-is-connected-to-room) selector from `hmsStore`.
+
+```jsx:index.js section=ChangingUIBasedOnConnectionState sectionIndex=1
+// Showing the required elements on connection/disconnection
+function onConnection(isConnected) {
+  if (isConnected) {
+    form.classList.add("hide");
+    conference.classList.remove("hide");
+    leaveBtn.classList.remove("hide");
+    controls.classList.remove("hide");
+  } else {
+    form.classList.remove("hide");
+    conference.classList.add("hide");
+    leaveBtn.classList.add("hide");
+    controls.classList.add("hide");
+  }
 }
+
+// Listen to the connection state
+hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
 ```
 
-</Tab>
+Refer to [Test the app section](/javascript/v2/guides/javascript-quickstart#test-the-app) above to test your sample app locally.
 
-That wraps it up for this guide. We hope you had fun.
-There are plenty of cool stuff which can be done with our SDK, be sure to check the [features section](/javascript/v2/features/integration) for more information.
+## Next steps
 
 Here's the complete example.
 
 <Codesandbox id="5rmes" />
 
 There is also a version of the above quickstart using CDN [here](https://codepen.io/triptu/pen/dymxmoR?editors=0010).
+
+That wraps it up for this guide. We hope you had fun. There are plenty of cool stuff which can be done with our SDK, be sure to check the [features section](/javascript/v2/features/integration) for more information.
+
+You can also check out our [React demo app](https://github.com/100mslive/100ms-web) built with more features like screenshare, virtual background, noise suppression, audio/video playlist, etc.

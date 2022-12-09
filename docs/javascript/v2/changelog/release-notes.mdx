@@ -12,6 +12,23 @@ description: Release Notes for 100ms JavaScript SDK
 | @100mslive/react-sdk                   | [![npm version](https://badge.fury.io/js/%40100mslive%2Freact-sdk.svg)](https://badge.fury.io/js/%40100mslive%2Freact-sdk)             |
 | @100mslive/hms-video-react(deprecated) | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-react.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-react) |
 
+## 2022-11-25
+
+Released: `@100mslive/hms-video-store@0.8.0`, `@100mslive/react-sdk@0.6.0`
+
+#### Added:
+- Simulcast support
+- New virtual background plugin with improved cpu usage compared to the previous one. Refer [usage](https://github.com/100mslive/100ms-web/blob/main/src/plugins/VirtualBackground/VirtualBackground.jsx)
+
+#### Fixed:
+- Black tile when video tile is on screen only for a split second(Example scenario: pagination)
+- Join promise not getting resolved in some rare case
+- leave.failure webhook getting triggered when closing tab from preview 
+
+#### Breaking:
+- `hmsActions.setVolume` is a promise now
+- `HMSStatsStore` interface updated and some of the selectors are removed 
+
 ## 2022-11-10
 
 Released: `@100mslive/hms-video-store@0.7.1`, `@100mslive/react-sdk@0.5.1`
