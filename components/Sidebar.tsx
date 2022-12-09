@@ -68,7 +68,6 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
     }
     indexOf = indexOf === -1 ? 0 : indexOf;
     const [tech, setTech] = useState(menuItem[indexOf]);
-    console.log(menuItem, indexOf, navAPI)
     const changeTech = (s) => {
         setTech(s);
         if (slug[0] === 'api-reference') {
