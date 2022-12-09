@@ -29,10 +29,12 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
         query: { slug },
         asPath
     } = router;
+
     const { menu, setMenu } = menuState;
     useEffect(() => {
         setMenu(false);
     }, [router]);
+
     const [currentDocSlug] = slug as string[];
     const [navAPI, setNavAPI] = useState(currentNav);
     useEffect(() => {
@@ -76,7 +78,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
             router.push(s.link, undefined, { shallow: false });
         }
     };
-
+useEffect(() => setTech(menuItem[indexOf]), [indexOf])
     return (
         <div className="sidebar">
             {/* Sidebar Version Section */}
