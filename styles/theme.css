@@ -123,6 +123,9 @@ to decide colors
     --docs_bg_code_highlight: hsla(217, 20%, 15%, 1);
     --docs_bg_sandbox: hsla(217, 20%, 15%, 1);
     --docs_bg_header_button: hsla(217, 20%, 15%, 1);
+    --docs_bg_card: var(--docs_bg_content);
+    --docs_bg_dropdown: hsla(217, 20%, 12%, 1);
+    --docs_bg_dropdown_hover: hsla(217, 20%, 18%, 1);
 
     --docs_border_radius_xs: 4px;
     --docs_border_radius_s: 8px;
@@ -177,15 +180,10 @@ to decide colors
     --surface_light: #F6F7F9;
     --surface_lighter: #FCFCFD;
 
-    --border_default: #E9ECF1;
-    --border_light: #DFE4EC;
-
     --secondary_disabled: #242A33;
 
     --background_default: #F9FAFB;
 
-    --text_med_emp: rgba(0, 0, 0, 0.7);
-    --text_high_emp: rgba(0, 0, 0, 0.95);
     --text_disabled: rgba(0, 0, 0, 0.4);
 
     --code: var(--surface_lighter);
@@ -196,13 +194,13 @@ to decide colors
     
     --surface_default: #F0F2F5;
     
-    --border_default: #E9ECF1;
-    --border_light: #DFE4EC;
+    --border_default: var(--docs_border_default);
+    --border_light: var(--docs_border_strong);
 
     --background_default: #F9FAFB;
     
-    --text_med_emp: hsla(0, 0, 0, 0.7);
-    --text_high_emp: hsla(0, 0, 0, 0.95);
+    --text_med_emp: var(--docs_text_secondary);
+    --text_high_emp: var(--docs_text_primary);
     
     --code: #E0ECFF;
     --code_text: var(--text_high_emp);
@@ -227,8 +225,23 @@ to decide colors
     --response_json: hsl(180, 59%, 45%);
 
     /* New docs colors */
-    --docs_text_primary: hsla(216, 40%, 10%, 0.9);
-    --docs_text_secondary: hsla(216, 40%, 10%, 0.7);
+    --docs_text_primary: hsla(216, 10%, 2%, 0.9);
+    --docs_text_secondary: hsla(216, 10%, 5%, 0.7);
+
+    --docs_border_default: hsla(217, 20%, 96%, 1);
+    --docs_border_strong: hsla(217, 20%, 93%, 1); 
+    --docs_border_dropdown: 1px solid var(--docs_border_strong);
+
+    --docs_bg_header: hsla(217, 20%, 100%, 1);
+    --docs_bg_content: hsla(217, 20%, 99%, 1);
+    --docs_bg_table_header: hsla(217, 20%, 100%, 1);
+    --docs_bg_table_body: hsla(217, 20%, 100%, 1);
+    --docs_bg_code_highlight: hsla(217, 50%, 95%, 1);
+    --docs_bg_sandbox: hsla(217, 20%, 90%, 1);
+    --docs_bg_header_button: hsla(217, 20%, 95%, 1);
+    --docs_bg_card: hsla(217, 20%, 100%, 1);
+    --docs_bg_dropdown: hsla(217, 20%, 100%, 1);
+    --docs_bg_dropdown_hover: hsla(217, 20%, 99%, 1);
 }
 
 *,
@@ -552,7 +565,7 @@ textarea:focus {
 }
 
 pre {
-    background-color: transparent;
+    background-color: var(--docs_bg_card);
     border: 1px solid var(--docs_border_strong);
     border-radius: var(--docs_border_radius_s);
     padding-left: 1rem;
@@ -972,10 +985,10 @@ h3:hover .copy-anchor {
     justify-content: space-between;
     text-align: left;
     outline: none;
-    border: none;
+    border: var(--docs_border_dropdown);
     width: 200px;
     height: 24px;
-    background-color: var(--new_surface_light);
+    background-color: var(--docs_bg_dropdown);
     color: var(--text_high_emp);
     border-radius: var(--docs_border_radius_s);
     margin: 8px 0 15px 1rem;
@@ -985,7 +998,7 @@ h3:hover .copy-anchor {
     font-weight: 600;
 }
 .dropdown:hover{
-    background-color: var(--dropdown_hover)
+    background-color: var(--docs_bg_dropdown_hover)
 }
 .dropdown:focus-visible {
     box-shadow: 0 0 0 3px var(--blue5);
@@ -1002,7 +1015,8 @@ ul.dropdown-options{
 .dropdown-options {
     z-index: 100;
     border-radius: var(--docs_border_radius_s);
-    background-color: var(--new_surface_light);
+    border: var(--docs_border_dropdown);
+    background-color: var(--docs_bg_dropdown);
     position: absolute;
     left: 16px;
     width: 232px;
