@@ -53,7 +53,7 @@ const Feedback = () => {
                 ))}
             </Flex>
             {submitSuccessful ? (
-                <Text css={{ color: '$textAccentHigh', fontWeight: '$semiBold' }}>
+                <Text variant="body2" css={{ color: '$textAccentHigh', fontWeight: '$semiBold' }}>
                     Feedback successfully submitted. Thank you!
                 </Text>
             ) : (
@@ -109,7 +109,7 @@ const Feedback = () => {
 
                 img.emoji[data-active='true'] {
                     filter: none;
-                    transform: scale(1.1);
+                    transform: scale(1.2);
                 }
 
                 .bottomContent {
