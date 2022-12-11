@@ -1,6 +1,6 @@
 import React from 'react';
-import { currentUser } from '../lib/currentUser';
 import { Flex, Box, Button, Text } from '@100mslive/react-ui';
+import { currentUser } from '../lib/currentUser';
 
 const emojis = [{ score: 1 }, { score: 2 }, { score: 3 }, { score: 4 }];
 

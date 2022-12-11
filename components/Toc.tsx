@@ -1,4 +1,5 @@
 import React from 'react';
+import Feedback from './Feedback';
 
 export type TocItem = {
     depth: number;
@@ -46,6 +47,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                     </div>
                 </>
             ) : null}
+            <Feedback />
             <style jsx>{`
                 .toc-ctx {
                     display: flex;
