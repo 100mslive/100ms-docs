@@ -24,6 +24,7 @@ import { Box, Button, Flex, Text } from '@100mslive/react-ui';
 import { Card, Item, SdkItem } from 'components';
 import Header from 'components/Header';
 import Switcher from 'components/Switcher';
+import Feedback from '@/components/Feedback';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
 
@@ -173,10 +174,11 @@ const Homepage = () => {
                                         text={value.title}
                                         sdk={value.id}
                                         css={{
-                                            borderRadius: `${index !== 0 ? '0 0' : '$3 $3'} ${mobileSDK.length - 1 !== index ? '0 0' : '$3 $3'
-                                                }`
+                                            borderRadius: `${index !== 0 ? '0 0' : '$3 $3'} ${
+                                                mobileSDK.length - 1 !== index ? '0 0' : '$3 $3'
+                                            }`
                                         }}
-                                    // listView={true}
+                                        // listView={true}
                                     />
                                 ))}
                             </Flex>
@@ -409,6 +411,7 @@ const Homepage = () => {
                             </Flex>
                         </Box>
                     </Flex>
+                    <Feedback />
                     <Footer css={{ backgroundColor: '$backgroundDefault' }} />
                 </>
             ) : null}

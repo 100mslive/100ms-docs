@@ -1,5 +1,6 @@
 import React from 'react';
 import { Flex, Box, Button, Text } from '@100mslive/react-ui';
+import useClickOutside from '@/lib/useClickOutside';
 import { currentUser } from '../lib/currentUser';
 
 const emojis = [{ score: 1 }, { score: 2 }, { score: 3 }, { score: 4 }];
@@ -7,10 +8,20 @@ const emojis = [{ score: 1 }, { score: 2 }, { score: 3 }, { score: 4 }];
 const Feedback = () => {
     const [showTextBox, setShowTextBox] = React.useState(false);
     const [clickedEmoji, setClickedEmoji] = React.useState(0);
+    const [submitSuccessful, setSubmitSuccessful] = React.useState(false);
+    const [message, setMessage] = React.useState('');
+    const feedBackRef = React.useRef<HTMLDivElement | null>();
     const inputRef = React.useRef<HTMLTextAreaElement | undefined>();
+
+    React.useEffect(() => {}, []);
+
+    // @ts-ignore
+    useClickOutside(feedBackRef, () => setShowTextBox(false));
+
     return (
-        <Box css={{ maxWidth: '200px', ml: '16px' }}>
-            <Text variant="body2" css={{ fontWeight: '$medium' }}>
+        // @ts-ignore
+        <Box ref={feedBackRef} css={{ maxWidth: '200px', ml: '16px' }}>
+            <Text variant="body2" css={{ fontWeight: '$medium', color: '$textHighEmp' }}>
                 How helpful was this page?
             </Text>
             <Flex css={{ gap: '30px', p: '$8 0' }}>
@@ -41,33 +52,48 @@ const Feedback = () => {
                     </span>
                 ))}
             </Flex>
-
-            <div className="bottomContent">
-                <textarea
-                    placeholder="Please share your feedback"
-                    cols={20}
-                    rows={3}
-                    // @ts-ignore
-                    ref={inputRef}
-                    style={{ background: 'none', fontSize: '13px', marginBottom: '16px' }}
-                />
-                <Button
-                    variant="standard"
-                    css={{ ml: 'auto' }}
-                    onClick={() => {
-                        window.analytics.track('docs.feedback.message', {
-                            title: document.title,
-                            message: inputRef.current?.value,
-                            referrer: document.referrer,
-                            path: window.location.pathname,
-                            rating: clickedEmoji,
-                            timeStamp: Date.now(),
-                            ...currentUser()
-                        });
-                    }}>
-                    Submit
-                </Button>
-            </div>
+            {submitSuccessful ? (
+                <Text css={{ color: '$textAccentHigh', fontWeight: '$semiBold' }}>
+                    Feedback successfully submitted. Thank you!
+                </Text>
+            ) : (
+                <div className="bottomContent">
+                    <textarea
+                        placeholder="Please share your feedback"
+                        cols={20}
+                        rows={3}
+                        // @ts-ignore
+                        ref={inputRef}
+                        onChange={(e) => {
+                            setMessage(e.target.value);
+                        }}
+                        style={{
+                            background: 'none',
+                            fontSize: '13px',
+                            marginBottom: '16px',
+                            borderRadius: '4px'
+                        }}
+                    />
+                    <Button
+                        variant="primary"
+                        css={{ ml: 'auto' }}
+                        disabled={!message}
+                        onClick={() => {
+                            window.analytics.track('docs.feedback.message', {
+                                title: document.title,
+                                message,
+                                referrer: document.referrer,
+                                path: window.location.pathname,
+                                rating: clickedEmoji,
+                                timeStamp: Date.now(),
+                                ...currentUser()
+                            });
+                            setSubmitSuccessful(true);
+                        }}>
+                        Submit
+                    </Button>
+                </div>
+            )}
 
             <style jsx>{`
                 .emoji {
