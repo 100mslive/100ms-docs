@@ -9,7 +9,7 @@ const Feedback = () => {
     const [clickedEmoji, setClickedEmoji] = React.useState(0);
     const inputRef = React.useRef<HTMLTextAreaElement | undefined>();
     return (
-        <Box css={{ maxWidth: '180px', mx: 'auto' }}>
+        <Box css={{ maxWidth: '200px', ml: '16px' }}>
             <Text variant="body2" css={{ fontWeight: '$medium' }}>
                 How helpful was this page?
             </Text>
