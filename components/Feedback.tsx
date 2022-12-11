@@ -9,7 +9,7 @@ const Feedback = () => {
     const [clickedEmoji, setClickedEmoji] = React.useState(0);
     const inputRef = React.useRef<HTMLTextAreaElement | undefined>();
     return (
-        <Box>
+        <Box css={{ maxWidth: '180px', mx: 'auto' }}>
             <Text variant="body2" css={{ fontWeight: '$medium' }}>
                 How helpful was this page?
             </Text>
@@ -92,6 +92,7 @@ const Feedback = () => {
                     transform: scaleY(${showTextBox ? '1' : '0'});
                     visibility: ${showTextBox ? 'visible' : 'collapse'};
                     transition: transform 200ms ease;
+                    margin-bottom: 16px;
                 }
             `}</style>
         </Box>
