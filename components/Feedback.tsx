@@ -27,6 +27,7 @@ const Feedback = () => {
             <Flex css={{ gap: '30px', p: '$8 0' }}>
                 {emojis.map((emoji) => (
                     <span
+                        title="Share your feedback!"
                         style={{ position: 'relative', width: '27px', height: '27px' }}
                         key={emoji.score}
                         onClick={() => {
@@ -59,6 +60,7 @@ const Feedback = () => {
             ) : (
                 <div className="bottomContent">
                     <textarea
+                        maxLength={140}
                         placeholder="Please share your feedback"
                         cols={20}
                         rows={3}
