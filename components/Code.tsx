@@ -84,16 +84,16 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                     }
                     .copied {
                         z-index: 45;
+                        background: var(--docs_bg_card);
                         outline: none;
                         cursor: pointer;
                         width: 40px;
                         height: 40px;
                         padding: 9px;
                         border: 1px solid var(--docs_border_strong);
-                        background: transparent;
                         border-radius: 20px;
                         position: absolute;
-                        top: 12px;
+                        top: 8px;
                         right: 12px;
                     }
                 `}</style>
