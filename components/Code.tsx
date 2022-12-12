@@ -91,7 +91,7 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                         border: 1px solid var(--gray3);
                         background: var(--gray1);
                         border-radius: 5px;
-                        position: absolute;
+                        position: sticky;
                         top: 10px;
                         right: 10px;
                     }
