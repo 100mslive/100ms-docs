@@ -39,7 +39,7 @@ const Feedback = () => {
                                 referrer: document.referrer,
                                 path: window.location.pathname,
                                 rating: clickedEmoji,
-                                timeStamp: Date.now(),
+                                timeStamp: new Date().toLocaleString(),
                                 ...currentUser()
                             });
                         }}>
@@ -87,7 +87,7 @@ const Feedback = () => {
                                 referrer: document.referrer,
                                 path: window.location.pathname,
                                 rating: clickedEmoji,
-                                timeStamp: Date.now(),
+                                timeStamp: new Date().toLocaleString(),
                                 ...currentUser()
                             });
                             setSubmitSuccessful(true);
