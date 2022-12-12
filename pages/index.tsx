@@ -63,7 +63,7 @@ const Homepage = () => {
                         justify="center"
                         css={{
                             paddingBottom: '$16',
-                            backgroundColor: '$backgroundDefault',
+                            backgroundColor: 'var(--docs_bg_content)',
                             filter: `blur(${modal ? '10px' : '0'})`
                         }}>
                         <Box css={{ width: '90%', maxWidth: '1248px' }}>
@@ -409,7 +409,7 @@ const Homepage = () => {
                             </Flex>
                         </Box>
                     </Flex>
-                    <Footer css={{ backgroundColor: '$backgroundDefault' }} />
+                    <Footer css={{ backgroundColor: 'var(--docs_bg_footer)' }} />
                 </>
             ) : null}
         </>
