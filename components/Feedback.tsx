@@ -125,6 +125,7 @@ const Feedback = () => {
 
                 textarea {
                     resize: none;
+                    padding: 8px;
                 }
             `}</style>
         </Box>
