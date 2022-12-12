@@ -20,11 +20,11 @@ const Feedback = () => {
 
     return (
         // @ts-ignore
-        <Box ref={feedBackRef} css={{ maxWidth: '200px', ml: '$8', mt: "$18" }}>
-            <Text variant="body2" css={{ fontWeight: '$medium', color: '$textHighEmp' }}>
+        <Box ref={feedBackRef} css={{ maxWidth: '200px', ml: '$8', mt: '$18' }}>
+            <Text css={{ fontWeight: '$medium', color: '$textHighEmp', fontSize: '13px' }}>
                 How helpful was this page?
             </Text>
-            <Flex css={{ gap: '30px', p: '$8 0' }}>
+            <Flex css={{ gap: '30px', p: '$9 0' }}>
                 {emojis.map((emoji) => (
                     <span
                         title="Share your feedback!"
@@ -54,7 +54,7 @@ const Feedback = () => {
                 ))}
             </Flex>
             {submitSuccessful ? (
-                <Text variant="body2" css={{ color: '$textAccentHigh', fontWeight: '$semiBold' }}>
+                <Text css={{ color: '$textAccentHigh', fontWeight: '$semiBold', fontSize: '13px' }}>
                     Feedback successfully submitted. Thank you!
                 </Text>
             ) : (
@@ -72,13 +72,13 @@ const Feedback = () => {
                         style={{
                             background: 'none',
                             fontSize: '13px',
-                            marginBottom: '16px',
+                            marginBottom: '18px',
                             borderRadius: '4px'
                         }}
                     />
                     <Button
                         variant="primary"
-                        css={{ ml: 'auto' }}
+                        css={{ ml: 'auto', fontSize: '$sm', padding: '$3 $6' }}
                         disabled={!message}
                         onClick={() => {
                             window.analytics.track('docs.feedback.message', {
@@ -121,6 +121,10 @@ const Feedback = () => {
                     visibility: ${showTextBox ? 'visible' : 'collapse'};
                     transition: transform 200ms ease;
                     margin-bottom: 16px;
+                }
+
+                textarea {
+                    resize: none;
                 }
             `}</style>
         </Box>
