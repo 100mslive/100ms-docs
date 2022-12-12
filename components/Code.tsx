@@ -76,7 +76,6 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                 <div ref={textRef}>{children}</div>{' '}
                 <style jsx>{`
                     .code-block {
-                        position: relative;
                         padding-top: 1rem;
                     }
                     button:hover {
