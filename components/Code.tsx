@@ -77,7 +77,6 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                 <style jsx>{`
                     .code-block {
                         padding-top: 1rem;
-                        contain: content;
                     }
                     button:hover {
                         opacity: 0.8;
