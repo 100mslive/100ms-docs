@@ -13,6 +13,7 @@ const Note: React.FC<Props> = ({ type = 'success', children }) => {
                 div {
                     padding: 16px;
                     padding-left: 24px;
+                    background: var(--docs_bg_card);
                     margin: 24px 0;
                     border-radius: var(--docs_border_radius_s);
                     border 1px solid var(--docs_border_strong);
