@@ -53,6 +53,7 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
             <style jsx>{`
                 .tab-ctx {
                     border-bottom: 0.5px solid var(--docs_border_strong);
+                    margin-bottom: var(--docs_spacing_2);
                 }
                 button {
                     background: none;
