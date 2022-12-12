@@ -15,7 +15,7 @@ This is can be discovered by checking the `publishSettings` and `subscribeSettin
 Check what actions this role can perform. i.e can it change someone else current role, end the meeting, or remove someone from the room This is can be discovered by checking the permissions property.
 
 
-In certain scenarios, you may want to change someone's role. Imagine an audio room with 2 roles `speaker` and `listener`. Only someone with a `speaker` role can publish audio to the room while a `listener` can only subscribe. Now at some point, `speaker` may decide to nominate some `listener` to become a `speaker`. This is where the `changeRole` API comes in.
+In certain scenarios, you may want to change someone's role. Imagine an audio room with 2 roles `speaker` and `listener`. Only someone with a `speaker` role can publish audio to the room while a `listener` can only subscribe. Now at some point, `speaker` may decide to nominate some `listener` to become a `speaker`. This is where the `changeRoleOfPeer` API comes in.
 
 
 To invoke the API you will need 2 things - 
@@ -26,18 +26,34 @@ All the peers that are in the current room are accessible via peers property of 
 
 A list of all available roles in the current room can be accessed via the `getRoles` method of `HMSSDK`
 
-Once you have both you can invoke.
+Once you have both you can invoke `changeRoleOfPeer` for changing role of single peer in the room.
 
 ```dart 
-hmsSDK.changeRole(peerId,roleName,forceChange);
+   hmsSDK.changeRoleOfPeer(
+        forPeer: forPeer,
+        toRole: toRole,
+        force: force,
+        hmsActionResultListener: hmsActionResultListener)
 ```
 
-`peer`: the HMSPeer object of the peer.
+`forPeer`: the HMSPeer object of the peer.
 
-`roleName`: name of the role.
+`toRole`: the HMSRole you want to switch to.
 
-`forceChange`: Optional boolean value. Set to `true` if you want to force the role change without the peer's explicit acceptance.
+`force`: Optional boolean value. Set to `true` if you want to force the role change without the peer's explicit acceptance.
 
+If you want to change role of all the peers in the room then use `changeRolesOfAllPeers` as follows:
+
+```dart
+ hmsSDK.changeRolesOfAllPeers(
+ toRole: toRole, 
+ limitToRoles: limitToRoles);
+```
+
+`toRole`: the HMSRole you want to switch to.
+`limitToRoles`: the list of HMSRole in which you want to apply role change.
+
+> 💡 Note: Force change is true in `changeRolesOfAllPeers` API.
 
 If the change role succeeds you will get an update in the `HMSUpdateListener` of `ROLE_CHANGED` update type:
 
