@@ -228,17 +228,17 @@ to decide colors
 
     /* New docs colors */
     --docs_text_primary: hsla(216, 10%, 2%, 0.9);
-    --docs_text_secondary: hsla(216, 10%, 30%, 0.7);
+    --docs_text_secondary: hsla(216, 10%, 20%, 0.7);
 
-    --docs_border_default: hsla(217, 20%, 96%, 1);
-    --docs_border_strong: hsla(217, 20%, 93%, 1);
+    --docs_border_default: hsla(217, 20%, 93%, 1);
+    --docs_border_strong: hsla(217, 20%, 90%, 1);
     --docs_border_dropdown: 1px solid var(--docs_border_strong);
 
     --docs_bg_header: hsla(217, 20%, 100%, 1);
     --docs_bg_content: hsla(217, 20%, 99%, 1);
     --docs_bg_table_header: hsla(217, 20%, 100%, 1);
     --docs_bg_table_body: hsla(217, 20%, 100%, 1);
-    --docs_bg_code_highlight: hsla(217, 50%, 93%, 1);
+    --docs_bg_code_highlight: hsla(217, 40%, 95%, 1);
     --docs_bg_sandbox: hsla(217, 20%, 90%, 1);
     --docs_bg_header_button: hsla(217, 20%, 95%, 1);
     --docs_bg_card: hsla(217, 20%, 100%, 1);
@@ -266,6 +266,10 @@ body {
 html {
     scroll-padding-top: 120px;
     /* height of sticky header */
+}
+
+video {
+    border-radius: var(--docs_border_radius_s);
 }
 
 body {
@@ -356,11 +360,11 @@ span.text.child, span.text {
 
 /* body2 */
 .menu-container a.menu-item {
-    font-size: 14px;
+    font-size: .875rem;
     color: var(--docs_text_secondary);
     line-height: 24px;
     border-left: 2px solid transparent;
-    letter-spacing: 0.02em;
+    letter-spacing: 0px;
 }
 
 .menu-container a.active-link {
@@ -443,12 +447,12 @@ ol {
 }
 
 li {
-    color: var(--text_med_emp);
+    color: var(--docs_text_primary);
     margin: 0 0 16px 0;
 }
 
 li p strong {
-    color: var(--text_high_emp);
+    color: var(--docs_text_primary);
 }
 
 /* ul li:before {
@@ -729,7 +733,7 @@ table td {
 }
 
 tr {
-    color: var(--text_high_emp);
+    color: var(--docs_text_primary);
 }
 
 table tr td:not(:last-of-type) {
@@ -742,10 +746,12 @@ table tr td:not(:first-of-type) {
 
 table tr:last-of-type td:first-of-type {
     border-bottom-left-radius: 8px;
+    border-bottom-width: 1px !important;
 }
 
 table tr:last-of-type td:last-of-type {
     border-bottom-right-radius: 8px;
+    border-bottom-width: 1px !important;
 }
 
 .table-wrapper {
@@ -762,6 +768,7 @@ table td {
 
 table th, tr, td {
     border-color: var(--docs_border_default) !important;
+    border-bottom-width: 0px !important;
 }
 
 .token.comment,
@@ -828,6 +835,7 @@ table th, tr, td {
 code[class*='language-'],
 pre[class*='language-'] {
     color: var(--token_code_class);
+    margin-top: 0px !important;
 }
 
 .request {
@@ -939,6 +947,7 @@ input {
 
 /* Reamark Code Header / Title */
 .remark-code-title {
+    background-color: var(--docs_bg_card);
     color: var(--docs_text_primary);
     padding: 4px 10px;
     border: 1px solid var(--docs_border_strong);
