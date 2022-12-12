@@ -20,7 +20,7 @@ const Feedback = () => {
 
     return (
         // @ts-ignore
-        <Box ref={feedBackRef} css={{ maxWidth: '200px', ml: '16px' }}>
+        <Box ref={feedBackRef} css={{ maxWidth: '200px', ml: '$8', mt: "$18" }}>
             <Text variant="body2" css={{ fontWeight: '$medium', color: '$textHighEmp' }}>
                 How helpful was this page?
             </Text>
