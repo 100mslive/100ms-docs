@@ -16,6 +16,7 @@ import LiveStreaming from '../common/live-streaming.md';
 import Recordings from '../common/recordings.md';
 import AdaptiveBitrate1 from "../common/adaptive-bitrate-1.md";
 import AdaptiveBitrate2 from "../common/adaptive-bitrate-2.md";
+import AndroidVersionShield from '../common/android-sdk-version-shield.md';
 
 const data = {
     basics: Basics,
@@ -28,6 +29,7 @@ const data = {
     domainsAndPorts: DomainsPorts,
     liveStreaming: LiveStreaming,
     recordings: Recordings,
+    androidVersionShield: AndroidVersionShield,
 
     /**
      * Adaptive bitrate docs are split into 2 parts because 3-backtick
