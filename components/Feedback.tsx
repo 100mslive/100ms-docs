@@ -25,7 +25,7 @@ const Feedback = () => {
         <Box ref={feedBackRef} css={{ maxWidth: '200px' }}>
             <Text
                 variant="tiny"
-                css={{ fontWeight: 'bold', color: '$textHighEmp', textTransform: 'uppercase' }}>
+                css={{ fontWeight: "$medium", color: '$textHighEmp', textTransform: 'uppercase', letterSpacing: "0.1rem" }}>
                 Was this helpful?
             </Text>
             <Flex justify="between" css={{ p: '$9 0' }}>
