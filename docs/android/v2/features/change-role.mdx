@@ -38,7 +38,7 @@ Once you have all you can invoke:
 <Tab id='change-role-single-0'>
 
 ```kotlin
-fun changeRoleOfPeer(forPeer: HMSPeer, toRole: HMSRole, force: Boolean, hmsActionResultListener: HMSActionResultListener)
+fun changeRoleOfPeer(forPeer: HMSPeer, toRole: HMSRole, force: Boolean)
     hmsSDK.changeRoleOfPeer(peer, toRole, force, object : HMSActionResultListener {
         override fun onSuccess() {
             // The request was sent successfully
@@ -55,7 +55,22 @@ fun changeRoleOfPeer(forPeer: HMSPeer, toRole: HMSRole, force: Boolean, hmsActio
 
 <Tab id='change-role-single-1'>
 
-
+```java
+public void changeRoleOfPeer(HMSPeer peer, HMSRole toRole, Boolean force) {
+        hmsSDK.changeRoleOfPeer(peer, toRole, force, new HMSActionResultListener() {
+    
+            @Override
+            public void onError(@NonNull HMSException e) {
+                // There was an error
+            }
+    
+            @Override
+            public void onSuccess() {
+                // The request was sent successfully
+            }
+        });
+    }
+```
 
 </Tab>
 
