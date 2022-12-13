@@ -121,6 +121,7 @@ const Homepage = () => {
                                     sdk="javascript"
                                     css={{
                                         borderRadius: '$3 $3 0 0',
+                                        borderBottomWidth: '0px;',
                                         '@lg': {
                                             borderRadius: '$3'
                                         }
@@ -174,7 +175,8 @@ const Homepage = () => {
                                         sdk={value.id}
                                         css={{
                                             borderRadius: `${index !== 0 ? '0 0' : '$3 $3'} ${mobileSDK.length - 1 !== index ? '0 0' : '$3 $3'
-                                                }`
+                                                }`,
+                                                borderBottomWidth: `${index !== mobileSDK.length - 1 ? '0px' : '1px'}`,
                                         }}
                                     // listView={true}
                                     />
