@@ -29,7 +29,7 @@ const Feedback = () => {
                 css={{ fontWeight: 'bold', color: '$textHighEmp', textTransform: 'uppercase' }}>
                 Was this helpful?
             </Text>
-            <Flex css={{ gap: '30px', p: '$9 0' }}>
+            <Flex justify="between" css={{ p: '$9 0' }}>
                 {emojis.map((emoji) => (
                     <span
                         title="Share your feedback!"
