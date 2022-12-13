@@ -23,7 +23,6 @@ const Feedback = () => {
     return (
         // @ts-ignore
         <Box ref={feedBackRef} css={{ maxWidth: '200px' }}>
-            <hr />
             <Text
                 variant="tiny"
                 css={{ fontWeight: 'bold', color: '$textHighEmp', textTransform: 'uppercase' }}>

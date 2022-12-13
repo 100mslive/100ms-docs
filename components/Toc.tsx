@@ -47,6 +47,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                     </div>
                 </>
             ) : null}
+            <hr />
             <Feedback />
             <style jsx>{`
                 .toc-ctx {
