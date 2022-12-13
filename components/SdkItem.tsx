@@ -34,7 +34,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
                 height: '$18',
                 borderWidth: '1px',
                 borderStyle: 'solid',
-                borderColor: 'var(--docs_border_strong)',
+                borderColor: 'var(--docs_border_default)',
                 gap: '$12',
                 flexWrap: 'wrap',
                 justify: 'between',
