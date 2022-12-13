@@ -57,19 +57,19 @@ fun changeRoleOfPeer(forPeer: HMSPeer, toRole: HMSRole, force: Boolean)
 
 ```java
 public void changeRoleOfPeer(HMSPeer peer, HMSRole toRole, Boolean force) {
-        hmsSDK.changeRoleOfPeer(peer, toRole, force, new HMSActionResultListener() {
-    
-            @Override
-            public void onError(@NonNull HMSException e) {
-                // There was an error
-            }
-    
-            @Override
-            public void onSuccess() {
-                // The request was sent successfully
-            }
-        });
-    }
+    hmsSDK.changeRoleOfPeer(peer, toRole, force, new HMSActionResultListener() {
+
+        @Override
+        public void onError(@NonNull HMSException e) {
+            // There was an error
+        }
+
+        @Override
+        public void onSuccess() {
+            // The request was sent successfully
+        }
+    });
+}
 ```
 
 </Tab>
