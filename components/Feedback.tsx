@@ -51,7 +51,7 @@ const Feedback = () => {
                         <img
                             className="emoji"
                             data-active={emoji.score === clickedEmoji}
-                            src={`/emoji-${emoji.score}.png`}
+                            src={`/docs/emoji-${emoji.score}.png`}
                             style={{ position: 'absolute', top: '0', left: '0' }}
                             alt={`${emoji.score}`}
                         />
