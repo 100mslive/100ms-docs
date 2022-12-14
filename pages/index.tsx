@@ -24,7 +24,6 @@ import { Box, Button, Flex, Text } from '@100mslive/react-ui';
 import { Card, Item, SdkItem } from 'components';
 import Header from 'components/Header';
 import Switcher from 'components/Switcher';
-import Feedback from '@/components/Feedback';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
 
@@ -411,7 +410,6 @@ const Homepage = () => {
                             </Flex>
                         </Box>
                     </Flex>
-                    <Feedback/>
                     <Footer css={{ backgroundColor: '$backgroundDefault' }} />
                 </>
             ) : null}
