@@ -305,7 +305,7 @@ const Header: React.FC<Props> = ({
                     margin-left: auto !important;
                     border-radius: var(--docs_border_radius_xs);
                     padding: 0 5px;
-                    color: var(--text_high_emp);
+                    color: var(--docs_text_primary);
                     border: 1px solid var(--gray6);
                 }
                 .company {

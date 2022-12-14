@@ -238,7 +238,7 @@ const ChevronDown = () => (
         strokeLinejoin="round"
         fill="none"
         shapeRendering="geometricPrecision"
-        style={{ color: 'var(--text_high_emp)' }}>
+        style={{ color: 'var(--docs_text_primary)' }}>
         <path d="M6 9l6 6 6-6" />
     </svg>
 );
