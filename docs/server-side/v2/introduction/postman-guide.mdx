@@ -31,44 +31,28 @@ We have simplified the process of management token generation for you within thi
 
 > **Note:** Refer to the [authentication and tokens guide](https://100ms.live/docs/server-side/v2/introduction/authentication-and-tokens#code-sample-generate-management-token) for more generating the management token in your preferred programming language for your development/production environment.
 
-## Example: Create a room
+### Manage authentication for multiple 100ms workspaces in Postman
 
-Let's try to create a room to see how the 100ms collection works. From the forked REST API collection, select the folder named **Room APIs **and select the request to `create room`. Replace the placeholders like name, description, template_id, etc with the desired values. Click the `Send` button once done.
-
-## Managing authentication for multiple workspaces in Postman
-
-You can use the environment variables in postman to maintain authentication for multiple 100ms workspaces. An example use case for it is managing API authentication for Development, QA and Production workspaces. You can learn more about environment variables in Postman here.
+You can use the environment variables in Postman to maintain authentication for multiple 100ms workspaces. An example use case is managing API authentication for Development, QA, and Production workspaces. You can learn more about environment variables in Postman [here](https://learning.postman.com/docs/sending-requests/variables/).
 
 You can setup environment variables using the steps below:
 
-1. Hover over to Environments in the Postman sidebar. Click on Create an Environment.
+1. Hover over to Environments in the Postman sidebar. Click on `Create an Environment`.
+2. Name your Environment (e.g., Dev Env) and add two variables `APP_ACCESS_KEY` and `APP_SECRET`.
+3. Go to the [Developer section](https://dashboard.100ms.live/developer) of your workspace, copy `APP_ACCESS_KEY` and `APP_SECRET`, paste those values in the `INITIAL VALUE` column, and Save your Environment.
+4. Head to your "100ms API collection" and switch your Environment to `Dev Env` to send API requests for the respective 100ms workspace.
+5. Similarly, you create other environments (e.g., QA and Production) for different workspaces to maintain ease of authentication access.
 
-    ![Environment Setup Step 1](/docs/v2/environment_postman_step_1.png)
+<video loop="true" autoplay="autoPlay" controls="controls" id="vid" muted>
+    <source src="/docs/guides/env-vars.mp4" type="video/mp4" />
+</video>
+<br />
 
-2. Name your Environment (e.g Development Environment)
+> **Note:** These environments exist across your Postman workspaces and would be visible in the dropdown for other collections.
 
-    ![Environment Setup Step 1](/docs/v2/environment_postman_step_2.png)
+## Example: Create a room
 
-3. Add two variables like shown in the screenshot i.e APP_ACCESS_KEY and APP_SECRET. Change the Type of APP_SECRET to secret.
-
-    ![Environment Setup Step 1](/docs/v2/environment_postman_step_3.png)
-
-4. Go to the Developer section of your workspace and copy values for APP_ACCESS_KEY and APP_SECRET.
-
-    ![Environment Setup Step 1](/docs/v2/environment_postman_step_4.png)
-
-5. Paste those values in the INITIAL VALUE column and Save your Environment.
-
-    ![Environment Setup Step 1](/docs/v2/environment_postman_step_5.png)
-
-6. Head over to your 100ms API collection and then switch your environment to access the respective workspace.
-
-    ![Environment Setup Step 1](/docs/v2/environment_postman_step_6.png)
-
-7. Similarly, you create other environments (e.g QA and Production) for different workspaces to maintain ease of authentication access.
-
-Please note that these environments exist across your postman workspaces and hence would also be visible in the dropdown for other collections.
-
+Let's try to create a room to see how the 100ms collection works. From the forked REST API collection, select the folder named **Room APIs **and select the request to `create room`. Replace the placeholders like name, description, template_id, etc with the desired values. Click the `Send` button once done.
 
 ## API Reference
 

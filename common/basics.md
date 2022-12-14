@@ -25,7 +25,7 @@ Any application built using 100ms' SDK has 2 components.
 -   `Webhooks` Webhook is an HTTP(S) endpoint used for pushing the notifications to your application. It will be invoked by 100ms servers to notify events of your room.
 -   `Workspace` A workspace is an isolated environment which contains account data like templates, rooms, room and session history, etc. You can use workspaces to create differentiated environments like “Production” and “Development” or team-first environments like “Small Classroom” and “Webinar Classroom”.
 -   `Members` A member is an individual 100ms account with access to a particular workspace. You can add and remove members in a workspace.
--   `Organisation` An organisation is an entity which holds all the workspaces and billing data of a particular account. Each account on sign-up has its own organization which acts as the organization owner. The account owner here acts as a super-admin of all workspaces created under this account. 
+-   `Organization` An organization is an entity which holds all the workspaces and billing data of a particular account. Each account on sign-up has its own organization which acts as the organization owner. The account owner here acts as a super-admin of all workspaces created under this account. 
 
 ## What are the steps to build a live app with 100ms?
 1. Sign up on 100ms using the **Try For Free** button in the top navbar.
