@@ -15,7 +15,7 @@ You can click on this button to fork the 100ms API collection.
 
 ## Authentication
 
-100ms uses management tokens to authenticate REST APIs. To create the management token, you must use the `App Access Key` and `App Secret` from the [developer section](https://dashboard.100ms.live/developer) in your 100ms dashboard.
+100ms uses management tokens to authenticate REST APIs. To create the management token, you must use the `App Access Key` and `App Secret` from the [developer section](https://dashboard.100ms.live/developer) in your 100ms dashboard. This key and secret differ across workspaces so please ensure you are in the intended workspace before copying these credentials.
 
 ![Copy app secret and key](/docs/v2/app-key-secret.png)
 
@@ -34,6 +34,41 @@ We have simplified the process of management token generation for you within thi
 ## Example: Create a room
 
 Let's try to create a room to see how the 100ms collection works. From the forked REST API collection, select the folder named **Room APIs **and select the request to `create room`. Replace the placeholders like name, description, template_id, etc with the desired values. Click the `Send` button once done.
+
+## Managing authentication for multiple workspaces in Postman
+
+You can use the environment variables in postman to maintain authentication for multiple 100ms workspaces. An example use case for it is managing API authentication for Development, QA and Production workspaces. You can learn more about environment variables in Postman here.
+
+You can setup environment variables using the steps below:
+
+1. Hover over to Environments in the Postman sidebar. Click on Create an Environment.
+
+  ![Environment Setup Step 1](/docs/docs/v2/environment_postman_step_1.png)
+
+2. Name your Environment (e.g Development Environment)
+
+  ![Environment Setup Step 1](/docs/docs/v2/environment_postman_step_2.png)
+
+3. Add two variables like shown in the screenshot i.e APP_ACCESS_KEY and APP_SECRET. Change the Type of APP_SECRET to secret.
+
+  ![Environment Setup Step 1](/docs/docs/v2/environment_postman_step_3.png)
+
+4. Go to the Developer section of your workspace and copy values for APP_ACCESS_KEY and APP_SECRET.
+
+  ![Environment Setup Step 1](/docs/docs/v2/environment_postman_step_4.png)
+
+5. Paste those values in the INITIAL VALUE column and Save your Environment.
+
+  ![Environment Setup Step 1](/docs/docs/v2/environment_postman_step_5.png)
+
+6. Head over to your 100ms API collection and then switch your environment to access the respective workspace.
+
+  ![Environment Setup Step 1](/docs/docs/v2/environment_postman_step_6.png)
+
+7. Similarly, you create other environments (e.g QA and Production) for different workspaces to maintain ease of authentication access.
+
+Please note that these environments exist across your postman workspaces and hence would also be visible in the dropdown for other collections.
+
 
 ## API Reference
 

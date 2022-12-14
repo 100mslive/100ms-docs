@@ -15,7 +15,7 @@ You must host your server to generate these tokens while transitioning your app 
 
 To create an App Token, you need to use `app_access_key`, `app_secret`, `room_id`, and `user_id`.
 
--   You can get the `app_access_key` and `app_secret` from the [developer section](https://dashboard.100ms.live/developer) in your 100ms dashboard.
+-   You can get the `app_access_key` and `app_secret` from the [developer section](https://dashboard.100ms.live/developer) in your 100ms dashboard. This key and secret differ across workspaces so please ensure you are in the intended workspace before copying these credentials. 
 -   **room_id**: This is the unique identifier for your room. You can get it from the [rooms page](https://dashboard.100ms.live/rooms) in your dashboard or in the response payload of the [create room server-side API](/docs/server-side/v2/Rooms/create-via-api).
 -   **user_id**: This identifier can be used to map a 100ms peer to your own internal user object for business logic. Specify your internal user identifier as the peer's user_id. If not available, use any random string.
 
