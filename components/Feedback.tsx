@@ -14,10 +14,10 @@ const Feedback = () => {
     const inputRef = React.useRef<HTMLTextAreaElement | undefined>();
 
     const getPlaceholder = {
-        1: 'What should we fix immediately?',
-        2: 'What should we work on?',
-        3: 'What were the things you liked?',
-        4: 'We would love to know what you liked'
+        1: 'What should we fix?',
+        2: 'How can we make it better?',
+        3: 'How can we make it even better?',
+        4: 'Great! What did you like?'
     };
 
     // @ts-ignore
