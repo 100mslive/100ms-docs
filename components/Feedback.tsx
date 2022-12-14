@@ -27,14 +27,11 @@ const Feedback = () => {
     }, [clickedEmoji]);
 
     return (
-        <Box ref={feedBackRef} css={{ maxWidth: '200px' }}>
+        <Box ref={feedBackRef} css={{ maxWidth: '160px' }}>
             <Text
-                variant="tiny"
+                variant="body2"
                 css={{
-                    fontWeight: '$medium',
-                    color: '$textHighEmp',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.1rem'
+                    color: 'var(--text_docs_primary)',
                 }}>
                 Was this helpful?
             </Text>
