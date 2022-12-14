@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Flex, Box, Button, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
 import { currentUser } from '../lib/currentUser';
