@@ -10,8 +10,8 @@ const Feedback = () => {
     const [clickedEmoji, setClickedEmoji] = React.useState(0);
     const [submitSuccessful, setSubmitSuccessful] = React.useState(false);
     const [message, setMessage] = React.useState('');
-    const feedBackRef = React.useRef<HTMLDivElement | null>();
-    const inputRef = React.useRef<HTMLTextAreaElement | undefined>();
+    const feedBackRef = React.createRef<HTMLDivElement>();
+    const inputRef = React.createRef<HTMLTextAreaElement>();
 
     const getPlaceholder = {
         1: 'What should we fix?',
@@ -20,7 +20,6 @@ const Feedback = () => {
         4: 'Great! What did you like?'
     };
 
-    // @ts-ignore
     useClickOutside(feedBackRef, () => setShowTextBox(false));
 
     React.useEffect(() => {
@@ -28,7 +27,6 @@ const Feedback = () => {
     }, [clickedEmoji]);
 
     return (
-        // @ts-ignore
         <Box ref={feedBackRef} css={{ maxWidth: '200px' }}>
             <Text
                 variant="tiny"
@@ -83,7 +81,6 @@ const Feedback = () => {
                             placeholder={getPlaceholder[clickedEmoji]}
                             cols={20}
                             rows={3}
-                            // @ts-ignore
                             ref={inputRef}
                             onChange={(e) => {
                                 setMessage(e.target.value);

@@ -14,15 +14,14 @@ interface Props {
 const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
     const paletteTrack = React.useRef(-1);
     const [search, setSearch] = React.useState('');
-    const ref = React.useRef();
-    const inputRef = React.useRef<HTMLInputElement>();
+    const ref = React.createRef<HTMLElement>();
+    const inputRef = React.createRef<HTMLInputElement>();
     // @ts-ignore
 
     const res = useSearch({
         search,
         docs
     });
-    // @ts-ignore
     useClickOutside(ref, () => {
         if (inputRef.current)
             window.analytics.track('docs.search.dismissed', {
@@ -97,7 +96,6 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
             <div className="input-wrapper">
                 <SearchIcon />
                 <input
-                    // @ts-ignore
                     ref={inputRef}
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
