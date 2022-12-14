@@ -1,8 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import Footer from '@/components/Footer';
 import HomeDropDown from '@/components/HomeDropDown';
-import SegmentAnalytics from '@/components/SegmentAnalytics';
-import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import {
     AndroidIcon,
     AppleIcon,
@@ -24,8 +24,8 @@ import { Box, Button, Flex, Text } from '@100mslive/react-ui';
 import { Card, Item, SdkItem } from 'components';
 import Header from 'components/Header';
 import Switcher from 'components/Switcher';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import useLockBodyScroll from '@/lib/useLockBodyScroll';
+import SegmentAnalytics from '@/components/SegmentAnalytics';
 
 const tabs = [
     { name: 'Web', id: 0 },
@@ -178,7 +178,7 @@ const Homepage = () => {
                                                 }`,
                                                 borderBottomWidth: `${index !== mobileSDK.length - 1 ? '0px' : '1px'}`,
                                         }}
-                                    // listView={true}
+                                        // listView={true}
                                     />
                                 ))}
                             </Flex>

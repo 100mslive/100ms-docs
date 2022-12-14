@@ -10,25 +10,34 @@ Turn on RTMP Streaming or Recording!
 In 100ms, recording and streaming is usually achieved by having a bot join your room and stream what it sees and hears to a file (recording) or to an rtmp injest url (streaming).
 
 The topics covered in this doc are:
+
 1. [How to start streaming / recording.](#starting-streaming-recording)
 2. [How to stop streaming / recording.](#stopping-streaming-recording)
 3. [How to check the current status for streaming / recording.](#current-room-status)
 4. [When to check the current status](#when-to-check-for-room-status)
 
 ## Starting Streaming / Recording
+
 To start recording, streaming or both, create an instance of `HMSRecordingConfig`.
 
 `HMSRecordingConfig` takes the following:
-1. **meetingUrl**: *String*. The url the 100ms bot user will open to join your room. It must allow access without any user level interaction.
-2. **rtmpUrls**: *List<String\>*. If streaming is required, this has to be one or more RTMP Injest Urls with a max limit of 3 urls where the stream should go. If only recording, this can be an empty list.
-3. **record**: *Boolean*. If recording is required, set true. If recording is not required, set false. This value has no effect on streaming.
-4. **resolution**: *HMSResolution*. An optional value for the output resolution of the stream. For instance default is landscape at 1280x720 but this could be set for a portrait mode of 720x1280. Or smaller values like 480x80.
+
+1. **meetingUrl**: _String_. The url the 100ms bot user will open to join your room. It must allow access without any user level interaction.
+2. **rtmpUrls**: _List<String\>_. If streaming is required, this has to be one or more RTMP Injest Urls with a max limit of 3 urls where the stream should go. If only recording, this can be an empty list.
+
+    - Format: `rtmp://server.com/app/STREAM_KEY`
+    - Example: `rtmp://a.rtmp.youtube.com/live2/k0jv-329m-1y7f-ktth-ck48`
+        - "rtmp://a.rtmp.youtube.com/live2/" - RTMP stream URL.
+        - "k0jv-329m-1y7f-ktth-ck48" - RTMP stream key.
+
+3. **record**: _Boolean_. If recording is required, set true. If recording is not required, set false. This value has no effect on streaming.
+4. **resolution**: _HMSResolution_. An optional value for the output resolution of the stream. For instance default is landscape at 1280x720 but this could be set for a portrait mode of 720x1280. Or smaller values like 480x80.
 
 The `HMSResolution` takes Width and Height.
 
-* If both rtmpUrls and record = true are provided, both streaming and recording will begin.
-* If only rtmpUrls are provided, only streaming will begin.
-* If only record true is provided, only recording will begin.
+-   If both rtmpUrls and record = true are provided, both streaming and recording will begin.
+-   If only rtmpUrls are provided, only streaming will begin.
+-   If only record true is provided, only recording will begin.
 
 If either one is started, the other can't be started without stopping whatever is running.
 Eg: If only streaming is started then recording can't be started unless streaming is stopped first.
@@ -42,7 +51,6 @@ If both are required, they have to be started together by providing both `RTMP I
       {required HMSRecordingConfig hmsRecordingConfig,
       HMSActionResultListener? hmsActionResultListener}) async {}
 ```
-
 
 ## Stopping Streaming / Recording
 
@@ -58,7 +66,6 @@ The result of the action is sent as `HMSException` if it is successfull then it 
 void stopRtmpAndRecording(
       {HMSActionResultListener? hmsActionResultListener}) async
 ```
-
 
 ## Current Room Status
 
@@ -109,11 +116,12 @@ This represents that the room was set to be recorded when it was created and all
 ## When to check for room status
 
 The room status should be checked in three places:
-1. `onJoin` callback of `HMSUpdateListener` 
+
+1. `onJoin` callback of `HMSUpdateListener`
 2. When `hmsSDK.startRtmpOrRecording()` is called
 3. When `hmsSDK.stopRtmpAndRecording()` is called.
 
-- In the `onJoin(room: HMSRoom)` callback in `HMSUpdateListener`
+-   In the `onJoin(room: HMSRoom)` callback in `HMSUpdateListener`
     The properties mentioned above will be on the `HMSRoom` object.
-- Whenever either of the start or stop recording functions is called, when their success or error callbacks are called, the values of the streaming and recording will be updated on the room object returned in onJoin.
-So saving an instance of the room received at that time is recommended.
+-   Whenever either of the start or stop recording functions is called, when their success or error callbacks are called, the values of the streaming and recording will be updated on the room object returned in onJoin.
+    So saving an instance of the room received at that time is recommended.
