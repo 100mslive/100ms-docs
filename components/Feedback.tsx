@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Flex, Box, Button, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
 import { currentUser } from '../lib/currentUser';
@@ -13,6 +13,13 @@ const Feedback = () => {
     const feedBackRef = React.useRef<HTMLDivElement | null>();
     const inputRef = React.useRef<HTMLTextAreaElement | undefined>();
 
+    const getPlaceholder = {
+        1: 'What should we fix immediately?',
+        2: 'What should we work on?',
+        3: 'What were the things you liked?',
+        4: 'We would love to know what you liked'
+    };
+
     // @ts-ignore
     useClickOutside(feedBackRef, () => setShowTextBox(false));
 
@@ -25,7 +32,12 @@ const Feedback = () => {
         <Box ref={feedBackRef} css={{ maxWidth: '200px' }}>
             <Text
                 variant="tiny"
-                css={{ fontWeight: "$medium", color: '$textHighEmp', textTransform: 'uppercase', letterSpacing: "0.1rem" }}>
+                css={{
+                    fontWeight: '$medium',
+                    color: '$textHighEmp',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1rem'
+                }}>
                 Was this helpful?
             </Text>
             <Flex justify="between" css={{ p: '$9 0' }}>
@@ -68,7 +80,7 @@ const Feedback = () => {
                         }}>
                         <textarea
                             maxLength={140}
-                            placeholder="Please share your feedback"
+                            placeholder={getPlaceholder[clickedEmoji]}
                             cols={20}
                             rows={3}
                             // @ts-ignore
