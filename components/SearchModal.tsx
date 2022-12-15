@@ -161,7 +161,8 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                 top: '0',
                 height: '100vh',
                 width: '100vw',
-                bg: 'rgba(0, 0, 0, 0.7)'
+                bg: 'rgba(0, 0, 0, 0.7)',
+                zIndex: '200'
             }}>
             <div className="search-modal" ref={ref}>
                 <Flex
@@ -275,7 +276,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                         height: 48px;
                         transform: translateX(-50%);
                         background-color: var(--gray1);
-                        z-index: 10;
+                        z-index: 200;
                     }
                     .res-box {
                         padding: 0.5rem 2rem;
