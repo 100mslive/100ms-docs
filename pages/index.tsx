@@ -64,7 +64,6 @@ const Homepage = () => {
                         css={{
                             paddingBottom: '$16',
                             backgroundColor: '$backgroundDefault',
-                            filter: `blur(${modal ? '10px' : '0'})`
                         }}>
                         <Box css={{ width: '90%', maxWidth: '1248px' }}>
                             <Flex

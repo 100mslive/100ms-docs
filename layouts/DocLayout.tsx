@@ -51,7 +51,6 @@ export default function Layout({ children }: Props) {
                 .ctx {
                     display: flex;
                     width: 100%;
-                    filter: blur(${modal ? '10px' : '0px'});
                     background-color: var(--sidebar_bg) !important;
                 }
                 .content-wrapper {
