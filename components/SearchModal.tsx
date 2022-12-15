@@ -17,8 +17,20 @@ interface ResultBoxProps {
 }
 
 const ResultBox: React.FC<ResultBoxProps> = ({ title, url }) => {
-    const path = url.split('/').slice(1);
-    path[0] = path[0][0].toUpperCase() + path[0].slice(1);
+    const path = url.replace(/-/g, ' ').split('/').slice(1);
+
+    const platform = {
+        javascript: 'JavaScript',
+        flutter: 'Flutter',
+        android: 'Android',
+        'react native': 'React Native',
+        ios: 'iOS',
+        'server side': 'Server-side',
+        'api reference': 'API Reference'
+    };
+
+    path[0] = platform[path[0]];
+
     return (
         <Box>
             <Text css={{ color: '$textHighEmp', fontWeight: '$semiBold' }}>{title}</Text>
@@ -50,12 +62,12 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
     const [search, setSearch] = React.useState('');
     const ref = React.createRef<HTMLDivElement>();
     const inputRef = React.createRef<HTMLInputElement>();
-    // @ts-ignore
 
     const res = useSearch({
         search,
         docs
     });
+
     useClickOutside(ref, () => {
         if (inputRef.current)
             window.analytics.track('docs.search.dismissed', {
@@ -169,7 +181,6 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                                 fontSize: '$sm',
                                 backgroundColor: '$surfaceLight',
                                 color: '$textMedEmp',
-                                // border: '1px solid $borderLight',
                                 borderRadius: '4px',
                                 padding: '0 4px'
                             }}>
