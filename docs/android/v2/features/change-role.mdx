@@ -12,9 +12,15 @@ Each `HMSPeer` instance has a `role` property which returns an `HMSRole` instanc
 
 > 💡 Anyone with the role change permission can change anyone's role. Including their own role. As of version 2.0.9 of the Android SDK.
 
-In certain scenarios you may want to change someone's role. Imagine an audio room with 2 roles "speaker" and "listener." Only someone with a "speaker" role can publish audio to the room while "listener" can only subscribe. Now at some point "speaker" may decide to nominate some "listener" to become a "speaker." This is where the `changeRole` API comes in.
+In certain scenarios you may want to change someone's role. Imagine an audio room with 2 roles "speaker" and "listener." Only someone with a "speaker" role can publish audio to the room while "listener" can only subscribe. Now at some point "speaker" may decide to nominate some "listener" to become a "speaker." This is where the `changeRoleOfPeer` API comes in.
 
-To invoke the API you will need 3 things.
+You may choose to either:
+1. [Single Peer Role Change](#single-peer-role-change): Change the role of a single peer to a specified one.
+2. [Bulk Role Change](#bulk-role-change): Change the role of all peers with a certain role, to a specified one.
+
+## Single Peer Role Change
+
+To invoke the API you will need 4 parameters.
 
 -   `peer`: An instance of `HMSPeer` of the peer who's role you want to change.
 -   `toRole`: The `HMSRole` instance for the target role.
@@ -27,9 +33,13 @@ A list of all available roles in the current room can be accessed via the `getRo
 
 Once you have all you can invoke:
 
+<Tabs id="change-role-single" items={['Kotlin', 'Java']} />
+
+<Tab id='change-role-single-0'>
+
 ```kotlin
-fun changeRole(forPeer: HMSPeer, toRole: HMSRole, force: Boolean, hmsActionResultListener: HMSActionResultListener)
-    hmsSDK.changeRole(peer, toRole, force, object : HMSActionResultListener {
+fun changeRoleOfPeer(forPeer: HMSPeer, toRole: HMSRole, force: Boolean)
+    hmsSDK.changeRoleOfPeer(peer, toRole, force, object : HMSActionResultListener {
         override fun onSuccess() {
             // The request was sent successfully
         }
@@ -40,6 +50,30 @@ fun changeRole(forPeer: HMSPeer, toRole: HMSRole, force: Boolean, hmsActionResul
     })
 }
 ```
+
+</Tab>
+
+<Tab id='change-role-single-1'>
+
+```java
+public void changeRoleOfPeer(HMSPeer peer, HMSRole toRole, Boolean force) {
+    hmsSDK.changeRoleOfPeer(peer, toRole, force, new HMSActionResultListener() {
+        @Override
+        public void onSuccess() {
+            // The request was sent successfully
+        }
+
+        @Override
+        public void onError(@NonNull HMSException e) {
+            // There was an error
+        }
+    });
+}
+```
+
+</Tab>
+
+
 
 If the peer accepted the request and their role changed, you will get an update in the `HMSUpdateListener`:
 
@@ -64,3 +98,84 @@ hmsSDK.acceptChangeRole(hmsRoleChangeRequest)
 with the same request which it received in `onRoleChangeRequest` which completes the `changeRole` loop. Both parties will receive a `roleUpdated` callback so that they both can do necessary UI updates. Now the user actually becomes a speaker and the audio publishing will start automatically.
 
 Now lets imagine the newly nominated speaker is not behaving nicely and we want to move him back to listener without a prompt. This is where the `force` parameter comes in. When it is set to `true` the other party will not receive a confirmation `roleChangeRequest` but instead will straight away receive a new set of updated permissions and stop publishing. `roleUpdated` callback will still be fired so that the app can update the user's UI state.
+
+
+## Bulk Role Change
+Bulk role change is used when you want to convert all roles from a list of roles, to another role.
+
+For example if peers join a room with a `waiting` role and you want to change them all to `viewers` then you'd use this API.
+
+It takes fewer parameters than for a single peer. Here is the method signature.
+
+```kotlin
+fun changeRoleOfPeersWithRoles(ofRoles: List<HMSRole>,
+                                toRole: HMSRole,
+                                hmsActionResultListener: HMSActionResultListener)
+```
+
+1. `ofRoles` is a list of `HMSRole` whose role should be changed.
+2. `toRole` is the `HMSRole` they should be changed to.
+3. `hmsActionResultListener` has onSuccess and onError callbacks for the result of the operation.
+
+Note that if an empty list is sent to `ofRoles`, no roles will be changed. This is to avoid accidentally changing roles you may not have intended such as the bots that provide recording and streaming with the roles `beam`.
+
+Also bulk role changes are always forced, no dialog will be given for the peer to accept it, they will just be changed immediately.
+
+Here's how the method could be called to change all `guest` and `waiting` roles to `host`:
+
+<Tabs id="change-role-bulk" items={['Kotlin', 'Java']} />
+
+<Tab id='change-role-bulk-0'>
+
+```kotlin
+fun changeRoles(hmsSdk: HMSSDK) {
+        val rolesToChange : List<HMSRole> = hmsSdk.getRoles()
+            .filter {
+                it.name == "guest" || it.name == "waiting"
+            }
+        val toRole : HMSRole = hmsSdk.getRoles().find { it.name == "host" }!!
+
+        hmsSdk.changeRoleOfPeersWithRoles(rolesToChange, toRole, object : HMSActionResultListener {
+            override fun onError(error: HMSException) {
+                // Error
+            }
+
+            override fun onSuccess() {
+                // Roles changed successfully
+            }
+
+        })
+    }
+```
+
+</Tab>
+
+<Tab id='change-role-bulk-1'>
+
+```java
+public void changeRoles(HMSSDK hmsSdk) {
+        List<HMSRole> rolesToChange = new ArrayList<>();
+        HMSRole toRole = null;
+        for (HMSRole role : hmsSdk.getRoles()) {
+            if(role.getName().equals("guest") || role.getName().equals("waiting")) {
+                rolesToChange.add(role);
+            }
+            if(role.getName().equals("host")) {
+                toRole = role;
+            }
+        }
+        hmsSdk.changeRoleOfPeersWithRoles(rolesToChange, toRole, new HMSActionResultListener() {
+            @Override
+            public void onSuccess() {
+                // Role changed
+            }
+
+            @Override
+            public void onError(@NonNull HMSException e) {
+                // Error occurred
+            }
+        });
+    }
+```
+
+</Tab>

@@ -18,8 +18,8 @@ export default function Codesandbox({ id, tests }) {
             </LazyLoad>
             <style jsx>{`
                 div {
-                    border: 1px solid var(--gray5);
-                    border-radius: 5px;
+                    border: 1px solid var(--docs_border_strong);
+                    border-radius: var(--docs_border_radius_s);
                     margin-bottom: 2rem;
                     overflow: hidden;
                 }
