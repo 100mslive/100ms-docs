@@ -157,7 +157,8 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
     return (
         <Box
             css={{
-                position: 'fixed',
+                position: 'absolute',
+                left: '0',
                 top: '0',
                 height: '100vh',
                 width: '100vw',
