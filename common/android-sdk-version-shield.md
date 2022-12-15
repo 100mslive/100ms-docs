@@ -1,2 +1,2 @@
 
-[![](https://img.shields.io/maven-central/v/live.100ms/android-sdk?label=100ms)](https://jitpack.io/#100mslive/android-sdk)
+[![](https://img.shields.io/badge/dynamic/xml.svg?label=100ms&color=blue&query=%2F%2Fmetadata%2Fversioning%2Flatest&url=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Flive%2F100ms%2Fandroid-sdk%2Fmaven-metadata.xml)](https://jitpack.io/#100mslive/android-sdk)
