@@ -32,13 +32,32 @@ const ResultBox: React.FC<ResultBoxProps> = ({ title, url }) => {
     path[0] = platform[path[0]];
 
     return (
-        <Box>
-            <Text css={{ color: '$textHighEmp', fontWeight: '$semiBold' }}>{title}</Text>
+        <Box css={{ w: '100%' }}>
             <Text
-                variant="xs"
+                css={{
+                    color: '$textHighEmp',
+                    fontWeight: '$semiBold'
+                }}>
+                {title}
+                <Text
+                    css={{
+                        display: 'inline',
+                        color: 'inherit',
+                        fontWeight: 'inherit',
+                        backgroundColor: '$surfaceLighter',
+                        p: '$1 $2',
+                        borderRadius: '0.25rem',
+                        marginLeft: '0.5rem'
+                    }}>
+                    {path[0]}
+                </Text>
+            </Text>
+            <Text
+                variant="sm"
                 css={{
                     color: '$textDisabled',
                     display: 'flex',
+                    flexWrap: 'wrap',
                     alignItems: 'center',
                     mt: '0.5rem'
                 }}>
@@ -47,7 +66,7 @@ const ResultBox: React.FC<ResultBoxProps> = ({ title, url }) => {
                         text
                     ) : (
                         <>
-                            {text}
+                            <span style={{ whiteSpace: 'nowrap' }}>{text}</span>
                             <ChevronRightIcon style={{ width: '10px', height: '14px' }} />
                         </>
                     )
@@ -261,7 +280,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                     }
                     .res-box {
                         padding: 0.5rem 2rem;
-                        height: 70px;
+                        min-height: 70px;
                         display: flex;
                         justify-content: space-between;
                         align-items: center;
