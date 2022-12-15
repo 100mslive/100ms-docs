@@ -1,6 +1,6 @@
 ### Bulk Role Change Errors
 
-You may get the following errors for bulk role chage:
+You may get the following errors for bulk role change:
 
 | Message                                | Meaning                                                  |
 |----------------------------------------|----------------------------------------------------------|
