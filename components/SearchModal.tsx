@@ -1,18 +1,51 @@
 import React from 'react';
-import EnterIcon from '@/assets/icons/EnterIcon';
-import { SearchIcon } from '@100mslive/react-icons';
+import { SearchIcon, ChevronRightIcon } from '@100mslive/react-icons';
 import { Flex, Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
 import useKeyPress from '@/lib/useKeyPress';
 import useSearch from '@/lib/useSearch';
 import Link from 'next/link';
 
-interface Props {
+interface SearchModalProps {
     docs: { url: string; title: string; description: string; nav: number; content: string }[];
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
+interface ResultBoxProps {
+    title: string;
+    url: string;
+}
+
+const ResultBox: React.FC<ResultBoxProps> = ({ title, url }) => {
+    const path = url.split('/').slice(1);
+    path[0] = path[0][0].toUpperCase() + path[0].slice(1);
+    return (
+        <Box>
+            <Text css={{ color: '$textHighEmp', fontWeight: '$semiBold' }}>{title}</Text>
+            <Text
+                variant="xs"
+                css={{
+                    color: '$textDisabled',
+                    display: 'flex',
+                    alignItems: 'center',
+                    mt: '0.5rem'
+                }}>
+                {path.map((text, id) =>
+                    id === path.length - 1 ? (
+                        text
+                    ) : (
+                        <>
+                            {text}
+                            <ChevronRightIcon style={{ width: '10px', height: '14px' }} />
+                        </>
+                    )
+                )}
+            </Text>
+        </Box>
+    );
+};
+
+const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
     const paletteTrack = React.useRef(-1);
     const [search, setSearch] = React.useState('');
     const ref = React.createRef<HTMLDivElement>();
@@ -37,7 +70,6 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
     });
 
     React.useEffect(() => {
-        // @ts-ignore
         inputRef.current?.focus();
     }, []);
 
@@ -149,34 +181,60 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
                     </Flex>
                 </Flex>
                 {res.length > 0 ? (
-                    <div className="res-ctx">
-                        {res.map((searchResult, i) => (
-                            <Link href={searchResult.url} key={searchResult.url} passHref>
-                                <a
-                                    id={`res-box-${i}`}
-                                    className="res-box"
-                                    onClick={() => {
-                                        window.analytics.track('docs.search.result.clicked', {
-                                            totalNumberOfResults: res.length,
-                                            // @ts-ignore
-                                            textInSearch: inputRef?.current?.value || '',
-                                            rankOfSearchResult: i + 1,
-                                            locationOfSearchResult: searchResult.url,
-                                            referrer: document.referrer,
-                                            path: window.location.hostname,
-                                            pathname: window.location.pathname
-                                        });
-                                        setModal(false);
+                    <Box
+                        css={{
+                            position: 'relative',
+                            top: '$8',
+                            backgroundColor: '$surfaceDefault',
+                            border: '1px solid',
+                            borderColor: '$borderDefault',
+                            borderRadius: '$1',
+                            pr: '$2',
+                            py: '$3 '
+                        }}>
+                        <Box
+                            css={{
+                                maxHeight: '60vh',
+                                overflow: 'auto'
+                            }}>
+                            {res.map((searchResult, i) => (
+                                <Box
+                                    key={searchResult.url}
+                                    css={{
+                                        borderColor: '$borderDefault',
+                                        '&:hover': { backgroundColor: '$surfaceLight' }
                                     }}>
-                                    <div>
-                                        <span>{searchResult.title}</span>
-                                        <span className="slug">{searchResult.url}</span>
-                                    </div>
-                                    <EnterIcon />
-                                </a>
-                            </Link>
-                        ))}
-                    </div>
+                                    <Link href={searchResult.url} passHref>
+                                        <a
+                                            id={`res-box-${i}`}
+                                            className="res-box"
+                                            style={{}}
+                                            onClick={() => {
+                                                window.analytics.track(
+                                                    'docs.search.result.clicked',
+                                                    {
+                                                        totalNumberOfResults: res.length,
+                                                        textInSearch:
+                                                            inputRef?.current?.value || '',
+                                                        rankOfSearchResult: i + 1,
+                                                        locationOfSearchResult: searchResult.url,
+                                                        referrer: document.referrer,
+                                                        path: window.location.hostname,
+                                                        pathname: window.location.pathname
+                                                    }
+                                                );
+                                                setModal(false);
+                                            }}>
+                                            <ResultBox
+                                                title={searchResult.title}
+                                                url={searchResult.url}
+                                            />
+                                        </a>
+                                    </Link>
+                                </Box>
+                            ))}
+                        </Box>
+                    </Box>
                 ) : null}
                 <style jsx>{`
                     .search-modal {
@@ -190,20 +248,14 @@ const SearchModal: React.FC<Props> = ({ docs, setModal }) => {
                         background-color: var(--gray1);
                         z-index: 10;
                     }
-                    .res-ctx {
-                        width: 100%;
-                    }
-                    .res-box:hover {
-                        opacity: 0.8;
-                    }
                     .res-box {
-                        margin: 0.5rem 0;
                         padding: 0.25rem 2rem;
                         height: 70px;
                         display: flex;
                         justify-content: space-between;
                         align-items: center;
-                        background-color: var(--gray3);
+                        border-bottom: 1px solid;
+                        border-color: inherit;
                     }
                     .res-box div {
                         display: flex;
