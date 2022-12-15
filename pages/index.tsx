@@ -63,8 +63,7 @@ const Homepage = () => {
                         justify="center"
                         css={{
                             paddingBottom: '$16',
-                            backgroundColor: '$backgroundDefault',
-                            filter: `blur(${modal ? '10px' : '0'})`
+                            backgroundColor: 'var(--docs_bg_content)',
                         }}>
                         <Box css={{ width: '90%', maxWidth: '1248px' }}>
                             <Flex
@@ -121,6 +120,7 @@ const Homepage = () => {
                                     sdk="javascript"
                                     css={{
                                         borderRadius: '$3 $3 0 0',
+                                        borderBottomWidth: '0px;',
                                         '@lg': {
                                             borderRadius: '$3'
                                         }
@@ -173,9 +173,9 @@ const Homepage = () => {
                                         text={value.title}
                                         sdk={value.id}
                                         css={{
-                                            borderRadius: `${index !== 0 ? '0 0' : '$3 $3'} ${
-                                                mobileSDK.length - 1 !== index ? '0 0' : '$3 $3'
-                                            }`
+                                            borderRadius: `${index !== 0 ? '0 0' : '$3 $3'} ${mobileSDK.length - 1 !== index ? '0 0' : '$3 $3'
+                                                }`,
+                                                borderBottomWidth: `${index !== mobileSDK.length - 1 ? '0px' : '1px'}`,
                                         }}
                                         // listView={true}
                                     />
@@ -410,7 +410,7 @@ const Homepage = () => {
                             </Flex>
                         </Box>
                     </Flex>
-                    <Footer css={{ backgroundColor: '$backgroundDefault' }} />
+                    <Footer css={{ backgroundColor: 'var(--docs_bg_footer)' }} />
                 </>
             ) : null}
         </>

@@ -3,11 +3,10 @@ import * as React from 'react';
 function JavascriptIcon(props: React.SVGProps<SVGSVGElement>) {
     return (
         <svg
+            className='svg-icon'
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 128 128"
-            width={20}
-            height={20}
-            style={{ fill: 'var(--gray12)' }}
+            style={{ fill: 'var(--docs_text_primary)' }}
             {...props}>
             <path fill="" d="M1.408 1.408h125.184v125.185H1.408z" />
             <path

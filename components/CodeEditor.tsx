@@ -30,7 +30,7 @@ const CodeEditor = () => (
         </LiveProvider>
         <style jsx>{`
             .editor {
-                border-radius: 5px;
+                border-radius: var(--docs_border_radius_s);
                 border: 1px solid var(--gray5);
             }
             .live-editor {

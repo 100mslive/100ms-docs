@@ -3,6 +3,17 @@ title: Release Notes
 nav: 15
 description: Release Notes for 100ms Android SDK
 ---
+## v2.5.4 - 2022-12-15
+### Added
+* [Auto Simulcast](https://www.100ms.live/docs/android/v2/migrations/surfaceview-migration) - HMSVideoView when used, changes the simulcast layer based on its size automatically to reduce bandwidth consumption.
+* [Bulk role change](https://www.100ms.live/docs/android/v2/features/change-role#bulk-role-change) - A list of roles an be provided to change several peers with that role to a single one with one API call.
+
+### Fixed
+Only a single update is sent for a local peer when their role is changed instead of two.
+
+### Deprecated
+The method `changeRole` is now `changeRoleForPeer`. No functional changes.
+
 ## v2.5.3 - 2022-12-7
 ### Added 
 * HMSVideoView - Easy to use abstraction over SurfaceViewRenderer
