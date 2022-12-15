@@ -101,10 +101,6 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
         setModal(false);
     });
 
-    React.useEffect(() => {
-        inputRef.current?.focus();
-    }, []);
-
     // reset if result is 0
     if (res.length === 0) {
         paletteTrack.current = -1;
@@ -183,6 +179,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                         ref={inputRef}
                         value={search}
                         type="text"
+                        autoFocus
                         onChange={(e) => setSearch(e.target.value)}
                         style={{
                             marginLeft: '13px',
