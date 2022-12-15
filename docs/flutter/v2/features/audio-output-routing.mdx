@@ -3,18 +3,29 @@ title: Audio Output Routing
 nav: 3.21
 ---
 
-Audio Routing can be helpful in the case when user wants to switch output to device other than the default focussed one by SDK,
-similar to the phone calls.
+Audio Output Routing is helpful when users wants to switch output to a connected device other than the default one.
 
-## Fetch available audio device
+For example, you can implement an in-call speaker button that toggles audio output between speaker, earpiece or any other connected earphones - wired or wireless, etc.
 
-Invoke this method to fetch the available audio device list:
+## Fetch Available Audio Device
+
+Invoke the `getAudioDevicesList` method to fetch the available audio device list. The method return a list of `HMSAudioDevice` enum.
 
 ```dart
- List<HMSAudioDevice> availableDevices = await hmsSDK.getAudioDevicesList();
+List<HMSAudioDevice> availableDevices = await hmsSDK.getAudioDevicesList();
+
+
+enum HMSAudioDevice {
+  SPEAKER_PHONE,
+  EARPIECE,
+  WIRED_HEADSET, // Android only
+  BLUETOOTH, // Android only
+  AUTOMATIC, // Android only
+  UNKNOWN
+}
 ```
 
-Following `HMSAudioDevice` values you can get from `getAudioDevicesList()`:
+The `getAudioDevicesList` API returns different values based on Android & iOS platform. Following `HMSAudioDevice` values you can get from `getAudioDevicesList()`:
 
 ### Android
 * SPEAKER_PHONE   - route audio to device speaker
@@ -27,38 +38,49 @@ Following `HMSAudioDevice` values you can get from `getAudioDevicesList()`:
 * SPEAKER_PHONE   - route audio to device speaker
 * EARPIECE  - route audio to device earpiece
 
-## Switch audio focus to another device
 
-Invoke this method with appropriate `HMSAudioDevice` value, to switch the output to that device
+## Switch Audio Focus to Another Device
 
-`audioDevice` is the [HMSAudioDevice] type through which audio should be routed.
+Invoke the `switchAudioOutput` method with appropriate `HMSAudioDevice` value fetched from `getAudioDevicesList` to switch the audio output to that device.
+
+
+The `audioDevice` is a required [HMSAudioDevice] parameter through which audio output should be routed.
 
 ```dart
-    hmsSDK.switchAudioOutput(audioDevice:audioDevice);
+hmsSDK.switchAudioOutput(audioDevice: audioDevice);
 ```
 
-## Adding a listener
+## Adding Audio Device Change Event Listener (Android Only)
 
-Listener is attached to get the updates if a new audio device gets connected to the device such as bluetooth,wired_headset etc.
-This method needs to be overriden in the class wherever `HMSUpdateListener` is implemented
+Implementing the `onAudioDeviceChanged` listener allows you to get event updates if a new audio device gets connected to the device such as Bluetooth, Wired Headset etc. 
+This method needs to be overriden in the class where `HMSUpdateListener` is implemented.
+
+Note that this event is available only on Android platform.
+
 
 ```dart
 @override
 void onAudioDeviceChanged(
-{HMSAudioDevice? currentAudioDevice,
-List<HMSAudioDevice>? availableAudioDevice})
-{
-    //currentAudioDevice : audio device to which audio is routed to
-    //availableAudioDevice : other available audio devices
+  {HMSAudioDevice? currentAudioDevice,
+  List<HMSAudioDevice>? availableAudioDevice}) {
+  
+    // currentAudioDevice : audio device to which audio is curently being routed to
+    // availableAudioDevice : all other available audio devices
 }
 ```
 
-## Get current focussed device
+## Get Current Focussed Device (Android Only)
 
-This method will help in getting the device where the current audio output is routed to.
+The `getCurrentAudioDevice` method allows you to get the device through which audio output is currently being routed to.
+
+
+Note that this event is available only on Android platform.
 
 ```dart
-  HMSAudioDevice currentAudioDevice = await hmsSDK.getCurrentAudioDevice();
+HMSAudioDevice currentAudioDevice = await hmsSDK.getCurrentAudioDevice();
 ```
 
-> Note: `onAudioDeviceChanged` listener and `getCurrentAudioDevice` method is only available on android platform.
+
+
+
+> Note: `onAudioDeviceChanged` listener and `getCurrentAudioDevice` methods are available only on Android platform.
