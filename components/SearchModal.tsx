@@ -249,7 +249,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                         z-index: 10;
                     }
                     .res-box {
-                        padding: 0.25rem 2rem;
+                        padding: 0.5rem 2rem;
                         height: 70px;
                         display: flex;
                         justify-content: space-between;
@@ -270,6 +270,13 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                     }
                     a:hover {
                         opacity: 1;
+                    }
+
+                    @media screen and (max-width: 600px) {
+                        .search-modal {
+                            width: 90%;
+                            top: 24px;
+                        }
                     }
                 `}</style>
             </div>
