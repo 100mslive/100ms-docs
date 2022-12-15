@@ -3,15 +3,14 @@ import React from 'react';
 function ReactIcon(props: React.SVGProps<SVGSVGElement>) {
     return (
         <svg
+            className='svg-icon'
             viewBox="0 0 353 353"
             xmlns="http://www.w3.org/2000/svg"
             fillRule="evenodd"
             clipRule="evenodd"
             strokeLinejoin="round"
             strokeMiterlimit={2}
-            width={24}
-            height={24}
-            style={{ fill: 'var(--gray12)' }}
+            style={{ fill: 'var(--docs_text_primary)' }}
             {...props}>
             <g transform="translate(.002 -.002) scale(2.75453)">
                 <circle cx={64} cy={64} r={11.4} />

@@ -153,16 +153,16 @@ useEffect(() => setTech(menuItem[indexOf]), [indexOf])
                 : null}
             <style jsx>{`
                 .sidebar {
-                    width: 288px;
+                    width: 304px;
+                    padding-bottom: 32px;
                     display: flex;
                     flex-direction: column;
                     align-items: stretch;
-                    height: calc(100vh - 80px);
+                    height: calc(100vh - 136px);
                     overflow-y: scroll;
-                    top: ${menu ? '' : '14px'};
+                    top: ${menu ? '' : '104px'};
                     left: 0;
                     position: sticky;
-                    background: var(--sidebar_bg);
                     z-index: 100;
                 }
                 ::-webkit-scrollbar {
@@ -178,6 +178,11 @@ useEffect(() => setTech(menuItem[indexOf]), [indexOf])
                     margin-right: 1.5rem;
                 }
                 .menu-container:first-of-type {
+                    margin-top: 0px;
+                    position: sticky;
+                    top: 0px;
+                    z-index: 100;
+                    background: var(--docs_bg_content);
                     margin-bottom: 10px;
                 }
                 .menu-item {
@@ -248,7 +253,7 @@ const ChevronDown = () => (
         strokeLinejoin="round"
         fill="none"
         shapeRendering="geometricPrecision"
-        style={{ color: 'var(--text_high_emp)' }}>
+        style={{ color: 'var(--docs_text_primary)' }}>
         <path d="M6 9l6 6 6-6" />
     </svg>
 );
