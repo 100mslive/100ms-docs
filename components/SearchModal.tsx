@@ -114,19 +114,19 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
             paletteTrack.current = 0;
             const last = document.getElementById(`res-box-${res.length - 1}`);
             if (last) {
-                last.style.backgroundColor = 'var(--gray3)';
+                last.style.backgroundColor = 'var(--surface_light)';
             }
         } else {
             paletteTrack.current += 1;
         }
         const ele = document.getElementById(`res-box-${paletteTrack.current}`);
         if (ele) {
-            ele.style.backgroundColor = 'var(--gray6)';
+            ele.style.backgroundColor = 'var(--surface_light)';
             ele.focus();
         }
         const prev = document.getElementById(`res-box-${paletteTrack.current - 1}`);
         if (prev) {
-            prev.style.backgroundColor = 'var(--gray3)';
+            prev.style.backgroundColor = 'var(--surface_default)';
         }
     }
     if (upKeyPressed) {
@@ -135,7 +135,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
             paletteTrack.current = res.length - 1;
             const top = document.getElementById(`res-box-0`);
             if (top) {
-                top.style.backgroundColor = 'var(--gray3)';
+                top.style.backgroundColor = 'var(--surface_light)';
             }
         } else {
             paletteTrack.current -= 1;
@@ -143,12 +143,12 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
 
         const ele = document.getElementById(`res-box-${paletteTrack.current}`);
         if (ele) {
-            ele.style.backgroundColor = 'var(--gray6)';
+            ele.style.backgroundColor = 'var(--surface_light)';
             ele.focus();
         }
         const prev = document.getElementById(`res-box-${paletteTrack.current + 1}`);
         if (prev) {
-            prev.style.backgroundColor = 'var(--gray3)';
+            prev.style.backgroundColor = 'var(--surface_default)';
         }
     }
     return (
