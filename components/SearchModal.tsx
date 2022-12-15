@@ -218,7 +218,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                             border: '1px solid',
                             borderColor: '$borderDefault',
                             borderRadius: '$1',
-                            pr: '$2',
+                            px: '$2',
                             py: '$3 '
                         }}>
                         <Box
