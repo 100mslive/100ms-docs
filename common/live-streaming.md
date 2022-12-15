@@ -104,6 +104,6 @@ You can serve HLS streaming video from a [CDN](https://www.stackpath.com/edge-ac
 
       - _Format_: https://cdn.100ms.live/beam/<customer_id>/<room_id>/master.m3u8
       - <customer_id>: replace this placeholder with your customer_id from [developer section](https://dashboard.100ms.live/developer) on your dashboard. 
-      - <room_id>: replace this placeholder with the room_ID of the respective room from which the stream will be broadcasted.
+      - <room_id>: replace this placeholder with the room_id of the respective room from which the stream will be broadcasted.
 
 4. If you wish to use Video on demand (VOD), 100ms provides the capability to record the HLS stream which will be posted to your webhook as a ZIP file of m3u8 format with all the chunks once the stream ends. Check [hls.recording.success](/server-side/v2/introduction/webhook#hls-recording-success) webhook for more information. 
