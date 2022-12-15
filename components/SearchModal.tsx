@@ -46,6 +46,7 @@ const ResultBox: React.FC<ResultBoxProps> = ({ title, url }) => {
                         fontWeight: 'inherit',
                         backgroundColor: '$surfaceLighter',
                         p: '$1 $2',
+                        whiteSpace: "nowrap",
                         borderRadius: '0.25rem',
                         marginLeft: '0.5rem'
                     }}>
@@ -157,13 +158,12 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
     return (
         <Box
             css={{
-                position: 'absolute',
+                position: 'fixed',
                 left: '0',
                 top: '0',
                 height: '100vh',
                 width: '100vw',
-                bg: 'rgba(0, 0, 0, 0.7)',
-                zIndex: '200'
+                bg: 'rgba(0, 0, 0, 0.7)'
             }}>
             <div className="search-modal" ref={ref}>
                 <Flex
@@ -277,7 +277,6 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                         height: 48px;
                         transform: translateX(-50%);
                         background-color: var(--gray1);
-                        z-index: 200;
                     }
                     .res-box {
                         padding: 0.5rem 2rem;
