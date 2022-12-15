@@ -64,34 +64,13 @@ By default, the live stream is composed in landscape mode for desktop viewers (w
     * If you have multiple broadcasters joining in, choose grid or active speaker based on your needs
     * In case of grid layout, choose the tile size that fits your use-case. For example, a stream with 2 streamers looks better with 1:1 tiles.
 
-### Step 5: HLS playback for the audience
-
-![HLS playback](/docs/docs/v2/hls-playback.png)
-
-You can serve HLS streaming video from a [CDN](https://www.stackpath.com/edge-academy/what-is-a-cdn/) for live playback for the audience.
-
-1. Once you start the HLS steaming, you will get an HLS URL (m3u8 URL) which you can use for playback.
-2. You can get this URL in multiple ways:
-   - **Webhook:** You can listen to [hls.started.success](/server-side/v2/foundation/webhook#hls-started-success) webhook and get the HLS URL from the `url` field. Please check the [webhooks guide](/server-side/v2/introduction/webhook) to learn more about webhooks.
-   - **Client SDKs:** You can get the HLS URL by checking the current room state using the client SDK. Check [here](./../features/hls#current-room-status) to find out how.
-   - **Static URL:** This method will help you get a static URL for playback. You can enable the `Static playback URLs` in your template from the [dashboard](https://dashboard.100ms.live/dashboard). You can go to Destination > enable "Live streaming with HLS" > under "Customise stream video output" section > enable "Static playback URLs."
-  
-    ![Enable Static URL](/docs/docs/v2/enable-static-url.png)
-
-      - _Format_: https://cdn.100ms.live/beam/<customer_id>/<room_id>/master.m3u8
-      - <customer_id>: replace this placeholder with your customer_id from [developer section](https://dashboard.100ms.live/developer) on your dashboard. 
-      - <room_id>: replace this placeholder with the room_ID of the respective room from which the stream will be broadcasted.
-      - Example: `https://cdn.100ms.live/beam/627cda54*******37a39291b/633fcdd8*******bf665346a/master.m3u8`
-
-3. You can use the HLS URL in your custom UI or any player that supports HLS to enable playback for audience.
-4. If you wish to use Video on demand (VOD), 100ms provides the capability to record the HLS stream which will be posted to your webhook as a ZIP file of m3u8 format with all the chunks once the stream ends. Check [hls.recording.success](/server-side/v2/introduction/webhook#hls-recording-success) webhook for more information. 
-
 ## Integrate in your app
 
 To integrate 100ms Interactive Live Streaming in your app, follow these steps:
 
 1. [Enable live streaming destination](#enable-destination)
-1. [Integrate the 100ms SDK in your app](#sdk-integration)
+2. [Integrate the 100ms SDK in your app](#sdk-integration)
+3. [Integrate playback for the audience](#hls-playback-for-the-audience)
 
 ### Enable destination
 
@@ -106,3 +85,25 @@ For custom apps, you can enable the live streaming destination manually:
 1. Ensure that you have roles for the broadcaster (who can publish their audio/video) and the viewer (who cannot publish audio/video)
 
 ### SDK integration
+
+Use the 100ms client-side SDKs to integrate streaming in your application. See code snippets for the web SDK [here](./../features/hls).
+
+### HLS playback for the audience
+
+![HLS playback](/docs/docs/v2/hls-playback.png)
+
+You can serve HLS streaming video from a [CDN](https://www.stackpath.com/edge-academy/what-is-a-cdn/) for live playback for the audience.
+
+1. Once you start the HLS steaming, you will get an HLS URL (m3u8 URL) which you can use for playback.
+2. If you are planning to use 100ms [client-side SDKs](./../features/hls) for HLS playback, you can get the HLS URL by checking the current room state using the client SDK. Check [here](./../features/hls#current-room-status) to find out how.
+3. If you wish to use a custom integration for HLS playback (not 100ms client SDK), you can follow one of the below approaches to get the HLS URL:
+   - **Webhook:** You can listen to [hls.started.success](/server-side/v2/foundation/webhook#hls-started-success) webhook and get the HLS URL from the `url` field. Please check the [webhooks guide](/server-side/v2/introduction/webhook) to learn more about webhooks.
+   - **Static URL:** This method will help you get a static URL for playback. You can enable the `Static playback URLs` in your template from the [dashboard](https://dashboard.100ms.live/dashboard). You can go to Destination > enable "Live streaming with HLS" > under "Customise stream video output" section > enable "Static playback URLs."
+  
+    ![Enable Static URL](/docs/docs/v2/enable-static-url.png)
+
+      - _Format_: https://cdn.100ms.live/beam/<customer_id>/<room_id>/master.m3u8
+      - <customer_id>: replace this placeholder with your customer_id from [developer section](https://dashboard.100ms.live/developer) on your dashboard. 
+      - <room_id>: replace this placeholder with the room_ID of the respective room from which the stream will be broadcasted.
+
+4. If you wish to use Video on demand (VOD), 100ms provides the capability to record the HLS stream which will be posted to your webhook as a ZIP file of m3u8 format with all the chunks once the stream ends. Check [hls.recording.success](/server-side/v2/introduction/webhook#hls-recording-success) webhook for more information. 
