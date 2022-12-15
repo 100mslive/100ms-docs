@@ -238,7 +238,6 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                                         <a
                                             id={`res-box-${i}`}
                                             className="res-box"
-                                            style={{}}
                                             onClick={() => {
                                                 window.analytics.track(
                                                     'docs.search.result.clicked',
@@ -291,17 +290,10 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                         display: flex;
                         flex-direction: column;
                     }
-                    .res-box .slug {
-                        opacity: 0.6;
-                    }
                     a {
                         color: inherit;
                         text-decoration: none;
                     }
-                    a:hover {
-                        opacity: 1;
-                    }
-
                     @media screen and (max-width: 600px) {
                         .search-modal {
                             width: 90%;

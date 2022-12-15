@@ -11,7 +11,7 @@ export default function useSearch({ search, docs }): Result[] {
         search,
         { keys: ['title', 'description', 'content'], threshold: matchSorter.rankings.CONTAINS }
       )
-      return re.slice(0, 10)
+      return re.slice(0, 16)
   }, [search])
 
   return results
