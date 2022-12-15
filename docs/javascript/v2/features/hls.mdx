@@ -65,7 +65,7 @@ async stopHLS() {
 }
 ```
 
-## Current HLS State
+## Current room status
 
 The `selectHLSState` selector can be used to know if HLS is currently running, and the url where it can be viewed.
 
@@ -120,6 +120,9 @@ Here is a simple example of using `hls.js` to play the hls URL given by the SDK.
 ```js
 import Hls from 'hls.js';
 
+const hlsState = store.getState(selectHLSState);
+const hlsUrl = hlsState.variants[0]?.url;
+
 function renderHLS({ hlsUrl }) {
     const video = document.getElementById('video');
     const browserHasNativeHLSSupport = videoRef.current.canPlayType(
@@ -144,6 +147,9 @@ function renderHLS({ hlsUrl }) {
 
 ```jsx
 import Hls from 'hls.js';
+
+const hlsState = useHMSStore(selectHLSState);
+const hlsUrl = hlsState.variants[0]?.url;
 
 function HLSView({ hlsUrl }) {
     const videoRef = useRef(null);
