@@ -17,6 +17,7 @@ import Recordings from '../common/recordings.md';
 import AdaptiveBitrate1 from "../common/adaptive-bitrate-1.md";
 import AdaptiveBitrate2 from "../common/adaptive-bitrate-2.md";
 import AndroidVersionShield from '../common/android-sdk-version-shield.md';
+import BulkRoleChangeErrors from '../common/bulk-role-change-errors.md';
 
 const data = {
     basics: Basics,
@@ -30,6 +31,7 @@ const data = {
     liveStreaming: LiveStreaming,
     recordings: Recordings,
     androidVersionShield: AndroidVersionShield,
+    bulkRoleChangeErrors: BulkRoleChangeErrors,
 
     /**
      * Adaptive bitrate docs are split into 2 parts because 3-backtick
