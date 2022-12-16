@@ -27,10 +27,10 @@ This is where Change Role capabilities come in play.
 
 You may choose to do either:
 
-1. Single Peer Role Change: Change the role of a single peer to a specified one using the `changeRoleOfPeer` API
+1. [Single Peer Role Change](#single-peer-role-change): Change the role of a single peer to a specified one using the `changeRoleOfPeer` API
 
 
-2. Bulk Role Change: Change the role of all peers with a certain role, to a specified one using the `changeRoleOfPeersWithRoles` API
+2. [Bulk Role Change](#bulk-role-change): Change the role of all peers with a certain role, to a specified one using the `changeRoleOfPeersWithRoles` API
 
 
 ## Single Peer Role Change
@@ -75,7 +75,7 @@ await hmsInstance.changeRoleOfPeer(peer, newRole, force) // request role change,
 
 If the changing role succeeds you will get an update in the `HMSUpdateListener` of `ROLE_CHANGED` update type:
 
-```dart
+```js
 const onPeerListener = ({
     peer,
     type,
@@ -147,12 +147,25 @@ changeRoleOfPeersWithRoles = async (ofRoles: HMSRole[], toRole: HMSRole) => { ..
 
 1. `toRole` is the `HMSRole` they should be changed to.
 2. `ofRoles` is a list of `HMSRole` whose role should be changed.
-3. `hmsActionResultListener` has onSuccess and onError callbacks for the result of the operation.
+
 
 Note that if an empty list is sent to `ofRoles`, no roles will be changed. This is to avoid accidentally changing roles you may not have intended such as the bots that provide recording and streaming with the roles `beam`.
 
 Also, Bulk Role Changes are always forced i.e. no option will be given for the peer to accept it, they will just be changed immediately.
 
 
-Here's how the method could be called to change all `guest` and `waiting` roles to `host`:
-TBD
+Here's how the method could be called to change all `waiting` and `guest` roles to `host`:
+
+```js
+// fetch all available Roles in the room
+const roles = await hmsInstance.getRoles();
+
+// get the Host Role object
+const hostRole = roles.find(role => role.name === 'host');
+
+// get list of Roles to be updated - in this case "Waiting" and "Guest" Roles
+const rolesToChange = roles.filter(role => role.name === 'waiting' || role.name === 'guest');
+
+// now perform Role Change of all peers in "Waiting" and "Guest" Roles to the "Host" Role
+await hmsInstance.changeRoleOfPeersWithRoles(rolesToChange, hostRole);
+```
