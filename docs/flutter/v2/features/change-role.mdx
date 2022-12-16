@@ -90,7 +90,7 @@ hmsSDK.acceptRoleChangeRequest();
 ```
 
 
-Now, all peers in the room will receive an `HMSPeerUpdate.roleUpdated` callback so that they both can do the necessary UI updates. Now the user becomes a speaker and the audio publishing will start automatically.
+Now, all peers in the room will receive an `HMSPeerUpdate.roleUpdated` callback so that they can do the necessary UI updates. Now the user becomes a speaker and the audio publishing will start automatically.
 
 Now let's imagine the newly nominated speaker is not behaving nicely and we want to move him back to the listener without a prompt. This is where the `force` parameter comes in.
 
@@ -109,7 +109,7 @@ When it is set to true the other party will not receive a confirmation `roleChan
 Bulk Role Change is used when you want to convert all Roles from a list of Roles, to another Role.
 
 
-For example, if peers join a room with a `waiting` role and you want to change them all to `viewers` then you'd use the `changeRoleOfPeersWithRoles` API.
+For example, if peers join a room with a `waiting` Role and now you want to change all these peers to `viewer` Role then use the `changeRoleOfPeersWithRoles` API.
 
 It takes fewer parameters than for a single peer. Here is the method signature.
 
