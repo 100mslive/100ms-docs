@@ -46,7 +46,7 @@ const ResultBox: React.FC<ResultBoxProps> = ({ title, url }) => {
                         fontWeight: 'inherit',
                         backgroundColor: '$surfaceLighter',
                         p: '$1 $2',
-                        whiteSpace: "nowrap",
+                        whiteSpace: 'nowrap',
                         borderRadius: '0.25rem',
                         marginLeft: '0.5rem'
                     }}>
@@ -113,33 +113,24 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
         if (paletteTrack.current >= res.length - 1) {
             paletteTrack.current = 0;
             const last = document.getElementById(`res-box-${res.length - 1}`);
-            if (last) {
-                last.style.backgroundColor = 'var(--surface_light)';
-            }
-        } else {
-            paletteTrack.current += 1;
-        }
+            if (last) last.style.backgroundColor = 'var(--surface_light)';
+        } else paletteTrack.current += 1;
+
         const ele = document.getElementById(`res-box-${paletteTrack.current}`);
         if (ele) {
             ele.style.backgroundColor = 'var(--surface_light)';
             ele.focus();
         }
         const prev = document.getElementById(`res-box-${paletteTrack.current - 1}`);
-        if (prev) {
-            prev.style.backgroundColor = 'var(--surface_default)';
-        }
+        if (prev) prev.style.backgroundColor = 'var(--surface_default)';
     }
     if (upKeyPressed) {
         // on top
         if (paletteTrack.current === 0) {
             paletteTrack.current = res.length - 1;
             const top = document.getElementById(`res-box-0`);
-            if (top) {
-                top.style.backgroundColor = 'var(--surface_light)';
-            }
-        } else {
-            paletteTrack.current -= 1;
-        }
+            if (top) top.style.backgroundColor = 'var(--surface_light)';
+        } else paletteTrack.current -= 1;
 
         const ele = document.getElementById(`res-box-${paletteTrack.current}`);
         if (ele) {
@@ -147,9 +138,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
             ele.focus();
         }
         const prev = document.getElementById(`res-box-${paletteTrack.current + 1}`);
-        if (prev) {
-            prev.style.backgroundColor = 'var(--surface_default)';
-        }
+        if (prev) prev.style.backgroundColor = 'var(--surface_default)';
     }
     return (
         <Box
@@ -159,7 +148,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                 top: '0',
                 height: '100vh',
                 width: '100vw',
-                bg: 'rgba(0, 0, 0, 0.7)'
+                bg: 'rgba(0, 0, 0, 0.8)'
             }}>
             <div className="search-modal" ref={ref}>
                 <Flex
@@ -168,7 +157,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                         color: '$textHighEmp',
                         bg: '$surfaceDefault',
                         padding: '12px 16px',
-                        border: '2px solid $primaryDefault',
+                        border: '2.5px solid $primaryDefault',
                         borderRadius: '0.5rem',
                         margin: '0 auto',
                         height: '20px'
@@ -192,8 +181,9 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                             fontSize: '15px'
                         }}
                     />
-                    <Flex align="center" gap="2" css={{}}>
-                        <Box
+                    <Flex align="center" gap="2">
+                        <Flex
+                            align="center"
                             css={{
                                 fontWeight: '$semiBold',
                                 fontSize: '$sm',
@@ -203,7 +193,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                                 padding: '0 4px'
                             }}>
                             esc
-                        </Box>
+                        </Flex>
                         <Text variant="xs" css={{ whiteSpace: 'nowrap', color: '$textMedEmp' }}>
                             to close
                         </Text>
@@ -272,6 +262,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                         top: 112px;
                         left: 50%;
                         height: 48px;
+                        border-radius: 8px;
                         transform: translateX(-50%);
                         background-color: var(--gray1);
                     }
