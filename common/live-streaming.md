@@ -86,24 +86,28 @@ For custom apps, you can enable the live streaming destination manually:
 
 ### SDK integration
 
-Use the 100ms client-side SDKs to integrate streaming in your application. See code snippets for the web SDK [here](./../features/hls).
+Use the 100ms client-side SDKs to integrate streaming in your application. See code snippets for the client-side SDK [here](./../features/hls).
 
-### HLS playback for the audience
+### Live stream playback
 
 ![HLS playback](/docs/docs/v2/hls-playback.png)
 
-You can serve HLS streaming video from a [CDN](https://www.stackpath.com/edge-academy/what-is-a-cdn/) for live playback for the audience.
+You can serve live streaming video for playback using 100ms client-side SDK or your custom integration.
 
-1. Once you start the HLS steaming, you will get an HLS URL (m3u8 URL) which you can use for playback.
+1. Once you start the live streaming, you will get an HLS URL (m3u8 URL) which you can use for playback.
 2. If you are planning to use 100ms [client-side SDKs](./../features/hls) for HLS playback, you can get the HLS URL by checking the current room state using the client SDK. Check [here](./../features/hls#current-room-status) to find out how.
 3. If you wish to use a custom integration for HLS playback (not 100ms client SDK), you can follow one of the below approaches to get the HLS URL:
    - **Webhook:** You can listen to [hls.started.success](/server-side/v2/foundation/webhook#hls-started-success) webhook and get the HLS URL from the `url` field. Please check the [webhooks guide](/server-side/v2/introduction/webhook) to learn more about webhooks.
-   - **Static URL:** This method will help you get a static URL for playback. You can enable the `Static playback URLs` in your template from the [dashboard](https://dashboard.100ms.live/dashboard). You can go to Destination > enable "Live streaming with HLS" > under "Customise stream video output" section > enable "Static playback URLs."
+   - **Static URL:** This configuration will help you get a static URL for playback. You can enable the `Static playback URLs` in your template from the [dashboard](https://dashboard.100ms.live/dashboard). You can go to Destination > enable "Live streaming with HLS" > under "Customise stream video output" section > enable "Static playback URLs."
   
     ![Enable Static URL](/docs/docs/v2/enable-static-url.png)
 
       - _Format_: https://cdn.100ms.live/beam/<customer_id>/<room_id>/master.m3u8
-      - <customer_id>: replace this placeholder with your customer_id from [developer section](https://dashboard.100ms.live/developer) on your dashboard. 
-      - <room_id>: replace this placeholder with the room_id of the respective room from which the stream will be broadcasted.
+      - `customer_id`: replace this placeholder with your customer_id from [developer section](https://dashboard.100ms.live/developer) on your dashboard. 
+      - `room_id`: replace this placeholder with the `room_id` of the respective room from which the stream will be broadcasted.
 
-4. If you wish to use Video on demand (VOD), 100ms provides the capability to record the HLS stream which will be posted to your webhook as a ZIP file of m3u8 format with all the chunks once the stream ends. Check [hls.recording.success](/server-side/v2/introduction/webhook#hls-recording-success) webhook for more information. 
+### Video-on-Demand use cases
+
+If you wish to replay your HLS stream for Video on demand (VOD) use case, 100ms provides the capability to record the HLS stream which will be posted to your webhook as a ZIP file of M3U8 format (same playback format as HLS) with all the chunks once the stream ends. 
+
+You can start recording a live stream using the [client-side SDK](./../features/hls) or using the [server API](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording#start-streaming-recording). Once the HLS recording is completed, you will get the details of recording as a callback to the webhook configured in your account. Check [hls.recording.success](/server-side/v2/introduction/webhook#hls-recording-success) webhook event for more information.
