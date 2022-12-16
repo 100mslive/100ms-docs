@@ -129,6 +129,21 @@ Note that if an empty list is sent to `ofRoles`, no roles will be changed. This 
 Also, Bulk Role Changes are always forced i.e. no option will be given for the peer to accept it, they will just be changed immediately.
 
 
-Here's how the method could be called to change all `guest` and `waiting` roles to `host`:
+Here's how the method could be called to change all `waiting` and `guest` roles to `host`:
 
-TBD
+```dart
+// fetch all available Roles in the room
+List<HMSRole> roles = await hmsSDK.getRoles();
+
+// get the Host Role object
+HMSRole toHostRole = roles.firstWhere((element) => element.name == "host");
+
+// get list of Roles to be updated - in this case "Waiting" and "Guest" Roles
+roles.retainWhere((element) => ((element.name == "waiting") || (element.name == "guest")));
+
+// now perform Role Change of all peers in "Waiting" and "Guest" Roles to the "Host" Role
+hmsSDK.changeRoleOfPeersWithRoles(
+    toRole: toHostRole,
+    ofRoles: roles,
+    hmsActionResultListener: hmsActionResultListener);
+```
