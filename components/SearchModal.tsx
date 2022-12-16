@@ -113,7 +113,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
         if (paletteTrack.current >= res.length - 1) {
             paletteTrack.current = 0;
             const last = document.getElementById(`res-box-${res.length - 1}`);
-            if (last) last.style.backgroundColor = 'var(--surface_light)';
+            if (last) last.style.backgroundColor = 'var(--surface_default)';
         } else paletteTrack.current += 1;
 
         const ele = document.getElementById(`res-box-${paletteTrack.current}`);
@@ -129,7 +129,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
         if (paletteTrack.current === 0) {
             paletteTrack.current = res.length - 1;
             const top = document.getElementById(`res-box-0`);
-            if (top) top.style.backgroundColor = 'var(--surface_light)';
+            if (top) top.style.backgroundColor = 'var(--surface_default)';
         } else paletteTrack.current -= 1;
 
         const ele = document.getElementById(`res-box-${paletteTrack.current}`);
