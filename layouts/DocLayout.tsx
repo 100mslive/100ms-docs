@@ -50,7 +50,6 @@ export default function Layout({ children }: Props) {
                     padding-top: 16px;
                     justify-content: center;
                     width: 100%;
-                    filter: blur(${modal ? '10px' : '0px'});
                     background-color: var(--docs_bg_content) !important;
                 }
                 .content-wrapper {

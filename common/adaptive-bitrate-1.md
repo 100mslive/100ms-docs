@@ -28,8 +28,6 @@ Simulcast configuration is opt-in and can be enabled on the role's configuration
 
 #### Enable via dashboard
 
-_This dashboard feature is currently limited to early adopters only._
-
 Enable "can publish simulcast" on the template page for a particular role. You can also specify how many video quality layers will be simultaneously published by peers of this role. The peer will publish these layers assuming network bandwidth permits.
 
 ![Simulcast configuration](/docs/guides/simulcast-on-dashboard.png)
