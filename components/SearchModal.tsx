@@ -157,7 +157,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                         color: '$textHighEmp',
                         bg: '$surfaceDefault',
                         padding: '12px 16px',
-                        border: '2px solid $primaryDefault',
+                        border: '2.5px solid $primaryDefault',
                         borderRadius: '0.5rem',
                         margin: '0 auto',
                         height: '20px'
@@ -262,6 +262,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                         top: 112px;
                         left: 50%;
                         height: 48px;
+                        border-radius: 8px;
                         transform: translateX(-50%);
                         background-color: var(--gray1);
                     }
