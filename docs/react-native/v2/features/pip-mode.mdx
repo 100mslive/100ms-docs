@@ -46,7 +46,7 @@ While enabling PIP Mode you can configure the PIP Window Aspect Ratio & buttons 
 Actionable buttons like Mute/Unmute Audio/Video, Leave Room for local peers can be customized while enabling PIP Mode.
 
 
-- `aspectRatio`: The Aspect Ratio of the PIP Window which will be appear. Commonly used values are 16:9, 4:3 & 1:1 ratios.
+- `aspectRatio`: The Aspect Ratio of the PIP Window which will be appear. Default value is 16:9 aspect ratio. Other commonly used values are 4:3, 1:1, 9:16 & 3:4 ratios.
 
 - `endButton`: To enable/disable showing of a button through which user can leave the room. Default is false, so the button is not visible by default.
 
@@ -56,9 +56,8 @@ Actionable buttons like Mute/Unmute Audio/Video, Leave Room for local peers can 
 
 
 ```js
-  
 const isEnabled = await hmsInstance?.enablePipMode({
-                          aspectRatio: [16, 9],   // for 16:9 aspect ratio
+                          aspectRatio: [9, 16],   // for 9:16 aspect ratio
                           endButton: true,        // for showing/hiding leave room button
                           videoButton: true,      // for showing/hiding local Video button
                           audioButton: true,      // for showing/hiding local Audio button
