@@ -23,7 +23,7 @@ Any application built using 100ms' SDK has 2 components.
 -   `Destinations` Destinations is used to save audio/video calls for offline viewing. 100ms supports 2 kinds of recording - SFU recording and Browser recording. Also, `HLS enabled` configuration will allow you to live stream your room over HLS.
 -   `RTMP` RTMP streaming is used to live stream your video conferencing apps to platforms like YouTube, Twitch, Facebook, MUX, etc.
 -   `Webhooks` Webhook is an HTTP(S) endpoint used for pushing the notifications to your application. It will be invoked by 100ms servers to notify events of your room.
--   `Workspace` A workspace is an isolated environment which contains account data like templates, rooms, room and session history, etc. You can use workspaces to create differentiated environments like “Production” and “Development” or team-first environments like “Small Classroom” and “Webinar Classroom”.
+-   `Workspace` A workspace is an isolated environment which contains account data like templates, rooms, room and session history, etc. You can use workspaces to represent environments like “Production” and “Development” and invite team members to a workspace.
 -   `Members` A member is an individual 100ms account with access to a particular workspace. You can add and remove members in a workspace.
 -   `Organization` An organization is an entity which holds all the workspaces and billing data of a particular account. Each account on sign-up has its own organization which acts as the organization owner. The account owner here acts as a super-admin of all workspaces created under this account. 
 
