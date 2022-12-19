@@ -1,0 +1,48 @@
+---
+ title: HLS Timed Metadata
+ nav: 8.05
+---
+
+HLS Timed Metadata feature helps you synchronise certain events with the HLS stream. This can be useful for showing interactive quizzes / product overlays etc.
+
+## Requirements
+
+- 100ms Android SDK version 2.5.6 or higher
+- Active HLS stream
+
+## Sending HLS Timed Metadata
+
+To add HLS timed metadata cue to the currently running HLS stream use `setHlsSessionMetadata` API like this:
+
+```kotlin
+val metadata = HMSHLSTimedMetadata(
+                        payload  = payloadText,
+                        duration = durationText
+                    )
+
+hmsSDK.setHlsSessionMetadata(arrayListOf(metaDataModel), object : HMSActionResultListener {
+        override fun onError(error: HMSException) {
+            Log.d(TAG, "Unable to send metadata")
+        }
+
+        override fun onSuccess() {
+           Log.d(TAG, "hls metadata sent")
+        }
+})
+```
+
+## Receiving HLS Timed Metadata
+
+To receive metadata on the HLS player side use `HlsMetadataHandler` class from sample app.
+
+```kotlin
+
+playerEventsManager = PlayerEventsCollector(it)
+val hlsMetadataHandler = HlsMetadataHandler(exoPlayer = exoplayer,{ metaDataModel ->
+ // showing a view or hiding it can be handled here
+} ,context)
+hlsMetadataHandler.start()
+
+```
+
+Please note that callback will be fired every second if a matching tag is found, the callback firing rate can be modified directly in `HlsMetadataHandler` based on preference.
