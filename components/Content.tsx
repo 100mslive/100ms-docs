@@ -18,6 +18,8 @@ import AdaptiveBitrate1 from "../common/adaptive-bitrate-1.md";
 import AdaptiveBitrate2 from "../common/adaptive-bitrate-2.md";
 import AndroidVersionShield from '../common/android-sdk-version-shield.md';
 import BulkRoleChangeErrors from '../common/bulk-role-change-errors.md';
+import HMSLinks from "../common/100ms-links.md";
+import Capabilities from "../common/capabilities.md";
 
 const data = {
     basics: Basics,
@@ -38,7 +40,10 @@ const data = {
      * code snippets in `md` files are not rendering well in mdx
      */
     adaptiveBitrate1: AdaptiveBitrate1,
-    adaptiveBitrate2: AdaptiveBitrate2
+    adaptiveBitrate2: AdaptiveBitrate2,
+
+    hmsLinks: HMSLinks,
+    capabilities: Capabilities,
 };
 
 interface Props {
