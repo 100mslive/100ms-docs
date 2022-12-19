@@ -60,7 +60,7 @@ Additionally, you can specify headers that will be passed transparently to your 
 
 ## How to configure Webhook
 
-Webhook can be configured using [Developer](https://dashboard.100ms.live/developer) section of [100ms Dashboard](https://dashboard.100ms.live/)
+Webhook can be configured using [Developer](https://dashboard.100ms.live/developer) section of [100ms Dashboard](https://dashboard.100ms.live/). Each workspace can have its own webhook configuration. 
 
 ## Events
 
@@ -243,22 +243,23 @@ This event will be sent when peer leaves the room
 
 #### Attributes
 
-| Name               | Type                 | Description                                                                                                |
-|:-------------------|:---------------------|:-----------------------------------------------------------------------------------------------------------|
-| room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
-| room_name          | `string`             | Room name provided when creating the room <br/><br/> _Example: Test Room _                                 |
-| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                  |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _ |
-| user_id            | `string`             | User id assigned by the customer <br/><br/> _Example: user.001 _                                           |
-| template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                    |
-| user_name          | `string`             | User name of the user <br/><br/> _Example: Test user _                                                     |
-| user_data          | `string`             | User data of the user <br/><br/> _Example: {"isHandRaised":true} _                                         |
-| role               | `string`             | Role of the user <br/><br/> _Example: host _                                                               |
-| left_at            | `timestamp (in UTC)` | Timestamp when user left <br/><br/> _Example: 2020-11-11T17:32:17Z _                                       |
-| duration           | `int`                | Duration the user spent in the room in seconds <br/><br/> _Example: 36000 _                                |
-| reason             | `string`             | Reason for the peer leaving, see more details below <br/><br/> _Example: client request _                  |
-| joined_at          | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> _Example: 2020-11-11T16:32:17Z _                                     |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                 |
+| Name               | Type                 | Description                                                                                                              |
+|:-------------------|:---------------------|:-------------------------------------------------------------------------------------------------------------------------|
+| room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                                   |
+| room_name          | `string`             | Room name provided when creating the room <br/><br/> _Example: Test Room _                                               |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                                |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _               |
+| user_id            | `string`             | User id assigned by the customer <br/><br/> _Example: user.001 _                                                         |
+| template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                                  |
+| user_name          | `string`             | User name of the user <br/><br/> _Example: Test user _                                                                   |
+| user_data          | `string`             | User data of the user <br/><br/> _Example: {"isHandRaised":true} _                                                       |
+| role               | `string`             | Role of the user <br/><br/> _Example: host _                                                                             |
+| left_at            | `timestamp (in UTC)` | Timestamp when user left <br/><br/> _Example: 2020-11-11T17:32:17Z _                                                     |
+| duration           | `int`                | Duration the user spent in the room in seconds <br/><br/> _Example: 36000 _                                              |
+| reason             | `string`             | Reason for the peer leaving, see more details below <br/><br/> _Example: client request _                                |
+| message            | `string`             | Reason specified while kicking peer out of room, see more details below <br/><br/> _Example: removed due to misconduct _ |
+| joined_at          | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> _Example: 2020-11-11T16:32:17Z _                                                   |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                               |
 
 #### Peer Leave Reason
 
@@ -289,6 +290,7 @@ Note:
         "left_at": "2021-11-30T12:58:58.500451704Z",
         "peer_id": "********-****-****-****-***********",
         "reason": "client request",
+        "message": "removed due to misconduct",
         "role": "********",
         "room_id": "************************",
         "room_name": "**********",
