@@ -24,8 +24,6 @@ Any application built using 100ms' SDK has 2 components.
 -   `RTMP` RTMP streaming is used to live stream your video conferencing apps to platforms like YouTube, Twitch, Facebook, MUX, etc.
 -   `Webhooks` Webhook is an HTTP(S) endpoint used for pushing the notifications to your application. It will be invoked by 100ms servers to notify events of your room.
 -   `Workspace` A workspace is an isolated environment which contains account data like templates, rooms, room and session history, etc. You can use workspaces to represent environments like “Production” and “Development” and invite team members to a workspace.
--   `Members` A member is an individual 100ms account with access to a particular workspace. You can add and remove members in a workspace.
--   `Organization` An organization is an entity which holds all the workspaces and billing data of a particular account. Each account on sign-up has its own organization which acts as the organization owner. The account owner here acts as a super-admin of all workspaces created under this account. 
 
 ## What are the steps to build a live app with 100ms?
 1. Sign up on 100ms using the **Try For Free** button in the top navbar.
