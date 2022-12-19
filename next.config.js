@@ -1,3 +1,5 @@
+const { formatDiagnosticsWithColorAndContext } = require('typescript');
+
 /**
  * @type {import('next').NextConfig}
  */

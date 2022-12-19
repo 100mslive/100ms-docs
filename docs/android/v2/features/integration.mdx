@@ -4,25 +4,51 @@ nav: 5.5
 ---
 
 Three main sections here are:
-[Adding Jitpack](#adding-jitpack) - Since you need to retrieve the 100ms Android SDK.
+[Adding Dependencies](#adding-dependencies) - Dependencies for the 100ms Android SDK.
 [Adding the 100ms SDK](#adding-the-100ms-sdk) - To add the SDK to your project's dependencies.
 [Adding Permissions](#permissions) - Since a video calling app needs camera/record-audio permissions you'll need this for the apps to work.
 
-### Adding Jitpack
+### Adding Dependencies
 
-The 100ms SDK is distributed via Jitpack.
 
-Add the JitPack repository to your root `settings.gradle` at the end of the `respositories` closure:
-You can open it in Android Studio by double tapping the Shift key and typing `settings.gradle`. It will be in your project root.
+<Content alias="androidVersionShield" />
 
-```json{7}:settings.gradle
+<Tabs id="sdk-imports" items={['Maven Central', 'Jitpack']} />
+
+<Tab id='sdk-imports-0'>
+​
+
+```json{5-8}:settings.gradle section=AddSDKDependencies sectionIndex=1
+dependencies {
+ // See the version in the badge above.
+ // There are separate libraries for the sdk, virtual background and hls-player-stats.
+ //     add just the ones you need.
+ def hmsVersion = "x.x.x"
+ implementation "live.100ms:android-sdk:$hmsVersion"    // Essential
+ implementation "live.100ms:virtual-background:$hmsVersion" // Optional
+ implementation "live.100ms:hls-player-stats:$hmsVersion"   // Optional
+}
+```
+
+</Tab>
+
+
+<Tab id='sdk-imports-1'>
+
+There is one extra step to use the jitpack libraries.
+
+-   Add the JitPack repository to your root `settings.gradle` at the end of the `respositories` closure:
+
+You can open it in Android Studio by double tapping shift and typing `settings.gradle`.
+
+```json{7}:settings.gradle section=AddSDKDependencies sectionIndex=1
 dependencyResolutionManagement {
  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
  repositories {
-        google()
-        mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
-        maven { url 'https://jitpack.io' }
+ google()
+ mavenCentral()
+ jcenter() // Warning: this repository is going to shut down soon
+ maven { url 'https://jitpack.io' }
     }
 }
 rootProject.name = "MyVideoCallApp"
@@ -30,15 +56,21 @@ include ':app'
 
 ```
 
-### Adding the 100ms SDK
-Add the 100ms sdk dependency to your app-level `build.gradle` [![](https://jitpack.io/v/100mslive/android-sdk.svg)](https://jitpack.io/#100mslive/android-sdk).
+-   Add the 100ms sdk dependency to your app-level `build.gradle`
 
-```json{3,4}:build.gradle
+```json{2,4-6}:build.gradle section=AddSDKDependencies sectionIndex=2
 dependencies {
-    // See the version in the jitpack badge above.
-    implementation 'com.github.100mslive.android-sdk:lib:x.x.x'
+ def hmsVersion = "x.x.x"
+ // See the version in the jitpack badge above.
+ implementation "com.github.100mslive.android-sdk:lib:$hmsVersion"          // Essential
+ implementation "com.github.100mslive.android-sdk:virtualBackground:$hmsVersion" // Optional
+ implementation "com.github.100mslive.android-sdk:stats:$hmsVersion"            // Optional
+
 }
 ```
+
+</Tab>
+
 
 ### Permissions
 

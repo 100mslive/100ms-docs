@@ -7,7 +7,7 @@ Mute is something that applies to both audio and video.
 
 When you mute audio, you can't be heard by other people.
 
-When you mute video, you will not be broadcasting your video to other people.
+When you mute a video, you will not be broadcasting your video to other people.
 
 It can be called on local (you) or remote (other people) peer's audio or video tracks.
 
@@ -72,3 +72,26 @@ HMSSDK hmsSDK = HMSSDK(
 3. Perform the other steps as usual i.e call the `build` method.
 
 Now, the user should be able to join the room with the microphone and the camera turned off.
+
+## Mute Remote peers locally 
+
+To mute peers locally `HMSSDK` provides dedicated methods `muteRoomAudioLocally` for audio and `muteRoomVideoLocally` for video. Execution 
+of this method mutes audio and video for yourself others will still be able to hear audio and video.
+
+```dart 
+//To mute audio locally
+hmsSDK.muteRoomAudioLocally();
+
+//To mute video locally
+hmsSDK.muteRoomVideoLocally();
+```
+
+Similarly their counterparts:
+
+```dart
+//To unmute audio locally
+hmsSDK.unMuteRoomAudioLocally();
+
+//To unmute video locally
+hmsSDK.unMuteRoomVideoLocally();
+```

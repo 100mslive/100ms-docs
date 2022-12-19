@@ -1,8 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import Footer from '@/components/Footer';
 import HomeDropDown from '@/components/HomeDropDown';
-import SegmentAnalytics from '@/components/SegmentAnalytics';
-import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import {
     AndroidIcon,
     AppleIcon,
@@ -24,8 +24,8 @@ import { Box, Button, Flex, Text } from '@100mslive/react-ui';
 import { Card, Item, SdkItem } from 'components';
 import Header from 'components/Header';
 import Switcher from 'components/Switcher';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import useLockBodyScroll from '@/lib/useLockBodyScroll';
+import SegmentAnalytics from '@/components/SegmentAnalytics';
 
 const tabs = [
     { name: 'Web', id: 0 },
@@ -63,8 +63,7 @@ const Homepage = () => {
                         justify="center"
                         css={{
                             paddingBottom: '$16',
-                            backgroundColor: '$backgroundDefault',
-                            filter: `blur(${modal ? '10px' : '0'})`
+                            backgroundColor: 'var(--docs_bg_content)',
                         }}>
                         <Box css={{ width: '90%', maxWidth: '1248px' }}>
                             <Flex
@@ -121,6 +120,7 @@ const Homepage = () => {
                                     sdk="javascript"
                                     css={{
                                         borderRadius: '$3 $3 0 0',
+                                        borderBottomWidth: '0px;',
                                         '@lg': {
                                             borderRadius: '$3'
                                         }
@@ -174,9 +174,10 @@ const Homepage = () => {
                                         sdk={value.id}
                                         css={{
                                             borderRadius: `${index !== 0 ? '0 0' : '$3 $3'} ${mobileSDK.length - 1 !== index ? '0 0' : '$3 $3'
-                                                }`
+                                                }`,
+                                                borderBottomWidth: `${index !== mobileSDK.length - 1 ? '0px' : '1px'}`,
                                         }}
-                                    // listView={true}
+                                        // listView={true}
                                     />
                                 ))}
                             </Flex>
@@ -409,7 +410,7 @@ const Homepage = () => {
                             </Flex>
                         </Box>
                     </Flex>
-                    <Footer css={{ backgroundColor: '$backgroundDefault' }} />
+                    <Footer css={{ backgroundColor: 'var(--docs_bg_footer)' }} />
                 </>
             ) : null}
         </>

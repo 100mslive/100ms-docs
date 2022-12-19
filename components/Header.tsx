@@ -128,7 +128,7 @@ const Header: React.FC<Props> = ({
                                 cursor: 'pointer',
                                 fontSize: '1rem',
                                 position: 'relative',
-                                top: '1px'
+                                top: '1px',
                             }}>
                             Docs
                         </p>
@@ -214,43 +214,18 @@ const Header: React.FC<Props> = ({
                     align-items: center;
                     width: 100%;
                     height: 3rem;
-                    z-index: 50;
+                    z-index: 200;
                     position: sticky;
                     margin: 0;
                     top: 0;
                     padding: 0.5rem 0 0.5rem 0;
-                    background-color: var(--header_bg);
-                    border-bottom: 2px solid var(--new_border_default);
-                }
-                .res-ctx {
-                    background-color: var(--gray2);
-                    border-bottom-right-radius: 5px;
-                    border-bottom-left-radius: 5px;
-                    padding: 1rem 2rem;
-                    z-index: 1000;
-                    position: absolute;
+                    background-color: var(--docs_bg_header);
+                    border-bottom: 1px solid var(--docs_border_default);
                 }
                 .link-btn {
-                    background: var(--gray4);
-                    border-radius: 5px;
+                    background: var(--docs_bg_header_button);
+                    border-radius: var(--docs_border_radius_xs);
                     padding: 5px 8px;
-                }
-                .res-box:hover {
-                    opacity: 1;
-                }
-                .res-box {
-                    margin: 0.5rem 0;
-                    border-radius: 5px;
-                    padding: 0 2rem;
-                    height: 50px;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    background-color: var(--gray3);
-                    opacity: 0.6;
-                }
-                .res-box span {
-                    margin-right: 1rem;
                 }
                 p.hide-content {
                     margin-right: 16px;
@@ -290,7 +265,7 @@ const Header: React.FC<Props> = ({
                     display: flex;
                     width: 100%;
                     align-items: center;
-                    border-radius: 5px;
+                    border-radius: var(--docs_border_radius_s);
                     cursor: pointer;
                     border-bottom-width: 1px;
                 }
@@ -303,9 +278,9 @@ const Header: React.FC<Props> = ({
                 }
                 .hot-key {
                     margin-left: auto !important;
-                    border-radius: 5px;
+                    border-radius: var(--docs_border_radius_xs);
                     padding: 0 5px;
-                    color: var(--text_high_emp);
+                    color: var(--docs_text_primary);
                     border: 1px solid var(--gray6);
                 }
                 .company {

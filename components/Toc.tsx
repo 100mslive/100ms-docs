@@ -1,4 +1,5 @@
 import React from 'react';
+import Feedback from './Feedback';
 
 export type TocItem = {
     depth: number;
@@ -22,7 +23,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
     }, []);
     return (
         <div className="toc-ctx">
-            {toc.length !== 0 ? <p className="head">On This Page</p> : null}
+            {toc.length !== 0 ? <p className="menu-title">ON THIS PAGE</p> : null}
             {toc.map((item) =>
                 item.title !== '' ? (
                     <span
@@ -39,37 +40,44 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
             {CurrentDocsSlug === 'server-side' ? (
                 <>
                     <hr />
-                    <div>
+                    <div style={{height: "2rem"}}>
                         <a href="https://god.gw.postman.com/run-collection/22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a?action=collection%2Ffork&collection-url=entityId%3D22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a%26entityType%3Dcollection%26workspaceId%3Dd9145dd6-337b-4761-81d6-21a30b4147a2">
                             <img src="https://run.pstmn.io/button.svg" alt="Run in postman" />
                         </a>
                     </div>
                 </>
             ) : null}
-
+            <hr />
+            <Feedback />
             <style jsx>{`
                 .toc-ctx {
                     display: flex;
                     flex-direction: column;
+                    padding-top: 16px;
                     position: sticky;
-                    top: 80px;
+                    top: 96px;
                     right: 0;
-                    height: calc(100vh - 80px);
+                    height: calc(100vh - 96px);
                     overflow-y: auto;
+                    overflow-x: clip;
                     margin-left: 16px;
                     padding-left: 10px;
                 }
+                .menu-title{
+                    margin-left: -8px;
+                }
                 .head {
-                    font-weight: bold;
                     text-transform: uppercase;
                 }
                 a {
                     color: inherit;
                     text-decoration: none;
+                    color: var(--docs_text_secondary);
                 }
                 .text {
                     font-size: 14px;
                     margin: 0.5rem 0;
+                    color: var(--docs_text_secondary);
                 }
                 .text a {
                     padding-left: 1rem !important;
@@ -92,7 +100,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                 button {
                     width: max-content;
                     background-color: #f16b16;
-                    border-radius: 4px;
+                    border-radius: var(--docs_border_radius_s);
                     padding: 8px;
                     font-size: 12px;
                 }

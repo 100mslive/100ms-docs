@@ -24,9 +24,7 @@ const withTableofContents = (toc?: any[]) => () => (tree) => {
         node.value = `
         <h${node.depth} id={"${slug}"} level={${node.depth}}>
          ${title}
-         <a href="#${slug}">
-          <svg className='copy-anchor' viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" shapeRendering="geometricPrecision" style={{color:"var(--gray12)"}}><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
-         </a>
+          <svg className='copy-anchor' onClick={() => navigator.clipboard.writeText(window.location.origin + window.location.pathname + "#" + "${slug}")} viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" shapeRendering="geometricPrecision" style={{color:"var(--gray12)", cursor: "pointer"}}><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
         </h${node.depth}>`
 
         if (Array.isArray(toc)) {

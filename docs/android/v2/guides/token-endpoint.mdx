@@ -1,0 +1,76 @@
+---
+title: Auth Token Endpoint Guide
+nav: 2.3
+---
+
+## Overview
+
+100ms provides an option to get `App Tokens` without setting up a token generation backend service to simplify your integration journey while testing the [sample app](https://github.com/100mslive/100ms-web) or building integration with 100ms.
+
+You can find the token endpoint from the [developer page](https://dashboard.100ms.live/developer) in your 100ms dashboard.
+
+![Token endpoint](/guides/token-endpoint-dashboard.png)
+
+We recommend you move to your token generation service before you transition your app to production, as our token endpoint service will not scale in production.
+
+The "Sample Apps" built using 100ms client SDKs require an `App Token` to join a room to initiate a video conferencing or live streaming session. Please check the [Authentication and Tokens guide](./../foundation/security-and-tokens)
+
+Please note that you cannot use the token endpoint to create a `Management Token` for server APIs. Refer to the [Management Token section](./../foundation/security-and-tokens#management-token) in Authentication and Tokens guide for more information.
+
+## Get an app token using token endpoint
+
+You can use the token endpoint from your 100ms dashboard while building integration with 100ms. This acts as a tool enabling front-end developers to complete the integration without depending on the backend developers to set up a token generation backend service.
+
+**URL format:** `<YOUR_TOKEN_ENDPOINT>api/token`
+
+100ms token endpoint can generate an app token with the inputs passed, such as room_id, role, & user_id (optional - your internal user identifier as the peer's user_id). You can use [jwt.io](https://jwt.io/) to validate whether the app token contains the same input values.
+
+<PostRequest title="https://prod-in2.100ms.live/hmsapi/johndoe.app.100ms.live/api/token" />
+<Request id="req-comp-0">
+
+```bash
+curl --location --request POST 'https://prod-in2.100ms.live/hmsapi/johndoe.app.100ms.live/api/token' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "room_id":"633fcdd84208780bf665346a",
+    "role":"host",
+    "user_id":"1234"
+}'
+```
+
+</Request>
+<ResponseBox id="resp-0" status="200 OK">
+
+```json
+{
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOi***************************R3tT-Yk",
+    "msg": "token generated successfully",
+    "status": 200,
+    "success": true,
+    "api_version": "2.0.192"
+}
+```
+
+</ResponseBox>
+
+### Example client-side implementation
+
+You can directly add this to your client-side implementation, check our [sample app](https://github.com/100mslive/100ms-android/blob/26468836b68c6b2595c10a297187040111ababc7/app/src/main/java/live/hms/app2/model/TokenRequestWithRoomId.kt#L5) for reference.
+
+### Disable 100ms token endpoint
+
+Due to some security concerns, if you don't wish to use the token endpoint to generate app tokens, then you can disable it on the [Developers page](https://dashboard.100ms.live/developer) on your dashboard by disabling the option "Disable &lt;room_id&gt;/&lt;role&gt; link format."
+
+![Disable Token endpoint](/guides/disable-token-endpoint.png)
+
+#### Error Response
+
+Once you're disabled it on the dashboard, the requests to create an app token using the 100ms token endpoint will throw the below error:
+
+```json
+{
+    "success": false,
+    "msg": "Generating token using the room_id and role is disabled.",
+    "api_version": "2.0.192"
+}
+```
