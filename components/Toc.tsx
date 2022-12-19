@@ -23,7 +23,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
     }, []);
     return (
         <div className="toc-ctx">
-            {toc.length !== 0 ? <p className="head">On This Page</p> : null}
+            {toc.length !== 0 ? <p className="menu-title">ON THIS PAGE</p> : null}
             {toc.map((item) =>
                 item.title !== '' ? (
                     <span
@@ -53,13 +53,18 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                 .toc-ctx {
                     display: flex;
                     flex-direction: column;
+                    padding-top: 16px;
                     position: sticky;
-                    top: 80px;
+                    top: 96px;
                     right: 0;
-                    height: calc(100vh - 80px);
+                    height: calc(100vh - 96px);
                     overflow-y: auto;
+                    overflow-x: clip;
                     margin-left: 16px;
                     padding-left: 10px;
+                }
+                .menu-title{
+                    margin-left: -8px;
                 }
                 .head {
                     text-transform: uppercase;
@@ -67,10 +72,12 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                 a {
                     color: inherit;
                     text-decoration: none;
+                    color: var(--docs_text_secondary);
                 }
                 .text {
                     font-size: 14px;
                     margin: 0.5rem 0;
+                    color: var(--docs_text_secondary);
                 }
                 .text a {
                     padding-left: 1rem !important;
@@ -93,7 +100,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                 button {
                     width: max-content;
                     background-color: #f16b16;
-                    border-radius: 4px;
+                    border-radius: var(--docs_border_radius_s);
                     padding: 8px;
                     font-size: 12px;
                 }

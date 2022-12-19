@@ -20,8 +20,8 @@ const Card: React.FC<Props> = ({ body, endComponent, titleComponent, css, onClic
             borderRadius: '$3',
             borderWidth: '$1',
             borderStyle: 'solid',
-            borderColor: '$borderDefault',
-            backgroundColor: '$surfaceDefault',
+            borderColor: 'var(--docs_border_default)',
+            backgroundColor: 'var(--docs_bg_card)',
             boxSizing: 'border-box',
             padding: '$10',
             '&:active': {

@@ -88,9 +88,8 @@ Add `joinRoom()` function with room id and token you obtained in previous steps.
 
 ```swift section=JoinRoom sectionIndex=1
 func joinRoom() {
-    let config = HMSConfig(userID: UUID().uuidString,
-            roomID: "replace with room id", authToken: "replace with token")
-        hmsSDK.join(config: config, delegate: self)
+    let config = HMSConfig(userName: "John Doe", authToken: "replace with token")
+    hmsSDK.join(config: config, delegate: self)
 }
 
 override func viewDidLoad() {
@@ -105,7 +104,7 @@ Build and launch on device, then join same room on web app to try a call between
 
 ## Adding Video
 
-Lets create add a lazily initialized UIStackView that will hold our video views
+Lets create and add a lazily initialized UIStackView that will hold our video views
 
 ```swift{4-24} section=AddingVideo sectionIndex=1
 class ViewController: UIViewController {

@@ -24,17 +24,27 @@ const EditFile: React.FC<Props> = ({ slug }) => {
     const url = `https://github.com/100mslive/100ms-docs/blob/main/docs${slug}.mdx`;
     return (
         <div style={{ width: 'fit-content' }}>
+            <span>Have a suggestion? </span>
             <a href={url}>
-                <EditIcon /> <span>Edit this File</span>
+                <span>Recommend changes -&gt;</span>
             </a>
             <style jsx>{`
-                a {
+                div {
+                    font-size: 0.9rem;
+                    color: var(--docs_text_primary);
                     display: flex;
-                    margin-left: 0.75rem;
+                }
+                span {
+                    font-size: inherit;
+                }
+                a {
+                    font-size: inherit;
+                    display: flex;
                     width: fit-content;
                 }
                 a span {
-                    margin-left: 0.5rem;
+                    font-size: inherit;
+                    margin-left: 4px;
                 }
             `}</style>
         </div>
