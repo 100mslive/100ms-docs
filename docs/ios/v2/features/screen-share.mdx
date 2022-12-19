@@ -5,6 +5,8 @@ nav: 3.981
 
 iOS SDK provides support for sharing the entire screen of the device in the room.
 
+It uses [Replaykit](https://developer.apple.com/documentation/replaykit) framework from Apple. To understand the documentation better consider familiarising yourself with live screen broadcast in iOS: https://developer.apple.com/videos/play/wwdc2018/601
+
 Please note that for a peer to share their screen, their role must have screenshare enabled in the dashboard. Also, select the appropriate resolution that you desire the screenshare track should be of.
 
 ![ScreenshareDashboard](/docs/v2/screenshare-dashboard.png)
@@ -122,6 +124,15 @@ When a user leaves the meeting room from the main app, you will receive an error
         ...
     }
   ```
+  
+## Debugging issues in your screen-share implementation
+
+1. If you use cocoapods with M1 mac and compile for simulator then you might run into an error like this: "error framework not found Pods_hmsscreenshare". This issue is specific to cocoapods method of integrating the 100ms SDK. If you use swift package manager, you wouldn't run into this error. As a workaround please use a snippet similar to at the end of this example podfile to exclude arm64 arch for simulator from your pod screen share target:
+Workaround for M1 simulator issue https://github.com/100mslive/100ms-ios-sdk/blob/main/Example/Podfile
+Note: Pods-HMSScreenShare in the snippet is your cocoapods framework target for broadcast extension (it's generally Pods-[Your Broadcast Extension target name])
+
+2. If you are getting a crash while running with screen share feature, please make sure that the app group identifier is not misspelled in both the main app and the broadcast extension. Also make sure your entitlement file has the correct app group name.
+
 
 👀 To see an Example iOS broadcast upload extension implementation for screen sharing using 100ms Broadcast extension SDK, checkout [our Example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
 
