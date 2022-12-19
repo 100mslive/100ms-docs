@@ -265,11 +265,10 @@ This event will be sent when peer leaves the room
 
 1. `client request` — if the peer leaves the room willingly (Leave request is sent from the app/client-side).
 2. `peer kicked` — if the peer is removed by someone else (host or application server) from an active room using the [Client SDK](/javascript/v2/features/remove-peer) or the [Server API](/server-side/v2/active-rooms/remove-peers).
+    - If you remove a peer from an [active room](./../active-rooms/overview) using the [client SDK](/javascript/v2/features/remove-peer) or the [server API](/server-side/v2/active-rooms/remove-peers), you can pass the reason as a message and the `peer.leave.success` event will contain the same in the `message` field. Check below sample event for reference.
 3. `websocket closed` — network issues (remote server has closed the WebSocket connection due to abrupt network disconnection and no reconnection)
 4. `ice connection state closed` — network issues (The ICE agent for the RTCPeerConnection has shut down and is no longer handling requests)
 5. `server removed peer` — network issues (server has removed peer from the room as there is no connection established with the server for more than 60 seconds). This happens rarely.
-
-> **Note**: `peer.leave.success` event contains a `message` field that holds the message set as the reason in the [client SDK](/javascript/v2/features/remove-peer) or the [server API](/server-side/v2/active-rooms/remove-peers). Check below sample event for reference.
 
 #### Sample `peer.leave.success` event
 
