@@ -159,7 +159,7 @@ This event will be sent when session closes successfully.
 #### Attributes
 
 | Name               | Type                 | Description                                                                              |
-|:-------------------|:---------------------|:-----------------------------------------------------------------------------------------|
+| :----------------- | :------------------- | :--------------------------------------------------------------------------------------- |
 | room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df_                    |
 | room_name          | `string`             | Room name provided when creating the room <br/><br/> _Example: Test Room _               |
 | session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df_ |
@@ -244,7 +244,7 @@ This event will be sent when peer leaves the room
 #### Attributes
 
 | Name               | Type                 | Description                                                                                                              |
-|:-------------------|:---------------------|:-------------------------------------------------------------------------------------------------------------------------|
+| :----------------- | :------------------- | :----------------------------------------------------------------------------------------------------------------------- |
 | room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                                   |
 | room_name          | `string`             | Room name provided when creating the room <br/><br/> _Example: Test Room _                                               |
 | session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                                |
@@ -263,17 +263,13 @@ This event will be sent when peer leaves the room
 
 #### Peer Leave Reason
 
-1. `client request`
-2. `peer kicked`
-3. `websocket closed`
-4. `ice connection state closed`
+1. `client request` — if the peer leaves the room willingly (Leave request is sent from the app/client-side).
+2. `peer kicked` — if the peer is removed by someone else (host or application server) from an active room using the [Client SDK](/javascript/v2/features/remove-peer) or the [Server API](/server-side/v2/active-rooms/remove-peers).
+3. `websocket closed` — network issues (remote server has closed the WebSocket connection due to abrupt network disconnection and no reconnection)
+4. `ice connection state closed` — network issues (The ICE agent for the RTCPeerConnection has shut down and is no longer handling requests)
+5. `server removed peer` — network issues (server has removed peer from the room as there is no connection established with the server for more than 60 seconds). This happens rarely.
 
-Note:
-
-1. In case of peer is kicked / room is ended
-    - Client itself initiates a peer leave on receiving the signal. In these cases, reason will be `client request`
-    - Also, server starts a timer for the same. If peer leave is not received from client before the timer ends, the server then kicks the peer itself. In such cases, reason will be `peer kicked`
-2. All other reasons except `client request` and `peer kicked` denote that the peer has left unexpectedly.
+> **Note**: `peer.leave.success` event contains a `message` field that holds the message set as the reason in the [client SDK](/javascript/v2/features/remove-peer) or the [server API](/server-side/v2/active-rooms/remove-peers). Check below sample event for reference.
 
 #### Sample `peer.leave.success` event
 
@@ -367,7 +363,7 @@ This event will be sent when the peer leave fails. This can occur when,
 #### Attributes
 
 | Name          | Type                 | Description                                                                                                |
-|:--------------|:---------------------|:-----------------------------------------------------------------------------------------------------------|
+| :------------ | :------------------- | :--------------------------------------------------------------------------------------------------------- |
 | room_id       | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
 | room_name     | `string`             | Room name provided when creating the room <br/><br/> _Example: Test Room _                                 |
 | peer_id       | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _ |
@@ -520,7 +516,7 @@ This event will be sent when the role change for a peer is successful.
 #### Attributes
 
 | Name               | Type                 | Description                                                                                                |
-|:-------------------|:---------------------|:-----------------------------------------------------------------------------------------------------------|
+| :----------------- | :------------------- | :--------------------------------------------------------------------------------------------------------- |
 | room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
 | room_name          | `string`             | Room name provided when creating the room <br/><br/> _Example: Test Room _                                 |
 | session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                  |
@@ -572,7 +568,7 @@ This event will be sent when the role change for a peer fails. For example:
 #### Attributes
 
 | Name               | Type                 | Description                                                                                                |
-|:-------------------|:---------------------|:-----------------------------------------------------------------------------------------------------------|
+| :----------------- | :------------------- | :--------------------------------------------------------------------------------------------------------- |
 | room_id            | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                     |
 | room_name          | `string`             | Room name provided when creating the room <br/><br/> _Example: Test Room _                                 |
 | session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                  |
@@ -621,20 +617,20 @@ This event will be sent when final composed recording is generated and uploaded 
 
 #### Attributes
 
-| Name                    | Type                 | Description                                                                                                                                              |
-|:------------------------|:---------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| room_id                 | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                                                                   |
-| room_name               | `string`             | Room name assigned by you when creating room <br/><br/> _Example: class-9-batch-2 _                                                                      |
-| session_id              | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                                                                |
-| template_id             | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                                                                  |
-| location                | `string`             | (Deprecated, use recording_path) s3 URI of the recorded video <br/><br/> _Example: s3://bucket/prefix/ac.mp4 _                                           |
-| URL                     | `string`             | (Deprecated, use recording_presigned_url) Presigned s3 URL for the recorded video, for download <br/><br/> _Example: https://s3-location/bucket/ac.mp4 _ |
-| duration                | `int`                | Duration the user spent in the room in seconds <br/><br/> _Example: 3600 _                                                                               |
-| recording_path          | `string`             | Upload path of the recorded video such as s3 URI <br/><br/> _Example: s3://bucket/prefix/ac.mp4 _                                                        |
-| recording_presigned_url | `string`             | Presigned s3 URL for the recorded video, for download. Valid for 24 hours <br/><br/> _Example: https://s3-location/bucket/ac.mp4 _                       |
-| size                    | `int`                | Size of the recorded video (in bytes) <br/><br/> _Example: 10024 _                                                                                       |
-| session_started_at      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                                                               |
-| session_stopped_at      | `timestamp (in UTC)` | Timestamp when session ended <br/><br/> _Example: 2020-11-11T16:32:17Z _                                                                                 |
+| Name                    | Type                 | Description                                                                                                                                               |
+| :---------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| room_id                 | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                                                                    |
+| room_name               | `string`             | Room name assigned by you when creating room <br/><br/> _Example: class-9-batch-2 _                                                                       |
+| session_id              | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                                                                 |
+| template_id             | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                                                                   |
+| location                | `string`             | (Deprecated, use recording*path) s3 URI of the recorded video <br/><br/> \_Example: s3://bucket/prefix/ac.mp4 *                                           |
+| URL                     | `string`             | (Deprecated, use recording*presigned_url) Presigned s3 URL for the recorded video, for download <br/><br/> \_Example: https://s3-location/bucket/ac.mp4 * |
+| duration                | `int`                | Duration the user spent in the room in seconds <br/><br/> _Example: 3600 _                                                                                |
+| recording_path          | `string`             | Upload path of the recorded video such as s3 URI <br/><br/> _Example: s3://bucket/prefix/ac.mp4 _                                                         |
+| recording_presigned_url | `string`             | Presigned s3 URL for the recorded video, for download. Valid for 24 hours <br/><br/> _Example: https://s3-location/bucket/ac.mp4 _                        |
+| size                    | `int`                | Size of the recorded video (in bytes) <br/><br/> _Example: 10024 _                                                                                        |
+| session_started_at      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                                                                |
+| session_stopped_at      | `timestamp (in UTC)` | Timestamp when session ended <br/><br/> _Example: 2020-11-11T16:32:17Z _                                                                                  |
 
 #### Sample `recording.success` event
 
@@ -675,7 +671,7 @@ This event will be sent when failure occurs during final recording composition o
 | template_id        | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                   |
 | error              | `string`             | Error message <br/><br/> _Example: Upload Failure _                                       |
 | session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                |
-| session_stopped_at | `timestamp (in UTC)` | Timestamp when session ended <br/><br/> _Example: 2020-11-11T16:32:17Z _                 |
+| session_stopped_at | `timestamp (in UTC)` | Timestamp when session ended <br/><br/> _Example: 2020-11-11T16:32:17Z _                  |
 
 #### Sample `recording.failed` event
 
@@ -708,7 +704,7 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
 #### Attributes
 
 | Name               | Type                 | Description                                                                                               |
-|:-------------------|:---------------------|:----------------------------------------------------------------------------------------------------------|
+| :----------------- | :------------------- | :-------------------------------------------------------------------------------------------------------- |
 | beam_id            | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83_                                             |
 | job_id             | `string`             | Beam job id <br/><br/> _Example: 60b8e1d96eb86d8101b57359_                                                |
 | recording_enabled  | `bool`               | Indicates whether recording is enabled or not <br/><br/> _Example: true_                                  |
@@ -765,7 +761,7 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
 #### Attributes
 
 | Name               | Type                 | Description                                                                                                |
-|:-------------------|:---------------------|:-----------------------------------------------------------------------------------------------------------|
+| :----------------- | :------------------- | :--------------------------------------------------------------------------------------------------------- |
 | beam_id            | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                             |
 | job_id             | `string`             | Beam job id <br/><br/> _Example: 60b8e1d96eb86d8101b57359 _                                                |
 | recording_enabled  | `bool`               | Indicates whether recording is enabled or not <br/><br/> _Example: true_                                   |
@@ -821,27 +817,27 @@ This event is sent when beam successfully records the room and uploads the video
 
 #### Attributes
 
-| Name                    | Type                 | Description                                                                                                                                        |
-|:------------------------|:---------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------|
-| beam_id                 | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                                                                     |
-| room_id                 | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                                                             |
-| peer_id                 | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _                                         |
-| metadata_id             | `string`             | Webhook metadata ID <br/><br/> _Example: 14f350f5-18c4-46ca-8a33-71cbcc836600 _                                                                    |
-| metadata_timestamp      | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> _Example: 2020-11-11T17:32:17Z _                                                                     |
-| session_id              | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                                                          |
-| template_id             | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                                                            |
-| created_at              | `timestamp (in UTC)` | Timestamp at which recording was created <br/><br/> _Example: 2020-11-11T17:12:17Z _                                                               |
-| duration                | `int`                | Duration of beam recording (seconds) <br/><br/> _Example: 79 _                                                                                     |
-| location                | `string`             | (Deprecated, use recording_presigned_url) HTTPS url to recorded session file on S3 bucket <br/><br/> _Example: https://s3-loc/bucket/beam/ac.mp4 _ |
-| started_at              | `timestamp (in UTC)` | Beam recording started at <br/><br/> _Example: 2020-11-11T17:12:27Z _                                                                              |
-| stopped_at              | `timestamp (in UTC)` | Beam recording stopped at <br/><br/> _Example: 2020-11-11T17:32:15Z _                                                                              |
-| max_width               | `int`                | Maximum width of the screen supported for recording in pixels <br/><br/> _Example: 1280 _                                                          |
-| max_height              | `int`                | Maximum height of the screen supported for recording in pixels <br/><br/> _Example: 720 _                                                          |
-| recording_path          | `string`             | Upload path of the recorded video such as s3 URI <br/><br/> _Example: s3://bucket/prefix/ac.mp4 _                                                  |
-| recording_presigned_url | `string`             | Presigned s3 URL for the recorded video, for download <br/><br/> _Example: https://s3-location/bucket/ac.mp4 _                                     |
-| meeting_url             | `string`             | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                                                            |
-| rtmp                    | `array`              | List of RTMP objects provided at rtmp start <br/><br/> _Example: [{"url": "http://test.com"}] _                                                    |
-| session_started_at      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                                                         |
+| Name                    | Type                 | Description                                                                                                                                         |
+| :---------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------- |
+| beam_id                 | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                                                                      |
+| room_id                 | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                                                              |
+| peer_id                 | `string`             | 100ms assigned id to identify the joining user <br/><br/> _Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 _                                          |
+| metadata_id             | `string`             | Webhook metadata ID <br/><br/> _Example: 14f350f5-18c4-46ca-8a33-71cbcc836600 _                                                                     |
+| metadata_timestamp      | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> _Example: 2020-11-11T17:32:17Z _                                                                      |
+| session_id              | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                                                           |
+| template_id             | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                                                             |
+| created_at              | `timestamp (in UTC)` | Timestamp at which recording was created <br/><br/> _Example: 2020-11-11T17:12:17Z _                                                                |
+| duration                | `int`                | Duration of beam recording (seconds) <br/><br/> _Example: 79 _                                                                                      |
+| location                | `string`             | (Deprecated, use recording*presigned_url) HTTPS url to recorded session file on S3 bucket <br/><br/> \_Example: https://s3-loc/bucket/beam/ac.mp4 * |
+| started_at              | `timestamp (in UTC)` | Beam recording started at <br/><br/> _Example: 2020-11-11T17:12:27Z _                                                                               |
+| stopped_at              | `timestamp (in UTC)` | Beam recording stopped at <br/><br/> _Example: 2020-11-11T17:32:15Z _                                                                               |
+| max_width               | `int`                | Maximum width of the screen supported for recording in pixels <br/><br/> _Example: 1280 _                                                           |
+| max_height              | `int`                | Maximum height of the screen supported for recording in pixels <br/><br/> _Example: 720 _                                                           |
+| recording_path          | `string`             | Upload path of the recorded video such as s3 URI <br/><br/> _Example: s3://bucket/prefix/ac.mp4 _                                                   |
+| recording_presigned_url | `string`             | Presigned s3 URL for the recorded video, for download <br/><br/> _Example: https://s3-location/bucket/ac.mp4 _                                      |
+| meeting_url             | `string`             | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                                                             |
+| rtmp                    | `array`              | List of RTMP objects provided at rtmp start <br/><br/> _Example: [{"url": "http://test.com"}] _                                                     |
+| session_started_at      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                                                          |
 
 #### Sample `beam.recording.success` event
 
@@ -887,7 +883,7 @@ This event will be sent when there are failures in RTMP streaming and/or browser
 #### Attributes
 
 | Name               | Type                 | Description                                                                                                |
-|:-------------------|:---------------------|:-----------------------------------------------------------------------------------------------------------|
+| :----------------- | :------------------- | :--------------------------------------------------------------------------------------------------------- |
 | beam_id            | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                             |
 | job_id             | `string`             | Beam job id <br/><br/> _Example: 60b8e1d96eb86d8101b57359 _                                                |
 | recording_enabled  | `bool`               | Indicates whether recording is enabled or not <br/><br/> _Example: true_                                   |
@@ -953,7 +949,7 @@ This event is sent when HLS streaming is successfully triggered
 #### Attributes
 
 | Name                                    | Type                 | Description                                                                                                                                                                           |
-|:----------------------------------------|:---------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| :-------------------------------------- | :------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | beam_id                                 | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                                                                                                        |
 | job_id                                  | `string`             | Beam job id <br/><br/> _Example: 60b8e1d96eb86d8101b57359 _                                                                                                                           |
 | recording_single_file_per_layer_enabled | `bool`               | Indicates whether HLS recording should be available as separate files for various dimensions supported. Output will be Individual mp4 file per HLS layer. <br/><br/> _Example: false_ |
@@ -968,8 +964,8 @@ This event is sent when HLS streaming is successfully triggered
 | start_delay                             | `int`                | Time taken by beam to start streaming <br/><br/> _Example: 12 _                                                                                                                       |
 | state_name                              | `string`             | Beam state identifier <br/><br/> _Example: HLSStarted _                                                                                                                               |
 | state_timestamp                         | `timestamp (in UTC)` | Timestamp at which beam state changed <br/><br/> _Example: 2020-11-11T17:32:18Z _                                                                                                     |
-| max_width                               | `int`                | Maximum width of the screen supported for streaming / recording in pixels <br/><br/> _Example: 1280 _                                                                                             |
-| max_height                              | `int`                | Maximum height of the screen supported for streaming / recording in pixels <br/><br/> _Example: 720 _                                                                                             |
+| max_width                               | `int`                | Maximum width of the screen supported for streaming / recording in pixels <br/><br/> _Example: 1280 _                                                                                 |
+| max_height                              | `int`                | Maximum height of the screen supported for streaming / recording in pixels <br/><br/> _Example: 720 _                                                                                 |
 | url                                     | `string`             | HLS live streaming url <br/><br/> _Example: https://100ms-live.m3u8 _                                                                                                                 |
 | started_at                              | `timestamp (in UTC)` | Timestamp at which HLS started <br/><br/> _Example: 2020-11-11T17:32:18Z _                                                                                                            |
 | session_started_at                      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                                                                                            |
@@ -998,7 +994,7 @@ This event is sent when HLS streaming is successfully triggered
         "start_delay": 12,
         "state_name": "HLSStarted",
         "state_timestamp": "2021-11-30T12:58:46.385555859Z",
-        "max_width" : 1280,
+        "max_width": 1280,
         "max_height": 720,
         "url": "https://100ms-live.m3u8",
         "started_at": "2021-11-30T12:58:46.400759043Z",
@@ -1014,7 +1010,7 @@ This event is sent when HLS streaming is successfully stopped
 #### Attributes
 
 | Name                                    | Type                 | Description                                                                                                                                                                           |
-|:----------------------------------------|:---------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| :-------------------------------------- | :------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | beam_id                                 | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                                                                                                        |
 | job_id                                  | `string`             | Beam job id <br/><br/> _Example: 60b8e1d96eb86d8101b57359 _                                                                                                                           |
 | recording_single_file_per_layer_enabled | `bool`               | Indicates whether HLS recording should be available as separate files for various dimensions supported. Output will be Individual mp4 file per HLS layer. <br/><br/> _Example: false_ |
@@ -1079,7 +1075,7 @@ This event will be sent when there are failures in HLS streaming and/or recordin
 #### Attributes
 
 | Name                                    | Type                 | Description                                                                                                                                                                           |
-|:----------------------------------------|:---------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| :-------------------------------------- | :------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | beam_id                                 | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                                                                                                        |
 | job_id                                  | `string`             | Beam job id <br/><br/> _Example: 60b8e1d96eb86d8101b57359 _                                                                                                                           |
 | recording_single_file_per_layer_enabled | `bool`               | Indicates whether HLS recording should be available as separate files for various dimensions supported. Output will be Individual mp4 file per HLS layer. <br/><br/> _Example: false_ |
@@ -1141,27 +1137,27 @@ This event will be sent when HLS recordings are successful and uploaded to the s
 
 #### Attributes
 
-| Name                                | Type                 | Description                                                                                                                     |
-|:------------------------------------|:---------------------|:--------------------------------------------------------------------------------------------------------------------------------|
-| beam_id                             | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                                                  |
-| room_id                             | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                                          |
-| metadata_id                         | `string`             | Webhook metadata ID <br/><br/> _Example: 14f350f5-18c4-46ca-8a33-71cbcc836600 _                                                 |
-| metadata_timestamp                  | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> _Example: 2020-11-11T17:32:17Z _                                                  |
-| duration                            | `int`                | Duration of HLS recording in seconds <br/><br/> _Example: 12 _                                                                  |
-| session_id                          | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                                       |
-| template_id                         | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                                         |
-| hls_vod_recording_path              | `string`             | Upload path of the HLS vod playlist such as s3 URI <br/><br/> _Example: s3://bucket/prefix/ac.mp4 _                             |
-| hls_vod_recording_presigned_url     | `string`             | Pre signed url for HLS vod playlist url <br/><br/> _Example: https://s3-location/bucket/hls-vod.zip _                           |
-| max_width                           | `int`                | Maximum width of the screen supported for HLS recording in pixels <br/><br/> _Example: 1280 _                                   |
-| max_height                          | `int`                | Maximum height of the screen supported for HLS recording in pixels <br/><br/> _Example: 720 _                                   |
-| meeting_url                         | `string`             | meeting_url provided at HLS start <br/><br/> Example: "https://app.100ms.live/room_id"                                          |
-| recording_created_at                | `timestamp (in UTC)` | Timestamp at which recording was created <br/><br/> _Example: 2020-11-11T17:12:17Z _                                            |
-| started_at                          | `timestamp (in UTC)` | Timestamp at which HLS started <br/><br/> _Example: 2020-11-11T17:32:18Z _                                                      |
-| stopped_at                          | `timestamp (in UTC)` | Timestamp at which HLS stopped <br/><br/> _Example: 2020-11-11T17:32:18Z _                                                      |
-| recording_single_files              | `array`              | List of recording details per layer. layer="0" is the highest quality layer <br/><br/> _Example: < see below > _                |
-| recording_hls_vod_playlist_location | `string`             | (Deprecated, use hls_vod_recording_presigned_url) Pre signed url for HLS vod playlist url. <br/><br/> _Example: < see below > _ |
-| recording_thumbnails                | `array`              | List of thumbnails generated <br/><br/> _Example: < see below > _                                                               |
-| session_started_at                  | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                                      |
+| Name                                | Type                 | Description                                                                                                                      |
+| :---------------------------------- | :------------------- | :------------------------------------------------------------------------------------------------------------------------------- |
+| beam_id                             | `string`             | Unique beam id <br/><br/> _Example: 61d3def54b616982bd80ed83 _                                                                   |
+| room_id                             | `string`             | 100ms assigned room id <br/><br/> _Example: 5f9edc6ac238215aec2312df _                                                           |
+| metadata_id                         | `string`             | Webhook metadata ID <br/><br/> _Example: 14f350f5-18c4-46ca-8a33-71cbcc836600 _                                                  |
+| metadata_timestamp                  | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> _Example: 2020-11-11T17:32:17Z _                                                   |
+| duration                            | `int`                | Duration of HLS recording in seconds <br/><br/> _Example: 12 _                                                                   |
+| session_id                          | `string`             | 100ms assigned id to identify the session <br/><br/> _Example: 5f9edc6bd238215aec7700df _                                        |
+| template_id                         | `string`             | Template ID of the room <br/><br/> _Example: 66112497abcd52312556c4gg _                                                          |
+| hls_vod_recording_path              | `string`             | Upload path of the HLS vod playlist such as s3 URI <br/><br/> _Example: s3://bucket/prefix/ac.mp4 _                              |
+| hls_vod_recording_presigned_url     | `string`             | Pre signed url for HLS vod playlist url <br/><br/> _Example: https://s3-location/bucket/hls-vod.zip _                            |
+| max_width                           | `int`                | Maximum width of the screen supported for HLS recording in pixels <br/><br/> _Example: 1280 _                                    |
+| max_height                          | `int`                | Maximum height of the screen supported for HLS recording in pixels <br/><br/> _Example: 720 _                                    |
+| meeting_url                         | `string`             | meeting_url provided at HLS start <br/><br/> Example: "https://app.100ms.live/room_id"                                           |
+| recording_created_at                | `timestamp (in UTC)` | Timestamp at which recording was created <br/><br/> _Example: 2020-11-11T17:12:17Z _                                             |
+| started_at                          | `timestamp (in UTC)` | Timestamp at which HLS started <br/><br/> _Example: 2020-11-11T17:32:18Z _                                                       |
+| stopped_at                          | `timestamp (in UTC)` | Timestamp at which HLS stopped <br/><br/> _Example: 2020-11-11T17:32:18Z _                                                       |
+| recording_single_files              | `array`              | List of recording details per layer. layer="0" is the highest quality layer <br/><br/> _Example: < see below > _                 |
+| recording_hls_vod_playlist_location | `string`             | (Deprecated, use hls*vod_recording_presigned_url) Pre signed url for HLS vod playlist url. <br/><br/> \_Example: < see below > * |
+| recording_thumbnails                | `array`              | List of thumbnails generated <br/><br/> _Example: < see below > _                                                                |
+| session_started_at                  | `timestamp (in UTC)` | Timestamp when session started <br/><br/> _Example: 2020-11-11T16:32:17Z _                                                       |
 
 #### Sample `hls.recording.success` event
 
