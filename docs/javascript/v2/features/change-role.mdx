@@ -37,16 +37,35 @@ const { video, audio, screen } = hmsStore.getState(selectIsAllowedToPublish);
 
 There are two way of chaning peer's role using our api:
 1. [`Single Peer Role API`](#change-single-peer-role-api) - It is useful when we need to change role of a single peer.
-2. [`Bulk Peer Role API`](#change-bulk-peer-role-api) - We could change a role of all the peer to another role. It will be helpful to make breakout rooms, waiting rooms, etc.
+2. [`Bulk Peer Role API`](#change-bulk-peer-role-api) - We could change a all peers of particular roles to a given role. It will be helpful to make breakout rooms, waiting rooms, etc.
 
 ### Change Single Peer Role API
 
 If the local peer has permissions to change role(`permissions.changeRole`), they can change either their or someone else's role using
 the below interface.
 
+<Tabs id="singleRoleChange" items={["Javascript", "React"]} />{" "}
+
+<Tab id='singleRoleChange-0'>
+
 ```js
 hmsActions.changeRoleOfPeer(forPeerId, toRoleName, force);
 ```
+
+</Tab>
+
+<Tab id='singleRoleChange-1'>
+
+```jsx
+import { useHMSActions } from '@100mslive/react-sdk';
+function RoleChange() {
+  const actions = useHMSActions();
+
+  return (<button onClick={() => hmsActions.changeRoleOfPeer(forPeerId, toRoleName, force)}> )
+}
+```
+
+</Tab>
 
 - `forPeerId`: The peer ID whose role needs to be changed, the peer can be either of local or remote.
 - `toRoleName`: The target role name.
@@ -59,9 +78,28 @@ hmsActions.changeRoleOfPeer(forPeerId, toRoleName, force);
 If the local peer has permissions to change role(`permissions.changeRole`), they can convert all roles from a list of roles, to another role using
 the below interface.
 
+<Tabs id="bulkRoleChange" items={["Javascript", "React"]} />{" "}
+
+<Tab id='bulkRoleChange-0'>
+
 ```js
 hmsActions.changeRoleOfPeersWithRoles(ofRoles, toRole);
 ```
+
+</Tab>
+
+<Tab id='bulkRoleChange-1'>
+
+```jsx
+import { useHMSActions } from '@100mslive/react-sdk';
+function BulkRoleChange() {
+  const actions = useHMSActions();
+
+  return (<button onClick={() => hmsActions.changeRoleOfPeersWithRoles(ofRoles, toRole)}> )
+}
+```
+
+</Tab>
 
 - `ofRoles`: It accepts the list of roles name.
 - `toRole`: The target role name.
