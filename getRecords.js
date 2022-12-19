@@ -23,11 +23,12 @@ const getPlatform = (path) => {
 };
 
 const stopwords = [
-  "a",
   "#",
+  "\n",
   "|",
   "[",
   "]",
+  "a",
   "about",
   "above",
   "after",
@@ -203,11 +204,24 @@ const stopwords = [
   "yourselves",
 ];
 
-const cleanContent = (content) => {
-  stopwords.forEach((stopword) => {
-    content = content.replaceAll(stopword, "");
-  });
-  return content;
+const getCleanedContent = (content) => {
+  const contentArray = content.split(" ");
+  const cleanedContentArray = contentArray.map((word) =>
+    stopwords.includes(word) ? "" : word
+  );
+  const cleanedContent = cleanedContentArray.join(" ").replaceAll("\n", " ");
+  return cleanedContent;
+};
+
+const getHeadings = (content) => {
+  const headings = content
+    .split("\n")
+    .filter((line) => line.match(/#{1,3}\s/))
+    .map((line) => {
+      const [, , title] = line.match(/(#{1,3})\s(.*)/);
+      return title;
+    });
+  return headings;
 };
 
 const getRecordObject = (filename, folderPath) => {
@@ -216,25 +230,23 @@ const getRecordObject = (filename, folderPath) => {
     .toString()
     .slice(70, -4);
 
+  const fileContent = fs.readFileSync(path.resolve(folderPath, filename), {
+    encoding: "utf8",
+    flag: "r",
+  });
+
   const fileRecord = {
     title: filename,
     link: link,
     associated_terms: [],
-    headings: [],
-    content: cleanContent(
-      fs.readFileSync(path.resolve(folderPath, filename), {
-        encoding: "utf8",
-        flag: "r",
-      })
-    ),
+    headings: getHeadings(fileContent),
+    content: getCleanedContent(fileContent),
     platform: getPlatform(link),
     customScore: 0,
     objectID: Date.now() + filename,
   };
   return fileRecord;
 };
-
-const folderList = [];
 
 const records = [];
 let count = 0;
@@ -252,8 +264,9 @@ const printAllFolders = (folderPaths) => {
     if (subFolderPaths.length) {
       printAllFolders(subFolderPaths);
     } else {
-      console.log("Logging mdx", contents[0], folderPath);
-      records.push(getRecordObject(contents[0], folderPath));
+      contents.forEach((content) =>
+        records.push(getRecordObject(content, folderPath))
+      );
       count += contents.length;
     }
   });
@@ -261,4 +274,4 @@ const printAllFolders = (folderPaths) => {
 
 printAllFolders([path.resolve(__dirname, "docs")]);
 console.log(records);
-console.log(count);
+console.log(`${records.length}/${count}`, "records created");
