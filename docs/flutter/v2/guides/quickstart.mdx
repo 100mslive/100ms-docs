@@ -13,12 +13,6 @@ Please check our [basic concepts guide](./../foundation/basics) to understand th
 
 This section contains instructions to create a simple Flutter video conferencing app in under 10 minutes. We will help you with instructions to understand the project setup and complete code samples to implement this quickly.
 
-Follow the instructions in one of the tabs below based on the target platform you wish to create the sample app.
-
-<Tabs id="sample-app" items={['Android', 'iOS']} />
-
-<Tab id="sample-app-0">
-
 ### Prerequisites
 
 To complete this implementation for Android platform, you must have:
@@ -30,27 +24,21 @@ To complete this implementation for Android platform, you must have:
 
 ### Create a Flutter app
 
-Once you have the above prerequisites, you can follow the below steps to create a Flutter app either using terminal or using Android Studio:
+Once you have the above prerequisites, you can follow the below steps to create a Flutter app. In this guide, we will be using VS code but you can use any IDE that supports flutter.
 
--   If you wish to create a Flutter app using terminal, you can get the [Flutter SDK](https://docs.flutter.dev/get-started/install/macos#get-sdk) and use the below command:
+-   Create a Flutter app using terminal, you can get the [Flutter SDK](https://docs.flutter.dev/get-started/install/macos#get-sdk) and use the below command:
 
     ```bash
     flutter create my_app
     ```
 
--   If you are using Android Studio, you can create a Flutter project from the welcome screen by clicking on `New Flutter Project` and from the menu bar, File > New > New Flutter Project.
--   Verify the `Flutter SDK path` specifies the SDK's location (select Install SDK… if the text field is blank).
--   Enter a project name (for example, myapp). Then click Next.
--   Click Finish and wait till Android Studio creates the project.
-    <br />
-    <video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
-        <source src="/docs/guides/create-flutter-app.mp4" type="video/mp4" />
-    </video>
-    <br />
+-   Once the app is created, open it in VS code.
 
 ### Add 100ms SDK to your project
 
 Once you have created a Flutter app, you must add the 100ms Flutter SDK and permissions_handler (to handle device media permissions) to your app.
+
+-   Add the below snippet to the `pubspec.yaml`.
 
 ```yaml
 # 100ms SDK and permissions_handler
@@ -58,22 +46,13 @@ hmssdk_flutter:
 permission_handler:
 ```
 
--   You can add the above snippet to the `pubspec.yaml` from Terminal using some terminal editor like Vim or Nano.
 -   Run `flutter pub get` to download these dependencies to your app.
--   In Android Studio, you can update the `pubspec.yaml` and click `Pub get` to download these dependencies to your app.
-
-    <br />
-    <video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
-        <source src="/docs/guides/add-hms-sdk.mp4" type="video/mp4" />
-    </video>
-    <br />
 
 ### Complete code example
 
 Now that your project setup is complete, let's replace the code in the `lib/main.dart` file with the complete code sample below.
 
 ```dart
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -142,8 +121,8 @@ class _MyHomePageState extends State<MyHomePage> {
             style: ButtonStyle(
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ))),
+              borderRadius: BorderRadius.circular(8.0),
+            ))),
             onPressed: () async => {
               res = await getPermissions(),
               if (res)
@@ -174,9 +153,8 @@ class MeetingPage extends StatefulWidget {
 class _MeetingPageState extends State<MeetingPage>
     implements HMSUpdateListener {
   late HMSSDK hmsSDK;
-  String userName = "test_user";
-  String authToken =
-      "<YOUR_APP_TOKEN_FROM_DASHBOARD>";
+  String userName = "Enter username here";
+  String authToken = "YOUR_APP_TOKEN_FROM_DASHBOARD";
   Offset position = const Offset(5, 5);
   bool isJoinSuccessful = false;
   HMSPeer? localPeer, remotePeer;
@@ -233,14 +211,13 @@ class _MeetingPageState extends State<MeetingPage>
       }
     } else if (update == HMSPeerUpdate.peerLeft) {
       if (!peer.isLocal) {
-        if(mounted){
+        if (mounted) {
           setState(() {
             remotePeer = null;
           });
         }
-
       } else {
-        if(mounted) {
+        if (mounted) {
           setState(() {
             localPeer = null;
           });
@@ -252,18 +229,18 @@ class _MeetingPageState extends State<MeetingPage>
   @override
   void onTrackUpdate(
       {required HMSTrack track,
-        required HMSTrackUpdate trackUpdate,
-        required HMSPeer peer}) {
+      required HMSTrackUpdate trackUpdate,
+      required HMSPeer peer}) {
     if (track.kind == HMSTrackKind.kHMSTrackKindVideo) {
       if (trackUpdate == HMSTrackUpdate.trackRemoved) {
         if (peer.isLocal) {
-          if(mounted) {
+          if (mounted) {
             setState(() {
               localPeerVideoTrack = null;
             });
           }
         } else {
-          if(mounted) {
+          if (mounted) {
             setState(() {
               remotePeerVideoTrack = null;
             });
@@ -290,7 +267,7 @@ class _MeetingPageState extends State<MeetingPage>
   @override
   void onAudioDeviceChanged(
       {HMSAudioDevice? currentAudioDevice,
-        List<HMSAudioDevice>? availableAudioDevice}) {}
+      List<HMSAudioDevice>? availableAudioDevice}) {}
 
   @override
   void onChangeTrackStateRequest(
@@ -331,102 +308,109 @@ class _MeetingPageState extends State<MeetingPage>
       },
       child: SafeArea(
           child: Scaffold(
-            body: Stack(
-              children: [
-                Container(
-                    color: Colors.black,
-                    height: MediaQuery.of(context).size.height,
-                    child: GridView(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          mainAxisExtent: (remotePeerVideoTrack == null)?MediaQuery.of(context).size.height:MediaQuery.of(context).size.height/2,
-                          crossAxisCount: 1),
-                      children: [
-                        if (remotePeerVideoTrack != null && remotePeer != null)
-                          peerTile(Key(remotePeerVideoTrack?.trackId??"" "mainVideo"),remotePeerVideoTrack, remotePeer, context),
-                        peerTile(Key(localPeerVideoTrack?.trackId??"" "mainVideo"),localPeerVideoTrack, localPeer, context)
-                      ],
-                    )),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    color: Colors.black,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical:8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          GestureDetector(
-                            onTap: () async {
-                              hmsSDK.leave();
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.red.withAlpha(60),
-                                      blurRadius: 3.0,
-                                      spreadRadius: 5.0,
-                                    ),
-                                  ]),
-                              child: const CircleAvatar(
-                                radius: 25,
-                                backgroundColor: Colors.red,
-                                child: Icon(Icons.call_end, color: Colors.white),
-                              ),
+        body: Stack(
+          children: [
+            Container(
+                color: Colors.black,
+                height: MediaQuery.of(context).size.height,
+                child: GridView(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      mainAxisExtent: (remotePeerVideoTrack == null)
+                          ? MediaQuery.of(context).size.height
+                          : MediaQuery.of(context).size.height / 2,
+                      crossAxisCount: 1),
+                  children: [
+                    if (remotePeerVideoTrack != null && remotePeer != null)
+                      peerTile(
+                          Key(remotePeerVideoTrack?.trackId ?? "" "mainVideo"),
+                          remotePeerVideoTrack,
+                          remotePeer,
+                          context),
+                    peerTile(
+                        Key(localPeerVideoTrack?.trackId ?? "" "mainVideo"),
+                        localPeerVideoTrack,
+                        localPeer,
+                        context)
+                  ],
+                )),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                color: Colors.black,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+                          hmsSDK.leave();
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          decoration:
+                              BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                            BoxShadow(
+                              color: Colors.red.withAlpha(60),
+                              blurRadius: 3.0,
+                              spreadRadius: 5.0,
                             ),
+                          ]),
+                          child: const CircleAvatar(
+                            radius: 25,
+                            backgroundColor: Colors.red,
+                            child: Icon(Icons.call_end, color: Colors.white),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
-          )),
+          ],
+        ),
+      )),
     );
   }
 
-  Widget peerTile(Key key,
-      HMSVideoTrack? videoTrack, HMSPeer? peer, BuildContext context) {
+  Widget peerTile(
+      Key key, HMSVideoTrack? videoTrack, HMSPeer? peer, BuildContext context) {
     return Container(
       key: key,
       color: Colors.black,
       child: (videoTrack != null && !(videoTrack.isMute))
           ? HMSVideoView(
-        track: videoTrack,
-      )
+              track: videoTrack,
+            )
           : Center(
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.blue.withAlpha(4),
-            shape: BoxShape.circle,
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.blue,
-                blurRadius: 20.0,
-                spreadRadius: 5.0,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.blue.withAlpha(4),
+                  shape: BoxShape.circle,
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.blue,
+                      blurRadius: 20.0,
+                      spreadRadius: 5.0,
+                    ),
+                  ],
+                ),
+                child: Text(
+                  peer?.name.substring(0, 1) ?? "D",
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600),
+                ),
               ),
-            ],
-          ),
-          child: Text(
-            peer?.name.substring(0, 1) ?? "D",
-            style: const TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.w600),
-          ),
-        ),
-      ),
+            ),
     );
   }
 }
 ```
 
 ### Test the app
-
-To test the application, you need to either connect your physical phone as a device in Android Studio or use an emulator. In this guide, we have connected a phone via USB to test the app.
 
 #### Fetch token to join the room
 
@@ -441,6 +425,23 @@ To test audio/video functionality, you need to connect to a 100ms room; please c
     <source src="/docs/guides/update-token-flutter-android.mp4" type="video/mp4" />
 </video>
 <br />
+
+Follow the instructions in one of the tabs below based on the target platform you wish to test the app.
+
+<Tabs id="sample-app" items={['Android', 'iOS']} />
+
+<Tab id="sample-app-0">
+
+Please follow the below instructions to test the app on android target platform:
+
+1. Allow camera, recording audio and internet permissions by adding them to the `AndroidManifest.xml` file.
+2. Add minimun SDK version (`minSdkVersion 21`) inside "defaultConfig".
+
+You will also need to request camera and record audio permissions at runtime before you join a call or display a preview. Please follow [Android Documentation](https://developer.android.com/training/permissions/requesting#request-permission) for runtime permissions.
+
+#### Build and run the app
+
+-   You can build the app and run it in a emulator or an actual android device.
 
 Now, after you click `join`, you should be able to see yourself. You can join the room using a browser to join as the second peer to check audio/video transactions between two or more peers.
 
