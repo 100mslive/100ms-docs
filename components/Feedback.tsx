@@ -46,7 +46,7 @@ const Feedback = () => {
                         style={{ position: 'relative', width: '24px', height: '24px' }}
                         key={emoji.score}
                         onClick={() => {
-                            if (showTextBox === false)
+                            if (showTextBox === false){
                                 window.analytics.track('docs.feedback.rating', {
                                     title: document.title,
                                     referrer: document.referrer,
@@ -55,8 +55,10 @@ const Feedback = () => {
                                     timeStamp: new Date().toLocaleString(),
                                     ...currentUser()
                                 });
+                                setClickedEmoji(emoji.score);
+                            }
                             setShowTextBox(true);
-                            setClickedEmoji(emoji.score);
+                            
                         }}>
                         <img
                             className="emoji"
@@ -116,7 +118,6 @@ const Feedback = () => {
                                     message: message || "",
                                     referrer: document.referrer,
                                     path: window.location.pathname,
-                                    rating: clickedEmoji,
                                     timeStamp: new Date().toLocaleString(),
                                     ...currentUser()
                                 });
