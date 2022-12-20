@@ -51,7 +51,7 @@ const Feedback = () => {
                                     title: document.title,
                                     referrer: document.referrer,
                                     path: window.location.pathname,
-                                    rating: clickedEmoji,
+                                    rating: emoji.score,
                                     timeStamp: new Date().toLocaleString(),
                                     ...currentUser()
                                 });
@@ -113,7 +113,7 @@ const Feedback = () => {
                             onClick={() => {
                                 window.analytics.track('docs.feedback.message', {
                                     title: document.title,
-                                    message,
+                                    message: message || "",
                                     referrer: document.referrer,
                                     path: window.location.pathname,
                                     rating: clickedEmoji,
