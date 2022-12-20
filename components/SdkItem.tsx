@@ -114,7 +114,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
             }}>
             {sdkItems[sdk as keyof typeof sdkItems].map((value) => (
                 <Link key={value.id} href={value.link} passHref>
-                    <a style={{ width: 'fit-content' }}>
+                    <a target="_blank" rel="noopener" style={{ width: 'fit-content' }}>
                         <Box
                             className="hoverParent"
                             role="button"
