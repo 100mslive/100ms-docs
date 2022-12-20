@@ -15,9 +15,13 @@ const Feedback = () => {
 
     const getPlaceholder = {
         1: 'What should we fix?',
+        'title-1': 'Needs work',
         2: 'How can we make it better?',
+        'title-2': `Decent`,
         3: 'How can we make it even better?',
-        4: 'Great! What did you like?'
+        'title-3': `Nice`,
+        4: 'Great! What did you like?',
+        'title-4': `Awesome!`
     };
 
     useClickOutside(feedBackRef, () => setShowTextBox(false));
@@ -31,17 +35,26 @@ const Feedback = () => {
             <Text
                 variant="body2"
                 css={{
-                    color: 'var(--text_docs_primary)',
+                    color: 'var(--text_docs_primary)'
                 }}>
                 Was this helpful?
             </Text>
             <Flex justify="between" css={{ p: '$9 0' }}>
-                {emojis.map((emoji) => (
+                {emojis.map((emoji, id) => (
                     <span
-                        title="Share your feedback!"
+                        title={getPlaceholder[`title-${id + 1}`]}
                         style={{ position: 'relative', width: '24px', height: '24px' }}
                         key={emoji.score}
                         onClick={() => {
+                            if (showTextBox === false)
+                                window.analytics.track('docs.feedback.rating', {
+                                    title: document.title,
+                                    referrer: document.referrer,
+                                    path: window.location.pathname,
+                                    rating: clickedEmoji,
+                                    timeStamp: new Date().toLocaleString(),
+                                    ...currentUser()
+                                });
                             setShowTextBox(true);
                             setClickedEmoji(emoji.score);
                         }}>
