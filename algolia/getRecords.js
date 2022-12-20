@@ -186,6 +186,9 @@ const stopwords = [
     'yourselves'
 ];
 
+const contentAlias = {};
+const records = [];
+
 const getPlatform = (path) => {
     const mapping = {
         'server-side': 'Server-side',
@@ -206,7 +209,18 @@ const getPlatform = (path) => {
     return platform;
 };
 
+const toCamelCase = (fileName) => {
+    const formattedName = fileName
+        .split('-')
+        .map((word) => word[0].toUpperCase() + word.slice(1))
+        .join('');
+    return formattedName[0].toLowerCase() + formattedName.slice(1);
+};
+
 const getCleanedContent = (content) => {
+    Object.keys(contentAlias).map(
+        (contentTag) => (content = content.replace(contentTag, contentAlias[contentTag]))
+    );
     const contentArray = content.split(' ');
     const cleanedContentArray = contentArray.map((word) => (stopwords.includes(word) ? '' : word));
     const cleanedContent = cleanedContentArray.join(' ').replaceAll('\n', ' ');
@@ -245,8 +259,6 @@ const getRecordObject = (filename, folderPath) => {
     return fileRecord;
 };
 
-const records = [];
-
 const pushRecursively = (obj) => {
     if (Buffer.byteLength(JSON.stringify(obj)) < 80000) {
         records.push(obj);
@@ -262,7 +274,7 @@ const pushRecursively = (obj) => {
     }
 };
 
-const printAllFolders = (folderPaths) => {
+const createRecords = (folderPaths) => {
     folderPaths.map((folderPath) => {
         const contents = fs.readdirSync(folderPath);
         const subFolders = contents.filter((content) =>
@@ -271,7 +283,7 @@ const printAllFolders = (folderPaths) => {
         const subFolderPaths = subFolders.map((subFolder) => path.resolve(folderPath, subFolder));
 
         if (subFolderPaths.length) {
-            printAllFolders(subFolderPaths);
+            createRecords(subFolderPaths);
         } else {
             contents.forEach((content) => {
                 const obj = getRecordObject(content, folderPath);
@@ -281,13 +293,24 @@ const printAllFolders = (folderPaths) => {
     });
 };
 
-printAllFolders([path.resolve(__dirname, '../docs')]);
-console.log(records);
+const cacheContentAlias = (basePath) => {
+    const contents = fs.readdirSync(basePath);
+    contents.forEach((content) => {
+        contentAlias[`<Content alias="${toCamelCase(content.toString().slice(0, -3))}" />`] =
+            fs.readFileSync(path.resolve(basePath, content), {
+                encoding: 'utf8',
+                flag: 'r'
+            });
+    });
+};
+
+cacheContentAlias(path.resolve(__dirname, '../common'));
+createRecords([path.resolve(__dirname, '../docs')]);
+// console.log(records);
 console.log(records.length, 'records created');
 
 try {
     fs.writeFileSync('./records.json', JSON.stringify(records));
-    // file written successfully
 } catch (err) {
     console.error(err);
 }

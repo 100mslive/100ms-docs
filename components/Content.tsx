@@ -3,7 +3,7 @@
 /* eslint-disable react/no-danger */
 import Markdown from 'markdown-to-jsx';
 import React from 'react';
-
+// Please use the same name as the md file, in Pascal or Camel case as reqd
 import Basics from '../common/basics.md';
 import Network from '../common/network.md';
 import Token from '../common/token.md';
@@ -11,13 +11,14 @@ import TokenEndpoint from '../common/token-endpoint.md';
 import TemplatesRoles from '../common/templates-and-roles.md';
 import SecurityTokens1 from '../common/security-tokens-1.md';
 import SecurityTokens2 from '../common/security-tokens-2.md';
-import DomainsPorts from '../common/firewall-and-ports.md';
+import FirewallAndPorts from '../common/firewall-and-ports.md';
 import LiveStreaming from '../common/live-streaming.md';
 import Recordings from '../common/recordings.md';
 import AdaptiveBitrate1 from "../common/adaptive-bitrate-1.md";
 import AdaptiveBitrate2 from "../common/adaptive-bitrate-2.md";
-import AndroidVersionShield from '../common/android-sdk-version-shield.md';
+import AndroidSdkVersionShield from '../common/android-sdk-version-shield.md';
 import BulkRoleChangeErrors from '../common/bulk-role-change-errors.md';
+
 
 const data = {
     basics: Basics,
@@ -25,12 +26,12 @@ const data = {
     network: Network,
     token: Token,
     tokenEndpoint: TokenEndpoint,
-    securityAndTokens1: SecurityTokens1,
-    securityAndTokens2: SecurityTokens2,
-    domainsAndPorts: DomainsPorts,
+    securityTokens1: SecurityTokens1,
+    securityTokens2: SecurityTokens2,
+    firewallAndPorts: FirewallAndPorts,
     liveStreaming: LiveStreaming,
     recordings: Recordings,
-    androidVersionShield: AndroidVersionShield,
+    androidSdkVersionShield: AndroidSdkVersionShield,
     bulkRoleChangeErrors: BulkRoleChangeErrors,
 
     /**
