@@ -240,13 +240,12 @@ const getRecordObject = (filename, folderPath) => {
         headings: getHeadings(fileContent),
         content: getCleanedContent(fileContent),
         platformName: platform,
-        objectID: `${platform}-${filename}-${Date.now()}`
+        objectID: link
     };
     return fileRecord;
 };
 
 const records = [];
-const sizeRecords = [];
 
 const pushRecursively = (obj) => {
     if (Buffer.byteLength(JSON.stringify(obj)) < 80000) {
@@ -254,10 +253,10 @@ const pushRecursively = (obj) => {
     } else {
         const leftChild = { ...obj };
         leftChild.content = leftChild.content.slice(0, leftChild.content.length / 2);
-        leftChild.objectID = obj.objectID + 'left' + Date.now();
+        leftChild.objectID = obj.objectID + '-left';
         const rightChild = { ...obj };
         rightChild.content = rightChild.content.slice(rightChild.content.length / 2);
-        rightChild.objectID = obj.objectID + 'right' + Date.now();
+        rightChild.objectID = obj.objectID + '-right';
         pushRecursively(leftChild);
         pushRecursively(rightChild);
     }
@@ -276,10 +275,7 @@ const printAllFolders = (folderPaths) => {
         } else {
             contents.forEach((content) => {
                 const obj = getRecordObject(content, folderPath);
-                sizeRecords.push(Buffer.byteLength(JSON.stringify(obj)));
-                if (Buffer.byteLength(JSON.stringify(obj)) >= 80000) {
-                    pushRecursively(obj);
-                } else records.push(obj);
+                pushRecursively(obj);
             });
         }
     });
