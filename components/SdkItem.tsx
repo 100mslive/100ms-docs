@@ -117,16 +117,17 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
                     <a
                         target={value.id === 2 || value.id === 3 ? '_blank' : '_self'}
                         rel="noopener"
-                        onClick={() =>
-                            window.analytics.track('link.clicked', {
-                                btnId: itemId[value.id],
-                                page: 'docsHome',
-                                framework: sdk,
-                                ...analytics[sdk]
-                            })
-                        }
                         style={{ width: 'fit-content' }}>
                         <Box
+                        role="button"
+                            onClick={() =>
+                                window.analytics.track('link.clicked', {
+                                    btnId: itemId[value.id],
+                                    page: 'docsHome',
+                                    framework: sdk,
+                                    ...analytics[sdk]
+                                })
+                            }
                             className="hoverParent"
                             css={{
                                 '&:hover .hoverChild': {
