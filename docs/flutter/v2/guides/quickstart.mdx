@@ -9,16 +9,16 @@ This guide will walk you through simple instructions to create a video conferenc
 
 Please check our [basic concepts guide](./../foundation/basics) to understand the concepts like rooms, templates, peers, etc.
 
-This guide contains instructions for two approaches to get you started with 100ms Flutter SDK as quickly as possible and to help you with a step-by-step approach.
+This guide contains instructions for two approaches to get you started with 100ms Flutter SDK:
 
-1. [Create a sample app](#create-a-sample-app) — instructions to start with a flutter app with the complete code example.
-2. [Building step-by-step](#building-step-by-step) — instructions to walk you through implementation of each feature/capability in a step-by-step manner.
+1. [Create a sample app](#create-a-sample-app) — instructions to create a flutter app quickly with a complete code sample.
+2. [Building step-by-step](#building-step-by-step) — instructions to walk you through the implementation of the app in a step-by-step manner.
 
-You can also check our [sample app](https://github.com/100mslive/100ms-flutter/tree/main/example) for basic audio/video functionalities.
+You can also check our [sample app](https://github.com/100mslive/100ms-flutter/tree/main/example).
 
 ## Create a sample app
 
-This section contains instructions to create a simple Flutter video conferencing app in under 10 minutes. We will help you with instructions to understand the project setup and complete code samples to implement this quickly.
+This section contains instructions to create a simple Flutter video conferencing app. We will help you with instructions to understand the project setup and complete code sample to implement this quickly.
 
 ### Prerequisites
 
@@ -67,35 +67,10 @@ import 'package:flutter/material.dart';
 import 'package:hmssdk_flutter/hmssdk_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MaterialApp(home: HomePage()));
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: '100ms Integration Guide'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  bool res = false;
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   static Future<bool> getPermissions() async {
     if (Platform.isIOS) return true;
@@ -115,26 +90,28 @@ class _MyHomePageState extends State<MyHomePage> {
     return true;
   }
 
+// UI to render join screen
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Container(
         color: Colors.black,
         child: Center(
           child: ElevatedButton(
             style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0),
-            ))),
-            onPressed: () async => {
-              res = await getPermissions(),
-              if (res)
-                Navigator.push(context,
-                    CupertinoPageRoute(builder: (_) => const MeetingPage()))
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+            ),
+            // Function to push to meeting page
+            onPressed: () async {
+              await getPermissions();
+              Navigator.push(
+                context,
+                CupertinoPageRoute(builder: (_) => const MeetingPage()),
+              );
             },
             child: const Padding(
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -159,13 +136,19 @@ class MeetingPage extends StatefulWidget {
 
 class _MeetingPageState extends State<MeetingPage>
     implements HMSUpdateListener {
+  //SDK
   late HMSSDK hmsSDK;
-  String userName = "Enter username here";
-  String authToken = "YOUR_APP_TOKEN_FROM_DASHBOARD";
-  Offset position = const Offset(5, 5);
-  bool isJoinSuccessful = false;
+
+  // Variables required for joining a room
+  String authToken =
+      "APP_TOKEN_FROM_DASHBOARD";
+  String userName = "test_user";
+
+  // Variables required for rendering video and peer info
   HMSPeer? localPeer, remotePeer;
   HMSVideoTrack? localPeerVideoTrack, remotePeerVideoTrack;
+
+  // Initialize variables and join room
   @override
   void initState() {
     super.initState();
@@ -175,6 +158,7 @@ class _MeetingPageState extends State<MeetingPage>
     hmsSDK.join(config: HMSConfig(authToken: authToken, userName: userName));
   }
 
+  // Clear all variables
   @override
   void dispose() {
     remotePeer = null;
@@ -184,6 +168,7 @@ class _MeetingPageState extends State<MeetingPage>
     super.dispose();
   }
 
+  // Called when peer joined the room - get current state of room by using HMSRoom obj
   @override
   void onJoin({required HMSRoom room}) {
     room.peers?.forEach((peer) {
@@ -193,84 +178,75 @@ class _MeetingPageState extends State<MeetingPage>
           localPeerVideoTrack = peer.videoTrack;
         }
         if (mounted) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            setState(() {});
-          });
+          setState(() {});
         }
       }
     });
   }
 
+  // Called when there's a peer update - use to update local & remote peer variables
   @override
   void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) {
-    if (update == HMSPeerUpdate.networkQualityUpdated) {
-      return;
-    }
-    if (update == HMSPeerUpdate.peerJoined) {
-      if (!peer.isLocal) {
-        if (mounted) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
+    switch (update) {
+      case HMSPeerUpdate.peerJoined:
+        if (!peer.isLocal) {
+          if (mounted) {
             setState(() {
               remotePeer = peer;
             });
-          });
+          }
         }
-      }
-    } else if (update == HMSPeerUpdate.peerLeft) {
-      if (!peer.isLocal) {
-        if (mounted) {
-          setState(() {
-            remotePeer = null;
-          });
+        break;
+      case HMSPeerUpdate.peerLeft:
+        if (!peer.isLocal) {
+          if (mounted) {
+            setState(() {
+              remotePeer = null;
+            });
+          }
         }
-      } else {
+        break;
+      case HMSPeerUpdate.networkQualityUpdated:
+        return;
+      default:
         if (mounted) {
           setState(() {
             localPeer = null;
           });
         }
-      }
     }
   }
 
+  // Called when there's a track update - use to update local & remote track variables
   @override
   void onTrackUpdate(
       {required HMSTrack track,
       required HMSTrackUpdate trackUpdate,
       required HMSPeer peer}) {
     if (track.kind == HMSTrackKind.kHMSTrackKindVideo) {
-      if (trackUpdate == HMSTrackUpdate.trackRemoved) {
-        if (peer.isLocal) {
+      switch (trackUpdate) {
+        case HMSTrackUpdate.trackRemoved:
           if (mounted) {
             setState(() {
-              localPeerVideoTrack = null;
+              peer.isLocal
+                  ? localPeerVideoTrack = null
+                  : remotePeerVideoTrack = null;
             });
           }
-        } else {
+          return;
+        default:
           if (mounted) {
             setState(() {
-              remotePeerVideoTrack = null;
+              peer.isLocal
+                  ? localPeerVideoTrack = track as HMSVideoTrack
+                  : remotePeerVideoTrack = track as HMSVideoTrack;
             });
           }
-        }
-        return;
-      }
-      if (peer.isLocal) {
-        if (mounted) {
-          setState(() {
-            localPeerVideoTrack = track as HMSVideoTrack;
-          });
-        }
-      } else {
-        if (mounted) {
-          setState(() {
-            remotePeerVideoTrack = track as HMSVideoTrack;
-          });
-        }
       }
     }
   }
 
+  // More callbacks - no need to implement for quickstart
   @override
   void onAudioDeviceChanged(
       {HMSAudioDevice? currentAudioDevice,
@@ -305,88 +281,12 @@ class _MeetingPageState extends State<MeetingPage>
   @override
   void onUpdateSpeakers({required List<HMSSpeaker> updateSpeakers}) {}
 
-  @override
-  Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        hmsSDK.leave();
-        Navigator.pop(context);
-        return true;
-      },
-      child: SafeArea(
-          child: Scaffold(
-        body: Stack(
-          children: [
-            Container(
-                color: Colors.black,
-                height: MediaQuery.of(context).size.height,
-                child: GridView(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      mainAxisExtent: (remotePeerVideoTrack == null)
-                          ? MediaQuery.of(context).size.height
-                          : MediaQuery.of(context).size.height / 2,
-                      crossAxisCount: 1),
-                  children: [
-                    if (remotePeerVideoTrack != null && remotePeer != null)
-                      peerTile(
-                          Key(remotePeerVideoTrack?.trackId ?? "" "mainVideo"),
-                          remotePeerVideoTrack,
-                          remotePeer,
-                          context),
-                    peerTile(
-                        Key(localPeerVideoTrack?.trackId ?? "" "mainVideo"),
-                        localPeerVideoTrack,
-                        localPeer,
-                        context)
-                  ],
-                )),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                color: Colors.black,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      GestureDetector(
-                        onTap: () async {
-                          hmsSDK.leave();
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          decoration:
-                              BoxDecoration(shape: BoxShape.circle, boxShadow: [
-                            BoxShadow(
-                              color: Colors.red.withAlpha(60),
-                              blurRadius: 3.0,
-                              spreadRadius: 5.0,
-                            ),
-                          ]),
-                          child: const CircleAvatar(
-                            radius: 25,
-                            backgroundColor: Colors.red,
-                            child: Icon(Icons.call_end, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      )),
-    );
-  }
-
-  Widget peerTile(
-      Key key, HMSVideoTrack? videoTrack, HMSPeer? peer, BuildContext context) {
+  // Widget to render a single video tile
+  Widget peerTile(Key key, HMSVideoTrack? videoTrack, HMSPeer? peer) {
     return Container(
       key: key,
-      color: Colors.black,
       child: (videoTrack != null && !(videoTrack.isMute))
+          // Actual widget to render video
           ? HMSVideoView(
               track: videoTrack,
             )
@@ -412,6 +312,69 @@ class _MeetingPageState extends State<MeetingPage>
                 ),
               ),
             ),
+    );
+  }
+
+  // Widget to render grid of peer tiles and a end button
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      // Used to call "leave room" upon clicking back button [in android]
+      onWillPop: () async {
+        hmsSDK.leave();
+        Navigator.pop(context);
+        return true;
+      },
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.black,
+          body: Stack(
+            children: [
+              // Grid of peer tiles
+              Container(
+                height: MediaQuery.of(context).size.height,
+                child: GridView(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      mainAxisExtent: (remotePeerVideoTrack == null)
+                          ? MediaQuery.of(context).size.height
+                          : MediaQuery.of(context).size.height / 2,
+                      crossAxisCount: 1),
+                  children: [
+                    if (remotePeerVideoTrack != null && remotePeer != null)
+                      peerTile(
+                          Key(remotePeerVideoTrack?.trackId ?? "" "mainVideo"),
+                          remotePeerVideoTrack,
+                          remotePeer),
+                    peerTile(
+                        Key(localPeerVideoTrack?.trackId ?? "" "mainVideo"),
+                        localPeerVideoTrack,
+                        localPeer)
+                  ],
+                ),
+              ),
+              // End button to leave the room
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: RawMaterialButton(
+                  onPressed: () {
+                    hmsSDK.leave();
+                    Navigator.pop(context);
+                  },
+                  elevation: 2.0,
+                  fillColor: Colors.red,
+                  padding: const EdgeInsets.all(15.0),
+                  shape: const CircleBorder(),
+                  child: const Icon(
+                    Icons.call_end,
+                    size: 25.0,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -494,7 +457,7 @@ Please follow the below instructions to test the app for iOS target platform:
     <string>{YourAppName} App wants to use your local network</string>
     ```
 
-2. Add the target platform version as (`platform :ios, '12.0'`) in "ios/Podfile".
+2. Add the target platform version as (`platform :ios, '12.0'`) in "ios/Podfile."
 
 #### Build and run the app
 
@@ -513,3 +476,397 @@ Now, after you click `join`, you should be able to see yourself (the android emu
 ## Building step-by-step
 
 In this section, We'll walk through what the code does.
+
+### Step 1: Handle device permissions
+
+We need permission from the user to access the media from the user's device. We must urge the user to grant permission to access camera, microphone, and bluetooth devices. We use the [permission_handler package](https://pub.dev/packages/permission_handler) that provides a cross-platform (iOS, Android) API to request permissions and check their status.
+
+Please ensure to update permissions in the `AndroidManifest.xml` file for android and `info.plist` file for iOS. Check [test the app section](#test-the-app) for more information. 
+
+```dart
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  static Future<bool> getPermissions() async {
+    if (Platform.isIOS) return true;
+    await Permission.camera.request();
+    await Permission.microphone.request();
+    await Permission.bluetoothConnect.request();
+
+    while ((await Permission.camera.isDenied)) {
+      await Permission.camera.request();
+    }
+    while ((await Permission.microphone.isDenied)) {
+      await Permission.microphone.request();
+    }
+    while ((await Permission.bluetoothConnect.isDenied)) {
+      await Permission.bluetoothConnect.request();
+    }
+    return true;
+  }
+```
+
+### Step 2: Implement join screen
+
+This section will help you create the join screen user interface. To keep it simple for the quickstart, we have not created many UI elements; you can refer to the [sample app implementation](https://github.com/100mslive/100ms-flutter/tree/main/example/lib/preview) for a complete Preview/Join user interface. 
+
+```dart
+// UI to render join screen
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        color: Colors.black,
+        child: Center(
+          child: ElevatedButton(
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+            ),
+            // Function to push to meeting page
+            onPressed: () async {
+              await getPermissions();
+              Navigator.push(
+                context,
+                CupertinoPageRoute(builder: (_) => const MeetingPage()),
+              );
+            },
+            child: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: Text(
+                'Join',
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+```
+
+### Step 3: Implement meeting page
+
+You can check the below snippet to create a widget as the user interface to show the video tiles of local and remote peers. `HMSUpdateListener` plays a significant role in rendering video or displaying any information regarding the room.
+
+100ms SDK provides callbacks to the client app about any change or update happening in the room after a user has joined by implementing `HMSUpdateListener`. 
+
+To join a room, you need to create an `HMSConfig` instance and use that instance to call the join method of `HMSSDK`.
+
+```dart
+class MeetingPage extends StatefulWidget {
+  const MeetingPage({super.key});
+
+  @override
+  State<MeetingPage> createState() => _MeetingPageState();
+}
+
+class _MeetingPageState extends State<MeetingPage>
+    implements HMSUpdateListener {
+  //SDK
+  late HMSSDK hmsSDK;
+
+  // Variables required for joining a room
+  String authToken =
+      "APP_TOKEN_FROM_DASHBOARD";
+  String userName = "test_user";
+
+  // Variables required for rendering video and peer info
+  HMSPeer? localPeer, remotePeer;
+  HMSVideoTrack? localPeerVideoTrack, remotePeerVideoTrack;
+
+  // Initialize variables and join room
+  @override
+  void initState() {
+    super.initState();
+    hmsSDK = HMSSDK();
+    hmsSDK.build();
+    hmsSDK.addUpdateListener(listener: this);
+    hmsSDK.join(config: HMSConfig(authToken: authToken, userName: userName));
+  }
+
+  // Clear all variables
+  @override
+  void dispose() {
+    remotePeer = null;
+    remotePeerVideoTrack = null;
+    localPeer = null;
+    localPeerVideoTrack = null;
+    super.dispose();
+  }
+```
+
+### Step 4: Listen to room and peer updates
+
+The 100ms SDK sends updates to the application about any change in `HMSPeer` and `HMSRoom` via the callbacks in `HMSUpdateListener`. Our application must listen to the corresponding updates in `onPeerUpdate` and `onRoomUpdate`. Check the [Update Listeners documentation](./../features/update-listener-enums) to understand the types of updates emitted by the SDK for room and peer updates.
+
+```dart
+// Called when peer joined the room - get current state of room by using HMSRoom obj
+  @override
+  void onJoin({required HMSRoom room}) {
+    room.peers?.forEach((peer) {
+      if (peer.isLocal) {
+        localPeer = peer;
+        if (peer.videoTrack != null) {
+          localPeerVideoTrack = peer.videoTrack;
+        }
+        if (mounted) {
+          setState(() {});
+        }
+      }
+    });
+  }
+
+  // Called when there's a peer update - use to update local & remote peer variables
+  @override
+  void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) {
+    switch (update) {
+      case HMSPeerUpdate.peerJoined:
+        if (!peer.isLocal) {
+          if (mounted) {
+            setState(() {
+              remotePeer = peer;
+            });
+          }
+        }
+        break;
+      case HMSPeerUpdate.peerLeft:
+        if (!peer.isLocal) {
+          if (mounted) {
+            setState(() {
+              remotePeer = null;
+            });
+          }
+        }
+        break;
+      case HMSPeerUpdate.networkQualityUpdated:
+        return;
+      default:
+        if (mounted) {
+          setState(() {
+            localPeer = null;
+          });
+        }
+    }
+  }
+```
+
+### Step 5: Listen to track updates
+
+100ms SDK also sends updates to the application about any change in `HMSTrack` via the callbacks in `HMSUpdateListener`. Our application must listen to the corresponding updates in `onTrackUpdate`. Check the [Update Listeners documentation](./../features/update-listener-enums#hms-track-update) to understand the types of updates emitted by the SDK for track updates.
+
+```dart
+// Called when there's a track update - use to update local & remote track variables
+  @override
+  void onTrackUpdate(
+      {required HMSTrack track,
+      required HMSTrackUpdate trackUpdate,
+      required HMSPeer peer}) {
+    if (track.kind == HMSTrackKind.kHMSTrackKindVideo) {
+      switch (trackUpdate) {
+        case HMSTrackUpdate.trackRemoved:
+          if (mounted) {
+            setState(() {
+              peer.isLocal
+                  ? localPeerVideoTrack = null
+                  : remotePeerVideoTrack = null;
+            });
+          }
+          return;
+        default:
+          if (mounted) {
+            setState(() {
+              peer.isLocal
+                  ? localPeerVideoTrack = track as HMSVideoTrack
+                  : remotePeerVideoTrack = track as HMSVideoTrack;
+            });
+          }
+      }
+    }
+  }
+```
+
+### Step 6: Other callbacks
+
+100ms SDK provides various other callbacks to handle different scenarios in the app. For example, you can use `onAudioDeviceChanged` to get updates whenever a new audio device or an audio device is switched. Please check [here](./../features/update-listeners) for more information about these callbacks. 
+
+```dart
+// More callbacks - no need to implement for quickstart
+  // More callbacks - no need to implement for quickstart
+  @override
+  void onAudioDeviceChanged(
+      {HMSAudioDevice? currentAudioDevice,
+      List<HMSAudioDevice>? availableAudioDevice}) {}
+
+  @override
+  void onChangeTrackStateRequest(
+      {required HMSTrackChangeRequest hmsTrackChangeRequest}) {}
+
+  @override
+  void onHMSError({required HMSException error}) {}
+
+  @override
+  void onMessage({required HMSMessage message}) {}
+
+  @override
+  void onReconnected() {}
+
+  @override
+  void onReconnecting() {}
+
+  @override
+  void onRemovedFromRoom(
+      {required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer}) {}
+
+  @override
+  void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest}) {}
+
+  @override
+  void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {}
+
+  @override
+  void onUpdateSpeakers({required List<HMSSpeaker> updateSpeakers}) {}
+```
+
+### Step 7: Render video in a tile
+
+We had initialized the `HMSUpdateListener` class in the [Implement meeting page section](#step-3-implement-meeting-page); now, we can use the same to render video tracks in a tile.
+
+To display a video track, first get the `HMSVideoTrack` & pass it on to `HMSVideoView` using the `setVideoTrack` function. Ensure to attach the `HMSVideoView` to your UI hierarchy. Check the [render video guide](./../features/render-video) for more information. 
+
+```dart
+// Widget to render a single video tile
+  Widget peerTile(Key key, HMSVideoTrack? videoTrack, HMSPeer? peer) {
+    return Container(
+      key: key,
+      child: (videoTrack != null && !(videoTrack.isMute))
+          // Actual widget to render video
+          ? HMSVideoView(
+              track: videoTrack,
+            )
+          : Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.blue.withAlpha(4),
+                  shape: BoxShape.circle,
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.blue,
+                      blurRadius: 20.0,
+                      spreadRadius: 5.0,
+                    ),
+                  ],
+                ),
+                child: Text(
+                  peer?.name.substring(0, 1) ?? "D",
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
+    );
+  }
+```
+
+### Step 8: Render video tiles for peers
+
+This section will help you build the user interface that renders the video tracks of local and remote peers in a grid view.
+
+```dart
+// Widget to render grid of peer tiles and a end button
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      // Used to call "leave room" upon clicking back button [in android]
+      onWillPop: () async {
+        hmsSDK.leave();
+        Navigator.pop(context);
+        return true;
+      },
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.black,
+          body: Stack(
+            children: [
+              // Grid of peer tiles
+              Container(
+                height: MediaQuery.of(context).size.height,
+                child: GridView(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      mainAxisExtent: (remotePeerVideoTrack == null)
+                          ? MediaQuery.of(context).size.height
+                          : MediaQuery.of(context).size.height / 2,
+                      crossAxisCount: 1),
+                  children: [
+                    if (remotePeerVideoTrack != null && remotePeer != null)
+                      peerTile(
+                          Key(remotePeerVideoTrack?.trackId ?? "" "mainVideo"),
+                          remotePeerVideoTrack,
+                          remotePeer),
+                    peerTile(
+                        Key(localPeerVideoTrack?.trackId ?? "" "mainVideo"),
+                        localPeerVideoTrack,
+                        localPeer)
+                  ],
+                ),
+              ),
+              // End button to leave the room
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: RawMaterialButton(
+                  onPressed: () {
+                    hmsSDK.leave();
+                    Navigator.pop(context);
+                  },
+                  elevation: 2.0,
+                  fillColor: Colors.red,
+                  padding: const EdgeInsets.all(15.0),
+                  shape: const CircleBorder(),
+                  child: const Icon(
+                    Icons.call_end,
+                    size: 25.0,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+```
+
+You can refer to the [test the app section](#test-the-app) to test your app for android or iOS platforms. 
+
+## Next steps
+
+### Basic example
+
+For a complete example, see the [sample app](https://github.com/100mslive/100ms-flutter/tree/main/example) on GitHub — This uses the [provider package](https://pub.dev/packages/provider) as the state management library.
+
+### Full-fledged example
+
+You can also check out the full-fledged example app implementation in the 100ms Flutter SDK [GitHub repository](https://github.com/100mslive/100ms-flutter/).
+
+### Examples with other state management libraries
+
+For implementations with other state management libraries, visit :
+
+-   [Bloc](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/bloc)
+-   [Getx](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/getx)
+-   [Riverpod](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/riverpod)
+-   [Mobx](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/mobx)
+
+### App store / Play store
+
+You can download & check out the 100ms Flutter app -
+
+🤖 Flutter Android app from [Google Play Store](https://play.google.com/store/apps/details?id=live.hms.flutter).
+
+📱 Flutter iOS app from [Apple App Store](https://apps.apple.com/app/100ms-live/id1576541989).
