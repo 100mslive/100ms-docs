@@ -1,5 +1,5 @@
 ---
- title: Simulcast
+ title: Adaptive Bitrate (Simulcast) 
  nav: 8.04
 ---
 
@@ -7,8 +7,8 @@ Simulcast enables [Adaptive Bitrate](../foundation/adaptive-bitrate) (ABR) in vi
 
 ## Minimum Requirements
 
-- SDK version 2.5.2 or higher
-- Simulcast enabled in room template
+-   SDK version 2.5.2 or higher
+-   Simulcast enabled in room template
 
 ## 100ms SDK Simulcast APIs
 
@@ -16,12 +16,12 @@ You interact with the simulcast feature by setting `HMSRemoteVideoTrack`'s `setL
 
 ```kotlin
 class HMSRemoteVideoTrack {
-	
+
 /**
    * Public api to set layer to [HMSLayer.HIGH], [HMSLayer.LOW], [HMSLayer.MEDIUM]
    */
   fun setLayer(HMSLayer: HMSLayer)
-		
+
 	/**
    * Public API to get layers definition
    */
@@ -31,18 +31,18 @@ class HMSRemoteVideoTrack {
    * Public API to get the current selected HMSLayer
    */
   fun getLayer() : HMSLayer
-    
+
 }
 
 data class HMSSimulcastLayerDefinition(
-	val resolution: HMSVideoResolution, 
+	val resolution: HMSVideoResolution,
 	val layer: HMSLayer
 )
 
-enum class HMSLayer 
-{ 
-	LOW, MEDIUM, HIGH 
+enum class HMSLayer
+{
+	LOW, MEDIUM, HIGH
 }
 ```
 
-Here `getLayerDefinition()` property holds an array of currently available layers for the track and `layer` property is the currently selected layer.  Within `HMSSimulcastLayerDefinition` you get its resolution and the layer name such as high/medium/low. 
+Here `getLayerDefinition()` property holds an array of currently available layers for the track and `layer` property is the currently selected layer. Within `HMSSimulcastLayerDefinition` you get its resolution and the layer name such as high/medium/low.
