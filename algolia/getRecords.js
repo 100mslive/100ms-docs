@@ -238,19 +238,27 @@ const getHeadings = (content) => {
     return headings;
 };
 
+const getKeywords = (content) => {
+    const headings = content
+        .split('\n')
+        .filter((line) => line.match('keywords: '))
+        .join('');
+    return headings.split('keywords: ')[1] || [];
+};
+
 const getRecordObject = (filename, folderPath) => {
     const link = url.pathToFileURL(path.resolve(folderPath, filename)).toString().slice(70, -4);
 
     const fileContent = fs.readFileSync(path.resolve(folderPath, filename), {
         encoding: 'utf8',
         flag: 'r'
-    });
+    }).toString();
 
     const platform = getPlatform(link);
     const fileRecord = {
         title: filename,
         link: link,
-        associated_terms: [],
+        keywords: getKeywords(fileContent),
         headings: getHeadings(fileContent),
         content: getCleanedContent(fileContent),
         platformName: platform,
