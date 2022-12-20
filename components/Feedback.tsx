@@ -8,6 +8,7 @@ const emojis = [{ score: 1 }, { score: 2 }, { score: 3 }, { score: 4 }];
 const Feedback = () => {
     const [showTextBox, setShowTextBox] = React.useState(false);
     const [clickedEmoji, setClickedEmoji] = React.useState(0);
+    const [firstSelection, setFirstSelection] = React.useState(0);
     const [submitSuccessful, setSubmitSuccessful] = React.useState(false);
     const [message, setMessage] = React.useState('');
     const feedBackRef = React.createRef<HTMLDivElement>();
@@ -46,7 +47,7 @@ const Feedback = () => {
                         style={{ position: 'relative', width: '24px', height: '24px' }}
                         key={emoji.score}
                         onClick={() => {
-                            if (showTextBox === false){
+                            if (showTextBox === false) {
                                 window.analytics.track('docs.feedback.rating', {
                                     title: document.title,
                                     referrer: document.referrer,
@@ -55,10 +56,10 @@ const Feedback = () => {
                                     timeStamp: new Date().toLocaleString(),
                                     ...currentUser()
                                 });
-                                setClickedEmoji(emoji.score);
+                                setFirstSelection(emoji.score);
                             }
+                            setClickedEmoji(emoji.score);
                             setShowTextBox(true);
-                            
                         }}>
                         <img
                             className="emoji"
@@ -115,7 +116,8 @@ const Feedback = () => {
                             onClick={() => {
                                 window.analytics.track('docs.feedback.message', {
                                     title: document.title,
-                                    message: message || "",
+                                    message: message || '',
+                                    rating: firstSelection,
                                     referrer: document.referrer,
                                     path: window.location.pathname,
                                     timeStamp: new Date().toLocaleString(),
