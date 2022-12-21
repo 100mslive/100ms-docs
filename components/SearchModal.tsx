@@ -158,6 +158,7 @@ const Search = ({ currentRefinement, refine, setSearchTerm }) => (
 );
 
 const CustomSearchBox = connectSearchBox(Search);
+
 const CustomHits = connectHits(ResultBox);
 
 const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
