@@ -48,10 +48,10 @@ const Header: React.FC<Props> = ({
     }, [slashPressed]);
 
     const { menu, setMenu } = menuState;
-    const [helperState, setHelperState] = useState(null);
+    const [helperState, setHelperState] = useState(0);
 
     useEffect(() => {
-        if (helperState !== null) setModal(true);
+        if (helperState) setModal((prev) => !prev);
     }, [helperState]);
 
     const [isDark, setIsDark] = React.useState<boolean>(true);
@@ -148,7 +148,7 @@ const Header: React.FC<Props> = ({
 
             <div className="head-right">
                 <Flex
-                    onClick={() => setHelperState((prev) => !prev)}
+                    onClick={() => setHelperState((prev) => prev + 1)}
                     css={{
                         borderRadius: '$1',
                         width: '$80',
