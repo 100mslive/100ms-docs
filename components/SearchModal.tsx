@@ -4,7 +4,7 @@ import { Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
 import Link from 'next/link';
 import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch, SearchBox, Hits } from 'react-instantsearch-dom';
+import { InstantSearch, SearchBox, connectHits } from 'react-instantsearch-dom';
 
 const searchClient = algoliasearch(
     process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '',
@@ -15,26 +15,8 @@ interface SearchModalProps {
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-interface ResultBoxProps {
-    title: string;
-    url: string;
-}
-
-const ResultBox: React.FC<ResultBoxProps> = ({ title, url }) => {
-    const path = url.replace(/-/g, ' ').split('/').slice(1);
-
-    const platform = {
-        javascript: 'JavaScript',
-        flutter: 'Flutter',
-        android: 'Android',
-        'react native': 'React Native',
-        ios: 'iOS',
-        'server side': 'Server-side',
-        'api reference': 'API Reference'
-    };
-
-    path[0] = platform[path[0]];
-
+const Result = ({ searchResult }) => {
+    const path = searchResult.link.replace(/-/g, ' ').split('/').slice(1);
     return (
         <Box css={{ w: '100%' }}>
             <Text
@@ -42,7 +24,7 @@ const ResultBox: React.FC<ResultBoxProps> = ({ title, url }) => {
                     color: '$textHighEmp',
                     fontWeight: '$semiBold'
                 }}>
-                {title}
+                {searchResult.title}
                 <Text
                     css={{
                         display: 'inline',
@@ -54,7 +36,7 @@ const ResultBox: React.FC<ResultBoxProps> = ({ title, url }) => {
                         borderRadius: '0.25rem',
                         marginLeft: '0.5rem'
                     }}>
-                    {path[0]}
+                    {searchResult.platformName}
                 </Text>
             </Text>
             <Text
@@ -81,6 +63,45 @@ const ResultBox: React.FC<ResultBoxProps> = ({ title, url }) => {
     );
 };
 
+const ResultBox = ({ hits, setModal }) => (
+    <Box
+        css={{
+            position: 'relative',
+            top: '$8',
+            backgroundColor: '$surfaceDefault',
+            border: '1px solid',
+            borderColor: '$borderDefault',
+            borderRadius: '$1',
+            px: '$4',
+            py: '$3'
+        }}>
+        <Box
+            css={{
+                maxHeight: '60vh',
+                overflow: 'auto'
+            }}>
+            {hits.slice(0, 10).map((searchResult, i) => (
+                <Box
+                    key={searchResult.link}
+                    css={{
+                        borderColor: '$borderDefault',
+                        '&:hover': { backgroundColor: '$surfaceLight' },
+                        px: '$8',
+                        py: '$8'
+                    }}>
+                    <Link href={searchResult.link} passHref>
+                        <a id={`res-box-${i}`} className="res-box" onClick={() => setModal(false)}>
+                            <Result searchResult={searchResult} />
+                        </a>
+                    </Link>
+                </Box>
+            ))}
+        </Box>
+    </Box>
+);
+
+const CustomHits = connectHits(ResultBox);
+
 const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
     const ref = React.createRef<HTMLDivElement>();
 
@@ -105,7 +126,8 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                         translations={{ placeholder: 'Search through docs' }}
                         showLoadingIndicator
                     />
-                    <Hits />
+
+                    <CustomHits setModal={setModal} />
                 </InstantSearch>
 
                 <style jsx>{`

@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const url = require('url');
 const algoliasearch = require('algoliasearch');
+
 // Run using node ./algolia/getRecords.js
 
 const client = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, process.env.NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY);
