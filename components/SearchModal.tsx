@@ -1,10 +1,10 @@
 import React from 'react';
-import { ChevronRightIcon } from '@100mslive/react-icons';
-import { Box, Text } from '@100mslive/react-ui';
+import { ChevronRightIcon, SearchIcon } from '@100mslive/react-icons';
+import { Flex, Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
 import Link from 'next/link';
 import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch, SearchBox, connectHits } from 'react-instantsearch-dom';
+import { InstantSearch, connectHits, connectSearchBox } from 'react-instantsearch-dom';
 
 const searchClient = algoliasearch(
     process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '',
@@ -17,6 +17,8 @@ interface SearchModalProps {
 
 const Result = ({ searchResult }) => {
     const path = searchResult.link.replace(/-/g, ' ').split('/').slice(1);
+    path[0] = searchResult.platformName;
+
     return (
         <Box css={{ w: '100%' }}>
             <Text
@@ -63,51 +65,109 @@ const Result = ({ searchResult }) => {
     );
 };
 
-const ResultBox = ({ hits, setModal }) => (
-    <Box
-        css={{
-            position: 'relative',
-            top: '$8',
-            backgroundColor: '$surfaceDefault',
-            border: '1px solid',
-            borderColor: '$borderDefault',
-            borderRadius: '$1',
-            px: '$4',
-            py: '$3'
-        }}>
+const ResultBox = ({ hits, setModal, searchTerm }) =>
+    hits.length && searchTerm ? (
         <Box
             css={{
-                maxHeight: '60vh',
-                overflow: 'auto'
+                position: 'relative',
+                top: '$8',
+                backgroundColor: '$surfaceDefault',
+                border: '1px solid',
+                borderColor: '$borderDefault',
+                borderRadius: '$1',
+                px: '$4',
+                py: '$3'
             }}>
-            {hits.slice(0, 10).map((searchResult, i) => (
-                <Box
-                    key={searchResult.link}
-                    css={{
-                        borderColor: '$borderDefault',
-                        '&:hover': { backgroundColor: '$surfaceLight' },
-                        px: '$8',
-                        py: '$8'
-                    }}>
-                    <Link href={searchResult.link} passHref>
-                        <a id={`res-box-${i}`} className="res-box" onClick={() => setModal(false)}>
-                            <Result searchResult={searchResult} />
-                        </a>
-                    </Link>
-                </Box>
-            ))}
+            <Box
+                css={{
+                    maxHeight: '60vh',
+                    overflow: 'auto'
+                }}>
+                {hits.map((searchResult, i) => (
+                    <Box
+                        key={searchResult.link}
+                        css={{
+                            borderColor: '$borderDefault',
+                            '&:hover': { backgroundColor: '$surfaceLight' },
+                            px: '$8',
+                            py: '$8',
+                            borderRadius: '$0'
+                        }}>
+                        <Link href={searchResult.link} passHref>
+                            <a onClick={() => setModal(false)}>
+                                <Result searchResult={searchResult} />
+                            </a>
+                        </Link>
+                    </Box>
+                ))}
+            </Box>
         </Box>
-    </Box>
+    ) : null;
+
+const Search = ({ currentRefinement, refine, setSearchTerm }) => (
+    <Flex
+        align="center"
+        css={{
+            color: '$textHighEmp',
+            bg: '$surfaceDefault',
+            padding: '12px 16px',
+            border: '2.5px solid $primaryDefault',
+            borderRadius: '0.5rem',
+            margin: '0 auto',
+            height: '20px'
+        }}
+        onClick={(e) => e.stopPropagation()}>
+        <SearchIcon style={{ color: 'inherit', height: '30px', width: '30px' }} />
+        <input
+            value={currentRefinement}
+            onChange={(event) => {
+                refine(event.target.value);
+                setSearchTerm(event.target.value);
+            }}
+            type="text"
+            autoFocus
+            style={{
+                marginLeft: '13px',
+                backgroundColor: 'inherit',
+                outline: 'none',
+                border: 'none',
+                height: '24px',
+                width: '100%',
+                fontWeight: '500',
+                fontSize: '15px'
+            }}
+        />
+        <Flex align="center" gap="2">
+            <Flex
+                align="center"
+                css={{
+                    fontWeight: '$semiBold',
+                    fontSize: '$sm',
+                    backgroundColor: '$surfaceLight',
+                    color: '$textMedEmp',
+                    borderRadius: '4px',
+                    padding: '0 4px'
+                }}>
+                esc
+            </Flex>
+            <Text variant="xs" css={{ whiteSpace: 'nowrap', color: '$textMedEmp' }}>
+                to close
+            </Text>
+        </Flex>
+    </Flex>
 );
 
+const CustomSearchBox = connectSearchBox(Search);
 const CustomHits = connectHits(ResultBox);
 
 const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
     const ref = React.createRef<HTMLDivElement>();
+    const [searchTerm, setSearchTerm] = React.useState('');
 
     useClickOutside(ref, () => {
         setModal(false);
     });
+
     return (
         <Box
             css={{
@@ -122,12 +182,8 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                 <InstantSearch
                     searchClient={searchClient}
                     indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
-                    <SearchBox
-                        translations={{ placeholder: 'Search through docs' }}
-                        showLoadingIndicator
-                    />
-
-                    <CustomHits setModal={setModal} />
+                    <CustomSearchBox setSearchTerm={setSearchTerm} />
+                    <CustomHits setModal={setModal} searchTerm={searchTerm} />
                 </InstantSearch>
 
                 <style jsx>{`
@@ -141,19 +197,6 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                         border-radius: 8px;
                         transform: translateX(-50%);
                         background-color: var(--gray1);
-                    }
-                    .res-box {
-                        padding: 0.5rem 2rem;
-                        min-height: 70px;
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        border-bottom: 1px solid;
-                        border-color: inherit;
-                    }
-                    .res-box div {
-                        display: flex;
-                        flex-direction: column;
                     }
                     a {
                         color: inherit;
