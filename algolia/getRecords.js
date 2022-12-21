@@ -9,7 +9,7 @@ const client = algoliasearch('5UAX3T19GE', 'eed09e4a3d303e35daed718838184efd');
 const index = client.initIndex('prod');
 const contentAlias = {};
 const records = [];
-const specialChars = ['#', '|', '`', '\\', '--', '\n', '  ', '[', ']', '!', '{', '}', '- ', '*'];
+const specialChars = ['#', '|', '`', '\\', '--', '\n', '  ', '[', ']', '!', '{', '}', '- ', '*', '> Note :'];
 
 const getPlatform = (path) => {
     const mapping = {

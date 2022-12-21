@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { ChevronRightIcon, SearchIcon } from '@100mslive/react-icons';
 import { Flex, Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
@@ -70,45 +70,52 @@ const Result = ({ searchResult }) => {
     );
 };
 
-const ResultBox = ({ hits, setModal, searchTerm }) => {
-    console.log(hits[0]);
-    return hits.length && searchTerm ? (
-        <Box
-            css={{
-                position: 'relative',
-                top: '$8',
-                backgroundColor: '$surfaceDefault',
-                border: '1px solid',
-                borderColor: '$borderDefault',
-                borderRadius: '$1',
-                px: '$4',
-                py: '$3'
-            }}>
-            <Box
-                css={{
-                    maxHeight: '60vh',
-                    overflow: 'auto'
-                }}>
-                {hits.map((searchResult) => (
+const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) => {
+    setHitsCount(hits.length);
+    activeResult.current = -1;
+    return (
+        <Box>
+            {hits.length && searchTerm ? (
+                <Box
+                    css={{
+                        position: 'relative',
+                        top: '$8',
+                        backgroundColor: '$surfaceDefault',
+                        border: '1px solid',
+                        borderColor: '$borderDefault',
+                        borderRadius: '$1',
+                        px: '$4',
+                        py: '$3'
+                    }}>
                     <Box
-                        key={searchResult.link}
                         css={{
-                            borderColor: '$borderDefault',
-                            '&:hover': { backgroundColor: '$surfaceLight' },
-                            px: '$8',
-                            py: '$8',
-                            borderRadius: '$0'
+                            maxHeight: '60vh',
+                            overflow: 'auto'
                         }}>
-                        <Link href={searchResult.link} passHref>
-                            <a onClick={() => setModal(false)}>
-                                <Result searchResult={searchResult} />
-                            </a>
-                        </Link>
+                        {hits.map((searchResult, i) => (
+                            <Box
+                                id={`res-box-${i}`}
+                                key={searchResult.link}
+                                css={{
+                                    borderColor: '$borderDefault',
+                                    '&:hover': { backgroundColor: '$surfaceLight' },
+                                    px: '$8',
+                                    py: '$8',
+                                    borderRadius: '$0'
+                                }}
+                                onClick={() => setModal(false)}>
+                                <Link href={searchResult.link} passHref>
+                                    <a>
+                                        <Result searchResult={searchResult} />
+                                    </a>
+                                </Link>
+                            </Box>
+                        ))}
                     </Box>
-                ))}
-            </Box>
+                </Box>
+            ) : null}
         </Box>
-    ) : null;
+    );
 };
 
 const Search = ({ currentRefinement, refine, setSearchTerm }) => (
@@ -165,12 +172,52 @@ const Search = ({ currentRefinement, refine, setSearchTerm }) => (
 );
 
 const CustomSearchBox = connectSearchBox(Search);
-
 const CustomHits = connectHits(ResultBox);
 
 const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
     const ref = React.createRef<HTMLDivElement>();
     const [searchTerm, setSearchTerm] = React.useState('');
+    const activeResult = useRef(-1);
+    const [hitsCount, setHitsCount] = useState(0);
+
+    React.useEffect(() => {
+        const handleNavigation = (e) => {
+            // Up
+            if (e.keyCode === 38) {
+                if (activeResult.current === 0) {
+                    activeResult.current = hitsCount - 1;
+                    const top = document.getElementById(`res-box-0`);
+                    if (top) top.style.backgroundColor = 'var(--surface_default)';
+                } else activeResult.current -= 1;
+
+                const ele = document.getElementById(`res-box-${activeResult.current}`);
+                ele?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+                if (ele) {
+                    ele.style.backgroundColor = 'var(--surface_light)';
+                    ele.focus();
+                }
+                const prev = document.getElementById(`res-box-${activeResult.current + 1}`);
+                if (prev) prev.style.backgroundColor = 'var(--surface_default)';
+            } else if (e.keyCode === 40) {
+                if (activeResult.current >= hitsCount - 1) {
+                    activeResult.current = 0;
+                    const last = document.getElementById(`res-box-${hitsCount - 1}`);
+                    if (last) last.style.backgroundColor = 'var(--surface_default)';
+                } else activeResult.current += 1;
+
+                const ele = document.getElementById(`res-box-${activeResult.current}`);
+                ele?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+                if (ele) {
+                    ele.style.backgroundColor = 'var(--surface_light)';
+                    ele.focus();
+                }
+                const prev = document.getElementById(`res-box-${activeResult.current - 1}`);
+                if (prev) prev.style.backgroundColor = 'var(--surface_default)';
+            }
+        };
+        if (window) window.addEventListener('keydown', handleNavigation);
+        return () => window.removeEventListener('keydown', handleNavigation);
+    }, [hitsCount]);
 
     useClickOutside(ref, () => {
         setModal(false);
@@ -191,7 +238,12 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                     searchClient={searchClient}
                     indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
                     <CustomSearchBox setSearchTerm={setSearchTerm} />
-                    <CustomHits setModal={setModal} searchTerm={searchTerm} />
+                    <CustomHits
+                        setModal={setModal}
+                        searchTerm={searchTerm}
+                        setHitsCount={setHitsCount}
+                        activeResult={activeResult}
+                    />
                 </InstantSearch>
 
                 <style jsx>{`
