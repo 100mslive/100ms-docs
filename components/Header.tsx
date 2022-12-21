@@ -10,7 +10,7 @@ import {
 import { Box, Flex, useTheme } from '@100mslive/react-ui';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -48,6 +48,12 @@ const Header: React.FC<Props> = ({
     }, [slashPressed]);
 
     const { menu, setMenu } = menuState;
+    const [helperState, setHelperState] = useState(null);
+
+    useEffect(() => {
+        if (helperState !== null) setModal(true);
+    }, [helperState]);
+
     const [isDark, setIsDark] = React.useState<boolean>(true);
     const { toggleTheme, themeType } = useTheme();
 
@@ -142,7 +148,7 @@ const Header: React.FC<Props> = ({
 
             <div className="head-right">
                 <Flex
-                    onClick={() => setModal(true)}
+                    onClick={() => setHelperState((prev) => !prev)}
                     css={{
                         borderRadius: '$1',
                         width: '$80',
@@ -188,7 +194,7 @@ const Header: React.FC<Props> = ({
                     }
                 }}>
                 <button
-                    onClick={() => setModal(true)}
+                    onClick={() => setHelperState((prev) => !prev)}
                     style={{ marginRight: '0.5rem', marginLeft: '-1rem', marginTop: '0.5rem' }}
                     type="button">
                     <SearchIcon style={{ width: '24px' }} />
