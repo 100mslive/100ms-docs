@@ -83,7 +83,7 @@ const ResultBox = ({ hits, setModal, searchTerm }) =>
                     maxHeight: '60vh',
                     overflow: 'auto'
                 }}>
-                {hits.map((searchResult, i) => (
+                {hits.map((searchResult) => (
                     <Box
                         key={searchResult.link}
                         css={{
