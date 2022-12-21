@@ -194,7 +194,7 @@ const Header: React.FC<Props> = ({
                     }
                 }}>
                 <button
-                    onClick={() => setHelperState((prev) => !prev)}
+                    onClick={() => setHelperState((prev) => prev + 1)}
                     style={{ marginRight: '0.5rem', marginLeft: '-1rem', marginTop: '0.5rem' }}
                     type="button">
                     <SearchIcon style={{ width: '24px' }} />
