@@ -4,14 +4,9 @@ const url = require('url');
 const algoliasearch = require('algoliasearch');
 // Run using node ./algolia/getRecords.js
 
-const NEXT_PUBLIC_ALGOLIA_APP_ID = '5UAX3T19GE';
-const NEXT_PUBLIC_ALGOLIA_INDEX = 'test';
-const NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY = '6b2fcf18157b00a2c7f33452512da0ba';
-const NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY = 'eed09e4a3d303e35daed718838184efd';
+const client = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, process.env.NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY);
 
-const client = algoliasearch(NEXT_PUBLIC_ALGOLIA_APP_ID, NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY);
-
-const index = client.initIndex(NEXT_PUBLIC_ALGOLIA_INDEX);
+const index = client.initIndex(process.env.NEXT_PUBLIC_ALGOLIA_INDEX);
 
 const stopwords = [
     '#',
