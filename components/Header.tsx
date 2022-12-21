@@ -49,14 +49,9 @@ const Header: React.FC<Props> = ({
 
     const { menu, setMenu } = menuState;
     const [isDark, setIsDark] = React.useState<boolean>(true);
-    const [docs, setAllDocs] = React.useState({} as any);
     const { toggleTheme, themeType } = useTheme();
 
     React.useEffect(() => {
-        fetch('/docs/api/content?query=docs')
-            .then((res) => res.json())
-            .then((data) => setAllDocs(data.docs))
-            .catch((e) => console.error('fetch api/content?query=docs failed', e));
         const theme = window.localStorage.getItem('theme') || 'dark';
         const docHtml = document.documentElement.dataset;
         setIsDark(theme === 'dark');
@@ -128,7 +123,7 @@ const Header: React.FC<Props> = ({
                                 cursor: 'pointer',
                                 fontSize: '1rem',
                                 position: 'relative',
-                                top: '1px',
+                                top: '1px'
                             }}>
                             Docs
                         </p>
@@ -184,7 +179,7 @@ const Header: React.FC<Props> = ({
                     {!isDark ? <NightIcon /> : <SunIcon style={{ color: '#ECC502' }} />}
                 </span>
             </div>
-            {modal ? <SearchModal setModal={setModal} docs={docs} /> : null}
+            {modal ? <SearchModal setModal={setModal} /> : null}
             <Box
                 css={{
                     display: 'none',

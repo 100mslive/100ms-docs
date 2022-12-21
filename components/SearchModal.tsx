@@ -1,35 +1,23 @@
 import React from 'react';
-import { SearchIcon, ChevronRightIcon } from '@100mslive/react-icons';
+import { ChevronRightIcon, SearchIcon } from '@100mslive/react-icons';
 import { Flex, Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
-import useKeyPress from '@/lib/useKeyPress';
-import useSearch from '@/lib/useSearch';
 import Link from 'next/link';
+import algoliasearch from 'algoliasearch/lite';
+import { InstantSearch, connectHits, connectSearchBox } from 'react-instantsearch-dom';
+
+const searchClient = algoliasearch(
+    process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '',
+    process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY || ''
+);
 
 interface SearchModalProps {
-    docs: { url: string; title: string; description: string; nav: number; content: string }[];
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-interface ResultBoxProps {
-    title: string;
-    url: string;
-}
-
-const ResultBox: React.FC<ResultBoxProps> = ({ title, url }) => {
-    const path = url.replace(/-/g, ' ').split('/').slice(1);
-
-    const platform = {
-        javascript: 'JavaScript',
-        flutter: 'Flutter',
-        android: 'Android',
-        'react native': 'React Native',
-        ios: 'iOS',
-        'server side': 'Server-side',
-        'api reference': 'API Reference'
-    };
-
-    path[0] = platform[path[0]];
+const Result = ({ searchResult }) => {
+    const path = searchResult.link.replace(/-/g, ' ').split('/').slice(1);
+    path[0] = searchResult.platformName;
 
     return (
         <Box css={{ w: '100%' }}>
@@ -38,7 +26,7 @@ const ResultBox: React.FC<ResultBoxProps> = ({ title, url }) => {
                     color: '$textHighEmp',
                     fontWeight: '$semiBold'
                 }}>
-                {title}
+                {searchResult.title}
                 <Text
                     css={{
                         display: 'inline',
@@ -50,7 +38,7 @@ const ResultBox: React.FC<ResultBoxProps> = ({ title, url }) => {
                         borderRadius: '0.25rem',
                         marginLeft: '0.5rem'
                     }}>
-                    {path[0]}
+                    {searchResult.platformName}
                 </Text>
             </Text>
             <Text
@@ -77,69 +65,109 @@ const ResultBox: React.FC<ResultBoxProps> = ({ title, url }) => {
     );
 };
 
-const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
-    const paletteTrack = React.useRef(-1);
-    const [search, setSearch] = React.useState('');
-    const ref = React.createRef<HTMLDivElement>();
-    const inputRef = React.createRef<HTMLInputElement>();
+const ResultBox = ({ hits, setModal, searchTerm }) =>
+    hits.length && searchTerm ? (
+        <Box
+            css={{
+                position: 'relative',
+                top: '$8',
+                backgroundColor: '$surfaceDefault',
+                border: '1px solid',
+                borderColor: '$borderDefault',
+                borderRadius: '$1',
+                px: '$4',
+                py: '$3'
+            }}>
+            <Box
+                css={{
+                    maxHeight: '60vh',
+                    overflow: 'auto'
+                }}>
+                {hits.map((searchResult, i) => (
+                    <Box
+                        key={searchResult.link}
+                        css={{
+                            borderColor: '$borderDefault',
+                            '&:hover': { backgroundColor: '$surfaceLight' },
+                            px: '$8',
+                            py: '$8',
+                            borderRadius: '$0'
+                        }}>
+                        <Link href={searchResult.link} passHref>
+                            <a onClick={() => setModal(false)}>
+                                <Result searchResult={searchResult} />
+                            </a>
+                        </Link>
+                    </Box>
+                ))}
+            </Box>
+        </Box>
+    ) : null;
 
-    const res = useSearch({
-        search,
-        docs
-    });
+const Search = ({ currentRefinement, refine, setSearchTerm }) => (
+    <Flex
+        align="center"
+        css={{
+            color: '$textHighEmp',
+            bg: '$surfaceDefault',
+            padding: '12px 16px',
+            border: '2.5px solid $primaryDefault',
+            borderRadius: '0.5rem',
+            margin: '0 auto',
+            height: '20px'
+        }}
+        onClick={(e) => e.stopPropagation()}>
+        <SearchIcon style={{ color: 'inherit', height: '30px', width: '30px' }} />
+        <input
+            value={currentRefinement}
+            onChange={(event) => {
+                refine(event.target.value);
+                setSearchTerm(event.target.value);
+            }}
+            type="text"
+            autoFocus
+            style={{
+                marginLeft: '13px',
+                backgroundColor: 'inherit',
+                outline: 'none',
+                border: 'none',
+                height: '24px',
+                width: '100%',
+                fontWeight: '500',
+                fontSize: '15px'
+            }}
+        />
+        <Flex align="center" gap="2">
+            <Flex
+                align="center"
+                css={{
+                    fontWeight: '$semiBold',
+                    fontSize: '$sm',
+                    backgroundColor: '$surfaceLight',
+                    color: '$textMedEmp',
+                    borderRadius: '4px',
+                    padding: '0 4px'
+                }}>
+                esc
+            </Flex>
+            <Text variant="xs" css={{ whiteSpace: 'nowrap', color: '$textMedEmp' }}>
+                to close
+            </Text>
+        </Flex>
+    </Flex>
+);
+
+const CustomSearchBox = connectSearchBox(Search);
+const CustomHits = connectHits(ResultBox);
+
+const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
+    const ref = React.createRef<HTMLDivElement>();
+    const [searchTerm, setSearchTerm] = React.useState('');
 
     useClickOutside(ref, () => {
-        if (inputRef.current)
-            window.analytics.track('docs.search.dismissed', {
-                textInSearch: inputRef.current?.value || '',
-                totalNumberOfResults: res.length,
-                referrer: document.referrer,
-                path: window.location.hostname,
-                pathname: window.location.pathname,
-                href: window.location.href
-            });
         setModal(false);
     });
 
-    // reset if result is 0
-    if (res.length === 0) {
-        paletteTrack.current = -1;
-    }
-
-    const downKeyPressed = useKeyPress('ArrowDown');
-    const upKeyPressed = useKeyPress('ArrowUp');
-    if (downKeyPressed) {
-        // reset to top
-        if (paletteTrack.current >= res.length - 1) {
-            paletteTrack.current = 0;
-            const last = document.getElementById(`res-box-${res.length - 1}`);
-            if (last) last.style.backgroundColor = 'var(--surface_default)';
-        } else paletteTrack.current += 1;
-
-        const ele = document.getElementById(`res-box-${paletteTrack.current}`);
-        if (ele) {
-            ele.style.backgroundColor = 'var(--surface_light)';
-            ele.focus();
-        }
-        const prev = document.getElementById(`res-box-${paletteTrack.current - 1}`);
-        if (prev) prev.style.backgroundColor = 'var(--surface_default)';
-    }
-    if (upKeyPressed) {
-        // on top
-        if (paletteTrack.current === 0) {
-            paletteTrack.current = res.length - 1;
-            const top = document.getElementById(`res-box-0`);
-            if (top) top.style.backgroundColor = 'var(--surface_default)';
-        } else paletteTrack.current -= 1;
-
-        const ele = document.getElementById(`res-box-${paletteTrack.current}`);
-        if (ele) {
-            ele.style.backgroundColor = 'var(--surface_light)';
-            ele.focus();
-        }
-        const prev = document.getElementById(`res-box-${paletteTrack.current + 1}`);
-        if (prev) prev.style.backgroundColor = 'var(--surface_default)';
-    }
     return (
         <Box
             css={{
@@ -151,109 +179,13 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                 bg: 'rgba(0, 0, 0, 0.8)'
             }}>
             <div className="search-modal" ref={ref}>
-                <Flex
-                    align="center"
-                    css={{
-                        color: '$textHighEmp',
-                        bg: '$surfaceDefault',
-                        padding: '12px 16px',
-                        border: '2.5px solid $primaryDefault',
-                        borderRadius: '0.5rem',
-                        margin: '0 auto',
-                        height: '20px'
-                    }}
-                    onClick={(e) => e.stopPropagation()}>
-                    <SearchIcon style={{ color: 'inherit', height: '30px', width: '30px' }} />
-                    <input
-                        ref={inputRef}
-                        value={search}
-                        type="text"
-                        autoFocus
-                        onChange={(e) => setSearch(e.target.value)}
-                        style={{
-                            marginLeft: '13px',
-                            backgroundColor: 'inherit',
-                            outline: 'none',
-                            border: 'none',
-                            height: '24px',
-                            width: '100%',
-                            fontWeight: '500',
-                            fontSize: '15px'
-                        }}
-                    />
-                    <Flex align="center" gap="2">
-                        <Flex
-                            align="center"
-                            css={{
-                                fontWeight: '$semiBold',
-                                fontSize: '$sm',
-                                backgroundColor: '$surfaceLight',
-                                color: '$textMedEmp',
-                                borderRadius: '4px',
-                                padding: '0 4px'
-                            }}>
-                            esc
-                        </Flex>
-                        <Text variant="xs" css={{ whiteSpace: 'nowrap', color: '$textMedEmp' }}>
-                            to close
-                        </Text>
-                    </Flex>
-                </Flex>
-                {res.length > 0 ? (
-                    <Box
-                        css={{
-                            position: 'relative',
-                            top: '$8',
-                            backgroundColor: '$surfaceDefault',
-                            border: '1px solid',
-                            borderColor: '$borderDefault',
-                            borderRadius: '$1',
-                            px: '$2',
-                            py: '$3 '
-                        }}>
-                        <Box
-                            css={{
-                                maxHeight: '60vh',
-                                overflow: 'auto'
-                            }}>
-                            {res.map((searchResult, i) => (
-                                <Box
-                                    key={searchResult.url}
-                                    css={{
-                                        borderColor: '$borderDefault',
-                                        '&:hover': { backgroundColor: '$surfaceLight' }
-                                    }}>
-                                    <Link href={searchResult.url} passHref>
-                                        <a
-                                            id={`res-box-${i}`}
-                                            className="res-box"
-                                            onClick={() => {
-                                                window.analytics.track(
-                                                    'docs.search.result.clicked',
-                                                    {
-                                                        totalNumberOfResults: res.length,
-                                                        textInSearch:
-                                                            inputRef?.current?.value || '',
-                                                        rankOfSearchResult: i + 1,
-                                                        locationOfSearchResult: searchResult.url,
-                                                        referrer: document.referrer,
-                                                        path: window.location.hostname,
-                                                        pathname: window.location.pathname
-                                                    }
-                                                );
-                                                setModal(false);
-                                            }}>
-                                            <ResultBox
-                                                title={searchResult.title}
-                                                url={searchResult.url}
-                                            />
-                                        </a>
-                                    </Link>
-                                </Box>
-                            ))}
-                        </Box>
-                    </Box>
-                ) : null}
+                <InstantSearch
+                    searchClient={searchClient}
+                    indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
+                    <CustomSearchBox setSearchTerm={setSearchTerm} />
+                    <CustomHits setModal={setModal} searchTerm={searchTerm} />
+                </InstantSearch>
+
                 <style jsx>{`
                     .search-modal {
                         max-width: 600px;
@@ -265,19 +197,6 @@ const SearchModal: React.FC<SearchModalProps> = ({ docs, setModal }) => {
                         border-radius: 8px;
                         transform: translateX(-50%);
                         background-color: var(--gray1);
-                    }
-                    .res-box {
-                        padding: 0.5rem 2rem;
-                        min-height: 70px;
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        border-bottom: 1px solid;
-                        border-color: inherit;
-                    }
-                    .res-box div {
-                        display: flex;
-                        flex-direction: column;
                     }
                     a {
                         color: inherit;
