@@ -3,11 +3,14 @@ import { ChevronRightIcon } from '@100mslive/react-icons';
 import { Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
 import Link from 'next/link';
-
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, Hits } from 'react-instantsearch-dom';
 
-const searchClient = algoliasearch('5UAX3T19GE', '6b2fcf18157b00a2c7f33452512da0ba');
+const NEXT_PUBLIC_ALGOLIA_APP_ID = '5UAX3T19GE';
+const NEXT_PUBLIC_ALGOLIA_INDEX = 'test';
+const NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY = '6b2fcf18157b00a2c7f33452512da0ba';
+
+const searchClient = algoliasearch(NEXT_PUBLIC_ALGOLIA_APP_ID, NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY);
 
 interface SearchModalProps {
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -85,7 +88,6 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
     useClickOutside(ref, () => {
         setModal(false);
     });
-
     return (
         <Box
             css={{
@@ -97,8 +99,11 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                 bg: 'rgba(0, 0, 0, 0.8)'
             }}>
             <div className="search-modal" ref={ref}>
-                <InstantSearch searchClient={searchClient} indexName="test">
-                    <SearchBox translations={{ placeholder: 'Search through docs' }} showLoadingIndicator/>
+                <InstantSearch searchClient={searchClient} indexName={NEXT_PUBLIC_ALGOLIA_INDEX}>
+                    <SearchBox
+                        translations={{ placeholder: 'Search through docs' }}
+                        showLoadingIndicator
+                    />
                     <Hits />
                 </InstantSearch>
 
