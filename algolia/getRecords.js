@@ -1,8 +1,17 @@
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
-
+const algoliasearch = require('algoliasearch');
 // Run using node ./algolia/getRecords.js
+
+const NEXT_PUBLIC_ALGOLIA_APP_ID = '5UAX3T19GE';
+const NEXT_PUBLIC_ALGOLIA_INDEX = 'test';
+const NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY = '6b2fcf18157b00a2c7f33452512da0ba';
+const NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY = 'eed09e4a3d303e35daed718838184efd';
+
+const client = algoliasearch(NEXT_PUBLIC_ALGOLIA_APP_ID, NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY);
+
+const index = client.initIndex(NEXT_PUBLIC_ALGOLIA_INDEX);
 
 const stopwords = [
     '#',
@@ -185,7 +194,6 @@ const stopwords = [
     'yourself',
     'yourselves'
 ];
-
 const contentAlias = {};
 const records = [];
 
@@ -246,17 +254,27 @@ const getKeywords = (content) => {
     return headings.split('keywords: ')[1] || [];
 };
 
+const getTitle = (content) => {
+    const headings = content
+        .split('\n')
+        .filter((line) => line.match('title: '))
+        .join('');
+    return headings.split('title: ')[1] || [];
+};
+
 const getRecordObject = (filename, folderPath) => {
     const link = url.pathToFileURL(path.resolve(folderPath, filename)).toString().slice(70, -4);
 
-    const fileContent = fs.readFileSync(path.resolve(folderPath, filename), {
-        encoding: 'utf8',
-        flag: 'r'
-    }).toString();
+    const fileContent = fs
+        .readFileSync(path.resolve(folderPath, filename), {
+            encoding: 'utf8',
+            flag: 'r'
+        })
+        .toString();
 
     const platform = getPlatform(link);
     const fileRecord = {
-        title: filename,
+        title: getTitle(fileContent),
         link: link,
         keywords: getKeywords(fileContent),
         headings: getHeadings(fileContent),
@@ -294,8 +312,10 @@ const createRecords = (folderPaths) => {
             createRecords(subFolderPaths);
         } else {
             contents.forEach((content) => {
-                const obj = getRecordObject(content, folderPath);
-                pushRecursively(obj);
+                if (content.includes('.mdx')) {
+                    const obj = getRecordObject(content, folderPath);
+                    pushRecursively(obj);
+                }
             });
         }
     });
@@ -314,11 +334,4 @@ const cacheContentAlias = (basePath) => {
 
 cacheContentAlias(path.resolve(__dirname, '../common'));
 createRecords([path.resolve(__dirname, '../docs')]);
-// console.log(records);
-console.log(records.length, 'records created');
-
-try {
-    fs.writeFileSync('./records.json', JSON.stringify(records));
-} catch (err) {
-    console.error(err);
-}
+index.replaceAllObjects(records);
