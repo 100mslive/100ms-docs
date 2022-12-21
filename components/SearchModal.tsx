@@ -61,12 +61,18 @@ const Result = ({ searchResult }) => {
                     )
                 )}
             </Text>
+            <Text
+                dangerouslySetInnerHTML={{
+                    __html: `${searchResult['_snippetResult']?.content?.value}...`
+                }}
+            />
         </Box>
     );
 };
 
-const ResultBox = ({ hits, setModal, searchTerm }) =>
-    hits.length && searchTerm ? (
+const ResultBox = ({ hits, setModal, searchTerm }) => {
+    console.log(hits[0]);
+    return hits.length && searchTerm ? (
         <Box
             css={{
                 position: 'relative',
@@ -103,6 +109,7 @@ const ResultBox = ({ hits, setModal, searchTerm }) =>
             </Box>
         </Box>
     ) : null;
+};
 
 const Search = ({ currentRefinement, refine, setSearchTerm }) => (
     <Flex
