@@ -3,7 +3,7 @@ name: Update Algolia records
 on:
   pull_request:
     branches:
-    - main
+    - GG-43
     types:
       - closed
 
@@ -15,5 +15,5 @@ jobs:
     - name: Algolia index update
       uses: fjogeleit/http-request-action@v1
       with:
-        url: 'https://100ms.live/docs/api/updateAlgolia'
+        url: 'https://100ms-docs-git-gg-43-100mslive.vercel.app/docs/api/updateAlgolia'
         method: 'GET'
