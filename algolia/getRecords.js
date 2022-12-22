@@ -1,15 +1,25 @@
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
-const algoliasearch = require('algoliasearch');
-// Run using node ./algolia/getRecords.js
 
-const client = algoliasearch('5UAX3T19GE', 'eed09e4a3d303e35daed718838184efd');
-
-const index = client.initIndex('prod');
-const contentAlias = {};
 const records = [];
-const specialChars = ['#', '|', '`', '\\', '--', '\n', '  ', '[', ']', '!', '{', '}', '- ', '*', '> Note :'];
+const specialChars = [
+    '#',
+    '|',
+    '`',
+    '\\',
+    '--',
+    '\n',
+    '  ',
+    '[',
+    ']',
+    '!',
+    '{',
+    '}',
+    '- ',
+    '*',
+    '> Note :'
+];
 
 const getPlatform = (path) => {
     const mapping = {
@@ -76,7 +86,7 @@ const getTitle = (content) => {
     return headings.split('title: ')[1] || [];
 };
 
-const getRecordObject = (filename, folderPath) => {
+const getRecordObject = (filename, folderPath, contentAlias) => {
     const link = url.pathToFileURL(path.resolve(folderPath, filename)).toString().slice(70, -4);
 
     const fileContent = fs
@@ -114,7 +124,7 @@ const pushRecursively = (obj) => {
     }
 };
 
-const createRecords = (folderPaths) => {
+export const createRecords = (folderPaths, contentAlias) => {
     folderPaths.map((folderPath) => {
         const contents = fs.readdirSync(folderPath);
         const subFolders = contents.filter((content) =>
@@ -123,19 +133,22 @@ const createRecords = (folderPaths) => {
         const subFolderPaths = subFolders.map((subFolder) => path.resolve(folderPath, subFolder));
 
         if (subFolderPaths.length) {
-            createRecords(subFolderPaths);
+            createRecords(subFolderPaths, contentAlias);
         } else {
             contents.forEach((content) => {
                 if (content.includes('.mdx')) {
-                    const obj = getRecordObject(content, folderPath);
+                    const obj = getRecordObject(content, folderPath, contentAlias);
                     pushRecursively(obj);
                 }
             });
         }
     });
+
+    if (folderPaths.length === 1 && folderPaths[0].slice(-4).toString() === 'docs') return records;
 };
 
-const cacheContentAlias = (basePath) => {
+export const cacheContentAlias = (basePath) => {
+    const contentAlias = {};
     const contents = fs.readdirSync(basePath);
     contents.forEach((content) => {
         contentAlias[`<Content alias="${toCamelCase(content.toString().slice(0, -3))}" />`] =
@@ -144,13 +157,11 @@ const cacheContentAlias = (basePath) => {
                 flag: 'r'
             });
     });
+    return contentAlias;
 };
 
-cacheContentAlias(path.resolve(__dirname, '../common'));
-createRecords([path.resolve(__dirname, '../docs')]);
 // try {
-//     fs.writeFileSync('./records.json', JSON.stringify(records));
+//     fs.writeFileSync('./records.json', JSON.stringify(rc));
 // } catch (err) {
 //     console.error(err);
 // }
-index.replaceAllObjects(records);
