@@ -29,7 +29,9 @@ function runMiddleware(req, res, fn) {
 export default async function handler(req, res) {
     await runMiddleware(req, res, cors);
     const jsonDirectory = path.join(process.cwd());
+    // @ts-ignore
     const dummyVar = fs.readdirSync(`${jsonDirectory}/common`)
+    // @ts-ignore
     const dummyLink = url.pathToFileURL(path.resolve(`${jsonDirectory}/common`))
     const records = await updateIndex(`${jsonDirectory}/common`, `${jsonDirectory}/docs`);
     index.replaceAllObjects(records).then(() => res.status(200).json({ records }))   
