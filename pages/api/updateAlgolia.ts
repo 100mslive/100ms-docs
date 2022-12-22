@@ -33,5 +33,6 @@ export default async function handler(req, res) {
 
     const records = await updateIndex(`${jsonDirectory}/common`, `${jsonDirectory}/docs`);
     // @ts-ignore
-    index.replaceAllObjects(records).then(() => res.status(200).json({ status: "completed" }))   
+    await index.replaceAllObjects(records);
+    res.status(200).json({ status: "completed" })
 }
