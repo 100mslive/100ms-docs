@@ -1,12 +1,11 @@
 import Cors from 'cors';
-import path from 'path';
-import { cacheContentAlias, createRecords } from "../../algolia/getRecords"
+import updateIndex from '../../algolia/getRecords'
 
-const algoliasearch = require('algoliasearch');
+// const algoliasearch = require('algoliasearch');
 
-const client = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, process.env.NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY);
+// const client = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, process.env.NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY);
 
-const index = client.initIndex(process.env.NEXT_PUBLIC_ALGOLIA_INDEX);
+// const index = client.initIndex(process.env.NEXT_PUBLIC_ALGOLIA_INDEX);
 
 const cors = Cors({
     methods: ['POST']
@@ -25,8 +24,7 @@ function runMiddleware(req, res, fn) {
 
 export default async function handler(req, res) {
     await runMiddleware(req, res, cors);
-    const contentAlias = cacheContentAlias(path.resolve(__dirname, '../common'));
-    const records = createRecords([path.resolve(__dirname, '../docs')], contentAlias);
-    console.log(path.resolve(__dirname, '../common'));
-    res.status(200).json({ records });
+    const records = await updateIndex();
+    console.log(records)
+    res.status(200).json({ result: "success" });
 }
