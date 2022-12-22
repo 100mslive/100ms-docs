@@ -32,12 +32,12 @@ export default async function handler(req, res) {
     const adminKey = process.env.NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY
     const algoliaIndex = process.env.NEXT_PUBLIC_ALGOLIA_INDEX
     if(appId && adminKey && algoliaIndex){
-        const records = updateIndex(`${jsonDirectory}/common`, `${jsonDirectory}/docs`, `${jsonDirectory}\\docs`);
-        console.log(records[0]);
+        const records = updateIndex(`${jsonDirectory}/common`, `${jsonDirectory}/docs`);
+        // console.log(records[0]);
         const client = algoliasearch(appId, adminKey);
         const index = client.initIndex(algoliaIndex);
         // @ts-ignore
-        // await index.replaceAllObjects(records);
+        await index.replaceAllObjects(records);
         res.status(200).json({ status: "completed" })
     }else {
         res.status(200).json({ status: "failed" })
