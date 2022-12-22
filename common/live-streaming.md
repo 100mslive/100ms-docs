@@ -93,14 +93,19 @@ Use the 100ms client-side SDKs to integrate streaming in your application. See c
 
 ![HLS playback](/docs/docs/v2/hls-playback.png)
 
-You can serve live streaming video for playback using 100ms client-side SDK or your custom integration.
+#### Using 100ms SDK [Recommended]
 
-1. Once you start the live streaming, you will get an HLS URL (m3u8 URL) which you can use for playback.
-2. If you are planning to use 100ms [client-side SDKs](./../features/hls) for HLS playback, you can get the HLS URL by checking the current room state using the client SDK. Check [here](./../features/hls#current-room-status) to find out how.
-3. If you wish to use a custom integration for HLS playback (not 100ms client SDK), you can follow one of the below approaches to get the HLS URL:
+You can serve live streaming video for playback using 100ms client-side SDK seamlessly. We recommend this approach as this removes the complexity of implementing a mechanism to capture HLS URL to enable live stream playback. The process is so simple:
 
-    - **Webhook:** You can listen to `hls.started.success` [webhook event](/server-side/v2/foundation/webhook#hls-started-success) and get the HLS URL from the `url` field. Please check the [webhooks guide](/server-side/v2/introduction/webhook) to learn more about webhooks.
-    - **Static URL:** This configuration will help you get a static URL for playback. You can enable the `Static playback URLs` in your template from the [dashboard](https://dashboard.100ms.live/dashboard). You can go to Destination > enable "Live streaming with HLS" > under "Customise stream video output" section > enable "Static playback URLs."
+1. Once you [start](#step-3-go-live) live streaming, you will get an HLS URL (M3U8 URL) which you can use for playback.
+2. You can use the [client-side SDK](./../features/hls) to get the HLS URL by checking the [current state](./../features/hls#current-room-status) of the room and start playback. 
+
+#### Other available approaches
+
+We also provide some approaches to integrate live stream playback in your CMS by ingesting the HLS URL:
+
+ - **Webhook:** You can listen to `hls.started.success` [webhook event](/server-side/v2/foundation/webhook#hls-started-success) and get the HLS URL from the `url` field. Please check the [webhooks guide](/server-side/v2/introduction/webhook) to learn more about webhooks.
+ - **Static URL:** This configuration will help you get a static URL for playback. You can enable the `Static playback URLs` in your template from the [dashboard](https://dashboard.100ms.live/dashboard). You can go to Destination > enable "Live streaming with HLS" > under "Customise stream video output" section > enable "Static playback URLs."
 
     ![Enable Static URL](/docs/docs/v2/enable-static-url.png)
 
