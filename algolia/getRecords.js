@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const url = require('url');
 
-const updateIndex = () => {
+const updateIndex = (contentPath, docsPath) => {
     const records = [];
     const contentAlias = {};
     const specialChars = [
@@ -165,8 +165,8 @@ const updateIndex = () => {
         });
         return contentAlias;
     };
-    cacheContentAlias(path.resolve(__dirname, '../common'));
-    createRecords([path.resolve(__dirname, '../docs')]);
+    cacheContentAlias(contentPath);
+    createRecords([docsPath]);
     return records;
 };
 

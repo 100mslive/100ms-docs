@@ -1,11 +1,12 @@
 import Cors from 'cors';
+import path from 'path';
 import updateIndex from '../../algolia/getRecords'
 
-// const algoliasearch = require('algoliasearch');
+const algoliasearch = require('algoliasearch');
 
-// const client = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, process.env.NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY);
+const client = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, process.env.NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY);
 
-// const index = client.initIndex(process.env.NEXT_PUBLIC_ALGOLIA_INDEX);
+const index = client.initIndex(process.env.NEXT_PUBLIC_ALGOLIA_INDEX);
 
 const cors = Cors({
     methods: ['POST']
@@ -24,7 +25,7 @@ function runMiddleware(req, res, fn) {
 
 export default async function handler(req, res) {
     await runMiddleware(req, res, cors);
-    const records = await updateIndex();
-    console.log(records)
-    res.status(200).json({ result: "success" });
+    const jsonDirectory = path.join(process.cwd());
+    const records = await updateIndex(`${jsonDirectory}/common`, `${jsonDirectory}/docs`);
+    index.replaceAllObjects(records).then(() => res.status(200).json({ records }))   
 }
