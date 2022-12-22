@@ -27,12 +27,17 @@ export default async function handler(req, res) {
     const dummyVar = fs.readdirSync(`${jsonDirectory}/common`)
     // @ts-ignore
     const dummyLink = url.pathToFileURL(path.resolve(`${jsonDirectory}/common`))
-    const client = algoliasearch(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || "", process.env.NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY|| "");
-
-    const index = client.initIndex(process.env.NEXT_PUBLIC_ALGOLIA_INDEX|| "");
-
-    const records = await updateIndex(`${jsonDirectory}/common`, `${jsonDirectory}/docs`);
+    const appId = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID
+    const adminKey = process.env.NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY
+    const algoliaIndex = process.env.NEXT_PUBLIC_ALGOLIA_INDEX
+    if(appId && adminKey && algoliaIndex){
+    const client = algoliasearch(appId, adminKey);
+    const index = client.initIndex(algoliaIndex);
+    const records = updateIndex(`${jsonDirectory}/common`, `${jsonDirectory}/docs`);
     // @ts-ignore
     await index.replaceAllObjects(records);
-    res.status(200).json({ status: "completed" })
+        res.status(200).json({ status: "completed" })
+    }else {
+        res.status(200).json({ status: "failed" })
+    }
 }
