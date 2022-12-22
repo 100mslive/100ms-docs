@@ -1,5 +1,5 @@
 ---
-title: Simulcast
+title: Adaptive Bitrate (Simulcast)
 nav: 5.09
 ---
 
@@ -7,15 +7,16 @@ Simulcast enables [Adaptive Bitrate](../foundation/adaptive-bitrate) (ABR) in vi
 
 ## Minimum requirements
 
-- SDK versions `@100mslive/hms-video-store@0.8.0`, `@100mslive/react-sdk@0.6.0` or later
-- Simulcast to be enabled from dashboard template
+-   SDK versions `@100mslive/hms-video-store@0.8.0`, `@100mslive/react-sdk@0.6.0` or later
+-   Simulcast to be enabled from dashboard template
 
 ## Simulcast Layer 100ms API's
 
 Available simulcast layers are:
-- `HMSSimulcastLayer.HIGH`
-- `HMSSimulcastLayer.MEDIUM`
-- `HMSSimulcastLayer.LOW`
+
+-   `HMSSimulcastLayer.HIGH`
+-   `HMSSimulcastLayer.MEDIUM`
+-   `HMSSimulcastLayer.LOW`
 
 > Note: The number of layers available will be dependent on the video publish resolution for the role and the available simulcast resolutions, in template settings in the dashboard.
 
@@ -32,7 +33,7 @@ import { HMSSimulcastLayer } from '@100mslive/hms-video-store';
  *   HMSSimulcastLayer.HIGH
  *   HMSSimulcastLayer.MEDIUM
  *   HMSSimulcastLayer.LOW
- * 
+ *
  * Setting preferred layer does not guarantee that the layer will be selected.
  * The server tries to give you that preferred layer when possible.
  * Otherwise, it will pick the next closest layer. Some of the reasons for
@@ -83,9 +84,9 @@ const SimulcastLayers = ({ trackId }) => {
 
 The [HMSVideoTrack](/api-reference/javascript/v2/interfaces/HMSVideoTrack) has a few fields related to simulcast.
 
-- `layer` - is the current layer you are receiving from the server
-- `layerDefinitions` - are the available layers for the role based on the template. These will contain layer name and resolution(widthxheight).
-- `preferredLayer` - this will contain the layer that is either manually set or auto selected based on resolution.
+-   `layer` - is the current layer you are receiving from the server
+-   `layerDefinitions` - are the available layers for the role based on the template. These will contain layer name and resolution(widthxheight).
+-   `preferredLayer` - this will contain the layer that is either manually set or auto selected based on resolution.
 
 ## Auto Layer selection:
 
