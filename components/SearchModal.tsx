@@ -63,7 +63,7 @@ const Result = ({ searchResult }) => {
             </Text>
             <Text
                 dangerouslySetInnerHTML={{
-                    __html: `${searchResult['_snippetResult']?.content?.value}...`
+                    __html: `${searchResult['_snippetResult']?.content?.value}`
                 }}
             />
         </Box>

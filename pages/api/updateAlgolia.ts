@@ -3,12 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import url from 'url';
 import algoliasearch from 'algoliasearch/lite';
-<<<<<<< HEAD
-import updateIndex from '@/lib/algolia/getRecords'
-import { DOCS_PATH } from '@/lib/mdxUtils';
-=======
 import updateIndex from '@/lib/algolia/getRecords';
->>>>>>> 1589e9d10e25360e4e188957652703c7644d3c2c
 
 const cors = Cors({
     methods: ['GET', 'HEAD']
