@@ -1,5 +1,8 @@
 import Cors from 'cors';
 import path from 'path';
+import fs from 'fs';
+import url from 'url'
+
 import updateIndex from '../../algolia/getRecords'
 
 const algoliasearch = require('algoliasearch');
@@ -26,6 +29,8 @@ function runMiddleware(req, res, fn) {
 export default async function handler(req, res) {
     await runMiddleware(req, res, cors);
     const jsonDirectory = path.join(process.cwd());
+    const dummyVar = fs.readdirSync(`${jsonDirectory}/common`)
+    const dummyLink = url.pathToFileURL(path.resolve(`${jsonDirectory}/common`))
     const records = await updateIndex(`${jsonDirectory}/common`, `${jsonDirectory}/docs`);
     index.replaceAllObjects(records).then(() => res.status(200).json({ records }))   
 }
