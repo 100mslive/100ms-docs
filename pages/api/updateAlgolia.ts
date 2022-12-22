@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     const adminKey = process.env.NEXT_PUBLIC_ALGOLIA_ADMIN_API_KEY;
     const algoliaIndex = process.env.NEXT_PUBLIC_ALGOLIA_INDEX;
     if (appId && adminKey && algoliaIndex) {
-        const records = updateIndex(`${jsonDirectory}/common`, `${jsonDirectory}/docs`);
+        const records = updateIndex(`${jsonDirectory}/common`, `${jsonDirectory}/docs`, `${url.pathToFileURL(jsonDirectory).toString()}/docs`);
         // console.log(records[0]);
         const client = algoliasearch(appId, adminKey);
         const index = client.initIndex(algoliaIndex);
