@@ -217,12 +217,11 @@ $token = JWT::encode(
 
 </Tab>
 
-<Note>
-
-**Warning**
-
-Your app key and secret carry many privileges, please ensure to keep them secure.
-
+<Note type="warning">
+    We strictly advise you not to post <i>app_access_key</i> and <i>app_secret</i> publicly; if you
+    need to store them in <strong>Git</strong>, please change the repository from public to private.
+    <br />
+    <br /> You cannot use an <strong>App token</strong> to trigger server API requests.
 </Note>
 
 #### Get app tokens from the token endpoint
@@ -394,10 +393,12 @@ $token = JWT::encode($payload, $app_secret, 'HS256');
 
 </Tab>
 
-<Note>
-
-**Warning**
-
-Your app key and secret carry many privileges, please ensure to keep them secure. All requests must be made over HTTPS. Requests made over plain HTTP and without a management token will fail.
-
+<Note type="warning">
+    We strictly advise you not to post <i>app_access_key</i> and <i>app_secret</i> publicly; if you
+    need to store them in <strong>Git</strong>, please change the repository from public to private.
+    <br />
+    <br />
+    You cannot authenticate room join requests from your client-side apps with a <strong>
+        Management token
+    </strong>.
 </Note>
