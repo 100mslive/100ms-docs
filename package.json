@@ -23,7 +23,7 @@
     ],
     "scripts": {
         "dev": "next dev -p 4000",
-        "build": "node init.js && next build",
+        "build": "next build && node ./lib/algolia/getRecords.js",
         "start": "next start",
         "lint": "eslint  \"{components,lib}/**/*.{js,ts,tsx}\"",
         "format": "prettier --write 'components/**/*.{js,jsxts,tsx,scss,css,json}'",
