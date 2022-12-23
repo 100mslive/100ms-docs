@@ -3,9 +3,29 @@ title: Screen Sharing
 nav: 3.981
 ---
 
-iOS SDK provides support for sharing the entire screen of the device in the room.
+iOS SDK provides support for sharing the entire screen of the device in the room or you can share just your App's Screen.
 
-It uses [Replaykit](https://developer.apple.com/documentation/replaykit) framework from Apple. To understand the documentation better consider familiarising yourself with live screen broadcast in iOS: https://developer.apple.com/videos/play/wwdc2018/601
+# Share Just Your App's Screen
+
+You can use the hmsSDK instance to start sharing your app screen like below:
+
+```swift
+    hmsSDK.startAppScreenCapture() { error in
+        // handle any errors
+    }
+  ```
+
+You can stop stop sharing your screen like below:
+
+```swift
+    hmsSDK.stopAppScreenCapture() { error in
+        // handle any errors
+    }
+  ```
+
+# Share The Entire Device Screen
+
+To share entire device screen the SDK uses [Replaykit](https://developer.apple.com/documentation/replaykit) framework from Apple. To understand the documentation better consider familiarising yourself with live screen broadcast in iOS: https://developer.apple.com/videos/play/wwdc2018/601
 
 Please note that for a peer to share their screen, their role must have screenshare enabled in the dashboard. Also, select the appropriate resolution that you desire the screenshare track should be of.
 
