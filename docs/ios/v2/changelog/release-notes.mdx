@@ -4,10 +4,19 @@ nav: 6.1
 description: Release Notes for 100ms iOS SDK
 ---
 
-## 0.5.3 - 2022-12-14
+## 0.5.4 - 2022-12-23
 ### Added
 - Varying frame rate support for simulcast layers
+- API to share in app screen content
+- Log a helpful message to the console when provided app group id is wrong
+- Sending track removed update for each of peer's tracks before sending peerLeft update
 
+### Fixed
+- Redundant "track restored" event is sent whenever simulcast layer selection is changed
+- Changing role during audio file playback is causing a crash
+
+
+## 0.5.3 - 2022-12-14
 ### Fixed
 - iPhone 14 + bluetooth headset microphone issue when custom audio source is used
 - Video track settings not respecting back camera selection

@@ -3,9 +3,29 @@ title: Screen Sharing
 nav: 3.981
 ---
 
-iOS SDK provides support for sharing the entire screen of the device in the room.
+iOS SDK provides support for sharing the entire screen of the device in the room or you can share just your App's Screen.
 
-It uses [Replaykit](https://developer.apple.com/documentation/replaykit) framework from Apple. To understand the documentation better consider familiarising yourself with live screen broadcast in iOS: https://developer.apple.com/videos/play/wwdc2018/601
+# Share Just Your App's Screen
+
+You can use the hmsSDK instance to start sharing your app screen like below:
+
+```swift
+    hmsSDK.startAppScreenCapture() { error in
+        // handle any errors
+    }
+  ```
+
+You can stop stop sharing your screen like below:
+
+```swift
+    hmsSDK.stopAppScreenCapture() { error in
+        // handle any errors
+    }
+  ```
+
+# Share The Entire Device Screen
+
+To share entire device screen the SDK uses [Replaykit](https://developer.apple.com/documentation/replaykit) framework from Apple. To understand the documentation better consider familiarising yourself with live screen broadcast in iOS: https://developer.apple.com/videos/play/wwdc2018/601
 
 Please note that for a peer to share their screen, their role must have screenshare enabled in the dashboard. Also, select the appropriate resolution that you desire the screenshare track should be of.
 
@@ -16,6 +36,11 @@ Please note that for a peer to share their screen, their role must have screensh
 You create an iOS broadcast upload extension. It uses Apple's ReplayKit framework to record the device screen and delivers frame samples to your broadcast extension. You can share not only your own app but also the entire device screen including other apps on the device.
 
 HMSBroadcastExtensionSDK is made specifically to be used in the iOS broadcast upload extension target. After importing the SDK, you use HMSScreenRenderer class to process the sample buffer coming from RPBroadcastSampleHandler. These samples are then presented in your main meeting app as a screen recording track.
+
+## Video walk-through of implementation
+
+<iframe allow="fullscreen;" width="800" height="460" src="https://www.youtube.com/embed/wMGfYtytAEc"></iframe>
+
 
 ## How to import
 
@@ -134,6 +159,8 @@ Note: Pods-HMSScreenShare in the snippet is your cocoapods framework target for 
 2. If you are getting a crash while running with screen share feature, please make sure that the app group identifier is not misspelled in both the main app and the broadcast extension. Also make sure your entitlement file has the correct app group name.
 
 
+## Example implementation
+
 👀 To see an Example iOS broadcast upload extension implementation for screen sharing using 100ms Broadcast extension SDK, checkout [our Example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
 
-📲 Download the 100ms fully-featured Sample iOS app here: https://testflight.apple.com/join/dhUSE7N8
+📲 Download the 100ms fully featured Sample iOS app here: https://testflight.apple.com/join/dhUSE7N8
