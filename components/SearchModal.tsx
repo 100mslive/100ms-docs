@@ -103,7 +103,18 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
                                     py: '$8',
                                     borderRadius: '$0'
                                 }}
-                                onClick={() => setModal(false)}>
+                                onClick={() => {
+                                    window.analytics.track('docs.search.result.clicked', {
+                                        totalNumberOfResults: hits.length,
+                                        textInSearch: searchTerm || '',
+                                        rankOfSearchResult: i + 1,
+                                        locationOfSearchResult: searchResult.url,
+                                        referrer: document.referrer,
+                                        path: window.location.hostname,
+                                        pathname: window.location.pathname
+                                    });
+                                    setModal(false);
+                                }}>
                                 <Link href={searchResult.link} passHref>
                                     <a>
                                         <Result searchResult={searchResult} />
@@ -220,6 +231,14 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
     }, [hitsCount]);
 
     useClickOutside(ref, () => {
+        window.analytics.track('docs.search.dismissed', {
+            textInSearch: searchTerm || '',
+            totalNumberOfResults: hitsCount,
+            referrer: document.referrer,
+            path: window.location.hostname,
+            pathname: window.location.pathname,
+            href: window.location.href
+        });
         setModal(false);
     });
 
