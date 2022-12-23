@@ -3,7 +3,7 @@
 /* eslint-disable react/no-danger */
 import Markdown from 'markdown-to-jsx';
 import React from 'react';
-// Please use the same name as the md file, in Pascal or Camel case as reqd
+// Please use the same name as the md file
 import Basics from '../common/basics.md';
 import Network from '../common/network.md';
 import Token from '../common/token.md';
