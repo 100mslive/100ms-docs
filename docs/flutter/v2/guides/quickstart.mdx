@@ -44,7 +44,7 @@ Once you have the prerequisites, follow the steps below to create a Flutter app.
 
 -   Create a Flutter app using the terminal; you can get the [Flutter SDK](https://docs.flutter.dev/get-started/install/macos#get-sdk) and use the below command:
 
-    ```bash
+    ```bash section=createFlutterApp
     flutter create my_app
     ```
 
@@ -56,7 +56,7 @@ Once you have created a Flutter app, you must add the 100ms Flutter SDK and [per
 
 -   Add the below snippet to the `pubspec.yaml`.
 
-```yaml
+```yaml section=InstallingTheDependencies
 # 100ms SDK and permissions_handler
 hmssdk_flutter:
 permission_handler:
@@ -68,7 +68,7 @@ permission_handler:
 
 Now that your project setup is complete let's replace the code in the `lib/main.dart` file with the complete code sample below.
 
-```dart
+```dart section=completeCodeExample
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -417,7 +417,7 @@ Please follow the below instructions to test the app for the android target plat
 
     <br />
 
-    ```xml
+    ```xml section=androidPermissions
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -455,7 +455,7 @@ Please follow the below instructions to test the app for iOS target platform:
 
     <br />
 
-    ```xml
+    ```xml section=iosPermissions
     <key>NSMicrophoneUsageDescription</key>
     <string>{YourAppName} wants to use your microphone</string>
 
@@ -492,7 +492,7 @@ We need permission from the user to access the media from the user's device. We 
 
 Please ensure to update permissions in the `AndroidManifest.xml` file for android and `info.plist` file for iOS. Check [test the app section](#test-the-app) for more information.
 
-```dart
+```dart section=stepByStepPermissions
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -519,7 +519,7 @@ class HomePage extends StatelessWidget {
 
 This section will help you create the join screen user interface. To keep it simple for the quickstart, we have not created many UI elements; you can refer to the [sample app implementation](https://github.com/100mslive/100ms-flutter/tree/main/example/lib/preview) for a complete Preview/Join user interface.
 
-```dart
+```dart section=stepByStepJoinScreen
 // UI to render join screen
   @override
   Widget build(BuildContext context) {
@@ -567,7 +567,7 @@ To join a room, you need to create an `HMSConfig` instance and use that instance
 
 > **Note:** An `App token` is required to authenticate a room join request from your client-side app. Please ensure to add the `authToken` by fetching it from your dashboard. Check [fetch token to join a room section](#fetch-token-to-join-the-room) for more information. <br/> Read more about authentication and tokens in [this guide](./../foundation/security-and-tokens)
 
-```dart
+```dart section=stepByStepMeetingPage
 class MeetingPage extends StatefulWidget {
   const MeetingPage({super.key});
 
@@ -614,7 +614,7 @@ class _MeetingPageState extends State<MeetingPage>
 
 The 100ms SDK sends updates to the application about any change in `HMSPeer` and `HMSRoom` via the callbacks in `HMSUpdateListener`. Our application must listen to the corresponding updates in `onPeerUpdate` and `onRoomUpdate`. Check the [Update Listeners documentation](./../features/update-listener-enums) to understand the types of updates emitted by the SDK for room and peer updates.
 
-```dart
+```dart section=stepByStepRoomUpdates
 // Called when peer joined the room - get current state of room by using HMSRoom obj
   @override
   void onJoin({required HMSRoom room}) {
@@ -669,7 +669,7 @@ The 100ms SDK sends updates to the application about any change in `HMSPeer` and
 
 100ms SDK also sends updates to the application about any change in `HMSTrack` via the callbacks in `HMSUpdateListener`. Our application must listen to the corresponding updates in `onTrackUpdate`. Check the [Update Listeners documentation](./../features/update-listener-enums#hms-track-update) to understand the types of updates emitted by the SDK for track updates.
 
-```dart
+```dart section=stepByStepTrackUpdates
 // Called when there's a track update - use to update local & remote track variables
   @override
   void onTrackUpdate(
@@ -704,7 +704,7 @@ The 100ms SDK sends updates to the application about any change in `HMSPeer` and
 
 100ms SDK provides various other callbacks to handle different scenarios in the app. For example, you can use `onAudioDeviceChanged` to get updates whenever a new audio device or an audio device is switched. Please check [here](./../features/update-listeners) for more information about these callbacks.
 
-```dart
+```dart section=stepByStepOtherCallbacks
   // More callbacks - no need to implement for quickstart
   @override
   void onAudioDeviceChanged(
@@ -749,7 +749,7 @@ To display a video track, first get the `HMSVideoTrack` & pass it on to `HMSVide
 
 Ensure to add the `HMSVideoView` to your app's Widget tree. Check the [render video guide](./../features/render-video) for more information.
 
-```dart
+```dart section=stepByStepRenderTile
 // Widget to render a single video tile
   Widget peerTile(Key key, HMSVideoTrack? videoTrack, HMSPeer? peer) {
     return Container(
@@ -789,7 +789,7 @@ Ensure to add the `HMSVideoView` to your app's Widget tree. Check the [render vi
 
 This section will help you build the user interface that renders the video tracks of local and remote peers in a grid view.
 
-```dart
+```dart section=stepByStepRenderPeers
 // Widget to render grid of peer tiles and a end button
   @override
   Widget build(BuildContext context) {
