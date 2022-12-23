@@ -1,0 +1,12 @@
+name: Update Algolia records
+on: [workflow_dispatch]
+
+jobs:
+    deployment:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Algolia index update
+              uses: fjogeleit/http-request-action@v1
+              with:
+                  url: 'https://100ms.live/docs/api/updateAlgolia'
+                  method: 'GET'
