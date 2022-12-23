@@ -1,15 +1,15 @@
 # .github/workflows/example-3.yml
 
 name: Update Algolia records
-on: 
+on:
   workflow_dispatch:
-    branches:
-      - main
+
 jobs:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Algolia index update
-      uses: fjogeleit/http-request-action@v1
-      with:
-        url: 'https://100ms.live/docs/api/updateAlgolia'
-        method: 'GET'
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Algolia index update
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://100ms.live/docs/api/updateAlgolia'
+          method: 'GET'
