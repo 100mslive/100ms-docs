@@ -14,13 +14,17 @@ HLS Timed Metadata feature helps you synchronise certain events with the HLS str
 
 To add HLS timed metadata cue to the currently running HLS stream use `setHlsSessionMetadata` API like this:
 
+<Tabs id="send-hmsTimedMetadata" items={['Kotlin', 'Java']} />
+
+<Tab id='send-hmsTimedMetadata-0'>
+
 ```kotlin
 val metadata = HMSHLSTimedMetadata(
                         payload  = payloadText,
                         duration = durationText
                     )
 
-hmsSDK.setHlsSessionMetadata(arrayListOf(metaDataModel), object : HMSActionResultListener {
+hmsSDK.setHlsSessionMetadata(arrayListOf(hmsHLSTimedMetadata), object : HMSActionResultListener {
         override fun onError(error: HMSException) {
             Log.d(TAG, "Unable to send metadata")
         }
@@ -31,17 +35,40 @@ hmsSDK.setHlsSessionMetadata(arrayListOf(metaDataModel), object : HMSActionResul
 })
 ```
 
+</Tab>
+
+<Tab id='send-hmsTimedMetadata-0'>
+
+```java
+
+HMSHLSTimedMetadata metaDataModel = new HMSHLSTimedMetadata(payload,duration,metaData);
+ArrayList<HMSHLSTimedMetadata> metadataModelList = new ArrayList<HMSHLSTimedMetadata>(metaDataModel);
+metadataModelList.add(metaDataModel);
+hmsSDK.setHlsSessionMetadata(metadataModelList, new HMSActionResultListener() {
+    @Override
+    public void onSuccess() {
+        Log.d(TAG, "hls metadata sending failed");
+    }
+
+    @Override
+    public void onError(@NonNull HMSException e) {
+        Log.d(TAG, "hls metadata sent successfully");
+    }
+});
+
+```
+</Tab>
+
 ## Receiving HLS Timed Metadata
 
 To receive metadata on the HLS player side use `HlsMetadataHandler` class from sample app.
 
 ```kotlin
 
-playerEventsManager = PlayerEventsCollector(it)
-val hlsMetadataHandler = HlsMetadataHandler(exoPlayer = exoplayer,{ metaDataModel ->
- // showing a view or hiding it can be handled here
-} ,context)
-hlsMetadataHandler.start()
+val hlsMetadataHandler = HlsMetadataHandler(exoPlayer = it, { metaDataModel ->
+    // toast can be replaced with custom handling
+    Toast.makeText(context, metaDataModel.payload, Toast.LENGTH_SHORT).show()
+}, requireContext())
 
 ```
 
