@@ -7,6 +7,10 @@ Changing track state is a concept that allows users to mute other peers's audio 
 
 ## Check if user has permissions
 
+Can't let just anyone mute others. First you need to create a [role](../foundation/templates-and-roles) with the permissions to end a room.
+
+![Permissions - Remote mute/unmute](/guides/permissions.png)
+
 ```js
 const mute: boolean = peer.role.permissions.mute;
 const unmute: boolean = peer.role.permissions.unmute;
@@ -57,29 +61,30 @@ import { HMSUpdateListenerActions, HMSChangeTrackStateRequest } from '@100mslive
 
 // add change track state listener
 hmsInstance.addEventListener(
-  HMSUpdateListenerActions.ON_CHANGE_TRACK_STATE_REQUEST,
-  onChangeTrackStateRequest,
+    HMSUpdateListenerActions.ON_CHANGE_TRACK_STATE_REQUEST,
+    onChangeTrackStateRequest
 );
 
 // reject or accept the request
 const onChangeTrackStateRequest = (data: HMSChangeTrackStateRequest) => {
-  const requestedBy = data?.requestedBy?.name
-  const trackType = data?.trackType            
-  if( trackType === 'audio' ) {
-    hmsInstance?.localPeer?.localAudioTrack()?.setMute(false);
-  } else if ( trackType === 'video' ) {
-      hmsInstance?.localPeer?.localVideoTrack()?.setMute(false);
-  }
+    const requestedBy = data?.requestedBy?.name;
+    const trackType = data?.trackType;
+    if (trackType === 'audio') {
+        hmsInstance?.localPeer?.localAudioTrack()?.setMute(false);
+    } else if (trackType === 'video') {
+        hmsInstance?.localPeer?.localVideoTrack()?.setMute(false);
+    }
 };
 ```
 
-## Mute all remote audio tracks 
+## Mute all remote audio tracks
 
 If you have the required permissions you can mute all remote audio tracks at once.
 
 ```js
 // instance acquired from build method
-await hmsInstance.remoteMuteAllAudio()
-  .then(d => console.log('Remote Mute All Audio Success: ', d))
-  .catch(e => console.log('Remote Mute All Audio Error: ', e));
+await hmsInstance
+    .remoteMuteAllAudio()
+    .then((d) => console.log('Remote Mute All Audio Success: ', d))
+    .catch((e) => console.log('Remote Mute All Audio Error: ', e));
 ```
