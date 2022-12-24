@@ -15,14 +15,14 @@ When user indicates that they want to _join_ the room, your app should have -
 You can also optionally pass these fields -
 
 1. Settings - Such as to join room with Muted Audio or Video using the `HMSTrackSettings` object.
-2. User Metadata - This can be used to pass any additional metadata associated with the user using `metadata` of `HMSConfig` object.
+2. User Metadata - This can be used to pass any additional metadata associated with the user using `metadata` property of `HMSConfig` object.
 
 
 ## Join a Room
 
 We'll call the `join` method on `HMSSDK` object with a config containing above fields to join the room.
 
-1. First, create an instance of `HMSSDK` using the `build` function. You'll need to add Event Listener for `HMSUpdateListenerActions` which are invoked to notify updates happening in the room like a peer joins/leaves, a track got muted/unmuted, etc.
+1. First, create an instance of `HMSSDK` using the `build` function. You'll need to add Event Listeners for `HMSUpdateListenerActions` which are invoked to notify about updates happening in the room like a peer joins/leaves, a track got muted/unmuted, etc.
 
 ```js
 import { HMSSDK } from '@100mslive/react-native-hms';
@@ -41,7 +41,7 @@ hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoin);
 let config = new HMSConfig({
                     authToken: 'eyJH5c', // client-side token generated from your token service 
                     username: 'John Appleseed',
-                }
+                });
 ```
 
 3. Now, we are primed to join the room. All you have to do is calling `join` by passing the `config` object.
@@ -102,7 +102,7 @@ const getTrackSettings = () => {
 };
 ```
 
-2. Now, create the `HMSSDK` object by pass the `HMSTrackSettings` object created above -
+2. Now, create an instance of `HMSSDK` by passing the `HMSTrackSettings` object created above to the `build` function -
 
 ```js
 // Pass the Track Settings object to the build function 
@@ -121,7 +121,7 @@ hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoin);
 let config = new HMSConfig({
                     authToken: 'eyJH5c', // client-side token generated from your token service 
                     username: 'John Appleseed',
-                }
+                });
 ```
 
 4. Now, we are primed to join the room. All you have to do is calling `join` by passing the `config` object.
@@ -136,7 +136,7 @@ Now, the user joins the room with the microphone and the camera turned off.
 
 ## Update Listener
 
-100ms SDK provides multiple Event Listeners - `HMSUpdateListenerActions` which notify the updates happening in the room like a peer joins/leaves, a track got muted/unmutes, etc.
+100ms SDK provides multiple Event Listeners - `HMSUpdateListenerActions` which notifies about the updates happening in the room like a peer joins/leaves, a track got muted/unmutes, etc.
 
 After calling `join` your app will be provided an update from the 100ms SDK.
 
