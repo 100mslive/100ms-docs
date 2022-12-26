@@ -78,9 +78,9 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                         </button>
                     )}
                 </Box>
-                <div ref={textRef} style={{ padding: '1rem 0' }}>
+                <Box ref={textRef} css={{ padding: '1rem 0', paddingRight: '1rem' }}>
                     {children}
-                </div>
+                </Box>
                 <style jsx>{`
                     button:hover {
                         opacity: 0.8;
