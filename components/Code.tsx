@@ -82,6 +82,7 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                             position: relative;
                             padding-top: 1rem;
                             width: 100%;
+                            background: var(--docs_bg_card);
                         }
                         button:hover {
                             opacity: 0.8;
@@ -96,7 +97,7 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                             padding: 9px;
                             border: 1px solid var(--docs_border_strong);
                             border-radius: 20px;
-                            position: absolute;
+                            position: sticky;
                             top: 8px;
                             right: 12px;
                         }
