@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react';
+import { Box } from '@100mslive/react-ui';
 
 export const CopyIcon = () => (
     <svg
@@ -55,8 +56,10 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
         const [copy, setCopy] = React.useState(false);
 
         return (
-            <div className="container">
-                <div className="code-block">
+            <Box css={{ position: 'relative', minWidth: 'min-content' }}>
+                <Box
+                    css={{ position: 'absolute', width: '100%', top: '1rem' }}
+                    className="code-block">
                     {!copy ? (
                         <button
                             aria-label="Copy to Clipboard"
@@ -74,20 +77,11 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                             <CheckIcon />
                         </button>
                     )}
-                </div>
+                </Box>
                 <div ref={textRef} style={{ padding: '1rem 0' }}>
                     {children}
                 </div>
                 <style jsx>{`
-                    .container {
-                        position: relative;
-                        min-width: min-content;
-                    }
-                    .code-block {
-                        position: absolute;
-                        width: 100%;
-                        top: 1rem;
-                    }
                     button:hover {
                         opacity: 0.8;
                     }
@@ -107,7 +101,7 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                         right: 12px;
                     }
                 `}</style>
-            </div>
+            </Box>
         );
     };
 
