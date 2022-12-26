@@ -55,7 +55,7 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
         const [copy, setCopy] = React.useState(false);
 
         return (
-            <>
+            <div className="container">
                 <div className="code-block">
                     {!copy ? (
                         <button
@@ -75,7 +75,9 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                         </button>
                     )}
                 </div>
-                <div ref={textRef}>{children}</div>
+                <div ref={textRef} style={{ padding: '1rem 0' }}>
+                    {children}
+                </div>
                 <style jsx>{`
                     .code-block {
                         position: relative;
@@ -96,12 +98,13 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                         padding: 9px;
                         border: 1px solid var(--docs_border_strong);
                         border-radius: 20px;
+                        float: right;
                         position: sticky;
                         top: 8px;
                         right: 12px;
                     }
                 `}</style>
-            </>
+            </div>
         );
     };
 
