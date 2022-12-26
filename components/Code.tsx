@@ -74,7 +74,7 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                                 padding: '9px',
                                 float: 'right',
                                 position: 'relative',
-                                top: '0.5rem',
+                                cursor: 'pointer',
                                 right: '12px',
                                 borderRadius: '20px',
                                 border: '1px solid var(--docs_border_strong)'
@@ -95,7 +95,7 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                                 padding: '9px',
                                 float: 'right',
                                 position: 'relative',
-                                top: '0.5rem',
+                                cursor: 'pointer',
                                 right: '12px',
                                 borderRadius: '20px',
                                 border: '1px solid var(--docs_border_strong)'
