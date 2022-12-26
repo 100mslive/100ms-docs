@@ -81,12 +81,12 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                 <style jsx>{`
                     .container {
                         position: relative;
+                        width: min-content;
                     }
                     .code-block {
                         position: absolute;
                         width: 100%;
                         top: 1rem;
-                        background: var(--docs_bg_card);
                     }
                     button:hover {
                         opacity: 0.8;
