@@ -55,49 +55,54 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
         const [copy, setCopy] = React.useState(false);
 
         return (
-            <div className="code-block">
-                {!copy ? (
-                    <button
-                        aria-label="Copy to Clipboard"
-                        onClick={() => copyFunction()}
-                        type="button"
-                        className="copied">
-                        <CopyIcon />
-                    </button>
-                ) : (
-                    <button
-                        aria-label="Copy to Clipboard"
-                        onClick={() => copyFunction()}
-                        type="button"
-                        className="copied">
-                        <CheckIcon />
-                    </button>
-                )}
-                <div ref={textRef}>{children}</div>{' '}
-                <style jsx>{`
-                    .code-block {
-                        position: relative;
-                        padding-top: 1rem;
-                    }
-                    button:hover {
-                        opacity: 0.8;
-                    }
-                    .copied {
-                        z-index: 45;
-                        background: var(--docs_bg_card);
-                        outline: none;
-                        cursor: pointer;
-                        width: 40px;
-                        height: 40px;
-                        padding: 9px;
-                        border: 1px solid var(--docs_border_strong);
-                        border-radius: 20px;
-                        position: absolute;
-                        top: 8px;
-                        right: 12px;
-                    }
-                `}</style>
-            </div>
+            <>
+                <div className="code-block">
+                    {!copy ? (
+                        <button
+                            aria-label="Copy to Clipboard"
+                            onClick={() => copyFunction()}
+                            type="button"
+                            className="copied">
+                            <CopyIcon />
+                        </button>
+                    ) : (
+                        <button
+                            aria-label="Copy to Clipboard"
+                            onClick={() => copyFunction()}
+                            type="button"
+                            className="copied">
+                            <CheckIcon />
+                        </button>
+                    )}
+                </div>
+                <div ref={textRef}>
+                    {children}
+                    <style jsx>{`
+                        .code-block {
+                            position: relative;
+                            padding-top: 1rem;
+                            width: 100%;
+                        }
+                        button:hover {
+                            opacity: 0.8;
+                        }
+                        .copied {
+                            z-index: 45;
+                            background: var(--docs_bg_card);
+                            outline: none;
+                            cursor: pointer;
+                            width: 40px;
+                            height: 40px;
+                            padding: 9px;
+                            border: 1px solid var(--docs_border_strong);
+                            border-radius: 20px;
+                            position: absolute;
+                            top: 8px;
+                            right: 12px;
+                        }
+                    `}</style>
+                </div>
+            </>
         );
     };
 
