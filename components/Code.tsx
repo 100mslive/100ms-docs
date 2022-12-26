@@ -79,10 +79,13 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                     {children}
                 </div>
                 <style jsx>{`
-                    .code-block {
+                    .container {
                         position: relative;
-                        padding-top: 1rem;
+                    }
+                    .code-block {
+                        position: absolute;
                         width: 100%;
+                        top: 1rem;
                         background: var(--docs_bg_card);
                     }
                     button:hover {
