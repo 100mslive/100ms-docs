@@ -65,7 +65,20 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                             aria-label="Copy to Clipboard"
                             onClick={() => copyFunction()}
                             type="button"
-                            className="copied">
+                            style={{
+                                zIndex: '45',
+                                background: 'var(--docs_bg_card)',
+                                outline: 'none',
+                                height: '40px',
+                                width: '40px',
+                                padding: '9px',
+                                float: 'right',
+                                position: 'relative',
+                                top: '0.5rem',
+                                right: '12px',
+                                borderRadius: '20px',
+                                border: '1px solid var(--docs_border_strong)'
+                            }}>
                             <CopyIcon />
                         </button>
                     ) : (
@@ -73,7 +86,20 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                             aria-label="Copy to Clipboard"
                             onClick={() => copyFunction()}
                             type="button"
-                            className="copied">
+                            style={{
+                                zIndex: '45',
+                                background: 'var(--docs_bg_card)',
+                                outline: 'none',
+                                height: '40px',
+                                width: '40px',
+                                padding: '9px',
+                                float: 'right',
+                                position: 'relative',
+                                top: '0.5rem',
+                                right: '12px',
+                                borderRadius: '20px',
+                                border: '1px solid var(--docs_border_strong)'
+                            }}>
                             <CheckIcon />
                         </button>
                     )}
@@ -84,21 +110,6 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                 <style jsx>{`
                     button:hover {
                         opacity: 0.8;
-                    }
-                    .copied {
-                        z-index: 45;
-                        background: var(--docs_bg_card);
-                        outline: none;
-                        cursor: pointer;
-                        width: 40px;
-                        height: 40px;
-                        padding: 9px;
-                        border: 1px solid var(--docs_border_strong);
-                        border-radius: 20px;
-                        float: right;
-                        position: sticky;
-                        top: 8px;
-                        right: 12px;
                     }
                 `}</style>
             </Box>
