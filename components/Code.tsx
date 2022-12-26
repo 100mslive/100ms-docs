@@ -55,29 +55,38 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
         const [copy, setCopy] = React.useState(false);
 
         return (
-            <div className="code-block">
-                {!copy ? (
-                    <button
-                        aria-label="Copy to Clipboard"
-                        onClick={() => copyFunction()}
-                        type="button"
-                        className="copied">
-                        <CopyIcon />
-                    </button>
-                ) : (
-                    <button
-                        aria-label="Copy to Clipboard"
-                        onClick={() => copyFunction()}
-                        type="button"
-                        className="copied">
-                        <CheckIcon />
-                    </button>
-                )}
-                <div ref={textRef}>{children}</div>{' '}
+            <div className="container">
+                <div className="code-block">
+                    {!copy ? (
+                        <button
+                            aria-label="Copy to Clipboard"
+                            onClick={() => copyFunction()}
+                            type="button"
+                            className="copied">
+                            <CopyIcon />
+                        </button>
+                    ) : (
+                        <button
+                            aria-label="Copy to Clipboard"
+                            onClick={() => copyFunction()}
+                            type="button"
+                            className="copied">
+                            <CheckIcon />
+                        </button>
+                    )}
+                </div>
+                <div ref={textRef} style={{ padding: '1rem 0' }}>
+                    {children}
+                </div>
                 <style jsx>{`
-                    .code-block {
+                    .container {
                         position: relative;
-                        padding-top: 1rem;
+                        width: min-content;
+                    }
+                    .code-block {
+                        position: absolute;
+                        width: 100%;
+                        top: 1rem;
                     }
                     button:hover {
                         opacity: 0.8;
@@ -92,7 +101,8 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                         padding: 9px;
                         border: 1px solid var(--docs_border_strong);
                         border-radius: 20px;
-                        position: absolute;
+                        float: right;
+                        position: sticky;
                         top: 8px;
                         right: 12px;
                     }
