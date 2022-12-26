@@ -2,54 +2,65 @@
 title: Peer Metadata Update
 nav: 3.993
 ---
-Looking for persistent state that can be set on a peer and updated anytime, for everyone in the room? Peer metadata is it.
 
-Metadata can be set initially in the HMSConfig object that's passed into the join method.
+Looking for persistent state that can be set on a peer and updated anytime, for everyone in the room? Peer metadata it is.
 
-This section will show you how to:
 
-1. Read Peer Metadata.
-2. Respond to when a remote peer changes its metadata.
-3. How to set a peer's metadata.
+Metadata can be set initially in the `HMSConfig` object that's passed into the join method and update post join by
+following the API below. You can imagine metadata as a persistent object attached to the peer which has more details about
+them.
 
-The `HMSPeer` object prior to 2.2.1 contained `customerDescription` a read-only string whose value wouldn't change throughout a call. 
-This has been replaced with `metadata`. The value is initially assigned as before but now can be changed by the peer who owns it.
 
-Any peer can change the metadata for themselves. Currently one peer cannot change another peer's metadata.
+We'll explain the API using an example of implementing raise hand. For this, we'll use the below interface for metadata -
 
-To change their own metadata value the peer should call `changeMetadata` on their `HMSSdk` instance.
-
-The data may be any arbitrary string though it cannot be changed to null.
-
-## Reading metadata
-To read metadata, read the metadata value on any HMSPeer instance.
-```js
-hmsInstance?.localPeer?.metadata // local or remote peer
+```ts
+interface CustomMetadata {
+    isHandRaised: boolean;
+}
 ```
 
-## Responding to updates
-Whenever a remote peer's metadata is updated a callback will be received in `onPeerUpdate` where the update value will be of type `HMSPeerUpdate.METADATA_CHANGED`.
+## Getting and Setting Metadata
 
-## Updating Metadata
-Here is how a peer can set their own metadata to a random string. In this case the string is stringified json
-```js
-const parsedMetadata = JSON.parse(hmsInstance?.localPeer?.metadata)
+Note that `peer.metadata` is a string, it can be used to keep a stringified JSON. 
+Metadata update post join can be achieved by calling `hmsInstance.changeMetadata(metadata)` 
 
-// Raise Hand
-await hmsInstance?.changeMetadata(
-  JSON.stringify({
-    ...parsedMetadata,
-    isHandRaised: true,
-  }),
-).then(d => console.log('Change Metadata Success: ', d))
- .catch(e => console.log('Change Metadata Error: ', e));
+The below example shows implementing a toggle raise hand function for the local peer.
 
-// BRB
-await hmsInstance?.changeMetadata(
-  JSON.stringify({
-    ...parsedMetadata,
-    isBRBOn: true,
-  }),
-).then(d => console.log('Change Metadata Success: ', d))
- .catch(e => console.log('Change Metadata Error: ', e));
+```ts
+async function toggleRaiseHand() {
+    const metadata = JSON.parse(hmsInstance.localPeer?.metadata);
+    const newMetadata = JSON.stringify({...parsedMetadata, isHandRaised: !metadata.isHandRaised});
+    await hmsInstance.changeMetadata(newMetadata);
+}
 ```
+
+
+## Peer Metadata Update Notification
+
+Once the metadata is updated, for all the peers `onPeerUpdate` event will be triggered where the update value will be of type `HMSPeerUpdate.METADATA_CHANGED`
+
+
+```ts
+const onPeerListener = ({
+    peer,
+    type,
+  }: {
+    peer: HMSPeer;
+    type: HMSPeerUpdate;
+  }) => {
+    if (type === HMSPeerUpdate.METADATA_CHANGED) {
+      const metadata = JSON.parse(peer.metadata);
+      if (metadata.isHandRaised && !peer.isLocal) {
+        toast(`${peer.name} raised their hand.`);
+      }  
+    }
+  };
+```
+
+
+## Ideas
+
+-   Implementing raise hand
+-   Multiplayer games like chess, scribble, quizzes etc.
+-   Store extra information such as profile picture for every peer which can be updated mid call
+
