@@ -75,34 +75,32 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                         </button>
                     )}
                 </div>
-                <div ref={textRef}>
-                    {children}
-                    <style jsx>{`
-                        .code-block {
-                            position: relative;
-                            padding-top: 1rem;
-                            width: 100%;
-                            background: var(--docs_bg_card);
-                        }
-                        button:hover {
-                            opacity: 0.8;
-                        }
-                        .copied {
-                            z-index: 45;
-                            background: var(--docs_bg_card);
-                            outline: none;
-                            cursor: pointer;
-                            width: 40px;
-                            height: 40px;
-                            padding: 9px;
-                            border: 1px solid var(--docs_border_strong);
-                            border-radius: 20px;
-                            position: sticky;
-                            top: 8px;
-                            right: 12px;
-                        }
-                    `}</style>
-                </div>
+                <div ref={textRef}>{children}</div>
+                <style jsx>{`
+                    .code-block {
+                        position: relative;
+                        padding-top: 1rem;
+                        width: 100%;
+                        background: var(--docs_bg_card);
+                    }
+                    button:hover {
+                        opacity: 0.8;
+                    }
+                    .copied {
+                        z-index: 45;
+                        background: var(--docs_bg_card);
+                        outline: none;
+                        cursor: pointer;
+                        width: 40px;
+                        height: 40px;
+                        padding: 9px;
+                        border: 1px solid var(--docs_border_strong);
+                        border-radius: 20px;
+                        position: sticky;
+                        top: 8px;
+                        right: 12px;
+                    }
+                `}</style>
             </>
         );
     };
