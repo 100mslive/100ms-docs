@@ -26,11 +26,11 @@ val metadata = HMSHLSTimedMetadata(
 
 hmsSDK.setHlsSessionMetadata(arrayListOf(hmsHLSTimedMetadata), object : HMSActionResultListener {
         override fun onError(error: HMSException) {
-            Log.d(TAG, "Unable to send metadata")
+            Log.d(TAG, "hls metadata sending failed");
         }
 
         override fun onSuccess() {
-           Log.d(TAG, "hls metadata sent")
+            Log.d(TAG, "hls metadata sent successfully");
         }
 })
 ```
@@ -55,65 +55,74 @@ hmsSDK.setHlsSessionMetadata(metadataModelList, new HMSActionResultListener() {
         Log.d(TAG, "hls metadata sending failed");
     }
 });
-
 ```
+
 </Tab>
 
 ## Receiving HLS Timed Metadata
 
-1. Getting the metadata from exoplayer : 
+### Getting metadata from exoplayer
 
 <Tabs id="recieve-hmsTimedMetadata" items={['Kotlin', 'Java']} />
 
 <Tab id='recieve-hmsTimedMetadata-0'>
-```kotlin
 
+```kotlin
         val hlsManifest = exoPlayer.currentManifest as HlsManifest?
         val windowIndex = exoPlayer.currentMediaItemIndex
         val timeline = exoPlayer.currentTimeline
         val window = timeline.getWindow(windowIndex, Timeline.Window())
         val currentAbsolutePosition = (window.windowStartTimeMs + exoPlayer.currentPosition)
         val META_DATA_MATCHER = "#EXT-X-DATERANGE:ID=\"(?<id>.*)\",START-DATE=\"(?<startDate>.*)\",DURATION=(?<duration>.*),X-100MSLIVE-PAYLOAD=\"(?<payload>.*)\""
-        
-        hlsManifest?.mediaPlaylist?.tags?.lastOrNull {
+        var duration = 0;
+        var tagStartTime = 0L;
+        String payload = "";
+
+        hlsManifest?.mediaPlaylist?.tags?.forEach {
             if (it.contains("EXT-X-DATERANGE")) {
                 val pattern = Pattern.compile(META_DATA_MATCHER)
                 val matcher = pattern.matcher(it)
                 if (matcher.matches()) {
                     try {
-                        val payload = matcher.group(4).orEmpty()
-                        val duration = matcher.group(3).orEmpty().toLongOrNull()?.times(1000) ?: 0
+                        // X-100MSLIVE-PAYLOAD : this contains payload passed in metadata from setHlsSessionMetadata()  
+                        payload = matcher.group(4).orEmpty()
+                        // DURATION : this contains duration that was passed in metadata from setHlsSessionMetadata()
+                        duration = matcher.group(3).orEmpty().toLongOrNull()?.times(1000) ?: 0
+                        // START-DATE : this contains start time for metadata
                         val startDate = matcher.group(2).orEmpty()
                         val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
                         formatter.timeZone = UTC
-                        val tagStartTime = formatter.parse(startDate).time
-                        lastFoundTag = LocalMetaDataModel(payload, duration)
-                        lastFoundTag?.startTime = tagStartTime
+                        tagStartTime = formatter.parse(startDate).time
+                        // Syncing of metadata with current player position.
+                        if (tagStartTime <= currentAbsolutePosition && currentAbsolutePosition - tagStartTime <= duration) {
+                            Log.i(TAG,payload);
+                        }
                         return@lastOrNull tagStartTime <= currentAbsolutePosition
                     } catch (e: Exception) {
+                        e.printStackTrace();
                     }
                 }
             }
             false
         }
-
 ```
 </Tab>
 
 <Tab id='recieve-hmsTimedMetadata-1'>
 
 ```java 
-
         HlsManifest hlsManifest = (HlsManifest) exoPlayer.getCurrentManifest();
         int windowIndex = exoPlayer.getCurrentMediaItemIndex();
         Timeline timeline = exoPlayer.getCurrentTimeline();
         Timeline.Window window = timeline.getWindow(windowIndex, new Timeline.Window());
         long currentAbsolutePosition = (window.windowStartTimeMs + exoPlayer.getCurrentPosition());
         String META_DATA_MATCHER = "#EXT-X-DATERANGE:ID=\"(?<id>.*)\",START-DATE=\"(?<startDate>.*)\",DURATION=(?<duration>.*),X-100MSLIVE-PAYLOAD=\"(?<payload>.*)\""
+        String payload = "";
+        long tagStartTime; 
 
-        Stream<String> tag = hlsManifest.mediaPlaylist.tags.stream().filter(new Predicate<String>() {
+        hlsManifest.mediaPlaylist.tags.forEach(new Consumer<String>() {
             @Override
-            public boolean test(String tag) {
+            public void accept(String tag) {
                 if (tag.contains("EXT-X-DATERANGE")) {
                     Pattern pattern = Pattern.compile(META_DATA_MATCHER);
                     Matcher matcher = pattern.matcher(tag);
@@ -124,52 +133,21 @@ hmsSDK.setHlsSessionMetadata(metadataModelList, new HMSActionResultListener() {
                             String startDate = matcher.group(2);
                             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
                             formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
-                            long tagStartTime = formatter.parse(startDate).getTime();
-                            LocalMetaDataModel lastFoundTag = new LocalMetaDataModel(payload, duration);
-                            lastFoundTag.setStartTime(tagStartTime);
-                            return tagStartTime <= currentAbsolutePosition;
+                            tagStartTime = formatter.parse(startDate).getTime();
+                            if (tagStartTime <= currentAbsolutePosition && currentAbsolutePosition - tagStartTime <= duration) {
+                                Log.i(TAG,payload);
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 }
-               return false;
             }
         });
 
 ```
 </Tab>
 
-2. Syncing up last found tag from above getter with current player position.
-
-<Tabs id="sync-hmsTimedMetadata" items={['Kotlin', 'Java']} />
-
-<Tab id='sync-hmsTimedMetadata-0'>
-```kotlin 
-
-    lastFoundTag?.let { tag ->
-        val tagStartTime = tag.startTime
-        if (tagStartTime <= currentAbsolutePosition && currentAbsolutePosition - tagStartTime <= tag.duration) {
-            // you can modify this toast message , as per requirement
-            Toast.makeText(context, "Metadata Found", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-```
-</Tab>
-
-<Tab id='sync-hmsTimedMetadata-1'>
-```java 
-
-    if (lastFoundTag != null){
-        long tagStartTime = lastFoundTag.getStartTime();
-        if (tagStartTime <= currentAbsolutePosition && currentAbsolutePosition - tagStartTime <= lastFoundTag.getDuration()) {
-            // you can modify this toast message , as per requirement
-            Toast.makeText(context, "Metadata Found", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-```
-</Tab>
+>  Please Note : above step has to be repeated periodically to sync meta-data with playback.
 
 
