@@ -13,23 +13,35 @@ nav: 7.5
 
 This guide will walk you through instructions to build a Collaborative whiteboard by integrating Pusher with our [sample app](https://github.com/100mslive/100ms-web).
 
-## Pusher Account
+<video loop="true" autoplay="autoPlay" controls="controls" id="vid" muted>
+    <source src="/docs/guides/whiteboard-demo.mp4" type="video/mp4" />
+</video>
+<br />
 
--   Create an Pusher account at https://pusher.com/.
--   Create a new channels app.
--   Go to the “App Keys” page for that app(apps list view at https://dashboard.pusher.com/apps), and make a note of your app_id, key, secret and cluster.
--   Go to the "App Settings" page and enable client events.
+You need three components to complete the Collaborative whiteboard demo:
+
+1. [Pusher Channels app](#usher-channels-app)
+2. [Whiteboard server](#whiteboard-server) — this guide follow vercel deployment.
+3. [Whiteboard client](#whiteboard-client) - this guide uses [100ms-web sample app](https://github.com/100mslive/100ms-web).
+
+## Pusher Channels App
+
+-   Sign up for [Pusher account](https://pusher.com/).
+-   Click on `Create app` to create a new `Channels app`.
+-   Provide a friendly `name for your app` and `select a cluster` based on your preference.
+-   Go to the `App Keys` section on the sidebar, and copy your app_id, key, secret and cluster.
+-   Go to the `App Settings` section on the sidebar and turn on `enable client events`.
 
 ## Whiteboard Server
 
 -   Fork the whiteboard pusher server from https://github.com/100mslive/whiteboard-server and deploy it using your preferred hosting provider.
 -   Add the pusher keys noted earlier to environment variables.
 
-```
-APP_CLUSTER="cluster"
-APP_SECRET="secret"
-APP_KEY="key"
+```environment
 APP_ID="app_id"
+APP_KEY="key"
+APP_SECRET="secret"
+APP_CLUSTER="cluster"
 ```
 
 -   The API path is `api/pusher/auth`, say your deployment URL is `whiteboard-server.vercel.app`, the Pusher Auth Endpoint is `https://whiteboard-server.vercel.app/api/pusher/auth`
