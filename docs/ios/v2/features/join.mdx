@@ -26,10 +26,36 @@ class MyMeetingClass {
 }
 ```
 
+You can optionally set the initial audio/video state at the time of joining like below:
+
+```
+class MyMeetingClass {
+    
+    let hmsSDK: HMSSDK // store instance of HMSSDK as a property in your class
+
+    init() {
+        // initialize the SDK using the `build()` class function
+        hmsSDK = HMSSDK.build() { sdk in
+            sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettingsBuilder in
+                videoSettingsBuilder.initialMuteState = .mute
+            }
+        }
+    }
+}
+```
+
 2. Next, create an object of `HMSConfig` class using the available joining configurations
 ```swift
 let config = HMSConfig(userName: "John Doe",
                       authToken: "eyJH5c")
+```
+
+Optionally, you can use metadata param that can be used to attach any additional data associated with this user. You can access this data on this peer later using peer's metadata property.
+
+```swift
+let config = HMSConfig(userName: "John Doe",
+                      authToken: "eyJH5c",
+                      metadata: "{"avatar": "location/on/amazon/storage"}")
 ```
 
 3. Now, we are primed to join the room. All you have to do is pass the `config` object to `hmsSDK`
