@@ -187,26 +187,22 @@ you use.
 import Hls from 'hls.js';
 
 function changeQuality() {
-    
     if (Hls.isSupported()) {
         let hls = new Hls();
-        console.log("Available quality levels in current stream", hls.levels);
+        console.log('Available quality levels in current stream', hls.levels);
         setCurrentLevel(hls.levels[0]); //set the first level.
     }
-    
 }
 
-  function setCurrentLevel(currentLevel) {
+function setCurrentLevel(currentLevel) {
     // make sure we are choosing the right level by checking the
     // height and width.
     const newLevel = this.hls.levels.findIndex(
-      level =>
-        level.height === currentLevel.height &&
-        level.width === currentLevel.width
+        (level) => level.height === currentLevel.height && level.width === currentLevel.width
     );
     // set it.
     this.hls.currentLevel = newLevel;
-  }
+}
 ```
 
 </Tab>
@@ -222,24 +218,22 @@ function HLSView({ hlsUrl }) {
         if (videoRef.current && hlsUrl) {
             if (Hls.isSupported()) {
                 let hls = new Hls();
-                console.log("Available quality levels in current stream", hls.levels);
+                console.log('Available quality levels in current stream', hls.levels);
                 setCurrentLevel(hls.levels[0]); //set the first level.
             }
         }
     }, [hlsUrl]);
 
     function setCurrentLevel(currentLevel) {
-    // make sure we are choosing the right level by checking the
-    // height and width.
-    const newLevel = this.hls.levels.findIndex(
-      level =>
-        level.height === currentLevel.height &&
-        level.width === currentLevel.width
-    );
-    // set it.
-    this.hls.currentLevel = newLevel;
-  }
-  
+        // make sure we are choosing the right level by checking the
+        // height and width.
+        const newLevel = this.hls.levels.findIndex(
+            (level) => level.height === currentLevel.height && level.width === currentLevel.width
+        );
+        // set it.
+        this.hls.currentLevel = newLevel;
+    }
+
     return <video ref={videoRef} autoPlay controls></video>;
 }
 ```
