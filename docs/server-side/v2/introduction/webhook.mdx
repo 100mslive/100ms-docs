@@ -277,13 +277,13 @@ This event will be sent when peer leaves the room
           same in the `message` field.
 3. `websocket closed`: network issues
     - _Example scenario:_
-        - If there's an abrupt network disconnection from the client side (peer) without any further attempts to reconnect, 100ms server will close the WebSocket connection.
+        - If there's an abrupt network disconnection from the client side (peer) without any further attempts to reconnect, the 100ms server will close the WebSocket connection after 60 seconds. This can happen if the app is forcefully closed or the network is disconnected.
 4. `ice connection state closed`: network issues
     - _Example scenario:_
-        - When a peer is disconnected due to network issues, the SDK will retry for 60 seconds and disconnect if there are no attempts to reconnect.
+        - Suppose there's an abrupt network disconnection at the media transport level from the client side (peer) without any further attempts to reconnect. In that case, the 100ms server will close the WebSocket connection after 60 seconds. This can happen if network config changes prohibit media packets from being sent/received by the client. Possible causes could be firewall changes or connection overwhelming because of higher downloads than the network can handle.
 5. `server removed peer`: network issues
     - _Example scenario:_
-        - When a peer is removed by the server as there were no attempts to reconnect for 60 seconds and if the client-side app still sends retries after 60 seconds. This happens rarely.
+        - If there are any server-side anomalies, like a server failure mid-way into the call, it will remove peers with this error. The occurrence of this is rare.
 
 #### Sample `peer.leave.success` event
 
