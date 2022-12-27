@@ -30,7 +30,7 @@ Use our [Live Streaming Starter Kit](https://www.100ms.live/marketplace/live-str
 
 ### Create a new app
 
-![Live Streaming starter kit](/docs/docs/v2/live-streaming-starter-kit.png)
+![Live streaming starter kit](/docs/docs/v2/live-streaming-starter-kit.png)
 
 1. Make sure that you have [an account with 100ms](https://dashboard.100ms.live/register) and can access the [100ms dashboard](https://dashboard.100ms.live/)
 1. On the dashboard, create a new app using the Live Streaming Starter Kit
