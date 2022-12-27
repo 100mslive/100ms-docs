@@ -26,7 +26,7 @@ class MyMeetingClass {
 }
 ```
 
-You can optionally set the initial audio/video state at the time of joining like below:
+You can optionally set the initial audio/video state at the time of joining (they are unmute by default) like below:
 
 ```
 class MyMeetingClass {
@@ -38,6 +38,7 @@ class MyMeetingClass {
         hmsSDK = HMSSDK.build() { sdk in
             sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettingsBuilder in
                 videoSettingsBuilder.initialMuteState = .mute
+                audioSettingsBuilder.initialMuteState = .mute
             }
         }
     }
