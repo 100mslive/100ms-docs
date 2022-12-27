@@ -30,7 +30,7 @@ Use our [Live Streaming Starter Kit](https://www.100ms.live/marketplace/live-str
 
 ### Create a new app
 
-![Live Streaming Starter Kit](/docs/docs/v2/live-streaming-starter-kit.png)
+![Live Streaming starter kit](/docs/docs/v2/live-streaming-starter-kit.png)
 
 1. Make sure that you have [an account with 100ms](https://dashboard.100ms.live/register) and can access the [100ms dashboard](https://dashboard.100ms.live/)
 1. On the dashboard, create a new app using the Live Streaming Starter Kit
@@ -50,7 +50,7 @@ This starter kit configures your new app with [two roles](templates-and-roles):
 ![Go live](/docs/docs/v2/live-streaming-go-live.gif)
 
 1. To go live for the first time, join the room as a `broadcaster` and start the live stream
-2. Once the stream has started, join the room as an `hls-viewer` — you should be able to see the ongoing live stream
+2. Once the stream has started, join the room as an `hls-viewer` and you should be able to see the ongoing live stream
 3. Use chat messages to interact between the viewer and the broadcaster
 
 ### Customize the stream
