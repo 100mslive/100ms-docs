@@ -1,0 +1,54 @@
+---
+title: Collaborative Whiteboard
+nav: 7.5
+---
+
+<Note type="warning">
+    This feature is still in Beta and only available for Web platform. To know more or report any
+    issues, feel free to reach out to us over{' '}
+    <a href={'https://discord.com/invite/kGdmszyzq2'}>Discord</a>.
+</Note>
+
+## Overview
+
+This guide will walk you through instructions to build a Collaborative whiteboard by integrating Pusher with our [sample app](https://github.com/100mslive/100ms-web).
+
+<video loop="true" autoplay="autoPlay" controls="controls" id="vid" muted>
+    <source src="/docs/guides/whiteboard-demo.mp4" type="video/mp4" />
+</video>
+<br />
+
+You need three components to complete the Collaborative whiteboard setup:
+
+1. [Pusher Channels app](#usher-channels-app)
+2. [Whiteboard server](#whiteboard-server) — this guide follows Vercel deployment.
+3. [Whiteboard client](#whiteboard-client) — this guide uses the [100ms-web sample app](https://github.com/100mslive/100ms-web).
+
+## Pusher Channels App
+
+-   Sign up for a [Pusher account](https://pusher.com/).
+-   Click on `Create app` to create a new `Channels app`.
+-   Provide a friendly `name for your app` and `select a cluster` based on your preference.
+-   Go to the `App Keys` section on the sidebar, and copy your app_id, key, secret, and cluster.
+-   Go to the `App Settings` section on the sidebar and turn on `enable client events`.
+
+## Whiteboard Server
+
+-   Fork the [Whiteboard Pusher server](https://github.com/100mslive/whiteboard-server) and deploy it using your preferred hosting provider.
+-   Add the Pusher keys noted earlier to environment variables.
+
+```bash
+APP_ID="app_id"
+APP_KEY="key"
+APP_SECRET="secret"
+APP_CLUSTER="cluster"
+```
+
+-   The API path is `api/pusher/auth`; say your deployment URL is `whiteboard-server.vercel.app`, then the Pusher Auth Endpoint will be `https://whiteboard-server.vercel.app/api/pusher/auth`.
+
+## Whiteboard Client
+
+-   Copy the whole folder at `/src/plugins/whiteboard` into your live video conferencing or live streaming apps using 100ms' SDKs.
+-   Add the Pusher `app key` and Pusher auth endpoint to `REACT_APP_PUSHER_APP_KEY` and `REACT_APP_PUSHER_AUTHENDPOINT` environment variables.
+-   The `useWhiteboardMetadata` hook returns a state such as the whiteboard owner(`whiteboardOwner`) and action to toggle the whiteboard(`toggleWhiteboard`). Refer to usage in `ToggleWhiteboard.jsx` - an icon button to toggle the whiteboard based on the active state.
+-   When the whiteboard is active(`whiteboardOwner` from `useWhiteboardMetadata` is not null), render the `Whiteboard` component on your UI to let your users draw on the whiteboard. Refer `mainView.jsx` and `WhiteboardView.jsx`.
