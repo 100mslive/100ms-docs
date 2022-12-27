@@ -1,0 +1,6 @@
+- Please refer to the platform specific documentation for details on how to obtain the stream URL and stream key. Here are some examples: 
+    -   [Create a YouTube live stream with an encoder - YouTube Help](https://support.google.com/youtube/answer/2907883?hl=en&ref_topic=9257892)
+    -   [How do I go live on Facebook using streaming software? | Facebook Help Center](https://www.facebook.com/help/587160588142067)
+    -   [Instagram Live Producer | Instagram Blog](https://about.instagram.com/blog/tips-and-tricks/instagram-live-producer)
+    -   [Twitch Stream Key FAQ](https://help.twitch.tv/s/article/twitch-stream-key-faq?language=en_US)
+    -   [Go Live Using a Custom Stream - LinkedIn Help](https://www.linkedin.com/help/linkedin/answer/a564446/go-live-using-a-custom-stream-rtmp)
