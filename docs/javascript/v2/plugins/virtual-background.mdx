@@ -212,6 +212,21 @@ const virtualBackground = new HMSVBPlugin(
     HMSVirtualBackgroundTypes.NONE
 );
 
+const checkSupport = () => {
+    const { isPluginSupported, errType, errMsg } = virtualBackground.checkSupport();
+    // errType and errMsg will be available if the plugin does not support the browser or os etc.
+    return isPluginSupported;
+}
+
+const changeBackground = async () => {
+    // for blurring the background
+    await virtualBackground.current.setBackground(HMSVirtualBackgroundTypes.BLUR, HMSVirtualBackgroundTypes.BLUR);
+    // for setting an image
+    const image = document.createElement('img');
+    image.src = <image url>;
+    await virtualBackground.current.setBackground(image, HMSVirtualBackgroundTypes.IMAGE)
+}
+
 async function toggleVB() {
     const isVirtualBackgroundEnabled = hmsStore.getState(
         selectIsLocalVideoPluginPresent(virtualBackground.getName())
@@ -253,13 +268,19 @@ function VirtualBackground() {
     );
     const hmsActions = useHMSActions();
 
-    const changeBackground = () => {
+    const changeBackground = async () => {
         // for blurring the background
-        virtualBackground.current.setBackground(HMSVirtualBackgroundTypes.BLUR, HMSVirtualBackgroundTypes.BLUR);
+        await virtualBackground.current.setBackground(HMSVirtualBackgroundTypes.BLUR, HMSVirtualBackgroundTypes.BLUR);
         // for setting an image
         const image = document.createElement('img');
         image.src = <image url>;
-        virtualBackground.current.setBackground(image, HMSVirtualBackgroundTypes.IMAGE)
+        await virtualBackground.current.setBackground(image, HMSVirtualBackgroundTypes.IMAGE)
+    }
+
+    const checkSupport = () => {
+        const { isPluginSupported, errType, errMsg } = virtualBackground.current.checkSupport();
+        // errType and errMsg will be available if the plugin does not support the browser or os etc.
+        return isPluginSupported;
     }
 
     const toggleVB = useCallback(async () => {
@@ -267,7 +288,8 @@ function VirtualBackground() {
             if (!isVirtualBackgroundEnabled) {
                 // Recommended value
                 const pluginFrameRate = 15;
-                // change background - this can be changed  after addPlugin as well
+                // Make sure to call the checkSupport function to enable virtual background depending on whether it is supported or not
+                // call changeBackground if it is not initialised with the right background can be done after adding the plugin as well
                 await hmsActions.addPluginToVideoTrack(virtualBackground.current, pluginFrameRate);
             } else {
                 await hmsActions.removePluginFromVideoTrack(virtualBackground.current);
