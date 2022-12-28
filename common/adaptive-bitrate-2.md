@@ -1,8 +1,6 @@
 
 ### Subscribe-side behavior
 
-<br/>
-
 #### Manual layer selection
 
 The 100ms client-side SDKs provide methods to set a preferred quality layer for a remote peer's video track. See docs for your preferred platform:
