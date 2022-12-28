@@ -26,15 +26,17 @@ The [roles primitive](templates-and-roles) can be used to define capabilities of
 
 Use our [Live Streaming Starter Kit](https://www.100ms.live/marketplace/live-streaming-starter-kit) to try out the experience before you write a line of code.
 
-### Step 1: Create a new app
+<div className="steps-container">
 
-![Live Streaming Starter Kit](/docs/docs/v2/live-streaming-starter-kit.png)
+### Create a new app
+
+![Live streaming starter kit](/docs/docs/v2/live-streaming-starter-kit.png)
 
 1. Make sure that you have [an account with 100ms](https://dashboard.100ms.live/register) and can access the [100ms dashboard](https://dashboard.100ms.live/)
 1. On the dashboard, create a new app using the Live Streaming Starter Kit
 1. Specify a subdomain and region to deploy the app
 
-### Step 2: Understand roles
+### Understand roles
 
 ![Live Streaming roles](/docs/docs/v2/live-streaming-roles.png)
 
@@ -43,15 +45,15 @@ This starter kit configures your new app with [two roles](templates-and-roles):
 -   `broadcaster`: This role represents a streamer who publishes their audio/video. There can be multiple peers who join as broadcasters
 -   `hls-viewer`: This role represents a circle 3 audience, who subscribes to the composite live stream and can interact using messaging
 
-### Step 3: Go live
+### Go live
 
 ![Go live](/docs/docs/v2/live-streaming-go-live.gif)
 
 1. To go live for the first time, join the room as a `broadcaster` and start the live stream
-2. Once the stream has started, join the room as an `hls-viewer` — you should be able to see the ongoing live stream
+2. Once the stream has started, join the room as an `hls-viewer` and you should be able to see the ongoing live stream
 3. Use chat messages to interact between the viewer and the broadcaster
 
-### Step 4: Customize the stream
+### Customize the stream
 
 ![Go live](/docs/docs/v2/live-streaming-customise.png)
 
@@ -63,6 +65,8 @@ By default, the live stream is composed in landscape mode for desktop viewers (w
     - If your viewers are on mobile, change the video aspect ratio to 9:16
     - If you have multiple broadcasters joining in, choose grid or active speaker based on your needs
     - In case of grid layout, choose the tile size that fits your use-case. For example, a stream with 2 streamers looks better with 1:1 tiles.
+
+</div>
 
 ## Integrate in your app
 
