@@ -1,6 +1,5 @@
 ## General
 
-
 ### What is the inspiration behind the name, 100ms?
 
 We got the name 100ms inspired by the "100ms latency ruule" concept from Gmail creator Paul Buchheit, who said that 100ms is the threshold "where interactions feel instantaneous"
@@ -17,13 +16,13 @@ For example, Virtual background feature is available as a beta feature on Web, A
 
 ### Can I delete apps from dashboard?
 
-Yes, you can delete an App from your [dashbaord](https://dashboard.100ms.live/dashboard) by hovering over the app and clicking on the trash icon.
+Yes, you can delete an App from your [dashboard](https://dashboard.100ms.live/dashboard) by hovering over the app and clicking on the trash icon.
 
 ## Getting started
 
 ### We have decided to use your tool for our Livestream product we are building. What are the next steps for us to get started?
 
-You can start with our documentation - https://www.100ms.live/docs. We also recommend checking out our github for open source sample SDKs that can aid in initial integration - https://github.com/100mslive; Here is a piece on our live streaming capabilities : https://www.100ms.live/interactive-live-streaming
+You can start with our [documentation](/docs). We also recommend checking out our github for open source [sample SDKs](https://github.com/100mslive) that can aid in initial integration; Here is a piece on our [live streaming capabilities](https://www.100ms.live/interactive-live-streaming).
 
 ### Do you have any resources for designers that lets them know what parts of the video player are easily configurable so they can make designs for how they want the video player to look?
 
@@ -93,3 +92,11 @@ The role argument should be assigned with the name of the role created in the te
 ### Can we generate two application access tokens, one for QA and one for production, so that messages from QA don't flood the production environment?
 
 Yes, this is possible with Teams & workspaces on 100ms dashboard, You can create multiple workspaces and use the App access key and App secret from each of these workspaces to create different app tokens or management tokens based on your requirements. For more information, please check [this blog](https://www.100ms.live/blog/launching-teams-workspaces) and also check your [100ms dashboard](https://dashboard.100ms.live/) to see how this works.
+
+### How do I stop using 100ms token endpoint for app token generation in the react sample app and use the endpoint of my backend service?
+
+You can set up a token generation service on your end to create app tokens and block users that are trying to join without a token that's generated from your service. Please check authentication and [tokens guide](./../foundation/security-and-tokens#app-token) for more information. 
+
+You can update the code to point to your own token service (relevant code in the sample - see getToken(...)), your token endpoint can follow a similar interface: for a given room_id and role name, return the app token JWT.
+
+You can continue using the existing routes (room_id/role) or setup your own routes in the cloned/forked code.
