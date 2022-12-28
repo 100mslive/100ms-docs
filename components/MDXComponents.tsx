@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
 import APILink from './APILink';
