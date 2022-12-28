@@ -17,24 +17,27 @@ When user indicates that they want to _join_ the room, your app should have -
 We'll call the `join` method on `HMSSDK` object with a config containing above fields to join the room.
 
 <div className="steps-container">
+
 ### Create HMSSDK Instance
 
-1. First, create an instance of `HMSSDK` class. Store this instance as a property. Ensure that the SDK object is alive in memory so that you can receive event callbacks from SDK. Simplest way to do this is as follows -
+First, create an instance of `HMSSDK` class. Store this instance as a property. Ensure that the SDK object is alive in memory so that you can receive event callbacks from SDK. Simplest way to do this is as follows -
 
-    ```swift
-    import HMSSDK
+```swift
+import HMSSDK
 
-    class MyMeetingClass {
+class MyMeetingClass {
 
-        let hmsSDK: HMSSDK // store instance of HMSSDK as a property in your class
+    let hmsSDK: HMSSDK // store instance of HMSSDK as a property in your class
 
-        init() {
-            hmsSDK = HMSSDK.build() // initialize the SDK using the `build()` class function
-        }
+    init() {
+        hmsSDK = HMSSDK.build() // initialize the SDK using the `build()` class function
     }
-    ```
+}
+```
 
-    [Optional] You can optionally set the initial audio/video state at the time of joining like below (they are unmute by default):
+**Optional: Join with Muted Audio / Video**
+
+    You can optionally set the initial audio/video state at the time of joining like below (they are unmute by default):
 
     ```
     class MyMeetingClass {
@@ -55,14 +58,14 @@ We'll call the `join` method on `HMSSDK` object with a config containing above f
 
 ### Create HMSConfig Instance
 
-2. Next, create an object of `HMSConfig` class using the available joining configurations
+Next, create an object of `HMSConfig` class using the available joining configurations
 
 ```swift
 let config = HMSConfig(userName: "John Doe",
                       authToken: "eyJH5c")
 ```
 
-[Optional] Set metadata for the user
+**Optional: Set metadata for the user**
 
 Optionally, you can use metadata param that can be used to attach any additional data associated with this user. You can access this data on this peer later using peer's 'metadata' property.
 
@@ -74,7 +77,7 @@ let config = HMSConfig(userName: "John Doe",
 
 ### Call join
 
-3. Now, we are primed to join the room. All you have to do is pass the `config` object to `hmsSDK`
+Now, we are primed to join the room. All you have to do is pass the `config` object to `hmsSDK`
 
 ```swift
 hmsSDK.join(config: config, delegate: self)
