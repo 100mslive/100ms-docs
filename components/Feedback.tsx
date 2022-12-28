@@ -117,6 +117,7 @@ const Feedback = () => {
                                 cursor: 'pointer'
                             }}
                             onClick={() => {
+                                const userDetails = currentUser();
                                 window.analytics.track('docs.feedback.message', {
                                     title: document.title,
                                     message: message || '',
@@ -124,7 +125,9 @@ const Feedback = () => {
                                     referrer: document.referrer,
                                     path: window.location.pathname,
                                     timeStamp: new Date().toLocaleString(),
-                                    ...currentUser()
+                                    customer_id: userDetails?.customer_id,
+                                    user_id: userDetails?.user_id,
+                                    email: userDetails?.email
                                 });
                                 setSubmitSuccessful(true);
                             }}>
