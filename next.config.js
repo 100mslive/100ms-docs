@@ -113,6 +113,11 @@ const nextConfig = {
                 source: '/api-reference/server-side/v2/home/content',
                 destination: '/server-side/v2/introduction/basics',
                 permanent: false
+            },
+            {
+                source: '/react-native/v2/features/hls-streaming',
+                destination: '/react-native/v2/features/hls',
+                permanent: false
             }
         ];
     }
