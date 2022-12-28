@@ -58,7 +58,6 @@ const Feedback = () => {
                                     customer_id: userDetails?.customer_id,
                                     user_id: userDetails?.user_id,
                                     email: userDetails?.email,
-                                    title: userDetails?.title
                                 });
                                 setFirstSelection(emoji.score);
                             }
