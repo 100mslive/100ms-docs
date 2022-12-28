@@ -288,18 +288,18 @@ function VirtualBackground() {
 
     const toggleVB = useCallback(async () => {
         try {
-            if (!isVirtualBackgroundEnabled) {
-                // Recommended value
-                const pluginFrameRate = 15;
-                // call changeBackground if it is not initialised with the right background can be done after adding the plugin as well
-                await hmsActions.addPluginToVideoTrack(virtualBackground.current, pluginFrameRate);
-            } else {
-                await hmsActions.removePluginFromVideoTrack(virtualBackground.current);
-            }
-        } catch (err) {
-            console.log('virtual background failure - ', isVirtualBackgroundEnabled, err);
+        if (!isVirtualBackgroundEnabled) {
+            // Recommended value
+            const pluginFrameRate = 15;
+            // call changeBackground if it is not initialised with the right background can be done after adding the plugin as well
+            await hmsActions.addPluginToVideoTrack(virtualBackground.current, pluginFrameRate);
+        } else {
+            await hmsActions.removePluginFromVideoTrack(virtualBackground.current);
         }
-    }, []);
+        } catch (error) {
+        console.log("virtual background failure - ", error);
+        }
+    }, [hmsActions]);
 
     return checkSupport() ? <Button onClick={toggleVB} /> : null;
 }
