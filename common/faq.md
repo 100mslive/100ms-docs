@@ -2,7 +2,7 @@
 
 ### What is the inspiration behind the name, 100ms?
 
-We got the name 100ms inspired by the "100ms latency ruule" concept from Gmail creator Paul Buchheit, who said that 100ms is the threshold "where interactions feel instantaneous"
+We got the name 100ms inspired by the "100ms latency rule" concept from Gmail creator Paul Buchheit, who said that 100ms is the threshold "where interactions feel instantaneous"
 
 ### Are your services supported in all countries?
 
@@ -22,7 +22,7 @@ Yes, you can delete an App from your [dashboard](https://dashboard.100ms.live/da
 
 ### We have decided to use your tool for our Livestream product we are building. What are the next steps for us to get started?
 
-You can start with our [documentation](/docs). We also recommend checking out our github for open source [sample SDKs](https://github.com/100mslive) that can aid in initial integration; Here is a piece on our [live streaming capabilities](https://www.100ms.live/interactive-live-streaming).
+You can start with our [documentation](/docs). We also recommend checking out our GitHub for open source [sample SDKs](https://github.com/100mslive) that can aid in initial integration; Here is a piece on our [live streaming capabilities](https://www.100ms.live/interactive-live-streaming).
 
 ### Do you have any resources for designers that lets them know what parts of the video player are easily configurable so they can make designs for how they want the video player to look?
 
@@ -39,9 +39,9 @@ No, but the raw video can be accessed and image recognition can be performed on 
 There are no feature-level limitations while using 100ms account. However, an invoice is generated when:
 
 - Your usage exhausts the free credits for
-    - video conferencing (10,000 mins) or
-    - HLS (live streaming) viewer minutes (10,000 mins) or
-    - HLS encoding minutes (1,000 mins)
+    - video conferencing (10,000 minutes) or
+    - HLS (live streaming) viewer minutes (10,000 minutes) or
+    - HLS encoding minutes (1,000 minutes)
 - Or if you use the recording feature
 - Or if you use external streaming (RTMP) feature
 - Or if use HD quality for webRTC, or HLS viewer or recording. 
@@ -100,3 +100,4 @@ You can set up a token generation service on your end to create app tokens and b
 You can update the code to point to your own token service (relevant code in the sample - see getToken(...)), your token endpoint can follow a similar interface: for a given room_id and role name, return the app token JWT.
 
 You can continue using the existing routes (room_id/role) or setup your own routes in the cloned/forked code.
+
