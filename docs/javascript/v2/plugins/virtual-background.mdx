@@ -34,10 +34,10 @@ We have not extended support for Mobile browsers in this release.
 npm install --save @100mslive/hms-virtual-background@latest
 ```
 
-## Import plugin
+## Usage
 
 ```jsx section=ImportPlugin sectionIndex=1
-import HMSVirtualBackgroundPlugin from '@100mslive/hms-virtual-background';
+import { HMSVirtualBackgroundPlugin } from '@100mslive/hms-virtual-background';
 ```
 
 ## Instantiate Virtual Background
@@ -188,3 +188,99 @@ With SIMD enabled, browsers can process multiple data points with each instructi
 -   `Firefox`- Open `about:config` in browser, search for simd, set javascript.options.wasm_simd=true and restart.
 -   `Edge` - Open `about:flags` in browser, search for simd, enable WebAssembly SIMD support and restart.
 -   `Brave` - Open `about:flags` in browser, search for simd, enable WebAssembly SIMD support and restart.
+
+
+### New VirtualBackground Plugin:
+
+The new virtual background plugin comes with improved performance(reduced cpu usage) and updated interfaces with proper types. It is part of the same package
+
+## Usage:
+
+<Tabs id="vb-plugin-code" items={['JavaScript', 'React']} />
+
+Check [this section](#tuning-plugin-frame-rate-optional) to use custom pluginFrameRate
+
+<Tab id='vb-plugin-code-0'>
+
+```js
+import { hmsActions, hmsStore } from './hms';
+import { selectIsLocalVideoPluginPresent } from '@100mslive/hms-video-store';
+import { HMSVBPlugin, HMSVirtualBackgroundTypes } from '@100mslive/hms-virtual-background';
+
+const virtualBackground = new HMSVBPlugin(
+    HMSVirtualBackgroundTypes.NONE,
+    HMSVirtualBackgroundTypes.NONE
+);
+
+async function toggleVB() {
+    const isVirtualBackgroundEnabled = hmsStore.getState(
+        selectIsLocalVideoPluginPresent(virtualBackground.getName())
+    );
+    try {
+        if (!isVirtualBackgroundEnabled) {
+            // Recommended value
+            const pluginFrameRate = 15;
+            // add virtual background
+            await hmsActions.addPluginToVideoTrack(virtualBackground, pluginFrameRate);
+        } else {
+            // remove virtual background
+            await hmsActions.removePluginFromVideoTrack(virtualBackground);
+        }
+    } catch (error) {
+        console.log('failed to set virtual background -', error);
+    }
+}
+```
+
+</Tab>
+
+<Tab id='vb-plugin-code-1'>
+
+```jsx
+
+import {  useRef } from "react";
+import { useHMSStore, useHMSActions, selectIsLocalVideoPluginPresent } from '@100mslive/react-sdk';
+import { HMSVBPlugin, HMSVirtualBackgroundTypes } from '@100mslive/hms-virtual-background';
+
+
+function VirtualBackground() {
+    const virtualBackground = useRef(new HMSVBPlugin(
+        HMSVirtualBackgroundTypes.NONE,
+        HMSVirtualBackgroundTypes.NONE
+    ));
+    const isVirtualBackgroundEnabled = useHMSStore(
+        selectIsLocalVideoPluginPresent(virtualBackground.current.getName())
+    );
+    const hmsActions = useHMSActions();
+
+    const changeBackground = () => {
+        // for blurring the background
+        virtualBackground.current.setBackground(HMSVirtualBackgroundTypes.BLUR, HMSVirtualBackgroundTypes.BLUR);
+        // for setting an image
+        const image = document.createElement('img');
+        image.src = <image url>;
+        virtualBackground.current.setBackground(image, HMSVirtualBackgroundTypes.IMAGE)
+    }
+
+    const toggleVB = useCallback(async () => {
+        try {
+            if (!isVirtualBackgroundEnabled) {
+                // Recommended value
+                const pluginFrameRate = 15;
+                // change background - this can be changed  after addPlugin as well
+                await hmsActions.addPluginToVideoTrack(virtualBackground.current, pluginFrameRate);
+            } else {
+                await hmsActions.removePluginFromVideoTrack(virtualBackground.current);
+            }
+        } catch (err) {
+            console.log('virtual background failure - ', isVirtualBackgroundEnabled, err);
+        }
+    }, []);
+
+    return <Button onClick={toggleVB} />;
+}
+```
+
+</Tab>
+
+
