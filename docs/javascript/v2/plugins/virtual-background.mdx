@@ -303,7 +303,7 @@ function VirtualBackground() {
         }
     }, []);
 
-    return <Button onClick={toggleVB} />;
+    return checkSupport() ? <Button onClick={toggleVB} /> : null;
 }
 ```
 
