@@ -422,7 +422,9 @@ You can open the app in another tab in the browser to join as the second peer to
 
 In this section, let's walk through what the code does.
 
-### Step 1: Initialize the SDK
+<div className="steps-container">
+
+### Initialize the SDK
 
 Let us start with initializing the libraries. We need two instances to get started:
 
@@ -445,7 +447,7 @@ const hmsStore = hmsManager.getStore();
 const hmsActions = hmsManager.getHMSActions();
 ```
 
-### Step 2: Initialize the HTML elements
+### Initialize the HTML elements
 
 Now, let's initialize all the HTML elements required such as tile for local and remote peers, join and leave button, mute and unmute button, etc.
 
@@ -673,7 +675,7 @@ const controls = document.getElementById("controls");
 
 </Tab>
 
-### Step 3: Join/leave a room
+### Join/leave a room
 
 To join a room (a video call), we need to call the [join](/api-reference/javascript/v2/interfaces/HMSActions#join) method on `hmsActions` and it requires us to pass a `config` object.
 The config object must be passed the following fields:
@@ -831,7 +833,7 @@ leaveBtn.onclick = leaveRoom;
 
 </Tab>
 
-### Step 4: Render video tiles for peers
+### Render video tiles for peers
 
 Let us next add a way to show a tile for every participant in the room. We'll need a list of peers connected to the room.
 
@@ -947,7 +949,7 @@ hmsStore.subscribe(renderPeers, selectPeers);
 
 </Tab>
 
-### Step 5: Mute/unmute local tracks
+### Mute/unmute local tracks
 
 Right now we are publishing both audio and video feed of the user whenever they join the room.
 We may want to allow the user to mute/unmute their own tracks - both audio and video.
@@ -1023,7 +1025,7 @@ muteVideo.onclick = () => {
 
 </Tab>
 
-### Step 6: Change UI based on connection state
+### Change UI based on connection state
 
 Right now, our join form will show up even after we have joined the room. We need a way to know the connection state of the room and hide the form after we've connected.
 
@@ -1050,6 +1052,8 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
 ```
 
 Refer to [Test the app section](/javascript/v2/guides/javascript-quickstart#test-the-app) above to test your sample app locally.
+
+</div>
 
 ## Next steps
 

@@ -65,7 +65,7 @@ async stopHLS() {
 }
 ```
 
-## Current HLS State
+## Current room status
 
 The `selectHLSState` selector can be used to know if HLS is currently running, and the url where it can be viewed.
 
@@ -111,7 +111,9 @@ Not all browsers support HLS [natively](https://caniuse.com/?search=hls), howeve
 [Shaka Player](https://github.com/google/shaka-player). In case you need more UI side customisations you can go with something like
 [videojs](https://videojs.com/) which internally uses `hls.js` for the hls piece.
 
-Here is a simple example of using `hls.js` to play the hls URL given by the SDK. Make sure you've installed the library(`npm i hls.js`) before using this code.
+Here is a simple example of using `hls.js` to play the HLS URL given by the SDK (using `hmsStore` selector). `hmsStore` selector hook will help you with selector functions to fetch information from the state at any point in time. Check [here](./../guides/useful-selectors) for more examples.
+
+Make sure you've installed the library(`npm i hls.js`) before using this code.
 
 <Tabs id="hlsview" items={['JavaScript', 'React']} />{' '}
 
@@ -119,8 +121,11 @@ Here is a simple example of using `hls.js` to play the hls URL given by the SDK.
 
 ```js
 import Hls from 'hls.js';
+import { hmsActions, hmsStore } from './hms';
 
 function renderHLS({ hlsUrl }) {
+    const hlsState = hmsStore.getState(selectHLSState);
+    const hlsUrl = hlsState.variants[0]?.url;
     const video = document.getElementById('video');
     const browserHasNativeHLSSupport = videoRef.current.canPlayType(
         'application/vnd.apple.mpegurl'
@@ -144,9 +149,12 @@ function renderHLS({ hlsUrl }) {
 
 ```jsx
 import Hls from 'hls.js';
+import { useHMSStore, selectHLSState } from '@100mslive/react-sdk';
 
 function HLSView({ hlsUrl }) {
     const videoRef = useRef(null);
+    const hlsState = useHMSStore(selectHLSState);
+    const hlsUrl = hlsState.variants[0]?.url;
     useEffect(() => {
         if (videoRef.current && hlsUrl) {
             const browserHasNativeHLSSupport = videoRef.current.canPlayType(
@@ -176,13 +184,15 @@ function HLSView({ hlsUrl }) {
 ## Testing with the Dashboard web-app
 
 You may want to try out the end to end flow on our dashboard web-app before moving ahead with building in your app. To do
-this, you can create an additional role named `hls-viewer` which will be presented with the hls stream when they join the room.
+this, you can create an additional role named `hls-viewer` which will be presented with the HLS stream when they join the room.
 
-![Streaming](/docs/v2/web-hamburger.png)
+![Go live](/docs/v2/live-streaming-go-live.gif)
 
-To start the hls stream, you can select Streaming from the hamburger menu on bottom center of the page. There will be a HLS checkbox in
-the popup that opens which can be checked to start HLS. Once HLS has started, you can join from the `hls-viewer` role to
-see the hls stream.
+To start the HLS stream:
+
+-   Click on the `Go Live` button on the top right of the page.
+-   Choose the `Live Stream with HLS` option and click `Go Live` to start streaming.
+-   Once HLS has started, you can join from the `hls-viewer` role to see the HLS stream.
 
 ## Tips
 
