@@ -47,6 +47,7 @@ const Feedback = () => {
                         style={{ position: 'relative', width: '24px', height: '24px' }}
                         key={emoji.score}
                         onClick={() => {
+                            const userDetails = currentUser();
                             if (showTextBox === false) {
                                 window.analytics.track('docs.feedback.rating', {
                                     title: document.title,
@@ -54,7 +55,10 @@ const Feedback = () => {
                                     path: window.location.pathname,
                                     rating: emoji.score,
                                     timeStamp: new Date().toLocaleString(),
-                                    ...currentUser()
+                                    customer_id: userDetails?.customer_id,
+                                    user_id: userDetails?.user_id,
+                                    email: userDetails?.email,
+                                    title: userDetails?.title
                                 });
                                 setFirstSelection(emoji.score);
                             }
