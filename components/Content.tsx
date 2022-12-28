@@ -11,6 +11,7 @@ import TokenEndpoint from '../common/token-endpoint.md';
 import TemplatesRoles from '../common/templates-and-roles.md';
 import SecurityTokens1 from '../common/security-tokens-1.md';
 import SecurityTokens2 from '../common/security-tokens-2.md';
+import CommonFaq from '../common/faq.md';
 import DomainsPorts from '../common/firewall-and-ports.md';
 import LiveStreaming from '../common/live-streaming.md';
 import Recordings from '../common/recordings.md';
@@ -27,6 +28,7 @@ const data = {
     tokenEndpoint: TokenEndpoint,
     securityAndTokens1: SecurityTokens1,
     securityAndTokens2: SecurityTokens2,
+    commonFaq: CommonFaq,
     domainsAndPorts: DomainsPorts,
     liveStreaming: LiveStreaming,
     recordings: Recordings,
