@@ -56,9 +56,9 @@ Please check our [pricing page](https://www.100ms.live/pricing) or [contact us](
 
 ### Is there any usage analytics dashboard available to check various metrics associated with our account?
 
-Currently, we don't have any dashboard for usage analytics, but we do it have it in our roadmap. We will keep you notified as soon as we have it. Subsribe to our newsletter to receive montly updates about on 100ms product releases.
+Currently, we don't have any dashboard for usage analytics, but we do it have it in our roadmap. We will keep you notified as soon as we have it. Subsribe to our newsletter to receive monthly updates about on 100ms product releases.
 
-### Does the 100ms video sdk provide analytics on room, session, and each user, including data such as time spent per user, total session length, and number of peers in a room?
+### Does the 100ms video SDK provide analytics on room, session, and each user, including data such as time spent per user, total session length, and number of peers in a room?
 
 You can get analytics about rooms, sessions, peers, etc in a multiple ways based on your requirements and feasibility. 
 
