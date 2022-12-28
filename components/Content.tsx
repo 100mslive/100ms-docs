@@ -3,12 +3,13 @@
 /* eslint-disable react/no-danger */
 import Markdown from 'markdown-to-jsx';
 import React from 'react';
-// Please use the same name as the md file
+// Please use the same name as the md file to ensure 
+// it gets picked up by the script for updating algolia records
 import Basics from '../common/basics.md';
 import Network from '../common/network.md';
 import Token from '../common/token.md';
 import TokenEndpoint from '../common/token-endpoint.md';
-import TemplatesRoles from '../common/templates-and-roles.md';
+import TemplatesAndRoles from '../common/templates-and-roles.md';
 import SecurityTokens1 from '../common/security-tokens-1.md';
 import SecurityTokens2 from '../common/security-tokens-2.md';
 import FirewallAndPorts from '../common/firewall-and-ports.md';
@@ -22,7 +23,7 @@ import BulkRoleChangeErrors from '../common/bulk-role-change-errors.md';
 
 const data = {
     basics: Basics,
-    templatesAndRoles: TemplatesRoles,
+    templatesAndRoles: TemplatesAndRoles,
     network: Network,
     token: Token,
     tokenEndpoint: TokenEndpoint,
@@ -33,7 +34,6 @@ const data = {
     recordings: Recordings,
     androidSdkVersionShield: AndroidSdkVersionShield,
     bulkRoleChangeErrors: BulkRoleChangeErrors,
-
     /**
      * Adaptive bitrate docs are split into 2 parts because 3-backtick
      * code snippets in `md` files are not rendering well in mdx
