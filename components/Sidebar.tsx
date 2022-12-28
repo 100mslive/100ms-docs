@@ -41,7 +41,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
         fetch('/docs/api/content?query=nav')
             .then((res) => res.json())
             .then((result) => setNavAPI(result.nav))
-            .catch();
+            .catch(e => console.log(e));
     }, []);
 
     let nav;
