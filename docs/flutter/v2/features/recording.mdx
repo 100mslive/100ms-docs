@@ -83,7 +83,8 @@ Apart from the rtmp stream and the browser recording, which are ones you can sta
 class HMSRtmpStreamingState {
   final HMSException? error;
   final bool running;
-  HMSRtmpStreamingState({required this.error,required this.running});
+  DateTime? startedAt;
+  HMSRtmpStreamingState({required this.error, required this.running, this.startedAt});
 }
 ```
 
@@ -95,7 +96,8 @@ This represents a livestream to one or more RTMP urls.
 class HMSBrowserRecordingState {
   final HMSException? error;
   final bool running;
-  HMSBrowserRecordingState({required this.error,required this.running});
+  DateTime? startedAt;
+  HMSBrowserRecordingState({required this.error, required this.running, this.startedAt});
 }
 ```
 
@@ -107,7 +109,8 @@ This represents the recording that can be requested to start.
 class HMSServerRecordingState {
   final HMSException? error;
   final bool running;
-  HMSServerRecordingState({required this.error,required this.running});
+  DateTime? startedAt;
+  HMSServerRecordingState({required this.error,required this.running, this.startedAt});
 }
 ```
 

@@ -13,6 +13,7 @@ import 'package:hmssdk_flutter/hmssdk_flutter.dart';
 
 class HMSSDKInteractor {
   late HMSSDK hmsSDK;
+  late HMSConfig config;
 
   HMSSDKInteractor() {
     hmsSDK = HMSSDK();    // save this hms instance
@@ -27,6 +28,15 @@ class HMSSDKInteractor {
     hmsSDK.addUpdateListener(listener: listener);
   }
 
+  Future<void> preview({required HMSConfig config}) {
+    this.config = config;
+    return hmsSDK.preview(config: config);
+  }
+
+   void join() {
+    hmsSDK.join(config: this.config);
+  }
+
 }
 ```
 
@@ -39,9 +49,31 @@ function is called we have to wait for the preview or error callback before call
 ```dart section=CallingPreviewAndJoinFunctions sectionIndex=1
 import 'package:hmssdk_flutter/hmssdk_flutter.dart';
 
-Class preview implements HMSUpdateListener, HMSActionResultListener{
-  void preview(HMSConfig config){
-    hmsInstance.preview(config);
+Class Preview implements HMSPreviewListener {
+
+  HMSSDKInteractor? hmsSDKInteractor;
+
+  // `localpeer` variable will hold the value of local peer.
+  HMSPeer? localpeer;
+
+  // `isVideoOn` variable will hold value for `localPeer` video status
+  bool isVideoOn = true;
+
+  // `isAudioOn` variable will hold value for `localPeer` audio status
+  bool isAudioOn = true;
+
+  // `localVideoTrack` variable will hold the value of HMSVideoTrack which will be used to show preview to user in `HMSVideoView` widget.
+  HMSVideoTrack? localVideoTrack;
+
+  void Preview(HMSConfig config){
+    // initial HMSSDKInteractor.
+    hmsSDKInteractor = HMSSDKInteractor();
+
+    // addPreviewListener to Preview class.
+    hmsSDKInteractor!.addPreviewListener(this);
+
+    // calling preview function of HMSSDK.
+    hmsSDKInteractor!.preview(config);
   }
 }
 
@@ -50,12 +82,65 @@ Class preview implements HMSUpdateListener, HMSActionResultListener{
     // this callback will be triggered if preview or join functions fails
   }
 
-void onPreviewListener(HMSPreviewListener listener) {
-// this callback will be triggered if preview is successful and then only we should call join
-    hmsSDK.join(config: this.config);
+  @override
+  void onPreview({required HMSRoom room, required List<HMSTrack> localTracks}) {
+    // this callback will be triggered if preview is successful
+     for (HMSPeer each in room.peers!) {
+      if (each.isLocal) {
+        peer = each;
+        break;
+      }
+    }
+    for (var track in localTracks) {
+      if (track.kind == HMSTrackKind.kHMSTrackKindVideo) {
+        isVideoOn = !(track.isMute);
+        localVideoTrack = track as HMSVideoTrack;
+      }
+      if (track.kind == HMSTrackKind.kHMSTrackKindAudio) {
+        isAudioOn = !(track.isMute);
+      }
+    }
+    // Update the UI of video and audio buttons.
+    // Use `localVideoTrack` in `HMSVideoView` widget to display preview on screen.
   }
 
-void onUpdateListener(HMSUpdateListener listener) {
-    hmsSDK.addUpdateListener(listener: listener);
+  // Call `join` method to join the room.
+  void joinButton(){
+    hmsSDKInteractor!.join();
   }
+
+  @override
+  void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) {
+    /// This will be called whenever there is an update on an existing peer
+    /// or a new peer got added/existing peer is removed.
+    ///
+    /// To Enable [onPeerUpdate] activate Send Peer List in Room-state from dashboard under templates->Advance Settings.
+    ///
+    /// This callback can be used to keep a track of all the peers in the room
+    /// - Parameters:
+    ///   - peer: the peer who joined/left or was updated
+    ///   - update: the triggered update type. Should be used to perform different UI Actions
+  }
+
+  @override
+  void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {
+    /// This is called when there is a change in any property of the Room
+    ///
+    /// To Enable [onRoomUpdate] activate Enable Room-State from dashboard under templates->Advance Settings.
+    ///
+    /// - Parameters:
+    ///   - room: the room which was joined
+    ///   - update: the triggered update type. Should be used to perform different UI Actions  
+  }
+
+  @override
+  void onAudioDeviceChanged({HMSAudioDevice? currentAudioDevice, List<HMSAudioDevice>? availableAudioDevice}) {
+    ///whenever a new audio device is plugged in or audio output is changed we
+    ///get the onAudioDeviceChanged update
+    ///This callback is only fired on Android devices. On iOS, this callback will not be triggered.
+    /// - Parameters:
+    ///   - currentAudioDevice: Current audio output route
+    ///   - availableAudioDevice: List of available audio output devices
+  }
+}
 ```

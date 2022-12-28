@@ -9,41 +9,44 @@ These are returned as `HMSException` in the `onHMSError` callback of the `HMSUpd
 
 Following are the different error codes that are returned by the SDK. Before returning any error code, SDK retries the errors\(whichever is possible\).
 
-| **Error Code** | **Cause of the error**                                 | **Action to be taken**                                                                                     |
-| :------------- | :----------------------------------------------------- | :--------------------------------------------------------------------------------------------------------- |
+| **Error Code** | **Cause of the error**                                 | **Action to be taken**                                                                                      |
+| :------------- | :----------------------------------------------------- | :---------------------------------------------------------------------------------------------------------- |
+| **1000**       | Generic Error                                          | Need to debug further with logs.                                                                            |
 | **1003**       | Websocket disconnected - Happens due to network issues | Mention user to check their network connection or try again after some time.                                |
 | **2002**       | Invalid Endpoint URL                                   | Check the endpoint provided while calling `join` on `HMSSDK`.                                               |
 | **2003**       | Endpoint is not reachable                              | Mention user to check their network connection or try again after some time.                                |
-| **2004**       | Token is not in proper JWT format                      | The token passed while calling `join` is not in the correct format. Retry getting a new token.                  |
-| **3001**       | Cant Access Capture Device                             | Ask the user to check permission granted to audio/video capture devices.                                        |
-| **3002**       | Capture Device is not Available                        | Ask the user to check if the audio/video capture device is connected or not.                                    |
-| **3003**       | Capture device is in use by some other application.    | Show notification to user mentioning that the capturing device is used by some other application currently. |
-| **3012**       | [BLUETOOTH_CONNECT](https://developer.android.com/reference/android/Manifest.permission#BLUETOOTH_CONNECT) permission is not given.| Add the BLUETOOTH_CONNECT permission to your app and request it at runtime since it is dangerous level permission.|
-| **3013**       | [BLUETOOTH](https://developer.android.com/reference/android/Manifest.permission#BLUETOOTH) permission is not given.                     | Add the BLUETOOTH permission to your app.|
-| **4001**       | WebRTC error                                           | Some webRTC error has occurred. Need more logs to debug.                                                     |
-| **4002**       | WebRTC error                                           | Some webRTC error has occurred. Need more logs to debug.                                                     |
-| **4003**       | WebRTC error                                           | Some webRTC error has occurred. Need more logs to debug.                                                     |
-| **4004**       | WebRTC error                                           | Some webRTC error has occurred. Need more logs to debug.                                                     |
-| **4005**       | ICE Connection Failed due to network issue             | Mention the user to check their network connection or try again after some time.                                |
-| **5001**       | Trying to join a room which is already joined          | Trying to join an already joined room.                                                                     |
+| **2004**       | Token is not in proper JWT format                      | The token passed while calling `join` is not in correct format. Retry getting a new token.                  |
+| **3000**       | Generic Error                                          | Need to debug further with logs.                                                                            |
+| **3001**       | Cant Access Capture Device                             | Ask user to check permission granted to audio/video capture devices.                                        |
+| **3002**       | Capture Device is not Available                        | Ask user to check if the audio/video capture device is connected or not.                                    |
+| **3003**       | Capture device is in use by some other application     | Show notification to user mentioning that the capturing device is used by some other application currently. |
+| **3005**       | There is no media to return                            | For building HMSTrackSettings either audio or video track has to be present.                                |
+| **3006**       | Invalid Video Settings                                 | Simulcast cannot be started without providing video settings.                                               |
+| **3007**       | Codec cannot change mid call                           | Codec cannot be changed mid call.                                                                           |
+| **3011**       | Mic Capture Failed                                     | Failed to capture mic access.                                                                               |
+| **3012**       | Bluetooth Inaccessible                                 | BLUETOOTH_CONNECT permission missing .                                                                      |
+| **3013**       | Bluetooth Inaccessible                                 | General Bluetooth Permission missing.                                                                               |
+| **4001**       | WebRTC error                                           | Some webRTC error has occurred. Need more logs to debug.                                                    |
+| **4002**       | WebRTC error                                           | Some webRTC error has occurred. Need more logs to debug.                                                    |
+| **4003**       | WebRTC error                                           | Some webRTC error has occurred. Need more logs to debug.                                                    |
+| **4004**       | WebRTC error                                           | Some webRTC error has occurred. Need more logs to debug.                                                    |
+| **4005**       | ICE Connection Failed due to network issue             | Mention user to check their network connection or try again after some time.                                |
+| **5001**       | Trying to join a room which is already joined          | Trying to join an already joined room.                                                                      |
+| **5002**       | Trying to start Preview which is already started       | Trying to start Preview which is already started.                                                           |
+| **6000**       | Client failed to connect                               | Client failed to connect.                                                                                   |
 | **6002**       | webRTC Error: Error while renegotiating                | Please try again.                                                                                           |
-| **40101**      | Token Error: Invalid Access Key                        | Access Key provided in the token is wrong.                                                                  |
-| **40102**      | Token Error: Invalid Room Id                           | RoomID provided in the token is wrong.                                                                      |
-| **40103**      | Token Error: Invalid Auth Id                           | AuthID provided in the token is wrong.                                                                      |
-| **40104**      | Token Error: Invalid App Id                            | App ID provided in the token is wrong.                                                                      |
-| **40105**      | Token Error: Invalid Customer Id                       | Customer Id provided in the token is wrong.                                                                 |
-| **40107**      | Token Error: Invalid User Id                           | User ID provided in the token is wrong.                                                                     |
-| **40108**      | Token Error: Invalid Role                              | The role provided in the token is wrong.                                                                    |
-| **40109**      | Token Error: Bad JWT Token                             | Bad JWT Token.                                                                                              |
-| **40100**      | Generic Error                                          | Need to debug further with logs.                                                                            |
-| **40001**      | Invalid Room                                           | Room ID provided while fetching the token is invalid.                                               |
-| **40002**      | Room Mismatched with Token                             | Room ID provided while fetching the token does not match.                                                   |
-| **40004**      | Peer already joined                                    | Peer who is trying to join has already joined the room.                                                     |
-| **41001**      | Peer is gone                                           | The peer is no more present in the room.                                                                    |
+| **6004**       | Json parsing failed                                    | Need to debug further with logs.                                                                            |
+| **6008**       | Unable to send message                                 | Cannot send message. Peer is null. The SDK must be disconnected from a room.                                |
+| **6008**       | API not supported                                      | This API is not support on the current Android Version (Android-31).                                        |
 | **7001**       | Platform Not Supported                                 | The platform is not supported for plugin                                                                    |
 | **7002**       | Plugin Init Failed                                     | Plugin initialization has failed                                                                            |
 | **7003**       | Plugin Processing Failed                               | Plugin processing failed                                                                                    |
-| **7004**       | Plugin Add Already Going on                            | Plugin add is already in progress    
+| **7004**       | Plugin Add Already Going on                            | Plugin add is already in progress                                                                           |
+| **7005**       | Bluetooth Sco Connection Failed                        | Bluetooth headset is either not available or in a processing state.                                         |
+| **400**        | Error occurred                                         | This can usually happen due to token issues(Check logs for more description). Need more logs to debug.      |
+| **401**        | Error occurred                                         | This can usually happen due to token issues(Check logs for more description). Need more logs to debug.      |
+| **410**        | Peer is gone                                           | The peer is no more present in the room.                                                                    |
+| **500**        | Error occurred                                         | This is a general server error(Check logs for more description).  Need more logs to debug.                  |
 
 ## HMSException
 

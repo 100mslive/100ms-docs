@@ -6,12 +6,15 @@ nav: 3.03
 Once you're done with the meeting and want to exit, call leave on the HMSSDK instance you created to join it.
 
 
-Before calling leave,remove the `HMSUpdateListener` instance as:
+Before calling leave, remove the `HMSUpdateListener` instance as:
 ```dart
 hmsSDK.removeUpdateListener(updateListener);
 ```
 
 To leave the meeting, call the `leave` method of `HMSSDK` and pass the `hmsActionResultListener` parameter to get a success callback from SDK in the `onSuccess` override method as follow:
+
+> You will to implements `HMSActionResultListener` interface in class to get `onSuccess` and `onException` callback.
+
 ```dart
 await hmsSDK.leave(hmsActionResultListener: this);
 

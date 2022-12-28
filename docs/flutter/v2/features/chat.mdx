@@ -1,6 +1,6 @@
 ---
 title: Chat
-nav: 3.05
+nav: 3.06
 ---
 
 What's a video call without being able to send messages to each other too? 100ms supports chat for every video/audio room you create.
@@ -26,7 +26,8 @@ Want to let everyone in the chat know something? Call `sendBroadcastMessage` on 
 The parameters are:
 
 1. *message*: The text of the message.
-
+2. *type*[optional]: The type of the message, default is `chat`.
+3. *hmsActionResultListener*: An instance of `HMSActionResultListener`.
 
 > 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error.
 >
@@ -47,6 +48,8 @@ The parameters are:
 
 1. *message*: The text of the message.
 2. *peerTo*: The `HMSPeer` instance who should receive the message.
+3. *type*[optional]: The type of the message, default is `chat`.
+4. *hmsActionResultListener*: An instance of `HMSActionResultListener`.
 
 
 > 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error.
@@ -73,7 +76,8 @@ The parameters are:
 
 1. *message*: The text of the message.
 2. *hmsRolesTo*: The list of `HMSRole` i.e the roles to whom the message needs to be sent.
-
+3. *type*[optional]: The type of the message, default is `chat`.
+4. *hmsActionResultListener*: An instance of `HMSActionResultListener`.
 
 > 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error.
 >
