@@ -1,0 +1,174 @@
+---
+title: React Hooks
+nav: 2.7
+---
+
+Here's a list of useful React hooks that you might want to use while building your application. Before using these make sure you have initialized the SDK, you can refer to this [guide](/javascript/v2/guides/react-quickstart#initializing-the-sdk).
+
+## Am I connected to the Room?
+
+Knowing if you're in the room or not is the barest model information you need. `selectIsConnectedToRoom` returns a boolean flag denoting whether you've joined a room. NOTE: Returns true only after join, returns false during the preview.
+
+```jsx section=AmIConnectedToTheRoom sectionIndex=1 tab=React
+const isConnected = useHMSStore(selectIsConnectedToRoom);
+```
+
+## Am I in the Preview?
+
+`selectIsInPreview` returns a boolean denoting whether the room is in Preview state.
+
+<Tabs id="preview" items={['Javascript', 'React']} />
+
+<Tab id='preview-0'>
+
+```js section=AmIInThePreview sectionIndex=1 tab=JS
+const isInPreview = hmsStore.getState(selectIsInPreview);
+```
+
+</Tab>
+
+<Tab id='preview-1'>
+
+```jsx section=AmIInThePreview sectionIndex=1 tab=React
+const isInPreview = useHMSStore(selectIsInPreview);
+```
+
+</Tab>
+
+## How many people have joined the room?
+
+`selectPeerCount` returns the number of peers inside the room. If you have turned on
+peer list in preview, this count won't include the local peer if they're still in preview.
+
+<Tabs id="peerCount" items={['Javascript', 'React']} />
+
+<Tab id='peerCount-0'>
+
+```js section=HowManyPeopleHaveJoinedTheRoom sectionIndex=1 tab=JS
+const count = hmsStore.getState(selectPeerCount);
+```
+
+</Tab>
+
+<Tab id='peerCount-1'>
+
+```jsx section=HowManyPeopleHaveJoinedTheRoom sectionIndex=1 tab=React
+const count = useHMSStore(selectPeerCount);
+```
+
+ </Tab>
+
+## Who all are in my room?
+
+`selectPeers` returns you an array of peers(remote peers and your local peer) present in the room. It will
+include the local peer in preview phase.
+
+<Tabs id="peers" items={['Javascript', 'React']} />
+
+<Tab id='peers-0'>
+
+```js section=WhoAllAreInMyRoom sectionIndex=1 tab=JS
+const peers = hmsStore.getState(selectPeers);
+```
+
+</Tab>
+
+<Tab id='peers-1'>
+
+```jsx section=WhoAllAreInMyRoom sectionIndex=1 tab=React
+const peers = useHMSStore(selectPeers);
+```
+
+</Tab>
+
+## What is my current state of room?
+
+What if you fail to join the room? How do you know if the user is reconnecting? This is where `selectRoomState` comes in handy, it returns you the current state of your room. You can refer to the [ENUMS](/api-reference/javascript/v2/enums/HMSRoomState) types for reference.
+
+<Tabs id="roomState" items={['Javascript', 'React']} />
+
+<Tab id='roomState-0'>
+
+```js section=WhatIsMyCurrentStateOfRoom sectionIndex=1 tab=JS
+const roomState = hmsStore.getState(selectRoomState);
+```
+
+</Tab>
+
+<Tab id='roomState-1'>
+
+```jsx section=WhatIsMyCurrentStateOfRoom sectionIndex=1 tab=React
+const roomState = useHMSStore(selectRoomState);
+```
+
+</Tab>
+
+## How do I know if my mic/video is on?
+
+Mic/Video being turned on can lead to a lot of blunders, therefore it's critical to show it to the end-user. `selectIsLocalAudioEnabled` & `selectIsLocalVideoEnabled` helps you know if the local audio/video is enabled or not.
+
+<Tabs id="av" items={['Javascript', 'React']} />
+
+<Tab id='av-0'>
+
+```js section=HowDoIKnowIfMyMicVideoIsOn sectionIndex=1 tab=JS
+const audioOn = hmsStore.getState(selectIsLocalAudioEnabled);
+const videoOn = hmsStore.getState(selectIsLocalVideoEnabled);
+```
+
+</Tab>
+
+<Tab id='av-1'>
+
+```jsx section=HowDoIKnowIfMyMicVideoIsOn sectionIndex=1 tab=React
+const audioOn = useHMSStore(selectIsLocalAudioEnabled);
+const videoOn = useHMSStore(selectIsLocalVideoEnabled);
+```
+
+</Tab>
+
+## How do I know the status of remote mic/video status?
+
+`selectIsPeerAudioEnabled` & `selectIsPeerVideoEnabled` returns a boolean denoting the peer's Audio/Video status.
+
+<Tabs id="rm" items={['Javascript', 'React']} />
+
+<Tab id='rm-0'>
+
+```js section=HowDoIKnowTheStatusOfRemoteMicVideoStatus sectionIndex=1 tab=JS
+const audioOn = hmsStore.getState(selectIsPeerAudioEnabled(peerId));
+const videoOn = hmsStore.getState(selectIsPeerVideoEnabled(peerId));
+```
+
+</Tab>
+
+<Tab id='rm-1'>
+
+```jsx section=MicVideoStatus sectionIndex=1 tab=React
+const audioOn = useHMSStore(selectIsPeerAudioEnabled(peerId));
+const videoOn = useHMSStore(selectIsPeerVideoEnabled(peerId));
+```
+
+</Tab>
+
+## How do I get the video stream of a user?
+
+You can get video stream of a user using `selectCameraStreamByPeer` it returns [HMSVideoTrack](/api-reference/javascript/v2/interfaces/HMSVideoTrack) which you can use to call [attach/detach](/javascript/v2/features/render-video) actions.
+
+<Tabs id="cam" items={['Javascript', 'React']} />
+
+<Tab id='cam-0'>
+
+```js section=HowDoIGetTheVideoStreamOfAUser sectionIndex=1 tab=JS
+const videoTrack = hmsStore.getState(selectCameraStreamByPeer(peerId));
+```
+
+</Tab>
+
+<Tab id='cam-1'>
+
+```jsx section=HowDoIGetTheVideoStreamOfAUser sectionIndex=1 tab=React
+const videoTrack = useHMSStore(selectCameraStreamByPeer(peerId));
+```
+
+</Tab>
