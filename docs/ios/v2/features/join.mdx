@@ -37,24 +37,24 @@ class MyMeetingClass {
 
 **Optional: Join with Muted Audio / Video**
 
-    You can optionally set the initial audio/video state at the time of joining like below (they are unmute by default):
+You can optionally set the initial audio/video state at the time of joining like below (they are unmute by default):
 
-    ```
-    class MyMeetingClass {
+```swift
+class MyMeetingClass {
 
-        let hmsSDK: HMSSDK // store instance of HMSSDK as a property in your class
+    let hmsSDK: HMSSDK // store instance of HMSSDK as a property in your class
 
-        init() {
-            // initialize the SDK using the `build()` class function
-            hmsSDK = HMSSDK.build() { sdk in
-                sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettingsBuilder in
-                    videoSettingsBuilder.initialMuteState = .mute
-                    audioSettingsBuilder.initialMuteState = .mute
-                }
+    init() {
+        // initialize the SDK using the `build()` class function
+        hmsSDK = HMSSDK.build() { sdk in
+            sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettingsBuilder in
+                videoSettingsBuilder.initialMuteState = .mute
+                audioSettingsBuilder.initialMuteState = .mute
             }
-        }
-    }
-    ```
+         }
+     }
+}
+```
 
 ### Create HMSConfig Instance
 
