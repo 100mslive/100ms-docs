@@ -107,9 +107,14 @@ The methods of HMSUpdateListener are invoked to notify updates happening in the 
 
 Add this `updateListener` instance to
 ```dart
-HMSSDK hmsSDK = HMSSDK();
-hmsSDK.build();
-hmsSDK.addUpdateListener(this);
+class Meeting implements HMSUpdateListener {
+    Meeting(){
+        HMSSDK hmsSDK = HMSSDK();
+        hmsSDK.build();
+        hmsSDK.addUpdateListener(this);
+    }
+    ...
+}
 ```
 
 After calling join your app will be provided an update from the 100ms SDK.
