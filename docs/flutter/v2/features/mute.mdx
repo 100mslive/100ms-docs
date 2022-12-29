@@ -1,13 +1,9 @@
 ---
 title: Mute / Unmute
-nav: 3.04
+nav: 3.10
 ---
 
-Mute is something that applies to both audio and video.
-
-When you mute audio, you can't be heard by other people.
-
-When you mute a video, you will not be broadcasting your video to other people.
+Mute is something that applies to both audio and video. When you mute audio, you can't be heard by other people. When you mute a video, you will not be broadcasting your video to other people.
 
 It can be called on local (you) or remote (other people) peer's audio or video tracks.
 
@@ -19,16 +15,17 @@ You can do the same for remote peers and HMSRemoteVideoTrack and HMSRemoteAudioT
 
 
 ```dart
+/// To switch local peer's audio on/off.
+/// Pass the bool value to [isOn] to change the current audio status
+hmsSDK.switchAudio(isOn: true);
 
-hmsSDK.switchAudio(true);
 
-hmsSDK.switchVideo(true);
+/// To switch local peer's video on/off.
+/// Pass the bool value to [isOn] to change the current video status
+hmsSDK.switchVideo(isOn: true);
 
+/// Switch camera to the front or rear mode
 hmsSDK.switchCamera();
-
-hmsSDK.stopCapturing();
-
-hmsSDK.startCapturing();
 ````
 
 ## Setting video and mic off while joining

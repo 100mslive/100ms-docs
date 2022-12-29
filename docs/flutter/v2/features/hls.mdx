@@ -1,6 +1,6 @@
 ---
 title: HLS Streaming
-nav: 3.17
+nav: 3.20
 ---
 
 [HLS Streaming](./../foundation/live-streaming) allows for scaling to millions of viewers in near real time. You can give a link of your
@@ -46,7 +46,7 @@ class HMSHLSConfig {
 
 
 // example usage of HLS Config to start HLS Streaming
-HMSHLSConfig hmshlsConfig = HMSHLSConfig(meetingURLVariant: HMSHLSMeetingURLVariant(meetingUrl: meetingUrl, metadata: "tag for reference"));
+HMSHLSConfig hmshlsConfig = HMSHLSConfig(meetingURLVariant: [HMSHLSMeetingURLVariant(meetingUrl: meetingUrl, metadata: "tag for reference")]);
 
 hmsSDK.startHlsStreaming(
         hmshlsConfig: hmshlsConfig,

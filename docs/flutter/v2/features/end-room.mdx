@@ -1,6 +1,6 @@
 ---
 title: End Room
-nav: 3.11
+nav: 3.09
 ---
 
 Done with talking and it's time to end the video call room for everyone not just yourself? You may be looking to end the room.
@@ -34,9 +34,9 @@ void endRoom(
 
 `endRoom` takes the following parameters -
 
-_lock_: A Boolean for whether you want to prevent anyone from rejoining the room. If false, they will be allowed to enter the room again if the client called `join`. If this is true, they will NOT able to join this room again.
-_reason_: reason String is the text that is passed describing why the room is being ended.
-_hmsActionResultListener_: It's the callback that would be called by SDK in case of a success or failure of `endRoom` operation
+1. *lock*: A Boolean for whether you want to prevent anyone from rejoining the room. If false, they will be allowed to enter the room again if the client called `join`. If this is true, they will NOT able to join this room again.
+2 *reason*: reason String is the text that is passed describing why the room is being ended.
+3. *hmsActionResultListener*: It's the callback that would be called by SDK in case of a success or failure of `endRoom` operation
 
 > 💡 After calling endRoom the video calling UI should be disposed of as well since only the other peers will get the `onPeerRemoved` callback. The caller has to rely on the `onSuccess` callback for `endRoom` to decide when to terminate the meeting room UI locally.
 
@@ -47,7 +47,7 @@ Once the peer with adequate permissions calls `endRoom`, all other peers in the 
 The `onRemovedFromRoom` callback has a single parameter called `HMSRemovedFromRoom` with the following structure.
 
 ```dart
-class HMSPeerRemovedFromPeer {
+class HMSPeerRemovedFromRoom {
   String reason;
   bool roomWasEnded;
   HMSPeer? peerWhoRemoved;
