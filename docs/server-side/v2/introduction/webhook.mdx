@@ -894,6 +894,17 @@ This event will be sent when there are failures in RTMP streaming and/or browser
 3. Incorrect storage (S3) credentials
 4. Other unexpected errors
 
+Please check the below table to check various error types, messages and description.
+
+#### Error types
+
+| Type                | Message                                                                                          | Description                                                                                               |
+| :------------------ | :----------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
+| INTERNAL_ERROR      | Internal error                                                                                   | Internal errors in beam.                                                                                  |
+| MAX_RETRIES_REACHED | Beam couldn't connect to Meeting URL after <max_count> retries. Check if meeting URL is correct. | Sent when Beam cannot join meeting URL after predefined number of max retries.                            |
+| UPLOAD_ERROR        | Failed to upload recordings. Check if upload config is correct.                                  | Sent when there are failures in uploading recordings. This is most likely due to incorrect upload config. |
+| BEAM_STOPPED        | Beam stopped too early                                                                           | Beam takes a few seconds to start, if a stop request is sent before that, we send BEAM_STOPPED error.     |
+
 #### Attributes
 
 | Name               | Type                 | Description                                                                                                          |
@@ -907,7 +918,7 @@ This event will be sent when there are failures in RTMP streaming and/or browser
 | template_id        | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                 |
 | error_code         | `int`                | Beam error code <br/><br/> Example: 1 <br/> (Deprecated)                                                             |
 | error_message      | `string`             | Beam error message (description) <br/><br/> Example: Failed to upload recordings. Check if upload config is correct. |
-| error_type         | `string`             | [Beam error type](#beam-error-types) <br/><br/> Example: UPLOAD_ERROR                                                |
+| error_type         | `string`             | Beam error type <br/><br/> Example: UPLOAD_ERROR                                                                     |
 | metadata_id        | `string`             | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                                         |
 | metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> Example: 2020-11-11T17:32:17Z                                          |
 | state_name         | `string`             | Beam state identifier <br/><br/> Example: Failed <br/> (Deprecated)                                                  |
@@ -1086,6 +1097,15 @@ This event will be sent when there are failures in HLS streaming and/or recordin
 1. The meeting_url is invalid
 2. Other unexpected errors with HLS streaming / recording.
 
+#### Error types
+
+| Type                | Message                                                                                          | Description                                                                                               |
+| :------------------ | :----------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
+| INTERNAL_ERROR      | Internal error                                                                                   | Internal errors in beam.                                                                                  |
+| MAX_RETRIES_REACHED | Beam couldn't connect to Meeting URL after <max_count> retries. Check if meeting URL is correct. | Sent when Beam cannot join meeting URL after predefined number of max retries.                            |
+| UPLOAD_ERROR        | Failed to upload recordings. Check if upload config is correct.                                  | Sent when there are failures in uploading recordings. This is most likely due to incorrect upload config. |
+| BEAM_STOPPED        | Beam stopped too early                                                                           | Beam takes a few seconds to start, if a stop request is sent before that, we send BEAM_STOPPED error.     |
+
 #### Attributes
 
 | Name                                    | Type                 | Description                                                                                                                                                                         |
@@ -1103,7 +1123,7 @@ This event will be sent when there are failures in HLS streaming and/or recordin
 | meeting_url                             | `string`             | meeting_url provided at HLS start <br/><br/> Example: "https://app.100ms.live/room_id"                                                                                              |
 | error_code                              | `int`                | Beam error code <br/><br/> Example: 1 <br/> (Deprecated)                                                                                                                            |
 | error_message                           | `string`             | Beam error message (description) <br/><br/> Example: Failed to upload recordings. Check if upload config is correct.                                                                |
-| error_type                              | `string`             | [Beam error type](#beam-error-types) <br/><br/> Example: UPLOAD_ERROR                                                                                                               |
+| error_type                              | `string`             | Beam error type <br/><br/> Example: UPLOAD_ERROR                                                                                                                                    |
 | metadata_id                             | `string`             | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                                                                                                        |
 | metadata_timestamp                      | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> Example: 2020-11-11T17:32:17Z                                                                                                         |
 | state_name                              | `string`             | Beam state identifier <br/><br/> Example: HLSFailed <br/> (Deprecated)                                                                                                              |
@@ -1233,12 +1253,3 @@ This event will be sent when HLS recordings are successful and uploaded to the s
     }
 }
 ```
-
-## Beam error types
-
-| Type                | Message                                                                                          | Description                                                                                               |
-| :------------------ | :----------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
-| INTERNAL_ERROR      | Internal error                                                                                   | Internal errors in beam.                                                                                  |
-| MAX_RETRIES_REACHED | Beam couldn’t connect to Meeting URL after <max_count> retries. Check if meeting URL is correct. | Sent when Beam cannot join meeting URL after predefined number of max retries.                            |
-| UPLOAD_ERROR        | Failed to upload recordings. Check if upload config is correct.                                  | Sent when there are failures in uploading recordings. This is most likely due to incorrect upload config. |
-| BEAM_STOPPED        | Beam stopped too early                                                                           | Beam takes a few seconds to start, if a stop request is sent before that, we send BEAM_STOPPED error.     |
