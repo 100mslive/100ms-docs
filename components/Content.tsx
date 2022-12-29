@@ -13,7 +13,6 @@ import TemplatesAndRoles from '../common/templates-and-roles.md';
 import SecurityTokens1 from '../common/security-tokens-1.md';
 import SecurityTokens2 from '../common/security-tokens-2.md';
 import Faq from '../common/faq.md';
-import DomainsPorts from '../common/firewall-and-ports.md';
 import LiveStreaming from '../common/live-streaming.md';
 import Recordings from '../common/recordings.md';
 import AdaptiveBitrate1 from "../common/adaptive-bitrate-1.md";
@@ -31,7 +30,6 @@ const data = {
     securityAndTokens1: SecurityTokens1,
     securityAndTokens2: SecurityTokens2,
     faq: Faq,
-    domainsAndPorts: DomainsPorts,
     liveStreaming: LiveStreaming,
     recordings: Recordings,
     androidSdkVersionShield: AndroidSdkVersionShield,
