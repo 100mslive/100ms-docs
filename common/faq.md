@@ -176,15 +176,15 @@ You can continue using the existing routes (room_id/role) or setup your own rout
 
 ## Chat
 
-### "Does your chat feature only support text conversations or does it support any advanced features like Profanity filtering, Rich media file uploads, etc?"
+### Does your chat feature only support text conversations or does it support any advanced features like Profanity filtering, Rich media file uploads, etc?
 
-"Our chat feature supports text conversations and emojis/reactions at the moment. 
+Our chat feature supports text conversations and emojis/reactions at the moment. 
 
 However, you can use a third-party library on top of 100ms to build features like:
 1. Profanity filtering 
 2. Language Translations
 3. Typing indicators,
-4. Rich media file uploads, etc."
+4. Rich media file uploads, etc.
 
 ### Is chat sent over a separate webRTC channel?
 
