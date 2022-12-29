@@ -28,11 +28,11 @@ Yes, you can delete an App from your [dashboard](https://dashboard.100ms.live/da
 
 ### How do I get started with integrating video functionality to my website using 100ms?
 
-You can get started with our [video conferecing example](./../examples/video-conferencing-starter-kit) to see a live demo. You can also clone the [100ms-web sample app](https://github.com/100mslive/100ms-web) to see how you can extend and customize as per your needs. 
+You can get started with our [video conferencing example](./../examples/video-conferencing-starter-kit) to see a live demo. You can also clone the [100ms-web sample app](https://github.com/100mslive/100ms-web) to see how you can extend and customize as per your needs. 
 
 Meanwhile, check our [docs](/javascript/v2/features/integration) to explore information about various features and capabilities supported on the platform. 
 
-### Do you have any live demo app with some deafult UI to check how live video/audio functionality works on your platform?
+### Do you have any live demo app with some default UI to check how live video/audio functionality works on your platform?
 
 Yes, you can get started with one of our examples from [here](./../examples). You can also sign up for a 100ms account to access the [dashboard](https://dashboard.100ms.live/).
 
@@ -58,7 +58,7 @@ No, a teacher can only mute/unmute a student using the [mute/unmute remote peer]
 
 ### Is there a way I can specify my own room_id while creating a room?
 
-No the roomid gets generated from our end.
+No the `room_id` gets generated from our end.
 
 ### Is there a way to get data on how many users are online?
 
@@ -66,7 +66,7 @@ Its is possible to get the online user for a specific room based on [active room
 
 ### How does pagination between tiles affect the download numbers?
 
-Video will be downloaded only for the visible tiles. For the tiles that are not visibile only audio will be downloaded.
+Video will be downloaded only for the visible tiles. For the tiles that are not visible only audio will be downloaded.
 
 ## Account management
 
@@ -80,7 +80,7 @@ There are no feature-level limitations while using 100ms account. However, an in
     - HLS encoding minutes (1,000 minutes)
 - Or if you use the recording feature
 - Or if you use external streaming (RTMP) feature
-- Or if use HD quality for webRTC, or HLS viewer or recording. 
+- Or if use HD quality for WebRTC, or HLS viewer or recording. 
 
 Please check our [pricing page](https://www.100ms.live/pricing) or [contact us](https://www.100ms.live/contact) for more information. 
 
@@ -88,9 +88,9 @@ Please check our [pricing page](https://www.100ms.live/pricing) or [contact us](
 
 ### Is there a way to provision development/testing access tokens to avoid touching production data/templates in development and staging deploys?
 
-We have just released Workspaces, which will let you create different environment and add team members to the same 100ms account! Know more about it [here](https://www.100ms.live/blog/launching-teams-workspaces).
+We have just released Workspaces, which will let you create different environment and add team members to the same 100ms account. Know more about it [here](https://www.100ms.live/blog/launching-teams-workspaces).
 
-### Is there any sandbox mode available for dev environments?
+### Is there any sandbox mode available for Development environments?
 
 Yes, this is possible with Teams & workspaces on 100ms dashboard, You can create multiple workspaces and members to manage each workspace based on your requirements. For example, you can create workspaces for development and production so that experimentation during development does not affect production. For more information, please check [this blog](https://www.100ms.live/blog/launching-teams-workspaces) and also check your [100ms dashboard](https://dashboard.100ms.live/) to see how this works. 
 
@@ -98,7 +98,7 @@ Yes, this is possible with Teams & workspaces on 100ms dashboard, You can create
 
 Yes, this is possible with Teams & workspaces on 100ms dashboard. Please check [this blog](https://www.100ms.live/blog/launching-teams-workspaces) for more information. 
 
-### Can we create subaccount in existing account? Want to make prod and non prod account separate?
+### Can we create sub-account in existing account? Want to make prod and non prod account separate?
 
 Yes, this is possible with Teams & workspaces on 100ms dashboard. Please check [this blog](https://www.100ms.live/blog/launching-teams-workspaces) for more information. 
 
@@ -108,7 +108,7 @@ Yes, this is possible with Teams & workspaces on 100ms dashboard, You can create
 
 ### Can I register for another 100ms account with same email address?
 
-You can use multiple email addresss to create multiple workspaces within your 100ms account. This will enable you to maintain different workspaces for different environments. For exampe, one workspace for development and one for production. For more information, please check [this blog](https://www.100ms.live/blog/launching-teams-workspaces) and also check your [100ms dashboard](https://dashboard.100ms.live/) to see how this works.
+You can use multiple email address to create multiple workspaces within your 100ms account. This will enable you to maintain different workspaces for different environments. For example, one workspace for development and one for production. For more information, please check [this blog](https://www.100ms.live/blog/launching-teams-workspaces) and also check your [100ms dashboard](https://dashboard.100ms.live/) to see how this works.
 
 
 ## Pricing and billing
@@ -186,7 +186,7 @@ However, you can use a third-party library on top of 100ms to build features lik
 3. Typing indicators,
 4. Rich media file uploads, etc.
 
-### Is chat sent over a separate webRTC channel?
+### Is chat sent over a separate WebRTC channel?
 
 Chat is sent over websockets.
 
@@ -212,13 +212,13 @@ Yes. The live feed is only available in a room.  And to enter a room you need a 
 
 ### We have decided to use 100ms to integrate live streaming into our app, how can we get started?
 
-We have readymade example for live streaming, you can view a live demo using [this](./../examples/live-streaming-starter-kit). You can also clone the [100ms-web sample app](https://github.com/100mslive/100ms-web) to see how you can extend and customize as per your needs. 
+We have ready-made example for live streaming, you can view a live demo using [this](./../examples/live-streaming-starter-kit). You can also clone the [100ms-web sample app](https://github.com/100mslive/100ms-web) to see how you can extend and customize as per your needs. 
 
 To learn more about how live streaming works, please check the [Interactive live streaming guide](./../foundation/live-streaming). 
 
 ### What is the limit for room size in live streaming?
 
-This is the same as webRTC. Suppose we have 1000 viewers on a stream who are publishing their video, and each of them is subscribing to only 9 tiles, then:
+This is the same as WebRTC. Suppose we have 1000 viewers on a stream who are publishing their video, and each of them is subscribing to only 9 tiles, then:
 
 - total number of uploaded streams + total number of downloaded streams ≤ 10,000
 - uploaded streams = 1000 
@@ -229,7 +229,7 @@ It's still under the 10K limit.
 
 ### Can users in the Live Stream send chat messages?
 
-Yes. The same chat API that works in real-time conferencing (webRTC) will work for the live streaming (HLS) viewers as well.
+Yes. The same chat API that works in real-time conferencing (WebRTC) will work for the live streaming (HLS) viewers as well.
 
 ### What is the scalability of the live streaming? What is the maximum number of viewers it can support?
 
@@ -261,7 +261,7 @@ Currently, we you can build additional interactive experiences in your app with 
 
 ### Would you be able to tell us the approximate latency of a Creator in north America doing a real time video conference for the end user who is located in Australia?
 
-It should be in the 200-500ms range
+It should be in the 200-500 ms range
 
 ### Is the latency different for different devices?
 
@@ -275,17 +275,17 @@ You can also look into the advance feature stat for nerds [here](/javascript/v2/
 
 ### Is it possible to dynamically set the video resolution based on the number of participants? 
 
-We have released [Simulcast](/javascript/v2/advanced-features/simulcast)! With simulcast the video quality of peers will drop based on network bandwidth available.
+We have released [Simulcast](/javascript/v2/advanced-features/simulcast). With simulcast the video quality of peers will drop based on network bandwidth available.
 
-So if there are just two, it's 1080, then when a third joins, it drops to 720, then when a 7th joins, it drops to 360.
+So if there are just two, it's 1080, then when a third joins, it drops to 720, then when a seventh joins, it drops to 360.
 
 ## Limits
 
-### What is the limit for room size in webRTC?
+### What is the limit for room size in WebRTC?
 
 - Limit = total number of uploaded streams + total number of downloaded streams ≤ 10,000
   - total number of uploaded streams is every single video feed being sent to the server, regardless of who is viewing it
-  - total number of downloaded streams is calculated as number of webrtc viewers x number of video tiles seen by each (regardless of tile size)                                                                                                        
+  - total number of downloaded streams is calculated as number of WebRTC viewers x number of video tiles seen by each (regardless of tile size)                                                                                                        
 - here’s an example:  a room with 100 peers, each with their video on, but each peer can only see 20 pax on the first page due to pagination
   - uploaded streams = 100
   - downloaded streams = 100 peers x 20 video tiles each = 2,000
@@ -293,7 +293,7 @@ So if there are just two, it's 1080, then when a third joins, it drops to 720, t
 
 ### For a given Room, what is the max number of concurrent WebRTC connected participants?
 
-In a single room at a given time, we currently support 10000 streams i.e. 100 participants with audio and video enabled
+In a single room at a given time, we currently support 10000 streams that is 100 participants with audio and video enabled
 
 ### What are max tiles config 100ms can support?
 
@@ -306,11 +306,11 @@ In a single room at a given time, we currently support 10000 streams i.e. 100 pa
 
 ### What is the maximum number of people that can be supported currently?
 
-The maximum number of people that can be supported currently is 100 for full duplex audio/video with less than 500ms latency. For webinar-style events with stage and audience, the maximum number of people on the stage is 10, with 1000s offstage. For large events, the audience on TV can number in the millions with a 7-10s latency.
+The maximum number of people that can be supported currently is 100 for full duplex audio/video with less than 500 ms latency. For webinar-style events with stage and audience, the maximum number of people on the stage is 10, with 1000 offstage peers. For large events, the audience on TV can number in the millions with a 7-10 seconds latency.
 
-### What is the maximum capacity for group calls with 100ms video sdk?
+### What is the maximum capacity for group calls with 100ms video SDK?
 
-The maximum capacity for group calls with 100ms video sdk is currently 100 participants with audio/video on.
+The maximum capacity for group calls with 100ms video SDK is currently 100 participants with audio/video on.
 
 ### Scalability and security
 
@@ -318,11 +318,11 @@ The maximum capacity for group calls with 100ms video sdk is currently 100 parti
 
 If the SDK is not connected and you just want the m3u8 file, the system can scale to 50k-100k viewers.
 
-### Is it possible to access in-depth analytics, such as the number of reconnections, drops, high latency, and live metrics?
+### Is it possible to access in-depth analytics, such as the number of attempts to reconnect, drops, high latency, and live metrics?
 
 All metrics are collected and can be shared through an Amplitude dashboard, which will eventually be available within the dashboard. For some basic debugging, you can always rely on the "Events Inspector" in your 100ms dashboard.
 
-### Is the 100ms live stream sdk customizable and able to scale to millions of users?
+### Is the 100ms live stream SDK customizable and able to scale to millions of users?
 
 Yes. 100ms main motto is to serve customers with SDKs that offers extensibility and customizability to a greater extend. You can check the [video-conferencing](https://www.100ms.live/video-conferencing) and [interactive live streaming](https://www.100ms.live/interactive-live-streaming) pages for more information. 
 
@@ -333,7 +333,7 @@ Yes, please check below:
 SOC2 type II compliant: report sharable with a mutual NDA signed
 HIPAA: we can sign a BAA if you require
 
-### Is it ok to potentially create 1000s of rooms over time? 
+### Is it ok to potentially create 1000 s of rooms over time? 
 
 Yes, you can create as many rooms as necessary. It's also handy to [disable a room](/server-side/v2/Rooms/disable-or-enable) after you're done using it.
 
@@ -354,7 +354,7 @@ Beam recording is the browser recording, built to give users a participant-first
 ### Hey how long should it take for a recording to show up in our s3 bucket after a livestream is ended, for both beam recording and SFU?
 
 Beam recording should be available within 15-20 minutes after the call ends.
-SFU recording will take ~1.5 times the call duration, after the call ends. For example, if the call duration is 30 mins, then SFU recording will be available in 45 mins.
+SFU recording will take ~1.5 times the call duration, after the call ends. For example, if the call duration is 30 minutes, then SFU recording will be available in 45 minutes.
 
 ### Is there a way for the beam recorder to record what is happening in the chat without the chat being open and covering any tiles?
 
@@ -362,7 +362,7 @@ No, chat cannot be recorded without chat being open. Beam recorder is a headless
 
 ### How Beam recording can pick up the chat in the video ?
 
-Beam recorder is a headless browser so it will record whatever is open in your page. Open up the chat as per the requirement in the meeting url that is being passed to beam
+Beam recorder is a headless browser so it will record whatever is open in your page. Open up the chat as per the requirement in the meeting URL that is being passed to beam
 
 ### Will the 100ms bot go to a video call webpage and render dynamic pages and stream/record the screen, or will it collect incoming video/audio streams only?
 
@@ -406,7 +406,7 @@ For that you need to have HLS recording enabled and that will give you a m3u8 fi
 ### Web Recording resolution, is the browser itself 1080p? Is the recording 1080p?
 
 Currently both are 720p.  We can do 1080p but it will cost more. Please check our [pricing page](https://www.100ms.live/pricing) or [contact us](https://www.100ms.live/contact) for more information. 
-The recording resolution can be changed from the dashbaord
+The recording resolution can be changed from the dashboard
 
 ### How can we debug issues with uploading video recordings to an S3 bucket?
 
@@ -440,7 +440,7 @@ Yes, you can handle this on your client-side and export chat logs.
 The functionalities of these two APIs are different:
 
 1. [Disable/Enable a room API](/server-side/v2/Rooms/disable-or-enable) - you can use this API to disable/enable the room to block/allow peers to join the room.
-2. [End an active room API](/server-side/v2/active-rooms/end-active-room) - you can use this API to end an ongoing session in a rapioom. Optionally you can use the `lock` argument to disable the room future peer joins.
+2. [End an active room API](/server-side/v2/active-rooms/end-active-room) - you can use this API to end an ongoing session in a room. Optionally you can use the `lock` argument to disable the room future peer joins.
 
 ### Is there a way to close a room using a server-side API?
 
@@ -448,20 +448,20 @@ You can use [end an active room API](/server-side/v2/active-rooms/end-active-roo
 
 ### Is there a way to mute a participant using a server-side API?
 
-You need to follow the below steps to achive this:
+You need to follow the below steps to achieve this:
 
 1. Create another role in your template by disabling audio publish strategies, for example: no-audio. You can either use the [create a role API](/server-side/v2/policy/create-update-role) or templates page on [dashboard](https://dashboard.100ms.live/dashboard) to do this. 
 2. On click of a button from the UI, you need to trigger the [update-peer server side API](/server-side/v2/active-rooms/update-a-peer) or [Change role client-side API](/javascript/v2/features/change-role) to change the role of the particular participant (peer) to no-video role to disable audio. 
 
 ### Is there a way to disable video for a participant using a server-side API?
 
-You need to follow the below steps to achive this:
+You need to follow the below steps to achieve this:
 1. Create another role in your template by disabling video publish strategies, for example: no-video. You can either use the [create a role API](/server-side/v2/policy/create-update-role) or templates page on [dashboard](https://dashboard.100ms.live/dashboard) to do this. 
 2. On click of a button from the UI, you need to trigger the [update-peer server side API](/server-side/v2/active-rooms/update-a-peer) or [Change role client-side API](/javascript/v2/features/change-role) to change the role of the particular participant (peer) to no-video role to disable video. 
 
-### Can you explain the differences between the hls recording and beam recording webhook events?
+### Can you explain the differences between the HLS recording and beam recording webhook events?
 
-HLS recording events are related to the recording enabled for Interactive live streaming (HLS) sessions, whereas beam recording events are only applicable to recording enabled for external streaming (RTMP) or browser recording for webRTC sessions.
+HLS recording events are related to the recording enabled for Interactive live streaming (HLS) sessions, whereas beam recording events are only applicable to recording enabled for external streaming (RTMP) or browser recording for WebRTC sessions.
 
 Please check the below links for more information:
 1. [Interactive live streaming (HLS)](/javascript/v2/foundation/live-streaming)
@@ -471,9 +471,9 @@ Please check the below links for more information:
 
 Yes, we have a list of IPs that can be whitelisted. [Here](/server-side/v2/introduction/webhook#ip-whitelisting") is the list.
 
-### Is there an API call we can make to set the webhook url and headers on our account?
+### Is there an API call we can make to set the webhook URL and headers on our account?
 
-No. Currently there is no API to update the webhook url and headers. The same can be done from 100ms Dashboard directly
+No. Currently there is no API to update the webhook URL and headers. The same can be done from 100ms Dashboard directly
 
 ### Do you have some static IP for 100ms, that we can whitelist your hits at our end?
 
@@ -486,9 +486,9 @@ No. Currently there is no API to update the webhook url and headers. The same ca
 
 The GCP is also on public network so no static IP
 
-### What is the filetypes you would write to bucket so we can whitelist them?
+### What is the file-types you would write to bucket so we can whitelist them?
 
-We will write mp4, txt, webm files.
+We will write `mp4`, `txt`, `webm` files.
 
 ### We need to know if there is a way to end an active session programmatically (reset the room so that everyone is kicked from the meeting and it starts a new session).
 
@@ -506,13 +506,13 @@ Currently, role change is initiated by a designated role. A role change REST API
 
 Yes, you can use [Update a peer API](/server-side/v2/active-rooms/update-a-peer) to change the role of a peer from backend. 
 
-### Have quieries related to for backend we need api's to create room and joining people to it and for website (Frontend) need guidance for components like video buttons and participants etc.
+### Have queries related to for backend we need APIs to create room and joining people to it and for website (Frontend) need guidance for components like video buttons and participants etc.
 
 You can use the [Create room server API](/server-side/v2/Rooms/create-via-api). The sample app for reference can be found [here](https://github.com/100mslive/100ms-web)
 
 ### Just want to know that if we create role with API and want changes to be synced in react SDK, so that we can use that role?
 
-Yes that is possible the template created on dashboard is universally used across all 100ms platfroms.
+Yes that is possible the template created on dashboard/API is universally used across all 100ms client SDKs.
 
 ### Is there a way to schedule these rooms for a certain date and time and send invites to certain email ids
 
