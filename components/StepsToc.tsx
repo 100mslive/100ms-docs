@@ -4,18 +4,20 @@ import { useMemo } from 'react';
 export type TocItem = {
     slug: string;
     title: string;
+    description: string;
 };
 
-export default function StepsToc({ parentId }) {
+export default function StepsToc({ parentId, descriptions = [] }) {
     const parentIdHash = parentId ? `#${parentId}` : '';
     const toc = useMemo(() => {
         let list: TocItem[] = [];
         if (typeof window !== 'undefined') {
             const ids = document.querySelectorAll(`${parentIdHash} h3`);
-            ids.forEach((t) =>
+            ids.forEach((t, idx) =>
                 list.push({
-                    title: t.textContent || '',
-                    slug: t.id
+                    title: t.textContent ?? '',
+                    slug: t.id,
+                    description: descriptions[idx] ?? ''
                 })
             );
         }
@@ -38,8 +40,8 @@ export default function StepsToc({ parentId }) {
                     href={`#${item.slug}`}
                     css={{
                         textDecoration: 'none',
-                        height: '200px',
                         backgroundColor: 'var(--docs_bg_card)',
+                        color: 'var(--docs_text_secondary)',
                         borderRadius: 'var(--docs_border_radius_s)',
                         border: '1px solid var(--docs_border_default)',
                         padding: '20px',
@@ -61,6 +63,7 @@ export default function StepsToc({ parentId }) {
                         {index + 1}
                     </Box>
                     <Text variant="lg">{item.title}</Text>
+                    <Text css={{ marginTop: '15px' }}>{item.description}</Text>
                 </Box>
             ))}
         </Box>
