@@ -1,5 +1,5 @@
 import { Box, Text } from '@100mslive/react-ui';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 
 export type TocItem = {
     slug: string;
@@ -7,19 +7,21 @@ export type TocItem = {
 };
 
 export default function StepsToc({ parentId }) {
-    const [toc, setToc] = useState<TocItem[]>([]);
     const parentIdHash = parentId ? `#${parentId}` : '';
-    useEffect(() => {
-        const list: TocItem[] = [];
-        const ids = document.querySelectorAll(`${parentIdHash} h3`);
-        ids.forEach((t) =>
-            list.push({
-                title: t.textContent || '',
-                slug: t.id
-            })
-        );
-        setToc(list);
+    const toc = useMemo(() => {
+        let list: TocItem[] = [];
+        if (typeof window !== 'undefined') {
+            const ids = document.querySelectorAll(`${parentIdHash} h3`);
+            ids.forEach((t) =>
+                list.push({
+                    title: t.textContent || '',
+                    slug: t.id
+                })
+            );
+        }
+        return list;
     }, []);
+
     return (
         <Box
             as="section"
