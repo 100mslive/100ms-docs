@@ -2,7 +2,19 @@ This page contains the frequently asked questions with answers categorized in va
 
 - [General](#general)
 - [Getting started](#getting-started)
-- []
+- [Account management](#account-management)
+- [Workspaces](#workspaces)
+- [Pricing and billing](#pricing-and-billing)
+- [Authentication and tokens](#authentication-and-tokens)
+- [Recording](#recording)
+- [Chat](#chat)
+- [Interactive Live streaming](#interactive-live-streaming)
+- [External streaming](#external-streaming-rtmp)
+- [Plugins](#plugins)
+- [Network and quality](#network-and-quality)
+- [Limits](#limits)
+- [Server-side](#server-side)
+- [Analytics](#analytics)
 
 ## General
 
@@ -125,19 +137,6 @@ You can use our [pricing calculator](https://www.100ms.live/pricing) for an esti
 
 Yes, if any peer joins and is publishing video or audio, it will be billed.
 
-## Analytics
-
-### Is there any usage analytics dashboard available to check various metrics associated with our account?
-
-Currently, we don't have any dashboard for usage analytics, but we do it have it in our roadmap. We will keep you notified as soon as we have it. Subsribe to our newsletter to receive monthly updates about on 100ms product releases.
-
-### Does the 100ms video SDK provide analytics on room, session, and each user, including data such as time spent per user, total session length, and number of peers in a room?
-
-You can get analytics about rooms, sessions, peers, etc in a multiple ways based on your requirements and feasibility. 
-
-1. You can use the [List Sessions server API](/server-side/v2/Sessions/list-sessions) to fetch the list of sessions for a particular data/time range and you can also filter these for a particular room. This API will provide data such as list of peers, their room join/leave time, session start/end time, etc,.
-
-2. If you need to get the sessions details for an active room (ongoing session), you can use our [Active room server APIs](/server-side/v2/active-rooms/overview) to fetch the details and perform some actions on peer from your server side. 
 
 ## Authentication and tokens
 
@@ -174,6 +173,96 @@ You can update the code to point to your own token service (relevant code in the
 
 You can continue using the existing routes (room_id/role) or setup your own routes in the cloned/forked code.
 
+
+
+## Recording
+
+### Whats the difference between the beam recording vs. SFU recording?
+
+Beam recording is the browser recording, built to give users a participant-first recording experience. SFU recording is a composite recording which gets created after recording each of the individual peers and merging it. Please check this [guide](/javascript/v2/foundation/recordings) for more information.
+
+### Hey how long should it take for a recording to show up in our s3 bucket after a livestream is ended, for both beam recording and SFU?
+
+Beam recording should be available within 15-20 minutes after the call ends.
+SFU recording will take ~1.5 times the call duration, after the call ends. For example, if the call duration is 30 minutes, then SFU recording will be available in 45 minutes.
+
+### Is there a way for the beam recorder to record what is happening in the chat without the chat being open and covering any tiles?
+
+No, chat cannot be recorded without chat being open. Beam recorder is a headless browser so it will record whatever is open in your page. 
+
+### How Beam recording can pick up the chat in the video ?
+
+Beam recorder is a headless browser so it will record whatever is open in your page. Open up the chat as per the requirement in the meeting URL that is being passed to beam
+
+### Will the 100ms bot go to a video call webpage and render dynamic pages and stream/record the screen, or will it collect incoming video/audio streams only?
+
+The 100ms bot (beam) goes to a video call webpage and renders dynamic pages and stream/record the screen only.
+
+### Can we split room recordings as per some control at our end?
+
+It depends on the type of recording being used. If using AVP recording, webhooks can be used to retrieve the recording link for each session. If using beam recording, the recording can be split by specifying the recording duration in the API call.
+
+### Can we use the same room ID but have separate recordings as per our need?
+
+Yes, it can be done by specifying a new session ID in the API call to create a new recording.
+
+### How can we retrieve the recording from a room?
+
+There are two ways for you to retrieve recording for a room. 
+
+1. Using your S3 bucket - You can configure your S3 bucket at a template level to get all recordings for all the rooms associated with that template. Check [this guide](/server-side/v2/introduction/recordings#configure-storage) for more information.
+2. Using webhooks - You can configure your server endpoint as webhook in the developers section on your [dashboard](https://dashboard.100ms.live/developer) to receive all events (including recording related events) to fetch the recording information. Check [webhooks guide](/server-side/v2/introduction/webhook) for more information. 
+
+### Is it possible to make a recording automatically stop after a certain duration or at a specific time?
+
+Yes, the recording can be stopped automatically by specifying the recording duration in the API call or by using the API call to stop the recording at a specific time.
+
+### Can we retrieve the list of all the recordings of a room?
+
+Yes, the list of all recordings for a room can be retrieved using the API call to list recordings.
+
+### Is it possible to make a recording stop when a specific event occurs?
+
+Yes, the recording can be stopped using the API call to stop the recording when a specific event occurs.
+
+### Is s3:ListBucket S3 permission required for S3 bucket access?
+
+ListBucket permission is not required
+
+### Is it possible to record a live stream and allow users to continue to replay the recording even after the live stream has ended (VOD use cases)?
+
+For that you need to have HLS recording enabled and that will give you a m3u8 file that you can play back post the session on any HLS player
+
+### Web Recording resolution, is the browser itself 1080p? Is the recording 1080p?
+
+Currently both are 720p.  We can do 1080p but it will cost more. Please check our [pricing page](https://www.100ms.live/pricing) or [contact us](https://www.100ms.live/contact) for more information. 
+The recording resolution can be changed from the dashboard
+
+### How can we debug issues with uploading video recordings to an S3 bucket?
+
+Now we have a validate button under destination in the dashboard and it will give an error if the permission are not set correctly.
+
+### What permissions are needed to allow video recordings to be uploaded to an S3 bucket?
+
+Both read and write permissions for the bucket are required for us to upload the recordings to the S3 bucket.
+
+### How long does it take for the composite recording to be ready?
+
+This usually takes 1.2 - 1.5 times the duration of the session. There is a delay when a lot of requests are in queue. 
+
+A delay can also happen if the number of peers in the sessions increase.                                       
+
+- Session minutes \* number of peers \* 1.5x.
+- So for example a session of 1 minute, with 5 participants. The total time taken for the recording to generate would be around 7.5 minutes (1\*5\*1.5).
+
+### Is Cloud recording available?
+
+Yes, Please check [RTMP streaming and recording guide](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording) for more information. 
+
+### Is it possible to export chat logs from one of the front-end clients and save it?
+
+Yes, you can handle this on your client-side and export chat logs.
+
 ## Chat
 
 ### Does your chat feature only support text conversations or does it support any advanced features like Profanity filtering, Rich media file uploads, etc?
@@ -194,21 +283,8 @@ Chat is sent over websockets.
 
 Currently, chat is not saved and there is no way to retrieve chat logs.
 
-## External streaming (RTMP)
 
-### Can the 100ms RTMP streaming be used with any URL?
-
-The 100ms RTMP streaming can be used with any URL.
-
-### Do we need to set up our own CDN servers for RTMP URLs or can we attach 100ms URLs to video elements in HTML?
-
-The CDN URL is not needed for HLS; it will be provided by 100ms. For RTMP, you will need to set up your own CDN servers or attach 100ms URLs to video elements in HTML.
-
-### How can I integrate a feature similar to Twitter super followers using 100ms? Also, I want to only allow the authenticated users, is that possible?
-
-Yes. The live feed is only available in a room.  And to enter a room you need a JWT token with the viewer role.  So this is possible
-
-## Live streaming
+## Interactive Live streaming
 
 ### We have decided to use 100ms to integrate live streaming into our app, how can we get started?
 
@@ -244,6 +320,20 @@ The average delay of the live streaming is 10-12 seconds.
 You can use 100ms platform to build Interactive live streaming (HLS) apps and to broadcast your live stream to external streaming platform like YouTube, Twitch, etc using our External streaming service (RTMP). Please check these links for more details. 
 1. [Interactive live streaming (HLS)](./../foundation/live-streaming)
 2. [External streaming (RTMP)](/javascript/v2/features/rtmp-recording)
+
+## External streaming (RTMP)
+
+### Can the 100ms RTMP streaming be used with any URL?
+
+The 100ms RTMP streaming can be used with any URL.
+
+### Do we need to set up our own CDN servers for RTMP URLs or can we attach 100ms URLs to video elements in HTML?
+
+The CDN URL is not needed for HLS; it will be provided by 100ms. For RTMP, you will need to set up your own CDN servers or attach 100ms URLs to video elements in HTML.
+
+### How can I integrate a feature similar to Twitter super followers using 100ms? Also, I want to only allow the authenticated users, is that possible?
+
+Yes. The live feed is only available in a room.  And to enter a room you need a JWT token with the viewer role.  So this is possible
 
 ## Plugins
 
@@ -345,94 +435,6 @@ The only encryption we have is on the token side. That is based on the token sha
 
 Yes we are Soc - 2 complaint.
 
-## Recording
-
-### Whats the difference between the beam recording vs. SFU recording?
-
-Beam recording is the browser recording, built to give users a participant-first recording experience. SFU recording is a composite recording which gets created after recording each of the individual peers and merging it. Please check this [guide](/javascript/v2/foundation/recordings) for more information.
-
-### Hey how long should it take for a recording to show up in our s3 bucket after a livestream is ended, for both beam recording and SFU?
-
-Beam recording should be available within 15-20 minutes after the call ends.
-SFU recording will take ~1.5 times the call duration, after the call ends. For example, if the call duration is 30 minutes, then SFU recording will be available in 45 minutes.
-
-### Is there a way for the beam recorder to record what is happening in the chat without the chat being open and covering any tiles?
-
-No, chat cannot be recorded without chat being open. Beam recorder is a headless browser so it will record whatever is open in your page. 
-
-### How Beam recording can pick up the chat in the video ?
-
-Beam recorder is a headless browser so it will record whatever is open in your page. Open up the chat as per the requirement in the meeting URL that is being passed to beam
-
-### Will the 100ms bot go to a video call webpage and render dynamic pages and stream/record the screen, or will it collect incoming video/audio streams only?
-
-The 100ms bot (beam) goes to a video call webpage and renders dynamic pages and stream/record the screen only.
-
-### Can we split room recordings as per some control at our end?
-
-It depends on the type of recording being used. If using AVP recording, webhooks can be used to retrieve the recording link for each session. If using beam recording, the recording can be split by specifying the recording duration in the API call.
-
-### Can we use the same room ID but have separate recordings as per our need?
-
-Yes, it can be done by specifying a new session ID in the API call to create a new recording.
-
-### How can we retrieve the recording from a room?
-
-There are two ways for you to retrieve recording for a room. 
-
-1. Using your S3 bucket - You can configure your S3 bucket at a template level to get all recordings for all the rooms associated with that template. Check [this guide](/server-side/v2/introduction/recordings#configure-storage) for more information.
-2. Using webhooks - You can configure your server endpoint as webhook in the developers section on your [dashboard](https://dashboard.100ms.live/developer) to receive all events (including recording related events) to fetch the recording information. Check [webhooks guide](/server-side/v2/introduction/webhook) for more information. 
-
-### Is it possible to make a recording automatically stop after a certain duration or at a specific time?
-
-Yes, the recording can be stopped automatically by specifying the recording duration in the API call or by using the API call to stop the recording at a specific time.
-
-### Can we retrieve the list of all the recordings of a room?
-
-Yes, the list of all recordings for a room can be retrieved using the API call to list recordings.
-
-### Is it possible to make a recording stop when a specific event occurs?
-
-Yes, the recording can be stopped using the API call to stop the recording when a specific event occurs.
-
-### Is s3:ListBucket S3 permission required for S3 bucket access?
-
-ListBucket permission is not required
-
-### Is it possible to record a live stream and allow users to continue to replay the recording even after the live stream has ended (VOD use cases)?
-
-For that you need to have HLS recording enabled and that will give you a m3u8 file that you can play back post the session on any HLS player
-
-### Web Recording resolution, is the browser itself 1080p? Is the recording 1080p?
-
-Currently both are 720p.  We can do 1080p but it will cost more. Please check our [pricing page](https://www.100ms.live/pricing) or [contact us](https://www.100ms.live/contact) for more information. 
-The recording resolution can be changed from the dashboard
-
-### How can we debug issues with uploading video recordings to an S3 bucket?
-
-Now we have a validate button under destination in the dashboard and it will give an error if the permission are not set correctly.
-
-### What permissions are needed to allow video recordings to be uploaded to an S3 bucket?
-
-Both read and write permissions for the bucket are required for us to upload the recordings to the S3 bucket.
-
-### How long does it take for the composite recording to be ready?
-
-This usually takes 1.2 - 1.5 times the duration of the session. There is a delay when a lot of requests are in queue. 
-
-A delay can also happen if the number of peers in the sessions increase.                                       
-
-- Session minutes \* number of peers \* 1.5x.
-- So for example a session of 1 minute, with 5 participants. The total time taken for the recording to generate would be around 7.5minutes (1\*5\*1.5).
-
-### Is Cloud recording available?
-
-Yes, Please check [RTMP streaming and recording guide](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording) for more information. 
-
-### Is it possible to export chat logs from one of the front-end clients and save it?
-
-Yes, you can handle this on your client-side and export chat logs.
-
 ## Server-side
 
 ### Is the functionality of disable a room and end an active room same?
@@ -521,3 +523,17 @@ That needs authentication for a user and you would need to handle this on the UI
 ### Can we disable room by id?
 
 Yes this is possible. [Disable/enable a room API](/server-side/v2/Rooms/disable-or-enable) supports room_id as an argument as well. 
+
+## Analytics
+
+### Is there any usage analytics dashboard available to check various metrics associated with our account?
+
+Currently, we don't have any dashboard for usage analytics, but we do it have it in our roadmap. We will keep you notified as soon as we have it. Subsribe to our newsletter to receive monthly updates about on 100ms product releases.
+
+### Does the 100ms video SDK provide analytics on room, session, and each user, including data such as time spent per user, total session length, and number of peers in a room?
+
+You can get analytics about rooms, sessions, peers, etc in a multiple ways based on your requirements and feasibility. 
+
+1. You can use the [List Sessions server API](/server-side/v2/Sessions/list-sessions) to fetch the list of sessions for a particular data/time range and you can also filter these for a particular room. This API will provide data such as list of peers, their room join/leave time, session start/end time, etc,.
+
+2. If you need to get the sessions details for an active room (ongoing session), you can use our [Active room server APIs](/server-side/v2/active-rooms/overview) to fetch the details and perform some actions on peer from your server side. 
