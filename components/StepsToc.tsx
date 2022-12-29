@@ -45,18 +45,19 @@ export default function StepsToc({ parentId }) {
                             borderColor: 'var(--docs_primary_light)'
                         }
                     }}>
-                    {/*<Box
+                    <Box
                         css={{
                             borderRadius: '50%',
-                            backgroundColor: 'var(--docs_bg_header)',
-                            height: '20px',
-                            width: '20px',
+                            backgroundColor: 'var(--docs_bg_code_highlight)',
+                            marginBottom: '10px',
+                            height: '40px',
+                            width: '40px',
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
                         {index + 1}
-                    </Box>*/}
+                    </Box>
                     <Text variant="lg">{item.title}</Text>
                 </Box>
             ))}

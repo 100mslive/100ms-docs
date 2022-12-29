@@ -19,6 +19,7 @@ import Response from './Response';
 import ResponseBox from './ResponseBox';
 import { Tab, Tabs } from './Tabs';
 import StepsToc from './StepsToc';
+import StepsContainer from './StepsContainer';
 import Text from './Text';
 import View from './View';
 
@@ -85,7 +86,8 @@ const MDXComponents = {
     Content,
     DownloadCollection,
     APILink,
-    StepsToc
+    StepsToc,
+    StepsContainer,
 };
 
 export default MDXComponents;

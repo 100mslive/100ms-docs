@@ -26,7 +26,7 @@ The [roles primitive](templates-and-roles) can be used to define capabilities of
 
 Use our [Live Streaming Starter Kit](https://www.100ms.live/marketplace/live-streaming-starter-kit) to try out the experience before you write a line of code.
 
-<div className="steps-container">
+<StepsContainer>
 
 ### Create a new app
 
@@ -66,7 +66,7 @@ By default, the live stream is composed in landscape mode for desktop viewers (w
     - If you have multiple broadcasters joining in, choose grid or active speaker based on your needs
     - In case of grid layout, choose the tile size that fits your use-case. For example, a stream with 2 streamers looks better with 1:1 tiles.
 
-</div>
+</StepsContainer>
 
 ## Integrate in your app
 
