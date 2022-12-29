@@ -19,6 +19,7 @@ import AdaptiveBitrate1 from "../common/adaptive-bitrate-1.md";
 import AdaptiveBitrate2 from "../common/adaptive-bitrate-2.md";
 import AndroidSdkVersionShield from '../common/android-sdk-version-shield.md';
 import BulkRoleChangeErrors from '../common/bulk-role-change-errors.md';
+import RtmpExternalConfig from '../common/rtmp-external-config.md';
 
 
 const data = {
@@ -32,6 +33,7 @@ const data = {
     firewallAndPorts: FirewallAndPorts,
     liveStreaming: LiveStreaming,
     recordings: Recordings,
+    rtmpExternalConfig: RtmpExternalConfig,
     androidSdkVersionShield: AndroidSdkVersionShield,
     bulkRoleChangeErrors: BulkRoleChangeErrors,
     /**
