@@ -1,3 +1,9 @@
+This page contains the frequently asked questions with answers categorized in various groups as below:
+
+- [General](#general)
+- [Getting started](#getting-started)
+- []
+
 ## General
 
 ### What is the inspiration behind the name, 100ms?
@@ -46,6 +52,22 @@ No, but the raw video can be accessed and image recognition can be performed on 
 
 It is powered by the same infra. Same as everything in production that we serve to our clients.
 
+### Can teacher handle remote user’s (student) screen (start and stop) like remotely mute/unmute of A/V ?
+
+No, a teacher can only mute/unmute a student using the [mute/unmute remote peer](/javascript/v2/features/remote-mute) feature. 
+
+### Is there a way I can specify my own room_id while creating a room?
+
+No the roomid gets generated from our end.
+
+### Is there a way to get data on how many users are online?
+
+Its is possible to get the online user for a specific room based on [active room API](/server-side/v2/active-rooms/overview).
+
+### How does pagination between tiles affect the download numbers?
+
+Video will be downloaded only for the visible tiles. For the tiles that are not visibile only audio will be downloaded.
+
 ## Account management
 
 ### Are there any trial account limitations?
@@ -62,15 +84,42 @@ There are no feature-level limitations while using 100ms account. However, an in
 
 Please check our [pricing page](https://www.100ms.live/pricing) or [contact us](https://www.100ms.live/contact) for more information. 
 
+## Workspaces
+
+### Is there a way to provision development/testing access tokens to avoid touching production data/templates in development and staging deploys?
+
+We have just released Workspaces, which will let you create different environment and add team members to the same 100ms account! Know more about it [here](https://www.100ms.live/blog/launching-teams-workspaces).
+
+### Is there any sandbox mode available for dev environments?
+
+Yes, this is possible with Teams & workspaces on 100ms dashboard, You can create multiple workspaces and members to manage each workspace based on your requirements. For example, you can create workspaces for development and production so that experimentation during development does not affect production. For more information, please check [this blog](https://www.100ms.live/blog/launching-teams-workspaces) and also check your [100ms dashboard](https://dashboard.100ms.live/) to see how this works. 
+
+### Is there a way to add a second user to our account? Or should we just share login credentials?
+
+Yes, this is possible with Teams & workspaces on 100ms dashboard. Please check [this blog](https://www.100ms.live/blog/launching-teams-workspaces) for more information. 
+
+### Can we create subaccount in existing account? Want to make prod and non prod account separate?
+
+Yes, this is possible with Teams & workspaces on 100ms dashboard. Please check [this blog](https://www.100ms.live/blog/launching-teams-workspaces) for more information. 
+
+### Could you specify multiple webhook URLs for different environments under the same account?
+
+Yes, this is possible with Teams & workspaces on 100ms dashboard, You can create multiple workspaces and configure different webhooks for each of these environments. For more information, please check [this blog](https://www.100ms.live/blog/launching-teams-workspaces) and also check your [100ms dashboard](https://dashboard.100ms.live/) to see how this works.
+
+### Can I register for another 100ms account with same email address?
+
+You can use multiple email addresss to create multiple workspaces within your 100ms account. This will enable you to maintain different workspaces for different environments. For exampe, one workspace for development and one for production. For more information, please check [this blog](https://www.100ms.live/blog/launching-teams-workspaces) and also check your [100ms dashboard](https://dashboard.100ms.live/) to see how this works.
+
+
 ## Pricing and billing
 
 ### We wanted to ask specifics on pricing and how we could calculate an estimated cost based on our use case
 
-You can use our pricing calculator for an estimate of the cost - https://www.100ms.live/pricing. You can also book a meeting with us directly for an in-depth discussion - https://www.100ms.live/contact
+You can use our [pricing calculator](https://www.100ms.live/pricing) for an estimate of the cost. You can also [book a meeting](https://www.100ms.live/contact) with us directly for an in-depth discussion.
 
 ### Is this pricing for standard definition or high definition? In the pricing calculator, it’s telling us to contact you guys to discuss pricing for HD
 
-You can use our pricing calculator for an estimate of the cost - https://www.100ms.live/pricing. You can also book a meeting with us directly for an in-depth discussion - https://www.100ms.live/contact
+You can use our [pricing calculator](https://www.100ms.live/pricing) for an estimate of the cost. You can also [book a meeting](https://www.100ms.live/contact) with us directly for an in-depth discussion.
 
 ### Does billing on minutes count when only the local peer is joined in a room?
 
@@ -86,9 +135,9 @@ Currently, we don't have any dashboard for usage analytics, but we do it have it
 
 You can get analytics about rooms, sessions, peers, etc in a multiple ways based on your requirements and feasibility. 
 
-1. You can use the List Sessions server API (https://www.100ms.live/docs/server-side/v2/Sessions/list-sessions) to fetch the list of sessions for a particular data/time range and you can also filter these for a particular room. This API will provide data such as list of peers, their room join/leave time, session start/end time, etc,.
+1. You can use the [List Sessions server API](/server-side/v2/Sessions/list-sessions) to fetch the list of sessions for a particular data/time range and you can also filter these for a particular room. This API will provide data such as list of peers, their room join/leave time, session start/end time, etc,.
 
-2. If you need to get the sessions details for an active room (ongoing session), you can use our Active room server APIs (https://www.100ms.live/docs/server-side/v2/active-rooms/overview) to fetch the details and perform some actions on peer from your server side. 
+2. If you need to get the sessions details for an active room (ongoing session), you can use our [Active room server APIs](/server-side/v2/active-rooms/overview) to fetch the details and perform some actions on peer from your server side. 
 
 ## Authentication and tokens
 
@@ -263,6 +312,39 @@ The maximum number of people that can be supported currently is 100 for full dup
 
 The maximum capacity for group calls with 100ms video sdk is currently 100 participants with audio/video on.
 
+### Scalability and security
+
+### Can the system scale to 50k-100k viewers if the SDK is not connected and we just want the m3u8 file?
+
+If the SDK is not connected and you just want the m3u8 file, the system can scale to 50k-100k viewers.
+
+### Is it possible to access in-depth analytics, such as the number of reconnections, drops, high latency, and live metrics?
+
+All metrics are collected and can be shared through an Amplitude dashboard, which will eventually be available within the dashboard. For some basic debugging, you can always rely on the "Events Inspector" in your 100ms dashboard.
+
+### Is the 100ms live stream sdk customizable and able to scale to millions of users?
+
+Yes. 100ms main motto is to serve customers with SDKs that offers extensibility and customizability to a greater extend. You can check the [video-conferencing](https://www.100ms.live/video-conferencing) and [interactive live streaming](https://www.100ms.live/interactive-live-streaming) pages for more information. 
+
+### Can you share some documentation on your information security practices?
+
+Yes, please check below:
+
+SOC2 type II compliant: report sharable with a mutual NDA signed
+HIPAA: we can sign a BAA if you require
+
+### Is it ok to potentially create 1000s of rooms over time? 
+
+Yes, you can create as many rooms as necessary. It's also handy to [disable a room](/server-side/v2/Rooms/disable-or-enable) after you're done using it.
+
+### Can you platform handle end-to-end encryption between just 2 users?
+
+The only encryption we have is on the token side. That is based on the token shared from the server to the client.
+
+### Is 100ms Soc 2 complainant?
+
+Yes we are Soc - 2 complaint.
+
 ## Recording
 
 ### Whats the difference between the beam recording vs. SFU recording?
@@ -340,7 +422,102 @@ This usually takes 1.2 - 1.5 times the duration of the session. There is a delay
 
 A delay can also happen if the number of peers in the sessions increase.                                       
 
-- Session minutes * number of peers * 1.5x.
+- Session minutes \* number of peers \* 1.5x.
 - So for example a session of 1 minute, with 5 participants. The total time taken for the recording to generate would be around 7.5minutes (1\*5\*1.5).
 
-### 
+### Is Cloud recording available?
+
+Yes, Please check [RTMP streaming and recording guide](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording) for more information. 
+
+### Is it possible to export chat logs from one of the front-end clients and save it?
+
+Yes, you can handle this on your client-side and export chat logs.
+
+## Server-side
+
+### Is the functionality of disable a room and end an active room same?
+
+The functionalities of these two APIs are different:
+
+1. [Disable/Enable a room API](/server-side/v2/Rooms/disable-or-enable) - you can use this API to disable/enable the room to block/allow peers to join the room.
+2. [End an active room API](/server-side/v2/active-rooms/end-active-room) - you can use this API to end an ongoing session in a rapioom. Optionally you can use the `lock` argument to disable the room future peer joins.
+
+### Is there a way to close a room using a server-side API?
+
+You can use [end an active room API](/server-side/v2/active-rooms/end-active-room) to end an ongoing session in a room. Optionally you can use the `lock` argument to disable the room future peer joins.
+
+### Is there a way to mute a participant using a server-side API?
+
+You need to follow the below steps to achive this:
+
+1. Create another role in your template by disabling audio publish strategies, for example: no-audio. You can either use the [create a role API](/server-side/v2/policy/create-update-role) or templates page on [dashboard](https://dashboard.100ms.live/dashboard) to do this. 
+2. On click of a button from the UI, you need to trigger the [update-peer server side API](/server-side/v2/active-rooms/update-a-peer) or [Change role client-side API](/javascript/v2/features/change-role) to change the role of the particular participant (peer) to no-video role to disable audio. 
+
+### Is there a way to disable video for a participant using a server-side API?
+
+You need to follow the below steps to achive this:
+1. Create another role in your template by disabling video publish strategies, for example: no-video. You can either use the [create a role API](/server-side/v2/policy/create-update-role) or templates page on [dashboard](https://dashboard.100ms.live/dashboard) to do this. 
+2. On click of a button from the UI, you need to trigger the [update-peer server side API](/server-side/v2/active-rooms/update-a-peer) or [Change role client-side API](/javascript/v2/features/change-role) to change the role of the particular participant (peer) to no-video role to disable video. 
+
+### Can you explain the differences between the hls recording and beam recording webhook events?
+
+HLS recording events are related to the recording enabled for Interactive live streaming (HLS) sessions, whereas beam recording events are only applicable to recording enabled for external streaming (RTMP) or browser recording for webRTC sessions.
+
+Please check the below links for more information:
+1. [Interactive live streaming (HLS)](/javascript/v2/foundation/live-streaming)
+2. [RTMP streaming/recording](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording)
+
+### For incoming webhooks from 100ms to our API, is there a list of IPs that can be whitelisted
+
+Yes, we have a list of IPs that can be whitelisted. [Here](/server-side/v2/introduction/webhook#ip-whitelisting") is the list.
+
+### Is there an API call we can make to set the webhook url and headers on our account?
+
+No. Currently there is no API to update the webhook url and headers. The same can be done from 100ms Dashboard directly
+
+### Do you have some static IP for 100ms, that we can whitelist your hits at our end?
+
+100ms provides two methods to whitelist traffic from 100ms. 
+
+1. [Domain and port whitelisting](/server-side/v2/introduction/firewall-and-ports)
+2. [Securing webhooks](/server-side/v2/introduction/webhook#how-to-secure-webhooks) 
+
+### Do you have any GCP IP range assigned to your GCP workloads from where you would write files?
+
+The GCP is also on public network so no static IP
+
+### What is the filetypes you would write to bucket so we can whitelist them?
+
+We will write mp4, txt, webm files.
+
+### We need to know if there is a way to end an active session programmatically (reset the room so that everyone is kicked from the meeting and it starts a new session).
+
+We have an end point that helps you end an active session immediately. You can check [this](/server-side/v2/active-rooms/end-active-room) to understand how the API works.
+
+### Is there any way to limit participants in a room?
+
+We don't limit the participants currently, but we can make it part of role configuration where we can add a maximum number of participants per role by setting the "maxPeerCount" attribute while you [create/update a role](/server-side/v2/policy/create-update-role).
+
+### How can I handle role change requests on my backend? Is there any webhook that exists or is planned?
+
+Currently, role change is initiated by a designated role. A role change REST API is on the roadmap.
+
+### Is there a way to handle role change requests on the backend, such as through a webhook or API?
+
+Yes, you can use [Update a peer API](/server-side/v2/active-rooms/update-a-peer) to change the role of a peer from backend. 
+
+### Have quieries related to for backend we need api's to create room and joining people to it and for website (Frontend) need guidance for components like video buttons and participants etc.
+
+You can use the [Create room server API](/server-side/v2/Rooms/create-via-api). The sample app for reference can be found [here](https://github.com/100mslive/100ms-web)
+
+### Just want to know that if we create role with API and want changes to be synced in react SDK, so that we can use that role?
+
+Yes that is possible the template created on dashboard is universally used across all 100ms platfroms.
+
+### Is there a way to schedule these rooms for a certain date and time and send invites to certain email ids
+
+That needs authentication for a user and you would need to handle this on the UI. You can use the [Create room API](/server-side/v2/features/room#create-room-using-api) to Create multiple rooms and schedule meetings as required by using them in queue. And only give the option of joining room when the meeting time comes up.
+
+### Can we disable room by id?
+
+Yes this is possible. [Disable/enable a room API](/server-side/v2/Rooms/disable-or-enable) supports room_id as an argument as well. 
