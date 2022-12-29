@@ -6,7 +6,7 @@ nav: 4.01
 
 Sometimes it is required to customize local peer's Audio & Video track settings while creating instances of 100ms SDK.
 
-These settings are optional parameters and are meant to be passed in the `HMSSDK` function as the `hmsTrackSetting` parameter which is an `HMSTrackSettings` object.
+These settings are optional parameters and are meant to be passed in the `HMSSDK` function as the `hmsTrackSetting` parameter which is an `HMSTrackSetting` object.
 
 ### For the Audio track we can set the following properties :
 
@@ -44,16 +44,16 @@ Here's a sample implementation of adding track settings while initializing 100ms
     trackInitialState: HMSTrackInitState.UNMUTED
   );
   
-HMSTrackSettings trackSettings = HMSTrackSetting(
+HMSTrackSetting trackSetting = HMSTrackSetting(
       audioTrackSetting: audioTrackSetting,
       videoTrackSetting: videoTrackSetting
     );
 
-HMSSDK hmsSDK = HMSSDK(hmsTrackSetting: trackSettings);
+HMSSDK hmsSDK = HMSSDK(hmsTrackSetting: trackSetting);
 ```
 
-You can fetch the track Settings using the method after the build method is called as follows - 
+You can fetch the track Setting using the method after the build method is called as follows - 
 ```dart
-HMSTrackSettings trackSettings = hmsSDK.getTrackSettings();
+HMSTrackSetting trackSetting = hmsSDK.getTrackSettings();
 ```
 
