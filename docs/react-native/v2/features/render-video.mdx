@@ -43,7 +43,7 @@ const remoteTrackId = hmsInstance.remotePeers[index].videoTrack.trackId;
 
 Make sure the trackId passed in the HMSView is not null/undefined because once a trackId is linked to HMSView, it can not be unlinked. 
 
-<highlight>You can make sure the `trackId` is not null/undefined by listening to `ON_TRACK_UPDATE` event for track updates. When you receive `TRACK_ADDED` update type for "Video" track, you will have `track` object with valid `trackId` for each `peer`.</highlight>
+**You can make sure the `trackId` is not null/undefined by listening to `ON_TRACK_UPDATE` event for track updates. When you receive `TRACK_ADDED` update type for "Video" track, you will have `track` object with valid `trackId` for each `peer`.**
 
 > Refer to [peerId undefined issue](https://www.100ms.live/docs/react-native/v2/guides/faq#track-id-is-undefined-hms-view-is-rendering-blank-view) for more details. You can also refer to our [sample apps](https://github.com/100mslive/react-native-hms/tree/main/sample-apps) to see our implementation.
 
