@@ -140,3 +140,31 @@ You may want to change default ratio as per your use case. for example, If you h
 
 This will give your Stream Viewers very nice watching experience.
 
+
+## How to know if Local Peer is HLS Stream Viewer?
+
+There is no fixed way to check this.
+
+One option can be to check if Local Peer has the role which you created for HLS Stream Viewers.
+
+```js
+// Role name created for HLS Stream Viewers in the Room Template
+const roleForStreamViewers = 'hls-viewer';
+
+// Checking if Local Peer has the Viewers role.
+const isHLSViewer = localPeer.role?.name === roleForStreamViewers;
+
+// If Local Peer is a Stream Viewer, Show Stream Video Player to user.
+if (isHLSViewer) {
+  return <VideoPlayer {...} />
+}
+
+```
+
+
+## Enable PIP Mode in iOS device.
+
+Picture in Picture (PIP) mode is not supported in iOS devices due to lack of permission of using [multitasking-camera-access](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_avfoundation_multitasking-camera-access?language=objc#discussion) entitlement.
+
+We are working on making this work. Thanks for your patience.
+
