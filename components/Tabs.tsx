@@ -24,14 +24,28 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
     const [tab, setTab] = useState(0);
     const tabElement = React.createRef<HTMLDivElement>();
 
+    // For updating all tabs on the current page
     React.useEffect(() => {
         const updateTab = (e) => {
             const idx = items.indexOf(e.detail.name);
             setTab(idx);
             changeTab(idx);
+            localStorage.setItem('tabSelection', e.detail.name);
         };
         document.addEventListener('tabChanged', updateTab);
         return () => document.removeEventListener('tabChanged', updateTab);
+    }, []);
+
+    // For setting value after page reload / navigation to another page
+    React.useEffect(() => {
+        const tabSelection = localStorage.getItem('tabSelection');
+        if (tabSelection) {
+            const idx = items.indexOf(tabSelection);
+            if (idx !== -1) {
+                setTab(idx);
+                changeTab(idx);
+            }
+        }
     }, []);
 
     const changeTab = (idx: number) => {
@@ -55,7 +69,6 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
                 <button
                     onClick={() => {
                         changeTab(i);
-                        console.log('selection', items[i]);
                         const tabChanged = new CustomEvent('tabChanged', {
                             detail: { name: items[i] }
                         });
