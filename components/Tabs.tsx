@@ -68,7 +68,6 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
             {items.map((el, i) => (
                 <button
                     onClick={() => {
-                        changeTab(i);
                         const tabChanged = new CustomEvent('tabChanged', {
                             detail: { name: items[i] }
                         });
