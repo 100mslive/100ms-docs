@@ -21,8 +21,21 @@ interface TabsProps {
 }
 
 export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
-    const def = 0;
-    const [tab, setTab] = useState(def);
+    const selectedTab = localStorage.getItem('selectedTab')
+        ? items.indexOf(localStorage.getItem('selectedTab') || '')
+        : 0;
+
+    const [tab, setTab] = useState(selectedTab);
+    const tabElement = React.createRef<HTMLDivElement>();
+
+    React.useEffect(() => {
+        const updateTab = (e) => {
+            console.log(e.detail.name);
+        };
+        window.addEventListener('tabChanged', updateTab);
+        return () => window.removeEventListener('tabChanged', updateTab);
+    }, []);
+
     const changeTab = (idx: number) => {
         items.forEach((_, i) => {
             if (i !== idx) {
@@ -39,10 +52,16 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
         setTab(idx);
     };
     return (
-        <div className="tab-ctx">
+        <div className="tab-ctx" ref={tabElement}>
             {items.map((el, i) => (
                 <button
-                    onClick={() => changeTab(i)}
+                    onClick={() => {
+                        changeTab(i);
+                        const tabChanged = new CustomEvent('tabChanged', {
+                            detail: { name: items[i] }
+                        });
+                        window.dispatchEvent(tabChanged);
+                    }}
                     type="button"
                     className={tab === i ? 'tab-active' : ''}
                     key={el}
