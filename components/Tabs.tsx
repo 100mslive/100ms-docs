@@ -30,7 +30,7 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
 
     React.useEffect(() => {
         const updateTab = (e) => {
-            console.log(e.detail.name);
+            console.log(e.detail);
         };
         window.addEventListener('tabChanged', updateTab);
         return () => window.removeEventListener('tabChanged', updateTab);
@@ -60,7 +60,8 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
                         const tabChanged = new CustomEvent('tabChanged', {
                             detail: { name: items[i] }
                         });
-                        window.dispatchEvent(tabChanged);
+                        if(window)
+                            window.dispatchEvent(tabChanged);
                     }}
                     type="button"
                     className={tab === i ? 'tab-active' : ''}
