@@ -26,11 +26,13 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
 
     React.useEffect(() => {
         const updateTab = (e) => {
-            setTab(items.indexOf(e.detail.name));
+            const idx = items.indexOf(e.detail.name);
+            setTab(idx);
+            changeTab(idx);
         };
         document.addEventListener('tabChanged', updateTab);
         return () => document.removeEventListener('tabChanged', updateTab);
-    }, [items]);
+    }, []);
 
     const changeTab = (idx: number) => {
         items.forEach((_, i) => {
