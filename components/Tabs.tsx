@@ -22,13 +22,22 @@ interface TabsProps {
 
 export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
     const [tab, setTab] = useState(0);
-    const platforms = ['server-side', 'javascript', 'ios', 'android', 'flutter', 'react-native'];
     const [currentPlatform, setCurrentPlatform] = useState('');
 
     useEffect(() => {
         if (window) {
+            const platforms = [
+                'server-side',
+                'javascript',
+                'ios',
+                'android',
+                'flutter',
+                'react-native'
+            ];
+
             const str = window.location.href;
             const match = platforms.filter((platform) => str.includes(platform));
+            console.log('match', match);
             setCurrentPlatform(match[0]);
         }
     }, []);
@@ -49,14 +58,13 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
     // For setting value on future visits / reload
     React.useEffect(() => {
         const tabSelection = JSON.parse(localStorage.getItem('tabSelection') || '{}');
-        console.log(tabSelection)
-        console.log(currentPlatform)
+        console.log(tabSelection);
+        console.log(currentPlatform);
         if (tabSelection) {
-            const idx = items.indexOf(tabSelection[currentPlatform]);
-            if (idx !== -1) {
-                setTab(idx);
-                changeTab(idx);
-            }
+            const storedValue = items.indexOf(tabSelection[currentPlatform]);
+            const idx = storedValue !== -1 ? storedValue : 0;
+            setTab(idx);
+            changeTab(idx);
         }
     }, []);
 
@@ -69,7 +77,6 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
         });
         const ele = document.getElementById(`${id}-${idx}`);
         if (ele) ele.style.display = 'block';
-
         setTab(idx);
     };
     return (
