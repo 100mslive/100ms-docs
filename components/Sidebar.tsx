@@ -85,7 +85,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
         if (activeItem?.current)
             activeItem.current.scrollIntoView({
                 behavior: 'smooth',
-                block: 'end',
+                block: 'center',
                 inline: 'nearest'
             });
     }, [activeItem]);
