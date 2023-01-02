@@ -85,16 +85,8 @@ class HMSException {
 
 ## Terminal Errors 
 
-Terminal errors are raised when SDK has cleaned up the connection due to the error.
+Terminal errors are raised in cases when SDK has cleaned up the connection due to the error.
 `isTerminal` property of HMSException object can be used to check whether the error is terminal.
-
-> 💡 Note: `isTerminal` denotes if the SDK has cleaned up the connection due to the error or not.
-If this is [true] it denotes that the error has removed the user from the room
-   else it denotes that the user is still in the room even with the error.
-
-
-Hence `isTerminal` property can be used to handle the UI as if `isTerminal:true` we can navigate the user back to the home screen or show them a popup.
-While in another case the error can be handled accordingly.
 
 Terminal error example:
 
