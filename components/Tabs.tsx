@@ -24,7 +24,7 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
     const [tab, setTab] = useState(0);
     const tabElement = React.createRef<HTMLDivElement>();
 
-    // For updating all tabs on the current page
+    // For updating all tabs and setting value in localStorage
     React.useEffect(() => {
         const updateTab = (e) => {
             const idx = items.indexOf(e.detail.name);
@@ -36,7 +36,7 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
         return () => document.removeEventListener('tabChanged', updateTab);
     }, []);
 
-    // For setting value after page reload / navigation to another page
+    // For setting value on future visits / reload
     React.useEffect(() => {
         const tabSelection = localStorage.getItem('tabSelection');
         if (tabSelection) {
