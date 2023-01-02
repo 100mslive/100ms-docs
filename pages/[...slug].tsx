@@ -17,7 +17,6 @@ import { DOCS_PATH, getAllDocs, getDocsPaths, getNavfromDocs } from '@/lib/mdxUt
 import withTableofContents from '@/lib/withTableofContents';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 
-
 export type AllDocsType = {
     url: string;
     title: string;
@@ -66,6 +65,7 @@ const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
             scrollToUrlHash(asPath);
         }, 500);
     }, [asPath]);
+
     React.useEffect(() => {
         if (!window.location.href.includes('#')) window.scrollTo(0, 0);
         const getTopIndex = (arr) => {
@@ -85,7 +85,7 @@ const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
                 if (
                     h3Index >= 0 &&
                     h3Array[h3Index].getBoundingClientRect().top >
-                    h2Array[h2Index].getBoundingClientRect().top
+                        h2Array[h2Index].getBoundingClientRect().top
                 )
                     setActiveSubHeading(h3Array[h3Index].id);
                 else setActiveSubHeading('');
@@ -98,9 +98,8 @@ const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
     }, []);
     let showPagination = true;
     // Don't show Pagination for Android
-    if (slug[1] === 'android') {
-        showPagination = false;
-    }
+    if (slug[1] === 'android') showPagination = false;
+
     return (
         <>
             <article>
@@ -118,17 +117,17 @@ const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
                 CurrentDocsSlug={currentDocSlug}
             />
             <style jsx>{`
-                 article {
-                     min-width: 100px;
-                     flex-grow: 1;
-                     box-sizing: border-box;
-                     padding: 0 2rem;
-                     min-height: calc(100vh - 140px);
-                     padding-bottom: 80px;
-                     display: flex;
-                     flex-direction: column;
-                 }
-             `}</style>
+                article {
+                    min-width: 100px;
+                    flex-grow: 1;
+                    box-sizing: border-box;
+                    padding: 0 2rem;
+                    min-height: calc(100vh - 140px);
+                    padding-bottom: 80px;
+                    display: flex;
+                    flex-direction: column;
+                }
+            `}</style>
         </>
     );
 };
@@ -174,7 +173,7 @@ export const getStaticProps = async ({ params }) => {
             pagination,
             nav: { [currentDocSlug]: nav[currentDocSlug] },
             source: mdxSource, // { compiledSource: mdxSource.compiledSource },
-            frontMatter: data,
+            frontMatter: data
         }
     };
 };

@@ -33,7 +33,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                 inline: 'nearest'
             });
         }
-    }, [activeItem]);
+    }, [activeItem, activeHeading, activeSubHeading]);
 
     return (
         <div className="toc-ctx">
