@@ -70,6 +70,8 @@ This problem can happen due to many reasons. To self-serve, We recommend you to 
 
   Also check out [Join Room Guide](https://www.100ms.live/docs/react-native/v2/features/join)
 
+- Meeting Joining link is not disabled
+
 
 ## UI components to test all the features and functionalities
 
@@ -198,4 +200,25 @@ We recommend enabling Picture in Picture (PIP) mode (by calling `enablePipMode` 
 [Picture in Picture (PIP) mode](https://www.100ms.live/docs/react-native/v2/features/pip-mode) is not supported in iOS devices due to lack of permission of using [multitasking-camera-access](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_avfoundation_multitasking-camera-access?language=objc#discussion) entitlement.
 
 We are working on making this work. Thanks for your patience.
+
+
+## Using HMSSDK Instance in nested components without passing as props
+
+**Don't call `HMSSDK.build` function just to get the `hmsInstance` in nested components without prop drilling to use various APIs.**
+
+`HMSSDK.build` creates and returns new instances of sdk each time you call it. It is not returning the previously created sdk instance.
+
+We recommend using State Management solutions like Redux or Context API to save your originally created `hmsInstance` into store and use this stored instance in your nested components.
+
+
+## How many HMSView can be rendered?
+
+We recommend rendering seperate HMSView for each `trackId`. It means If you have 50 peers with trackIds in a room, then you will render 50 HMSView for each peer.
+
+This can have an impact on your apps' performance. Therefore, since ideally maximum 4-6 HMSView should be visible at a time because of small screen size of mobile devices.
+
+You can use [FlatList](https://reactnative.dev/docs/flatlist) to render HMSView for large list of peers, this way HMSView that are not in visible area will never be mounted and HMSViews that goes out of visible area will be unmounted.
+
+By using FlatList you are improving your apps' performance and rendering seperate HMSView for each `trackId`.
+
 
