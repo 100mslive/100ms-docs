@@ -22,20 +22,18 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
         setToc(list);
     }, []);
 
-    const activeItem = React.createRef<HTMLSpanElement>();
+    const activeItem = React.createRef<HTMLAnchorElement>();
 
     React.useEffect(() => {
-        const handler = () => {
-            if (activeItem?.current){
-                activeItem.current.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center',
-                    inline: 'nearest'
-                });}
-        };
-        document.addEventListener('scroll', handler);
-        return () => document.removeEventListener('scroll', handler);
-    }, []);
+        if (activeItem?.current) {
+            console.log(activeItem.current);
+            activeItem.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+                inline: 'nearest'
+            });
+        }
+    }, [activeItem]);
 
     return (
         <div className="toc-ctx">
@@ -43,14 +41,17 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
             {toc.map((item) =>
                 item.title !== '' ? (
                     <span
-                        ref={item.slug === activeHeading ? activeItem : null}
                         className={`${item.slug === activeHeading ? 'active-toc' : ''} text ${
                             item.depth === 3
                                 ? `child ${item.slug === activeSubHeading ? 'active-sublink' : ''}`
                                 : ''
                         }`}
                         key={item.slug}>
-                        <a href={`#${item.slug}`}>{item.title}</a>
+                        <a
+                            ref={item.slug === activeHeading ? activeItem : null}
+                            href={`#${item.slug}`}>
+                            {item.title}
+                        </a>
                     </span>
                 ) : null
             )}
