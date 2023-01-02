@@ -37,14 +37,14 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
 
             const str = window.location.href;
             const match = platforms.filter((platform) => str.includes(platform));
-            console.log('match', match, match[0]);
             setCurrentPlatform(match[0]);
         }
     }, []);
+
     // For updating all tabs and setting value in localStorage
     React.useEffect(() => {
         const updateTab = (e) => {
-            const currentValue = items.indexOf(e.detail.name)
+            const currentValue = items.indexOf(e.detail.name);
             const idx = currentValue !== -1 ? currentValue : 0;
             setTab(idx);
             changeTab(idx);
@@ -60,13 +60,11 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
     React.useEffect(() => {
         const tabSelection = JSON.parse(localStorage.getItem('tabSelection') || '{}');
         console.log('TabSelection object:', tabSelection);
-        if (tabSelection) {
-            const storedValue = items.indexOf(tabSelection[currentPlatform]);
-            const idx = storedValue !== -1 ? storedValue : 0;
-            setTab(idx);
-            changeTab(idx);
-        }
-    }, []);
+        const storedValue = items.indexOf(tabSelection[currentPlatform]);
+        const idx = storedValue !== -1 ? storedValue : 0;
+        setTab(idx);
+        changeTab(idx);
+    }, [currentPlatform]);
 
     const changeTab = (idx: number) => {
         items.forEach((_, i) => {
