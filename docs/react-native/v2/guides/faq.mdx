@@ -158,13 +158,44 @@ const isHLSViewer = localPeer.role?.name === roleForStreamViewers;
 if (isHLSViewer) {
   return <VideoPlayer {...} />
 }
-
 ```
+
+
+## How to Mute/Unmute Specific or All Remote Peers?
+
+100ms have `changeTrackState` APIs to request mute or unmute remote peers.
+
+Refer to [Change Track State](https://www.100ms.live/docs/react-native/v2/features/change-track-state) API docs to learn more.
+
+To Mute all Remote Peers at once, you can refer [here](https://www.100ms.live/docs/react-native/v2/features/change-track-state#mute-all-remote-audio-tracks).
+
+
+## How to Mute/Unmute Specific or All Remote Peers only locally?
+
+When you mute audio or video of remote peer locally, you won't be able to hear or see the remote peer but it will be still audible and visible to others.
+
+100ms have "Playback Allowed" APIs to mute or unmute remote peers locally.
+
+Refer to [Playback Allowed](https://www.100ms.live/docs/react-native/v2/features/change-track-state) API docs to learn more.
+
+To locally mute all Remote Peers at once, you can refer [here](https://www.100ms.live/docs/react-native/v2/features/playback-allowed#local-mute-all-remote-peers-audio).
+
+
+## Restrict Remote Peer from Unmuting after Muting them
+
+Once you [mute a Peer](https://www.100ms.live/docs/react-native/v2/features/mute), they can unmute themselves. To prevent peers from unmuting themselves, You should [change their role](https://www.100ms.live/docs/react-native/v2/features/change-role) to a `Role` which has has less [publishing permissions](https://www.100ms.live/docs/react-native/v2/foundation/templates-and-roles#publish-strategies) as per your use case instead of muting the peer.
+
+
+## Enable PIP Mode automatically when user leaves app
+
+Currently, Enabling [Picture in Picture (PIP) mode](https://www.100ms.live/docs/react-native/v2/features/pip-mode) automatically (i.e. without calling any function) is not supported.
+
+We recommend enabling Picture in Picture (PIP) mode (by calling `enablePipMode` function) **while app is active**, on a button click or programatically.
 
 
 ## Enable PIP Mode in iOS device.
 
-Picture in Picture (PIP) mode is not supported in iOS devices due to lack of permission of using [multitasking-camera-access](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_avfoundation_multitasking-camera-access?language=objc#discussion) entitlement.
+[Picture in Picture (PIP) mode](https://www.100ms.live/docs/react-native/v2/features/pip-mode) is not supported in iOS devices due to lack of permission of using [multitasking-camera-access](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_avfoundation_multitasking-camera-access?language=objc#discussion) entitlement.
 
 We are working on making this work. Thanks for your patience.
 
