@@ -74,6 +74,34 @@ This problem can happen due to many reasons. To self-serve, We recommend you to 
 - Meeting Joining link is not disabled
 
 
+## Run the Example app
+
+Follow following steps:
+
+1. Clone [100ms React Native Package repository](https://github.com/100mslive/react-native-hms)
+
+2. In the project root, run `npm install`
+
+3. Go to the example folder, `cd example`
+
+4. In the example folder, run `npm install`
+
+5. To run on Android, run `npx react-native run-android`
+
+  You can run example app on Android Emulator using "deviceId" option, run `npx react-native run-android --deviceId <device_id_here>`
+
+6. To run on iOS -
+
+  a. First run Pod Install in iOS folder, `cd ios && pod install && cd ../`
+
+  b. Set the Correct Development Team in Signing & Capabilities in Xcode Build Settings to run on an actual iPhone or iPad. Apple Development Team Signing is not required for running the app on Simulators.
+
+  c. Run the command `npx react-native run-ios`
+
+  You can run example app on iOS Simulator using "simulator" option, run `npx react-native run-ios --simulator <simulator_name_here>`.
+
+
+
 ## UI components to test all the features and functionalities
 
 We have UI components for all the features in our showcase apps.
@@ -177,12 +205,12 @@ To locally mute all Remote Peers at once, you can refer [here](https://www.100ms
 
 ## Restrict Remote Peer from Unmuting after Muting them
 
-Once you [mute a Peer](https://www.100ms.live/docs/react-native/v2/features/mute), they can unmute themselves. To prevent peers from unmuting themselves, You should [change their role](https://www.100ms.live/docs/react-native/v2/features/change-role) to a `Role` which has has less [publishing permissions](https://www.100ms.live/docs/react-native/v2/foundation/templates-and-roles#publish-strategies) as per your use case instead of muting the peer.
+Once you [mute a Peer](https://www.100ms.live/docs/react-native/v2/features/mute), they can unmute themselves. To prevent peers from unmuting themselves, You should [change their role](https://www.100ms.live/docs/react-native/v2/features/change-role) to a `Role` which has less [publishing permissions](https://www.100ms.live/docs/react-native/v2/foundation/templates-and-roles#publish-strategies) as per your use case instead of muting the peer.
 
 
 ## Enable PIP Mode automatically when user leaves app
 
-Currently, Enabling [Picture in Picture (PIP) mode](https://www.100ms.live/docs/react-native/v2/features/pip-mode) automatically (i.e. without calling any function) is not supported.
+Currently, Enabling [Picture in Picture (PIP) mode](https://www.100ms.live/docs/react-native/v2/features/pip-mode) automatically (that is without calling any function) is not supported.
 
 We recommend enabling Picture in Picture (PIP) mode (by calling `enablePipMode` function) **while app is active**, on a button click or programatically.
 
@@ -198,50 +226,17 @@ We are working on making this work. Thanks for your patience.
 
 **Don't call `HMSSDK.build` function just to get the `hmsInstance` in nested components without prop drilling to use various APIs.**
 
-`HMSSDK.build` creates and returns new instances of sdk each time you call it. It is not returning the previously created sdk instance.
+`HMSSDK.build` creates and returns new instances of sdk each time you call it. It is not returning the previously created SDK instance.
 
 We recommend using State Management solutions like Redux or Context API to save your originally created `hmsInstance` into store and use this stored instance in your nested components.
 
 
 ## How many HMSView can be rendered?
 
-We recommend rendering seperate HMSView for each `trackId`. It means If you have 50 peers with trackIds in a room, then you will render 50 HMSView for each peer.
+We recommend rendering separate HMSView for each `trackId`. It means If you have 50 peers with trackIds in a room, then you will render 50 HMSView for each peer.
 
 This can have an impact on your apps' performance. Therefore, since ideally maximum 4-6 HMSView should be visible at a time because of small screen size of mobile devices.
 
 You can use [FlatList](https://reactnative.dev/docs/flatlist) to render HMSView for large list of peers, this way HMSView that are not in visible area will never be mounted and HMSViews that goes out of visible area will be unmounted.
 
-By using FlatList you are improving your apps' performance and rendering seperate HMSView for each `trackId`.
-
-
-## setup Example app
-
-Follow following steps:
-
-1. clone [100ms React Native repo](https://github.com/100mslive/react-native-hms)
-
-2. In the project root, run `npm install`
-
-3. Go to the example folder, `cd example`
-
-4. In the example folder, run `npm install`
-
-5. To run on Android, run `npx react-native run-android`
-
-  You can run example app on Android Emulator using "deviceId" option, run `npx react-native run-android --deviceId <device_id_here>`
-
-6. To run on iOS,
-
-  a. first install the pods in iOS folder, `cd ios && pod install && cd ../`
-    if error `cd ios && arch -x86_64 pod install && cd ../`
-
-  b. set the Correct Development Team in Signing & Capabilities (This is not necessary for running app on iOS simulator)
-
-  c. exclude architectures in Build Settings of Project and Pods ([more info](https://stackoverflow.com/a/65399525)) (mention Xcode version?)
-
-  b. run `npx react-native run-ios`
-
-  You can run example app on iOS Simulator using "simulator" option, run `npx react-native run-ios --simulator <simulator_name_here>`.
-
-Above steps are also listed [here](https://github.com/100mslive/react-native-hms#-run-example-app)
-
+By using FlatList you are improving your apps' performance and rendering separate HMSView for each `trackId`.
