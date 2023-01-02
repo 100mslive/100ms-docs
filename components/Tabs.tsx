@@ -49,6 +49,8 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
     // For setting value on future visits / reload
     React.useEffect(() => {
         const tabSelection = JSON.parse(localStorage.getItem('tabSelection') || '{}');
+        console.log(tabSelection)
+        console.log(currentPlatform)
         if (tabSelection) {
             const idx = items.indexOf(tabSelection[currentPlatform]);
             if (idx !== -1) {
