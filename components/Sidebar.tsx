@@ -31,6 +31,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
     } = router;
 
     const { menu, setMenu } = menuState;
+
     useEffect(() => {
         setMenu(false);
     }, [router]);
@@ -87,7 +88,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                 block: 'center',
                 inline: 'nearest'
             });
-    }, [activeItem, router]);
+    }, [activeItem, slug]);
 
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
 
