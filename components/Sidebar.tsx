@@ -130,7 +130,6 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                           {Object.entries(children as {}).map(([_, route]: [unknown, any]) =>
                               Object.prototype.hasOwnProperty.call(route, 'title') ? (
                                   <Link
-                                      scroll={false}
                                       prefetch={false}
                                       href={route.url || ''}
                                       key={`${route.url}-${index}`}>
