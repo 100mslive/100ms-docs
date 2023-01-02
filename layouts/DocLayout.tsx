@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import Header from '@/components/Header';
@@ -15,17 +15,20 @@ export default function Layout({ children }: Props) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const router = useRouter() as any;
     const SEO = {
-        title: `${frontMatter.title || '100ms Docs'
-            } | 100ms`,
+        title: `${frontMatter.title || '100ms Docs'} | 100ms`,
         openGraph: {
-            title: `${frontMatter.title || '100ms Docs'
-                } | 100ms`
+            title: `${frontMatter.title || '100ms Docs'} | 100ms`
         },
-        canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${router.asPath === '/' ? '' : router.asPath.split('?')[0]
-            }`
+        canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${
+            router.asPath === '/' ? '' : router.asPath.split('?')[0]
+        }`
     };
     const [menu, setMenu] = useState(false);
     const [modal, setModal] = useState(false);
+    const [url, setUrl] = useState('');
+    useEffect(() => {
+        if (typeof window !== 'undefined') setUrl(window.location.pathname);
+    }, []);
     const menuState = { menu, setMenu };
     useLockBodyScroll(modal);
     return (
@@ -36,9 +39,8 @@ export default function Layout({ children }: Props) {
                 <Header modal={modal} setModal={setModal} menuState={menuState} />
                 <div className="ctx">
                     <div className="content-wrapper">
-                        <div
-                            className="sidebar-container">
-                            <Sidebar menuState={menuState} nav={nav} />
+                        <div className="sidebar-container">
+                            <Sidebar menuState={menuState} nav={nav} url={url} />
                         </div>
                         {!menu ? children : null}
                     </div>
