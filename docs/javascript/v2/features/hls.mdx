@@ -127,7 +127,7 @@ function renderHLS({ hlsUrl }) {
     const hlsState = hmsStore.getState(selectHLSState);
     const hlsUrl = hlsState.variants[0]?.url;
     const video = document.getElementById('video');
-    const browserHasNativeHLSSupport = videoRef.current.canPlayType(
+    const browserHasNativeHLSSupport = video.canPlayType(
         'application/vnd.apple.mpegurl'
     );
     if (Hls.isSupported()) {
@@ -196,7 +196,7 @@ import Hls from 'hls.js';
 
 let hls = null;
 const video = document.getElementById('video');
-const browserHasNativeHLSSupport = videoRef.current.canPlayType('application/vnd.apple.mpegurl');
+const browserHasNativeHLSSupport = video.canPlayType('application/vnd.apple.mpegurl');
 if (Hls.isSupported()) {
     hls = new Hls();
     hls.loadSource(hlsUrl);
