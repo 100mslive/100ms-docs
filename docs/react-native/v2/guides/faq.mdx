@@ -222,3 +222,34 @@ You can use [FlatList](https://reactnative.dev/docs/flatlist) to render HMSView 
 By using FlatList you are improving your apps' performance and rendering seperate HMSView for each `trackId`.
 
 
+## setup Example app
+
+Follow following steps:
+
+1. clone [100ms React Native repo](https://github.com/100mslive/react-native-hms)
+
+2. In the project root, run `npm install`
+
+3. Go to the example folder, `cd example`
+
+4. In the example folder, run `npm install`
+
+5. To run on Android, run `npx react-native run-android`
+
+  You can run example app on Android Emulator using "deviceId" option, run `npx react-native run-android --deviceId <device_id_here>`
+
+6. To run on iOS,
+
+  a. first install the pods in iOS folder, `cd ios && pod install && cd ../`
+    if error `cd ios && arch -x86_64 pod install && cd ../`
+
+  b. set the Correct Development Team in Signing & Capabilities (This is not necessary for running app on iOS simulator)
+
+  c. exclude architectures in Build Settings of Project and Pods ([more info](https://stackoverflow.com/a/65399525)) (mention Xcode version?)
+
+  b. run `npx react-native run-ios`
+
+  You can run example app on iOS Simulator using "simulator" option, run `npx react-native run-ios --simulator <simulator_name_here>`.
+
+Above steps are also listed [here](https://github.com/100mslive/react-native-hms#-run-example-app)
+
