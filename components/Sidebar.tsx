@@ -21,10 +21,9 @@ interface Props {
         setMenu: React.Dispatch<React.SetStateAction<boolean>>;
     };
     nav: Record<string, Record<string, NavRoute>>;
-    url: String;
 }
 
-const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, url }) => {
+const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
     const router = useRouter() as any;
     const {
         query: { slug },
@@ -89,7 +88,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, url }) => {
                 block: 'center',
                 inline: 'nearest'
             });
-    }, [activeItem, tech, url]);
+    });
 
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
 

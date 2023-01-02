@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import Header from '@/components/Header';
@@ -25,10 +25,7 @@ export default function Layout({ children }: Props) {
     };
     const [menu, setMenu] = useState(false);
     const [modal, setModal] = useState(false);
-    const [url, setUrl] = useState('');
-    useEffect(() => {
-        if (typeof window !== 'undefined') setUrl(window.location.pathname);
-    }, []);
+
     const menuState = { menu, setMenu };
     useLockBodyScroll(modal);
     return (
@@ -40,7 +37,7 @@ export default function Layout({ children }: Props) {
                 <div className="ctx">
                     <div className="content-wrapper">
                         <div className="sidebar-container">
-                            <Sidebar menuState={menuState} nav={nav} url={url} />
+                            <Sidebar menuState={menuState} nav={nav} />
                         </div>
                         {!menu ? children : null}
                     </div>
