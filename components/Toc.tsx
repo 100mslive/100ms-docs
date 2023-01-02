@@ -26,12 +26,13 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
 
     React.useEffect(() => {
         const handler = () => {
-            if (activeItem?.current)
+            if (activeItem?.current){
+                console.log(activeItem.current)
                 activeItem.current.scrollIntoView({
                     behavior: 'smooth',
                     block: 'center',
                     inline: 'nearest'
-                });
+                });}
         };
         document.addEventListener('scroll', handler);
         return () => document.removeEventListener('scroll', handler);

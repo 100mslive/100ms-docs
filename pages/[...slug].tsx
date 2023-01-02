@@ -1,26 +1,22 @@
+import React from 'react';
+import { useRouter } from 'next/router';
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import hydrate from 'next-mdx-remote/hydrate';
+import renderToString from 'next-mdx-remote/render-to-string';
+import mdxPrism from 'mdx-prism';
+import DocLayout from '@/layouts/DocLayout';
 import EditFile from '@/components/EditFile';
 import components from '@/components/MDXComponents';
 import Pagination from '@/components/Pagination';
 import Toc from '@/components/Toc';
-import DocLayout from '@/layouts/DocLayout';
-import getPagination from '@/lib/getPagination';
 import imagePlugin from '@/lib/image';
+import getPagination from '@/lib/getPagination';
 import { DOCS_PATH, getAllDocs, getDocsPaths, getNavfromDocs } from '@/lib/mdxUtils';
-import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import withTableofContents from '@/lib/withTableofContents';
-import fs from 'fs';
-import matter from 'gray-matter';
-import mdxPrism from 'mdx-prism';
-import hydrate from 'next-mdx-remote/hydrate';
-import renderToString from 'next-mdx-remote/render-to-string';
-import { useRouter } from 'next/router';
-import path from 'path';
-import React from 'react';
+import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 
-// type NavRoute = {
-//     url: string;
-//     title: string;
-// };
 
 export type AllDocsType = {
     url: string;
