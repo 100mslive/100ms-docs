@@ -58,7 +58,7 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
         return (
             <Box css={{ position: 'relative', minWidth: 'min-content' }}>
                 <Box
-                    css={{ position: 'absolute', width: '100%', top: '1rem' }}
+                    css={{ position: 'absolute', width: '100%', top: '6px' }}
                     className="code-block">
                     {!copy ? (
                         <button
