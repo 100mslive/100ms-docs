@@ -25,19 +25,9 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
     const [currentPlatform, setCurrentPlatform] = useState('');
 
     useEffect(() => {
-        if (window) {
-            const platforms = [
-                'server-side',
-                'javascript',
-                'ios',
-                'android',
-                'flutter',
-                'react-native'
-            ];
-
-            const str = window.location.href;
-            const match = platforms.filter((platform) => str.includes(platform));
-            setCurrentPlatform(match[0]);
+        if (typeof window !== 'undefined') {
+            const platform = window.location.pathname.split('/')[2];
+            setCurrentPlatform(platform);
         }
     }, []);
 
