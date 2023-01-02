@@ -80,6 +80,8 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
     };
 
     const activeItem = React.createRef<HTMLAnchorElement>();
+    // @ts-ignore
+    const [pageURL, setPageURL] = React.useState(window.location.href);
 
     useEffect(() => {
         if (activeItem?.current)
@@ -88,7 +90,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                 block: 'center',
                 inline: 'nearest'
             });
-    }, [activeItem, slug]);
+    }, [activeItem, pageURL]);
 
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
 
