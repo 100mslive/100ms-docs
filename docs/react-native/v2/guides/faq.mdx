@@ -2,6 +2,7 @@
 title: FAQ
 nav: 2.5
 ---
+
 This page lists down frequently asked questions. If you want to add a new question or edit an older one, feel free to send us a PR.
 
 
@@ -111,23 +112,14 @@ On Android 12 devices, new Bluetooth permissions have been added to interact wit
   You can also check [Our Android Integration Guide](https://www.100ms.live/docs/react-native/v2/features/integration#for-android) and permission related code in our [Quickstart Sample App](https://github.com/100mslive/react-native-hms/tree/main/sample-apps)
 
 
-## Using HMS with Twilio & Agora
+## Using HMS with another WebRTC library
 
-TODO: add more explanation here
-
-App might crash or work unexpectedly.
+WebRTC is a core dependency of 100ms SDKs. While building your Real Time Audio Video apps, developers tend to utilize multiple libraries. So it can happen that some another package also has WebRTC as a dependency. In this scenario, your app might emit compile time errors, crash at run time or have unexpected behaviours. This usually happens due to multiple WebRTC instances within the app. To avoid these issues, it's recommended to only add 100ms package & remove any other packages that also depend on WebRTC. 100ms provides a rich set of features which you can easily customize to build your ideal Audio Video experiences.
 
 
 ## Expo Support
 
 Yes, Expo is supported by 100ms React Native SDK. You can follow our [Expo Setup Guide](https://www.100ms.live/docs/react-native/v2/features/integration#expo-setup) to complete your setup.
-
-
-## Update type TRACK_REMOVED received after TRACK_ADDED, When multiple Role change request is done for multiple Roles
-
-TODO: Add Scinerio explanation and solution
-
-You should do Multiple Role change request after some delay.
 
 
 ## Change Streaming Video Aspect Ratio
