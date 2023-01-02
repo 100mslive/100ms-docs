@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
 
 /**
  *
@@ -22,14 +22,25 @@ interface TabsProps {
 
 export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
     const [tab, setTab] = useState(0);
+    const platforms = ['server-side', 'javascript', 'ios', 'android', 'flutter', 'react-native'];
+    const [currentPlatform, setCurrentPlatform] = useState('');
 
+    useEffect(() => {
+        if (window) {
+            const str = window.location.href;
+            const match = platforms.filter((platform) => str.includes(platform));
+            setCurrentPlatform(match[0]);
+        }
+    }, []);
     // For updating all tabs and setting value in localStorage
     React.useEffect(() => {
         const updateTab = (e) => {
             const idx = items.indexOf(e.detail.name);
             setTab(idx);
             changeTab(idx);
-            localStorage.setItem('tabSelection', e.detail.name);
+            const obj = JSON.parse(localStorage.getItem('tabSelection') || '{}');
+            obj[e.detail.sdk] = e.detail.name;
+            localStorage.setItem('tabSelection', JSON.stringify(obj));
         };
         document.addEventListener('tabChanged', updateTab);
         return () => document.removeEventListener('tabChanged', updateTab);
@@ -37,9 +48,9 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
 
     // For setting value on future visits / reload
     React.useEffect(() => {
-        const tabSelection = localStorage.getItem('tabSelection');
+        const tabSelection = JSON.parse(localStorage.getItem('tabSelection') || '{}');
         if (tabSelection) {
-            const idx = items.indexOf(tabSelection);
+            const idx = items.indexOf(tabSelection[currentPlatform]);
             if (idx !== -1) {
                 setTab(idx);
                 changeTab(idx);
@@ -69,7 +80,7 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
                 <button
                     onClick={() => {
                         const tabChanged = new CustomEvent('tabChanged', {
-                            detail: { name: items[i] }
+                            detail: { name: items[i], sdk: currentPlatform }
                         });
                         document.dispatchEvent(tabChanged);
                     }}
