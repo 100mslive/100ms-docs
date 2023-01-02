@@ -72,7 +72,9 @@ void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update});
 
 With the same peer, you passed as targetPeer and an `HMSPeerUpdate.roleUpdated` update type.
 
-The `force` parameter in `changeRole`, when false, is a polite request: "Would you like to change your role from listener to speaker?" Which can be ignored by the peer. The way it works is the other peer will first receive an `onRoleChangeRequest` callback in `HMSUpdateListener`:
+## Accept Role change Request
+
+The `force` parameter in `changeRoleOfPeer`, when false, is a polite request: "Would you like to change your role from listener to speaker?" Which can be ignored by the peer. The way it works is the other peer will first receive an `onRoleChangeRequest` callback in `HMSUpdateListener`:
 
 
 ```dart
@@ -82,10 +84,10 @@ void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest});
 At this point, the app should show a prompt to the user asking for permission to accept or deny role change. 
 
 
-If the user wants to accept the request, the app should invoke `acceptRoleChangeRequest` on `HMSSDK` instance:
+If the user wants to accept the request, the app should invoke `acceptChangeRole` on `HMSSDK` instance:
 
 ```dart
-hmsSDK.acceptRoleChangeRequest();
+hmsSDK.acceptChangeRole(hmsRoleChangeRequest: roleChangeRequest, hmsActionResultListener: hmsActionResultListener);
 ```
 
 
@@ -146,3 +148,5 @@ hmsSDK.changeRoleOfPeersWithRoles(
     ofRoles: roles,
     hmsActionResultListener: hmsActionResultListener);
 ```
+
+<Content alias="bulkRoleChangeErrors" />

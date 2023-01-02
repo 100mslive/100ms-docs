@@ -1372,3 +1372,42 @@ ul+p>img, ol+p>img {
 li>p:nth-child(n+2) {
     margin-top: 16px;
 }
+
+/* Matched term in snippets returned from 
+algolia search are wrapped in this tag */
+
+ais-highlight-0000000000 {
+    color: var(--primary_light) !important;
+}
+
+.steps-container {
+  margin-left: 1rem;
+  padding-left: 1.5rem;
+  counter-reset: step;
+  border-left: 1px solid;
+  border-color: var(--docs_border_strong);
+  margin-bottom: 3rem;
+}
+
+.steps-container h3 {
+  counter-increment: step;
+}
+
+.steps-container h3:before {
+  content: counter(step);
+  display: inline-flex;
+  position: absolute;
+  margin-top: -5px;
+  margin-left: -41px;
+  width: 33px;
+  height: 33px;
+  justify-content: center;
+  align-items: center;
+  color: var(--docs_text_secondary);
+  border-radius: 100%;
+  border: 4px solid var(--docs_bg_content);
+  background: var(--docs_bg_code_highlight);
+  line-height: 1.5rem;
+  font-size: 1rem;
+  font-weight: 400;
+}

@@ -1,18 +1,19 @@
 ---
 title: Update Listeners
-nav: 3.09
+nav: 3.03
 ---
 
 Now, let's take a look at the listener class to be implemented.
-
 ```dart
+/// 100ms SDK provides callbacks to the client app about any change or update happening in the room after a user has joined by implementing HMSUpdateListener.
+/// Implement this listener in a class where you want to perform UI Actions, update App State, etc. These updates can be used to render the video on screen or to display other info regarding the room.
+/// Depending on your use case, you'll need to implement specific methods of the Update Listener. The most common ones are onJoin, onPeerUpdate, onTrackUpdate & onHMSError.
 abstract class HMSUpdateListener {
   /// This will be called on a successful JOIN of the room by the user
   ///
   /// This is the point where applications can stop showing its loading state
   /// - Parameter room: the room which was joined
   void onJoin({required HMSRoom room});
-
 
   /// This will be called whenever there is an update on an existing peer
   /// or a new peer got added/existing peer is removed.
@@ -22,7 +23,6 @@ abstract class HMSUpdateListener {
   ///   - peer: the peer who joined/left or was updated
   ///   - update: the triggered update type. Should be used to perform different UI Actions
   void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update});
-
 
   /// This is called when there are updates on an existing track
   /// or a new track got added/existing track is removed
@@ -37,6 +37,18 @@ abstract class HMSUpdateListener {
       required HMSTrackUpdate trackUpdate,
       required HMSPeer peer});
 
+  /// This will be called when there is an error in the system
+  ///
+  /// and SDK has already retried to fix the error
+  /// - Parameter error: the error that occurred
+  void onHMSError({required HMSException error});
+
+  /// This is called when there is a change in any property of the Room
+  ///
+  /// - Parameters:
+  ///   - room: the room which was joined
+  ///   - update: the triggered update type. Should be used to perform different UI Actions
+  void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update});
 
   /// This is called when there is a new broadcast message from any other peer in the room
   ///
@@ -44,14 +56,8 @@ abstract class HMSUpdateListener {
   /// - Parameter message: the received broadcast message
   void onMessage({required HMSMessage message});
 
-
-  /// This is called when someone asks for change or role
+  /// This is called every 1 second with list of active speakers
   ///
-  /// for eg. admin can ask a peer to become host from guest.
-  /// this triggers this call on peer's app
-  void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest});
-
-
   /// ## A HMSSpeaker object contains -
   ///    - peerId: the peer identifier of HMSPeer who is speaking
   ///    - trackId: the track identifier of HMSTrack which is emitting audio
@@ -63,45 +69,36 @@ abstract class HMSUpdateListener {
   /// - Parameter speakers: the list of speakers
   void onUpdateSpeakers({required List<HMSSpeaker> updateSpeakers});
 
-  /// This will be called when there is an error in the system
-  ///
-  /// and SDK has already retried to fix the error
-  /// - Parameter error: the error that occurred
-  void onHMSError({required HMSException error});
-
-
-  /// This is called when there is a change in any property of the Room
-  ///
-  /// - Parameters:
-  ///   - room: the room which was joined
-  ///   - update: the triggered update type. Should be used to perform different UI Actions
-  void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update});
-
-
-  ///when network or some other error happens it will be called
+  /// When network connection is lost & the SDK is trying to reconnect to the room
   void onReconnecting();
 
-
-  ///when you are back in the room after reconnection
+  /// When you are back in the room after network connection was lost
   void onReconnected();
 
-  ///when someone requests for track change of yours be it video or audio this will be triggered
+  /// This is called when someone asks for change or role
+  ///
+  /// for eg. admin can ask a peer to become host from guest.
+  /// this triggers this call on peer's app
+  void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest});
+
+  /// When someone requests for track change of your Audio, Video or an Auxiliary track like Screenshare, this event will be triggered
   /// - Parameter hmsTrackChangeRequest: request instance consisting of all the required info about track change
   void onChangeTrackStateRequest(
-     {required HMSTrackChangeRequest hmsTrackChangeRequest});
+      {required HMSTrackChangeRequest hmsTrackChangeRequest});
 
-  ///when someone kicks you out or when someone ends the room at that time it is triggered
-  ///- Paramter hmsPeerRemovedFromPeer - it consists info about who removed you and why.
+  /// When someone kicks you out or when someone ends the room at that time it is triggered
+  /// - Parameter hmsPeerRemovedFromPeer - it consists info about who removed you and why.
   void onRemovedFromRoom(
-     {required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer});
+      {required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer});
 
-  ///whenever a new audio device gets connected to the device or audio device is switched this is triggered
-  ///- Parameters
-  ///  - currentAudioDevice - current audio output device
-  ///  - availableAudioDevice - list of available audio output devices
+  /// Whenever a new audio device is plugged in or audio output is changed we get the onAudioDeviceChanged update
+  /// This callback is only fired on Android devices. On iOS, this callback will not be triggered.
+  /// - Parameters:
+  ///   - currentAudioDevice: Current audio output route
+  ///   - availableAudioDevice: List of available audio output devices
   void onAudioDeviceChanged(
-     {HMSAudioDevice? currentAudioDevice,
-     List<HMSAudioDevice>? availableAudioDevice});
+      {HMSAudioDevice? currentAudioDevice,
+      List<HMSAudioDevice>? availableAudioDevice});
 }
 ```
 
@@ -110,9 +107,14 @@ The methods of HMSUpdateListener are invoked to notify updates happening in the 
 
 Add this `updateListener` instance to
 ```dart
-HMSSDK hmsSDK = HMSSDK();
-hmsSDK.build();
-hmsSDK.addUpdateListener(updateListener);
+class Meeting implements HMSUpdateListener {
+    Meeting(){
+        HMSSDK hmsSDK = HMSSDK();
+        hmsSDK.build();
+        hmsSDK.addUpdateListener(this);
+    }
+    ...
+}
 ```
 
 After calling join your app will be provided an update from the 100ms SDK.
@@ -124,5 +126,5 @@ After calling join your app will be provided an update from the 100ms SDK.
 Remove the `updateListener` instance as:
 
 ```dart
-hmsSDK.removeUpdateListener(updateListener);
+hmsSDK.removeUpdateListener(this);
 ```

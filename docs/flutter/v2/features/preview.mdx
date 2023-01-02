@@ -1,47 +1,147 @@
 ---
 title: Preview
-nav: 3.06
+nav: 3.08
 ---
 
-Preview screen is a frequently used UX element which allows users to check if their input devices are working properly and set the initial state (mute/unmute) of their audio and video tracks before joining. 
+The preview screen is a frequently used UX element that allows users to check if their input devices are working properly and set the initial state (mute/unmute) of their audio and video tracks before joining. 
 
 100ms SDKs provide an easy-to-use API to back this feature. Additionally, the SDK will try to establish a connection to 100ms server to verify there are no network issues and that the auth credentials are valid so that if everything is in order the subsequent room join will be much faster.
 
-Create an object of HMSConfig class using the available join configurations
+Create an object of the HMSConfig class using the available join configurations
 
-   ```dart
-   HMSConfig config = HMSConfig(authToken: token,
-                                userName: user);
-   ```
+```dart
+HMSConfig config = HMSConfig(authToken: token,userName: user);
+```
 
 To invoke the Preview API call -
 
 ```dart
 HMSSDK hmsSDK = HMSSDK();
 hmsSDK.build();
+//config which we created above
 hmsSDK.preview(config);
 ```
 
-You need HMSConfig instance which you have created above.
+Now once we started previewing we need to listen to the updates. You get this via `HMSPreviewListener`.
 
-Now you have started preview you need to listen to the updates. You get this via `PreviewUpdateListener`.
+The methods of HMSPreviewListener are invoked to notify updates while in preview like a peer join, video mute/unmute, audio device selection etc.
+
+To listen to `HMSPreviewListener` methods we will need to attach a preview listener on hmsSDK.
+Let's look at how we can listen to preview updates in the room:
+
+1. Firstly, the class where we want the updates must implement `HMSPreviewListener`:
+
+```dart 
+class PreviewUpdates implements HMSPreviewListener{}
+```
+
+2. To start getting updates we will attach the previewListener as:
 
 ```dart
-abstract class HMSPreviewListener {
+//hmsPreviewListener is an instance of HMSPreviewListener
+//hmsSDK is HMSSDK instance on which the build is already called above
 
-  /// On success, when you want to preview listen to this callback
+hmsSDK.addPreviewListener(listener: hmsPreviewListener);
+```
+
+3. We need to override `HMSPreviewListener` methods as: 
+
+```dart
+class PreviewUpdates implements HMSPreviewListener{
+
+  @override
+  void onHMSError({required HMSException error}){}
+
+  @override
+  void onPreview({required HMSRoom room, required List<HMSTrack> localTracks}){}
+
+  @override
+  void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}){}
+
+  @override
+  void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}){}
+
+  @override
+  void onAudioDeviceChanged(
+      {HMSAudioDevice? currentAudioDevice,
+      List<HMSAudioDevice>? availableAudioDevice}){}
+}
+```
+
+After calling preview your app will be provided an update from the 100ms SDK.
+
+✅ If successful, the `onPreview({required HMSRoom room, required List<HMSTrack> localTracks})` method of HMSPreviewListener will be invoked with information about the room encapsulated in the HMSRoom object.
+
+❌ If failure, the `onHMSError({required HMSException error})` method will be invoked with exact failure reason.
+
+4. Render Preview 
+
+In case of success `onPreview` provides an array of local tracks in the parameter `localTracks` that you can display to the user (see [Render Video](render-video) and [Mute](mute) sections for more details).
+
+- Fetching the track in `onPreview` callback:
+
+```dart
+@override
+
+List<HMSVideoTrack> videoTracks = [];
+void onPreview({required HMSRoom room, required List<HMSTrack> localTracks}) {
+
+   for (var track in localTracks) {
+      if (track.kind == HMSTrackKind.kHMSTrackKindVideo) {
+        isVideoOn = !(track.isMute);
+        videoTracks.add(track as HMSVideoTrack);
+      }
+      if (track.kind == HMSTrackKind.kHMSTrackKindAudio) {
+        isAudioOn = !(track.isMute);
+      }
+   }
+} 
+```
+
+- Display the track using `HMSVideoView`:
+
+```dart 
+//videoTracks is the List<HMSVideoTrack> which we have set above
+HMSVideoView(
+   scaleType:
+         ScaleType.SCALE_ASPECT_FILL,
+   track:videoTracks[0],//setting the first track from videoTracks list to render on screen
+   setMirror: true,
+   matchParent: false,
+)
+```
+
+Check how we have implemented the preview in our sample app [here](https://github.com/100mslive/100ms-flutter/tree/main/example/lib/preview)
+
+5. To stop receiving preview updates or if we navigating from preview then we can remove the `previewListener` instance as:
+
+```dart
+hmsSDK.removePreviewListener(previewListener);
+```
+
+Now, let's take a look at the listener class in detail.
+
+```dart
+///[HMSPreviewListener] listens to updates when you preview.
+///
+///Just implement it and get the preview updates.
+///
+/// Check out the [Sample App] to know about how we are implementing it: https://github.com/100mslive/100ms-flutter.
+
+abstract class HMSPreviewListener {
+  ///when an error is caught [onError] will be called
+  ///
+  /// - Parameters:
+  ///   - error: error which you get.
+  void onHMSError({required HMSException error});
+
+  ///when you want to preview listen to this callback
   ///
   /// - Parameters:
   ///   - room: the room which was joined
   ///   - localTracks: local audio/video tracks list
-  void onPreview({required HMSRoom room, required List<HMSTrack>localTracks});
+  void onPreview({required HMSRoom room, required List<HMSTrack> localTracks});
 
-  /// when an error is caught [onHMSError] will be called
-  ///
-  /// - Parameters:
-  ///   - error: error which you get.
-  void onHMSError({required HMSError error});
-    
   /// This is called when there is a change in any property of the Room
   ///
   /// - Parameters:
@@ -57,23 +157,24 @@ abstract class HMSPreviewListener {
   ///   - peer: the peer who joined/left or was updated
   ///   - update: the triggered update type. Should be used to perform different UI Actions
   void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update});
+
+  ///whenever a new audio device is plugged in or audio output is changed we
+  ///get the onAudioDeviceChanged update
+  ///This callback is only fired on Android devices. On iOS, this callback will not be triggered.
+  /// - Parameters:
+  ///   - currentAudioDevice: Current audio output route
+  ///   - availableAudioDevice: List of available audio output devices
+  void onAudioDeviceChanged(
+      {HMSAudioDevice? currentAudioDevice,
+      List<HMSAudioDevice>? availableAudioDevice});
 }
+
 ```
 
-This will pass an array of local tracks that you can display to the user (see [Render Video](render-video) and [Mute](mute) sections for more details).
-
-If however there was some error related to getting the input sources or some preflight check has failed delegate callback will be fired with the `HMSException` instance you can use the object to find what went wrong (see [Error Handling](error-handling)).
-
-
-Add the `previewListener` instance to 
-
-```dart
-hmsSDK.addPreviewListener(previewListener);
-```
 
 ## Get onPeerUpdate and room state in preview 
 
-To enable `onPeerUpdate` in preview, we need to enable room state from dashboard.
+To enable `onPeerUpdate` in the preview, we need to enable room state from the dashboard.
 This can be enabled by selecting a template and then navigating to advanced settings.
 
 ![Advanced settings](/docs/v2/flutter-advanced-settings.png)
