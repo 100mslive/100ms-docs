@@ -26,7 +26,7 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            const platform = window.location.pathname.split('/')[2];
+            const platform = window.location.pathname.split('/')?.[2];
             setCurrentPlatform(platform);
         }
     }, []);
