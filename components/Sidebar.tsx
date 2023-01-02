@@ -1,4 +1,7 @@
 /* eslint-disable react/no-array-index-key */
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
@@ -6,9 +9,6 @@ import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import ReactIcon from '@/assets/icons/ReactIcon';
 import ServerIcon from '@/assets/icons/ServerIcon';
 import { Listbox } from '@headlessui/react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
 
 type NavRoute = {
     url: string;
@@ -41,7 +41,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
         fetch('/docs/api/content?query=nav')
             .then((res) => res.json())
             .then((result) => setNavAPI(result.nav))
-            .catch(e => console.log(e));
+            .catch((e) => console.log(e));
     }, []);
 
     let nav;
@@ -78,7 +78,20 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
             router.push(s.link, undefined, { shallow: false });
         }
     };
-useEffect(() => setTech(menuItem[indexOf]), [indexOf])
+
+    const activeItem = React.createRef<HTMLAnchorElement>();
+
+    useEffect(() => {
+        if (activeItem?.current)
+            activeItem.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'end',
+                inline: 'nearest'
+            });
+    }, [activeItem]);
+
+    useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
+
     return (
         <div className="sidebar">
             {/* Sidebar Version Section */}
@@ -122,6 +135,7 @@ useEffect(() => setTech(menuItem[indexOf]), [indexOf])
                                       href={route.url || ''}
                                       key={`${route.url}-${index}`}>
                                       <a
+                                          ref={route.url === asPath ? activeItem : null}
                                           className={`menu-item ${
                                               route.url === asPath ? 'active-link' : ''
                                           }`}>
