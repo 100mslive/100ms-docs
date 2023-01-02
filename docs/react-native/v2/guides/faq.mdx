@@ -61,7 +61,7 @@ This problem can happen due to many reasons. To self-serve, We recommend you to 
 
 - you are calling static `build` function on `HMSSDK` class correctly. <strong>Do not create an instance of `HMSSDK` class yourself with `new` keyword</strong>.
   
-  `build` function returns instance of `HMSSDK` class and also sets up sdk on native side.
+  `build` function returns instance of `HMSSDK` class and also sets up SDK on native side.
 
   ```js
   import { HMSSDK } from '@100mslive/react-native-hms';
@@ -198,21 +198,21 @@ When you mute audio or video of remote peer locally, you won't be able to hear o
 
 100ms have "Playback Allowed" APIs to mute or unmute remote peers locally.
 
-Refer to [Playback Allowed](https://www.100ms.live/docs/react-native/v2/features/change-track-state) API docs to learn more.
+Refer to [Playback Allowed](https://www.100ms.live/docs/react-native/v2/features/playback-allowed) API docs to learn more.
 
 To locally mute all Remote Peers at once, you can refer [here](https://www.100ms.live/docs/react-native/v2/features/playback-allowed#local-mute-all-remote-peers-audio).
 
 
-## Restrict Remote Peer from Unmuting after Muting them
+## Restrict Remote Peer from Speaking after their Audio is Muted
 
-Once you [mute a Peer](https://www.100ms.live/docs/react-native/v2/features/mute), they can unmute themselves. To prevent peers from unmuting themselves, You should [change their role](https://www.100ms.live/docs/react-native/v2/features/change-role) to a `Role` which has less [publishing permissions](https://www.100ms.live/docs/react-native/v2/foundation/templates-and-roles#publish-strategies) as per your use case instead of muting the peer.
+Once you [Mute a Peer](https://www.100ms.live/docs/react-native/v2/features/change-track-state), they can unmute themselves. To prevent peers from un-muting themselves, you should [Change their Role](https://www.100ms.live/docs/react-native/v2/features/change-role) to a `Role` which has less [publishing permissions](https://www.100ms.live/docs/react-native/v2/foundation/templates-and-roles#publish-strategies) as per your use case instead of muting the peer.
 
 
 ## Enable PIP Mode automatically when user leaves app
 
 Currently, Enabling [Picture in Picture (PIP) mode](https://www.100ms.live/docs/react-native/v2/features/pip-mode) automatically (that is without calling any function) is not supported.
 
-We recommend enabling Picture in Picture (PIP) mode (by calling `enablePipMode` function) **while app is active**, on a button click or programatically.
+We recommend enabling Picture in Picture (PIP) mode (by calling `enablePipMode` function) **while app is active**, on a button click or programmatically.
 
 
 ## Enable PIP Mode in iOS device.
@@ -226,7 +226,7 @@ We are working on making this work. Thanks for your patience.
 
 **Don't call `HMSSDK.build` function just to get the `hmsInstance` in nested components without prop drilling to use various APIs.**
 
-`HMSSDK.build` creates and returns new instances of sdk each time you call it. It is not returning the previously created SDK instance.
+`HMSSDK.build` creates and returns new instances of SDK each time you call it. It is not returning the previously created SDK instance.
 
 We recommend using State Management solutions like Redux or Context API to save your originally created `hmsInstance` into store and use this stored instance in your nested components.
 
