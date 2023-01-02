@@ -63,20 +63,19 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
     }
 
     let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]);
-    if (slug[0] === 'api-reference') {
+    if (slug[0] === 'api-reference')
         indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[1]);
-    }
+
     indexOf = indexOf === -1 ? 0 : indexOf;
     const [tech, setTech] = useState(menuItem[indexOf]);
+
     const changeTech = (s) => {
         setTech(s);
-        if (slug[0] === 'api-reference') {
+        if (slug[0] === 'api-reference')
             router.push(s.apiRef, undefined, {
                 shallow: false
             });
-        } else {
-            router.push(s.link, undefined, { shallow: false });
-        }
+        else router.push(s.link, undefined, { shallow: false });
     };
 
     const activeItem = React.createRef<HTMLAnchorElement>();
@@ -88,7 +87,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                 block: 'center',
                 inline: 'nearest'
             });
-    }, [activeItem]);
+    }, [activeItem, router]);
 
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
 
