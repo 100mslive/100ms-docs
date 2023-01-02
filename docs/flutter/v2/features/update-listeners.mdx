@@ -3,16 +3,48 @@ title: Update Listeners
 nav: 3.03
 ---
 
-Now, let's take a look at the listener class to be implemented.
+Now, let's take a look at what the listener class looks like.
+
+> `HMSUpdateListener`: A class conforming to the HMSUpdateListener interface.
+
+The methods of HMSUpdateListener are invoked to notify updates happening in the room like a peer join/leave, track mute/unmute etc.
+
+## How to add an HMSUpdateListener
+
+This section contains info about how can we attach `HMSUpdateListener`: 
+
+```dart
+class Meeting implements HMSUpdateListener {
+    Meeting(){
+        HMSSDK hmsSDK = HMSSDK();
+        hmsSDK.build();
+        //`this` corresponds to the instance implementing HMSUpdateListener
+        hmsSDK.addUpdateListener(this);
+    }
+    ...
+}
+```
+
+`addUpdateListener` is the method responsible for attaching `HMSUpdateListener`.
+
+## Remove update listener
+
+If we don't want the room updates anymore or while leaving the room, we must remove the `updateListener` instance as:
+
+```dart
+hmsSDK.removeUpdateListener(this);
+```
+
+## Supplementary bytes
+
+This section explains `HMSUpdateListener` class methods. We implement this class to listen to room updates.
+
 ```dart
 /// 100ms SDK provides callbacks to the client app about any change or update happening in the room after a user has joined by implementing HMSUpdateListener.
-/// Implement this listener in a class where you want to perform UI Actions, update App State, etc. These updates can be used to render the video on screen or to display other info regarding the room.
+/// Implement this listener in a class where you want to perform UI Actions, update App State, etc. These updates can be used to render the video on the screen or to display other info regarding the room.
 /// Depending on your use case, you'll need to implement specific methods of the Update Listener. The most common ones are onJoin, onPeerUpdate, onTrackUpdate & onHMSError.
 abstract class HMSUpdateListener {
-  /// This will be called on a successful JOIN of the room by the user
-  ///
-  /// This is the point where applications can stop showing its loading state
-  /// - Parameter room: the room which was joined
+
   void onJoin({required HMSRoom room});
 
   /// This will be called whenever there is an update on an existing peer
@@ -31,7 +63,7 @@ abstract class HMSUpdateListener {
   /// - Parameters:
   ///   - track: the track which was added, removed or updated
   ///   - trackUpdate: the triggered update type
-  ///   - peer: the peer for which track was added, removed or updated
+  ///   - peer: the peer for which the track was added, removed or updated
   void onTrackUpdate(
       {required HMSTrack track,
       required HMSTrackUpdate trackUpdate,
@@ -39,7 +71,7 @@ abstract class HMSUpdateListener {
 
   /// This will be called when there is an error in the system
   ///
-  /// and SDK has already retried to fix the error
+  /// and SDK have already retried to fix the error
   /// - Parameter error: the error that occurred
   void onHMSError({required HMSException error});
 
@@ -52,11 +84,11 @@ abstract class HMSUpdateListener {
 
   /// This is called when there is a new broadcast message from any other peer in the room
   ///
-  /// This can be used to implement chat is the room
+  /// This can be used to implement chat in the room
   /// - Parameter message: the received broadcast message
   void onMessage({required HMSMessage message});
 
-  /// This is called every 1 second with list of active speakers
+  /// This is called every 1 second with a list of active speakers
   ///
   /// ## A HMSSpeaker object contains -
   ///    - peerId: the peer identifier of HMSPeer who is speaking
@@ -69,16 +101,16 @@ abstract class HMSUpdateListener {
   /// - Parameter speakers: the list of speakers
   void onUpdateSpeakers({required List<HMSSpeaker> updateSpeakers});
 
-  /// When network connection is lost & the SDK is trying to reconnect to the room
+  /// When the network connection is lost & the SDK is trying to reconnect to the room
   void onReconnecting();
 
-  /// When you are back in the room after network connection was lost
+  /// When you are back in the room after the network connection was lost
   void onReconnected();
 
-  /// This is called when someone asks for change or role
+  /// This is called when someone asks for a change of role
   ///
-  /// for eg. admin can ask a peer to become host from guest.
-  /// this triggers this call on peer's app
+  /// for eg. the admin can ask a peer to become a host from a guest.
+  /// this triggers this call on the peer's app
   void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest});
 
   /// When someone requests for track change of your Audio, Video or an Auxiliary track like Screenshare, this event will be triggered
@@ -87,7 +119,7 @@ abstract class HMSUpdateListener {
       {required HMSTrackChangeRequest hmsTrackChangeRequest});
 
   /// When someone kicks you out or when someone ends the room at that time it is triggered
-  /// - Parameter hmsPeerRemovedFromPeer - it consists info about who removed you and why.
+  /// - Parameter hmsPeerRemovedFromPeer - it consists of info about who removed you and why.
   void onRemovedFromRoom(
       {required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer});
 
@@ -100,31 +132,4 @@ abstract class HMSUpdateListener {
       {HMSAudioDevice? currentAudioDevice,
       List<HMSAudioDevice>? availableAudioDevice});
 }
-```
-
-> `HMSUpdateListener` : A class conforming to HMSUpdateListener interface.
-The methods of HMSUpdateListener are invoked to notify updates happening in the room like a peer join/leave, track mute/unmute etc.
-
-Add this `updateListener` instance to
-```dart
-class Meeting implements HMSUpdateListener {
-    Meeting(){
-        HMSSDK hmsSDK = HMSSDK();
-        hmsSDK.build();
-        hmsSDK.addUpdateListener(this);
-    }
-    ...
-}
-```
-
-After calling join your app will be provided an update from the 100ms SDK.
-
-✅ If successful, the `onJoin({required HMSRoom room})` method of HMSUpdateListener will be invoked with information about the room encapsulated in the HMSRoom object.
-
-❌ If failure, the `onHMSError({required HMSException error})` method will be invoked with exact failure reason.
-
-Remove the `updateListener` instance as:
-
-```dart
-hmsSDK.removeUpdateListener(this);
 ```

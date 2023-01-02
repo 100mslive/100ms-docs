@@ -3,24 +3,23 @@ title: Render Video
 nav: 3.04
 ---
 
-It all comes down to this. All the setup so far has been done so that we can show live streaming videos in our beautiful app.
+It all comes down to this. All the setup so far has been done so that we can show live-streaming videos in our beautiful app.
 
-To render video you will use HMSVideoView. To use it we will need a few things:
+To render video we will use HMSVideoView. To use it, we will `track`:
 
-1. HMSVideoTrack: `HMSVideoView` will render video using HMSVideoTrack.
-2. `HMSVideoView` will use viewSize to get the height and width of the rendered video. If not passed, it will take whatever size is available to the widget.
+1. HMSVideoTrack: `HMSVideoView` renders video using HMSVideoTrack which we get from `onTrackUpdate`.
 
 ## How to get HMSVideoTrack 
+
+This section contains info about how to get video tracks so that we can display them on screen. 
 
 `HMSVideoTrack` is used to render video in HMSVideoView. Single `HMSVideoView` can be attached to only one `HMSVideoTrack`.
 
 > For resetting the track or updating any property in `HMSVideoView` it is required to use the new HMSVideoView widget.
 
-And you can get all tracks by listening to `HMSUpdateListener.onTrackUpdate`
+To get tracks we will be listening to HMSUpdateListener's `onTrackUpdate`.
 
-Add a check on these tracks to see if they are video tracks or audio tracks.
-
-For example -
+`onTrackUpdate` provides updates for both Audio & Video tracks so to segregate them we can put a check like below:
 
 ```dart
 /// check if the track is video or audio
@@ -32,40 +31,69 @@ track.kind == HMSTrackKind.kHMSTrackKindAudio
 track.kind == HMSTrackKind.kHMSTrackKindVideo
 ```
 
-> `HMSSDK` automatically handles audio tracks. So they are not required to be set in the application. Although [mute/unmute](../features/mute) or [set audio volume](../advanced-features/set-volume) features are provided
-> by SDK.  
-
-
-Now, you can pass the video track to `HMSVideoView` to get your live video on the screen.
-
-## Render Video
-
-To display video tracks `HMSSDK` provides the `HMSVideoView` widget.
+Let's see an example of how we can extract the video tracks from `onTrackUpdate`:
 
 ```dart
-class HMSVideoView extends StatelessWidget {
-  ///  This will render video with trackId present in track
-  ///[track] - track to be displayed
-  final HMSVideoTrack track;
+class Meeting implements HMSUpdateListener{
+  
+  late HMSSDK hmsSDK;
+  ...
 
-  //[matchParent] - to match the size of parent widget
-  final matchParent;
+  void onTrackUpdate(
+      {required HMSTrack track,
+      required HMSTrackUpdate trackUpdate,
+      required HMSPeer peer}) {
 
-  //[scaleType] - To set the video scaling
-  final ScaleType scaleType;
-
-  //[setMirror] - To set mirroring of video
-  //Generally true for local peer and false for a remote peer
-  final bool setMirror;
-
-  //[isAutoSimulcast] - To set auto simulcast (Adaptive Bitrate)
-  final bool isAutoSimulcast;
+        if (track.kind == HMSTrackKind.kHMSTrackKindVideo) {
+          //We will get all the video tracks
+          if(track.source == "REGULAR"){
+            //We will get only camera feed(Normal Video) tracks of peer here
+            if(peer.isLocal){
+              //We will get the local peer video track here
+            }
+            else{
+              //We will get the remote peer video tracks here
+            }
+          }
+          else{
+            //To get screenshare or other video tracks from peers
+          }
+        }
+      }
 }
 ```
 
-> `HMSVideoView` also accepts `Key` as an optional parameter but it is recommended to always pass `Key` to `HMSVideoView` So that it can be disposed of and reset correctly during rebuilds.
+Now, once we have the video tracks we can pass the video track to `HMSVideoView` to get live video on the screen.
+Screenshare as well as normal video tracks can be rendered in the same way which we will see below.
 
-Let's understand the `ScaleType` property a bit more. The `ScaleType` property decides how much space the video will take from the available space.
+> `HMSSDK` automatically handles audio tracks. So they are not required to be handled in the application. Although [mute/unmute](../features/mute) or [set audio volume](../advanced-features/set-volume) features are provided
+> by SDK.  
+
+## Render Video
+
+This section contains information about how we can render the video once we have the track.
+
+To display video tracks `HMSSDK` provides the `HMSVideoView` widget.
+We just need to pass the `track` which is `HMSVideoTrack` instance to get our video running as:
+
+
+```dart
+//videoTrack is an instance of HMSVideoTrack
+HMSVideoView(track: videoTrack);
+```
+
+## Configuring video view
+
+`HMSVideoView` has several properties to configure the way video is rendered as:
+
+1. matchParent 
+
+This is a `bool` type parameter, `true` indicates that `HMSVideoView` can take the size of parent widget.
+
+2. scaleType
+
+The `ScaleType` property decides how much space the video will take from the available space.
+`ScaleType` is an enum with values:
 
 ```dart
 enum ScaleType { 
@@ -81,18 +109,59 @@ enum ScaleType {
 }
 ```
 
-> 🔑  Note: `SCALE_ASPECT_FIT` is the default scaleType for HMSVideoView
+> 🔑  Note: `SCALE_ASPECT_FIT` is the default `scaleType` for HMSVideoView
 
-## Dispose HMSVideoView to conserve bandwidth and cleanup elements
+`SCALE_ASPECT_FILL` might crop the video if the parent widget is small. So, for cases like screen share where cropping is not acceptable
+use the default type i.e `SCALE_ASPECT_FIT`.
+
+3. setMirror
+
+This is a `bool` type parameter, `true` indicates that the video feed gets mirrored and `false` shows the track as it is.
+Generally true for local peer and false for a remote peers
+
+4. isAutoSimulcast
+
+This is also a `bool` type parameter, `true` indicates that simulcast/Adaptive Bitrate is ON for the current video view
+
+> `HMSVideoView` also accepts `Key` as an optional parameter but it is recommended to always pass `Key` to `HMSVideoView` So that it can be disposed of and reset correctly during rebuilds.
+
+## Best Practices 
+
+### Dispose HMSVideoView to conserve bandwidth and cleanup elements
 
 Remove the HMSVideoView from UI and it will not render its video & conserve network bandwidth.
 
 It is always advised to stop rendering video when it is not required to save bandwidth consumption.
 This is done in the example app by setting the `isOffscreen` property of `PeerTrackNode` as true when the peer tile is off-screen. So that app does not download the video track when the tile is off-screen.
 
-## Limit the number of HMSVideoView on-screen at a time 
+### Limit the number of HMSVideoView on-screen at a time 
 
 `HMSVideoView` internally uses `SurfaceView` in android and `UiKitView` in iOS. It is recommended to render at most 4-6 videos at a time on-screen and 
 rest should be paginated for better performance. 
 
 For a full example try out our [Example app here](https://github.com/100mslive/100ms-flutter/tree/main/example).
+
+## Supplementary bytes 
+
+This section shows the `HMSVideoView` widget and its properties :
+
+```dart
+class HMSVideoView extends StatelessWidget {
+  ///  This will render video with trackId present in the track
+  ///[track] - track to be displayed
+  final HMSVideoTrack track;
+
+  //[matchParent] - to match the size of the parent widget
+  final matchParent;
+
+  //[scaleType] - To set the video scaling
+  final ScaleType scaleType;
+
+  //[setMirror] - To set mirroring of video
+  //
+  final bool setMirror;
+
+  //[isAutoSimulcast] - To set auto simulcast (Adaptive Bitrate)
+  final bool isAutoSimulcast;
+}
+```
