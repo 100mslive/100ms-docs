@@ -1055,6 +1055,30 @@ Refer to [Test the app section](/javascript/v2/guides/javascript-quickstart#test
 
 </div>
 
+## hmsStore.subscribe()
+
+You might notice that `hmsStore.subscribe()` is used in many places. Let's take a moment to discuss this function.
+hmsStore is a single source of truth for all SDK related data. To get access to this store, we have to `subscribe()` to
+the store. It takes two arguments, a callback and a selector to tell what data in the store you want to subscribe.
+
+**subscribe**: `Subscribe`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\>
+
+Subscribe to a part of store using selectors, whenever the subscribed part changes, the callback
+is called with both the latest and previous value of the changed part. The subscribe also returns
+a reference to `unsubscribe`, which could be used to unsubscribe the subscription.
+
+Example usage:
+
+```
+const onSpeakerUpdate = (speaker, prevSpeaker) => {
+ console.log("speaker changed from - ", prevSpeaker, ", to - ", speaker);
+}
+const unsub = store.subscribe(onSpeakerUpdate, selectDominantSpeaker);
+
+// To unsubscribe from the listener,
+unsub();
+
+```
 ## Next steps
 
 Here's the complete example.
