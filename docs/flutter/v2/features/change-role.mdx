@@ -12,7 +12,7 @@ Each `HMSPeer` instance has a `role` property which returns an `HMSRole` instanc
     For example, a Student Role can only see the Teacher's video. This is can be discovered by checking `publishSettings` and `subscribeSettings` properties.
 
 
-2. Check what actions this Role can perform. i.e can it change someone else's current Role, End the Meeting, or remove someone from the room. This is can be discovered by checking the `permissions` property.
+2. Check what actions this Role can perform. i.e can it change someone else's current Role, End the Meeting, or remove someone from the room? This is can be discovered by checking the `permissions` property.
 
 
 In certain scenarios, you may want to change someone's role.
@@ -21,7 +21,7 @@ Imagine an audio room with 2 roles `speaker` and `listener`. Only someone with a
 
 Now at some point, the `speaker` may decide to nominate some `listener` to become a `speaker`. 
 
-This is where Change Role capabilities come in play.
+This is where *Change Role* capabilities come into play.
 
 
 You may choose to do either:
@@ -34,101 +34,165 @@ You may choose to do either:
 
 ## Single Peer Role Change
 
-To invoke the API you will need 4 parameters.
+> Note: 🔑 `changeRoleOfPeer` is the same as `changeRole`  but we have deprecated `changeRole` and it will be removed in future releases. So, Please
+> use `changeRoleOfPeer`.
 
--   `forPeer`: An instance of `HMSPeer` of the peer who's role you want to change.
+
+```dart
+class Meeting  implements HMSUpdateListener, HMSActionResultListener{ 
+
+    void changeRoleOfPeer({required HMSPeer peer,required HMSRole roleName,bool forceChange}) {
+        ///[peer]: peer whose role needs to be changed
+        ///[toRole]: the role which we want the peer to be in(destination role).
+        ///[forceChange]: it indicates whether to change the role of a peer forcefully
+        ///If set to `true` then the role will be changed without asking permission from the [peer]
+        ///In case of `false` permissions will be asked and the role will be changed only after the request is accepted. 
+        ///[hmsActionResultListener]: an instance of a class which implements HMSActionResultListener
+        //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+        hmsSDK.changeRoleOfPeer(
+        forPeer: peer,
+        toRole: roleName,
+        force: forceChange,
+        hmsActionResultListener: this);
+    }
+
+    @override
+    void onSuccess(
+        {HMSActionResultListenerMethod methodType =
+            HMSActionResultListenerMethod.unknown,
+        Map<String, dynamic>? arguments}) {
+
+            switch (methodType) {
+
+            case HMSActionResultListenerMethod.changeRoleOfPeer:
+            //Here we will receive the success callback
+            break;
+            ...
+        }
+    }
+
+    @override
+    void onException(
+        {HMSActionResultListenerMethod methodType =
+            HMSActionResultListenerMethod.unknown,
+        Map<String, dynamic>? arguments,
+        required HMSException hmsException}) {
+
+            switch (methodType) {
+
+                case HMSActionResultListenerMethod.changeRoleOfPeer:
+                 // Check the HMSException object for details about the error
+                break;
+                ...
+        }
+    }
+}
+```
+
+
+To invoke this method we will need 4 parameters.
+
+-   `forPeer`: An instance of `HMSPeer` of the peer whose role you want to change.
 
 -   `toRole`: The `HMSRole` instance for the target role.
 
 -   `force`: Whether you want to change their role without asking them or give them a chance to accept/reject.
 
--   `hmsActionResultListener`: The `HMSActionResultListener` that will get a success or failure callback depending on the result of the request.
+-   `hmsActionResultListener`: The `HMSActionResultListener` will get a success or failure callback depending on the result of the request.
 
+> How to handle it at receiver side if `force` is false.Check it out [here](#accept-role-change-request)
+> 
 Note: success doesn't mean that the role was changed, just that the server accepted the request as valid.
 
-
-
-All the peers that are in the current room are accessible via the `peers` property of the `HMSRoom` instance. 
-
-
-A list of all available roles in the current room can be accessed via the `getRoles` method of `HMSSDK`.
-
-
-Now with all the parameters you can invoke the `changeRoleOfPeer` API:
-
-```dart 
-hmsSDK.changeRoleOfPeer(
- forPeer: forPeer,
- toRole: toRole,
- force: force,
- hmsActionResultListener: hmsActionResultListener)
-```
-
-If the changing role succeeds you will get an update in the `HMSUpdateListener` of `ROLE_CHANGED` update type:
+If the changeRole was succeeded you will get an update in the `onPeerUpdate` with `roleUpdated`as update type,
+With the same peer, you passed as `forPeer` and an `HMSPeerUpdate.roleUpdated` update type.
 
 ```dart
-void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update});
+  @override
+  void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) async {
+    switch (update) {
+      ...
+
+      case HMSPeerUpdate.roleUpdated:
+      //Here we will get the update with peer being the same as the `forPeer` we sent in changeRole
+      break;
+
+      ...
+    }
+  }
 ```
-
-With the same peer, you passed as targetPeer and an `HMSPeerUpdate.roleUpdated` update type.
-
-## Accept Role change Request
-
-The `force` parameter in `changeRoleOfPeer`, when false, is a polite request: "Would you like to change your role from listener to speaker?" Which can be ignored by the peer. The way it works is the other peer will first receive an `onRoleChangeRequest` callback in `HMSUpdateListener`:
-
-
-```dart
-void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest});
-```
-
-At this point, the app should show a prompt to the user asking for permission to accept or deny role change. 
-
-
-If the user wants to accept the request, the app should invoke `acceptChangeRole` on `HMSSDK` instance:
-
-```dart
-hmsSDK.acceptChangeRole(hmsRoleChangeRequest: roleChangeRequest, hmsActionResultListener: hmsActionResultListener);
-```
-
-
-Now, all peers in the room will receive an `HMSPeerUpdate.roleUpdated` callback so that they can do the necessary UI updates. Now the user becomes a speaker and the audio publishing will start automatically.
-
-Now let's imagine the newly nominated speaker is not behaving nicely and we want to move him back to the listener without a prompt. This is where the `force` parameter comes in.
-
-
-When it is set to true the other party will not receive a confirmation `roleChangeRequest` but instead will straight away receive a new set of updated permissions and stop publishing. 
-
-
-`HMSPeerUpdate.roleUpdated` callback will still be fired so that the app can update the user's UI state.
-
-
-
 
 ## Bulk Role Change
 
+Bulk Role Change is used when we want to change the role of peers with a specific role to another role.
 
-Bulk Role Change is used when you want to convert all Roles from a list of Roles, to another Role.
-
-
-For example, if peers join a room with a `waiting` Role and now you want to change all these peers to `viewer` Role then use the `changeRoleOfPeersWithRoles` API.
-
-It takes fewer parameters than for a single peer. Here is the method signature.
+For example, if peers join a room with a `waiting` role and now you want to change all these peers to `viewer` role then use the `changeRoleOfPeersWithRoles` method.
 
 ```dart
-void changeRoleOfPeersWithRoles(
+class Meeting  implements HMSUpdateListener, HMSActionResultListener{ 
+
+    ... 
+
+    void changeRoleOfPeersWithRoles(
       {required HMSRole toRole,
       required List<HMSRole> ofRoles,
-      HMSActionResultListener? hmsActionResultListener})
+      HMSActionResultListener? hmsActionResultListener}) {
+        ///[toRole]: the role you wish to move peers into(destination role)
+        ///[ofRoles]: List of roles whose role needs to be changed
+        ///[hmsActionResultListener]: an instance of a class which implements HMSActionResultListener
+        //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+        hmsSDK.changeRoleOfPeersWithRoles(
+        toRole: toRole,
+        ofRoles: ofRoles,
+        hmsActionResultListener: this);
+    }
+
+    @override
+    void onSuccess(
+        {HMSActionResultListenerMethod methodType =
+            HMSActionResultListenerMethod.unknown,
+        Map<String, dynamic>? arguments}) {
+
+            switch (methodType) {
+
+            case HMSActionResultListenerMethod.changeRoleOfPeer:
+            break;
+
+            case HMSActionResultListenerMethod.changeRoleOfPeersWithRoles:
+            //Here we will receive the success callback
+            break;
+            ...
+        }
+    }
+
+    @override
+    void onException(
+        {HMSActionResultListenerMethod methodType =
+            HMSActionResultListenerMethod.unknown,
+        Map<String, dynamic>? arguments,
+        required HMSException hmsException}) {
+
+            switch (methodType) {
+
+                case HMSActionResultListenerMethod.changeRoleOfPeer:
+                break;
+
+                case HMSActionResultListenerMethod.changeRoleOfPeersWithRoles:
+                 // Check the HMSException object for details about the error
+                break;
+                ...
+        }
+    }
+}
 ```
 
-1. `toRole` is the `HMSRole` they should be changed to.
-2. `ofRoles` is a list of `HMSRole` whose role should be changed.
-3. `hmsActionResultListener` has onSuccess and onError callbacks for the result of the operation.
+### Edge cases with bulk role change
 
-Note that if an empty list is sent to `ofRoles`, no roles will be changed. This is to avoid accidentally changing roles you may not have intended such as the bots that provide recording and streaming with the roles `beam`.
+1. Note that if an empty list is sent to `ofRoles`, no roles will be changed. This is to avoid accidentally changing roles you may not have intended such as the bots that provide recording and streaming with the roles `beam`.
 
-Also, Bulk Role Changes are always forced i.e. no option will be given for the peer to accept it, they will just be changed immediately.
+2. Also, Bulk Role Changes are always forced i.e. no option will be given for the peer to accept it, they will just be changed immediately.
 
+### Let's have a look at an example of bulk role change
 
 Here's how the method could be called to change all `waiting` and `guest` roles to `host`:
 
@@ -139,7 +203,7 @@ List<HMSRole> roles = await hmsSDK.getRoles();
 // get the Host Role object
 HMSRole toHostRole = roles.firstWhere((element) => element.name == "host");
 
-// get list of Roles to be updated - in this case "Waiting" and "Guest" Roles
+// get a list of Roles to be updated - in this case, "Waiting" and "Guest" Roles
 roles.retainWhere((element) => ((element.name == "waiting") || (element.name == "guest")));
 
 // now perform Role Change of all peers in "Waiting" and "Guest" Roles to the "Host" Role
@@ -150,3 +214,87 @@ hmsSDK.changeRoleOfPeersWithRoles(
 ```
 
 <Content alias="bulkRoleChangeErrors" />
+
+## Accept Role change Request
+
+When a peer wishes to change the role of another peer it calls `changeRoleOfPeer` with a parameter `force`.
+The `force` parameter in `changeRoleOfPeer`,
+- when `true` role is directly changed and the peer receives an `onPeerUpdate` with method type as `roleUpdated`. 
+- when `false`, is a polite request: "Would you like to change your role from listener to speaker?" Which can be ignored by the peer. The way it works is the other peer will first receive an `onRoleChangeRequest` callback in `HMSUpdateListener`:
+
+Let's understand this with a diagram:
+
+
+![accept-change-role](/docs/v2/flutter-accept-role-change.png)
+
+Now let's do it step-by-step:
+
+<div className="steps-container">
+
+### PeerA calls changeRoleOfPeer with `force` as false
+
+```dart 
+//Assuming that HMSActionResultListener is implemented in the class where this function is being called 
+hmsSDK.changeRoleOfPeer(
+        forPeer: peerB,
+        toRole: new-role,
+        force: false,
+        hmsActionResultListener: this);
+```
+
+### PeerB receives onRoleChangeRequest
+
+PeerB receives onRoleChangeRequest in the class wherever HMSUpdateListener is implemented.
+
+```dart
+  @override
+  void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest}) {
+    //Show some popup asking for permissions
+  }
+```
+
+At this point, the app should show a prompt to the user asking for permission to accept or deny role change. 
+
+#### How to extract info from HMSRoleChangeRequest to show popups for permission
+
+`HMSRoleChangeRequest` is a class that contains info about the role change request.
+It contains two attributes:
+
+- *suggestedRole* -> This is an `HMSRole` object which contains info about the destination role 
+- *suggestedBy* -> This is an `HMSPeer` object which contains info about the peer who performed a role change 
+
+To get information like role name and peer who performed role change we can do it like :
+
+```dart 
+  @override
+  void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest}) {
+    String? peerWhoPerformedRoleChange = roleChangeRequest.suggestedBy?.name;
+    String? destinationRole = roleChangeRequest.suggestedRole.name
+  }
+```
+
+### PeerB calls acceptChangeRole
+
+If the user wants to accept the request, the app should invoke `acceptChangeRole` on `HMSSDK` instance:
+
+```dart
+//roleChangeRequest: this is the same request which we received in onRoleChangeRequest
+hmsSDK.acceptChangeRole(hmsRoleChangeRequest: roleChangeRequest, hmsActionResultListener: hmsActionResultListener);
+```
+### All the peers receive onPeerUpdate with type as roleUpdated
+
+Now, all peers in the room will receive an `HMSPeerUpdate.roleUpdated` callback so that they can do the necessary UI updates.
+PeerB will have all the permissions of new role.
+
+</div>
+
+
+#### Case with changeRoleOfPeer with `force` as true
+
+Now let's imagine the newly nominated speaker is not behaving nicely and we want to move him back to the listener without a prompt. This is where the `force` parameter comes in.
+
+When it is set to true the other party will not receive a confirmation `roleChangeRequest` but instead will straight away receive a new set of updated permissions and stop publishing. 
+
+`HMSPeerUpdate.roleUpdated` callback will still be fired so that the app can update the user's UI state.
+
+
