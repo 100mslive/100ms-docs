@@ -86,7 +86,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                 block: 'center',
                 inline: 'nearest'
             });
-    }, [activeItem]);
+    });
 
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
 

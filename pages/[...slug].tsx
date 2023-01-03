@@ -10,14 +10,21 @@ import DocLayout from '@/layouts/DocLayout';
 import EditFile from '@/components/EditFile';
 import components from '@/components/MDXComponents';
 import Pagination from '@/components/Pagination';
+import Sidebar from '@/components/Sidebar';
 import Toc from '@/components/Toc';
+import Header from '@/components/Header';
+import SegmentAnalytics from '@/components/SegmentAnalytics';
 import imagePlugin from '@/lib/image';
 import getPagination from '@/lib/getPagination';
 import { DOCS_PATH, getAllDocs, getDocsPaths, getNavfromDocs } from '@/lib/mdxUtils';
 import withTableofContents from '@/lib/withTableofContents';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
-import useLockBodyScroll from "@/lib/useLockBodyScroll";
+import useLockBodyScroll from '@/lib/useLockBodyScroll';
 
+type NavRoute = {
+    url: string;
+    title: string;
+};
 
 export type AllDocsType = {
     url: string;
@@ -39,7 +46,8 @@ interface Props {
         title: string;
         nav: number;
     };
-    // nav: Record<string, Record<string, NavRoute>>;
+    nav: Record<string, Record<string, NavRoute>>;
+
     pagination: {
         previousPost: PaginationType;
         nextPost: PaginationType;
@@ -52,7 +60,7 @@ interface Props {
     };
 }
 
-const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
+const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
     const {
         query: { slug },
         asPath
@@ -98,38 +106,75 @@ const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
 
         return () => window.removeEventListener('scroll', getActiveLinks);
     }, []);
+
     let showPagination = true;
     // Don't show Pagination for Android
-    if (slug[1] === 'android') showPagination = false;
+    if (slug[1] === 'android') {
+        showPagination = false;
+    }
+    const [modal, setModal] = React.useState(false);
+    const [menu, setMenu] = React.useState(false);
+    const menuState = { menu, setMenu };
+    useLockBodyScroll(modal);
 
     return (
         <>
-            <article>
-                <h1>{frontMatter.title}</h1>
-                {content}
-                <hr />
-                {pagination.previousPost && showPagination && (
-                    <Pagination next={pagination.nextPost} prev={pagination.previousPost} />
-                )}
-                <EditFile slug={asPath} />
-            </article>
-            <Toc
-                activeHeading={activeHeading}
-                activeSubHeading={activeSubHeading}
-                CurrentDocsSlug={currentDocSlug}
-            />
-            <style jsx>{`
-                article {
-                    min-width: 100px;
-                    flex-grow: 1;
-                    box-sizing: border-box;
-                    padding: 0 2rem;
-                    min-height: calc(100vh - 140px);
-                    padding-bottom: 80px;
-                    display: flex;
-                    flex-direction: column;
-                }
-            `}</style>
+            <SegmentAnalytics options={{}} title={frontMatter.title} />
+            <Header modal={modal} setModal={setModal} menuState={menuState} />
+            <div
+                className="ctx"
+                style={{
+                    display: 'flex',
+                    paddingTop: '1rem',
+                    justifyContent: 'center',
+                    width: '100%',
+                    backgroundColor: 'var(--docs_bg_content) !important;'
+                }}>
+                <div
+                    className="content-wrapper"
+                    style={{
+                        width: '100%',
+                        display: 'flex',
+                        maxWidth: '1500px',
+                        justifyContent: 'space-between',
+                        backgroundColor: 'var(--docs_bg_content);'
+                    }}>
+                    <div
+                        className="sidebar-container"
+                        style={{ backgroundColor: 'var(--docs_bg_content) !important;' }}>
+                        <Sidebar menuState={menuState} nav={nav} />
+                    </div>
+                    {!menu ? (
+                        <article
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                minWidth: '100px',
+                                flexGrow: '1',
+                                boxSizing: 'border-box',
+                                padding: '0 2rem',
+                                minHeight: 'calc(100vh - 140px)',
+                                paddingBottom: '80px'
+                            }}>
+                            <h1>{frontMatter.title}</h1>
+                            {content}
+                            <hr />
+                            {pagination.previousPost && showPagination && (
+                                <Pagination
+                                    next={pagination.nextPost}
+                                    prev={pagination.previousPost}
+                                />
+                            )}
+                            <EditFile slug={asPath} />
+                        </article>
+                    ) : null}
+                    <Toc
+                        activeHeading={activeHeading}
+                        activeSubHeading={activeSubHeading}
+                        CurrentDocsSlug={currentDocSlug}
+                    />
+                </div>
+            </div>
         </>
     );
 };
