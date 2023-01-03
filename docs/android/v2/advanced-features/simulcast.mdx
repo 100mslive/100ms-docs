@@ -46,3 +46,13 @@ enum class HMSLayer
 ```
 
 Here `getLayerDefinition()` property holds an array of currently available layers for the track and `layer` property is the currently selected layer. Within `HMSSimulcastLayerDefinition` you get its resolution and the layer name such as high/medium/low.
+
+## Disabling Auto Simulcast
+
+HMSVideoView has an automatic simulcast layer selection capability which is enabled by default.
+
+It will select a layer that best matches the current view frame size and reacts to frame updates. In case manual layer selection is preferred set `disableAutoSimulcastLayerSelect` property to `true`. By default, the track layer is set to `high`.
+
+```kotlin
+hmsVideoView.disableAutoSimulcastLayerSelect(true)
+```
