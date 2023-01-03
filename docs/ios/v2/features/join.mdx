@@ -83,7 +83,16 @@ Now, we are primed to join the room. All you have to do is pass the `config` obj
 hmsSDK.join(config: config, delegate: self)
 ```
 
-That's it. You have joined a room successfully. 🥳
+Once on(join room: HMSRoom) callback is fired you have joined the room successfully. 🥳
+    
+```swift
+class MyMeetingClass: HMSUpdateListener {
+    func on(join room: HMSRoom) {
+        ...
+    }
+}
+``` 
+Note: Make sure to wait for onJoin callback before calling any other SDK API (except leave) as they require an active connection and will fail with a “not connected” error.
 
 </div>
 
