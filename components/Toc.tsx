@@ -35,7 +35,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
             });
             scrollIntoView.current = false;
         }
-    }, [activeItem]);
+    }, [activeItem, activeHeading]);
 
     return (
         <div className="toc-ctx">
