@@ -28,7 +28,7 @@ Yes, our services are supported in all countries.
 
 ### Is 100ms fully optimized for mobile devices?
 
-Our Mobile SDKs are optimized to support most of the features and capabilities that are supported in our Web SDK. However, there could be a delay in making some features available in Mobile SDKs whereas the same is available on the Web SDK. 
+Our mobile SDKs are optimized to support most of the features and capabilities that are supported in our Web SDK. However, there could be a delay in making some features available in Mobile SDKs whereas the same is available on the Web SDK. 
 
 For example, Virtual background feature is available as a beta feature on Web, Android and iOS native platforms but not in React Native and Flutter.
 
@@ -345,7 +345,7 @@ Please check the [Collaborative Whiteboard guide](/javascript/v2/plugins/collabo
 
 ### Do you have a list of extra plugins that can be added to live sessions?
 
-Currently, we you can build additional interactive experiences in your app with the help of [Peer Metadata](/javascript/v2/advanced-features/peer-metadata). You can integrate raise hand, polls, quizzes, etc,. using this. You can also check the existing plugins our platform such as [Virtual background](/javascript/v2/plugins/virtual-background), [Noise suppression](/javascript/v2/plugins/noise-suppression), Custom [audio](/javascript/v2/plugins/custom-audio-plugins) & [video](/javascript/v2/plugins/custom-video-plugins) plugins. We will soon be adding a whiteboard plugin as well. Please stay tuned our product updates by signing up for our newsletter from [here](https://www.100ms.live/blog#email).
+Currently, we you can build additional interactive experiences in your app with the help of [Peer metadata](/javascript/v2/advanced-features/peer-metadata). You can integrate raise hand, polls, quizzes, etc,. using this. You can also check the existing plugins our platform such as [Virtual background](/javascript/v2/plugins/virtual-background), [Noise suppression](/javascript/v2/plugins/noise-suppression), Custom [audio](/javascript/v2/plugins/custom-audio-plugins) & [video](/javascript/v2/plugins/custom-video-plugins) plugins. We will soon be adding a whiteboard plugin as well. Please stay tuned our product updates by signing up for our newsletter from [here](https://www.100ms.live/blog#email).
 
 ## Network and quality
 
