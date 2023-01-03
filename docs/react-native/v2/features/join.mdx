@@ -22,7 +22,11 @@ You can also optionally pass these fields -
 
 We'll call the `join` method on `HMSSDK` object with a config containing above fields to join the room.
 
-1. First, create an instance of `HMSSDK` using the `build` function. You'll need to add Event Listeners for `HMSUpdateListenerActions` which are invoked to notify about updates happening in the room like a peer joins/leaves, a track got muted/unmuted, etc.
+<div className="steps-container">
+
+### Create HMSSDK instance
+
+First, create an instance of `HMSSDK` using the `build` function. You'll need to add Event Listeners for `HMSUpdateListenerActions` which are invoked to notify about updates happening in the room like a peer joins/leaves, a track got muted/unmuted, etc.
 
 ```js
 import { HMSSDK } from '@100mslive/react-native-hms';
@@ -35,7 +39,9 @@ hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoin);
 ```
 
-2. Next, create an object of `HMSConfig` class using the available joining configurations.
+### Create HMSConfig object 
+
+Next, create an object of `HMSConfig` class using the available joining configurations.
 
 ```js
 let config = new HMSConfig({
@@ -44,12 +50,15 @@ let config = new HMSConfig({
                 });
 ```
 
-3. Now, we are primed to join the room. All you have to do is calling `join` by passing the `config` object.
+### Invoke Join
+
+Now, we are primed to join the room. All you have to do is calling `join` by passing the `config` object.
 
 ```js
 hmsInstance.join(config);
 ```
 
+</div>
 
 That's it. You have joined a room successfully 🥳
 
@@ -78,7 +87,11 @@ enum HMSTrackSettingsInitState {
 
 Let's see how this can be achieved in the following steps.
 
-1. First, for joining a Room with Muted Audio / Video `trackSettings` property should be set while building the `HMSSDK` instance as follows -
+<div className="steps-container">
+
+### Create Track Settings object
+
+First, for joining a Room with Muted Audio / Video `trackSettings` property should be set while building the `HMSSDK` instance as follows -
 
 ```js
 // Customize Audio & Video initial states as per user discretion
@@ -102,7 +115,9 @@ const getTrackSettings = () => {
 const trackSettings = getTrackSettings();
 ```
 
-2. Now, create an instance of `HMSSDK` by passing the `HMSTrackSettings` object created above to the `build` function -
+### Create HMSSDK instance
+
+Now, create an instance of `HMSSDK` by passing the `HMSTrackSettings` object created above to the `build` function -
 
 ```js
 // Pass the Track Settings object to the build function 
@@ -115,7 +130,9 @@ hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoin);
 ```
 
-3. Next, create an object of `HMSConfig` class using the available joining configurations.
+### Create HMSConfig object 
+
+Next, create an object of `HMSConfig` class using the available joining configurations.
 
 ```js
 let config = new HMSConfig({
@@ -124,7 +141,9 @@ let config = new HMSConfig({
                 });
 ```
 
-4. Now, we are primed to join the room. All you have to do is calling `join` by passing the `config` object.
+### Invoke Join
+
+Now, we are primed to join the room. All you have to do is calling `join` by passing the `config` object.
 
 ```js
 hmsInstance.join(config);
@@ -132,6 +151,7 @@ hmsInstance.join(config);
 
 Now, the user joins the room with the microphone and the camera turned off.
 
+</div>
 
 
 ## Update Listener
