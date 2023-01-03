@@ -122,26 +122,20 @@ const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
             <SegmentAnalytics options={{}} title={frontMatter.title} />
             <Header modal={modal} setModal={setModal} menuState={menuState} />
             <div
-                className="ctx"
                 style={{
                     display: 'flex',
                     paddingTop: '1rem',
                     justifyContent: 'center',
-                    width: '100%',
-                    backgroundColor: 'var(--docs_bg_content) !important;'
+                    width: '100%'
                 }}>
                 <div
-                    className="content-wrapper"
                     style={{
                         width: '100%',
                         display: 'flex',
                         maxWidth: '1500px',
-                        justifyContent: 'space-between',
-                        backgroundColor: 'var(--docs_bg_content);'
+                        justifyContent: 'space-between'
                     }}>
-                    <div
-                        className="sidebar-container"
-                        style={{ backgroundColor: 'var(--docs_bg_content) !important;' }}>
+                    <div>
                         <Sidebar menuState={menuState} nav={nav} />
                     </div>
                     {!menu ? (
