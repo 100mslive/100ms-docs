@@ -15,6 +15,53 @@ It all comes down to this. All the setup so far has been done so that we can sho
 
 3. You can then iterate over all the peers, and call the `attachVideo` function in hmsActions to render the video.
 
+```js
+hmsActions.attachVideo(videoTrack.id, videoElement);
+```
+
+The videos will now be rendered & start playing on your screen. 🥳
+
+> In case you want to render local peer and remote peers separately, you can use the selectors - `selectLocalPeer` and `selectRemotePeers`.
+
+## Detach video to conserve bandwidth and cleanup elements
+
+You can call `detachVideo` on the `hmsActions` to unsubscribe a track and not fetch it's data. This can be done
+for example when a video goes out of view. This should also be called when the component is going to be unmounted
+for proper cleanups of the video elements.
+
+```js
+hmsActions.detachVideo(videoTrack.id, videoElement);
+```
+
+## When to attach/detach videos
+
+We need to re-attach video when it's in view after every:
+
+1. Unmute(when track.enable is true)
+2. Plugin is added/removed(for example, enable/disable virtual background)
+3. Camera/device change(track.deviceId is changed)
+
+You can achieve all this by using the `selectTrackByID` selector and the aforementioned `hmsActions.attachVideo` and `hmsActions.detachVideo` functions.
+
+```js
+// assuming you have peer object and video element
+// complete code snippet below
+hmsStore.subscribe((track) => {
+    if (!track) {
+        return;
+    }
+    if (track?.enabled) {
+        hmsActions.attachVideo(track.id, videoElement);
+    } else {
+        hmsActions.detachVideo(track.id, videoElement);
+    }
+}, selectTrackByID(peer.videoTrack));
+```
+
+> Note that if you're using the `useVideo` hook from `react-sdk` this is already being taken care of.
+
+## Example Snippet
+
 <Tabs id="render" items={['JavaScript', 'React']} />{' '}
 
 <Tab id='render-0'>
@@ -24,26 +71,49 @@ import { hmsActions } from './hms';
 
 const peersContainer = document.getElementById('peers-container');
 
-function renderVideo(peer) {
-    // you can either get an existing video element or create a new onw.
-    // const videoElement = document.getElementByID(peer.id)
+// store peer IDs already rendered to avoid re-render on mute/unmute
+const renderedPeerIDs = new Set();
+
+// render a single peer video tile
+function renderPeer(peer) {
+    const peerTileDiv = document.createElement('div');
+    // you can either get an existing video element or create a new one.
     const videoElement = document.createElement('video');
+    const peerTileName = document.createElement('div');
     videoElement.autoplay = true;
     videoElement.muted = true;
     videoElement.playsinline = true;
+    peerTileName.textContent = peer.name;
 
-    hmsActions.attachVideo(peer.videoTrack, videoElement);
+    hmsStore.subscribe((track) => {
+        if (!track) {
+            return;
+        }
+        if (track?.enabled) {
+            hmsActions.attachVideo(track.id, videoElement);
+        } else {
+            hmsActions.detachVideo(track.id, videoElement);
+        }
+    }, selectTrackByID(peer.videoTrack));
+
+    peerTileDiv.append(videoElement);
+    peerTileDiv.append(peerTileName);
+
+    renderedPeerIDs.add(peer.id);
+    return peerTileDiv;
 }
 
+// display a tile for each peer in the peer list
 function renderPeers(peers) {
     peersContainer = document.getElementById('peers-container');
-    peersContainer.innerHTML = '';
 
     peers.forEach((peer) => {
-        console.log(
-            `rendering video for peer - ${peer.name}, roleName - ${peer.roleName}, isLocal- ${peer.isLocal}`
-        );
-        peersContainer.append(renderVideo(peer));
+        if (!renderedPeerIDs.has(peer.id) && peer.videoTrack) {
+            console.log(
+                `rendering video for peer - ${peer.name}, roleName - ${peer.roleName}, isLocal- ${peer.isLocal}`
+            );
+            peersContainer.append(renderVideo(peer));
+        }
     });
 }
 
@@ -57,17 +127,13 @@ hmsStore.subscribe(renderPeers, selectPeers);
 
 ```jsx
 import { useRef, useEffect } from 'react';
-import {
-    useHMSStore,
-    useVideo,
-    selectPeers,
-} from '@100mslive/react-sdk';
+import { useHMSStore, useVideo, selectPeers } from '@100mslive/react-sdk';
 
 function VideoTile({ peer }) {
     const { videoRef } = useVideo({
         trackId: peer.videoTrack
     });
-    
+
     return <video ref={videoRef} autoPlay muted playsInline></video>;
 }
 
@@ -85,19 +151,3 @@ function Conference() {
 ```
 
 </Tab>
-
-The videos will now be rendered & start playing on your screen. 🥳
-
-> In case you want to render local peer and remote peers separately, you can use the selectors - `selectLocalPeer` and `selectRemotePeers`.
-
-## Detach video to conserve bandwidth and cleanup elements
-
-You can call `detachVideo` on the `hmsActions` to unsubscribe a track and not fetch it's data. This can be done
-for example when a video goes out of view. This should also be called when the component is going to be unmounted
-for proper cleanups of the video elements.
-
-> Note that if you're using the `useVideo` hook from `react-sdk` this is already being taken care of.
-
-```js
-hmsActions.detachVideo(videoTrack.id, videoElement);
-```

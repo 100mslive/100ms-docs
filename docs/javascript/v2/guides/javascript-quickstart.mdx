@@ -122,7 +122,7 @@ function renderPeer(peer) {
   peerTileName.textContent = peer.name;
 
   hmsStore.subscribe((track) => {
-    if (!track || !videoElement) {
+    if (!track) {
       return;
     }
     if (track?.enabled) {
