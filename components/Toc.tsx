@@ -25,13 +25,15 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
     const activeItem = React.createRef<HTMLAnchorElement>();
 
     React.useEffect(() => {
-        if (activeItem?.current) {
-            activeItem.current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-                inline: 'nearest'
-            });
-        }
+        setTimeout(() => {
+            if (activeItem?.current) {
+                activeItem.current.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center',
+                    inline: 'nearest'
+                });
+            }
+        }, 1000);
     }, []);
 
     return (
