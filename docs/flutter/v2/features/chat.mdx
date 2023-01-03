@@ -231,15 +231,15 @@ Let's break down each parameter a bit more in detail :
 <div className="steps-container">
 
 
-#### Identifying Senders:
+### Identifying Senders:
 
 The sender of a message is always contained in the `sender` field of HMSMessage. This lets you get the name and peer id of the sender.
 
-#### Message Body:
+### Message Body:
 
 The body of the message is in `message` as a String.
 
-#### Time:
+### Time:
 
 The time the message was sent is contained in `time` as a DateTime datatype.
 
@@ -247,7 +247,7 @@ The time the message was sent is contained in `time` as a DateTime datatype.
 
 The UI is completely up to you to decide! You'll also need to hold onto all the received messages if you want to display history.
 
-#### Identifying who the message was for
+### Identifying who the message was for
 
 The HMSMessageRecipient contained in the `hmsMessageRecipient` field of `HMSMessage` lets you know who the message was for.
 
@@ -274,7 +274,7 @@ class HMSMessageRecipient{
 
 - `HMSMessageRecipientType.ROLES` will be set when it\'s a message to one or many roles.
 
-#### Store Chat Messages
+### Store Chat Messages
 
 You can store chat message by creating a list of `HMSMessage` and append new messages from the callback `onMessage({required HMSMessage message})` as follow:
 
@@ -287,7 +287,7 @@ void onMessage({required HMSMessage message}) {
 }
 ```
 
-#### Filter Chat Messages
+### Filter Chat Messages
 
 You can filter chat messages by creating a separate list of `HMSMessage`.
 
