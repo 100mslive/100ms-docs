@@ -8,8 +8,7 @@ export type TocItem = {
 };
 
 const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
-    const [toc, setToc] = React.useState<TocItem[] | []>([]);
-    const scrollIntoView = React.useRef<boolean>(true);
+    const [toc, setToc] = React.useState<TocItem[] | []>([]);    
 
     React.useEffect(() => {
         const list: TocItem[] = [];
@@ -25,17 +24,6 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
     }, []);
 
     const activeItem = React.createRef<HTMLAnchorElement>();
-
-    React.useEffect(() => {
-        if (activeItem?.current && scrollIntoView.current) {
-            activeItem.current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center',
-                inline: 'nearest'
-            });
-            scrollIntoView.current = false;
-        }
-    }, [activeItem, activeHeading]);
 
     return (
         <div className="toc-ctx">
