@@ -19,7 +19,7 @@ What's a video call without being able to send messages to each other too? 100ms
 Let's look at a simple implementation for chat methods:
 
 ```dart 
-class Meeting implements HMSUpdateListener,HMSActionResultListener{
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
 
   ...
 
@@ -100,15 +100,15 @@ class Meeting implements HMSUpdateListener,HMSActionResultListener{
         switch (methodType) {
 
             case HMSActionResultListenerMethod.sendBroadcastMessage:
-            // Check the HMSException object for details about error
+            // Check the HMSException object for details about the error
             break;
 
             case HMSActionResultListenerMethod.sendGroupMessage:
-            // Check the HMSException object for details about error
+            // Check the HMSException object for details about the error
             break;
 
             case HMSActionResultListenerMethod.sendDirectMessage:
-            // Check the HMSException object for details about error
+            // Check the HMSException object for details about the error
             break;
             ...
         }
