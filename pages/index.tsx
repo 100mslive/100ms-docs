@@ -63,7 +63,7 @@ const Homepage = () => {
                         justify="center"
                         css={{
                             paddingBottom: '$16',
-                            backgroundColor: 'var(--docs_bg_content)',
+                            backgroundColor: 'var(--docs_bg_content)'
                         }}>
                         <Box css={{ width: '90%', maxWidth: '1248px' }}>
                             <Flex
@@ -75,7 +75,13 @@ const Homepage = () => {
                                     marginBottom: '$12'
                                 }}>
                                 <h1 style={{ marginBottom: '0' }}>
-                                    <Text variant="h4" css={{ zIndex: '0', color: '$textHighEmp', textAlign: "center" }}>
+                                    <Text
+                                        variant="h4"
+                                        css={{
+                                            zIndex: '0',
+                                            color: '$textHighEmp',
+                                            textAlign: 'center'
+                                        }}>
                                         Documentation
                                     </Text>
                                 </h1>
@@ -86,7 +92,7 @@ const Homepage = () => {
                                         textAlign: 'center',
                                         marginTop: '$4'
                                     }}>
-                                    Explore our guides and examples to integrate 100ms.
+                                    Expl our guides and examples to integrate 100ms.
                                 </Text>
                             </Flex>
                             <Flex align="center" css={{ marginBottom: '$8', gap: '$2' }}>
@@ -173,9 +179,12 @@ const Homepage = () => {
                                         text={value.title}
                                         sdk={value.id}
                                         css={{
-                                            borderRadius: `${index !== 0 ? '0 0' : '$3 $3'} ${mobileSDK.length - 1 !== index ? '0 0' : '$3 $3'
-                                                }`,
-                                                borderBottomWidth: `${index !== mobileSDK.length - 1 ? '0px' : '1px'}`,
+                                            borderRadius: `${index !== 0 ? '0 0' : '$3 $3'} ${
+                                                mobileSDK.length - 1 !== index ? '0 0' : '$3 $3'
+                                            }`,
+                                            borderBottomWidth: `${
+                                                index !== mobileSDK.length - 1 ? '0px' : '1px'
+                                            }`
                                         }}
                                         // listView={true}
                                     />
