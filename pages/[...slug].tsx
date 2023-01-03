@@ -16,6 +16,8 @@ import getPagination from '@/lib/getPagination';
 import { DOCS_PATH, getAllDocs, getDocsPaths, getNavfromDocs } from '@/lib/mdxUtils';
 import withTableofContents from '@/lib/withTableofContents';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
+import useLockBodyScroll from "@/lib/useLockBodyScroll";
+
 
 export type AllDocsType = {
     url: string;

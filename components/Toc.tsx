@@ -23,8 +23,6 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
         setToc(list);
     }, []);
 
-    const activeItem = React.createRef<HTMLAnchorElement>();
-
     return (
         <div className="toc-ctx">
             {toc.length !== 0 ? <p className="menu-title">ON THIS PAGE</p> : null}
@@ -38,7 +36,6 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                         }`}
                         key={item.slug}>
                         <a
-                            ref={item.slug === activeHeading ? activeItem : null}
                             href={`#${item.slug}`}>
                             {item.title}
                         </a>
