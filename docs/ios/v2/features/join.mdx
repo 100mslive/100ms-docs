@@ -92,7 +92,7 @@ class MyMeetingClass: HMSUpdateListener {
     }
 }
 ``` 
-Note: you should make further calls on the SDK instance after you have received the on(join room: HMSRoom) callback, otherwise your call will end up in “not connected” error.
+Note: Make sure to wait for onJoin callback before calling any other SDK API (except leave) as they require an active connection and will fail with a “not connected” error.
 
 </div>
 
