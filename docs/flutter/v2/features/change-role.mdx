@@ -100,6 +100,8 @@ To invoke this method we will need 4 parameters.
 
 -   `hmsActionResultListener`: The `HMSActionResultListener` will get a success or failure callback depending on the result of the request.
 
+> How to handle it at receiver side if `force` is false.Check it out [here](#accept-role-change-request)
+> 
 Note: success doesn't mean that the role was changed, just that the server accepted the request as valid.
 
 If the changeRole was succeeded you will get an update in the `onPeerUpdate` with `roleUpdated`as update type,
@@ -266,8 +268,8 @@ To get information like role name and peer who performed role change we can do i
 ```dart 
   @override
   void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest}) {
-    String peerWhoPerformedRoleChange = roleChangeRequest.suggestedBy?.name;
-    String destinationRole = roleChangeRequest.suggestedRole.name
+    String? peerWhoPerformedRoleChange = roleChangeRequest.suggestedBy?.name;
+    String? destinationRole = roleChangeRequest.suggestedRole.name
   }
 ```
 
