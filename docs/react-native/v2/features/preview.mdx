@@ -3,43 +3,130 @@ title: Preview
 nav: 3.4
 ---
 
-Preview screen is a frequently used UX element which allows users to check if their input devices are working properly and set the initial state (mute/unmute) of their audio and video tracks before joining. 100ms SDKs provide an easy-to-use API to back this feature.
+## Overview
 
-## Calling Preview function
+Preview screen is a frequently used UX element which allows users to check if their input devices are working properly and set the initial state (mute/unmute) of their audio and video tracks before joining.
 
-We can call preview method in HMSSDK Instance. it is advised to attach error listener and preview listener before calling that function in order to get updates if preview got executed successfully or if it failed.
+100ms SDKs provide an easy-to-use API to back this feature.
+Additionally, the SDK will try to establish a connection to 100ms server to verify there are no network issues and that the auth credentials are valid so that if everything is in order the subsequent room join will be much faster.
+
+## Start Preview
+
+We'll call the `preview` method on `HMSSDK` object with a `HMSConfig` object.
+
+<div className="steps-container">
+
+### Create HMSSDK instance
+
+First, create an instance of `HMSSDK` using the `build` function.
 
 ```js
-import {
-  HMSSDK,
-  HMSUpdateListenerActions,
-} from '@100mslive/react-native-hms';
+import { HMSSDK } from '@100mslive/react-native-hms';
 
-const hmsInstance = HMSSDK.build()
+// create HMSSDK instance using the build function
+const hmsInstance = await HMSSDK.build();
+```
 
-hmsInstance.addEventListener(
-  HMSUpdateListenerActions.ON_PREVIEW,
-  onPreview, // function that will be called on Preview success
-);
-// attach room and peer update listeners for current status
-hmsInstance?.addEventListener(
-  MSUpdateListenerActions.ON_ROOM_UPDATE,
-  onRoomListener,
-);
-hmsInstance?.addEventListener(
-  HMSUpdateListenerActions.ON_PEER_UPDATE,
-  onPeerListener,
-);
+### Attach Event Listeners
 
+It is advised to attach Event Listeners for `HMSUpdateListenerActions.ON_ERROR` and `HMSUpdateListenerActions.ON_PREVIEW` before calling the `preview` function to get updates if preview got executed successfully or if it failed.
+
+```js
+const onPreview = (data: { room: HMSRoom; previewTracks: HMSTrack[]; }) => {
+  // You can use `previewTracks` to render preview for the local peer
+  console.log(data.previewTracks);
+}
+
+// add Event Listeners to subscribe to Preview Success or Failure updates
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_PREVIEW, onPreview);
 ```
 
-once listeners are attached we can call preview method as shown in following snippet.
+### Create HMSConfig object 
+
+Next, create an object of `HMSConfig` class using the available joining configurations.
 
 ```js
-import { HMSConfig } from '@100mslive/react-native-hms';
-
-// instance acquired from build() method
-const HmsConfig = new HMSConfig({ authToken, username });
-hmsInstance.preview(HmsConfig); // to start preview
+const config = new HMSConfig({
+                    authToken: 'eyJH5c...', // client-side token generated from your token service 
+                    username: 'John Appleseed',
+                });
 ```
+
+### Invoke Preview function
+
+Now, you are primed to preview the room and local tracks. All you have to do is call the `preview` method on `HMSSDK` object with a `HMSConfig` object.
+
+```js
+hmsInstance.preview(config);
+```
+
+After calling `preview` your app will be provided an update from the 100ms SDK.
+
+✅ If successful, the `onPreview` function which is listening for `HMSUpdateListenerActions.ON_PREVIEW` event will be invoked with information about the Room and Local Audio & Video tracks.
+
+❌ If failure, the `onError` function which is listening for `HMSUpdateListenerActions.ON_ERROR` event will be invoked with exact failure reason.
+
+
+### Render Preview Tracks
+
+In case of preview success, `onPreview` provides an array of local tracks in the parameter `previewTracks`.
+
+You can use local audio track to change and show audio track mute status.
+
+You can use `trackId` from local video track to [Render Video](https://www.100ms.live/docs/react-native/v2/features/render-video) of local peer, change and show video track mute status.
+
+Refer to [Mute and Unmute Guide](https://www.100ms.live/docs/react-native/v2/features/mute) to know how to check and change mute status.
+
+```js
+// Get Local Audio Track from preview tracks
+const regularAudioTrack = previewTracks.find(previewTrack => {
+  return previewTrack.source === HMSTrackSource.REGULAR && previewTrack.type === HMSTrackType.AUDIO;
+});
+
+// Get Local Video Track from preview tracks
+const regularVideoTrack = previewTracks.find(previewTrack => {
+  return previewTrack.source === HMSTrackSource.REGULAR && previewTrack.type === HMSTrackType.VIDEO;
+});
+
+// If we have regular video track, then we can render it
+if (regularVideoTrack) {
+  return (
+    <HmsView
+      trackId={regularVideoTrack.trackId} // Render Video track by using its' trackId
+      scaleType={HMSVideoViewMode.ASPECT_FILL}
+      style={styles.hmsView}
+      mirror={true}
+    />
+  );
+}
+```
+
+### Receive Room Updates
+
+To receive the `Room` updates like number of peers in the room or when new peer joins the room, You can also add listener for `HMSUpdateListenerActions.ON_ROOM_UPDATE` as follows -
+
+> Note: To receive Room State in preview i.e. before joining the room, You can enable this feature in [Template](https://www.100ms.live/docs/react-native/v2/foundation/templates-and-roles) of the room. Refer [here]() for more
+
+```js
+const onRoomUpdate = (data: { room: HMSRoom; type: HMSRoomUpdate }) => {
+  console.log(data.room.peerCount); // Number of peers inside Room
+  console.log(data.room.peers); // list of peers inside Room 
+}
+
+// This listener is called when there is a change in any property of the Room
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ROOM_UPDATE, onRoomUpdate);
+```
+
+</div>
+
+## Get Peer Updates and Room State in Preview
+
+To enable `onPeerUpdate` in the preview, we need to enable room state from the dashboard.
+This can be enabled by selecting a template and then navigating to advanced settings.
+
+![Advanced settings](/docs/v2/flutter-advanced-settings.png)
+
+These options are available in advanced settings:
+
+![Room State in preview](/docs/v2/flutter-room-state-in-preview.png)
