@@ -318,7 +318,3 @@ const aliasMenu = [
     // }
 ];
 
-    //     title: 'Simulcast',
-    //     url: '/docs/server-side/v2/features/simulcast'
-    // }
-];
