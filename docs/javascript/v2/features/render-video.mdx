@@ -41,7 +41,7 @@ We need to re-attach video when it's in view after every:
 2. Plugin is added/removed(for example, enable/disable virtual background)
 3. Camera/device change(track.deviceId is changed)
 
-You can achieve all this by using the `selectTrackByID` selector and the aforementioned `hmsActions.attachVideo` and `hmsActions.detachVideo` functions.
+You can achieve all this by using the `selectVideoTrackByID` selector and the aforementioned `hmsActions.attachVideo` and `hmsActions.detachVideo` functions.
 
 ```js
 // assuming you have peer object and video element
@@ -55,7 +55,7 @@ hmsStore.subscribe((track) => {
     } else {
         hmsActions.detachVideo(track.id, videoElement);
     }
-}, selectTrackByID(peer.videoTrack));
+}, selectVideoTrackByID(peer.videoTrack));
 ```
 
 > Note that if you're using the `useVideo` hook from `react-sdk` this is already being taken care of.
@@ -89,12 +89,12 @@ function renderPeer(peer) {
         if (!track) {
             return;
         }
-        if (track?.enabled) {
+        if (track.enabled) {
             hmsActions.attachVideo(track.id, videoElement);
         } else {
             hmsActions.detachVideo(track.id, videoElement);
         }
-    }, selectTrackByID(peer.videoTrack));
+    }, selectVideoTrackByID(peer.videoTrack));
 
     peerTileDiv.append(videoElement);
     peerTileDiv.append(peerTileName);
