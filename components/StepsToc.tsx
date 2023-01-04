@@ -7,7 +7,20 @@ export type TocItem = {
     description: string;
 };
 
-export default function StepsToc({ parentId, descriptions = [] }) {
+export default function StepsToc({
+    parentId,
+    descriptions = []
+}: {
+    parentId: string;
+    descriptions: string[];
+}) {
+    // props from mdx gets converted to a string
+    console.log(descriptions)
+    if (typeof descriptions === 'string') {
+        let descriptionString = descriptions as string;
+        descriptions = JSON.parse(descriptionString) as string[];
+    }
+
     const parentIdHash = parentId ? `#${parentId}` : '';
     const toc = useMemo(() => {
         let list: TocItem[] = [];
