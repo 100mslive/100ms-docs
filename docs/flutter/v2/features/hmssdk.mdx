@@ -1,5 +1,5 @@
 ---
-title: HMSSDK
+title: HMSSDK Constructor
 nav: 3.011
 ---
 
@@ -8,10 +8,11 @@ Instantiate the HMSSDK like this:
 ```dart
 HMSSDK hmsSDK = HMSSDK();
 ```
+> In most cases, a simple `HMSSDK` constructor & calling `build` function is only required.
 
-Following are optional parameters which are meant to be passed in the HMSSDK function:
+Following are optional parameters which are meant to be passed in the HMSSDK function for advanced use case:
 
-- `hmsTrackSetting` : It is required to customize local peer's Audio & Video track settings. Only required for advanced use cases. More info about this can be found [here](https://www.100ms.live/docs/flutter/v2/advanced-features/set-track-settings).
+- `hmsTrackSetting` : It is required to customize local peer's Audio & Video track settings. More info about this can be found [here](https://www.100ms.live/docs/flutter/v2/advanced-features/set-track-settings).
 - `hmsLogSettings`: SDK sends all the logs by default. This makes debugging difficult. HMSSDK provides log levels to only receive logs which are relevant. More info about this can be found [here](https://www.100ms.live/docs/flutter/v2/features/error-handling#setting-log-levels-in-sdk).
 - `appGroup`: It is only used for screen share (broadcast screen) in iOS. Refer iOS Screen share guide [here](https://www.100ms.live/docs/flutter/v2/features/screen-share#i-os-setup).
 - `preferredExtension` - It is only used for screen share (broadcast screen) in iOS. Refer iOS Screen share guide [here](https://www.100ms.live/docs/flutter/v2/features/screen-share#i-os-setup)
@@ -22,16 +23,15 @@ Sample code of HMSSDK with all the parameters looks like this:
 
 1. Creating HMSTrackSetting:
 
+Following example shows how to join meeting with muted audio and video.
 ```dart
 // hmsAudioTrackSetting
 HMSAudioTrackSetting audioTrackSetting = HMSAudioTrackSetting(
-    useHardwareAcousticEchoCanceler: false,
-    trackInitialState: HMSTrackInitState.UNMUTED);
+    trackInitialState: HMSTrackInitState.MUTED);
   
 // hmsVideoTrackSetting
 HMSVideoTrackSetting videoTrackSetting = HMSVideoTrackSetting(                                
-    cameraFacing: HMSCameraFacing.FRONT,
-    trackInitialState: HMSTrackInitState.UNMUTED);
+    trackInitialState: HMSTrackInitState.MUTED);
   
 // hmsTrackSetting
 HMSTrackSetting trackSetting = HMSTrackSetting(
@@ -41,12 +41,13 @@ HMSTrackSetting trackSetting = HMSTrackSetting(
 
 2. Creating HMSLogSettings:
 
+Following example shows how to set debug level to `WARN`.
 ```dart
 // hmsLogSettings
 HMSLogSettings hmsLogSettings = HMSLogSettings(
     maxDirSizeInBytes: 1000000,
     isLogStorageEnabled: true,
-    level: HMSLogLevel.OFF);
+    level: HMSLogLevel.WARN);
 ```
 3. For adding preferredExtension and appGroup follow the iOS screen share guide [here](https://www.100ms.live/docs/flutter/v2/features/screen-share#i-os-setup).
 After successfully following the screen share guide you can find `appGroup` and `preferredExtension` name in Xcode under `Signing and Capabilities` section under `target > yourExtensionName`.
@@ -82,3 +83,5 @@ The destroy method will delete the instance of HMSSDK at native platform.
 hmsSDK.destroy();
 hmsSDK = null;
 ```
+
+> The destroy method should be call after `hmsSDK.leave()` method.
