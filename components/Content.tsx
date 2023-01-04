@@ -3,7 +3,7 @@
 /* eslint-disable react/no-danger */
 import Markdown from 'markdown-to-jsx';
 import React from 'react';
-// Please use the same name as the md file to ensure 
+// Please use the same name as the md file to ensure
 // it gets picked up by the script for updating algolia records
 import Basics from '../common/basics.md';
 import Network from '../common/network.md';
@@ -15,12 +15,12 @@ import SecurityTokens2 from '../common/security-tokens-2.md';
 import FirewallAndPorts from '../common/firewall-and-ports.md';
 import LiveStreaming from '../common/live-streaming.md';
 import Recordings from '../common/recordings.md';
-import AdaptiveBitrate1 from "../common/adaptive-bitrate-1.md";
-import AdaptiveBitrate2 from "../common/adaptive-bitrate-2.md";
+import AdaptiveBitrate1 from '../common/adaptive-bitrate-1.md';
+import AdaptiveBitrate2 from '../common/adaptive-bitrate-2.md';
 import AndroidSdkVersionShield from '../common/android-sdk-version-shield.md';
 import BulkRoleChangeErrors from '../common/bulk-role-change-errors.md';
 import RtmpExternalConfig from '../common/rtmp-external-config.md';
-
+import Code from './Code';
 
 const data = {
     basics: Basics,
@@ -50,7 +50,16 @@ interface Props {
 
 const Content = ({ alias }: Props) => {
     const str = data[alias];
-    return <Markdown>{str}</Markdown>;
+    return (
+        <Markdown
+            options={{
+                overrides: {
+                    Code
+                }
+            }}>
+            {str}
+        </Markdown>
+    );
 };
 
 export default Content;
