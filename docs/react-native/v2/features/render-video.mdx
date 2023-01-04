@@ -48,19 +48,21 @@ It is a required prop in the `HmsView` component. You can get trackIds of peers 
 
 ```js
 const onTrackListener = (data: { peer: HMSPeer; track: HMSTrack; type: HMSTrackUpdate }) => {
+  const { peer, track, type } = data;
+
   // We will only consider Video tracks events to render videos
-  if (data.track.type === HMSTrackType.VIDEO) {
+  if (track.type === HMSTrackType.VIDEO) {
 
     // If Video track is added, you can use `trackId` to render video
-    if (data.type === HMSTrackUpdate.TRACK_ADDED) {
-      console.log(`${peer.name}s' video track Added: ${data.track.trackId}`);
-      console.log(`Render HMSView with trackId: ${data.track.trackId}`);
+    if (type === HMSTrackUpdate.TRACK_ADDED) {
+      console.log(`${peer.name}s' video track Added: ${track.trackId}`);
+      console.log(`Render HMSView with trackId: ${track.trackId}`);
     }
 
     // If Video track is removed, remove `HMSView` which is using this `trackId`
     if (type === HMSTrackUpdate.TRACK_REMOVED) {
-      console.log(`${peer.name}s' video track Removed: ${data.track.trackId}`);
-      console.log(`Remove HMSView rendering trackId: ${data.track.trackId}`);
+      console.log(`${peer.name}s' video track Removed: ${track.trackId}`);
+      console.log(`Remove HMSView rendering trackId: ${track.trackId}`);
     }
 
     if (
@@ -70,7 +72,7 @@ const onTrackListener = (data: { peer: HMSPeer; track: HMSTrack; type: HMSTrackU
       type === HMSTrackUpdate.TRACK_DEGRADED
     ) {
       console.log(
-        `Update UI to show Muted/Unmuted/Degraded/Restored updates: ${data.track.trackId}`
+        `Update UI to show Muted/Unmuted/Degraded/Restored updates: ${track.trackId}`
       );
     }
   }
