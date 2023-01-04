@@ -47,6 +47,7 @@ const Feedback = () => {
                         style={{ position: 'relative', width: '24px', height: '24px' }}
                         key={emoji.score}
                         onClick={() => {
+                            const userDetails = currentUser();
                             if (showTextBox === false) {
                                 window.analytics.track('docs.feedback.rating', {
                                     title: document.title,
@@ -54,7 +55,9 @@ const Feedback = () => {
                                     path: window.location.pathname,
                                     rating: emoji.score,
                                     timeStamp: new Date().toLocaleString(),
-                                    ...currentUser()
+                                    customer_id: userDetails?.customer_id,
+                                    user_id: userDetails?.user_id,
+                                    email: userDetails?.email,
                                 });
                                 setFirstSelection(emoji.score);
                             }
@@ -114,6 +117,7 @@ const Feedback = () => {
                                 cursor: 'pointer'
                             }}
                             onClick={() => {
+                                const userDetails = currentUser();
                                 window.analytics.track('docs.feedback.message', {
                                     title: document.title,
                                     message: message || '',
@@ -121,7 +125,9 @@ const Feedback = () => {
                                     referrer: document.referrer,
                                     path: window.location.pathname,
                                     timeStamp: new Date().toLocaleString(),
-                                    ...currentUser()
+                                    customer_id: userDetails?.customer_id,
+                                    user_id: userDetails?.user_id,
+                                    email: userDetails?.email
                                 });
                                 setSubmitSuccessful(true);
                             }}>
