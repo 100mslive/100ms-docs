@@ -4,22 +4,30 @@ nav: 3.6
 ---
 It all comes down to this. All the setup so far has been done so that we can show live streaming video in our beautiful apps.
 
-The React Native SDK provides a Component `HmsView` that renders the video on the screen.
+The React Native SDK provides a Component `HmsView` that renders the video on the screen. You can access `HmsView` on the `HMSSDK` instance that you created with build method.
 
-We can pass video `trackId`, `scaleType` and `mirror` to `HmsView` component.
+We can pass `scaleType`, `mirror` and video tracks' `trackId` to `HmsView` component.
 
 ```js
 import { HMSVideoViewMode } from '@100mslive/react-native-hms';
 ...
-// hms instance acquired from build method
-const HmsView = hmsInstance.HmsView;
 const styles = StyleSheet.create({
   hmsView: {
     height: '100%',
     width: '100%',
   },
 });
-<HmsView trackId={trackId} scaleType={HMSVideoViewMode.ASPECT_FILL} style={styles.hmsView} mirror={true} />
+
+// hms instance acquired from build method
+const HmsView = hmsInstance.HmsView;
+
+<HmsView
+  key={trackId}
+  trackId={trackId}
+  mirror={true}
+  scaleType={HMSVideoViewMode.ASPECT_FILL}
+  style={styles.hmsView}
+/>
 ...
 ```
 
@@ -33,12 +41,47 @@ const styles = StyleSheet.create({
 
 - For listening to the audio you have to do absolutely nothing, it's automatically played once you join the room. To mute & unmute audio/ideo refer [here](./mute). To set volume levels refer [here](../advanced-features/set-volume).
 
+
 ## Track Id
-It is a required prop in the `HmsView` component. There are 2 types of peers - a `localPeer` & `remotePeer`, to extract `trackId` from peers use the following code snippet. These track IDs can directly be passed to `HmsView` component.
+
+It is a required prop in the `HmsView` component. You can get trackIds of peers from `HMSUpdateListenerActions.ON_TRACK_UPDATE` event.
 
 ```js
-const localTrackId = hmsInstance.localPeer.videoTrack.trackId;
-const remoteTrackId = hmsInstance.remotePeers[index].videoTrack.trackId;
+const onTrackListener = (data: { peer: HMSPeer; track: HMSTrack; type: HMSTrackUpdate }) => {
+  const { peer, track, type } = data;
+
+  // We will only consider Video tracks events to render videos
+  if (track.type === HMSTrackType.VIDEO) {
+
+    // If Video track is added, you can use `trackId` to render video
+    if (type === HMSTrackUpdate.TRACK_ADDED) {
+      console.log(`${peer.name}s' video track Added: ${track.trackId}`);
+      console.log(`Render HMSView with trackId: ${track.trackId}`);
+    }
+
+    // If Video track is removed, remove `HMSView` which is using this `trackId`
+    if (type === HMSTrackUpdate.TRACK_REMOVED) {
+      console.log(`${peer.name}s' video track Removed: ${track.trackId}`);
+      console.log(`Remove HMSView rendering trackId: ${track.trackId}`);
+    }
+
+    if (
+      type === HMSTrackUpdate.TRACK_MUTED ||
+      type === HMSTrackUpdate.TRACK_UNMUTED ||
+      type === HMSTrackUpdate.TRACK_RESTORED ||
+      type === HMSTrackUpdate.TRACK_DEGRADED
+    ) {
+      console.log(
+        `Update UI to show Muted/Unmuted/Degraded/Restored updates: ${track.trackId}`
+      );
+    }
+  }
+};
+
+hmsInstance.addEventListener(
+  HMSUpdateListenerActions.ON_TRACK_UPDATE,
+  onTrackListener
+);
 ```
 
 Make sure the trackId passed in the HMSView is not null/undefined because once a trackId is linked to HMSView, it can not be unlinked. 
@@ -110,7 +153,7 @@ const onTrackListener = (data: { peer: HMSPeer; track: HMSTrack; type: HMSTrackU
   if (data.type === HMSTrackUpdate.TRACK_ADDED) setTrackIds(prevTrackIds => [...prevTrackIds, data.track.trackId]);
 
   // If Video track is removed, remove trackId from our list
-  if (type === HMSTrackUpdate.TRACK_REMOVED) setTrackIds(prevTrackIds => prevTrackIds.filter(prevTrackId => prevTrackId !== track.trackId));
+  if (data.type === HMSTrackUpdate.TRACK_REMOVED) setTrackIds(prevTrackIds => prevTrackIds.filter(prevTrackId => prevTrackId !== data.track.trackId));
 };
 
 hmsInstance.addEventListener(
