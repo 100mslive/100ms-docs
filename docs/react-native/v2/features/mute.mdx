@@ -1,40 +1,55 @@
 ---
-title: Mute & Umute
+title: Mute & Unmute
 nav: 3.3
 ---
 
-Mute is something that applies to both audio and video.
+Mute is something that applies to both audio and video. When you mute audio, you can't be heard by other people i.e your audio is OFF. When you mute a video, you will not be broadcasting your video to other people i.e your video is OFF.
 
-When you mute audio, you can't be heard by other people.
 
-When you mute video, you will not be broadcasting your video to other people.
+## Check Mute Status
 
-It can be called on local (you) peers' audio or video tracks.
+Current Mute Status of any `HMSTrack` can be checked by calling `isMute` method on it.
 
-You get a reference to your own local peer from localPeer on HMSSDK instance.
+In most of the cases, You would need current mute status to toggle mute and render correct mic and camera icons.
 
 ```js
-// instance acquired from build() method
+// You can get `HMSTrack` object from `HMSPeer` object or `HMSUpdateListenerActions.ON_TRACK_UPDATE` event
 
-hmsInstance.localPeer.localAudioTrack().setMute(true); // audio track
+const audioMuted = peer.audioTrack?.isMute(); // audioTrack property can be undefined on peer object
 
-hmsInstance.localPeer.localVideoTrack().setMute(true); // video track
+const videoMuted = peer.videoTrack?.isMute(); // videoTrack property can be undefined on peer object
 ```
 
 
-### Mute/Unmute Status
+## Change Your(Local Peer) Mute Status
 
-Mute/Unmute can be done for local peer as well as remote peer according to their mute status.
+To switch your "video" or "audio" on/off, you can call `setMute` method available on `HMSLocalVideoTrack` or `HMSLocalAudioTrack` objects respectively with `true` or `false` values.
 
-
-In most of the cases you would need to render the components on basis of current mute status of peers like their mic and camera icons.
-
+If you want to toggle mute status of your "video" or "audio", then you can first get the current mute status and then pass opposite value to `setMute` method.
 
 ```js
-isAudioMute: boolean = peer?.audioTrack?.isMute(),
-isVideoMute: boolean = peer?.videoTrack?.isMute(),
+// instance acquired from build() method
+const localPeer = await hmsInstance.getLocalPeer();
+
+// Muting Example - 
+
+localPeer.localAudioTrack().setMute(true); // Muting Local Audio
+
+localPeer.localVideoTrack().setMute(true); // Muting Local Video
+
+
+// Toggling Mute Example -
+
+const audioMuted = localPeer.audioTrack?.isMute();
+
+// Toggling Local Audio, audio will be unmuted
+localPeer.localAudioTrack().setMute(!audioMuted); // pass opposite value of mute status to `setMute`
+
+const videoMuted = localPeer.videoTrack?.isMute();
+
+// Toggling Local Video, video will be unmuted
+localPeer.localVideoTrack().setMute(!videoMuted); // pass opposite value of mute status to `setMute`
 ```
 
 
 For muting remote peer refer to [Change Track State](./change-track-state) docs and for muting remote peers locally refer to [Playback Allowed](./playback-allowed) docs.
-
