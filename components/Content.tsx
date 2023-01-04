@@ -20,7 +20,8 @@ import AdaptiveBitrate2 from '../common/adaptive-bitrate-2.md';
 import AndroidSdkVersionShield from '../common/android-sdk-version-shield.md';
 import BulkRoleChangeErrors from '../common/bulk-role-change-errors.md';
 import RtmpExternalConfig from '../common/rtmp-external-config.md';
-import Code from './Code';
+import { Tabs, Tab } from './Tabs';
+import Note from './Note';
 
 const data = {
     basics: Basics,
@@ -54,7 +55,9 @@ const Content = ({ alias }: Props) => {
         <Markdown
             options={{
                 overrides: {
-                    Code
+                    Tabs,
+                    Tab,
+                    Note
                 }
             }}>
             {str}
