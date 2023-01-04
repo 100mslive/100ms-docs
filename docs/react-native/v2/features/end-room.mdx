@@ -3,37 +3,91 @@ title: End Room
 nav: 3.8
 ---
 
-If the local peer has endRoom permission they can end a room. It's also possible to lock the room to prevent any future rejoins.
+---
+title: End Room
+nav: 3.09
+---
 
-## Check if user has permissions
+Done with talking and it's time to end the video call room for everyone not just yourself? You may be looking to end the room.
+
+
+## How to End Room 
+
+<div className="steps-container">
+
+### Permissions
+
+Can't let just anyone end the video call room. First you need to create a [Role](https://www.100ms.live/docs/react-native/v2/foundation/templates-and-roles) with the permissions to end a room.
+
+The permission to end a room is called `permissions.endRoom` and you should check for that within the `HMSRole` of the peer to see if they have it.
+
+Here's how to check whether the local peer has the permission to end the room:
 
 ```js
-const endRoom: boolean = peer.role.permissions.endRoom;
+const localPeer = await hmsInstance.getLocalPeer();
+
+const haveEndRoomPermission = localPeer.role?.permissions?.endRoom;
 ```
 
-## End Room for all
+`await hmsInstance.getLocalPeer()` will not return null/undefined as long as you're in a preview or in a room. 
+Since you likely won't need to check for permissions if you're not in one it would be safe to omit null check.
+
+### Ending the Room
+
+Once you're sure the peer has the permissions to end the room, we can end the room by calling: 
 
 ```js
-const reason = 'Host ended the room';
-const lock = false; // optional parameter
+const reason = 'Host ended the room'; // Reason to end the room
+const lock = false; // whether to Lock room to prevent future joins
 
-// instance acquired from build() method
-await hmsInstance.endRoom(reason, lock)
-    .then(d => console.log('End Room Success: ', d))
-    .catch(e => console.log('End Room Error: ', e));
+try {
+  // instance acquired from build() method
+  await hmsInstance.endRoom(reason, lock);
+
+  console.log('End Room Success');
+
+  // Navigate away from the Meeting screen, when end room is successful
+  navigation.goBack();
+} catch(error) {
+  console.log('End Room Error: ', error);
+}
 ```
 
-## End Room Notification
+`endRoom` takes the following parameters -
 
-Once the peer with adequate permissions calls endRoom, all other peers in the room will receive a notification with type ON_REMOVED_FROM_ROOM with a HMSLeaveRoomRequest object as the data.
+1. *lock*: A boolean for whether you want to prevent anyone from rejoining the room. If false, they will be allowed to enter the room again if the client called `join`. If this is true, they will NOT able to join this room again.
+2. *reason*: reason string is the text that is passed describing why the room is being ended.
+
+> 💡 After calling endRoom, the video calling UI should be disposed of as well since only other peers will get the `HMSUpdateListenerActions.ON_REMOVED_FROM_ROOM` event. The caller can terminate the meeting room UI locally when the promise returned from `endRoom` is resolved.
+
+</div>
+
+
+## Handle App UI When Someone else Ends Room
+
+This section explains how to handle the app UI when someone else ends the room.
+
+Once the peer with adequate permissions calls `endRoom`, all other peers in the room will receive a `HMSUpdateListenerActions.ON_REMOVED_FROM_ROOM` event.
+
+You can update your apps' UI and [Free Resources](https://www.100ms.live/docs/react-native/v2/features/release-resources) on receive of `HMSUpdateListenerActions.ON_REMOVED_FROM_ROOM` event.
+
 
 ```js
-// import classes
-import { HMSUpdateListenerActions, HMSLeaveRoomRequest } from '@100mslive/react-native-hms';
+const onRemovedFromRoom = (data: { requestedBy: HMSPeer | null, reason: string; roomEnded: boolean; }) => {
+  // Free App resources and do cleanup
+  destroy();
 
-const onRemovedFromRoom = (data: HMSLeaveRoomRequest) => {
-    // redirect to home screen
+  // Redirect to home screen or Navigate away from Meeting screen
+  navigation.navigate('Home');
 };
 
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_REMOVED_FROM_ROOM, onRemovedFromRoom);
 ```
+
+> 💡 This is the same callback that will be triggered if a peer is [removed from a room](https://www.100ms.live/docs/react-native/v2/features/remove-peer) as well. Except that `roomEnded` will be true when the entire room is ended.
+
+Description of keys of data received from `HMSUpdateListenerActions.ON_REMOVED_FROM_ROOM` event:
+
+-   _reason_: The string message detailing why the room was ended.
+-   _requestedBy_: The details of the peer who called `endRoom`.
+-   _roomEnded_: `true` if the entire room was ended. `false` if only the receiving peer(local peer) was removed.
