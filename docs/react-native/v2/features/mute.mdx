@@ -13,11 +13,12 @@ Current Mute Status of any `HMSTrack` can be checked by calling `isMute` method 
 In most of the cases, You would need current mute status to toggle mute and render correct mic and camera icons.
 
 ```js
-// You can get `HMSTrack` object from `HMSPeer` object or `HMSUpdateListenerActions.ON_TRACK_UPDATE` event
+// You can get `HMSTrack` object from `HMSPeer` object
+// or `HMSUpdateListenerActions.ON_TRACK_UPDATE` event
 
-const audioMuted = peer.audioTrack?.isMute(); // audioTrack property can be undefined on peer object
+const audioMuted = peer.audioTrack?.isMute(); // audioTrack property can be undefined
 
-const videoMuted = peer.videoTrack?.isMute(); // videoTrack property can be undefined on peer object
+const videoMuted = peer.videoTrack?.isMute(); // videoTrack property can be undefined
 ```
 
 
@@ -43,12 +44,12 @@ localPeer.localVideoTrack().setMute(true); // Muting Local Video
 const audioMuted = localPeer.audioTrack?.isMute();
 
 // Toggling Local Audio, audio will be unmuted
-localPeer.localAudioTrack().setMute(!audioMuted); // pass opposite value of mute status to `setMute`
+localPeer.localAudioTrack().setMute(!audioMuted); // passing opposite value of audioMuted
 
 const videoMuted = localPeer.videoTrack?.isMute();
 
 // Toggling Local Video, video will be unmuted
-localPeer.localVideoTrack().setMute(!videoMuted); // pass opposite value of mute status to `setMute`
+localPeer.localVideoTrack().setMute(!videoMuted); // passing opposite value of videoMuted
 ```
 
 
