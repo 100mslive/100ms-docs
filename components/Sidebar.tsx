@@ -72,14 +72,14 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
 
     const activeItem = React.createRef<HTMLAnchorElement>();
 
-    useEffect(() => {
-        if (activeItem?.current)
-            activeItem.current.scrollIntoView({
-                behavior: 'auto',
-                block: 'center',
-                inline: 'nearest'
-            });
-    }, [activeItem]);
+    // useEffect(() => {
+    //     if (activeItem?.current)
+    //         activeItem.current.scrollIntoView({
+    //             behavior: 'auto',
+    //             block: 'center',
+    //             inline: 'nearest'
+    //         });
+    // }, [activeItem]);
 
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
 
