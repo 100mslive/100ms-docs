@@ -429,8 +429,8 @@ In this section, let's walk through what the code does.
 Let us start with initializing the libraries. We need two instances to get started:
 
 -   An instance of [HMSStore](/api-reference/javascript/v2/interfaces/HMSStore) that holds the complete state of the application such as details of all the participants. We can also visualize this state at any time using the [DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en) extension.
-    This HMSStore is a single source of truth for the entire SDK. To get access to the data from this store, you have to call [hmsStore.subscribe()](/api-reference/javascript/v2/interfaces/IHMSStore#subscribe). It takes two parameters. A callback and a selector which tells the store which slice of state you want to subscribe to.
-    The `subscribe()` also returns a reference to `unsubscribe()` which could be used later to ubsubscribe from the subscription.
+    -   This HMSStore is a single source of truth for the entire SDK. To get access to the data from this store, you have to call [hmsStore.subscribe()](/api-reference/javascript/v2/interfaces/IHMSStore#subscribe). It takes two parameters. A callback and a selector which tells the store which slice of state you want to subscribe to.
+    -   The `subscribe()` also returns a reference to `unsubscribe()` which could be used later to ubsubscribe from the subscription.
 -   And an instance of [HMSActions](/api-reference/javascript/v2/interfaces/HMSActions) that will help us perform actions such as joining the room, muting our audio, and sending messages.
 
 ```jsx:index.js section=InitializingTheSDK sectionIndex=1
