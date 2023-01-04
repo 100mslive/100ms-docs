@@ -66,7 +66,6 @@ class Meeting implements HMSUpdateListener, HMSActionResultListener{
 
       }
   }
-
 ```
 > You will receive an update on `onSuccess` Callback after successfully setting metadata in `HMSActionResultListenerMethod.setSessionMetadata`.
 
@@ -129,7 +128,7 @@ In `onMessage` callback check for message type and update session Metadata value
 class Meeting implements HMSUpdateListener, HMSActionResultListener{
 
   ... 
-  
+
   void getSessionMetadata() async{
     await hmsSDK.getSessionMetadata();
   }
