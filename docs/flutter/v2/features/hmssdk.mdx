@@ -3,6 +3,12 @@ title: HMSSDK Constructor
 nav: 3.011
 ---
 
+## HMSSDK lifecycle 
+
+![hmssdk-lifecycle](/docs/v2/flutter-hmssdk-lifecycle.png)
+
+Let's look this in detail:
+
 ## Instantiate HMSSDK
 
 In majority of use-cases, constructing a simple `HMSSDK` object & calling `build` function are required.
@@ -21,8 +27,6 @@ For Advanced use-cases, 100ms provides following optional parameters while const
 
 
 - `hmsLogSettings`: (Android Only) 100ms provides ability to save logs to disk on Android devices. These logs can be used to diagnose performance of room sessions. By default, logging is disabled i.e. set to `HMSLogLevel.OFF`. To enable logging, create the `HMSLogSettings` object & pass it while constructing the `HMSSDK` instance. This functionality of saving logs to Disk is not available on iOS. More details are available [here](https://www.100ms.live/docs/flutter/v2/features/error-handling#setting-log-levels-in-sdk).
-
-
 
 ## Initializing HMSSDK for Advanced Use-cases 
 
