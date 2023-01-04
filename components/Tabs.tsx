@@ -22,6 +22,12 @@ interface TabsProps {
 
 export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
     const [tab, setTab] = useState(0);
+    
+    if (typeof items === 'string') {
+        const itemsString = items as string;
+        items = JSON.parse(itemsString) as string[];
+    }
+
     const [currentPlatform, setCurrentPlatform] = useState('');
 
     useEffect(() => {
