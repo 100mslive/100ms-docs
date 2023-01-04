@@ -7,6 +7,8 @@ Sometimes you need a way to capture certain metrics related to a call. This may 
 
 100ms SDK provides this data via dedicated delegate callbacks found in `HMSStatsListener`. These will be called with a fixed interval of one second after a room has been joined. You can get stats on a per-track basis ( `onRemoteAudioStats`) or as an overall summary (`onRTCStats`) 
 
+## HMSStatsListener callbacks
+
 Here is the full list of callbacks:
 
 ```dart
@@ -29,20 +31,24 @@ void onRTCStats({required HMSRTCStatsReport hmsrtcStatsReport})
 To listen to these callbacks we will need to attach `HMSStatsListener` and override the above methods.
 Let's see how we can listen to these callbacks: 
 
-1. Implement `HMSStatsListener` wherever we want their callbacks
+<div className="steps-container">
+
+### Implement HMSStatsListener wherever we want its callbacks
 
 ```dart 
 class StatsReport implements HMSStatsListener{}
 ```
 
-2. Call `addStatsListener` on the hmsSDK instance because we will only get updates after calling `addStatsListener` on the hmsSDK instance
+### Call addStatsListener
+
+Call `addStatsListener` on the hmsSDK instance because we will only get updates after calling `addStatsListener` on the hmsSDK instance
 
 ```dart 
 //hmsStatsListener is an instance of HMSStatsListener
 hmsSDK.addStatsListener(listener: hmsStatsListener);
 ```
 
-3. Override the above methods as:
+### Override the HMSStatsListener methods:
 
 ```dart
 class StatsReport implements HMSStatsListener{
@@ -77,14 +83,19 @@ class StatsReport implements HMSStatsListener{
 }
 ```
 
-4. To stop listening to updates or while leaving the room we will need to remove this listener as:
+### Remove the listener when not required
+
+To stop listening to updates or while leaving the room we will need to remove this listener as:
 
 ```dart 
 //hmsStatsListener is an instance of HMSStatsListener which we passed in addStatsListener
 hmsSDK.removeStatsListener(listener: hmsStatsListener);
 ```
+</div>
 
-## HMSRTCStatsReport
+## Supplementary bytes
+
+### HMSRTCStatsReport
 
 This class will contain the combined stats for the room.
 
@@ -116,7 +127,7 @@ class HMSRTCStatsReport {
 }
 ```
 
-## HMSLocalAudioStats
+### HMSLocalAudioStats
 
 This class contains stats related to the local audio track.
 
@@ -131,7 +142,7 @@ class HMSLocalAudioStats {
 }
 ```
 
-## HMSLocalVideoStats
+### HMSLocalVideoStats
 
 This class contains stats related to local video track.
 
@@ -150,7 +161,7 @@ class HMSLocalVideoStats {
 }
 ```
 
-## HMSRemoteAudioStats
+### HMSRemoteAudioStats
 
 This class contains stats related to the remote audio track.
 
@@ -169,7 +180,7 @@ class HMSRemoteAudioStats {
 }
 ```
 
-## HMSRemoteVideoStats
+### HMSRemoteVideoStats
 
 This class contains stats related to the remote video track.
 
