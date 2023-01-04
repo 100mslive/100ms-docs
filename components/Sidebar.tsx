@@ -1,7 +1,4 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
 import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
@@ -9,6 +6,9 @@ import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import ReactIcon from '@/assets/icons/ReactIcon';
 import ServerIcon from '@/assets/icons/ServerIcon';
 import { Listbox } from '@headlessui/react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 
 type NavRoute = {
     url: string;
@@ -31,16 +31,22 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
     } = router;
 
     const { menu, setMenu } = menuState;
-
     useEffect(() => {
         setMenu(false);
     }, [router]);
 
     const [currentDocSlug] = slug as string[];
+    const [navAPI, setNavAPI] = useState(currentNav);
+    useEffect(() => {
+        fetch('/docs/api/content?query=nav')
+            .then((res) => res.json())
+            .then((result) => setNavAPI(result.nav))
+            .catch(e => console.log(e));
+    }, []);
 
     let nav;
-    if (Object.keys(currentNav).length) {
-        const platform = currentNav[currentDocSlug];
+    if (Object.keys(navAPI).length) {
+        const platform = navAPI[currentDocSlug];
         if (slug[0] !== 'v1' && slug[0] !== 'v2') {
             if (slug?.length > 3) {
                 nav = platform[slug[1]];
@@ -51,38 +57,28 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                     nav = platform[slug[1]][slug[2]];
                 }
             }
-        } else nav = platform;
+        } else {
+            nav = platform;
+        }
     }
 
     let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]);
-    if (slug[0] === 'api-reference')
+    if (slug[0] === 'api-reference') {
         indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[1]);
-
+    }
     indexOf = indexOf === -1 ? 0 : indexOf;
     const [tech, setTech] = useState(menuItem[indexOf]);
-
     const changeTech = (s) => {
         setTech(s);
-        if (slug[0] === 'api-reference')
+        if (slug[0] === 'api-reference') {
             router.push(s.apiRef, undefined, {
                 shallow: false
             });
-        else router.push(s.link, undefined, { shallow: false });
+        } else {
+            router.push(s.link, undefined, { shallow: false });
+        }
     };
-
-    const activeItem = React.createRef<HTMLAnchorElement>();
-
-    useEffect(() => {
-        if (activeItem?.current)
-            activeItem.current.scrollIntoView({
-                behavior: 'auto',
-                block: 'center',
-                inline: 'nearest'
-            });
-    }, [activeItem]);
-
-    useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
-
+useEffect(() => setTech(menuItem[indexOf]), [indexOf])
     return (
         <div className="sidebar">
             {/* Sidebar Version Section */}
@@ -121,11 +117,11 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                           {Object.entries(children as {}).map(([_, route]: [unknown, any]) =>
                               Object.prototype.hasOwnProperty.call(route, 'title') ? (
                                   <Link
+                                      scroll={false}
                                       prefetch={false}
                                       href={route.url || ''}
                                       key={`${route.url}-${index}`}>
                                       <a
-                                          ref={route.url === asPath ? activeItem : null}
                                           className={`menu-item ${
                                               route.url === asPath ? 'active-link' : ''
                                           }`}>
@@ -317,6 +313,11 @@ const aliasMenu = [
         url: '/server-side/v2/Destinations/recording'
     }
     // {
+    //     title: 'Simulcast',
+    //     url: '/docs/server-side/v2/features/simulcast'
+    // }
+];
+
     //     title: 'Simulcast',
     //     url: '/docs/server-side/v2/features/simulcast'
     // }
