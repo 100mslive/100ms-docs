@@ -29,6 +29,9 @@ class Meeting implements HMSUpdateListener, HMSActionResultListener{
 
   void setSessionMetadata(
     {required String? metadata}) {
+      ///[metadata]: String data which you wish to set as session metadata
+      ///[hmsActionResultListener]: an instance of a class which implements HMSActionResultListener
+      //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
       hmsSDK.setSessionMetadata(
         metadata: metadata, hmsActionResultListener: this);
   }
