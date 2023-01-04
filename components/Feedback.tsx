@@ -82,7 +82,7 @@ const Feedback = () => {
                             color: '$textAccentHigh',
                             fontWeight: '$semiBold',
                             textAlign: 'center',
-                            marginBottom: '$4'
+                            marginBottom: '$6'
                         }}>
                         Feedback successfully submitted. Thank you!
                     </Text>
