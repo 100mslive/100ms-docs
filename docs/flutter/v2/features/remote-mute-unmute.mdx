@@ -9,6 +9,8 @@ You'd prefer they'd stay mute. Or perhaps you want their video turned off as wel
 
 Muting can apply to both audio and video.
 
+Let's understand the steps:
+
 ### Permissions
 
 Can't let just anyone mute others. First, you need to create a [role](../foundation/templates-and-roles) with the permissions to mute others and also to ask them to Unmute.
@@ -51,42 +53,141 @@ Let's look at each of them:
 We can use the `changeTrackState` method to mute/unmute remote peer's audio/video
 
 ```dart
-// [forRemoteTrack] : track whose state needs to be changed
-// Set [mute] to true if the track needs to be muted, false otherwise.
-if(
+
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+  ...
+
+  void changeTrackState(HMSTrack forRemoteTrack, bool mute,
+      HMSActionResultListener hmsActionResultListener) {
+    /// [forRemoteTrack] : track whose state needs to be changed(mute -> unmute or unmute -> mute)
+    /// Set [mute] to true if the track needs to be muted, false otherwise.
+    ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+    //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+    if(
     //peer has permission to change track state
     localPeer?.role.permissions.mute
-  )
-HMSSDK.changeTrackState(
+    ){
+      hmsSDK.changeTrackState(
         forRemoteTrack: forRemoteTrack,
         mute: mute,
         hmsActionResultListener: this);
+    }
+    else{
+      //Peer doesn't have permission to mute/unmute other peers
+    }
+
+  }
+
+    @override
+    void onSuccess(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments}) {
+          switch (methodType) {
+          ...
+
+          case HMSActionResultListenerMethod.changeTrackState:
+          //Track state successfully changed
+          break;  
+      }        
+  }
+
+
+  @override
+  void onException(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments,
+      required HMSException hmsException}) {
+          switch (methodType) {
+          ...
+
+          case HMSActionResultListenerMethod.changeTrackState:
+          // Check the HMSException object for details about the error
+          break;
+
+      }
+  }
+}
+
 ```
 
-If the `changeTrackState` method is successful we will get the `onSuccess` callback and track update in `onTrackUpdate`.
+If the `changeTrackState` method is successful we will get the `onSuccess` callback on HMSActionResultListener attached and track update in `onTrackUpdate`.
 
 -   Specific role
 
 We can use the `changeTrackStateForRole` method to mute/unmute peers under specific roles.
 
 ```dart
-// Set [mute] true if the track needs to be muted, false otherwise
-  // [type] is the HMSTrackType which should be affected. If this and the source are specified, it is considered an AND operation. If not specified, all track sources are affected.
-  // [source] is the HMSTrackSource that should be affected. If this and type are specified, it is considered an AND operation. If not specified, all track types are affected.
-  // [roles] is a list of roles, that may have a single item in a list, whose tracks should be affected.
-  //If not specified, all roles are affected.
-  // [hmsActionResultListener] - the callback that would be called by SDK in case of success or failure.
-  /// `this` is used here since MeetingStore already implements
-  if(
-    //peer has permission to change track state
-    localPeer?.role.permissions.mute
-    )
-    HMSSDK.changeTrackStateForRole(
-        mute: mute,
-        kind: kind,
-        source: source,
-        roles: roles,
-        hmsActionResultListener: this);
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+  ...
+
+  void changeTrackStateForRole(bool mute, HMSTrackKind? kind, String? source,
+      List<HMSRole>? roles, HMSActionResultListener? hmsActionResultListener) {
+      if(//peer has permission to change track state
+        localPeer?.role.permissions.mute)
+        {
+            /// Set [mute] true if the track needs to be muted, false otherwise
+            /// [kind] is the HMSTrackType that should be affected. If this and the source are specified, it is considered an AND operation. If not specified, all track sources are affected.
+            /// [source] is the HMSTrackSource that should be affected. If this and type are specified, it is considered an AND operation. If not specified, all track types are affected.
+            /// [roles] is a list of roles, that may have a single item in a list, whose tracks should be affected.
+            //If not specified, all roles are affected.
+            ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+            //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+              HMSSDK.changeTrackStateForRole(
+              mute: mute,
+              kind: kind,
+              source: source,
+              roles: roles,
+              hmsActionResultListener: this);
+
+        }
+      else{
+      //Peer doesn't have permission to mute/unmute other peers
+        }
+    }
+
+
+    @override
+    void onSuccess(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments}) {
+          switch (methodType) {
+          ...
+
+          case HMSActionResultListenerMethod.changeTrackState:
+          break;  
+
+          case HMSActionResultListenerMethod.changeTrackStateForRole:
+          //Track state successfully changed
+          break;
+      }        
+  }
+
+
+  @override
+  void onException(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments,
+      required HMSException hmsException}) {
+          switch (methodType) {
+          ...
+
+          case HMSActionResultListenerMethod.changeTrackState:
+          break;
+
+          case HMSActionResultListenerMethod.changeTrackStateForRole:
+          // Check the HMSException object for details about the error
+          break;
+
+      }
+  }
+}
+
 ```
 
 If the `changeTrackStateForRole` method is successful we will get the `onSuccess` callback and track update in `onTrackUpdate` similar to `changeTrackState`.
@@ -104,13 +205,32 @@ Let's turn the table now to what happens if a remote peer wishes to mute/unmute 
 -   In case when remote peer mutes our audio/video `HMSSDK` performs it automatically without asking permission In another case, we get the `onChangeTrackStateRequest` if
     we accept the request we need to call `switchVideo` or `switchAudio` according to the request.
 
+Let's understand this with a diagram:
+
+![accept-change-track-state](/docs/v2/flutter-accept-track-change-request.png)
+
+Now let's do it step-by-step:
+
+<div className="steps-container">
+
+### PeerA calls changeTrackState on PeerB's track
+
+```dart 
+hmsSDK.changeTrackState(
+        forRemoteTrack: "PeerB's track",
+        mute: mute,
+        hmsActionResultListener: this);
+```
+
+### PeerB receives onChangeTrackStateRequest
+
 ```dart
  @override
   void onChangeTrackStateRequest(
       {required HMSTrackChangeRequest hmsTrackChangeRequest}){}
 ```
 
-How this is implemented in the example app can be found [here](https://github.com/100mslive/100ms-flutter/blob/main/example/lib/data_store/meeting_store.dart)
+How this is implemented in the example app can be found [here](https://github.com/100mslive/100ms-flutter/blob/1537a82a2213c8bbb1b0eb2dcc009c171e89bad1/example/lib/data_store/meeting_store.dart#L736)
 
 Let's look at the `HMSTrackChangeRequest` structure :
 
@@ -122,14 +242,57 @@ class HMSTrackChangeRequest {
 }
 ```
 
-This contains information on which track is requested for unmuting. Check the track type and inform the user accordingly.
+This contains information on which track is requested for unmuting. Check the track type and call the unmute methods accordingly.
 
 ```dart
-public void checkTrack(HMSTrackKind trackKind) {
-    if(trackKind == HMSTrackType.kHMSTrackKindAudio) {
-
-    } else if (trackKind == HMSTrackType.kHMSTrackKindVideo) {
-
+public void checkTrack(HMSTrack track) {
+    if(track.kind == HMSTrackType.kHMSTrackKindAudio) {
+        //Requested track is an audio track
+    } else if (track.kind == HMSTrackType.kHMSTrackKindVideo) {
+        //Requested track is a video track
     }
 }
 ```
+
+So final implementation looks like this:
+
+```dart 
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+  ...
+
+  public void checkTrack(HMSTrack track) {
+    if(track.kind == HMSTrackType.kHMSTrackKindAudio) {
+        hmsSDK.switchAudio(isOn: false);
+    } else if (track.kind == HMSTrackType.kHMSTrackKindVideo) {
+        hmsSDK.switchVideo(isOn: false);
+    }
+  }
+
+  @override
+  void onChangeTrackStateRequest(
+      {required HMSTrackChangeRequest hmsTrackChangeRequest}){
+          checkTrack(hmsTrackChangeRequest.track)
+  }
+}
+```
+
+### PeerB calls switchAudio/switchVideo depending on the track kind
+
+If the track is an audio track then PeerB calls `switchAudio`
+
+```dart 
+///[isOn] as false since it's an unmute request
+hmsSDK.switchAudio(isOn: false);
+```
+
+If the track is a video track then PeerB calls `switchVideo`
+
+```dart 
+///[isOn] as false since it's an unmute request
+hmsSDK.switchVideo(isOn: false);
+```
+
+Now all the peers will receive an `onTrackUpdate` with the type as `trackUnmuted`
+
+</div>
