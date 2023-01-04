@@ -17,16 +17,9 @@ HMSConfig config = HMSConfig(userName: "John Doe",
 
 This section will show you how to:
 1. [Get Peer Metadata](#get-peer-metadata).
-2. [Respond to when a remote peer changes its metadata](#responding-to-updates).
-3. [How to set a peer's metadata](#updating-metadata).
+2. [Hoe to respond when a remote peer changes its metadata](#how-to-listen-to-updates-when-metadata-of-any-peer-is-updated).
+3. [How to set a peer's metadata](#how-a-peer-can-set-its-metadata).
 
-The `HMSPeer` object contains the parameter `metadata`.
-
-Any peer can change the metadata for themselves. Currently, one peer cannot change another peer's metadata.
-
-To change their metadata value the peer should call `changeMetadata` on their `HMSSDK` instance.
-
-The data may be any arbitrary string though it cannot be changed to null.
 
 ## Get Peer metadata
 
@@ -73,24 +66,24 @@ When this callback is received the UI for that peer should be updated as well.
 
 Here is how a peer can set their own metadata to a random string. In this case, the string is stringified JSON.
 
-Example String: "{\"Zodiac Sign\": \"Virgo\" }"
+Example String: `"{\"Zodiac Sign\": \"Virgo\" }"`
 
 ```dart
 class Meeting  implements HMSUpdateListener, HMSActionResultListener{ 
 
     ... 
 
-void changeMetadata(
-      {required String metadata,
-      required HMSActionResultListener hmsActionResultListener}) {
-    ///[metadata] is a stringified JSON as above
-    ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
-    //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
-    hmsSDK.changeMetadata(
-        metadata: metadata, hmsActionResultListener: this);
-  }
+    void changeMetadata(
+          {required String metadata,
+          required HMSActionResultListener hmsActionResultListener}) {
+        ///[metadata] is a stringified JSON as above
+        ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+        //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+        hmsSDK.changeMetadata(
+            metadata: metadata, hmsActionResultListener: this);
+      }
 
-      @override
+    @override
     void onSuccess(
         {HMSActionResultListenerMethod methodType =
             HMSActionResultListenerMethod.unknown,
@@ -132,7 +125,7 @@ speaker know by raising their hands in the application similar to what they woul
 
 Let's understand this with a diagram:
 
-![hand-raise](/docs/v2/flutter-accept-hand-raise.png)
+![hand-raise](/docs/v2/flutter-raise-hand-flowchart.png)
 
 Let's check the implementation step-by-step:
 
@@ -228,3 +221,5 @@ class Meeting implements HMSUpdateListener, HMSActionResultListener{
 ### Implement polls in room
 
 We can use peer's metadata property to implement polls similar to what we did above.
+
+There are many more use cases which can be implemented using peer metadata. Have any questions regarding the use cases please reach out to us [here](https://100ms.live/discord)
