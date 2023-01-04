@@ -70,7 +70,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
         else router.push(s.link, undefined, { shallow: false });
     };
 
-    const activeItem = React.useRef<HTMLAnchorElement>();
+    const activeItem = React.useRef<HTMLAnchorElement>(null);
 
     useEffect(() => {
         if (activeItem?.current)
