@@ -31,21 +31,25 @@ Create three roles with permissions as:
 ### If role of user is changed to a role which has audio-video publishing permission then ask for permissions as:
 
 ```dart
-@override
-void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest}) {
-    if(roleChangeRequest.suggestedRole.publishSettings?.allowed.contains("video")??false){
-        //if video permissions are not available
-        await Permission.camera.request();
-    }
-    if(roleChangeRequest.suggestedRole.publishSettings?.allowed.contains("audio")??false){
-        //if audio permissions are not available
-        await Permission.microphone.request();
-        //if bluetooth permissions are not available
-        await Permission.bluetoothConnect.request();
-    }
+class Meeting  implements HMSUpdateListener, HMSActionResultListener{ 
+    
+    ...
+    @override
+    void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest}) {
+        if(roleChangeRequest.suggestedRole.publishSettings?.allowed.contains("video")??false){
+            //if video permissions are not available
+            await Permission.camera.request();
+        }
+        if(roleChangeRequest.suggestedRole.publishSettings?.allowed.contains("audio")??false){
+            //if audio permissions are not available
+            await Permission.microphone.request();
+            //if bluetooth permissions are not available
+            await Permission.bluetoothConnect.request();
+        }
 
-    //if the application have required permissions
-    hmsSDK.acceptChangeRole(roleChangeRequest);
+        //if the application have required permissions
+        hmsSDK.acceptChangeRole(roleChangeRequest);
+    }
 }
 ```
 </div>
