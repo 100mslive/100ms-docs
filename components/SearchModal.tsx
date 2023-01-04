@@ -186,7 +186,7 @@ const CustomSearchBox = connectSearchBox(Search);
 const CustomHits = connectHits(ResultBox);
 
 const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
-    const ref = React.createRef<HTMLDivElement>();
+    const ref = React.useRef<HTMLDivElement>(null);
     const [searchTerm, setSearchTerm] = React.useState('');
     const activeResult = useRef(-1);
     const [hitsCount, setHitsCount] = useState(0);
