@@ -3,86 +3,165 @@ title: RTMP Streaming / Recording
 nav: 3.19
 ---
 
-Want to preserve your video call for posterity in a recording? Or live stream it out to millions of viewers on Twitch or YouTube or whatever gives you an RTMP injest URL?
+Want to preserve your video call for posterity in a recording? Or live stream it out to millions of viewers on Twitch or YouTube or whatever gives you an RTMP ingest URL?
 
 Turn on RTMP Streaming or Recording!
 
-In 100ms, recording and streaming is usually achieved by having a bot join your room and stream what it sees and hears to a file (recording) or to an rtmp injest url (streaming).
+In 100ms, recording and streaming are usually achieved by having a bot join your room and stream what it sees and hears to a file (recording) or an RTMP ingest URL (streaming).
+
+## Types of recordings 
+
+Apart from the RTMP stream and the browser recording, there is also a serverRecording, which can be turned on for the room for.
+
+### - Server Recording 
+
+This is used for archival purposes and cannot be stopped by method calls from SDK. This can only be enabled/disabled from the dashboard.
+This represents that the room was set to be recorded when it was created and all sessions within it will always be recorded for archival by the server.
+
+### - Browser Recording 
+
+This is a normal recording that can be enabled/disabled using `HMSSDK` method `startRtmpOrRecording` with `toRecord` as true
+
+## RTMP Streaming & Recording
 
 The topics covered in this doc are:
 
-1. [How to start streaming / recording.](#starting-streaming-recording)
-2. [How to stop streaming / recording.](#stopping-streaming-recording)
-3. [How to check the current status for streaming / recording.](#current-room-status)
-4. [When to check the current status](#when-to-check-for-room-status)
+1. [How to start stop streaming / recording.](#start-stop-streaming-recording)
+2. [How to check the current status for streaming/recording.](#current-room-status)
+3. [When to check the current status](#when-to-check-for-room-status)
 
-## Starting Streaming / Recording
+## Start/Stop Streaming / Recording
+
+Let's look at the implementation for starting/stopping RTMP streaming and browser recording:
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+  void startRtmpOrRecording({
+  required String meetingUrl,
+      required bool toRecord,List<String>? rtmpUrls,double height,double width}) async {
+
+          HMSResolution streamResolution = HMSResolution(height: height, width: width);
+
+          HMSRecordingConfig hmsRecordingConfig = new HMSRecordingConfig(
+              meetingUrl: meetingUrl, toRecord: toRecord, rtmpUrls: rtmpUrls,resolution: streamResolution);
+
+          ///[hmsRecordingConfig]: the object of HMSRecordingConfig which we created above
+          ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+          //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+          hmsSDK.startRtmpOrRecording(
+            hmsRecordingConfig: hmsRecordingConfig,
+            hmsActionResultListener: this);
+  }
+
+  void stopRtmpAndRecording() {
+    ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+    //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+    hmsSDK.stopRtmpAndRecording(
+        hmsActionResultListener: this);
+  }
+
+  @override
+  void onSuccess(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments}) {
+          switch (methodType) {
+          ...
+
+          case HMSActionResultListenerMethod.startRtmpOrRecording:
+          //RTMP stream started successfully. We will get the update here
+          break;  
+
+          case HMSActionResultListenerMethod.stopRtmpAndRecording:
+          //RTMP stream stopped successfully
+          break;
+      }        
+  }
+
+  @override
+  void onException(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments,
+      required HMSException hmsException}) {
+          switch (methodType) {
+          ...
+
+          
+          case HMSActionResultListenerMethod.startRtmpOrRecording:
+          // Check the HMSException object for details about the error
+          break;
+
+          case HMSActionResultListenerMethod.stopRtmpAndRecording:
+          // Check the HMSException object for details about the error
+          break;
+      }
+  }
+
+}
+```
+
+Let's break down the implementation
 
 To start recording, streaming or both, create an instance of `HMSRecordingConfig`.
 
-`HMSRecordingConfig` takes the following:
+```dart 
+    HMSRecordingConfig hmsRecordingConfig = new HMSRecordingConfig(
+        meetingUrl: "meeting_url", toRecord: "true for enabling recording", rtmpUrls: "List of URLs", resolution: "HMSResolution object for stream resolution");
+```
 
-1. **meetingUrl**: _String_. The url the 100ms bot user will open to join your room. It must allow access without any user level interaction.
-2. **rtmpUrls**: _List<String\>_. If streaming is required, this has to be one or more RTMP Injest Urls with a max limit of 3 urls where the stream should go. If only recording, this can be an empty list.
+Let's understand each parameter:
+
+1. **meetingUrl**: _String_. The URL the 100ms bot user will open to join your room. It must allow access without any user-level interaction.
+2. **rtmpUrls**: _List<String\>_. If streaming is required, this has to be one or more RTMP Ingest Urls with a max limit of 3 URLs where the stream should go. If only recording, this can be an empty list.
 
     - Format: `rtmp://server.com/app/STREAM_KEY`
+    
     - Example: `rtmp://a.rtmp.youtube.com/live2/k0jv-329m-1y7f-ktth-ck48`
         - "rtmp://a.rtmp.youtube.com/live2/" - RTMP stream URL.
         - "k0jv-329m-1y7f-ktth-ck48" - RTMP stream key.
 
     <Content alias="rtmpExternalConfig" />
 
-3. **record**: _Boolean_. If recording is required, set true. If recording is not required, set false. This value has no effect on streaming.
-4. **resolution**: _HMSResolution_. An optional value for the output resolution of the stream. For instance default is landscape at 1280x720 but this could be set for a portrait mode of 720x1280. Or smaller values like 480x80.
+3. **toRecord**: _Boolean_. If the recording is required, set it `true`. If the recording is not required, set false. This value does not affect streaming.
+4. **resolution**: _HMSResolution_. An optional value for the output resolution of the stream. For instance, the default is a landscape at 1280x720 but this could be set for a portrait mode to 720x1280 or smaller values like 480x80. The `HMSResolution` class takes Width and Height.
 
-The `HMSResolution` takes Width and Height.
+### Key Notes
 
--   If both rtmpUrls and record = true are provided, both streaming and recording will begin.
--   If only rtmpUrls are provided, only streaming will begin.
--   If only record true is provided, only recording will begin.
+-   If both `rtmpUrls` and `toRecord = true` are provided, both streaming and recording will begin.
+-   If only `rtmpUrls` are provided, only streaming will begin.
+-   If only `toRecord` true is provided, only recording will begin.
 
 If either one is started, the other can't be started without stopping whatever is running.
-Eg: If only streaming is started then recording can't be started unless streaming is stopped first.
 
-If both are required, they have to be started together by providing both `RTMP Ingest Urls` and `recording = true`.
+> Eg: If only streaming is started then recording can't be started unless streaming is stopped first.
 
-[hmsActionResultListener] is the callback that would be called by SDK in case of a success or failure.
-
-```dart
-  void startRtmpOrRecording(
-      {required HMSRecordingConfig hmsRecordingConfig,
-      HMSActionResultListener? hmsActionResultListener}) async {}
-```
-
-## Stopping Streaming / Recording
-
-To stop streaming AND recording. It is not currently possible to stop just one, whatever is running will be stopped.
-
-Here's how to stop both:
-
-The result of the action is sent as `HMSException` if it is successfull then it will be null otherwise it is not.
-
-[hmsActionResultListener] is the callback that would be called by SDK in case of a success or failure.
-
-```dart
-void stopRtmpAndRecording(
-      {HMSActionResultListener? hmsActionResultListener}) async
-```
+If both are required, they have to be started together by providing both `rtmpUrls` and `toRecord = true`.
 
 ## Current Room Status
 
 The current status for the room is always reflected in the `HMSRoom` object that is returned from the `HMSUpdateListener`.
 
-Here are the relevant properties inside the `HMSRoom` object which you can read to get the current recording/streaming status of the room namely: `rtmpHMSRtmpStreamingState`, `browserRecordingState` and `serverRecordingState`.
+This can be used to show the stream or recording status on UI something similar to this:
 
-Each of them are objects which contain a boolean `running` which lets you know if it's active on the room right now and `error` which lets you know if there was an error.
+![stream-state](/docs/v2/flutter-stream-state.jpg)
 
-Apart from the rtmp stream and the browser recording, which are ones you can start and stop, there is also a serverRecording, which can be turned on for the room for archival purposes and which cannot currently be stopped if enabled for the room from the dashboard.
+Here are the relevant properties inside the `HMSRoom` object which we can read to get the current recording/streaming status of the room namely: 
+
+- `hmsRtmpStreamingState` - Contains info about RTMP Streaming, `running` attribute if true indicates streaming is ON currently
+- `hmsBrowserRecordingState` - Contains info about Browser Recording, `running` attribute if true indicates browser recording is ON currently
+- `hmsServerRecordingState` - Contains info about Server Recording, `running` attribute if true indicates server recording is ON currently
+
+Each of them is an object which contains a boolean `running` which lets you know if it's active in the room right now and `error` which lets you know if there was an error.
 
 1. **HMSRtmpStreamingState** an instance of `HMSRtmpStreamingState`, which looks like:
 
 ```dart
 class HMSRtmpStreamingState {
+  ///[error]: Gets populated if there is some error in starting the stream 
+  ///[running]: bool value `true` indicates that RTMP streaming is running 
+  ///[startedAt]: time at which RTMP streaming was started
   final HMSException? error;
   final bool running;
   DateTime? startedAt;
@@ -90,12 +169,13 @@ class HMSRtmpStreamingState {
 }
 ```
 
-This represents a livestream to one or more RTMP urls.
-
 2. **browserRecordingState** an instance of `HMSBrowserRecordingState`, which looks like:
 
 ```dart
 class HMSBrowserRecordingState {
+  ///[error]: Gets populated if there is some error in starting the browser recording 
+  ///[running]: bool value `true` indicates that browser recording is running 
+  ///[startedAt]: time at which browser recording was started
   final HMSException? error;
   final bool running;
   DateTime? startedAt;
@@ -103,12 +183,13 @@ class HMSBrowserRecordingState {
 }
 ```
 
-This represents the recording that can be requested to start.
-
 3. **serverRecordingState** an instance of `HMSServerRecordingState`, which looks like:
 
 ```dart
 class HMSServerRecordingState {
+  ///[error]: Gets populated if there is some error in starting the server recording
+  ///[running]: bool value `true` indicates that server recording is running 
+  ///[startedAt]: time at which server recording was started
   final HMSException? error;
   final bool running;
   DateTime? startedAt;
@@ -116,17 +197,16 @@ class HMSServerRecordingState {
 }
 ```
 
-This represents that the room was set to be recorded when it was created and all sessions within it will always be recorded for archival by the server.
-
 ## When to check for room status
 
 The room status should be checked in three places:
 
 1. `onJoin` callback of `HMSUpdateListener`
-2. When `hmsSDK.startRtmpOrRecording()` is called
-3. When `hmsSDK.stopRtmpAndRecording()` is called.
+2. `onRoomUpdate` callback of `HMSUpdateListener`
+3. When `hmsSDK.startRtmpOrRecording()` is called
+4. When `hmsSDK.stopRtmpAndRecording()` is called.
 
--   In the `onJoin(room: HMSRoom)` callback in `HMSUpdateListener`
+-   In the `onJoin(room: HMSRoom)` & `onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update})` callback in `HMSUpdateListener`
     The properties mentioned above will be on the `HMSRoom` object.
--   Whenever either of the start or stop recording functions is called, when their success or error callbacks are called, the values of the streaming and recording will be updated on the room object returned in onJoin.
-    So saving an instance of the room received at that time is recommended.
+-   Whenever either of the start or stop recording functions is called, their success or error callbacks are called, the values of the streaming and recording will be updated on the room object returned in `onRoomUpdate`.
+    So update the instance of room in your application at that time.

@@ -3,7 +3,11 @@ title: Remove Peer
 nav: 3.16
 ---
 
-Someone's overstayed their welcome and now you need to remove a peer from the video call room. Just call `meeting.removePeer`.
+Someone's overstayed their welcome and now you need to remove a peer from the video call room.HMSSDK's `removePeer` comes to rescue.
+
+Let's look at this step-by-step
+
+<div className="steps-container">
 
 ### Permissions
 
@@ -25,41 +29,78 @@ bool isAllowedToRemovePeer() async{
 
 Once the permissions are checked to ensure the caller has the permission to remove a peer, remove them by calling `hmsSDK.removePeer`.
 
-The parameters are:
-
-peer: is the `HMSRemotePeer` that you'd like to be removed from the video call room.
-reason: is the string that should be conveyed to them as the reason for being removed.
-hmsActionResultListener: is the listener that will convey the success or error of the server accepting the request.
-
 ```dart
-void removePeer(
-      {required HMSPeer peer,
-      required String reason,
-      HMSActionResultListener? hmsActionResultListener}) async {}
-```
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
 
-```dart
-hmsSDK.removePeer(peer: peerToRemove, reason: "Some good reason to remove the peer")
+  ...
+
+  void removePeer(
+      {required HMSPeer peerToRemove,
+      required String reason}) {
+      ///[peerToRemove]: HMSPeer that needs to be removed from room
+      ///[reason]: Reason for removal
+      ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+      //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+        hmsSDK.removePeer(
+          peer: peerToRemove,
+          reason: "Reason to remove",
+          hmsActionResultListener: this);
+      }
+
+    @override
+    void onSuccess(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments}) {
+          switch (methodType) {
+          ...
+
+          case HMSActionResultListenerMethod.removePeer:
+          //Peer removed successfully
+          break;  
+      }        
+  }
+
+
+  @override
+  void onException(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments,
+      required HMSException hmsException}) {
+          switch (methodType) {
+          ...
+
+          case HMSActionResultListenerMethod.removePeer:
+          // Check the HMSException object for details about the error
+          break;
+
+      }
+  }
+
+}
 ```
 
 ### Handling the remove peer callback
 
-The target of the `removePeerRequest` will receive a call in `HMSUpdateListener` of `onRemovedFromRoom(notification : HMSRemovedFromRoom)`.
+The peer who is removed will receive a callback in `HMSUpdateListener` method `onRemovedFromRoom( HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer)`.
 
-The `HMSRemovedFromRoom` object which is passed into the callback has the structure:
+The `HMSRemovedFromPeer` object which is passed into the callback has the structure:
 
 ```dart
-class HMSRemovedFromRoom {
+class HMSRemovedFromPeer {
   final HMSPeer peerWhoRemoved;
   final String reason;
   final bool roomWasEnded;
 }
 ```
 
-`reason`: Is the string that the caller of `removePeerRequest` sent as the reason they were being removed from the room.
+`reason`: the string that the caller of `removePeerRequest` sent as the reason they were being removed from the room.
 
-`peerWhoRemoved`: Is an `HMSRemotePeer` instance containing the details of the person who called `removePeerRequest`. This can be used to show the name of the person who removed them.
+`peerWhoRemoved`: `HMSPeer` instance containing the details of the person who called `removePeerRequest`. This can be used to show the name of the person who removed them.
 
 `roomWasEnded`: This will be false if the peer was removed. If true, it indicates that the peer was not removed, but the entire room was ended. See [End Room](/flutter/v2/features/end-room) for details.
 
-When this callback is received, the UI should be cleaned up from the client side. The video call room would be ended from the SDK once this callback is sent.
+> When this callback is received, the UI should be cleaned up from the client side. The video call room would be ended from the SDK once this callback is sent.
+
+</div>

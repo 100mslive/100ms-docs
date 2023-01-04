@@ -3,30 +3,76 @@ title: Session Metadata
 nav: 3.18
 ---
 
-Session Metadata is an alpha feature that allows you to set and get metadata on a given session.
+Session Metadata is an alpha feature that allows you to set and get metadata for a given session.
 
 > A session is defined as the period from when the first peer joins an empty room till the last peer leaves. 
 
 The same room can have multiple sessions. During one session the metadata will be preserved. Once a session ends the session metadata will also be cleared, that is, when the last peer leaves.
 
-### Limits
+## Limits
 
 Since session metadata is an alpha feature, it does not have the following:
 1. Locks to ensure consistency of the data. If two peers update it at the same time, it will be a race condition for which one succeeds last, overwriting whatever was before.
 2. SDKs are not made aware of session metadata updates on their own. This has to be done manually. One suggested way is listed [below](#updating-session-metadata-manually).
 
-#### Set Session Metadata
+### Set Session Metadata
+
 Any peer can set the session metadata by calling `setSessionMetadata` and passing `String` value to its metadata parameter.
 
+> No updates are sent to other peers after calling `setSessionMetadata` as it's an alpha feature. So, some extra code needs to be written 
+> to send updates. The implementation can be found [here](#updating-session-metadata-manually)
+
 ```dart
-//hmsActionResultListener is the HMSActionResultListener that you attach, this is an optional parameter
-//but we suggest .adding it as it notifies about the success or failure of the function call
-hmsSDK.setSessionMetadata(metadata: "ENTER METADATA HERE", hmsActionResultListener: hmsActionResultListener);
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+  ...
+
+  void setSessionMetadata(
+    {required String? metadata}) {
+      ///[metadata]: String data which you wish to set as session metadata
+      ///[hmsActionResultListener]: an instance of a class which implements HMSActionResultListener
+      //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+      hmsSDK.setSessionMetadata(
+        metadata: metadata, hmsActionResultListener: this);
+  }
+
+  @override
+  void onSuccess(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments}) {
+          switch (methodType) {
+          ...
+
+          case HMSActionResultListenerMethod.setSessionMetadata:
+          //Session metadata set successfully
+          break;  
+      }        
+  }
+
+
+  @override
+  void onException(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments,
+      required HMSException hmsException}) {
+          switch (methodType) {
+          ...
+
+          case HMSActionResultListenerMethod.setSessionMetadata:
+          // Check the HMSException object for details about the error
+          break;
+
+      }
+  }
+
 ```
 > You will receive an update on `onSuccess` Callback after successfully setting metadata in `HMSActionResultListenerMethod.setSessionMetadata`.
 
 ### Get Session Metadata
-Any peer can get metadata by calling `getSessionMetadata`.
+
+Any peer can get the session metadata by calling `getSessionMetadata`.
 
 ```dart
 String? metadata = await hmsSDK.getSessionMetadata();
@@ -37,6 +83,24 @@ String? metadata = await hmsSDK.getSessionMetadata();
 Since no updates are sent for session metadata as it is an alpha feature, here is one suggested way of getting peers to receive it once set.
 
 One way to notify other apps of a change in session metadata is to send a custom broadcast message when a set succeeds. The type can be set to something like "metadata" or whatever you choose and this should then be handled in the `onMessage` of all apps. To `getSessionMetadata` at that time instead of showing a message for that type.
+
+Let's understand it from a diagram:
+
+![session-metadata](/docs/v2/flutter-session-metadata.png)
+
+Let's look at them step-by-step:
+
+<div className="steps-container">
+
+### PeerA calls setSessionMetadata
+
+```dart
+//Assuming this function is called in class where HMSActionResultListener is implemented as the above example
+hmsSDK.setSessionMetadata(
+        metadata: metadata, hmsActionResultListener: this);
+```
+
+### PeerA gets onSuccess callback from HMSSDK and sends a broadcast message with type `metadata`
 
 `onSuccess` callback sends a broadcast message as follows:
 
@@ -54,9 +118,22 @@ One way to notify other apps of a change in session metadata is to send a custom
       }
 ```
 
-`onMessage` callback checks for message type and update session Metadata value.
+> 🔑 Note: We can set the type as any string just make sure you check the same `type` string on the `onMessage` callback.
+> We have taken `metadata` as an example
+
+### Other peers receive onMessage callback
+
+In `onMessage` callback check for message type and update session Metadata value using `getSessionMetadata`.
 
 ```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+  ... 
+  
+  void getSessionMetadata() async{
+    await hmsSDK.getSessionMetadata();
+  }
+
   @override
   void onMessage({required HMSMessage message}) {
     if(message.type=="metadata") {
@@ -64,4 +141,7 @@ One way to notify other apps of a change in session metadata is to send a custom
         return;
     }
   }
+
+}
 ```
+</div>
