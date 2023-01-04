@@ -121,11 +121,19 @@ hmsSDK.setSessionMetadata(
 > 🔑 Note: We can set the type as any string just make sure you check the same `type` string on the `onMessage` callback.
 > We have taken `metadata` as an example
 
-### Other peers receive `onMessage` callback
+### Other peers receive onMessage callback
 
-`onMessage` callback checks for message type and update session Metadata value.
+In `onMessage` callback check for message type and update session Metadata value using `getSessionMetadata`.
 
 ```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+  ... 
+  
+  void getSessionMetadata() async{
+    await hmsSDK.getSessionMetadata();
+  }
+
   @override
   void onMessage({required HMSMessage message}) {
     if(message.type=="metadata") {
@@ -133,5 +141,7 @@ hmsSDK.setSessionMetadata(
         return;
     }
   }
+
+}
 ```
 </div>
