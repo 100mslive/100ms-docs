@@ -70,16 +70,16 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
         else router.push(s.link, undefined, { shallow: false });
     };
 
-    const activeItem = React.createRef<HTMLAnchorElement>();
+    const activeItem = React.useRef<HTMLAnchorElement>();
 
-    // useEffect(() => {
-    //     if (activeItem?.current)
-    //         activeItem.current.scrollIntoView({
-    //             behavior: 'auto',
-    //             block: 'center',
-    //             inline: 'nearest'
-    //         });
-    // }, [activeItem]);
+    useEffect(() => {
+        if (activeItem?.current)
+            activeItem.current.scrollIntoView({
+                behavior: 'auto',
+                block: 'center',
+                inline: 'nearest'
+            });
+    }, [activeItem]);
 
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
 
