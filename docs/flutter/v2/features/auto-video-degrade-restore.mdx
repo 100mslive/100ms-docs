@@ -22,3 +22,30 @@ If `isDegraded` is true, treat it as if the video is turned off. If the UI is no
 ## Video Track Update
 
 We can listen to the track update of `trackDegraded` and `trackRestored` in `HMSTrackUpdate` to update the UI whenever someone's track gets changed due to degradation.
+
+```dart 
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+  ...
+
+    @override
+    void onTrackUpdate(
+      {required HMSTrack track,
+      required HMSTrackUpdate trackUpdate,
+      required HMSPeer peer}) {
+
+        switch (update) {
+        
+            case HMSTrackUpdate.trackDegraded:
+            //Show as if video is turned off otherwise the tile becomes black
+            break;
+
+            case HMSTrackUpdate.trackRestored:
+            //Switch to normal video as track is restored now
+            break;
+        
+        }
+
+    }
+}
+```

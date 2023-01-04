@@ -61,10 +61,12 @@ Usage:
 const onSpeakerUpdate = (speaker, prevSpeaker) => {
  console.log("speaker changed from - ", prevSpeaker, ", to - ", speaker);
 }
-const unsub = store.subscribe(onSpeakerUpdate, selectDominantSpeaker);
+// The subscribe returns a reference to unsubscribe() which you can use to
+// ubsubscribe from the subscription in the future.
+const unsubscribe = store.subscribe(onSpeakerUpdate, selectDominantSpeaker);
 
-// To unsubscribe from the listener,
-unsub();
+// unsubscribe from the listener.
+unsubscribe();
 
 ```
 

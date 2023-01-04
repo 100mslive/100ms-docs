@@ -64,6 +64,8 @@ class Meeting  implements HMSUpdateListener, HMSActionResultListener{
 
             switch (methodType) {
 
+            ...
+
             case HMSActionResultListenerMethod.changeRoleOfPeer:
             //Here we will receive the success callback
             break;
@@ -79,6 +81,8 @@ class Meeting  implements HMSUpdateListener, HMSActionResultListener{
         required HMSException hmsException}) {
 
             switch (methodType) {
+
+                ... 
 
                 case HMSActionResultListenerMethod.changeRoleOfPeer:
                  // Check the HMSException object for details about the error
@@ -231,7 +235,7 @@ Now let's do it step-by-step:
 
 <div className="steps-container">
 
-### PeerA calls changeRoleOfPeer with `force` as false
+### PeerA calls changeRoleOfPeer with force as false
 
 ```dart 
 //Assuming that HMSActionResultListener is implemented in the class where this function is being called 
