@@ -41,3 +41,36 @@ In the example below, the role is configured to publish 720p with 3 simulcast la
 * `f` for full with scale down factor of 1 (= 720p)
 * `h` for half with scale down factor of 2 (= 360p)
 * `q` for quarter with scale down factor of 4 (= 180p)
+
+```js
+{
+    "publishParams": {
+        ...
+        "simulcast": {
+            "video": {
+                "layers": [
+                    {
+                        "rid": "f",
+                        "scaleResolutionDownBy": 1,
+                        "maxBitrate": 700,
+                        "maxFramerate": 30
+                    },
+                    {
+                        "rid": "h",
+                        "scaleResolutionDownBy": 2,
+                        "maxBitrate": 250,
+                        "maxFramerate": 30
+                    },
+                    {
+                        "rid": "q",
+                        "scaleResolutionDownBy": 4,
+                        "maxBitrate": 100,
+                        "maxFramerate": 30
+                    }
+                ]
+            },
+            "screen": {}
+        }
+    }
+}
+```
