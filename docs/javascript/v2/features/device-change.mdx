@@ -45,22 +45,19 @@ hmsActions.setAudioOutputDevice(selectedAudioOutputDeviceID);
 <Tab id='devicechange-1'>
 
 ```jsx
-import {
-  useDevices,
-  DeviceType,
-} from '@100mslive/react-sdk';
+import { useDevices, DeviceType } from '@100mslive/react-sdk';
 
 const DeviceSettings = () => {
-  const { allDevices, selectedDeviceIDs, updateDevice } = useDevices();
-   // Call the updateDevice function like below to update the videoInput device. Similarly for audio input and output pass corresponding deviceId and DeviceType
-   updateDevice({
-      deviceId,
-      deviceType: DeviceType.videoInput
-   });
+    const { allDevices, selectedDeviceIDs, updateDevice } = useDevices();
+    // Call the updateDevice function like below to update the videoInput device. Similarly for audio input and output pass corresponding deviceId and DeviceType
+    updateDevice({
+        deviceId,
+        deviceType: DeviceType.videoInput
+    });
 
-  // render devices and selection from allDevices and selectedDeviceIDs
-  return <div />
-}
+    // render devices and selection from allDevices and selectedDeviceIDs
+    return <div />;
+};
 ```
 
 </Tab>
@@ -84,13 +81,15 @@ await hmsActions.join({ ...joinConfig, rememberDeviceSelection: true });
 
 ```jsx
 const JoinCall = () => {
-  const hmsActions = useHMSActions();
-  const join = useCallback(async () => {
-    await hmsActions.join({ ...joinConfig, rememberDeviceSelection: true });
-  }, [hmsActions]);
+    const hmsActions = useHMSActions();
+    const join = useCallback(async () => {
+        await hmsActions.join({ ...joinConfig, rememberDeviceSelection: true });
+    }, [hmsActions]);
 
-  return <button onClick={join}>Join</button>;
+    return <button onClick={join}>Join</button>;
 };
-
 ```
+
 </Tab>
+
+> Note that `hmsActions.attachVideo` should be called when there's a change in camera. Refer [Render Video](./render-video#when-to-attach-detach-videos) section to see how to handle it.
