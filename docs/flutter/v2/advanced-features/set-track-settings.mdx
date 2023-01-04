@@ -1,19 +1,20 @@
 ---
-title: Set Track Settings
+title: Set Track Settings (Video/Audio)
+
 nav: 4.01
 ---
 
 Sometimes it is required to customize local peer's Audio & Video track settings while creating instances of 100ms SDK.
 
-These settings are optional parameters and are meant to be passed in the `HMSSDK` function as the `hmsTrackSetting` parameter which is an `HMSTrackSettings` object.
+These settings are optional parameters and are meant to be passed in the `HMSSDK` function as the `hmsTrackSetting` parameter which is an `HMSTrackSetting` object.
 
 ### For the Audio track we can set the following properties :
 
 - `useHardwareAcousticEchoCanceler` - Property to enable Hardware echo cancellation. By default, it's set to `true` if the device supports it.
   Please note that on some devices the hardware wrongly reports the HW echo canceler to be present whereas it does not work
   In such cases, the application needs to set this to `false`, so that SW echo canceler is picked up
-- `audioSource` - Property to configure audio nodes mainly used in iOS for audio sharing.
-- `trackInitialState` - Property to set the initial state of the audio track i.e Mute/Unmute.More info about this can be found [here](../features/join-with-muted-audio-video)
+- `audioSource` - Property to configure audio nodes for audio sharing.(iOS Only) More info about this can be found [here](../features/audio_sharing#i-os-setup)
+- `trackInitialState` - Property to set the initial state of the audio track i.e Mute/Unmute. More info about this can be found [here](../features/mute#setting-video-and-mic-off-while-joining)
 
 ## For the Video track we can set the following properties : 
 
@@ -25,7 +26,7 @@ HMSCameraFacing.BACK
 ```
 
 - `disableAutoResize` - Property to disable auto-resizing.
-- `trackInitialState` - Property to set the initial state of the video track i.e Mute/Unmute.More info about this can be found [here](../features/join-with-muted-audio-video)
+- `trackInitialState` - Property to set the initial state of the video track i.e Mute/Unmute. More info about this can be found [here](../features/mute#setting-video-and-mic-off-while-joining)
 - `forceSoftwareDecoder` - Property to use software decoder. By default it's set to `false`.(Android Only)
 
 ## How to add track settings while initializing HMSSDK 
@@ -43,16 +44,16 @@ Here's a sample implementation of adding track settings while initializing 100ms
     trackInitialState: HMSTrackInitState.UNMUTED
   );
   
-HMSTrackSettings trackSettings = HMSTrackSetting(
+HMSTrackSetting trackSetting = HMSTrackSetting(
       audioTrackSetting: audioTrackSetting,
       videoTrackSetting: videoTrackSetting
     );
 
-HMSSDK hmsSDK = HMSSDK(hmsTrackSetting: trackSettings);
+HMSSDK hmsSDK = HMSSDK(hmsTrackSetting: trackSetting);
 ```
 
-You can fetch the track Settings using the method after the build method is called as follows - 
+You can fetch the track Setting using the method after the build method is called as follows - 
 ```dart
-HMSTrackSettings trackSettings = hmsSDK.getTrackSettings();
+HMSTrackSetting trackSetting = hmsSDK.getTrackSettings();
 ```
 

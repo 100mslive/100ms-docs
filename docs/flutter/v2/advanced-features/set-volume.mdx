@@ -25,8 +25,8 @@ It can only be called on remote audio tracks.
       required HMSTrackUpdate trackUpdate,
       required HMSPeer peer}) {
 
-        if(trackUpdate === HMSTrackUpdate.TRACK_ADDED && track.kind == HMSTrackKind.kHMSTrackKindAudio && peer.isLocal === false){
-            track.setVolume("set the required volume");
+        if(trackUpdate == HMSTrackUpdate.TRACK_ADDED && track.kind == HMSTrackKind.kHMSTrackKindAudio && peer.isLocal == false){
+            track.setVolume(1.0); //set the required volume
         }
 }
 ```
@@ -37,6 +37,6 @@ It can only be called on remote audio tracks.
 
 ```dart
 void setVolume(HMSRemoteAudioTrack track,double volume){
-    track.setVolume(volume)
+    track.setVolume(volume);
 }
 ```

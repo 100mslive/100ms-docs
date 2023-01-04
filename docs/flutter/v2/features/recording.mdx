@@ -1,6 +1,6 @@
 ---
 title: RTMP Streaming / Recording
-nav: 3.16
+nav: 3.19
 ---
 
 Want to preserve your video call for posterity in a recording? Or live stream it out to millions of viewers on Twitch or YouTube or whatever gives you an RTMP injest URL?
@@ -29,6 +29,8 @@ To start recording, streaming or both, create an instance of `HMSRecordingConfig
     - Example: `rtmp://a.rtmp.youtube.com/live2/k0jv-329m-1y7f-ktth-ck48`
         - "rtmp://a.rtmp.youtube.com/live2/" - RTMP stream URL.
         - "k0jv-329m-1y7f-ktth-ck48" - RTMP stream key.
+
+    <Content alias="rtmpExternalConfig" />
 
 3. **record**: _Boolean_. If recording is required, set true. If recording is not required, set false. This value has no effect on streaming.
 4. **resolution**: _HMSResolution_. An optional value for the output resolution of the stream. For instance default is landscape at 1280x720 but this could be set for a portrait mode of 720x1280. Or smaller values like 480x80.
@@ -83,7 +85,8 @@ Apart from the rtmp stream and the browser recording, which are ones you can sta
 class HMSRtmpStreamingState {
   final HMSException? error;
   final bool running;
-  HMSRtmpStreamingState({required this.error,required this.running});
+  DateTime? startedAt;
+  HMSRtmpStreamingState({required this.error, required this.running, this.startedAt});
 }
 ```
 
@@ -95,7 +98,8 @@ This represents a livestream to one or more RTMP urls.
 class HMSBrowserRecordingState {
   final HMSException? error;
   final bool running;
-  HMSBrowserRecordingState({required this.error,required this.running});
+  DateTime? startedAt;
+  HMSBrowserRecordingState({required this.error, required this.running, this.startedAt});
 }
 ```
 
@@ -107,7 +111,8 @@ This represents the recording that can be requested to start.
 class HMSServerRecordingState {
   final HMSException? error;
   final bool running;
-  HMSServerRecordingState({required this.error,required this.running});
+  DateTime? startedAt;
+  HMSServerRecordingState({required this.error,required this.running, this.startedAt});
 }
 ```
 

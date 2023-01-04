@@ -1,10 +1,10 @@
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
 import Header from '@/components/Header';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
 import Sidebar from '@/components/Sidebar';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
-import { NextSeo } from 'next-seo';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
 
 interface Props {
     children: JSX.Element;

@@ -1,6 +1,6 @@
 ---
 title: Screen Share
-nav: 3.18
+nav: 3.17
 ---
 
 Flutter SDK provides support for sharing the entire screen of the device to the room.
@@ -203,40 +203,4 @@ hmsSDK.stopScreenShare(hmsActionResultListener: hmsActionResultListener);
 > Screenshare track can be differentiated from normal video track using track's `source` property as `track.source == "SCREEN"` for screenshare
 >tracks
 
-Screenshare tracks can be found in two ways, from `onTrackUpdate` when the track is added and other from peer's `auxiliaryTracks`.
-
-## Screenshare track from onTrackUpdate
-
-Get screenshare track directly from onTrackUpdate and display it as below: 
-
-```dart
-void onTrackUpdate(
-      {required HMSTrack track,
-      required HMSTrackUpdate trackUpdate,
-      required HMSPeer peer}) {
-
-    switch (update) {
-      case HMSTrackUpdate.trackAdded:
-        if (track.source == "SCREEN") {
-            //This track is a screenshare track and can be rendered using HMSVideoView as
-            HMSVideoView(track:track);
-        }
-    }
-}
-```
-
-## Screenshare track from auxiliaryTracks
-
-The peer's screenshare can also be found in `auxiliaryTracks` property of peer. `auxiliaryTracks` is of type `List<HMSTrack>?`.
-
-To get screenshare track from `auxiliaryTracks` the implementation is as follows:
-
-```dart
-HMSTrack? screenShareTrack =
-        peer.auxiliaryTracks?.firstWhere((track) => track.source == "SCREEN");
-if(screenShareTrack != null){
-  //The user is sharing the screen and has screenshare track.
-  HMSVideoView(track: screenShareTrack);
-}
-```
-
+Screenshare can be rendered on the screen similar to normal videos.Checkout the implementation [here](../features/render-video) 

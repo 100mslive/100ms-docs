@@ -21,6 +21,7 @@ import AndroidSdkVersionShield from '../common/android-sdk-version-shield.md';
 import BulkRoleChangeErrors from '../common/bulk-role-change-errors.md';
 import StepsContainer from './StepsContainer';
 import StepsToc from './StepsToc';
+import RtmpExternalConfig from '../common/rtmp-external-config.md';
 
 const data = {
     basics: Basics,
@@ -33,6 +34,7 @@ const data = {
     firewallAndPorts: FirewallAndPorts,
     liveStreaming: LiveStreaming,
     recordings: Recordings,
+    rtmpExternalConfig: RtmpExternalConfig,
     androidSdkVersionShield: AndroidSdkVersionShield,
     bulkRoleChangeErrors: BulkRoleChangeErrors,
     /**

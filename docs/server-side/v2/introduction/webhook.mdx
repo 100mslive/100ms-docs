@@ -60,7 +60,7 @@ Additionally, you can specify headers that will be passed transparently to your 
 
 ## How to configure Webhook
 
-Webhook can be configured using [Developer](https://dashboard.100ms.live/developer) section of [100ms Dashboard](https://dashboard.100ms.live/). Each workspace can have its own webhook configuration. 
+Webhook can be configured using [Developer](https://dashboard.100ms.live/developer) section of [100ms Dashboard](https://dashboard.100ms.live/). Each workspace can have its own webhook configuration.
 
 ## Events
 
@@ -894,30 +894,41 @@ This event will be sent when there are failures in RTMP streaming and/or browser
 3. Incorrect storage (S3) credentials
 4. Other unexpected errors
 
+Please check the below table for possible error types, messages and description.
+
+#### Error types
+
+| Type                | Message                                                                                          | Description                                                                                               |
+| :------------------ | :----------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
+| INTERNAL_ERROR      | Internal error                                                                                   | Internal errors in beam.                                                                                  |
+| MAX_RETRIES_REACHED | Beam couldn't connect to Meeting URL after <max_count> retries. Check if meeting URL is correct. | Sent when Beam cannot join meeting URL after predefined number of max retries.                            |
+| UPLOAD_ERROR        | Failed to upload recordings. Check if upload config is correct.                                  | Sent when there are failures in uploading recordings. This is most likely due to incorrect upload config. |
+| BEAM_STOPPED        | Beam stopped too early                                                                           | Beam takes a few seconds to start, if a stop request is sent before that, we send BEAM_STOPPED error.     |
+
 #### Attributes
 
-| Name               | Type                 | Description                                                                                             |
-| :----------------- | :------------------- | :------------------------------------------------------------------------------------------------------ |
-| beam_id            | `string`             | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                             |
-| job_id             | `string`             | Beam job id <br/><br/> Example: 60b8e1d96eb86d8101b57359                                                |
-| recording_enabled  | `bool`               | Indicates whether recording is enabled or not <br/><br/> Example: true                                  |
-| room_id            | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                     |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                  |
-| template_id        | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                    |
-| error_code         | `int`                | Beam error code <br/><br/> Example: 1                                                                   |
-| error_message      | `string`             | Beam error message (description) <br/><br/> Example: Failed to resolve hostname                         |
-| error_type         | `string`             | Beam error type <br/><br/> Example: BeamFailed                                                          |
-| metadata_id        | `string`             | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                            |
-| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> Example: 2020-11-11T17:32:17Z                             |
-| state_name         | `string`             | Beam state identifier <br/><br/> Example: Failed                                                        |
-| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed <br/><br/> Example: 2020-11-11T17:32:18Z                          |
-| duration           | `int`                | Duration of RTMP streaming / recording in seconds <br/><br/> Example: 12                                |
-| max_width          | `int`                | Maximum width of the screen supported for streaming / recording in pixels <br/><br/> Example: 1280      |
-| max_height         | `int`                | Maximum height of the screen supported for streaming / recording in pixels <br/><br/> Example: 720      |
-| meeting_url        | `string`             | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                 |
-| rtmp               | `array`              | List of RTMP objects provided at rtmp start <br/><br/> Example: [{"url": "http://test.com"}]            |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                 |
+| Name               | Type                 | Description                                                                                                          |
+| :----------------- | :------------------- | :------------------------------------------------------------------------------------------------------------------- |
+| beam_id            | `string`             | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                                          |
+| job_id             | `string`             | Beam job id <br/><br/> Example: 60b8e1d96eb86d8101b57359                                                             |
+| recording_enabled  | `bool`               | Indicates whether recording is enabled or not <br/><br/> Example: true                                               |
+| room_id            | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                  |
+| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4              |
+| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                               |
+| template_id        | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                 |
+| error_code         | `int`                | Beam error code <br/><br/> Example: 1 <br/> (Deprecated)                                                             |
+| error_message      | `string`             | Beam error message (description) <br/><br/> Example: Failed to upload recordings. Check if upload config is correct. |
+| error_type         | `string`             | Beam error type <br/><br/> Example: UPLOAD_ERROR                                                                     |
+| metadata_id        | `string`             | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                                         |
+| metadata_timestamp | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> Example: 2020-11-11T17:32:17Z                                          |
+| state_name         | `string`             | Beam state identifier <br/><br/> Example: Failed <br/> (Deprecated)                                                  |
+| state_timestamp    | `timestamp (in UTC)` | Timestamp at which beam state changed <br/><br/> Example: 2020-11-11T17:32:18Z <br/> (Deprecated)                    |
+| duration           | `int`                | Duration of RTMP streaming / recording in seconds <br/><br/> Example: 12                                             |
+| max_width          | `int`                | Maximum width of the screen supported for streaming / recording in pixels <br/><br/> Example: 1280                   |
+| max_height         | `int`                | Maximum height of the screen supported for streaming / recording in pixels <br/><br/> Example: 720                   |
+| meeting_url        | `string`             | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                              |
+| rtmp               | `array`              | List of RTMP objects provided at rtmp start <br/><br/> Example: [{"url": "http://test.com"}]                         |
+| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                              |
 
 #### Sample `beam.failure` event
 
@@ -931,8 +942,8 @@ This event will be sent when there are failures in RTMP streaming and/or browser
     "data": {
         "beam_id": "************************",
         "error_code": 1,
-        "error_message": "[tcp @ 0x55f6cc5f5780] Failed to resolve hostname rvs-isr: Name or service not known",
-        "error_type": "BeamFailed",
+        "error_message": "Failed to upload recordings. Check if upload config is correct.",
+        "error_type": "UPLOAD_ERROR",
         "job_id": "************************",
         "metadata_id": "********-****-****-****-***********",
         "metadata_timestamp": "2021-11-30T20:36:55.807155801Z",
@@ -1086,6 +1097,17 @@ This event will be sent when there are failures in HLS streaming and/or recordin
 1. The meeting_url is invalid
 2. Other unexpected errors with HLS streaming / recording.
 
+Please check the below table for possible error types, messages and description.
+
+#### Error types
+
+| Type                | Message                                                                                          | Description                                                                                               |
+| :------------------ | :----------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
+| INTERNAL_ERROR      | Internal error                                                                                   | Internal errors in beam.                                                                                  |
+| MAX_RETRIES_REACHED | Beam couldn't connect to Meeting URL after <max_count> retries. Check if meeting URL is correct. | Sent when Beam cannot join meeting URL after predefined number of max retries.                            |
+| UPLOAD_ERROR        | Failed to upload recordings. Check if upload config is correct.                                  | Sent when there are failures in uploading recordings. This is most likely due to incorrect upload config. |
+| BEAM_STOPPED        | Beam stopped too early                                                                           | Beam takes a few seconds to start, if a stop request is sent before that, we send BEAM_STOPPED error.     |
+
 #### Attributes
 
 | Name                                    | Type                 | Description                                                                                                                                                                         |
@@ -1101,13 +1123,13 @@ This event will be sent when there are failures in HLS streaming and/or recordin
 | max_width                               | `int`                | Maximum width of the screen supported for HLS streaming / recording in pixels <br/><br/> Example: 1280                                                                              |
 | max_height                              | `int`                | Maximum height of the screen supported for HLS streaming / recording in pixels <br/><br/> Example: 720                                                                              |
 | meeting_url                             | `string`             | meeting_url provided at HLS start <br/><br/> Example: "https://app.100ms.live/room_id"                                                                                              |
-| error_code                              | `int`                | Beam error code <br/><br/> Example: 1                                                                                                                                               |
-| error_message                           | `string`             | Beam error message (description) <br/><br/> Example: Beam failed with unknown error                                                                                                 |
-| error_type                              | `string`             | Beam error type <br/><br/> Example: BeamFailed                                                                                                                                      |
+| error_code                              | `int`                | Beam error code <br/><br/> Example: 1 <br/> (Deprecated)                                                                                                                            |
+| error_message                           | `string`             | Beam error message (description) <br/><br/> Example: Failed to upload recordings. Check if upload config is correct.                                                                |
+| error_type                              | `string`             | Beam error type <br/><br/> Example: UPLOAD_ERROR                                                                                                                                    |
 | metadata_id                             | `string`             | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                                                                                                        |
 | metadata_timestamp                      | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> Example: 2020-11-11T17:32:17Z                                                                                                         |
-| state_name                              | `string`             | Beam state identifier <br/><br/> Example: HLSFailed                                                                                                                                 |
-| state_timestamp                         | `timestamp (in UTC)` | Timestamp at which beam state changed <br/><br/> Example: 2020-11-11T17:32:18Z                                                                                                      |
+| state_name                              | `string`             | Beam state identifier <br/><br/> Example: HLSFailed <br/> (Deprecated)                                                                                                              |
+| state_timestamp                         | `timestamp (in UTC)` | Timestamp at which beam state changed <br/><br/> Example: 2020-11-11T17:32:18Z <br/> (Deprecated)                                                                                   |
 | duration                                | `int`                | Duration of HLS streaming in seconds <br/><br/> Example: 12                                                                                                                         |
 | session_started_at                      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                                             |
 
@@ -1123,8 +1145,8 @@ This event will be sent when there are failures in HLS streaming and/or recordin
     "data": {
         "beam_id": "************************",
         "error_code": 1,
-        "error_message": "Beam failed with unknown error",
-        "error_type": "BeamFailed",
+        "error_message": "Failed to upload recordings. Check if upload config is correct.",
+        "error_type": "UPLOAD_ERROR",
         "job_id": "************************",
         "metadata_id": "********-****-****-****-***********",
         "metadata_timestamp": "2021-11-30T20:36:55.807155801Z",

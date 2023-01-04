@@ -1,13 +1,11 @@
 ---
 title: Chat
-nav: 3.05
+nav: 3.11
 ---
 
 What's a video call without being able to send messages to each other too? 100ms supports chat for every video/audio room you create.
 
-You can see an example of every type of message (of the types below) being sent and displayed in the advanced [sample app](https://github.com/100mslive/100ms-android/).
-
-### Addressing messages
+### Message Types
 
 * [Broadcast messages](#sending-broadcast-messages) are sent to Everyone in the chat `hmsSDK.sendBroadcastMessage`.
 
@@ -18,6 +16,111 @@ You can see an example of every type of message (of the types below) being sent 
 
 ## Sending Chat Messages
 
+Let's look at a simple implementation for chat methods:
+
+```dart 
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+  ...
+
+  // onMessage is HMSUpdateListener method called when a new message is received
+  @override
+  void onMessage({required HMSMessage message}) {
+    //Here we will receive messages sent by other peers
+  }
+
+  void sendBroadcastMessage(String message,String type) {
+        ///[message]: Message to be sent
+        ///[type]: Message type(More about this at the end)
+        ///[hmsActionResultListener]: instance of class implementing HMSActionResultListener 
+        //Here this is an instance of class that implements HMSActionResultListener i.e. Meeting
+        hmsSDK.sendBroadcastMessage(
+          message: message,
+          type: type,
+          hmsActionResultListener: this);
+  }
+
+  void sendDirectMessage(String message, HMSPeer peerTo,String type) async {
+        ///[message]: Message to be sent
+        ///[peerTo]: Peer to whom message needs to be sent
+        ///[type]: Message type(More about this at the end)
+        ///[hmsActionResultListener]: instance of class implementing HMSActionResultListener 
+        //Here this is an instance of class that implements HMSActionResultListener i.e. Meeting
+        hmsSDK.sendDirectMessage(
+          message: message,
+          peerTo: peerTo,
+          type: type,
+          hmsActionResultListener: this);
+  }
+
+  void sendGroupMessage(String message, List<HMSRole> rolesToSendMessage,String type) async {
+
+        ///[message]: Message to be sent
+        ///[hmsRolesTo]: Roles to which this message needs to be sent
+        ///[type]: Message type(More about this at the end)
+        ///[hmsActionResultListener]: instance of class implementing HMSActionResultListener 
+        //Here this is an instance of class that implements HMSActionResultListener i.e. Meeting
+        hmsSDK.sendGroupMessage(
+            message: message,
+            hmsRolesTo: rolesToSendMessage,
+            type: type,
+            hmsActionResultListener: this);
+  }
+
+  @override
+  void onSuccess(
+    {HMSActionResultListenerMethod methodType =
+        HMSActionResultListenerMethod.unknown,
+    Map<String, dynamic>? arguments}) {
+
+        switch (methodType) {
+
+          case HMSActionResultListenerMethod.sendBroadcastMessage:
+          //Broadcast Message sent successfully
+          break;
+
+          case HMSActionResultListenerMethod.sendGroupMessage:
+          //Group Message sent successfully
+          break;
+
+          case HMSActionResultListenerMethod.sendDirectMessage:
+          //Direct Message sent successfully
+          break;
+          ...
+      }
+    }
+
+  @override
+  void onException(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments,
+      required HMSException hmsException}) {
+
+        switch (methodType) {
+
+            case HMSActionResultListenerMethod.sendBroadcastMessage:
+            // Check the HMSException object for details about the error
+            break;
+
+            case HMSActionResultListenerMethod.sendGroupMessage:
+            // Check the HMSException object for details about the error
+            break;
+
+            case HMSActionResultListenerMethod.sendDirectMessage:
+            // Check the HMSException object for details about the error
+            break;
+            ...
+        }
+  
+    }
+
+  ...
+}
+
+```
+
+Now lets at each method one by one :
 
 ### Sending Broadcast Messages
 
@@ -26,7 +129,8 @@ Want to let everyone in the chat know something? Call `sendBroadcastMessage` on 
 The parameters are:
 
 1. *message*: The text of the message.
-
+2. *type*[optional]: The type of the message, default is `chat`.
+3. *hmsActionResultListener*: An instance of `HMSActionResultListener`.
 
 > 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error.
 >
@@ -41,12 +145,14 @@ hmsSDK.sendBroadcastMessage(message: "Hi", hmsActionResultListener: hmsActionRes
 
 ### Sending Direct Messages
 
-Got secrets to share? Send a message directly to a single person in the chat with a direct message. Call `sendDirectMessage` on an instance of `HMSSDK`.
+Got secrets to share? Send a message directly to a single person with a direct message. Call `sendDirectMessage` on an instance of `HMSSDK`.
 
 The parameters are:
 
 1. *message*: The text of the message.
-2. *peerTo*: The `HMSPeer` instance who should receive the message.
+2. *peerTo*: The `HMSPeer` instance that should receive the message.
+3. *type*[optional]: The type of the message, default is `chat`.
+4. *hmsActionResultListener*: An instance of `HMSActionResultListener`.
 
 
 > 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error.
@@ -54,7 +160,6 @@ The parameters are:
 >It does not convey whether the message was delivered to or read by the recipient.
 >
 >Also it's important to make a new callback per message because it will only contain the results of that particular call for sending a message.
-
 
 
 ```dart
@@ -73,7 +178,8 @@ The parameters are:
 
 1. *message*: The text of the message.
 2. *hmsRolesTo*: The list of `HMSRole` i.e the roles to whom the message needs to be sent.
-
+3. *type*[optional]: The type of the message, default is `chat`.
+4. *hmsActionResultListener*: An instance of `HMSActionResultListener`.
 
 > 💡 Note that the callback only lets you know if the server has received your request for the message or if there was some error.
 >
@@ -91,7 +197,9 @@ hmsSDK.sendGroupMessage(message: "Hi",
 
 When you called `hmsSDK.join(config)` to join a room, the `HMSUpdateListener` implementation that was passed in had the callback `void onMessage({required HMSMessage message});`.
 
-This is where you'll receive new messages as `HMSMessage` during the call. It contains:
+This is where you'll receive new messages as `HMSMessage` during the call.
+
+Let's look at what the `HMSMessage` class looks like:
 
 ```dart
 class HMSMessage(
@@ -115,25 +223,31 @@ class HMSMessage(
 * *message*: Content of the text message or the text description of the raw message.
 * *type*: Type of message sent. The default value is `chat`.
 * *hmsMessageRecipient*: The intended recipient(s) of this message as a `HMSMessageRecipient`.
-* *time*: DateTime of when the messaging server receives this message. Update the time in your own messages when this comes back from the server in `HMSUpdateListener.onMessageReceived` for accurate ordering of your own messages.
+* *time*: DateTime of when the messaging server receives this message. This can be used for accurate ordering of your messages.
 * *sender*: The `HMSPeer` who is sending this message.
 
-`Identifying Senders`:
+Let's break down each parameter a bit more in detail :
 
-The sender of a message is always contained in the `sender` field of HMSMessage. This lets you get the name and peer id of any message sender.
+<div className="steps-container">
 
-`Message Body`:
+
+### Identifying Senders:
+
+The sender of a message is always contained in the `sender` field of HMSMessage. This lets you get the name and peer id of the sender.
+
+### Message Body:
 
 The body of the message is in `message` as a String.
 
-`Time`:
+### Time:
 
 The time the message was sent is contained in `time` as a DateTime datatype.
 
 ### Putting together a list of chat messages.
+
 The UI is completely up to you to decide! You'll also need to hold onto all the received messages if you want to display history.
 
-#### Identifying who the message was for
+### Identifying who the message was for
 
 The HMSMessageRecipient contained in the `hmsMessageRecipient` field of `HMSMessage` lets you know who the message was for.
 
@@ -147,17 +261,18 @@ class HMSMessageRecipient{
 }
 ```
 
+
 `recipientPeer`: Only contains a peer when a specific single peer is being direct messaged.
 
 `recipientRoles`: Only contains values when a group message is being sent to many roles.
 
-`hmsMessageRecipientType`: Can contain enum value `BROADCAST`, `PEER` and `ROLES`.
+`hmsMessageRecipientType`: Can contain enum values `BROADCAST`, `PEER` and `ROLES`.
 
 - `HMSMessageRecipientType.BROADCAST` for a message being sent to everyone. If this is true, the other two fields will be null and empty respectively.
 
-- `HMSMessageRecipientType.PEER` will be set when it's a direct message.
+- `HMSMessageRecipientType.PEER` will be set when it\'s a direct message.
 
-- `HMSMessageRecipientType.ROLES` will be set when it's a message to one or many roles.
+- `HMSMessageRecipientType.ROLES` will be set when it\'s a message to one or many roles.
 
 ### Store Chat Messages
 
@@ -184,23 +299,26 @@ List<HMSMessage> peerList = [];
 List<HMSMessage> messageFilter(List<HMSMessage> messages, HMSMessageRecipientType type) {
   filterList = [];
   for(HMSMessage message in messages) {
-    // Filter list on the basis of Broadcast chat.
+
+    // Filter list based on Broadcast chat.
     if(message.hmsMessageRecipient.hmsMessageRecipientType == HMSMessageRecipientType.BROADCAST) {
       broadcastList.add(message);
     }
 
-    // Filter list on the basis of Roles chat.
+    // Filter list based on Roles chat(group messages).
     if(message.hmsMessageRecipient.hmsMessageRecipientType == HMSMessageRecipientType.ROLES) {
       rolesList.add(message);
     }
 
-    // Filter list on the basis of Peer chat.
+    // Filter list based on Peer chat(direct messages).
     if(message.hmsMessageRecipient.hmsMessageRecipientType == HMSMessageRecipientType.PEER) {
       peerList.add(message);
     }
   }
 }
 ```
+
+</div>
 
 ### Advanced Use-Cases
 

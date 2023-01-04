@@ -16,7 +16,7 @@ dependencies:
 
   hmssdk_flutter:
 ```
-> HMSSDK is supported with flutter 2.10.x or above versions.
+> HMSSDK is supported with flutter 3.3.x or above versions.
 
 > There are 2 ways of adding plugin in pubspec.yaml file with and without version locking.
 > Without version locking flutter will fetch the latest compatible package with your project.
@@ -28,9 +28,6 @@ Run following in command in terminal.
 
 ```bash
 flutter pub get
-flutter build apk
-flutter build ios
-flutter run
 ```
 ## Update Version
 
@@ -69,8 +66,6 @@ Camera, Recording Audio and Internet permissions are required. Add them to your 
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 ```
 
-You will also need to request Camera and Record Audio permissions at runtime before you join a call or display a preview. Please follow [Android Documentation](https://developer.android.com/training/permissions/requesting#request-permission) for runtime permissions.
-
 ### Update target Android version
 
 Update the Android SDK version to 21 or later by navigating to the directory and updating the android/app/build.gradle file
@@ -80,16 +75,6 @@ defaultConfig{
   minSdkVersion 21
   …
 }
-```
-
-## Proguard configuration
-
-Add this to your proguard-rules.pro
-
-```kotlin
-# 100ms proguard rules
--keep class org.webrtc.** { *; }
--keep class live.hms.video.** { *; }
 ```
 
 ### iOS
@@ -129,6 +114,7 @@ permission_handler:
 
 ```dart
 Future<bool> getPermissions() async {
+  // In iOS permission are handle by OS.
   if (Platform.isIOS) return true;
   await Permission.camera.request();
   await Permission.microphone.request();
