@@ -38,11 +38,16 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
 
     const [currentDocSlug] = slug as string[];
     const [navAPI, setNavAPI] = useState(currentNav);
+
     useEffect(() => {
-        fetch('/docs/api/content?query=nav')
-            .then((res) => res.json())
-            .then((result) => setNavAPI(result.nav))
-            .catch((e) => console.log(e));
+        const fetchedNav = sessionStorage.getItem('fetchedNav');
+        if (fetchedNav !== 'true') {
+            sessionStorage.setItem('fetchedNav', 'true');
+            fetch('/docs/api/content?query=nav')
+                .then((res) => res.json())
+                .then((result) => setNavAPI(result.nav))
+                .catch((e) => console.log(e));
+        }
     }, []);
 
     let nav;
