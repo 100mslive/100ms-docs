@@ -106,7 +106,7 @@ if (regularVideoTrack) {
 
 To receive the `Room` updates like number of peers in the room or when new peer joins the room, You can also add listener for `HMSUpdateListenerActions.ON_ROOM_UPDATE` as follows -
 
-> Note: To receive Room State in preview i.e. before joining the room, You can enable this feature in [Template](https://www.100ms.live/docs/react-native/v2/foundation/templates-and-roles) of the room. Refer [here](https://www.100ms.live/docs/react-native/v2/foundation/templates-and-roles) for more
+> Note: To receive Room State in preview i.e. before joining the room, You can enable this feature in [Template](https://www.100ms.live/docs/react-native/v2/foundation/templates-and-roles) of the room. Refer [here](#get-peer-updates-and-room-state-in-preview) for more info
 
 ```js
 const onRoomUpdate = (data: { room: HMSRoom; type: HMSRoomUpdate }) => {
@@ -118,11 +118,21 @@ const onRoomUpdate = (data: { room: HMSRoom; type: HMSRoomUpdate }) => {
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ROOM_UPDATE, onRoomUpdate);
 ```
 
+### Remove Preview event listener
+
+When you are ready to [Join Room](https://www.100ms.live/docs/react-native/v2/features/join) or navigating away from preview, you don't need to keep listening to preview updates.
+
+To stop receiving preview updates, we can remove the preview event listener as follows -
+
+```js
+hmsInstance.removeEventListener(HMSUpdateListenerActions.ON_PREVIEW);
+```
+
 </div>
 
 ## Get Peer Updates and Room State in Preview
 
-To enable `onPeerUpdate` in the preview, we need to enable room state from the dashboard.
+To enable Room State and Peer Updates in the preview, we need to enable room state from the dashboard.
 This can be enabled by selecting a template and then navigating to advanced settings.
 
 ![Advanced settings](/docs/v2/flutter-advanced-settings.png)
