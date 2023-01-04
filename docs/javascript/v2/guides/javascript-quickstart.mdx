@@ -429,6 +429,8 @@ In this section, let's walk through what the code does.
 Let us start with initializing the libraries. We need two instances to get started:
 
 -   An instance of [HMSStore](/api-reference/javascript/v2/interfaces/HMSStore) that holds the complete state of the application such as details of all the participants. We can also visualize this state at any time using the [DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en) extension.
+    This HMSStore is a single source of truth for the entire SDK. To get access to the data from this store, you have to call [hmsStore.subscribe()](/api-reference/javascript/v2/interfaces/IHMSStore#subscribe). It takes two parameters. A callback and a selector which tells the store which slice of state you want to subscribe to.
+    The `subscribe()` also returns a reference to `unsubscribe()` which could be used later to ubsubscribe from the subscription.
 -   And an instance of [HMSActions](/api-reference/javascript/v2/interfaces/HMSActions) that will help us perform actions such as joining the room, muting our audio, and sending messages.
 
 ```jsx:index.js section=InitializingTheSDK sectionIndex=1
@@ -1055,30 +1057,6 @@ Refer to [Test the app section](/javascript/v2/guides/javascript-quickstart#test
 
 </div>
 
-## hmsStore.subscribe()
-
-You might notice that `hmsStore.subscribe()` is used in many places. Let's take a moment to discuss this function.
-hmsStore is a single source of truth for all SDK related data. To get access to this store, we have to `subscribe()` to
-the store. It takes two arguments, a callback and a selector to tell what data in the store you want to subscribe.
-
-**subscribe**: `Subscribe`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\>
-
-Subscribe to a part of store using selectors, whenever the subscribed part changes, the callback
-is called with both the latest and previous value of the changed part. The subscribe also returns
-a reference to `unsubscribe`, which could be used to unsubscribe the subscription.
-
-Example usage:
-
-```
-const onSpeakerUpdate = (speaker, prevSpeaker) => {
- console.log("speaker changed from - ", prevSpeaker, ", to - ", speaker);
-}
-const unsub = store.subscribe(onSpeakerUpdate, selectDominantSpeaker);
-
-// To unsubscribe from the listener,
-unsub();
-
-```
 ## Next steps
 
 Here's the complete example.
