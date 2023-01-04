@@ -39,13 +39,11 @@ const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
         router.events.on('routeChangeError', () => NProgress.done());
     }, []);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const getLayout = (Component as any)?.getLayout || ((page) => page);
     return (
         <>
             <DefaultSeo {...SEO} />
             <HMSThemeProvider>
-                {getLayout(<Component {...pageProps} key={router.asPath} />)}
-                {/* <Component {...pageProps} key={router.asPath} /> */}
+                <Component {...pageProps} key={router.asPath} />
             </HMSThemeProvider>
         </>
     );

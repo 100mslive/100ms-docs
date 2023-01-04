@@ -1,12 +1,12 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import hydrate from 'next-mdx-remote/hydrate';
 import renderToString from 'next-mdx-remote/render-to-string';
 import mdxPrism from 'mdx-prism';
-import DocLayout from '@/layouts/DocLayout';
 import EditFile from '@/components/EditFile';
 import components from '@/components/MDXComponents';
 import Pagination from '@/components/Pagination';
@@ -52,7 +52,6 @@ interface Props {
         previousPost: PaginationType;
         nextPost: PaginationType;
     };
-    // allDocs: AllDocsType[];
     source: {
         compiledSource: string;
         renderedOutput: string;
@@ -117,8 +116,20 @@ const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
     const menuState = { menu, setMenu };
     useLockBodyScroll(modal);
 
+    const router = useRouter() as any;
+    const SEO = {
+        title: `${frontMatter.title || '100ms Docs'} | 100ms`,
+        openGraph: {
+            title: `${frontMatter.title || '100ms Docs'} | 100ms`
+        },
+        canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${
+            router.asPath === '/' ? '' : router.asPath.split('?')[0]
+        }`
+    };
+
     return (
-        <>
+        <div style={{ margin: '0' }}>
+            <NextSeo {...SEO} />
             <SegmentAnalytics options={{}} title={frontMatter.title} />
             <Header modal={modal} setModal={setModal} menuState={menuState} />
             <div
@@ -169,7 +180,7 @@ const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
                     />
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
@@ -232,8 +243,4 @@ export const getStaticPaths = async () => {
         paths,
         fallback: false
     };
-};
-
-DocSlugs.getLayout = function getLayout(page) {
-    return <DocLayout>{page}</DocLayout>;
 };
