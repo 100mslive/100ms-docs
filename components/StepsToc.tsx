@@ -15,7 +15,6 @@ export default function StepsToc({
     descriptions: string[];
 }) {
     // props from mdx gets converted to a string
-    console.log(descriptions)
     if (typeof descriptions === 'string') {
         let descriptionString = descriptions as string;
         descriptions = JSON.parse(descriptionString) as string[];
