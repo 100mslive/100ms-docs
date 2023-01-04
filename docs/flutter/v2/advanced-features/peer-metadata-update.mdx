@@ -3,47 +3,228 @@ title: Peer Metadata Update
 nav: 4.2
 ---
 
-Looking for persistent state that can be set on a peer and updated anytime, for everyone in the room? Peer metadata is it.
+Looking for a persistent state that can be set on a peer and updated anytime, for everyone in the room? Peer metadata is it.
 
-Metadata can be set initially in the `HMSConfig` object that's passed into the join method.
+Metadata can be set initially in the `HMSConfig` object that's passed into the join method. This can be used to display profile pictures as the user's avatar in meetings.
+
+Something similar to this:
+
+```dart
+HMSConfig config = HMSConfig(userName: "John Doe",
+                      authToken: "eyJH5c",
+                      metadata: "{"avatar": "location/on/amazon/storage"}");
+```
 
 This section will show you how to:
-1. [Read Peer Metadata](#reading-metadata).
+1. [Get Peer Metadata](#get-peer-metadata).
 2. [Respond to when a remote peer changes its metadata](#responding-to-updates).
 3. [How to set a peer's metadata](#updating-metadata).
 
-The `HMSPeer` object contained parameter `metadata`.
+The `HMSPeer` object contains the parameter `metadata`.
 
-Any peer can change the metadata for themselves. Currently one peer cannot change another peer's metadata.
+Any peer can change the metadata for themselves. Currently, one peer cannot change another peer's metadata.
 
-To change their own metadata value the peer should call `changeMetadata` on their `HMSSDK` instance.
+To change their metadata value the peer should call `changeMetadata` on their `HMSSDK` instance.
 
 The data may be any arbitrary string though it cannot be changed to null.
 
-## Reading metadata
+## Get Peer metadata
 
-To read metadata, read the `metadata` value on any `HMSPeer` instance.
+To get peer metadata, read the `metadata` value on any `HMSPeer` instance as:
 
-## Responding to updates
+```dart
+void getPeerMetadata(HMSPeer peer){
+  //Setting String as nullable since metadata can be null as well
+  String? metadata = peer.metadata;
+}
+```
 
-Whenever a remote peer's metadata is updated a callback will be received in `onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update})` of `HMSUpdateListener` where the `update` value will be of type `HMSPeerUpdate.metadataChanged`.
+## How to listen to updates when metadata of any peer is updated
+
+Whenever a remote peer's metadata is updated a callback will be received in `onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update})` of `HMSUpdateListener` where the `HMSPeerUpdate` type will be `HMSPeerUpdate.metadataChanged` as:
+
+```dart 
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+  ...
+
+  @override
+  void onPeerUpdate(
+      {required HMSPeer peer, required HMSPeerUpdate update}) async {
+
+        switch (update){
+          ...
+
+          case HMSPeerUpdate.metadataChanged:
+          //We can get the metadata from HMSPeer object
+          String? metadata = peer.metadata
+          break;
+
+          ...
+        
+        }
+  }
+}
+```
 
 When this callback is received the UI for that peer should be updated as well.
 
-## Updating Metadata
+## How a peer can set its metadata
 
-Here is how a peer can set their own metadata to a random string. In this case the string is stringified json.
+Here is how a peer can set their own metadata to a random string. In this case, the string is stringified JSON.
 
+Example String: "{\"Zodiac Sign\": \"Virgo\" }"
 
 ```dart
-// String newMetadata = "{\"ms\": 100 }"
+class Meeting  implements HMSUpdateListener, HMSActionResultListener{ 
+
+    ... 
+
 void changeMetadata(
       {required String metadata,
       required HMSActionResultListener hmsActionResultListener}) {
+    ///[metadata] is a stringified JSON as above
+    ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+    //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
     hmsSDK.changeMetadata(
-        metadata: metadata, hmsActionResultListener: hmsActionResultListener);
+        metadata: metadata, hmsActionResultListener: this);
   }
+
+      @override
+    void onSuccess(
+        {HMSActionResultListenerMethod methodType =
+            HMSActionResultListenerMethod.unknown,
+        Map<String, dynamic>? arguments}) {
+
+            switch (methodType) {
+
+            case HMSActionResultListenerMethod.changeMetadata:
+            //metadata updated successfully
+            break;
+            ...
+        }
+    }
+
+    @override
+    void onException(
+        {HMSActionResultListenerMethod methodType =
+            HMSActionResultListenerMethod.unknown,
+        Map<String, dynamic>? arguments,
+        required HMSException hmsException}) {
+
+            switch (methodType) {
+
+                case HMSActionResultListenerMethod.changeMetadata:
+                 // Check the HMSException object for details about the error
+                break;
+                ...
+        }
+    }
+}
 ```
 
+## Use cases 
 
+### Implement hand raise in applications
 
+This is a very common requirement where the people attending a webinar or online class wish to ask a question they can let the
+speaker know by raising their hands in the application similar to what they would have done in an offline event 
+
+Let's understand this with a diagram:
+
+![hand-raise](/docs/v2/flutter-accept-hand-raise.png)
+
+Let's check the implementation step-by-step:
+
+<div className="steps-container">
+
+### PeerA calls changeMetadata
+
+Peer A calls `changeMetadata` with metadata as: `"{\"isHandRaised\":true}"` since the `metadata` string is a stringified JSON. 
+We can also use `jsonEncode()` method for this.
+
+```dart 
+class Meeting  implements HMSUpdateListener, HMSActionResultListener{ 
+
+    ...
+
+    String metadata = "{\"isHandRaised\":true}";
+    hmsSDK.changeMetadata(
+        metadata: metadata, hmsActionResultListener: this);
+
+    @override
+    void onSuccess(
+        {HMSActionResultListenerMethod methodType =
+            HMSActionResultListenerMethod.unknown,
+        Map<String, dynamic>? arguments}) {
+
+            switch (methodType) {
+
+            case HMSActionResultListenerMethod.changeMetadata:
+            //Here we will get the update regarding changeMetadata method
+            break;
+            ...
+        }
+    }
+
+    @override
+    void onException(
+        {HMSActionResultListenerMethod methodType =
+            HMSActionResultListenerMethod.unknown,
+        Map<String, dynamic>? arguments,
+        required HMSException hmsException}) {
+
+            switch (methodType) {
+
+                case HMSActionResultListenerMethod.changeMetadata:
+                 // Check the HMSException object for details about the error
+                break;
+                ...
+        }
+    }
+}
+```
+
+### PeerA receives onSuccess event
+
+This shows that the method call was successful.
+
+### All the peers receive onPeerUpdate
+
+As soon as we get `onSuccess` callback for `changeMetadata` method call, all the peers in the room will get `onPeerUpdate` callback
+with `HMSPeerUpdate` type as `HMSPeerUpdate.metadataChanged`.
+
+Let's see how we can update the UI using this:
+
+```dart 
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+  ...
+
+  @override
+  void onPeerUpdate(
+      {required HMSPeer peer, required HMSPeerUpdate update}) async {
+
+        switch (update){
+          ...
+
+          case HMSPeerUpdate.metadataChanged:
+          //We can get the metadata from HMSPeer object
+          if(peer.metadata?.contains("\"isHandRaised\":true")){
+            //This shows that peer has raised the hand
+            //UI can be updated by using the peer object
+          }
+          break;
+
+          ...
+        
+        }
+  }
+}
+```
+
+</div>
+
+### Implement polls in room
+
+We can use peer's metadata property to implement polls similar to what we did above.

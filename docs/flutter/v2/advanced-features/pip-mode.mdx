@@ -1,5 +1,5 @@
 ---
-title: PIP Mode
+title: PIP Mode(Android Only)
 nav: 4.9
 ---
 
@@ -17,7 +17,12 @@ Currently this functionality is only available on Android.
 
 ### How to add PiP support
 
-1. You need to update the activity tag in the `AndroidManifest.xml`
+<div className="steps-container">
+
+
+### Update the manifest file
+
+You need to update the activity tag in the `AndroidManifest.xml`
 
 ```xml
 <activity
@@ -27,19 +32,29 @@ Currently this functionality is only available on Android.
     ... />
 ```
 
-2. PIP mode only works above Android API Level 26(Android 8.0) but to check whether the current device supports PIP mode or not `isPipAvailable` method can be used:
+### Check PIP availablility
+
+PIP mode only works above Android API Level 26(Android 8.0) but to check whether the current device supports PIP mode or not `isPipAvailable` method can be used:
 
 ```dart
 hmsSDK.isPipAvailable();
 ```
 
-3. To show PIP mode in the application:
+### Enter PIP mode
+
+To show PIP mode in the application:
 
 ```dart
 // enterPipMode is a Future<bool> function where true indicates that the application has entered pip mode successfully.
-hmsSDK.enterPipMode(autoEnterPip: true/false, aspectRatio: [16, 9]);
+///[autoEnterPip] if true start pip mode will start automatically when app is minimized.For android 12 and above
+///[aspectRatio]: List of double indicating ratio for PIP window as [width,height]  
+bool isPipEnteredSuccesfully = await hmsSDK.enterPipMode(autoEnterPip: true/false, aspectRatio: [16, 9]);
 ```
-4. To check whether PIP mode is currently active use `isPipActive` method as:
+</div>
+
+## How to check whether PIP is active
+
+To check whether PIP mode is currently active use `isPipActive` method as:
 
 ```dart
 hmsSDK.isPipActive();
