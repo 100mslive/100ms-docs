@@ -11,8 +11,8 @@ const Feedback = () => {
     const [firstSelection, setFirstSelection] = React.useState(0);
     const [submitSuccessful, setSubmitSuccessful] = React.useState(false);
     const [message, setMessage] = React.useState('');
-    const feedBackRef = React.createRef<HTMLDivElement>();
-    const inputRef = React.createRef<HTMLTextAreaElement>();
+    const feedBackRef = React.useRef<HTMLDivElement>(null);
+    const inputRef = React.useRef<HTMLTextAreaElement>(null);
 
     const getPlaceholder = {
         1: 'What should we fix?',
@@ -81,7 +81,8 @@ const Feedback = () => {
                         css={{
                             color: '$textAccentHigh',
                             fontWeight: '$semiBold',
-                            textAlign: 'center'
+                            textAlign: 'center',
+                            marginBottom: '$6'
                         }}>
                         Feedback successfully submitted. Thank you!
                     </Text>
