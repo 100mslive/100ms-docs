@@ -127,7 +127,13 @@ On Android 12 devices, new Bluetooth permissions have been added to interact wit
 1. Declare `BLUETOOTH_CONNECT` permission in AndroidManifest.xml file.
 
 ```xml
-  <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+<uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+
+<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+
+<uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
 ```
 
 2. The `BLUETOOTH_CONNECT` permission is runtime permission. Therefore, you must also request user approval at runtime before you join a call or display a preview in your app, like we do for Camera and Audio Permissions.
