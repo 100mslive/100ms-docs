@@ -41,6 +41,8 @@ You may choose to do either:
 ```dart
 class Meeting  implements HMSUpdateListener, HMSActionResultListener{ 
 
+    ...
+
     void changeRoleOfPeer({required HMSPeer peer,required HMSRole roleName,bool forceChange}) {
         ///[peer]: peer whose role needs to be changed
         ///[toRole]: the role which we want the peer to be in(destination role).
@@ -112,6 +114,9 @@ If the changeRole was succeeded you will get an update in the `onPeerUpdate` wit
 With the same peer, you passed as `forPeer` and an `HMSPeerUpdate.roleUpdated` update type.
 
 ```dart
+class Meeting  implements HMSUpdateListener, HMSActionResultListener{ 
+
+  ...
   @override
   void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) async {
     switch (update) {
@@ -124,6 +129,7 @@ With the same peer, you passed as `forPeer` and an `HMSPeerUpdate.roleUpdated` u
       ...
     }
   }
+}
 ```
 
 ## Bulk Role Change
@@ -251,10 +257,16 @@ hmsSDK.changeRoleOfPeer(
 PeerB receives onRoleChangeRequest in the class wherever HMSUpdateListener is implemented.
 
 ```dart
+class Meeting  implements HMSUpdateListener, HMSActionResultListener{ 
+
+  ...
+    
   @override
   void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest}) {
     //Show some popup asking for permissions
   }
+
+}
 ```
 
 At this point, the app should show a prompt to the user asking for permission to accept or deny role change. 
@@ -270,11 +282,16 @@ It contains two attributes:
 To get information like role name and peer who performed role change we can do it like :
 
 ```dart 
+class Meeting  implements HMSUpdateListener, HMSActionResultListener{ 
+    
+  ...
+  
   @override
   void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest}) {
     String? peerWhoPerformedRoleChange = roleChangeRequest.suggestedBy?.name;
     String? destinationRole = roleChangeRequest.suggestedRole.name
   }
+}
 ```
 
 ### PeerB calls acceptChangeRole
@@ -291,7 +308,6 @@ Now, all peers in the room will receive an `HMSPeerUpdate.roleUpdated` callback 
 PeerB will have all the permissions of new role.
 
 </div>
-
 
 #### Case with changeRoleOfPeer with `force` as true
 
