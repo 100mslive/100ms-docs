@@ -153,25 +153,30 @@ class SampleHandler: RPBroadcastSampleHandler {
 
 #### Key Notes 
 
-To start screen share in iOS you need to pass `App Group` and `Extension` name to `HMSSDK` before build while initialization as follows:
+To start Screenshare from iOS devices you need to pass `App Group` and `Preferred Extension` name to `HMSSDK` constructor as shown below.
+
+You can find `appGroup` and `preferredExtension` name in Xcode under Signing and Capabilities section under Target > yourExtensionName.
+
+Once you have the correct App Group & Preferred Extension values created in Xcode & linked to your Apple Developer Account, you can now use them to start Screenshare from iOS devices (iPhone / iPad).
+
 
 ```dart
-HMSSDK(appGroup: "group.name", preferredExtension: "your.extension.name")
+// Pass the correct App Group & Preferred Extension parameters while contructing the HMSSDK object
+HMSSDK hmsSDK = HMSSDK(
+    appGroup: "appGroup", // App Group value linked to your Apple Developer Account
+    preferredExtension: "preferredExtension"); // Name of the Broadcast Upload Extension Target created in Xcode
+
+hmsSDK.build();
 ```
 
-Checkout the detailed docs [here](../features/hmssdk#initializing-hmssdk-for-advanced-use-cases)
-
-You can find `app group` and `extension` name in Xcode under `Signing and Capabilities` section under `target > yourExtensionName`.
 
 ![parameter](/docs/v2/flutter-dart-help.png) 
 
-> ❗️ NOTE on iOS 16: If you start Screenshare from an iPhone/iPad running iOS 16 version, then if the app is in foreground then Screenshare will work fine. But if you start Screenshare & background the app, then Screenshare pauses as the SDK is unable to send video frames using IPC. This results in other peers in room seeing stuck frame. We are actively working to resolve this issue. On iOS 15 or below, this issue does not exists. 
 
-Note viewing Screenshare on iOS 16 devices is unaffected by this & works fine.
+After completing the setup let's see how we can Start the Screenshare from iOS.
 
-After completing the setup let's see how we can start the screenshare.
 
-## How to start/stop screenshare from the app
+## How to Start/Stop Screenshare from the app
 
 To start screen share, app needs to call the `startScreenshare` method of `HMSSDK` and similar is it's counterpart `stopScreenShare` to stop screen share.
 
