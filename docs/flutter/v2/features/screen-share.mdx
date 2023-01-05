@@ -256,3 +256,20 @@ hmsSDK.isScreenShareActive();
 >tracks
 
 Screenshare can be rendered on the screen similar to normal videos.Checkout the implementation [here](../features/render-video) 
+
+
+## Troubleshooting Guide
+
+For starting Screenshare from iOS devices (iPhones or iPads) following are some common setup you should already have within your Apps -
+
+- `Bitcode` Disabled: Bitcode has been disabled by Apple from Xcode 14 & iOS 16 onwards. So 100ms packages also have Disabled Bitcode to ensure compatibility. Ensure that in your Xcode project Bitcode is Disabled for all Targets.
+
+![Disable Bitcode in Xcode](/docs/v2/iOS-Xcode-Disable-Bitcode.png)
+
+
+- `Background Modes` Enabled: In majority use-cases, playing audio from Room would be required when app is in Background Mode. Mostly, if users are starting Screenshare from their iPhones/iPads they would want to continue listening to audio from the Room.
+
+![Enable Background Modes](enable-background-modes.png)
+
+
+- Running on Simulator: Starting Screenshare from an iOS Simulator is not supported by Apple. You can start Screenshare only from an actual iOS device i.e. an iPhone or iPad.
