@@ -2,13 +2,120 @@
 title: Action Result Listeners
 nav: 3.07
 ---
-
+`HMSActionResultListener` is a listener to listen to success or failure callback for methods.
 Whenever an instance of `HMSActionResultListener` is passed with a method then it's status i.e whether it succeeded or failed 
 can be listened using HMSActionResultListener's `onSuccess` & `onException` callbacks respectively. 
 
 > `HMSActionResultListener` should be implemented in the class where HMSActionResultListener methods are called.
+> We can implement `HMSUpdateListener`,`HMSActionResultListener`,`HMSStatsListener` etc. on a single class 
+> checkout the example [here](https://github.com/100mslive/100ms-flutter/blob/1537a82a2213c8bbb1b0eb2dcc009c171e89bad1/example/lib/data_store/meeting_store.dart#L33)
+
+## How to add an HMSActionResultListener
+
+This section contains info about how we can add HMSActionResultListener to our class:
+
+<div className="steps-container">
+
+### Implement HMSActionResultListener
+
+Implement HMSActionResultListener in a class wherever you wish to call the HMSSDK methods and add override methods.
 
 ```dart
+class Meeting implements HMSActionResultListener{
+
+  @override
+  void onSuccess(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments}) {}
+  
+  @override
+  void onException(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments,
+      required HMSException hmsException}) {}
+} 
+```
+
+### Pass HMSActionResultListener instance in methods
+
+To get the `onSuccess` or `onException` callbacks we need to pass the `HMSActionResultListener` instance while calling methods as:
+
+```dart
+class Meeting implements HMSActionResultListener{
+
+  ...
+
+  void leave() async {
+    //this is the instance of class which implements HMSActionResultListener
+    await hmsSDK.leave(hmsActionResultListener: this);
+  }
+
+  void sendBroadcastMessage(){
+    //this is the instance of class which implements HMSActionResultListener
+    hmsSDK.sendBroadcastMessage(
+    message: message,
+    type: type,
+    hmsActionResultListener: this);
+  }
+
+  @override
+  void onSuccess(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments}) {
+
+          switch (methodType) {
+            case HMSActionResultListenerMethod.leave:
+            // Room leaved successfully
+            // Clear the local room state
+            break;
+
+            case HMSActionResultListenerMethod.sendBroadcastMessage:
+            //Do the needful actions here
+            break;
+            ...
+        }
+  }
+  
+  @override
+  void onException(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments,
+      required HMSException hmsException}) {
+
+        switch (methodType) {
+            case HMSActionResultListenerMethod.leave:
+            // Check the HMSException object for details about error
+            break;
+
+            case HMSActionResultListenerMethod.sendBroadcastMessage:
+            // Check the HMSException object for details about error
+            break;
+
+            ...
+        }
+  
+  }
+
+  ...
+} 
+```
+</div>
+
+Other methods can be implemented in similar fashion.
+
+## Supplementary bytes
+
+This section explains `HMSActionResultListener` class methods. We implement this class to listen to method callbacks.
+
+```dart
+///100ms HMSActionResultListener
+///
+///Whenever an instance of [HMSActionResultListener] is passed with a method then it's status i.e whether it succeeded or failed can be listened using HMSActionResultListener's onSuccess & onException callbacks respectively.
+
 abstract class HMSActionResultListener {
   void onSuccess(
       {HMSActionResultListenerMethod methodType,
@@ -24,9 +131,9 @@ abstract class HMSActionResultListener {
 > 💡 `HMSActionResultListener` : A class conforming to HMSActionResultListener interface.
 The methods of HMSActionResultListener are invoked to notify the status of the api's whether it failed or succedded.
 
-## HMSActionResultListenerMethod
+### HMSActionResultListenerMethod
 
-`HMSActionResultListenerMethod` is an enum which can be used to segregate the `HMSActionResultListener` method type.
+`HMSActionResultListenerMethod` is an enum which can be used to segregate the `HMSActionResultListener` method type similar to what we did in above example.
 
 ```dart
 enum HMSActionResultListenerMethod {
@@ -36,7 +143,7 @@ enum HMSActionResultListenerMethod {
   endRoom,
   removePeer,
   acceptChangeRole,
-  changeRole,
+  changeRoleOfPeer,
   changeTrackStateForRole,
   startRtmpOrRecording,
   stopRtmpAndRecording,
@@ -50,7 +157,9 @@ enum HMSActionResultListenerMethod {
   stopScreenShare,
   startAudioShare,
   stopAudioShare,
-  
+  setSessionMetadata,
+  switchCamera,
+  changeRoleOfPeersWithRoles,
   //default case
   unknown
 }

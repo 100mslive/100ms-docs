@@ -7,7 +7,11 @@ Flutter SDK provides support for sharing the entire screen of the device to the 
 
 Please note that for a peer to share their screen, their role must have Screenshare enabled in the dashboard. Also select the appropriate resolution for the Screen share quality. 1080p is recommended for better text readability.
 
-## Android Setup
+## Prerequisites
+
+Let's first do some setup required for both the platforms 
+
+### Android Setup
 
 You also need to pass the intent from android native side to HMS SDK in the following way :
 
@@ -35,10 +39,9 @@ super.onActivityResult(requestCode, resultCode, data)
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 ```
 
-## iOS Setup
+### iOS Setup
 
 You need to create an iOS broadcast upload extension. It uses Apple's ReplayKit framework to record the device screen and delivers frame samples to your broadcast extension. You can share not only your own app but also the entire device sceeen including other apps on the device.
-
 
 ### Step 1 - Open project
 Open your iOS Xcode project, such as `ios/Runner.xcworkspace` for full-Flutter apps.
@@ -148,56 +151,105 @@ class SampleHandler: RPBroadcastSampleHandler {
 }
 ```
 
-## How to start screenshare from the app
+#### Key Notes 
 
-To start screen share, app needs to call the `startScreenshare` method of `HMSSDK`.
+To start Screenshare from iOS devices you need to pass `App Group` and `Preferred Extension` name to `HMSSDK` constructor as shown below.
+
+You can find `appGroup` and `preferredExtension` name in Xcode under Signing and Capabilities section under Target > yourExtensionName.
+
+Once you have the correct App Group & Preferred Extension values created in Xcode & linked to your Apple Developer Account, you can now use them to start Screenshare from iOS devices (iPhone / iPad).
+
+
+```dart
+// Pass the correct App Group & Preferred Extension parameters while contructing the HMSSDK object
+HMSSDK hmsSDK = HMSSDK(
+    appGroup: "appGroup", // App Group value linked to your Apple Developer Account
+    preferredExtension: "preferredExtension"); // Name of the Broadcast Upload Extension Target created in Xcode
+
+hmsSDK.build();
+```
+
+
+![parameter](/docs/v2/flutter-dart-help.png) 
+
+
+After completing the setup let's see how we can Start the Screenshare from iOS.
+
+
+## How to Start/Stop Screenshare from the app
+
+To start screen share, app needs to call the `startScreenshare` method of `HMSSDK` and similar is it's counterpart `stopScreenShare` to stop screen share.
 
 Following is the snippet on how to use this:
 
 ```dart
-hmsSDK.startScreenShare(hmsActionResultListener: hmsActionResultListener);
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    void startScreenShare() {
+        ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+        //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+        hmsSDK.startScreenShare(hmsActionResultListener: this);
+    }
+
+    void stopScreenShare() {
+        ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+        //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+        hmsSDK.stopScreenShare(hmsActionResultListener: this);
+    }
+
+    @override
+    void onSuccess(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments}) {
+          switch (methodType) {
+          ...
+
+          
+            case HMSActionResultListenerMethod.startScreenShare:
+            //Screen share started successfully
+            break; 
+
+            case HMSActionResultListenerMethod.stopScreenShare:
+            //Screen share stopped successfully
+            break;
+      }        
+  }
+
+
+  @override
+  void onException(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments,
+      required HMSException hmsException}) {
+          switch (methodType) {
+          ...
+
+            case HMSActionResultListenerMethod.startScreenShare:
+            // Check the HMSException object for details about the error
+            break;
+
+            case HMSActionResultListenerMethod.stopScreenShare:
+            // Check the HMSException object for details about the error
+            break;
+
+      }
+  }
+
+}
 ```
-
-To start screen share in iOS you need to pass `App Group` and `Extension` name to `HMSSDK` as follows:
-
-```dart
-HMSSDK(appGroup: "group.name", preferredExtension: "your.extension.name")
-```
-You can find `app group` and `extension` name in Xcode under `Signing and Capabilities` section under `target > yourExtensionName`.
-
-![parameter](/docs/v2/flutter-dart-help.png)
-
-
-> ❗️ NOTE on iOS 16: If you start Screenshare from an iPhone/iPad running iOS 16 version, then if the app is in foreground then Screenshare will work fine. But if you start Screenshare & background the app, then Screenshare pauses as the SDK is unable to send video frames using IPC. This results in other peers in room seeing stuck frame. We are actively working to resolve this issue. On iOS 15 or below, this issue does not exists. 
-
-Note viewing Screenshare on iOS 16 devices is unaffected by this & works fine.
-
 
 ## How to get Screen Share Status
 
 Application needs to call the `isScreenShareActive` method of `HMSSDK`.
 
-This method returns a `Boolean` which will be true inscase ScreenShare is currently active and being used, and False for inactive state.
+This method returns a `Boolean` which will be `true` incase ScreenShare is currently active and being used, and `false` for inactive state.
 
 ```dart
 hmsSDK.isScreenShareActive();
 ```
 
-To start Screen share in iOS you need to pass appGroup and preferred Extension name to HMSSDK:
-
-```dart
-HMSSDK(appGroup: appGroup, preferredExtension: preferredExtension);
-```
-
-## How to stop screenshare
-
-To stop the screenshare, you need to invoke `stopscreenShare` method of `HMSSDK`
-
-Following is the snippet on how to use this:
-
-```dart
-hmsSDK.stopScreenShare(hmsActionResultListener: hmsActionResultListener);
-```
 ## How to display screenshare in apps 
 
 > Screenshare track can be differentiated from normal video track using track's `source` property as `track.source == "SCREEN"` for screenshare

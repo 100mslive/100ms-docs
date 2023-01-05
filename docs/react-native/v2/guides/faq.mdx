@@ -115,7 +115,7 @@ while setting up `HMSSDK` instance you can pass instance of `HMSTrackSettings` t
 
 Refer to [Track Settings Guide](https://www.100ms.live/docs/react-native/v2/advanced-features/track-settings) for more info.
 
-<strong>To customize more settings (other than defined on above mentioned classes) like video quality, aspect ratio, screenshare quality.</strong>
+**To customize more settings (other than defined on above mentioned classes) like video quality, aspect ratio, screenshare quality.**
 
 You can change all these and more in [100ms dashboard](https://dashboard.100ms.live/templates). Check out [Templates and Roles Guide](https://www.100ms.live/docs/react-native/v2/foundation/templates-and-roles)
 
@@ -127,7 +127,13 @@ On Android 12 devices, new Bluetooth permissions have been added to interact wit
 1. Declare `BLUETOOTH_CONNECT` permission in AndroidManifest.xml file.
 
 ```xml
-  <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+<uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+
+<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+
+<uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+
+<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
 ```
 
 2. The `BLUETOOTH_CONNECT` permission is runtime permission. Therefore, you must also request user approval at runtime before you join a call or display a preview in your app, like we do for Camera and Audio Permissions.
@@ -162,24 +168,50 @@ You may want to change default ratio as per your use case. for example, If you h
 This will give your Stream Viewers very nice watching experience.
 
 
-## How to know if Local Peer is HLS Stream Viewer?
+## How to get HLS Stream URL?
 
-There is no fixed way to check this.
-
-One option can be to check if Local Peer has the role which you created for HLS Stream Viewers.
+HLS Stream URL is available in `Room` object. Check out below code snippet -
 
 ```js
-// Role name created for HLS Stream Viewers in the Room Template
-const roleForStreamViewers = 'hls-viewer';
+// you can check if hls stream is running
+const isStreaming = room.hlsStreamingState?.running;
 
-// Checking if Local Peer has the Viewers role.
-const isHLSViewer = localPeer.role?.name === roleForStreamViewers;
+// you can access various variants of running hls stream
+const hlsStreamingVariant = room.hlsStreamingState?.variants[0];
 
-// If Local Peer is a Stream Viewer, Show Stream Video Player to user.
-if (isHLSViewer) {
-  return <VideoPlayer {...} />
-}
+// on stream variant, you have access to stream url
+const sreamURL = hlsStreamingVariant.hlsStreamUrl;
+
+// Showing running stream in a video player
+<VideoPlayer url={hlsStreamingVariant.hlsStreamUrl} />
 ```
+
+You can get `Room` object by `hmsInstance.getRoom` method and `HMSUpdateListenerActions.ON_ROOM_UPDATE` event -
+
+```js
+// Initially get room object from `getRoom` method
+const room = await hmsInstance.getRoom();
+
+// Add listener to receive Room Updates
+hmsInstance.addEventListener(
+  HMSUpdateListenerActions.ON_ROOM_UPDATE,
+  (data: { room: HMSRoom; type: HMSRoomUpdate; }) => {
+    // Updated Room object
+    const room = data.room;
+
+    if (data.type === HMSRoomUpdate.HLS_STREAMING_STATE_UPDATED) {
+      console.log('HLS Streaming state has changed')
+    }
+  }
+);
+```
+
+To know how to start or stop HLS Streaming, check out [HLS Streaming Docs](https://www.100ms.live/docs/react-native/v2/features/hls)
+
+
+## Video Player to play HLS Streams
+
+[react-native-video](https://www.npmjs.com/package/react-native-video) is the most reliable package to play videos on React Native apps. We are also using this package in our example app to play HLS Streams.
 
 
 ## How to Mute/Unmute Specific or All Remote Peers?
@@ -239,3 +271,5 @@ This can have an impact on your apps' performance. Therefore, since ideally maxi
 You can use [FlatList](https://reactnative.dev/docs/flatlist) to render HMSView for large list of peers, this way HMSView that are not in visible area will never be mounted and HMSViews that goes out of visible area will be unmounted.
 
 By using FlatList you are improving your apps' performance and rendering separate HMSView for each `trackId`.
+
+> Pro Tip: You can use `key` prop with `trackId` as value to bind `HMSView` with trackId. Example - `<HMSView key={trackId} {...} />`

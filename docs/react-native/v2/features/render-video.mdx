@@ -4,22 +4,30 @@ nav: 3.6
 ---
 It all comes down to this. All the setup so far has been done so that we can show live streaming video in our beautiful apps.
 
-The React Native SDK provides a Component `HmsView` that renders the video on the screen.
+The React Native SDK provides a Component `HmsView` that renders the video on the screen. You can access `HmsView` on the `HMSSDK` instance that you created with build method.
 
-We can pass video `trackId`, `scaleType` and `mirror` to `HmsView` component.
+We can pass `scaleType`, `mirror` and video tracks' `trackId` to `HmsView` component.
 
 ```js
 import { HMSVideoViewMode } from '@100mslive/react-native-hms';
 ...
-// hms instance acquired from build method
-const HmsView = hmsInstance.HmsView;
 const styles = StyleSheet.create({
   hmsView: {
     height: '100%',
     width: '100%',
   },
 });
-<HmsView trackId={trackId} scaleType={HMSVideoViewMode.ASPECT_FILL} style={styles.hmsView} mirror={true} />
+
+// hms instance acquired from build method
+const HmsView = hmsInstance.HmsView;
+
+<HmsView
+  key={trackId}
+  trackId={trackId}
+  mirror={true}
+  scaleType={HMSVideoViewMode.ASPECT_FILL}
+  style={styles.hmsView}
+/>
 ...
 ```
 
@@ -33,12 +41,47 @@ const styles = StyleSheet.create({
 
 - For listening to the audio you have to do absolutely nothing, it's automatically played once you join the room. To mute & unmute audio/ideo refer [here](./mute). To set volume levels refer [here](../advanced-features/set-volume).
 
+
 ## Track Id
-It is a required prop in the `HmsView` component. There are 2 types of peers - a `localPeer` & `remotePeer`, to extract `trackId` from peers use the following code snippet. These track IDs can directly be passed to `HmsView` component.
+
+It is a required prop in the `HmsView` component. You can get trackIds of peers from `HMSUpdateListenerActions.ON_TRACK_UPDATE` event.
 
 ```js
-const localTrackId = hmsInstance.localPeer.videoTrack.trackId;
-const remoteTrackId = hmsInstance.remotePeers[index].videoTrack.trackId;
+const onTrackListener = (data: { peer: HMSPeer; track: HMSTrack; type: HMSTrackUpdate }) => {
+  const { peer, track, type } = data;
+
+  // We will only consider Video tracks events to render videos
+  if (track.type === HMSTrackType.VIDEO) {
+
+    // If Video track is added, you can use `trackId` to render video
+    if (type === HMSTrackUpdate.TRACK_ADDED) {
+      console.log(`${peer.name}s' video track Added: ${track.trackId}`);
+      console.log(`Render HMSView with trackId: ${track.trackId}`);
+    }
+
+    // If Video track is removed, remove `HMSView` which is using this `trackId`
+    if (type === HMSTrackUpdate.TRACK_REMOVED) {
+      console.log(`${peer.name}s' video track Removed: ${track.trackId}`);
+      console.log(`Remove HMSView rendering trackId: ${track.trackId}`);
+    }
+
+    if (
+      type === HMSTrackUpdate.TRACK_MUTED ||
+      type === HMSTrackUpdate.TRACK_UNMUTED ||
+      type === HMSTrackUpdate.TRACK_RESTORED ||
+      type === HMSTrackUpdate.TRACK_DEGRADED
+    ) {
+      console.log(
+        `Update UI to show Muted/Unmuted/Degraded/Restored updates: ${track.trackId}`
+      );
+    }
+  }
+};
+
+hmsInstance.addEventListener(
+  HMSUpdateListenerActions.ON_TRACK_UPDATE,
+  onTrackListener
+);
 ```
 
 Make sure the trackId passed in the HMSView is not null/undefined because once a trackId is linked to HMSView, it can not be unlinked. 
@@ -58,12 +101,20 @@ This can be done using a `key` prop and passing `trackId` as its value in the `H
 > Pro Tip: Try to render only 2 to 4 videos on a screen and set sink false for other videos. This will stop downloading video data of tiles which are not visible on the screen.
 
 ## Scale Type
+Scale Type prop defines how the video stream should fit the dimensions(i.e. width and height) of HMSView.
+
 It is an optional prop in the `HmsView` component. By default value of scale type is set to `HMSVideoViewMode.ASPECT_FILL`. There are 3 scale types you can pass to render a video. 
+
 ```js
 import { HMSVideoViewMode } from '@100mslive/react-native-hms';
 
+// Video maintains the aspect ratio so it only occupies space based on the aspect ratio
 const ASPECT_FILL = HMSVideoViewMode.ASPECT_FILL
+
+// Video occupies all the available space and may get cropped 
 const ASPECT_FIT = HMSVideoViewMode.ASPECT_FIT
+
+// Video aspect ratio is balanced similar to SCALE_ASPECT_FIT
 const ASPECT_BALANCED = HMSVideoViewMode.ASPECT_BALANCED
 ```
 
@@ -81,46 +132,62 @@ Show a black tile with avatar or initials when `isDegraded` is true.
 const isDegraded: boolean = peer.videoTrack.isDegraded
 ```
 
-> Pro Tip: Always use ON_PEER_UPDATE and ON_TRACK_UPDATE listeners, these listeners get updated `localPeer` and `remotePeers` whenever there is any event related to these values.
 
+## Receive Local and Remote Peers updates
+
+Always use `ON_PEER_UPDATE` and `ON_TRACK_UPDATE` listeners, these listeners get updated `localPeer` and `remotePeers` whenever there is any event related to these values.
 
 ```js
-HmsInstance.addEventListener(
-  HMSUpdateListenerActions.ON_PEER_UPDATE,
-  onPeerListener
-);
-HmsInstance.addEventListener(
+// In this example code snippet, We are keeping things very simple.
+// You will get an overview of how to render `HMSView`s for list of `trackId`s and how to keep that list up to date.
+// We don't need `ON_PEER_UPDATE` event listener for keeping track of only `trackId`s.
+// So, we have registered only `ON_TRACK_UPDATE` event listener here
+
+const [trackIds, setTrackIds] = useState<string[]>([]);
+
+const onTrackListener = (data: { peer: HMSPeer; track: HMSTrack; type: HMSTrackUpdate }) => {
+  // We will only consider Video tracks for this example
+  if (data.track.type !== HMSTrackType.VIDEO) return;
+
+  // If Video track is added, add trackId to our list
+  if (data.type === HMSTrackUpdate.TRACK_ADDED) setTrackIds(prevTrackIds => [...prevTrackIds, data.track.trackId]);
+
+  // If Video track is removed, remove trackId from our list
+  if (data.type === HMSTrackUpdate.TRACK_REMOVED) setTrackIds(prevTrackIds => prevTrackIds.filter(prevTrackId => prevTrackId !== data.track.trackId));
+};
+
+hmsInstance.addEventListener(
   HMSUpdateListenerActions.ON_TRACK_UPDATE,
   onTrackListener
 );
 
-const onPeerListener = ({
-  remotePeers,
-  localPeer,
-}: {
-  peer: HMSPeer;
-  room?: HMSRoom;
-  type?: HMSPeerUpdate;
-  localPeer: HMSLocalPeer;
-  remotePeers: HMSRemotePeer[];
-}) => {
-  updateVideoIds(remotePeers, localPeer); // this function can be used to update local and remotePeers on React-Native side
-};
+// Render multiple HMSView for trackIds inside FlatList
+// Note: HMSView will render blank if video track of peer is muted, Make sure video of peers is not muted.
+<FlatList
+  data={trackIds} // trackIds is an array of trackIds of video tracks
+  keyExtractor={(trackId) => trackId}
+  renderItem={({ item }) => <HMSView key={item} trackId={item} style={{ width: '100%', height: 300 }} {...} />}
+  {...}
+/>
+```
 
-const onTrackListener = ({
-  remotePeers,
-  localPeer,
-}: {
+To see a more detailed implementation of these events, you can refer our [quickstart app implementation](https://github.com/100mslive/react-native-hms/blob/21d7871691ec6c8ffd125a0592a3b16c5e79e1cd/sample-apps/rn-quickstart-app/src/screens/MeetingScreen/hooks.ts#L158)
+
+In above example, We haven't considered showing Avatars, Muted Status, Name of Peers because we wanted this example to be simple.
+To show all these visual elements you need to have `peer` object and `track` object for that peer. You can use `PeerTrackNode` interface mentioned in below code snippet for this use case -
+
+```js
+interface PeerTrackNode {
+  id: string;
   peer: HMSPeer;
   track: HMSTrack;
-  room?: HMSRoom;
-  type?: HMSTrackUpdate;
-  localPeer: HMSLocalPeer;
-  remotePeers: HMSRemotePeer[];
-}) => {
-  updateVideoIds(remotePeers, localPeer);
-};
+  isDegraded: boolean;
+}
 ```
+
+Then, You can use list of `PeerTrackNode` instead of trackIds in `FlatList`.
+
+We have used `PeerTrackNode` object type in our [Quickstart Sample app](https://github.com/100mslive/react-native-hms/tree/develop/sample-apps/) and [Example app](https://github.com/100mslive/react-native-hms/tree/main/example). You should definitely see implementation in our apps and to read more, refer [here](https://github.com/100mslive/react-native-hms/tree/main/example#peertracknodes).
 
 ## Troubleshooting in HmsView
 
