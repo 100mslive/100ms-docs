@@ -5,9 +5,11 @@ nav: 4.2
 
 Looking for a persistent state that can be set on a peer and updated anytime, for everyone in the room? Peer metadata is it.
 
-Metadata can be set initially in the `HMSConfig` object that's passed into the join method. This can be used to display profile pictures as the user's avatar in meetings.
+Metadata can be set initially in the `HMSConfig` object that's passed into the join method. This can be used to display profile pictures as the user's avatar in meetings. You can imagine metadata as a persistent object attached to the peer which has more details about them.
 
-Something similar to this:
+Peer Metadata can be changed after joining the Room as well. 
+
+To set metadata before joining the room, pass the `metadata` property to `HMSConfig` used to Join the Room.
 
 ```dart
 HMSConfig config = HMSConfig(userName: "John Doe",
