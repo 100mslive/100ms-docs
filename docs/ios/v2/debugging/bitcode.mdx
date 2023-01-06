@@ -4,15 +4,14 @@ nav: 5.2
 ---
 
 100ms iOS SDK has removed support for bitcode starting following versions:
-
 - 100ms SDK version 0.4.7 onwards
 - Broadcast Extension SDK version 0.0.6 onwards
 
 ## Context
-If you make a project with Xcode 14, the bitcode is disabled in all targets by default. And if you enable bitcode explicitly, Xcode generates a warning message: “Building with bitcode is deprecated. Please update your project and/or target settings to disable bitcode.”. You cannot submit an app with bitcode to App Store from Xcode 14.
+Xcode 14 has deprecated bitcode. If you make a project with Xcode 14, the bitcode is disabled in all targets by default. And if you enable bitcode explicitly, Xcode generates a warning message: “Building with bitcode is deprecated. Please update your project and/or target settings to disable bitcode." Also, you can no longer submit apps with bitcode to App Store from Xcode 14.
 
 ## Issue
-This means if you are using Xcode 13 or you have explicitly enabled bitcode on your target using the 100ms SDK, you may encounter an error saying: "framework does not contain bitcode and you must rebuild it".
+This means if you are using Xcode 13 or you have explicitly enabled bitcode on your target using the 100ms SDK, you may encounter an error saying: "framework does not contain bitcode and you must rebuild it."
 
 ## Resolution
-To resolve this issue you should go to each of your target's build settings and search for "bitcode". Now set 'Enable Bitcode' setting to 'NO'.
+To resolve this issue, you should make sure that your targets have bitcode disabled. To disable bitcode on a target, you go to the target's build settings and search for "bitcode". Set 'Enable Bitcode' setting to 'NO'.
