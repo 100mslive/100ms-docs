@@ -3,65 +3,189 @@ title: Chat
 nav: 3.35
 ---
 
-What's a video without being able to send messages to each other too? 100ms supports chat for every video/audio room you create.
+What's a video call without being able to send messages to each other too? 100ms supports chat for every video/audio room you create.
+
+
+### Message Types
+
+* [Broadcast messages](#broadcast-messages) are sent to "Everyone" in the chat, using - `hmsInstance.sendBroadcastMessage`.
+
+* [Direct messages](#direct-messages) are sent to a "specific person", using - `hmsInstance.sendDirectMessage`.
+
+* [Group messages](#group-messages) are sent to "everyone with a particular `HMSRole`". Such as all `hosts` or all `teachers` or all `students`, using - `hmsInstance.sendGroupMessage`.
+    * Learn more about [Templates and Roles here](../foundation/templates-and-roles).
+
 
 ## Sending Chat Messages
 
-With the HMSSDK instance call different send message functions.
+On the `HMSSDK` instance call different send message functions -
+
 
 ### Broadcast Messages
 
-This will be received by everyone in the room.
+Want to let everyone in the chat know something? Call `sendBroadcastMessage` method on the `HMSSDK` instance to send a broadcast message.
+
+`sendBroadcastMessage` method accepts following parameters:
+
+1. _message_: The text of the message.
+2. _type_[optional]: The type (`HMSMessageType`) of the message, default value is `HMSMessageType.CHAT`, other available value is `HMSMessageType.METADATA`.
+
+
+> 💡 Note: `Promise` returned from `sendBroadcastMessage` method only lets you know if the server has received your request for the message or if there was some error. It does not convey whether the message was delivered to or read by the recipient.
+
 
 ```js
-// instance acquired from build() method
-await hmsInstance.sendBroadcastMessage('hello everyone!') // yes it's that simple 😉
-    .then(d => console.log('Broadcast Message Success: ', d))
-    .catch(e => console.log('Broadcast Message Error: ', e));
+// instance acquired from HMSSDk.build() method
+try {
+  const result = await hmsInstance.sendBroadcastMessage('hello everyone!'); // yes it's that simple 😉
+  console.log('Broadcast Message Success: ', result);
+} catch (error) {
+  console.log('Broadcast Message Error: ', error);
+}
 ```
 
-### Group Messages
-
-This will be received by every peer who is part of the passed in roles.
-
-```js
-// instance acquired from build() method
-
-// all available Roles can be obtained from hmsInstance using hmsInstance.knownRoles. 
-// it will return an array of HMSRole from which required roles can be selected for this API.
-
-await hmsInstance.sendGroupMessage('hi folks!', [role1, role2])
-    .then(d => console.log('Group Message Success: ', d))
-    .catch(e => console.log('Group Message Error: ', e));
-```
 
 ### Direct Messages
 
-This will only be received by the peer whom the message was sent to.
+Got secrets to share with someone? Call `sendDirectMessage` method on the `HMSSDK` instance to send message directly to a single person.
+
+`sendDirectMessage` method accepts following parameters:
+
+1. _message_: The text of the message.
+2. _peer_: The `HMSPeer` instance that should receive the message.
+3. _type_[optional]: The type (`HMSMessageType`) of the message, default value is `HMSMessageType.CHAT`, other available value is `HMSMessageType.METADATA`.
+
+
+> 💡 Note: `Promise` returned from `sendDirectMessage` method only lets you know if the server has received your request for the message or if there was some error. It does not convey whether the message was delivered to or read by the recipient.
+
 
 ```js
-// instance acquired from build() method
-await hmsInstance.sendDirectMessage('keep this message a secret!', peer)
-    .then(d => console.log('Direct Message Success: ', d))
-    .catch(e => console.log('Direct Message Error: ', e));
+// instance acquired from HMSSDk.build() method
+try {
+  const result = await hmsInstance.sendDirectMessage('keep this message a secret!', peer);
+  console.log('Direct Message Success: ', result);
+} catch (error) {
+  console.log('Direct Message Error: ', error);
+}
 ```
+
+
+### Group Messages
+
+Need to call attention to All the hosts or All the teachers or All the developers? Call `sendGroupMessage` method on the `HMSSDK` instance to send message to peers with specific roles.
+
+`sendGroupMessage` method accepts following parameters:
+
+1. _message_: The text of the message.
+2. _roles_: The list of `HMSRole` i.e the roles to whom the message needs to be sent.
+3. _type_[optional]: The type (`HMSMessageType`) of the message, default value is `HMSMessageType.CHAT`, other available value is `HMSMessageType.METADATA`.
+
+
+> 💡 Note: `Promise` returned from `sendGroupMessage` method only lets you know if the server has received your request for the message or if there was some error. It does not convey whether the message was delivered to or read by the recipient.
+
+
+```js
+// all available Roles can be obtained `getRoles` method on `HMSSDK` instance
+// it will return an array of HMSRole from which required roles can be selected for `sendGroupMessage` method.
+const roles = await hmsInstance.getRoles();
+
+const [role1, role2] = roles; // getting first 2 roles from roles list
+
+try {
+  const result = await hmsInstance.sendGroupMessage('hi folks!', [role1, role2]);
+  console.log('Group Message Success: ', result);
+} catch (error) {
+  console.log('Group Message Error: ', error);
+}
+```
+
 
 ## Receiving Chat Messages
 
-When you called hmsInstance.join(config) to join a room, add a ON_MESSAGE event listener with callback function onMessageReceived.
+After [Joining the Room](./join), you can add a listener for `HMSUpdateListenerActions.ON_MESSAGE` event to receive new messages as `HMSMessage` object during the call.
 
 ```js
-// import HMSUpdateListenerActions,HMSMessage classes
-import { HMSUpdateListenerActions, HMSMessage } from '@100mslive/react-native-hms';
-
 // instance acquired from build() method
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_MESSAGE, onMessageReceived);
 
 const onMessageReceived = (message: HMSMessage) => {
-    // perform action
+  // new message received, show this message in chat UI
 };
 ```
 
-## Putting together a list of chat messages.
+Let's look at what the `HMSMessage` looks like -
 
-The UI is completely up to you to decide! You'll also need to hold onto all the received messages if you want to display history.
+```js
+interface HMSMessage {
+  message: string;
+  type: HMSMessageType;
+  time: Date;
+  sender?: HMSPeer;
+  recipient: HMSMessageRecipient;
+}
+```
+
+* _message_: The actual text message string that was sent.
+* _type_: Type of message sent. Default value is `HMSMessageType.CHAT`, other available value is `HMSMessageType.METADATA`.
+* _time_: DateTime of when the server received the message. This can be used for accurate ordering of your messages.
+* _sender_: The `HMSPeer` who sent this message.
+* _recipient_: The intended recipient(s) of this message as a `HMSMessageRecipient` object.
+
+
+Now let's look at what the `HMSMessageRecipient` looks like -
+
+```js
+interface HMSMessageRecipient {
+  recipientPeer?: HMSPeer;
+  recipientRoles?: HMSRole[];
+  recipientType?: HMSMessageRecipientType;
+}
+```
+
+* _recipientPeer_: Peer that should receive this message. This is available when a specific single peer is being direct messaged.
+* _recipientRoles_: Peers with these Roles whom should receive this message. This is available when a group message is being sent to many roles.
+* _recipientType_: HMSMessageRecipientType Enum Values - `BROADCAST`, `PEER` or `ROLES`.
+
+  - `HMSMessageRecipientType.BROADCAST` will be set when it\'s a message being sent to everyone.
+  - `HMSMessageRecipientType.PEER` will be set when it\'s a direct message.
+  - `HMSMessageRecipientType.ROLES` will be set when it\'s a message to one or many roles.
+
+
+
+## Chat Messages UI
+
+HMSSDK doesn't provide UI for chat, The UI is completely up to you to decide! **You'll also need to hold onto all the received messages if you want to display history**.
+
+
+## Advanced Use-Cases
+
+Sometimes the app requires to show messages in different styles. Something similar to this:
+
+![Chat](/docs/v2/flutter-chat.gif)
+
+`HMSSDK` provides the `type` parameter on the `HMSMessage` object and methods used to send different types of messages to take care of such use cases. 
+
+You can send messages as:
+
+```js
+await hmsInstance.sendBroadcastMessage("😁", "emoji");
+// OR
+await hmsInstance.sendDirectMessage("😁", peer, "emoji");
+// OR
+await hmsInstance.sendGroupMessage("😁", [role1, role2], "emoji");
+```
+
+When you receive messages, you can filter out the messages based on the `type` parameter on `HMSMessage` object and handle the UI accordingly.
+
+```js
+// instance acquired from build() method
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_MESSAGE, onMessageReceived);
+
+const onMessageReceived = (message: HMSMessage) => {
+  if(message.type === "emoji") {
+    // Show as emoticons on UI
+  } else{
+    // Handle other cases
+  }
+};
+```
