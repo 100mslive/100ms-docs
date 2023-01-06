@@ -174,30 +174,27 @@ HmsInstance.addEventListener(HMSUpdateListenerActions.ON_PEER_UPDATE, onPeerList
 HmsInstance.addEventListener(HMSUpdateListenerActions.ON_TRACK_UPDATE, onTrackListener);
 
 const onPeerListener = ({
-    remotePeers,
-    localPeer
+    peer,
+    type,
 }: {
-    peer: HMSPeer,
-    room?: HMSRoom,
-    type?: HMSPeerUpdate,
-    localPeer: HMSLocalPeer,
-    remotePeers: HMSRemotePeer[]
+    peer: HMSPeer;
+    type?: HMSPeerUpdate;
 }) => {
-    updateVideoIds(remotePeers, localPeer); // this function can be used to update local and remotePeers on React-Native side
+  // gets triggered when peer leaves, joins, peer's audio or video is muted, starts or stops speaking, role is changed or becomes dominant speaker.
+  // use these objects to update your local and remote peers.
 };
 
 const onTrackListener = ({
-    remotePeers,
-    localPeer
+    track,
+    peer,
+    type,
 }: {
-    peer: HMSPeer,
-    track: HMSTrack,
-    room?: HMSRoom,
-    type?: HMSTrackUpdate,
-    localPeer: HMSLocalPeer,
-    remotePeers: HMSRemotePeer[]
+    track: HMSTrack;
+    peer: HMSPeer;
+    type?: HMSTrackUpdate;
 }) => {
-    updateVideoIds(remotePeers, localPeer);
+  // gets triggered when track is added, removed, muted, unmuted, degraded and restored back.
+  // use these objects to update your local and remote peers.
 };
 ```
 

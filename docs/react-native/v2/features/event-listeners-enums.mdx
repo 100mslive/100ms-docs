@@ -14,12 +14,12 @@ hmsInstance?.addEventListener(
   onPeerListener,
 );
 
-const onPeerListener = ({ type } : {
-  peer: HMSPeer;
-  room?: HMSRoom;
-  type?: HMSPeerUpdate;
-  localPeer: HMSLocalPeer;
-  remotePeers: HMSRemotePeer[];
+const onPeerListener = ({
+    peer,
+    type,
+}: {
+    peer: HMSPeer;
+    type?: HMSPeerUpdate;
 }) => {
   if(type === HMSPeerUpdate.PEER_JOINED){
     // when a peer joins
@@ -53,13 +53,14 @@ hmsInstance?.addEventListener(
   onTrackListener,
 );
 
-const onTrackListener = ({ type } : {
-  peer: HMSPeer;
-  track: HMSTrack;
-  room?: HMSRoom;
-  type?: HMSTrackUpdate;
-  localPeer: HMSLocalPeer;
-  remotePeers: HMSRemotePeer[];
+const onTrackListener = ({
+    track,
+    peer,
+    type,
+}: {
+    track: HMSTrack;
+    peer: HMSPeer;
+    type?: HMSTrackUpdate;
 }) => {
   if(type === HMSTrackUpdate.TRACK_ADDED){
     // when track is added
@@ -96,12 +97,13 @@ hmsInstance?.addEventListener(
   onRoomListener,
 );
 
-const onRoomListener = ({ type } : {
-  room?: HMSRoom;
-  type?: HMSRoomUpdate;
-  localPeer: HMSLocalPeer;
-  remotePeers: HMSRemotePeer[];
-}) => {
+const onRoomListener = ({
+    room,
+    type,
+  }: {
+    room: HMSRoom;
+    type: HMSRoomUpdate;
+  }) => {
   if(type === HMSRoomUpdate.ROOM_MUTED){
     // when room is muted
   }
