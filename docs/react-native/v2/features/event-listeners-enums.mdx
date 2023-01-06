@@ -19,7 +19,7 @@ const onPeerListener = ({
     type,
 }: {
     peer: HMSPeer;
-    type?: HMSPeerUpdate;
+    type: HMSPeerUpdate;
 }) => {
   if(type === HMSPeerUpdate.PEER_JOINED){
     // when a peer joins
@@ -60,7 +60,7 @@ const onTrackListener = ({
 }: {
     track: HMSTrack;
     peer: HMSPeer;
-    type?: HMSTrackUpdate;
+    type: HMSTrackUpdate;
 }) => {
   if(type === HMSTrackUpdate.TRACK_ADDED){
     // when track is added

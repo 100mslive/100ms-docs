@@ -39,22 +39,6 @@ const onJoinListener = ({ localPeer, remotePeers }) => {
 };
 
 hmsInstance.addEventListener(
-  HMSUpdateListenerActions.ON_ROOM_UPDATE,
-  onRoomListener
-);
-
-const onRoomListener = ({
-    room,
-    type,
-  }: {
-    room: HMSRoom;
-    type: HMSRoomUpdate;
-  }) => {
-  // gets triggered when room is muted or unmuted.
-  // use these objects to update your local and remote peers.
-};
-
-hmsInstance.addEventListener(
   HMSUpdateListenerActions.ON_PEER_UPDATE,
   onPeerListener
 );
@@ -64,7 +48,7 @@ const onPeerListener = ({
     type,
 }: {
     peer: HMSPeer;
-    type?: HMSPeerUpdate;
+    type: HMSPeerUpdate;
 }) => {
   // gets triggered when peer leaves, joins, peer's audio or video is muted, starts or stops speaking, role is changed or becomes dominant speaker.
   // use these objects to update your local and remote peers.
@@ -82,7 +66,7 @@ const onTrackListener = ({
 }: {
     track: HMSTrack;
     peer: HMSPeer;
-    type?: HMSTrackUpdate;
+    type: HMSTrackUpdate;
 }) => {
   // gets triggered when track is added, removed, muted, unmuted, degraded and restored back.
   // use these objects to update your local and remote peers.
@@ -122,6 +106,21 @@ hmsInstance.addEventListener(
   HMSUpdateListenerActions.RECONNECTING,
   onReconnectingListener
 );
+
+hmsInstance.addEventListener(
+  HMSUpdateListenerActions.ON_ROOM_UPDATE,
+  onRoomListener
+);
+
+const onRoomListener = ({
+    room,
+    type,
+  }: {
+    room: HMSRoom;
+    type: HMSRoomUpdate;
+  }) => {
+  // gets triggered when room is muted or unmuted.
+};
 
 const onReconnectingListener = (data) => {
   // triggered whenever local peer is trying to reconnect to room i.e. bad network.
