@@ -10,7 +10,7 @@ You can use "Playback Allowed" API to "mute Audio and/or Video" or "check mute s
 If you set "Playback Allowed" to `false`, then it means remote peers' tracks can't be played, meaning "Mute Status" is set to `true` and vice-versa.
 
 
-## Check Remote Peers Mute Status locally
+## Check Mute Status of Remote Peers locally
 
 To check playback allowed status, you can call `isPlaybackAllowed` method on `HMSRemoteAudioTrack` and `HMSRemoteVideoTrack` objects available on `HMSRemotePeer` object. You can get list of `HMSRemotePeer` objects from `getRemotePeers` method available on `HMSSDK` instance created using build method.
 
@@ -25,6 +25,7 @@ const firstRemotePeer = remotePeers[0];
 const isAudioPlaybackAllowed = firstRemotePeer.remoteAudioTrack().isPlaybackAllowed(); 
 const isVideoPlaybackAllowed = firstRemotePeer.remoteVideoTrack().isPlaybackAllowed();
 ```
+
 
 ## Muting Remote Peers for yourself (locally)
 
@@ -42,4 +43,14 @@ const firstRemotePeer = remotePeers[0];
 // Changing mute status of first remote peer for yourself only
 firstRemotePeer.remoteAudioTrack().setPlaybackAllowed(false);
 firstRemotePeer.remoteVideoTrack().setPlaybackAllowed(true);
+```
+
+
+## Muting "Audio" of All Remote Peers for yourself (locally)
+
+You can mute "audio" of all remote peers at once for yourself. Use `setPlaybackForAllAudio` method available on `HMSSDK` instance created using build method with `true` or `false` values.
+
+```js
+hmsInstance.setPlaybackForAllAudio(true)  // Mute Locally only
+hmsInstance.setPlaybackForAllAudio(false) // Unmute Locally only
 ```
