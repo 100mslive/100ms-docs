@@ -1,90 +1,158 @@
 ---
-title: Change Track State
+title: Remote Mute
 nav: 3.92
 ---
 
-Changing track state is a concept that allows users to mute other peers's audio / video and request unmute other peer's audio / video if they have required permissions or not according to their role.
+You're running a video call room and decide that someone who's currently talking shouldn't be talking. You'd prefer they'd stay mute or perhaps you want their video turned off as well. You're looking for a Remote Mute feature.
 
-## Check if user has permissions
+You may also decide that you want to let someone else speak who was currently muted or may want to ask someone to turn on their video as well. You're looking for a Request Unmute feature.
 
-Can't let just anyone mute others. First you need to create a [role](../foundation/templates-and-roles) with the permissions to end a room.
+Muting/Unmuting can apply to both audio and video.
+
+100ms provides these functionalities using "Change Track State" APIs. These APIs allows users to mute other peers's audio / video and request unmute other peer's audio / video if they have required permissions or not according to their role.
+
+
+## Permissions
+
+Can't let just anyone mute others. First, you need to create a [role](../foundation/templates-and-roles) with the permissions to mute others and also to ask them to Unmute.
 
 ![Permissions - Remote mute/unmute](/guides/permissions.png)
 
+Only the peers which has role with above permissions allowed will be able to Mute peers and/or Request Unmute from peers.
+
+You can check if local peer has permission to Mute peers or Request Unmute from peers as follows -
+
 ```js
-const mute: boolean = peer.role.permissions.mute;
-const unmute: boolean = peer.role.permissions.unmute;
+const localPeer = await hmsInstance.getLocalPeer();
+
+// Permissions are available on `HMSRole` object of Local Peer
+const localPeerPermissions: HMSPermissions = localPeer.role?.permissions;
+
+// Check if Local Peer has Mute Permission
+const canMute: boolean = localPeerPermissions?.mute;
+
+// Check if Local Peer has Request Unmute Permission
+const canRequestUnmute: boolean = localPeerPermissions?.unmute;
 ```
+
 
 ## Example
 
 Imagine a room with 10 people having 3 speakers and they have to speak one by one. The first speaker can mute other 2 speakers and start. After some point when the first speaker is finished they can mute himself and request other speakers to unmute.
 
-## Mute other tracks
 
-If you have the required permissions you can mute remote tracks audio / video. The track of the remote peer would be muted without any requests.
+## Mute / Unmute Remote Peers
+
+You can use `changeTrackState` method available on `HMSSDK` instance to mute and unmute remote peers.
+
+`changeTrackState` method accepts two parameters:
+
+1. _track_: `HMSTrack` that you want to mute or unmute.
+2. _mute_: `boolean` value,
+    - pass `true` to mute the track. track is muted immediately without any requests from track owner(peer). Peer is notified about the change by `HMSUpdateActionListeners.ON_CHANGE_TRACK_STATE_REQUEST` event.
+    - pass `false` to request unmute for the track. track owner(peer) will receive a unmute request. If the request is accepted by the remote peer `HMSUpdateActionListeners.ON_TRACK_UPDATE` event will be emitted.
+
+Make sure you have above mentioned permissions for mute/unmute to work.
 
 ```js
-const mute: boolean = true;
+try {
+  await hmsInstance.changeTrackState(audioTrack as HMSTrack, true); // Passing `true` to mute
+  console.log('Audio Track Mute Success');
 
-// instance acquired from build() method
-await hmsInstance?.changeTrackState(audioTrack as HMSTrack, mute)
-  .then(d => console.log('Change Track State Success: ', d))
-  .catch(e => console.log('Change Track State Error: ', e));
-await hmsInstance?.changeTrackState(videoTrack as HMSTrack, mute)
-  .then(d => console.log('Change Track State Success: ', d))
-  .catch(e => console.log('Change Track State Error: ', e));
+  await hmsInstance.changeTrackState(videoTrack as HMSTrack, false); // Passing `false` to request unmute
+  console.log('Video Track Unmute Request Sent');
+} catch (error) {
+  console.log('Change Track State Error: ', error);
+}
 ```
 
-## Unmute other tracks
 
-If you have the required permissions you can request to unmute remote tracks audio / video. If the request is accepted by the remote peer ON_TRACK_UPDATE listener will get triggered.
+## Mute / Unmute Remote Peers with Specific Roles
+
+You can use `changeTrackStateForRoles` method available on `HMSSDK` instance to mute and unmute **multiple peers at once by specifying specific roles**. This is not possible with `changeTrackState` method, it only mutes and unmutes single track for single peer at once.
+
+`changeTrackStateForRoles` method accepts four parameters:
+
+1. `mute` - `true` to mute the track(s) and `false` to request unmute for the track(s)
+2. `type` [Optional] - type is the `HMSTrackType` that should be affected. If `type` and `source` are specified, it is considered an `AND` operation. If `null`/`undefined`, all track sources are affected.
+3. `source` [Optional] - source is the `HMSTrackSource` that should be affected. If `type` and `source` are specified, it is considered an `AND` operation. If `null`/`undefined`, all track types are affected.
+4. `roles` [Optional] - list of `HMSRole` whose tracks should be affected. If `null`/`undefined`, all roles are affected.
+
+Also make sure you have above mentioned permissions for mute/unmute to work.
 
 ```js
-const unmute: boolean = false;
+try {
+  const roles = await hmsInstance.getRoles();
 
-// instance acquired from build() method
-await hmsInstance?.changeTrackState(audioTrack as HMSTrack, unmute)
-  .then(d => console.log('Change Track State Success: ', d))
-  .catch(e => console.log('Change Track State Error: ', e));
-await hmsInstance?.changeTrackState(videoTrack as HMSTrack, unmute)
-  .then(d => console.log('Change Track State Success: ', d))
-  .catch(e => console.log('Change Track State Error: ', e));
+  const [role1, role2] = roles;
+
+  await hmsInstance?.changeTrackStateForRoles(
+    true, // mute, set `false` to request unmute
+    HMSTrackType.AUDIO, // only mute audio tracks
+    HMSTrackSource.REGULAR, // only mute regular tracks
+    [role1, role2], // roles to target
+  );
+
+  console.log('Change Track State Roles Success');
+} catch (error) {
+  console.log('Change Track State for Roles Error: ', error);
+}
 ```
 
-## Accept Track change request
 
-Once the peer with adequate permissions calls change track state or unmute, you can either accept or reject the request.
+## Handle Track Mute
+
+Mute is automatically applied to the target peer, No action is required. However, Peer will still receives `HMSUpdateListenerActions.ON_CHANGE_TRACK_STATE_REQUEST` event, notifying peer about the track got muted.
+
+
+## Handle Track Unmute request
+
+Once the peer with adequate permissions requests unmute of a track, the track owner (`HMSPeer`) receives `HMSUpdateListenerActions.ON_CHANGE_TRACK_STATE_REQUEST` event. In this events' listener, you can show a prompt to the peer to accept or reject the unmute request.
+
+then Peer can accept the unmute request by Unmuting the audio/video track or reject the request by dismissing the prompt.
 
 ```js
-import { HMSUpdateListenerActions, HMSChangeTrackStateRequest } from '@100mslive/react-native-hms';
+// let's look at what the `HMSChangeTrackStateRequest` looks like -
+interface HMSChangeTrackStateRequest {
+  requestedBy: HMSPeer; // Peer who Muted or requested Unmute
 
-// add change track state listener
-hmsInstance.addEventListener(
-    HMSUpdateListenerActions.ON_CHANGE_TRACK_STATE_REQUEST,
-    onChangeTrackStateRequest
-);
+  trackType: string; // 'audio' or 'video' track type
 
-// reject or accept the request
+  mute: boolean; // `true` - Peer Muted your track; `false` - Peer Requested Unmute of your track
+}
+
+...
+
 const onChangeTrackStateRequest = (data: HMSChangeTrackStateRequest) => {
-    const requestedBy = data?.requestedBy?.name;
-    const trackType = data?.trackType;
-    if (trackType === 'audio') {
-        hmsInstance?.localPeer?.localAudioTrack()?.setMute(false);
-    } else if (trackType === 'video') {
-        hmsInstance?.localPeer?.localVideoTrack()?.setMute(false);
-    }
+  const requestedBy = data.requestedBy?.name; // Peer Name who Muted or requested Unmute
+
+  if (data.trackType === 'audio') {
+    // show Prompt to peer to accept or reject "Audio" track unmute request
+
+    // In Prompt, Peer can accept request by - `localPeer.localAudioTrack()?.setMute(false)`
+
+  } else if (data.trackType === 'video') {
+    // show Prompt to peer to accept or reject "Video" track unmute request
+
+    // In Prompt, Peer can accept request by - `localPeer.localVideoTrack()?.setMute(false)`
+  }
 };
+
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_CHANGE_TRACK_STATE_REQUEST, onChangeTrackStateRequest);
 ```
 
-## Mute all remote audio tracks
 
-If you have the required permissions you can mute all remote audio tracks at once.
+## Mute Audio of all Remote Peers
+
+You can use `remoteMuteAllAudio` method available on `HMSSDK` instance to mute audio track of all remote peers at once.
+
+Make sure you have above mentioned permissions for mute to work.
 
 ```js
-// instance acquired from build method
-await hmsInstance
-    .remoteMuteAllAudio()
-    .then((d) => console.log('Remote Mute All Audio Success: ', d))
-    .catch((e) => console.log('Remote Mute All Audio Error: ', e));
+try {
+  await hmsInstance.remoteMuteAllAudio();
+  console.log('Remote Mute All Audio Success');
+} catch (error) {
+  console.log('Remote Mute All Audio Error: ', error);
+}
 ```

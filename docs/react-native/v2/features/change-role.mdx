@@ -42,96 +42,165 @@ To invoke the API you will need 3 parameters -
 
 -   `force`: Whether you want to change their role without asking them or give them a chance to accept/reject.
 
-Note: success doesn't mean that the role was changed, just that the server accepted the request as valid.
-
-
 
 All the peers that are in the current room are accessible via the `peers` property of the `HMSRoom` instance. 
 
-
-A list of all available roles in the current room can be accessed via the `getRoles` method of `HMSSDK`.
-
+A list of all available roles in the current room can be accessed via the `getRoles` method of `HMSSDK` instance.
 
 Now with all the parameters you can invoke the `changeRoleOfPeer` API:
 
 ```js
 import { HMSRole, HMSRemotePeer } from '@100mslive/react-native-hms';
 
-const force = false
-
-// instance acquired from build() method
-await hmsInstance.changeRoleOfPeer(peer, newRole, force) // request role change, not forced
-    .then(d => console.log('Change Role Success: ', d))
-    .catch(e => console.log('Change Role Error: ', e));
+try {
+  const force = false;
+  // instance acquired from build() method
+  const result = await hmsInstance.changeRoleOfPeer(peer, newRole, force) // request role change, not forced
+  console.log('Change Role Success: ', result);
+} catch (error) {
+  console.log('Change Role Error: ', error);
+}
 ```
 
-If the changing role succeeds you will get an update in the `HMSUpdateListener` of `ROLE_CHANGED` update type:
+> Note: `changeRoleOfPeer` success doesn't mean that the role was changed, it just means that the server accepted the request as valid.
+
+> Note: 🔑 `changeRoleOfPeer` is the same as `changeRole` but we have deprecated `changeRole` and it will be removed in future releases. So, Please use `changeRoleOfPeer`.
+
+If the changing role succeeds, you will get an update in the `HMSUpdateListenerActions.ON_PEER_UPDATE` event with `HMSPeerUpdate.ROLE_CHANGED` update type:
 
 ```js
 const onPeerListener = ({
-    peer,
-    type,
-  }: {
-    peer: HMSPeer;
-    type: HMSPeerUpdate;
-  }) => {
-    if (type === HMSPeerUpdate.ROLE_CHANGED) {
-        // Update your app UI here
-    }
-  };
+  peer,
+  type,
+}: {
+  peer: HMSPeer;
+  type: HMSPeerUpdate;
+}) => {
+  if (type === HMSPeerUpdate.ROLE_CHANGED) {
+    // Role was changed of {peer}, New role is {peer.role}
+    // Update your app UI here
+  }
+};
+
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_PEER_UPDATE, onPeerListener);
 ```
 
-With the same peer, you passed as targetPeer and an `HMSPeerUpdate.ROLE_CHANGED` update type.
+Registered `HMSUpdateListenerActions.ON_PEER_UPDATE` event listener will receive the same peer, you passed as targetPeer and an `HMSPeerUpdate.ROLE_CHANGED` update type.
 
-The `force` parameter in `changeRole`, when false, is a polite request: "Would you like to change your role from listener to speaker?" Which can be ignored by the peer. The way it works is the other peer will first receive an `onRoleChangeRequest` callback in `HMSUpdateListener`:
 
+## Accept Single Peer Role Change request
+
+When a peer wishes to change the role of another peer it calls `changeRoleOfPeer` with a parameter `force`.
+
+- When `force` is set to `true` - role is directly changed and the peers receives an `HMSUpdateListenerActions.ON_PEER_UPDATE` event with `HMSPeerUpdate.ROLE_CHANGED` update type.
+
+- When `force` is set to `false` - This is a polite request e.g. "Would you like to change your role from listener to speaker?". Which can be ignored by the peer. The way it works is that the target peer will first receive a "Role Change Request" by `HMSUpdateListenerActions.ON_ROLE_CHANGE_REQUEST` event. If the request is accepted, the peers receives an `HMSUpdateListenerActions.ON_PEER_UPDATE` event with `HMSPeerUpdate.ROLE_CHANGED` update type otherwise nothing happens.
+
+
+Let's understand this with a diagram:
+
+![accept-change-role](/docs/v2/flutter-accept-role-change.png)
+
+Now let's do it step-by-step:
+
+<div className="steps-container">
+
+
+### PeerA calls changeRoleOfPeer with force as false
 
 ```js
-// import classes
-import { HMSUpdateListenerActions, HMSLeaveRoomRequest } from '@100mslive/react-native-hms';
+try {
+  const force = false;
+  // instance acquired from build() method
+  const result = await hmsInstance.changeRoleOfPeer(peer, newRole, force) // request role change, not forced
+  console.log('Change Role Success: ', result);
+} catch (error) {
+  console.log('Change Role Error: ', error);
+}
+```
 
-const onRoleChangeRequest = ({ requestedBy, suggestedRole }) => {
-    // open a promt to accept or reject the request
+
+### PeerB receives Role Change Request
+
+PeerB receive a "Role Change Request" by `HMSUpdateListenerActions.ON_ROLE_CHANGE_REQUEST` event -
+
+```js
+// `HMSRoleChangeRequest` is a class that contains info about the role change request.
+interface HMSRoleChangeRequest {
+  requestedBy: HMSPeer; // This is an `HMSPeer` object which contains info about the peer who performed the role change
+  suggestedRole: HMSRole; // This is an `HMSRole` object which contains info about the destination role
+}
+
+...
+
+const onRoleChangeRequest = ({
+  requestedBy,
+  suggestedRole
+}: HMSRoleChangeRequest) => {
+  // open a prompt to accept or reject the request
 };
 
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ROLE_CHANGE_REQUEST, onRoleChangeRequest);
 ```
 
-At this point, the app should show a prompt to the user asking for permission to accept or deny role change. 
+At this point, the app should show a prompt to the user asking for permission to accept or deny role change request.
 
 
-If the user wants to accept the request, the app should invoke `acceptRoleChangeRequest` on `HMSSDK` instance:
+### PeerB accepts Role Change request
+
+Role Change request can be accepted by calling `acceptRoleChange` method on `HMSSDK` instance -
 
 ```js
-// call this if you accept role change else close the prompt
-await hmsInstance.acceptRoleChange()
-    .then(d => console.log('Accept change role Success: ', d))
-    .catch(e => console.log('Accept change role Error: ', e));
+try {
+  // call `acceptRoleChange` if you want to accept role change else close the prompt
+  await hmsInstance.acceptRoleChange();
+  console.log('Accept change role Success');
+} catch (error) {
+  console.log('Accept change role Error: ', error);
+}
 ```
 
-
-Now, all peers in the room will receive an `HMSPeerUpdate.ROLE_CHANGED` callback so that they can do the necessary UI updates. Now the user becomes a speaker and the audio publishing will start automatically.
-
-Now let's imagine the newly nominated speaker is not behaving nicely and we want to move him back to the listener without a prompt. This is where the `force` parameter comes in.
+If the user wants to ignore the request, he/she can just dismiss the prompt.
 
 
-When it is set to true the other party will not receive a confirmation `roleChangeRequest` but instead will straight away receive a new set of updated permissions and stop publishing. 
+### All the peers receive Peer Role Change update
+
+Now, all peers in the room will receive an `HMSUpdateListenerActions.ON_PEER_UPDATE` event with `HMSPeerUpdate.ROLE_CHANGED` update type so that they can do the necessary UI updates. PeerB will have all the permissions of new role.
+
+```js
+const onPeerListener = ({
+  peer,
+  type,
+}: {
+  peer: HMSPeer;
+  type: HMSPeerUpdate;
+}) => {
+  if (type === HMSPeerUpdate.ROLE_CHANGED) {
+    // Role was changed of {peer}, New role is {peer.role}
+    // Update your app UI here
+  }
+};
+
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_PEER_UPDATE, onPeerListener);
+```
+
+</div>
 
 
-`HMSPeerUpdate.ROLE_CHANGED` callback will still be fired so that the app can update the user's UI state.
+### Force Role Change Request case
 
+Now let's imagine the newly nominated speaker is not behaving nicely and we want to move him back to the listener without a prompt. This is where the force parameter comes in.
 
+When `force` is set to true the other party will not receive a confirmation `HMSUpdateListenerActions.ON_ROLE_CHANGE_REQUEST` event, but instead will straight away receive a new set of updated permissions and will stop publishing audio. Note that `HMSUpdateListenerActions.ON_PEER_UPDATE` event with `HMSPeerUpdate.ROLE_CHANGED` update type will still be emitted so that the app can update the user's UI state.
 
 
 ## Bulk Role Change
 
+Bulk Role Change is used when we want to change the role of peers with a specific role to another role.
 
-Bulk Role Change is used when you want to convert all Roles from a list of Roles, to another Role.
+For example, if peers join a room with a `waiting` role and now you want to change all these peers to `viewer` role then use the `changeRoleOfPeersWithRoles` method.
 
-
-For example, if peers join a room with a `waiting` Role and now you want to change all these peers to `viewer` Role then use the `changeRoleOfPeersWithRoles` API.
-
-It takes fewer parameters than for a single peer. Here is the method signature.
+It takes fewer parameters than for a single peer. Here is the method signature:
 
 ```js
 changeRoleOfPeersWithRoles = async (ofRoles: HMSRole[], toRole: HMSRole) => { ... };
@@ -139,11 +208,6 @@ changeRoleOfPeersWithRoles = async (ofRoles: HMSRole[], toRole: HMSRole) => { ..
 
 1. `toRole` is the `HMSRole` they should be changed to.
 2. `ofRoles` is a list of `HMSRole` whose role should be changed.
-
-
-Note that if an empty list is sent to `ofRoles`, no roles will be changed. This is to avoid accidentally changing roles you may not have intended such as the bots that provide recording and streaming with the roles `beam`.
-
-Also, Bulk Role Changes are always forced i.e. no option will be given for the peer to accept it, they will just be changed immediately.
 
 
 Here's how the method could be called to change all `waiting` and `guest` roles to `host`:
@@ -161,3 +225,13 @@ const rolesToChange = roles.filter(role => role.name === 'waiting' || role.name 
 // now perform Role Change of all peers in "Waiting" and "Guest" Roles to the "Host" Role
 await hmsInstance.changeRoleOfPeersWithRoles(rolesToChange, hostRole);
 ```
+
+
+### Edge cases with bulk role change
+
+1. Note that if an empty list is sent to `ofRoles`, no roles will be changed. This is to avoid accidentally changing roles you may not have intended such as the bots that provide recording and streaming with the roles `beam`.
+
+2. Also, Bulk Role Changes are always forced i.e. no option will be given for the peer to accept it, they will just be changed immediately.
+
+
+<Content alias="bulkRoleChangeErrors" />

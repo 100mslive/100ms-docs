@@ -1,0 +1,28 @@
+---
+title: Capture Snapshot (Beta)
+nav: 3.987
+---
+
+You can capture a snapshot of the video stream of a local or remote peer's video.
+
+## Minimum Requirements
+
+-   SDK version 0.5.5
+
+## How to capture the snapshot
+
+You show a peer's video track using HMSVideoView. To capture a snapshot, you call captureSnapshot method on HMSVideoView instance to get a UIImage containing a snapshot of the video stream:
+
+```swift
+
+var videoView = HMSVideoView()
+...
+
+// Capture snapshot
+if let image = videoView.captureSnapshot() {
+  // process the captured UIImage
+  ...
+}
+  ```
+
+👀 To see an example iOS Capture Snapshot implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).

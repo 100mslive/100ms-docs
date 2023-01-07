@@ -1,0 +1,125 @@
+---
+title: HMSSDK Constructor
+nav: 3.011
+---
+
+## HMSSDK lifecycle 
+
+![hmssdk-lifecycle](/docs/v2/flutter-hmssdk-lifecycle.png)
+
+Let's look this in detail:
+
+## Instantiate HMSSDK
+
+In majority of use-cases, constructing a simple `HMSSDK` object & calling `build` function are required.
+
+```dart
+HMSSDK hmsSDK = HMSSDK();
+hmsSDK.build();
+```
+
+For Advanced use-cases, 100ms provides following optional parameters while constructing the `HMSSDK` object -
+
+- `hmsTrackSetting`: To customize local peer's Audio & Video track settings like Joining with Muted Audio or Video, changing default Camera (Front or Back), using Software Decoder for Video Rendering, etc. More details about Track Settings are available [here](https://www.100ms.live/docs/flutter/v2/advanced-features/set-track-settings).
+
+
+- `appGroup` & `preferredExtension`: (iOS Only) App Group & Preferred Extension are iOS only parameters required if you want to Start Screenshare from iOS devices. Passing correct App Group & Preferred Extension is required to allow users to perform Screenshare in a Room from iPhone or iPads. Refer iOS Screen share guide [here](https://www.100ms.live/docs/flutter/v2/features/screen-share#i-os-setup).
+
+
+- `hmsLogSettings`: (Android Only) 100ms provides ability to save logs to disk on Android devices. These logs can be used to diagnose performance of room sessions. By default, logging is disabled i.e. set to `HMSLogLevel.OFF`. To enable logging, create the `HMSLogSettings` object & pass it while constructing the `HMSSDK` instance. This functionality of saving logs to Disk is not available on iOS. More details are available [here](https://www.100ms.live/docs/flutter/v2/features/error-handling#setting-log-levels-in-sdk).
+
+## Initializing HMSSDK for Advanced Use-cases 
+
+You can initialize `HMSSDK` with either one or multiple of following optional parameters as per your use-cases. Say, for example, you want to Join with Muted Audio & Video and also allow users to start Screenshare from their iOS devices then pass the `HMSTrackSetting`, `appGroup` & `preferredExtension` parameters while constructing `HMSSDK` object.
+
+1. Custom Track Settings using `HMSTrackSetting`
+
+Following example shows creation of Track Settings object to join with Muted Audio & Video. By default, when you join a room, Camera & Microphone are ON. Using Track Settings you can allow users to choose to join with either Muted or Unmuted Audio & Video.
+
+```dart
+// create the Audio Track Settings object
+HMSAudioTrackSetting audioTrackSetting = HMSAudioTrackSetting(
+    trackInitialState: HMSTrackInitState.MUTED);
+
+// create the Video Track Settings object
+HMSVideoTrackSetting videoTrackSetting = HMSVideoTrackSetting(                                
+    trackInitialState: HMSTrackInitState.MUTED);
+
+// use the above Audio & Video Track Settings object to create HMSTrackSettings 
+HMSTrackSetting trackSetting = HMSTrackSetting(
+    audioTrackSetting: audioTrackSetting,
+    videoTrackSetting: videoTrackSetting);
+
+// Now, pass the Track Settings parameter while contructing the HMSSDK object
+HMSSDK hmsSDK = HMSSDK(hmsTrackSetting: trackSetting);
+hmsSDK.build();
+```
+
+2. iOS Screenshare
+
+For adding `appGroup` and `preferredExtension` follow the iOS Screenshare guide [here](https://www.100ms.live/docs/flutter/v2/features/screen-share#i-os-setup).
+After successfully following the iOS Screenshare guide you can find `appGroup` and `preferredExtension` name in Xcode under `Signing and Capabilities` section under `target > yourExtensionName`. 
+
+
+Once you have the correct App Group & Preferred Extension values created in Xcode & linked to your Apple Developer Account, you can now use them to start Screenshare from iOS devices.
+
+```dart
+// Pass the correct App Group & Preferred Extension parameters while contructing the HMSSDK object
+HMSSDK hmsSDK = HMSSDK(
+    appGroup: "appGroup", // App Group value linked to your Apple Developer Account
+    preferredExtension: "preferredExtension"); // Name of the Broadcast Upload Extension Target created in Xcode
+
+hmsSDK.build();
+```
+
+
+![iOS Screenshare Parameters](/docs/v2/flutter-dart-help.png)
+
+
+3. Android Logging to Disk
+
+To diagnose 100ms room sessions you can enable Logging to Disk on Android devices by creating the `HMSLogSettings` object.
+The following example shows how to set debug level to `VERBOSE`.
+
+```dart
+// initialize Log Settings object
+HMSLogSettings hmsLogSettings = HMSLogSettings(
+    maxDirSizeInBytes: 1000000,  // pass a value for setting the maximum log file size
+    isLogStorageEnabled: true,   // pass true to enable storage to Disk
+    level: HMSLogLevel.VERBOSE); // pass the appropriate log level - Verbose, Warn or Error
+
+// pass the Log Settings while contructing the HMSSDK object
+HMSSDK hmsSDK = HMSSDK(hmsLogSettings: hmsLogSettings);
+hmsSDK.build();
+```
+
+
+## What does Build Method do?
+
+The `build` method of `HMSSDK` creates an instance of 100ms SDK on Native iOS / Android platforms. It's recommended that you only create a single instance of `HMSSDK`. This allows for quick & simple integration & avoids State Management complexities. So the invocation of `build` method should only happen once in your app lifecycle. The `build` method should always be called after creating an instance of the `HMSSDK`.
+
+```dart
+hmsSDK.build();
+```
+
+## What does Destroy Method do?
+
+The `destroy` method performs the opposite action of `build`. It removes & clears 100ms SDK instances from Native iOS / Android platforms. `destroy` should be called when the user has a left a meeting room & you now want to perform cleanup of all references to 100ms. After calling `destroy` you should also set `HMSSDK` reference object to null.
+
+```dart
+HMSSDK hmsSDK = HMSSDK(); // construct HMSSDK object
+hmsSDK.build(); // invoke the build method 
+
+... // perform Room actions like join room, chat, streaming, recording, screenshare, etc
+
+await hmsSDK.leave(hmsActionResultListener: this); // leave the room & attach a listener to check if leave was successful or not
+
+... // when leave is successful, or you are going back to App Screen where 100ms Rooms are not required, invoke destroy method
+
+hmsSDK.destroy(); // destroy performs 100ms internal cleanup actions
+
+hmsSDK = null; // set the hmsSDK to null for cleanup
+```
+
+Now, if you want to join a room again, first initialize the `HMSSDK`, invoke `build` method & then call the [Join](https://www.100ms.live/docs/flutter/v2/features/join) method.
+

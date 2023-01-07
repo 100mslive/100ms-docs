@@ -11,8 +11,8 @@ const Feedback = () => {
     const [firstSelection, setFirstSelection] = React.useState(0);
     const [submitSuccessful, setSubmitSuccessful] = React.useState(false);
     const [message, setMessage] = React.useState('');
-    const feedBackRef = React.createRef<HTMLDivElement>();
-    const inputRef = React.createRef<HTMLTextAreaElement>();
+    const feedBackRef = React.useRef<HTMLDivElement>(null);
+    const inputRef = React.useRef<HTMLTextAreaElement>(null);
 
     const getPlaceholder = {
         1: 'What should we fix?',
@@ -47,6 +47,7 @@ const Feedback = () => {
                         style={{ position: 'relative', width: '24px', height: '24px' }}
                         key={emoji.score}
                         onClick={() => {
+                            const userDetails = currentUser();
                             if (showTextBox === false) {
                                 window.analytics.track('docs.feedback.rating', {
                                     title: document.title,
@@ -54,7 +55,9 @@ const Feedback = () => {
                                     path: window.location.pathname,
                                     rating: emoji.score,
                                     timeStamp: new Date().toLocaleString(),
-                                    ...currentUser()
+                                    customer_id: userDetails?.customer_id,
+                                    user_id: userDetails?.user_id,
+                                    email: userDetails?.email,
                                 });
                                 setFirstSelection(emoji.score);
                             }
@@ -78,7 +81,8 @@ const Feedback = () => {
                         css={{
                             color: '$textAccentHigh',
                             fontWeight: '$semiBold',
-                            textAlign: 'center'
+                            textAlign: 'center',
+                            marginBottom: '$6'
                         }}>
                         Feedback successfully submitted. Thank you!
                     </Text>
@@ -114,6 +118,7 @@ const Feedback = () => {
                                 cursor: 'pointer'
                             }}
                             onClick={() => {
+                                const userDetails = currentUser();
                                 window.analytics.track('docs.feedback.message', {
                                     title: document.title,
                                     message: message || '',
@@ -121,7 +126,9 @@ const Feedback = () => {
                                     referrer: document.referrer,
                                     path: window.location.pathname,
                                     timeStamp: new Date().toLocaleString(),
-                                    ...currentUser()
+                                    customer_id: userDetails?.customer_id,
+                                    user_id: userDetails?.user_id,
+                                    email: userDetails?.email
                                 });
                                 setSubmitSuccessful(true);
                             }}>

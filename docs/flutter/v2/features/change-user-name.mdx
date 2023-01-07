@@ -5,23 +5,121 @@ nav: 3.13
 
 Any peer can change their own name before or after joining a room. Before joining, the name would have to be specified in `HMSConfig` that is passed to the join method. This document shows how the name can be changed after joining.
 
-## Responding to name changes
-
-Whenever a remote peer's name is changed a callback will be received in `onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update})` of `HMSUpdateListener` where the `update` will be of type `HMSPeerUpdate.nameChanged`.
-
-When this callback is received the UI for that peer should be updated as well.
-
 ## Changing the name
 
 The peer who wants to change their name should call the following method on an `HMSSDK` instance.
 
-
 ```dart
-void changeName(
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    ...
+
+    void changeName(
       {required String name,
       required HMSActionResultListener hmsActionResultListener}) {
-    hmsSDK.changeName(
-        name: name, hmsActionResultListener: hmsActionResultListener);
+        ///[name] : the updated name
+        ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+        //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+        hmsSDK.changeName(name: name, hmsActionResultListener: this);
       }
+
+    @override
+    void onSuccess(
+        {HMSActionResultListenerMethod methodType =
+            HMSActionResultListenerMethod.unknown,
+        Map<String, dynamic>? arguments}) {
+            switch (methodType) {
+            case HMSActionResultListenerMethod.changeName:
+            //Name successfully changed
+            break;  
+        }        
+    }
+
+
+    @override
+    void onException(
+        {HMSActionResultListenerMethod methodType =
+            HMSActionResultListenerMethod.unknown,
+        Map<String, dynamic>? arguments,
+        required HMSException hmsException}) {
+            switch (methodType) {
+
+            ...
+
+            case HMSActionResultListenerMethod.changeName:
+            // Check the HMSException object for details about the error
+            break;
+
+        }
+    }
+}
 ```
 
+## Responding to name changes
+
+Once the name change is successful all the peers receive `onPeerUpdate` with the method type `nameChanged` which can be used to update peer info in the application.
+So, Whenever a remote peer's name is changed a callback will be received.
+
+```dart 
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    ...
+
+    @override
+    void onPeerUpdate(
+      {required HMSPeer peer, required HMSPeerUpdate update}) async {
+
+      switch (update) {
+
+        ...
+
+        case HMSPeerUpdate.nameChanged:
+        //update the HMSPeer object here in the application
+        break;
+
+        ...
+
+      }
+
+    }
+
+    void changeName(
+      {required String name,
+      required HMSActionResultListener hmsActionResultListener}) {
+        ///[name] : the updated name
+        ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+        //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+        hmsSDK.changeName(name: name, hmsActionResultListener: this);
+      }
+
+    @override
+    void onSuccess(
+        {HMSActionResultListenerMethod methodType =
+            HMSActionResultListenerMethod.unknown,
+        Map<String, dynamic>? arguments}) {
+            switch (methodType) {
+            case HMSActionResultListenerMethod.changeName:
+            //Name successfully changed
+            break;  
+        }        
+    }
+
+
+    @override
+    void onException(
+        {HMSActionResultListenerMethod methodType =
+            HMSActionResultListenerMethod.unknown,
+        Map<String, dynamic>? arguments,
+        required HMSException hmsException}) {
+            switch (methodType) {
+
+            ...
+            
+            case HMSActionResultListenerMethod.changeName:
+            // Check the HMSException object for details about the error
+            break;
+
+        }
+    }
+}
+```
