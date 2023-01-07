@@ -4,23 +4,37 @@ nav: 3.993
 ---
 
 
-React SDK provides support for sharing the entire screen of the device to the room. Please note that for a peer to share their screen, their role must have screenshare enabled in the dashboard. Also select the appropriate resolution for the Screen share quality. 1080p is recommended for better text readability.
+React SDK provides support for sharing the entire screen of the device to the room.
+
+Please note that for a peer to share their screen, their role must have screenshare enabled in the dashboard. Also select the appropriate resolution for the Screen share quality. 1080p is recommended for better text readability.
 
 ![ScreenshareDashboard](/docs/v2/screenshare-dashboard.png)
 
 ## Android Setup
 
-Adding activity to AndroidManifest.xml
-Add `HmsScreenshareActivity` to manifest located at `android/app/src/main/AndroidManifest.xml`.
-```js
-<activity
-  android:name="com.reactnativehmssdk.HmsScreenshareActivity"
-  android:label="@string/app_name" />
+Add `HmsScreenshareActivity` to manifest located at `android/app/src/main/AndroidManifest.xml` as follows -
+
+```xml
+<application
+  android:name=".MainApplication"
+  ...
+  android:label="@string/app_name">
+
+  ...
+  <!-- Add below activity in your "application" tag -->
+  <activity
+    android:name="com.reactnativehmssdk.HmsScreenshareActivity"
+    android:label="@string/app_name" />
+  ...
+
+</application>
 ```
 
 ## iOS Setup
 
 You need to create an iOS broadcast upload extension. It uses Apple's ReplayKit framework to record the device screen and delivers frame samples to your broadcast extension. You can share not only your own app but also the entire device sceeen including other apps on the device.
+
+<div className="steps-container">
 
 ### Step 1 - Open project
 Open your iOS Xcode project `xed ios`.
@@ -129,56 +143,78 @@ class SampleHandler: RPBroadcastSampleHandler {
     }
 }
 ```
+</div>
 
-## How to start screenshare from the app
-To start screen share, app needs to call the `startScreenshare` method of `HMSSDK`.
+
+## Start Screenshare
+
+To start screen share, app needs to call the `startScreenshare` method of `HMSSDK` instance.
 
 To start screen share in iOS you need to pass App Group and Preferred Extension name while creating HMSSDK instance as follows:
+
 ```js
+// Create `HMSSDK` instance with `appGroup` and `preferredExtension` properties
 const hmsInstance = await HMSSDK.build({
     appGroup: 'group.reactnativehms',
     preferredExtension: 'RHHMSExampleBroadcastUpload',
 });
+
+...
+
+// Start Screenshare
+try {
+  await hmsInstance.startScreenshare();
+  console.log('Start startScreenshare Success');
+} catch(error) {
+  console.log('Start startScreenshare Error: ', error);
+}
 ```
 
 You can find `app group` and `extension` name in Xcode under `Signing and Capabilities` section under `target > yourExtensionName`.
 
 ![Parameter](/docs/v2/RNParameter.png)
 
-Following is the snippet on how to use this:
+
+## Stop Screenshare
+
+To stop screen share, application needs to call the `stopScreenshare` method of `HMSSDK` instance.
+
 ```js
-// hms instance acquired from build method
-await hmsInstance?.startScreenshare()
-    .then(d => console.log('Start startScreenshare Success: ', d))
-    .catch(e => console.log('Start startScreenshare Error: ', e));
+try {
+  await hmsInstance.stopScreenshare();
+  console.log('Stop Screenshare Success');
+} catch(error) {
+  console.log('Stop Screenshare Error: ', error);
+}
 ```
-## How to stop screenshare from the app
-To start screen share, application needs to call the `stopScreenshare` method of `HMSSDK`.
-Following is the snippet on how to use this:
-```js
-// hms instance acquired from build method
-await hmsInstance?.stopScreenshare()
-    .then(d => console.log('Stop Screenshare Success: ', d))
-    .catch(e => console.log('Stop Screenshare Error: ', e));
-```
+
+
 ## How to get Screen Share Status
-Application needs to call the `isScreenShared` method of `HMSSDK`. This method returns a Boolean which will be true 
-inscase ScreenShare is currently active and being used, and False for inactive state.
+
+Application needs to call the `isScreenShared` method of `HMSSDK` instance. This method returns `true` inscase Screenshare is currently active and being used, and `false` for inactive state.
+
 ```js
-// hms instance acquired from build method
-await hmsInstance?.isScreenShared()
-    .then(d => console.log('Is Screenshare Success: ', d))
-    .catch(e => console.log('Is Screenshare Error: ', e));
+try {
+  await hmsInstance.isScreenShared();
+  console.log('Is Screenshare Success');
+} catch(error) {
+  console.log('Is Screenshare Error: ', error);
+}
 ```
 
-## How to display screenshare tracks
-You can get screenshare track in two ways, one from onTrackListener when the track is added and other from peer's auxiliaryTracks.
 
-Get screenshare track directly from onTrackListener and display it.
+## Render Screenshare Track
+
+You can get screenshare track in two ways:
+
+- from `HMSUpdateListenerActions.ON_TRACK_UPDATE` event, when the track is added
+- from peers' `auxiliaryTracks` property
+
+
+Code snippet to get screenshare track from `HMSUpdateListenerActions.ON_TRACK_UPDATE` event -
 
 ```js
-const HmsView = hmsInstance?.HmsView;
-const peerTrackNodes = [];
+const [peerTrackNodes, setPeerTrackNodes] = useState([]);
 
 // Get screenshare track from onTrackListener
 const onTrackListener = ({
@@ -190,36 +226,48 @@ const onTrackListener = ({
   track: HMSTrack;
   type: HMSTrackUpdate;
 }) => {
-  if(type === HMSTrackUpdate.TRACK_ADDED && track.source === HMSTrackSource.SCREEN && track.type === HMSTrackType.VIDEO){
-    peerTrackNodes.push({
-      id: peer.peerID + track.trackId,
-      peer,
-      track,
-    })
+  if(
+    type === HMSTrackUpdate.TRACK_ADDED && // track is added 
+    track.source === HMSTrackSource.SCREEN && // track source is screenshare
+    track.type === HMSTrackType.VIDEO // track type is video
+  ) {
+    // Saving screenshare track and peer to render it
+    setPeerTrackNodes(prevNodes => {
+      return [
+        { id: peer.peerID + track.trackId, peer, track, },
+        ...prevNodes
+      ];
+    });
   }
 };
 
+...
+
+const HmsView = hmsInstance.HmsView;
+
 <HmsView trackId={peerTrackNodes[0]?.trackId} />
 ```
 
-The peer's ScreenShare video is in the `peer.auxiliaryTracks` which is of type `HMSTrack[]`.
+Code snippet to get screenshare track from peers' `auxiliaryTracks` property -
 
 ```js
-const HmsView = hmsInstance?.HmsView;
-const peerTrackNodes = [];
+const remotePeers = await hmsInstance.getRemotePeers();
+
+const firstPeer = remotePeers[0];
 
 // Get screenshare track from peer
-const auxiliaryTracks = hmsInstance?.remotePeers[0]?.auxiliaryTracks
-
-auxiliaryTracks?.map(track => {
-  if(track.source === HMSTrackSource.SCREEN && track.type === HMSTrackType.VIDEO){
-    peerTrackNodes.push({
-      id: peer.peerID + track.trackId,
-      peer,
-      track,
-    })
-  }
+const firstPeerScreenshareTrack = firstPeer.auxiliaryTracks.find(auxiliaryTrack => {
+  return (
+    auxiliaryTrack.source === HMSTrackSource.SCREEN && // track source is screenshare
+      auxiliaryTrack.type === HMSTrackType.VIDEO // track type is video
+  );
 });
 
-<HmsView trackId={peerTrackNodes[0]?.trackId} />
+...
+
+const HmsView = hmsInstance?.HmsView;
+
+<HmsView trackId={firstPeerScreenshareTrack?.trackId} />
 ```
+
+Refer to [Render Video](./render-video) docs to know more about `HmsView` component and help in rendering video.
