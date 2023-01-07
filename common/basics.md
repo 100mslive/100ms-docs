@@ -20,10 +20,11 @@ Any application built using 100ms' SDK has 2 components.
 -   `Track` A track is a segment of media (audio/video) captured from the peer's camera and microphone. Peers in a session publish local tracks and subscribe to remote tracks from other peers.
 -   `Role` A role defines who can a peer see/hear, the quality at which they publish their video, whether they have permissions to publish video/screenshare, mute someone, change someone's role.
 -   `Template` A template is a collection of roles, room settings, recording and RTMP settings (if used), that are used by the SDK to decide which geography to connect to, which tracks to return to the client, whether to turn on recording when a room is created, etc. Each room is associated with a template.
--   `Destinations` Destinations is used to save audio/video calls for offline viewing. 100ms supports 2 kinds of recording - [SFU recording](/javascript/v2/foundation/recordings#sfu-recording-advanced)and [Browser recording](/javascript/v2/foundation/recordings#browser-recording-recommended). Also, `HLS enabled` configuration will allow you to live stream your room over HLS.
--   `RTMP` RTMP streaming is used to live stream your video conferencing apps to platforms like YouTube, Twitch, Facebook, MUX, etc.
+-   `Destinations` In 100ms, a destination allows you to act on your rooms to perform actions like recording or live streaming. 
+    -   You can record an active room and store the recordings in your S3 bucket for offline viewing. 100ms supports two kinds of recording - [SFU recording](./recordings#sfu-recording-advanced) and [Browser recording](./recordings#browser-recording-recommended).
+    -   You can use the Live Streaming destination to start an [Interactive live streaming session](/docs/server-side/v2/Destinations/live-streaming-via-dashboard) (using HLS) or stream to external streaming platforms such as YouTube, Twitch, Facebook, etc., using [RTMP streaming](/docs/server-side/v2/Destinations/rtmp-streaming-and-browser-recording).
 -   `Webhooks` Webhook is an HTTP(S) endpoint used for pushing the notifications to your application. It will be invoked by 100ms servers to notify events of your room.
--   `Workspace` A workspace is an isolated environment which contains account data like templates, rooms, room and session history, etc. You can use workspaces to represent environments like “Production” and “Development” and invite team members to a workspace.
+-   `Workspace` A workspace is an isolated environment which contains account data like templates, rooms, room and session history, etc., You can use workspaces to represent environments like “Production” and “Development” and invite team members to a workspace.
 
 ## What are the steps to build a live app with 100ms?
 1. Sign up on 100ms using the **Try For Free** button in the top navbar.
