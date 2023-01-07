@@ -3,40 +3,75 @@ title: Remove Peer
 nav: 3.91
 ---
 
-If the local peer has removeOthers permission they can remove a peer.
+Someone's overstayed their welcome and now you need to remove a peer from the video call room. `removePeer` method of `HMSSDK` instance comes to rescue.
 
-## Check if user has permissions
 
-```js
-const removeOthers: boolean = peer.role.permissions.removeOthers;
+## Permissions
+
+Can't let just anyone remove others from the video call room. First, you need to create a [role](../foundation/templates-and-roles) with the permissions to remove others.
+
+Only the peers who has role with remove permissions allowed will be able to Remove peers from the Room.
+
+You can check if you (local peer) have permission to remove peers as follows -
+
+```ts
+const localPeer = await hmsInstance.getLocalPeer();
+
+// Permissions are available on `HMSRole` object of Local Peer
+const localPeerPermissions: HMSPermissions = localPeer.role?.permissions;
+
+// Check if Local Peer has Remove Peer Permission
+const canRemoveOthers: boolean = localPeerPermissions?.removeOthers;
 ```
 
-## Remove Peer
+
+## Remove Peers
+
+You can use `removePeer` method available on `HMSSDK` instance to remove peers from the room.
+
+`removePeer` method accepts two parameters:
+
+1. _peer_: `HMSPeer` object of the peer that you want to remove
+2. _reason_: `string` reason for removal. Target Peer will receive this reason in `HMSUpdateListenerActions.ON_REMOVED_FROM_ROOM` event
+
+Make sure you have above mentioned permission for `removePeer` to work.
 
 ```js
-import { HMSPeer } from '@100mslive/react-native-hms';
+try {
+  const reason = 'removed from room';
 
-const reason = 'removed from room';
-
-// instance acquired from build() method
-const peer: HMSPeer = hmsInstance?.remotePeers[0]
-
-await hmsInstance.removePeer(peer, reason)
-    .then(d => console.log('Remove Peer Success: ', d))
-    .catch(e => console.log('Remove Peer Error: ', e));
+  await hmsInstance.removePeer(peer, reason); // peer is `HMSPeer` object of the peer to remove
+  console.log('Remove Peer Success');
+} catch (error) {
+  console.log('Remove Peer Error: ', error);
+}
 ```
+
 
 ## Remove Peer Notification
 
-Once the peer with adequate permissions calls removePeer for the local peer, the local peer will receive a notification with type REMOVED_FROM_ROOM with a HMSLeaveRoomRequest object as the data.
+This section explains how to handle the app UI when you (local peer) are removed from the room by someone else.
+
+Once the peer with adequate permissions calls `removePeer`, the removed peer will receive a `HMSUpdateListenerActions.ON_REMOVED_FROM_ROOM` event.
+
+You can update your apps' UI and [Free Resources](./release-resources) on receive of `HMSUpdateListenerActions.ON_REMOVED_FROM_ROOM` event.
 
 ```js
-// import classes
-import { HMSUpdateListenerActions, HMSLeaveRoomRequest } from '@100mslive/react-native-hms';
+const onRemovedFromRoom = (data: { requestedBy: HMSPeer | null, reason: string; roomEnded: boolean; }) => {
+  // Free App resources and do cleanup
+  destroy();
 
-const onRemovedFromRoom = (data: HMSLeaveRoomRequest) => {
-    // redirect to home screen
+  // Redirect to home screen or Navigate away from Meeting screen
+  navigation.navigate('Home');
 };
 
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_REMOVED_FROM_ROOM, onRemovedFromRoom);
 ```
+
+> 💡 Note: This is the same event that will be emitted if a peer [ends the room](./end-room). Except that `roomEnded` will be `false` when a peer is removed from room.
+
+Description of keys of data received from `HMSUpdateListenerActions.ON_REMOVED_FROM_ROOM` event:
+
+-   _reason_: The `string` message detailing why the peer was removed.
+-   _requestedBy_: `HMSPeer` object of the peer who called `removePeer`.
+-   _roomEnded_: `false` if only the receiving peer(local peer) was removed. `true` if the entire room was ended.
