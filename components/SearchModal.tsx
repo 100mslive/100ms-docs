@@ -174,7 +174,7 @@ const Search = ({ currentRefinement, refine, setSearchTerm }) => (
         onClick={(e) => e.stopPropagation()}>
         <SearchIcon style={{ color: 'inherit', height: '30px', width: '30px' }} />
         <input
-            placeholder="Search for concepts, functions, FAQs, and more"
+            placeholder="Search for FAQs, concepts, plugins, and more"
             value={currentRefinement}
             onChange={(event) => {
                 refine(event.target.value);
