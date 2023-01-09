@@ -852,6 +852,7 @@ This event is sent when beam successfully records the room and uploads the video
 | meeting_url             | `string`             | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                                                                |
 | rtmp                    | `array`              | List of RTMP objects provided at rtmp start <br/><br/> Example: [{"url": "http://test.com"}]                                                           |
 | session_started_at      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                |
+| size                    | `int`                | Size of the recording (in bytes) <br/><br/> Example: 10024                                                                                             |
 
 #### Sample `beam.recording.success` event
 
@@ -880,7 +881,8 @@ This event is sent when beam successfully records the room and uploads the video
         "max_width": 1280,
         "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
         "rtmp": [{ "url": "http://test.com" }],
-        "session_started_at": "2021-11-30T12:58:49.97291247Z"
+        "session_started_at": "2021-11-30T12:58:49.97291247Z",
+        "size": 10024
     }
 }
 ```
@@ -1184,6 +1186,7 @@ This event will be sent when HLS recordings are successful and uploaded to the s
 | template_id                         | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                           |
 | hls_vod_recording_path              | `string`             | Upload path of the HLS vod playlist such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                               |
 | hls_vod_recording_presigned_url     | `string`             | Pre signed url for HLS vod playlist url <br/><br/> Example: https://s3-location/bucket/hls-vod.zip                             |
+| hls_vod_recording_size              | `int`                | Size of the HLS vod recording (in bytes) <br/><br/> Example: 10024                                                             |
 | max_width                           | `int`                | Maximum width of the screen supported for HLS recording in pixels <br/><br/> Example: 1280                                     |
 | max_height                          | `int`                | Maximum height of the screen supported for HLS recording in pixels <br/><br/> Example: 720                                     |
 | meeting_url                         | `string`             | meeting_url provided at HLS start <br/><br/> Example: "https://app.100ms.live/room_id"                                         |
@@ -1217,26 +1220,31 @@ This event will be sent when HLS recordings are successful and uploaded to the s
         "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
         "hls_vod_recording_path": "s3://<hls-vod-bucket-address>.zip",
         "hls_vod_recording_presigned_url": "https://<hls-vod-access-url>?<signature>",
+        "hls_vod_recording_size": 10024,
         "recording_single_files": [
             {
                 "layer": "0",
                 "recording_path": "s3://<file-0-bucket-address>.mp4",
-                "recording_presigned_url": "https://<file-0-access-url>?<signature-0>"
+                "recording_presigned_url": "https://<file-0-access-url>?<signature-0>",
+                "size": 10024
             },
             {
                 "layer": "1",
                 "recording_path": "s3://<file-1-bucket-address>.mp4",
-                "recording_presigned_url": "https://<file-1-access-url>?<signature-1>"
+                "recording_presigned_url": "https://<file-1-access-url>?<signature-1>",
+                "size": 5012
             },
             {
                 "layer": "2",
                 "recording_path": "s3://<file-2-bucket-address>.mp4",
-                "recording_presigned_url": "https://<file-2-access-url>?<signature-2>"
+                "recording_presigned_url": "https://<file-2-access-url>?<signature-2>",
+                "size": 2506
             },
             {
                 "layer": "3",
                 "recording_path": "s3://<file-3-bucket-address>.mp4",
-                "recording_presigned_url": "https://<file-3-access-url>?<signature-3>"
+                "recording_presigned_url": "https://<file-3-access-url>?<signature-3>",
+                "size": 1024
             }
         ],
         "recording_thumbnails": [
