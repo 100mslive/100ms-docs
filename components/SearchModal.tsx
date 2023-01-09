@@ -72,11 +72,11 @@ const Result = ({ searchResult }) => {
 };
 
 const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) => {
-    setHitsCount(hits.length);
+    setHitsCount(hits?.length || 0);
     activeResult.current = -1;
     return (
         <Box>
-            {hits.length && searchTerm ? (
+            {hits?.length && searchTerm ? (
                 <Box
                     css={{
                         position: 'relative',
@@ -106,7 +106,7 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
                                 }}
                                 onClick={() => {
                                     window.analytics.track('docs.search.result.clicked', {
-                                        totalNumberOfResults: hits.length,
+                                        totalNumberOfResults: hits?.length,
                                         textInSearch: searchTerm || '',
                                         rankOfSearchResult: i + 1,
                                         locationOfSearchResult: searchResult.url,
@@ -126,7 +126,7 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
                     </Box>
                 </Box>
             ) : null}
-            {hits.length === 0 && searchTerm ? (
+            {hits?.length === 0 && searchTerm ? (
                 <Flex
                     justify="center"
                     align="center"
