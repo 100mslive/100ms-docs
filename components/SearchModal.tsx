@@ -255,7 +255,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
             <div className="search-modal" ref={ref}>
                 <InstantSearch
                     searchClient={searchClient}
-                    indexName="test">
+                    indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
                     <CustomSearchBox setSearchTerm={setSearchTerm} />
                     <CustomHits
                         setModal={setModal}
