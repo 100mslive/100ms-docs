@@ -69,7 +69,7 @@ New section should be added under `Signing & Capabilities` named App Groups. Cli
 
 ![Appgroup](/docs/v2/RNAddAppGroup.png)
 
-Enter App group name (create unique app group name ex: group.your.domain.name)
+Enter App Aroup name. This must be unique to your Apple Development Account. The standard practice is to use your domain name like `group.your.domain.name`.
 
 ![AppgroupDetail](/docs/v2/RNAddAppGroupName.png)
 
@@ -78,21 +78,76 @@ In ios folder of your react project and open `Podfile`.
 Paste the following code and replace the extension name you just created:
 
 ```ruby
+# ENSURE TO SET THE CORRECT SCREENSHARE EXTENSION TARGET NAME BELOW
 target 'RNHMSExampleBroadcastUpload' do
   use_modular_headers!
   pod 'HMSBroadcastExtensionSDK'
 end
 ```
+
+A sample of complete Podfile snippet after adding the Screenshare Target is as follows -
+
+```ruby
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+platform :ios, '13.0'
+
+# ENSURE TO SET THE CORRECT iOS SCREENSHARE EXTENSION TARGET NAME BELOW.
+# Not required if starting Screenshare from iOS devices is not a feature of the app. Then Remove this Target snippet
+target 'RNHMSExampleBroadcastUpload' do
+  use_modular_headers!
+  pod 'HMSBroadcastExtensionSDK'
+end
+
+# ENSURE TO SET THE CORRECT MAIN APP TARGET NAME BELOW
+target 'RNHMSExample' do
+  config = use_native_modules!
+  permissions_path = '../node_modules/react-native-permissions/ios'
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # to enable hermes on iOS, change `false` to `true` and then install pods
+    # :hermes_enabled => false
+    :hermes_enabled => true
+  )
+
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+  pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone"
+
+  target 'RNHMSExampleTests' do
+    inherit! :complete
+    # Pods for testing
+  end
+
+  # Enables Flipper.
+  #
+  # Note that if you have use_frameworks! enabled, Flipper will not work and
+  # you should disable the next line.
+  use_flipper!()
+
+  # POST INSTALL SCRIPT TO DISABLE BITCODE FROM ALL PODS & EXCLUDE arm64 FROM SIMULATORS
+  post_install do |installer|
+    react_native_post_install(installer)
+    installer.pods_project.build_configurations.each do |config|
+      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+    end
+  end
+end
+```
+
+
 ![Podfile](/docs/v2/RNPodfile.png)
 
-In terminal change directory to ios and run `pod install` command.
+In Terminal, change the directory to `ios` and run `pod install` command.
 
 ### Step 5 - Edit SampleHandler
 Expand `Runner > ExtensionName` and open SampleHandler file.
 
 ![SampleHandler](/docs/v2/RNSampleHandler.png)
 
-Replace the file with the code below and pset the correct App Group created for your Apple Developer Account.
+Replace the default `SampleHandler.swift` file with the code below and pset the correct App Group created for your Apple Developer Account.
 
 ```swift
 import ReplayKit
@@ -104,19 +159,15 @@ class SampleHandler: RPBroadcastSampleHandler {
   let screenRenderer = HMSScreenRenderer(appGroup: "group.reactnativehms")
   
   override func broadcastStarted(withSetupInfo setupInfo: [String: NSObject]?) {
-    // User has requested to start the broadcast. Setup info from the UI extension can be supplied but optional.
   }
   
   override func broadcastPaused() {
-    // User has requested to pause the broadcast. Samples will stop being delivered.
   }
   
   override func broadcastResumed() {
-    // User has requested to resume the broadcast. Samples delivery will resume.
   }
   
   override func broadcastFinished() {
-    // User has requested to finish the broadcast.
     screenRenderer.invalidate()
   }
   
@@ -158,8 +209,8 @@ To start screen share in iOS you need to pass App Group and Preferred Extension 
 ```js
 // Create `HMSSDK` instance with `appGroup` and `preferredExtension` properties
 const hmsInstance = await HMSSDK.build({
-    appGroup: 'group.reactnativehms',
-    preferredExtension: 'RHHMSExampleBroadcastUpload',
+    appGroup: 'group.reactnativehms', // ensure to pass the correct App Group linked to your Apple Developer Account
+    preferredExtension: 'RHHMSExampleBroadcastUpload', // ensure to pass the correct Extension Target name created in Xcode
 });
 
 ...
@@ -283,7 +334,7 @@ For starting Screenshare from iOS devices (iPhones or iPads) following are some 
 
 - `Bitcode` Disabled: Bitcode has been disabled by Apple from Xcode 14 & iOS 16 and above. So 100ms packages also have Disabled Bitcode to ensure compatibility. Ensure that in your Xcode project Bitcode is Disabled for all Targets.
 
-![Disable Bitcode in Xcode](/docs/v2/iOS-Xcode-Disable-Bitcode.png)
+![Disable Bitcode in Xcode](/docs/v2/RNDisableBitcode.png)
 
 
 - `Podfile` with `Bitcode` Disabled: You can use the following Podfile which has `post_install` script to Disable Bitcode for all `Pods`. Ensure that you modify the `target` for your Main App and the Broadcast Upload Extension. 
@@ -291,52 +342,49 @@ For starting Screenshare from iOS devices (iPhones or iPads) following are some 
 In this sample Podfile, the Target names are `Runner` and `FlutterBroadcastUploadExtension`. Change these to the actual Target names defined in your Xcode project.
 
 ```ruby
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
 platform :ios, '13.0'
 
-project 'Runner', {
-  'Debug' => :debug,
-  'Profile' => :release,
-  'Release' => :release,
-}
-
-def flutter_root
-  generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
-  unless File.exist?(generated_xcode_build_settings_path)
-    raise "#{generated_xcode_build_settings_path} must exist. If you're running pod install manually, make sure flutter pub get is executed first"
-  end
-
-  File.foreach(generated_xcode_build_settings_path) do |line|
-    matches = line.match(/FLUTTER_ROOT\=(.*)/)
-    return matches[1].strip if matches
-  end
-  raise "FLUTTER_ROOT not found in #{generated_xcode_build_settings_path}. Try deleting Generated.xcconfig, then run flutter pub get"
-end
-
-require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
-
-flutter_ios_podfile_setup
-
-# ENSURE TO SET THE CORRECT MAIN APP TARGET NAME BELOW
-target 'Runner' do
+# ENSURE TO SET THE CORRECT iOS SCREENSHARE EXTENSION TARGET NAME BELOW.
+# Not required if starting Screenshare from iOS devices is not a feature of the app. Then Remove this Target snippet
+target 'RNHMSExampleBroadcastUpload' do
   use_modular_headers!
-  use_frameworks!
-
-  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
-end
-
-
-# ENSURE TO SET THE CORRECT SCREENSHARE EXTENSION TARGET NAME BELOW
-target 'FlutterBroadcastUploadExtension' do
-  use_modular_headers!
-  use_frameworks!
   pod 'HMSBroadcastExtensionSDK'
 end
 
-# Post install script to Disable Bitcode from all Pods
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    flutter_additional_ios_build_settings(target)
-    target.build_configurations.each do |config|
+# ENSURE TO SET THE CORRECT MAIN APP TARGET NAME BELOW
+target 'RNHMSExample' do
+  config = use_native_modules!
+  permissions_path = '../node_modules/react-native-permissions/ios'
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # to enable hermes on iOS, change `false` to `true` and then install pods
+    # :hermes_enabled => false
+    :hermes_enabled => true
+  )
+
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+  pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone"
+
+  target 'RNHMSExampleTests' do
+    inherit! :complete
+    # Pods for testing
+  end
+
+  # Enables Flipper.
+  #
+  # Note that if you have use_frameworks! enabled, Flipper will not work and
+  # you should disable the next line.
+  use_flipper!()
+
+  # POST INSTALL SCRIPT TO DISABLE BITCODE FROM ALL PODS & EXCLUDE arm64 FROM SIMULATORS
+  post_install do |installer|
+    react_native_post_install(installer)
+    installer.pods_project.build_configurations.each do |config|
+      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
       config.build_settings['ENABLE_BITCODE'] = 'NO'
     end
   end
@@ -346,7 +394,7 @@ end
 
 - `Background Modes` Enabled: In majority use-cases, playing audio from Room would be required when app is in Background Mode. Mostly, if users are starting Screenshare from their iPhones/iPads they would want to continue listening to audio from the Room. So, ensure that you have Background Modes Enabled in your Xcode project.
 
-![Enable Background Modes](/docs/v2/enable-background-modes.png)
+![Enable Background Modes](/docs/v2/rn-background-modes.png)
 
 
 - Running on Simulator: Starting Screenshare from an iOS Simulator is not supported by Apple. You can start Screenshare only from an actual iOS device like an iPhone or iPad.
@@ -354,10 +402,6 @@ end
 
 - iOS Deployment Target Version: 100ms Flutter Package is supported for iOS 12 and above versions. Ensure that the Minimum iOS Deployment Target Version is set to `12.0` or above in your Xcode project & the Podfile.
 
-
-- Flutter version 3.3.0+ : 100ms Flutter Package is supported for Flutter versions 3.3.0 or above. You can check your current Flutter version by running the `flutter doctor` command.
-
-![Flutter Doctor](/docs/v2/flutter-doctor.png)
 
 
 - Role has Screenshare Permission: Ensure that the [Role](../foundation/templates-and-roles) used to Join the Room has Screenshare permission Enabled from the [100ms Dashboard](https://dashboard.100ms.live/). If the Screenshare permission is not Enabled from the Dashboard, any users joining with this Role won't be able to start Screenshare. These users would still be able to see Screenshare performed by other Peers who have Screenshare permissions.
