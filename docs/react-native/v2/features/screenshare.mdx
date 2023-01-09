@@ -142,7 +142,8 @@ end
 In Terminal, change the directory to `ios` and run `pod install` command.
 
 ### Step 5 - Edit SampleHandler
-Expand `Runner > ExtensionName` and open SampleHandler file.
+Open the `SampleHandler.swift` file. It would be available in your `TARGET_NAME > ExtensionName` Xcode folder.
+For example, `RNHMSExample > ExtensionName` then `SampleHandler.swift` file.
 
 ![SampleHandler](/docs/v2/RNSampleHandler.png)
 
@@ -338,7 +339,7 @@ For starting Screenshare from iOS devices (iPhones or iPads) following are some 
 
 - `Podfile` with `Bitcode` Disabled: You can use the following Podfile which has `post_install` script to Disable Bitcode for all `Pods`. Ensure that you modify the `target` for your Main App and the Broadcast Upload Extension. 
 
-In this sample Podfile, the Target names are `Runner` and `FlutterBroadcastUploadExtension`. Change these to the actual Target names defined in your Xcode project.
+In this sample Podfile, the Target names are `RNHMSExample` and `RNHMSExampleBroadcastUpload`. Change these to the actual Target names defined in your Xcode project.
 
 ```ruby
 require_relative '../node_modules/react-native/scripts/react_native_pods'
@@ -399,7 +400,7 @@ end
 - Running on Simulator: Starting Screenshare from an Simulator is not supported by Apple. You can start Screenshare only from an actual iOS device like an iPhone or iPad.
 
 
-- iOS Deployment Target Version: 100ms Flutter Package is supported for iOS 12 and above versions. Ensure that the Minimum iOS Deployment Target Version is set to `12.0` or above in your Xcode project & the Podfile.
+- iOS Deployment Target Version: 100ms React Native Package is supported for iOS 12 and above versions. Ensure that the Minimum iOS Deployment Target Version is set to `12.0` or above in your Xcode project & the Podfile.
 
 
 
