@@ -5,8 +5,6 @@ import { Flex, Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
 import Link from 'next/link';
 import algoliasearch from 'algoliasearch/lite';
-import debounce from 'lodash/debounce';
-
 import { InstantSearch, connectHits, connectSearchBox } from 'react-instantsearch-dom';
 
 const searchClient = algoliasearch(
@@ -161,7 +159,7 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
     );
 };
 
-const Search = ({ refine, setSearchTerm, searchTerm, debounceDelay = 500 }) => (
+const Search = ({ refine, setSearchTerm, searchTerm, debounceDelay = 400 }) => (
     <Flex
         align="center"
         css={{
@@ -179,9 +177,12 @@ const Search = ({ refine, setSearchTerm, searchTerm, debounceDelay = 500 }) => (
             placeholder="Search 100ms documentation"
             value={searchTerm}
             onChange={(event) => {
-                event.persist();
-                debounce(() => refine(event.target.value), debounceDelay);
-                setSearchTerm(event.target.value);
+                let debounceTimer;
+                const { value } = event.currentTarget;
+
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => refine(value), debounceDelay);
+                setSearchTerm(value);
             }}
             type="text"
             autoFocus
@@ -227,6 +228,12 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
 
     React.useEffect(() => {
         const handleNavigation = (e) => {
+            if (e.keyCode === 13 && activeResult.current) {
+                const ele = document.getElementById(`res-box-${activeResult.current}`)
+                    ?.children[0] as HTMLAnchorElement;
+                if (ele) ele.click();
+            }
+
             // Up
             if (e.keyCode === 38) {
                 if (activeResult.current === 0) {
