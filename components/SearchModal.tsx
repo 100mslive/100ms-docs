@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import Image from 'next/image';
 import { ChevronRightIcon, SearchIcon } from '@100mslive/react-icons';
 import { Flex, Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
@@ -71,11 +72,11 @@ const Result = ({ searchResult }) => {
 };
 
 const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) => {
-    setHitsCount(hits.length);
+    setHitsCount(hits?.length || 0);
     activeResult.current = -1;
     return (
         <Box>
-            {hits.length && searchTerm ? (
+            {hits?.length && searchTerm ? (
                 <Box
                     css={{
                         position: 'relative',
@@ -105,7 +106,7 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
                                 }}
                                 onClick={() => {
                                     window.analytics.track('docs.search.result.clicked', {
-                                        totalNumberOfResults: hits.length,
+                                        totalNumberOfResults: hits?.length,
                                         textInSearch: searchTerm || '',
                                         rankOfSearchResult: i + 1,
                                         locationOfSearchResult: searchResult.url,
@@ -124,6 +125,35 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
                         ))}
                     </Box>
                 </Box>
+            ) : null}
+            {hits?.length === 0 && searchTerm ? (
+                <Flex
+                    justify="center"
+                    align="center"
+                    direction="column"                    
+                    css={{
+                        position: 'relative',
+                        top: '$8',
+                        py:"$12",
+                        backgroundColor: '$surfaceDefault',
+                        border: '1px solid',
+                        borderColor: '$borderDefault',
+                        borderRadius: '$1',
+                        px: '$4',
+                    }}>
+                    <Image alt="No results" src="/docs/frown.svg" height={48} width={48} />
+                    <Text css={{ color: '$textDisabled', fontWeight: '$medium', mt: "$8" }}>
+                        Couldn't find anything for
+                        <Text
+                            css={{
+                                fontWeight: 'bold',
+                                display: 'inline-block',
+                                color: '$textHighEmp'
+                            }}>
+                            &nbsp;"{searchTerm}"
+                        </Text>
+                    </Text>
+                </Flex>
             ) : null}
         </Box>
     );
@@ -144,6 +174,7 @@ const Search = ({ currentRefinement, refine, setSearchTerm }) => (
         onClick={(e) => e.stopPropagation()}>
         <SearchIcon style={{ color: 'inherit', height: '30px', width: '30px' }} />
         <input
+            placeholder="Search 100ms documentation"
             value={currentRefinement}
             onChange={(event) => {
                 refine(event.target.value);
