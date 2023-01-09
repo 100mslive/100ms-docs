@@ -5,6 +5,8 @@ import { Flex, Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
 import Link from 'next/link';
 import algoliasearch from 'algoliasearch/lite';
+import debounce from 'lodash/debounce';
+
 import { InstantSearch, connectHits, connectSearchBox } from 'react-instantsearch-dom';
 
 const searchClient = algoliasearch(
@@ -130,19 +132,19 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
                 <Flex
                     justify="center"
                     align="center"
-                    direction="column"                    
+                    direction="column"
                     css={{
                         position: 'relative',
                         top: '$8',
-                        py:"$12",
+                        py: '$12',
                         backgroundColor: '$surfaceDefault',
                         border: '1px solid',
                         borderColor: '$borderDefault',
                         borderRadius: '$1',
-                        px: '$4',
+                        px: '$4'
                     }}>
                     <Image alt="No results" src="/docs/frown.svg" height={48} width={48} />
-                    <Text css={{ color: '$textDisabled', fontWeight: '$medium', mt: "$8" }}>
+                    <Text css={{ color: '$textDisabled', fontWeight: '$medium', mt: '$8' }}>
                         Couldn't find anything for
                         <Text
                             css={{
@@ -159,7 +161,7 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
     );
 };
 
-const Search = ({ currentRefinement, refine, setSearchTerm }) => (
+const Search = ({ refine, setSearchTerm, searchTerm, debounceDelay = 500 }) => (
     <Flex
         align="center"
         css={{
@@ -175,9 +177,10 @@ const Search = ({ currentRefinement, refine, setSearchTerm }) => (
         <SearchIcon style={{ color: 'inherit', height: '30px', width: '30px' }} />
         <input
             placeholder="Search 100ms documentation"
-            value={currentRefinement}
+            value={searchTerm}
             onChange={(event) => {
-                refine(event.target.value);
+                event.persist();
+                debounce(() => refine(event.target.value), debounceDelay);
                 setSearchTerm(event.target.value);
             }}
             type="text"
@@ -287,7 +290,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                 <InstantSearch
                     searchClient={searchClient}
                     indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
-                    <CustomSearchBox setSearchTerm={setSearchTerm} />
+                    <CustomSearchBox setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
                     <CustomHits
                         setModal={setModal}
                         searchTerm={searchTerm}
