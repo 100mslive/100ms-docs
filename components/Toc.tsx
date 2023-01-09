@@ -8,7 +8,8 @@ export type TocItem = {
 };
 
 const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
-    const [toc, setToc] = React.useState<TocItem[] | []>([]);
+    const [toc, setToc] = React.useState<TocItem[] | []>([]);    
+
     React.useEffect(() => {
         const list: TocItem[] = [];
         const ids = document.querySelectorAll('h2,h3');
@@ -21,6 +22,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
         );
         setToc(list);
     }, []);
+
     return (
         <div className="toc-ctx">
             {toc.length !== 0 ? <p className="menu-title">ON THIS PAGE</p> : null}
@@ -33,14 +35,17 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                                 : ''
                         }`}
                         key={item.slug}>
-                        <a href={`#${item.slug}`}>{item.title}</a>
+                        <a
+                            href={`#${item.slug}`}>
+                            {item.title}
+                        </a>
                     </span>
                 ) : null
             )}
             {CurrentDocsSlug === 'server-side' ? (
                 <>
                     <hr />
-                    <div style={{height: "2rem"}}>
+                    <div style={{ height: '2rem' }}>
                         <a href="https://god.gw.postman.com/run-collection/22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a?action=collection%2Ffork&collection-url=entityId%3D22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a%26entityType%3Dcollection%26workspaceId%3Dd9145dd6-337b-4761-81d6-21a30b4147a2">
                             <img src="https://run.pstmn.io/button.svg" alt="Run in postman" />
                         </a>
@@ -63,7 +68,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                     margin-left: 16px;
                     padding-left: 10px;
                 }
-                .menu-title{
+                .menu-title {
                     margin-left: -8px;
                 }
                 .head {

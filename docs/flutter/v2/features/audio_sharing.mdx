@@ -48,21 +48,81 @@ super.onActivityResult(requestCode, resultCode, data)
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 ```
 
-### How to stream device audio from the application
-To start streaming device audio, the application needs to call the `startAudioShare` method of `HMSSDK`, which takes in three parameters -
+### How to start/stop device audio streaming from the application
+To start streaming device audio, the application needs to call the `startAudioShare` method of `HMSSDK`, which takes in two parameters -
+
 1. The first one is `HMSActionResultListener` which is a callback object needed to inform about the `success` or `failure` of the action
 
 2. The second one is one of the modes of type `HMSAudioMixingMode` in which the user wants to stream.
     This can be one out of the three available types -
     - TALK_ONLY :  Data captured by the mic will be streamed in the room
     - TALK_AND_MUSIC: Data captured by the mic as well as playback audio being captured from the device will be streamed in the room
-    - MUSIC_ONLY:  The playback audio being captured from the device will be streamed in the room
+    - MUSIC_ONLY:  The playback audio being captured from the device will be streamed into the room
 
-Following is the snippet on how to use this:
+Following is the snippet on how to start and stop audio share:
 
 ```dart
-//For example if the mode needed is TALK_AND_MUSIC 
-hmsSDK.startAudioShare(hmsActionResultListener: hmsActionResultListener,audioMixingMode: HMSAudioMixingMode.TALK_AND_MUSIC);
+class Meeting  implements HMSUpdateListener, HMSActionResultListener{ 
+
+    ...
+
+    void startAudioShare() {
+        ///[audioMixingMode] HMSAudioMixingMode enum with values discussed above 
+        ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+        //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+        //For example if the mode needed is TALK_AND_MUSIC 
+        hmsSDK.startAudioShare(audioMixingMode: HMSAudioMixingMode.TALK_AND_MUSIC,hmsActionResultListener: this);
+    }
+
+    void stopAudioShare() {
+        ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+        //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+        hmsSDK.stopAudioShare(hmsActionResultListener: this);
+    }
+
+    @override
+    void onSuccess(
+        {HMSActionResultListenerMethod methodType =
+            HMSActionResultListenerMethod.unknown,
+        Map<String, dynamic>? arguments}) {
+
+            switch (methodType) {
+
+            ...
+
+            case HMSActionResultListenerMethod.startAudioShare:
+            //Here we will receive the startAudioShare success callback
+            break;
+
+            case HMSActionResultListenerMethod.stopAudioShare:
+            //Here we will receive the stopAudioShare success callback
+            break;        
+            ...
+        }
+    }
+
+    @override
+    void onException(
+        {HMSActionResultListenerMethod methodType =
+            HMSActionResultListenerMethod.unknown,
+        Map<String, dynamic>? arguments,
+        required HMSException hmsException}) {
+
+            switch (methodType) {
+
+                ... 
+
+                case HMSActionResultListenerMethod.startAudioShare:
+                 // Check the HMSException object for details about the error
+                break;
+
+                case HMSActionResultListenerMethod.stopAudioShare:
+                 // Check the HMSException object for details about the error
+                break;
+                ...
+        }
+    }
+}
 ```
 
 ### How to change the audio mixing mode
@@ -76,23 +136,15 @@ hmsSDK.setAudioMixingMode(audioMixingMode:HMSAudioMixingMode.MUSIC_ONLY);
   
 Note that `TALK_ONLY` mode is equivalent to regular mode, i.e. without starting this API
 
-### How to stop audio sharing
-To stop capturing device audio and streaming into the room, call the `stopAudioShare` API and provide an `HMSActionResultListener`
-to listen to the success or error callbacks.
-
-```dart
-hmsSDK.stopAudioShare(hmsActionResultListener: hmsActionResultListener);
-```
-
 ## iOS Setup
 
 -  Minimum iOS version required to support Audio Share is iOS 13
 
 ### How audio sharing works in iOS
 
-The audio that the device shares go to other peers through the mic channel. To be able to share audio we need to set up the SDK to use a custom audio source instead of the default mic. To do that you pass an instance of a custom audio source to HMSAudioTrackSettings on your hmssdk instance.
+The audio that the device shares go to other peers through the mic channel. To be able to share audio we need to set up the SDK to use a custom audio source instead of the default mic. To do that you pass an instance of a custom audio source to HMSAudioTrackSettings on your HMSSDK instance.
 
-### How to use hmssdk to share audio from a file
+### How to use HMSSDK to share audio from a file
 
 1. You create an instance of `HMSAudioFilePlayerNode` and an instance of `HMSMicNode` like below:
     HMSAudioFilePlayerNode required a parameter type `String` which will be used at the control music player in the room.
@@ -108,7 +160,7 @@ HMSMicNode micNode = HMSMicNode();
 HMSAudioMixerSource audioMixerSource = HMSAudioMixerSource(nodes: [audioFilePlayerNode, micNode]);
 ```
   
-3. Next, you pass this custom audio source to the 'audioSource' parameter of HMSAudioTrackSetting that you set on hmssdk instance like so:
+3. Next, you pass this custom audio source to the 'audioSource' parameter of HMSAudioTrackSetting that you set on HMSSDK instance like so:
 
 ```dart
 HMSAudioTrackSetting audioSettings = HMSAudioTrackSetting(..., audioSource: audioMixerSource);
@@ -143,9 +195,9 @@ Note volume value range from 0.0 to 1.0
 You can set `interrupts` parameter to false to tell audioFilePlayerNode to not interrupt the current file playback, but schedule the file after the current file is finished. Like below:
 
 ```dart
-audioFilePlayerNode.play(fileUrl: url to file 1)
-audioFilePlayerNode.play(fileUrl: url to file 2, interrupts: false)
-audioFilePlayerNode.play(fileUrl: url to file 3, interrupts: false)
+audioFilePlayerNode.play(fileUrl: URL to file 1)
+audioFilePlayerNode.play(fileUrl: URL to file 2, interrupts: false)
+audioFilePlayerNode.play(fileUrl: URL to file 3, interrupts: false)
 ...
 ```
 

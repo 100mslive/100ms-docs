@@ -5,9 +5,19 @@ nav: 3.04
 
 It all comes down to this. All the setup so far has been done so that we can show live-streaming videos in our beautiful app.
 
-To render video we will use HMSVideoView. To use it, we will `track`:
+100ms Flutter Package provides the `HMSVideoView` widget that renders the video on the screen.
 
-1. HMSVideoTrack: `HMSVideoView` renders video using HMSVideoTrack which we get from `onTrackUpdate`.
+We simply have to pass a Video Track object to the `HMSVideoView` to begin automatic rendering of Live Video Stream.
+
+We can also optionally pass props like `key`, `scaleType`, `mirror` to customize the `HMSVideoView` widget.
+
+```dart
+HMSVideoView(
+  track: videoTrack,
+  key: Key(videoTrack.trackId),
+),
+```
+
 
 ## How to get HMSVideoTrack 
 
@@ -57,6 +67,10 @@ class Meeting implements HMSUpdateListener{
           }
           else{
             //To get screenshare or other video tracks from peers
+            //For screenshare 
+            if(track.source == "SCREEN"){
+              //We will get screen share track here
+            }
           }
         }
       }

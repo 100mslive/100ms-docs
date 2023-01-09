@@ -97,23 +97,19 @@ In such cases, the `isTerminal` property can be used to handle the UI updates.
 
 > 🔑  More info on reconnection handling can be found [here](./reconnection-handling)
 
-## Setting log levels in SDK
+## Setting log levels in SDK (Android Only)
 
-`HMSSDK` sends all the logs from SDK by default. This makes debugging difficult.`HMSSDK` provides log levels to only receive logs 
-which are relevant.Log levels can be set as:
+100ms provides ability to save logs to disk on Android devices. These logs can be used to diagnose performance of room sessions. By default, logging is disabled i.e. set to `HMSLogLevel.OFF`. To enable logging, create the `HMSLogSettings` object & pass it while constructing the `HMSSDK` instance. This functionality of saving logs to Disk is not available on iOS.
 
 ```dart
-//To turn off logs set HMSLogLevel as OFF
+// Create the Log Settings object
 HMSLogSettings hmsLogSettings = HMSLogSettings(
         maxDirSizeInBytes: 1000000,
         isLogStorageEnabled: true,
-        level: HMSLogLevel.OFF);
+        level: HMSLogLevel.VERBOSE);
 
 hmsSDK = HMSSDK(
-    appGroup: appGroup,
-    preferredExtension: preferredExtension,
-    hmsLogSettings: hmsLogSettings,//Pass the settings while creating HMSSDK instance
-    hmsTrackSetting: trackSetting);
+    hmsLogSettings: hmsLogSettings); // pass the Log Settings as a parameter while constructing the HMSSDK instance
 ```
 
 `HMSLogLevel` is an enum with values:

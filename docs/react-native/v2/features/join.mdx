@@ -14,8 +14,9 @@ When user indicates that they want to _join_ the room, your app should have -
 
 You can also optionally pass these fields -
 
-1. Settings - Such as to join room with Muted Audio or Video using the `HMSTrackSettings` object.
-2. User Metadata - This can be used to pass any additional metadata associated with the user using `metadata` property of `HMSConfig` object.
+1. Track Settings - Such as joining a Room with Muted Audio or Video using the `HMSTrackSettings` object. More information available [here](#join-with-muted-audio-video)
+
+2. User Metadata - This can be used to pass any additional metadata associated with the user using `metadata` of `HMSConfig` object. For Eg: user-id mapping at the application side. More information is available [here](../advanced-features/change-metadata).
 
 
 ## Join a Room
@@ -26,14 +27,20 @@ We'll call the `join` method on `HMSSDK` object with a config containing above f
 
 ### Create HMSSDK instance
 
-First, create an instance of `HMSSDK` using the `build` function. You'll need to add Event Listeners for `HMSUpdateListenerActions` which are invoked to notify about updates happening in the room like a peer joins/leaves, a track got muted/unmuted, etc.
+First, create an instance of `HMSSDK` using the `build` function.
 
 ```js
 import { HMSSDK } from '@100mslive/react-native-hms';
 
 // create HMSSDK instance using the build function
 const hmsInstance = await HMSSDK.build();
+```
 
+### Attach Event Listeners
+
+You'll need to add Event Listeners for `HMSUpdateListenerActions`, which are invoked to notify about updates happening in the room like a peer joins/leaves, a track got muted/unmuted, etc.
+
+```js
 // add Event Listeners to subscribe to Join Success or Failure updates
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoin);
@@ -45,7 +52,7 @@ Next, create an object of `HMSConfig` class using the available joining configur
 
 ```js
 let config = new HMSConfig({
-                    authToken: 'eyJH5c', // client-side token generated from your token service 
+                    authToken: 'eyJH5c...', // client-side token generated from your token service 
                     username: 'John Appleseed',
                 });
 ```
@@ -60,7 +67,13 @@ hmsInstance.join(config);
 
 </div>
 
-That's it. You have joined a room successfully 🥳
+After calling join your app will be provided an update from the 100ms SDK.
+
+✅ If successful, the `onJoin` function which is listening for `HMSUpdateListenerActions.ON_JOIN` event will be invoked with information about the room encapsulated in the `HMSRoom` object.
+
+❌ If failure, the `onError` function which is listening for `HMSUpdateListenerActions.ON_ERROR` event will be invoked with exact failure reason.
+
+Once you get onJoin callback, You have joined a room successfully 🥳
 
 
 ## Join with Muted Audio / Video
@@ -68,7 +81,7 @@ That's it. You have joined a room successfully 🥳
 
 Joining with Muted Audio / Video is a customization that sets the microphone and camera state before joining the room.
 
-By default 100ms SDK keeps the microphone and camera ON but by using this feature you can decide their state according to the use case.
+By default 100ms SDK keeps the microphone and camera ON but by using this feature you can decide their state according to your use case.
 
 HMSSDK provides this capability using `initialState` property of Audio & Video Track Settings.
 
@@ -91,7 +104,9 @@ Let's see how this can be achieved in the following steps.
 
 ### Create Track Settings object
 
-First, for joining a Room with Muted Audio / Video `trackSettings` property should be set while building the `HMSSDK` instance as follows -
+First, create an instance of `HMSTrackSettings`, it will be used when we initialize our SDK.
+
+For joining a Room with Muted Audio and/or Video, We set `initialState` property of `HMSAudioTrackSettings` and/or `HMSVideoTrackSettings` with `HMSTrackSettingsInitState.MUTED` as follows -
 
 ```js
 // Customize Audio & Video initial states as per user discretion
@@ -120,41 +135,20 @@ const trackSettings = getTrackSettings();
 Now, create an instance of `HMSSDK` by passing the `HMSTrackSettings` object created above to the `build` function -
 
 ```js
+import { HMSSDK } from '@100mslive/react-native-hms';
+
 // Pass the Track Settings object to the build function 
-const hmsInstance = await HMSSDK.build({
-    trackSettings
-});
-
-// add Event Listeners to subscribe to Join Success or Failure updates
-hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
-hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoin);
+c̶o̶n̶s̶t̶ ̶h̶m̶s̶I̶n̶s̶t̶a̶n̶c̶e̶ ̶=̶ ̶a̶w̶a̶i̶t̶ ̶H̶M̶S̶S̶D̶K̶.̶b̶u̶i̶l̶d̶(̶)̶;̶
+const hmsInstance = await HMSSDK.build({ trackSettings });
 ```
 
-### Create HMSConfig object 
-
-Next, create an object of `HMSConfig` class using the available joining configurations.
-
-```js
-let config = new HMSConfig({
-                    authToken: 'eyJH5c', // client-side token generated from your token service 
-                    username: 'John Appleseed',
-                });
-```
-
-### Invoke Join
-
-Now, we are primed to join the room. All you have to do is calling `join` by passing the `config` object.
-
-```js
-hmsInstance.join(config);
-```
+Rest all the steps are same as above.
 
 Now, the user joins the room with the microphone and the camera turned off.
-
 </div>
 
 
-## Update Listener
+## Update Listeners
 
 100ms SDK provides multiple Event Listeners - `HMSUpdateListenerActions` which notifies about the updates happening in the room like a peer joins/leaves, a track got muted/unmutes, etc.
 
@@ -196,7 +190,7 @@ const onPeerListener = ({
   type,
 }: {
   peer: HMSPeer;
-  type?: HMSPeerUpdate;
+  type: HMSPeerUpdate;
 }) => {
   // gets triggered when peer leaves, joins, peer's audio or video is muted, starts or stops speaking, role is changed or becomes dominant speaker.
   // use these objects to update your local and remote peers.
@@ -215,7 +209,7 @@ const onTrackListener = ({
 }: {
   track: HMSTrack;
   peer: HMSPeer;
-  type?: HMSTrackUpdate;
+  type: HMSTrackUpdate;
 }) => {
   // gets triggered when track is added, removed, muted, unmuted, degraded and restored back.
   // use these objects to update your local and remote peers.

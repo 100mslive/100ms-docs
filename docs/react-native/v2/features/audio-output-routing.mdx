@@ -3,74 +3,115 @@ title: Audio Output Routing
 nav: 3.9991
 ---
 
-These are android only APIs. Audio Routing can be helpful in the case when user wants to switch output to device other than the default focussed one by SDK.
+**"These are Android only APIs."**
 
-## Switch audio focus to another device
+Audio Output Routing is helpful when users want to switch the audio output to a connected device other than the default one.
+
+For example, you can implement an in-call speaker button that toggles audio output between the speaker, earpiece or any other connected earphones - wired or wireless, etc.
+
+Let's see how we can use HMSSDK to implement this:
+
+<div className="steps-container">
+
+### Fetch Available Audio Devices
+
+You can use `getAudioDevicesList` method available on `HMSSDK` instance to fetch the list of available audio devices.
 
 ```js
-fun switchAudioOutput(audioDevice: HMSAudioDevice)
+enum HMSAudioDevice {
+  SPEAKER_PHONE = 'SPEAKER_PHONE',
+  WIRED_HEADSET = 'WIRED_HEADSET',
+  EARPIECE = 'EARPIECE',
+  BLUETOOTH = 'BLUETOOTH',
+  AUTOMATIC = 'AUTOMATIC',
+}
+
+...
+
+try {
+  // List of available devices
+  const audioDevices: HMSAudioDevice[] = await hmsInstance.getAudioDevicesList();
+
+  console.log('Get Audio Device List Success: ', audioDevices);
+} catch (error) {
+  console.log('Get Audio Device List Error: ', error);
+}
 ```
 
-Types of audio routing supported.
+`getAudioDevicesList` method returns list of `HMSAudioDevice` enum. `HMSAudioDevice` has following values -
 
-* SPEAKER - route audio to device speaker
-* EARPIECE - route audio to device earpiece
-* WIRED - route audio to connected wired device
-* BLUETOOTH - route audio to connected bluetooth device
-* AUTOMATIC - automatic routing
+- SPEAKER_PHONE - device speaker
+- EARPIECE - device earpiece
+- WIRED_HEADSET - connected wired device
+- BLUETOOTH - connected Bluetooth device
+- AUTOMATIC - other automatic device
 
-invoke this method with appropriate option , to switch the output to that device
 
-`audioDevice` is the [AudioDevice] type through which audio should be routed.
+
+### Switch Audio Focus to Another Device
+
+You can use `switchAudioOutput` method available on `HMSSDK` instance to switch the device audio output to different device.
+
+`switchAudioOutput` method takes a `HMSAudioDevice` as a parameter. You can pass any device from the device list you got from previous step (`getAudioDevicesList` method call).
 
 ```js
-import { HMSAudioDevice } from '@100mslive/react-native-hms';
+try {
+  // List of available devices
+  const audioDevices: HMSAudioDevice[] = await hmsInstance.getAudioDevicesList();
 
-hmsInstance?.switchAudioOutput(HMSAudioDevice.EARPIECE)
+  // EARPIECE device
+  const earpieceAudioDevice = audioDevices.find(audioDevice => audioDevice === HMSAudioDevice.EARPIECE);
+
+  // Switching Audio Output from default to EARPIECE device
+  hmsInstance.switchAudioOutput(earpieceAudioDevice);
+
+  console.log('Switch Audio Output Success');
+} catch (error) {
+  console.log('Switch Audio Output Error: ', error);
+}
 ```
 
-## Adding a listener
-```js
-fun setAudioDeviceChangeListener(callback: Function)
-```
-Add a listener to get updates whenever a device is removed or attached to the device. Callback function to be passed to be able to listen to device updates.
 
-Callback methods :
+### Receive the device change updates
 
-* callback passed - this method is invoked when output device has changed.
-* onError listener - this method is invoked when there is an error with switching to output device.
+You can add a listener to get updates whenever a audio device is removed or attached to the device such as Bluetooth, Wired Headset etc.
+
+You can use `setAudioDeviceChangeListener` method available on `HMSSDK` instance to add device change listener.
+
+`setAudioDeviceChangeListener` method takes a `callback` as a parameter, which will be called _when output device has changed_ or a _device is removed or attached_.
 
 ```js
-const onAudioDeviceChangedListener = (data: {
-  device: string;
-  audioDevicesList: string[];
-}) => {
-  // 
+const deviceChangeListener = (data: { device: HMSAudioDevice; audioDevicesList: HMSAudioDevice[] }) => {
+  // `device` param - Focused Audio Device
+  // `audioDevicesList` param - List of available Audio Devices
+
+  console.log(`Audio Device Output changed to ${data.device}`);
 };
-  
-hmsInstance?.setAudioDeviceChangeListener(onAudioDeviceChangedListener)
+
+hmsInstance.setAudioDeviceChangeListener(deviceChangeListener);
 ```
 
-## Get current focussed device
+You can remove this listener as follows -
 
 ```js
-async function getAudioOutputRouteType() : AudioDevice
+hmsInstance.removeEventListener(HMSUpdateListenerActions.ON_AUDIO_DEVICE_CHANGED);
 ```
 
-invoke this method get current device type through which audio output is being routed.
+</div>
+
+
+
+## Get Current Focussed Device
+
+You can use `getAudioOutputRouteType` method available on `HMSSDK` instance to get the current focused audio output device.
+
+`getAudioOutputRouteType` method returns audio device of type `HMSAudioDevice`.
 
 ```js
-await hmsInstance?.getAudioOutputRouteType()
-```
-
-## Get list of audio device
-
-```js
-async function getAudioDevicesList() : AudioDevice[]
-```
-
-invoke this method get list of devices type through which audio output can be routed.
-
-```js
-await hmsInstance?.getAudioDevicesList()
+try {
+  const focusedAudioDevice: HMSAudioDevice = await hmsInstance.getAudioOutputRouteType();
+  console.log('Get Audio Output Route Type Success: ', focusedAudioDevice);
+} catch (error) {
+  console.log('Get Audio Output Route Type Error: ', error);
+}
 ```

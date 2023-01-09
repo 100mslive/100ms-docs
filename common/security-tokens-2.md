@@ -1,6 +1,6 @@
 #### Get app tokens from the token endpoint
 
-If you are building integration with 100ms, you can get app tokens from the 100ms token endpoint without hosting a token generation backend service. Refer to [this guide](./../guides/token-endpoint#get-a-token-using-100ms-token-endpoint) for more information. 
+If you are building integration with 100ms, you can get app tokens from the 100ms token endpoint without hosting a token generation backend service. Refer to [this guide](./../guides/token-endpoint#get-an-app-token-using-token-endpoint) for more information. 
 
 #### Get app tokens from the dashboard
 

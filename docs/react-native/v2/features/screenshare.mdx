@@ -3,26 +3,39 @@ title: Screen Share
 nav: 3.993
 ---
 
+100ms React Native Package provides support for sharing the entire screen of the device to the room.
 
-React SDK provides support for sharing the entire screen of the device to the room. Please note that for a peer to share their screen, their role must have screenshare enabled in the dashboard. Also select the appropriate resolution for the Screen share quality. 1080p is recommended for better text readability.
+Please note that for a peer to share their screen, their role must have screenshare enabled in the dashboard. Also select the appropriate resolution for the Screen share quality. 1080p is recommended for better text readability.
 
 ![ScreenshareDashboard](/docs/v2/screenshare-dashboard.png)
 
 ## Android Setup
 
-Adding activity to AndroidManifest.xml
-Add `HmsScreenshareActivity` to manifest located at `android/app/src/main/AndroidManifest.xml`.
-```js
-<activity
-  android:name="com.reactnativehmssdk.HmsScreenshareActivity"
-  android:label="@string/app_name" />
+Add `HmsScreenshareActivity` to manifest located at `android/app/src/main/AndroidManifest.xml` as follows -
+
+```xml
+<application
+  android:name=".MainApplication"
+  ...
+  android:label="@string/app_name">
+
+  ...
+  <!-- Add below activity in your "application" tag -->
+  <activity
+    android:name="com.reactnativehmssdk.HmsScreenshareActivity"
+    android:label="@string/app_name" />
+  ...
+
+</application>
 ```
 
 ## iOS Setup
 
 You need to create an iOS broadcast upload extension. It uses Apple's ReplayKit framework to record the device screen and delivers frame samples to your broadcast extension. You can share not only your own app but also the entire device sceeen including other apps on the device.
 
-### Step 1 - Open project
+<div className="steps-container">
+
+### Step 1 - Open Xcode project at the `/ios` path of your app
 Open your iOS Xcode project `xed ios`.
 
 ### Step 2 - Add Broadcast Upload Extension
@@ -55,130 +68,208 @@ New section should be added under `Signing & Capabilities` named App Groups. Cli
 
 ![Appgroup](/docs/v2/RNAddAppGroup.png)
 
-Enter App group name (create unique app group name ex: group.your.domain.name)
+Enter App Aroup name. This must be unique to your Apple Development Account. The standard practice is to use your domain name like `group.your.domain.name`.
 
 ![AppgroupDetail](/docs/v2/RNAddAppGroupName.png)
 
 ### Step 4 - Edit Podfile
 In ios folder of your react project and open `Podfile`.
 Paste the following code and replace the extension name you just created:
-```
+
+```ruby
+# ENSURE TO SET THE CORRECT SCREENSHARE EXTENSION TARGET NAME BELOW
 target 'RNHMSExampleBroadcastUpload' do
   use_modular_headers!
   pod 'HMSBroadcastExtensionSDK'
 end
 ```
+
+A sample of complete Podfile snippet after adding the Screenshare Target is as follows -
+
+```ruby
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+platform :ios, '13.0'
+
+# ENSURE TO SET THE CORRECT EXTENSION TARGET NAME BELOW.
+# Not required if starting Screenshare from iOS devices is not a feature of the app. Then Remove this Target snippet
+target 'RNHMSExampleBroadcastUpload' do
+  use_modular_headers!
+  pod 'HMSBroadcastExtensionSDK'
+end
+
+# ENSURE TO SET THE CORRECT MAIN APP TARGET NAME BELOW
+target 'RNHMSExample' do
+  config = use_native_modules!
+  permissions_path = '../node_modules/react-native-permissions/ios'
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # to enable hermes on iOS, change `false` to `true` and then install pods
+    # :hermes_enabled => false
+    :hermes_enabled => true
+  )
+
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+  pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone"
+
+  target 'RNHMSExampleTests' do
+    inherit! :complete
+    # Pods for testing
+  end
+
+  # Enables Flipper.
+  #
+  # Note that if you have use_frameworks! enabled, Flipper will not work and
+  # you should disable the next line.
+  use_flipper!()
+
+  # POST INSTALL SCRIPT TO DISABLE BITCODE FROM ALL PODS & EXCLUDE arm64 FROM SIMULATORS
+  post_install do |installer|
+    react_native_post_install(installer)
+    installer.pods_project.build_configurations.each do |config|
+      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+    end
+  end
+end
+```
+
+
 ![Podfile](/docs/v2/RNPodfile.png)
 
-In terminal change directory to ios and run `pod install` command.
+In Terminal, change the directory to `ios` and run `pod install` command.
 
 ### Step 5 - Edit SampleHandler
-Expand `Runner > ExtensionName` and open SampleHandler file.
+Open the `SampleHandler.swift` file. It would be available in your `TARGET_NAME > ExtensionName` Xcode folder.
+For example, `RNHMSExample > ExtensionName` then `SampleHandler.swift` file.
 
 ![SampleHandler](/docs/v2/RNSampleHandler.png)
 
-Replace the code with the code below and pass app group name to the respected field:
+Replace the default `SampleHandler.swift` file with the code below and pset the correct App Group created for your Apple Developer Account.
 
 ```swift
 import ReplayKit
 import HMSBroadcastExtensionSDK
 
 class SampleHandler: RPBroadcastSampleHandler {
-
-    let screenRenderer = HMSScreenRenderer(appGroup: "group.reactnativehms")
-
-    override func broadcastStarted(withSetupInfo setupInfo: [String : NSObject]?) {
-        // User has requested to start the broadcast. Setup info from the UI extension can be supplied but optional.
-    }
-
-    override func broadcastPaused() {
-        // User has requested to pause the broadcast. Samples will stop being delivered.
-    }
-
-    override func broadcastResumed() {
-        // User has requested to resume the broadcast. Samples delivery will resume.
-    }
-
-    override func broadcastFinished() {
-        // User has requested to finish the broadcast.
-        screenRenderer.invalidate()
-    }
-
-    override func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType) {
-        switch sampleBufferType {
-        case RPSampleBufferType.video:
-            // Handle video sample buffer
-            if let error = screenRenderer.process(sampleBuffer) {
-                if error.code == .noActiveMeeting {
-                    finishBroadcastWithError(NSError(domain: "ScreenShare",
-                                                     code: error.code.rawValue,
-                                                     userInfo: [NSLocalizedFailureReasonErrorKey : "You are not in a meeting."]))
-                }
-            }
-            break
-        case RPSampleBufferType.audioApp:
-            // Handle audio sample buffer for app audio
-            break
-        case RPSampleBufferType.audioMic:
-            // Handle audio sample buffer for mic audio
-            break
-        @unknown default:
-            // Handle other sample buffer types
-            fatalError("Unknown type of sample buffer")
+  
+  // ENSURE TO SET CORRECT APP GROUP LINKED TO YOUR APPLE DEVELOPER ACCOUNT HERE
+  let screenRenderer = HMSScreenRenderer(appGroup: "group.reactnativehms")
+  
+  override func broadcastStarted(withSetupInfo setupInfo: [String: NSObject]?) {
+  }
+  
+  override func broadcastPaused() {
+  }
+  
+  override func broadcastResumed() {
+  }
+  
+  override func broadcastFinished() {
+    screenRenderer.invalidate()
+  }
+  
+  override func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType) {
+    switch sampleBufferType {
+    case RPSampleBufferType.video:
+      // Handle video sample buffer
+      if let error = screenRenderer.process(sampleBuffer) {
+        if error.code == .noActiveMeeting {
+          finishBroadcastWithError(NSError(domain: "ScreenShare",
+                                           code: error.code.rawValue,
+                                           userInfo: [NSLocalizedFailureReasonErrorKey: "You are not in a meeting."]))
         }
+      }
+      break
+    case RPSampleBufferType.audioApp:
+      _ = self.screenRenderer.process(audioSampleBuffer: sampleBuffer)
+      break
+    case RPSampleBufferType.audioMic:
+      // Handle audio sample buffer for mic audio
+      break
+    @unknown default:
+      // Handle other sample buffer types
+      fatalError("Unknown type of sample buffer")
     }
+  }
 }
 ```
 
-## How to start screenshare from the app
-To start screen share, app needs to call the `startScreenshare` method of `HMSSDK`.
+</div>
+
+
+## Start Screenshare
+
+To start screen share, app needs to call the `startScreenshare` method of `HMSSDK` instance.
 
 To start screen share in iOS you need to pass App Group and Preferred Extension name while creating HMSSDK instance as follows:
+
 ```js
+// Create `HMSSDK` instance with `appGroup` and `preferredExtension` properties
 const hmsInstance = await HMSSDK.build({
-    appGroup: 'group.reactnativehms',
-    preferredExtension: 'RHHMSExampleBroadcastUpload',
+    appGroup: 'group.reactnativehms', // ensure to pass the correct App Group linked to your Apple Developer Account
+    preferredExtension: 'RHHMSExampleBroadcastUpload', // ensure to pass the correct Extension Target name created in Xcode
 });
+
+...
+
+// Start Screenshare
+try {
+  await hmsInstance.startScreenshare();
+  console.log('Start startScreenshare Success');
+} catch(error) {
+  console.log('Start startScreenshare Error: ', error);
+}
 ```
 
 You can find `app group` and `extension` name in Xcode under `Signing and Capabilities` section under `target > yourExtensionName`.
 
 ![Parameter](/docs/v2/RNParameter.png)
 
-Following is the snippet on how to use this:
+
+## Stop Screenshare
+
+To stop screen share, application needs to call the `stopScreenshare` method of `HMSSDK` instance.
+
 ```js
-// hms instance acquired from build method
-await hmsInstance?.startScreenshare()
-    .then(d => console.log('Start startScreenshare Success: ', d))
-    .catch(e => console.log('Start startScreenshare Error: ', e));
+try {
+  await hmsInstance.stopScreenshare();
+  console.log('Stop Screenshare Success');
+} catch(error) {
+  console.log('Stop Screenshare Error: ', error);
+}
 ```
-## How to stop screenshare from the app
-To start screen share, application needs to call the `stopScreenshare` method of `HMSSDK`.
-Following is the snippet on how to use this:
-```js
-// hms instance acquired from build method
-await hmsInstance?.stopScreenshare()
-    .then(d => console.log('Stop Screenshare Success: ', d))
-    .catch(e => console.log('Stop Screenshare Error: ', e));
-```
+
+
 ## How to get Screen Share Status
-Application needs to call the `isScreenShared` method of `HMSSDK`. This method returns a Boolean which will be true 
-inscase ScreenShare is currently active and being used, and False for inactive state.
+
+Application needs to call the `isScreenShared` method of `HMSSDK` instance. This method returns `true` inscase Screenshare is currently active and being used, and `false` for inactive state.
+
 ```js
-// hms instance acquired from build method
-await hmsInstance?.isScreenShared()
-    .then(d => console.log('Is Screenshare Success: ', d))
-    .catch(e => console.log('Is Screenshare Error: ', e));
+try {
+  await hmsInstance.isScreenShared();
+  console.log('Is Screenshare Success');
+} catch(error) {
+  console.log('Is Screenshare Error: ', error);
+}
 ```
 
-## How to display screenshare tracks
-You can get screenshare track in two ways, one from onTrackListener when the track is added and other from peer's auxiliaryTracks.
 
-Get screenshare track directly from onTrackListener and display it.
+## Render Screenshare Track
+
+You can get screenshare track in two ways:
+
+- from `HMSUpdateListenerActions.ON_TRACK_UPDATE` event, when the track is added
+- from peers' `auxiliaryTracks` property
+
+> Note: Screenshare track can be differentiated from normal track using tracks' `source` property - `track.source === "SCREEN"` for screenshare tracks
+
+Code snippet to get screenshare track from `HMSUpdateListenerActions.ON_TRACK_UPDATE` event -
 
 ```js
-const HmsView = hmsInstance?.HmsView;
-const peerTrackNodes = [];
+const [peerTrackNodes, setPeerTrackNodes] = useState([]);
 
 // Get screenshare track from onTrackListener
 const onTrackListener = ({
@@ -190,36 +281,130 @@ const onTrackListener = ({
   track: HMSTrack;
   type: HMSTrackUpdate;
 }) => {
-  if(type === HMSTrackUpdate.TRACK_ADDED && track.source === HMSTrackSource.SCREEN && track.type === HMSTrackType.VIDEO){
-    peerTrackNodes.push({
-      id: peer.peerID + track.trackId,
-      peer,
-      track,
-    })
+  if(
+    type === HMSTrackUpdate.TRACK_ADDED && // track is added 
+    track.source === HMSTrackSource.SCREEN && // track source is screenshare
+    track.type === HMSTrackType.VIDEO // track type is video
+  ) {
+    // Saving screenshare track and peer to render it
+    setPeerTrackNodes(prevNodes => {
+      return [
+        { id: peer.peerID + track.trackId, peer, track, },
+        ...prevNodes
+      ];
+    });
   }
 };
 
+...
+
+const HmsView = hmsInstance.HmsView;
+
 <HmsView trackId={peerTrackNodes[0]?.trackId} />
 ```
 
-The peer's ScreenShare video is in the `peer.auxiliaryTracks` which is of type `HMSTrack[]`.
+Code snippet to get screenshare track from peers' `auxiliaryTracks` property -
 
 ```js
-const HmsView = hmsInstance?.HmsView;
-const peerTrackNodes = [];
+const remotePeers = await hmsInstance.getRemotePeers();
+
+const firstPeer = remotePeers[0];
 
 // Get screenshare track from peer
-const auxiliaryTracks = hmsInstance?.remotePeers[0]?.auxiliaryTracks
-
-auxiliaryTracks?.map(track => {
-  if(track.source === HMSTrackSource.SCREEN && track.type === HMSTrackType.VIDEO){
-    peerTrackNodes.push({
-      id: peer.peerID + track.trackId,
-      peer,
-      track,
-    })
-  }
+const firstPeerScreenshareTrack = firstPeer.auxiliaryTracks.find(auxiliaryTrack => {
+  return (
+    auxiliaryTrack.source === HMSTrackSource.SCREEN && // track source is screenshare
+      auxiliaryTrack.type === HMSTrackType.VIDEO // track type is video
+  );
 });
 
-<HmsView trackId={peerTrackNodes[0]?.trackId} />
+...
+
+const HmsView = hmsInstance?.HmsView;
+
+<HmsView trackId={firstPeerScreenshareTrack?.trackId} />
 ```
+
+Refer to [Render Video](./render-video) docs to know more about `HmsView` component and help in rendering video.
+
+
+## Troubleshooting Guide
+
+For starting Screenshare from iOS devices (iPhones or iPads) following are some common setup you should already have within your Apps -
+
+- `Bitcode` Disabled: Bitcode has been disabled by Apple from Xcode 14 & iOS 16 and above. So 100ms packages also have Disabled Bitcode to ensure compatibility. Ensure that in your Xcode project Bitcode is Disabled for all Targets.
+
+![Disable Bitcode in Xcode](/docs/v2/RNDisableBitcode.png)
+
+
+- `Podfile` with `Bitcode` Disabled: You can use the following Podfile which has `post_install` script to Disable Bitcode for all `Pods`. Ensure that you modify the `target` for your Main App and the Broadcast Upload Extension. 
+
+In this sample Podfile, the Target names are `RNHMSExample` and `RNHMSExampleBroadcastUpload`. Change these to the actual Target names defined in your Xcode project.
+
+```ruby
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+platform :ios, '13.0'
+
+# ENSURE TO SET THE CORRECT SCREENSHARE EXTENSION TARGET NAME BELOW.
+# Not required if starting Screenshare from iOS devices is not a feature of the app. Then Remove this Target snippet
+target 'RNHMSExampleBroadcastUpload' do
+  use_modular_headers!
+  pod 'HMSBroadcastExtensionSDK'
+end
+
+# ENSURE TO SET THE CORRECT MAIN APP TARGET NAME BELOW
+target 'RNHMSExample' do
+  config = use_native_modules!
+  permissions_path = '../node_modules/react-native-permissions/ios'
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # to enable hermes on iOS, change `false` to `true` and then install pods
+    # :hermes_enabled => false
+    :hermes_enabled => true
+  )
+
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+  pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone"
+
+  target 'RNHMSExampleTests' do
+    inherit! :complete
+    # Pods for testing
+  end
+
+  # Enables Flipper.
+  #
+  # Note that if you have use_frameworks! enabled, Flipper will not work and
+  # you should disable the next line.
+  use_flipper!()
+
+  # POST INSTALL SCRIPT TO DISABLE BITCODE FROM ALL PODS & EXCLUDE arm64 FROM SIMULATORS
+  post_install do |installer|
+    react_native_post_install(installer)
+    installer.pods_project.build_configurations.each do |config|
+      config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+    end
+  end
+end
+```
+
+
+- `Background Modes` Enabled: In majority use-cases, playing audio from Room would be required when app is in Background Mode. Mostly, if users are starting Screenshare from their iPhones/iPads they would want to continue listening to audio from the Room. So, ensure that you have Background Modes Enabled in your Xcode project.
+
+![Enable Background Modes](/docs/v2/rn-background-modes.png)
+
+
+- Running on Simulator: Starting Screenshare from an Simulator is not supported by Apple. You can start Screenshare only from an actual iOS device like an iPhone or iPad.
+
+
+- iOS Deployment Target Version: 100ms React Native Package is supported for iOS 12 and above versions. Ensure that the Minimum iOS Deployment Target Version is set to `12.0` or above in your Xcode project & the Podfile.
+
+
+
+- Role has Screenshare Permission: Ensure that the [Role](../foundation/templates-and-roles) used to Join the Room has Screenshare permission Enabled from the [100ms Dashboard](https://dashboard.100ms.live/). If the Screenshare permission is not Enabled from the Dashboard, any users joining with this Role won't be able to start Screenshare. These users would still be able to see Screenshare performed by other Peers who have Screenshare permissions.
+
+![Screen Share Permission](/docs/v2/screenshare-permission.png)
+
