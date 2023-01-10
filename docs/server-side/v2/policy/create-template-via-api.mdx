@@ -125,15 +125,15 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
         "recording": {
             "enabled": true,
             "upload": {
-                "type": "s3",
-                "location": "<Name of the AWS s3 bucket>",
+                "type": "<upload type: supported are s3, gs, oss>",
+                "location": "<Name of the storage bucket>",
                 "prefix": "<Upload prefix path>",
                 "options": {
-                    "region": "<region of the s3 bucket>"
+                    "region": "<region of the storage bucket>"
                 },
                 "credentials": {
-                    "key": "<access key ID for the AWS account/S3 bucket>",
-                    "secretKey": "<secret access key for the AWS account/S3 bucket>"
+                    "key": "<access key ID for accessing the storage bucket>",
+                    "secretKey": "<secret access key for accessing the storage bucket>"
                 }
             }
         },
@@ -331,15 +331,15 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
         "recording": {
             "enabled": true,
             "upload": {
-                "location": "<Name of the AWS s3 bucket>",
-                "type": "s3",
+                "location": "<Name of the storage bucket>",
+                "type": "<upload type: Supported are s3, gs, oss>",
                 "prefix": "<Upload prefix path>",
                 "credentials": {
-                    "key": "<access key ID for the AWS account/S3 bucket>",
-                    "secretKey": "<secret access key for the AWS account/S3 bucket>"
+                    "key": "<access key ID for accessing the storage bucket>",
+                    "secretKey": "<secret access key for accessing the storage bucket>"
                 },
                 "options": {
-                    "region": "<region of the s3 bucket>"
+                    "region": "<region of the storage bucket>"
                 }
             }
         },
@@ -533,26 +533,26 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 #### upload object
 
-| Name        | Type     | Description                                                                                            | Required |
-| :---------- | :------- | :----------------------------------------------------------------------------------------------------- | :------- |
-| type        | `string` | Upload destination type. Currently, only s3 is supported.                                              | Yes      |
-| location    | `string` | Name of the AWS s3 bucket in which you want to store all recordings                                    | Yes      |
-| prefix      | `string` | Upload prefix path                                                                                     | Yes      |
-| options     | `object` | Additional configurations of type Options to be used for uploading                                     | No       |
-| credentials | `object` | Object of type `credentials`. This is used to share AWS credentials to access the s3 bucket specified. | No       |
+| Name        | Type     | Description                                                                                                       | Required |
+| :---------- | :------- | :---------------------------------------------------------------------------------------------------------------- | :------- |
+| type        | `string` | Upload destination type. Currently, `s3` (AWS), `gs` (Google Cloud Storage), `oss` (Alibaba Cloud) are supported. | Yes      |
+| location    | `string` | Name of the storage bucket in which you want to store all recordings                                              | Yes      |
+| prefix      | `string` | Upload prefix path                                                                                                | Yes      |
+| options     | `object` | Additional configurations of type Options to be used for uploading                                                | No       |
+| credentials | `object` | Object of type `credentials`. This is used to share the credentials to access the storage bucket specified.       | No       |
 
 #### options object
 
-| Name   | Type     | Description                                                                                       | Required |
-| :----- | :------- | :------------------------------------------------------------------------------------------------ | :------- |
-| region | `string` | Region of the AWS account hosting the s3 bucket. If not provided it is assumed to be `ap-south-1` | No       |
+| Name   | Type     | Description                                                              | Required |
+| :----- | :------- | :----------------------------------------------------------------------- | :------- |
+| region | `string` | Region of the account hosting the storage bucket for storing recordings. | No       |
 
 #### credentials object
 
-| Name      | Type     | Description                                                                          | Required |
-| :-------- | :------- | :----------------------------------------------------------------------------------- | :------- |
-| key       | `string` | `access key ID` for the AWS account hosting the s3 bucket for storing recordings     | Yes      |
-| secretKey | `string` | `secret access key` for the AWS account hosting the s3 bucket for storing recordings | Yes      |
+| Name      | Type     | Description                                                                   | Required |
+| :-------- | :------- | :---------------------------------------------------------------------------- | :------- |
+| key       | `string` | Access Key for the account hosting your storage bucket for storing recordings | Yes      |
+| secretKey | `string` | Secret for the account hosting the storage bucket for storing recordings      | Yes      |
 
 ### roomState object
 
