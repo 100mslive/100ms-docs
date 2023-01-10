@@ -1,50 +1,89 @@
 ---
-title: Reconnecting & Reconnected Callbacks
+title: Reconnection Handling
 nav: 3.999
 ---
-Reconnecting listener is triggered when the SDK detects a network issue or is trying to reconnect automatically on a network drop, switch etc. 
-The Reconnected listener is triggered when the SDK  has successfully recovered from a network drop, switch or a network issue etc.
 
-> 💡 Note: The SDK tries to reconnect automatically for 60 seconds after that the connection is terminated and the room has to be rejoined.
+Real-world apps operate in varying network conditions and thus require handling for network bandwidth issues. The SDK provides callbacks when a user gets disconnected due to network issues or network switch and also when the user gets reconnected again.
 
-## Errors
+> 💡 Note: The SDK tries to reconnect automatically for 60 seconds after that the connection is terminated, the peer is removed from the room and the room has to be rejoined.
 
-When in reconnecting state the SDK emits the error `Error Code: 1003, Cause: Websocket disconnected` which is received in onReconnectingListener.
+
+## Reconnecting & Reconnected Events
+
+`HMSUpdateListenerActions.RECONNECTING` event is emitted when SDK detects a network issue and it's trying to Reconnect with servers.
+
+`HMSUpdateListenerActions.RECONNECTED` event is emitted when SDK has successfully recovered from a network drop, switch or a network issue etc.
+
+You should subscribe to these events to receive Reconnecting & Reconnected updates as follows -
 
 ```js
-hmsInstance?.addEventListener(HMSUpdateListenerActions.RECONNECTING, onReconnectingListener);
-hmsInstance?.addEventListener(HMSUpdateListenerActions.RECONNECTED, onReconnectedListener);
+const onReconnectingListener = ({ error }: { error: HMSException }) => {
+  console.log('SDK is trying to Reconnect to servers due to error: ', error);
+}
 
-const onReconnectingListener = (error: HMSException) => {
-  // show reconnecting... toast
-};
+// Subscribing to `Reconnecting` updates
+hmsInstance.addEventListener(HMSUpdateListenerActions.RECONNECTING, onReconnectingListener);
+
+
 const onReconnectedListener = () => {
-  // show reconnected toast
-};
+  console.log('SDK has successfully Reconnected to servers!');
+}
+
+// Subscribing to `Reconnected` updates
+hmsInstance.addEventListener(HMSUpdateListenerActions.RECONNECTED, onReconnectedListener);
 ```
 
-Once the 60 seconds timeout is finished and the peer is not joined back in the room, an error `Error Code: 4005, Cause: ICE Connection Failed due to network issue` 
-is emitted in onErrorListener.
+> 💡 Note: On getting reconnected, the SDK will send all the updates(Track and Peer updates) again.
+
+
+## Handle case when user fails to reconnect
+
+SDK tries to reconnect the user automatically for 60 seconds, after that the connection gets terminated and the peer is removed from the room by SDK. If reconnection fails the SDK emits `HMSUpdateListenerActions.ON_ERROR` event with error.
 
 ```js
-hmsInstance?.addEventListener(HMSUpdateListenerActions.ON_ERROR, onErrorListener);
-
 const onErrorListener = (error: HMSException) => {
-  // show data?.error?.message toast
-};
-```
-## Best Practices
+  if (error.code === 1003 || error.code === 4005) {
+    // Free Resources and do cleanup
+    doCleanup();
 
-* Once you receive an onReconnectingListener try and avoid the user from interacting with any APIs until onReconnectedListener is received otherwise 
-the APIs might not be successful like join, leave, setMute etc. 
-* If 60 seconds timeout is passed and you receive an onErrorListener, check for 4005 error code and redirect back to home screen as the connection is 
-terminated and you will have to again join the room.
-```js
-const onErrorListener = (error: HMSException) => {
-  if (data?.error?.code === 4005) {
-    // Redirect and try to rejoin once connection is established again
+    // navigate user to the HomeScreen, showing a toast or errorDialog with error description.
+    navigation.navigate('HomeScreen');
   }
 };
+
+// Subscribing to `Error` updates
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onErrorListener);
 ```
 
-> 💡 Note: You can also measure a user's connection speed. Learn more about connection quality API [here](../advanced-features/network-quality)
+The user will receive the error object which has `isTerminal` property set to `true` and `errorCode` property as:
+
+* Error Code: 1003, Cause: Websocket disconnected
+
+![Error Code:1003](/docs/v2/flutter-errorCode-1003.png)
+
+* Error Code: 4005, Cause: ICE Connection Failed due to network issue[PUBLISH]
+
+![Error Code:1003](/docs/v2/flutter-errorCode-4005-PUBLISH.png)
+
+* Error Code: 4005, Cause: ICE Connection Failed due to network issue[SUBSCRIBE]
+
+![Error Code:1003](/docs/v2/flutter-errorCode-4005-SUBSCRIBE.png)
+
+
+## Best Practices
+
+The SDK emits:
+- `HMSUpdateListenerActions.RECONNECTING` event, when the user disconnects
+- `HMSUpdateListenerActions.RECONNECTED` event, when the user reconnects, and
+- `HMSUpdateListenerActions.ON_ERROR` event, when the user **fails** to reconnect
+
+These callbacks can be handled as follows:
+
+* In "Reconnecting" stage, Do not allow the user to interact with UI and show loaders or reconnecting indicator.
+* When "Reconnected", switch back to room UI allowing interactions as usual.
+* When user fails to reconnect then SDK emits `HMSUpdateListenerActions.ON_ERROR` event, In the function subscribed to this event, look for `code` property and if it is something(generally 1003, 4005 etc.) such that the user can never reconnect then navigate user to the HomeScreen, showing a toast or errorDialog with error description.
+
+> 🗝️ You can find the errorCodes, descriptions and the suggested actions to be taken [here](./error-handling)
+
+
+You can also measure a users' connection speed. Learn more about connection quality API [here](../advanced-features/network-quality)
