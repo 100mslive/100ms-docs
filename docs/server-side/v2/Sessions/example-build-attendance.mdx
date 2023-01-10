@@ -1,0 +1,203 @@
+---
+title: Example - Build attendance
+nav: 4.4
+---
+
+## Introduction
+
+This guide will help you understand various approaches available to calculate total session duration, aggregated participants duration, and individual participants' duration for a specific session.
+
+You can use `Retrieve a session API` to get the individual participants' duration, total session duration, and aggregated participants' duration. And use the data export option from the 100ms dashboard to get the total session duration and aggregated participants' duration. Please follow the below sections for more details with examples.
+
+## Using Sessions API
+
+Use this API to build the attendance system to gather information about peers for a session, such as join/leave timestamps, duration, peer_id, user_id, etc.
+
+Let's take a quick look at the overall flow of how we can build this:
+
+-   Listen to the `session.close.success` webhook event, which indicates that the particular session has ended.
+-   Once you receive the webhook, fetch `session_id` and trigger the **Retrieve a session API** to fetch details of all the peers who participated in the session.
+-   Calculations:
+    -   Calculate the total duration of each unique peer by finding the difference between the `joined_at` and `left_at` fields for the respective peer
+        -   Map the duration against `peer_id` or `user_id` (your internal user identifier for business logic).
+    -   Calculate aggregated duration of peers by adding the duration of all the peers.
+    -   Calculate total session duration by finding the difference between created_at and updated_at timestamps.
+-   Store the data in your preferred database for later review.
+
+### Code example
+
+```javascript
+// Build attendance
+app.post('/webhooks', async function (req, res) {
+    var eventType = req.body.type;
+    var sessionId = req.body.data['session_id'];
+    // Listen to the session.close.success webhook event
+    if (eventType === 'session.close.success') {
+        console.log('Session has ended');
+        try {
+            // Trigger Retrieve a session API to fetch details of all peers in the session.
+            var response = await axios({
+                method: 'get',
+                url: baseUrl + '/sessions/' + sessionId,
+                headers: { Authorization: `Bearer ${managementToken}` }
+            });
+            var parsedData = response.data;
+
+            // Calculate the total duration of each unique peer
+            const peers = Object.values(parsedData.peers);
+            const durationByUser = peers.reduce((acc, peer) => {
+                const duration = moment
+                    .duration(moment(peer.left_at).diff(moment(peer.joined_at)))
+                    .asMinutes();
+                const roundedDuration = Math.round(duration * 100) / 100;
+                acc[peer.user_id] = (acc[peer.user_id] || 0) + roundedDuration;
+                return acc;
+            }, {});
+            const result = Object.entries(durationByUser).map(([user_id, duration]) => ({
+                user_id,
+                duration
+            }));
+            console.log(result);
+
+            // Calculate aggregated duration of peers
+            const totalDuration = Object.values(durationByUser)
+                .reduce((a, b) => a + b)
+                .toFixed(2);
+            console.log(`Total duration for all peers: ${totalDuration} minutes`);
+
+            // Calculate session duration
+            const sessionDuration = moment
+                .duration(moment(parsedData.updated_at).diff(moment(parsedData.created_at)))
+                .asMinutes()
+                .toFixed(2);
+            console.log(`Session duration is: ${sessionDuration} minutes`);
+        } catch (err) {
+            console.log(err.data);
+        }
+    } else console.log('Some other event');
+});
+```
+
+### Example output
+
+```json
+[
+  { user_id: 'user1', duration: 2.42 },
+  { user_id: 'user2', duration: 2.37 }
+]
+Total duration for all peers: 4.79 minutes
+Total session duration is: 2.42 minutes
+```
+
+## Using data export - 100ms dashboard
+
+100ms provides a simple way to extract the Sessions data to create reports using the exported data. Please follow the below steps:
+
+-   Go to the [Sessions page](https://dashboard.100ms.live/sessions) on your dashboard.
+-   Click on the `download` icon next to "Your Sessions" at the top of the page.
+-   This will initiate a data export request that will be shared as a CSV file via email to your account email address.
+
+<video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
+    <source src="/docs/guides/export-csv.mp4" type="video/mp4" />
+</video>
+<br />
+
+### Example CSV
+
+The exported data will contain data for fields such as:
+
+-   session_id,
+-   room_id,
+-   created_at (session start time),
+-   recording_enabled (recording status),
+-   total_peers,
+-   participant duration (aggregated duration for all peers),
+-   session_duration, and
+-   recording_duration.
+
+![Room](/docs/v2/exported-data.png)
+
+## Complete code example - Using sessions API
+
+```javascript
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
+var axios = require('axios');
+var jwt = require('jsonwebtoken');
+var moment = require('moment');
+var uuid4 = require('uuid4');
+
+var baseUrl = 'https://api.100ms.live/v2';
+var app_access_key = '<YOUR_APP_ACCESS_KEY>';
+var app_secret = '<YOUR_APP_SECRET>';
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+var managementToken = jwt.sign(
+    {
+        access_key: app_access_key,
+        type: 'management',
+        version: 2,
+        iat: Math.floor(Date.now() / 1000),
+        nbf: Math.floor(Date.now() / 1000)
+    },
+    app_secret,
+    { algorithm: 'HS256', expiresIn: '24h', jwtid: uuid4() }
+);
+
+// Build attendance
+app.post('/webhooks', async function (req, res) {
+    var eventType = req.body.type;
+    var sessionId = req.body.data['session_id'];
+    // Listen to the session.close.success webhook event
+    if (eventType === 'session.close.success') {
+        console.log('Session has ended');
+        try {
+            // Trigger Retrieve a session API to fetch details of all peers in the session.
+            var response = await axios({
+                method: 'get',
+                url: baseUrl + '/sessions/' + sessionId,
+                headers: { Authorization: `Bearer ${managementToken}` }
+            });
+            var parsedData = response.data;
+
+            // Calculate the total duration of each unique peer
+            const peers = Object.values(parsedData.peers);
+            const durationByUser = peers.reduce((acc, peer) => {
+                const duration = moment
+                    .duration(moment(peer.left_at).diff(moment(peer.joined_at)))
+                    .asMinutes();
+                const roundedDuration = Math.round(duration * 100) / 100;
+                acc[peer.user_id] = (acc[peer.user_id] || 0) + roundedDuration;
+                return acc;
+            }, {});
+            const result = Object.entries(durationByUser).map(([user_id, duration]) => ({
+                user_id,
+                duration
+            }));
+            console.log(result);
+
+            // Calculate aggregated duration of peers
+            const totalDuration = Object.values(durationByUser)
+                .reduce((a, b) => a + b)
+                .toFixed(2);
+            console.log(`Total duration for all peers: ${totalDuration} minutes`);
+
+            // Calculate session duration
+            const sessionDuration = moment
+                .duration(moment(parsedData.updated_at).diff(moment(parsedData.created_at)))
+                .asMinutes()
+                .toFixed(2);
+            console.log(`Session duration is: ${sessionDuration} minutes`);
+        } catch (err) {
+            console.log(err.data);
+        }
+    } else console.log('Some other event');
+});
+
+app.set('port', process.env.PORT || 2400);
+app.listen(app.get('port'), function () {
+    console.log('Node app is running on port', app.get('port'));
+});
+```
