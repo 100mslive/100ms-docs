@@ -29,9 +29,28 @@ Audio Track settings are defined by `HMSAudioTrackSettings` class. We have follo
 
   ...
 
+  // Creating "Audio Track settings" config object
   const audioSettings = new HMSAudioTrackSettings({
     initialState: HMSTrackSettingsInitState.MUTED,
   });
+
+  // Creating "Track settings" config object
+  const trackSettings = new HMSTrackSettings({
+    audio: audioSettings,
+  });
+
+  // Pass the Track Settings object to the build function
+  c̶o̶n̶s̶t̶ ̶h̶m̶s̶I̶n̶s̶t̶a̶n̶c̶e̶ ̶=̶ ̶a̶w̶a̶i̶t̶ ̶H̶M̶S̶S̶D̶K̶.̶b̶u̶i̶l̶d̶(̶)̶;̶
+  const hmsInstance = await HMSSDK.build({ trackSettings });
+
+  ...
+
+  // add Event Listeners to subscribe to Join Success or Failure updates
+  hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
+  hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoin);
+
+  // Join Room with above created config
+  hmsInstance.join(config);
   ```
   
   More info about this can be found in [Join with Muted Audio](../features/join#join-with-muted-audio-video) docs.
@@ -79,9 +98,28 @@ Video Track settings are defined by `HMSVideoTrackSettings` class. We have follo
 
   ...
 
+  // Creating "Video Track settings" config object
   const videoSettings = new HMSVideoTrackSettings({
     initialState: HMSTrackSettingsInitState.MUTED,
   });
+
+  // Creating "Track settings" config object
+  const trackSettings = new HMSTrackSettings({
+    video: videoSettings,
+  });
+
+  // Pass the Track Settings object to the build function
+  c̶o̶n̶s̶t̶ ̶h̶m̶s̶I̶n̶s̶t̶a̶n̶c̶e̶ ̶=̶ ̶a̶w̶a̶i̶t̶ ̶H̶M̶S̶S̶D̶K̶.̶b̶u̶i̶l̶d̶(̶)̶;̶
+  const hmsInstance = await HMSSDK.build({ trackSettings });
+
+  ...
+
+  // add Event Listeners to subscribe to Join Success or Failure updates
+  hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
+  hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoin);
+
+  // Join Room with above created config
+  hmsInstance.join(config);
   ```
 
   More info about this can be found in [Join with Muted Video](../features/join#join-with-muted-audio-video) docs.
