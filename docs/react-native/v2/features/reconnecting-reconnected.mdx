@@ -55,6 +55,8 @@ const onErrorListener = (error: HMSException) => {
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onErrorListener);
 ```
 
+> To learn more about cleanup and freeing resources refer to [Free Resources](./release-resources) docs.
+
 The user will receive the error object which has `isTerminal` property set to `true` and `errorCode` property as:
 
 * Error Code: 1003, Cause: Websocket disconnected
