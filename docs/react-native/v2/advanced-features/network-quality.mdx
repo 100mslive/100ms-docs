@@ -24,41 +24,60 @@ The entire file may not be downloaded if it exceeds the timeout.
 
 DNS time is not counted in this, only throughput is measured.
 
-## Requesting/Reading a Network Quality Update in Preview
+## Requesting/Reading Network Quality Updates
 
-When creating an `HMSConfig` object to request a preview, set the `captureNetworkQualityInPreview` to `true` to measure the user's downlink network 
-quality.
-
-When available, the information will be returned in `onPeerUpdate` of the `HMSPreviewListener` in the update type 
-`HMSPeerUpdate.NETWORK_QUALITY_UPDATED`. It can be retrieved out of the `HMSPeer` object's `networkQuality` property.
+Network Quality information for every peer is available on `networkQuality` property of `HMSPeer` object. `networkQuality` property value is an instance of `HMSNetworkQuality` class -
 
 ```js
-import {
-  HMSConfig,
-} from '@100mslive/react-native-hms';
-
-const config = new HMSConfig({
-  authToken: token,
-  username: userID,
-  captureNetworkQualityInPreview: true,
-});
-
-// hms instance acquired by build method
-hmsInstance?.preview(config);
-hmsInstance?.join(config);
-```
-
-Here's the class definition of HMSNetworkQuality, which is a property on the HMSPeer.
-
-```js
-class HMSNetworkQuality {
+interface HMSNetworkQuality {
   downlinkQuality: number;
 }
 ```
 
+On `networkQuality` property value, we have `downlinkQuality` property which represents the peers' network quality. This is a number ranging from -1 to 5. To know about the meaning of each value refer to [Interpreting the Values](#interpreting-the-values) section.
+
+Whenever network quality of a peer changes, `HMSUpdateListenerActions.ON_PEER_UPDATE` event is emitted with `HMSPeerUpdate.NETWORK_QUALITY_UPDATED` update type. Then inside the function subscribed to this event, you can can check `networkQuality` property on the updated `HMSPeer` object and update the UI accordingly.
+
+```js
+const onPeerListener = (data: { peer: HMSPeer; type: HMSPeerUpdate; }) => {
+  const { peer, type } = data;
+
+  // Network quality changed for {peer}
+  if (type === HMSPeerUpdate.NETWORK_QUALITY_UPDATED) {
+    console.log(`Network Quality of ${peer.name}: ${peer.networkQuality?.downlinkQuality}`);
+  }
+};
+
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_PEER_UPDATE, onPeerListener);
+```
+
+
+## Requesting/Reading Network Quality Updates in Preview
+
+When creating a `HMSConfig` object to request a preview, You have to set the `captureNetworkQualityInPreview` property to `true` to get the users' downlink network 
+quality in preview room state.
+
+When available is available, `HMSUpdateListenerActions.ON_PEER_UPDATE` event is emitted with `HMSPeerUpdate.NETWORK_QUALITY_UPDATED` update type. Rest is same as mentioned in [above](#requesting-reading-network-quality-updates) section.
+
+```js
+import { HMSConfig } from '@100mslive/react-native-hms';
+
+const config = new HMSConfig({
+  authToken: '...jgvc...',
+  username: 'John Applesead',
+  captureNetworkQualityInPreview: true,
+});
+
+// hms instance acquired by build method
+hmsInstance.preview(config);
+```
+
+Refer to [Preview Guide](../features/preview) to learn more about room preview
+
+
 ## Interpreting the Values
 
-`hmsInstance?.localPeer?.networkQuality?.downlinkQuality` will be a value between -1 and 5.
+`Peer.networkQuality?.downlinkQuality` will be a value in range -1 to 5.
 
 * -1 -> Undefined - yet to be determined or not enough data to determine
 * 0 -> Disconnected or error in measuring score(in preview)
