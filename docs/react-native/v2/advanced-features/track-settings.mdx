@@ -14,9 +14,29 @@ Audio Track settings are defined by `HMSAudioTrackSettings` class. We have follo
 
 - `initialState`
 
-  Property to set the initial state of the Audio track i.e. Mute/Unmute. You can use `HMSTrackSettingsInitState` enum to set this value.
+  Property to set the initial state of the Audio track (microphone) i.e. Mute/Unmute before joining the room. By default Audio track is Unmuted meaning microphone is ON.
   
-  More info about this can be found in [Mute and Unmute](../features/mute) docs.
+  You can use `HMSTrackSettingsInitState` enum to set this value.
+
+  ```js
+  enum HMSTrackSettingsInitState {
+    // If the track needs to be kept mute while joining
+    MUTED,
+    
+    // If the track needs to be kept unmute while joining  
+    UNMUTED
+  }
+
+  ...
+
+  const audioSettings = new HMSAudioTrackSettings({
+    initialState: HMSTrackSettingsInitState.MUTED,
+  });
+  ```
+  
+  More info about this can be found in [Join with Muted Audio](../features/join#join-with-muted-audio-video) docs.
+
+  More info about Muting and Unmuting Audio Track, check out [Mute and Unmute](../features/mute) docs.
 
 - `useHardwareEchoCancellation` [Android Only]
 
@@ -44,9 +64,29 @@ Video Track settings are defined by `HMSVideoTrackSettings` class. We have follo
 
 - `initialState`
 
-  Property to set the initial state of the Video track i.e Mute/Unmute. You can use `HMSTrackSettingsInitState` enum to set this value.
+  Property to set the initial state of the Video track (camera) i.e Mute/Unmute before joining the room. By default Video track is Unmuted meaning camera is ON.
   
-  More info about this can be found in [Mute and Unmute](../features/mute) docs.
+  You can use `HMSTrackSettingsInitState` enum to set this value.
+
+  ```js
+  enum HMSTrackSettingsInitState {
+    // If the track needs to be kept mute while joining
+    MUTED,
+    
+    // If the track needs to be kept unmute while joining  
+    UNMUTED
+  }
+
+  ...
+
+  const videoSettings = new HMSVideoTrackSettings({
+    initialState: HMSTrackSettingsInitState.MUTED,
+  });
+  ```
+
+  More info about this can be found in [Join with Muted Video](../features/join#join-with-muted-audio-video) docs.
+  
+  More info about Muting and Unmuting Video Track, check out [Mute and Unmute](../features/mute) docs.
 
 - `cameraFacing`
 
