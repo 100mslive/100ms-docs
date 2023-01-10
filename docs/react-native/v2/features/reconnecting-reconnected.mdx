@@ -82,7 +82,7 @@ The SDK emits:
 These callbacks can be handled as follows:
 
 * In "Reconnecting" Mode: Do not allow the user to interact with UI and show loaders or Reconnecting indicator.
-* When "Reconnected", switch back to room UI allowing interactions as usual.
+* When "Reconnected" back: Switch back to room UI allowing interactions as usual.
 * When user fails to reconnect then SDK emits `HMSUpdateListenerActions.ON_ERROR` event, In the function subscribed to this event, look for `code` property and if it is something(generally 1003, 4005 etc.) such that the user can never reconnect then navigate user to the HomeScreen, showing a toast or errorDialog with error description.
 
 > 🗝️ You can find the errorCodes, descriptions and the suggested actions to be taken [here](./error-handling)
