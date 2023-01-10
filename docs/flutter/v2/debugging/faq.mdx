@@ -3,76 +3,93 @@ title: Frequently Asked Questions
 nav: 5.1
 ---
 
-This page lists down frequently asked questions. If you want to add a new question or edit an older one, feel free to
+This page lists down frequently asked questions specific to Flutter framework. If you want to add a new question or edit an older one, feel free to
 [send us a PR](https://github.com/100mslive/100ms-docs/blob/main/docs/flutter/v2/debugging/faq.mdx).
 
+If you are looking for generic frequently asked questions about the 100ms platform, please check the [common FAQ page](./../foundation/faq).
+
 ## Flutter version compatibility
+
 HMSSDK works with flutter 2.10.x or above.
 
 ## Not getting event updates after hot reload/restart
+
 This is caused because the platform channel needs to be reinitialized again, hence this is intended behaviour.
 The solution for this is to re-run the app.
 
 Practices for faster development :
 
-* Perform the intended changes.
-* Leave the room.
-* Perform hot reload/restart and rejoin the room.
-* Verify the changes.
+-   Perform the intended changes.
+-   Leave the room.
+-   Perform hot reload/restart and rejoin the room.
+-   Verify the changes.
 
 The permanent solution for this is in pipeline, we will update once it's done.
 
 ## Issues while using `hmssdk_flutter` with flutter 3.0.x
+
 Flutter versions 3.0.0 to 3.0.5 had issues related to Platform View.
 
 Refer: [Android Platform View issue](https://github.com/flutter/flutter/issues/107313) & [Flutter Platform View bug](https://github.com/flutter/flutter/issues/103630)
 
 These were resolved in Flutter versions 3.3.0 & above. Please update the Flutter version to 3.3.0 or above.
 
-
-## Is there any limit to the number of HMSVideoView on-screen at a time 
+## Is there any limit to the number of HMSVideoView on-screen at a time
 
 `HMSVideoView` internally uses `SurfaceView` in android and `UiKitView` in iOS. It is recommended to render at most 3 to 4 videos on a Single page/screen of the app and rest should be paginated for optimum performance.
 
 ## Do you have any implementation with popular State Management libraries -
+
 Please find the implementations below:
-* [Provider](https://github.com/100mslive/100ms-flutter/tree/main/example)
-* [Bloc](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/bloc)
-* [Getx](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/getx)
-* [Mobx](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/mobx)
-* [Riverpod](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/riverpod)
+
+-   [Provider](https://github.com/100mslive/100ms-flutter/tree/main/example)
+-   [Bloc](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/bloc)
+-   [Getx](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/getx)
+-   [Mobx](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/mobx)
+-   [Riverpod](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/riverpod)
 
 ## Not able to get room updates after joining the room
+
 To listen to the room updates please attach `HMSUpdateListener` as:
+
 ```dart
 hmsSDK.addUpdateListener(updateListener);
 ```
+
 You can find more details about HMSUpdateListener [here](../features/update-listeners)
 
-## Join room with muted audio/video 
+## Join room with muted audio/video
+
 User can join the room with muted audio/video by default.Please find the docs [here](../features/join-with-muted-audio-video)
 
 ## Get `onPeerUpdate` in preview
+
 User can get `onPeerUpdate` in preview the docs can be found [here](../features/preview#get-on-peer-update-and-room-state-in-preview)
 
 ## Getting updates multiple times in the room
+
 Please ensure removing the `HMSUpdateListener` while leaving the room.
+
 ```dart
 hmsSDK.removeUpdateListener(updateListener);
 ```
+
 You can find more details about HMSUpdateListener [here](../features/update-listeners)
 
 ## Can I create a room using API?
+
 Yes,please find the link [here](/server-side/v2/Rooms/create-via-api)
 
 ## Screenshare not working in the background on iOS?
-On iOS 16, if you start Screenshare from an iPhone/iPad running iOS 16 version, then if the app is in foreground then Screenshare will work fine. But if you start Screenshare & background the app, then Screenshare pauses as the SDK is unable to send video frames using IPC. This results in other peers in room seeing stuck frame. We are actively working to resolve this issue. On iOS 15 or below, this issue does not exists. 
+
+On iOS 16, if you start Screenshare from an iPhone/iPad running iOS 16 version, then if the app is in foreground then Screenshare will work fine. But if you start Screenshare & background the app, then Screenshare pauses as the SDK is unable to send video frames using IPC. This results in other peers in room seeing stuck frame. We are actively working to resolve this issue. On iOS 15 or below, this issue does not exists.
 
 Note that viewing Screenshare on iOS 16 devices is unaffected by this & works fine.
 
-## Receiving too many logs from SDK 
-Logs can be turned OFF using the `hmsLogSettings` parameter of `HMSSDK`.More info about this can be found [here](../features/error-handling#setting-log-levels-in-sdk) 
+## Receiving too many logs from SDK
+
+Logs can be turned OFF using the `hmsLogSettings` parameter of `HMSSDK`.More info about this can be found [here](../features/error-handling#setting-log-levels-in-sdk)
 
 ## I want to suggest a new feature.
-Awesome, we're always looking out for new ideas and features. Please reach out to us over [discord](https://100ms.live/discord)
 
+Awesome, we're always looking out for new ideas and features. Please reach out to us over [discord](https://100ms.live/discord)

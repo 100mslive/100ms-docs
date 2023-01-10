@@ -1,4 +1,3 @@
-This page contains the frequently asked questions with answers categorized in various groups as below:
 
 - [General](#general)
 - [Getting started](#getting-started)
@@ -388,7 +387,7 @@ In a single room at a given time, we currently support 10000 streams that is 100
 ### What are max tiles config 100ms can support?
 
 | Layout | Tiles in view | Publish resolution | Max peers in room |
-| :----- | :------------ | :----------------- | ----------------- |
+|:-------|:--------------|:-------------------|-------------------|
 | 1x1    | 1             | 720p               | 1500              |
 | 2x2    | 4             | 480p               | 450               |
 | 3x3    | 9             | 360p               | 200               |
