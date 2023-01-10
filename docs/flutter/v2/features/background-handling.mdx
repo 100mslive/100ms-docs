@@ -3,6 +3,16 @@ title: Background Handling
 nav: 3.28
 ---
 
+While a user has joined a Room they can put the in Background Mode & usually expect a certain subset of app functionality continues to work. 
+
+Background Mode implies that the application is not currently visible to the user, not responding to user input, and running in the Background. 
+
+Background state in Flutter apps is represented by `AppLifecycleState.paused` as described [here](https://api.flutter.dev/flutter/dart-ui/AppLifecycleState.html#paused).
+
+Android & iOS have different mechanisms of handling app behaviour which includes limiting access to Camera & Microphone, time allowed to keep running before getting  completely stopped, Aggressive Battery Optimisations on Android OEMs, etc.
+
+There are 2 prominent behaviours that are mainly affected when apps transition to Background State - Publishing Audio/Video and Subscribing or Playing incoming Audio/Video.
+
 To keep the app running in the background even after the device goes into sleep mode then we need to add background permission in the app for android and iOS both.
 
 ## Android
@@ -90,6 +100,8 @@ Widget build(BuildContext context) {
 > To know more about `flutter_foreground_task` visit [here](https://pub.dev/packages/flutter_foreground_task).
 
 ## iOS
+
+When your app goes into the background, it can no longer access camera and publish it to other peers in the room. Also, you can't see video of other particiapants in the call if your app is in the background.
 
 Follow the following step to add background service in iOS:
 
