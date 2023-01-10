@@ -142,15 +142,24 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
                         px: '$4'
                     }}>
                     <Image alt="No results" src="/docs/frown.svg" height={48} width={48} />
-                    <Text css={{ color: '$textDisabled', fontWeight: '$medium', mt: '$8' }}>
-                        Couldn't find anything for
+                    <Text
+                        css={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: '$textDisabled',
+                            fontWeight: '$medium',
+                            mt: '$8'
+                        }}>
+                        <span>Couldn't find anything for</span>
                         <Text
                             css={{
                                 fontWeight: 'bold',
-                                display: 'inline-block',
-                                color: '$textHighEmp'
+                                color: '$textHighEmp',
+                                wordWrap: 'break-word'
                             }}>
-                            &nbsp;"{searchTerm}"
+                            &nbsp;"{searchTerm.slice(0, 25)} {searchTerm.length > 25 ? '...' : ''}"
                         </Text>
                     </Text>
                 </Flex>
