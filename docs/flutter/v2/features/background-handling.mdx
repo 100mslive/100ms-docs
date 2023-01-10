@@ -1,0 +1,122 @@
+---
+title: Background Handling
+nav: 3.27
+---
+
+To keep the app running in the background even after the device goes into sleep mode then we need to add background permission in the app for android and iOS both.
+
+## Android
+
+In Android, if you want to speak in sleep mode then Android OS allow it for 60 seconds by default but if you want to continue it for more than 60 seconds then we have to use 3 party plugin [flutter_foreground_task](https://pub.dev/packages/flutter_foreground_task) which allows the app to run in the foreground with a notification.
+
+Here is step by step guide how to integrate flutter_foreground_task in application for 100ms SDK.
+
+> Note: Playing Audio works fine without using Foreground Service as well.
+
+<div className="steps-container">
+
+### Add plugin
+Add flutter_foreground_task as a dependency in your pubspec.yaml file.
+```
+dependencies:
+  flutter_foreground_task: "3.10.0"
+```
+
+### Adding Service in `AndroidManifest.xml`
+
+Add service inside `<application>` tag as follows:
+```
+<application>
+    ...
+     <activity>
+        ...
+     </activity>
+
+<service android:name="com.pravera.flutter_foreground_task.service.ForegroundService" />
+
+</application>
+```
+
+### Start ForegroundService
+Wrap meeting page with `WillStartForegroundTask` widget as follows:
+```dart
+@override
+Widget build(BuildContext context) {
+  return MaterialApp(
+    // A widget to start the foreground service when the app is minimized or closed.
+    // This widget must be declared above the [Scaffold] widget.
+    home: WillStartForegroundTask(
+      onWillStart: () async {
+        // Return whether to start the foreground service.
+        return true;
+      },
+      androidNotificationOptions: AndroidNotificationOptions(
+        channelId: 'notification_channel_id',
+        channelName: 'Foreground Notification',
+        channelDescription: 'This notification appears when the foreground service is running.',
+        channelImportance: NotificationChannelImportance.LOW,
+        priority: NotificationPriority.LOW,
+        iconData: NotificationIconData(
+          resType: ResourceType.mipmap,
+          resPrefix: ResourcePrefix.ic,
+          name: 'launcher',
+        ),
+      ),
+      iosNotificationOptions: const IOSNotificationOptions(
+        showNotification: false,
+        playSound: false,
+      ),
+      foregroundTaskOptions: const ForegroundTaskOptions(
+        interval: 5000,
+        autoRunOnBoot: false,
+        allowWifiLock: false,
+      ),
+      notificationTitle: 'Foreground Service is running',
+      notificationText: 'Tap to return to the app',
+      callback: startCallback,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Your App Title'),
+          centerTitle: true,
+        ),
+        body: MeetingApp(),
+      ),
+    ),
+  );
+}
+```
+</div>
+
+## iOS
+
+Follow the following step to add background service in iOS:
+
+<div className="steps-container">
+
+### Open project in Xcode
+
+Open project in Xcode by right clicking on ios folder in project and select Open in Xcode as shown in image below.
+
+![OpenXcode](/docs/v2/flutter-background-service-1.png)
+
+### Add Capability
+
+Click on `Runner` in Navigator then select `Runner` under `TARGETS` and click on `Signing & Capabilities` and add `Capability`.
+
+![addCapability](/docs/v2/flutter-background-service-2.png)
+
+### Background Mode
+
+Search background mode and add it to project by clicking on it.
+
+![backgroundMode](/docs/v2/flutter-background-service-3.png)
+
+### Start Background Processing
+
+Check the checkbox under background mode named ` Background Processing`.
+
+![backgroundProcessing](/docs/v2/flutter-background-service-4.png)
+
+</div>
+
+Now you can use your app in the background even when the device is in sleep mode.
