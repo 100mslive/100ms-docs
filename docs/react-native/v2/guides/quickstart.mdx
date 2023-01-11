@@ -39,7 +39,7 @@ Once you have the prerequisites, follow the steps below to create a React Native
 1. Open your Terminal and navigate to directory/folder where you would like to create your app.
 
 2. Run below command to create React Native app:
-    
+  ​
   ```bash
   npx react-native init HMSSampleApp --version 0.68.5 --npm && cd ./HMSSampleApp
   ```
@@ -47,13 +47,15 @@ Once you have the prerequisites, follow the steps below to create a React Native
 3. Once the app is created, open it in VS code
 
 4. Test run your app
-            
+    ​
+    a. Build the App
+    ​
     <Tabs id="test-run-sample-app" items={['iOS', 'Android']} />
 
     <Tab id="test-run-sample-app-0">
 
       ```bash tab=iOS
-      npx react-native run-ios --simulator="iPhone 14"; npx react-native start
+      npx react-native run-ios --simulator="iPhone 14"
       ```
 
     </Tab>
@@ -61,10 +63,16 @@ Once you have the prerequisites, follow the steps below to create a React Native
     <Tab id="test-run-sample-app-1">
 
       ```bash tab=Android
-      npx react-native run-android; npx react-native start
+      npx react-native run-android
       ```
 
     </Tab>
+
+    b. Start Metro Bundler if it is not already started
+    ​
+    ```bash
+    npx react-native start
+    ```
 
     or follow Run instructions printed in terminal
 
@@ -109,7 +117,7 @@ Follow the instructions in one of the tabs below based on the target platform yo
 1. Allow camera, recording audio and internet permissions
 
   Add the below snippet in the `info.plist` file -
-    
+    ​
   ```xml:Info.plist section=ForIOSPermissions sectionIndex=1
   <key>NSCameraUsageDescription</key>
   <string>Please allow access to Camera to enable video conferencing</string>
@@ -122,7 +130,7 @@ Follow the instructions in one of the tabs below based on the target platform yo
   ```
 
   Add the below snippet in the `ios/Podfile` file -
-    
+    ​
   ```json{5-8}:Podfile
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
@@ -138,7 +146,7 @@ Follow the instructions in one of the tabs below based on the target platform yo
   ```
 
 2. Change ios target platform version to '13.0' in the `ios/Podfile` file
-    
+    ​
   ```json{4}:Podfile
   require_relative '../node_modules/react-native/scripts/react_native_pods'
   require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
@@ -152,19 +160,19 @@ Follow the instructions in one of the tabs below based on the target platform yo
 Once you've made the above changes, your app is ready for testing. You can build the app and run it in a simulator.
 
 1. Install pods
-    
+    ​
   ```bash
   cd ios && pod install && cd ../
   ```
 
 2. Build the App
-    
+    ​
   ```bash
-  npx react-native run-ios --simulator="iPhone 14";
+  npx react-native run-ios --simulator="iPhone 14"
   ```
 
 3. Start Metro Bundler if it is not already started
-    
+    ​
   ```bash
   npx react-native start
   ```
@@ -180,7 +188,7 @@ Now, after you click `join`, you should be able to see yourself (iOS simulator d
 ##### Native file changes
 
 1. Allow camera, recording audio and internet permissions by adding the below snippet to the `AndroidManifest.xml` file (at the application tag level).
-
+  ​
   ```xml section=androidPermissions
   <uses-feature android:name="android.hardware.camera"/>
 
@@ -210,7 +218,7 @@ Now, after you click `join`, you should be able to see yourself (iOS simulator d
   ```
 
 2. Change `minSdkVersion` to 21 in the `android/build.gradle` file
-    
+    ​
   ```json{4}:build.gradle
   buildscript {
     ext {
@@ -226,9 +234,17 @@ Now, after you click `join`, you should be able to see yourself (iOS simulator d
 
 Once you've made the above changes, your app is ready for testing. You can build the app and run it in an emulator or an actual android device.
 
-```bash
-npx react-native run-android; npx react-native start
-```
+1. Build the App
+    ​
+  ```bash
+  npx react-native run-android
+  ```
+
+2. Start Metro Bundler if it is not already started
+    ​
+  ```bash
+  npx react-native start
+  ```
 
 Now, after you click `join`, you should be able to see yourself (android emulator doesn't support actual video, you can connect an actual device to see your video in real-time). You can join the room using a browser as the second peer to check audio/video transactions between two or more peers.
 
