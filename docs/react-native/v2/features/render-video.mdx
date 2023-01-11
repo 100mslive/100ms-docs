@@ -2,49 +2,72 @@
 title: Render Video
 nav: 3.6
 ---
-It all comes down to this. All the setup so far has been done so that we can show live streaming video in our beautiful apps.
+It all comes down to this. All the setup so far has been done so that we can show Live Streaming Video in our beautiful apps.
 
-The React Native SDK provides a Component `HmsView` that renders the video on the screen. You can access `HmsView` on the `HMSSDK` instance that you created with build method.
+100ms React Native Package provides `HmsView` component that renders the video on the screen. You can access `HmsView` from the `HMSSDK` instance.
 
-We can pass `scaleType`, `mirror` and video tracks' `trackId` to `HmsView` component.
+We simply have to pass a Video Track's `trackId` to the `HmsView` to begin automatic rendering of Live Video Stream.
+
+We can also optionally pass props like `key`, `scaleType`, `mirror` to customize the `HmsView` component.
 
 ```js
-import { HMSVideoViewMode } from '@100mslive/react-native-hms';
-...
+// use the save HMSSDK instance acquired from build method
+const HmsView = hmsInstance.HmsView;
+
+<HmsView
+  trackId={videoTrackId}
+  key={videoTrackId}
+  style={styles.hmsView}
+/>
+
 const styles = StyleSheet.create({
   hmsView: {
     height: '100%',
     width: '100%',
   },
 });
-
-// hms instance acquired from build method
-const HmsView = hmsInstance.HmsView;
-
-<HmsView
-  key={trackId}
-  trackId={trackId}
-  mirror={true}
-  scaleType={HMSVideoViewMode.ASPECT_FILL}
-  style={styles.hmsView}
-/>
-...
 ```
 
-> Note: One `HmsView` component can only be connected with one video `trackId`. To display multiple videos you have to create multiple instances of `HmsView` component.
+## What is Track Update Listener?
 
-- Once the requirement of that `HmsView` is finshed it should be disposed.
+Let's first understand what is the Track Update Listener. 
 
-- Every `HmsView` should be unique, which should be done by passing a `key` property and value as video `trackId`.
+Once you have successfully joined a Room, all the available Audio & Video Tracks will be received via the `ON_TRACK_UPDATE` Event Listener. The Peer, Track & the Update Type data is available to be used for rendering Video on the App UI. 
 
-- Recommended practice is to show maximum of 3 to 4 `HmsView` on a single page/screen of the app. This avoids network data consumption & video decoding resources of the device.  
+Before joining the Room, you should attach the `ON_TRACK_UPDATE` Event Listener. 
 
-- For listening to the audio you have to do absolutely nothing, it's automatically played once you join the room. To mute & unmute audio/ideo refer [here](./mute). To set volume levels refer [here](../advanced-features/set-volume).
+The following snippet shows how to attach the listener -
 
+```js
+// create HMSSDK instance using the build function
+const hmsInstance = await HMSSDK.build();
 
-## Track Id
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoinSuccess);
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_PEER_UPDATE, onPeerUpdate);
 
-It is a required prop in the `HmsView` component. You can get trackIds of peers from `HMSUpdateListenerActions.ON_TRACK_UPDATE` event.
+// attach the on Track Update Listener before Joining the Room
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_TRACK_UPDATE, onTrackUpdate); 
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
+
+// Next, create an object of HMSConfig class using the available joining configurations.
+let config = new HMSConfig({
+                    authToken: 'eyJH5c...', // client-side token generated from your token service
+                    username: 'John Appleseed',
+                });
+
+// Now, we are primed to join the room. All you have to do is calling join by passing the config object
+hmsInstance.join(config);
+```
+
+The Track Update Event Listener is fired whenever there is any change in Audio, Video, Screenshare, etc types of Tracks in the Room. These changes can be of many types, most common ones being as follows - 
+
+- Track Added or Removed: This usually happens when a peer who is publishing audio or video joins or leave the Room
+
+- Track Muted or Unmuted: When a peer mutes or unmutes their Audio or Video Track
+
+- Track Degraded or Restored: Due to bad network conditions, a peer stops publishing Video Track until network conditions get restored.
+
+The following snippet shows method signature of onTrackUpdate -
 
 ```js
 const onTrackListener = (data: { peer: HMSPeer; track: HMSTrack; type: HMSTrackUpdate }) => {
@@ -84,58 +107,13 @@ hmsInstance.addEventListener(
 );
 ```
 
-Make sure the trackId passed in the HMSView is not null/undefined because once a trackId is linked to HMSView, it can not be unlinked. 
+## Using Track Update Listener
 
-**You can make sure the `trackId` is not null/undefined by listening to `ON_TRACK_UPDATE` event for track updates. When you receive `TRACK_ADDED` update type for "Video" track, you will have `track` object with valid `trackId` for each `peer`.**
+The `ON_PEER_UPDATE` and `ON_TRACK_UPDATE` listeners are triggered a peer joins/leaves room, peer's track gets added, removed, muted, etc.
 
-> Refer to [peerId undefined issue](https://www.100ms.live/docs/react-native/v2/guides/faq#track-id-is-undefined-hms-view-is-rendering-blank-view) for more details. You can also refer to our [sample apps](https://github.com/100mslive/react-native-hms/tree/main/sample-apps) to see our implementation.
+It's recommended to use both these Listeners to correctly update your App UI.
 
-If a null trackId is passed in HMSView you have to unmount the HMSView component and mount it with a new `trackId`.
-
-This can be done using a `key` prop and passing `trackId` as its value in the `HmsView` component.
-
-```js
-<HmsView key={trackId} trackId={trackId} />
-```
-
-> Pro Tip: Try to render only 2 to 4 videos on a screen and set sink false for other videos. This will stop downloading video data of tiles which are not visible on the screen.
-
-## Scale Type
-Scale Type prop defines how the video stream should fit the dimensions(i.e. width and height) of HMSView.
-
-It is an optional prop in the `HmsView` component. By default value of scale type is set to `HMSVideoViewMode.ASPECT_FILL`. There are 3 scale types you can pass to render a video. 
-
-```js
-import { HMSVideoViewMode } from '@100mslive/react-native-hms';
-
-// Video maintains the aspect ratio so it only occupies space based on the aspect ratio
-const ASPECT_FILL = HMSVideoViewMode.ASPECT_FILL
-
-// Video occupies all the available space and may get cropped 
-const ASPECT_FIT = HMSVideoViewMode.ASPECT_FIT
-
-// Video aspect ratio is balanced similar to SCALE_ASPECT_FIT
-const ASPECT_BALANCED = HMSVideoViewMode.ASPECT_BALANCED
-```
-
-## Mirror
-It is an optional prop in the `HmsView` component. You can mirror the videos as well. By default, the mirror prop is set to false. For a beautiful rendering, you can set mirror true for the videos rendered to the left of the camera.
-
-
-## Is Degraded
-Sometimes people have bad internet connections but everyone deserves a good meeting. When the network is too slow to support audio and video conversations together, the 100ms SDK can automatically turn off downloading other peers' videos, which may improve the audio quality and avoid disconnections. 
-
-If the network quality improves, the videos will be restored automatically as well.
-
-Show a black tile with avatar or initials when `isDegraded` is true.
-```js
-const isDegraded: boolean = peer.videoTrack.isDegraded
-```
-
-
-## Receive Local and Remote Peers updates
-
-Always use `ON_PEER_UPDATE` and `ON_TRACK_UPDATE` listeners, these listeners get updated `localPeer` and `remotePeers` whenever there is any event related to these values.
+For simplicity, the following snippet shows usage of only onTrackUpdate to start rendering Videos in a `FlatList` - 
 
 ```js
 // In this example code snippet, We are keeping things very simple.
@@ -166,37 +144,201 @@ hmsInstance.addEventListener(
 <FlatList
   data={trackIds} // trackIds is an array of trackIds of video tracks
   keyExtractor={(trackId) => trackId}
-  renderItem={({ item }) => <HMSView key={item} trackId={item} style={{ width: '100%', height: 300 }} {...} />}
+  renderItem={({ item }) => <HMSView key={item} trackId={item} style={{ width: '100%', height: '50%' }} {...} />}
   {...}
 />
 ```
 
-To see a more detailed implementation of these events, you can refer our [quickstart app implementation](https://github.com/100mslive/react-native-hms/blob/21d7871691ec6c8ffd125a0592a3b16c5e79e1cd/sample-apps/rn-quickstart-app/src/screens/MeetingScreen/hooks.ts#L158)
+To see a more detailed implementation of these events, you can refer our [Quickstart App Implementation](https://github.com/100mslive/react-native-hms/blob/21d7871691ec6c8ffd125a0592a3b16c5e79e1cd/sample-apps/rn-quickstart-app/src/screens/MeetingScreen/hooks.ts#L158).
 
-In above example, We haven't considered showing Avatars, Muted Status, Name of Peers because we wanted this example to be simple.
-To show all these visual elements you need to have `peer` object and `track` object for that peer. You can use `PeerTrackNode` interface mentioned in below code snippet for this use case -
+In the above example, we haven't considered showing Muted Status, Name of Peers, Avatars, Network Quality, etc. All of this data & much more are available which can used according to your App's UI design.
+
+To show all these visual elements both `Peer` and `Track` object are required. You can use `PeerTrackNode` interface mentioned in below code snippet & build on top of it -
 
 ```js
 interface PeerTrackNode {
   id: string;
   peer: HMSPeer;
-  track: HMSTrack;
+  track: HMSVideoTrack;
   isDegraded: boolean;
 }
 ```
 
-Then, You can use list of `PeerTrackNode` instead of trackIds in `FlatList`.
+Then, you can use list of `PeerTrackNode` instead of trackIds in `FlatList` to render videos & show other available data in your Apps.
 
-We have used `PeerTrackNode` object type in our [Quickstart Sample app](https://github.com/100mslive/react-native-hms/tree/develop/sample-apps/) and [Example app](https://github.com/100mslive/react-native-hms/tree/main/example). You should definitely see implementation in our apps and to read more, refer [here](https://github.com/100mslive/react-native-hms/tree/main/example#peertracknodes).
+We have used `PeerTrackNode` object type in our [Quickstart Sample app](https://github.com/100mslive/react-native-hms/tree/develop/sample-apps/) and [Example app](https://github.com/100mslive/react-native-hms/tree/main/example). A detailed explanation of our Example App & mutliple UI components are [available here](https://github.com/100mslive/react-native-hms/tree/main/example#peertracknodes).
 
-## Troubleshooting in HmsView
+## Properties of HmsView
 
-If a video renders for the first time and then it doesn't appear at all this can be due to the usage of multiple instances.
+The following listing shows all the available props of the `HmsView` component.
 
-It's possible to create multiple instances of SDK which is required in some niche requirements.
+### TrackId
 
-In most cases, prefer to use a single instance of SDK. That means once you call the `build` method and get an hms instance, save the instance in a global state.
+The `trackId` is a required prop in the `HmsView` component. Passing of correct Video TrackId is required to start rendering Videos of different peers in the Room.
 
-Do not call the `build` method again, as it will return a new hms instance every time. 
+There are multiple ways to access Video TrackIds. The recommended way is to access Video Tracks is by attaching the `HMSUpdateListenerActions.ON_TRACK_UPDATE` Event Listener. A Video Track object can also be accessed from the `HMSPeer` object as `peer.videoTrack`.
 
-So in this way you can ensure that only a single instance of the SDK is created.
+```js
+<HmsView
+  trackId={videoTrackId}
+  key={videoTrackId}
+  style={styles.hmsView}
+/>
+```
+
+
+### Scale Type
+
+The `scaleType` prop defines how the Video stream should fit the given dimension (width and height) of HmsView.
+
+Video capturing & rendering them on your App UI can have different Aspect Ratios (Resolution). So selecting a correct Scale Type prop is necessary so video does not get clipped from edges, or you don't have blank padding spaces in your UI, etc.
+
+It is an optional prop in the `HmsView` component. By default value of scale type is set to `HMSVideoViewMode.ASPECT_FILL`. There are 3 scale types you can pass to render a video. 
+
+```js
+import { HMSVideoViewMode } from '@100mslive/react-native-hms';
+
+// Video occupies all the available space and may get cropped 
+const ASPECT_FILL = HMSVideoViewMode.ASPECT_FILL
+
+// Video maintains the aspect ratio so it only occupies space based on the aspect ratio
+const ASPECT_FIT = HMSVideoViewMode.ASPECT_FIT
+
+// Video aspect ratio is balanced to show the central part of video
+const ASPECT_BALANCED = HMSVideoViewMode.ASPECT_BALANCED
+
+
+// example usage showing setting of Aspect_Fit scaleType prop
+<HmsView
+  trackId={videoTrackId}
+  key={videoTrackId}
+  scaleType={HMSVideoViewMode.ASPECT_FIT}
+  style={styles.hmsView}
+/>
+```
+
+### Mirror
+
+The `mirror` is an optional prop in the `HmsView` component. Whenever the video is rendered on the `HmsView` we can flip the video frame on the horizontally to create a mirror frame. By default, the mirror prop is set to false. 
+
+```js
+<HmsView
+  trackId={videoTrackId}
+  key={videoTrackId}
+  mirror={true}
+  style={styles.hmsView}
+/>
+```
+
+#### Front Camera
+
+The default `HmsView` has no mirroring. If you were facing the front camera, here's what that would look like on a display on the phone.
+
+Actual position is how you sit, display position is how it will look in the `HmsView`
+
+```
+    Actual Position                       Display Position
+
+┌─────────────────────────┐           ┌─────────────────────────┐
+│                         │           │                         │
+│                         │           │                         │
+│   Phone Front Camera    │           │   Phone Front Camera    │
+│                         │           │                         │
+│                         │           │                         │
+│                         │           │                         │
+│                   You   │           │   You                   │
+│                         │           │                         │
+│                         │           │                         │
+└─────────────────────────┘           └─────────────────────────┘
+```
+
+
+To change this, turn on mirroring by setting the `mirror={true}`
+
+```
+    Actual Position                       Display Position
+
+┌─────────────────────────┐           ┌─────────────────────────┐
+│                         │           │                         │
+│                         │           │                         │
+│   Phone Front Camera    │           │   Phone Front Camera    │
+│                         │           │                         │
+│                         │           │                         │
+│                         │           │                         │
+│                   You   │           │                   You   │
+│                         │           │                         │
+│                         │           │                         │
+└─────────────────────────┘           └─────────────────────────┘
+```
+
+#### Back Camera
+
+Since the left and right for the back camera vs the display are the same, a non mirrored view of the back camera is the same as a mirrored view for the front camera.
+The Actual and Display positions are reverse for the back camera.
+
+#### Camera Flip Effects
+
+If you set the `mirror` prop then flip the camera from front to back or vice versa, the value persists. A given surface once mirrored will remain mirrored. It should be noted however that left for the front facing the camera and left for the back facing camera are opposites. So you may want to toggle back the `mirror` value.
+
+
+
+## Points to Remember
+
+- One `HmsView` component can only be connected with one video `trackId`. To display multiple videos you have to create multiple instances of `HmsView` component.
+
+- It's recommended to always pass the `key` property while creating `HmsView`
+
+- If a null or undefined `trackId` is passed in `HmsView` you will have to unmount and remount with the new `trackId`. Using the `key` prop and passing `trackId` to it automatically achieves this.
+
+- Once the usage of that `HmsView` is finshed it should ALWAYS be disposed. You cannot reuse the same `HmsView` component for multiple Video TrackIds.
+
+- Every `HmsView` should be unique, which should be done by passing a `key` property and value as video `trackId`.
+
+- Recommended practice is to show maximum of 2 to 4 `HmsView` on a single page/screen of the app. This avoids network data consumption & video decoding resources of the device.  
+
+- For listening to the audio you have to do absolutely nothing. Audio is automatically played once you join the room. To mute & unmute audio/video refer [here](./mute). To set Audio Volume levels refer [here](../advanced-features/set-volume).
+
+- TrackId should always be a valid Video TrackId of a Peer in the current ongoing Room.
+
+- Ensure that you are not passing a Video TrackId of some previously joined Room.
+
+- You can ensure the `trackId` is valid by listening to `ON_TRACK_UPDATE` event for Track updates. 
+
+- When you receive `TRACK_ADDED` update type for "Video" track, you will have `track` object with valid `trackId` for each `peer`.
+
+
+### Handling Video Track Degradation
+
+Sometimes people have bad internet connections but everyone deserves a good meeting. When the network is too slow to support audio and video conversations together, the 100ms SDK can automatically turns off downloading other peers' videos, which may improve the audio quality and avoid disconnections. 
+
+If the network quality improves, the videos will be restored automatically as well.
+
+These updates are available via the `onTrackUpdate` event as `TRACK_DEGRADED` & `TRACK_RESTORED` Update Types.
+
+You can show an Avatar overlay with the peer's name's initials, push the video tile off-screen, etc when Video Track gets Degraded.
+
+```js
+const isDegraded: boolean = videoTrack.isDegraded
+```
+
+> Pro Tip: Always render 2 to 4 videos on a screen and dispose of other HmsView components. This will stop downloading video data of tiles which are not visible on the screen.
+
+
+
+## Troubleshooting Guide
+
+- If a video renders for the first time and then it doesn't appear at all this can be due to the usage of multiple instances.
+
+- It's possible to create multiple instances of SDK which is required in some niche requirements.
+
+- In most cases, prefer to use a single instance of SDK. That means once you call the `build` method and get an hms instance, save the instance in a global state.
+
+- Do not call the `build` method again, as it will return a new hms instance every time. 
+
+- So in this way you can ensure that only a single instance of the SDK is created.
+
+- If peer is null or undefined, refer to solving [peerId undefined issue](https://www.100ms.live/docs/react-native/v2/guides/faq#track-id-is-undefined-hms-view-is-rendering-blank-view) for more details
+
+- It's possible a black frame is first visible for sometime before actual video is seen. This is usually due to very bad network conditions or the device's capacity to render video is limited. Ensure only videos visible on screen are being rendered & minimize the number of videos shown on lower end devices or bad network regions.
+
+- Checkout our Example App UI implementation [available here](https://github.com/100mslive/react-native-hms/tree/main/example).

@@ -3,34 +3,31 @@
 /* eslint-disable react/no-danger */
 import Markdown from 'markdown-to-jsx';
 import React from 'react';
-// Please use the same name as the md file to ensure 
+// Please use the same name as the md file to ensure
 // it gets picked up by the script for updating algolia records
 import Basics from '../common/basics.md';
 import Network from '../common/network.md';
 import Token from '../common/token.md';
-import TokenEndpoint from '../common/token-endpoint.md';
 import TemplatesAndRoles from '../common/templates-and-roles.md';
 import SecurityTokens1 from '../common/security-tokens-1.md';
 import SecurityTokens2 from '../common/security-tokens-2.md';
-import FirewallAndPorts from '../common/firewall-and-ports.md';
 import LiveStreaming from '../common/live-streaming.md';
 import Recordings from '../common/recordings.md';
-import AdaptiveBitrate1 from "../common/adaptive-bitrate-1.md";
-import AdaptiveBitrate2 from "../common/adaptive-bitrate-2.md";
+import AdaptiveBitrate1 from '../common/adaptive-bitrate-1.md';
+import AdaptiveBitrate2 from '../common/adaptive-bitrate-2.md';
 import AndroidSdkVersionShield from '../common/android-sdk-version-shield.md';
 import BulkRoleChangeErrors from '../common/bulk-role-change-errors.md';
 import RtmpExternalConfig from '../common/rtmp-external-config.md';
-
+import StepsContainer from './StepsContainer';
+import StepsToc from './StepsToc';
 
 const data = {
     basics: Basics,
     templatesAndRoles: TemplatesAndRoles,
     network: Network,
     token: Token,
-    tokenEndpoint: TokenEndpoint,
     securityTokens1: SecurityTokens1,
     securityTokens2: SecurityTokens2,
-    firewallAndPorts: FirewallAndPorts,
     liveStreaming: LiveStreaming,
     recordings: Recordings,
     rtmpExternalConfig: RtmpExternalConfig,
@@ -50,7 +47,17 @@ interface Props {
 
 const Content = ({ alias }: Props) => {
     const str = data[alias];
-    return <Markdown>{str}</Markdown>;
+    return (
+        <Markdown
+            options={{
+                overrides: {
+                    StepsContainer,
+                    StepsToc
+                }
+            }}>
+            {str}
+        </Markdown>
+    );
 };
 
 export default Content;
