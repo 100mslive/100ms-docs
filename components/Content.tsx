@@ -17,9 +17,9 @@ import AdaptiveBitrate1 from '../common/adaptive-bitrate-1.md';
 import AdaptiveBitrate2 from '../common/adaptive-bitrate-2.md';
 import AndroidSdkVersionShield from '../common/android-sdk-version-shield.md';
 import BulkRoleChangeErrors from '../common/bulk-role-change-errors.md';
+import RtmpExternalConfig from '../common/rtmp-external-config.md';
 import StepsContainer from './StepsContainer';
 import StepsToc from './StepsToc';
-import RtmpExternalConfig from '../common/rtmp-external-config.md';
 
 const data = {
     basics: Basics,
@@ -51,8 +51,8 @@ const Content = ({ alias }: Props) => {
         <Markdown
             options={{
                 overrides: {
-                    StepsContainer: StepsContainer,
-                    StepsToc: StepsToc
+                    StepsContainer,
+                    StepsToc
                 }
             }}>
             {str}
