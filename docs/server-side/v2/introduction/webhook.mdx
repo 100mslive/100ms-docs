@@ -632,20 +632,20 @@ This event will be sent when final composed recording is generated and uploaded 
 
 #### Attributes
 
-| Name                    | Type                 | Description                                                                                                                                            |
-| :---------------------- | :------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| room_id                 | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312dff                                                                                   |
-| room_name               | `string`             | Room name assigned by you when creating room <br/><br/> Example: class-9-batch-2                                                                       |
-| session_id              | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                 |
-| template_id             | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                                                   |
-| location                | `string`             | (Deprecated, use recording_path) s3 URI of the recorded video <br/><br/> Example: s3://bucket/prefix/ac.mp4                                            |
-| location                | `string`             | (Deprecated, use recording_presigned_url) HTTPS url to recorded session file on S3 bucket <br/><br/> Example: https://s3-location/bucket/beam/ac.mp4\* |
-| duration                | `int`                | Duration the user spent in the room in seconds <br/><br/> Example: 3600                                                                                |
-| recording_path          | `string`             | Upload path of the recorded video such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                                                         |
-| recording_presigned_url | `string`             | Presigned s3 URL for the recorded video, for download. Valid for 24 hours <br/><br/> Example: https://s3-location/bucket/ac.mp4                        |
-| size                    | `int`                | Size of the recorded video (in bytes) <br/><br/> Example: 10024                                                                                        |
-| session_started_at      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                |
-| session_stopped_at      | `timestamp (in UTC)` | Timestamp when session ended <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                  |
+| Name                    | Type                 | Description                                                                                                                                                     |
+| :---------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| room_id                 | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312dff                                                                                            |
+| room_name               | `string`             | Room name assigned by you when creating room <br/><br/> Example: class-9-batch-2                                                                                |
+| session_id              | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
+| template_id             | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                                                            |
+| location                | `string`             | (Deprecated, use recording_path) URI of the recorded video along with the storage type<br/><br/> Example: s3://bucket/prefix/ac.mp4                             |
+| location                | `string`             | (Deprecated, use recording_presigned_url) HTTPS url to recorded session file on storage bucket <br/><br/> Example: https://upload-location/bucket/beam/ac.mp4\* |
+| duration                | `int`                | Duration the user spent in the room in seconds <br/><br/> Example: 3600                                                                                         |
+| recording_path          | `string`             | Upload path of the recorded video such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                                                                  |
+| recording_presigned_url | `string`             | Presigned URL for the recorded video, for download. Valid for 24 hours <br/><br/> Example: https://upload-location/bucket/ac.mp4                                |
+| size                    | `int`                | Size of the recorded video (in bytes) <br/><br/> Example: 10024                                                                                                 |
+| session_started_at      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                         |
+| session_stopped_at      | `timestamp (in UTC)` | Timestamp when session ended <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                           |
 
 #### Sample `recording.success` event
 
@@ -832,27 +832,27 @@ This event is sent when beam successfully records the room and uploads the video
 
 #### Attributes
 
-| Name                    | Type                 | Description                                                                                                                                            |
-| :---------------------- | :------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| beam_id                 | `string`             | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                                                                            |
-| room_id                 | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                                    |
-| peer_id                 | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                |
-| metadata_id             | `string`             | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                                                                           |
-| metadata_timestamp      | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> Example: 2020-11-11T17:32:17Z                                                                            |
-| session_id              | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                 |
-| template_id             | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                                                   |
-| created_at              | `timestamp (in UTC)` | Timestamp at which recording was created <br/><br/> Example: 2020-11-11T17:12:17Z                                                                      |
-| duration                | `int`                | Duration of beam recording (seconds) <br/><br/> Example: 79                                                                                            |
-| location                | `string`             | (Deprecated, use recording_presigned_url) HTTPS url to recorded session file on S3 bucket <br/><br/> Example: https://s3-location/bucket/beam/ac.mp4\* |
-| started_at              | `timestamp (in UTC)` | Beam recording started at <br/><br/> Example: 2020-11-11T17:12:27Z                                                                                     |
-| stopped_at              | `timestamp (in UTC)` | Beam recording stopped at <br/><br/> Example: 2020-11-11T17:32:15Z                                                                                     |
-| max_width               | `int`                | Maximum width of the screen supported for recording in pixels <br/><br/> Example: 1280                                                                 |
-| max_height              | `int`                | Maximum height of the screen supported for recording in pixels <br/><br/> Example: 720                                                                 |
-| recording_path          | `string`             | Upload path of the recorded video such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                                                         |
-| recording_presigned_url | `string`             | Presigned s3 URL for the recorded video, for download <br/><br/> Example: https://s3-location/bucket/ac.mp4                                            |
-| meeting_url             | `string`             | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                                                                |
-| rtmp                    | `array`              | List of RTMP objects provided at rtmp start <br/><br/> Example: [{"url": "http://test.com"}]                                                           |
-| session_started_at      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                |
+| Name                    | Type                 | Description                                                                                                                                                     |
+| :---------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| beam_id                 | `string`             | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                                                                                     |
+| room_id                 | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                                             |
+| peer_id                 | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                         |
+| metadata_id             | `string`             | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                                                                                    |
+| metadata_timestamp      | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> Example: 2020-11-11T17:32:17Z                                                                                     |
+| session_id              | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
+| template_id             | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                                                            |
+| created_at              | `timestamp (in UTC)` | Timestamp at which recording was created <br/><br/> Example: 2020-11-11T17:12:17Z                                                                               |
+| duration                | `int`                | Duration of beam recording (seconds) <br/><br/> Example: 79                                                                                                     |
+| location                | `string`             | (Deprecated, use recording_presigned_url) HTTPS url to recorded session file on storage bucket <br/><br/> Example: https://upload-location/bucket/beam/ac.mp4\* |
+| started_at              | `timestamp (in UTC)` | Beam recording started at <br/><br/> Example: 2020-11-11T17:12:27Z                                                                                              |
+| stopped_at              | `timestamp (in UTC)` | Beam recording stopped at <br/><br/> Example: 2020-11-11T17:32:15Z                                                                                              |
+| max_width               | `int`                | Maximum width of the screen supported for recording in pixels <br/><br/> Example: 1280                                                                          |
+| max_height              | `int`                | Maximum height of the screen supported for recording in pixels <br/><br/> Example: 720                                                                          |
+| recording_path          | `string`             | Upload path of the recorded video such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                                                                  |
+| recording_presigned_url | `string`             | Presigned URL for the recorded video, for download <br/><br/> Example: https://upload-location/bucket/ac.mp4                                                    |
+| meeting_url             | `string`             | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                                                                         |
+| rtmp                    | `array`              | List of RTMP objects provided at rtmp start <br/><br/> Example: [{"url": "http://test.com"}]                                                                    |
+| session_started_at      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                         |
 
 #### Sample `beam.recording.success` event
 
@@ -1184,7 +1184,7 @@ This event will be sent when HLS recordings are successful and uploaded to the s
 | session_id                          | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                         |
 | template_id                         | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                           |
 | hls_vod_recording_path              | `string`             | Upload path of the HLS vod playlist such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                               |
-| hls_vod_recording_presigned_url     | `string`             | Pre signed url for HLS vod playlist url <br/><br/> Example: https://s3-location/bucket/hls-vod.zip                             |
+| hls_vod_recording_presigned_url     | `string`             | Pre signed url for HLS vod playlist url <br/><br/> Example: https://upload-location/bucket/hls-vod.zip                         |
 | max_width                           | `int`                | Maximum width of the screen supported for HLS recording in pixels <br/><br/> Example: 1280                                     |
 | max_height                          | `int`                | Maximum height of the screen supported for HLS recording in pixels <br/><br/> Example: 720                                     |
 | meeting_url                         | `string`             | meeting_url provided at HLS start <br/><br/> Example: "https://app.100ms.live/room_id"                                         |
