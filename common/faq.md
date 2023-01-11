@@ -409,6 +409,10 @@ The maximum number of people that can be supported currently is 100 for full dup
 
 The maximum capacity for group calls with 100ms video SDK is currently 100 participants with audio/video on.
 
+### How can I limit the number of peers in a room?
+
+You can use the `maxPeerCount` argument available in the [roles object](/docs/server-side/v2/policy/create-template-via-api#roles-object) of Template to limit the number of peers for a particular role. 
+
 ### Scalability and security
 
 ### Can the system scale to 50k-100k viewers if the SDK is not connected and we just want the m3u8 file?
