@@ -106,9 +106,11 @@ Follow the instructions in one of the tabs below based on the target platform yo
 
 ##### Native file changes
 
-1. Allow camera, recording audio and internet permissions by adding the below snippet to the `info.plist` file.
+1. Allow camera, recording audio and internet permissions
 
-  ```xml section=ForIOSPermissions sectionIndex=1
+  Add the below snippet in the `info.plist` file -
+    
+  ```xml:Info.plist section=ForIOSPermissions sectionIndex=1
   <key>NSCameraUsageDescription</key>
   <string>Please allow access to Camera to enable video conferencing</string>
 
@@ -119,16 +121,55 @@ Follow the instructions in one of the tabs below based on the target platform yo
   <string>Please allow access to network usage to enable video conferencing</string>
   ```
 
-2. Add the target platform version as (`platform :ios, '12.0'`) in "ios/Podfile."
+  Add the below snippet in the `ios/Podfile` file -
+    
+  ```json{5-8}:Podfile
+    # An absolute path to your application root.
+    :app_path => "#{Pod::Config.instance.installation_root}/.."
+  )
 
+  permissions_path = '../node_modules/react-native-permissions/ios'
+
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+  pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone"
+
+  target 'HMSSampleAppTests' do
+    inherit! :complete
+  ```
+
+2. Change ios target platform version to '13.0' in the `ios/Podfile` file
+    
+  ```json{4}:Podfile
+  require_relative '../node_modules/react-native/scripts/react_native_pods'
+  require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+  platform :ios, '13.0'
+  install! 'cocoapods', :deterministic_uuids => false
+  ```
 
 ##### Build and run the app
 
 Once you've made the above changes, your app is ready for testing. You can build the app and run it in a simulator.
 
-```bash
-npx react-native run-ios --simulator="iPhone 14"; npx react-native start
-```
+1. Install pods
+    
+  ```bash
+  cd ios && pod install && cd ../
+  ```
+
+2. Build the App
+    
+  ```bash
+  npx react-native run-ios --simulator="iPhone 14";
+  ```
+
+3. Start Metro Bundler if it is not already started
+    
+  ```bash
+  npx react-native start
+  ```
+
+> If you see any permission related error, then check out `react-native-permissions` library [setup guide](https://github.com/zoontek/react-native-permissions#setup)
 
 Now, after you click `join`, you should be able to see yourself (iOS simulator doesn't support actual video, you can connect an actual device to see your video in real-time). You can join the room using a browser as the second peer to check audio/video transactions between two or more peers.
 
@@ -168,7 +209,17 @@ Now, after you click `join`, you should be able to see yourself (iOS simulator d
   <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
   ```
 
-2. Add minimum SDK version (`minSdkVersion 21`) in "android/app/build.gradle" file (inside "defaultConfig").
+2. Change `minSdkVersion` to 21 in the `android/build.gradle` file
+    
+  ```json{4}:build.gradle
+  buildscript {
+    ext {
+      ...
+      minSdkVersion = 21
+      ...
+    }
+  }
+  ```
 
 
 ##### Build and run the app
