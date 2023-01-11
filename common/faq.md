@@ -35,6 +35,14 @@ For example, Virtual background feature is available as a beta feature on Web, A
 
 Yes, you can delete an App from your [dashboard](https://dashboard.100ms.live/dashboard) by hovering over the app and clicking on the trash icon.
 
+### Can I delete rooms via dashboard or API?
+
+No, you cannot delete a room. We don't support the "delete room" functionality as it would lead to losing all data associated with the room. However, we support the below options based on the actual requirement of why you want to delete the room(s):
+
+- **Creating new rooms for every session**:  You can create as many rooms as you want, as we don't have any limit for room creation. 
+- **Disable room**: If you don't want future room join requests for a particular room, you can disable a room from the dashboard or via [server API](/server-side/v2/Rooms/disable-or-enable). 
+- **Dev & Prod Env**: If you want to delete rooms from your account as you transition from Development to the Production stage, we recommend using "Workspaces." It enables you to create two or more workspaces per your need and isolate the data for each workspace. Please check this blog for more information. 
+
 ## Getting started
 
 ### How do I get started with integrating video functionality to my website using 100ms?
@@ -522,6 +530,17 @@ That needs authentication for a user and you would need to handle this on the UI
 ### Can we disable room by id?
 
 Yes this is possible. [Disable/enable a room API](/server-side/v2/Rooms/disable-or-enable) supports room_id as an argument as well. 
+
+### How do I limit the session to a specified duration?
+
+To achieve this, you can use the [End an active room API](/server-side/v2/active-rooms/end-active-room). 
+
+For example, if you must limit the duration of a session to 30 minutes:
+- Once the session starts, you can start a timer once you receive the [session.open.success](/server-side/v2/introduction/webhook#sessionopensuccess) webhook event, 
+- Wait till the duration (timer) of the session reaches 30 minutes,
+- Once reached, trigger the [End an active room API](/server-side/v2/active-rooms/end-active-room) to end the session and kick out the peers from the session. 
+
+> Note: If you set the lock argument to `true`, it will end the active room, and users will not be able to join the room later. You can use [enable a room API](/server-side/v2/Rooms/disable-or-enable) or [dashboard](https://dashboard.100ms.live/rooms) to enable the room again.
 
 ## Analytics
 
