@@ -118,7 +118,7 @@ Follow the instructions in one of the tabs below based on the target platform yo
 
   Add the below snippet in the `info.plist` file -
     ​
-  ```xml:Info.plist section=ForIOSPermissions sectionIndex=1
+  ```xml section=ForIOSPermissions sectionIndex=1
   <key>NSCameraUsageDescription</key>
   <string>Please allow access to Camera to enable video conferencing</string>
 
@@ -131,7 +131,7 @@ Follow the instructions in one of the tabs below based on the target platform yo
 
   Add the below snippet in the `ios/Podfile` file -
     ​
-  ```json{5-8}:Podfile
+  ```json{5-8}
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
@@ -147,7 +147,7 @@ Follow the instructions in one of the tabs below based on the target platform yo
 
 2. Change ios target platform version to '13.0' in the `ios/Podfile` file
     ​
-  ```json{4}:Podfile
+  ```json{4}
   require_relative '../node_modules/react-native/scripts/react_native_pods'
   require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
@@ -219,7 +219,7 @@ Now, after you click `join`, you should be able to see yourself (iOS simulator d
 
 2. Change `minSdkVersion` to 21 in the `android/build.gradle` file
     ​
-  ```json{4}:build.gradle
+  ```json{4}
   buildscript {
     ext {
       ...
