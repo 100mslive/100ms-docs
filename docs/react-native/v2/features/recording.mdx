@@ -3,33 +3,92 @@ title: RTMP Streaming & Recording
 nav: 3.991
 ---
 
-Want to preserve your video call for posterity in a recording? Or live stream it out to millions of viewers on Twitch or YouTube or whatever gives you an RTMP injest URL?
+Want to preserve your video call for posterity in a recording? Or live stream it out to millions of viewers on Twitch or YouTube or whatever gives you an RTMP ingest URL?
 
 Turn on RTMP Streaming or Recording!
 
-In 100ms, recording and streaming is usually achieved by having a bot join your room and stream what it sees and hears to a file (recording) or to an rtmp injest url (streaming).
+In 100ms, recording and streaming is usually achieved by having a bot join your room and stream what it sees and hears to a file (recording) or an RTMP ingest URL (streaming).
+
+
+## Types of Recordings 
+
+Apart from the RTMP stream and the browser recording, there is also a Server Recording, which can be turned on for the room.
+
+### - Server Recording 
+
+This is used for archival purposes and cannot be stopped by method calls from SDK. This can only be enabled/disabled from the dashboard.
+This represents that the room was set to be recorded when it was created and all sessions within it will always be recorded for archival by the server.
+
+### - Browser Recording 
+
+This is a normal recording that can be enabled/disabled using `HMSSDK` instance method `startRTMPOrRecording` with `record` property set to true.
+
+
+## RTMP Streaming & Recording
 
 The topics covered in this doc are:
 
-1. How to start streaming / recording.
-2. How to stop streaming / recording.
-3. How to check the current status for streaming / recording.
+1. [How to start streaming / recording.](#start-streaming-recording)
+2. [How to stop streaming / recording.](#stop-streaming-recording)
+3. [How to check the current status for streaming / recording.](#current-room-status)
+4. [When to check the current status](#when-to-check-for-room-status)
 
-### Starting Streaming / Recording
 
-Check if user has permissions
+## Permissions
 
-```js
-const browserRecording: boolean = peer.role.permissions.browserRecording;
-const rtmpStreaming: boolean = peer.role.permissions.rtmpStreaming;
+Can't let just anyone record and stream room audio and video. First, you need to create a [role](../foundation/templates-and-roles) with the permissions to record and stream room.
+
+You can check if you (local peer) have permission to record and stream room as follows -
+
+```ts
+const localPeer = await hmsInstance.getLocalPeer();
+
+// Permissions are available on `HMSRole` object of Local Peer
+const localPeerPermissions: HMSPermissions = localPeer.role?.permissions;
+
+// Check if Local Peer has Room Recording Permission
+const canRecord: boolean = localPeerPermissions?.browserRecording;
+
+// Check if Local Peer has Room Streaming Permission
+const canStream: boolean = localPeerPermissions?.rtmpStreaming;
 ```
 
-To start recording, streaming or both, create an instance of HMSRTMPConfig.
 
-HMSRTMPConfig takes the following:
+## Start Streaming / Recording
 
-1. meetingUrl: String. The url the 100ms bot user will open to join your room. It must allow access without any user level interaction.
-2. rtmpUrls: `Array<String>`. If streaming is required, this has to be one or more RTMP Injest Urls with a max limit of 3 urls where the stream should go. If only recording, this can be an empty list.
+Let's understand the process by following steps:
+
+<div className="steps-container">
+
+### Create an HMSRTMPConfig instance
+
+`HMSRTMPConfig` object will be used to start the Room recording and streaming.
+
+```js
+import { HMSRTMPConfig } from '@100mslive/react-native-hms';
+
+const roomJoinLink = 'https://...app.100ms.live/streaming/meeting...';
+
+const recordingConfig = new HMSRTMPConfig({
+  meetingURL: `${roomJoinLink}/viewer?token=beam_recording`,
+  rtmpURLs: [],
+  record: true,
+});
+```
+
+Let's look at how `HMSRTMPConfig` object looks like -
+
+```js
+interface HMSRTMPConfig {
+  meetingURL: string;
+  rtmpURLs?: string[];
+  record: boolean;
+  resolution?: HMSRtmpVideoResolution;
+}
+```
+
+1. _meetingURL_: `string`, The URL that the 100ms bot user will open to join your room. It must allow access without any user-level interaction.
+2. _rtmpURLs_: `string[]`, If streaming is required, this has to be one or more RTMP Ingest URLs with a max limit of 3 URLs where the stream should go. If only recording, this can be an empty list.
 
     - Format: `rtmp://server.com/app/STREAM_KEY`
     - Example: `rtmp://a.rtmp.youtube.com/live2/k0jv-329m-1y7f-ktth-ck48`
@@ -38,87 +97,118 @@ HMSRTMPConfig takes the following:
 
     <Content alias="rtmpExternalConfig" />
 
-3. record: Boolean. If recording is required, set true. If recording is not required, set false. This value has no effect on streaming.
+3. _record_: `boolean`, If the recording is required, set it `true`. If the recording is not required, set it to `false`. This value does not affect streaming.
+4. _resolution_: `HMSRtmpVideoResolution`, An optional value for the output resolution of the stream. For instance, the default is a landscape at `1280x720` but this could be set for a portrait mode to `720x1280` or smaller values like `480x80`. The `HMSResolution` class takes `width` and `height`.
 
--   If both rtmpUrls and record = true are provided, both streaming and recording will begin.
--   If only rtmpUrls are provided, only streaming will begin.
--   If only record true is provided, only recording will begin.
 
-If either one is started, the other can't be started without first stopping whatever is running. Eg: Only streaming is started. Recording can't be started unless streaming is stopped first.
+#### Key Notes
 
-If both are required, they have to be started together by providing both RTMP Injest Urls and recording = true.
+- If both `rtmpURLs` and `record = true` are provided, both streaming and recording will begin.
+- If only `rtmpURLs` are provided, only streaming will begin.
+- If only `record = true` is provided, only recording will begin.
 
-The result of the action is returned. On failure to start then an error will be sent in onError listener.
+If either one is started, the other can't be started without first stopping whatever is running.
 
-```js
-import { HMSRTMPConfig } from '@100mslive/react-native-hms';
+> Eg: If only streaming is started then recording can't be started unless streaming is stopped first.
 
-const recordingDetails = HMSRTMPConfig({
-    record: true,
-    meetingURL: roomID + '/viewer?token=beam_recording',
-    rtmpURLs: []
-});
+If both are required, they have to be started together by providing both `rtmpURLs` and `record = true`.
 
-await instance
-    ?.startRTMPOrRecording(recordingDetails)
-    .then((d) => console.log('Start Recording Success: ', d))
-    .catch((e) => console.log('Start Recording Error: ', e));
-```
+### Call method on HMSSDK instance
 
-### Stopping Streaming / Recording
+After creating config (`HMSRTMPConfig`) object, You can use `startRTMPOrRecording` method available on `HMSSDK` instance to start the RTMP Streaming and Recording as follows -
 
-To stop streaming AND recording. It is not currently possible to stop just one, whatever is running will be stopped.
-
-Here's how to stop both:
-
-The result of the action is returned. On failure to start then an error will be sent in onError listener.
+Make sure you have above mentioned permissions for starting RTMP streaming and recording.
 
 ```js
-await instance
-    ?.stopRtmpAndRecording()
-    .then((d) => console.log('Stop Recording Success: ', d))
-    .catch((e) => console.log('Stop Recording Error: ', e));
+try {
+  // Calling `startRTMPOrRecording` with config created in above step
+  await hmsInstance.startRTMPOrRecording(recordingConfig);
+
+  console.log('Start Recording Success');
+} catch (error) {
+  console.log('Start Recording Error: ', error);
+}
 ```
 
-### Current Room Status
+</div>
 
-The current status for the room is always reflected in the HMSRoom object that is returned from the `hmsInstance.room`.
 
-Here are the relevant properties inside the HMSRoom object which you can read to get the current recording/streaming status of the room namely: rtmpHMSRtmpStreamingState, browserRecordingState and serverRecordingState.
+## Stop Streaming / Recording
 
-Each of them are objects which contain a boolean running which lets you know if it's active on the room right now and error which lets you know if there was an error.
+You can use `stopRtmpAndRecording` method available on `HMSSDK` instance to stop the RTMP Streaming and Recording.
 
-Apart from the rtmp stream and the browser recording, which are ones you can start and stop, there is also a serverRecording, which can be turned on for the room for archival purposes and which cannot currently be stopped if enabled for the room from the dashboard.
-
-1. rtmpHMSRtmpStreamingState an instance of HMSRtmpStreamingState, which looks like:
+Make sure you have above mentioned permissions for stopping RTMP streaming and recording.
 
 ```js
-class HMSRtmpStreamingState(
-    val running : Boolean,
-    val error : HMSException?
-)
+try {
+  await hmsInstance.stopRtmpAndRecording();
+
+  console.log('Stop Recording Success');
+} catch (error) {
+  console.log('Stop Recording Error: ', error);
+}
 ```
 
-This represents a livestream to one or more RTMP urls.
 
-2. browserRecordingState an instance of HMSBrowserRecordingState, which looks like:
+## Current Room Status
+
+The current status for the room is always reflected in the `HMSRoom` object which we can get from `getRoom` method available on `HMSSDK` instance or `HMSUpdateListenerActions.ON_ROOM_UPDATE` event.
+
+This can be used to show the stream or recording status on UI something similar to this:
+
+![stream-state](/docs/v2/flutter-stream-state.jpg)
+
+Here are the relevant properties inside the `HMSRoom` object which we can read to get the current recording/streaming status of the room: 
+
+- `rtmpHMSRtmpStreamingState` - Contains info about RTMP Streaming, `running` attribute if true indicates streaming is ON currently
+- `browserRecordingState` - Contains info about Browser Recording, `running` attribute if true indicates browser recording is ON currently
+- `serverRecordingState` - Contains info about Server Recording, `running` attribute if true indicates server recording is ON currently
+
+Each of them is an object which contains a boolean `running` which lets you know if it's active in the room right now and `error` which lets you know if there was an error.
+
+1. **rtmpHMSRtmpStreamingState** is an instance of `HMSRtmpStreamingState`, which looks like:
 
 ```js
-class HMSBrowserRecordingState(
-    val running : Boolean,
-    val error : HMSException?
-)
+interface HMSRtmpStreamingState {
+  running: boolean; // `true` indicates that RTMP streaming is running
+  error?: HMSException; // Gets populated if there is some error in starting the stream or recording
+  startedAt: Date; // time at which RTMP streaming was started
+  stoppedAt: Date; // time at which RTMP streaming was stopped
+}
 ```
 
-This represents the recording that can be requested to start.
-
-3. serverRecordingState an instance of HMSServerRecordingState, which looks like:
+2. **browserRecordingState** is an instance of `HMSBrowserRecordingState`, which looks like:
 
 ```js
-class HMSServerRecordingState(
-    val running : Boolean,
-    val error : HMSException?
-)
+interface HMSBrowserRecordingState {
+  running: boolean; // `true` indicates that browser recording is running 
+  error?: HMSException; // Gets populated if there is some error in starting the browser recording 
+  startedAt: Date; // time at which browser recording was started
+  stoppedAt: Date; // time at which browser recording was stopped
+}
 ```
 
-This represents that the room was set to be recorded when it was created and all sessions within it will always be recorded for archival by the server.
+3. **serverRecordingState** is an instance of `HMSServerRecordingState`, which looks like:
+
+  This represents that the room was set to be recorded when it was created and all sessions within it will always be recorded for archival by the server.
+
+```js
+interface HMSServerRecordingState {
+  running: boolean; // `true` indicates that server recording is running 
+  error?: HMSException; // Gets populated if there is some error in starting the server recording
+  startedAt: Date; // time at which server recording was started
+}
+```
+
+
+## When to check for room status
+
+The room status should be checked in any of the following ways -
+
+1. Inside `onJoinListener` function which is subscribed to `HMSUpdateListenerActions.ON_JOIN` event
+2. Inside `onRoomListener` function which is subscribed to `HMSUpdateListenerActions.ON_ROOM_UPDATE` event
+3. When `hmsInstance.startRTMPOrRecording(recordingConfig)` is called
+4. When `hmsInstance.stopRtmpAndRecording()` is called
+
+-   In the above mentioned `onJoinListener` & `onRoomListener` functions, The properties mentioned above will be on the `HMSRoom` object.
+-   Whenever either of the `startRTMPOrRecording` or `stopRtmpAndRecording` functions are called, the values of the streaming and recording will be updated on the room object available in `onRoomListener` function. So, You should update the instance of `HMSRoom` in your application at that time.
