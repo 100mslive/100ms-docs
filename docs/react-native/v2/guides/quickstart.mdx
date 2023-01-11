@@ -78,7 +78,7 @@ Once you have the prerequisites, follow the steps below to create a React Native
     or follow Run instructions printed in terminal
 
 
-### Install the 100ms React Native library
+### Install the Dependencies
 
 After the Test run of your app is successful, You can install [100ms React Native library](https://www.npmjs.com/package/@100mslive/react-native-hms) and [react-native-permissions](https://www.npmjs.com/package/react-native-permissions) in your app.
 
@@ -88,7 +88,571 @@ npm install --save @100mslive/react-native-hms react-native-permissions
 
 ### Complete code example
 
-Now that your project setup is complete, let's replace the code in the lib/main.dart file with the complete code sample below -
+Now that your project setup is complete, let's replace the code in the `App.js` file with the complete code sample below -
+
+```js
+import React, {useState, useRef, useEffect} from 'react';
+import {
+  SafeAreaView,
+  FlatList,
+  StatusBar,
+  Text,
+  View,
+  TouchableHighlight,
+  ActivityIndicator,
+} from 'react-native';
+import {PERMISSIONS, requestMultiple, RESULTS} from 'react-native-permissions';
+import {HMSSDK, HMSUpdateListenerActions, HMSConfig, HMSTrackType, HMSTrackUpdate, HMSPeerUpdate} from '@100mslive/react-native-hms';
+
+/**
+ * Take Auth Token from Dashbaord for this sample app.
+ * For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/foundation/security-and-tokens | Token Concept}
+ */
+const AUTH_TOKEN = 'PASTE_AUTH_TOKEN_FROM_DASHBOARD_HERE';
+
+const USERNAME = 'Test User';
+
+//#region Screens
+const App = () => {
+  const [joinRoom, setJoinRoom] = useState(false);
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#EFF7FF' }}>
+      <StatusBar barStyle={'dark-content'} />
+
+      {joinRoom ? (
+        <RoomScreen navigate={() => setJoinRoom(false)} />
+      ) : (
+        <HomeScreen navigate={() => setJoinRoom(true)} />
+      )}
+    </SafeAreaView>
+  );
+};
+
+export default App;
+
+const HomeScreen = ({ navigate }) => {
+
+  // Function to handle "Join Room" button press
+  const handleJoinPress = async () => {
+    // Checking Device Permissions
+    const permissionsGranted = await checkPermissions([
+      PERMISSIONS.ANDROID.CAMERA,
+      PERMISSIONS.ANDROID.RECORD_AUDIO,
+      PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
+    ]);
+
+    if (permissionsGranted) {
+      navigate('RoomScreen');
+    } else {
+      console.log('Permission Not Granted!');
+    }
+  };
+
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <TouchableHighlight
+        onPress={handleJoinPress}
+        underlayColor='#143466'
+        style={{ paddingHorizontal: 20, paddingVertical: 12, backgroundColor: '#2471ED', borderRadius: 8 }}
+      >
+        <Text style={{ fontSize: 20, color: '#ffffff' }}>Join Room</Text>
+      </TouchableHighlight>
+    </View>
+  );
+};
+
+const RoomScreen = ({ navigate }) => {
+  /**
+   * `usePeerTrackNodes` hook takes care of setting up {@link HMSSDK | HMSSDK} instance, joining room and adding all required event listeners.
+   * It gives us:
+   *  1. peerTrackNodes - This is a list of {@link PeerTrackNode}, we can use this list to render local and remote peer tiles.
+   *  2. loading - We can show loader while Room Room join is under process.
+   *  3. leaveRoom - This is a function that can be called on a button press to leave room and go back to Welcome screen.
+   */
+	const { peerTrackNodes, loading, leaveRoom, hmsInstanceRef } = usePeerTrackNodes();
+
+  const HmsView = hmsInstanceRef.current?.HmsView;
+
+  const _keyExtractor = (item) => item.id;
+
+  // `_renderItem` function returns a Tile UI for each item which is `PeerTrackNode` object
+	const _renderItem = ({ item }) => {
+    const {peer, track} = item;
+
+    return (
+      <View style={{ height: 300, margin: 8, borderRadius: 20, overflow: 'hidden', backgroundColor: '#A0C3D2' }}>
+        {/* Checking if we have "HmsView" component, valid trackId and "track is not muted" */}
+        {HmsView && track && track.trackId && !track.isMute() ? (
+          // To Render Peer Live Videos, We can use HMSView
+          // For more info about its props and usage, Check out {@link https://www.100ms.live/docs/react-native/v2/features/render-video | Render Video}
+          <HmsView
+            trackId={track.trackId}
+            mirror={peer.isLocal}
+            style={{ width: '100%', height: '100%' }}
+          />
+        ) : (
+          <View style={{ flex: 1, alignItems:'center', justifyContent: 'center' }}>
+            <View style={{
+              width: 100, height: 100, borderRadius: 50,
+              alignItems:'center', justifyContent: 'center',  backgroundColor: '#FD8A8A'
+            }}>
+              <Text style={{ textAlign: 'center', fontSize: 28, fontWeight: 'bold', textTransform: 'uppercase' }}>
+                {peer.name.split(' ').map(item => item[0]).join('')}
+              </Text>
+            </View>
+          </View>
+        )}
+      </View>
+    );
+  };
+
+  const handleRoomEnd = () => {
+    leaveRoom();
+
+    navigate('HomeScreen');
+  };
+
+	return (
+		<View style={{ flex: 1 }}>
+      {loading ? (
+        // Showing loader while Join is under process
+				<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+					<ActivityIndicator size={'large'} color='#2471ED' />
+				</View>
+			) : (
+        <View style={{ flex: 1, position: 'relative' }}>
+          {peerTrackNodes.length > 0 ? (
+            // Rendering list of Peers
+            <FlatList
+              centerContent={true}
+              data={peerTrackNodes}
+              showsVerticalScrollIndicator={false}
+              keyExtractor={_keyExtractor}
+              renderItem={_renderItem}
+              contentContainerStyle={{
+                paddingBottom: 120,
+                flexGrow: Platform.OS === 'android' ? 1 : undefined,
+                justifyContent: Platform.OS === 'android' ? 'center' : undefined,
+              }}
+            />
+          ) : (
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+              <Text style={{ fontSize: 28, marginBottom: 32 }}>Welcome!</Text>
+              <Text style={{ fontSize: 16, }}>
+                You’re the first one here.
+              </Text>
+              <Text style={{ fontSize: 16, }}>
+                Sit back and relax till the others join.
+              </Text>
+            </View>
+          )}
+
+          {/* Button to Leave Room */}
+          <TouchableHighlight
+            onPress={handleRoomEnd}
+            underlayColor='#6e2028'
+            style={{
+              position: 'absolute', bottom: 40, alignSelf: 'center',
+              backgroundColor: '#CC525F',
+              width: 60, height: 60, borderRadius: 30,
+              alignItems: 'center', justifyContent: 'center',
+            }}
+          >
+            <Text style={{ textAlign: 'center', color: '#ffffff', fontWeight: 'bold' }}>Leave Room</Text>
+          </TouchableHighlight>
+        </View>
+      )}
+		</View>
+	);
+};
+//#endregion Screens
+
+/**
+ * Sets up HMSSDK instance, Adds required Event Listeners
+ * Checkout Quick Start guide to know things covered {@link https://www.100ms.live/docs/react-native/v2/guides/quickstart | Quick Start Guide}
+ */
+export const usePeerTrackNodes = () => {
+	const hmsInstanceRef = useRef(null); // We will save `hmsInstance` in this ref
+	const [loading, setLoading] = useState(true);
+	const [peerTrackNodes, setPeerTrackNodes] = useState([]); // Use this state to render Peer Tiles
+
+	/**
+	 * Handles Room leave process
+	 */
+	const handleRoomLeave = async () => {
+		try {
+      const hmsInstance = hmsInstanceRef.current;
+
+			if (!hmsInstance) {
+				return Promise.reject('HMSSDK instance is null');
+			}
+			// Removing all registered listeners
+			hmsInstance.removeAllListeners();
+			
+			/**
+			 * Leave Room. For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/features/leave | Leave Room}
+			 */
+			const leaveResult = await hmsInstance.leave();
+			console.log('Leave Success: ', leaveResult);
+
+			/**
+			 * Free/Release Resources. For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/features/release-resources | Release Resources}
+			 */
+			const destroyResult = await hmsInstance.destroy();
+			console.log('Destroy Success: ', destroyResult);
+
+			// Removing HMSSDK instance
+			hmsInstanceRef.current = null;
+		} catch (error) {
+			console.log('Leave or Destroy Error: ', error);
+		}
+	};
+
+  /**
+	 * Handles Join Update received from {@link HMSUpdateListenerActions.ON_JOIN} event listener
+	 * Receiving This event means User (i.e. Local Peer) has successfully joined room
+	 * @param {Object} data - object which has room object
+	 * @param {Object} data.room - current {@link HMSRoom | room} object
+	 */
+	const onJoinSuccess = (data) => {
+		/**
+		 * Checkout {@link HMSLocalPeer | HMSLocalPeer} Class
+		 */
+		const { localPeer } = data.room;
+
+		// Creating or Updating Local Peer Tile
+
+    // `updateNode` function updates "Track and Peer objects" in PeerTrackNodes and returns updated list.
+    // if none exist then we are "creating a new PeerTrackNode with the received Track and Peer"
+    setPeerTrackNodes(prevPeerTrackNodes => updateNode({
+      nodes: prevPeerTrackNodes,
+      peer: localPeer,
+      track: localPeer.videoTrack,
+      createNew: true
+    }));
+
+		// Turning off loading state on successful Room Room join
+		setLoading(false);
+	};
+
+	/**
+	 * Handles Peer Updates received from {@link HMSUpdateListenerActions.ON_PEER_UPDATE} event listener
+	 * @param {Object} data - This has updated peer and update type
+	 * @param {HMSPeer} data.peer - Updated Peer
+	 * @param {HMSPeerUpdate} data.type - Update Type
+	 */
+	const onPeerListener = ({ peer, type }) => {
+
+		// We will create Tile for the Joined Peer when we receive `HMSUpdateListenerActions.ON_TRACK_UPDATE` event.
+		// Note: We are chosing to not create Tiles for Peers which does not have any tracks
+		if (type === HMSPeerUpdate.PEER_JOINED) return;
+
+		if (type === HMSPeerUpdate.PEER_LEFT) {
+			// Remove all Tiles which has peer same as the peer which just left the room.
+			// `removeNodeWithPeerId` function removes peerTrackNodes which has given peerID and returns updated list.
+			setPeerTrackNodes(prevPeerTrackNodes => removeNodeWithPeerId(prevPeerTrackNodes, peer.peerID));
+			return;
+		}
+
+		if (peer.isLocal) {
+			// Updating the LocalPeer Tile.
+			// `updateNodeWithPeer` function updates Peer object in PeerTrackNodes and returns updated list.
+			// if none exist then we are "creating a new PeerTrackNode for the updated Peer".
+			setPeerTrackNodes(prevPeerTrackNodes => updateNodeWithPeer({ nodes: prevPeerTrackNodes, peer, createNew: true }));
+			return;
+		}
+
+		if (type === HMSPeerUpdate.ROLE_CHANGED) {
+			// If Peer's role has changed to a Role Which does not have publish permissions.
+			// We will remove Tile with that Peer object
+			if (
+				peer.role?.publishSettings?.allowed === undefined ||
+				(peer.role?.publishSettings?.allowed &&
+					peer.role?.publishSettings?.allowed.length < 1)
+			) {
+				// Remove all Tiles which has peer same as the peer whom role just got changed
+				// `removeNodeWithPeerId` function removes peerTrackNodes which has given peerID and returns updated list.
+				setPeerTrackNodes(prevPeerTrackNodes => removeNodeWithPeerId(prevPeerTrackNodes, peer.peerID));
+			}
+			return;
+		}
+
+		if (
+			type === HMSPeerUpdate.METADATA_CHANGED ||
+			type === HMSPeerUpdate.NAME_CHANGED ||
+			type === HMSPeerUpdate.NETWORK_QUALITY_UPDATED
+		) {
+			// Updating the Tiles with updated Peer.
+			// `updateNodeWithPeer` function updates Peer object in PeerTrackNodes and returns updated list.
+			// Note: We are not creating new PeerTrackNode object.
+			setPeerTrackNodes(prevPeerTrackNodes => updateNodeWithPeer({ nodes: prevPeerTrackNodes, peer }));
+			return;
+		}
+	};
+
+	/**
+	 * Handles Track Updates received from {@link HMSUpdateListenerActions.ON_TRACK_UPDATE} event listener
+	 * @param {Object} data - This has updated track with peer and update type
+	 * @param {HMSPeer} data.peer - Peer
+	 * @param {HMSTrack} data.track - Peer Track
+	 * @param {HMSTrackUpdate} data.type - Update Type
+	 */
+	const onTrackListener = ({ peer, track, type }) => {
+
+		// on TRACK_ADDED update
+		// We will update Tile with the track or
+		// create new Tile for with the track and peer
+		if (type === HMSTrackUpdate.TRACK_ADDED && track.type === HMSTrackType.VIDEO) {
+
+			// We will only update or create Tile "with updated track" when track type is Video.
+			// Tiles without Video Track are already respresenting Peers with or without Audio.
+
+      // Updating the Tiles with Track and Peer.
+      // `updateNode` function updates "Track and Peer objects" in PeerTrackNodes and returns updated list.
+      // if none exist then we are "creating a new PeerTrackNode with the received Track and Peer".
+      setPeerTrackNodes(prevPeerTrackNodes => updateNode({
+        nodes: prevPeerTrackNodes,
+        peer,
+        track,
+        createNew: true
+      }));
+
+			return;
+		}
+
+		if (type === HMSTrackUpdate.TRACK_REMOVED) {
+			// If non-regular track, or
+			// both regular video and audio tracks are removed
+			// Then we will remove Tiles (PeerTrackNodes) with removed track and received peer
+			return;
+		}
+
+		// on TRACK_MUTED or TRACK_UNMUTED updates, We will update Tiles (PeerTrackNodes)
+		if (
+			type === HMSTrackUpdate.TRACK_MUTED ||
+			type === HMSTrackUpdate.TRACK_UNMUTED
+		) {
+			// We will only update Tile "with updated track" when track type is Video.
+			if (track.type === HMSTrackType.VIDEO) {
+
+				// Updating the Tiles with Track and Peer.
+				// `updateNode` function updates "Track and Peer objects" in PeerTrackNodes and returns updated list.
+				// Note: We are not creating new PeerTrackNode object.
+				setPeerTrackNodes(prevPeerTrackNodes => updateNode({
+					nodes: prevPeerTrackNodes,
+					peer,
+					track,
+				}));
+			} else {
+
+				// Updating the Tiles with Peer.
+				// `updateNodeWithPeer` function updates Peer object in PeerTrackNodes and returns updated list.
+				// Note: We are not creating new PeerTrackNode object.
+				setPeerTrackNodes(prevPeerTrackNodes => updateNodeWithPeer({
+          nodes: prevPeerTrackNodes,
+          peer,
+        }));
+			}
+			return;
+		}
+
+		/**
+		 * For more info about Degrade/Restore. check out {@link https://www.100ms.live/docs/react-native/v2/features/auto-video-degrade | Auto Video Degrade}
+		 */
+		if (type === HMSTrackUpdate.TRACK_RESTORED || type === HMSTrackUpdate.TRACK_DEGRADED) {
+			return;
+		}
+	};
+
+	/**
+	 * Handles Errors received from {@link HMSUpdateListenerActions.ON_ERROR} event listener
+	 * @param {HMSException} error 
+	 * 
+	 * For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/features/error-handling | Error Handling}
+	 */
+	const onErrorListener = (error) => {
+		setLoading(false);
+
+    console.log(`${error?.code} ${error?.description}`);
+	};
+
+	// Effect to handle HMSSDK initialization and Listeners Setup 
+	useEffect(() => {
+		const joinRoom = async () => {
+			setLoading(true);
+
+			/**
+			 * creating {@link HMSSDK} instance to join room
+			 * For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/features/join#join-a-room | Join a Room}
+			 */
+			const hmsInstance = await HMSSDK.build();
+
+      // Saving `hmsInstance` in ref
+			hmsInstanceRef.current = hmsInstance;
+
+			/**
+			 * Adding HMSSDK Event Listeners before calling Join method on HMSSDK instance
+			 * For more info, Check out -
+			 * {@link https://www.100ms.live/docs/react-native/v2/features/join#update-listener | Adding Event Listeners before Join},
+			 * {@link https://www.100ms.live/docs/react-native/v2/features/event-listeners | Event Listeners},
+			 * {@link https://www.100ms.live/docs/react-native/v2/features/event-listeners-enums | Event Listeners Enums}
+			 */
+			hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoinSuccess);
+
+			hmsInstance.addEventListener(HMSUpdateListenerActions.ON_PEER_UPDATE, onPeerListener);
+
+			hmsInstance.addEventListener(HMSUpdateListenerActions.ON_TRACK_UPDATE, onTrackListener);
+
+			hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onErrorListener);
+
+			/**
+			 * Joining Room. For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/features/join#join-a-room | Join a Room}
+       * 
+       * Please make sure you are passing correct AUTH_TOKEN to join method
+			 */
+			hmsInstance.join(new HMSConfig({ authToken: AUTH_TOKEN, username: USERNAME }));
+		};
+
+		joinRoom();
+
+    // When effect unmounts for any reason, We are calling leave function
+    return () => {
+			handleRoomLeave();
+		};
+	}, []);
+
+	return { loading, leaveRoom: handleRoomLeave, peerTrackNodes, hmsInstanceRef };
+};
+
+//#region Utilities
+
+/**
+ * Function to check permissions
+ * @param {string[]} permissions 
+ * @returns {boolean} all permissions granted or not
+ */
+export const checkPermissions = async (permissions) => {
+  try {
+    if (Platform.OS === 'ios') {
+      return true;
+    }
+    const results = await requestMultiple(permissions);
+    let allPermissionsGranted = true;
+    for (let permission in permissions) {
+      if (!(results[permissions[permission]] === RESULTS.GRANTED)) {
+        allPermissionsGranted = false;
+      }
+    }
+    return allPermissionsGranted;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+/**
+ * returns `uniqueId` for a given `peer` and `track` combination
+ */
+export const getPeerTrackNodeId = (peer, track) => {
+	return peer.peerID + (track?.source ?? HMSTrackSource.REGULAR);
+}
+
+/**
+ * creates `PeerTrackNode` object for given `peer` and `track` combination
+ */
+export const createPeerTrackNode = (peer, track) => {
+	let isVideoTrack = false;
+	if (track && track?.type === HMSTrackType.VIDEO) {
+		isVideoTrack = true;
+	}
+	const videoTrack = isVideoTrack ? track : undefined;
+	return {
+		id: getPeerTrackNodeId(peer, track),
+		peer: peer,
+		track: videoTrack,
+	};
+};
+
+/**
+ * Removes all nodes which has `peer` with `id` same as the given `peerID`.
+ */
+export const removeNodeWithPeerId = (nodes, peerID) => {
+	return nodes.filter(node => node.peer.peerID !== peerID);
+};
+
+/**
+ * Updates `peer` of `PeerTrackNode` objects which has `peer` with `peerID` same as the given `peerID`.
+ * 
+ * If `createNew` is passed as `true` and no `PeerTrackNode` exists with `id` same as `uniqueId` generated from given `peer` and `track`
+ * then new `PeerTrackNode` object will be created.
+ */
+export const updateNodeWithPeer = (data) => {
+  const { nodes, peer, createNew = false } = data;
+
+	const peerExists = nodes.some(node => node.peer.peerID === peer.peerID);
+
+	if (peerExists) {
+		return nodes.map(node => {
+			if (node.peer.peerID === peer.peerID) {
+				return { ...node, peer };
+			}
+			return node;
+		});
+	}
+
+	if (!createNew) return nodes;
+
+	if (peer.isLocal) {
+		return [createPeerTrackNode(peer), ...nodes];
+	}
+
+	return [...nodes, createPeerTrackNode(peer)];
+};
+
+/**
+ * Removes all nodes which has `id` same as `uniqueId` generated from given `peer` and `track`.
+ */
+export const removeNode = (nodes, peer, track) => {
+	const uniqueId = getPeerTrackNodeId(peer, track);
+
+	return nodes.filter(node => node.id !== uniqueId);
+};
+
+/**
+ * Updates `track` and `peer` of `PeerTrackNode` objects which has `id` same as `uniqueId` generated from given `peer` and `track`.
+ * 
+ * If `createNew` is passed as `true` and no `PeerTrackNode` exists with `id` same as `uniqueId` generated from given `peer` and `track`
+ * then new `PeerTrackNode` object will be created 
+ */
+export const updateNode = (data) => {
+	const {nodes, peer, track, createNew = false} = data;
+  
+  const uniqueId = getPeerTrackNodeId(peer, track);
+
+	const nodeExists = nodes.some(node => node.id === uniqueId);
+
+	if (nodeExists) {
+		return nodes.map(node => {
+			if (node.id === uniqueId) {
+				return { ...node, peer, track };
+			}
+			return node;
+		});
+	}
+
+	if (!createNew) return nodes;
+
+	if (peer.isLocal) {
+		return [createPeerTrackNode(peer, track), ...nodes];
+	}
+
+	return [...nodes, createPeerTrackNode(peer, track)];
+};
+
+//#endregion Utility
+
+```
 
 ### Fetch token to join the Room
 
@@ -273,31 +837,110 @@ We need permission from the user to access the media from the user's device. We 
 Please ensure to add permissions in the `AndroidManifest.xml` file for android and `info.plist` file for iOS. Check [test the app section](#test-the-app) for more information.
 
 ```js
-console.log('Permissions Code Snippet here');
+import {PERMISSIONS, requestMultiple, RESULTS} from 'react-native-permissions';
+
+export const checkPermissions = async (permissions) => {
+  try {
+    if (Platform.OS === 'ios') {
+      return true;
+    }
+    const results = await requestMultiple(permissions);
+    let allPermissionsGranted = true;
+    for (let permission in permissions) {
+      if (!(results[permissions[permission]] === RESULTS.GRANTED)) {
+        allPermissionsGranted = false;
+      }
+    }
+    return allPermissionsGranted;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+...
+
+// Function to handle "Join Room" button press
+const handleJoinPress = async () => {
+  // Checking Device Permissions
+  const permissionsGranted = await checkPermissions([
+    PERMISSIONS.ANDROID.CAMERA,
+    PERMISSIONS.ANDROID.RECORD_AUDIO,
+    PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
+  ]);
+
+  if (permissionsGranted) {
+    navigate('RoomScreen');
+  } else {
+    console.log('Permission Not Granted!');
+  }
+};
 ```
+
+In the above code snippet, First, We have `checkPermissions` function which uses `requestMultiple` function from `react-native-permissions` library to request permissions from device. Then we have `handleJoinPress` function which calls `checkPermissions` function to request Camera, Microphone and Bluetooth permissions on "Join Room" button press.
 
 ### Implement Join screen
 
 This section will help you create the join screen user interface. To keep it simple for the quickstart, we have not created many UI elements; you can refer to the [sample app implementation](https://github.com/100mslive/react-native-hms/blob/develop/sample-apps/rn-quickstart-app/src/screens/Welcome/index.tsx) for a complete Preview/Join user interface.
 
 ```js
-console.log('Join button Code Snippet here');
+const HomeScreen = ({ navigate }) => {
+  // Function to handle "Join Room" button press
+  const handleJoinPress = async () => {
+    ...
+  };
+
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <TouchableHighlight
+        onPress={handleJoinPress}
+        underlayColor='#143466'
+        style={{ paddingHorizontal: 20, paddingVertical: 12, backgroundColor: '#2471ED', borderRadius: 8 }}
+      >
+        <Text style={{ fontSize: 20, color: '#ffffff' }}>Join Room</Text>
+      </TouchableHighlight>
+    </View>
+  );
+};
 ```
 
-### Implement Room screen
+In the above code snippet, We are implementing UI for "Join Room" button in Home screen.
+
+### Initializing the SDK
 
 100ms SDK provides various events, the client apps can subscribe to these events to get updates happening in the room after a user has joined.
 
-To join a room, you need to create an `HMSConfig` instance and use that instance to call the join method of `HMSSDK` instance.
-
-> **Note:** An `App token` is required to authenticate a room join request from your client-side app. Please ensure to set the `AUTH_TOKEN` variable value with correct "Auth Token" by fetching it from your dashboard. Check [fetch token to join a room section](#fetch-token-to-join-the-room) for more information. <br/> Read more about authentication and tokens in [this guide](../foundation/security-and-tokens)
-
-You can check the below code snippet to create UI to show the video tiles of local and remote peers.
-// TO CHECK: HMSUpdateListener plays a significant role in rendering video or displaying any information regarding the room.
+After requesting required permissions from the user, We are ready to initialize the 100ms SDK to subscribe to room updates.
 
 ```js
-console.log('Room screen Initialization Code Snippet');
+// Effect to handle HMSSDK initialization and Listeners Setup 
+useEffect(() => {
+  const joinRoom = async () => {
+    setLoading(true);
+
+    /**
+      * creating {@link HMSSDK} instance to join room
+      * For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/features/join#join-a-room | Join a Room}
+      */
+    const hmsInstance = await HMSSDK.build();
+
+    // Saving `hmsInstance` in ref
+    hmsInstanceRef.current = hmsInstance;
+
+    ...
+
+  };
+
+  joinRoom();
+
+  // When effect unmounts for any reason, We are calling leave function
+  return () => {
+    handleRoomLeave();
+  };
+}, []);
 ```
+
+In above code snippet, We have a `useEffect` hook which initializes the `HMSSDK` by calling static `build` method.
 
 ### Listen to Join and Peer Updates
 
@@ -311,7 +954,81 @@ Our application must subscribe to these events to get the updates.
 Check out the [Event Listener Enums](../features/event-listeners-enums#hmspeerupdate) docs to understand the update types emitted by the SDK for `HMSUpdateListenerActions.ON_PEER_UPDATE` event.
 
 ```js
-console.log('on_JOIN and ON_PEER_UPDATE listeners Code Snippet');
+// Subscribing to Join updates
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoinSuccess);
+
+// Subscribing to Peer updates
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_PEER_UPDATE, onPeerListener);
+
+const onJoinSuccess = (data) => {
+  /**
+   * Checkout {@link HMSLocalPeer | HMSLocalPeer} Class
+   */
+  const { localPeer } = data.room;
+
+  // Creating or Updating Local Peer Tile
+
+  // `updateNode` function updates "Track and Peer objects" in PeerTrackNodes and returns updated list.
+  // if none exist then we are "creating a new PeerTrackNode with the received Track and Peer"
+  setPeerTrackNodes(prevPeerTrackNodes => updateNode({
+    nodes: prevPeerTrackNodes,
+    peer: localPeer,
+    track: localPeer.videoTrack,
+    createNew: true
+  }));
+
+  // Turning off loading state on successful Room Room join
+  setLoading(false);
+};
+
+const onPeerListener = ({ peer, type }) => {
+
+  // We will create Tile for the Joined Peer when we receive `HMSUpdateListenerActions.ON_TRACK_UPDATE` event.
+  // Note: We are chosing to not create Tiles for Peers which does not have any tracks
+  if (type === HMSPeerUpdate.PEER_JOINED) return;
+
+  if (type === HMSPeerUpdate.PEER_LEFT) {
+    // Remove all Tiles which has peer same as the peer which just left the room.
+    // `removeNodeWithPeerId` function removes peerTrackNodes which has given peerID and returns updated list.
+    setPeerTrackNodes(prevPeerTrackNodes => removeNodeWithPeerId(prevPeerTrackNodes, peer.peerID));
+    return;
+  }
+
+  if (peer.isLocal) {
+    // Updating the LocalPeer Tile.
+    // `updateNodeWithPeer` function updates Peer object in PeerTrackNodes and returns updated list.
+    // if none exist then we are "creating a new PeerTrackNode for the updated Peer".
+    setPeerTrackNodes(prevPeerTrackNodes => updateNodeWithPeer({ nodes: prevPeerTrackNodes, peer, createNew: true }));
+    return;
+  }
+
+  if (type === HMSPeerUpdate.ROLE_CHANGED) {
+    // If Peer's role has changed to a Role Which does not have publish permissions.
+    // We will remove Tile with that Peer object
+    if (
+      peer.role?.publishSettings?.allowed === undefined ||
+      (peer.role?.publishSettings?.allowed &&
+        peer.role?.publishSettings?.allowed.length < 1)
+    ) {
+      // Remove all Tiles which has peer same as the peer whom role just got changed
+      // `removeNodeWithPeerId` function removes peerTrackNodes which has given peerID and returns updated list.
+      setPeerTrackNodes(prevPeerTrackNodes => removeNodeWithPeerId(prevPeerTrackNodes, peer.peerID));
+    }
+    return;
+  }
+
+  if (
+    type === HMSPeerUpdate.METADATA_CHANGED ||
+    type === HMSPeerUpdate.NAME_CHANGED ||
+    type === HMSPeerUpdate.NETWORK_QUALITY_UPDATED
+  ) {
+    // Updating the Tiles with updated Peer.
+    // `updateNodeWithPeer` function updates Peer object in PeerTrackNodes and returns updated list.
+    // Note: We are not creating new PeerTrackNode object.
+    setPeerTrackNodes(prevPeerTrackNodes => updateNodeWithPeer({ nodes: prevPeerTrackNodes, peer }));
+    return;
+  }
+};
 ```
 
 ### Listen to Track Updates
@@ -321,7 +1038,75 @@ The 100ms SDK emits `HMSUpdateListenerActions.ON_TRACK_UPDATE` event when any ch
 Check out the [Event Listener Enums](../features/event-listeners-enums#hmstrackupdate) docs to understand the update types emitted by the SDK for `HMSUpdateListenerActions.ON_TRACK_UPDATE` event.
 
 ```js
-console.log('ON_TRACK_UPDATE listeners Code Snippet');
+// Subscribing to Track updates
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_TRACK_UPDATE, onTrackListener);
+
+const onTrackListener = ({ peer, track, type }) => {
+
+  // on TRACK_ADDED update
+  // We will update Tile with the track or
+  // create new Tile for with the track and peer
+  if (type === HMSTrackUpdate.TRACK_ADDED && track.type === HMSTrackType.VIDEO) {
+
+    // We will only update or create Tile "with updated track" when track type is Video.
+    // Tiles without Video Track are already respresenting Peers with or without Audio.
+
+    // Updating the Tiles with Track and Peer.
+    // `updateNode` function updates "Track and Peer objects" in PeerTrackNodes and returns updated list.
+    // if none exist then we are "creating a new PeerTrackNode with the received Track and Peer".
+    setPeerTrackNodes(prevPeerTrackNodes => updateNode({
+      nodes: prevPeerTrackNodes,
+      peer,
+      track,
+      createNew: true
+    }));
+
+    return;
+  }
+
+  if (type === HMSTrackUpdate.TRACK_REMOVED) {
+    // If non-regular track, or
+    // both regular video and audio tracks are removed
+    // Then we will remove Tiles (PeerTrackNodes) with removed track and received peer
+    return;
+  }
+
+  // on TRACK_MUTED or TRACK_UNMUTED updates, We will update Tiles (PeerTrackNodes)
+  if (
+    type === HMSTrackUpdate.TRACK_MUTED ||
+    type === HMSTrackUpdate.TRACK_UNMUTED
+  ) {
+    // We will only update Tile "with updated track" when track type is Video.
+    if (track.type === HMSTrackType.VIDEO) {
+
+      // Updating the Tiles with Track and Peer.
+      // `updateNode` function updates "Track and Peer objects" in PeerTrackNodes and returns updated list.
+      // Note: We are not creating new PeerTrackNode object.
+      setPeerTrackNodes(prevPeerTrackNodes => updateNode({
+        nodes: prevPeerTrackNodes,
+        peer,
+        track,
+      }));
+    } else {
+
+      // Updating the Tiles with Peer.
+      // `updateNodeWithPeer` function updates Peer object in PeerTrackNodes and returns updated list.
+      // Note: We are not creating new PeerTrackNode object.
+      setPeerTrackNodes(prevPeerTrackNodes => updateNodeWithPeer({
+        nodes: prevPeerTrackNodes,
+        peer,
+      }));
+    }
+    return;
+  }
+
+  /**
+   * For more info about Degrade/Restore. check out {@link https://www.100ms.live/docs/react-native/v2/features/auto-video-degrade | Auto Video Degrade}
+   */
+  if (type === HMSTrackUpdate.TRACK_RESTORED || type === HMSTrackUpdate.TRACK_DEGRADED) {
+    return;
+  }
+};
 ```
 
 ### Listen to Other Updates
@@ -331,8 +1116,56 @@ The 100ms SDK emits various other events to handle different scenarios in the ap
 Check out the [Event Listeners](../features/event-listeners) docs to know more about events emitted by the SDK.
 
 ```js
-console.log('ON_ERROR listener Code Snippet');
+// Subscribing to Error updates
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onErrorListener);
+
+const onErrorListener = (error) => {
+  setLoading(false);
+
+  console.log(`${error?.code} ${error?.description}`);
+};
 ```
+
+### Join Room
+
+After adding all required event listeners, You need to create an `HMSConfig` instance and use that instance to call the `join` method of `HMSSDK` instance to join a room.
+
+> **Note:** An `App token` is required to authenticate a room join request from your client-side app. Please ensure to set the `AUTH_TOKEN` variable value with correct "Auth Token" by fetching it from your dashboard. Check [fetch token to join a room section](#fetch-token-to-join-the-room) for more information. <br/> Read more about authentication and tokens in [this guide](../foundation/security-and-tokens)
+
+You can learn more about joining the room from [Join Room](../features/join) docs.
+
+```js
+// Effect to handle HMSSDK initialization and Listeners Setup 
+useEffect(() => {
+  const joinRoom = async () => {
+    setLoading(true);
+
+    /**
+     * creating {@link HMSSDK} instance to join room
+     * For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/features/join#join-a-room | Join a Room}
+     */
+    const hmsInstance = await HMSSDK.build();
+
+    ...
+
+    /**
+     * Joining Room. For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/features/join#join-a-room | Join a Room}
+     * 
+     * Please make sure you are passing correct AUTH_TOKEN to join method
+     */
+    hmsInstance.join(new HMSConfig({ authToken: AUTH_TOKEN, username: USERNAME }));
+  };
+
+  joinRoom();
+
+  // When effect unmounts for any reason, We are calling leave function
+  return () => {
+    handleRoomLeave();
+  };
+}, []);
+```
+
+In above code snippet, We have the same `useEffect` hook which initializes the `HMSSDK`, after initialization and adding listeners it creates an `HMSConfig` object with `AUTH_TOKEN` and `USERNAME` and passes the created config object to `join` method of `HMSSDK` instance.
 
 ### Render Video in a Tile
 
@@ -351,16 +1184,135 @@ To display a video track, You can simply get the `trackId` of the Video Tracks i
 Check the [Render Video](../features/render-video) guide for more information.
 
 ```js
-console.log('Tile Rendering Code Snippet');
+// `_renderItem` function returns a Tile UI for each item which is `PeerTrackNode` object
+const _renderItem = ({ item }) => {
+  const {peer, track} = item;
+
+  return (
+    <View style={{ height: 300, margin: 8, borderRadius: 20, overflow: 'hidden', backgroundColor: '#A0C3D2' }}>
+      {/* Checking if we have "HmsView" component, valid trackId and "track is not muted" */}
+      {HmsView && track && track.trackId && !track.isMute() ? (
+        // To Render Peer Live Videos, We can use HMSView
+        // For more info about its props and usage, Check out {@link https://www.100ms.live/docs/react-native/v2/features/render-video | Render Video}
+        <HmsView
+          trackId={track.trackId}
+          mirror={peer.isLocal}
+          style={{ width: '100%', height: '100%' }}
+        />
+      ) : (
+        // Render Peer name Initials
+        <View style={{ flex: 1, alignItems:'center', justifyContent: 'center' }}>
+          <View style={{
+            width: 100, height: 100, borderRadius: 50,
+            alignItems:'center', justifyContent: 'center',  backgroundColor: '#FD8A8A'
+          }}>
+            <Text style={{ textAlign: 'center', fontSize: 28, fontWeight: 'bold', textTransform: 'uppercase' }}>
+              {peer.name.split(' ').map(item => item[0]).join('')}
+            </Text>
+          </View>
+        </View>
+      )}
+    </View>
+  );
+};
 ```
+
+In the above code snippet, We have `_renderItem` function which returns Tile UI. Inside Tile UI, we are rendering `HmsView` if we have valid track otherwise Peer name Initials.
 
 ### Render Video Tiles for Peers
 
 You can create a **list of `PeerTrackNode` objects** (mentioned in [Render Video in a Tile](#render-video-in-a-tile) step) for each peer and track combination and then use this list to render Tiles for all the `PeerTrackNodes` objects. We recommend using [FlatList](https://reactnative.dev/docs/flatlist) component to render multiple Tiles, this ensures uniques Tiles are created for each trackId.
 
 ```js
-console.log('Flatlist with list of PeerTrackNodes Code Snippet');
+const [peerTrackNodes, setPeerTrackNodes] = useState([]); // Use this state to render Peer Tiles
+
+...
+
+const _keyExtractor = (item) => item.id;
+
+// `_renderItem` function returns a Tile UI for each item which is `PeerTrackNode` object
+const _renderItem = ({ item }) => { ... };
+
+...
+
+// Rendering list of Peers
+<FlatList
+  centerContent={true}
+  data={peerTrackNodes}
+  showsVerticalScrollIndicator={false}
+  keyExtractor={_keyExtractor}
+  renderItem={_renderItem}
+  contentContainerStyle={{
+    paddingBottom: 120,
+    flexGrow: Platform.OS === 'android' ? 1 : undefined,
+    justifyContent: Platform.OS === 'android' ? 'center' : undefined,
+  }}
+/>
 ```
+
+In the above code snippet, We are rendering `FlatList` for a list of `PeerTrackNode` objects.
+
+### Leaving the Room
+
+You can leave the meeting once you are done with it. To leave the meeting you can call the `leave` method on `HMSSDK` instance.
+
+You can learn more about leave the room in [Leave Room](../features/leave) docs.
+
+```js
+const handleRoomLeave = async () => {
+  try {
+    const hmsInstance = hmsInstanceRef.current;
+
+    if (!hmsInstance) {
+      return Promise.reject('HMSSDK instance is null');
+    }
+    // Removing all registered listeners
+    hmsInstance.removeAllListeners();
+    
+    /**
+     * Leave Room. For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/features/leave | Leave Room}
+     */
+    const leaveResult = await hmsInstance.leave();
+    console.log('Leave Success: ', leaveResult);
+
+    /**
+     * Free/Release Resources. For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/features/release-resources | Release Resources}
+     */
+    const destroyResult = await hmsInstance.destroy();
+    console.log('Destroy Success: ', destroyResult);
+
+    // Removing HMSSDK instance
+    hmsInstanceRef.current = null;
+  } catch (error) {
+    console.log('Leave or Destroy Error: ', error);
+  }
+};
+
+...
+
+const handleRoomEnd = () => {
+  leaveRoom();
+
+  navigate('HomeScreen');
+};
+
+...
+
+<TouchableHighlight
+  onPress={handleRoomEnd}
+  underlayColor='#6e2028'
+  style={{
+    position: 'absolute', bottom: 40, alignSelf: 'center',
+    backgroundColor: '#CC525F',
+    width: 60, height: 60, borderRadius: 30,
+    alignItems: 'center', justifyContent: 'center',
+  }}
+>
+  <Text style={{ textAlign: 'center', color: '#ffffff', fontWeight: 'bold' }}>Leave Room</Text>
+</TouchableHighlight>
+```
+
+In the above code snippet, First we have `handleRoomLeave` function which calls `leave` and `destroy` methods. Then we have implementation of "Leave Room" button UI in Room meeting screen which eventually calls `handleRoomLeave` function.
 
 ### Test App
 
@@ -388,230 +1340,3 @@ You can download and check out the 100ms React Native deployed apps -
 🤖 Download the Sample Android App [here](https://appdistribution.firebase.dev/i/7b7ab3b30e627c35)
 
 📲 Download the Sample iOS App [here](https://testflight.apple.com/join/v4bSIPad)
-
-
--------------------------------------------------------------------------------------------------------------------------
-
-
-## Getting started
-
-Hello there! In this guide, we'll build a video conferencing application using our React Native SDK. We'll be using functional components with the powerful hooks provided by our SDK and build an app where you can have video call with your friends.
-
-## Prerequisites
-
-To get started you should be familiar with basics of [React Native](https://reactnative.dev/).
-
-## Installing the dependencies
-
-```bash section=InstallingTheDependencies sectionIndex=1
-npm install --save @100mslive/react-native-hms
-```
-
-## Permissions
-
-### For Android Permissions
-
-Add following permissions in `AndroidManifest.xml`
-
-```xml section=ForAndroidPermissions sectionIndex=1
-<uses-feature android:name="android.hardware.camera"/>
-
-<uses-feature android:name="android.hardware.camera.autofocus"/>
-
-<uses-permission android:name="android.permission.CAMERA"/>
-
-<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-
-<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
-
-<uses-permission android:name="android.permission.RECORD_AUDIO"/>
-
-<uses-permission android:name="android.permission.INTERNET"/>
-
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
-<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-<uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
-
-<uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
-
-<uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-
-<uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-```
-
-You will also need to request Camera and Record Audio permissions at runtime before you join a call or display a preview. Please follow [Android Documentation](https://developer.android.com/training/permissions/requesting#request-permission) for runtime permissions.
-
-### For iOS Permissions
-
-Add following lines in `Info.plist` file
-
-```xml section=ForIOSPermissions sectionIndex=1
-<key>NSCameraUsageDescription</key>
-<string>Please allow access to Camera to enable video conferencing</string>
-<key>NSMicrophoneUsageDescription</key>
-<string>Please allow access to Microphone to enable video conferencing</string>
-<key>NSLocalNetworkUsageDescription</key>
-<string>Please allow access to network usage to enable video conferencing</string>
-```
-
-## Concepts
-
--   Room: When we join a conference call, the participants are said to be in a video call room.
--   Peer: A participant in the video call. You are the local peer while others are remote peers.
--   Track: Media. There are two types of track a peer can have - audio and video.
-
-## Initializing the SDK
-
-Call the function given below to initialise the SDK
-
-```js section=InitializingTheSDK sectionIndex=1
-import { HMSSDK } from '@100mslive/react-native-hms';
-
-const hmsInstance = await HMSSDK.build();
-```
-
-This function will return the instance of HMSSDK that will be used for calling various functions and accessing data.
-
-## Add event listeners
-
-Add event listeners for all the events you want updates from such as onPreview, onJoin, onError etc. The actions can be found in HMSUpdateListenerActions class.
-
-The event handlers are the way of handling any update happening in hms. It is advised to attach all the event listeners so you don't miss any update.
-
-```js section=AddEventListeners sectionIndex=1
-import { HMSUpdateListenerActions } from 'react-native-hms';
-
-// instance acquired from build() method
-hmsInstance.addEventListener(
-    HMSUpdateListenerActions.ON_PREVIEW,
-    onPreview // function that will be called on Preview success
-);
-
-hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
-
-hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoin);
-```
-
-## Joining a room
-
-To join a room 3 fields are required:
-
--   `username`: The name of the user. This is the value that will be set on the peer object and be visible to everyone connected to the room.
--   `authToken`: A client-side token that is used to authenticate the user. You can read about how to generate this token [here](https://docs.100ms.live/react-native/v2/guides/token).
--   `userID`: A unique ID that will be used to identify user.
--   `roomID` (optional): The ID of the room that you wanna join
-
-```js section=JoinRoom sectionIndex=1
-import { HMSConfig } from 'react-native-hms';
-
-// instance acquired from build() method
-const HmsConfig = new HMSConfig({ authToken, userID, roomID, userName });
-
-hmsInstance.preview(HmsConfig); // to start preview
-// or
-hmsInstance.join(HmsConfig); // to join a room
-```
-
-## Leaving the room
-
-Before we go ahead with adding video, let us add a way to leave the room as well. We can call the leave method on hmsActions to leave the room.
-
-Once you're done with a call and want to exit, call leave on the HMSSDK instance you created to join it. Also you can always acquire instance of HMS using build() method.
-
-```js section=LeavingRoom sectionIndex=1
-hmsInstance.leave();
-```
-
-## Render video
-
-Let us next add a way to show a tile for every participant in the room. We use HmsView component to render video on screen. This component takes trackId and scaleType of HMSVideoTrack and renders the corresponding track. The prop scaleType can be selected from HMSVideoViewMode as required. We can also add mirror a boolean prop as true to flip videos horizontally. Here is a code snippet explaining the way to link a videoTrack to HmsView.
-
-```js section=RenderVideo sectionIndex=1
-import { HmsView, HMSVideoViewMode } from 'react-native-hms';
-
-const styles = StyleSheet.create({
-    hmsView: {
-        height: '100%',
-        width: '100%'
-    }
-});
-
-<HmsView
-    style={styles.hmsView}
-    trackId={trackId}
-    mirror={true}
-    scaleType={HMSVideoViewMode.ASPECT_FILL}
-/>;
-```
-
-There are 2 types of Peers - a localPeer & remotePeers. To extract trackId from peers we can use following code snippet.
-
-```js section=RenderVideo sectionIndex=2
-const localTrackId = hmsInstance.localPeer.videoTrack.trackId;
-
-const remoteTrackId = hmsInstance.remotePeers[index].videoTrack.trackId;
-```
-
-These track IDs can directly be passed to HmsView component
-
-> A Pro tip: for fastest updates we can use ON_PEER_UPDATE and ON_TRACK_UPDATE listeners, these listeners get updated localPeer and remotePeers whenever there is any event related to these values.
-
-```js section=RenderVideo sectionIndex=3
-HmsInstance.addEventListener(HMSUpdateListenerActions.ON_PEER_UPDATE, onPeerListener);
-
-HmsInstance.addEventListener(HMSUpdateListenerActions.ON_TRACK_UPDATE, onTrackListener);
-
-const onPeerListener = ({
-    peer,
-    type,
-}: {
-    peer: HMSPeer;
-    type: HMSPeerUpdate;
-}) => {
-  // gets triggered when peer leaves, joins, peer's audio or video is muted, starts or stops speaking, role is changed or becomes dominant speaker.
-  // use these objects to update your local and remote peers.
-};
-
-const onTrackListener = ({
-    track,
-    peer,
-    type,
-}: {
-    track: HMSTrack;
-    peer: HMSPeer;
-    type: HMSTrackUpdate;
-}) => {
-  // gets triggered when track is added, removed, muted, unmuted, degraded and restored back.
-  // use these objects to update your local and remote peers.
-};
-```
-
-## Mute/Unmute local Audio/Video tracks
-
-Mute is something that applies to both audio and video. When you mute audio, you can't be heard by other people. When you mute video, you will not be broadcasting your video to other people.
-
-It can be invoked only on local (you) peers' audio or video tracks.
-
-You get a reference to your own local peer from localPeer on HMSSDK instance.
-
-```js section=MuteVideo sectionIndex=1
-// instance acquired from build() method
-
-hmsInstance.localPeer.localAudioTrack().setMute(true); // audio track
-
-hmsInstance.localPeer.localVideoTrack().setMute(true); // video track
-```
-
-
-### [Github Repo](https://github.com/100mslive/react-native-hms/)
-You can checkout the 100ms React Native SDK Github repo which also contains a fully fledged [Example app implementation here](https://github.com/100mslive/react-native-hms/) 
-
-
-
-### [Example App](https://github.com/100mslive/react-native-hms/tree/develop/example)
-
-In the [100ms Example App](https://github.com/100mslive/react-native-hms/tree/main/example) we have shown how to setup the various listeners, what data to store in the redux and what all features you can implement.
-
-We have also implemented multiple views which are commonly used. Checkout the [videos & relevant code in the Example app](https://github.com/100mslive/react-native-hms/tree/main/example#additional-features).
