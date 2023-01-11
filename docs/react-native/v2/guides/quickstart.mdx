@@ -40,34 +40,29 @@ Once you have the prerequisites, follow the steps below to create a React Native
 
 2. Run below command to create React Native app:
 
-  ```bash
-  npx react-native init HMSSampleApp --version 0.68.5 --npm && cd ./HMSSampleApp
-  ```
+    ```bash
+    npx react-native init HMSSampleApp --version 0.68.5 --npm && cd ./HMSSampleApp
+    ```
 
 3. Once the app is created, open it in VS code
 
 4. Test run your app
+    
+    <Tabs id="test-run-sample-app" items={['iOS', 'Android']} />
 
+    <Tab id="test-run-sample-app-0">
+      ```bash tab=iOS
+      npx react-native run-ios --simulator="iPhone 14"; npx react-native start
+      ```
+    </Tab>
 
-  <Tabs id="test-run-sample-app" items={['iOS', 'Android']} />
+    <Tab id="test-run-sample-app-1">
+      ```bash tab=Android
+      npx react-native run-android; npx react-native start
+      ```
+    </Tab>
 
-  <Tab id="test-run-sample-app-0">
-
-    ```bash tab=iOS
-    npx react-native run-ios --simulator="iPhone 14"; npx react-native start
-    ```
-
-  </Tab>
-
-  <Tab id="test-run-sample-app-1">
-
-    ```bash tab=Android
-    npx react-native run-android; npx react-native start
-    ```
-
-  </Tab>
-
-  or follow Run instructions printed in terminal
+    or follow Run instructions printed in terminal
 
 
 ### Install the 100ms React Native library
@@ -105,7 +100,7 @@ Follow the instructions in one of the tabs below based on the target platform yo
 
 <Tab id="sample-app-0">
 
-#### Native file changes
+##### Native file changes
 
 1. Allow camera, recording audio and internet permissions by adding the below snippet to the `info.plist` file.
 
@@ -123,7 +118,7 @@ Follow the instructions in one of the tabs below based on the target platform yo
 2. Add the target platform version as (`platform :ios, '12.0'`) in "ios/Podfile."
 
 
-#### Build and run the app
+##### Build and run the app
 
 Once you've made the above changes, your app is ready for testing. You can build the app and run it in a simulator.
 
