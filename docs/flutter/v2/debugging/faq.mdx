@@ -10,7 +10,7 @@ If you are looking for generic frequently asked questions about the 100ms platfo
 
 ## Flutter version compatibility
 
-HMSSDK works with flutter 2.10.x or above.
+HMSSDK works with flutter 3.3.x or above.
 
 ## Not getting event updates after hot reload/restart
 
@@ -53,14 +53,20 @@ Please find the implementations below:
 To listen to the room updates please attach `HMSUpdateListener` as:
 
 ```dart
-hmsSDK.addUpdateListener(updateListener);
+class Meeting implements HMSUpdateListener {
+    Meeting(){
+        hmsSDK.addUpdateListener(updateListener);
+    }
+    ...
+}
 ```
 
 You can find more details about HMSUpdateListener [here](../features/update-listeners)
 
-## Join room with muted audio/video
 
-User can join the room with muted audio/video by default.Please find the docs [here](../features/join-with-muted-audio-video)
+## Join Room with Muted Audio/Video
+
+User can join the room with muted audio/video by default. Please find the docs [here](../features/join-with-muted-audio-video).
 
 ## Get `onPeerUpdate` in preview
 
@@ -80,15 +86,21 @@ You can find more details about HMSUpdateListener [here](../features/update-list
 
 Yes,please find the link [here](/server-side/v2/Rooms/create-via-api)
 
-## Screenshare not working in the background on iOS?
+## Receiving too many logs from SDK 
+Logs can be turned OFF using the `hmsLogSettings` parameter of `HMSSDK`. More info about this can be found [here](../features/error-handling#setting-log-levels-in-sdk) 
 
-On iOS 16, if you start Screenshare from an iPhone/iPad running iOS 16 version, then if the app is in foreground then Screenshare will work fine. But if you start Screenshare & background the app, then Screenshare pauses as the SDK is unable to send video frames using IPC. This results in other peers in room seeing stuck frame. We are actively working to resolve this issue. On iOS 15 or below, this issue does not exists.
+## Do I need to do anything to handle poor internet connection?
+Not much, just turn on a flag in dashboard, and show a proper UI when a video gets degraded/unsubscribed. More details [here](../features/auto-video-degrade-restore).
 
-Note that viewing Screenshare on iOS 16 devices is unaffected by this & works fine.
 
-## Receiving too many logs from SDK
+## How do I implement Raise Hand, polls in application ?
+You can do using [peer metadata](../advanced-features/peer-metadata-update#use-cases).
 
-Logs can be turned OFF using the `hmsLogSettings` parameter of `HMSSDK`.More info about this can be found [here](../features/error-handling#setting-log-levels-in-sdk)
+## Why do I see videos getting stuck or frozen?
+If you have enabled subscribe degradation from the dashboard, the SDK might go in the degradation mode on poor internet connection turning off some videos to ensure good call quality. When this is done, a flag on the track will be turned on to let the UI know. The UI should treat it similar to the track turning off for purpose of displaying avatar etc. More details [here](../features/auto-video-degrade-restore).
+
+## What is the maximum allowed duration for a session?
+The maximum allowed duration for a session on the 100ms platform is 12 hours.
 
 ## I want to suggest a new feature.
 

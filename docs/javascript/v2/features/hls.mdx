@@ -127,7 +127,7 @@ function renderHLS({ hlsUrl }) {
     const hlsState = hmsStore.getState(selectHLSState);
     const hlsUrl = hlsState.variants[0]?.url;
     const video = document.getElementById('video');
-    const browserHasNativeHLSSupport = videoRef.current.canPlayType(
+    const browserHasNativeHLSSupport = video.canPlayType(
         'application/vnd.apple.mpegurl'
     );
     if (Hls.isSupported()) {
@@ -180,6 +180,77 @@ function HLSView({ hlsUrl }) {
 </Tab>
 
 > **Note:** If you wish to customize the stream, please check [this guide](./../foundation/live-streaming#step-4-customize-the-stream) for more information.
+
+## Changing the quality of Stream(Hls.js)
+
+You may want to change the quality layer of the stream based on user input or some other criteria. Each library handles this differently.
+Below we mention an example snippet on how to do it if you choose to use hls.js. Please refer to the respective documentations of the library
+you use.
+
+<Tabs id="hlsChangeQuality" items={['JavaScript', 'React']} />{' '}
+
+<Tab id='hlsChangeQuality-0'>
+
+```js
+import Hls from 'hls.js';
+
+let hls = null;
+const video = document.getElementById('video');
+const browserHasNativeHLSSupport = video.canPlayType('application/vnd.apple.mpegurl');
+if (Hls.isSupported()) {
+    hls = new Hls();
+    hls.loadSource(hlsUrl);
+    hls.attachMedia(video);
+    console.log('Available quality levels in current stream', hls.levels);
+    setCurrentLevel(hls.levels[0]); //set the first level.
+}
+
+function setCurrentLevel(currentLevel) {
+    // make sure we are choosing the right level by checking the
+    // height and width.
+    const newLevel = hls.levels.findIndex(
+        (level) => level.height === currentLevel.height && level.width === currentLevel.width
+    );
+    // set it.
+    hls.currentLevel = newLevel;
+}
+```
+
+</Tab>
+
+<Tab  id='hlsChangeQuality-1'>
+
+```jsx
+import Hls from 'hls.js';
+
+let hls = null;
+function HLSView({ hlsUrl }) {
+    const videoRef = useRef(null);
+    useEffect(() => {
+        if (videoRef.current && hlsUrl) {
+            if (Hls.isSupported()) {
+                hls = new Hls();
+                console.log('Available quality levels in current stream', hls.levels);
+                setCurrentLevel(hls.levels[0]); //set the first level.
+            }
+        }
+    }, [hlsUrl]);
+
+    function setCurrentLevel(currentLevel) {
+        // make sure we are choosing the right level by checking the
+        // height and width.
+        const newLevel = hls.levels.findIndex(
+            (level) => level.height === currentLevel.height && level.width === currentLevel.width
+        );
+        // set it.
+        hls.currentLevel = newLevel;
+    }
+
+    return <video ref={videoRef} autoPlay controls></video>;
+}
+```
+
+</Tab>
 
 ## Testing with the Dashboard web-app
 

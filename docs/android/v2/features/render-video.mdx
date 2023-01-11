@@ -12,13 +12,17 @@ The latest HMSVideoView SDK version is:
 <Content alias="androidSdkVersionShield" />
 
 
-```json{5-8}:build.gradle section=AddSDKDependencies sectionIndex=1
+```json{}:build.gradle section=AddSDKDependencies sectionIndex=1
 dependencies {
  def hmsVersion = "x.x.x"
  implementation "live.100ms:android-sdk:$hmsVersion"    // Essential base sdk
  implementation "live.100ms:video-view:$hmsVersion" // HMSVideoView
 }
 ```
+
+## Minimum Requirements
+
+-   SDK version 2.5.3 or higher
 
 
 In XML layouts it would look like
@@ -73,6 +77,24 @@ hmsVideoView.removeTrack()
 ```
 
 Until you call `removeTrack()` the video frame is being streamed over the device's data.
+
+### High Quality Video Frame Capture
+You can get a high quality bitmap object of the frame getting rendered on the HMSVideoView
+
+```kotlin
+hmsVideoView.captureBitmap(onBitmap: (Bitmap?) -> Unit, scale: Float = 1.0f)
+```
+
+### Disabling Auto Simulcast
+
+HMSVideoView has an automatic simulcast layer selection capability which is enabled if adaptive bitrate is enabled. You can check more about it [here](https://www.100ms.live/docs/android/v2/foundation/adaptive-bitrate) 
+
+It will select a layer that best matches the current view frame size and reacts to frame updates. In case manual layer selection is preferred set `disableAutoSimulcastLayerSelect` property to `true`. By default, the track layer is set to `high`.
+
+```kotlin
+hmsVideoView.disableAutoSimulcastLayerSelect(true)
+```
+
 
 ### Special cases for videos in RecyclerViews
 

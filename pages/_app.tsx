@@ -1,15 +1,15 @@
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { DefaultSeo } from 'next-seo';
+import dynamic from 'next/dynamic';
+import { NextPage } from 'next';
+import { AppProps } from 'next/app';
+import NProgress from 'nprogress';
+import SEO from '../next-seo.config';
+import { currentUser } from '../lib/currentUser';
 import '@/styles/nprogress.css';
 import '@/styles/theme.css';
 import 'inter-ui/inter.css';
-import React, { useEffect, useState } from 'react';
-import { NextPage } from 'next';
-import { DefaultSeo } from 'next-seo';
-import { AppProps } from 'next/app';
-import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
-import NProgress from 'nprogress';
-import { currentUser } from '../lib/currentUser';
-import SEO from '../next-seo.config';
 
 declare global {
     interface Window {
@@ -18,7 +18,7 @@ declare global {
 }
 
 const HMSThemeProvider = dynamic(
-    () => import("@100mslive/react-ui").then((mod) => mod.HMSThemeProvider),
+    () => import('@100mslive/react-ui').then((mod) => mod.HMSThemeProvider),
     { ssr: true }
 );
 
@@ -39,13 +39,11 @@ const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
         router.events.on('routeChangeError', () => NProgress.done());
     }, []);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const getLayout = (Component as any)?.getLayout || ((page) => page)
     return (
         <>
             <DefaultSeo {...SEO} />
             <HMSThemeProvider>
-                {getLayout(<Component {...pageProps} key={router.asPath} />)}
-                {/* <Component {...pageProps} key={router.asPath} /> */}
+                <Component {...pageProps} key={router.asPath} />
             </HMSThemeProvider>
         </>
     );

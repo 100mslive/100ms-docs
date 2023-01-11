@@ -1,66 +1,143 @@
 ---
-title: Peer Metadata Update
+title: Persistent Participant States (Peer Metadata)
 nav: 3.993
 ---
 
-Looking for persistent state that can be set on a peer and updated anytime, for everyone in the room? Peer metadata it is.
+Looking for a persistent state that can be set on a peer and updated anytime, for everyone in the room? Peer metadata it is.
+
+Metadata can be set initially in the `HMSConfig` object that's passed into the join method. This can be used to display profile pictures as the user's avatar in meetings. You can imagine metadata as a persistent object attached to the peer which has more details about them.
+
+Peer Metadata can be changed after joining the Room as well. 
+
+To set metadata before joining the room, pass the `metadata` property to `HMSConfig` used to Join the Room.
+
+```js
+const config = new HMSConfig({
+                  authToken: 'eyJH5c...',
+                  username: 'John Appleseed',
+                  metadata: '{"avatar": "location/on/amazon/storage"}'
+                });
+```
+
+This section will show you how to:
+1. [Get Peer Metadata](#get-peer-metadata).
+2. [How to respond when a remote peer changes its metadata](#how-to-listen-to-updates-when-metadata-of-any-peer-is-updated).
+3. [How to set a peer's metadata](#set-peer-metadata).
 
 
-Metadata can be set initially in the `HMSConfig` object that's passed into the join method and updated post join by
-following the API below. You can imagine metadata as a persistent object attached to the peer which has more details about
-them.
+## Get Peer Metadata
+
+Peer Metadata is available on `HMSPeer` object of that peer. You can read the `metadata` property on any `HMSPeer` instance to get metadata of that peer.
+
+```js
+// Getting Local Peer object
+const localPeer = await hmsInstance.getLocalPeer();
+
+// Getting "metadata" of local peer
+const localPeerMetaData = localPeer.metadata;
+```
 
 
-We'll explain the API using an example of implementing raise hand. For this, we'll use the below interface for metadata -
+## How to listen to updates when metadata of any peer is updated
 
-```ts
-interface CustomMetadata {
-    isHandRaised: boolean;
+Whenever a peers' metadata is updated, `HMSUpdateListenerActions.ON_PEER_UPDATE` event is emitted with `HMSPeerUpdate.METADATA_CHANGED` update type. You can subscribe to this event and update the UI for updated peer.
+
+```js
+const onPeerListener = (data: { peer: HMSPeer; type: HMSPeerUpdate; }) => {
+  const { peer, type } = data;
+
+  if (type === HMSPeerUpdate.METADATA_CHANGED) {
+    // Metadata for the {peer} is changed
+    // Update UI for the {peer}
+
+    // Parsing the updated Metadata
+    const metadata = JSON.parse(peer.metadata);
+  }
+};
+
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_PEER_UPDATE, onPeerListener);
+```
+
+
+## Set Peer Metadata
+
+You can use `changeMetadata` method available on `HMSSDK` instance to change the metadata of yourself (Local Peer).
+
+```js
+try {
+  const metadata = { zodiacSign: "virgo" };
+
+  const metadataString = JSON.stringify(metadata);
+
+  hmsInstance.changeMetadata(metadataString);
+  console.log('Change Metadata Success');
+} catch (error) {
+  console.log('Change Metadata Error: ', error);
 }
 ```
 
-## Getting and Setting Metadata
 
-Note that `peer.metadata` is a string, it can be used to keep a stringified JSON. 
-Metadata update post join can be achieved by calling `hmsInstance.changeMetadata(metadata)` 
+## Use cases 
 
-The below example shows implementing a toggle raise hand function for the local peer.
+### Hand Raise
 
-```ts
-async function toggleRaiseHand() {
-    const metadata = JSON.parse(hmsInstance.localPeer?.metadata);
-    const newMetadata = JSON.stringify({...parsedMetadata, isHandRaised: !metadata.isHandRaised});
-    await hmsInstance.changeMetadata(newMetadata);
+This is a very common requirement where the people attending a webinar or online class wish to ask a question. They can let the
+speaker know by raising their hands in the application similar to what they would have done in an offline event.
+
+Let's understand this with a diagram:
+
+![hand-raise](/docs/v2/flutter-raise-hand-flowchart.png)
+
+Let's check the implementation step-by-step:
+
+<div className="steps-container">
+
+#### PeerA changes Metadata
+
+Peer A calls `changeMetadata` with metadata as -
+
+```js
+try {
+  const metadata = { isHandRaised: true };
+
+  const metadataString = JSON.stringify(metadata);
+
+  hmsInstance.changeMetadata(metadataString);
+  console.log('Change Metadata Success');
+} catch (error) {
+  console.log('Change Metadata Error: ', error);
 }
 ```
 
+#### All the peers receives Metadata update
 
-## Peer Metadata Update Notification
+As soon as `changeMetadata` method call in above step is successful, All the peers in the room will get `HMSUpdateListenerActions.ON_PEER_UPDATE` event with `HMSPeerUpdate.METADATA_CHANGED` update type.
 
-Once the metadata is updated, for all the peers `onPeerUpdate` event will be triggered where the update value will be of type `HMSPeerUpdate.METADATA_CHANGED`
+Let's see how we can update the UI using this:
 
+```js
+const onPeerListener = (data: { peer: HMSPeer; type: HMSPeerUpdate; }) => {
+  const { peer, type } = data;
 
-```ts
-const onPeerListener = ({
-    peer,
-    type,
-  }: {
-    peer: HMSPeer;
-    type: HMSPeerUpdate;
-  }) => {
-    if (type === HMSPeerUpdate.METADATA_CHANGED) {
-      const metadata = JSON.parse(peer.metadata);
-      if (metadata.isHandRaised && !peer.isLocal) {
-        toast(`${peer.name} raised their hand.`);
-      }  
-    }
-  };
+  if (type === HMSPeerUpdate.METADATA_CHANGED) {
+    // We can get the metadata from `HMSPeer` object
+
+    // Parsing the updated Metadata
+    const metadata = JSON.parse(peer.metadata);
+
+    // Metadata for the {peer} is changed, Update Hand Raised UI for the {peer}
+    console.log(metadata.isHandRaised);
+  }
+};
+
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_PEER_UPDATE, onPeerListener);
 ```
 
+</div>
 
-## Ideas
+### Polls
 
--   Implementing raise hand
--   Multiplayer games like chess, scribble, quizzes etc.
--   Store extra information such as profile picture for every peer which can be updated mid call
+We can use peers' `metadata` property to implement polls similar to what we did in above implementation.
 
+
+There are many more use cases which can be implemented using peer metadata. Have any questions regarding the use cases please reach out to us [here](https://100ms.live/discord)

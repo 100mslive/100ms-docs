@@ -33,7 +33,7 @@ curl --location --request GET 'https://api.100ms.live/v2/sessions' \
                     "session_id": "631a0fa23e3d9fdb00832596",
                     "name": "asdas",
                     "role": "host",
-                    "user": "16a868ef-670d-4ad2-ac62-a6966f608d8a",
+                    "user_id": "Batch1-student1",
                     "joined_at": "2022-09-08T15:52:02.194Z",
                     "left_at": "2022-09-08T15:52:04.009Z"
                 }
@@ -56,7 +56,7 @@ curl --location --request GET 'https://api.100ms.live/v2/sessions' \
                     "session_id": "63172c2d3e3d9fdb008322e1",
                     "name": "Nixon K",
                     "role": "backstage",
-                    "user": "ba71cf83-dfbf-4a41-b9e6-945ed12d237c",
+                    "user_id": "Batch1-student10",
                     "joined_at": "2022-09-06T11:17:01.816Z",
                     "left_at": "2022-09-06T11:17:03.643Z"
                 }
@@ -75,8 +75,8 @@ curl --location --request GET 'https://api.100ms.live/v2/sessions' \
 
 | Name          | Type      | Description                                                                                                                                                             | Required |
 | :------------ | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| active <br/>  | `boolean` | Flag to fetch the list of active room sessions. <br/><br/>`Default`: true, <br/>`Allowed values`: true, false                                                                | No       |
-| room_id <br/> | `string`  | Fetch the list of sessions created in the room specified. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                                                               | No       |
+| active <br/>  | `boolean` | Flag to fetch the list of active room sessions. <br/><br/>`Default`: true, <br/>`Allowed values`: true, false                                                           | No       |
+| room_id <br/> | `string`  | Fetch the list of sessions created in the room specified. <br/><br/>**Example**: `627cda81ab4f3b56a077dc33`                                                             | No       |
 | after <br/>   | `string`  | Check for sessions started with a timestamp greater than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.s+z.                                               | No       |
 | before <br/>  | `string`  | Check for sessions started with a timestamp less than or equal to "after" <br/><br/>`Format`: YYYY-MM-DDTHH:mm:ss.s+z.                                                  | No       |
 | limit <br/>   | `int`     | Determines the number of session objects to be included in response. <br/><br/>`Default`: 10, <br/>`Allowed values`: **Min**: 10, **Max**: 100                          | No       |
