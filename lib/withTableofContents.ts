@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import slugify from '@sindresorhus/slugify'
-
-
-
 /**
  * Generates a table of contents by parsing a node tree
  * @param [toc] An array to push table contents to.
