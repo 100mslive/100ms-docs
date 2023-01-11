@@ -25,7 +25,7 @@ In this section, We'll walk through what the above code does.
 
 <div className="steps-container">
 
-### Step 1: Handle device permissions
+### Handle device permissions
 
 We need permission from the user to access the media from the user's device. We must urge the user to grant permission to access camera, microphone, and bluetooth devices. We use the [react-native-permissions](https://www.npmjs.com/package/react-native-permissions) library that provides a cross-platform (iOS, Android) API to request permissions and check their status.
 
@@ -35,7 +35,7 @@ Please ensure to add permissions in the `AndroidManifest.xml` file for android a
 console.log('Permissions Code Snippet here');
 ```
 
-### Step 2: Implement Join screen
+### Implement Join screen
 
 This section will help you create the join screen user interface. To keep it simple for the quickstart, we have not created many UI elements; you can refer to the [sample app implementation](https://github.com/100mslive/react-native-hms/blob/develop/sample-apps/rn-quickstart-app/src/screens/Welcome/index.tsx) for a complete Preview/Join user interface.
 
@@ -43,7 +43,7 @@ This section will help you create the join screen user interface. To keep it sim
 console.log('Join button Code Snippet here');
 ```
 
-### Step 3: Implement Room screen
+### Implement Room screen
 
 100ms SDK provides various events, the client apps can subscribe to these events to get updates happening in the room after a user has joined.
 
@@ -58,7 +58,7 @@ You can check the below code snippet to create UI to show the video tiles of loc
 console.log('Room screen Initialization Code Snippet');
 ```
 
-### Step 4: Listen to Join and Peer Updates
+### Listen to Join and Peer Updates
 
 The 100ms SDK emits:
 
@@ -73,7 +73,7 @@ Check out the [Event Listener Enums](../features/event-listeners-enums#hmspeerup
 console.log('on_JOIN and ON_PEER_UPDATE listeners Code Snippet');
 ```
 
-### Step 5: Listen to Track Updates
+### Listen to Track Updates
 
 The 100ms SDK emits `HMSUpdateListenerActions.ON_TRACK_UPDATE` event when any change happens for any Track in the Room. Our application must subscribe to this event to get the track updates.
 
@@ -83,7 +83,7 @@ Check out the [Event Listener Enums](../features/event-listeners-enums#hmstracku
 console.log('ON_TRACK_UPDATE listeners Code Snippet');
 ```
 
-### Step 6: Listen to Other Updates
+### Listen to Other Updates
 
 The 100ms SDK emits various other events to handle different scenarios in the app. For example, you can use `HMSUpdateListenerActions.ON_ERROR` event to get errors from `HMSSDK`.
 
@@ -93,7 +93,7 @@ Check out the [Event Listeners](../features/event-listeners) docs to know more a
 console.log('ON_ERROR listener Code Snippet');
 ```
 
-### Step 7: Render Video in a Tile
+### Render Video in a Tile
 
 We are taking use of `PeerTrackNode` class to render video and avatar of peers. Let's take a look at interface for `PeerTrackNode` class -
 
@@ -113,7 +113,7 @@ Check the [Render Video](../features/render-video) guide for more information.
 console.log('Tile Rendering Code Snippet');
 ```
 
-### Step 8: Render Video Tiles for Peers
+### Render Video Tiles for Peers
 
 You can create a **list of `PeerTrackNode` objects** (mentioned in [Render Video in a Tile](#render-video-in-a-tile) step) for each peer and track combination and then use this list to render Tiles for all the `PeerTrackNodes` objects. We recommend using [FlatList]() component to render multiple Tiles, this ensures uniques Tiles are created for each trackId.
 
@@ -121,7 +121,7 @@ You can create a **list of `PeerTrackNode` objects** (mentioned in [Render Video
 console.log('Flatlist with list of PeerTrackNodes Code Snippet');
 ```
 
-### Step 9: Test App
+### Test App
 
 You can refer to the [test the app section](#test-the-app) to test your app for android or iOS platform.
 
