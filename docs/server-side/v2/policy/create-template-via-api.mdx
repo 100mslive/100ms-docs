@@ -442,13 +442,14 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 ## roles object
 
-| Name            | Type     | Description                                                                                                                                                                                               | Required |
-| --------------- | :------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name            | `string` | Alias for the role associated with a particular template.                                                                                                                                                 | No       |
-| publishParams   | `object` | Publish parameters for this role. <br/><br/>Object of type [publishParams](#publishparams-object) with the collection of objects such as `allowed`, `audio`, `video`, `screen`, etc                       | No       |
-| subscribeParams | `object` | Subscribe parameters for this role. <br/><br/>Object of type [subscribeParams](#subscribe-object) with a mix of arguments and objects like `subscribeToRoles`, `maxSubsBitRate`, & `subscribeDegradation` | No       |
-| permissions     | `object` | Permissions for this role. <br/><br/>Object of type [permission](#permissions-object) with collection of objects like `browserRecordings`, `rtmpDestinations`, & `hlsDestinations`.                       | No       |
-| priority        | `int`    | Priority of the role for subscribing/publishing. <br/><br/>Priority will determine the order in which the roles will be degraded. A lower number represents a higher priority.                            | No       |
+| Name            | Type     | Description                                                                                                                                                                                                                                                  | Required |
+| --------------- | :------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| name            | `string` | Alias for the role associated with a particular template.                                                                                                                                                                                                    | No       |
+| publishParams   | `object` | Publish parameters for this role. <br/><br/>Object of type [publishParams](#publishparams-object) with the collection of objects such as `allowed`, `audio`, `video`, `screen`, etc                                                                          | No       |
+| subscribeParams | `object` | Subscribe parameters for this role. <br/><br/>Object of type [subscribeParams](#subscribe-object) with a mix of arguments and objects like `subscribeToRoles`, `maxSubsBitRate`, & `subscribeDegradation`                                                    | No       |
+| permissions     | `object` | Permissions for this role. <br/><br/>Object of type [permission](#permissions-object) with collection of objects like `browserRecordings`, `rtmpDestinations`, & `hlsDestinations`.                                                                          | No       |
+| priority        | `int`    | Priority of the role for subscribing/publishing. <br/><br/>Priority will determine the order in which the roles will be degraded. A lower number represents a higher priority.                                                                               | No       |
+| maxPeerCount    | `int`    | The number of peers allowed for a particular role in a session. <br/><br/> `Allowed values`: **Min**: 1, **Max**: &lt;no limit&gt;. <br/> `Default`: 0 (unlimited). <br/><br/> **Note**: If set as `-1` then no peer will be allowed to join with that role. | No       |
 
 ### publishParams object
 
