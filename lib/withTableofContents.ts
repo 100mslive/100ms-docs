@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { slugify } from "./mdxUtils"
+
 /**
  * Generates a table of contents by parsing a node tree
  * @param [toc] An array to push table contents to.
  */
-
-const slugify = (text) => text.toString().toLowerCase().replace(/\s+/g, "-").replace(/[^\w\-]+/g, "").replace(/\-\-+/g, "-").replace(/^-+/, "").replace(/-+$/, "")
-
 
 const withTableofContents = (toc?: any[]) => () => (tree) => {
     // @ts-ignore
