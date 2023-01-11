@@ -1,9 +1,13 @@
 ---
 title: Call Stats
-nav: 3.20
+nav: 3.26
 ---
 
-Sometimes you need a way to capture certain metrics related to a call. This may be helpful if you want to tailor the experience to your users or debug issues. Typical metrics of interest are audio/video bitrate, round trip time, total consumed bandwidth and packet loss. 100ms SDK provides this data via dedicated delegate callbacks found in `HMSUpdateListener`. These will be called with a fixed interval of one second after a room has been joined. You can get stats on a per track basis ( `onRemoteAudioStats`) or as an overall summary (`onRTCStats`) 
+Sometimes you need a way to capture certain metrics related to a call. This may be helpful if you want to tailor the experience to your users or debug issues. Typical metrics of interest are audio/video bitrate, round trip time, total consumed bandwidth and packet loss.
+
+100ms SDK provides this data via dedicated delegate callbacks found in `HMSStatsListener`. These will be called with a fixed interval of one second after a room has been joined. You can get stats on a per-track basis ( `onRemoteAudioStats`) or as an overall summary (`onRTCStats`) 
+
+## HMSStatsListener callbacks
 
 Here is the full list of callbacks:
 
@@ -15,16 +19,83 @@ void onLocalAudioStats({required HMSLocalAudioStats hmsLocalAudioStats, required
 void onLocalVideoStats({required HMSLocalVideoStats hmsLocalVideoStats, required HMSLocalVideoTrack track, required HMSPeer peer})
 
 /// This callback provides stats for a remote audio track.
- void onRemoteAudioStats({required HMSRemoteAudioStats hmsRemoteAudioStats, required HMSRemoteAudioTrack track, required HMSPeer peer})
+void onRemoteAudioStats({required HMSRemoteAudioStats hmsRemoteAudioStats, required HMSRemoteAudioTrack track, required HMSPeer peer})
 
 /// This callback provides stats for a remote video track.
-  void onRemoteVideoStats({required HMSRemoteVideoStats hmsRemoteVideoStats, required HMSRemoteVideoTrack track, required HMSPeer peer})
+void onRemoteVideoStats({required HMSRemoteVideoStats hmsRemoteVideoStats, required HMSRemoteVideoTrack track, required HMSPeer peer})
 
 /// This callback provides combined stats for the session.
 void onRTCStats({required HMSRTCStatsReport hmsrtcStatsReport})
 ```
 
-## HMSRTCStatsReport
+To listen to these callbacks we will need to attach `HMSStatsListener` and override the above methods.
+Let's see how we can listen to these callbacks: 
+
+<div className="steps-container">
+
+### Implement HMSStatsListener wherever we want its callbacks
+
+```dart 
+class StatsReport implements HMSStatsListener{}
+```
+
+### Call addStatsListener
+
+Call `addStatsListener` on the hmsSDK instance because we will only get updates after calling `addStatsListener` on the hmsSDK instance
+
+```dart 
+//hmsStatsListener is an instance of HMSStatsListener
+hmsSDK.addStatsListener(listener: hmsStatsListener);
+```
+
+### Override the HMSStatsListener methods:
+
+```dart
+class StatsReport implements HMSStatsListener{
+
+  @override
+  void onLocalAudioStats(
+      {required HMSLocalAudioStats hmsLocalAudioStats,
+      required HMSLocalAudioTrack track,
+      required HMSPeer peer}) {}
+
+  @override
+  void onLocalVideoStats(
+      {required HMSLocalVideoStats hmsLocalVideoStats,
+      required HMSLocalVideoTrack track,
+      required HMSPeer peer}) {}
+
+  @override
+  void onRemoteAudioStats(
+      {required HMSRemoteAudioStats hmsRemoteAudioStats,
+      required HMSRemoteAudioTrack track,
+      required HMSPeer peer}) {}
+
+  @override
+  void onRemoteVideoStats(
+      {required HMSRemoteVideoStats hmsRemoteVideoStats,
+      required HMSRemoteVideoTrack track,
+      required HMSPeer peer}) {}
+
+  @override
+  void onRTCStats({required HMSRTCStatsReport hmsrtcStatsReport}) {}
+
+}
+```
+
+### Remove the listener when not required
+
+To stop listening to updates or while leaving the room we will need to remove this listener as:
+
+```dart 
+//hmsStatsListener is an instance of HMSStatsListener which we passed in addStatsListener
+hmsSDK.removeStatsListener(listener: hmsStatsListener);
+```
+</div>
+
+## Supplementary bytes
+
+### HMSRTCStatsReport
 
 This class will contain the combined stats for the room.
 
@@ -38,11 +109,11 @@ class HMSRTCStats {
   int packetsReceived;
   // Total packets lost in the current session.
   int packetsLost;
-  // Total outgoing bitrate observed since previous report.
+  // Total outgoing bitrate observed since the previous report.
   double bitrateSent;
-  // Total incoming bitrate observed since previous report in Kb/s.
+  // Total incoming bitrate observed since the previous report in Kb/s.
   double bitrateReceived;
-  // Average round trip time observed since previous report in Kb/s.
+  // Average round trip time observed since the previous report in Kb/s.
   double roundTripTime;
 }
 
@@ -56,32 +127,32 @@ class HMSRTCStatsReport {
 }
 ```
 
-## HMSLocalAudioStats
+### HMSLocalAudioStats
 
-This class contains stats related to local audio track.
+This class contains stats related to the local audio track.
 
 ```dart
 class HMSLocalAudioStats {
-	// Round trip time observed since previous report.
+	// Round trip time observed since the previous report.
 	double roundTripTime;
 	// Total bytes sent by this track in the current session.
 	int bytesSent;
-	// Outgoing bitrate of this track observed since previous report in Kb/s.
+	// Outgoing bitrate of this track observed since the previous report in Kb/s.
   double bitrate;
 }
 ```
 
-## HMSLocalVideoStats
+### HMSLocalVideoStats
 
 This class contains stats related to local video track.
 
 ```dart
 class HMSLocalVideoStats {
-	// Round trip time observed since previous report.
+	// Round trip time observed since the previous report.
   double roundTripTime;
 	// Total bytes sent by this track in the current session.
 	int bytesSent;
-	// Outgoing bitrate of this track observed since previous report in Kb/s.
+	// Outgoing bitrate of this track observed since the previous report in Kb/s.
   double bitrate;
 	// Resolution of video frames being sent.
 	double frameRate;
@@ -90,9 +161,9 @@ class HMSLocalVideoStats {
 }
 ```
 
-## HMSRemoteAudioStats
+### HMSRemoteAudioStats
 
-This class contains stats related to remote audio track.
+This class contains stats related to the remote audio track.
 
 ```dart
 class HMSRemoteAudioStats {
@@ -100,7 +171,7 @@ class HMSRemoteAudioStats {
   double jitter;
 	// Total bytes received by this track in the current session.
   int bytesReceived;
-	// Incoming bitrate of this track observed since previous report in Kb/s.
+	// Incoming bitrate of this track observed since the previous report in Kb/s.
   double bitrate;
 	// Total packets received by this track in the current session.
   int packetsReceived;
@@ -109,9 +180,9 @@ class HMSRemoteAudioStats {
 }
 ```
 
-## HMSRemoteVideoStats
+### HMSRemoteVideoStats
 
-This class contains stats related to remote video track.
+This class contains stats related to the remote video track.
 
 ```dart
 class HMSRemoteVideoStats {
@@ -119,7 +190,7 @@ class HMSRemoteVideoStats {
   double jitter;
 	// Total bytes received by this track in the current session.
   int bytesReceived;
-	// Incoming bitrate of this track observed since previous report in Kb/s.
+	// Incoming bitrate of this track observed since the previous report in Kb/s.
 	double bitrate;
 	// Total packets received by this track in the current session.
   int packetsReceived;

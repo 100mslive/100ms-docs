@@ -256,7 +256,7 @@ to decide colors
 
 html,
 body {
-    background-color: var(--surface_default);
+    background-color: var(--docs_bg_content);
     color: var(--docs_text_primary);
     transition: none;
     overscroll-behavior-y: none;
@@ -1389,11 +1389,11 @@ ais-highlight-0000000000 {
   margin-bottom: 3rem;
 }
 
-.steps-container h3 {
+.steps-container h3, .steps-container h4 {
   counter-increment: step;
 }
 
-.steps-container h3:before {
+.steps-container h3:before, .steps-container h4:before {
   content: counter(step);
   display: inline-flex;
   position: absolute;
@@ -1410,4 +1410,12 @@ ais-highlight-0000000000 {
   line-height: 1.5rem;
   font-size: 1rem;
   font-weight: 400;
+}
+
+/* Prevents auto zoom for mobile browsers */
+@media only screen and (max-device-width: 480px) {
+    body {
+        -webkit-text-size-adjust: 100%;
+        -moz-text-size-adjust: 100%;
+    }
 }

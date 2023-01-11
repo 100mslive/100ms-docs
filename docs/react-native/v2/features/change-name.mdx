@@ -6,18 +6,41 @@ nav: 3.994
 Any peer can change their own name before or after joining a room. Before joining, the name would have to be specified in `HMSConfig` that is passed 
 to the join method. This document shows how the name can be changed after joining.
 
-## Responding to name changes
-Whenever a remote peer's name is changed a callback will be received in `onPeerUpdate` where the update will be of type `HMSPeerUpdate.NAME_CHANGED`.
-When this callback is received the UI for that peer should be updated as well.
 
 ## Changing the name
-The peer who wants to change their name should call the following method on an HMSSdk instance.
+
+The peer who wants to change their name should call the `changeName` method on `HMSSDK` instance with the new name.
 
 ```js
-const newName: string = "new name"
+try {
+  const newName = "new name";
+  await hmsInstance.changeName(newName);
 
-// hms instance acquired by build method
-await hmsInstance.changeName(newName)
-    .then(d => console.log('Change Name Success: ', d))
-    .catch(e => console.log('Change Name Error: ', e));
+  console.log('Change Name Success');
+} catch (error) {
+  console.log('Change Name Error: ', error);
+}
+```
+
+
+## Responding to name changes
+
+Once the name change is successful, all the peers receive `HMSUpdateListenerActions.ON_PEER_UPDATE` event with `HMSPeerUpdate.NAME_CHANGED` as update type.
+When this event is received, the UI for that peer should be updated.
+
+```js
+const onPeerListener = ({
+  peer,
+  type,
+}: {
+  peer: HMSPeer;
+  type: HMSPeerUpdate;
+}) => {
+  if (type === HMSPeerUpdate.NAME_CHANGED) {
+    // Name Changed for Peer
+    console.log(`Update UI of ${peer.name}`);
+  }
+};
+
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_PEER_UPDATE, onPeerListener);
 ```

@@ -3,33 +3,56 @@ title: Playback Allowed
 nav: 3.93
 ---
 
-Mute is something that applies to both audio and video and its possible to mute remote peers only for yourself. When you will mute audio or video, you won't be able to hear or see the remote person but it will be audible and visible to others.
+Mute is something that applies to both audio and video and its possible to **mute remote peers only for yourself**. When you will mute audio or video track of remote peer, you won't be able to hear or see the remote person but it will be audible and visible to others.
 
-## Fetch isPlaybackAllowed
+You can use "Playback Allowed" API to "mute Audio and/or Video" or "check mute status" of Remote Peers only for yourself (locally).
 
-You can check if playback is allowed or not for a certain remote peer's audio or video.
+If you set "Playback Allowed" to `false`, then it means remote peers' tracks can't be played, meaning "Mute Status" is set to `true` and vice-versa.
+
+
+## Check Mute Status of Remote Peers locally
+
+To check playback allowed status, you can call `isPlaybackAllowed` method on `HMSRemoteAudioTrack` and `HMSRemoteVideoTrack` objects available on `HMSRemotePeer` object. You can get list of `HMSRemotePeer` objects from `getRemotePeers` method available on `HMSSDK` instance created using build method.
 
 ```js
-const remotePeer: HMSRemotePeer;
-const isAudioPlaybackAllowed = remotePeer.remoteAudioTrack().isPlaybackAllowed(); 
-const isVideoPlaybackAllowed = remotePeer.remoteVideoTrack().isPlaybackAllowed();
+// getting list of Remote Peers
+const remotePeers = await hmsInstance.getRemotePeers();
+
+// Make sure you have atleast one remote peer, otherwise list will be empty, and firstRemotePeer will be `undefined`
+const firstRemotePeer = remotePeers[0];
+
+// Checking mute status of first remote peer
+const isAudioPlaybackAllowed = firstRemotePeer.remoteAudioTrack().isPlaybackAllowed(); 
+const isVideoPlaybackAllowed = firstRemotePeer.remoteVideoTrack().isPlaybackAllowed();
 ```
 
-## Set isPlaybackAllowed
+
+## Muting Remote Peers for yourself (locally)
+
+To change playback allowed status, you can call `setPlaybackAllowed` method on `HMSRemoteAudioTrack` and `HMSRemoteVideoTrack` objects available on `HMSRemotePeer` object with `true` or `false` values. You can get list of `HMSRemotePeer` objects from `getRemotePeers` method available on `HMSSDK` instance created using build method.
 
 You can set playback for a certain remote peer's audio or video. If you set it to false it will turn off the audio or video only for you. You can revert it back by setting it true.
 
+> Note: If you want to Mute/Unmute a remote peer **for the whole room**, check out [Mute Remote Peer Docs](./change-track-state)
+
 ```js
-const remotePeer: HMSRemotePeer;
-const isAudioPlaybackAllowed = remotePeer.remoteAudioTrack().setPlaybackAllowed(false);
-const isVideoPlaybackAllowed = remotePeer.remoteVideoTrack().setPlaybackAllowed(true);
+// getting list of Remote Peers
+const remotePeers = await hmsInstance.getRemotePeers();
+
+// Make sure you have atleast one remote peer, otherwise list will be empty, and firstRemotePeer will be `undefined`
+const firstRemotePeer = remotePeers[0];
+
+// Changing mute status of first remote peer for yourself only
+firstRemotePeer.remoteAudioTrack().setPlaybackAllowed(false);
+firstRemotePeer.remoteVideoTrack().setPlaybackAllowed(true);
 ```
 
-## Local mute all remote peers audio
+
+## Muting "Audio" of All Remote Peers for yourself (locally)
+
+You can mute "audio" of all remote peers at once for yourself. Use `setPlaybackForAllAudio` method available on `HMSSDK` instance created using build method with `true` or `false` values.
 
 ```js
-// instance acquired from build method
-
-hmsInstance.setPlaybackForAllAudio(true)  // mute
-hmsInstance.setPlaybackForAllAudio(false) // unmute
+hmsInstance.setPlaybackForAllAudio(true)  // Mute Locally only
+hmsInstance.setPlaybackForAllAudio(false) // Unmute Locally only
 ```
