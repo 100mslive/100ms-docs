@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import slugify from '@sindresorhus/slugify'
-
-
-
 /**
  * Generates a table of contents by parsing a node tree
  * @param [toc] An array to push table contents to.
  */
+
+const slugify = (text) => text.toString().toLowerCase().replace(/\s+/g, "-").replace(/[^\w\-]+/g, "").replace(/\-\-+/g, "-").replace(/^-+/, "").replace(/-+$/, "")
+
+
 const withTableofContents = (toc?: any[]) => () => (tree) => {
     // @ts-ignore
     for (let i = 0; i < tree.children.length; i++) {
@@ -16,6 +16,7 @@ const withTableofContents = (toc?: any[]) => () => (tree) => {
           .filter((n) => n.type === 'text')
           .map((n) => n.value)
           .join('')
+
 
         const slug = slugify(title)
 
