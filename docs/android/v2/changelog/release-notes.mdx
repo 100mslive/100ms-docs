@@ -3,6 +3,23 @@ title: Release Notes
 nav: 15
 description: Release Notes for 100ms Android SDK
 ---
+## v2.5.6 - 2023-01-11
+### Added
+* New API in SDK to send Timed Metadata while streaming to hls viewers
+* Util method added to get HMS SDK and webrtc version
+* Added `joined_at` field to Local and Remote peers
+* `AutoSimulcast` is enabled by default while using `HMSVideoView`
+* Local Stats for all the layers
+
+### Fixed
+* `isScreenShared()` API always returning `false`
+* Multiple setLayer call in `HMSVideoView`
+
+### Changed
+* `onJoin` notification will come before `onPeerUpdate` when user joined a room. Earlier it used to be sent later
+*  Prefer layer is now request response instead of notify
+* `onLocalVideoStats` of `HMSStatsObserver` now has a `List` of `HMSLocalVideoStats` instead of single  object to accomodate for Simulcast layers
+
 ## v2.5.5 - 2022-12-17
 ### Fixed
 * `TRACK_REMOVE` update not being sent for screen-share to a new peer who joined the room when screen-share was already in progress
