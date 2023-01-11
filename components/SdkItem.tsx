@@ -114,10 +114,12 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
             }}>
             {sdkItems[sdk as keyof typeof sdkItems].map((value) => (
                 <Link key={value.id} href={value.link} passHref>
-                    <a style={{ width: 'fit-content' }}>
+                    <a
+                        target={value.id === 2 || value.id === 3 ? '_blank' : '_self'}
+                        rel="noopener"
+                        style={{ width: 'fit-content' }}>
                         <Box
-                            className="hoverParent"
-                            role="button"
+                        role="button"
                             onClick={() =>
                                 window.analytics.track('link.clicked', {
                                     btnId: itemId[value.id],
@@ -126,6 +128,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
                                     ...analytics[sdk]
                                 })
                             }
+                            className="hoverParent"
                             css={{
                                 '&:hover .hoverChild': {
                                     right: '-$11'
@@ -154,7 +157,7 @@ export default SdkItem;
 
 const itemId = {
     1: 'Quickstart',
-    2: 'Sandbox',
+    2: 'Playground',
     3: 'Sample app',
     4: 'API reference',
     5: 'Release notes',
@@ -193,6 +196,7 @@ const sdkItems = {
     ],
     react: [
         { id: 1, link: '/javascript/v2/guides/react-quickstart' },
+        { id: 2, link: 'https://codesandbox.io/s/100ms-react-quickstart-kh0hy?file=/src/App.jsx' },
         { id: 3, link: 'https://github.com/100mslive/100ms-web' },
         { id: 4, link: '/api-reference/javascript/v2/home/content' },
         { id: 5, link: '/javascript/v2/changelog/release-notes' }

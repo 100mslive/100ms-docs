@@ -1,51 +1,59 @@
 ---
 title: Reconnection Handling
-nav: 3.23
+nav: 3.24
 ---
 
-Real world apps operate in varying network conditions thus requires handling for network bandwidth issues.
-The SDK provides callbacks when a user gets disconnected due to network issues or network switch and also when user gets reconnected again.
+Real-world apps operate in varying network conditions and thus require handling for network bandwidth issues.
+The SDK provides callbacks when a user gets disconnected due to network issues or network switch and also when the user gets reconnected again.
 
-> 💡 Note: The SDK tries to reconnect automatically for 60 seconds after that the connection is terminated,the peer is removed from the room and the room has to be rejoined.
+> 💡 Note: The SDK tries to reconnect automatically for 60 seconds after that the connection is terminated, the peer is removed from the room and the room has to be rejoined.
 
 ## Reconnecting & Reconnected Callbacks
 
-`onReconnecting` and `onReconnected` callbacks are provided in `HMSUpdateListener`.So,These method needs to be overriden in the class wherever `HMSUpdateListener` is implemented.
+`onReconnecting` and `onReconnected` callbacks are provided in `HMSUpdateListener`.So, These method needs to be overridden in the class wherever `HMSUpdateListener` is implemented.
 
 ```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
 
-//OnReconnecting callback is triggered when the SDK detects a network issue or is trying to
-// reconnect automatically on a network drop, switch etc. 
-@override
-void onReconnecting(){
-    // Reconnecting...
-    // Handle reconnection by showing loaders etc.
+  ...
+
+  //OnReconnecting callback is triggered when the SDK detects a network issue or is trying to
+  // reconnect automatically on a network drop, switch etc. 
+  @override
+  void onReconnecting(){
+      // Reconnecting...
+      // Handle reconnection by showing loaders etc.
+  }
+
+  //OnReconnected callback is triggered when the SDK has successfully recovered from a network
+  // drop, switch or a network issue etc.
+  @override
+  void onReconnected(){
+      // Reconnected...
+      // Handle by resetting the loaders and switching to normal UI. 
+  }
+
+  ...
 }
-
-//OnReconnected callback is triggered when the SDK has successfully recovered from a network
-// drop, switch or a network issue etc.
-@override
-void onReconnected(){
-    // Reconnected...
-    // Handle by reseting the loaders and switching to normal UI. 
-}
-
 ```
 
 > 💡 Note: On getting reconnected the SDK will send all the updates(Track and Peer updates) again.
 
-## Case when user never gets reconnected
+## Case when a user never gets reconnected
 
 SDK tries to reconnect the user automatically for 60 seconds after that the connection gets terminated and the peer is removed from the room by SDK.
 If reconnection fails the SDK sends `onHMSError` callback.
 
 ```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
 
-@override
-  void onHMSError({required HMSException error}){
-    //Handle the UI depending on the error object
-  }
+  ...
 
+  @override
+    void onHMSError({required HMSException error}){
+      //Handle the UI depending on the error object
+    }
+}
 ```
 
 The user will receive the following callbacks with `error` object having `isTerminal:true` and `errorCode` as :
@@ -64,24 +72,12 @@ The user will receive the following callbacks with `error` object having `isTerm
 
 ## Best practices to handle reconnection
 
-The SDK will send `onReconnecting` callback first if user disconnects, If user reconnects the SDK sends `onReconnected` callback whereas if
+The SDK will send `onReconnecting` callback first if the user disconnects, If the user reconnects the SDK sends `onReconnected` callback whereas if
 the user fails to connect then it sends `onHMSError`.These callbacks can be handled as follows: 
 
-* Once the SDK sends `onReconnecting` callback, Do not allow user to interact with UI and show loaders or reconnecting indicator.
+* Once the SDK sends `onReconnecting` callback, Do not allow the user to interact with UI and show loaders or reconnecting indicator.
 * If `onReconnected` is received then switch back to room UI allowing interaction as usual.
-* If the user fails to reconnect then SDK sends `onHMSError` callback, look for `isTerminal` parameter if it 
-is set to `true` then navigate to the `HomeScreen`,showing a toast or errorDialog to the user with `description`.
-In the `false` case look for the `errorCode` and handle it accordingly.
-```dart
-@override
-  void onHMSError({required HMSException error}){
-    if(error.isTerminal){
-        //Pop from the meeting room 
-    }
-    else{
-        //Handle the error accordingly
-    }
-  }
-```
+* If the user fails to reconnect then SDK sends `onHMSError` callback, look for `errorCode` parameter and if it is 
+something(generally 1003,4005 etc.) such that the user can never reconnect and then navigate to the HomeScreen, showing a toast or errorDialog to the user with a description.
 
 > 🗝️ You can find the errorCodes, descriptions and the suggested actions to be taken [here](./error-handling)

@@ -28,6 +28,8 @@ These are the options which need to be passed to start RTMP or recording -
         - "rtmp://a.rtmp.youtube.com/live2/" - RTMP stream URL.
         - "k0jv-329m-1y7f-ktth-ck48" - RTMP stream key.
 
+    <Content alias="rtmpExternalConfig" />
+
 3. **record**: _boolean_. Optional, If recording is required this can be set as true. This value has no effect on streaming.
 4. **resolution**: _{ width: number, height: number }_. Optional, if passed the recording or RTMP will be done in the passed in resolution.
 
@@ -44,7 +46,7 @@ If both are required, they have to be started together by providing both RTMP In
 async start() {
     const params = {
         meetingURL: "",
-        rtmpUrls: [""],
+        rtmpURLs: [""],
         record: true
     };
     try {

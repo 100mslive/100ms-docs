@@ -1,8 +1,6 @@
 
 ### Subscribe-side behavior
 
-<br/>
-
 #### Manual layer selection
 
 The 100ms client-side SDKs provide methods to set a preferred quality layer for a remote peer's video track. See docs for your preferred platform:
@@ -22,7 +20,7 @@ The 100ms client-side SDKs provide methods to set a preferred quality layer for 
 - Based on video tile size: The SDK automatically ensures appropriate video layer is subscribed to, as demonstrated in the video above. For example, if the video element is 360 px in width, 360p or the closest layer will be selected.
     - **JavaScript**: The `useVideo` hook in the 100ms React SDK auto-selects the appropriate video quality layer.
     - **iOS**: `HMSVideoView` can auto-select video quality layer.
-    - **Android**: _Coming soon_.
+    - **Android**: `HMSVideoView` ([see docs](/docs/android/v2/migrations/surfaceview-migration)) can auto-select video quality layer.
 - Based on network quality: ABR will work alongside subscribe degradation and auto-downgrade video quality for peers. This is _coming soon_.
 
 ## ABR in live streaming
