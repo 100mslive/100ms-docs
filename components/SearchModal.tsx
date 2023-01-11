@@ -239,7 +239,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
 
     React.useEffect(() => {
         const handleNavigation = (e) => {
-            if (e.code === 'Enter' && activeResult.current) {
+            if (e.code === 'Enter' && activeResult.current !== -1) {
                 const ele = document.getElementById(`res-box-${activeResult.current}`)
                     ?.children[0] as HTMLAnchorElement;
                 if (ele) ele.click();
