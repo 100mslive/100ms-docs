@@ -3,7 +3,9 @@ title: Show Audio Levels
 nav: 3.99
 ---
 
-### Getting Audio Levels for all speaking peers
+## Getting Audio Levels for all speaking peers
+
+We can find the currently speaking peers by subscribing to `HMSUpdateListenerActions.ON_SPEAKER` event as follows -
 
 ```js
 import {
@@ -11,24 +13,41 @@ import {
   HMSSpeaker,
 } from '@100mslive/react-native-hms';
 
-// hmsInstance obtained by build method
-hmsInstance?.addEventListener(HMSUpdateListenerActions.ON_SPEAKER, onSpeaker);
-
+// `onSpeaker` function will be invoked whenever active speaker changes in room
 const onSpeaker = (data: HMSSpeaker[]) => {
-  data?.map((speaker: HMSSpeaker) => console.log('speaker audio level: ', speaker?.level));  
+  // data is the list of `HMSSpeaker` objects
+  data.forEach((speaker: HMSSpeaker) => console.log('speaker audio level: ', speaker.level));  
 };
+
+// hmsInstance obtained by build method
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_SPEAKER, onSpeaker);
 ```
 
+Let's look at the `HMSSpeaker` class:
 
-Here are the properties on the HMSSpeaker class:
+```js
+interface HMSSpeaker {
+  level: Number;
+  peer: HMSPeer;
+  track: HMSTrack;
+}
+```
 
-1. level : Number -> The level of the audio. It may vary from 0-100. A higher value indicates a higher speaking volume.
-2. hmsTrack : HMSTrack -> The audio track corresponding to this speaker. It may be null when the speaker who was speaking loudly, leaves.
-3. peer : HMSPeer -> The peer who was speaking. This may be null if the peer has left before the update information has reached the other person.
+Let's understand the properties of `HMSSpeaker` class:
+
+1. `level` : Number -> The level of the audio. It may vary from 0-100. A higher value indicates a higher speaking volume.
+2. `peer` : HMSPeer -> The peer who was speaking. This may be null if the peer has left before the update information has reached the other person.
+3. `track` : HMSTrack -> The audio track corresponding to this speaker. It may be null when the speaker who was speaking loudly, leaves.
 
 
+## Where can we use Active Speakers Updates
 
 ### Active Speaker Views
-To maintain an active speaker view, such as the default view in the open source advanced sample app, you need to keep track of who the active
-speakers are over time. We'll be using the input from `ON_SPEAKER` listener update as mentioned above and then building something that attempts to show all
+
+To maintain an active speaker view, such as the default view in the [sample app](https://github.com/100mslive/react-native-hms/tree/develop/sample-apps/rn-quickstart-app), you need to keep track of active
+speakers over time. We'll be using the Active Speakers list which we get in function subscribed to `HMSUpdateListenerActions.ON_SPEAKER` event as mentioned above and then building something that attempts to show all
 the active speakers while minimizing re-ordering the list.
+
+### Dominant Speaker - the loudest speaker
+
+The Active Speakers list which we get in function subscribed to `HMSUpdateListenerActions.ON_SPEAKER` event is already in descending order based on the audio level. So, the first element of the list will be loudest speaker.

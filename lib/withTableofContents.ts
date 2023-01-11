@@ -1,9 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+<<<<<<< HEAD
 import slugify from '@sindresorhus/slugify'
+=======
+import { slugify } from "./mdxUtils"
+
+>>>>>>> d3ef5159ca81dc3a23bd88ef76de899ac1f5821c
 /**
  * Generates a table of contents by parsing a node tree
  * @param [toc] An array to push table contents to.
  */
+
 const withTableofContents = (toc?: any[]) => () => (tree) => {
     // @ts-ignore
     for (let i = 0; i < tree.children.length; i++) {
@@ -13,6 +19,7 @@ const withTableofContents = (toc?: any[]) => () => (tree) => {
           .filter((n) => n.type === 'text')
           .map((n) => n.value)
           .join('')
+
 
         const slug = slugify(title)
 

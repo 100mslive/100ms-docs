@@ -436,7 +436,19 @@ You can open the app in another tab in the browser to join as the second peer to
 
 In this section, let's walk through what the code does.
 
-<div className="steps-container">
+<StepsToc
+  parentId="initialize-sdk-steps"
+  descriptions={[
+    "Initialize HMSStore and HMSActions from 100ms SDK for state management and to perform actions like join, leave, etc. in the app.",
+    "Include the HTML elements such as tiles and buttons to render peers and trigger actions like join, leave, etc.",
+    "Pass config object with userName and authToken to join method from HMSActions. Use leave method from HMSActions to leave the room.",
+    "Use attachVideo method from HMSActions to add video and selectPeers selector from hmsStore to display tile for peers.",
+    "Use setLocalAudioEnabled and setLocalVideoEnabled from HMSActions to mute/unmute local audio/video tracks.",
+    "Use selectIsConnectedToRoom selector from hmsStore to manage UI elements based on connection/disconnection.",
+  ]}
+/>
+
+<StepsContainer id="initialize-sdk-steps">
 
 ### Initialize the SDK
 
@@ -1069,7 +1081,7 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
 
 Refer to [Test the app section](/javascript/v2/guides/javascript-quickstart#test-the-app) above to test your sample app locally.
 
-</div>
+</StepsContainer>
 
 ## Next steps
 
