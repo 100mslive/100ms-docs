@@ -39,13 +39,13 @@ Yes, you can delete an App from your [dashboard](https://dashboard.100ms.live/da
 
 ### How do I get started with integrating video functionality to my website using 100ms?
 
-You can get started with our [video conferencing example](./../examples/video-conferencing-starter-kit) to see a live demo. You can also clone the [100ms-web sample app](https://github.com/100mslive/100ms-web) to see how you can extend and customize as per your needs. 
+You can get started with our [video conferencing example](https://www.100ms.live/examples/live-streaming-starter-kit) to see a live demo. You can also clone the [100ms-web sample app](https://github.com/100mslive/100ms-web) to see how you can extend and customize as per your needs. 
 
 Meanwhile, check our [docs](/javascript/v2/features/integration) to explore information about various features and capabilities supported on the platform. 
 
 ### Do you have any live demo app with some default UI to check how live video/audio functionality works on your platform?
 
-Yes, you can get started with one of our examples from [here](./../examples). You can also sign up for a 100ms account to access the [dashboard](https://dashboard.100ms.live/).
+Yes, you can get started with one of our examples from [here](https://www.100ms.live/examples/). You can also sign up for a 100ms account to access the [dashboard](https://dashboard.100ms.live/).
 
 ### We have decided to use your tool for our Livestream product we are building. What are the next steps for us to get started?
 
@@ -287,7 +287,7 @@ Currently, chat is not saved and there is no way to retrieve chat logs.
 
 ### We have decided to use 100ms to integrate live streaming into our app, how can we get started?
 
-We have ready-made example for live streaming, you can view a live demo using [this](./../examples/live-streaming-starter-kit). You can also clone the [100ms-web sample app](https://github.com/100mslive/100ms-web) to see how you can extend and customize as per your needs. 
+We have ready-made example for live streaming, you can view a live demo using [this](https://www.100ms.live/examples/live-streaming-starter-kit). You can also clone the [100ms-web sample app](https://github.com/100mslive/100ms-web) to see how you can extend and customize as per your needs. 
 
 To learn more about how live streaming works, please check the [Interactive live streaming guide](./../foundation/live-streaming). 
 
