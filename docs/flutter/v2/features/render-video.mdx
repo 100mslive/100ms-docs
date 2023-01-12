@@ -9,7 +9,7 @@ It all comes down to this. All the setup so far has been done so that we can sho
 
 We simply have to pass a Video Track object to the `HMSVideoView` to begin automatic rendering of Live Video Stream.
 
-We can also optionally pass props like `key`, `scaleType`, `mirror` to customize the `HMSVideoView` widget.
+We can also optionally pass props like `key`, `scaleType`, `mirror` or `matchParent` to customize the `HMSVideoView` widget.
 
 ```dart
 HMSVideoView(
@@ -153,29 +153,47 @@ This is done in the example app by setting the `isOffscreen` property of `PeerTr
 `HMSVideoView` internally uses `SurfaceView` in android and `UiKitView` in iOS. It is recommended to render at most 4-6 videos at a time on-screen and 
 rest should be paginated for better performance. 
 
-For a full example try out our [Example app here](https://github.com/100mslive/100ms-flutter/tree/main/example).
+Check out our fully featured [Example app here](https://github.com/100mslive/100ms-flutter/tree/main/example).
 
-## Supplementary bytes 
+### Display Screen Share Tracks without getting cropped from edges
 
-This section shows the `HMSVideoView` widget and its properties :
+A peer in Room can broadcast their Screen from any platform like Web, Android, iOS, etc. If a peer shares their Screen from Web & the viewer is on a Mobile platform, some content on the Screen can get cropped. It's necessary to configure the `HMSVideoView` correctly to ensure the complete Screen share content is visible without any clipping/cropping from edges.
+
+Always create the `HMSVideoView` with `matchParent` as `false` and `ScaleType` as `ScaleType.SCALE_ASPECT_FIT` for correctly showing Screenshare Tracks.
+
+Let's look at the implementation:
+
+```dart 
+ HMSVideoView(
+  track: screenShareTrack,  // pass the screen share track here
+  matchParent: false,   // set match parent as false to ensure Screenshare view is not cropped
+  scaleType: ScaleType.SCALE_ASPECT_FIT, // always set to Aspect Fit for Screenshare Tracks
+  key: Key(videoTrack.trackId),   // set a unique identifier using the trackId 
+)
+```
+
+## HMSVideoView Widget
+
+The 100ms Video View Widget named `HMSVideoView` is built over the Stateless Widget.
+This `HMSVideoView` widget and all of its available properties are listed below.
 
 ```dart
 class HMSVideoView extends StatelessWidget {
-  ///  This will render video with trackId present in the track
-  ///[track] - track to be displayed
+
+  /// This will render video with trackId present in the track
+  /// [track] - the video track to be displayed
   final HMSVideoTrack track;
 
-  //[matchParent] - to match the size of the parent widget
+  // [matchParent] - to match the size of the parent widget
   final matchParent;
 
-  //[scaleType] - To set the video scaling
+  // [scaleType] - To set the video scaling
   final ScaleType scaleType;
 
-  //[setMirror] - To set mirroring of video
-  //
+  // [setMirror] - To set mirroring of video
   final bool setMirror;
 
-  //[isAutoSimulcast] - To set auto simulcast (Adaptive Bitrate)
+  // [isAutoSimulcast] - To set auto simulcast (Adaptive Bitrate)
   final bool isAutoSimulcast;
 }
 ```

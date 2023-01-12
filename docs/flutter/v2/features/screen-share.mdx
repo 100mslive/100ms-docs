@@ -252,10 +252,24 @@ hmsSDK.isScreenShareActive();
 
 ## How to display screenshare in apps 
 
-> Screenshare track can be differentiated from normal video track using track's `source` property as `track.source == "SCREEN"` for screenshare
->tracks
+> Screen share track can be differentiated from normal video track using track's `source` property as `track.source == "SCREEN"`
 
-Screenshare can be rendered on the screen similar to normal videos.Checkout the implementation [here](../features/render-video) 
+A peer in Room can broadcast their Screen from any platform like Web, Android, iOS, etc. If a peer shares their Screen from Web & the viewer is on a Mobile platform, some content on the Screen can get cropped. It's necessary to configure the `HMSVideoView` correctly to ensure the complete Screen share content is visible without any clipping/cropping from edges.
+
+Always create the `HMSVideoView` with `matchParent` as `false` and `ScaleType` as `ScaleType.SCALE_ASPECT_FIT` for correctly showing Screenshare Tracks.
+
+Let's look at the implementation:
+
+```dart 
+ HMSVideoView(
+  track: screenShareTrack,  // pass the screen share track here
+  matchParent: false,   // set match parent as false to ensure Screenshare view is not cropped
+  scaleType: ScaleType.SCALE_ASPECT_FIT, // always set to Aspect Fit for Screenshare Tracks
+  key: Key(videoTrack.trackId),   // set a unique identifier using the trackId 
+)
+```
+
+To learn more about Rendering any Video, refer the guide [here](https://www.100ms.live/docs/flutter/v2/features/render-video).
 
 
 ## Troubleshooting Guide
