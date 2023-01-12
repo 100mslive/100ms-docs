@@ -429,6 +429,20 @@ The only encryption we have is on the token side. That is based on the token sha
 
 Yes we are Soc - 2 complaint.
 
+## Analytics
+
+#### Is there any usage analytics dashboard available to check various metrics associated with our account?
+
+Currently, we don't have any dashboard for usage analytics, but we do it have it in our roadmap. We will keep you notified as soon as we have it. Subsribe to our newsletter to receive monthly updates about on 100ms product releases.
+
+#### Does the 100ms video SDK provide analytics on room, session, and each user, including data such as time spent per user, total session length, and number of peers in a room?
+
+You can get analytics about rooms, sessions, peers, etc in a multiple ways based on your requirements and feasibility. 
+
+1. You can use the [List Sessions server API](/server-side/v2/Sessions/list-sessions) to fetch the list of sessions for a particular data/time range and you can also filter these for a particular room. This API will provide data such as list of peers, their room join/leave time, session start/end time, etc,.
+
+2. If you need to get the sessions details for an active room (ongoing session), you can use our [Active room server APIs](/server-side/v2/active-rooms/overview) to fetch the details and perform some actions on peer from your server side. 
+
 ## Server-side
 
 #### Is the functionality of disable a room and end an active room same?
@@ -528,17 +542,3 @@ For example, if you must limit the duration of a session to 30 minutes:
 - Once reached, trigger the [End an active room API](/server-side/v2/active-rooms/end-active-room) to end the session and kick out the peers from the session. 
 
 > Note: If you set the lock argument to `true`, it will end the active room, and users will not be able to join the room later. You can use [enable a room API](/server-side/v2/Rooms/disable-or-enable) or [dashboard](https://dashboard.100ms.live/rooms) to enable the room again.
-
-## Analytics
-
-#### Is there any usage analytics dashboard available to check various metrics associated with our account?
-
-Currently, we don't have any dashboard for usage analytics, but we do it have it in our roadmap. We will keep you notified as soon as we have it. Subsribe to our newsletter to receive monthly updates about on 100ms product releases.
-
-#### Does the 100ms video SDK provide analytics on room, session, and each user, including data such as time spent per user, total session length, and number of peers in a room?
-
-You can get analytics about rooms, sessions, peers, etc in a multiple ways based on your requirements and feasibility. 
-
-1. You can use the [List Sessions server API](/server-side/v2/Sessions/list-sessions) to fetch the list of sessions for a particular data/time range and you can also filter these for a particular room. This API will provide data such as list of peers, their room join/leave time, session start/end time, etc,.
-
-2. If you need to get the sessions details for an active room (ongoing session), you can use our [Active room server APIs](/server-side/v2/active-rooms/overview) to fetch the details and perform some actions on peer from your server side. 
