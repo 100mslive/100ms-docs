@@ -82,3 +82,17 @@ export const getNavfromDocs = (docs) => {
         return n;
     }, {});
 };
+
+export const slugify = (text) => text.toString().toLowerCase().replace(/\s+/g, "-").replace(/[^\w\-]+/g, "").replace(/\-\-+/g, "-").replace(/^-+/, "").replace(/-+$/, "");
+
+/*
+Source: https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery
+    
+    (/\s+/g, '-') //spaces to dashes
+    (/&/g, '-and-') //ampersand to and
+    (/[^\w\-]+/g, '') //remove non-words
+    (/\-\-+/g, '-') //collapse multiple dashes
+    (/^-+/, '') //trim starting dash
+    (/-+$/, ''); //trim ending dash
+    
+*/
