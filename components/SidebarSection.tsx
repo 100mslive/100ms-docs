@@ -1,6 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { ChevronRightIcon } from '@100mslive/react-icons';
+import { Flex, Text } from '@100mslive/react-ui';
 
 interface Props {
     value: String;
@@ -10,12 +12,17 @@ interface Props {
 
 const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
     const activeItem = useRef<HTMLAnchorElement>(null);
+    const [openSection, setOpenSection] = useState(false);
     const router = useRouter() as any;
 
     const {
         asPath,
         query: { slug }
     } = router;
+
+    useEffect(() => {
+        if (slug?.[2].toLowerCase() === key) setOpenSection(true);
+    }, []);
 
     useEffect(() => {
         if (activeItem?.current)
@@ -31,63 +38,54 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
             className="menu-container"
             style={{ margin: '2px 0.5rem 0.5rem 1rem' }}
             key={`${key}-${index}`}>
-            <div
-                style={{
-                    paddingLeft: '1rem',
-                    textTransform: 'uppercase',
-                    fontWeight: '700',
-                    fontSize: '13px',
+            <Flex
+                align="center"
+                justify="between"
+                onClick={() => setOpenSection((prev) => !prev)}
+                css={{
+                    marginLeft: '2rem',
+                    padding: '0.5rem 1rem',
                     margin: '5px 0',
-                    letterSpacing: '1px'
+                    cursor: 'pointer',
+                    '&:hover': { background: '$primaryDark' }
                 }}>
-                {key.replace(/-/g, ' ')}
-            </div>
-            {Object.entries(children as {}).map(([_, route]: [unknown, any]) =>
-                Object.prototype.hasOwnProperty.call(route, 'title') ? (
-                    <Link prefetch={false} href={route.url || ''} key={`${route.url}-${index}`}>
-                        <a
-                            ref={route.url === asPath ? activeItem : null}
-                            style={{
-                                cursor: 'pointer',
-                                padding: '4px 0',
-                                color:
-                                    route.url === asPath
-                                        ? 'var(--docs_text_primary)'
-                                        : 'var(--docs_text_secondary)',
-                                fontWeight: route.url === asPath ? '500' : '400',
-                                fontSize: '14px',
-                                lineHeight: '24px',
-                                borderLeft:
-                                    route.url === asPath
-                                        ? '4px solid var(--primary_light)'
-                                        : '4px solid transparent',
-                                display: 'flex',
-                                alignItems: 'center',
-                                paddingLeft: '1rem',
-                                marginLeft: '1rem'
-                            }}>
-                            {route.title}
-                        </a>
-                    </Link>
-                ) : null
-            )}
-            {key === 'features' && slug[0] !== 'server-side' ? (
-                <>
-                    {aliasMenu.map((a) => (
-                        <Link scroll={false} prefetch={false} href={a.url} key={a.url}>
+                <Text
+                    css={{
+                        textTransform: 'uppercase',
+                        fontWeight: '700',
+                        fontSize: '13px',
+                        letterSpacing: '1px'
+                    }}>
+                    {key.replace(/-/g, ' ')}
+                </Text>
+                <ChevronRightIcon
+                    style={{
+                        height: '16px',
+                        width: '16px',
+                        strokeWidth: '15px',
+                        transition: 'all 0.2s ease',
+                        transform: openSection ? 'rotateZ(90deg)' : ''
+                    }}
+                />
+            </Flex>
+            <div className={`accordion-content ${openSection ? 'active' : ''}`}>
+                {Object.entries(children as {}).map(([_, route]: [unknown, any]) =>
+                    Object.prototype.hasOwnProperty.call(route, 'title') ? (
+                        <Link prefetch={false} href={route.url || ''} key={`${route.url}-${index}`}>
                             <a
+                                ref={route.url === asPath ? activeItem : null}
                                 style={{
                                     cursor: 'pointer',
                                     padding: '4px 0',
                                     color:
-                                        a.url === asPath
+                                        route.url === asPath
                                             ? 'var(--docs_text_primary)'
                                             : 'var(--docs_text_secondary)',
-                                    fontWeight: a.url === asPath ? '500' : '400',
+                                    fontWeight: route.url === asPath ? '500' : '400',
                                     fontSize: '14px',
                                     lineHeight: '24px',
                                     borderLeft:
-                                        a.url === asPath
+                                        route.url === asPath
                                             ? '4px solid var(--primary_light)'
                                             : '4px solid transparent',
                                     display: 'flex',
@@ -95,12 +93,56 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                                     paddingLeft: '1rem',
                                     marginLeft: '1rem'
                                 }}>
-                                {a.title}
+                                {route.title}
                             </a>
                         </Link>
-                    ))}
-                </>
-            ) : null}
+                    ) : null
+                )}
+                {key === 'features' && slug[0] !== 'server-side' ? (
+                    <>
+                        {aliasMenu.map((a) => (
+                            <Link scroll={false} prefetch={false} href={a.url} key={a.url}>
+                                <a
+                                    style={{
+                                        cursor: 'pointer',
+                                        padding: '4px 0',
+                                        color:
+                                            a.url === asPath
+                                                ? 'var(--docs_text_primary)'
+                                                : 'var(--docs_text_secondary)',
+                                        fontWeight: a.url === asPath ? '500' : '400',
+                                        fontSize: '14px',
+                                        lineHeight: '24px',
+                                        borderLeft:
+                                            a.url === asPath
+                                                ? '4px solid var(--primary_light)'
+                                                : '4px solid transparent',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        paddingLeft: '1rem',
+                                        marginLeft: '1rem'
+                                    }}>
+                                    {a.title}
+                                </a>
+                            </Link>
+                        ))}
+                    </>
+                ) : null}
+            </div>
+            <style jsx>
+                {`
+                    .accordion-content {
+                        margin-top: 0.5rem;
+                        transition: max-height 0.2s ease;
+                        max-height: 0px;
+                        overflow: hidden;
+                    }
+
+                    .active {
+                        max-height: 100px;
+                    }
+                `}
+            </style>
         </section>
     );
 };
