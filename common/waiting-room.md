@@ -1,0 +1,1 @@
+100ms provides the capability to enable the waiting room feature for a room via the self-serve dashboard or via server API. The waiting room feature will allow peers to join a room without publishing/subscribing to any audio/video tracks. You can transfer a peer from the waiting room to an active room for the peer to start a conversation with another peer(s) in the room. 
