@@ -523,7 +523,11 @@ export const checkPermissions = async (permissions) => {
     const results = await requestMultiple(permissions);
     let allPermissionsGranted = true;
     for (let permission in permissions) {
-      if (!(results[permissions[permission]] === RESULTS.GRANTED)) {
+      const permissionResult = results[permissions[permission]];
+
+      const isBLConnectUnavailable = permissions[permission] === PERMISSIONS.ANDROID.BLUETOOTH_CONNECT && permissionResult === RESULTS.UNAVAILABLE;
+
+      if (!(permissionResult === RESULTS.GRANTED || isBLConnectUnavailable)) {
         allPermissionsGranted = false;
       }
     }
@@ -829,7 +833,11 @@ export const checkPermissions = async (permissions) => {
     const results = await requestMultiple(permissions);
     let allPermissionsGranted = true;
     for (let permission in permissions) {
-      if (!(results[permissions[permission]] === RESULTS.GRANTED)) {
+      const permissionResult = results[permissions[permission]];
+
+      const isBLConnectUnavailable = permissions[permission] === PERMISSIONS.ANDROID.BLUETOOTH_CONNECT && permissionResult === RESULTS.UNAVAILABLE;
+
+      if (!(permissionResult === RESULTS.GRANTED || isBLConnectUnavailable)) {
         allPermissionsGranted = false;
       }
     }
