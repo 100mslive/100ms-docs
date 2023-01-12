@@ -16,7 +16,7 @@ This guide contains instructions for two approaches to get you started with 100m
 
 You can also check our [basic sample app](https://github.com/100mslive/react-native-hms/tree/develop/sample-apps/rn-quickstart-app) on GitHub.
 
-Check out the full-fledged example app implementation in the [100ms React Native SDK GitHub repository](https://github.com/100mslive/react-native-hms/tree/main/example) showcasing multiple features provided by 100ms.
+Check out the full-featured example app implementation in the [100ms React Native SDK GitHub repository](https://github.com/100mslive/react-native-hms/tree/main/example) showcasing multiple features provided by 100ms.
 
 
 ## Create a sample app
@@ -363,30 +363,13 @@ export const usePeerTrackNodes = () => {
 			return;
 		}
 
-		if (type === HMSPeerUpdate.ROLE_CHANGED) {
-			// If Peer's role has changed to a Role Which does not have publish permissions.
-			// We will remove Tile with that Peer object
-			if (
-				peer.role?.publishSettings?.allowed === undefined ||
-				(peer.role?.publishSettings?.allowed &&
-					peer.role?.publishSettings?.allowed.length < 1)
-			) {
-				// Remove all Tiles which has peer same as the peer whom role just got changed
-				// `removeNodeWithPeerId` function removes peerTrackNodes which has given peerID and returns updated list.
-				setPeerTrackNodes(prevPeerTrackNodes => removeNodeWithPeerId(prevPeerTrackNodes, peer.peerID));
-			}
-			return;
-		}
-
 		if (
+      type === HMSPeerUpdate.ROLE_CHANGED || 
 			type === HMSPeerUpdate.METADATA_CHANGED ||
 			type === HMSPeerUpdate.NAME_CHANGED ||
 			type === HMSPeerUpdate.NETWORK_QUALITY_UPDATED
 		) {
-			// Updating the Tiles with updated Peer.
-			// `updateNodeWithPeer` function updates Peer object in PeerTrackNodes and returns updated list.
-			// Note: We are not creating new PeerTrackNode object.
-			setPeerTrackNodes(prevPeerTrackNodes => updateNodeWithPeer({ nodes: prevPeerTrackNodes, peer }));
+      // Ignoring these update types because we want to keep this implementation simple.
 			return;
 		}
 	};
@@ -421,13 +404,6 @@ export const usePeerTrackNodes = () => {
 			return;
 		}
 
-		if (type === HMSTrackUpdate.TRACK_REMOVED) {
-			// If non-regular track, or
-			// both regular video and audio tracks are removed
-			// Then we will remove Tiles (PeerTrackNodes) with removed track and received peer
-			return;
-		}
-
 		// on TRACK_MUTED or TRACK_UNMUTED updates, We will update Tiles (PeerTrackNodes)
 		if (
 			type === HMSTrackUpdate.TRACK_MUTED ||
@@ -454,6 +430,13 @@ export const usePeerTrackNodes = () => {
           peer,
         }));
 			}
+			return;
+		}
+
+    if (type === HMSTrackUpdate.TRACK_REMOVED) {
+			// If non-regular track, or
+			// both regular video and audio tracks are removed
+			// Then we will remove Tiles (PeerTrackNodes) with removed track and received peer
 			return;
 		}
 
@@ -696,18 +679,15 @@ Follow the instructions in one of the tabs below based on the target platform yo
 
   Add the below snippet in the `ios/Podfile` file -
     ​
-  ```json{5-8}
-    # An absolute path to your application root.
-    :app_path => "#{Pod::Config.instance.installation_root}/.."
-  )
-
-  permissions_path = '../node_modules/react-native-permissions/ios'
-
-  pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
-  pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone"
-
-  target 'HMSSampleAppTests' do
-    inherit! :complete
+  ```json{3-6}
+  target 'HMSSampleApp' do
+  ...
+    permissions_path = '../node_modules/react-native-permissions/ios'
+    
+    pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+    pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone"
+  ...
+  end
   ```
 
 2. Change ios target platform version to '13.0' in the `ios/Podfile` file
@@ -775,10 +755,6 @@ Now, after you click `join`, you should be able to see yourself (iOS simulator d
 
   <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
 
-  <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
-
-  <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-
   <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
   ```
 
@@ -827,6 +803,12 @@ Now, after you click `join`, you should be able to see yourself (android emulato
 ## Building step-by-step
 
 In this section, We'll walk through what the above code does.
+
+Below is the diagram which shows the common SDK implementation lifecycle. We start with requesting the permissions from user and end with leaving the meeting or freeing resources.
+
+![HMSSDK Integration Lifecycle](/docs/guides/rn-hmssdk-integration-lifecycle.png)
+
+Now we will look at code and explaination for each step in implementation lifecycle.
 
 <div className="steps-container">
 
@@ -1002,30 +984,13 @@ const onPeerListener = ({ peer, type }) => {
     return;
   }
 
-  if (type === HMSPeerUpdate.ROLE_CHANGED) {
-    // If Peer's role has changed to a Role Which does not have publish permissions.
-    // We will remove Tile with that Peer object
-    if (
-      peer.role?.publishSettings?.allowed === undefined ||
-      (peer.role?.publishSettings?.allowed &&
-        peer.role?.publishSettings?.allowed.length < 1)
-    ) {
-      // Remove all Tiles which has peer same as the peer whom role just got changed
-      // `removeNodeWithPeerId` function removes peerTrackNodes which has given peerID and returns updated list.
-      setPeerTrackNodes(prevPeerTrackNodes => removeNodeWithPeerId(prevPeerTrackNodes, peer.peerID));
-    }
-    return;
-  }
-
   if (
+    type === HMSPeerUpdate.ROLE_CHANGED || 
     type === HMSPeerUpdate.METADATA_CHANGED ||
     type === HMSPeerUpdate.NAME_CHANGED ||
     type === HMSPeerUpdate.NETWORK_QUALITY_UPDATED
   ) {
-    // Updating the Tiles with updated Peer.
-    // `updateNodeWithPeer` function updates Peer object in PeerTrackNodes and returns updated list.
-    // Note: We are not creating new PeerTrackNode object.
-    setPeerTrackNodes(prevPeerTrackNodes => updateNodeWithPeer({ nodes: prevPeerTrackNodes, peer }));
+    // Ignoring these update types because we want to keep this implementation simple.
     return;
   }
 };
@@ -1064,13 +1029,6 @@ const onTrackListener = ({ peer, track, type }) => {
     return;
   }
 
-  if (type === HMSTrackUpdate.TRACK_REMOVED) {
-    // If non-regular track, or
-    // both regular video and audio tracks are removed
-    // Then we will remove Tiles (PeerTrackNodes) with removed track and received peer
-    return;
-  }
-
   // on TRACK_MUTED or TRACK_UNMUTED updates, We will update Tiles (PeerTrackNodes)
   if (
     type === HMSTrackUpdate.TRACK_MUTED ||
@@ -1097,6 +1055,13 @@ const onTrackListener = ({ peer, track, type }) => {
         peer,
       }));
     }
+    return;
+  }
+
+  if (type === HMSTrackUpdate.TRACK_REMOVED) {
+    // If non-regular track, or
+    // both regular video and audio tracks are removed
+    // Then we will remove Tiles (PeerTrackNodes) with removed track and received peer
     return;
   }
 
@@ -1329,9 +1294,9 @@ We have multiple example apps to get you started with 100ms React Native SDK -
 
 For a basic example, see the [React Native Quickstart Sample App](https://github.com/100mslive/react-native-hms/tree/develop/sample-apps/rn-quickstart-app) on GitHub.
 
-### Full-fledged example
+### Full-featured example
 
-You can also check out the full-fledged example app implementation in the [100ms React Native SDK github repository](https://github.com/100mslive/react-native-hms/tree/main/example) showcasing multiple features provided by 100ms.
+You can also check out the full-featured example app implementation in the [100ms React Native SDK GitHub repository](https://github.com/100mslive/react-native-hms/tree/main/example) showcasing multiple features provided by 100ms.
 
 ### Check Deployed Sample Apps
 
