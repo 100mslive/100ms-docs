@@ -118,6 +118,21 @@ const nextConfig = {
                 source: '/react-native/v2/features/hls-streaming',
                 destination: '/react-native/v2/features/hls',
                 permanent: false
+            },
+            {
+                source: '/javascript/v2/debugging/faq',
+                destination: '/javascript/v2/foundation/faq',
+                permanent: false
+            },
+            {
+                source: '/react-native/v2/guides/faq',
+                destination: '/react-native/v2/foundation/faq',
+                permanent: false
+            },
+            {
+                source: '/flutter/v2/debugging/faq',
+                destination: '/flutter/v2/foundation/faq',
+                permanent: false
             }
         ];
     }

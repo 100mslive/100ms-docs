@@ -3,8 +3,112 @@ title: FAQ
 nav: 1.8
 ---
 
-The questions and answers on this page are not plaform/framework specific, these are generic to the 100ms platform. Please check the platform-specific FAQ [here](./../debugging/faq).
+This page contains FAQ that are generic to 100ms platform and specific to Flutter as well:
 
-This page contains the frequently asked questions with answers categorized in various groups as below:
+-   [Common](#general)
+-   [Flutter](#flutter)
 
 <Content alias="faq" />
+
+## Flutter
+
+#### Flutter version compatibility
+
+HMSSDK works with flutter 3.3.x or above.
+
+#### Not getting event updates after hot reload/restart
+
+This is caused because the platform channel needs to be reinitialized again, hence this is intended behaviour.
+The solution for this is to re-run the app.
+
+Practices for faster development :
+
+-   Perform the intended changes.
+-   Leave the room.
+-   Perform hot reload/restart and rejoin the room.
+-   Verify the changes.
+
+The permanent solution for this is in pipeline, we will update once it's done.
+
+#### Issues while using `hmssdk_flutter` with flutter 3.0.x
+
+Flutter versions 3.0.0 to 3.0.5 had issues related to Platform View.
+
+Refer: [Android Platform View issue](https://github.com/flutter/flutter/issues/107313) & [Flutter Platform View bug](https://github.com/flutter/flutter/issues/103630)
+
+These were resolved in Flutter versions 3.3.0 & above. Please update the Flutter version to 3.3.0 or above.
+
+#### Is there any limit to the number of HMSVideoView on-screen at a time
+
+`HMSVideoView` internally uses `SurfaceView` in android and `UiKitView` in iOS. It is recommended to render at most 3 to 4 videos on a Single page/screen of the app and rest should be paginated for optimum performance.
+
+#### Do you have any implementation with popular State Management libraries -
+
+Please find the implementations below:
+
+-   [Provider](https://github.com/100mslive/100ms-flutter/tree/main/example)
+-   [Bloc](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/bloc)
+-   [Getx](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/getx)
+-   [Mobx](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/mobx)
+-   [Riverpod](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/riverpod)
+
+#### Not able to get room updates after joining the room
+
+To listen to the room updates please attach `HMSUpdateListener` as:
+
+```dart
+class Meeting implements HMSUpdateListener {
+    Meeting(){
+        hmsSDK.addUpdateListener(updateListener);
+    }
+    ...
+}
+```
+
+You can find more details about HMSUpdateListener [here](../features/update-listeners)
+
+#### Join Room with Muted Audio/Video
+
+User can join the room with muted audio/video by default. Please find the docs [here](../features/join-with-muted-audio-video).
+
+#### Get `onPeerUpdate` in preview
+
+User can get `onPeerUpdate` in preview the docs can be found [here](../features/preview#get-on-peer-update-and-room-state-in-preview)
+
+#### Getting updates multiple times in the room
+
+Please ensure removing the `HMSUpdateListener` while leaving the room.
+
+```dart
+hmsSDK.removeUpdateListener(updateListener);
+```
+
+You can find more details about HMSUpdateListener [here](../features/update-listeners)
+
+#### Can I create a room using API?
+
+Yes,please find the link [here](/server-side/v2/Rooms/create-via-api)
+
+#### Receiving too many logs from SDK
+
+Logs can be turned OFF using the `hmsLogSettings` parameter of `HMSSDK`. More info about this can be found [here](../features/error-handling#setting-log-levels-in-sdk)
+
+#### Do I need to do anything to handle poor internet connection?
+
+Not much, just turn on a flag in dashboard, and show a proper UI when a video gets degraded/unsubscribed. More details [here](../features/auto-video-degrade-restore).
+
+#### How do I implement Raise Hand, polls in application ?
+
+You can do using [peer metadata](../advanced-features/peer-metadata-update#use-cases).
+
+#### Why do I see videos getting stuck or frozen?
+
+If you have enabled subscribe degradation from the dashboard, the SDK might go in the degradation mode on poor internet connection turning off some videos to ensure good call quality. When this is done, a flag on the track will be turned on to let the UI know. The UI should treat it similar to the track turning off for purpose of displaying avatar etc. More details [here](../features/auto-video-degrade-restore).
+
+#### What is the maximum allowed duration for a session?
+
+The maximum allowed duration for a session on the 100ms platform is 12 hours.
+
+#### I want to suggest a new feature.
+
+Awesome, we're always looking out for new ideas and features. Please reach out to us over [discord](https://100ms.live/discord)
