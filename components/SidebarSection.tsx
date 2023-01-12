@@ -21,8 +21,10 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
     } = router;
 
     useEffect(() => {
-        if (slug?.[2].toLowerCase() === key) setOpenSection(true);
-    }, []);
+        slug.forEach((part) => {
+            if (part === key) setOpenSection(true);
+        });
+    }, [slug, key]);
 
     useEffect(() => {
         if (activeItem?.current)
