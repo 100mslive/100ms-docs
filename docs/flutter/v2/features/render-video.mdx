@@ -162,32 +162,34 @@ Let's look at the implementation:
 
 ```dart 
  HMSVideoView(
-  matchParent: false,
-  track: screenShareTrack,//pass the screen share track here.
-  scaleType: ScaleType.SCALE_ASPECT_FIT,
+  track: screenShareTrack,  // pass the screen share track here.
+  matchParent: false,   // set match parent as false to ensure Screenshare view is not cropped
+  scaleType: ScaleType.SCALE_ASPECT_FIT, // set to Aspect Fit
+  key: Key(videoTrack.trackId),   // set a unique identifier using the trackId 
 )
 ```
-## Supplementary bytes 
+## HMSVideoView Widget
 
-This section shows the `HMSVideoView` widget and its properties :
+The 100ms Video View Widget named `HMSVideoView` is built over the Stateless Widget.
+This `HMSVideoView` widget and all of its available properties are listed below.
 
 ```dart
 class HMSVideoView extends StatelessWidget {
-  ///  This will render video with trackId present in the track
-  ///[track] - track to be displayed
+
+  /// This will render video with trackId present in the track
+  /// [track] - the video track to be displayed
   final HMSVideoTrack track;
 
-  //[matchParent] - to match the size of the parent widget
+  // [matchParent] - to match the size of the parent widget
   final matchParent;
 
-  //[scaleType] - To set the video scaling
+  // [scaleType] - To set the video scaling
   final ScaleType scaleType;
 
-  //[setMirror] - To set mirroring of video
-  //
+  // [setMirror] - To set mirroring of video
   final bool setMirror;
 
-  //[isAutoSimulcast] - To set auto simulcast (Adaptive Bitrate)
+  // [isAutoSimulcast] - To set auto simulcast (Adaptive Bitrate)
   final bool isAutoSimulcast;
 }
 ```
