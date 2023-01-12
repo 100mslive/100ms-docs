@@ -16,8 +16,7 @@ You can also optionally pass these fields -
 
 1. Track Settings - Such as joining a Room with Muted Audio or Video using the `HMSTrackSetting` object. More information available [here](#join-with-muted-audio-video)
 
-2. User Metadata - This can be used to pass any additional metadata associated with the user using `metadata` of `HMSConfig` object. For Eg: user-id mapping at the application side. More information is available [here](../advanced-features/peer-metadata-update).
-
+2. User Metadata - This can be used to pass any additional metadata associated with the user using `metadata` of [HMSConfig object](https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/HMSConfig-class.html). For Eg: user-id mapping at the application side. More information is available [here](../advanced-features/peer-metadata-update).
 
 ## Join a Room
 
@@ -32,7 +31,7 @@ class Meeting implements HMSUpdateListener{
         hmsSDK = HMSSDK();
         hmsSDK.build();
         hmsSDK.addUpdateListener(this);
-        HMSConfig config = HMSConfig(authToken: 'eyJH5c', // client-side token generated from your token service 
+        HMSConfig config = HMSConfig(authToken: 'eyJH5c', // client-side token generated from your token service
                                 userName: 'John Appleseed');
         hmsSDK.join(config: config);
     }
@@ -111,7 +110,7 @@ class Meeting implements HMSUpdateListener{
 }
 ```
 
-### Step-by-step guide 
+### Step-by-step guide
 
 This section will take you through the join journey step by step :
 
@@ -119,9 +118,9 @@ This section will take you through the join journey step by step :
 
 ### Create a class implementing HMSUpdateListener
 
-Let's create a class that implements `HMSUpdateListener` and acts as a data source for our UI 
+Let's create a class that implements `HMSUpdateListener` and acts as a data source for our UI
 
-```dart 
+```dart
 class Meeting implements HMSUpdateListener{}
 ```
 
@@ -129,7 +128,7 @@ class Meeting implements HMSUpdateListener{}
 
 Now, create an instance of `HMSSDK` using the `build` function. This can be called in the constructor or on a function call depending on the implementation.
 
-```dart 
+```dart
 HMSSDK hmsSDK = HMSSDK();
 hmsSDK.build();
 ```
@@ -139,23 +138,24 @@ hmsSDK.build();
 The methods of `HMSUpdateListener` are invoked to notify updates happening in the room like as soon as `join` is successful we get `onJoin` callback.
 So, to get these updates we need to attach the listener as:
 
-```dart 
+```dart
 //`this` value corresponds to the instance implementing HMSUpdateListener
 hmsSDK.addUpdateListener(this);
 ```
 
-### Create HMSConfig object 
+### Create HMSConfig object
 
-Next, create an object of `HMSConfig` class using the available join configurations.
+Next, create an object of [HMSConfig class](https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/HMSConfig-class.html) using the available join configurations.
 
 ```dart
-HMSConfig config = HMSConfig(authToken: 'eyJH5c', // client-side token generated from your token service 
+HMSConfig config = HMSConfig(authToken: 'eyJH5c', // client-side token generated from your token service
                               userName: 'John Appleseed');
 ```
 
-### Invoke Join 
+### Invoke Join
 
 Now, we are primed to join the room. All you have to do is call `join` by passing the `config` object.
+
 ```dart
 hmsSDK.join(config: config);
 ```
@@ -205,7 +205,6 @@ HMSTrackSetting trackSettings = HMSTrackSetting(
          videoTrackSetting: HMSVideoTrackSetting(trackInitialState: HMSTrackInitState.MUTED));
 ```
 
-
 2. Now, create the `HMSSDK` object by passing the `HMSTrackSetting` object created above :
 
 ```dart
@@ -218,7 +217,7 @@ class Meeting implements HMSUpdateListener{
         HMSSDK hmsSDK = HMSSDK(hmsTrackSetting: trackSettings);
         hmsSDK.build();
         hmsSDK.addUpdateListener(this);
-        HMSConfig config = HMSConfig(authToken: 'eyJH5c', // client-side token generated from your token service 
+        HMSConfig config = HMSConfig(authToken: 'eyJH5c', // client-side token generated from your token service
                                 userName: 'John Appleseed');
         hmsSDK.join(config: config);
     }

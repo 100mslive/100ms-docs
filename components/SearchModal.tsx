@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ChevronRightIcon, SearchIcon } from '@100mslive/react-icons';
 import { Flex, Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
-import Link from 'next/link';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, connectHits, connectSearchBox } from 'react-instantsearch-dom';
 
@@ -239,7 +239,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
 
     React.useEffect(() => {
         const handleNavigation = (e) => {
-            if (e.code === 'Enter' && activeResult.current) {
+            if (e.code === 'Enter' && activeResult.current !== -1) {
                 const ele = document.getElementById(`res-box-${activeResult.current}`)
                     ?.children[0] as HTMLAnchorElement;
                 if (ele) ele.click();
