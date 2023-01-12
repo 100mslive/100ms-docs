@@ -139,7 +139,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                     }
 
                     .active {
-                        max-height: 100px;
+                        max-height: 100vh;
                     }
                 `}
             </style>
