@@ -47,6 +47,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                     padding: '0.5rem 1rem',
                     margin: '5px 0',
                     cursor: 'pointer',
+                    borderRadius: '$0',
                     '&:hover': { background: '$primaryDark' }
                 }}>
                 <Text
