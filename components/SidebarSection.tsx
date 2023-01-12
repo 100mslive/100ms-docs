@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 interface Props {
     value: String;
-    index: String;
+    index: Number;
     children: React.ReactChildren;
 }
 
