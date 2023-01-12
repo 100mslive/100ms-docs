@@ -155,19 +155,23 @@ rest should be paginated for better performance.
 
 Check out our fully featured [Example app here](https://github.com/100mslive/100ms-flutter/tree/main/example).
 
-### How to display screen share in apps without screen getting cropped 
+### Display Screen Share Tracks without getting cropped from edges
 
-Pass the screen share track in `HMSVideoView` with `matchParent` as `false` and `ScaleType` as `ScaleType.SCALE_ASPECT_FIT`.
+A peer in Room can broadcast their Screen from any platform like Web, Android, iOS, etc. If a peer shares their Screen from Web & the viewer is on a Mobile platform, some content on the Screen can get cropped. It's necessary to configure the `HMSVideoView` correctly to ensure the complete Screen share content is visible without any clipping/cropping from edges.
+
+Always create the `HMSVideoView` with `matchParent` as `false` and `ScaleType` as `ScaleType.SCALE_ASPECT_FIT` for correctly showing Screenshare Tracks.
+
 Let's look at the implementation:
 
 ```dart 
  HMSVideoView(
-  track: screenShareTrack,  // pass the screen share track here.
+  track: screenShareTrack,  // pass the screen share track here
   matchParent: false,   // set match parent as false to ensure Screenshare view is not cropped
   scaleType: ScaleType.SCALE_ASPECT_FIT, // always set to Aspect Fit for Screenshare Tracks
   key: Key(videoTrack.trackId),   // set a unique identifier using the trackId 
 )
 ```
+
 ## HMSVideoView Widget
 
 The 100ms Video View Widget named `HMSVideoView` is built over the Stateless Widget.
