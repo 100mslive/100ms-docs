@@ -20,15 +20,15 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms/<room_id>' \
     "recording_info": {
         "enabled": true,
         "upload_info": {
-            "type": "s3",
-            "location": "<Updated Name of the AWS s3 bucket>",
+            "type": "<Updated upload type (supported are s3, gs, oss)>",
+            "location": "<Updated Name of the storage bucket>",
             "prefix": "<Updated Upload prefix path>",
             "options": {
-                "region": "<Updated region of the s3 bucket, example `ap-south-1`>"
+                "region": "<Updated region of the storage bucket, example `ap-south-1`>"
             },
             "credentials": {
-                "key": "<Updated access key ID for the AWS account/S3 bucket>",
-                "secret": "<Updated secret access key for the AWS account/S3 bucket>"
+                "key": "<Updated access key ID for accessing the storage bucket>",
+                "secret": "<Updated secret access key for accessing the storage bucket>"
             }
         }
     },
