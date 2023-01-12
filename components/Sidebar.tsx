@@ -1,7 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
@@ -28,8 +27,7 @@ interface Props {
 const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
     const router = useRouter() as any;
     const {
-        query: { slug },
-        asPath
+        query: { slug }
     } = router;
 
     const { menu, setMenu } = menuState;
@@ -135,7 +133,9 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
             {/* Sidebar Menu Section */}
             {nav
                 ? Object.entries(nav).map(([key, children], index) => (
-                      <SidebarSection key={key} value={key} index={index} children={children} />
+                      <SidebarSection key={key} value={key} index={index}>
+                          {children as React.ReactChildren}
+                      </SidebarSection>
                   ))
                 : null}
             <style jsx>{`
@@ -218,21 +218,21 @@ const menuItem = [
     }
 ];
 
-const aliasMenu = [
-    {
-        title: 'Room APIs',
-        url: '/server-side/v2/Rooms/object'
-    },
-    {
-        title: 'Webhooks',
-        url: '/server-side/v2/introduction/webhook'
-    },
-    {
-        title: 'SFU Recording',
-        url: '/server-side/v2/Destinations/recording'
-    }
-    // {
-    //     title: 'Simulcast',
-    //     url: '/docs/server-side/v2/features/simulcast'
-    // }
-];
+// const aliasMenu = [
+//     {
+//         title: 'Room APIs',
+//         url: '/server-side/v2/Rooms/object'
+//     },
+//     {
+//         title: 'Webhooks',
+//         url: '/server-side/v2/introduction/webhook'
+//     },
+//     {
+//         title: 'SFU Recording',
+//         url: '/server-side/v2/Destinations/recording'
+//     }
+//     // {
+//     //     title: 'Simulcast',
+//     //     url: '/docs/server-side/v2/features/simulcast'
+//     // }
+// ];

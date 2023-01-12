@@ -4,8 +4,8 @@ import Link from 'next/link';
 
 interface Props {
     value: String;
-    index: String;
-    children: any;
+    index: Number;
+    children?: React.ReactChildren;
 }
 
 const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
