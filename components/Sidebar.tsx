@@ -217,22 +217,3 @@ const menuItem = [
         apiRef: '/server-side/v2/introduction/basics'
     }
 ];
-
-// const aliasMenu = [
-//     {
-//         title: 'Room APIs',
-//         url: '/server-side/v2/Rooms/object'
-//     },
-//     {
-//         title: 'Webhooks',
-//         url: '/server-side/v2/introduction/webhook'
-//     },
-//     {
-//         title: 'SFU Recording',
-//         url: '/server-side/v2/Destinations/recording'
-//     }
-//     // {
-//     //     title: 'Simulcast',
-//     //     url: '/docs/server-side/v2/features/simulcast'
-//     // }
-// ];

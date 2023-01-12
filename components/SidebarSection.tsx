@@ -4,15 +4,18 @@ import Link from 'next/link';
 
 interface Props {
     value: String;
-    index: Number;
-    children?: React.ReactChildren;
+    index: String;
+    children: React.ReactChildren;
 }
 
 const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
     const activeItem = useRef<HTMLAnchorElement>(null);
     const router = useRouter() as any;
 
-    const { asPath } = router;
+    const {
+        asPath,
+        query: { slug }
+    } = router;
 
     useEffect(() => {
         if (activeItem?.current)
@@ -68,8 +71,57 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                     </Link>
                 ) : null
             )}
+            {key === 'features' && slug[0] !== 'server-side' ? (
+                <>
+                    {aliasMenu.map((a) => (
+                        <Link scroll={false} prefetch={false} href={a.url} key={a.url}>
+                            <a
+                                style={{
+                                    cursor: 'pointer',
+                                    padding: '4px 0',
+                                    color:
+                                        a.url === asPath
+                                            ? 'var(--docs_text_primary)'
+                                            : 'var(--docs_text_secondary)',
+                                    fontWeight: a.url === asPath ? '500' : '400',
+                                    fontSize: '14px',
+                                    lineHeight: '24px',
+                                    borderLeft:
+                                        a.url === asPath
+                                            ? '4px solid var(--primary_light)'
+                                            : '4px solid transparent',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    paddingLeft: '1rem',
+                                    marginLeft: '1rem'
+                                }}>
+                                {a.title}
+                            </a>
+                        </Link>
+                    ))}
+                </>
+            ) : null}
         </section>
     );
 };
 
 export default SidebarSection;
+
+const aliasMenu = [
+    {
+        title: 'Room APIs',
+        url: '/server-side/v2/Rooms/object'
+    },
+    {
+        title: 'Webhooks',
+        url: '/server-side/v2/introduction/webhook'
+    },
+    {
+        title: 'SFU Recording',
+        url: '/server-side/v2/Destinations/recording'
+    }
+    // {
+    //     title: 'Simulcast',
+    //     url: '/docs/server-side/v2/features/simulcast'
+    // }
+];
