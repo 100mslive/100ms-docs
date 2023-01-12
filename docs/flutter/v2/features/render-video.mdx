@@ -9,7 +9,7 @@ It all comes down to this. All the setup so far has been done so that we can sho
 
 We simply have to pass a Video Track object to the `HMSVideoView` to begin automatic rendering of Live Video Stream.
 
-We can also optionally pass props like `key`, `scaleType`, `mirror` to customize the `HMSVideoView` widget.
+We can also optionally pass props like `key`, `scaleType`, `mirror` or `matchParent` to customize the `HMSVideoView` widget.
 
 ```dart
 HMSVideoView(
@@ -155,6 +155,18 @@ rest should be paginated for better performance.
 
 For a full example try out our [Example app here](https://github.com/100mslive/100ms-flutter/tree/main/example).
 
+### How to display screen share in apps without screen getting cropped 
+
+Pass the screen share track in `HMSVideoView` with `matchParent` as `false` and `ScaleType` as `ScaleType.SCALE_ASPECT_FIT`.
+Let's look at the implementation:
+
+```dart 
+ HMSVideoView(
+  matchParent: false,
+  track: screenShareTrack,//pass the screen share track here.
+  scaleType: ScaleType.SCALE_ASPECT_FIT,
+)
+```
 ## Supplementary bytes 
 
 This section shows the `HMSVideoView` widget and its properties :
