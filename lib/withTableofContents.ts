@@ -10,7 +10,7 @@ const withTableofContents = (toc?: any[]) => () => (tree) => {
     // @ts-ignore
     for (let i = 0; i < tree.children.length; i++) {
       const node = tree.children[i]
-      if (node.type === 'heading' && [2, 3].includes(node.depth)) {
+      if (node.type === 'heading' && [2, 3, 4].includes(node.depth)) {
         const title = node.children
           .filter((n) => n.type === 'text')
           .map((n) => n.value)
