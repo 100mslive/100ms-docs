@@ -5,9 +5,14 @@ nav: 4.4
 
 ## Introduction
 
-This guide will help you understand various approaches available to calculate total session duration, aggregated participants duration, and individual participants' duration for a specific session.
+This guide will help you understand various approaches available to calculate total session duration, aggregated participants' duration, and individual participants' duration for a specific session.
 
-You can use `Retrieve a session API` to get the individual participants' duration, total session duration, and aggregated participants' duration. And use the data export option from the 100ms dashboard to get the total session duration and aggregated participants' duration. Please follow the below sections for more details with examples.
+We recommend two approaches:
+
+1. Use the [Retrieve a specific session API](/server-side/v2/Sessions/retrieve-a-session) to get the individual participants' duration, total session duration, and aggregated participants' duration.
+2. Use the data export option available on [Sessions page](https://dashboard.100ms.live/sessions) in your 100ms dashboard to get the total session duration and aggregated participants' duration.
+
+Please follow the below sections for more details with examples.
 
 ## Using Sessions API
 
@@ -15,14 +20,19 @@ Use this API to build the attendance system to gather information about peers fo
 
 Let's take a quick look at the overall flow of how we can build this:
 
--   Listen to the `session.close.success` webhook event, which indicates that the particular session has ended.
--   Once you receive the webhook, fetch `session_id` and trigger the **Retrieve a session API** to fetch details of all the peers who participated in the session.
+-   Listen to the `session.close.success` [webhook event](/server-side/v2/introduction/webhook#session-close-success), which indicates that the particular session has ended.
+-   Once you receive the webhook, fetch `session_id` and trigger the [Retrieve a specific session API](/server-side/v2/Sessions/retrieve-a-session) to fetch details of all the peers who participated in the session.
 -   Calculations:
-    -   Calculate the total duration of each unique peer by finding the difference between the `joined_at` and `left_at` fields for the respective peer
-        -   Map the duration against `peer_id` or `user_id` (your internal user identifier for business logic).
-    -   Calculate aggregated duration of peers by adding the duration of all the peers.
+    -   Calculate the individual participants' duration by finding the difference between the `joined_at` and `left_at` fields for the respective peer
+        -   Map the duration against `peer_id` or `user_id` (your internal user identifier used while creating the [app token](/server-side/v2/introduction/authentication-and-tokens#app-token) for peers).
+    -   Calculate aggregated participants duration by adding the duration of all the peers.
     -   Calculate total session duration by finding the difference between created_at and updated_at timestamps.
 -   Store the data in your preferred database for later review.
+
+> **Note**:
+>
+> -   100ms generates a `peer_id` (unique identifier) every time a peer joins a room. If a peer leaves and re-joins the room, they will be assigned a new peer_id.
+> -   A `user_id` will be unique to a peer as it's associated with the [app token](/server-side/v2/introduction/authentication-and-tokens#app-token) they use to join the room. The below example uses `user_id` to avoid duplicate entries for a single peer.
 
 ### Code example
 
@@ -43,7 +53,7 @@ app.post('/webhooks', async function (req, res) {
             });
             var parsedData = response.data;
 
-            // Calculate the total duration of each unique peer
+            // Calculate individual participants' duration
             const peers = Object.values(parsedData.peers);
             const durationByUser = peers.reduce((acc, peer) => {
                 const duration = moment
@@ -59,13 +69,13 @@ app.post('/webhooks', async function (req, res) {
             }));
             console.log(result);
 
-            // Calculate aggregated duration of peers
+            // Calculate aggregated participants' duration
             const totalDuration = Object.values(durationByUser)
                 .reduce((a, b) => a + b)
                 .toFixed(2);
             console.log(`Total duration for all peers: ${totalDuration} minutes`);
 
-            // Calculate session duration
+            // Calculate total session duration
             const sessionDuration = moment
                 .duration(moment(parsedData.updated_at).diff(moment(parsedData.created_at)))
                 .asMinutes()
@@ -113,9 +123,18 @@ The exported data will contain data for fields such as:
 -   total_peers,
 -   participant duration (aggregated duration for all peers),
 -   session_duration, and
--   recording_duration.
+-   recording_duration (only available for [SFU recording](/server-side/v2/Destinations/recording) at the moment).
 
 ![Room](/docs/v2/exported-data.png)
+
+## Other possible methods
+
+-   You can use the `peer.leave.success` [webhook event](/server-side/v2/introduction/webhook#peer-leave-success) for a specific session to calculate individual participants' duration and aggregated participants' duration.
+    -   From the webhook events fetch details of `joined_at` and `left_at` fields for each peer and find the difference to calculate individual participants' duration.
+    -   Find the sum of the duration for all the peers to calculate the aggregated participants' duration.
+-   If you need to get the duration of an ongoing session, you can use the below logic:
+    -   Use [Retrieve a specific session API](/server-side/v2/Sessions/retrieve-a-session) to fetch details of individual peers currently active in the session.
+    -   Find the difference between the value for `joined_at` and `current_time` (use some library to get the current time) to get the current duration.
 
 ## Complete code example - Using sessions API
 
@@ -162,7 +181,7 @@ app.post('/webhooks', async function (req, res) {
             });
             var parsedData = response.data;
 
-            // Calculate the total duration of each unique peer
+            // Calculate individual participants' duration
             const peers = Object.values(parsedData.peers);
             const durationByUser = peers.reduce((acc, peer) => {
                 const duration = moment
@@ -178,13 +197,13 @@ app.post('/webhooks', async function (req, res) {
             }));
             console.log(result);
 
-            // Calculate aggregated duration of peers
+            // Calculate aggregated participants' duration
             const totalDuration = Object.values(durationByUser)
                 .reduce((a, b) => a + b)
                 .toFixed(2);
             console.log(`Total duration for all peers: ${totalDuration} minutes`);
 
-            // Calculate session duration
+            // Calculate total session duration
             const sessionDuration = moment
                 .duration(moment(parsedData.updated_at).diff(moment(parsedData.created_at)))
                 .asMinutes()
