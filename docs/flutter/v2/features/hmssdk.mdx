@@ -15,7 +15,7 @@ In majority of use-cases, constructing a simple `HMSSDK` object & calling `build
 
 ```dart
 HMSSDK hmsSDK = HMSSDK();
-hmsSDK.build();
+await hmsSDK.build(); // ensure to await while invoking the `build` method
 ```
 
 For Advanced use-cases, 100ms provides following optional parameters while constructing the `HMSSDK` object -
@@ -52,7 +52,7 @@ HMSTrackSetting trackSetting = HMSTrackSetting(
 
 // Now, pass the Track Settings parameter while contructing the HMSSDK object
 HMSSDK hmsSDK = HMSSDK(hmsTrackSetting: trackSetting);
-hmsSDK.build();
+await hmsSDK.build(); // ensure to await while invoking the `build` method
 ```
 
 2. iOS Screenshare
@@ -69,7 +69,7 @@ HMSSDK hmsSDK = HMSSDK(
     appGroup: "appGroup", // App Group value linked to your Apple Developer Account
     preferredExtension: "preferredExtension"); // Name of the Broadcast Upload Extension Target created in Xcode
 
-hmsSDK.build();
+await hmsSDK.build(); // ensure to await while invoking the `build` method
 ```
 
 
@@ -90,7 +90,7 @@ HMSLogSettings hmsLogSettings = HMSLogSettings(
 
 // pass the Log Settings while contructing the HMSSDK object
 HMSSDK hmsSDK = HMSSDK(hmsLogSettings: hmsLogSettings);
-hmsSDK.build();
+await hmsSDK.build(); // ensure to await while invoking the `build` method
 ```
 
 
@@ -99,7 +99,7 @@ hmsSDK.build();
 The `build` method of `HMSSDK` creates an instance of 100ms SDK on Native iOS / Android platforms. It's recommended that you only create a single instance of `HMSSDK`. This allows for quick & simple integration & avoids State Management complexities. So the invocation of `build` method should only happen once in your app lifecycle. The `build` method should always be called after creating an instance of the `HMSSDK`.
 
 ```dart
-hmsSDK.build();
+await hmsSDK.build(); // ensure to await while invoking the `build` method
 ```
 
 ## What does Destroy Method do?
@@ -108,7 +108,7 @@ The `destroy` method performs the opposite action of `build`. It removes & clear
 
 ```dart
 HMSSDK hmsSDK = HMSSDK(); // construct HMSSDK object
-hmsSDK.build(); // invoke the build method 
+await hmsSDK.build(); // ensure to await while invoking the `build` method
 
 ... // perform Room actions like join room, chat, streaming, recording, screenshare, etc
 
