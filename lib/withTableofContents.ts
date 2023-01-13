@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { slugify } from './mdxUtils';
 import { visit } from 'unist-util-visit';
-import { toMdxJsxFlowElement } from '@/lib/mdxUtils';
+import { slugify, toMdxJsxFlowElement } from '@/lib/mdxUtils';
 
 function getTitle(node): string | undefined {
     const children = node.children[0];
     if (children && children.type === 'text') {
         return children.value;
     }
+    return undefined
 }
 
 /**
@@ -16,7 +16,7 @@ function getTitle(node): string | undefined {
  */
 const withTableofContents = () => (tree) => {
     visit(tree, 'heading', (node, index, parent) => {
-        let rank = node.depth;
+        const rank = node.depth;
         if (rank && [2, 3].includes(rank)) {
             const title = getTitle(node) ?? '';
             const slug = slugify(title);

@@ -1,7 +1,7 @@
 import { visit } from 'unist-util-visit';
 
-const remarkCodeHeader = () => (tree) => {
-    return visit(tree, 'code', (node, index, parent) => {
+const remarkCodeHeader = () => (tree) =>
+    visit(tree, 'code', (node, index, parent) => {
         const nodeLang = node.lang || '';
         let language = '';
         let title = '';
@@ -21,6 +21,5 @@ const remarkCodeHeader = () => (tree) => {
         });
         node.lang = language;
     });
-};
 
 export default remarkCodeHeader;

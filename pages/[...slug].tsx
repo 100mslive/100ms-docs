@@ -22,6 +22,7 @@ import { getMDXComponent } from 'mdx-bundler/client';
 import remarkCodeHeader from '@/lib/remark-code-header';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
+import remarkA11yEmoji from '@fec/remark-a11y-emoji';
 
 type NavRoute = {
     url: string;
@@ -55,14 +56,13 @@ interface Props {
         nextPost: PaginationType;
     };
     source: string;
-    toc: any[];
 }
 
 const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
     const {
         query: { slug },
         asPath
-    } = useRouter() as any;
+    } = useRouter();
     const [currentDocSlug] = slug as string[];
     const [activeHeading, setActiveHeading] = React.useState('');
     const [activeSubHeading, setActiveSubHeading] = React.useState('');
@@ -115,7 +115,7 @@ const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
     const menuState = { menu, setMenu };
     useLockBodyScroll(modal);
 
-    const router = useRouter() as any;
+    const router = useRouter();
     const SEO = {
         title: `${frontMatter.title || '100ms Docs'} | 100ms`,
         openGraph: {
@@ -210,7 +210,7 @@ export const getStaticProps = async ({ params }) => {
             options.remarkPlugins = [
                 ...(options.remarkPlugins ?? []),
                 remarkGfm,
-                require('@fec/remark-a11y-emoji'),
+                remarkA11yEmoji,
                 imagePlugin,
                 remarkCodeHeader,
                 withTableofContents
