@@ -3,7 +3,7 @@ title: Session Metadata
 nav: 5.04
 ---
 
-Session metadata is a shared state that is accessible by everyone in the room. Session metadata can be used to achieve features like pinned text, spotlight(bringing a particular peer into a larger stage), etc.
+Session metadata is a shared state that is accessible by everyone in the room. Think of it as a additional top-level data associated with a session. Session metadata can be used to achieve features like pinned text, spotlight(bringing a particular peer into a center stage for everyone in the room), etc.
 
 Session metadata is persisted throughout a session and is cleared once the last peer leaves the room.
 
@@ -19,7 +19,7 @@ While peer metadata is associated with individual peers and each peer can have t
 ## setSessionMetadata
 
 -   Use `setSessionMetadata` to update the value of the session metadata.
--   Objects as session metadata but the object should be JSON serializable.
+-   Objects could be set as session metadata but the object should be JSON serializable.
 -   Note: whatever is passed to setSessionMetadata is set as session metadata as is. When using objects, if you want to update a particular key, you should update it before calling setSessionMetadata.
 
 ```tsx
@@ -70,8 +70,9 @@ const sessionMetadata = useHMSStore(selectSessionMetadata);
 -   To notify remote peers of the change in metadata, broadcast API needs to be used.
 -   After updating metadata, a broadcast message with text `refresh` of type `metadata` is sent to all the remote peers.
 -   On receiving a message of this type and text, session metadata needs to be refreshed and `populateSessionMetadat` action.
--   Also after joining, session metadata is not available and needs to be fetched explicitly by the app using`populateSessionMetadata`(web) action.
--   No permission support - anyone can read/write session metadata.
+-   Also after joining, session metadata is not available and needs to be fetched explicitly by the app using `populateSessionMetadata` action.
+-   No permission support - anyone can read/write session metadata. If you want to restrict access to session metadata, you have to do it on your app level logic.
+-   Locks to ensure consistency of the data. If two peers update it at the same time, it will be a race condition for which one succeeds last, overwriting whatever was before.
 
 # Usage
 
@@ -242,5 +243,28 @@ export const useSetPinnedMessage = () => {
     );
 
     return { setPinnedMessage };
+};
+```
+
+### Display the pinned message
+
+We'll also use the same function returned from the hook to clear the pinned chat by passing in no arguments
+
+```js
+const PinnedMessage = () => {
+    const pinnedMessage = useHMSStore(selectSessionMetadata);
+    const { setPinnedMessage } = useSetPinnedMessage();
+
+    return pinnedMessage ? (
+        <Flex>
+            <Box>
+                <PinIcon />
+            </Box>
+            <Text variant="sm">{pinnedMessage}</Text>
+            <IconButton onClick={() => setPinnedMessage()}>
+                <CrossIcon />
+            </IconButton>
+        </Flex>
+    ) : null;
 };
 ```
