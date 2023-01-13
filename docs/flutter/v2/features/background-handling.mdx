@@ -13,6 +13,39 @@ Android & iOS have different mechanisms of handling app behaviour which includes
 
 There are 2 prominent behaviours that are mainly affected when apps transition to Background State - Publishing Audio/Video, and Playing incoming Audio/Video.
 
+### Android Behaviours when app goes to background without enabling blackground processing
+
+| **Scenario**   | **Behaviours**                                 |
+| :------------- | :----------------------------------------------------- |
+| Mic is unmuted | It will remain unmuted and the user will able to publish audio for limited period (time depend on OS) |
+| Camera is unmuted | It will remain unmuted and the user will able to publish video for limited period (time depend on OS)  |
+| Remote Peer is publishing audio | Able to play incoming audio from the room |
+
+### Android Behaviours when app goes to background with enabling blackground processing
+
+| **Scenario**   | **Behaviours**                                 |
+| :------------- | :----------------------------------------------------- |
+| Mic is unmuted | It will remain unmuted and the user will able to publish audio without any restriction |
+| Camera is unmuted | It will remain unmuted and the user will able to publish video without any restriction |
+| Remote Peer is publishing audio | Able to play incoming audio from the room |
+
+### iOS Behaviours when app goes to background without enabling blackground processing
+
+| **Scenario**   | **Behaviours**                                 |
+| :------------- | :----------------------------------------------------- |
+| Mic is unmuted | It will get muted |
+| Camera is unmuted | It will get muted |
+| Remote Peer is publishing audio | Able to play incoming audio from the room |
+
+### iOS Behaviours when app goes to background with enabling blackground processing
+
+| **Scenario**   | **Behaviours**                                 |
+| :------------- | :----------------------------------------------------- |
+| Mic is unmuted |It will remain unmuted and the user will able to publish audio without any restriction  |
+| Camera is unmuted | It will get muted |
+| Remote Peer is publishing audio | Able to play incoming audio from the room |
+
+
 Let's breakdown how your apps can implement efficient handling of Background states on Android & iOS Platforms.
 
 ## Android
@@ -44,7 +77,8 @@ Add service inside `<application>` tag as follows:
         ...
      </activity>
 
-<service android:name="com.pravera.flutter_foreground_task.service.ForegroundService" />
+<service android:name="com.pravera.flutter_foreground_task.service.ForegroundService" 
+  android:foregroundServiceType="camera|microphone" />
 
 </application>
 ```
@@ -99,7 +133,7 @@ Widget build(BuildContext context) {
 ```
 </div>
 
-> To know more about `flutter_foreground_task` visit [here](https://pub.dev/packages/flutter_foreground_task).
+> To know more about `flutter_foreground_task` visit [here](https://pub.dev/packages/flutter_foreground_task) or checkout implementation in our [example app](https://github.com/100mslive/100ms-flutter/tree/main/example).
 
 ## iOS
 
