@@ -3,6 +3,8 @@ title: Stats for HLS Player
 nav: 8.04
 ---
 
+import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md'
+
 ## Stats Information
 
 Statistics for an on-going stream can be viewed by user for debugging purposes.
@@ -12,7 +14,7 @@ It can also be used as a standalone dependency if required and has no dependency
 
 -   Adding the Player-Stats plugin and SDK dependency to your app-level `build.gradle`.
 
-<Content alias="androidSdkVersionShield" />
+<AndroidSdkVersionShield />
 
 <Tabs id="sdk-imports" items={['Maven Central', 'Jitpack']} />
 
@@ -132,7 +134,7 @@ An Existing exoplayer instance can be directly attached to PlayerEventsCollector
 <Tab id='removeListener-PlayerStatsPlugin-0'>
 
 ```kotlin
-            playerEventsCollector.removeListener()
+            playerEventsCollector.removeListener();
 
 ```
 
@@ -151,7 +153,7 @@ An Existing exoplayer instance can be directly attached to PlayerEventsCollector
 
 **Note**
 
-    removeListener() must be called when view listening to it is destroyed
+    `removeListener()` must be called when view listening to it is destroyed
 
 </Note>
 

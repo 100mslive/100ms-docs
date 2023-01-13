@@ -208,7 +208,7 @@ This event will be sent when any peer joins the room successfully
 | user_id            | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                           |
 | template_id        | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                    |
 | user_name          | `string`             | User name of the joining user <br/><br/> Example: Test user                                             |
-| user_data          | `string`             | User data of the joining user <br/><br/> Example: {"isHandRaised":true}                                 |
+| user_data          | `string`             | User data of the joining user <br/><br/> Example: `{"isHandRaised":true}`                               |
 | role               | `string`             | Role of the joining user <br/><br/> Example: host                                                       |
 | joined_at          | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                     |
 | session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                 |
@@ -253,7 +253,7 @@ This event will be sent when peer leaves the room
 | user_id            | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                                         |
 | template_id        | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                  |
 | user_name          | `string`             | User name of the user <br/><br/> Example: Test user                                                                   |
-| user_data          | `string`             | User data of the user <br/><br/> Example: {"isHandRaised":true}                                                       |
+| user_data          | `string`             | User data of the user <br/><br/> Example: `{"isHandRaised":true}`                                                     |
 | role               | `string`             | Role of the user <br/><br/> Example: host                                                                             |
 | left_at            | `timestamp (in UTC)` | Timestamp when user left <br/><br/> Example: 2020-11-11T17:32:17Z                                                     |
 | duration           | `int`                | Duration the user spent in the room in seconds <br/><br/> Example: 36000                                              |
@@ -332,7 +332,7 @@ This event will be sent when a peer fails to join a room. This can occur when,
 | user_id       | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                           |
 | template_id   | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                    |
 | user_name     | `string`             | User name of the user <br/><br/> Example: Test user                                                     |
-| user_data     | `string`             | User data of the user <br/><br/> Example: {"isHandRaised":true}                                         |
+| user_data     | `string`             | User data of the user <br/><br/> Example: `{"isHandRaised":true}`                                         |
 | role          | `string`             | Role of the user <br/><br/> Example: host                                                               |
 | joined_at     | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                     |
 | error_message | `string`             | Reason for failure <br/><br/> Example: Peer not joined                                                  |
@@ -385,7 +385,7 @@ This event will be sent when the peer leave fails. This can occur when,
 | user_id       | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                           |
 | template_id   | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                    |
 | user_name     | `string`             | User name of the user <br/><br/> Example: Test user                                                     |
-| user_data     | `string`             | User data of the user <br/><br/> Example: {"isHandRaised":true}                                         |
+| user_data     | `string`             | User data of the user <br/><br/> Example: `{"isHandRaised":true}`                                         |
 | role          | `string`             | Role of the user <br/><br/> Example: host                                                               |
 | left_at       | `timestamp (in UTC)` | Timestamp when user left <br/><br/> Example: 2020-11-11T17:32:17Z                                       |
 | duration      | `int`                | Duration the user spent in the room in seconds <br/><br/> Example: 36000                                |
@@ -539,7 +539,7 @@ This event will be sent when the role change for a peer is successful.
 | peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id            | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                           |
 | user_name          | `string`             | User name of the user <br/><br/> Example: Test user                                                     |
-| user_data          | `string`             | User data of the user <br/><br/> Example: {"isHandRaised":true}                                         |
+| user_data          | `string`             | User data of the user <br/><br/> Example: `{"isHandRaised":true}`                                         |
 | previous_role      | `string`             | Previous role of the peer <br/><br/> Example: host                                                      |
 | role               | `string`             | New role of the user <br/><br/> Example: host                                                           |
 | joined_at          | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                     |
@@ -591,7 +591,7 @@ This event will be sent when the role change for a peer fails. For example:
 | peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id            | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                           |
 | user_name          | `string`             | User name of the user <br/><br/> Example: Test user                                                     |
-| user_data          | `string`             | User data of the user <br/><br/> Example: {"isHandRaised":true}                                         |
+| user_data          | `string`             | User data of the user <br/><br/> Example: `{"isHandRaised":true}`                                         |
 | role               | `string`             | New role of the user <br/><br/> Example: host                                                           |
 | joined_at          | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                     |
 | session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                 |
@@ -735,7 +735,7 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
 | max_width          | `int`                | Maximum width of the screen supported for streaming / recording in pixels <br/><br/> Example: 1280      |
 | max_height         | `int`                | Maximum height of the screen supported for streaming / recording in pixels <br/><br/> Example: 720      |
 | meeting_url        | `string`             | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                 |
-| rtmp               | `array`              | List of RTMP objects provided at rtmp start <br/><br/> Example: [{"url": "http://test.com"}]            |
+| rtmp               | `array`              | List of RTMP objects provided at rtmp start <br/><br/> Example: `[{"url": "http://test.com"}]`          |
 | session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                 |
 
 #### Sample `beam.started.success` event
@@ -792,7 +792,7 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
 | max_width          | `int`                | Maximum width of the screen supported for streaming / recording in pixels <br/><br/> Example: 1280      |
 | max_height         | `int`                | Maximum height of the screen supported for streaming / recording in pixels <br/><br/> Example: 720      |
 | meeting_url        | `string`             | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                 |
-| rtmp               | `array`              | List of RTMP objects provided at rtmp start <br/><br/> Example: [{"url": "http://test.com"}]            |
+| rtmp               | `array`              | List of RTMP objects provided at rtmp start <br/><br/> Example: `[{"url": "http://test.com"}]`          |
 | session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                 |
 
 #### Sample `beam.stopped.success` event
@@ -851,7 +851,7 @@ This event is sent when beam successfully records the room and uploads the video
 | recording_path          | `string`             | Upload path of the recorded video such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                                                                  |
 | recording_presigned_url | `string`             | Presigned URL for the recorded video, for download <br/><br/> Example: https://upload-location/bucket/ac.mp4                                                    |
 | meeting_url             | `string`             | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                                                                         |
-| rtmp                    | `array`              | List of RTMP objects provided at rtmp start <br/><br/> Example: [{"url": "http://test.com"}]                                                                    |
+| rtmp                    | `array`              | List of RTMP objects provided at rtmp start <br/><br/> Example: `[{"url": "http://test.com"}]`                                                         |
 | session_started_at      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                         |
 
 #### Sample `beam.recording.success` event
@@ -899,12 +899,12 @@ Please check the below table for possible error types, messages and description.
 
 #### Error types
 
-| Type                | Message                                                                                          | Description                                                                                               |
-| :------------------ | :----------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
-| INTERNAL_ERROR      | Internal error                                                                                   | Internal errors in beam.                                                                                  |
-| MAX_RETRIES_REACHED | Beam couldn't connect to Meeting URL after <max_count> retries. Check if meeting URL is correct. | Sent when Beam cannot join meeting URL after predefined number of max retries.                            |
-| UPLOAD_ERROR        | Failed to upload recordings. Check if upload config is correct.                                  | Sent when there are failures in uploading recordings. This is most likely due to incorrect upload config. |
-| BEAM_STOPPED        | Beam stopped too early                                                                           | Beam takes a few seconds to start, if a stop request is sent before that, we send BEAM_STOPPED error.     |
+| Type                | Message                                                                                            | Description                                                                                               |
+| :------------------ | :-----------------------------------------------------------------------------------------------   | :-------------------------------------------------------------------------------------------------------- |
+| INTERNAL_ERROR      | Internal error                                                                                     | Internal errors in beam.                                                                                  |
+| MAX_RETRIES_REACHED | Beam couldn't connect to Meeting URL after `<max_count>` retries. Check if meeting URL is correct. | Sent when Beam cannot join meeting URL after predefined number of max retries.                            |
+| UPLOAD_ERROR        | Failed to upload recordings. Check if upload config is correct.                                    | Sent when there are failures in uploading recordings. This is most likely due to incorrect upload config. |
+| BEAM_STOPPED        | Beam stopped too early                                                                             | Beam takes a few seconds to start, if a stop request is sent before that, we send BEAM_STOPPED error.     |
 
 #### Attributes
 
@@ -928,7 +928,7 @@ Please check the below table for possible error types, messages and description.
 | max_width          | `int`                | Maximum width of the screen supported for streaming / recording in pixels <br/><br/> Example: 1280                   |
 | max_height         | `int`                | Maximum height of the screen supported for streaming / recording in pixels <br/><br/> Example: 720                   |
 | meeting_url        | `string`             | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                              |
-| rtmp               | `array`              | List of RTMP objects provided at rtmp start <br/><br/> Example: [{"url": "http://test.com"}]                         |
+| rtmp               | `array`              | List of RTMP objects provided at rtmp start <br/><br/> Example: `[{"url": "http://test.com"}]`                       |
 | session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                              |
 
 #### Sample `beam.failure` event
@@ -1105,7 +1105,7 @@ Please check the below table for possible error types, messages and description.
 | Type                | Message                                                                                          | Description                                                                                               |
 | :------------------ | :----------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
 | INTERNAL_ERROR      | Internal error                                                                                   | Internal errors in beam.                                                                                  |
-| MAX_RETRIES_REACHED | Beam couldn't connect to Meeting URL after <max_count> retries. Check if meeting URL is correct. | Sent when Beam cannot join meeting URL after predefined number of max retries.                            |
+| MAX_RETRIES_REACHED | Beam couldn't connect to Meeting URL after `<max_count>` retries. Check if meeting URL is correct. | Sent when Beam cannot join meeting URL after predefined number of max retries.                            |
 | UPLOAD_ERROR        | Failed to upload recordings. Check if upload config is correct.                                  | Sent when there are failures in uploading recordings. This is most likely due to incorrect upload config. |
 | BEAM_STOPPED        | Beam stopped too early                                                                           | Beam takes a few seconds to start, if a stop request is sent before that, we send BEAM_STOPPED error.     |
 

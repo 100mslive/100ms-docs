@@ -4,6 +4,8 @@ nav: 14.1
 description: Migrating from SurfaceViewRenderer --> HMSVideoView
 ---
 
+import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
+
 ### Why should you migrate?
 - HMSVideoView provides a better abstraction to render live video and handles edge cases like managing release and init state. Can prevent accidentally subscribing to video track more than once.
 - Has in-built support for zoom and pan
@@ -19,6 +21,7 @@ To use HMSVideoView you'll need to migrate from SurfaceViewRenderer (if you are 
 ### Adding the HMSVideoView 
 
 <Content alias="androidSdkVersionShield" />
+<AndroidSdkVersionShield />
 
 ```json{}:build.gradle
 dependencies {

@@ -193,7 +193,7 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
 
 <Tab id="complete-code-1">
 
-```html:index.html section=completeCodeExample sectionIndex=1 tab=HTML
+```html:index.html section=completeCodeExample sectionIndex=2 tab=HTML
 <!DOCTYPE html>
 <html>
   <head>
@@ -240,7 +240,7 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
 
 <Tab id="complete-code-2">
 
-```css:styles.css section=completeCodeExample sectionIndex=1 tab=CSS
+```css:styles.css section=completeCodeExample sectionIndex=3 tab=CSS
 * {
     margin: 0;
     padding: 0;
@@ -441,15 +441,8 @@ You can open the app in another tab in the browser to join as the second peer to
 In this section, let's walk through what the code does.
 
 <StepsToc
-    parentId="initialize-sdk-steps"
-    descriptions={[
-        'Initialize HMSStore and HMSActions from 100ms SDK for state management and to perform actions like join, leave, etc. in the app.',
-        'Include the HTML elements such as tiles and buttons to render peers and trigger actions like join, leave, etc.',
-        'Pass config object with userName and authToken to join method from HMSActions. Use leave method from HMSActions to leave the room.',
-        'Use attachVideo method from HMSActions to add video and selectPeers selector from hmsStore to display tile for peers.',
-        'Use setLocalAudioEnabled and setLocalVideoEnabled from HMSActions to mute/unmute local audio/video tracks.',
-        'Use selectIsConnectedToRoom selector from hmsStore to manage UI elements based on connection/disconnection.'
-    ]}
+  parentId="initialize-sdk-steps"
+  descriptions={["Initialize HMSStore and HMSActions from 100ms SDK for state management and to perform actions like join, leave, etc. in the app.", "Include the HTML elements such as tiles and buttons to render peers and trigger actions like join, leave, etc.", "Pass config object with userName and authToken to join method from HMSActions. Use leave method from HMSActions to leave the room.", "Use attachVideo method from HMSActions to add video and selectPeers selector from hmsStore to display tile for peers.", "Use setLocalAudioEnabled and setLocalVideoEnabled from HMSActions to mute/unmute local audio/video tracks.", "Use selectIsConnectedToRoom selector from hmsStore to manage UI elements based on connection/disconnection."]}
 />
 
 <StepsContainer id="initialize-sdk-steps">
@@ -503,7 +496,7 @@ const controls = document.getElementById("controls");
 
 <Tab id="initialize-html-elements-1">
 
-```html:index.html section=InitializingTheSDK sectionIndex=2 tab=HTML
+```html:index.html section=InitializingTheSDK sectionIndex=3 tab=HTML
 <!DOCTYPE html>
 <html>
   <head>
@@ -549,7 +542,7 @@ const controls = document.getElementById("controls");
 
 <Tab id="initialize-html-elements-2">
 
-```css:styles.css section=InitializingTheSDK sectionIndex=2 tab=CSS
+```css:styles.css section=InitializingTheSDK sectionIndex=4 tab=CSS
 * {
     margin: 0;
     padding: 0;
@@ -746,7 +739,7 @@ leaveBtn.onclick = leaveRoom;
 
 <Tab id="join-form-1">
 
-```html:index.html section=JoiningRoom sectionIndex=1 tab=HTML
+```html:index.html section=JoiningRoom sectionIndex=2 tab=HTML
 <!DOCTYPE html>
 <html>
   <head>
@@ -781,7 +774,7 @@ leaveBtn.onclick = leaveRoom;
 
 <Tab id="join-form-2">
 
-```css:styles.css section=JoiningRoom sectionIndex=1 tab=CSS
+```css:styles.css section=JoiningRoom sectionIndex=3 tab=CSS
 * {
     margin: 0;
     padding: 0;
@@ -919,7 +912,7 @@ hmsStore.subscribe(renderPeers, selectPeers);
 
 <Tab id="render-peers-1">
 
-```html:index.html section=SubscribingToTheState sectionIndex=1 tab=HTML
+```html:index.html section=SubscribingToTheState sectionIndex=2 tab=HTML
 <div id="conference" class="conference-section hide">
     <h2>Conference</h2>
     <div id="peers-container"></div>
@@ -930,7 +923,7 @@ hmsStore.subscribe(renderPeers, selectPeers);
 
 <Tab id="render-peers-2">
 
-```css:styles.css section=SubscribingToTheState sectionIndex=1 tab=CSS
+```css:styles.css section=SubscribingToTheState sectionIndex=3 tab=CSS
   form h2,
   .conference-section h2 {
     margin-bottom: 20px;
@@ -1014,7 +1007,7 @@ muteVideo.onclick = () => {
 
 <Tab id="mute-unmute-1">
 
-```html:index.html section=MutingUnmutingLocalTracks sectionIndex=1 tab=HTML
+```html:index.html section=MutingUnmutingLocalTracks sectionIndex=2 tab=HTML
 <div id="controls" class="control-bar">
     <button id="mute-aud" class="btn-control">Mute</button>
     <button id="mute-vid" class="btn-control">Hide</button>
@@ -1025,7 +1018,7 @@ muteVideo.onclick = () => {
 
 <Tab id="mute-unmute-2">
 
-```css:styles.css section=MutingUnmutingLocalTracks sectionIndex=1 tab=CSS
+```css:styles.css section=MutingUnmutingLocalTracks sectionIndex=3 tab=CSS
   .control-bar {
     display: flex;
     position: fixed;
