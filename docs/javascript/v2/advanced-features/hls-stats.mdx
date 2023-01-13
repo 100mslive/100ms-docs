@@ -1,6 +1,6 @@
 ---
 title: HLS Stats
-nav: 5.08
+nav: 5.09
 ---
 
 <Note type="warning">
@@ -104,14 +104,15 @@ the `subscribe()` also returns a reference to `unsubscribe()` function which cou
 from your subscription
 
 ## Exposed Stats
+
 `hls-stats` currently exposes the following stats
 
 | Name                             | Description                                             | Unit            | Usage                                                                                         |
-|----------------------------------|---------------------------------------------------------|-----------------|-----------------------------------------------------------------------------------------------|
+| -------------------------------- | ------------------------------------------------------- | --------------- | --------------------------------------------------------------------------------------------- |
 | bandwidthEstimate                | The current bandwidth, as seen by the player            | bits per second | Use this to show the current network speed of the user                                        |
 | bitrate                          | server indicated bitrate of current layer of HLS stream | bits per second | Use to know the bitrate required for current layer                                            |
 | bufferedDuration                 | buffered duration from the current position             | ms              | This can be used to show how much data is buffered from the current location (forward buffer) |
 | distanceFromLiveEdge             | The distance from the live edge                         | ms              | Used to know currently buffered duration ahead                                                |
-| droppedFrames                    | The number of dropped frames till now                   |                 | Used to calculate the total number of dropped frames                                             | 
+| droppedFrames                    | The number of dropped frames till now                   |                 | Used to calculate the total number of dropped frames                                          |
 | videoSize.width videoSize.height | The width and height of the video                       | px              | Used to know the resolution being played                                                      |
 | watchDuration                    | Total duration watched                                  | ms              | used to know the overall watch duration (not the stream length)                               |

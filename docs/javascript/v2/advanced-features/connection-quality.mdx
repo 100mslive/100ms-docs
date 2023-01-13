@@ -1,15 +1,15 @@
 ---
 title: Connection Quality
-nav: 5.06
+nav: 5.07
 ---
 
 ![Network Icons](/docs/v2/network-icons.png)
 
-Video/Audio conferencing is by nature a data intensive operation. 
-Our SDK attempts to stabilize connections especially if subscribe degradation 
+Video/Audio conferencing is by nature a data intensive operation.
+Our SDK attempts to stabilize connections especially if subscribe degradation
 is turned on in the template but it's possible for really bad connections that users will still have problems.
 
-It can be helpful to measure a user's connection speed before joining a room in order to set expectations or 
+It can be helpful to measure a user's connection speed before joining a room in order to set expectations or
 decide to have them join with video off etc. Letting the participants know of each other's connection
 status is also a great value addition.
 
@@ -56,10 +56,9 @@ function ConnectionQuality(peerId) {
 
 </Tab>
 
-
 ## Connection Quality Score in Preview
 
-To receive the score in [preview](../features/preview) as well, you can 
+To receive the score in [preview](../features/preview) as well, you can
 pass in the `captureNetworkQualityInPreview` flag as true in preview config
 while calling preview. The interface to get the quality score stays same as above
 which is for post joining the room.
@@ -71,27 +70,23 @@ which is for post joining the room.
 actions.preview({..., captureNetworkQualityInPreview: true})
 ```
 
-
 ## Score Interpretation
 
 The networkQuality score will be a number between -1 and 5.
 
-- -1 -> Undefined - yet to be determined or not enough data to determine
-- 0 -> Disconnected or error in measuring score(in preview)
-- 1 -> Very Bad Connection
-- 2 -> Bad Connection
-- 3 -> Moderate Connection
-- 4 -> Good Connection
-- 5 -> Excellent Connection
-
+-   -1 -> Undefined - yet to be determined or not enough data to determine
+-   0 -> Disconnected or error in measuring score(in preview)
+-   1 -> Very Bad Connection
+-   2 -> Bad Connection
+-   3 -> Moderate Connection
+-   4 -> Good Connection
+-   5 -> Excellent Connection
 
 > 0 score in preview could also mean a failure in measuring the network due to firewall
-block if the internet otherwise looks good.
+> block if the internet otherwise looks good.
 
 ## Showing in the UI
 
 You can show this as a network icon on every peer tile or show only a list of peers not having good connection.
 Feel free to checkout how the code from our dashboard app's implementation [here](https://github.com/100mslive/100ms-web/tree/main/src/components/Connection)
 where we show a network bar on each peer's tile as well in the participant list with a tooltip describing the connection state.
-
-

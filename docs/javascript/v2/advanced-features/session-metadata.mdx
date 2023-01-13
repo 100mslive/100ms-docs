@@ -1,0 +1,246 @@
+---
+title: Session Metadata
+nav: 5.04
+---
+
+Session metadata is a shared state that is accessible by everyone in the room. Session metadata can be used to achieve features like pinned text, spotlight(bringing a particular peer into a larger stage), etc.
+
+Session metadata is persisted throughout a session and is cleared once the last peer leaves the room.
+
+<Note>
+💡 Session Metadata vs Peer Metadata
+
+While peer metadata is associated with individual peers and each peer can have their own metadata, session metadata remains the same for every peer in the room.
+
+</Note>
+
+# SDK Actions
+
+## setSessionMetadata
+
+-   Use `setSessionMetadata` to update the value of the session metadata.
+-   Objects as session metadata but the object should be JSON serializable.
+-   Note: whatever is passed to setSessionMetadata is set as session metadata as is. When using objects, if you want to update a particular key, you should update it before calling setSessionMetadata.
+
+```tsx
+// interface
+setSessionMetadata(metadata: any): Promise<void>
+
+// usage
+await hmsActions.setSessionMetadata('any-string-here');
+await hmsActions.setSessionMetadata({ hello: 'world' });
+```
+
+## populateSessionMetadata
+
+Use `populateSessionMetadata` to fetch the metadata from the server and update it in HMSStore.
+
+```js
+// interface
+populateSessionMetadata(): Promise<void>;
+
+// usage
+await hmsActions.populateSessionMetadata();
+```
+
+# Fetching session metadata
+
+The current session metadata can be fetched from HMSStore using the `selectSessionMetadata` selector.
+
+<Tabs id="fetch" items={['Javascript', 'React']} />
+
+<Tab id="fetch-0">
+
+```js
+const sessionMetadata = hmsStore.getState(selectSessionMetadata);
+```
+
+</Tab>
+<Tab id="fetch-1">
+
+```js
+const sessionMetadata = useHMSStore(selectSessionMetadata);
+```
+
+</Tab>
+
+# Limitations and workarounds in Alpha release
+
+-   Changing the value of session metadata using `setSessionMetadata` doesn’t update the metadata of remote peers.
+-   To notify remote peers of the change in metadata, broadcast API needs to be used.
+-   After updating metadata, a broadcast message with text `refresh` of type `metadata` is sent to all the remote peers.
+-   On receiving a message of this type and text, session metadata needs to be refreshed and `populateSessionMetadat` action.
+-   Also after joining, session metadata is not available and needs to be fetched explicitly by the app using`populateSessionMetadata`(web) action.
+-   No permission support - anyone can read/write session metadata.
+
+# Usage
+
+## Setting session metadata
+
+<Tabs id="set" items={['Javascript', 'React']} />
+<Tab id='set-0'>
+
+```js
+import { hmsActions } from './hms';
+
+const setSessionMetadata = async (data) => {
+    await hmsActions.setSessionMetadata(data);
+    await hmsActions.sendBroadcastMessage('refresh', 'metadata');
+};
+
+// usage
+setSessionMetadata('any-data');
+```
+
+</Tab>
+
+<Tab id='set-1'>
+
+```js
+import { useCallback } from 'react';
+import { useHMSActions } from '@100mslive/react-sdk';
+
+export const useSetSessionMetadata = () => {
+    const hmsActions = useHMSActions();
+
+    const setSessionMetadata = useCallback(
+        async (data) => {
+            await hmsActions.setSessionMetadata(data);
+            await hmsActions.sendBroadcastMessage('refresh', 'metadata');
+        },
+        [hmsActions]
+    );
+
+    return { setSessionMetadata };
+};
+
+// usage
+const { setSessionMetadata } = useSetSessionMetadata();
+setSessionMetadata('any-data');
+```
+
+</Tab>
+
+## Refreshing session metadata
+
+<Tabs id="refresh" items={['Javascript', 'React']} />
+<Tab id='refresh-0'>
+
+```js
+import { hmsStore, hmsActions, hmsNotifications } from './hms';
+
+hmsStore.subscribe((isConnected) => {
+    if (isConnected) hmsActions.populateSessionMetadata();
+}, selectIsConnectedToRoom);
+
+hmsNotifications.onNotification((notification) => {
+    const msg = notification.data;
+    if (msg && msg.type === 'metadata' && msg.message === 'refresh') {
+        hmsActions.populateSessionMetadata();
+    }
+}, HMSNotificationTypes.NEW_MESSAGE);
+```
+
+</Tab>
+
+<Tab id='refresh-1'>
+
+```js
+import {
+    selectIsConnectedToRoom,
+    useCustomEvent,
+    useHMSActions,
+    useHMSStore
+} from '@100mslive/react-sdk';
+import { useCallback, useEffect } from 'react';
+
+export const REFRESH_MESSAGE = 'refresh';
+export const METADATA_MESSAGE_TYPE = 'metadata';
+
+/**
+ * Refresh(re-populate) session metadata on receiving refresh broadcast message of type metadata
+ */
+export const useRefreshSessionMetadata = () => {
+    const hmsActions = useHMSActions();
+    const isConnected = useHMSStore(selectIsConnectedToRoom);
+
+    useEffect(() => {
+        if (isConnected) {
+            hmsActions.populateSessionMetadata();
+        }
+    }, [hmsActions, isConnected]);
+
+    const onEvent = useCallback(
+        (message) => {
+            if (message === REFRESH_MESSAGE) {
+                hmsActions.populateSessionMetadata();
+            }
+        },
+        [hmsActions]
+    );
+
+    useCustomEvent({
+        type: METADATA_MESSAGE_TYPE,
+        json: false,
+        onEvent
+    });
+};
+
+// in a top-level component
+useRefreshSessionMetadata();
+```
+
+</Tab>
+
+## Example
+
+You can use session metadata to pin information so that it's available for everyone in the room - even for newly joined peers. In this example we'll pin a chat message that's important in React.
+
+![PinnedChat](/docs/v2/pinned-chat.png)
+
+### Hook to set pinned message - useSetPinnedMessage
+
+```js
+import { useCallback } from 'react';
+import {
+    selectPeerNameByID,
+    selectSessionMetadata,
+    useHMSActions,
+    useHMSStore,
+    useHMSVanillaStore
+} from '@100mslive/react-sdk';
+// from refreshing session metadata section
+import { METADATA_MESSAGE_TYPE, REFRESH_MESSAGE } from './useRefreshSessionMetadata';
+
+/**
+ * set pinned chat message by updating the session metadata
+ * and broadcasting metadata refresh message to other peers
+ */
+export const useSetPinnedMessage = () => {
+    const hmsActions = useHMSActions();
+    const vanillaStore = useHMSVanillaStore();
+    const pinnedMessage = useHMSStore(selectSessionMetadata);
+
+    const setPinnedMessage = useCallback(
+        /**
+         * @param {import("@100mslive/react-sdk").HMSMessage | undefined} message
+         */
+        async (message) => {
+            const peerName =
+                vanillaStore.getState(selectPeerNameByID(message?.sender)) || message?.senderName;
+            const newPinnedMessage = message
+                ? peerName
+                    ? `${peerName}: ${message.message}`
+                    : message.message
+                : null;
+            if (newPinnedMessage !== pinnedMessage) {
+                await hmsActions.setSessionMetadata(newPinnedMessage);
+                await hmsActions.sendBroadcastMessage(REFRESH_MESSAGE, METADATA_MESSAGE_TYPE);
+            }
+        },
+        [hmsActions, vanillaStore, pinnedMessage]
+    );
+
+    return { setPinnedMessage };
+};
+```
