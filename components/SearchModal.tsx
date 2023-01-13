@@ -56,7 +56,7 @@ const Result = ({ searchResult }) => {
                         text
                     ) : (
                         <>
-                            <span style={{ whiteSpace: 'nowrap' }}>{text}</span>
+                            <span style={{ whiteSpace: 'nowrap' }}>{text.split('#')[0]}</span>
                             <ChevronRightIcon style={{ width: '10px', height: '14px' }} />
                         </>
                     )
