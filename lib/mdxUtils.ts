@@ -1,6 +1,9 @@
 import { readdirSync, readFileSync } from 'fs';
 import matter from 'gray-matter';
 import { join } from 'path';
+import { fromMarkdown } from 'mdast-util-from-markdown';
+import { mdxFromMarkdown } from 'mdast-util-mdx';
+import { mdxjs } from 'micromark-extension-mdxjs';
 import setValue from 'set-value';
 
 /**
@@ -96,3 +99,11 @@ Source: https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-
     (/-+$/, ''); //trim ending dash
     
 */
+
+export const toMdxJsxFlowElement = (input) => {
+    const tree = fromMarkdown(input, {
+        extensions: [mdxjs()],
+        mdastExtensions: [mdxFromMarkdown()]
+    });
+    return tree.children[0];
+};

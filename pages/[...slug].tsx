@@ -1,11 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import fs from 'fs';
 import path from 'path';
-import matter from 'gray-matter';
-import hydrate from 'next-mdx-remote/hydrate';
-import renderToString from 'next-mdx-remote/render-to-string';
 import mdxPrism from 'mdx-prism';
 import EditFile from '@/components/EditFile';
 import components from '@/components/MDXComponents';
@@ -20,6 +17,11 @@ import { DOCS_PATH, getAllDocs, getDocsPaths, getNavfromDocs } from '@/lib/mdxUt
 import withTableofContents from '@/lib/withTableofContents';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
+import { bundleMDX } from 'mdx-bundler';
+import { getMDXComponent } from 'mdx-bundler/client';
+import remarkCodeHeader from '@/lib/remark-code-header';
+import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
 
 type NavRoute = {
     url: string;
@@ -52,11 +54,8 @@ interface Props {
         previousPost: PaginationType;
         nextPost: PaginationType;
     };
-    source: {
-        compiledSource: string;
-        renderedOutput: string;
-        scope: { title: string; nav: number };
-    };
+    source: string;
+    toc: any[];
 }
 
 const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
@@ -67,7 +66,7 @@ const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
     const [currentDocSlug] = slug as string[];
     const [activeHeading, setActiveHeading] = React.useState('');
     const [activeSubHeading, setActiveSubHeading] = React.useState('');
-    const content = hydrate(source, { components });
+    const Component = useMemo(() => getMDXComponent(source), [source]);
 
     React.useEffect(() => {
         setTimeout(() => {
@@ -162,7 +161,7 @@ const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
                                 paddingBottom: '80px'
                             }}>
                             <h1>{frontMatter.title}</h1>
-                            {content}
+                            <Component components={components} />
                             <hr />
                             {pagination.previousPost && showPagination && (
                                 <Pagination
@@ -190,13 +189,13 @@ export const getStaticProps = async ({ params }) => {
     // Absolute path of the docs file
     const postFilePath = path.join(DOCS_PATH, `${path.join(...params.slug)}.mdx`);
     // Raw Mdx File Data Buffer
-    const source = fs.readFileSync(postFilePath);
+    const source = fs.readFileSync(postFilePath, 'utf-8');
 
     /**
      * Content: Mdx Data
      * data: FrontMatter Data
      */
-    const { content, data } = matter(source);
+    //const { content, data } = matter(source);
 
     const allDocs = getAllDocs();
     const nav = getNavfromDocs(allDocs);
@@ -204,28 +203,44 @@ export const getStaticProps = async ({ params }) => {
     const currentDocs = allDocs.filter((doc) => doc.url.includes(`/${currentDocSlug}/`));
     const { previousPost, nextPost } = getPagination(currentDocs, params.slug as string[]);
     const pagination = { previousPost, nextPost };
-    const toc = [];
-    const mdxSource = await renderToString(content, {
-        components,
-        // Optionally pass remark/rehype plugins
-        mdxOptions: {
-            remarkPlugins: [
-                require('@/lib/remark-code-header'),
+    const { code, frontmatter } = await bundleMDX({
+        cwd: path.join(DOCS_PATH, path.join(...params.slug.slice(0, -1))),
+        source,
+        mdxOptions(options) {
+            options.remarkPlugins = [
+                ...(options.remarkPlugins ?? []),
+                remarkGfm,
                 require('@fec/remark-a11y-emoji'),
-                withTableofContents(toc),
-                imagePlugin
-            ],
-            rehypePlugins: [mdxPrism]
-        },
-        scope: data
+                imagePlugin,
+                remarkCodeHeader,
+                withTableofContents
+            ];
+            options.rehypePlugins = [
+                ...(options.rehypePlugins ?? []),
+                [
+                    rehypeRaw,
+                    {
+                        passThrough: [
+                            'mdxFlowExpression',
+                            'mdxJsxFlowElement',
+                            'mdxJsxTextElement',
+                            'mdxTextExpression',
+                            'mdxjsEsm'
+                        ]
+                    }
+                ],
+                mdxPrism
+            ];
+            return options;
+        }
     });
+
     return {
         props: {
-            toc,
             pagination,
             nav: { [currentDocSlug]: nav[currentDocSlug] },
-            source: mdxSource, // { compiledSource: mdxSource.compiledSource },
-            frontMatter: data
+            source: code, // { compiledSource: mdxSource.compiledSource },
+            frontMatter: frontmatter
         }
     };
 };

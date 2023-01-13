@@ -1,28 +1,26 @@
-const visitUtil = require('unist-util-visit');
+import { visit } from 'unist-util-visit';
 
+const remarkCodeHeader = () => (tree) => {
+    return visit(tree, 'code', (node, index, parent) => {
+        const nodeLang = node.lang || '';
+        let language = '';
+        let title = '';
 
-module.exports = () =>  (tree) => visitUtil(tree, 'code', (node, index) => {
-    const nodeLang = (node.lang || '');
-    let language = ''; let title = ''
+        if (nodeLang.includes(':')) {
+            language = nodeLang.slice(0, nodeLang.search(':'));
+            title = nodeLang.slice(nodeLang.search(':') + 1, nodeLang.length);
+        }
 
-    if (nodeLang.includes(':')) {
-      language = nodeLang.slice(0, nodeLang.search(':'));
-      title = nodeLang.slice(nodeLang.search(':') + 1, nodeLang.length);
-    }
+        if (!title) {
+            return;
+        }
 
-    if (!title) {
-      return;
-    }
+        parent.children.splice(index, 0, {
+            type: 'html',
+            value: `<div class="remark-code-title">${title}</div>`
+        });
+        node.lang = language;
+    });
+};
 
-    const className = 'remark-code-title'
-
-    const titleNode = {
-      type: 'html',
-      value: `<div class="${className}">${title}</div>`.trim()
-    };
-
-    tree.children.splice(index, 0, titleNode);
-    node.lang = language;
-  })
-
-  export {}
+export default remarkCodeHeader;
