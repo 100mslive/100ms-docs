@@ -29,7 +29,7 @@ Use our [Live Streaming Starter Kit](https://www.100ms.live/marketplace/live-str
 <StepsToc
   parentId="try-live-streaming"
   descriptions={["Use our Live streaming starter kit to try out the experience before you write a line of code.", "Understand the difference between a stream broadcaster and stream viewer.", "Use the demo app link to go live for the first time as a broadcaster and join the stream as viewer.", "Use the 100ms self-serve dashboard to update the layout, aspect ratio, etc of the stream."]}
->
+/>
 
 <StepsContainer id="try-live-streaming">
 
