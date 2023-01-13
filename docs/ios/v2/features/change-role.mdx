@@ -43,3 +43,37 @@ hmsSDK.accept(changeRole: roleChangeRequest)
 which completes the `changeRole` loop. Both parties will receive a `roleUpdated` callback so that they both can do necessary UI updates. Now the user actually becomes a speaker and the audio publishing will start automatically.
 
 Now lets imagine the newly nominated speaker is not behaving nicely and we want to move him back to listener without a prompt. This is where the `force` parameter comes in. When it is set to `true` the other party will not receive a confirmation `roleChangeRequest` but instead will straight away receive a new set of updated permissions and stop publishing. `roleUpdated` callback will still be fired so that the app can update the user's UI state.
+
+## Bulk Role Change
+Bulk role change is used when you want to convert all roles from a list of roles, to another role.
+
+For example if peers join a room with a `waiting` role and you want to change them all to `viewers` then you'd use this API.
+
+It takes fewer parameters than for a single peer. Here is the method signature.
+
+```swift
+func changeRolesOfAllPeers(to role: HMSRole, limitToRoles: [HMSRole]? = nil, completion: ((Bool, Error?) -> Void)? = nil)
+```
+
+1. `role` is the `HMSRole` they should be changed to.
+2. `limitToRoles` is a list of `HMSRole` whose role should be changed.
+3. `completion` is the optional completion handler to be invoked when the request succeeds or fails with an error.
+
+You should avoid omitting `limitToRoles` param as this can result in accidentally changing roles you may not have intended such as the bots that provide recording and streaming with the roles `beam`.
+
+Also bulk role changes are always forced, no dialog will be given for the peer to accept it, they will just be changed immediately.
+
+Here's how the method could be called to change all `guest` and `waiting` roles to `host`:
+
+```swift
+func changeRoles(hmsSdk: HMSSDK) {
+        var sourceRoles = roles.filter({ role in
+            role.name == "guest" || role.name == "waiting"
+        })
+        var toRole = roles.first { $0.name == "host" }
+
+        hmsSdk.changeRolesOfAllPeers(to: toRole, limitToRoles: sourceRoles)
+    }
+```
+
+<Content alias="bulkRoleChangeErrors" />
