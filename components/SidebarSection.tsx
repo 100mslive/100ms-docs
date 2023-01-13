@@ -21,11 +21,12 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
     } = router;
 
     useEffect(() => {
-        for (const i of slug)
+        for (const i of slug) {
             if (i === key) {
                 setOpenSection(true);
                 break;
             }
+        }
     }, [slug, key]);
 
     useEffect(() => {
@@ -40,22 +41,34 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
     return (
         <section
             className="menu-container"
-            style={{ margin: '2px 0.5rem 0.5rem 1rem' }}
+            style={{ margin: '2px 0.5rem 0.5rem 0.25rem' }}
             key={`${key}-${index}`}>
             <Flex
                 align="center"
-                justify="between"
                 onClick={() => setOpenSection((prev) => !prev)}
                 css={{
                     marginLeft: '2rem',
                     padding: '0.5rem 1rem',
-                    margin: '5px 0',
+                    margin: '0',
                     cursor: 'pointer',
                     borderRadius: '$0',
-                    '&:hover': { background: '$primaryDark' }
+                    width: 'max-content',
+                    color: openSection ? '$textHighEmp' : '$textMedEmp',
+                    '&:hover': { color: '$textAccentHigh' }
                 }}>
+                <ChevronRightIcon
+                    style={{
+                        height: '16px',
+                        width: '18px',
+                        fontWeight: 'bold',
+                        marginRight: '0.5rem',
+                        transition: 'all 0.2s ease',
+                        transform: openSection ? 'rotateZ(90deg)' : ''
+                    }}
+                />
                 <Text
                     css={{
+                        color: 'inherit',
                         textTransform: 'uppercase',
                         fontWeight: '700',
                         fontSize: '13px',
@@ -63,15 +76,6 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                     }}>
                     {key.replace(/-/g, ' ')}
                 </Text>
-                <ChevronRightIcon
-                    style={{
-                        height: '16px',
-                        width: '16px',
-                        strokeWidth: '15px',
-                        transition: 'all 0.2s ease',
-                        transform: openSection ? 'rotateZ(90deg)' : ''
-                    }}
-                />
             </Flex>
             <div className={`accordion-content ${openSection ? 'active' : ''}`}>
                 {Object.entries(children as {}).map(([_, route]: [unknown, any]) =>
@@ -91,8 +95,8 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                                     lineHeight: '24px',
                                     borderLeft:
                                         route.url === asPath
-                                            ? '4px solid var(--primary_light)'
-                                            : '4px solid transparent',
+                                            ? '1.5px solid var(--primary_light)'
+                                            : '1px solid var(--docs_text_secondary)',
                                     display: 'flex',
                                     alignItems: 'center',
                                     paddingLeft: '1rem',
@@ -137,14 +141,19 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
             <style jsx>
                 {`
                     .accordion-content {
-                        margin-top: 0.5rem;
-                        transition: max-height 0.2s ease;
+                        margin-top: 0;
+                        padding-left: 0.5rem;
+                        transition: max-height 0.3s ease;
                         max-height: 0px;
                         overflow: hidden;
                     }
 
                     .active {
                         max-height: 100vh;
+                    }
+                    a:hover {
+                        opacity: 1;
+                        color: var(--docs_text_primary) !important;
                     }
                 `}
             </style>

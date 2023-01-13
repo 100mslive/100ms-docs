@@ -96,7 +96,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                 }}>
                 <div
                     style={{
-                        paddingLeft: '1.25rem',
+                        paddingLeft: '1.125rem',
                         textTransform: 'uppercase',
                         fontWeight: '700',
                         fontSize: '13px',
