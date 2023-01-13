@@ -4,7 +4,7 @@ nav: 5.0
 ---
 
 
-Simulcast enables [Adaptive Bitrate](../foundation/adaptive-bitrate) (ABR) in video conferencing scenarios. This means 100ms SDKs can upgrade or downgrade video quality for remote tracks based on user preferences or network conditions. To learn more about how Adaptive Bitrate enhances your applications refer the guide [here](../foundation/adaptive-bitrate).
+Simulcast enables [Adaptive Bitrate](../foundation/adaptive-bitrate) (ABR) in video conferencing scenarios. This means 100ms SDKs can upgrade or downgrade video quality for remote video tracks based on user preferences or network conditions. To learn more about how Adaptive Bitrate enhances your applications refer the guide [here](../foundation/adaptive-bitrate).
 
 In this guide, we'll see how to customize Simulcast settings from your apps using the 100ms Flutter SDK.
 
@@ -17,8 +17,10 @@ In this guide, we'll see how to customize Simulcast settings from your apps usin
 
 You can interact with the simulcast feature by using the `setSimulcastLayer` method of `HMSRemoteVideoTrack`.
 
-By default, on all Remote Video Tracks the layer is set to `high` i.e `HMSSimulcastLayer.high`.
-This implies that the 100ms SDK tries to fetch the highest quality video available for a Remote peer.
+By default, on all Remote Video Tracks the layer is set to `high` i.e `HMSSimulcastLayer.high`
+
+
+`High` layer implies that the 100ms SDK tries to fetch the highest quality video available for a Remote peer.
 
 
 Let's look at the Remote Video Track interface showing the available APIs to customize Simulcast behaviour -
@@ -81,7 +83,7 @@ It will select a layer that best matches the current view frame size and reacts 
 
 In case manual layer selection is preferred set `disableAutoSimulcastLayerSelect` property to `true`.
 
-By default, the track layer is set to `high`.
+By default, the `disableAutoSimulcastLayerSelect` property is `false` which means that an appropriate quality video track will be rendered for the `HMSVideoView` widget.
 
 
 ```dart
@@ -103,9 +105,9 @@ To learn more about Rendering Video refer the guide [here](../features/render-vi
 Here's how to get the current layer of remote video track:
 
 ```dart
-  HMSRemoteVideoTrack remoteTrack; // get remote track from the onTrackUpdate listener
+  HMSRemoteVideoTrack remoteVideoTrack; // use the remote video track from the onTrackUpdate listener
 
-  HMSSimulcastLayer currentLayer = remoteTrack.getLayer();
+  HMSSimulcastLayer currentLayer = remoteVideoTrack.getLayer();
 ```
 
 ### Get all Available Layers
@@ -113,9 +115,9 @@ Here's how to get the current layer of remote video track:
 Here's how to get the all available layers with their resolution:
 
 ```dart
-  HMSRemoteVideoTrack remoteTrack; // get remote track from the onTrackUpdate.
+  HMSRemoteVideoTrack remoteVideoTrack; // use the remote video track from the onTrackUpdate listener
 
-  List<HMSSimulcastLayerDefinition> availableLayers = remoteTrack.getLayerDefinition();
+  List<HMSSimulcastLayerDefinition> availableLayers = remoteVideoTrack.getLayerDefinition();
 ```
 
 ### Change Current Layer
@@ -123,14 +125,14 @@ Here's how to get the all available layers with their resolution:
 If you want to can change layer manually then follow the follwing steps:
 
 ```dart
-  HMSRemoteVideoTrack remoteTrack;
+  HMSRemoteVideoTrack remoteVideoTrack;
 
-  List<HMSSimulcastLayerDefinition> availableLayers = remoteTrack.getLayerDefinition();
+  List<HMSSimulcastLayerDefinition> availableLayers = remoteVideoTrack.getLayerDefinition();
 
   // availableLayers will contains all the layers which remote peer is publishing.
   // In this example we are taking first layer in availableLayers list.
   HMSSimulcastLayer firstLayer = availableLayers[0].hmsSimulcastLayer;
 
   // set layer by passing it to `setSimulcastLayer` function.
-  remoteTrack.setSimulcastLayer(firstLayer);
+  remoteVideoTrack.setSimulcastLayer(firstLayer);
 ```

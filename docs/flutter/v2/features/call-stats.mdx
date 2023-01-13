@@ -33,7 +33,7 @@ Let's see how we can listen to these callbacks:
 
 <div className="steps-container">
 
-### Implement HMSStatsListener wherever we want its callbacks
+### Implement HMSStatsListener in a Class
 
 ```dart 
 class StatsReport implements HMSStatsListener{}
@@ -41,14 +41,14 @@ class StatsReport implements HMSStatsListener{}
 
 ### Call addStatsListener
 
-Call `addStatsListener` on the hmsSDK instance because we will only get updates after calling `addStatsListener` on the hmsSDK instance
+Call `addStatsListener` on the hmsSDK instance without which by default RTC Stats will not be sent to the app.
 
 ```dart 
 //hmsStatsListener is an instance of HMSStatsListener
 hmsSDK.addStatsListener(listener: hmsStatsListener);
 ```
 
-### Override the HMSStatsListener methods:
+### Implement HMSStatsListener Methods
 
 ```dart
 class StatsReport implements HMSStatsListener{
@@ -132,11 +132,11 @@ This class contains stats related to the local audio track.
 
 ```dart
 class HMSLocalAudioStats {
-	// Round trip time observed since the previous report.
-	double roundTripTime;
-	// Total bytes sent by this track in the current session.
-	int bytesSent;
-	// Outgoing bitrate of this track observed since the previous report in Kb/s.
+  // Round trip time observed since the previous report
+  double roundTripTime;
+  // Total bytes sent by this track in the current session
+  int bytesSent;
+  // Outgoing bitrate of this track observed since the previous report in Kb/s
   double bitrate;
 }
 ```
