@@ -9,7 +9,7 @@ import {
     WebhookIcon
 } from '@100mslive/react-icons';
 import { Box, CSS, Flex, HorizontalDivider, VerticalDivider } from '@100mslive/react-ui';
-import { Item } from 'components';
+import Item from './Item';
 import merge from 'lodash/merge';
 import Link from 'next/link';
 import React from 'react';

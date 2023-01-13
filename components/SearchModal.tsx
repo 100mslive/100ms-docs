@@ -64,7 +64,7 @@ const Result = ({ searchResult }) => {
             </Text>
             <Text
                 dangerouslySetInnerHTML={{
-                    __html: `${searchResult['_snippetResult']?.content?.value}`
+                    __html: `${searchResult._snippetResult ?.content?.value}`
                 }}
             />
         </Box>
@@ -195,6 +195,7 @@ const Search = ({ refine, setSearchTerm, searchTerm }) => {
                     setSearchTerm(event.target.value);
                 }}
                 type="text"
+                // eslint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
                 style={{
                     marginLeft: '13px',

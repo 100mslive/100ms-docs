@@ -118,7 +118,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                 ? Object.entries(nav).map(([key, children], index) => (
                       <section className="menu-container" key={`${key}-${index}`}>
                           <div className="menu-title">{key.replace(/-/g, ' ')}</div>
-                          {Object.entries(children as {}).map(([_, route]: [unknown, any]) =>
+                          {Object.entries(children as Record<string, NavRoute>).map(([_, route]) =>
                               Object.prototype.hasOwnProperty.call(route, 'title') ? (
                                   <Link
                                       prefetch={false}
