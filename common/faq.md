@@ -502,12 +502,10 @@ We have an end point that helps you end an active session immediately. You can c
 
 #### Is there any way to limit participants in a room?
 
-We don't limit the participants currently, but you can limit the number of peers as pert of the role or template configuration where we can add a maximum number of participants per role by setting the "maxPeerCount" attribute:
+We don't limit the participants currently, but you can limit the number of peers as pert of the role or template configuration where we can add a maximum number of participants per role by setting the `maxPeerCount` attribute:
 
 - While [creating/updating a role](/server-side/v2/policy/create-update-role) or
 - While creating/updating a template as part of [roles config](/docs/server-side/v2/policy/create-template-via-api#roles-object).
-
-You can use the `maxPeerCount` argument available in the  of Template to limit the number of peers for a particular role. 
 
 #### How can I handle role change requests on my backend? Is there any webhook that exists or is planned?
 
