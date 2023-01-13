@@ -166,3 +166,7 @@ You can get the HLS URL in several ways based on whether you use 100ms client SD
 #### I get type errors related to WebRTC Stats, for example, 'Cannot find name RTCInboundRtpStreamStats'.
 
 The minimum supported version of TypeScript for the SDK is '4.4'. You could update to any version above 4.4 or if you are on an old version of TypeScript and cannot do a major upgrade you can set `skipLibCheck: true` in your tsconfig file.
+
+#### Can we customise the width and height of video tile which we are getting from useVideoList hook?
+
+You can use the `Video aspect ratio` config in template configuration on [dashboard](https://dashboard.100ms.live/dashboard) or use the [update template server API](/server-side/v2/policy/update-a-template) with the respective height and width for the particular role using the [publishParams object](/server-side/v2/policy/create-template-via-api#publish-params-object).
