@@ -13,21 +13,45 @@ Android & iOS have different mechanisms of handling app behaviour which includes
 
 There are 2 prominent behaviours that are mainly affected when apps transition to Background State - Publishing Audio/Video, and Playing incoming Audio/Video.
 
-### Android Behaviours when the app goes to the background without enabling background processing
+## iOS Background Handling
 
-| **Scenario**   | **Behaviours**                                 |
-| :------------- | :----------------------------------------------------- |
-| Mic is unmuted | Mic will remain unmuted and the user will able to publish audio for a limited period (time depending on OS) |
-| Camera is unmuted | Camera will remain unmuted and the user will able to publish video for a limited period (time depending on OS)  |
-| Remote Peer is publishing audio | Able to play incoming audio from the room |
+When your app goes into the background, it can no longer access camera and publish it to other peers in the room. Also, you cannot hear audio of other participants in the call if your app is in the background without enabling Background Modes.
 
-### Android Behaviours when the app goes to the background with enabling background processing
+There are 2 Background Modes settings required 
+To allow users to hear incoming Audio from other peers in room and to allow them to speak & be heard
 
-| **Scenario**   | **Behaviours**                                 |
-| :------------- | :----------------------------------------------------- |
-| Mic is unmuted | Mic will remain unmuted and the user will able to publish audio without any restriction |
-| Camera is unmuted | Camera will remain unmuted and the user will able to publish video without any restriction |
-| Remote Peer is publishing audio | Able to play incoming audio from the room |
+Follow the following step to add background service in iOS:
+
+<div className="steps-container">
+
+### Open project in Xcode
+
+Open project in Xcode by right clicking on `ios` folder in project and select `Open in Xcode` as shown in image below.
+
+![OpenXcode](/docs/v2/flutter-background-service-1.png)
+
+### Add Capability
+
+Click on `Runner` in Navigator then select `Runner` under `TARGETS` and click on `Signing & Capabilities` and add `Capability`.
+
+![addCapability](/docs/v2/flutter-background-service-2.png)
+
+### Background Mode
+
+Search background mode and add it to project by clicking on it.
+
+![backgroundMode](/docs/v2/flutter-background-service-3.png)
+
+### Start Background Processing
+
+Check the checkbox under background mode named ` Background Processing` and `Audio, AirPlay, and Picture in Picture`.
+
+![backgroundProcessing](/docs/v2/flutter-background-service-4.png)
+
+</div>
+
+Now you can use your app in the background even when the device is in sleep mode.
+
 
 ### iOS Behaviours when the app goes to the background without enabling background processing
 
@@ -43,6 +67,22 @@ There are 2 prominent behaviours that are mainly affected when apps transition t
 | :------------- | :----------------------------------------------------- |
 | Mic is unmuted |Mic will remain unmuted and the user will able to publish audio without any restriction  |
 | Camera is unmuted | Camera will get muted |
+| Remote Peer is publishing audio | Able to play incoming audio from the room |
+
+### Android Behaviours when the app goes to the background without enabling background processing
+
+| **Scenario**   | **Behaviours**                                 |
+| :------------- | :----------------------------------------------------- |
+| Mic is unmuted | Mic will remain unmuted and the user will able to publish audio for a limited period (time depending on OS) |
+| Camera is unmuted | Camera will remain unmuted and the user will able to publish video for a limited period (time depending on OS)  |
+| Remote Peer is publishing audio | Able to play incoming audio from the room |
+
+### Android Behaviours when the app goes to the background with enabling background processing
+
+| **Scenario**   | **Behaviours**                                 |
+| :------------- | :----------------------------------------------------- |
+| Mic is unmuted | Mic will remain unmuted and the user will able to publish audio without any restriction |
+| Camera is unmuted | Camera will remain unmuted and the user will able to publish video without any restriction |
 | Remote Peer is publishing audio | Able to play incoming audio from the room |
 
 
@@ -134,39 +174,3 @@ Widget build(BuildContext context) {
 </div>
 
 > To know more about `flutter_foreground_task` visit [here](https://pub.dev/packages/flutter_foreground_task) or checkout implementation in our [example app](https://github.com/100mslive/100ms-flutter/tree/main/example).
-
-## iOS
-
-When your app goes into the background, it can no longer access camera and publish it to other peers in the room. Also, you can't see video of other participants in the call if your app is in the background.
-
-Follow the following step to add background service in iOS:
-
-<div className="steps-container">
-
-### Open project in Xcode
-
-Open project in Xcode by right clicking on `ios` folder in project and select `Open in Xcode` as shown in image below.
-
-![OpenXcode](/docs/v2/flutter-background-service-1.png)
-
-### Add Capability
-
-Click on `Runner` in Navigator then select `Runner` under `TARGETS` and click on `Signing & Capabilities` and add `Capability`.
-
-![addCapability](/docs/v2/flutter-background-service-2.png)
-
-### Background Mode
-
-Search background mode and add it to project by clicking on it.
-
-![backgroundMode](/docs/v2/flutter-background-service-3.png)
-
-### Start Background Processing
-
-Check the checkbox under background mode named ` Background Processing` and `Audio, AirPlay, and Picture in Picture`.
-
-![backgroundProcessing](/docs/v2/flutter-background-service-4.png)
-
-</div>
-
-Now you can use your app in the background even when the device is in sleep mode.
