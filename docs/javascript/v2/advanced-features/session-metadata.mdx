@@ -14,9 +14,9 @@ While peer metadata is associated with individual peers and each peer can have t
 
 </Note>
 
-# SDK Actions
+## SDK Actions
 
-## setSessionMetadata
+### setSessionMetadata
 
 -   Use `setSessionMetadata` to update the value of the session metadata.
 -   Objects could be set as session metadata but the object should be JSON serializable.
@@ -31,7 +31,7 @@ await hmsActions.setSessionMetadata('any-string-here');
 await hmsActions.setSessionMetadata({ hello: 'world' });
 ```
 
-## populateSessionMetadata
+### populateSessionMetadata
 
 Use `populateSessionMetadata` to fetch the metadata from the server and update it in HMSStore.
 
@@ -43,7 +43,7 @@ populateSessionMetadata(): Promise<void>;
 await hmsActions.populateSessionMetadata();
 ```
 
-# Fetching session metadata
+## Fetching session metadata
 
 The current session metadata can be fetched from HMSStore using the `selectSessionMetadata` selector.
 
@@ -64,7 +64,7 @@ const sessionMetadata = useHMSStore(selectSessionMetadata);
 
 </Tab>
 
-# Limitations and workarounds in Alpha release
+## Limitations and workarounds in Alpha release
 
 -   Changing the value of session metadata using `setSessionMetadata` doesn’t update the metadata of remote peers.
 -   To notify remote peers of the change in metadata, broadcast API needs to be used.
@@ -74,9 +74,9 @@ const sessionMetadata = useHMSStore(selectSessionMetadata);
 -   No permission support - anyone can read/write session metadata. If you want to restrict access to session metadata, you have to do it on your app level logic.
 -   Locks to ensure consistency of the data. If two peers update it at the same time, it will be a race condition for which one succeeds last, overwriting whatever was before.
 
-# Usage
+## Usage
 
-## Setting session metadata
+### Setting session metadata
 
 <Tabs id="set" items={['Javascript', 'React']} />
 <Tab id='set-0'>
@@ -122,7 +122,7 @@ setSessionMetadata('any-data');
 
 </Tab>
 
-## Refreshing session metadata
+### Refreshing session metadata
 
 <Tabs id="refresh" items={['Javascript', 'React']} />
 <Tab id='refresh-0'>
@@ -193,7 +193,7 @@ useRefreshSessionMetadata();
 
 </Tab>
 
-## Example
+## Example - Pin Message
 
 You can use session metadata to pin information so that it's available for everyone in the room - even for newly joined peers. In this example we'll pin a chat message that's important in React.
 
