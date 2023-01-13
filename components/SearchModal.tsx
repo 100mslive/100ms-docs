@@ -53,7 +53,7 @@ const Result = ({ searchResult }) => {
                 }}>
                 {path.map((text, id) =>
                     id === path.length - 1 ? (
-                        text
+                        text.split('#')[0]
                     ) : (
                         <>
                             <span style={{ whiteSpace: 'nowrap' }}>{text}</span>
