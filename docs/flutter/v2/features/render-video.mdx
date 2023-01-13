@@ -133,9 +133,11 @@ use the default type i.e `SCALE_ASPECT_FIT`.
 This is a `bool` type parameter, `true` indicates that the video feed gets mirrored and `false` shows the track as it is.
 Generally true for local peer and false for a remote peers
 
-### 4. isAutoSimulcast
+### 4. disableAutoSimulcastLayerSelect
 
-This is also a `bool` type parameter, `true` indicates that simulcast/Adaptive Bitrate is ON for the current video view
+HMSVideoView has an automatic simulcast layer selection capability which is enabled if adaptive bitrate is enabled. You can check more about it [here](../advanced-features/adaptive-bitrate).
+
+It will select a layer that best matches the current view frame size and reacts to frame updates. In case manual layer selection is preferred set `disableAutoSimulcastLayerSelect` property to `true`. By default, the track layer is set to `high`.
 
 > `HMSVideoView` also accepts `Key` as an optional parameter but it is recommended to always pass `Key` to `HMSVideoView` So that it can be disposed of and reset correctly during rebuilds.
 

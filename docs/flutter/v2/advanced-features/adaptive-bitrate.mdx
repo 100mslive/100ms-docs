@@ -1,0 +1,53 @@
+---
+title: Adaptive Bitrate (Simulcast)
+nav: 5.0
+---
+
+
+Simulcast enables [Adaptive Bitrate](../foundation/adaptive-bitrate) (ABR) in video conferencing scenarios. This means 100ms SDKs can upgrade or downgrade video quality for remote tracks based on user preferences or network conditions.
+
+## Minimum Requirements
+
+-   SDK version 1.2.0 or higher
+-   Simulcast enabled in room template
+
+## 100ms SDK Simulcast APIs
+
+You interact with the simulcast feature by setting `HMSRemoteVideoTrack`'s `setSimulcastLayer` function. By default the layer is set to high i.e `HMSSimulcastLayer.high` Let's look at the track interface:
+
+```dart
+class HMSRemoteVideoTrack {
+
+/**
+   * Public api to set simulcast layer to [`HMSSimulcastLayer.high], [`HMSSimulcastLayer.low], [`HMSSimulcastLayer.mid]
+   */
+  Future<HMSException?> setSimulcastLayer(HMSSimulcastLayer layer)
+
+	/**
+   * Public API to get simulcast layers definition
+   */
+  Future<List<HMSSimulcastLayerDefinition>> getLayerDefinition()
+
+	/**
+   * Public API to get the current selected HMSSimulcastLayer
+   */
+  Future<HMSSimulcastLayer> getLayer()
+
+}
+
+data class HMSSimulcastLayerDefinition(
+  HMSSimulcastLayer hmsSimulcastLayer;
+  HMSResolution hmsResolution;
+)
+
+enum HMSSimulcastLayer 
+{ 
+    high, mid, low 
+}
+```
+
+Here `getLayerDefinition()` property holds an array of currently available layers for the track and `getLayer()` property is the currently selected layer. Within `HMSSimulcastLayerDefinition` you get its resolution and the layer name such as high/mid/low.
+
+## Disabling Auto Simulcast
+
+You can read more about it [here](../features/render-video#4.-disableAutoSimulcastLayerSelect)

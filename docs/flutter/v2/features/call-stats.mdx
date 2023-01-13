@@ -15,8 +15,8 @@ Here is the full list of callbacks:
 /// This callback provides stats for a local audio track.
 void onLocalAudioStats({required HMSLocalAudioStats hmsLocalAudioStats, required HMSLocalAudioTrack track, required HMSPeer peer})
 
-/// This callback provides stats for a local video track.
-void onLocalVideoStats({required HMSLocalVideoStats hmsLocalVideoStats, required HMSLocalVideoTrack track, required HMSPeer peer})
+/// This callback provides stats for a local video track with all the available layers.
+void onLocalVideoStats({required List<HMSLocalVideoStats> hmsLocalVideoStats, required HMSLocalVideoTrack track, required HMSPeer peer})
 
 /// This callback provides stats for a remote audio track.
 void onRemoteAudioStats({required HMSRemoteAudioStats hmsRemoteAudioStats, required HMSRemoteAudioTrack track, required HMSPeer peer})
@@ -61,7 +61,7 @@ class StatsReport implements HMSStatsListener{
 
   @override
   void onLocalVideoStats(
-      {required HMSLocalVideoStats hmsLocalVideoStats,
+      {required List<HMSLocalVideoStats> hmsLocalVideoStats,
       required HMSLocalVideoTrack track,
       required HMSPeer peer}) {}
 
@@ -150,14 +150,18 @@ This class contains stats related to local video track.
 class HMSLocalVideoStats {
 	// Round trip time observed since the previous report.
   double roundTripTime;
-	// Total bytes sent by this track in the current session.
-	int bytesSent;
-	// Outgoing bitrate of this track observed since the previous report in Kb/s.
+  // Total bytes sent by this track in the current session.
+  int bytesSent;
+  // Outgoing bitrate of this track observed since the previous report in Kb/s.
   double bitrate;
-	// Resolution of video frames being sent.
-	double frameRate;
-	// Frame rate of video frames being sent (FPS).
-  HMSVideoResolution resolution;
+  // Resolution of video frames being sent.
+  double frameRate;
+  // Frame rate of video frames being sent (FPS).
+  HMSResolution resolution;
+  ///Reason for quality limitations
+  HMSQualityLimitationReasons? hmsQualityLimitationReasons;
+  ///Simulcast Layer
+  HMSSimulcastLayer? hmsLayer;
 }
 ```
 
@@ -197,7 +201,7 @@ class HMSRemoteVideoStats {
 	// Total packets lost by this track in the current session.
 	int packetsLost;
 	// Resolution of video frames being received.
-	HMSVideoResolution resolution;
+	HMSResolution resolution;
 	// Frame rate of video frames being received (FPS).
 	double frameRate;
 }
