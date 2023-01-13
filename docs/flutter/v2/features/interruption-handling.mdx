@@ -20,13 +20,13 @@ In Android you will get an update on the `onRoomUpdate` method with the update t
 
 Tested Scenario
 
-| **Test Case**                                       | **Android**   | **iOS**   |
-| :-------------------------------------------------- | :------------ | :-------- |
-| **App in Foreground Call interrupt (Mic)**          |  ✅           | ✅         |
-| **App in Foreground Call interrupt (Camera)**       |  ✅           | ✅         |
-| **App in Foreground other apps interrupt (Mic)**    |  ✅           | ✅         |
-| **App in Foreground other apps interrupt (Camera)** |  ✅           | ✅         |
-| **App in Background Call interrupt (Mic)**          |  ❌           | ✅         |
-| **App in Background Call interrupt (Camera)**       |  ✅           | ✅         |
-| **App in Background other apps interrupt (Mic)**    |  ❌           | ✅         |
-| **App in Background other apps interrupt (Camera)** |  ✅           | ✅         |
+**App State** | **Test Case**                              | **Android**                                | **iOS**                                       |
+:-------------| :------------------------------------------| :------------------------------------------| :-------------------------------------------- |
+Foreground    | **A Call interrupts Microphone access**    | SDK gets the mic access back after call    | SDK gets the mic access back after call       |
+Background    | **A Call interrupts Microphone access**    | SDK doesn't get the mic access after call  | SDK gets the mic access back after call       |
+Foreground    | **A Call interrupts Camera access**        | SDK gets the camera access back after call | SDK gets the camera access back after call    |
+Background    | **A Call interrupts Camera access**        | SDK gets the camera access back after call | SDK gets the camera access back after call    |
+Foreground    | **Other app interrupts Microphone access** | SDK gets the mic access back after call    | SDK gets the mic access back after call       |
+Background    | **Other app interrupts Microphone access** | SDK doesn't get the mic access after call  | SDK gets the mic access back after call       |
+Foreground    | **Other app interrupts Camera access**     | SDK gets the camera access back after call | SDK gets the camera access back after call    |
+Background    | **Other app interrupts Camera access**     | SDK gets the camera access back after call | SDK gets the camera access back after call    |
