@@ -133,11 +133,13 @@ use the default type i.e `SCALE_ASPECT_FIT`.
 This is a `bool` type parameter, `true` indicates that the video feed gets mirrored and `false` shows the track as it is.
 Generally true for local peer and false for a remote peers
 
-### 4. isAutoSimulcast
+### 4. disableAutoSimulcastLayerSelect
 
-This is also a `bool` type parameter, `true` indicates that simulcast/Adaptive Bitrate is ON for the current video view
+HMSVideoView has an automatic simulcast layer selection capability which is enabled if adaptive bitrate is enabled. You can check more about it [here](../advanced-features/adaptive-bitrate).
 
-> `HMSVideoView` also accepts `Key` as an optional parameter but it is recommended to always pass `Key` to `HMSVideoView` So that it can be disposed of and reset correctly during rebuilds.
+It will select a layer that best matches the current view frame size and reacts to frame updates. In case manual layer selection is preferred set `disableAutoSimulcastLayerSelect` property to `true`. By default, the track layer is set to `high`.
+
+> Always pass the `Key` parameter to `HMSVideoView` with the unique Video Track's `trackId` value so that it can be disposed of and reset correctly during rebuilds.
 
 ## Best Practices 
 
@@ -185,7 +187,7 @@ class HMSVideoView extends StatelessWidget {
   final HMSVideoTrack track;
 
   // [matchParent] - to match the size of the parent widget
-  final matchParent;
+  final bool matchParent;
 
   // [scaleType] - To set the video scaling
   final ScaleType scaleType;
@@ -193,7 +195,7 @@ class HMSVideoView extends StatelessWidget {
   // [setMirror] - To set mirroring of video
   final bool setMirror;
 
-  // [isAutoSimulcast] - To set auto simulcast (Adaptive Bitrate)
-  final bool isAutoSimulcast;
+  // [disableAutoSimulcastLayerSelect] - To disable auto simulcast (Adaptive Bitrate)
+  final bool disableAutoSimulcastLayerSelect;
 }
 ```
