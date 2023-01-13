@@ -59,10 +59,10 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
 
 > **Note**: This object enables recording and configuring storage during room creation. But we recommend configuring it at a template level through the [Dashboard](https://dashboard.100ms.live/dashboard), where the config validator can help with validating inputs proactively.
 
-| Name        | Type      | Description                                                                                                                                                                                                                                                                                                           | Required |
-| :---------- | :-------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| enabled     | `boolean` | Enable SFU recording. Disabled by default. <br/><br/> **Note:** This argument is only applicable to enable/disable [SFU recording](/server-side/v2/Destinations/recording). Refer to [RTMP Streaming & Browser Recording](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording) guide for other options. | No       |
-| upload_info | `object`  | Object of type `upload_info`. This object contains information on recordings storage location. <br/><br/>If you want to store recording with 100ms, and not use your own s3, don't add this to the object. <br/><br/>Check the [upload_info object](#upload-info-arguments) below for more information.               | No       |
+| Name        | Type      | Description                                                                                                                                                                                                                                                                                                              | Required |
+| :---------- | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| enabled     | `boolean` | Enable SFU recording. Disabled by default. <br/><br/> **Note:** This argument is only applicable to enable/disable [SFU recording](/server-side/v2/Destinations/recording). Refer to [RTMP Streaming & Browser Recording](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording) guide for other options.    | No       |
+| upload_info | `object`  | Object of type `upload_info`. This object contains information on recordings storage location. <br/><br/>If you want to store recording with 100ms, and not use your own storage (s3/gs/oss), don't add this to the object. <br/><br/>Check the [upload_info object](#upload-info-arguments) below for more information. | No       |
 
 `recording_info` in the room acts as an atomic property. It depends on the recording settings defined in a template as below:
 
@@ -73,26 +73,26 @@ To know more about recording please visit [Recording](/server-side/v2/Destinatio
 
 ### upload_info arguments
 
-| Name        | Type     | Description                                                                                                                                                                  | Required |
-| :---------- | :------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| type        | `string` | Upload Destination type. Currently, only `s3` is supported                                                                                                                   | Yes      |
-| location    | `string` | Name of the AWS s3 bucket in which you want to store all recordings                                                                                                          | Yes      |
-| prefix      | `string` | Upload prefix path                                                                                                                                                           | No       |
-| options     | `object` | Additional configurations of type `Options` to be used for uploading. <br/><br/>Check the options arguments below for more information.                                      | No       |
-| credentials | `object` | Object of type `Credentials`. This is used to share AWS credentials to access the s3 bucket specified. <br/><br/>Check the credentials arguments below for more information. | No       |
+| Name        | Type     | Description                                                                                                                             | Required |
+| :---------- | :------- | :-------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| type        | `string` | Upload destination type. Currently, `s3` (AWS), `gs` (Google Cloud Storage), `oss` (Alibaba Cloud) are supported.                       | Yes      |
+| location    | `string` | Name of the storage bucket in which you want to store all recordings                                                                    | Yes      |
+| prefix      | `string` | Upload prefix path                                                                                                                      | No       |
+| options     | `object` | Additional configurations of type `Options` to be used for uploading. <br/><br/>Check the options arguments below for more information. | No       |
+| credentials | `object` | Object of type `credentials`. This is used to share the credentials to access the storage bucket specified.                             | No       |
 
 #### Options arguments
 
-| Name   | Type     | Description                                                                                                              | Required |
-| :----- | :------- | :----------------------------------------------------------------------------------------------------------------------- | :------- |
-| region | `string` | Region of the AWS account hosting the s3 bucket for storing recordings. If not provided it is assumed to be `ap-south-1` | No       |
+| Name   | Type     | Description                                                              | Required |
+| :----- | :------- | :----------------------------------------------------------------------- | :------- |
+| region | `string` | Region of the account hosting the storage bucket for storing recordings. | No       |
 
 #### Credentials arguments
 
-| Name   | Type     | Description                                                                          | Required |
-| :----- | :------- | :----------------------------------------------------------------------------------- | :------- |
-| key    | `string` | `access key ID` for the AWS account hosting the s3 bucket for storing recordings     | Yes      |
-| secret | `string` | `secret access key` for the AWS account hosting the s3 bucket for storing recordings | Yes      |
+| Name   | Type     | Description                                                                   | Required |
+| :----- | :------- | :---------------------------------------------------------------------------- | :------- |
+| key    | `string` | Access Key for the account hosting your storage bucket for storing recordings | Yes      |
+| secret | `string` | Secret for the account hosting the storage bucket for storing recordings      | Yes      |
 
-The access keys should have read(GetObject) and write(PutObject) permissions for the s3 bucket.
+The access keys should have read(GetObject) and write(PutObject) permissions for the storage bucket.
 For more details check - https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html
