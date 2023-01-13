@@ -4,6 +4,9 @@ const { formatDiagnosticsWithColorAndContext } = require('typescript');
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+    experimental: {
+        esmExternals: 'loose'
+    },
     basePath: '/docs',
     webpack: (config, { isServer, dev }) => {
         // Fixes npm packages that depend on `fs` module
