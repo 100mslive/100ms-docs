@@ -77,31 +77,29 @@ curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <manage
 
 ---
 
-### recording_info arguments
+### recording_info
 
-> **Note**: This object enables recording and configuring storage during room creation. But we recommend configuring it at a template level through the [Dashboard](https://dashboard.100ms.live/dashboard), where the config validator can help with validating inputs proactively.
+| Name        | Type      | Description                                                                                                                                                                                     | Required |
+| :---------- | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| enabled     | `boolean` | Enable SFU recording. Disabled by default                                                                                                                                                       | No       |
+| upload_info | `object`  | Object of type `upload_info`. This object contains information on recordings storage location. If you want to store recording with 100ms, and not use your own s3, don't add this to the object | No       |
 
-| Name        | Type      | Description                                                                                                                                                                                                                                                                                                              | Required |
-| :---------- | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| enabled     | `boolean` | Enable SFU recording. Disabled by default. <br/><br/> **Note:** This argument is only applicable to enable/disable [SFU recording](/server-side/v2/Destinations/recording). Refer to [RTMP Streaming & Browser Recording](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording) guide for other options.    | No       |
-| upload_info | `object`  | Object of type `upload_info`. This object contains information on recordings storage location. <br/><br/>If you want to store recording with 100ms, and not use your own storage (s3/gs/oss), don't add this to the object. <br/><br/>Check the [upload_info object](#upload-info-arguments) below for more information. | No       |
+`recording_info` in room acts as an atomic property. Following describes the way `recording_info` depends on recording settings defined in a template.
 
-`recording_info` in the room acts as an atomic property. It depends on the recording settings defined in a template as below:
+-   If `recording_info` key is **not** provided in the api, the room will fill it with recording settings from template. And the response body will include `recording_source_template: true`. This means, whenever recording info is changed in template, they will also be reflected in room's recording settings.
+-   If `recording_info` key is provided in the api, the room's recording settings will not depend on template at all.
 
--   If the `recording_info` key is not provided in the API, the room will fill it with recording settings from the template. And the response body will include `recording_source_template: true`. This implies that whenever recording info is modified in the template, the recording settings for the room will also be updated.
--   If the `recording_info` key is provided in the API, the recording settings of the room won't be affected by the template at all.
+To know more about recording please visit [Recording](./recording)
 
-To know more about recording please visit [Recording](/server-side/v2/Destinations/recording).
+### upload_info
 
-### upload_info arguments
-
-| Name        | Type     | Description                                                                                                                             | Required |
-| :---------- | :------- | :-------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| type        | `string` | Upload destination type. Currently, `s3` (AWS), `gs` (Google Cloud Storage), `oss` (Alibaba Cloud) are supported.                       | Yes      |
-| location    | `string` | Name of the storage bucket in which you want to store all recordings                                                                    | Yes      |
-| prefix      | `string` | Upload prefix path                                                                                                                      | No       |
-| options     | `object` | Additional configurations of type `Options` to be used for uploading. <br/><br/>Check the options arguments below for more information. | No       |
-| credentials | `object` | Object of type `credentials`. This is used to share the credentials to access the storage bucket specified.                             | No       |
+| Name        | Type     | Description                                                                                            | Required |
+| :---------- | :------- | :----------------------------------------------------------------------------------------------------- | :------- |
+| type        | `string` | Upload Destination type. Currently, only `s3` is supported                                             | Yes      |
+| location    | `string` | Name of the AWS s3 bucket in which you want to store all recordings                                    | Yes      |
+| prefix      | `string` | Upload prefix path                                                                                     | No       |
+| options     | `object` | Additional configurations of type `Options` to be used for uploading                                   | No       |
+| credentials | `object` | Object of type `Credentials`. This is used to share AWS credentials to access the s3 bucket specified. | No       |
 
 ### Options
 
