@@ -74,7 +74,7 @@ const MDXComponents = {
     Note,
     Image,
     blockquote: NoteCustom,
-    code: CodeCustom,
+    pre: CodeCustom,
     table: TableCustom,
     Code,
     Tab,

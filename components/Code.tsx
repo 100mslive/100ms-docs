@@ -56,63 +56,65 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
         const [copy, setCopy] = React.useState(false);
 
         return (
-            <Box css={{ position: 'relative', minWidth: 'min-content' }}>
-                <Box
-                    css={{ position: 'absolute', width: '100%', top: '6px' }}
-                    className="code-block">
-                    {!copy ? (
-                        <button
-                            aria-label="Copy to Clipboard"
-                            onClick={() => copyFunction()}
-                            type="button"
-                            style={{
-                                zIndex: '45',
-                                background: 'var(--docs_bg_card)',
-                                outline: 'none',
-                                height: '40px',
-                                width: '40px',
-                                padding: '9px',
-                                float: 'right',
-                                position: 'sticky',
-                                cursor: 'pointer',
-                                right: '12px',
-                                borderRadius: '20px',
-                                border: '1px solid var(--docs_border_strong)'
-                            }}>
-                            <CopyIcon />
-                        </button>
-                    ) : (
-                        <button
-                            aria-label="Copy to Clipboard"
-                            onClick={() => copyFunction()}
-                            type="button"
-                            style={{
-                                zIndex: '45',
-                                background: 'var(--docs_bg_card)',
-                                outline: 'none',
-                                height: '40px',
-                                width: '40px',
-                                padding: '9px',
-                                float: 'right',
-                                position: 'sticky',
-                                cursor: 'pointer',
-                                right: '12px',
-                                borderRadius: '20px',
-                                border: '1px solid var(--docs_border_strong)'
-                            }}>
-                            <CheckIcon />
-                        </button>
-                    )}
+            <pre>
+                <Box css={{ position: 'relative', minWidth: 'min-content' }}>
+                    <Box
+                        css={{ position: 'absolute', width: '100%', top: '6px' }}
+                        className="code-block">
+                        {!copy ? (
+                            <button
+                                aria-label="Copy to Clipboard"
+                                onClick={() => copyFunction()}
+                                type="button"
+                                style={{
+                                    zIndex: '45',
+                                    background: 'var(--docs_bg_card)',
+                                    outline: 'none',
+                                    height: '40px',
+                                    width: '40px',
+                                    padding: '9px',
+                                    float: 'right',
+                                    position: 'sticky',
+                                    cursor: 'pointer',
+                                    right: '12px',
+                                    borderRadius: '20px',
+                                    border: '1px solid var(--docs_border_strong)'
+                                }}>
+                                <CopyIcon />
+                            </button>
+                        ) : (
+                            <button
+                                aria-label="Copy to Clipboard"
+                                onClick={() => copyFunction()}
+                                type="button"
+                                style={{
+                                    zIndex: '45',
+                                    background: 'var(--docs_bg_card)',
+                                    outline: 'none',
+                                    height: '40px',
+                                    width: '40px',
+                                    padding: '9px',
+                                    float: 'right',
+                                    position: 'sticky',
+                                    cursor: 'pointer',
+                                    right: '12px',
+                                    borderRadius: '20px',
+                                    border: '1px solid var(--docs_border_strong)'
+                                }}>
+                                <CheckIcon />
+                            </button>
+                        )}
+                    </Box>
+                    <Box ref={textRef} css={{ padding: '1rem 0', paddingRight: '1rem' }}>
+                        {children}
+                    </Box>
+                    <style jsx>{`
+                        button:hover {
+                            opacity: 0.8;
+                        }
+                    `}</style>
                 </Box>
-                <Box ref={textRef} css={{ padding: '1rem 0', paddingRight: '1rem' }}>
-                    {children}
-                </Box>
-                <style jsx>{`
-                    button:hover {
-                        opacity: 0.8;
-                    }
-                `}</style>
-            </Box>
+            </pre>
         );
     };
 
