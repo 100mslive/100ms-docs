@@ -19,7 +19,7 @@ You interact with the simulcast feature by setting `HMSRemoteVideoTrack`'s `setS
 class HMSRemoteVideoTrack {
 
 /**
-   * Public api to set simulcast layer to [`HMSSimulcastLayer.high], [`HMSSimulcastLayer.low], [`HMSSimulcastLayer.mid]
+   * Public api to set simulcast layer to [HMSSimulcastLayer.high], [HMSSimulcastLayer.low], [HMSSimulcastLayer.mid]
    */
   Future<HMSException?> setSimulcastLayer(HMSSimulcastLayer layer)
 
@@ -35,7 +35,7 @@ class HMSRemoteVideoTrack {
 
 }
 
-data class HMSSimulcastLayerDefinition(
+class HMSSimulcastLayerDefinition(
   HMSSimulcastLayer hmsSimulcastLayer;
   HMSResolution hmsResolution;
 )
@@ -44,10 +44,44 @@ enum HMSSimulcastLayer
 { 
     high, mid, low 
 }
-```
+``` 
 
 Here `getLayerDefinition()` property holds an array of currently available layers for the track and `getLayer()` property is the currently selected layer. Within `HMSSimulcastLayerDefinition` you get its resolution and the layer name such as high/mid/low.
 
 ## Disabling Auto Simulcast
 
 You can read more about it [here](../features/render-video#4-disableautosimulcastlayerselect)
+
+## Implementation
+
+### Get Current layer
+
+Here's how to get the current layer of remote video track:
+
+```dart
+  HMSRemoteVideoTrack remoteTrack; // get remote track from the onTrackUpdate.
+  HMSSimulcastLayer currentLayer = remoteTrack.getLayer();
+```
+
+### Get All available layers
+
+Here's how to get the all available layers with their resolution:
+
+```dart
+  HMSRemoteVideoTrack remoteTrack; // get remote track from the onTrackUpdate.
+  List<HMSSimulcastLayerDefinition> availableLayers = remoteTrack.getLayerDefinition();
+```
+
+### change Layer manually
+
+If you want to can change layer manually then follow the follwing steps:
+
+```dart
+  HMSRemoteVideoTrack remoteTrack;
+  List<HMSSimulcastLayerDefinition> availableLayers = remoteTrack.getLayerDefinition();
+  // availableLayers will contains all the layers which remote peer is publishing.
+  // In this example we are taking first layer in availableLayers list.
+  HMSSimulcastLayer firstLayer = availableLayers[0].hmsSimulcastLayer;
+  // set layer by passing it to `setSimulcastLayer` function.
+  remoteTrack.setSimulcastLayer(firstLayer);
+```
