@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     BookIcon,
     ChevronRightIcon,
@@ -12,7 +13,6 @@ import { Box, CSS, Flex, HorizontalDivider, VerticalDivider } from '@100mslive/r
 import Item from './Item';
 import merge from 'lodash/merge';
 import Link from 'next/link';
-import React from 'react';
 
 interface Props {
     logo?: React.SVGProps<SVGSVGElement>;

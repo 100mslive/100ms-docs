@@ -42,7 +42,7 @@ const Feedback = () => {
             </Text>
             <Flex justify="between" css={{ p: '$9 0' }}>
                 {emojis.map((emoji, id) => (
-                    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+                    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/interactive-supports-focus
                     <span
                         title={getPlaceholder[`title-${id + 1}`]}
                         style={{ position: 'relative', width: '24px', height: '24px' }}

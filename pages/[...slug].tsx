@@ -191,12 +191,6 @@ export const getStaticProps = async ({ params }) => {
     // Raw Mdx File Data Buffer
     const source = fs.readFileSync(postFilePath, 'utf-8');
 
-    /**
-     * Content: Mdx Data
-     * data: FrontMatter Data
-     */
-    //const { content, data } = matter(source);
-
     const allDocs = getAllDocs();
     const nav = getNavfromDocs(allDocs);
     const [currentDocSlug] = params.slug as string[];

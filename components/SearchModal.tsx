@@ -64,6 +64,7 @@ const Result = ({ searchResult }) => {
             </Text>
             <Text
                 dangerouslySetInnerHTML={{
+                    // eslint-disable-next-line no-underscore-dangle
                     __html: `${searchResult._snippetResult ?.content?.value}`
                 }}
             />
