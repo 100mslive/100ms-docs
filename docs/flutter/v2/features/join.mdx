@@ -27,14 +27,19 @@ class Meeting implements HMSUpdateListener{
 
     late HMSSDK hmsSDK;
 
-    Meeting(){
+    Meeting() {
+        initHMSSDK();
+    }
+
+    void initHMSSDK() async {
         hmsSDK = HMSSDK();
-        hmsSDK.build();
+        await hmsSDK.build(); // ensure to await while invoking the `build` method
         hmsSDK.addUpdateListener(this);
         HMSConfig config = HMSConfig(authToken: 'eyJH5c', // client-side token generated from your token service
                                 userName: 'John Appleseed');
         hmsSDK.join(config: config);
     }
+
 
     @override
     void onJoin({required HMSRoom room}) async {
@@ -130,7 +135,7 @@ Now, create an instance of `HMSSDK` using the `build` function. This can be call
 
 ```dart
 HMSSDK hmsSDK = HMSSDK();
-hmsSDK.build();
+await hmsSDK.build(); // ensure to await while invoking the `build` method
 ```
 
 ### Attach HMSUpdateListener
@@ -215,7 +220,7 @@ class Meeting implements HMSUpdateListener{
         // pass the trackSettings while constructing the HMSSDK instance
          ̶h̶m̶s̶S̶D̶K̶ ̶=̶ ̶H̶M̶S̶S̶D̶K̶(̶)̶;̶
         HMSSDK hmsSDK = HMSSDK(hmsTrackSetting: trackSettings);
-        hmsSDK.build();
+        await hmsSDK.build(); // ensure to await while invoking the `build` method
         hmsSDK.addUpdateListener(this);
         HMSConfig config = HMSConfig(authToken: 'eyJH5c', // client-side token generated from your token service
                                 userName: 'John Appleseed');
