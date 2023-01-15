@@ -18,8 +18,14 @@ This section contains info about how can we attach `HMSUpdateListener`:
 ```dart
 class Meeting implements HMSUpdateListener {
     Meeting(){
+        initHMSSDK();
+    }
+
+    void initHMSSDK() async {
         HMSSDK hmsSDK = HMSSDK();
-        hmsSDK.build();
+
+        await hmsSDK.build(); // ensure to await while invoking the `build` method
+
         //`this` corresponds to the instance implementing HMSUpdateListener
         hmsSDK.addUpdateListener(this);
     }
