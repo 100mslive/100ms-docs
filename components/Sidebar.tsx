@@ -94,17 +94,6 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                     zIndex: '20',
                     background: 'var(--docs_bg_content)'
                 }}>
-                <div
-                    style={{
-                        paddingLeft: '1.125rem',
-                        textTransform: 'uppercase',
-                        fontWeight: '700',
-                        fontSize: '13px',
-                        margin: '0',
-                        letterSpacing: '1px'
-                    }}>
-                    PLATFORM
-                </div>
                 <Listbox value={tech} onChange={changeTech}>
                     <Listbox.Button className="dropdown">
                         <div style={{ display: 'flex ', alignItems: 'center' }}>
