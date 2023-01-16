@@ -23,6 +23,9 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
 
         return false;
     });
+    const [renderComponents, setRenderComponents] = useState(false);
+
+    useEffect(() => setRenderComponents(true), []);
 
     useEffect(() => {
         if (activeItem?.current)
@@ -51,26 +54,30 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                     color: openSection ? '$textHighEmp' : '$textMedEmp',
                     '&:hover': { color: '$textAccentHigh' }
                 }}>
-                <ChevronRightIcon
-                    style={{
-                        height: '16px',
-                        width: '18px',
-                        fontWeight: 'bold',
-                        marginRight: '0.5rem',
-                        transition: 'all 0.2s ease',
-                        transform: openSection ? 'rotateZ(90deg)' : ''
-                    }}
-                />
-                <Text
-                    css={{
-                        color: 'inherit',
-                        textTransform: 'uppercase',
-                        fontWeight: '700',
-                        fontSize: '13px',
-                        letterSpacing: '1px'
-                    }}>
-                    {key.replace(/-/g, ' ')}
-                </Text>
+                {renderComponents ? (
+                    <>
+                        <ChevronRightIcon
+                            style={{
+                                height: '16px',
+                                width: '18px',
+                                fontWeight: 'bold',
+                                marginRight: '0.5rem',
+                                transition: 'all 0.2s ease',
+                                transform: openSection ? 'rotateZ(90deg)' : ''
+                            }}
+                        />
+                        <Text
+                            css={{
+                                color: 'inherit',
+                                textTransform: 'uppercase',
+                                fontWeight: '700',
+                                fontSize: '13px',
+                                letterSpacing: '1px'
+                            }}>
+                            {key.replace(/-/g, ' ')}
+                        </Text>
+                    </>
+                ) : null}
             </Flex>
             <div className={`accordion-content ${openSection ? 'active' : ''}`}>
                 {Object.entries(children as {}).map(([_, route]: [unknown, any]) =>
