@@ -124,8 +124,8 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                                         lineHeight: '24px',
                                         borderLeft:
                                             a.url === asPath
-                                                ? '4px solid var(--primary_light)'
-                                                : '4px solid transparent',
+                                                ? '1.5px solid var(--primary_light)'
+                                                : '1px solid var(--docs_text_secondary)',
                                         display: 'flex',
                                         alignItems: 'center',
                                         paddingLeft: '1rem',
