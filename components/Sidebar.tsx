@@ -134,7 +134,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                                   </Link>
                               ) : null
                           )}
-                          {key === 'features' && slug[0] !== 'server-side' ? (
+                          {key === 'features' && Array.isArray(slug) && slug[0] !== 'server-side' ? (
                               <>
                                   {aliasMenu.map((a) => (
                                       <Link
