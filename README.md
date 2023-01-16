@@ -78,24 +78,8 @@ Then Follow the Steps in 1. to add docs to it.
 So you don't have to copy paste it again and again.
 
 1. Create a new file `test.md` and add your Markdown content.
-2. then open to `/components/Content.tsx`
-3. Makes sure to import it like this `import Role from '../common/role.md';`
-
-4. Add it in the `data` which is just below it
-
-```js
-const data = {
-    foundation: Foundation,
-    // add below
-    roles: Role
-};
-```
-
-5. Then open up any `.mdx` file to use this
-
-```jsx
-<Content alias="roles" />
-```
+2. Import it at the top of the mdx file like this: `import Test from '@/common/test.md'`
+3. Use the file like a component within the markdown: `<Test />`
 
 ## 🥵 Components
 
