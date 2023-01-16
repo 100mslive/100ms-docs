@@ -190,7 +190,7 @@ The 100ms bot (beam) goes to a video call webpage and renders dynamic pages and 
 
 #### Can we split room recordings as per some control at our end?
 
-It depends on the type of recording being used. If using AVP recording, webhooks can be used to retrieve the recording link for each session. If using beam recording, the recording can be split by specifying the recording duration in the API call.
+It depends on the type of recording being used. If using SFU recording, webhooks can be used to retrieve the recording link for each session. If using beam recording, the recording can be split by specifying the recording duration in the API call.
 
 #### Can we use the same room ID but have separate recordings as per our need?
 
