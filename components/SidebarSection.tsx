@@ -132,8 +132,8 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                                     lineHeight: '24px',
                                     borderLeft:
                                         route.url === asPath
-                                            ? '1.5px solid var(--primary_light)'
-                                            : '1px solid var(--docs_text_secondary)',
+                                            ? '2px solid var(--primary_light)'
+                                            : '2px solid var(--docs_border_strong)',
                                     display: 'flex',
                                     alignItems: 'center',
                                     paddingLeft: '1rem',
@@ -161,8 +161,8 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                                         lineHeight: '24px',
                                         borderLeft:
                                             a.url === asPath
-                                                ? '1.5px solid var(--primary_light)'
-                                                : '1px solid var(--docs_text_secondary)',
+                                                ? '2px solid var(--primary_light)'
+                                                : '2px solid var(--docs_border_strong)',
                                         display: 'flex',
                                         alignItems: 'center',
                                         paddingLeft: '1rem',
