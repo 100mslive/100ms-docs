@@ -23,6 +23,7 @@ import remarkCodeHeader from '@/lib/remark-code-header';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkA11yEmoji from '@fec/remark-a11y-emoji';
+import { MDXProvider, useMDXComponents } from '@mdx-js/react';
 
 type NavRoute = {
     url: string;
@@ -58,6 +59,12 @@ interface Props {
     source: string;
 }
 
+const MDX_GLOBAL_CONFIG = {
+    MdxJsReact: {
+        useMDXComponents
+    }
+};
+
 const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
     const {
         query: { slug },
@@ -66,7 +73,7 @@ const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
     const [currentDocSlug] = slug as string[];
     const [activeHeading, setActiveHeading] = React.useState('');
     const [activeSubHeading, setActiveSubHeading] = React.useState('');
-    const Component = useMemo(() => getMDXComponent(source), [source]);
+    const Component = useMemo(() => getMDXComponent(source, MDX_GLOBAL_CONFIG), [source]);
 
     React.useEffect(() => {
         setTimeout(() => {
@@ -161,7 +168,9 @@ const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
                                 paddingBottom: '80px'
                             }}>
                             <h1>{frontMatter.title}</h1>
-                            <Component components={components} />
+                            <MDXProvider components={components}>
+                                <Component />
+                            </MDXProvider>
                             <hr />
                             {pagination.previousPost && showPagination && (
                                 <Pagination
@@ -198,6 +207,13 @@ export const getStaticProps = async ({ params }) => {
     const { previousPost, nextPost } = getPagination(currentDocs, params.slug as string[]);
     const pagination = { previousPost, nextPost };
     const { code, frontmatter } = await bundleMDX({
+        globals: {
+            '@mdx-js/react': {
+                varName: 'MdxJsReact',
+                namedExports: ['useMDXComponents'],
+                defaultExport: false
+            }
+        },
         cwd: path.join(DOCS_PATH, path.join(...params.slug.slice(0, -1))),
         source,
         mdxOptions(options) {
@@ -225,6 +241,7 @@ export const getStaticProps = async ({ params }) => {
                 ],
                 mdxPrism
             ];
+            options.providerImportSource = '@mdx-js/react';
             return options;
         }
     });
