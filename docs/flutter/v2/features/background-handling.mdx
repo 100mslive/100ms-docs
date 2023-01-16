@@ -17,9 +17,11 @@ Let's breakdown how your apps can implement efficient handling of Background sta
 
 ## iOS Background Handling
 
-When your app goes into the background, by default it can no longer access camera and publish it to other peers in the room. Also, you cannot hear audio of other participants in the call if your app is in the background without enabling Background Modes.
+When your app goes into the background, by default it can no longer access camera or microphone and publish it to other peers in the room. Also, you cannot hear audio of other participants in the call if your app is in the background without enabling Background Modes.
 
 This is the default iOS platform behaviour whereby it limits access to Microphone & Camera for capturing Audio & Video. By default, iOS also stops playing audio of the Room when your app is in Background.
+
+By Enabling Background Modes you can ensure that your iOS app has access to Microphone & can play incoming Audio from the Room.
 
 Following steps show how to add Background Modes in iOS:
 
@@ -53,7 +55,7 @@ Enable the checkbox under Background Modes named `Audio, AirPlay, and Picture in
 
 Let's look at different scenarios on iOS with & without Enabling Background Modes. 
 
-#### Without Background Modes Enabled (Default iOS Behaviour)
+### Without Background Modes Enabled (Default iOS Behaviour)
 The table lists down iOS app behaviours when the app transitions to background when a 100ms Room is ongoing without enabling background processing.
 
 The "**Scenario**" on the left of the Table below implies the activity which is ongoing in the App when user has joined a 100ms Room.
@@ -66,7 +68,7 @@ The "**Behaviours**" on the right of the Table shows what happens when the App t
 | Camera is unmuted | Camera will get **Muted** |
 | Remote Peers are publishing audio | Incoming Audio from Room **Stops** Playing |
 
-#### Background Modes Enabled
+### Background Modes Enabled (Recommended)
 
 The table lists down iOS app behaviours when the app transitions to background when a 100ms Room is ongoing with Background Modes **Enabled**.
 
@@ -85,14 +87,14 @@ The "**Behaviours**" on the right of the Table shows what happens when the App t
 
 On Android devices, by default Capturing Video & Audio from Camera & Microphone is **allowed** for sometime - usually 60 seconds. This time limit depends on different Android OEMs, Battery Optimisations Mode (Aggressive/Doze), etc. This leads to inconsistent behaviours of your apps in Background Mode on different Android devices.
 
-As per your use-case, apps can choose to implement an [Android Foreground Service](https://developer.android.com/guide/components/foreground-services) to ensure consistent behaviour. With a Foreground Service, you can continuously access Microphone, Camera & play Incoming Audio of other peers in the Room. 
+As per your use-case, apps can choose to implement an [Android Foreground Service](https://developer.android.com/guide/components/foreground-services) to ensure consistent behaviour. With a Foreground Service, you can continuously access Microphone & Camera & publish the captured Audio & Video to other peers in the Room. 
 
 Foreground Services show a status bar notification, so that users are actively aware that your app is performing a task and is consuming system resources.
 
 
 > Note: Playing Audio continuously while app is in Background is allowed by default on Android devices.
 
-### Without Android Foreground Service
+### Without Android Foreground Service (Default Android Behaviour)
 
 The table below lists down Android app behaviours when the app transitions to background when a 100ms Room is ongoing without using any Android Foreground Service.
 
@@ -142,19 +144,19 @@ Add service inside `<application>` tag as follows:
 ```
 <application>
     ...
-     <activity>
+    <activity>
         ...
-     </activity>
+    </activity>
 
-    // Set Service Type to capture Audio or Video as per your use-case. In most cases, only `microphone` access would be required. Then do not pass the `camera`
-    <service android:name="com.pravera.flutter_foreground_task.service.ForegroundService"
-      android:foregroundServiceType="camera|microphone" />
+      // Set Service Type to capture Audio or Video as per your use-case. In most cases, only `microphone` access would be required. Then do not pass the `camera`
+      <service android:name="com.pravera.flutter_foreground_task.service.ForegroundService"
+        android:foregroundServiceType="camera|microphone" />
 
 </application>
 ```
 
 ### Start Foreground Service
-Wrap meeting page with `WillStartForegroundTask` widget as follows:
+Wrap your _Meeting page_ with `WillStartForegroundTask` widget. The page which is shown when an 100ms Room is joined should be encapsulated as shown below:
 ```dart
 @override
 Widget build(BuildContext context) {
