@@ -5,23 +5,30 @@ nav: 2.1
 
 ## Overview
 
-This guide will walk you through simple instructions to create a video conferencing app using 100ms React Native SDK and test it using an emulator or your mobile phone.
+This guide will walk you through simple instructions to create a Video Conferencing app using the 100ms React Native SDK and test it using an Emulator or your Mobile Phone.
 
-Please check our [basic concepts guide](../foundation/basics) to understand the concepts like rooms, templates, peers, etc.
+Please check our [Basic Concepts Guide](../foundation/basics) to understand the concepts like Templates, Rooms, Peers, Roles, Tracks, etc.
 
-This guide contains instructions for two approaches to get you started with 100ms React Native SDK:
+This Guide contains instructions for two approaches to get you started with 100ms React Native SDK:
 
-1. [Create a sample app](#create-a-sample-app) — instructions to create a react native app quickly with a complete code sample.
-2. [Building step-by-step](#building-step-by-step) — instructions to walk you through the implementation of the app in a step-by-step manner.
+1. [Create a Sample App](#create-a-sample-app) — Instructions to create a React Native app quickly with a complete Code Sample.
+2. [Building Step-by-Step](#building-step-by-step) — Instructions to walk you through the implementation of the app in a step-by-step manner.
 
-You can also check our [basic sample app](https://github.com/100mslive/react-native-hms/tree/develop/sample-apps/rn-quickstart-app) on GitHub.
+You can also check our [Basic Sample App](https://github.com/100mslive/react-native-hms/tree/develop/sample-apps/rn-quickstart-app) on GitHub.
 
-Check out the full-featured example app implementation in the [100ms React Native SDK GitHub repository](https://github.com/100mslive/react-native-hms/tree/main/example) showcasing multiple features provided by 100ms.
+Check out the full-featured Example app implementation in the [100ms React Native SDK GitHub repository](https://github.com/100mslive/react-native-hms/tree/main/example) showcasing multiple features provided by 100ms.
+
+
+You can download the fully featured Example app on your iOS & Android Devices.
+
+📲 Download the Example iOS app here: https://testflight.apple.com/join/v4bSIPad
+
+🤖 Download the Example Android app here: https://appdistribution.firebase.dev/i/7b7ab3b30e627c35
 
 
 ## Create a sample app
 
-This section contains instructions to create a simple React Native video conferencing app. We will help you with instructions to understand the project setup and complete code sample to implement this quickly.
+This section contains instructions to create a simple React Native Video Conferencing app. We will help you with instructions to understand the project setup and complete code sample to implement this quickly.
 
 <div className="steps-container">
 
@@ -38,17 +45,17 @@ Once you have the prerequisites, follow the steps below to create a React Native
 
 1. Open your Terminal and navigate to directory/folder where you would like to create your app.
 
-2. Run below command to create React Native app:
+2. Run the below command to create React Native app:
   ​
   ```bash
   npx react-native init HMSSampleApp --version 0.68.5 --npm && cd ./HMSSampleApp
   ```
 
-3. Once the app is created, open it in VS code
+3. Once the app is created, open it in VS code.
 
 4. Test run your app
             
-             
+
     a. Build the App
     ​
     <Tabs id="test-run-sample-app" items={['iOS', 'Android']} />
@@ -56,6 +63,7 @@ Once you have the prerequisites, follow the steps below to create a React Native
     <Tab id="test-run-sample-app-0">
 
       ```bash tab=iOS
+      // to run the app on iPhone 14 Simulator
       npx react-native run-ios --simulator="iPhone 14"
       ```
 
@@ -64,6 +72,7 @@ Once you have the prerequisites, follow the steps below to create a React Native
     <Tab id="test-run-sample-app-1">
 
       ```bash tab=Android
+      // to run the app on a Connected Android Device or any Emulator
       npx react-native run-android
       ```
 
@@ -75,12 +84,15 @@ Once you have the prerequisites, follow the steps below to create a React Native
     npx react-native start
     ```
 
-    or follow Run instructions printed in terminal
+    or follow Run instructions printed in Terminal to start the Metro Bundler.
 
 
 ### Install the Dependencies
 
-After the Test run of your app is successful, You can install [100ms React Native library](https://www.npmjs.com/package/@100mslive/react-native-hms) and [react-native-permissions](https://www.npmjs.com/package/react-native-permissions) in your app.
+After the Test run of your app is successful, you can install [100ms React Native package](https://www.npmjs.com/package/@100mslive/react-native-hms) in your app. 
+
+Since the app requires Camera & Microphone permissions, a package for requesting these permissions from users should also be installed. We recommend using the 
+[react-native-permissions](https://www.npmjs.com/package/react-native-permissions) package.
 
 ```bash
 npm install --save @100mslive/react-native-hms react-native-permissions
@@ -650,9 +662,9 @@ export const updateNode = (data) => {
 
 ```
 
-### Fetch token to join the Room
+### Fetch token to Join the Room
 
-To test audio/video functionality, you need to connect to a 100ms room; Please check the following steps for the same -
+To test audio/video functionality, you need to connect to a 100ms Room. Please check the following steps for the same -
 
 1. Navigate to your [100ms dashboard](https://dashboard.100ms.live/dashboard) or [create an account](https://dashboard.100ms.live/register) if you don't have one.
 2. Use the `Video Conferencing Starter Kit` to create a room with a default template assigned to it to test this app quickly.
@@ -817,7 +829,7 @@ Now, after you click `join`, you should be able to see yourself (android emulato
 
 In this section, We'll walk through what the above code does.
 
-Below is the diagram which shows the common SDK implementation lifecycle. We start with requesting the permissions from user and end with leaving the meeting or freeing resources.
+Below is the diagram which shows the common SDK implementation lifecycle. We start with requesting the Camera & Microphone permissions from user and end with leaving the 100ms Room.
 
 ![HMSSDK Integration Lifecycle](/guides/rn-hmssdk-integration-lifecycle.png)
 
@@ -829,7 +841,7 @@ Now we will look at code and explaination for each step in implementation lifecy
 
 We need permission from the user to access the media from the user's device. We must urge the user to grant permission to access camera, microphone, and bluetooth devices. We use the [react-native-permissions](https://www.npmjs.com/package/react-native-permissions) library that provides a cross-platform (iOS, Android) API to request permissions and check their status.
 
-Please ensure to add permissions in the `AndroidManifest.xml` file for android and `info.plist` file for iOS. Check [test the app section](#test-the-app) for more information.
+Please ensure to add permissions declarations in the `AndroidManifest.xml` file for Android and `info.plist` file for iOS. Check [test the app section](#test-the-app) for more information.
 
 ```js
 import {PERMISSIONS, requestMultiple, RESULTS} from 'react-native-permissions';
@@ -885,11 +897,11 @@ const handleJoinPress = async () => {
 };
 ```
 
-In the above code snippet, First, We have `checkPermissions` function which uses `requestMultiple` function from `react-native-permissions` library to request permissions from device. Then we have `handleJoinPress` function which calls `checkPermissions` function to request Camera, Microphone and Bluetooth permissions on "Join Room" button press.
+In the above code snippet, first, we have `checkPermissions` function which uses `requestMultiple` function from `react-native-permissions` library to request permissions from device. Then we have `handleJoinPress` function which calls `checkPermissions` function to request Camera, Microphone and Bluetooth permissions on "Join Room" button press.
 
 ### Implement Join screen
 
-This section will help you create the join screen user interface. To keep it simple for the quickstart, we have not created many UI elements; you can refer to the [sample app implementation](https://github.com/100mslive/react-native-hms/blob/develop/sample-apps/rn-quickstart-app/src/screens/Welcome/index.tsx) for a complete Preview/Join user interface.
+This section will help you create the join screen user interface. To keep it simple for the quickstart, we have not created many UI elements. You can refer to the [sample app implementation](https://github.com/100mslive/react-native-hms/blob/develop/sample-apps/rn-quickstart-app/src/screens/Welcome/index.tsx) for a complete Preview/Join user interface.
 
 ```js
 const HomeScreen = ({ navigate }) => {
@@ -916,9 +928,9 @@ In the above code snippet, We are implementing UI for "Join Room" button in Home
 
 ### Initializing the SDK
 
-100ms SDK provides various events, the client apps can subscribe to these events to get updates happening in the room after a user has joined.
+100ms SDK provides various events which the client apps can subscribe to. These events notify about updates happening in the room after a user has joined.
 
-After requesting required permissions from the user, We are ready to initialize the 100ms SDK to subscribe to room updates.
+After requesting required Audio & Video permissions from the user, we are ready to initialize the 100ms SDK to subscribe to updates.
 
 ```js
 // Effect to handle HMSSDK initialization and Listeners Setup 
@@ -941,25 +953,25 @@ useEffect(() => {
 
   joinRoom();
 
-  // When effect unmounts for any reason, We are calling leave function
+  // When effect unmounts for any reason, we are calling leave function to exit the 100ms Room
   return () => {
     handleRoomLeave();
   };
 }, []);
 ```
 
-In above code snippet, We have a `useEffect` hook which initializes the `HMSSDK` by calling static `build` method.
+In above code snippet, we have a `useEffect` hook which initializes the `HMSSDK` by calling static `build` method.
 
 ### Listen to Join and Peer Updates
 
 The 100ms SDK emits:
 
-- `HMSUpdateListenerActions.ON_JOIN` event when the user has joined the room successfully, and
+- `HMSUpdateListenerActions.ON_JOIN` event when the user has joined the Room successfully, and
 - `HMSUpdateListenerActions.ON_PEER_UPDATE` event when any change happens for any Peer in the Room.
 
 Our application must subscribe to these events to get the updates.
 
-Check out the [Event Listener Enums](../features/event-listeners-enums#hmspeerupdate) docs to understand the update types emitted by the SDK for `HMSUpdateListenerActions.ON_PEER_UPDATE` event.
+Check out the [Event Listeners](../features/event-listeners) docs to know more about events emitted by the SDK.
 
 ```js
 // Subscribing to Join updates
@@ -1026,7 +1038,7 @@ const onPeerListener = ({ peer, type }) => {
 
 The 100ms SDK emits `HMSUpdateListenerActions.ON_TRACK_UPDATE` event when any change happens for any Track in the Room. Our application must subscribe to this event to get the track updates.
 
-Check out the [Event Listener Enums](../features/event-listeners-enums#hmstrackupdate) docs to understand the update types emitted by the SDK for `HMSUpdateListenerActions.ON_TRACK_UPDATE` event.
+Check out the [Event Listeners](../features/event-listeners) docs to know more about events emitted by the SDK.
 
 ```js
 // Subscribing to Track updates
@@ -1119,11 +1131,11 @@ const onErrorListener = (error) => {
 
 ### Join Room
 
-After adding all required event listeners, You need to create an `HMSConfig` instance and use that instance to call the `join` method of `HMSSDK` instance to join a room.
+After adding all required event listeners, you need to create an `HMSConfig` instance and use that instance to call the `join` method of `HMSSDK` instance to join a Room.
 
-> **Note:** An `App token` is required to authenticate a room join request from your client-side app. Please ensure to set the `AUTH_TOKEN` variable value with correct "Auth Token" by fetching it from your dashboard. Check [fetch token to join a room section](#fetch-token-to-join-the-room) for more information. <br/> Read more about authentication and tokens in [this guide](../foundation/security-and-tokens)
+> **Note:** An `App token` is required to authenticate a Room join request from your client-side app. Please ensure to set the `AUTH_TOKEN` variable value with correct "Auth Token" by fetching it from your dashboard. Check [fetch token to join a room section](#fetch-token-to-join-the-room) for more information. <br/> Read more about authentication and tokens in [this guide](../foundation/security-and-tokens).
 
-You can learn more about joining the room from [Join Room](../features/join) docs.
+You can learn more about joining the Room from [Join Room](../features/join) docs.
 
 ```js
 // Effect to handle HMSSDK initialization and Listeners Setup 
@@ -1156,7 +1168,7 @@ useEffect(() => {
 }, []);
 ```
 
-In above code snippet, We have the same `useEffect` hook which initializes the `HMSSDK`, after initialization and adding listeners it creates an `HMSConfig` object with `AUTH_TOKEN` and `USERNAME` and passes the created config object to `join` method of `HMSSDK` instance.
+In above code snippet, we have the same `useEffect` hook which initializes the `HMSSDK`. After initialization and adding listeners it creates an `HMSConfig` object with `AUTH_TOKEN` and `USERNAME` and passes the created config object to `join` method of `HMSSDK` instance.
 
 ### Render Video in a Tile
 
@@ -1170,7 +1182,7 @@ interface PeerTrackNode {
 }
 ```
 
-To display a video track, You can simply get the `trackId` of the Video Tracks in `PeerTrackNode` object and pass it to `HmsView` component. If `track` in `PeerTrackNode` object is undefined or null then you can render avatar or name initials of the peer from the `peer` property in `PeerTrackNode`.
+To display a video track, you can simply get the `trackId` of the Video Tracks in `PeerTrackNode` object and pass it to `HmsView` component. If `track` in `PeerTrackNode` object is undefined or null then you can render avatar or name initials of the peer from the `peer.name` property in `PeerTrackNode`.
 
 Check the [Render Video](../features/render-video) guide for more information.
 
@@ -1208,11 +1220,11 @@ const _renderItem = ({ item }) => {
 };
 ```
 
-In the above code snippet, We have `_renderItem` function which returns Tile UI. Inside Tile UI, we are rendering `HmsView` if we have valid track otherwise Peer name Initials.
+In the above code snippet, we have `_renderItem` function which returns Tile UI. Inside Tile UI, we are rendering `HmsView` if we have valid track otherwise an Avatar with Peer's Name Initials.
 
 ### Render Video Tiles for Peers
 
-You can create a **list of `PeerTrackNode` objects** (mentioned in [Render Video in a Tile](#render-video-in-a-tile) step) for each peer and track combination and then use this list to render Tiles for all the `PeerTrackNodes` objects. We recommend using [FlatList](https://reactnative.dev/docs/flatlist) component to render multiple Tiles, this ensures uniques Tiles are created for each trackId.
+You can create a **list of `PeerTrackNode` objects** (mentioned in [Render Video in a Tile](#render-video-in-a-tile) step) for each Peer and Track combination and then use this list to render Tiles for all the `PeerTrackNodes` objects. We recommend using [FlatList](https://reactnative.dev/docs/flatlist) component to render multiple Tiles. This ensures uniques Tiles are created for each `trackId`.
 
 ```js
 const [peerTrackNodes, setPeerTrackNodes] = useState([]); // Use this state to render Peer Tiles
@@ -1241,7 +1253,7 @@ const _renderItem = ({ item }) => { ... };
 />
 ```
 
-In the above code snippet, We are rendering `FlatList` for a list of `PeerTrackNode` objects.
+In the above code snippet, we are rendering `FlatList` for a list of `PeerTrackNode` objects.
 
 ### Leaving the Room
 
@@ -1303,11 +1315,11 @@ const handleRoomEnd = () => {
 </TouchableHighlight>
 ```
 
-In the above code snippet, First we have `handleRoomLeave` function which calls `leave` and `destroy` methods. Then we have implementation of "Leave Room" button UI in Room meeting screen which eventually calls `handleRoomLeave` function.
+In the above code snippet, first we have `handleRoomLeave` function which calls `leave` and `destroy` methods. Then we have implementation of "Leave Room" button UI in Room meeting screen which eventually calls `handleRoomLeave` function.
 
 ### Test App
 
-You can refer to the [test the app section](#test-the-app) to test your app for android or iOS platform.
+You can refer to the [Test the App section](#test-the-app) to test your app on Android or iOS Device or Simulators.
 
 </div>
 
@@ -1316,13 +1328,13 @@ You can refer to the [test the app section](#test-the-app) to test your app for 
 
 We have multiple example apps to get you started with 100ms React Native SDK -
 
-### Basic example
+### Basic Example
 
-For a basic example, see the [React Native Quickstart Sample App](https://github.com/100mslive/react-native-hms/tree/develop/sample-apps/rn-quickstart-app) on GitHub.
+For a Basic Sample Reference, check out the [React Native Quickstart Sample App](https://github.com/100mslive/react-native-hms/tree/develop/sample-apps/rn-quickstart-app) on GitHub.
 
-### Full-featured example
+### Full-featured Example
 
-You can also check out the full-featured example app implementation in the [100ms React Native SDK GitHub repository](https://github.com/100mslive/react-native-hms/tree/main/example) showcasing multiple features provided by 100ms.
+You can also check out the fully-featured Example App implementation in the [100ms React Native SDK GitHub repository](https://github.com/100mslive/react-native-hms/tree/main/example) showcasing multiple features provided by 100ms.
 
 ### Check Deployed Sample Apps
 
