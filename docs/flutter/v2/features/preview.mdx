@@ -25,7 +25,7 @@ HMSSDK hmsSDK = HMSSDK();
 ### Call build method on HMSSDK instance
 
 ```dart 
-hmsSDK.build();
+await hmsSDK.build(); // ensure to await while invoking the `build` method
 ```
 
 ### Attach preview listeners and call preview method 
@@ -38,11 +38,16 @@ class Preview implements HMSPreviewListener{
    late HMSSDK hmsSDK;
 
    Preview(){
-      hmsSDK = HMSSDK();
-      hmsSDK.build();
+      initHMSSDK();
+   }
 
-      HMSConfig config = HMSConfig(authToken: 'eyJH5c', // client-side token generated from your token service 
-                        userName: 'John Appleseed');
+   void initHMSSDK() async {
+      hmsSDK = HMSSDK();
+      await hmsSDK.build(); // ensure to await while invoking the `build` method
+      HMSConfig config = HMSConfig(
+         userName: "John Doe",
+         authToken: "eyJH5c", // client-side token generated from your token service 
+      );
 
       //Here this is an instance of a class that implements HMSPreviewListener i.e. Preview
       hmsSDK.addPreviewListener(this);

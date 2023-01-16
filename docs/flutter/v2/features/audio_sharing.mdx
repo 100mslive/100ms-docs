@@ -166,7 +166,7 @@ HMSAudioMixerSource audioMixerSource = HMSAudioMixerSource(nodes: [audioFilePlay
 HMSAudioTrackSetting audioSettings = HMSAudioTrackSetting(..., audioSource: audioMixerSource);
 HMSTrackSetting = HMSTrackSetting(..., audioTrackSetting: audioSettings);
 HMSSDK hmsSDK = HMSSDK(hmsTrackSetting: trackSetting);
-hmsSDK.build();
+await hmsSDK.build(); // ensure to await while invoking the `build` method
 ```
 
 That's all you need to set up the SDK to use your custom audio source.

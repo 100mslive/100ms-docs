@@ -26,7 +26,12 @@ The [roles primitive](/docs/javascript/v2/foundation/templates-and-roles) can be
 
 Use our [Live Streaming Starter Kit](https://www.100ms.live/marketplace/live-streaming-starter-kit) to try out the experience before you write a line of code.
 
-<div className="steps-container">
+<StepsToc
+  parentId="try-live-streaming"
+  descriptions={["Use our Live streaming starter kit to try out the experience before you write a line of code.", "Understand the difference between a stream broadcaster and stream viewer.", "Use the demo app link to go live for the first time as a broadcaster and join the stream as viewer.", "Use the 100ms self-serve dashboard to update the layout, aspect ratio, etc of the stream."]}
+>
+
+<StepsContainer id="try-live-streaming">
 
 ### Create a new app
 
@@ -66,7 +71,7 @@ By default, the live stream is composed in landscape mode for desktop viewers (w
     - If you have multiple broadcasters joining in, choose grid or active speaker based on your needs
     - In case of grid layout, choose the tile size that fits your use-case. For example, a stream with 2 streamers looks better with 1:1 tiles.
 
-</div>
+</StepsContainer>
 
 ## Integrate in your app
 

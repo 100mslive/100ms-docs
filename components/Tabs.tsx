@@ -1,4 +1,5 @@
-import React, { PropsWithChildren, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { PropsWithChildren, useCallback, useEffect, useState } from 'react';
 
 /**
  *
@@ -24,27 +25,39 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
     const [tab, setTab] = useState(0);
     const [currentPlatform, setCurrentPlatform] = useState('');
 
+    const router = useRouter();
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const platform = window.location.pathname.split('/')?.[2];
-            setCurrentPlatform(platform);
-        }
-    }, []);
+        const platform = router.asPath.split('/')?.[1];
+        setCurrentPlatform(platform);
+    }, [router?.asPath]);
 
-    // For updating all tabs and setting value in localStorage
-    React.useEffect(() => {
-        const updateTab = (e) => {
-            const currentValue = items.indexOf(e.detail.name);
+    const changeTab = useCallback(
+        (idx: number) => {
+            items.forEach((_, i) => {
+                if (i !== idx) {
+                    const ele = document.getElementById(`${id}-${i}`);
+                    if (ele) ele.style.display = 'none';
+                }
+            });
+            const ele = document.getElementById(`${id}-${idx}`);
+            if (ele) ele.style.display = 'block';
+            setTab(idx);
+        },
+        [items, setTab]
+    );
+
+    const updateTab = useCallback(
+        (name) => {
+            const currentValue = items.indexOf(name);
             const idx = currentValue !== -1 ? currentValue : 0;
             setTab(idx);
             changeTab(idx);
             const obj = JSON.parse(localStorage.getItem('tabSelection') || '{}');
-            obj[e.detail.sdk] = e.detail.name;
+            obj[currentPlatform] = name;
             localStorage.setItem('tabSelection', JSON.stringify(obj));
-        };
-        document.addEventListener('tabChanged', updateTab);
-        return () => document.removeEventListener('tabChanged', updateTab);
-    }, []);
+        },
+        [items, currentPlatform, setTab, changeTab]
+    );
 
     // For setting value on future visits / reload
     React.useEffect(() => {
@@ -55,17 +68,6 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
         changeTab(idx);
     }, [currentPlatform]);
 
-    const changeTab = (idx: number) => {
-        items.forEach((_, i) => {
-            if (i !== idx) {
-                const ele = document.getElementById(`${id}-${i}`);
-                if (ele) ele.style.display = 'none';
-            }
-        });
-        const ele = document.getElementById(`${id}-${idx}`);
-        if (ele) ele.style.display = 'block';
-        setTab(idx);
-    };
     return (
         <div
             style={{
@@ -75,10 +77,8 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
             {items.map((el, i) => (
                 <button
                     onClick={() => {
-                        const tabChanged = new CustomEvent('tabChanged', {
-                            detail: { name: items[i], sdk: currentPlatform }
-                        });
-                        document.dispatchEvent(tabChanged);
+                        updateTab(items[i]);
+                        document.dispatchEvent(new CustomEvent('tabChanged'));
                     }}
                     type="button"
                     style={{
@@ -90,7 +90,7 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
                         borderBottom: tab === i ? '2px solid var(--gray12)' : 'none'
                     }}
                     key={el}
-                    id={i.toString()}>
+                    id={`${id}-button-${i}`}>
                     {el}
                 </button>
             ))}
