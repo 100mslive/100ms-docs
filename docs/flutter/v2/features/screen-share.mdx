@@ -276,13 +276,13 @@ To learn more about Rendering any Video, refer the guide [here](https://www.100m
 
 For starting Screenshare from iOS devices (iPhones or iPads) following are some common setup you should already have within your Apps -
 
-### `Bitcode` Disabled
+### Bitcode Disabled
 Bitcode has been disabled by Apple from Xcode 14 & iOS 16 and above. So 100ms packages also have Disabled Bitcode to ensure compatibility. Ensure that in your Xcode project Bitcode is Disabled for all Targets.
 
 ![Disable Bitcode in Xcode](/docs/v2/iOS-Xcode-Disable-Bitcode.png)
 
 
-### `Podfile` with `Bitcode` Disabled
+### Podfile with Bitcode Disabled
 You can use the following Podfile which has `post_install` script to Disable Bitcode for all `Pods`. Ensure that you modify the `target` for your Main App and the Broadcast Upload Extension. 
 
 In this sample Podfile, the Target names are `Runner` and `FlutterBroadcastUploadExtension`. Change these to the actual Target names defined in your Xcode project.
@@ -341,20 +341,20 @@ end
 ```
 
 
-### `Background Modes` Enabled
+### Background Modes Enabled
 In majority use-cases, playing audio from Room would be required when app is in Background Mode. Mostly, if users are starting Screenshare from their iPhones/iPads they would want to continue listening to audio from the Room. So, ensure that you have Background Modes Enabled in your Xcode project.
 
 ![Enable Background Modes](/docs/v2/enable-background-modes.png)
 
 
-### `App Groups` Enabled
+### App Groups Enabled
 Ensure that you have enabled `App Groups` for both your Main App Target & the newly created Broadcast Extension Target. If the same `App Group` is not enabled on both Targets then the App & the Screenshare Extension won't be able to communicate & starting Screenshare from your iOS device will fail. 
 Also, ensure that there's no typo / spelling mis-matches between the App Group enabled on Main App Target & the Screenshare Broadcast Extension Target.
 
 ![Same App Group for both Targets](/docs/v2/same-app-group.png)
 
 
-### `Permission Denied` EXC_BAD_ACCESS error
+### Permission Denied EXC_BAD_ACCESS error
 100ms Example Apps already have configurations for starting Screenshare on iOS devices. The values for App Group & Preferred Extension used in 100ms Example Apps cannot be reused by any other apps as they won't be linked to your Apple Developer Account.
 
 If the 100ms values for App Group which is "group.flutterhms" & Preferred Extension which is "FlutterBroadcastUploadExtension" are resued by your apps then you will have an Xcode exception containing `Permission Denied` EXC_BAD_ACCESS error message similar to the one shown below -
