@@ -11,23 +11,18 @@ interface Props {
 }
 
 const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
-    const activeItem = useRef<HTMLAnchorElement>(null);
-    const [openSection, setOpenSection] = useState(false);
     const router = useRouter() as any;
-
     const {
         asPath,
         query: { slug }
     } = router;
 
-    useEffect(() => {
-        for (const i of slug) {
-            if (i === key) {
-                setOpenSection(true);
-                break;
-            }
-        }
-    }, [slug, key]);
+    const activeItem = useRef<HTMLAnchorElement>(null);
+    const [openSection, setOpenSection] = useState(() => {
+        for (const i of slug) if (i === key) return true;
+
+        return false;
+    });
 
     useEffect(() => {
         if (activeItem?.current)
