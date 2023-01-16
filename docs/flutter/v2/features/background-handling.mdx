@@ -13,9 +13,13 @@ Android & iOS have different mechanisms of handling app behaviour which includes
 
 There are 2 prominent behaviours that are mainly affected when apps transition to Background State - Publishing Audio/Video, and Playing incoming Audio/Video.
 
+Let's breakdown how your apps can implement efficient handling of Background states on iOS & Android Platforms.
+
 ## iOS Background Handling
 
-When your app goes into the background, it can no longer access camera and publish it to other peers in the room. Also, you cannot hear audio of other participants in the call if your app is in the background without enabling Background Modes.
+When your app goes into the background, by default it can no longer access camera and publish it to other peers in the room. Also, you cannot hear audio of other participants in the call if your app is in the background without enabling Background Modes.
+
+This is the default iOS platform behaviour whereby it limits access to Microphone & Camera for capturing Audio & Video. By default, iOS also stops playing audio of the Room when your app is in Background.
 
 Following steps show how to add Background Modes in iOS:
 
@@ -39,7 +43,7 @@ Search background mode and add it to project by clicking on it.
 
 ![backgroundMode](/docs/v2/flutter-background-service-3.png)
 
-### Start Background Processing
+### Enable Background Mode
 
 Enable the checkbox under Background Modes named `Audio, AirPlay, and Picture in Picture`.
 
@@ -47,11 +51,9 @@ Enable the checkbox under Background Modes named `Audio, AirPlay, and Picture in
 
 </div>
 
-Now you can use your app in the background even when the device is in sleep mode.
-
 Let's look at different scenarios on iOS with & without Enabling Background Modes. 
 
-#### Without Background Modes Enabled
+#### Without Background Modes Enabled (Default iOS Behaviour)
 The table lists down iOS app behaviours when the app transitions to background when a 100ms Room is ongoing without enabling background processing.
 
 The "**Scenario**" on the left of the Table below implies the activity which is ongoing in the App when user has joined a 100ms Room.
@@ -79,13 +81,20 @@ The "**Behaviours**" on the right of the Table shows what happens when the App t
 | Remote Peers are publishing audio | Incoming Audio from Room **Continues** to Play |
 
 
-Let's breakdown how your apps can implement efficient handling of Background states on Android & iOS Platforms.
-
 ## Android Background Handling
+
+On Android devices, by default Capturing Video & Audio from Camera & Microphone is **allowed** for sometime - usually 60 seconds. This time limit depends on different Android OEMs, Battery Optimisations Mode (Aggressive/Doze), etc. This leads to inconsistent behaviours of your apps in Background Mode on different Android devices.
+
+As per your use-case, apps can choose to implement an [Android Foreground Service](https://developer.android.com/guide/components/foreground-services) to ensure consistent behaviour. With a Foreground Service, you can continuously access Microphone, Camera & play Incoming Audio of other peers in the Room. 
+
+Foreground Services show a status bar notification, so that users are actively aware that your app is performing a task and is consuming system resources.
+
+
+> Note: Playing Audio continuously while app is in Background is allowed by default on Android devices.
 
 ### Without Android Foreground Service
 
-The table lists down Android app behaviours when the app transitions to background when a 100ms Room is ongoing without using any Android Foreground Service.
+The table below lists down Android app behaviours when the app transitions to background when a 100ms Room is ongoing without using any Android Foreground Service.
 
 The "**Scenario**" on the left of the Table below implies the activity which is ongoing in the App when user has joined a 100ms Room.
 
@@ -94,27 +103,26 @@ The "**Behaviours**" on the right of the Table shows what happens when the App t
 
 | **Scenario**   | **Behaviours**                                 |
 | :------------- | :----------------------------------------------------- |
-| Mic is unmuted | Mic will remain **Unmuted** and the user will able to publish audio for a limited period (time depending on OS) |
+| Mic is unmuted | Mic will remain **Unmuted** and the user will able to publish audio for a limited period (time depending on OEMs) |
 | Camera is Unmuted | Camera will remain **Unmuted** and the user will able to publish video for a limited period (time depending on OS)  |
-| Remote Peer is publishing audio | Able to play incoming audio from the room |
+| Remote Peers are publishing audio | Able to play incoming audio from the Room |
 
 ### With Android Foreground Service
+
+When your app implements a Foreground Service it has steady access to capturing & playing audio & video.
 
 | **Scenario**   | **Behaviours**                                 |
 | :------------- | :----------------------------------------------------- |
 | Mic is unmuted | Mic will remain unmuted and the user will able to publish audio without any restriction |
 | Camera is unmuted | Camera will remain unmuted and the user will able to publish video without any restriction |
-| Remote Peer is publishing audio | Able to play incoming audio from the room |
+| Remote Peers are publishing audio | Able to play incoming audio from the Room |
 
 
 
-To keep the app running in the background even after the device goes into sleep mode then we need to add background permission in the app for android and iOS both.
+For implementing a Foreground Service we recommend using the  [flutter_foreground_task](https://pub.dev/packages/flutter_foreground_task) package which allows the app to run in the background with a Persistent Status Bar Notification.
 
-In Android, if you want to speak in sleep mode then Android OS allow it for around 60 seconds (depend on OS) by default but if you want to continue it for more than allowed time then we have to use 3 party plugin [flutter_foreground_task](https://pub.dev/packages/flutter_foreground_task) which allows the app to run in the foreground with a notification.
+Here is step by step guide how to integrate `flutter_foreground_task` in your apps -
 
-Here is step by step guide how to integrate flutter_foreground_task in application for 100ms SDK.
-
-> Note: Playing Audio works fine without using Foreground Service as well.
 
 <div className="steps-container">
 
@@ -126,6 +134,9 @@ dependencies:
 ```
 
 ### Adding Service in `AndroidManifest.xml`
+Depending on your use-case, your app may want either access to `microphone` or `camera` or both when the app is in Background. Ensure that you set the correct `foregroundServiceType` inside the `<activity>`.
+
+
 
 Add service inside `<application>` tag as follows:
 ```
@@ -135,8 +146,9 @@ Add service inside `<application>` tag as follows:
         ...
      </activity>
 
-<service android:name="com.pravera.flutter_foreground_task.service.ForegroundService" 
-  android:foregroundServiceType="camera|microphone" />
+    // Set Service Type to capture Audio or Video as per your use-case. In most cases, only `microphone` access would be required. Then do not pass the `camera`
+    <service android:name="com.pravera.flutter_foreground_task.service.ForegroundService"
+      android:foregroundServiceType="camera|microphone" />
 
 </application>
 ```
@@ -183,7 +195,7 @@ Widget build(BuildContext context) {
           title: const Text('Your App Title'),
           centerTitle: true,
         ),
-        body: MeetingApp(),
+        body: MeetingApp(), // your app screen which is shown when 100ms Room is joined
       ),
     ),
   );
@@ -191,4 +203,8 @@ Widget build(BuildContext context) {
 ```
 </div>
 
-> To know more about `flutter_foreground_task` visit [here](https://pub.dev/packages/flutter_foreground_task) or checkout implementation in our [example app](https://github.com/100mslive/100ms-flutter/tree/main/example).
+That's it. Now you'll have a Foreground Service up & running in your app.
+
+> Checkout the Background Handling implementations in 100ms Example app [here](https://github.com/100mslive/100ms-flutter/tree/main/example).
+  
+To know more about Android `flutter_foreground_task` package, visit [here](https://pub.dev/packages/flutter_foreground_task).
