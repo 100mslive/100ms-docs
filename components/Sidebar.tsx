@@ -39,31 +39,31 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
     const [currentDocSlug] = slug as string[];
 
     let nav;
-    if (Object.keys(currentNav).length) {
+    if (Object.keys(currentNav).length && Array.isArray(slug)) {
         const platform = currentNav[currentDocSlug];
-        if (slug![0] !== 'v1' && slug![0] !== 'v2') {
-            if (slug!.length > 3) {
+        if (slug[0] !== 'v1' && slug[0] !== 'v2') {
+            if (slug.length > 3) {
                 nav = platform[slug![1]];
-                if (slug![0] === 'api-reference') {
+                if (slug[0] === 'api-reference') {
                     // if (slug[1] === 'android') {
                     //     showPagination = false;
                     // }
-                    nav = platform[slug![1]][slug![2]];
+                    nav = platform[slug[1]][slug[2]];
                 }
             }
         } else nav = platform;
     }
 
-    let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug![0]);
-    if (slug![0] === 'api-reference')
-        indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug![1]);
+    let indexOf = Array.isArray(slug) ? menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]) : -1;
+    if (Array.isArray(slug) && slug[0] === 'api-reference')
+        indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[1]);
 
     indexOf = indexOf === -1 ? 0 : indexOf;
     const [tech, setTech] = useState(menuItem[indexOf]);
 
     const changeTech = (s) => {
         setTech(s);
-        if (slug![0] === 'api-reference')
+        if (Array.isArray(slug) && slug[0] === 'api-reference')
             router.push(s.apiRef, undefined, {
                 shallow: false
             });
@@ -134,7 +134,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                                   </Link>
                               ) : null
                           )}
-                          {key === 'features' && slug![0] !== 'server-side' ? (
+                          {key === 'features' && Array.isArray(slug) && slug[0] !== 'server-side' ? (
                               <>
                                   {aliasMenu.map((a) => (
                                       <Link
