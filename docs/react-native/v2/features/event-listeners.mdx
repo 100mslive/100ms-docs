@@ -3,7 +3,18 @@ title: Event Listeners
 nav: 3.7
 ---
 
-You can easily add or remove an event listener by using the addEventListener() or removeEventListener() method. HMSUpdateListenerActions is an enum class which has all the types of event listeners.
+## Common Events Implementation Lifecycle
+
+The below diagram shows an overview of which Events are emitted and at what time when you `Join` or `Preview` a Room.
+
+You will start receiving event updates after you call `preview` or `join` method on `HMSSDK` instance.
+
+![Common Events Implementation Lifecycle Diagram](/guides/rn-event-lifecycle-diagram.png)
+
+
+## All Available Event Listeners
+
+You can easily add or remove an event listener by using the `addEventListener()` or `removeEventListener()` method. `HMSUpdateListenerActions` is an enum class which has all the types of event listeners.
 
 ```js
 import {
@@ -227,12 +238,3 @@ const onChangeRemoteVideoStats = (data: {
   // This contains stats related to remote video track.
 };
 ```
-
-
-## Common Events Implementation Lifecycle Diagram
-
-Below diagram gives you an overview of which events are emitted and at what time when you join or preview room.
-
-You will start receiving event updates after you call `preview` or `join` method on `HMSSDK` instance -
-
-![Common Events Implementation Lifecycle Diagram](/guides/rn-event-lifecycle-diagram.png)
