@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useLayoutEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { ChevronRightIcon } from '@100mslive/react-icons';
@@ -20,20 +20,43 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
     const activeItem = useRef<HTMLAnchorElement>(null);
     const [openSection, setOpenSection] = useState(() => {
         for (const i of slug) if (i === key) return true;
-
         return false;
     });
+
     const [renderComponents, setRenderComponents] = useState(false);
 
-    useEffect(() => setRenderComponents(true), []);
+    useLayoutEffect(() => {
+        if (typeof window !== 'undefined') {
+            const openedAccordions = JSON.parse(sessionStorage.getItem('openedAccordions') || '[]');
+            for (const i of openedAccordions)
+                if (i === key) {
+                    setOpenSection(true);
+                    return;
+                }
+        }
+    }, [key]);
 
     useEffect(() => {
-        if (activeItem?.current)
-            activeItem.current.scrollIntoView({
-                behavior: 'auto',
-                block: 'center',
-                inline: 'nearest'
-            });
+        if (window) {
+            const currentList = JSON.parse(sessionStorage.getItem('openedAccordions') || '[]');
+            if (openSection) {
+                currentList.push(key);
+                sessionStorage.setItem('openedAccordions', JSON.stringify(currentList));
+            }
+            setRenderComponents(true);
+        }
+    }, []);
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (activeItem?.current) {
+                activeItem.current.scrollIntoView({
+                    behavior: 'auto',
+                    block: 'center',
+                    inline: 'nearest'
+                });
+            }
+        }, 0);
     }, [activeItem]);
 
     return renderComponents ? (
@@ -43,7 +66,23 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
             key={`${key}-${index}`}>
             <Flex
                 align="center"
-                onClick={() => setOpenSection((prev) => !prev)}
+                onClick={() => {
+                    setOpenSection((prev) => {
+                        const currentList = JSON.parse(
+                            sessionStorage.getItem('openedAccordions') || '[]'
+                        );
+                        const updatedList = [
+                            ...new Set(
+                                prev === false
+                                    ? [...currentList, key]
+                                    : currentList.filter((heading) => heading !== key)
+                            )
+                        ];
+
+                        sessionStorage.setItem('openedAccordions', JSON.stringify(updatedList));
+                        return !prev;
+                    });
+                }}
                 css={{
                     marginLeft: '2rem',
                     padding: '0.5rem 1rem',
