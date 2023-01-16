@@ -36,7 +36,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
             });
     }, [activeItem]);
 
-    return (
+    return renderComponents ? (
         <section
             className="menu-container"
             style={{ margin: '2px 0.5rem 0.5rem 0.25rem' }}
@@ -54,37 +54,26 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                     color: openSection ? '$textHighEmp' : '$textMedEmp',
                     '&:hover': { color: '$textAccentHigh' }
                 }}>
-                {renderComponents ? (
-                    <>
-                        <ChevronRightIcon
-                            style={{
-                                height: '16px',
-                                width: '18px',
-                                fontWeight: 'bold',
-                                marginRight: '0.5rem',
-                                transition: 'all 0.2s ease',
-                                transform: openSection ? 'rotateZ(90deg)' : ''
-                            }}
-                        />
-                        <Text
-                            css={{
-                                color: 'inherit',
-                                textTransform: 'uppercase',
-                                fontWeight: '700',
-                                fontSize: '13px',
-                                letterSpacing: '1px'
-                            }}>
-                            {key.replace(/-/g, ' ')}
-                        </Text>
-                    </>
-                ) : (
-                    <Text
-                        css={{
-                            fontSize: '13px'
-                        }}>
-                        {' '}
-                    </Text>
-                )}
+                <ChevronRightIcon
+                    style={{
+                        height: '16px',
+                        width: '18px',
+                        fontWeight: 'bold',
+                        marginRight: '0.5rem',
+                        transition: 'all 0.2s ease',
+                        transform: openSection ? 'rotateZ(90deg)' : ''
+                    }}
+                />
+                <Text
+                    css={{
+                        color: 'inherit',
+                        textTransform: 'uppercase',
+                        fontWeight: '700',
+                        fontSize: '13px',
+                        letterSpacing: '1px'
+                    }}>
+                    {key.replace(/-/g, ' ')}
+                </Text>
             </Flex>
             <div className={`accordion-content ${openSection ? 'active' : ''}`}>
                 {Object.entries(children as {}).map(([_, route]: [unknown, any]) =>
@@ -167,7 +156,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                 `}
             </style>
         </section>
-    );
+    ) : null;
 };
 
 export default SidebarSection;
