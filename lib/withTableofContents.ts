@@ -14,7 +14,7 @@ function getTitle(node): string | undefined {
  * Generates a table of contents by parsing a node tree
  * @param [toc] An array to push table contents to.
  */
-const withTableofContents = () => (tree) => {
+const withTableofContents = () => (tree) =>
     visit(tree, 'heading', (node, index, parent) => {
         const rank = node.depth;
         if (rank && [2, 3].includes(rank)) {
@@ -29,8 +29,5 @@ const withTableofContents = () => (tree) => {
             }
         }
     });
-
-    return tree;
-};
 
 export default withTableofContents;
