@@ -91,7 +91,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                     borderRadius: '$0',
                     width: 'max-content',
                     color: openSection ? '$textHighEmp' : '$textMedEmp',
-                    '&:hover': { color: '$textAccentHigh' }
+                    '&:hover': { color: 'var(--docs_text_primary)' }
                 }}>
                 <ChevronRightIcon
                     style={{
@@ -186,7 +186,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                     }
 
                     .active {
-                        max-height: 100vh;
+                        max-height: 1000vh;
                     }
                     a:hover {
                         opacity: 1;
