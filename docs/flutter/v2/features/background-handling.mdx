@@ -49,32 +49,56 @@ Enable the checkbox under Background Modes named `Audio, AirPlay, and Picture in
 
 Now you can use your app in the background even when the device is in sleep mode.
 
+Let's look at different scenarios on iOS with & without Enabling Background Modes. 
 
-### iOS Behaviours when the app goes to the background without enabling background processing
+#### Without Background Modes Enabled
+The table lists down iOS app behaviours when the app transitions to background when a 100ms Room is ongoing without enabling background processing.
+
+The "**Scenario**" on the left of the Table below implies the activity which is ongoing in the App when user has joined a 100ms Room.
+
+The "**Behaviours**" on the right of the Table shows what happens when the App transitions to Background.
+
+| **Scenario**   | **Behaviours** |
+| :------------- | :----------------------------------------------------- |
+| Mic is Unmuted | Mic will get **Muted** |
+| Camera is unmuted | Camera will get **Muted** |
+| Remote Peers are publishing audio | Incoming Audio from Room **Stops** Playing |
+
+#### Background Modes Enabled
+
+The table lists down iOS app behaviours when the app transitions to background when a 100ms Room is ongoing with Background Modes **Enabled**.
+
+The "**Scenario**" on the left of the Table below implies the activity which is ongoing in the App when user has joined a 100ms Room.
+
+The "**Behaviours**" on the right of the Table shows what happens when the App transitions to Background.
 
 | **Scenario**   | **Behaviours**                                 |
 | :------------- | :----------------------------------------------------- |
-| Mic is unmuted | Mic will get muted |
-| Camera is unmuted | Camera will get muted |
-| Remote Peer is publishing audio | Able to play incoming audio from the room |
+| Mic is unmuted |Mic will remain **Unmuted** and the user will able to publish audio without any restriction  |
+| Camera is unmuted | Camera will get **Muted** |
+| Remote Peers are publishing audio | Incoming Audio from Room **Continues** to Play |
 
-### iOS Behaviours when the app goes to the background with enabling background processing
+
+Let's breakdown how your apps can implement efficient handling of Background states on Android & iOS Platforms.
+
+## Android Background Handling
+
+### Without Android Foreground Service
+
+The table lists down Android app behaviours when the app transitions to background when a 100ms Room is ongoing without using any Android Foreground Service.
+
+The "**Scenario**" on the left of the Table below implies the activity which is ongoing in the App when user has joined a 100ms Room.
+
+The "**Behaviours**" on the right of the Table shows what happens when the App transitions to Background.
+
 
 | **Scenario**   | **Behaviours**                                 |
 | :------------- | :----------------------------------------------------- |
-| Mic is unmuted |Mic will remain unmuted and the user will able to publish audio without any restriction  |
-| Camera is unmuted | Camera will get muted |
+| Mic is unmuted | Mic will remain **Unmuted** and the user will able to publish audio for a limited period (time depending on OS) |
+| Camera is Unmuted | Camera will remain **Unmuted** and the user will able to publish video for a limited period (time depending on OS)  |
 | Remote Peer is publishing audio | Able to play incoming audio from the room |
 
-### Android Behaviours when the app goes to the background without enabling background processing
-
-| **Scenario**   | **Behaviours**                                 |
-| :------------- | :----------------------------------------------------- |
-| Mic is unmuted | Mic will remain unmuted and the user will able to publish audio for a limited period (time depending on OS) |
-| Camera is unmuted | Camera will remain unmuted and the user will able to publish video for a limited period (time depending on OS)  |
-| Remote Peer is publishing audio | Able to play incoming audio from the room |
-
-### Android Behaviours when the app goes to the background with enabling background processing
+### With Android Foreground Service
 
 | **Scenario**   | **Behaviours**                                 |
 | :------------- | :----------------------------------------------------- |
@@ -83,9 +107,6 @@ Now you can use your app in the background even when the device is in sleep mode
 | Remote Peer is publishing audio | Able to play incoming audio from the room |
 
 
-Let's breakdown how your apps can implement efficient handling of Background states on Android & iOS Platforms.
-
-## Android
 
 To keep the app running in the background even after the device goes into sleep mode then we need to add background permission in the app for android and iOS both.
 
