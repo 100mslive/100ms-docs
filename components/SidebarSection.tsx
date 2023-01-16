@@ -77,7 +77,14 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                             {key.replace(/-/g, ' ')}
                         </Text>
                     </>
-                ) : null}
+                ) : (
+                    <Text
+                        css={{
+                            fontSize: '13px'
+                        }}>
+                        {' '}
+                    </Text>
+                )}
             </Flex>
             <div className={`accordion-content ${openSection ? 'active' : ''}`}>
                 {Object.entries(children as {}).map(([_, route]: [unknown, any]) =>
