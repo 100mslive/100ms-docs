@@ -15,8 +15,8 @@ Here is the full list of callbacks:
 /// This callback provides stats for a local audio track.
 void onLocalAudioStats({required HMSLocalAudioStats hmsLocalAudioStats, required HMSLocalAudioTrack track, required HMSPeer peer})
 
-/// This callback provides stats for a local video track.
-void onLocalVideoStats({required HMSLocalVideoStats hmsLocalVideoStats, required HMSLocalVideoTrack track, required HMSPeer peer})
+/// This callback provides stats for a local video track with all the available layers.
+void onLocalVideoStats({required List<HMSLocalVideoStats> hmsLocalVideoStats, required HMSLocalVideoTrack track, required HMSPeer peer})
 
 /// This callback provides stats for a remote audio track.
 void onRemoteAudioStats({required HMSRemoteAudioStats hmsRemoteAudioStats, required HMSRemoteAudioTrack track, required HMSPeer peer})
@@ -33,7 +33,7 @@ Let's see how we can listen to these callbacks:
 
 <div className="steps-container">
 
-### Implement HMSStatsListener wherever we want its callbacks
+### Implement HMSStatsListener in a Class
 
 ```dart 
 class StatsReport implements HMSStatsListener{}
@@ -41,14 +41,14 @@ class StatsReport implements HMSStatsListener{}
 
 ### Call addStatsListener
 
-Call `addStatsListener` on the hmsSDK instance because we will only get updates after calling `addStatsListener` on the hmsSDK instance
+Call `addStatsListener` on the hmsSDK instance without which by default RTC Stats will not be sent to the app.
 
 ```dart 
 //hmsStatsListener is an instance of HMSStatsListener
 hmsSDK.addStatsListener(listener: hmsStatsListener);
 ```
 
-### Override the HMSStatsListener methods:
+### Implement HMSStatsListener Methods
 
 ```dart
 class StatsReport implements HMSStatsListener{
@@ -61,7 +61,7 @@ class StatsReport implements HMSStatsListener{
 
   @override
   void onLocalVideoStats(
-      {required HMSLocalVideoStats hmsLocalVideoStats,
+      {required List<HMSLocalVideoStats> hmsLocalVideoStats,
       required HMSLocalVideoTrack track,
       required HMSPeer peer}) {}
 
@@ -79,7 +79,6 @@ class StatsReport implements HMSStatsListener{
 
   @override
   void onRTCStats({required HMSRTCStatsReport hmsrtcStatsReport}) {}
-
 }
 ```
 
@@ -133,11 +132,11 @@ This class contains stats related to the local audio track.
 
 ```dart
 class HMSLocalAudioStats {
-	// Round trip time observed since the previous report.
-	double roundTripTime;
-	// Total bytes sent by this track in the current session.
-	int bytesSent;
-	// Outgoing bitrate of this track observed since the previous report in Kb/s.
+  // Round trip time observed since the previous report
+  double roundTripTime;
+  // Total bytes sent by this track in the current session
+  int bytesSent;
+  // Outgoing bitrate of this track observed since the previous report in Kb/s
   double bitrate;
 }
 ```
@@ -150,14 +149,18 @@ This class contains stats related to local video track.
 class HMSLocalVideoStats {
 	// Round trip time observed since the previous report.
   double roundTripTime;
-	// Total bytes sent by this track in the current session.
-	int bytesSent;
-	// Outgoing bitrate of this track observed since the previous report in Kb/s.
+  // Total bytes sent by this track in the current session.
+  int bytesSent;
+  // Outgoing bitrate of this track observed since the previous report in Kb/s.
   double bitrate;
-	// Resolution of video frames being sent.
-	double frameRate;
-	// Frame rate of video frames being sent (FPS).
-  HMSVideoResolution resolution;
+  // Resolution of video frames being sent.
+  double frameRate;
+  // Frame rate of video frames being sent (FPS).
+  HMSResolution resolution;
+  ///Reason for quality limitations
+  HMSQualityLimitationReasons? hmsQualityLimitationReasons;
+  ///Simulcast Layer
+  HMSSimulcastLayer? hmsLayer;
 }
 ```
 
@@ -167,16 +170,16 @@ This class contains stats related to the remote audio track.
 
 ```dart
 class HMSRemoteAudioStats {
-	// Packet Jitter measured in seconds for this track. Calculated as defined in section 6.4.1. of RFC3550.
+  // Packet Jitter measured in seconds for this track. Calculated as defined in section 6.4.1. of RFC3550.
   double jitter;
-	// Total bytes received by this track in the current session.
+  // Total bytes received by this track in the current session.
   int bytesReceived;
-	// Incoming bitrate of this track observed since the previous report in Kb/s.
+  // Incoming bitrate of this track observed since the previous report in Kb/s.
   double bitrate;
-	// Total packets received by this track in the current session.
+  // Total packets received by this track in the current session.
   int packetsReceived;
-	// Total packets lost by this track in the current session.
-	int packetsLost;
+  // Total packets lost by this track in the current session.
+  int packetsLost;
 }
 ```
 
@@ -186,19 +189,19 @@ This class contains stats related to the remote video track.
 
 ```dart
 class HMSRemoteVideoStats {
-	// Packet Jitter measured in seconds for this track. Calculated as defined in section 6.4.1. of RFC3550.
+  // Packet Jitter measured in seconds for this track. Calculated as defined in section 6.4.1. of RFC3550.
   double jitter;
-	// Total bytes received by this track in the current session.
+  // Total bytes received by this track in the current session.
   int bytesReceived;
-	// Incoming bitrate of this track observed since the previous report in Kb/s.
-	double bitrate;
-	// Total packets received by this track in the current session.
+  // Incoming bitrate of this track observed since the previous report in Kb/s.
+  double bitrate;
+  // Total packets received by this track in the current session.
   int packetsReceived;
-	// Total packets lost by this track in the current session.
-	int packetsLost;
-	// Resolution of video frames being received.
-	HMSVideoResolution resolution;
-	// Frame rate of video frames being received (FPS).
-	double frameRate;
+  // Total packets lost by this track in the current session.
+  int packetsLost;
+  // Resolution of video frames being received.
+  HMSResolution resolution;
+  // Frame rate of video frames being received (FPS).
+  double frameRate;
 }
 ```

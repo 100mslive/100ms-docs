@@ -19,6 +19,8 @@ In this section, we will walk you through a complete code example that will enab
 
 We will use [ParcelJS](https://parceljs.org/getting-started/webapp/), a web application bundler that requires zero configuration. If you wish to use any other library or framework, you can set up your app using that.
 
+<StepsContainer id="sample-app-locally">
+
 ### Initialize a project
 
 You can initialize a project using `npm init` or `yarn init`. While initializing the project you can enter the details for your project as you wish.
@@ -432,20 +434,22 @@ You can open the app in another tab in the browser to join as the second peer to
 
 **We have a fully functional video conferencing application now** 🎉🚀
 
+</StepsContainer>
+
 ## Building step-by-step
 
 In this section, let's walk through what the code does.
 
 <StepsToc
-  parentId="initialize-sdk-steps"
-  descriptions={[
-    "Initialize HMSStore and HMSActions from 100ms SDK for state management and to perform actions like join, leave, etc. in the app.",
-    "Include the HTML elements such as tiles and buttons to render peers and trigger actions like join, leave, etc.",
-    "Pass config object with userName and authToken to join method from HMSActions. Use leave method from HMSActions to leave the room.",
-    "Use attachVideo method from HMSActions to add video and selectPeers selector from hmsStore to display tile for peers.",
-    "Use setLocalAudioEnabled and setLocalVideoEnabled from HMSActions to mute/unmute local audio/video tracks.",
-    "Use selectIsConnectedToRoom selector from hmsStore to manage UI elements based on connection/disconnection.",
-  ]}
+    parentId="initialize-sdk-steps"
+    descriptions={[
+        'Initialize HMSStore and HMSActions from 100ms SDK for state management and to perform actions like join, leave, etc. in the app.',
+        'Include the HTML elements such as tiles and buttons to render peers and trigger actions like join, leave, etc.',
+        'Pass config object with userName and authToken to join method from HMSActions. Use leave method from HMSActions to leave the room.',
+        'Use attachVideo method from HMSActions to add video and selectPeers selector from hmsStore to display tile for peers.',
+        'Use setLocalAudioEnabled and setLocalVideoEnabled from HMSActions to mute/unmute local audio/video tracks.',
+        'Use selectIsConnectedToRoom selector from hmsStore to manage UI elements based on connection/disconnection.'
+    ]}
 />
 
 <StepsContainer id="initialize-sdk-steps">
