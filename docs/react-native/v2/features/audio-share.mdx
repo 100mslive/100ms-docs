@@ -1,5 +1,5 @@
 ---
-title: Audio Share
+title: Audio Share (Beta)
 nav: 3.9992
 ---
 
@@ -23,6 +23,8 @@ Examples of such use cases can be a FM like application where the host would wan
 This API gives apps the ability to copy the audio being played by other apps which have set its usage to USAGE_MEDIA, USAGE_GAME, or USAGE_UNKNOWN (Audio from apps like YouTube, Music, etc can be captured)
 
 ### Start device Audio Streaming from the App
+
+Follow below steps to start audio share on android devices -
 
 <div className="steps-container">
 
@@ -138,7 +140,9 @@ try {
 
 The audio that device shares goes to other peers through the mic channel. To be able to share audio, you need to setup the sdk to use a custom audio source instead of default mic.
 
-### Share Audio from a file
+### Share Audio
+
+Follow below steps to **share audio playing on your iOS device** or **play and stream audio from a local file** on iOS device -
 
 <div className="steps-container">
 
@@ -198,7 +202,7 @@ const trackSettings = new HMSTrackSettings({
 const hmsInstance = await HMSSDK.build({ trackSettings });
 ```
 
-#### Play Audio File(s)
+#### Play and Stream Audio File(s)
 
 You can use `play` method available on `HMSAudioFilePlayerNode` instance (that we created in [1st step](#file-player-and-mic-nodes)) to play a file on device in meeting room.
 
