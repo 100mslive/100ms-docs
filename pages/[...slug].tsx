@@ -11,7 +11,7 @@ import Sidebar from '@/components/Sidebar';
 import Toc from '@/components/Toc';
 import Header from '@/components/Header';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
-import imagePlugin from '@/lib/image';
+// import imagePlugin from '@/lib/image';
 import getPagination from '@/lib/getPagination';
 import { DOCS_PATH, getAllDocs, getDocsPaths, getNavfromDocs } from '@/lib/mdxUtils';
 import withTableofContents from '@/lib/withTableofContents';
@@ -205,7 +205,7 @@ export const getStaticProps = async ({ params }) => {
                 ...(options.remarkPlugins ?? []),
                 remarkGfm,
                 remarkA11yEmoji,
-                imagePlugin,
+                // imagePlugin,
                 remarkCodeHeader,
                 withTableofContents
             ];
