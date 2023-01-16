@@ -45,7 +45,8 @@ which completes the `changeRole` loop. Both parties will receive a `roleUpdated`
 Now lets imagine the newly nominated speaker is not behaving nicely and we want to move him back to listener without a prompt. This is where the `force` parameter comes in. When it is set to `true` the other party will not receive a confirmation `roleChangeRequest` but instead will straight away receive a new set of updated permissions and stop publishing. `roleUpdated` callback will still be fired so that the app can update the user's UI state.
 
 ## Bulk Role Change
-Bulk role change is used when you want to convert all roles from a list of roles, to another role.
+Bulk role change is used when you want to change roles of all users from a list of roles, to another role.
+
 
 For example if peers join a room with a `waiting` role and you want to change them all to `viewers` then you'd use this API.
 
