@@ -235,3 +235,167 @@ If you are building your first app by following one of our [quickstart guides](/
 If you're evaluating 100ms [server APIs](/docs/server-side/v2/introduction/basics), you can use our public [Postman collection](/docs/server-side/v2/introduction/postman-guide#fork-the-collection), which doesn't require you to create a management token as we've managed it using a [pre-request script](/docs/server-side/v2/introduction/postman-guide#simplified-token-generation) within the collection.
 
 If you're transitioning your app to production, we recommend you create your backend service for management token generation. You must use the `app_access_key` and `app_secret` from the [developer section](https://dashboard.100ms.live/developer) in your 100ms dashboard to create the management token.
+
+
+#### Code sample: Generate management token
+
+<Tabs id="test-code" items={['Node.js', 'Python', 'Java', 'Ruby', 'PHP']} />
+
+<Tab id='test-code-0'>
+
+```js
+var jwt = require('jsonwebtoken');
+var uuid4 = require('uuid4');
+
+var app_access_key = '<app_access_key>';
+var app_secret = '<app_secret>';
+
+jwt.sign(
+    {
+        access_key: app_access_key,
+        type: 'management',
+        version: 2,
+        iat: Math.floor(Date.now() / 1000),
+        nbf: Math.floor(Date.now() / 1000)
+    },
+    app_secret,
+    {
+        algorithm: 'HS256',
+        expiresIn: '24h',
+        jwtid: uuid4()
+    },
+    function (err, token) {
+        console.log(token);
+    }
+);
+```
+
+</Tab>
+
+<Tab id='test-code-1'>
+
+```py
+#!/usr/bin/env python3
+import jwt
+import uuid
+import datetime
+
+app_access_key = '<app_access_key>'
+app_secret = '<app_secret>'
+
+
+def generateManagementToken():
+    expires = 24 * 3600
+    now = datetime.datetime.utcnow()
+    exp = now + datetime.timedelta(seconds=expires)
+    return jwt.encode(payload={
+        'access_key': app_access_key,
+        'type': 'management',
+        'version': 2,
+        'jti': str(uuid.uuid4()),
+        'iat': now,
+        'exp': exp,
+        'nbf': now
+        }, key=app_secret)
+
+if __name__ == '__main__':
+    print(generateManagementToken())
+```
+
+</Tab>
+
+<Tab id="test-code-2">
+
+```java
+import java.time.Instant;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
+private void generateManagementToken() {
+    Map<String, Object> payload = new HashMap<>();
+    payload.put("access_key", "<app_access_key>");
+    payload.put("type", "management");
+    payload.put("version", 2);
+    String token = Jwts.builder().setClaims(payload).setId(UUID.randomUUID().toString())
+        .setExpiration(new Date(System.currentTimeMillis() + 86400 * 1000))
+        .setIssuedAt(Date.from(Instant.ofEpochMilli(System.currentTimeMillis() - 60000)))
+        .setNotBefore(new Date(System.currentTimeMillis()))
+        .signWith(SignatureAlgorithm.HS256, "<app_secret>".getBytes()).compact();
+  }
+```
+
+</Tab>
+
+<Tab id="test-code-3">
+
+```ruby
+require 'jwt'
+require 'securerandom'
+
+$app_access_key = "<app_access_key>"
+$app_secret = "<app_secret>"
+
+def generateManagementToken()
+    now = Time.now
+    exp = now + 86400
+    payload = {
+    access_key: $app_access_key,
+    type: "management",
+    version: 2,
+    jti: SecureRandom.uuid,
+    iat: now.to_i,
+    nbf: now.to_i,
+    exp: exp.to_i
+}
+token = JWT.encode(payload, $app_secret, 'HS256')
+return token
+end
+
+puts generateManagementToken
+```
+
+</Tab>
+
+<Tab id="test-code-4">
+
+```php
+<?php
+
+use Firebase\JWT\JWT;
+use Ramsey\Uuid\Uuid;
+
+$app_access_key = "<app_access_key>";
+$app_secret = "<app_secret>";
+
+$issuedAt   = new DateTimeImmutable();
+$expire     = $issuedAt->modify('+24 hours')->getTimestamp();
+
+$payload = [
+    'access_key' => $app_access_key,
+    'type' => 'management',
+    'version' => 2,
+    'jti' =>  Uuid::uuid4()->toString(),
+    'iat'  => $issuedAt->getTimestamp(),
+    'nbf'  => $issuedAt->getTimestamp(),
+    'exp'  => $expire,
+];
+
+$token = JWT::encode($payload, $app_secret, 'HS256');
+?>
+```
+
+</Tab>
+
+<Note type="warning">
+    We strictly advise you not to post <i>app_access_key</i> and <i>app_secret</i> publicly; if you
+    need to store them in <strong>Git</strong>, please change the repository from public to private.
+    <br />
+    <br />
+    You cannot authenticate room join requests from your client-side apps with a <strong>
+        Management token
+    </strong>.
+</Note>

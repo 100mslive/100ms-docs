@@ -7,7 +7,6 @@ import APILink from './APILink';
 import BaseRequest from './BaseRequest';
 import Code from './Code';
 import Codesandbox from './Codesandbox';
-import Content from './Content';
 import DeleteRequest from './DeleteRequest';
 import DownloadCollection from './DownloadCollection';
 import EndpointRequest from './EndpointRequest';
@@ -83,7 +82,6 @@ const MDXComponents = {
     Text,
     View,
     a: LinkCustom,
-    Content,
     DownloadCollection,
     APILink,
     StepsToc,
