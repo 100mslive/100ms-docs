@@ -3,6 +3,8 @@ title: Change Role
 nav: 11
 ---
 
+import BulkRoleChangeErrors from '@/common/bulk-role-change-errors.md';
+
 Role is a powerful concept that takes a lot of complexity away in handling permissions and supporting features like breakout rooms. [Learn more about roles here.](../foundation/templates-and-roles)
 
 Each `HMSPeer` instance has a `role` property which returns an `HMSRole` instance. You can use this property to do following:
@@ -15,6 +17,7 @@ Each `HMSPeer` instance has a `role` property which returns an `HMSRole` instanc
 In certain scenarios you may want to change someone's role. Imagine an audio room with 2 roles "speaker" and "listener." Only someone with a "speaker" role can publish audio to the room while "listener" can only subscribe. Now at some point "speaker" may decide to nominate some "listener" to become a "speaker." This is where the `changeRoleOfPeer` API comes in.
 
 You may choose to either:
+
 1. [Single Peer Role Change](#single-peer-role-change): Change the role of a single peer to a specified one.
 2. [Bulk Role Change](#bulk-role-change): Change the role of all peers with a certain role, to a specified one.
 
@@ -73,8 +76,6 @@ public void changeRoleOfPeer(HMSPeer peer, HMSRole toRole, Boolean force) {
 
 </Tab>
 
-
-
 If the peer accepted the request and their role changed, you will get an update in the `HMSUpdateListener`:
 
 ```kotlin
@@ -99,8 +100,8 @@ with the same request which it received in `onRoleChangeRequest` which completes
 
 Now lets imagine the newly nominated speaker is not behaving nicely and we want to move him back to listener without a prompt. This is where the `force` parameter comes in. When it is set to `true` the other party will not receive a confirmation `roleChangeRequest` but instead will straight away receive a new set of updated permissions and stop publishing. `roleUpdated` callback will still be fired so that the app can update the user's UI state.
 
-
 ## Bulk Role Change
+
 Bulk role change is used when you want to convert all roles from a list of roles, to another role.
 
 For example if peers join a room with a `waiting` role and you want to change them all to `viewers` then you'd use this API.
@@ -180,4 +181,4 @@ public void changeRoles(HMSSDK hmsSdk) {
 
 </Tab>
 
-<Content alias="bulkRoleChangeErrors" />
+<BulkRoleChangeErrors />
