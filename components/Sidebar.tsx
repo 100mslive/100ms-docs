@@ -88,7 +88,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
             {/* Sidebar Version Section */}
             <section
                 style={{
-                    margin: '0px 0.5rem 0.5rem 0.5rem',
+                    margin: '0px 0.5rem 0.5rem 0.4rem',
                     position: 'sticky',
                     top: '0',
                     zIndex: '20',
