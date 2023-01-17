@@ -1,0 +1,27 @@
+---
+title: PIP (Picture-in-Picture) Mode
+nav: 3.37
+---
+
+PIP allows the users to see a mini window with video while navigating to other tabs on the browser.
+
+100ms PIP selects top 4 peers with video enabled and render them in the PIP window.
+
+
+For implemenation copy this [folder](https://github.com/100mslive/100ms-web/tree/main/src/components/PIP) to your react project.
+
+```jsx
+import { PIP } from '../path-to-above-folder';
+
+function SomeComponent() {
+    return (
+        <PIP />
+    )
+}
+```
+For non React projects, you can use `PictureInPicture` from PIPManager in the above folder and use it to start/stop pip, check whether 
+it is supported or not.
+
+## Customisation:
+
+If you want to render custom peers in PIP from your end, you can pass those peers in the `PIPComponent` in the above folder.
