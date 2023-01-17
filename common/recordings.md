@@ -14,7 +14,8 @@ Based on your end goal, you can choose one of the recording types and its implem
     - [Video-on-demand Recording](#video-on-demand-recording)
     - [Multiresolution Recording](#multiresolution-recording)
 - [Configure storage](#configure-storage)
-  - [How to configure recording storage?](#how-to-configure-recording-storage)
+  - [How to configure recording storage?](#how-to-configure-recording-storage)\
+  - [Storage path for recordings](#storage-path-for-recordings)
 
 ### Quick Comparison
 
