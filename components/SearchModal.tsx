@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ChevronRightIcon, SearchIcon } from '@100mslive/react-icons';
 import { Flex, Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
-import Link from 'next/link';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, connectHits, connectSearchBox } from 'react-instantsearch-dom';
 
@@ -130,27 +130,36 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
                 <Flex
                     justify="center"
                     align="center"
-                    direction="column"                    
+                    direction="column"
                     css={{
                         position: 'relative',
                         top: '$8',
-                        py:"$12",
+                        py: '$12',
                         backgroundColor: '$surfaceDefault',
                         border: '1px solid',
                         borderColor: '$borderDefault',
                         borderRadius: '$1',
-                        px: '$4',
+                        px: '$4'
                     }}>
                     <Image alt="No results" src="/docs/frown.svg" height={48} width={48} />
-                    <Text css={{ color: '$textDisabled', fontWeight: '$medium', mt: "$8" }}>
-                        Couldn't find anything for
+                    <Text
+                        css={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: '$textDisabled',
+                            fontWeight: '$medium',
+                            mt: '$8'
+                        }}>
+                        <span>Couldn't find anything for</span>
                         <Text
                             css={{
                                 fontWeight: 'bold',
-                                display: 'inline-block',
-                                color: '$textHighEmp'
+                                color: '$textHighEmp',
+                                wordWrap: 'break-word'
                             }}>
-                            &nbsp;"{searchTerm}"
+                            &nbsp;"{searchTerm.slice(0, 25)} {searchTerm.length > 25 ? '...' : ''}"
                         </Text>
                     </Text>
                 </Flex>
@@ -159,59 +168,65 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
     );
 };
 
-const Search = ({ currentRefinement, refine, setSearchTerm }) => (
-    <Flex
-        align="center"
-        css={{
-            color: '$textHighEmp',
-            bg: '$surfaceDefault',
-            padding: '12px 16px',
-            border: '2.5px solid $primaryDefault',
-            borderRadius: '0.5rem',
-            margin: '0 auto',
-            height: '20px'
-        }}
-        onClick={(e) => e.stopPropagation()}>
-        <SearchIcon style={{ color: 'inherit', height: '30px', width: '30px' }} />
-        <input
-            placeholder="Search 100ms documentation"
-            value={currentRefinement}
-            onChange={(event) => {
-                refine(event.target.value);
-                setSearchTerm(event.target.value);
+const Search = ({ refine, setSearchTerm, searchTerm }) => {
+    useEffect(() => {
+        const debounceTimer = setTimeout(() => refine(searchTerm), 400);
+        return () => clearTimeout(debounceTimer);
+    }, [searchTerm]);
+
+    return (
+        <Flex
+            align="center"
+            css={{
+                color: '$textHighEmp',
+                bg: '$surfaceDefault',
+                padding: '12px 16px',
+                border: '2.5px solid $primaryDefault',
+                borderRadius: '0.5rem',
+                margin: '0 auto',
+                height: '20px'
             }}
-            type="text"
-            autoFocus
-            style={{
-                marginLeft: '13px',
-                backgroundColor: 'inherit',
-                outline: 'none',
-                border: 'none',
-                height: '24px',
-                width: '100%',
-                fontWeight: '500',
-                fontSize: '15px'
-            }}
-        />
-        <Flex align="center" gap="2">
-            <Flex
-                align="center"
-                css={{
-                    fontWeight: '$semiBold',
-                    fontSize: '$sm',
-                    backgroundColor: '$surfaceLight',
-                    color: '$textMedEmp',
-                    borderRadius: '4px',
-                    padding: '0 4px'
-                }}>
-                esc
+            onClick={(e) => e.stopPropagation()}>
+            <SearchIcon style={{ color: 'inherit', height: '30px', width: '30px' }} />
+            <input
+                placeholder="Search 100ms documentation"
+                value={searchTerm}
+                onChange={(event) => {
+                    setSearchTerm(event.target.value);
+                }}
+                type="text"
+                autoFocus
+                style={{
+                    marginLeft: '13px',
+                    backgroundColor: 'inherit',
+                    outline: 'none',
+                    border: 'none',
+                    height: '24px',
+                    width: '100%',
+                    fontWeight: '500',
+                    fontSize: '15px'
+                }}
+            />
+            <Flex align="center" gap="2">
+                <Flex
+                    align="center"
+                    css={{
+                        fontWeight: '$semiBold',
+                        fontSize: '$sm',
+                        backgroundColor: '$surfaceLight',
+                        color: '$textMedEmp',
+                        borderRadius: '4px',
+                        padding: '0 4px'
+                    }}>
+                    esc
+                </Flex>
+                <Text variant="xs" css={{ whiteSpace: 'nowrap', color: '$textMedEmp' }}>
+                    to close
+                </Text>
             </Flex>
-            <Text variant="xs" css={{ whiteSpace: 'nowrap', color: '$textMedEmp' }}>
-                to close
-            </Text>
         </Flex>
-    </Flex>
-);
+    );
+};
 
 const CustomSearchBox = connectSearchBox(Search);
 const CustomHits = connectHits(ResultBox);
@@ -224,8 +239,13 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
 
     React.useEffect(() => {
         const handleNavigation = (e) => {
-            // Up
-            if (e.keyCode === 38) {
+            if (e.code === 'Enter' && activeResult.current !== -1) {
+                const ele = document.getElementById(`res-box-${activeResult.current}`)
+                    ?.children[0] as HTMLAnchorElement;
+                if (ele) ele.click();
+            }
+
+            if (e.code === 'ArrowUp') {
                 if (activeResult.current === 0) {
                     activeResult.current = hitsCount - 1;
                     const top = document.getElementById(`res-box-0`);
@@ -240,7 +260,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                 }
                 const prev = document.getElementById(`res-box-${activeResult.current + 1}`);
                 if (prev) prev.style.backgroundColor = 'var(--surface_default)';
-            } else if (e.keyCode === 40) {
+            } else if (e.code === 'ArrowDown') {
                 if (activeResult.current >= hitsCount - 1) {
                     activeResult.current = 0;
                     const last = document.getElementById(`res-box-${hitsCount - 1}`);
@@ -259,7 +279,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
         };
         if (window) window.addEventListener('keydown', handleNavigation);
         return () => window.removeEventListener('keydown', handleNavigation);
-    }, [hitsCount]);
+    }, [hitsCount, searchTerm]);
 
     useClickOutside(ref, () => {
         window.analytics.track('docs.search.dismissed', {
@@ -287,7 +307,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                 <InstantSearch
                     searchClient={searchClient}
                     indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
-                    <CustomSearchBox setSearchTerm={setSearchTerm} />
+                    <CustomSearchBox setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
                     <CustomHits
                         setModal={setModal}
                         searchTerm={searchTerm}

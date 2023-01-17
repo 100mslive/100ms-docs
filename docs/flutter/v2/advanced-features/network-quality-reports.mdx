@@ -27,18 +27,21 @@ class Preview implements HMSPreviewListener{
   late HMSSDK hmsSDK;
 
   Preview(){
+      initHMSSDK();
+    }
+
+    void initHMSSDK() async {
       hmsSDK = HMSSDK();
-      hmsSDK.build();
-      hmsSDK.addUpdateListener(this);
-       HMSConfig config = HMSConfig(
-      userName: "John Doe",
-      authToken: "eyJH5c",
-      //Setting this to true enables network quality reports in the preview
-      captureNetworkQualityInPreview: true,
-    );
+      await hmsSDK.build(); // ensure to await while invoking the `build` method
+      HMSConfig config = HMSConfig(
+        userName: "John Doe",
+        authToken: "eyJH5c",
+        //Setting this to true enables network quality reports in the preview
+        captureNetworkQualityInPreview: true,
+      );
       hmsSDK.addPreviewListener(this);
       hmsSDK.preview(config: config);
-  }
+    }
 }
 ```
 

@@ -19,15 +19,15 @@ curl --location --request POST 'https://api.100ms.live/v2/<template_id>/settings
     "recording": {
         "enabled": true,
         "upload": {
-            "type": "s3",
-            "location": "<Name of the AWS s3 bucket>",
+            "type": "<upload type: supported are s3, gs, oss>",
+            "location": "<Name of the storage bucket>",
             "prefix": "<Upload prefix path>",
             "options": {
-                "region": "<region of the s3 bucket>"
+                "region": "<region of the storage bucket>"
             },
             "credentials": {
-                "key": "<access key ID for the AWS account/S3 bucket>",
-                "secretKey": "<secret access key for the AWS account/S3 bucket>"
+                "key": "<access key ID for accessing the storage bucket>",
+                "secretKey": "<secret access key for accessing the storage bucket>"
             }
         }
     },
@@ -55,15 +55,15 @@ curl --location --request POST 'https://api.100ms.live/v2/<template_id>/settings
     "recording": {
         "enabled": true,
         "upload": {
-            "location": "<Name of the AWS s3 bucket>",
-            "type": "s3",
+            "location": "<Name of the storage bucket>",
+            "type": "<upload type: supported are s3, gs, oss>",
             "prefix": "<Upload prefix path>",
             "credentials": {
-                "key": "<access key ID for the AWS account/S3 bucket>",
-                "secret": "<secret access key for the AWS account/S3 bucket>"
+                "key": "<access key ID for accessing the storage bucket>",
+                "secret": "<secret access key for accessing the storage bucket>"
             },
             "options": {
-                "region": "<region of the s3 bucket>"
+                "region": "<region of the storage bucket>"
             }
         }
     },
