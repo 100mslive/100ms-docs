@@ -75,7 +75,7 @@ const Homepage = () => {
                                     marginBottom: '$12'
                                 }}>
                                 <h1 style={{ marginBottom: '0' }}>
-                                    <Text variant="h4" css={{ zIndex: '0', color: '$textHighEmp' }}>
+                                    <Text variant="h4" css={{ zIndex: '0', color: '$textHighEmp', textAlign: "center" }}>
                                         Documentation
                                     </Text>
                                 </h1>

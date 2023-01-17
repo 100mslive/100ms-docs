@@ -33,19 +33,82 @@ console.log("can I end change role - ", permissions.changeRole);
 const { video, audio, screen } = hmsStore.getState(selectIsAllowedToPublish);
 ```
 
-## Change Role API
+## Change Role APIs
+
+There are two way of chaning peer's role using our api:
+1. [`Single Peer Role API`](#change-single-peer-role-api) - It is useful when we need to change role of a single peer.
+2. [`Bulk Peer Role API`](#change-bulk-peer-role-api) - We could change a all peers of particular roles to a given role. It will be helpful to make breakout rooms, waiting rooms, etc.
+
+### Change Single Peer Role API
 
 If the local peer has permissions to change role(`permissions.changeRole`), they can change either their or someone else's role using
 the below interface.
 
+<Tabs id="singleRoleChange" items={["Javascript", "React"]} />{" "}
+
+<Tab id='singleRoleChange-0'>
+
 ```js
-hmsActions.changeRole(forPeerId, toRoleName, force);
+hmsActions.changeRoleOfPeer(forPeerId, toRoleName, force);
 ```
+
+</Tab>
+
+<Tab id='singleRoleChange-1'>
+
+```jsx
+import { useHMSActions } from '@100mslive/react-sdk';
+function RoleChange() {
+  const actions = useHMSActions();
+
+  return (<button onClick={() => hmsActions.changeRoleOfPeer(forPeerId, toRoleName, force)}> )
+}
+```
+
+</Tab>
 
 - `forPeerId`: The peer ID whose role needs to be changed, the peer can be either of local or remote.
 - `toRoleName`: The target role name.
 - `force`(optional): The other peer gets a request by default to accept a role change, by setting force to true, the role can be changed
   without requesting for approval.
+
+
+### Change Bulk Peer Role API
+
+If the local peer has permissions to change role(`permissions.changeRole`), they can convert all roles from a list of roles, to another role using
+the below interface.
+
+<Tabs id="bulkRoleChange" items={["Javascript", "React"]} />{" "}
+
+<Tab id='bulkRoleChange-0'>
+
+```js
+hmsActions.changeRoleOfPeersWithRoles(ofRoles, toRole);
+```
+
+</Tab>
+
+<Tab id='bulkRoleChange-1'>
+
+```jsx
+import { useHMSActions } from '@100mslive/react-sdk';
+function BulkRoleChange() {
+  const actions = useHMSActions();
+
+  return (<button onClick={() => hmsActions.changeRoleOfPeersWithRoles(ofRoles, toRole)}> )
+}
+```
+
+</Tab>
+
+- `ofRoles`: It accepts the list of roles name.
+- `toRole`: The target role name.
+
+Note that if an empty list is sent to ofRoles, no roles will be changed. This is to avoid accidentally changing roles you may not have intended such as the bots that provide recording and streaming with the roles beam.
+
+It will throw exception when list ofRoles consist of target toRole.
+
+Bulk role changes are always forced, no dialog will be given for the peer to accept it, they will just be changed immediately.
 
 > 💡 A list of all available role names in the current room can be accessed via the `selectAvailableRoleNames` selector. Further the `selectRoleByRoleName`
 > selector can be used to get the full [HMSRole](/api-reference/javascript/v2/interfaces/HMSRole) object for a role name.
@@ -129,7 +192,7 @@ If you want this unmuting to happen automatically, you can listen to the notific
 ### Breakout Rooms/Groups
 
 You can have multiple roles which act as breakout rooms subscribing only to peers within the role. A peer can join another breakout room
-or group easily using the change role API.
+or group easily using the change bulk role API.
 
 ### Waiting Room
 

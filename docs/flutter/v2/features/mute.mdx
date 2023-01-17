@@ -1,97 +1,64 @@
 ---
-title: Mute / Unmute
-nav: 3.04
+title: Mute / Unmute Peer
+nav: 3.10
 ---
 
-Mute is something that applies to both audio and video.
+Mute is something that applies to both audio and video. When you mute audio, you can't be heard by other people i.e your audio is OFF. When you mute a video, you will not be broadcasting your video to other people i.e your video is OFF.
 
-When you mute audio, you can't be heard by other people.
+## Methods to mute/unmute
 
-When you mute a video, you will not be broadcasting your video to other people.
+This example shows implementation of three methods namely : 
 
-It can be called on local (you) or remote (other people) peer's audio or video tracks.
+### 1. switchAudio : To switch local peer's audio on/off.
+### 2. switchVideo : To switch local peer's video on/off.
+### 3. switchCamera: Switch camera to the front or rear mode
 
-You get a reference to your own local peer from `getLocalPeer` on HMSSDK.
-
-You can do the same for remote peers and HMSRemoteVideoTrack and HMSRemoteAudioTrack. Get other peers by calling `hmsSDK.getRemotePeers()`
-
-> 💡 You may get null for any track if the peer was not allowed to publish the track according to its role permissions.
-
+Let's look at their implementation:
 
 ```dart
+class Meeting implements HMSUpdateListener,HMSActionResultListener{
 
-hmsSDK.switchAudio(true);
+...
+/// To switch local peer's audio on/off.
+/// Pass the bool value to [isOn] to change the current audio status
+/// [isOn] : Pass the current audio status i.e. true if unmuted and false if muted currently
+hmsSDK.switchAudio(isOn: true); //This mutes local peer(you) audio
 
-hmsSDK.switchVideo(true);
 
+/// To switch local peer's video on/off.
+/// Pass the bool value to [isOn] to change the current video status
+/// [isOn] : Pass the current video status i.e. true if unmuted and false if muted currently
+hmsSDK.switchVideo(isOn: true); //This mutes local peer(you) video
+
+/// Switch camera from front or rear mode
 hmsSDK.switchCamera();
 
-hmsSDK.stopCapturing();
+...
 
-hmsSDK.startCapturing();
-````
-
-## Setting video and mic off while joining
-
-Joining with muted audio/video is a customization that sets the microphone and camera state before joining the room.
-
-By default `HMSSDK` keeps the microphone and camera on but by using this feature you can decide their state according to the use case.
-
-To use this we need to set the `hmsVideoTrackInitState` property for video and `hmsAudioTrackInitState` in the `hmsTrackSetting`
-of the `HMSSDK` constructor.
-
-Here `trackInitialState` property of `HMSVideoTrackSetting` and `HMSAudioTrackSetting` is Enum of type `HMSTrackInitState` which has the possible values as:
-
-```dart
-enum HMSTrackInitState {
-
-  //If the track needs to be kept mute while joining
-  MUTED,
-
-  //If the track needs to be kept unmute while joining
-  UNMUTED,
 }
 ```
-#### Let's take an example to understand the implementation: 
-
-1. For joining a room with muted audio/video these values need to be set in the `hmsTrackSetting` property as :
-
-```dart
-HMSTrackSetting trackSetting = HMSTrackSetting(
-        //This is for joining with muted audio and unmuted video
-        audioTrackSetting: HMSAudioTrackSetting(trackInitialState: HMSTrackInitState.MUTED),
-        videoTrackSetting: HMSVideoTrackSetting(trackInitialState: HMSTrackInitState.MUTED));
-```
-2. While creating the `HMSSDK` object pass the `HMSTrackSetting` object created above :
-
-```dart 
-HMSSDK hmsSDK = HMSSDK(
-        hmsTrackSetting: trackSetting);
-```
-
-3. Perform the other steps as usual i.e call the `build` method.
-
-Now, the user should be able to join the room with the microphone and the camera turned off.
 
 ## Mute Remote peers locally 
 
-To mute peers locally `HMSSDK` provides dedicated methods `muteRoomAudioLocally` for audio and `muteRoomVideoLocally` for video. Execution 
-of this method mutes audio and video for yourself others will still be able to hear audio and video.
+To mute peers all the peers for yourself `HMSSDK` provides dedicated methods `muteRoomAudioLocally` for audio and `muteRoomVideoLocally` for video. Execution 
+of this method mutes audio and video only locally others will still be able to hear audio and video.
+
+> These methods mute/unmute the room audio/video of all the peers for yourself.To mute/unmute certain peer check [this](../features/mute-unmute-remote-peer)
 
 ```dart 
-//To mute audio locally
+//To mute room audio locally
 hmsSDK.muteRoomAudioLocally();
 
-//To mute video locally
+//To mute room video locally
 hmsSDK.muteRoomVideoLocally();
 ```
 
 Similarly their counterparts:
 
 ```dart
-//To unmute audio locally
+//To unmute room audio locally
 hmsSDK.unMuteRoomAudioLocally();
 
-//To unmute video locally
+//To unmute room video locally
 hmsSDK.unMuteRoomVideoLocally();
 ```

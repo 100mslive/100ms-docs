@@ -5,14 +5,21 @@ nav: 3.96
 
 Releasing resources when they are not required anymore is an important part of the app.
 
-If the resources are not released and acquired again time to time, 
-it might hamper app performance. 
+If the resources are not released and acquired again time to time, it might hamper app performance. 
 
-When the hms instance is not required any more or when a new hms instance has to be created instead of using the previous one, `destroy` the previous instance. 
+When the hms instance is not required any more or when a new hms instance has to be created instead of using the previous one, "destroy" the previous instance.
+
+You can call the `destroy` method available on `HMSSDK` instance to free resources. This method removes native and JS event listeners and destroys SDK instance on native side.
 
 ```js
-// instance aquired from build method 
-await hmsInstance?.destroy()
-    .then(d => console.log('Destroy Success: ', d))
-    .catch(e => console.log('Destroy Error: ', e));
+try {
+  await hmsInstance.destroy();
+  console.log('Destroy Success');
+
+  // Removing HMSSDK instance saved in redux or any other store
+  clearHmsReference();
+
+} catch (error) {
+  console.log('Destroy Error: ', error);
+}
 ```

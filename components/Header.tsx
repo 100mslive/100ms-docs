@@ -10,7 +10,7 @@ import {
 import { Box, Flex, useTheme } from '@100mslive/react-ui';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -48,15 +48,16 @@ const Header: React.FC<Props> = ({
     }, [slashPressed]);
 
     const { menu, setMenu } = menuState;
+    const [helperState, setHelperState] = useState(0);
+
+    useEffect(() => {
+        if (helperState) setModal((prev) => !prev);
+    }, [helperState]);
+
     const [isDark, setIsDark] = React.useState<boolean>(true);
-    const [docs, setAllDocs] = React.useState({} as any);
     const { toggleTheme, themeType } = useTheme();
 
     React.useEffect(() => {
-        fetch('/docs/api/content?query=docs')
-            .then((res) => res.json())
-            .then((data) => setAllDocs(data.docs))
-            .catch((e) => console.error('fetch api/content?query=docs failed', e));
         const theme = window.localStorage.getItem('theme') || 'dark';
         const docHtml = document.documentElement.dataset;
         setIsDark(theme === 'dark');
@@ -128,7 +129,7 @@ const Header: React.FC<Props> = ({
                                 cursor: 'pointer',
                                 fontSize: '1rem',
                                 position: 'relative',
-                                top: '1px',
+                                top: '1px'
                             }}>
                             Docs
                         </p>
@@ -147,7 +148,7 @@ const Header: React.FC<Props> = ({
 
             <div className="head-right">
                 <Flex
-                    onClick={() => setModal(true)}
+                    onClick={() => setHelperState((prev) => prev + 1)}
                     css={{
                         borderRadius: '$1',
                         width: '$80',
@@ -184,7 +185,7 @@ const Header: React.FC<Props> = ({
                     {!isDark ? <NightIcon /> : <SunIcon style={{ color: '#ECC502' }} />}
                 </span>
             </div>
-            {modal ? <SearchModal setModal={setModal} docs={docs} /> : null}
+            {modal ? <SearchModal setModal={setModal} /> : null}
             <Box
                 css={{
                     display: 'none',
@@ -193,7 +194,7 @@ const Header: React.FC<Props> = ({
                     }
                 }}>
                 <button
-                    onClick={() => setModal(true)}
+                    onClick={() => setHelperState((prev) => prev + 1)}
                     style={{ marginRight: '0.5rem', marginLeft: '-1rem', marginTop: '0.5rem' }}
                     type="button">
                     <SearchIcon style={{ width: '24px' }} />

@@ -1,0 +1,65 @@
+---
+title: Background Modes
+nav: 3.990
+---
+
+When your app goes into the background, by default it can no longer access camera or microphone and publish it to other peers in the room. Also, you cannot hear audio of other participants in the call if your app is in the background without enabling Background Modes.
+
+This is the default iOS platform behaviour whereby it limits access to Microphone & Camera for capturing Audio & Video. By default, iOS also stops playing audio of the Room when your app is in Background.
+
+By Enabling Background Modes you can ensure that your iOS app has access to Microphone & can play incoming Audio from the Room.
+
+Following steps show how to add Background Modes in iOS:
+
+<div className="steps-container">
+
+### Add Capability
+
+Click on your project in Navigator then select your app target under `TARGETS` and click on `Signing & Capabilities` and add `Capability`.
+
+![addCapability](/docs/v2/flutter-background-service-2.png)
+
+### Background Mode
+
+Search background mode and add it to project by clicking on it.
+
+![backgroundMode](/docs/v2/flutter-background-service-3.png)
+
+### Enable Background Mode
+
+Enable the checkbox under Background Modes named `Audio, AirPlay, and Picture in Picture`.
+
+![backgroundProcessing](/docs/v2/flutter-background-service-4.png)
+
+</div>
+
+Let's look at different scenarios on iOS with & without Enabling Background Modes. 
+
+### Without Background Modes Enabled (Default iOS Behaviour)
+The table lists down iOS app behaviours when the app transitions to background when a 100ms Room is ongoing without enabling background processing.
+
+The "**Scenario**" on the left of the Table below implies the activity which is ongoing in the App when user has joined a 100ms Room.
+
+The "**Behaviours**" on the right of the Table shows what happens when the App transitions to Background.
+
+| **Scenario**   | **Behaviours** |
+| :------------- | :----------------------------------------------------- |
+| Mic is Unmuted | Mic will get **Muted** |
+| Camera is unmuted | Camera will get **Muted** |
+| Remote Peers are publishing audio | Incoming Audio from Room **Stops** Playing |
+
+### Background Modes Enabled (Recommended)
+
+The table lists down iOS app behaviours when the app transitions to background when a 100ms Room is ongoing with Background Modes **Enabled**.
+
+The "**Scenario**" on the left of the Table below implies the activity which is ongoing in the App when user has joined a 100ms Room.
+
+The "**Behaviours**" on the right of the Table shows what happens when the App transitions to Background.
+
+| **Scenario**   | **Behaviours**                                 |
+| :------------- | :----------------------------------------------------- |
+| Mic is unmuted |Mic will remain **Unmuted** and the user will able to publish audio without any restriction  |
+| Camera is unmuted | Camera will get **Muted** |
+| Remote Peers are publishing audio | Incoming Audio from Room **Continues** to Play |
+
+👀 To see an example iOS app that uses background mode and 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).

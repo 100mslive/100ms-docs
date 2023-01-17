@@ -11,8 +11,9 @@ Here is the full list of callbacks:
 /// This callback provides stats for a local audio track.
 optional func on(localAudioStats: HMSLocalAudioStats, track: HMSLocalAudioTrack, peer: HMSPeer)
 
-/// This callback provides stats for a local video track.
-optional func on(localVideoStats: HMSLocalVideoStats, track: HMSLocalVideoTrack, peer: HMSPeer)
+/// This callback provides stats for a local video track. In case of simulcast enabled room 
+/// the localVideoStats param will contain an entry for each simulcast layer.
+optional func on(localVideoStats: [HMSLocalVideoStats], track: HMSLocalVideoTrack, peer: HMSPeer)
 
 /// This callback provides stats for a remote audio track.
 optional func on(remoteAudioStats: HMSRemoteAudioStats, track: HMSRemoteAudioTrack, peer: HMSPeer)
@@ -42,7 +43,7 @@ class HMSRTCStats {
 	var bitrateSent: Double
 	// Total incoming bitrate observed since previous report in Kb/s.
 	var bitrateReceived: Double
-	// Average round trip time observed since previous report in Kb/s.
+	// Average round trip time observed since previous report in seconds.
 	var roundTripTime: Double
 }
 
@@ -87,6 +88,8 @@ class HMSLocalVideoStats {
 	var resolution: HMSVideoResolution
 	// Frame rate of video frames being sent (FPS).
 	var frameRate: Double
+	// Simulcast layer id in case of simulcast enabled room. See HMSSimulcastLayer enum for possible values
+	var simulcastLayerId: NSNumber?
 }
 ```
 

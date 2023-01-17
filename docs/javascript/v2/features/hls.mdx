@@ -3,7 +3,7 @@ title: HLS Streaming
 nav: 3.35
 ---
 
-HLS Streaming allows for scaling to millions of viewers in near real time. You can give a link of your
+[HLS Streaming](./../foundation/live-streaming) allows for scaling to millions of viewers in near real time. You can give a link of your
 web-app which will be converted to a HLS feed by our server and can be played across devices for consumption.
 Behind the scenes, this will be achieved by having a bot join your room and stream what it sees and hears. Once the feed
 is ready, the server will give a URL which can be played using any HLS Player.
@@ -65,7 +65,7 @@ async stopHLS() {
 }
 ```
 
-## Current HLS State
+## Current room status
 
 The `selectHLSState` selector can be used to know if HLS is currently running, and the url where it can be viewed.
 
@@ -111,7 +111,9 @@ Not all browsers support HLS [natively](https://caniuse.com/?search=hls), howeve
 [Shaka Player](https://github.com/google/shaka-player). In case you need more UI side customisations you can go with something like
 [videojs](https://videojs.com/) which internally uses `hls.js` for the hls piece.
 
-Here is a simple example of using `hls.js` to play the hls URL given by the SDK. Make sure you've installed the library(`npm i hls.js`) before using this code.
+Here is a simple example of using `hls.js` to play the HLS URL given by the SDK (using `hmsStore` selector). `hmsStore` selector hook will help you with selector functions to fetch information from the state at any point in time. Check [here](./../guides/useful-selectors) for more examples.
+
+Make sure you've installed the library(`npm i hls.js`) before using this code.
 
 <Tabs id="hlsview" items={['JavaScript', 'React']} />{' '}
 
@@ -119,10 +121,13 @@ Here is a simple example of using `hls.js` to play the hls URL given by the SDK.
 
 ```js
 import Hls from 'hls.js';
+import { hmsActions, hmsStore } from './hms';
 
 function renderHLS({ hlsUrl }) {
+    const hlsState = hmsStore.getState(selectHLSState);
+    const hlsUrl = hlsState.variants[0]?.url;
     const video = document.getElementById('video');
-    const browserHasNativeHLSSupport = videoRef.current.canPlayType(
+    const browserHasNativeHLSSupport = video.canPlayType(
         'application/vnd.apple.mpegurl'
     );
     if (Hls.isSupported()) {
@@ -144,9 +149,12 @@ function renderHLS({ hlsUrl }) {
 
 ```jsx
 import Hls from 'hls.js';
+import { useHMSStore, selectHLSState } from '@100mslive/react-sdk';
 
 function HLSView({ hlsUrl }) {
     const videoRef = useRef(null);
+    const hlsState = useHMSStore(selectHLSState);
+    const hlsUrl = hlsState.variants[0]?.url;
     useEffect(() => {
         if (videoRef.current && hlsUrl) {
             const browserHasNativeHLSSupport = videoRef.current.canPlayType(
@@ -171,16 +179,91 @@ function HLSView({ hlsUrl }) {
 
 </Tab>
 
+> **Note:** If you wish to customize the stream, please check [this guide](./../foundation/live-streaming#step-4-customize-the-stream) for more information.
+
+## Changing the quality of Stream(Hls.js)
+
+You may want to change the quality layer of the stream based on user input or some other criteria. Each library handles this differently.
+Below we mention an example snippet on how to do it if you choose to use hls.js. Please refer to the respective documentations of the library
+you use.
+
+<Tabs id="hlsChangeQuality" items={['JavaScript', 'React']} />{' '}
+
+<Tab id='hlsChangeQuality-0'>
+
+```js
+import Hls from 'hls.js';
+
+let hls = null;
+const video = document.getElementById('video');
+const browserHasNativeHLSSupport = video.canPlayType('application/vnd.apple.mpegurl');
+if (Hls.isSupported()) {
+    hls = new Hls();
+    hls.loadSource(hlsUrl);
+    hls.attachMedia(video);
+    console.log('Available quality levels in current stream', hls.levels);
+    setCurrentLevel(hls.levels[0]); //set the first level.
+}
+
+function setCurrentLevel(currentLevel) {
+    // make sure we are choosing the right level by checking the
+    // height and width.
+    const newLevel = hls.levels.findIndex(
+        (level) => level.height === currentLevel.height && level.width === currentLevel.width
+    );
+    // set it.
+    hls.currentLevel = newLevel;
+}
+```
+
+</Tab>
+
+<Tab  id='hlsChangeQuality-1'>
+
+```jsx
+import Hls from 'hls.js';
+
+let hls = null;
+function HLSView({ hlsUrl }) {
+    const videoRef = useRef(null);
+    useEffect(() => {
+        if (videoRef.current && hlsUrl) {
+            if (Hls.isSupported()) {
+                hls = new Hls();
+                console.log('Available quality levels in current stream', hls.levels);
+                setCurrentLevel(hls.levels[0]); //set the first level.
+            }
+        }
+    }, [hlsUrl]);
+
+    function setCurrentLevel(currentLevel) {
+        // make sure we are choosing the right level by checking the
+        // height and width.
+        const newLevel = hls.levels.findIndex(
+            (level) => level.height === currentLevel.height && level.width === currentLevel.width
+        );
+        // set it.
+        hls.currentLevel = newLevel;
+    }
+
+    return <video ref={videoRef} autoPlay controls></video>;
+}
+```
+
+</Tab>
+
 ## Testing with the Dashboard web-app
 
 You may want to try out the end to end flow on our dashboard web-app before moving ahead with building in your app. To do
-this, you can create an additional role named `hls-viewer` which will be presented with the hls stream when they join the room.
+this, you can create an additional role named `hls-viewer` which will be presented with the HLS stream when they join the room.
 
-![Streaming](/docs/v2/web-hamburger.png)
+![Go live](/docs/v2/live-streaming-go-live.gif)
 
-To start the hls stream, you can select Streaming from the hamburger menu on bottom center of the page. There will be a HLS checkbox in
-the popup that opens which can be checked to start HLS. Once HLS has started, you can join from the `hls-viewer` role to
-see the hls stream.
+To start the HLS stream:
+
+-   Click on the `Go Live` button on the top right of the page.
+-   Choose the `Live Stream with HLS` option and click `Go Live` to start streaming.
+-   Once HLS has started, you can join from the `hls-viewer` role to see the HLS stream.
 
 ## Tips
 

@@ -1,9 +1,23 @@
 ---
 title: Set Playback Allowed
-nav: 3.27
+nav: 3.15
 ---
 
-Mute is something that applies to both audio and video and it's possible to mute remote peers only for yourself. When you will mute audio or video, you won't be able to hear or see the remote person but it will be audible and visible to others
+Mute/Unmute is something that applies to both audio and video and it's possible to mute remote peers only for yourself. When you mute audio or video for a user using this API, you won't be able to hear or see the remote person but it will be audible and visible to others
+
+## Set isPlaybackAllowed
+
+You can set playback for a certain remote peer's audio or video. If you set it to false it will turn off the audio or video only for you. You can revert it by setting it to true.
+
+```dart
+//remoteAudioTrack is the remote peer's audio track
+remoteAudioTrack.setPlaybackAllowed(false);//setting playback to false
+
+//remoteVideoTrack is the remote peer's video track
+remoteVideoTrack.setPlaybackAllowed(true);//setting playback to true
+```
+
+> For muting/unmuting entire room(all peers) for yourself check out the docs [here](../features/mute#mute-remote-peers-locally)
 
 ## Fetch isPlaybackAllowed
 
@@ -15,15 +29,4 @@ bool isPlaybackAllowedForAudioTrack = remoteAudioTrack.isPlaybackAllowed
 
 //remoteVideoTrack is the remote peer's video track
 bool isPlaybackAllowedForVideoTrack = remoteVideoTrack.isPlaybackAllowed
-```
-## Set isPlaybackAllowed
-
-You can set playback for a certain remote peer's audio or video. If you set it to false it will turn off the audio or video only for you. You can revert it by setting it to true.
-
-```dart
-//remoteAudioTrack is the remote peer's audio track
-remoteAudioTrack.setPlaybackAllowed(false);//setting playback to false
-
-//remoteVideoTrack is the remote peer's video track
-remoteVideoTrack.setPlaybackAllowed(true);//setting playback to true
 ```

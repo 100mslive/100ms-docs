@@ -1,26 +1,30 @@
+import React from 'react';
+import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import hydrate from 'next-mdx-remote/hydrate';
+import renderToString from 'next-mdx-remote/render-to-string';
+import mdxPrism from 'mdx-prism';
 import EditFile from '@/components/EditFile';
 import components from '@/components/MDXComponents';
 import Pagination from '@/components/Pagination';
+import Sidebar from '@/components/Sidebar';
 import Toc from '@/components/Toc';
-import DocLayout from '@/layouts/DocLayout';
-import getPagination from '@/lib/getPagination';
+import Header from '@/components/Header';
+import SegmentAnalytics from '@/components/SegmentAnalytics';
 import imagePlugin from '@/lib/image';
+import getPagination from '@/lib/getPagination';
 import { DOCS_PATH, getAllDocs, getDocsPaths, getNavfromDocs } from '@/lib/mdxUtils';
-import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import withTableofContents from '@/lib/withTableofContents';
-import fs from 'fs';
-import matter from 'gray-matter';
-import mdxPrism from 'mdx-prism';
-import hydrate from 'next-mdx-remote/hydrate';
-import renderToString from 'next-mdx-remote/render-to-string';
-import { useRouter } from 'next/router';
-import path from 'path';
-import React from 'react';
+import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
+import useLockBodyScroll from '@/lib/useLockBodyScroll';
 
-// type NavRoute = {
-//     url: string;
-//     title: string;
-// };
+type NavRoute = {
+    url: string;
+    title: string;
+};
 
 export type AllDocsType = {
     url: string;
@@ -42,12 +46,12 @@ interface Props {
         title: string;
         nav: number;
     };
-    // nav: Record<string, Record<string, NavRoute>>;
+    nav: Record<string, Record<string, NavRoute>>;
+
     pagination: {
         previousPost: PaginationType;
         nextPost: PaginationType;
     };
-    // allDocs: AllDocsType[];
     source: {
         compiledSource: string;
         renderedOutput: string;
@@ -55,7 +59,7 @@ interface Props {
     };
 }
 
-const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
+const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
     const {
         query: { slug },
         asPath
@@ -70,6 +74,7 @@ const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
             scrollToUrlHash(asPath);
         }, 500);
     }, [asPath]);
+
     React.useEffect(() => {
         if (!window.location.href.includes('#')) window.scrollTo(0, 0);
         const getTopIndex = (arr) => {
@@ -89,7 +94,7 @@ const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
                 if (
                     h3Index >= 0 &&
                     h3Array[h3Index].getBoundingClientRect().top >
-                    h2Array[h2Index].getBoundingClientRect().top
+                        h2Array[h2Index].getBoundingClientRect().top
                 )
                     setActiveSubHeading(h3Array[h3Index].id);
                 else setActiveSubHeading('');
@@ -100,40 +105,82 @@ const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
 
         return () => window.removeEventListener('scroll', getActiveLinks);
     }, []);
+
     let showPagination = true;
     // Don't show Pagination for Android
     if (slug[1] === 'android') {
         showPagination = false;
     }
+    const [modal, setModal] = React.useState(false);
+    const [menu, setMenu] = React.useState(false);
+    const menuState = { menu, setMenu };
+    useLockBodyScroll(modal);
+
+    const router = useRouter() as any;
+    const SEO = {
+        title: `${frontMatter.title || '100ms Docs'} | 100ms`,
+        openGraph: {
+            title: `${frontMatter.title || '100ms Docs'} | 100ms`
+        },
+        canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${
+            router.asPath === '/' ? '' : router.asPath.split('?')[0]
+        }`
+    };
+
     return (
-        <>
-            <article>
-                <h1>{frontMatter.title}</h1>
-                {content}
-                <hr />
-                {pagination.previousPost && showPagination && (
-                    <Pagination next={pagination.nextPost} prev={pagination.previousPost} />
-                )}
-                <EditFile slug={asPath} />
-            </article>
-            <Toc
-                activeHeading={activeHeading}
-                activeSubHeading={activeSubHeading}
-                CurrentDocsSlug={currentDocSlug}
-            />
-            <style jsx>{`
-                 article {
-                     min-width: 100px;
-                     flex-grow: 1;
-                     box-sizing: border-box;
-                     padding: 0 2rem;
-                     min-height: calc(100vh - 140px);
-                     padding-bottom: 80px;
-                     display: flex;
-                     flex-direction: column;
-                 }
-             `}</style>
-        </>
+        <div style={{ margin: '0' }}>
+            <NextSeo {...SEO} />
+            <SegmentAnalytics options={{}} title={frontMatter.title} />
+            <Header modal={modal} setModal={setModal} menuState={menuState} />
+            <div
+                style={{
+                    display: 'flex',
+                    paddingTop: '1rem',
+                    justifyContent: 'center',
+                    width: '100%'
+                }}>
+                <div
+                    style={{
+                        width: '100%',
+                        display: 'flex',
+                        maxWidth: '1500px',
+                        justifyContent: 'space-between'
+                    }}>
+                    <div>
+                        <Sidebar menuState={menuState} nav={nav} />
+                    </div>
+                    {!menu ? (
+                        <article
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                minWidth: '100px',
+                                flexGrow: '1',
+                                boxSizing: 'border-box',
+                                padding: '0 2rem',
+                                minHeight: 'calc(100vh - 140px)',
+                                paddingBottom: '80px'
+                            }}>
+                            <h1>{frontMatter.title}</h1>
+                            {content}
+                            <hr />
+                            {pagination.previousPost && showPagination && (
+                                <Pagination
+                                    next={pagination.nextPost}
+                                    prev={pagination.previousPost}
+                                />
+                            )}
+                            <EditFile slug={asPath} />
+                        </article>
+                    ) : null}
+                    <Toc
+                        activeHeading={activeHeading}
+                        activeSubHeading={activeSubHeading}
+                        CurrentDocsSlug={currentDocSlug}
+                    />
+                </div>
+            </div>
+        </div>
     );
 };
 
@@ -178,7 +225,7 @@ export const getStaticProps = async ({ params }) => {
             pagination,
             nav: { [currentDocSlug]: nav[currentDocSlug] },
             source: mdxSource, // { compiledSource: mdxSource.compiledSource },
-            frontMatter: data,
+            frontMatter: data
         }
     };
 };
@@ -196,8 +243,4 @@ export const getStaticPaths = async () => {
         paths,
         fallback: false
     };
-};
-
-DocSlugs.getLayout = function getLayout(page) {
-    return <DocLayout>{page}</DocLayout>;
 };

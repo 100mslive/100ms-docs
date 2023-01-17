@@ -3,27 +3,25 @@ title: Remote Mute
 nav: 3.93
 ---
 
-You're running a room and decide that someone who's currently talking shouldn't be talking.
-
-You'd prefer they'd stay mute. Or perhaps you want their video turned off as well as their audio. You're looking for a remote mute.
+You're running a room and decide that someone who's currently talking shouldn't be talking. You'd prefer they'd stay mute. Or perhaps you want their video turned-off as well as their audio. Then you're looking for a remote mute feature.
 
 Muting can apply to both audio and video.
 
-##### Unmuting
+### Unmuting
 
-You may also decide that you want to let someone else speak who was currently muted. Or may want to ask someone to turn on their video.
-
-You can request people to un-mute themselves as well.
+You may also decide that you want to let someone else speak who was currently muted. Or may want to ask someone to turn on their video. You can request people to un-mute themselves as well.
 
 ### Permissions
 
-Can't let just anyone mute others. First you need to create a [role](../foundation/templates-and-roles) with the permissions to end a room.
+You can't let just anyone mute others. First you need to create a [role](../foundation/templates-and-roles) with the permissions to mute other participants and unmute other participants. Please note that they are two separate permissions.
 
-The permission to end a room is called `mute` and you should check for that within the `permissions` property of `HMSRole` of the peer to see if they have it.
+![Permissions - Remote mute/unmute](/guides/permissions.png)
+
+The permission to mute others is called `mute` and you should check for that within the `permissions` property of `HMSRole` of the peer to see if they have it. Similarly permission to unmute others is called 'unmute'.
 
 ### Muting/Unmuting
 
-Once you have checked that the caller has permissions to mute another peer's audio or video, call for it with `hmsSdk.changeTrackState`.
+Once you have checked that the caller has permissions to mute another peer's audio or video, you can use `hmsSdk.changeTrackState` to make a remote mute/unmute request.
 
 To mute a track:
 

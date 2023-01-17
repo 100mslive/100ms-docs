@@ -9,6 +9,8 @@ It can only be called on remote audio tracks.
 
 >Volume can vary from 0(min) to 10(max). The default value for volume would be 1.0.
 
+Let's see how you can call the `setVolume` on a remoteAudioTrack:
+
 ```dart
     HMSRemoteAudioTrack remoteAudioTrack;
     remoteAudioTrack.setVolume(double volume);
@@ -19,15 +21,20 @@ It can only be called on remote audio tracks.
 1. Set volume while track is added 
 
 ```dart
-  @override
-  void onTrackUpdate(
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+    ... 
+    
+    @override
+    void onTrackUpdate(
       {required HMSTrack track,
       required HMSTrackUpdate trackUpdate,
       required HMSPeer peer}) {
 
-        if(trackUpdate === HMSTrackUpdate.TRACK_ADDED && track.kind == HMSTrackKind.kHMSTrackKindAudio && peer.isLocal === false){
-            track.setVolume("set the required volume");
+        if(trackUpdate == HMSTrackUpdate.TRACK_ADDED && track.kind == HMSTrackKind.kHMSTrackKindAudio && peer.isLocal == false){
+            track.setVolume(1.0); //set the required volume
         }
+    }
 }
 ```
 
@@ -37,6 +44,6 @@ It can only be called on remote audio tracks.
 
 ```dart
 void setVolume(HMSRemoteAudioTrack track,double volume){
-    track.setVolume(volume)
+    track.setVolume(volume);
 }
 ```

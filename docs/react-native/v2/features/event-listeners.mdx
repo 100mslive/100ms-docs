@@ -3,7 +3,18 @@ title: Event Listeners
 nav: 3.7
 ---
 
-You can easily add or remove an event listener by using the addEventListener() or removeEventListener() method. HMSUpdateListenerActions is an enum class which has all the types of event listeners.
+## Common Events Implementation Lifecycle
+
+The below diagram shows an overview of which Events are emitted and at what time when you `Join` or `Preview` a Room.
+
+You will start receiving event updates after you call `preview` or `join` method on `HMSSDK` instance.
+
+![Common Events Implementation Lifecycle Diagram](/guides/rn-event-lifecycle-diagram.png)
+
+
+## All Available Event Listeners
+
+You can easily add or remove an event listener by using the `addEventListener()` or `removeEventListener()` method. `HMSUpdateListenerActions` is an enum class which has all the types of event listeners.
 
 ```js
 import {
@@ -39,42 +50,16 @@ const onJoinListener = ({ localPeer, remotePeers }) => {
 };
 
 hmsInstance.addEventListener(
-  HMSUpdateListenerActions.ON_ROOM_UPDATE,
-  onRoomListener
-);
-
-const onRoomListener = ({
-  room,
-  type,
-  localPeer,
-  remotePeers,
-}:{
-  room?: HMSRoom;
-  type?: HMSRoomUpdate;
-  localPeer: HMSLocalPeer;
-  remotePeers: HMSRemotePeer[];
-}) => {
-  // gets triggered when room is muted or unmuted.
-  // use these objects to update your local and remote peers.
-};
-
-hmsInstance.addEventListener(
   HMSUpdateListenerActions.ON_PEER_UPDATE,
   onPeerListener
 );
 
 const onPeerListener = ({
-  room,
-  type,
-  remotePeers,
-  localPeer,
-  peer,
+    peer,
+    type,
 }: {
-  room?: HMSRoom;
-  type?: HMSPeerUpdate;
-  localPeer: HMSLocalPeer;
-  remotePeers: HMSRemotePeer[];
-  peer: HMSPeer;
+    peer: HMSPeer;
+    type: HMSPeerUpdate;
 }) => {
   // gets triggered when peer leaves, joins, peer's audio or video is muted, starts or stops speaking, role is changed or becomes dominant speaker.
   // use these objects to update your local and remote peers.
@@ -86,19 +71,13 @@ hmsInstance.addEventListener(
 );
 
 const onTrackListener = ({
-  track,
-  peer,
-  room,
-  type,
-  remotePeers,
-  localPeer,
+    track,
+    peer,
+    type,
 }: {
-  track: HMSTrack;
-  peer: HMSPeer;
-  room?: HMSRoom;
-  type?: HMSTrackUpdate;
-  localPeer: HMSLocalPeer;
-  remotePeers: HMSRemotePeer[];
+    track: HMSTrack;
+    peer: HMSPeer;
+    type: HMSTrackUpdate;
 }) => {
   // gets triggered when track is added, removed, muted, unmuted, degraded and restored back.
   // use these objects to update your local and remote peers.
@@ -138,6 +117,21 @@ hmsInstance.addEventListener(
   HMSUpdateListenerActions.RECONNECTING,
   onReconnectingListener
 );
+
+hmsInstance.addEventListener(
+  HMSUpdateListenerActions.ON_ROOM_UPDATE,
+  onRoomListener
+);
+
+const onRoomListener = ({
+    room,
+    type,
+  }: {
+    room: HMSRoom;
+    type: HMSRoomUpdate;
+  }) => {
+  // gets triggered when room is muted or unmuted.
+};
 
 const onReconnectingListener = (data) => {
   // triggered whenever local peer is trying to reconnect to room i.e. bad network.
@@ -244,3 +238,5 @@ const onChangeRemoteVideoStats = (data: {
   // This contains stats related to remote video track.
 };
 ```
+
+Check out the [Event Listener Enums](../event-listeners-enums) docs to understand the Update Types emitted by the SDK for events like `ON_PEER_UPDATE`, `ON_TRACK_UPDATE`, `ON_ROOM_UPDATE`, etc.
