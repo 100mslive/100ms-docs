@@ -192,7 +192,7 @@ the stream coming from server saving significant bandwidth for the user.
 ▸ **changeMetadata**(`metadata`): `Promise`\<`void`\>
 
 If you want to update the metadata of local peer. If an object is passed, it should be serializable using
-JSON.stringify.
+`JSON.stringify`.
 
 #### Parameters
 
@@ -596,46 +596,45 @@ Send a plain text message to all the other participants in the room.
 
 ▸ **setAppData**(`key`, `value`, `merge?`): `void`
 
-use it for updating a particular property in the appdata
+use it for updating a particular property in the `appData`
 
-**`Example`**
-
+**Example**
 ```ts
-assume appdata is initially
- {
-    mySettings: {
-      setting1: 'val1',
-      setting2: 'val2',
-    },
-    mySettings2: 43,
-    mySettings3: false,
-  };
+// assume appData is initially
+{
+  mySettings: {
+    setting1: 'val1',
+    setting2: 'val2',
+  },
+  mySettings2: 43,
+  mySettings3: false,
+};
 
-after calling,
+// after calling,
 setAppData("mySettings", {setting1:'val1-edit', setting3:'val3'}, true);
-it becomes
- {
-    mySettings: {
-      setting1: 'val1-edit',
-      setting2: 'val2',
-      setting3: 'val3',
-    },
-    mySettings2: 43,
-    mySettings3: false,
-  };
 
-Note: This is not suitable for keeping large data or data which updates
-at a high frequency, it is recommended to use app side store for those
-cases.
+// it becomes
+{
+  mySettings: {
+    setting1: 'val1-edit',
+    setting2: 'val2',
+    setting3: 'val3',
+  },
+  mySettings2: 43,
+  mySettings3: false,
+};
 ```
+> This is not suitable for keeping large data or data which updates
+> at a high frequency, it is recommended to use app side store for those
+> cases.
 
 #### Parameters
 
-| Name     | Type                                   | Description                                                                                                                                                                                                                                                                                        |
-| :------- | :------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `key`    | `string`                               | a string. Does not check for existence. If the key is already not a property of the appData, it is added.                                                                                                                                                                                          |
+| Name     | Type                                    | Description                                                                                                                                                                                                                                                                                        |
+| :------- | :-------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `key`    | `string`                                | a string. Does not check for existence. If the key is already not a property of the `appData`, it is added.                                                                                                                                                                                        |
 | `value`  | `Record`\<`string` \| `number`, `any`\> | value to set for the key.                                                                                                                                                                                                                                                                          |
-| `merge?` | `boolean`                              | set it to true if you want to merge the appdata. - Always replaces the value for a given key if this parameter is not explicitly set to true. - Always replaces if the value is anything other than a plain object (i.e) JSON.parse()able. - If set to true on non-plain objects, this is ignored. |
+| `merge?` | `boolean`                               | set it to true if you want to merge the appdata. - Always replaces the value for a given key if this parameter is not explicitly set to true. - Always replaces if the value is anything other than a plain object (i.e) JSON.parse()able. - If set to true on non-plain objects, this is ignored. |
 
 #### Returns
 
@@ -840,7 +839,7 @@ This can be used to mute/unmute a remote peer's track
 
 ▸ **setRemoteTracksEnabled**(`params`): `Promise`\<`void`\>
 
-Use this to mute/unmute multipe tracks by source, role or type
+Use this to mute/unmute multiple tracks by source, role or type
 
 #### Parameters
 
