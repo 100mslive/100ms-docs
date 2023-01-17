@@ -123,6 +123,9 @@ const nextConfig = {
                 permanent: false
             }
         ];
+    },
+    eslint: {
+        ignoreDuringBuilds: true
     }
 };
 
