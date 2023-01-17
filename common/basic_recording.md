@@ -100,13 +100,15 @@ The above message ensures that your configuration is successful now, and all you
 If a storage destination is not configured for recordings and if you choose to record that room then such recordings are stored for **72 hours** in an internal 100ms bucket. You can access these recordings through [Sessions](https://dashboard.100ms.live/sessions).  
 
 
-![Recording Links](/docs/docs/v2/session-recording-links.png)
+![Recording Links](/docs/docs/v2/session-recording-links-1.png)
+
 
 **If a storage destination is configured, then path for these recordings will look like follows:**
 
 1. Browser Recording: `s3://<location>/<prefix>/beam/<room_id>/<start_date>/Rec-<room_id>-<epoch>.mp4`
 
 2. SFU Recording:
+
     1. Composite: `s3://<location>/<prefix>/<room_id>/<start_date>/<session_id>/Rec-<session_id>-<epoch>.mp4`
 
     2. Individual: `s3://<bucket>/<prefix>/<room_id>/<start_date>/<session_id>/<peer_id>/<stream_id>/<track_id>.webm`
@@ -118,7 +120,7 @@ If a storage destination is not configured for recordings and if you choose to r
 
 **The breakdown of the aforementioned tags is as follows:**
 
-| Tag Name | Tag Description |
+| Tag Name | Description |
 | --- | --- |
 | Location | Name of the bucket where recordings are stored |
 | Prefix | Prefix for upload path which is configured in storage settings of your template. If not configured, the default value for this will be your Customer ID |
@@ -128,4 +130,4 @@ If a storage destination is not configured for recordings and if you choose to r
 | Peer ID | Unique identifier of a peer in a room |
 | Stream ID | Unique identifier for a particular stream of a room (audio-video/screenshare) |
 | Track ID | Unique identifier for a particular track (audio or video) of a stream |
-| Layer Index | Layer index values show descending HLS resolutions - 1080p (0), 720p (1), 480p (2), etc. If highest resolution is 720p, 0 is 720p, 1 is 480p, 2 is 360p, etc. |
+| Layer Index | Layer index values show descending HLS resolutions - 0(1080p), 1(720p), 2(480p), 3(360p) and 4(240p). If highest resolution of template is 720p, then 0(720p), 1(480p), 2(360p) and 3(240p) |
