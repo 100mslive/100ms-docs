@@ -23,6 +23,10 @@ For non React projects, you can use `PictureInPicture` from PIPManager in the ab
 it is supported or not.
 
 ```js
+import { PictureInPicture } from '../path-to-above-folder/PIPManager';
+import { MediaSession } from "../path-to-above-folder/SetupMediaSession";
+
+
 PictureInPicture.isSupported(); // to check if PIP is supported.
 PictureInPicture.isOn(); // to check whether PIP is enabled.
 
@@ -37,8 +41,8 @@ MediaSession.setup(hmsActions, store);
 PictureInPicture.stop().catch(err =>
     console.error("error in stopping pip", err)
 );
-```
 
+```
 
 ## Customisation:
 
