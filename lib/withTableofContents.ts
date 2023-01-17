@@ -17,7 +17,7 @@ function getTitle(node): string | undefined {
 const withTableofContents = () => (tree) =>
     visit(tree, 'heading', (node, index, parent) => {
         const rank = node.depth;
-        if (rank && [2, 3].includes(rank)) {
+        if (rank && [2, 3, 4].includes(rank)) {
             const title = getTitle(node) ?? '';
             const slug = slugify(title);
 
