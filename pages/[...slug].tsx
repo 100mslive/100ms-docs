@@ -15,7 +15,6 @@ import SegmentAnalytics from '@/components/SegmentAnalytics';
 import getPagination from '@/lib/getPagination';
 import { DOCS_PATH, getAllDocs, getDocsPaths, getNavfromDocs } from '@/lib/mdxUtils';
 import withTableofContents from '@/lib/withTableofContents';
-import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import { bundleMDX } from 'mdx-bundler';
 import { getMDXComponent } from 'mdx-bundler/client';
@@ -24,6 +23,7 @@ import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkA11yEmoji from '@fec/remark-a11y-emoji';
 import { MDXProvider, useMDXComponents } from '@mdx-js/react';
+import { Tabs } from '@/components/Tabs';
 
 type NavRoute = {
     url: string;
@@ -65,6 +65,8 @@ const MDX_GLOBAL_CONFIG = {
     }
 };
 
+const platformArray = ['android', 'ios', 'javascript', 'react-native', 'flutter'];
+
 const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
     const {
         query: { slug },
@@ -76,13 +78,7 @@ const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
     const Component = useMemo(() => getMDXComponent(source, MDX_GLOBAL_CONFIG), [source]);
 
     React.useEffect(() => {
-        setTimeout(() => {
-            scrollToUrlHash(asPath);
-        }, 500);
-    }, [asPath]);
-
-    React.useEffect(() => {
-        if (!window.location.href.includes('#')) window.scrollTo(0, 0);
+        // if (!window.location.href.includes('#')) window.scrollTo(0, 0);
         const getTopIndex = (arr) => {
             for (let i = arr.length - 1; i >= 0; i--)
                 if (Math.floor(arr[i].getBoundingClientRect().top) < 200) return i;
@@ -133,6 +129,14 @@ const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
         }`
     };
 
+    function handleChangePlatform(platform) {
+        if (Array.isArray(slug)) {
+            const newSlug = [...slug];
+            newSlug[0] = platform;
+            router.push(`/${newSlug.join('/')}`, undefined, { scroll: false });
+        }
+    }
+
     return (
         <div style={{ margin: '0' }}>
             <NextSeo {...SEO} />
@@ -168,6 +172,23 @@ const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
                                 paddingBottom: '80px'
                             }}>
                             <h1>{frontMatter.title}</h1>
+                            {slug![3] === 'join' && (
+                                <Tabs
+                                    id="platform-selection"
+                                    items={[
+                                        'Android',
+                                        'iOS',
+                                        'JavaScript',
+                                        'React Native',
+                                        'Flutter'
+                                    ]}
+                                    itemsValue={platformArray}
+                                    initialIndex={platformArray.findIndex(
+                                        (platform) => platform === slug![0]
+                                    )}
+                                    onChange={handleChangePlatform}
+                                />
+                            )}
                             <MDXProvider components={components}>
                                 <Component />
                             </MDXProvider>

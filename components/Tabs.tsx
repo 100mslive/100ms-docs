@@ -19,10 +19,13 @@ import React, { PropsWithChildren, useCallback, useEffect, useState } from 'reac
 interface TabsProps {
     items: string[];
     id: string;
+    onChange?: (key: string) => void;
+    itemsValue?: string[];
+    initialIndex?: number;
 }
 
-export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
-    const [tab, setTab] = useState(0);
+export const Tabs: React.FC<TabsProps> = ({ items, id, onChange, itemsValue, initialIndex }) => {
+    const [tab, setTab] = useState(initialIndex ?? 0);
     const [currentPlatform, setCurrentPlatform] = useState('');
 
     const router = useRouter();
@@ -61,12 +64,14 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
 
     // For setting value on future visits / reload
     React.useEffect(() => {
-        const tabSelection = JSON.parse(localStorage.getItem('tabSelection') || '{}');
-        const storedValue = items.indexOf(tabSelection[currentPlatform]);
-        const idx = storedValue !== -1 ? storedValue : 0;
-        setTab(idx);
-        changeTab(idx);
-    }, [currentPlatform]);
+        if (!initialIndex) {
+            const tabSelection = JSON.parse(localStorage.getItem('tabSelection') || '{}');
+            const storedValue = items.indexOf(tabSelection[currentPlatform]);
+            const idx = storedValue !== -1 ? storedValue : 0;
+            setTab(idx);
+            changeTab(idx);
+        }
+    }, [currentPlatform, initialIndex]);
 
     return (
         <div
@@ -77,7 +82,12 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
             {items.map((el, i) => (
                 <button
                     onClick={() => {
-                        updateTab(items[i]);
+                        if (onChange) {
+                            onChange(itemsValue ? itemsValue[i] : items[i]);
+                            setTab(i)
+                        } else {
+                            updateTab(items[i]);
+                        }
                         document.dispatchEvent(new CustomEvent('tabChanged'));
                     }}
                     type="button"
