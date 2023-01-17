@@ -102,14 +102,14 @@ If a storage destination is not configured for recordings and if you choose to r
 
 ![Recording Links](/docs/docs/v2/session-recording-links.png)
 
-**If a storage destination is configured, the storage path for recordings will look like follows:**
+**If a storage destination is configured, then path for these recordings will look like follows:**
 
 1. Browser Recording: `s3://<location>/<prefix>/beam/<room_id>/<start_date>/Rec-<room_id>-<epoch>.mp4`
 
 2. SFU Recording:
-    a. Composite: `s3://<location>/<prefix>/<room_id>/<start_date>/<session_id>/Rec-<session_id>-<epoch>.mp4`
+    1. Composite: `s3://<location>/<prefix>/<room_id>/<start_date>/<session_id>/Rec-<session_id>-<epoch>.mp4`
 
-    b. Individual: `s3://<bucket>/<prefix>/<room_id>/<start_date>/<session_id>/<peer_id>/<stream_id>/<track_id>.webm`
+    2. Individual: `s3://<bucket>/<prefix>/<room_id>/<start_date>/<session_id>/<peer_id>/<stream_id>/<track_id>.webm`
 
 3. Multiresolution Recording: `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/file-recording/Rec-<room_id>-<epoch>-<layer_index>.mp4`
 
@@ -118,13 +118,14 @@ If a storage destination is not configured for recordings and if you choose to r
 
 **The breakdown of the aforementioned tags is as follows:**
 
-| Location | Name of the bucket where recordings are stored |
+| Tag Name | Tag Description |
 | --- | --- |
+| Location | Name of the bucket where recordings are stored |
 | Prefix | Prefix for upload path which is configured in storage settings of your template. If not configured, the default value for this will be your Customer ID |
 | Room ID | The identifier for the room which was recorded |
 | Start Date | Start date of the session |
 | Epoch | Start time of the recorder in the session |
 | Peer ID | Unique identifier of a peer in a room |
-| Stream ID | Unique identifier for a particular stream of a room |
-| Track ID | Unique identifier for a particular track (like audio/video/screenshare) of a stream |
+| Stream ID | Unique identifier for a particular stream of a room (audio-video/screenshare) |
+| Track ID | Unique identifier for a particular track (audio or video) of a stream |
 | Layer Index | Layer index values show descending HLS resolutions - 1080p (0), 720p (1), 480p (2), etc. If highest resolution is 720p, 0 is 720p, 1 is 480p, 2 is 360p, etc. |
