@@ -1,16 +1,30 @@
 import React, { useEffect, useRef, useState, useLayoutEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { ChevronRightIcon } from "@100mslive/react-icons";
+import { ChevronRightIcon, MinusIcon } from "@100mslive/react-icons";
 import { Flex, Text } from "@100mslive/react-ui";
 
 interface Props {
   value: String;
   index: Number;
   children: React.ReactChildren;
+  nested: Boolean;
 }
 
-const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
+const toPascalCase = text => {
+  const words = text.split(" ");
+  const transformedText = words.map(
+    word => word[0].toUpperCase() + word.slice(1)
+  );
+  return transformedText.join(" ");
+};
+
+const SidebarSection: React.FC<Props> = ({
+  value: key,
+  index,
+  children,
+  nested = false,
+}) => {
   const router = useRouter() as any;
   const {
     asPath,
@@ -66,7 +80,10 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
   return renderComponents ? (
     <section
       className="menu-container"
-      style={{ margin: "2px 0.5rem 0.5rem 0.25rem" }}
+      style={{
+        margin: nested ? "0 0 0 0.95rem" : "2px 0.5rem 0.5rem 0.25rem",
+        borderLeft: nested ? "2px solid var(--docs_border_strong" : "none",
+      }}
       key={`${key}-${index}`}
     >
       <Flex
@@ -91,21 +108,24 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
           });
         }}
         css={{
-          marginLeft: "2rem",
-          padding: "0.5rem 1rem",
+          padding: "0 0 0.25rem 1rem",
+          paddingTop: nested ? "0.125rem" : "0.5rem",
           margin: "0",
           cursor: "pointer",
           borderRadius: "$0",
           width: "max-content",
-          color: openSection ? "$textHighEmp" : "$textMedEmp",
+          color: openSection
+            ? "$textHighEmp"
+            : nested
+            ? "var(--docs_text_secondary)"
+            : "$textMedEmp",
           "&:hover": { color: "var(--docs_text_primary)" },
         }}
       >
         <ChevronRightIcon
           style={{
             height: "16px",
-            width: "18px",
-            fontWeight: "bold",
+            width: "15px",
             marginRight: "0.5rem",
             transition: "all 0.2s ease",
             transform: openSection ? "rotateZ(90deg)" : "",
@@ -114,13 +134,11 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
         <Text
           css={{
             color: "inherit",
-            textTransform: "uppercase",
-            fontWeight: "700",
-            fontSize: "13px",
-            letterSpacing: "1px",
+            fontWeight: openSection ? "600" : "400",
+            fontSize: nested ? "13px" : "15px",
           }}
         >
-          {key.replace(/-/g, " ")}
+          {toPascalCase(key.replace(/-/g, " "))}
         </Text>
       </Flex>
       <div className={`accordion-content ${openSection ? "active" : ""}`}>
@@ -135,13 +153,13 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                 ref={route.url === asPath ? activeItem : null}
                 style={{
                   cursor: "pointer",
-                  padding: "4px 0",
+                  padding: "0.25rem 0",
                   color:
                     route.url === asPath
                       ? "var(--docs_text_primary)"
                       : "var(--docs_text_secondary)",
                   fontWeight: route.url === asPath ? "500" : "400",
-                  fontSize: "14px",
+                  fontSize: "13px",
                   lineHeight: "24px",
                   borderLeft:
                     route.url === asPath
@@ -150,14 +168,15 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                   display: "flex",
                   alignItems: "center",
                   paddingLeft: "1rem",
-                  marginLeft: "1rem",
+                  marginLeft: "0.95rem",
                 }}
               >
+                <MinusIcon style={{ width: "14px", marginRight: "0.5rem" }} />
                 {route.title}
               </a>
             </Link>
           ) : (
-            <SidebarSection index={index} value={_}>
+            <SidebarSection index={index} value={_} nested>
               {route}
             </SidebarSection>
           )
@@ -169,7 +188,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                 <a
                   style={{
                     cursor: "pointer",
-                    padding: "4px 0",
+                    paddingTop: "0.5rem",
                     color:
                       a.url === asPath
                         ? "var(--docs_text_primary)"
@@ -183,7 +202,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
                         : "2px solid var(--docs_border_strong)",
                     display: "flex",
                     alignItems: "center",
-                    paddingLeft: "1rem",
+                    paddingLeft: "0.75rem",
                     marginLeft: "1rem",
                   }}
                 >
