@@ -102,6 +102,16 @@ Please follow the below instructions to test the app for the android target plat
 
 2. Add minimum SDK version (`minSdkVersion 21`) in "android/app/build.gradle" file (inside "defaultConfig").
 
+```json
+...
+  defaultConfig {
+      ...
+      minSdkVersion 21
+      ...
+  }
+...
+```
+
 You will also need to request camera and record audio permissions at runtime before you join a call or display a preview. Please follow the [Android Documentation](https://developer.android.com/training/permissions/requesting#request-permission) for runtime permissions.
 
 </Tab>
@@ -126,6 +136,10 @@ Please follow the below instructions to test the app for iOS target platform:
     ```
 
 2. Add the target platform version as (`platform :ios, '12.0'`) in "ios/Podfile."
+
+```json 
+platform :ios, '12.0'
+```
 
 </Tab>
 
@@ -530,7 +544,8 @@ permission_handler:
 ### Add permissions for android and iOS 
 
 Add the permissions for microphone,camera and bluetooth for android and iOS follow the docs [above](#add-permissions)
-### Handle device permissions
+
+### Handle device runtime permissions
 
 We need permission from the user to access the media from the user's device. We must urge the user to grant permission to access camera, microphone, and bluetooth devices. We use the [permission_handler](https://pub.dev/packages/permission_handler) package that provides a cross-platform (iOS, Android) API to request permissions and check their status.
 
