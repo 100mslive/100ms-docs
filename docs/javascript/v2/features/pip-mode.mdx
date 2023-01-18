@@ -1,0 +1,55 @@
+---
+title: PIP (Picture-in-Picture) Mode
+nav: 3.37
+---
+
+## Overview
+
+PiP Mode lets the user watch the room video in a small window pinned to a corner of the screen while navigating between apps or browsing content on the main screen.
+
+100ms PiP selects top 4 peers with video enabled and render them in the PiP window.
+
+<video loop="true" autoplay="autoPlay" controls="controls" id="vid" muted>
+    <source src="/docs/guides/pip-demo.mp4" type="video/mp4" />
+</video>
+<br />
+
+## Implemenation
+
+### React projects
+
+For implemenation copy this [folder](https://github.com/100mslive/100ms-web/tree/main/src/components/PIP) to your react project.
+
+```jsx
+import { PIP } from '../path-to-above-folder';
+
+function SomeComponent() {
+    return <PIP />;
+}
+```
+
+### Non-React projects
+
+For non React projects, you can use `PictureInPicture` from PIPManager in the above folder and use it to start/stop PiP, check whether it is supported or not.
+
+```js
+import { PictureInPicture } from '../path-to-above-folder/PIPManager';
+import { MediaSession } from '../path-to-above-folder/SetupMediaSession';
+
+PictureInPicture.isSupported(); // to check if PiP is supported.
+PictureInPicture.isOn(); // to check whether PiP is enabled.
+
+// To start pip, pass hmsActions and a callback function which receives the current state of pip
+PictureInPicture.start(hmsActions, setIsPipOn).catch((err) =>
+    console.error('error in starting pip', err)
+);
+// Call this to show controls in PiP window.(Audio toggle, Video toggle and end call are the options supported here)
+MediaSession.setup(hmsActions, store);
+
+// To stop pip
+PictureInPicture.stop().catch((err) => console.error('error in stopping pip', err));
+```
+
+## Customization
+
+If you want to render custom peers in PiP from your end, you can pass those peers in the `PIPComponent` in the above folder.
