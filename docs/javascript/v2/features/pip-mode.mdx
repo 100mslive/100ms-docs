@@ -9,6 +9,8 @@ PiP Mode lets the user watch the room video in a small window pinned to a corner
 
 100ms PiP selects top 4 peers with video enabled and render them in the PiP window.
 
+> NOTE: Local Peer is not shown in PiP by default
+
 <video loop="true" autoplay="autoPlay" controls="controls" id="vid" muted>
     <source src="/docs/guides/pip-demo.mp4" type="video/mp4" />
 </video>
@@ -19,6 +21,8 @@ PiP Mode lets the user watch the room video in a small window pinned to a corner
 ### React projects
 
 For implemenation copy this [folder](https://github.com/100mslive/100ms-web/tree/main/src/components/PIP) to your react project.
+
+Add `worker-timers` as a dependency.
 
 ```jsx
 import { PIP } from '../path-to-above-folder';
@@ -36,7 +40,7 @@ For non React projects, you can use `PictureInPicture` from PIPManager in the ab
 import { PictureInPicture } from '../path-to-above-folder/PIPManager';
 import { MediaSession } from '../path-to-above-folder/SetupMediaSession';
 
-PictureInPicture.isSupported(); // to check if PiP is supported.
+PictureInPicture.isSupported(); // to check if PiP is supported. This depends on browser implementation. For example, it is not supported in firefox
 PictureInPicture.isOn(); // to check whether PiP is enabled.
 
 // To start pip, pass hmsActions and a callback function which receives the current state of pip
@@ -50,6 +54,32 @@ MediaSession.setup(hmsActions, store);
 PictureInPicture.stop().catch((err) => console.error('error in stopping pip', err));
 ```
 
-## Customization
+## Customization(in React)
 
 If you want to render custom peers in PiP from your end, you can pass those peers in the `PIPComponent` in the above folder.
+
+For example, if you want to show peers of particular role only in PiP, the following can be done.
+```jsx
+import { useHMSStore, selectPeersByRole } from '@100mslive/react-sdk';
+
+function PIP() {
+    const peers = useHMSStore(selectPeersByRole("some-role"));
+
+    return <PIPComponent peers={peers} />
+}
+
+```
+
+To include local peer in PiP, just pass `showLocalPeer` to PIPComponent.
+
+```jsx
+function PIP() {
+    return <PIPComponent showLocalPeer />
+}
+
+```
+
+## Limitations:
+
+- PiP is not supported in firefox
+- PiP is flaky in safari due to it's canvas rendering issues. check [known issues](../debugging/known-issues) for more information
