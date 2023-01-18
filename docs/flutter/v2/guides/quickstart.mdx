@@ -64,6 +64,71 @@ permission_handler:
 
 -   Run `flutter pub get` to download these dependencies to your app.
 
+### Add permissions 
+
+<Tabs id="sample-app" items={['Android', 'iOS']} />
+
+<Tab id="sample-app-0">
+
+Please follow the below instructions to test the app for the android target platform:
+
+1. Allow camera, recording audio and internet permissions by adding the below snippet to the `AndroidManifest.xml` file (at the application tag level).
+
+    <br />
+
+    ```xml section=androidPermissions
+    <uses-feature android:name="android.hardware.camera"/>
+
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    ```
+
+2. Add minimum SDK version (`minSdkVersion 21`) in "android/app/build.gradle" file (inside "defaultConfig").
+
+You will also need to request camera and record audio permissions at runtime before you join a call or display a preview. Please follow the [Android Documentation](https://developer.android.com/training/permissions/requesting#request-permission) for runtime permissions.
+
+</Tab>
+
+<Tab id="sample-app-1">
+
+Please follow the below instructions to test the app for iOS target platform:
+
+1. Allow camera, recording audio and internet permissions by adding the below snippet to the `info.plist` file.
+
+    <br />
+
+    ```xml section=iosPermissions
+    <key>NSMicrophoneUsageDescription</key>
+    <string>{YourAppName} wants to use your microphone</string>
+
+    <key>NSCameraUsageDescription</key>
+    <string>{YourAppName} wants to use your camera</string>
+
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>{YourAppName} App wants to use your local network</string>
+    ```
+
+2. Add the target platform version as (`platform :ios, '12.0'`) in "ios/Podfile."
+
+</Tab>
+
 ### Complete code example
 
 Now that your project setup is complete let's replace the code in the `lib/main.dart` file with the complete code sample below.
@@ -81,7 +146,7 @@ void main() => runApp(const MaterialApp(home: HomePage()));
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  static Future<bool> getPermissions() async {
+  Future<bool> getPermissions() async {
     if (Platform.isIOS) return true;
     await Permission.camera.request();
     await Permission.microphone.request();
@@ -412,110 +477,65 @@ To test audio/video functionality, you need to connect to a 100ms room; please c
 
 ### Test the app
 
-Follow the instructions in one of the tabs below based on the target platform you wish to test the app.
+After adding the required code let's run the app
+
+#### Build and run the app
 
 <Tabs id="sample-app" items={['Android', 'iOS']} />
 
 <Tab id="sample-app-0">
-
-Please follow the below instructions to test the app for the android target platform:
-
-1. Allow camera, recording audio and internet permissions by adding the below snippet to the `AndroidManifest.xml` file (at the application tag level).
-
-    <br />
-
-    ```xml section=androidPermissions
-    <uses-feature android:name="android.hardware.camera"/>
-
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
-
-    <uses-permission android:name="android.permission.CAMERA"/>
-
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
-
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
-
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    ```
-
-2. Add minimum SDK version (`minSdkVersion 21`) in "android/app/build.gradle" file (inside "defaultConfig").
-
-You will also need to request camera and record audio permissions at runtime before you join a call or display a preview. Please follow the [Android Documentation](https://developer.android.com/training/permissions/requesting#request-permission) for runtime permissions.
-
-#### Build and run the app
 
 -   Once you've made the above changes, your app is ready for testing. You can build the app and run it in an emulator or an actual android device.
 -   Go to _Run > Start debugging > select a device to use_ (android emulator or android phone).
 
 Now, after you click `join`, you should be able to see yourself (android emulator doesn't support actual video, you can connect an actual device to see your video in real-time). You can join the room using a browser as the second peer to check audio/video transactions between two or more peers.
 
-<video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
-    <source src="/docs/guides/join-room-flutter-android.mp4" type="video/mp4" />
-</video>
-<br />
-
 </Tab>
 
 <Tab id="sample-app-1">
-
-Please follow the below instructions to test the app for iOS target platform:
-
-1. Allow camera, recording audio and internet permissions by adding the below snippet to the `info.plist` file.
-
-    <br />
-
-    ```xml section=iosPermissions
-    <key>NSMicrophoneUsageDescription</key>
-    <string>{YourAppName} wants to use your microphone</string>
-
-    <key>NSCameraUsageDescription</key>
-    <string>{YourAppName} wants to use your camera</string>
-
-    <key>NSLocalNetworkUsageDescription</key>
-    <string>{YourAppName} App wants to use your local network</string>
-    ```
-
-2. Add the target platform version as (`platform :ios, '12.0'`) in "ios/Podfile."
-
-#### Build and run the app
 
 -   Once you've made the above changes, your app is ready for testing. You can build the app and run it in a simulator or an actual iOS device.
 -   Go to _Run > Start debugging > select a device to use_ (iOS simulator or iPhone).
 
 Now, after you click `join`, you should be able to see yourself (iOS simulator doesn't support actual video, you can connect an actual device to see your video in real-time). You can join the room using a browser as the second peer to check audio/video transactions between two or more peers.
+</Tab>
 
 <video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
     <source src="/docs/guides/join-room-flutter-android.mp4" type="video/mp4" />
 </video>
 <br />
 
-</Tab>
-
 ## Building step-by-step
 
 In this section, We'll walk through what the code does.
 
-### Step 1: Handle device permissions
+<div className="steps-container">
+
+### Add dependencies in pubspec.yaml 
+
+In your project `pubspec.yaml` dependencies add:
+
+```yaml section=InstallingTheDependencies
+# 100ms SDK and permissions_handler
+hmssdk_flutter:
+permission_handler: 
+```
+
+### Add permissions for android and iOS 
+
+Add the permissions for microphone,camera and bluetooth for android and iOS follow the docs [above](#add-permissions)
+### Handle device permissions
 
 We need permission from the user to access the media from the user's device. We must urge the user to grant permission to access camera, microphone, and bluetooth devices. We use the [permission_handler package](https://pub.dev/packages/permission_handler) that provides a cross-platform (iOS, Android) API to request permissions and check their status.
 
-Please ensure to update permissions in the `AndroidManifest.xml` file for android and `info.plist` file for iOS. Check [test the app section](#test-the-app) for more information.
+Please ensure to update permissions in the `AndroidManifest.xml` file for android and `info.plist` file for iOS. Check [Add Permission section](#add-permissions) for more information.
+`getPermissions` takes required permission for microphone, camera and bluetooth.
 
 ```dart section=stepByStepPermissions
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  static Future<bool> getPermissions() async {
+  Future<bool> getPermissions() async {
     if (Platform.isIOS) return true;
     await Permission.camera.request();
     await Permission.microphone.request();
@@ -532,11 +552,13 @@ class HomePage extends StatelessWidget {
     }
     return true;
   }
+}
 ```
 
-### Step 2: Implement join screen
+### Implement join screen
 
 This section will help you create the join screen user interface. To keep it simple for the quickstart, we have not created many UI elements; you can refer to the [sample app implementation](https://github.com/100mslive/100ms-flutter/tree/main/example/lib/preview) for a complete Preview/Join user interface.
+Add the below code in `HomePage` class.
 
 ```dart section=stepByStepJoinScreen
 // UI to render join screen
@@ -576,7 +598,7 @@ This section will help you create the join screen user interface. To keep it sim
   }
 ```
 
-### Step 3: Implement meeting page
+### Implement meeting page
 
 You can check the below snippet to create a widget as the user interface to show the video tiles of local and remote peers. `HMSUpdateListener` plays a significant role in rendering video or displaying any information regarding the room.
 
@@ -631,11 +653,14 @@ class _MeetingPageState extends State<MeetingPage>
     localPeerVideoTrack = null;
     super.dispose();
   }
+}
 ```
+Now in the same class we will override the `HMSUpdateListener` methods to listen to updates.
 
-### Step 4: Listen to room and peer updates
+### Listen to room and peer updates
 
 The 100ms SDK sends updates to the application about any change in `HMSPeer` and `HMSRoom` via the callbacks in `HMSUpdateListener`. Our application must listen to the corresponding updates in `onPeerUpdate` and `onRoomUpdate`. Check the [Update Listeners documentation](./../features/update-listener-enums) to understand the types of updates emitted by the SDK for room and peer updates.
+We will add these methods in MeetingPage class as they are overrides for `HMSUpdateListener`
 
 ```dart section=stepByStepRoomUpdates
 // Called when peer joined the room - get current state of room by using HMSRoom obj
@@ -688,7 +713,7 @@ The 100ms SDK sends updates to the application about any change in `HMSPeer` and
   }
 ```
 
-### Step 5: Listen to track updates
+### Listen to track updates
 
 100ms SDK also sends updates to the application about any change in `HMSTrack` via the callbacks in `HMSUpdateListener`. Our application must listen to the corresponding updates in `onTrackUpdate`. Check the [Update Listeners documentation](./../features/update-listener-enums#hms-track-update) to understand the types of updates emitted by the SDK for track updates.
 
@@ -723,7 +748,7 @@ The 100ms SDK sends updates to the application about any change in `HMSPeer` and
   }
 ```
 
-### Step 6: Other callbacks
+### Other callbacks
 
 100ms SDK provides various other callbacks to handle different scenarios in the app. For example, you can use `onAudioDeviceChanged` to get updates whenever a new audio device or an audio device is switched. Please check [here](./../features/update-listeners) for more information about these callbacks.
 
@@ -764,7 +789,7 @@ The 100ms SDK sends updates to the application about any change in `HMSPeer` and
   void onUpdateSpeakers({required List<HMSSpeaker> updateSpeakers}) {}
 ```
 
-### Step 7: Render video in a tile
+### Render video in a tile
 
 We had initialized the `HMSUpdateListener` class in the [Implement meeting page section](#step-3-implement-meeting-page); now, we can use the same to render video tracks in a tile.
 
@@ -808,10 +833,10 @@ Ensure to add the `HMSVideoView` to your app's Widget tree. Check the [render vi
   }
 ```
 
-### Step 8: Render video tiles for peers
+### Render video tiles for remote peer
 
-This section will help you build the user interface that renders the video tracks of local and remote peers in a grid view.
-
+This section will help you build the user interface that renders the video tracks of local and remote peer in a grid.
+Add this in `MeetingPage` class.For more info about implementation check the complete code [above](#complete-code-example)
 ```dart section=stepByStepRenderPeers
 // Widget to render grid of peer tiles and a end button
   @override
@@ -876,6 +901,8 @@ This section will help you build the user interface that renders the video track
     );
   }
 ```
+ 
+</div>
 
 You can refer to the [test the app section](#test-the-app) to test your app for android or iOS platforms.
 
