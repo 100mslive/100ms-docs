@@ -1,0 +1,54 @@
+---
+title: React Sample App Quickstart Guide
+nav: 2.3
+---
+
+## Overview
+
+[100ms-web](https://github.com/100mslive/100ms-web) is a fully-featured sample application built using React. This application gives you a ready-made starting point for writing your own video apps with 100ms or customizing the cloned app per your needs.
+You can use this app to test:
+
+-   **Basic functionalities**: Video calling, Recording, Interactive live streaming (HLS), External streaming (RTMP), Screenshare, Picture-in-Picture (PiP).
+-   **Interactive features**: Chat (broadcast, direct, & group), Raise hand.
+-   **Plugins**: Virtual background, Collaborative whiteboard, Noise suppression.
+
+The app also includes features and capabilities like custom audio/video tracks, control remote peers, network quality and performance stats, adaptive bitrate (Simulcast) and more.
+
+## Set up the app locally
+
+-   Clone the repository from [GitHub](https://github.com/100mslive/100ms-web).
+
+    ```bash section=cloneRepo sectionIndex=1
+    git clone git@github.com:100mslive/100ms-web.git
+    ```
+
+-   Change your working directory to `100ms-web`.
+
+    ```bash section=cloneRepo sectionIndex=2
+    cd 100ms-web
+    ```
+
+-   Install the dependencies using `npm` or `yarn`.
+
+    ```bash section=cloneRepo sectionIndex=3
+    npm install or
+    yarn install
+    ```
+
+-   Set environment variables to configure token generation endpoint and to [customize your app](#customize-your-app). We have a `example.env` as a template to help you get started with. Create a new file `.env` and copy the values from `example.env`
+
+    ```bash section=envVariable sectionIndex=1
+    cp example.env .env
+    ```
+
+    -   Get your token endpoint from the [Developer section of 100ms' Dashboard](https://dashboard.100ms.live/developer)
+
+        ![token endpoint](https://user-images.githubusercontent.com/11087313/140727818-43cd8be4-b3bf-4b34-9921-a77f9a1b819d.png)
+
+    -   Update the `REACT_APP_TOKEN_GENERATION_ENDPOINT` in `.env` file with the above token endpoint value (For example, `https://prod-in.100ms.live/hmsapi/example.app.100ms.live/`)
+
+## Test the app
+
+## Customize your app
+
+## Next steps
