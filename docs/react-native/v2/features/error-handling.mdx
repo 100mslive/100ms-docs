@@ -120,3 +120,38 @@ Following are the different errors emitted by the SDK with their codes and actio
 | **7002**       | Plugin Init Failed                                                                                                                  | Plugin initialization has failed                                                                                    |
 | **7003**       | Plugin Processing Failed                                                                                                            | Plugin processing failed                                                                                            |
 | **7004**       | Plugin Add Already Going on                                                                                                         | Plugin add is already in progress                                                                                   |
+
+
+## Setting log levels in SDK (Android Only)
+
+Logs can be used to diagnose the performance of room sessions or debug various issues. To enable logging, create an `HMSLogSettings` object and pass it to the `build` method when constructing the `HMSSDK` instance.
+
+The SDK also provides an option to save these logs to disk on **Android devices** using the `isLogStorageEnabled` property of the `HMSLogSettings` object. You can set the `isLogStorageEnabled` property to `true` to enable the SDK to write logs to the disk.
+
+```js
+// Creating the Log Settings object with disk storage turned on
+const logSettings = new HMSLogSettings({
+  level: HMSLogLevel.VERBOSE,
+  isLogStorageEnabled: true,
+  maxDirSizeInBytes: HMSLogAlarmManager.DEFAULT_DIR_SIZE, // Maximum size of the directory where log will be saved
+});
+
+// Pass the Log Settings object to the build function
+c̶o̶n̶s̶t̶ ̶h̶m̶s̶I̶n̶s̶t̶a̶n̶c̶e̶ ̶=̶ ̶a̶w̶a̶i̶t̶ ̶H̶M̶S̶S̶D̶K̶.̶b̶u̶i̶l̶d̶(̶)̶;̶
+const hmsInstance = await HMSSDK.build({ logSettings });
+```
+
+`HMSLogLevel` is an enum with values -
+
+```js
+export enum HMSLogLevel {
+  // To receive all the logs
+  VERBOSE = 'VERBOSE',
+
+  // To receive warnings
+  WARNING = 'WARNING',
+
+  // To receive errors
+  ERROR = 'ERROR',
+}
+```
