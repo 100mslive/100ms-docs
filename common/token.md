@@ -1,4 +1,5 @@
 ## Create a 100ms account
+Follow the steps below to create an account
 
 - Create an account at [Dashboard of 100ms](https://dashboard.100ms.live/)
 
