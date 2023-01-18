@@ -131,7 +131,7 @@ class Meeting implements HMSUpdateListener{}
 
 ### Create HMSSDK instance
 
-Now, create an instance of `HMSSDK` using the `build` function. This can be called in the constructor or on a function call depending on the implementation.
+Now, create an instance of `HMSSDK` using the `build` method. The `build` should always be called with `await` to ensure correct initialization & setup of the 100ms SDK.
 
 ```dart
 HMSSDK hmsSDK = HMSSDK();

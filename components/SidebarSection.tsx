@@ -124,7 +124,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
         </Text>
       </Flex>
       <div className={`accordion-content ${openSection ? "active" : ""}`}>
-        {Object.entries(children as {}).map(([_, route]: [unknown, any]) =>
+        {Object.entries(children as {}).map(([_, route]: [string, any]) =>
           Object.prototype.hasOwnProperty.call(route, "title") ? (
             <Link
               prefetch={false}
@@ -157,7 +157,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
               </a>
             </Link>
           ) : (
-            <SidebarSection index={index} value={_.toString()}>
+            <SidebarSection index={index} value={_}>
               {route}
             </SidebarSection>
           )
