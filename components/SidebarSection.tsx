@@ -109,7 +109,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                 <ChevronRightIcon
                     style={{
                         height: '16px',
-                        width: '15px',
+                        width: '14px',
                         marginRight: '0.5rem',
                         transition: 'all 0.2s ease',
                         transform: openSection ? 'rotateZ(90deg)' : ''
@@ -149,7 +149,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                                     paddingLeft: '1rem',
                                     marginLeft: '0.95rem'
                                 }}>
-                                <MinusIcon style={{ width: '14px', marginRight: '0.5rem' }} />
+                                <MinusIcon style={{ width: '12px', marginRight: '0.625rem' }} />
                                 {route.title}
                             </a>
                         </Link>
