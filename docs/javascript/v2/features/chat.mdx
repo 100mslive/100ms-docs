@@ -77,7 +77,7 @@ import {
 
 function Chat() {
     // use only the selectors that are required for the corresponding UI
-    const allMessages = useHMSStore(selectMessages); // get all messages
+    const allMessages = useHMSStore(selectHMSMessages); // get all messages
     const broadcastMessages = useHMSStore(selectBroadcastMessages); // get all broadcasted messages
     const groupMessagesByRole = useHMSStore(selectMessagesByRole('host')); // get conversation with the host role
     const directMessages = useHMSStore(selectMessagesByPeerID(peer.id)); // get private conversation with peer
