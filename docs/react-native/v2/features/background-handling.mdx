@@ -1,0 +1,126 @@
+---
+title: Background Handling
+nav: 3.28
+---
+
+While a user has joined a 100ms Room they can put the app in Background Mode & usually expect a certain subset of app functionality continues to work. 
+
+Background Mode implies that the application is not currently visible to the user, not responding to user input, and running in the Background. 
+
+Background state in React Native apps is represented by `AppState.currentState === 'background'` as described [here](https://reactnative.dev/docs/appstate#app-states).
+
+Android & iOS have different mechanisms of handling app behaviour which includes limiting access to Camera & Microphone, time allowed to keep running before getting  completely stopped, Aggressive Battery Optimisations on Android OEMs, etc.
+
+There are 2 prominent behaviours that are mainly affected when apps transition to Background State - Publishing Audio/Video, and Playing incoming Audio/Video.
+
+Let's breakdown how your apps can implement efficient handling of Background states on iOS & Android Platforms.
+
+## iOS Background Handling
+
+When your app goes into the background, by default it can no longer access camera or microphone and publish it to other peers in the room. Also, you cannot hear audio of other participants in the call if your app is in the background without enabling Background Modes.
+
+This is the default iOS platform behaviour whereby it limits access to Microphone & Camera for capturing Audio & Video. By default, iOS also stops playing audio of the Room when your app is in Background.
+
+By Enabling Background Modes you can ensure that your iOS app has access to Microphone & can play incoming Audio from the Room.
+
+Following steps show how to add Background Modes in iOS:
+
+<div className="steps-container">
+
+### Open project in Xcode
+
+Open project in Xcode by right clicking on `ios` folder in project and select `Open in Xcode` as shown in image below.
+
+![OpenXcode](/docs/v2/flutter-background-service-1.png)
+
+### Add Capability
+
+Click on `Runner` in Navigator then select `Runner` under `TARGETS` and click on `Signing & Capabilities` and add `Capability`.
+
+![addCapability](/docs/v2/flutter-background-service-2.png)
+
+### Background Mode
+
+Search background mode and add it to project by clicking on it.
+
+![backgroundMode](/docs/v2/flutter-background-service-3.png)
+
+### Enable Background Mode
+
+Enable the checkbox under Background Modes named `Audio, AirPlay, and Picture in Picture`.
+
+![backgroundProcessing](/docs/v2/flutter-background-service-4.png)
+
+</div>
+
+Let's look at different scenarios on iOS with & without Enabling Background Modes. 
+
+### Without Background Modes Enabled (Default iOS Behaviour)
+The table lists down iOS app behaviours when the app transitions to background when a 100ms Room is ongoing without enabling background processing.
+
+The "**Scenario**" on the left of the Table below implies the activity which is ongoing in the App when user has joined a 100ms Room.
+
+The "**Behaviours**" on the right of the Table shows what happens when the App transitions to Background.
+
+| **Scenario**   | **Behaviours** |
+| :------------- | :----------------------------------------------------- |
+| Mic is Unmuted | Mic will get **Muted** |
+| Camera is unmuted | Camera will get **Muted** |
+| Remote Peers are publishing audio | Incoming Audio from Room **Stops** Playing |
+
+### Background Modes Enabled (Recommended)
+
+The table lists down iOS app behaviours when the app transitions to background when a 100ms Room is ongoing with Background Modes **Enabled**.
+
+The "**Scenario**" on the left of the Table below implies the activity which is ongoing in the App when user has joined a 100ms Room.
+
+The "**Behaviours**" on the right of the Table shows what happens when the App transitions to Background.
+
+| **Scenario**   | **Behaviours**                                 |
+| :------------- | :----------------------------------------------------- |
+| Mic is unmuted |Mic will remain **Unmuted** and the user will able to publish audio without any restriction  |
+| Camera is unmuted | Camera will get **Muted** |
+| Remote Peers are publishing audio | Incoming Audio from Room **Continues** to Play |
+
+
+## Android Background Handling
+
+On Android devices, by default Capturing Video & Audio from Camera & Microphone is **allowed** for sometime - usually 60 seconds. This time limit depends on different Android OEMs, Battery Optimisations Mode (Aggressive/Doze), etc. This leads to inconsistent behaviours of your apps in Background Mode on different Android devices.
+
+As per your use-case, apps can choose to implement an [Android Foreground Service](https://developer.android.com/guide/components/foreground-services) to ensure consistent behaviour. With a Foreground Service, you can continuously access Microphone & Camera & publish the captured Audio & Video to other peers in the Room. 
+
+Foreground Services show a status bar notification, so that users are actively aware that your app is performing a task and is consuming system resources.
+
+
+> Note: Playing Audio continuously while app is in Background is allowed by default on Android devices.
+
+### Without Android Foreground Service (Default Android Behaviour)
+
+The table below lists down Android app behaviours when the app transitions to background when a 100ms Room is ongoing without using any Android Foreground Service.
+
+The "**Scenario**" on the left of the Table below implies the activity which is ongoing in the App when user has joined a 100ms Room.
+
+The "**Behaviours**" on the right of the Table shows what happens when the App transitions to Background.
+
+
+| **Scenario**   | **Behaviours**                                 |
+| :------------- | :----------------------------------------------------- |
+| Mic is unmuted | Mic will remain **Unmuted** and the user will able to publish audio for a limited period (time depending on OEMs) |
+| Camera is Unmuted | Camera will remain **Unmuted** and the user will able to publish video for a limited period (time depending on OS)  |
+| Remote Peers are publishing audio | Able to play incoming audio from the Room |
+
+### With Android Foreground Service
+
+When your app implements a Foreground Service it continues access to capturing Audio & Video even when the app is in Background Mode.
+
+| **Scenario**   | **Behaviours**                                 |
+| :------------- | :----------------------------------------------------- |
+| Mic is unmuted | Mic will remain unmuted and the user will able to publish audio without any restriction |
+| Camera is unmuted | Camera will remain unmuted and the user will able to publish video without any restriction |
+| Remote Peers are publishing audio | Able to play incoming audio from the Room |
+
+
+
+For implementing a Foreground Service we recommend using the [@voximplant/react-native-foreground-service](https://www.npmjs.com/package/@voximplant/react-native-foreground-service) package which allows the app to run in the background with a Persistent Status Bar Notification.
+
+That's it. Now you'll have a Foreground Service up & running in your app.
