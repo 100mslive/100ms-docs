@@ -11,10 +11,7 @@ PiP Mode lets the user watch the room video in a small window pinned to a corner
 
 > NOTE: Local Peer is not shown in PiP by default
 
-<video loop="true" autoplay="autoPlay" controls="controls" id="vid" muted>
-    <source src="/docs/guides/pip-demo.mp4" type="video/mp4" />
-</video>
-<br />
+![Picture-in-Picture](/guides/pip-mode.png)
 
 ## Implemenation
 
@@ -59,27 +56,26 @@ PictureInPicture.stop().catch((err) => console.error('error in stopping pip', er
 If you want to render custom peers in PiP from your end, you can pass those peers in the `PIPComponent` in the above folder.
 
 For example, if you want to show peers of particular role only in PiP, the following can be done.
+
 ```jsx
 import { useHMSStore, selectPeersByRole } from '@100mslive/react-sdk';
 
 function PIP() {
-    const peers = useHMSStore(selectPeersByRole("some-role"));
+    const peers = useHMSStore(selectPeersByRole('some-role'));
 
-    return <PIPComponent peers={peers} />
+    return <PIPComponent peers={peers} />;
 }
-
 ```
 
 To include local peer in PiP, just pass `showLocalPeer` to PIPComponent.
 
 ```jsx
 function PIP() {
-    return <PIPComponent showLocalPeer />
+    return <PIPComponent showLocalPeer />;
 }
-
 ```
 
 ## Limitations:
 
-- PiP is not supported in firefox
-- PiP is flaky in safari due to it's canvas rendering issues. check [known issues](../debugging/known-issues) for more information
+-   PiP is not supported in firefox
+-   PiP is flaky in safari due to it's canvas rendering issues. check [known issues](../debugging/known-issues) for more information
