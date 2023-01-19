@@ -8,7 +8,7 @@ import ConditionalLink from './ConditionalLink';
 interface Props {
     value: String;
     index: Number;
-    children: React.ReactChildren;
+    children: any;
     nested: Boolean;
 }
 
@@ -67,8 +67,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
         }, 0);
     }, [activeItem]);
 
-    const indexURL = children?.index?.url || '';
-    // if (indexURL !== '#') delete children.index;
+    const indexURL = children?.overview?.url || '';
 
     return renderComponents ? (
         <section
