@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from 'fs';
+import { existsSync, readdirSync, readFileSync } from 'fs';
 import matter from 'gray-matter';
 import { join } from 'path';
 import { fromMarkdown } from 'mdast-util-from-markdown';
@@ -49,7 +49,11 @@ export const getAllDocs = () => {
     const docs = getDocsPaths()
         .map((path) => {
             // Get frontMatter from markdown
-            const source = readFileSync(join(DOCS_PATH, `${path}.mdx`));
+            let filePath = join(DOCS_PATH, `${path}.mdx`)
+            if (!existsSync(filePath)) {
+                filePath = join(DOCS_PATH, `${path}.md`)
+            }
+            const source = readFileSync(filePath);
             const { data, content } = matter(source);
             // Normalize paths for web
             const url = path.replace(/\\/g, '/');

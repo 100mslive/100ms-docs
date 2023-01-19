@@ -60,7 +60,7 @@ Next, copy the below code snippets and paste it into the respective files create
 
 <Tab id="complete-code-0">
 
-```jsx:index.js section=completeCodeExample sectionIndex=1 tab=JS
+```jsx index.js section=completeCodeExample sectionIndex=1 tab=JS
 import {
   HMSReactiveStore,
   selectIsLocalAudioEnabled,
@@ -193,7 +193,7 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
 
 <Tab id="complete-code-1">
 
-```html:index.html section=completeCodeExample sectionIndex=2 tab=HTML
+```html index.html section=completeCodeExample sectionIndex=2 tab=HTML
 <!DOCTYPE html>
 <html>
   <head>
@@ -240,7 +240,7 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
 
 <Tab id="complete-code-2">
 
-```css:styles.css section=completeCodeExample sectionIndex=3 tab=CSS
+```css styles.css section=completeCodeExample sectionIndex=3 tab=CSS
 * {
     margin: 0;
     padding: 0;
@@ -453,7 +453,7 @@ Let us start with initializing the libraries. We need two instances to get start
     -   The `subscribe()` also returns a reference to `unsubscribe()` which could be used later to ubsubscribe from the subscription.
 -   And an instance of [HMSActions](/api-reference/javascript/v2/interfaces/HMSActions) that will help us perform actions such as joining the room, muting our audio, and sending messages.
 
-```jsx:index.js section=InitializingTheSDK sectionIndex=1
+```jsx index.js section=InitializingTheSDK sectionIndex=1
 import {
   HMSReactiveStore,
   selectIsLocalAudioEnabled,
@@ -477,7 +477,7 @@ Now, let's initialize all the HTML elements required such as tile for local and 
 
 <Tab id="initialize-html-elements-0">
 
-```jsx:index.js section=InitializingTheSDK sectionIndex=2 tab=JS
+```jsx index.js section=InitializingTheSDK sectionIndex=2 tab=JS
 // HTML elements
 const form = document.getElementById("join");
 const joinBtn = document.getElementById("join-btn");
@@ -493,7 +493,7 @@ const controls = document.getElementById("controls");
 
 <Tab id="initialize-html-elements-1">
 
-```html:index.html section=InitializingTheSDK sectionIndex=3 tab=HTML
+```html index.html section=InitializingTheSDK sectionIndex=3 tab=HTML
 <!DOCTYPE html>
 <html>
   <head>
@@ -1053,7 +1053,7 @@ Right now, our join form will show up even after we have joined the room. We nee
 
 We can do this by subscribing to the store with the [selectIsConnectedToRoom](/api-reference/javascript/v2/home/content#select-is-connected-to-room) selector from `hmsStore`.
 
-```jsx:index.js section=ChangingUIBasedOnConnectionState sectionIndex=1
+```jsx index.js section=ChangingUIBasedOnConnectionState sectionIndex=1
 // Showing the required elements on connection/disconnection
 function onConnection(isConnected) {
   if (isConnected) {

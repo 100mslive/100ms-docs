@@ -196,7 +196,10 @@ export default DocSlugs;
 
 export const getStaticProps = async ({ params }) => {
     // Absolute path of the docs file
-    const postFilePath = path.join(DOCS_PATH, `${path.join(...params.slug)}.mdx`);
+    let postFilePath = path.join(DOCS_PATH, `${path.join(...params.slug)}.mdx`);
+    if (!fs.existsSync(postFilePath)) {
+        postFilePath = path.join(DOCS_PATH, `${path.join(...params.slug)}.md`);
+    }
     // Raw Mdx File Data Buffer
     const source = fs.readFileSync(postFilePath, 'utf-8');
 
