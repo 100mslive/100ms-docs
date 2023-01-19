@@ -114,7 +114,7 @@ const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
 
     let showPagination = true;
     // Don't show Pagination for Android
-    if (slug![1] === 'android') {
+    if (Array.isArray(slug) && slug[1] === 'android') {
         showPagination = false;
     }
     const [modal, setModal] = React.useState(false);
