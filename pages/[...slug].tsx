@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import fs from 'fs';
 import path from 'path';
-import mdxPrism from 'mdx-prism';
+// import mdxPrism from 'mdx-prism';
 import EditFile from '@/components/EditFile';
 import components from '@/components/MDXComponents';
 import Pagination from '@/components/Pagination';
@@ -24,6 +24,8 @@ import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkA11yEmoji from '@fec/remark-a11y-emoji';
 import { MDXProvider, useMDXComponents } from '@mdx-js/react';
+import { remarkCodeHike } from '@code-hike/mdx';
+import theme from 'shiki/themes/nord.json';
 
 type NavRoute = {
     url: string;
@@ -57,6 +59,7 @@ interface Props {
         nextPost: PaginationType;
     };
     source: string;
+    showToc?: boolean;
 }
 
 const MDX_GLOBAL_CONFIG = {
@@ -65,7 +68,7 @@ const MDX_GLOBAL_CONFIG = {
     }
 };
 
-const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
+const DocSlugs = ({ source, frontMatter, pagination, nav, showToc = true }: Props) => {
     const {
         query: { slug },
         asPath
@@ -181,11 +184,13 @@ const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
                             <EditFile slug={asPath} />
                         </article>
                     ) : null}
-                    <Toc
-                        activeHeading={activeHeading}
-                        activeSubHeading={activeSubHeading}
-                        CurrentDocsSlug={currentDocSlug}
-                    />
+                    {showToc && (
+                        <Toc
+                            activeHeading={activeHeading}
+                            activeSubHeading={activeSubHeading}
+                            CurrentDocsSlug={currentDocSlug}
+                        />
+                    )}
                 </div>
             </div>
         </div>
@@ -224,7 +229,8 @@ export const getStaticProps = async ({ params }) => {
                 remarkA11yEmoji,
                 // imagePlugin,
                 remarkCodeHeader,
-                withTableofContents
+                withTableofContents,
+                [remarkCodeHike, { theme, lineNumbers: false }]
             ];
             options.rehypePlugins = [
                 ...(options.rehypePlugins ?? []),
@@ -239,8 +245,8 @@ export const getStaticProps = async ({ params }) => {
                             'mdxjsEsm'
                         ]
                     }
-                ],
-                mdxPrism
+                ]
+                // mdxPrism
             ];
             options.providerImportSource = '@mdx-js/react';
             return options;
@@ -252,7 +258,8 @@ export const getStaticProps = async ({ params }) => {
             pagination,
             nav: { [currentDocSlug]: nav[currentDocSlug] },
             source: code, // { compiledSource: mdxSource.compiledSource },
-            frontMatter: frontmatter
+            frontMatter: frontmatter,
+            showToc: !(params.slug[3] ?? '').endsWith('quickstart')
         }
     };
 };
