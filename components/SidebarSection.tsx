@@ -4,6 +4,7 @@ import { ChevronRightIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
 import SidebarItem from './SidebarItem';
 import ConditionalLink from './ConditionalLink';
+import { toPascalCase } from '../lib/mdxUtils';
 
 interface Props {
     value: String;
@@ -11,12 +12,6 @@ interface Props {
     children: any;
     nested: Boolean;
 }
-
-const toPascalCase = (text) => {
-    const words = text.split(' ');
-    const transformedText = words.map((word) => word[0].toUpperCase() + word.slice(1));
-    return transformedText.join(' ');
-};
 
 const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested = false }) => {
     const router = useRouter() as any;
@@ -26,10 +21,11 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
     } = router;
 
     const activeItem = useRef<HTMLAnchorElement>(null);
-    const [openSection, setOpenSection] = useState(() => {
+    const [inFocus, setInFocus] = useState(() => {
         for (const i of slug) if (i === key) return true;
         return false;
     });
+    const [openSection, setOpenSection] = useState(false);
 
     const [renderComponents, setRenderComponents] = useState(false);
 
@@ -101,12 +97,8 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                         margin: '0',
                         cursor: 'pointer',
                         borderRadius: '$0',
-                        color: openSection
-                            ? '$textHighEmp'
-                            : nested
-                            ? 'var(--docs_text_secondary)'
-                            : '$textMedEmp',
-                        '&:hover': { color: 'var(--docs_text_primary)' }
+                        color: inFocus ? 'var(--docs_text_primary)' : 'var(--docs_text_secondary)',
+                        '&:hover': { color: '$textHighEmp' }
                     }}>
                     <ChevronRightIcon
                         style={{
@@ -121,7 +113,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                     <Text
                         css={{
                             color: 'inherit',
-                            fontWeight: openSection ? '600' : '400',
+                            fontWeight: openSection ? '600' : '500',
                             fontSize: nested ? '13px' : '15px'
                         }}>
                         {toPascalCase(key.replace(/-/g, ' '))}

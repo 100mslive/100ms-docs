@@ -16,7 +16,6 @@ export const DOCS_PATH = join(process.cwd(), 'docs');
 /**
  * Gets a list of all mdx files inside the `DOCS_PATH` directory
  */
-
 const getFileList = (dirName) => {
     let files: string[] = [];
     const items = readdirSync(dirName, { withFileTypes: true });
@@ -83,7 +82,15 @@ export const getNavfromDocs = (docs) => {
     }, {});
 };
 
-export const slugify = (text) => text.toString().toLowerCase().replace(/\s+/g, "-").replace(/[^\w\-]+/g, "").replace(/\-\-+/g, "-").replace(/^-+/, "").replace(/-+$/, "");
+export const slugify = (text) =>
+    text
+        .toString()
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w\-]+/g, '')
+        .replace(/\-\-+/g, '-')
+        .replace(/^-+/, '')
+        .replace(/-+$/, '');
 
 /*
 Source: https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery
@@ -96,3 +103,9 @@ Source: https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-
     (/-+$/, ''); //trim ending dash
     
 */
+
+export const toPascalCase = (text) => {
+    const words = text.split(' ');
+    const transformedText = words.map((word) => word[0].toUpperCase() + word.slice(1));
+    return transformedText.join(' ');
+};

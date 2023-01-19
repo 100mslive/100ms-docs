@@ -15,7 +15,6 @@ const SidebarItem = ({ route, index, asPath, activeItem }) => (
                         : 'var(--docs_text_secondary)',
                 fontWeight: route.url === asPath ? '500' : '400',
                 fontSize: '13px',
-                lineHeight: '24px',
                 borderLeft:
                     route.url === asPath
                         ? '2px solid var(--primary_light)'
