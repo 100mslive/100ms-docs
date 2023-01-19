@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState, useLayoutEffect } from 'react';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { ChevronRightIcon, MinusIcon } from '@100mslive/react-icons';
+import { ChevronRightIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
+import SidebarItem from './SidebarItem';
 import ConditionalLink from './ConditionalLink';
 
 interface Props {
@@ -133,38 +133,13 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                     // eslint-disable-next-line no-nested-ternary
                     Object.prototype.hasOwnProperty.call(route, 'title') &&
                     route.url !== indexURL ? (
-                        <Link prefetch={false} href={route.url || ''} key={`${route.url}-${index}`}>
-                            <a
-                                ref={route.url === asPath ? activeItem : null}
-                                style={{
-                                    cursor: 'pointer',
-                                    padding: '0.25rem 0',
-                                    color:
-                                        route.url === asPath
-                                            ? 'var(--docs_text_primary)'
-                                            : 'var(--docs_text_secondary)',
-                                    fontWeight: route.url === asPath ? '500' : '400',
-                                    fontSize: '13px',
-                                    lineHeight: '24px',
-                                    borderLeft:
-                                        route.url === asPath
-                                            ? '2px solid var(--primary_light)'
-                                            : '2px solid var(--docs_border_strong)',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    paddingLeft: '1rem',
-                                    marginLeft: '0.95rem'
-                                }}>
-                                <MinusIcon
-                                    style={{
-                                        width: '12px',
-                                        minWidth: '12px',
-                                        marginRight: '0.625rem'
-                                    }}
-                                />
-                                {route.title}
-                            </a>
-                        </Link>
+                        <SidebarItem
+                            key={route.title}
+                            asPath={asPath}
+                            route={route}
+                            activeItem={activeItem}
+                            index={index}
+                        />
                     ) : indexURL !== route.url ? (
                         <SidebarSection index={index} value={_} nested>
                             {route}
@@ -173,39 +148,14 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                 )}
                 {key === 'features' && slug[0] !== 'server-side' ? (
                     <>
-                        {aliasMenu.map((a) => (
-                            <Link scroll={false} prefetch={false} href={a.url} key={a.url}>
-                                <a
-                                    ref={a.url === asPath ? activeItem : null}
-                                    style={{
-                                        cursor: 'pointer',
-                                        padding: '0.25rem 0',
-                                        color:
-                                            a.url === asPath
-                                                ? 'var(--docs_text_primary)'
-                                                : 'var(--docs_text_secondary)',
-                                        fontWeight: a.url === asPath ? '500' : '400',
-                                        fontSize: '13px',
-                                        lineHeight: '24px',
-                                        borderLeft:
-                                            a.url === asPath
-                                                ? '2px solid var(--primary_light)'
-                                                : '2px solid var(--docs_border_strong)',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        paddingLeft: '1rem',
-                                        marginLeft: '0.95rem'
-                                    }}>
-                                    <MinusIcon
-                                        style={{
-                                            width: '12px',
-                                            minWidth: '12px',
-                                            marginRight: '0.625rem'
-                                        }}
-                                    />
-                                    {a.title}
-                                </a>
-                            </Link>
+                        {aliasMenu.map((route) => (
+                            <SidebarItem
+                                key={route.title}
+                                asPath={asPath}
+                                route={route}
+                                activeItem={activeItem}
+                                index={index}
+                            />
                         ))}
                     </>
                 ) : null}
