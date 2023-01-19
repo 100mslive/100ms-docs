@@ -166,14 +166,15 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                     .accordion-content {
                         margin-top: 0;
                         padding-left: 0.5rem;
-                        transition-delay: 0.3s;
-                        transition: max-height 0.3s ease-in-out;
-                        max-height: 0px;
+                        opacity: 0;
+                        transition: all ease 0.3s;
+                        max-height: 0;
                         overflow: hidden;
                     }
 
                     .active {
-                        max-height: 1000vh;
+                        max-height: 100%;
+                        opacity: 1;
                     }
                     a:hover {
                         opacity: 1;
