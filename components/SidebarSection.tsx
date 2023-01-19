@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useLayoutEffect } from 'react';
+import React, { useEffect, useRef, useState, useLayoutEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { ChevronRightIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
@@ -21,10 +21,13 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
     } = router;
 
     const activeItem = useRef<HTMLAnchorElement>(null);
-    const [inFocus, setInFocus] = useState(() => {
+
+    const isInFocus = useCallback(() => {
         for (const i of slug) if (i === key) return true;
         return false;
-    });
+    }, [slug, key]);
+
+    const inFocus = isInFocus();
     const [openSection, setOpenSection] = useState(false);
 
     const [renderComponents, setRenderComponents] = useState(false);
