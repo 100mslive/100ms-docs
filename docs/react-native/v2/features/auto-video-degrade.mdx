@@ -9,14 +9,52 @@ When the network is too slow to support audio and video conversations together, 
 
 If the network quality improves, the videos will be restored automatically as well.
 
-To turn on subscribe degradation in your room, open the templates in the dashboard and enable it for roles there.
+To turn on subscribe degradation in your room, open the [templates](https://dashboard.100ms.live/templates) in the dashboard and enable it for roles there. Here's more information about [templates](../foundation/templates-and-roles).
 
-## Responding in the app
+![Dashboard Degradation Option](/docs/v2/degradation.png)
 
-All HMSVideoTracks, within the HMSPeer's have a variable called `isDegraded`.
 
-If `isDegraded` is true, treat it as if the video is turned off. If the UI is not changed, the video tile will appear black.
+## Get Video Degrade Status
+
+You can check if the SDK has stopped downloading a peers' video (video quality has been degraded) using `isDegraded` property available on all instances of `HMSVideoTrack` class.
+
+If `isDegraded` is true, treat it as if the video of the peer is turned off.
+
+Note: If the UI is not changed, when `isDegraded` property of a video track becomes `true`, **the video tile will appear black**.
 
 ```js
-const isDegraded: boolean = peer.videoTrack.isDegraded
+const isDegraded: boolean = peer.videoTrack.isDegraded;
+```
+
+
+## Video Degrade and Restore Updates
+
+When a peers' video is restored and degraded, the SDK emits `HMSUpdateListenerActions.ON_TRACK_UPDATE` event with `HMSTrackUpdate.TRACK_RESTORED` and `HMSTrackUpdate.TRACK_DEGRADED` update types respectively.
+
+You can listen to `HMSUpdateListenerActions.ON_TRACK_UPDATE` event for above mentioned update types and update your layout accordingly -
+
+```js
+const onTrackListener = ({
+  peer,
+  track,
+  type,
+}: {
+  peer: HMSPeer;
+  track: HMSTrack;
+  type: HMSTrackUpdate;
+}) => {
+  if (type === HMSTrackUpdate.TRACK_RESTORED) {
+    // {track} of {peer} is restored
+    // Now, update your UI to show video of peer again
+    console.log(`TRACK_RESTORED: ${track}`);
+  }
+
+  if (type === HMSTrackUpdate.TRACK_DEGRADED) {
+    // {track} of {peer} is degraded
+    // Now, update your UI to hide video of peer, otherwise video tile will appear black
+    console.log(`TRACK_DEGRADED: ${track}`);
+  }
+}
+
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_TRACK_UPDATE, onTrackListener);
 ```

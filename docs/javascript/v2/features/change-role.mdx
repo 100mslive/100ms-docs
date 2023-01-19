@@ -28,14 +28,15 @@ permissions please check [`selectPermissions'`](../../../api-reference/javascrip
 ```js
 const role = hmsStore.getState(selectLocalPeerRole);
 const permissions = hsmStore.getState(selectPermissions);
-console.log("can I end room - ", permissions.endRoom);
-console.log("can I end change role - ", permissions.changeRole);
+console.log('can I end room - ', permissions.endRoom);
+console.log('can I end change role - ', permissions.changeRole);
 const { video, audio, screen } = hmsStore.getState(selectIsAllowedToPublish);
 ```
 
 ## Change Role APIs
 
 There are two way of chaning peer's role using our api:
+
 1. [`Single Peer Role API`](#change-single-peer-role-api) - It is useful when we need to change role of a single peer.
 2. [`Bulk Peer Role API`](#change-bulk-peer-role-api) - We could change a all peers of particular roles to a given role. It will be helpful to make breakout rooms, waiting rooms, etc.
 
@@ -44,7 +45,7 @@ There are two way of chaning peer's role using our api:
 If the local peer has permissions to change role(`permissions.changeRole`), they can change either their or someone else's role using
 the below interface.
 
-<Tabs id="singleRoleChange" items={["Javascript", "React"]} />{" "}
+<Tabs id="singleRoleChange" items={['Javascript', 'React']} />{' '}
 
 <Tab id='singleRoleChange-0'>
 
@@ -67,18 +68,17 @@ function RoleChange() {
 
 </Tab>
 
-- `forPeerId`: The peer ID whose role needs to be changed, the peer can be either of local or remote.
-- `toRoleName`: The target role name.
-- `force`(optional): The other peer gets a request by default to accept a role change, by setting force to true, the role can be changed
-  without requesting for approval.
-
+-   `forPeerId`: The peer ID whose role needs to be changed, the peer can be either of local or remote.
+-   `toRoleName`: The target role name.
+-   `force`(optional): The other peer gets a request by default to accept a role change, by setting force to true, the role can be changed
+    without requesting for approval.
 
 ### Change Bulk Peer Role API
 
 If the local peer has permissions to change role(`permissions.changeRole`), they can convert all roles from a list of roles, to another role using
 the below interface.
 
-<Tabs id="bulkRoleChange" items={["Javascript", "React"]} />{" "}
+<Tabs id="bulkRoleChange" items={['Javascript', 'React']} />{' '}
 
 <Tab id='bulkRoleChange-0'>
 
@@ -101,8 +101,8 @@ function BulkRoleChange() {
 
 </Tab>
 
-- `ofRoles`: It accepts the list of roles name.
-- `toRole`: The target role name.
+-   `ofRoles`: It accepts the list of roles name.
+-   `toRole`: The target role name.
 
 Note that if an empty list is sent to ofRoles, no roles will be changed. This is to avoid accidentally changing roles you may not have intended such as the bots that provide recording and streaming with the roles beam.
 
@@ -118,25 +118,23 @@ Bulk role changes are always forced, no dialog will be given for the peer to acc
 The `force` parameter in `changeRole`, when false, is a polite request: "Would you like to change your role from listener to speaker?" which can be ignored by the other party.
 The way it works is the other party will first receive a [request](/api-reference/javascript/v2/interfaces/HMSRoleChangeRequest) which they can accept or reject.
 
-<Tabs id="roleChange" items={["Javascript", "React"]} />{" "}
+<Tabs id="roleChange" items={['Javascript', 'React']} />{' '}
 
 <Tab id='roleChange-0'>
 
 ```js
 function handleRoleChangeRequest(request) {
-  if (!request) {
-    return;
-  }
-  console.log(
-    `${request.requestedBy.name} requested role change to - ${request.role.name}`
-  );
-  // shouldAccept can for example present a pop up to the user for deciding how to act on the request
-  const accept = shouldAccept(request);
-  if (accept) {
-    hmsActions.acceptChangeRole(request);
-  } else {
-    hmsActions.rejectChangeRole(request);
-  }
+    if (!request) {
+        return;
+    }
+    console.log(`${request.requestedBy.name} requested role change to - ${request.role.name}`);
+    // shouldAccept can for example present a pop up to the user for deciding how to act on the request
+    const accept = shouldAccept(request);
+    if (accept) {
+        hmsActions.acceptChangeRole(request);
+    } else {
+        hmsActions.rejectChangeRole(request);
+    }
 }
 
 hmsStore.subscribe(handleRoleChangeRequest, selectRoleChangeRequest);
@@ -148,23 +146,21 @@ hmsStore.subscribe(handleRoleChangeRequest, selectRoleChangeRequest);
 
 ```jsx
 function handleRoleChangeRequest(request) {
-  const request = useHMSStore(selectRoleChangeRequest);
-  const hmsActions = useHMSActions();
+    const request = useHMSStore(selectRoleChangeRequest);
+    const hmsActions = useHMSActions();
 
-  useEffect(() => {
-    console.log(
-      `${request.requestedBy.name} requested role change to - ${request.role.name}`
-    );
-    // shouldAccept can for example present a pop up to the user for deciding how to act on the request
-    const accept = shouldAccept(request);
-    if (accept) {
-      hmsActions.acceptChangeRole(request);
-    } else {
-      hmsActions.rejectChangeRole(request);
-    }
-  }, [request, hmsActions]);
+    useEffect(() => {
+        console.log(`${request.requestedBy.name} requested role change to - ${request.role.name}`);
+        // shouldAccept can for example present a pop up to the user for deciding how to act on the request
+        const accept = shouldAccept(request);
+        if (accept) {
+            hmsActions.acceptChangeRole(request);
+        } else {
+            hmsActions.rejectChangeRole(request);
+        }
+    }, [request, hmsActions]);
 
-  return null;
+    return null;
 }
 ```
 
@@ -192,7 +188,7 @@ If you want this unmuting to happen automatically, you can listen to the notific
 ### Breakout Rooms/Groups
 
 You can have multiple roles which act as breakout rooms subscribing only to peers within the role. A peer can join another breakout room
-or group easily using the change bulk role API.
+or group easily using the change single peer role API.
 
 ### Waiting Room
 
