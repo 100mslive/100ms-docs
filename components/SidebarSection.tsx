@@ -61,8 +61,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
 
     return renderComponents ? (
         <section
-            className="menu-container"
-            style={{ margin: '2px 0.5rem 0.5rem 0.25rem' }}
+            style={{ margin: '2px 0.5rem 0.5rem 0.25rem', overscrollBehavior: 'none' }}
             key={`${key}-${index}`}>
             <Flex
                 align="center"
