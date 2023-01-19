@@ -4,7 +4,6 @@ import { ChevronRightIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
 import SidebarItem from './SidebarItem';
 import ConditionalLink from './ConditionalLink';
-// import { toPascalCase } from '../lib/mdxUtils';
 
 interface Props {
     value: String;
@@ -34,7 +33,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
     }, [slug, key]);
 
     const inFocus = isInFocus();
-    const [openSection, setOpenSection] = useState(false);
+    const [openSection, setOpenSection] = useState(isInFocus());
 
     const [renderComponents, setRenderComponents] = useState(false);
 
