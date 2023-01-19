@@ -540,15 +540,20 @@ This api adds EXT-X-DATERANGE tags to the media playlist.
 It is useful for defining timed metadata for interstitial regions such as advertisements,
 but can be used to define any timed metadata needed by your stream.
 usage (e.g)
-const metadataList = [{
-payload: "some string 1",
-duration: 2
-},
-{
-payload: "some string 2",
-duration: 3
-}]
+```js
+const metadataList = [
+  {
+    payload: "some string 1",
+    duration: 2
+  },
+  {
+    payload: "some string 2",
+    duration: 3
+  }
+]
+
 sendHLSTimedMetadata(metadataList);
+```
 
 #### Parameters
 

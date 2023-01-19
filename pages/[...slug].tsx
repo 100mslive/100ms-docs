@@ -200,8 +200,6 @@ export const getStaticProps = async ({ params }) => {
     if (!fs.existsSync(postFilePath)) {
         postFilePath = path.join(DOCS_PATH, `${path.join(...params.slug)}.md`);
     }
-    // Raw Mdx File Data Buffer
-    const source = fs.readFileSync(postFilePath, 'utf-8');
 
     const allDocs = getAllDocs();
     const nav = getNavfromDocs(allDocs);
@@ -218,7 +216,7 @@ export const getStaticProps = async ({ params }) => {
             }
         },
         cwd: path.join(DOCS_PATH, path.join(...params.slug.slice(0, -1))),
-        source,
+        file: postFilePath,
         mdxOptions(options) {
             options.remarkPlugins = [
                 ...(options.remarkPlugins ?? []),
