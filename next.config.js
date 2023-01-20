@@ -120,10 +120,17 @@ const nextConfig = {
                 permanent: false
             },
             {
-                source: '/javascript/v2/guides/javascript-quickstart',
-                destination: '/javascript/v2/get-started/javascript-quickstart',
+                // https://www.markhneedham.com/blog/2022/07/27/vercel-redirect-wildcards-nested-paths/
+                source: '/javascript/v2/guides:path(.*)',
+                destination: '/javascript/v2/get-started:path',
                 permanent: true
-            }
+            },
+            // start redirects for new JS how-to guides structure
+            // {
+            //     source: '/javascript/v2/guides/javascript-quickstart',
+            //     destination: '/javascript/v2/get-started/javascript-quickstart',
+            //     permanent: true
+            // },
         ];
     }
 };
