@@ -4,7 +4,7 @@ import { ChevronRightIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
 import SidebarItem from './SidebarItem';
 import ConditionalLink from './ConditionalLink';
-import { toSentenceCase } from '../lib/utils';
+import { titleCasing } from '../lib/utils';
 
 interface Props {
     value: String;
@@ -12,8 +12,6 @@ interface Props {
     children: any;
     nested: Boolean;
 }
-
-const doubleHyphens = (text) => text.replace(/--/g, '_').replace(/-/g, ' ').replace(/_/g, '-');
 
 const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested = false }) => {
     const router = useRouter() as any;
@@ -126,7 +124,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                             fontWeight: openSection ? '600' : '500',
                             fontSize: nested ? '13px' : '15px'
                         }}>
-                        {toSentenceCase(doubleHyphens(key))}
+                        {titleCasing(key)}
                     </Text>
                 </Flex>
             </ConditionalLink>
