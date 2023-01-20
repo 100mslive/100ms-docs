@@ -101,7 +101,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                     }}
                     css={{
                         padding: '0 0 0.25rem 1rem',
-                        paddingTop: nested ? '0.125rem' : '0.5rem',
+                        paddingTop: nested ? '0.25rem' : '0.5rem',
                         margin: '0',
                         cursor: 'pointer',
                         borderRadius: '$0',
