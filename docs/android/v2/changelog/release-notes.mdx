@@ -7,11 +7,10 @@ description: Release Notes for 100ms Android SDK
 ### Added
 * Send `requested_by` in acceptChangeRole message
 * Added `CameraControls` interface to `HMSLocalVideoTrack` - Use this interface to control the settings of native camera
-* Added Utils method to know about the properties of vp8 codecs present in the device
 
 ### Fixed
 * `captureBitmap` API of the local `HMSVideoView` now returns the bitmap at the publishing resolution of local peer
-* Issue where a remote track was getting removed inside `HMSPeer` if the ordering of onRemoteTrack message from server was wrong.
+* Sometimes `HMSTrack` was in-correctly removed from `HMSPeer` if a `RemotePeer` un-publishes a `HMSTrack` and re-publishes it again,
 
 ## v2.5.6 - 2023-01-11
 ### Added
