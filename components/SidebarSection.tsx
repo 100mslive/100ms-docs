@@ -4,7 +4,7 @@ import { ChevronRightIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
 import SidebarItem from './SidebarItem';
 import ConditionalLink from './ConditionalLink';
-import { toPascalCase } from '../lib/utils';
+import { toSentenceCase } from '../lib/utils';
 
 interface Props {
     value: String;
@@ -12,6 +12,8 @@ interface Props {
     children: any;
     nested: Boolean;
 }
+
+const doubleHyphens = (text) => text.replace(/--/g, '_').replace(/-/g, ' ').replace(/_/g, '-');
 
 const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested = false }) => {
     const router = useRouter() as any;
@@ -32,6 +34,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
 
     const [renderComponents, setRenderComponents] = useState(false);
 
+    // To open accordions that were not closed before the page reload
     useLayoutEffect(() => {
         if (typeof window !== 'undefined') {
             const openedAccordions = JSON.parse(sessionStorage.getItem('openedAccordions') || '[]');
@@ -45,15 +48,18 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
 
     useEffect(() => {
         if (window) {
+            // Add active accordions to the list - when users directly navigate via links
             const currentList = JSON.parse(sessionStorage.getItem('openedAccordions') || '[]');
             if (openSection) {
                 currentList.push(key);
                 sessionStorage.setItem('openedAccordions', JSON.stringify(currentList));
             }
+            // Styles take some time to load
             setRenderComponents(true);
         }
     }, []);
 
+    // Scroll active page into view
     useEffect(() => {
         setTimeout(() => {
             if (activeItem?.current) {
@@ -119,11 +125,11 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                             fontWeight: openSection ? '600' : '500',
                             fontSize: nested ? '13px' : '15px'
                         }}>
-                        {toPascalCase(key.replace(/-/g, ' '))}
+                        {toSentenceCase(doubleHyphens(key))}
                     </Text>
                 </Flex>
             </ConditionalLink>
-            <div className={`accordion-content ${openSection ? 'active' : ''}`}>
+            <div className={`accordion-content ${openSection ? 'active' : ''}`} style={{}}>
                 {Object.entries(children as {}).map(([_, route]: [string, any]) =>
                     // eslint-disable-next-line no-nested-ternary
                     Object.prototype.hasOwnProperty.call(route, 'title') &&
@@ -158,17 +164,19 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
             <style jsx>
                 {`
                     .accordion-content {
+                        position: relative;
                         margin-top: 0;
                         padding-left: 0.5rem;
                         opacity: 0;
-                        transition: all ease 0.3s;
                         max-height: 0;
+                        transition: all ease 0.3s;
                         overflow: hidden;
                     }
 
                     .active {
-                        max-height: 100%;
+                        top: 0;
                         opacity: 1;
+                        max-height: 150vh;
                     }
                     a:hover {
                         opacity: 1;
