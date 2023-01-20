@@ -118,6 +118,11 @@ const nextConfig = {
                 source: '/react-native/v2/features/hls-streaming',
                 destination: '/react-native/v2/features/hls',
                 permanent: false
+            },
+            {
+                source: '/javascript/v2/guides/javascript-quickstart',
+                destination: '/javascript/v2/get-started/javascript-quickstart',
+                permanent: true
             }
         ];
     }
