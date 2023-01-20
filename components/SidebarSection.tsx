@@ -127,7 +127,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                     </Text>
                 </Flex>
             </ConditionalLink>
-            <div className={`accordion-content ${openSection ? 'active' : ''}`}>
+            <div className={`accordion-content ${openSection ? 'active' : ''}`} style={{}}>
                 {Object.entries(children as {}).map(([_, route]: [string, any]) =>
                     // eslint-disable-next-line no-nested-ternary
                     Object.prototype.hasOwnProperty.call(route, 'title') &&
@@ -162,17 +162,19 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
             <style jsx>
                 {`
                     .accordion-content {
+                        position: relative;
                         margin-top: 0;
                         padding-left: 0.5rem;
                         opacity: 0;
-                        transition: all ease 0.3s;
                         max-height: 0;
+                        transition: all ease 0.3s;
                         overflow: hidden;
                     }
 
                     .active {
-                        max-height: 100%;
+                        top: 0;
                         opacity: 1;
+                        max-height: 150vh;
                     }
                     a:hover {
                         opacity: 1;
