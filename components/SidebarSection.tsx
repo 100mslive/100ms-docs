@@ -13,6 +13,8 @@ interface Props {
     nested: Boolean;
 }
 
+const doubleHyphens = (text) => text.replace(/--/g, '_').replace(/-/g, ' ').replace(/_/g, '-');
+
 const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested = false }) => {
     const router = useRouter() as any;
     const {
@@ -123,7 +125,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                             fontWeight: openSection ? '600' : '500',
                             fontSize: nested ? '13px' : '15px'
                         }}>
-                        {toSentenceCase(key.replace(/-/g, ' '))}
+                        {toSentenceCase(doubleHyphens(key))}
                     </Text>
                 </Flex>
             </ConditionalLink>
