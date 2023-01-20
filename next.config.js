@@ -126,11 +126,31 @@ const nextConfig = {
                 permanent: true
             },
             // start redirects for new JS how-to guides structure
-            // {
-            //     source: '/javascript/v2/guides/javascript-quickstart',
-            //     destination: '/javascript/v2/get-started/javascript-quickstart',
-            //     permanent: true
-            // },
+            {
+                source: '/javascript/v2/advanced-features/peer-metadata',
+                destination: '/javascript/v2/how--to-guides/build-interactive-features/peer-metadata',
+                permanent: true
+            },
+            {
+                source: '/javascript/v2/features/:slug(change-role|end-room|remote-mute|remove-peer)',
+                destination: '/javascript/v2/how--to-guides/control-remote-peers/:slug',
+                permanent: true
+            },
+            {
+                source: '/javascript/v2/advanced-features/volume-control',
+                destination: '/javascript/v2/how--to-guides/control-remote-peers/volume-control',
+                permanent: true
+            },
+            {
+                source: '/javascript/v2/features/error-handling',
+                destination: '/javascript/v2/how--to-guides/debugging/error-handling',
+                permanent: true
+            },
+            {
+                source: '/javascript/v2/debugging/:slug(faq|known-issues)',
+                destination: '/javascript/v2/how--to-guides/debugging/:slug',
+                permanent: true
+            },
         ];
     }
 };
