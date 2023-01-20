@@ -70,17 +70,6 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
         else router.push(s.link, undefined, { shallow: false });
     };
 
-    const activeItem = React.useRef<HTMLAnchorElement>(null);
-
-    useEffect(() => {
-        if (activeItem?.current)
-            activeItem.current.scrollIntoView({
-                behavior: 'auto',
-                block: 'center',
-                inline: 'nearest'
-            });
-    }, [activeItem]);
-
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
 
     return (
@@ -122,7 +111,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
             {/* Sidebar Menu Section */}
             {nav
                 ? Object.entries(nav).map(([key, children], index) => (
-                      <SidebarSection key={key} value={key} index={index}>
+                      <SidebarSection key={key} value={key} index={index} nested={false}>
                           {children as React.ReactChildren}
                       </SidebarSection>
                   ))
@@ -140,6 +129,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                     left: 0;
                     position: sticky;
                     z-index: 100;
+                    overscroll-behavior: none;
                 }
                 ::-webkit-scrollbar {
                     width: 0px;
