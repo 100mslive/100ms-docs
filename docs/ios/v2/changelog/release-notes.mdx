@@ -4,6 +4,22 @@ nav: 6.1
 description: Release Notes for 100ms iOS SDK
 ---
 
+## 0.6.1 - 2023-01-19
+### Added
+- Error callback onPlaybackFailure to monitor HLS error events
+
+### Fixed
+- requested_by field not populated in role change webhook
+- RTC stats are not reported for screen share track
+- RTC stats are not reported if user joins with HLS role and then switches to WebRTC
+- In the first onRoom update during preview local peer's role is nil
+- In App Screen share sends bogus error first time with permission popup
+- Sometimes, in app screen share is stuck waiting for a visual change in the UI
+
+### Breaking change
+- RTC stats delegate callback signatures have been changed to return HMSVideoTrack and HMSAudioTrack types in order to support stats for screen share track.
+
+
 ## 0.5.5 - 2023-01-06
 ### Added
 - Simulcast support for local RTC stats
