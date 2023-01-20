@@ -32,6 +32,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
 
     const [renderComponents, setRenderComponents] = useState(false);
 
+    // To open accordions that were not closed before the page reload
     useLayoutEffect(() => {
         if (typeof window !== 'undefined') {
             const openedAccordions = JSON.parse(sessionStorage.getItem('openedAccordions') || '[]');
@@ -45,15 +46,18 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
 
     useEffect(() => {
         if (window) {
+            // Add active accordions to the list - when users directly navigate via links
             const currentList = JSON.parse(sessionStorage.getItem('openedAccordions') || '[]');
             if (openSection) {
                 currentList.push(key);
                 sessionStorage.setItem('openedAccordions', JSON.stringify(currentList));
             }
+            // Styles take some time to load
             setRenderComponents(true);
         }
     }, []);
 
+    // Scroll active page into view
     useEffect(() => {
         setTimeout(() => {
             if (activeItem?.current) {
