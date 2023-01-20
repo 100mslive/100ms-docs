@@ -79,13 +79,12 @@ hmsVideoView.removeTrack()
 Until you call `removeTrack()` the video frame is being streamed over the device's data.
 
 ### Capture Video Frame
-You can get a high quality bitmap object of the frame getting rendered on the HMSVideoView
+You can get a bitmap object of the frame getting rendered on the HMSVideoView
+Incase you are calling this API on a `videoView` which is rendering localVideoTrack, it will return a bitmap whose resolution would be equal to the resolution at which this peer is supposed to publish
 
 ```kotlin
 hmsVideoView.captureBitmap(onBitmap: (Bitmap?) -> Unit, scale: Float = 1.0f)
 ```
-Incase you are capturing video frame for the local peer's camera, remember to disable `auto re-size` option in `HMSVideoTrackSettings` before doing this as described [here](https://www.100ms.live/docs/android/v2/advanced-features/track-settings#disableautoresize).
-This would disable publish degradation, so it wont effect the quality of the image based on your upload network bandwidth
 
 ### Disabling Auto Simulcast
 
