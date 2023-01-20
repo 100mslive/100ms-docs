@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { ChevronRightIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
 import SidebarItem from './SidebarItem';
-import ConditionalLink from './ConditionalLink';
 import { titleCasing } from '../lib/utils';
 
 interface Props {
@@ -70,7 +69,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
         }, 0);
     }, [activeItem]);
 
-    const indexURL = children?.overview?.url || '';
+    // const indexURL = children?.overview?.url || '';
 
     return renderComponents ? (
         <section
@@ -79,7 +78,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                 borderLeft: nested ? '2px solid var(--docs_border_strong' : 'none'
             }}
             key={`${key}-${index}`}>
-            <ConditionalLink link={indexURL}>
+            {/* <ConditionalLink link={indexURL}> */}
                 <Flex
                     align="center"
                     onClick={() => {
@@ -95,7 +94,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                                 )
                             ];
                             sessionStorage.setItem('openedAccordions', JSON.stringify(updatedList));
-                            if (!inFocus && prev === true) return true;
+
                             return !prev;
                         });
                     }}
@@ -127,12 +126,11 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                         {titleCasing(key)}
                     </Text>
                 </Flex>
-            </ConditionalLink>
+            {/* </ConditionalLink> */}
             <div className={`accordion-content ${openSection ? 'active' : ''}`} style={{}}>
                 {Object.entries(children as {}).map(([_, route]: [string, any]) =>
-                    // eslint-disable-next-line no-nested-ternary
-                    Object.prototype.hasOwnProperty.call(route, 'title') &&
-                    route.url !== indexURL ? (
+                    // && route.url !== indexURL ?
+                    Object.prototype.hasOwnProperty.call(route, 'title') ? (
                         <SidebarItem
                             key={route.title}
                             asPath={asPath}
@@ -140,11 +138,11 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                             activeItem={activeItem}
                             index={index}
                         />
-                    ) : indexURL !== route.url ? (
+                    ) : (
                         <SidebarSection index={index} value={_} nested>
                             {route}
                         </SidebarSection>
-                    ) : null
+                    )
                 )}
                 {key === 'features' && slug[0] !== 'server-side' ? (
                     <>
