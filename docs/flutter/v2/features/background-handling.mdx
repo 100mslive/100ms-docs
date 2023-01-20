@@ -148,7 +148,7 @@ Add service inside `<application>` tag as follows:
         ...
     </activity>
 
-      // Set Service Type to capture Audio or Video as per your use-case. In most cases, only `microphone` access would be required. Then do not pass the `camera`. `stopWithTask` will stop the notification if app is force killed.
+      // Set Service Type to capture Audio or Video as per your use-case. In most cases, only `microphone` access would be required. Then do not pass the `camera`. If stopWithTask set to true then it will stop the notification if app is force killed.
       <service android:name="com.pravera.flutter_foreground_task.service.ForegroundService"
         android:foregroundServiceType="camera|microphone"
         android:stopWithTask="true" />
@@ -220,7 +220,8 @@ Stop `FlutterForegroundTask` at `onRemovedFromRoom` and `onSuccess` -> `HMSActio
 ```dart
   @override
   void onRemovedFromRoom({required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer}) {
-    // Stop FlutterForegroundTask at onRemovedFromRoom callback.
+    // Clear the local room state
+    // Stop FlutterForegroundTask
     FlutterForegroundTask.stopService();
     ...
   }
@@ -229,7 +230,9 @@ Stop `FlutterForegroundTask` at `onRemovedFromRoom` and `onSuccess` -> `HMSActio
   void onSuccess({HMSActionResultListenerMethod methodType = HMSActionResultListenerMethod.unknown, Map<String, dynamic>? arguments}) {
     switch (methodType) {
       case HMSActionResultListenerMethod.leave:
-      // Stop FlutterForegroundTask at leave successfully callback.
+      // Room leaved successfully
+      // Clear the local room state
+      // Stop FlutterForegroundTask
         FlutterForegroundTask.stopService();    
         break;
       ...
@@ -237,6 +240,10 @@ Stop `FlutterForegroundTask` at `onRemovedFromRoom` and `onSuccess` -> `HMSActio
 ```
 
 That's it. Now you'll have a Foreground Service up & running in your app.
+
+<video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
+    <source src="/docs/v2/flutter-foreground-task.mp4" type="video/mp4" />
+</video>
 
 > Checkout the Background Handling implementations in 100ms Example app [here](https://github.com/100mslive/100ms-flutter/tree/main/example).
   
