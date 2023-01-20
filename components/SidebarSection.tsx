@@ -4,6 +4,7 @@ import { ChevronRightIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
 import SidebarItem from './SidebarItem';
 import ConditionalLink from './ConditionalLink';
+import { toPascalCase } from '../lib/utils';
 
 interface Props {
     value: String;
@@ -11,12 +12,6 @@ interface Props {
     children: any;
     nested: Boolean;
 }
-
-const toPascalCase = (text) => {
-    const words = text.split(' ');
-    const transformedText = words.map((word) => word[0].toUpperCase() + word.slice(1));
-    return transformedText.join(' ');
-};
 
 const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested = false }) => {
     const router = useRouter() as any;
@@ -33,7 +28,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
     }, [slug, key]);
 
     const inFocus = isInFocus();
-    const [openSection, setOpenSection] = useState(isInFocus());
+    const [openSection, setOpenSection] = useState(inFocus);
 
     const [renderComponents, setRenderComponents] = useState(false);
 
