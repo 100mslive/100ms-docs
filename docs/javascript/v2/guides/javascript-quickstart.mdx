@@ -15,6 +15,20 @@ TL;DR - Use this [Playground](https://codesandbox.io/s/hms-js-quickstart-5rmes) 
 
 ## Get started
 
+<StepsToc
+    parentId="initialize-sdk-steps"
+    descriptions={[
+        'Initialize HMSStore and HMSActions from 100ms SDK for state management and to perform actions like join, leave, etc. in the app.',
+        'Include the HTML elements such as tiles and buttons to render peers and trigger actions like join, leave, etc.',
+        'Pass config object with userName and authToken to join method from HMSActions. Use leave method from HMSActions to leave the room.',
+        'Use attachVideo method from HMSActions to add video and selectPeers selector from hmsStore to display tile for peers.',
+        'Use setLocalAudioEnabled and setLocalVideoEnabled from HMSActions to mute/unmute local audio/video tracks.',
+        'Use selectIsConnectedToRoom selector from hmsStore to manage UI elements based on connection/disconnection.'
+    ]}
+/>
+
+<StepsContainer id="initialize-sdk-steps">
+
 ### Setup a project
 
 <CH.Scrollycoding>
@@ -67,13 +81,13 @@ Let us start with initializing the 100ms libraries for state management and to p
 
 ```jsx index.js mark=11:14
 import {
-  HMSReactiveStore,
-  selectIsLocalAudioEnabled,
-  selectIsLocalVideoEnabled,
-  selectPeers,
-  selectIsConnectedToRoom,
-  selectVideoTrackByID,
-} from "@100mslive/hms-video-store";
+    HMSReactiveStore,
+    selectIsLocalAudioEnabled,
+    selectIsLocalVideoEnabled,
+    selectPeers,
+    selectIsConnectedToRoom,
+    selectVideoTrackByID
+} from '@100mslive/hms-video-store';
 
 // Initialize HMS Store
 const hmsManager = new HMSReactiveStore();
@@ -82,29 +96,29 @@ const hmsStore = hmsManager.getStore();
 const hmsActions = hmsManager.getActions();
 
 // HTML elements
-const form = document.getElementById("join");
-const joinBtn = document.getElementById("join-btn");
-const conference = document.getElementById("conference");
-const peersContainer = document.getElementById("peers-container");
-const leaveBtn = document.getElementById("leave-btn");
-const muteAudio = document.getElementById("mute-aud");
-const muteVideo = document.getElementById("mute-vid");
-const controls = document.getElementById("controls");
+const form = document.getElementById('join');
+const joinBtn = document.getElementById('join-btn');
+const conference = document.getElementById('conference');
+const peersContainer = document.getElementById('peers-container');
+const leaveBtn = document.getElementById('leave-btn');
+const muteAudio = document.getElementById('mute-aud');
+const muteVideo = document.getElementById('mute-vid');
+const controls = document.getElementById('controls');
 
 // store peer IDs already rendered to avoid re-render on mute/unmute
 const renderedPeerIDs = new Set();
 
 // Joining the room
 joinBtn.onclick = () => {
-  hmsActions.join({
-    userName: document.getElementById("name").value,
-    authToken: document.getElementById("token").value
-  });
+    hmsActions.join({
+        userName: document.getElementById('name').value,
+        authToken: document.getElementById('token').value
+    });
 };
 
 // Leaving the room
 function leaveRoom() {
-  hmsActions.leave();
+    hmsActions.leave();
 }
 
 // Cleanup if user refreshes the tab or navigates away
@@ -113,81 +127,80 @@ leaveBtn.onclick = leaveRoom;
 
 // Helper function to create html elements
 function createElementWithClass(tag, className) {
-  const newElement = document.createElement(tag);
-  newElement.className = className;
-  return newElement;
+    const newElement = document.createElement(tag);
+    newElement.className = className;
+    return newElement;
 }
 
 // Render a single peer
 function renderPeer(peer) {
-  const peerTileDiv = createElementWithClass("div", "peer-tile");
-  const videoElement = createElementWithClass("video", "peer-video");
-  const peerTileName = createElementWithClass("div", "peer-name");
-  videoElement.autoplay = true;
-  videoElement.muted = true;
-  videoElement.playsinline = true;
-  peerTileName.textContent = peer.name;
+    const peerTileDiv = createElementWithClass('div', 'peer-tile');
+    const videoElement = createElementWithClass('video', 'peer-video');
+    const peerTileName = createElementWithClass('div', 'peer-name');
+    videoElement.autoplay = true;
+    videoElement.muted = true;
+    videoElement.playsinline = true;
+    peerTileName.textContent = peer.name;
 
-  hmsStore.subscribe((track) => {
-    if (!track) {
-      return;
-    }
-    if (track.enabled) {
-      hmsActions.attachVideo(track.id, videoElement);
-    } else {
-      hmsActions.detachVideo(track.id, videoElement);
-    }
-  }, selectVideoTrackByID(peer.videoTrack));
+    hmsStore.subscribe((track) => {
+        if (!track) {
+            return;
+        }
+        if (track.enabled) {
+            hmsActions.attachVideo(track.id, videoElement);
+        } else {
+            hmsActions.detachVideo(track.id, videoElement);
+        }
+    }, selectVideoTrackByID(peer.videoTrack));
 
-  peerTileDiv.append(videoElement);
-  peerTileDiv.append(peerTileName);
+    peerTileDiv.append(videoElement);
+    peerTileDiv.append(peerTileName);
 
-  renderedPeerIDs.add(peer.id);
-  return peerTileDiv;
+    renderedPeerIDs.add(peer.id);
+    return peerTileDiv;
 }
 
 // display a tile for each peer in the peer list
 function renderPeers() {
-  const peers = hmsStore.getState(selectPeers);
+    const peers = hmsStore.getState(selectPeers);
 
-  peers.forEach((peer) => {
-    if (!renderedPeerIDs.has(peer.id) && peer.videoTrack) {
-      peersContainer.append(renderPeer(peer));
-    }
-  });
+    peers.forEach((peer) => {
+        if (!renderedPeerIDs.has(peer.id) && peer.videoTrack) {
+            peersContainer.append(renderPeer(peer));
+        }
+    });
 }
 
 // Reactive state - renderPeers is called whenever there is a change in the peer-list
 hmsStore.subscribe(renderPeers, selectPeers);
 
-
 // Mute and unmute audio
 muteAudio.onclick = async () => {
-  const audioEnabled = !hmsStore.getState(selectIsLocalAudioEnabled);
-  await hmsActions.setLocalAudioEnabled(audioEnabled);
-  muteAudio.textContent = audioEnabled ? "Mute" : "Unmute";
+    const audioEnabled = !hmsStore.getState(selectIsLocalAudioEnabled);
+    await hmsActions.setLocalAudioEnabled(audioEnabled);
+    muteAudio.textContent = audioEnabled ? 'Mute' : 'Unmute';
 };
 
 // Mute and unmute video
 muteVideo.onclick = async () => {
-  const videoEnabled = !hmsStore.getState(selectIsLocalVideoEnabled);
-  await hmsActions.setLocalVideoEnabled(videoEnabled);
-  muteVideo.textContent = videoEnabled ? "Hide" : "Unhide";
+    const videoEnabled = !hmsStore.getState(selectIsLocalVideoEnabled);
+    await hmsActions.setLocalVideoEnabled(videoEnabled);
+    muteVideo.textContent = videoEnabled ? 'Hide' : 'Unhide';
 };
 
 // Showing the required elements on connection/disconnection
 function onConnection(isConnected) {
-  if (isConnected) {
-    form.classList.add("hide");
-    conference.classList.remove("hide");
-    leaveBtn.classList.remove("hide");
-    controls.classList.remove("hide");
-  } else {
-    form.classList.remove("hide");
-    conference.classList.add("hide");
-    leaveBtn.classList.add("hide");
-    controls.classList.add("hide");
-  }
+    if (isConnected) {
+        form.classList.add('hide');
+        conference.classList.remove('hide');
+        leaveBtn.classList.remove('hide');
+        controls.classList.remove('hide');
+    } else {
+        form.classList.remove('hide');
+        conference.classList.add('hide');
+        leaveBtn.classList.add('hide');
+        controls.classList.add('hide');
+    }
 }
 
 // Listen to the connection state
@@ -201,6 +214,7 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
 Now, let's initialize all the HTML elements required to build the user interface such as tile for local and remote peers, join and leave button, mute and unmute button, etc.
 
 ```jsx index.js mark=16:24
+
 ```
 
 ---
@@ -263,6 +277,8 @@ You can open the app in another tab in the browser to join as the second peer to
 **We have a fully functional video calling application now** 🎉🚀
 
 </CH.Scrollycoding>
+
+</StepsContainer>
 
 ## Next steps
 
