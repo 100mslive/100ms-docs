@@ -175,7 +175,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                     .active {
                         top: 0;
                         opacity: 1;
-                        max-height: 150vh;
+                        max-height: 1000px;
                     }
                     a:hover {
                         opacity: 1;
