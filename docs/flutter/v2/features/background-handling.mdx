@@ -218,6 +218,14 @@ Start `FlutterForegroundTask` at `onJoin` callback.
 Stop `FlutterForegroundTask` at `onRemovedFromRoom` and `onSuccess` -> `HMSActionResultListenerMethod.leave` callbacks.
 
 ```dart
+
+class Meeting implements HMSActionResultListener{
+  
+  void leave(){
+    //this is the instance of class implementing HMSActionResultListener  
+    await hmsSDK.leave(hmsActionResultListener: this);
+  }
+
   @override
   void onRemovedFromRoom({required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer}) {
     // Clear the local room state
@@ -237,6 +245,7 @@ Stop `FlutterForegroundTask` at `onRemovedFromRoom` and `onSuccess` -> `HMSActio
         break;
       ...
     }
+  }
 ```
 
 That's it. Now you'll have a Foreground Service up & running in your app.
