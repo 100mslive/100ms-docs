@@ -4,7 +4,7 @@ import { ChevronRightIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
 import SidebarItem from './SidebarItem';
 import ConditionalLink from './ConditionalLink';
-import { toPascalCase } from '../lib/utils';
+import { toSentenceCase } from '../lib/utils';
 
 interface Props {
     value: String;
@@ -123,7 +123,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                             fontWeight: openSection ? '600' : '500',
                             fontSize: nested ? '13px' : '15px'
                         }}>
-                        {toPascalCase(key.replace(/-/g, ' '))}
+                        {toSentenceCase(key.replace(/-/g, ' '))}
                     </Text>
                 </Flex>
             </ConditionalLink>
