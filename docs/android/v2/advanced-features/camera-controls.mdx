@@ -139,7 +139,7 @@ app permission has to be taken before.
 @param callback [Boolean.true] if image was successfully captured and saved in the file provided, 
 [Boolean.false] otherwise.
 
-cameraControl.captureMaxResolutionImage(
+cameraControl.captureImageAtMaxSupportedResolution(
     savePath: File, 
     callback: (isSuccess: Boolean) -> Unit
 )
@@ -177,7 +177,7 @@ val gestureDetector = GestureDetectorCompat(context, object : GestureDetector.Si
         cachePath.mkdirs()
         val imageSavePath = File(cachePath, "image.jpeg")
 
-        cameraControl.captureMaxResolutionImage(imageSavePath) { isSuccess ->
+        cameraControl.captureImageAtMaxSupportedResolution(imageSavePath) { isSuccess ->
 
         if (isSuccess) {
             val fileSaveUri = FileProvider.getUriForFile(
