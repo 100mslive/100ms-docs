@@ -91,12 +91,13 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                             );
                             const updatedList = [
                                 ...new Set(
-                                    prev === false
+                                    prev === false || inFocus
                                         ? [...currentList, key]
                                         : currentList.filter((heading) => heading !== key)
                                 )
                             ];
                             sessionStorage.setItem('openedAccordions', JSON.stringify(updatedList));
+                            if (!inFocus && prev === true) return true;
                             return !prev;
                         });
                     }}
