@@ -1,9 +1,9 @@
 ---
 title: Session Metadata
-nav: 5.04
+nav: 8.2
 ---
 
-Session metadata is a shared state that is accessible by everyone in the room. Think of it as a additional top-level data associated with a session. Session metadata can be used to achieve features like pinned text, spotlight(bringing a particular peer into a center stage for everyone in the room), etc.
+Session metadata is a shared state that is accessible by everyone in the room. Think of it as a additional top-level data associated with a session. Session metadata can be used to achieve features like pinned text, spotlight (bringing a particular peer into a center stage for everyone in the room), etc.
 
 Session metadata is persisted throughout a session and is cleared once the last peer leaves the room.
 
@@ -13,66 +13,6 @@ Session metadata is persisted throughout a session and is cleared once the last 
 While peer metadata is associated with individual peers and each peer can have their own metadata, session metadata remains the same for every peer in the room.
 
 </Note>
-
-## SDK Actions
-
-### setSessionMetadata
-
--   Use `setSessionMetadata` to update the value of the session metadata.
--   Objects could be set as session metadata but the object should be JSON serializable.
--   Note: whatever is passed to setSessionMetadata is set as session metadata as is. When using objects, if you want to update a particular key, you should update it before calling setSessionMetadata.
-
-```tsx
-// interface
-setSessionMetadata(metadata: any): Promise<void>
-
-// usage
-await hmsActions.setSessionMetadata('any-string-here');
-await hmsActions.setSessionMetadata({ hello: 'world' });
-```
-
-### populateSessionMetadata
-
-Use `populateSessionMetadata` to fetch the metadata from the server and update it in HMSStore.
-
-```js
-// interface
-populateSessionMetadata(): Promise<void>;
-
-// usage
-await hmsActions.populateSessionMetadata();
-```
-
-## Fetching session metadata
-
-The current session metadata can be fetched from HMSStore using the `selectSessionMetadata` selector.
-
-<Tabs id="fetch" items={['Javascript', 'React']} />
-
-<Tab id="fetch-0">
-
-```js
-const sessionMetadata = hmsStore.getState(selectSessionMetadata);
-```
-
-</Tab>
-<Tab id="fetch-1">
-
-```js
-const sessionMetadata = useHMSStore(selectSessionMetadata);
-```
-
-</Tab>
-
-## Limitations and workarounds in Alpha release
-
--   Changing the value of session metadata using `setSessionMetadata` doesn’t update the metadata of remote peers.
--   To notify remote peers of the change in metadata, broadcast API needs to be used.
--   After updating metadata, a broadcast message with text `refresh` of type `metadata` is sent to all the remote peers.
--   On receiving a message of this type and text, session metadata needs to be refreshed and `populateSessionMetadat` action.
--   Also after joining, session metadata is not available and needs to be fetched explicitly by the app using `populateSessionMetadata` action.
--   No permission support - anyone can read/write session metadata. If you want to restrict access to session metadata, you have to do it on your app level logic.
--   Locks to ensure consistency of the data. If two peers update it at the same time, it will be a race condition for which one succeeds last, overwriting whatever was before.
 
 ## Usage
 
@@ -192,6 +132,67 @@ useRefreshSessionMetadata();
 ```
 
 </Tab>
+
+## SDK Actions
+
+### setSessionMetadata
+
+-   Use `setSessionMetadata` to update the value of the session metadata.
+-   Objects could be set as session metadata but the object should be JSON serializable.
+-   Note: whatever is passed to setSessionMetadata is set as session metadata as is. When using objects, if you want to update a particular key, you should update it before calling setSessionMetadata.
+
+```tsx
+// interface
+setSessionMetadata(metadata: any): Promise<void>
+
+// usage
+await hmsActions.setSessionMetadata('any-string-here');
+await hmsActions.setSessionMetadata({ hello: 'world' });
+```
+
+### populateSessionMetadata
+
+-   Use `populateSessionMetadata` to fetch the metadata from the server and update it in HMSStore.
+-   In the alpha release, session metadata needs to be repopulated on the app side upon join and on receiving refresh message as demonstrated earlier in the uasge section.
+
+```js
+// interface
+populateSessionMetadata(): Promise<void>;
+
+// usage
+await hmsActions.populateSessionMetadata();
+```
+
+## Accessing session metadata
+
+The current session metadata can be accessed from HMSStore using the `selectSessionMetadata` selector.
+
+<Tabs id="access" items={['Javascript', 'React']} />
+
+<Tab id="access-0">
+
+```js
+const sessionMetadata = hmsStore.getState(selectSessionMetadata);
+```
+
+</Tab>
+<Tab id="access-1">
+
+```js
+const sessionMetadata = useHMSStore(selectSessionMetadata);
+```
+
+</Tab>
+
+## Limitations and workarounds in Alpha release
+
+-   Changing the value of session metadata using `setSessionMetadata` doesn’t update the metadata of remote peers.
+-   To notify remote peers of the change in metadata, broadcast API needs to be used.
+-   After updating metadata, a broadcast message with text `refresh` of type `metadata` is sent to all the remote peers.
+-   On receiving a message of this type and text, session metadata needs to be refreshed and `populateSessionMetadata` action.
+-   Also after joining, session metadata is not available and needs to be fetched explicitly by the app using `populateSessionMetadata` action.
+-   No permission support - anyone can read/write session metadata. If you want to restrict access to session metadata, you have to do it on your app level logic.
+-   Locks to ensure consistency of the data. If two peers update it at the same time, it will be a race condition for which one succeeds last, overwriting whatever was before.
 
 ## Example - Pin Message
 
