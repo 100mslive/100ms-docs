@@ -76,7 +76,9 @@ const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
     }, [asPath]);
 
     React.useEffect(() => {
-        if (!window.location.href.includes('#')) window.scrollTo(0, 0);
+        setTimeout(() => {
+            if (!window.location.href.includes('#')) window.scrollTo(0, 0);
+        }, 0);
         const getTopIndex = (arr) => {
             for (let i = arr.length - 1; i >= 0; i--)
                 if (Math.floor(arr[i].getBoundingClientRect().top) < 200) return i;

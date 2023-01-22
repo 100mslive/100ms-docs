@@ -11,7 +11,7 @@ You can create room using API. This provides a more scalable way of creating roo
 
 <PostRequest
     title="Create Room API"
-    desp="This endpoint is used to create Room. "
+    desp="This endpoint is used to create room. "
     url="https://prod-in2.100ms.live/api/v2/rooms"
 />
 
@@ -69,7 +69,7 @@ curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <manage
 
 | Name                 | Type     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Required |
 | :------------------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name <br/>           | `string` | A unique identifier you can assign to 100ms rooms. This is `case-insensitive`. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Note**: <br/><br/> (1) If `create Room` is called with an existing room name, then the corresponding room ID is returned <br/><br/> (2) Providing room name will be helpful if you want to disable the room later (disable room API requires room name) | No       |
+| name <br/>           | `string` | A unique identifier you can assign to 100ms rooms. This is `case-insensitive`. Accepted characters are `a-z, A-Z, 0-9, and . - : _`. If not provided, this is generated automatically. <br/><br/> **Note**: <br/><br/> (1) If `create room` is called with an existing room name, then the corresponding room ID is returned <br/><br/> (2) Providing room name will be helpful if you want to disable the room later (disable room API requires room name) | No       |
 | description <br/>    | `string` | A string to describe your room's usage. E.g. "9PM English Class Batch 2"                                                                                                                                                                                                                                                                                                                                                                                    | No       |
 | template <br/>       | `string` | [Template](../foundation/templates-and-roles) of the room. You can get template name from room details section on dashboard                                                                                                                                                                                                                                                                                                                                 | No       |
 | recording_info <br/> | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings.                                                                                                                                                                                                                                                                                                                           | No       |
@@ -86,8 +86,8 @@ curl https://prod-in2.100ms.live/api/v2/rooms -H 'Authorization: Bearer  <manage
 
 `recording_info` in room acts as an atomic property. Following describes the way `recording_info` depends on recording settings defined in a template.
 
-- If `recording_info` key is **not** provided in the api, the room will fill it with recording settings from template. And the response body will include `recording_source_template: true`. This means, whenever recording info is changed in template, they will also be reflected in room's recording settings.
-- If `recording_info` key is provided in the api, the room's recording settings will not depend on template at all.
+-   If `recording_info` key is **not** provided in the api, the room will fill it with recording settings from template. And the response body will include `recording_source_template: true`. This means, whenever recording info is changed in template, they will also be reflected in room's recording settings.
+-   If `recording_info` key is provided in the api, the room's recording settings will not depend on template at all.
 
 To know more about recording please visit [Recording](./recording)
 
