@@ -149,10 +149,6 @@ Yes, you can get App tokens using a couple of approaches based on your app's lif
 
 Yes, if you're exploring 100ms server APIs, our Postman collection contains a pre-request script which can generate the management token if you just update the App access key and App secret from the [developers page](https://dashboard.100ms.live/developer) on your 100ms dashboard. Please check the [Postman guide](/docs/server-side/v2/introduction/postman-guide#simplified-token-generation) for more information. 
 
-#### Is there an easy method to create a management token?
-
-Yes, if you're exploring 100ms server APIs, our Postman collection contains a pre-request script which can generate the management token - simply update the App access key and App secret from the [developers page](https://dashboard.100ms.live/developer) on your 100ms dashboard. Please check the [Postman guide](/docs/server-side/v2/introduction/postman-guide#simplified-token-generation) for more information.
-
 #### What is the validity of management and client token?
 
 If you use the code sample from [authentication and tokens guide](/docs/javascript/v2/foundation/security-and-tokens#app-token) the validity of the token will be set as 24 hours. However, you can increase this to a maximum of 90 days by updating the value for expiresIn field.
