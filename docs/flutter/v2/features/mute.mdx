@@ -9,8 +9,8 @@ Mute is something that applies to both audio and video. When you mute audio, you
 
 This example shows implementation of three methods namely : 
 
-### 1. switchAudio : To switch local peer's audio on/off.
-### 2. switchVideo : To switch local peer's video on/off.
+### 1. toggleMicMuteState : To switch local peer's audio on/off.
+### 2. toggleCameraMuteState : To switch local peer's video on/off.
 ### 3. switchCamera: Switch camera to the front or rear mode
 
 Let's look at their implementation:
@@ -20,15 +20,11 @@ class Meeting implements HMSUpdateListener,HMSActionResultListener{
 
 ...
 /// To switch local peer's audio on/off.
-/// Pass the bool value to [isOn] to change the current audio status
-/// [isOn] : Pass the current audio status i.e. true if unmuted and false if muted currently
-hmsSDK.switchAudio(isOn: true); //This mutes local peer(you) audio
+hmsSDK.toggleMicMuteState(); //This toggles the current mic status(mute/unmute)
 
 
 /// To switch local peer's video on/off.
-/// Pass the bool value to [isOn] to change the current video status
-/// [isOn] : Pass the current video status i.e. true if unmuted and false if muted currently
-hmsSDK.switchVideo(isOn: true); //This mutes local peer(you) video
+hmsSDK.toggleCameraMuteState(); //This toggles current camera status(mute/unmute)
 
 /// Switch camera from front or rear mode
 hmsSDK.switchCamera();
