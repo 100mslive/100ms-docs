@@ -10,7 +10,11 @@ Based on your end goal, you can choose one of the recording types and its implem
 - [SFU recording](#sfu-recording-advanced)
 - Recordings for [Live Streaming](live-streaming) use-cases:
   - [Video-on-demand](#video-on-demand-recording)
-  - [Multiresolution](#multiresolution-recording)\
+  - [Multiresolution](#multiresolution-recording)
+- [Configure Storage](#configure-storage)
+  - [How to configure recording storage?](#how-to-configure-recording-storage)
+  - [Storage path for recordings](#storage-path-for-recordings)
+
 
 ## Quick comparison
 
