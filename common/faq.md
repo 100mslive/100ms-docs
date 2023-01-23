@@ -44,7 +44,7 @@ You can start with our [documentation](/docs). We also recommend checking out ou
 
 #### I’d like to make some changes on how the video player looks. Do you have any resources I can pass to my design team so they can get started with the parts that are easy to configure? 
 
-100ms SDK is not coupled with the UI, which means you are free to change whatever you want. You can even use a completely custom built player from scratch. Please check out this super [Figma UI Kit](https://www.figma.com/community/file/1165192525323846383) the 100ms design team put together! 
+100ms SDK is not coupled with the UI, which means you are free to change whatever you want. You can even use a completely custom built player from scratch. Please check out this super [Figma UI Kit](https://www.figma.com/community/file/1165192525323846383) the 100ms design team put together.
 
 #### Is it possible to capture some images shown by customers during a call and store it in a database? It could be useful for applications like KYC. 
 
@@ -102,7 +102,7 @@ Yes, you can add members to a [100ms workspace](https://dashboard.100ms.live/set
 
 Please check [this blog](https://www.100ms.live/blog/launching-teams-workspaces) for more information.
 
-#### I want to separate prod and non prod accounts - can I create sub-accounts within exisiting accounts? 
+#### I want to separate prod and non prod accounts - can I create sub-accounts within existing accounts? 
 
 You can create multiple workspaces on the 100ms dashboard to manage this. Use the “Create workspace” option from the workspaces dropdown on the top of the sidebar on Dashboard to create workspaces for different environments. 
 
@@ -127,7 +127,7 @@ You can use our [pricing calculator](https://www.100ms.live/pricing) for an esti
 
 #### Is this pricing for standard definition or high definition? 
 
-No, the pricing is different for standard and high definition. Our product experts can help you with more details - go ahead and [book a meeting](https://www.100ms.live/contact) with them, they will get in touch!.
+No, the pricing is different for standard and high definition. Our product experts can help you with more details - go ahead and [book a meeting](https://www.100ms.live/contact) with them, they will get in touch.
 
 #### Does billing on minutes count when the room has only the local peer in it?
 
@@ -151,7 +151,7 @@ Yes, if you're exploring 100ms server APIs, our Postman collection contains a pr
 
 #### Is there an easy method to create a management token?
 
-Yes, if you're exploring 100ms server APIs, our Postman collection contains a pre-request script which can generate the management token - simplyupdate the App access key and App secret from the [developers page](https://dashboard.100ms.live/developer) on your 100ms dashboard. Please check the [Postman guide](/docs/server-side/v2/introduction/postman-guide#simplified-token-generation) for more information.
+Yes, if you're exploring 100ms server APIs, our Postman collection contains a pre-request script which can generate the management token - simply update the App access key and App secret from the [developers page](https://dashboard.100ms.live/developer) on your 100ms dashboard. Please check the [Postman guide](/docs/server-side/v2/introduction/postman-guide#simplified-token-generation) for more information.
 
 #### What is the validity of management and client token?
 
@@ -282,7 +282,7 @@ Currently, chat is not saved and there is no way to retrieve chat logs.
 
 Yes, you can handle this on your client-side and export chat logs.
 
-#### What is the size limit of a custom event in 100ms sdk ?
+#### What is the size limit of a custom event in 100ms SDK ?
 
 4KB
 
@@ -321,7 +321,7 @@ Please check these links for more details.
 
 #### Can I integrate a feature similar to Twitter super followers using 100ms by only allowing the authenticated users?
 
-Yes! You can use interactive live streaming (HLS) to integrate a similar app and the live feed of the streaming will be available in a room which can be accessed by joining a room with a JWT token ([auth token](/docs/javascript/v2/foundation/security-and-tokens#app-token)) with the viewer role.
+Yes, you can use interactive live streaming (HLS) to integrate a similar app and the live feed of the streaming will be available in a room which can be accessed by joining a room with a JWT token ([auth token](/docs/javascript/v2/foundation/security-and-tokens#app-token)) with the viewer role.
 
 ## External streaming (RTMP)
 
@@ -339,12 +339,12 @@ For RTMP, you will need to set up your own CDN servers or attach 100ms URLs to v
 
 The whiteboard feature is currently available in beta for the web platform. We will build our own communication infra for this but currently this is integrated with Pusher, you can create a Pusher account and integrate this in your app too.
 
-Please check the c[ollaborative whiteboard guide](/docs/javascript/v2/plugins/collaborative-whiteboard) for more information.
+Please check the [collaborative whiteboard guide](/docs/javascript/v2/plugins/collaborative-whiteboard) for more information.
  
 
 #### Do you have a list of extra plugins that can be added to live sessions?
 
-Currently, you can build additional interactive experiences in your app with the help of p[eer metadata](/docs/javascript/v2/advanced-features/peer-metadata). You can integrate features like raise hand, polls, quizzes, etc,. using this. You can also check the existing plugins on our platform such as c[ollaborative whiteboard](/docs/javascript/v2/plugins/collaborative-whiteboard), v[irtual background](/docs/javascript/v2/plugins/virtual-background), n[oise suppression](/docs/javascript/v2/plugins/noise-suppression), Custom [audio](/docs/javascript/v2/plugins/custom-audio-plugins) & [video](/docs/javascript/v2/plugins/custom-video-plugins) plugins. Please stay tuned to our product updates by signing up for our newsletter from [here](https://www.100ms.live/blog#email).
+Currently, you can build additional interactive experiences in your app with the help of [peer metadata](/docs/javascript/v2/advanced-features/peer-metadata). You can integrate features like raise hand, polls, quizzes, etc,. using this. You can also check the existing plugins on our platform such as [collaborative whiteboard](/docs/javascript/v2/plugins/collaborative-whiteboard), [virtual background](/docs/javascript/v2/plugins/virtual-background), [noise suppression](/docs/javascript/v2/plugins/noise-suppression), Custom [audio](/docs/javascript/v2/plugins/custom-audio-plugins) & [video](/docs/javascript/v2/plugins/custom-video-plugins) plugins. Please stay tuned to our product updates by signing up for our newsletter from [here](https://www.100ms.live/blog#email).
 
 Currently, you can build additional interactive experiences in your app with the help of [Peer metadata](/javascript/v2/advanced-features/peer-metadata). You can integrate raise hand, polls, quizzes, etc,. using this. You can also check the existing plugins our platform such as [Virtual background](/javascript/v2/plugins/virtual-background), [Noise suppression](/javascript/v2/plugins/noise-suppression), Custom [audio](/javascript/v2/plugins/custom-audio-plugins) & [video](/javascript/v2/plugins/custom-video-plugins) plugins. We will soon be adding a whiteboard plugin as well. Please stay tuned our product updates by signing up for our newsletter from [here](https://www.100ms.live/blog#email).
 
@@ -395,7 +395,7 @@ In a single room at a given time, we currently support 10000 streams that is 100
 
 #### What is the maximum number of people that can be supported currently?
 
-For full duplex audio/video with a latency of <500ms, 100ms can support a maximum of 100 people. For webinar-style events, 100ms can support 10 people on stage and 1000 offstage peers/audience. For large events, it can be broadcasted on a TV-like setup for an audience of millions with a latency of 7-10 seconds.
+For full duplex audio/video with a latency of <500 ms, 100ms can support a maximum of 100 people. For webinar-style events, 100ms can support 10 people on stage and 1000 offstage peers/audience. For large events, it can be broadcasted on a TV-like setup for an audience of millions with a latency of 7-10 seconds.
 
 #### What is the maximum capacity for group calls with 100ms video SDK?
 
@@ -444,9 +444,9 @@ If you’re wondering how, here it is: please subscribe to our monthly newslette
 
 #### Does the 100ms platform provide analytics on room, session, and each user, including data such as time spent per user, total session length, and number of peers in a room?
 
-You can get analytics about rooms, sessions, peers and morein multiple ways based on feasibility and your requirements.
+You can get analytics about rooms, sessions, peers and more in multiple ways based on feasibility and your requirements.
 
-1. You can use the l[ist sessions server API](/docs/server-side/v2/Sessions/list-sessions) to fetch the list of sessions for a particular data/time range and you can also filter these for a particular room. This API will provide data such as list of peers, their room join/leave time, session start/end time, etc,.
+1. You can use the [list sessions server API](/docs/server-side/v2/Sessions/list-sessions) to fetch the list of sessions for a particular data/time range and you can also filter these for a particular room. This API will provide data such as list of peers, their room join/leave time, session start/end time, etc,.
 
 2. If you need to get the session details for an active room (ongoing session), you can use our [Active room server APIs](/docs/server-side/v2/active-rooms/overview) to fetch the details and perform some actions on peers from your server side.
 
@@ -468,11 +468,11 @@ You can use [end an active room API](/docs/server-side/v2/active-rooms/end-activ
 You need to follow the below steps to achieve this:
 
 1. Yes. Here are the steps: Create another role in your template by disabling audio publish strategies, for example: no-audio. You can either use the [create a role API](/docs/server-side/v2/policy/create-update-role) or templates page on [dashboard](https://dashboard.100ms.live/dashboard) to do this.
-2. Use the button click from the UI as a trigger to call the [update-peer server side API](/docs/server-side/v2/active-rooms/update-a-peer) or c[hange role client-side API](/docs/javascript/v2/features/change-role) to change the role of the particular participant (peer) to no-video role to disable audio.
+2. Use the button click from the UI as a trigger to call the [update-peer server side API](/docs/server-side/v2/active-rooms/update-a-peer) or [change role client-side API](/docs/javascript/v2/features/change-role) to change the role of the particular participant (peer) to no-video role to disable audio.
 
 #### Is there a way to disable video for a participant using a server-side API?
 
-Yes! Follow the same process mentioned for the question above ^ 
+Yes, follow the same process mentioned for the question above ^ 
 
 #### Can you explain the differences between the HLS recording and Beam recording webhook events?
 
