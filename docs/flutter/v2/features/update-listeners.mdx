@@ -10,6 +10,9 @@ Now, let's take a look at what the listener class looks like.
 > checkout the example [here](https://github.com/100mslive/100ms-flutter/blob/1537a82a2213c8bbb1b0eb2dcc009c171e89bad1/example/lib/data_store/meeting_store.dart#L33)
 
 The methods of HMSUpdateListener are invoked to notify updates happening in the room like a peer join/leave, track mute/unmute etc.
+Let's see the flow for listener lifecycle:
+
+![update-listener](/docs/v2/flutter-update-listener.png)
 
 ## How to add an HMSUpdateListener
 
@@ -18,8 +21,14 @@ This section contains info about how can we attach `HMSUpdateListener`:
 ```dart
 class Meeting implements HMSUpdateListener {
     Meeting(){
+        initHMSSDK();
+    }
+
+    void initHMSSDK() async {
         HMSSDK hmsSDK = HMSSDK();
-        hmsSDK.build();
+
+        await hmsSDK.build(); // ensure to await while invoking the `build` method
+
         //`this` corresponds to the instance implementing HMSUpdateListener
         hmsSDK.addUpdateListener(this);
     }

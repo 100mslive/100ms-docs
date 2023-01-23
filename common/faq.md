@@ -1,3 +1,5 @@
+If you want to add a new question or edit an older one, feel free to [send us a PR](https://github.com/100mslive/100ms-docs/)
+
 ## General
 
 #### What is the inspiration behind the name, 100ms?

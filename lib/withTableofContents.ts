@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { slugify } from "./mdxUtils"
+import { slugify } from "./utils"
 
 /**
  * Generates a table of contents by parsing a node tree

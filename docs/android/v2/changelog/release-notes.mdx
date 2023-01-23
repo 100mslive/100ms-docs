@@ -3,6 +3,15 @@ title: Release Notes
 nav: 15
 description: Release Notes for 100ms Android SDK
 ---
+## v2.5.7 - 2023-01-20
+### Added
+* Send `requested_by` in acceptChangeRole message
+* Added `CameraControls` interface to `HMSLocalVideoTrack` - Check details about this [here](https://www.100ms.live/docs/android/v2/advanced-features/camera-controls)
+
+### Fixed
+* `captureBitmap` API of the local `HMSVideoView` now returns the bitmap at the publishing resolution of local peer
+* Sometimes `HMSTrack` was in-correctly removed from `HMSPeer` if a `RemotePeer` un-publishes a `HMSTrack` and re-publishes it again
+
 ## v2.5.6 - 2023-01-11
 ### Added
 * New API in SDK to send Timed Metadata while streaming to hls viewers
