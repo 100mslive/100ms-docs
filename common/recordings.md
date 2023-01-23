@@ -14,13 +14,13 @@ Based on your end goal, you can choose one of the recording types and its implem
     - [Video-on-demand Recording](#video-on-demand-recording)
     - [Multiresolution Recording](#multiresolution-recording)
 - [Configure storage](#configure-storage)
-  - [How to configure recording storage?](#how-to-configure-recording-storage)\
-  - [Storage path for recordings](#storage-path-for-recordings)
+  - [How to configure recording storage?](#how-to-configure-recording-storage)
+- [Storage path for recordings](#storage-path-for-recordings)
 
 ### Quick Comparison
 
 | Recording Features                   | Browser Recording [Recommended] | SFU Recording [Advanced]         |
-| ------------------------------------ | ------------------------------- | -------------------------------- |
+|--------------------------------------|---------------------------------|----------------------------------|
 | Resolution                           | Upto 1080p                      | Only 720p                        |
 | Participant-level Audio/Video Tracks | Not Available                   | Available                        |
 | Portrait/Landscape Mode              | Available                       | Not Available                    |
@@ -124,14 +124,14 @@ If a storage destination is not configured for recordings and if you choose to r
 
 **The breakdown of the aforementioned tags is as follows:**
 
-| Tag Name | Description |
-| --- | --- |
-| Location | Name of the bucket where recordings are stored |
-| Prefix | Prefix for upload path which is configured in storage settings of your template. If not configured, the default value for this will be your Customer ID |
-| Room ID | The identifier for the room which was recorded |
-| Start Date | Start date of the session |
-| Epoch | Start time of the recorder in the session |
-| Peer ID | Unique identifier of a peer in a room |
-| Stream ID | Unique identifier for a particular stream of a room (audio-video/screenshare) |
-| Track ID | Unique identifier for a particular track (audio or video) of a stream |
+| Tag Name    | Description                                                                                                                                                                                 |
+|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Location    | Name of the bucket where recordings are stored                                                                                                                                              |
+| Prefix      | Prefix for upload path which is configured in storage settings of your template. If not configured, the default value for this will be your Customer ID                                     |
+| Room ID     | The identifier for the room which was recorded                                                                                                                                              |
+| Start Date  | Start date of the session                                                                                                                                                                   |
+| Epoch       | Start time of the recorder in the session                                                                                                                                                   |
+| Peer ID     | Unique identifier of a peer in a room                                                                                                                                                       |
+| Stream ID   | Unique identifier for a particular stream of a room (audio-video/screenshare)                                                                                                               |
+| Track ID    | Unique identifier for a particular track (audio or video) of a stream                                                                                                                       |
 | Layer Index | Layer index values show descending HLS resolutions - 0(1080p), 1(720p), 2(480p), 3(360p) and 4(240p). If highest resolution of template is 720p, then 0(720p), 1(480p), 2(360p) and 3(240p) |
