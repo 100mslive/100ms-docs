@@ -103,20 +103,25 @@ If a storage destination is not configured for recordings and if you choose to r
 ![Recording Links](/docs/docs/v2/session-recording-links-1.png)
 
 
-**If a storage destination is configured, then path for these recordings will look like follows:**
+**If a storage destination is configured for recordings, then you can find recording paths in the following webhook responses:**
 
-  1. Browser Recording: `s3://<location>/<prefix>/beam/<room_id>/<start_date>/Rec-<room_id>-<epoch>.mp4`
+- Browser Recording: [beam.recording.success](https://www.100ms.live/docs/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `recording_path`)
+- SFU Recording: [recording.success](https://www.100ms.live/docs/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `recording_path`)
+- Multiresolution Recording: [hls.recording.success](https://www.100ms.live/docs/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `recording_single_files` ; `recording_path`)
+- VOD Recording: [hls.recording.success](https://www.100ms.live/docs/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `hls_vod_recording_path`)
 
-  2. SFU Recording:
+**The recording path for these respective recordings will look like follows:**
 
-      1. Composite: `s3://<location>/<prefix>/<room_id>/<start_date>/<session_id>/Rec-<session_id>-<epoch>.mp4`
+1. Browser Recording: `s3://<location>/<prefix>/beam/<room_id>/<start_date>/Rec-<room_id>-<epoch>.mp4`
 
-      2. Individual: `s3://<bucket>/<prefix>/<room_id>/<start_date>/<session_id>/<peer_id>/<stream_id>/<track_id>.webm`
+2. SFU Recording:
+    1. Composite: `s3://<location>/<prefix>/<room_id>/<start_date>/<session_id>/Rec-<session_id>-<epoch>.mp4`
 
-  3. Multiresolution Recording: `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/file-recording/Rec-<room_id>-<epoch>-<layer_index>.mp4`
+    2. Individual: `s3://<location>/<prefix>/<room_id>/<start_date>/<session_id>/<peer_id>/<stream_id>/<track_id>.webm`
 
-  4. VOD Recording: `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/vod/Rec-<room_id>-<epoch>.zip`
+3. Multiresolution Recording: `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/file-recording/Rec-<room_id>-<epoch>-<layer_index>.mp4`
 
+4. VOD Recording: `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/vod/Rec-<room_id>-<epoch>.zip`
 
 **The breakdown of the aforementioned tags is as follows:**
 
