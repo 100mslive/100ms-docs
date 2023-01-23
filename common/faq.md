@@ -397,7 +397,7 @@ For full duplex audio/video with a latency of <500 ms, 100ms can support a maxim
 
 The maximum capacity for group calls with 100ms video SDK is currently 100 participants with audio/video on.
 
-#### Scalability and security
+## Scalability and security
 
 #### Can the system scale to 50k-100k viewers if the SDK is not connected and we just want the m3u8 file?
 
