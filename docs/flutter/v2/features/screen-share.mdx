@@ -41,7 +41,31 @@ super.onActivityResult(requestCode, resultCode, data)
 
 ### iOS Setup
 
-You need to create an iOS broadcast upload extension. It uses Apple's ReplayKit framework to record the device screen and delivers frame samples to your broadcast extension. You can share not only your own app but also the entire device sceeen including other apps on the device.
+Flutter iOS provides support for sharing the entire screen of the device in the room or you can share just your App's Screen.
+
+### Share Just Your App's Screen
+
+You can use the hmsSDK instance to start sharing your app screen like below:
+
+```dart
+  HMSException exception = await hmsSDK.startAppScreenShare();
+  if(exception == null){
+    // App screen share start successfully.
+  }
+```
+
+You can stop stop sharing your screen like below:
+
+```dart
+  HMSException exception = await hmsSDK.stopAppScreenShare();
+  if(exception == null){
+    // App screen share stop successfully.
+  }
+```
+
+### Share The Entire Device Screen
+
+To share entire device screen you need to create an iOS broadcast upload extension. It uses Apple's ReplayKit framework to record the device screen and delivers frame samples to your broadcast extension. You can share not only your own app but also the entire device sceeen including other apps on the device.
 
 ### Step 1 - Open project
 Open your iOS Xcode project, such as `ios/Runner.xcworkspace` for full-Flutter apps.
@@ -153,22 +177,22 @@ class SampleHandler: RPBroadcastSampleHandler {
 
 #### Key Notes 
 
-To start Screenshare from iOS devices you need to pass `App Group` and `Preferred Extension` name to `HMSSDK` constructor as shown below.
+To start Screenshare from iOS devices you need to pass `iOSScreenshareConfig` to `HMSSDK` constructor as shown below.
 
 You can find `appGroup` and `preferredExtension` name in Xcode under Signing and Capabilities section under Target > yourExtensionName.
 
 Once you have the correct App Group & Preferred Extension values created in Xcode & linked to your Apple Developer Account, you can now use them to start Screenshare from iOS devices (iPhone / iPad).
 
-
 ```dart
-// Pass the correct App Group & Preferred Extension parameters while contructing the HMSSDK object
-HMSSDK hmsSDK = HMSSDK(
-    appGroup: "appGroup", // App Group value linked to your Apple Developer Account
-    preferredExtension: "preferredExtension"); // Name of the Broadcast Upload Extension Target created in Xcode
+// Pass the correct App Group & Preferred Extension parameters while contructing the HMSIOSScreenshareConfig object.
+HMSIOSScreenshareConfig screenshareConfig = HMSIOSScreenshareConfig(
+      appGroup: "appGroup", // App Group value linked to your Apple Developer Account.
+        preferredExtension: "preferredExtension"); // Name of the Broadcast Upload Extension Target created in Xcode.
+  
+HMSSDK hmsSDK = HMSSDK(iOSScreenshareConfig: screenshareConfig); // Pass screenshareConfig to iOSScreenshareConfig parameter.
 
-await hmsSDK.build(); // ensure to await while invoking the `build` method
+await hmsSDK.build(); // ensure to await while invoking the `build` method.
 ```
-
 
 ![parameter](/docs/v2/flutter-dart-help.png) 
 
