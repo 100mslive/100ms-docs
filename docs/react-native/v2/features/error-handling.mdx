@@ -3,60 +3,86 @@ title: Error Handling
 nav: 3.6
 ---
 
-When you make various function calls through HmsInstance, it may return errors with different error codes. ErrorCodes are returned when a problem that cannot be recovered without app intervention has occurred.
+When interacting with the 100ms SDK using the `HMSSDK` instance, or joining and previewing the Room, it may encounter issues that it cannot automatically recover from, and app or user intervention may be required. In such cases, the 100ms SDK emits `HMSUpdateListenerActions.ON_ERROR` event with error encounter by it.
 
-These are returned as HMSException in the onError callback of the HMSUpdateListner.
+You can subscribe to `HMSUpdateListenerActions.ON_ERROR` event to get notified about the errors encountered by the SDK -
 
 ```js
-// import HMSUpdateListenerActions class
-import { HMSUpdateListenerActions, HMSException } from '@100mslive/react-native-hms';
-
-// instance acquired from build() method
-hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
-
+// this function will be called with `error` as first parameter
 const onError = (error: HMSException) => {
-    if (Platform.OS === 'android') {
-      if (data?.code === 4005 || data?.code === 1003) {
-        destroy();
-      }
-    } else {
-      if (data?.code === 2000) {
-        destroy();
-      }
-    }
+  // Logging error
+  console.log(`${error.code} ${error.description}`);
+
+  // You should handle error as per its' code
+  // Each code represents different error. Read below section to get more details
+  if (error.code === 4005 || error.code === 1003) {
+    leaveMeeting();
+  }
 };
+
+// Subscribe to get SDK errors
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
 ```
-## HMSException Properties
 
-### isTerminal
 
-The isTerminal property denotes wether error has caused the current session to terminate and the app will need to call join again to reconnect. 
+## HMSException
 
-### description
+Function subscribed to `HMSUpdateListenerActions.ON_ERROR` event is called with `error` object, which is an instance of `HMSException` class. Lets take a look at `HMSException` class interface -
 
-The description property denotes what is the source of the error.
+```js
+interface HMSException {
+  code: number;
+  description: string;
+  isTerminal: boolean;
+  canRetry?: boolean; // Android Only
+  message?: string; // Android Only
+  name?: string; // Android Only
+  action?: string; // Android Only
+}
+```
+
+Here are the details of each property of `HMSException` object:
 
 ### code
 
-The code property denotes error code which a unique identifier for the error.
+The `code` property denotes error code which a unique identifier for the error.
+
+### description
+
+The `description` property denotes what is the source of the error.
+
+### isTerminal
+
+The `isTerminal` property denotes wether error has caused the current session to terminate and the app will need to call join again to reconnect.
+
+Terminal error example:
+
+![Terminal Error](/docs/v2/flutter-errorCode-1003.png)
+
+The error code `1003` (error in above image) occurs when the reconnection attempt fails. The SDK returns this error after attempting to reconnect for 60 seconds. In such cases, the `isTerminal` property can be used to handle updates to the UI.
+
+> 🔑  More info on reconnection handling can be found [here](./reconnecting-reconnected)
 
 ### canRetry
 
-It is a `iOS` only property. The canRetry property denotes wether app can call join again with the same configuration it has used before. The value be false in cases like token expiring or room getting locked. You can use this property while implementing infinite retry in your app.
+It is an `android` only property. The `canRetry` property denotes wether app can call join again with the same configuration it has used before. The value be false in cases like token expiring or room getting locked. You can use this property while implementing infinite retry in your app.
 
 ### message
 
-It is a `android` only property. The message property denotes error information.
+It is an `android` only property. The `message` property denotes error information.
 
 ### name
 
-It is a `android` only property. The name property denotes error name.
+It is an `android` only property. The `name` property denotes error name.
 
 ### action
 
-It is a `android` only property. The action property tells what to do when a error occurs. For example `SEND_ALL_REQUIRED_KEYS` means you have not sent some required key in the API call
+It is an `android` only property. The `action` property tells what to do when a error occurs. For example `SEND_ALL_REQUIRED_KEYS` means you have not sent some required key in the API call.
 
-Following are the different error codes that are returned in the callback . Before returning any error code, it retries the errors (whichever is possible).
+
+## Different Error Types
+
+Following are the different errors emitted by the SDK with their codes and action you should take to resolve the error -
 
 | **Error Code** | **Cause of the error**                                                                                                              | **Action to be taken**                                                                                              |
 | :------------- | :---------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------ |
@@ -94,3 +120,38 @@ Following are the different error codes that are returned in the callback . Befo
 | **7002**       | Plugin Init Failed                                                                                                                  | Plugin initialization has failed                                                                                    |
 | **7003**       | Plugin Processing Failed                                                                                                            | Plugin processing failed                                                                                            |
 | **7004**       | Plugin Add Already Going on                                                                                                         | Plugin add is already in progress                                                                                   |
+
+
+## Setting log levels in SDK (Android Only)
+
+Logs can be used to diagnose the performance of room sessions or debug various issues. To enable logging, create an `HMSLogSettings` object and pass it to the `build` method when constructing the `HMSSDK` instance.
+
+The SDK also provides an option to save these logs to disk on **Android devices** using the `isLogStorageEnabled` property of the `HMSLogSettings` object. You can set the `isLogStorageEnabled` property to `true` to enable the SDK to write logs to the disk.
+
+```js
+// Creating the Log Settings object with disk storage turned on
+const logSettings = new HMSLogSettings({
+  level: HMSLogLevel.VERBOSE,
+  isLogStorageEnabled: true,
+  maxDirSizeInBytes: HMSLogAlarmManager.DEFAULT_DIR_SIZE, // Maximum size of the directory where log will be saved
+});
+
+// Pass the Log Settings object to the build function
+c̶o̶n̶s̶t̶ ̶h̶m̶s̶I̶n̶s̶t̶a̶n̶c̶e̶ ̶=̶ ̶a̶w̶a̶i̶t̶ ̶H̶M̶S̶S̶D̶K̶.̶b̶u̶i̶l̶d̶(̶)̶;̶
+const hmsInstance = await HMSSDK.build({ logSettings });
+```
+
+`HMSLogLevel` is an enum with values -
+
+```js
+export enum HMSLogLevel {
+  // To receive all the logs
+  VERBOSE = 'VERBOSE',
+
+  // To receive warnings
+  WARNING = 'WARNING',
+
+  // To receive errors
+  ERROR = 'ERROR',
+}
+```

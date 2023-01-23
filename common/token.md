@@ -1,4 +1,4 @@
-## Create an 100ms account
+## Create a 100ms account
 
 - Create an account at [Dashboard of 100ms](https://dashboard.100ms.live/)
 
