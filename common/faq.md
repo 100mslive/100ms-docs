@@ -23,7 +23,7 @@ Yes, you can delete an App from your [dashboard](https://dashboard.100ms.live/da
 No, you cannot delete a room. The “delete room” functionality automatically erases all data associated with the room, so we don’t support it. We don't support the "delete room" functionality as it would lead to losing all data associated with the room. However, we support the following options based on why you’d want to delete rooms:
 
 - **Creating new rooms for every session**:  You can create as many rooms as you want, there is no limit on room creation
-- **Disable room**: If you don't want additional requests to join a room, you can disable a room from the dashboard or via [server API](/server-side/v2/Rooms/disable-or-enable). 
+- **Disable room**: If you don't want additional requests to join a room, you can disable a room from the dashboard or via [server API](/docs/server-side/v2/Rooms/disable-or-enable). 
 - **Dev & Prod Env**: If you want to delete rooms from your account as you transition from Development to the Production stage, we recommend using "Workspaces." It enables you to create two or more workspaces per your need and isolate the data for each workspace. Please check this blog for more information.
 
 ## Getting started
@@ -64,7 +64,7 @@ No the `room_id` gets generated from our end.
 
 #### Is there a way to get data on how many users are online?
 
-It is possible to get the online user for a specific room based on [active room API](/server-side/v2/active-rooms/overview).
+It is possible to get the online user for a specific room based on [active room API](/docs/server-side/v2/active-rooms/overview).
 
 #### How does pagination between tiles affect the download numbers?
 
@@ -143,11 +143,11 @@ Yes, if any peer joins and is publishing video or audio, it will be billed.
 
 #### Is there an easy method to create an app token?
 
-Yes, you can get App tokens using a couple of approaches based on your app's lifecycle stage. Please check [this guide](./../foundation/security-and-tokens#how-to-use) for more information
+Yes, you can get App tokens using a couple of approaches based on your app's lifecycle stage. Please check [this guide](/docs/javascript/v2/foundation/security-and-tokens#how-to-use) for more information
 
 #### Is there a easy method to create an management token?
 
-Yes, if you're exploring 100ms server APIs, our Postman collection contains a pre-request script which can generate the management token if you just update the App access key and App secret from the [developers page](https://dashboard.100ms.live/developer) on your 100ms dashboard. Please check the [Postman guide](/server-side/v2/introduction/postman-guide#simplified-token-generation) for more information. 
+Yes, if you're exploring 100ms server APIs, our Postman collection contains a pre-request script which can generate the management token if you just update the App access key and App secret from the [developers page](https://dashboard.100ms.live/developer) on your 100ms dashboard. Please check the [Postman guide](/docs/server-side/v2/introduction/postman-guide#simplified-token-generation) for more information. 
 
 #### Is there an easy method to create a management token?
 
@@ -155,7 +155,7 @@ Yes, if you're exploring 100ms server APIs, our Postman collection contains a pr
 
 #### What is the validity of management and client token?
 
-If you use the code sample from [authentication and tokens guide](./../foundation/security-and-tokens#app-token) the validity of the token will be set as 24 hours. However, you can increase this to a maximum of 90 days by updating the value for expiresIn field.
+If you use the code sample from [authentication and tokens guide](/docs/javascript/v2/foundation/security-and-tokens#app-token) the validity of the token will be set as 24 hours. However, you can increase this to a maximum of 90 days by updating the value for expiresIn field.
 
 #### Why is the “role” variable needed when generating the app token?
 
@@ -164,7 +164,7 @@ The role argument should be assigned with the name of the role created in the te
 - The quality at which they publish their video 
 - Whether or not they have permissions to publish video and/or share screen, mute someone, change someone’s role
 
-Please check [templates and roles guide](./../foundation/templates-and-roles#roles) for more information.
+Please check [templates and roles guide](/docs/javascript/v2/foundation/templates-and-roles#roles) for more information.
 
 #### Can we generate two application access tokens, one for QA and one for production, so that messages from QA don't flood the production environment?
 
@@ -172,7 +172,7 @@ Yes, this is possible with Teams & workspaces on the100ms dashboard - create mul
 
 #### I’d like to use the endpoint of my backend service instead of the 100ms token endpoint for app token generation in the React sample app. How do I do that? 
 
-You can set up a token generation service on your end to create app tokens and block users that are trying to join without a token that's generated from your service. Please check authentication and [tokens guide](./../foundation/security-and-tokens#app-token) for more information.
+You can set up a token generation service on your end to create app tokens and block users that are trying to join without a token that's generated from your service. Please check authentication and [tokens guide](/docs/javascript/v2/foundation/security-and-tokens#app-token) for more information.
 
 You can update the code to point to your own token service (relevant code in the sample - see getToken(...)), your token endpoint can follow a similar interface: for a given room_id and role name, return the app token JWT.
 
@@ -316,7 +316,7 @@ The average delay of the live streaming is 10-12 seconds.
 You can use the 100ms platform to build interactive live streaming (HLS) apps and to broadcast your live stream to external streaming platforms like YouTube, Twitch, etc using our External streaming service (RTMP). 
 
 Please check these links for more details. 
-1. [Interactive live streaming (HLS)](./../foundation/live-streaming)
+1. [Interactive live streaming (HLS)](/docs/javascript/v2/foundation/live-streaming)
 2. [External streaming (RTMP)](/javascript/v2/features/rtmp-recording)
 
 #### Can I integrate a feature similar to Twitter super followers using 100ms by only allowing the authenticated users?
@@ -366,7 +366,7 @@ If you want to investigate further, do check out the [Stats for Nerds](/docs/jav
 
 #### Is it possible to dynamically set the video resolution based on the number of participants?
 
-We have released a new feature, Adaptive Bitrate (affectionately called [Simulcast),](/assets/FlutterIcon.tsxdocs/javascript/v2/advanced-features/simulcast) that enables dynamic adjustments to video quality to optimise for end-user experience under diverse network conditions. ABR ensures that every participant is able to consume the highest possible quality video in conferencing or streaming use-cases, based on their bandwidth constraints.
+We have released a new feature, Adaptive Bitrate (affectionately called [Simulcast](/docs/javascript/v2/foundation/adaptive-bitrate) that enables dynamic adjustments to video quality to optimise for end-user experience under diverse network conditions. ABR ensures that every participant is able to consume the highest possible quality video in conferencing or streaming use-cases, based on their bandwidth constraints.
 
 ## Limits
 
@@ -494,18 +494,18 @@ No. Currently there is no API to update the webhook URL and headers, but you can
 
 100ms provides two methods to whitelist traffic from 100ms.
 
-1. [Domain and port whitelisting](/server-side/v2/introduction/firewall-and-ports)
-2. [Securing webhooks](/server-side/v2/introduction/webhook#how-to-secure-webhooks) 
+1. [Domain and port whitelisting](/docs/server-side/v2/introduction/firewall-and-ports)
+2. [Securing webhooks](/docs/server-side/v2/introduction/webhook#how-to-secure-webhooks) 
 
 #### Can we end an active session programmatically (reset the room so that everyone is kicked from the meeting and it starts a new session)?
 
-We have an end point that helps you end an active session. You can check [this](/server-side/v2/active-rooms/end-active-room) to understand how the API works.
+We have an end point that helps you end an active session. You can check [this](/docs/server-side/v2/active-rooms/end-active-room) to understand how the API works.
 
 #### Is there any way to limit participants in a room?
 
 We don't limit the participants currently, but you can limit the number of peers as a part of the Role or Template configuration where we can add a maximum number of participants per role by setting the `maxPeerCount` attribute:
 
-- While [creating/updating a role](/server-side/v2/policy/create-update-role) or
+- While [creating/updating a role](/docs/server-side/v2/policy/create-update-role) or
 - While creating/updating a template as part of [roles config](/docs/server-side/v2/policy/create-template-via-api#roles-object).
 
 #### How can I handle role change requests on my backend? Is there any webhook for it? 
