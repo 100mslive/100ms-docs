@@ -54,7 +54,7 @@ Set the delegate property of HMSHLSStatsMonitor to an instance conforming to HMS
 
 Following delegate callbacks are available:
 
-1. **playerDidStall** - Player has stalled because it can't continue - this can happen when player does not have enough buffer for playback
+1. **onPlaybackFailure** - Player has encountered an error. This error could be a recoverable or unrecoverable (terminal) error. You can find out the type of error with isTerminal property like below.
 2. **playerDidChangeResolution** - Player has switched to different resolution layer of HLS stream - due to improved/degraded network condition or when user manually picks a different resolution
 
 ```swift
@@ -70,8 +70,15 @@ class YourClass: HMSHLSPlaybackDelegate {
     print("Resolution Changed: \(videoSize)")
   }
 
-  func playerDidStall() {
-    print("Player Stalled")
+  func onPlaybackFailure(error: Error) {
+    guard let error = error as? HMSError else { return }
+    
+    if error.isTerminal {
+      print("Player has encountered a terminal error, we need to restart the player: \(error.localizedDescription)")
+    }
+    else {
+      print("Player has encountered an error, but it's non-fatal and player might recover \(error.localizedDescription)")
+    }
   }
 
 }
