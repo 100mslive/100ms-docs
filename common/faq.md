@@ -32,7 +32,7 @@ No, you cannot delete a room. The “delete room” functionality automatically 
 
 You can get started with our [video conferencing example](https://www.100ms.live/examples/live-streaming-starter-kit) to see a live demo. You can also clone the [100ms-web sample app](https://github.com/100mslive/100ms-web) to see how you can extend and customize as per your needs.
 
-Meanwhile, check our [docs](/javascript/v2/features/integration) to explore information about various features and capabilities supported on the platform.
+Meanwhile, check our [docs](/docs/javascript/v2/features/integration) to explore information about various features and capabilities supported on the platform.
 
 #### Do you have a live demo app to check how live video/audio functionality works on your platform?
 
@@ -56,7 +56,7 @@ It is powered by the same infra. Same as everything in production that we serve 
 
 #### Can a teacher handle a remote user’s (student) screen (start and stop) like remotely mute/unmute of A/V ?
 
-No, a teacher can only mute/unmute a student using the [mute/unmute remote peer](/javascript/v2/features/remote-mute) feature.
+No, a teacher can only mute/unmute a student using the [mute/unmute remote peer](/docs/javascript/v2/features/remote-mute) feature.
 
 #### Is there a way I can specify my own room_id while creating a room?
 
@@ -179,7 +179,7 @@ You can continue using the existing routes (room_id/role) or set up your own rou
 
 #### What is the difference between the Beam recording vs. SFU recording?
 
-Beam recording is the browser recording, built to give users a participant-first recording experience. SFU recording is a composite recording which gets created after recording each of the individual peers and merging it. Please check this [guide](/javascript/v2/foundation/recordings) for more information.
+Beam recording is the browser recording, built to give users a participant-first recording experience. SFU recording is a composite recording which gets created after recording each of the individual peers and merging it. Please check this [guide](/docs/javascript/v2/foundation/recordings) for more information.
 
 #### After a live stream ends, how long does it take (for both Beam recording and SFU) to show up in our s3 bucket? 
 
@@ -313,7 +313,7 @@ You can use the 100ms platform to build interactive live streaming (HLS) apps an
 
 Please check these links for more details. 
 1. [Interactive live streaming (HLS)](/docs/javascript/v2/foundation/live-streaming)
-2. [External streaming (RTMP)](/javascript/v2/features/rtmp-recording)
+2. [External streaming (RTMP)](/docs/javascript/v2/features/rtmp-recording)
 
 #### Can I integrate a feature similar to Twitter super followers using 100ms by only allowing the authenticated users?
 
@@ -342,7 +342,7 @@ Please check the [collaborative whiteboard guide](/docs/javascript/v2/plugins/co
 
 Currently, you can build additional interactive experiences in your app with the help of [peer metadata](/docs/javascript/v2/advanced-features/peer-metadata). You can integrate features like raise hand, polls, quizzes, etc,. using this. You can also check the existing plugins on our platform such as [collaborative whiteboard](/docs/javascript/v2/plugins/collaborative-whiteboard), [virtual background](/docs/javascript/v2/plugins/virtual-background), [noise suppression](/docs/javascript/v2/plugins/noise-suppression), Custom [audio](/docs/javascript/v2/plugins/custom-audio-plugins) & [video](/docs/javascript/v2/plugins/custom-video-plugins) plugins. Please stay tuned to our product updates by signing up for our newsletter from [here](https://www.100ms.live/blog#email).
 
-Currently, you can build additional interactive experiences in your app with the help of [Peer metadata](/javascript/v2/advanced-features/peer-metadata). You can integrate raise hand, polls, quizzes, etc,. using this. You can also check the existing plugins our platform such as [Virtual background](/javascript/v2/plugins/virtual-background), [Noise suppression](/javascript/v2/plugins/noise-suppression), Custom [audio](/javascript/v2/plugins/custom-audio-plugins) & [video](/javascript/v2/plugins/custom-video-plugins) plugins. We will soon be adding a whiteboard plugin as well. Please stay tuned our product updates by signing up for our newsletter from [here](https://www.100ms.live/blog#email).
+Currently, you can build additional interactive experiences in your app with the help of [Peer metadata](/docs/javascript/v2/advanced-features/peer-metadata). You can integrate raise hand, polls, quizzes, etc,. using this. You can also check the existing plugins our platform such as [Virtual background](/docs/javascript/v2/plugins/virtual-background), [Noise suppression](/docs/javascript/v2/plugins/noise-suppression), Custom [audio](/docs/javascript/v2/plugins/custom-audio-plugins) & [video](/docs/javascript/v2/plugins/custom-video-plugins) plugins. We will soon be adding a whiteboard plugin as well. Please stay tuned our product updates by signing up for our newsletter from [here](https://www.100ms.live/blog#email).
 
 ## Network and quality
 
