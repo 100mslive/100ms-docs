@@ -8,7 +8,6 @@ import React from 'react';
 import Basics from '../common/basics.md';
 import Network from '../common/network.md';
 import Token from '../common/token.md';
-import TokenEndpoint from '../common/token-endpoint.md';
 import TemplatesAndRoles from '../common/templates-and-roles.md';
 import SecurityTokens1 from '../common/security-tokens-1.md';
 import SecurityTokens2 from '../common/security-tokens-2.md';
@@ -27,7 +26,6 @@ const data = {
     templatesAndRoles: TemplatesAndRoles,
     network: Network,
     token: Token,
-    tokenEndpoint: TokenEndpoint,
     securityTokens1: SecurityTokens1,
     securityTokens2: SecurityTokens2,
     liveStreaming: LiveStreaming,
