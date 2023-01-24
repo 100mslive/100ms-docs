@@ -5,17 +5,17 @@ nav: 2.3
 
 ## Overview
 
-[100ms-web](https://github.com/100mslive/100ms-web) is a fully-featured sample application built using React. This application gives you a ready-made starting point for writing your own video apps or customizing the cloned app as per your needs.
+[100ms-web](https://github.com/100mslive/100ms-web) is a fully-featured sample application built using React. This application gives you a ready-made starting point for writing your video apps or customizing the cloned app based on your needs.
 
 You can use this app to test:
 
--   **Basic functionalities**: Video calling, Recording, Interactive live streaming (HLS), External streaming (RTMP), Screenshare, Picture-in-Picture (PiP).
+-   **Basic functionalities**: Video calling, Recording, Interactive live streaming (HLS), External streaming (RTMP), Screenshare, and Picture-in-Picture (PiP).
 -   **Interactive features**: Chat (broadcast, direct, & group), Raise hand.
 -   **Plugins**: Virtual background, Collaborative whiteboard, Noise suppression.
 
-The app also includes other features and capabilities like custom audio/video tracks, control remote peers, network quality and performance stats, adaptive bitrate (Simulcast) and more.
+The app also includes other features and capabilities like custom audio/video tracks, control remote peers, network quality and performance stats, adaptive bitrate (Simulcast), and more.
 
-If you're trying to get started with 100ms with a basic app, please check our [quickstart guide](./react-quickstart).
+Please check our [quickstart guide](./react-quickstart) if you're trying to get started with 100ms with a basic app.
 
 ## Set up the app locally
 
@@ -56,7 +56,7 @@ If you're trying to get started with 100ms with a basic app, please check our [q
 
 ## Test the app
 
--   Start the app with the below command. The app now should be running at [http://localhost:3000/](http://localhost:3000/). You should see a Welcome message saying "Almost There!".
+-   Start the app with the below command. The app should now be running at [http://localhost:3000/](http://localhost:3000/). You should see a welcome message saying, "Almost There!".
 
     ```bash section=runApp sectionIndex=1
     yarn start
@@ -64,10 +64,10 @@ If you're trying to get started with 100ms with a basic app, please check our [q
 
 -   To test audio/video functionality, you need to connect to a 100ms room; please check following steps for the same:
 
-    1. Navigate to your [100ms dashboard](https://dashboard.100ms.live/dashboard) or [create an account](https://dashboard.100ms.live/register) if you don't have one.
-    2. Use the `Video Conferencing Starter Kit` to create a room with a default template assigned to it to test this app quickly.
-    3. Go to [Rooms page](https://dashboard.100ms.live/rooms) in your dashboard, copy the `Room Id` of the room and role created in the above step.
-    4. Add the `Room Id` and role to the localhost URL to test the app. For example, `http://localhost:3000/633fcdd84208780bf665346a/host`
+    1. Navigate to your [100ms Dashboard](https://dashboard.100ms.live/dashboard) or [create an account](https://dashboard.100ms.live/register) if you don't have one.
+    2. To test this app quickly, use the "Video Conferencing Starter Kit" to create a room with a default template assigned to it.
+    3. Go to [Rooms page](https://dashboard.100ms.live/rooms) in your Dashboard, copy the "Room Id" of the room and role created in the above step.
+    4. Add the "Room Id" and role to the localhost URL to test the app. For example, `http://localhost:3000/633fcdd84208780bf665346a/host`
 
     <br />
     <video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
@@ -77,7 +77,7 @@ If you're trying to get started with 100ms with a basic app, please check our [q
 
 ## Customize your app
 
-This sample app provides the flexibility to customize the user interface by updating the UI layout, logo, tile aspect ratio, theme and color, etc. You can use various environment variables available in the env file to make these customizations.
+This sample app allows UI customization, like updating the UI layout, logo, tile aspect ratio, theme, color, etc. To make these customizations, you can use various environment variables in the env file.
 
 ### Configure UI layout
 
@@ -108,12 +108,6 @@ This sample app provides the flexibility to customize the user interface by upda
     REACT_APP_POLICY_CONFIG = "{"trainer":{"center": ["student"],"sidepane":["trainer"]}}"
     ```
 
--   It is used in the app as:
-
-    ```js section=configureUi sectionIndex=2
-    const envPolicyConfig = JSON.parse(process.env.REACT_APP_POLICY_CONFIG || '{}');
-    ```
-
 ### Change logo
 
 You can upload your logo in the sample app to customize the UI for your brand. You can achieve this in two ways:
@@ -129,7 +123,7 @@ You can upload your logo in the sample app to customize the UI for your brand. Y
 
 ### Change tile aspect ratio
 
-You can use the `REACT_APP_TILE_SHAPE` variable to customize the aspect ratio of video tiles, the format is `width-height`.
+You can use the `REACT_APP_TILE_SHAPE` variable to customize the aspect ratio of video tiles; the format is `width-height`.
 
 **Examples:**
 
@@ -178,8 +172,8 @@ Building and deploying the 100ms sample app is simple and the same as any React 
 
 #### [Simple quickstart](./react-quickstart)
 
-If you're trying to get started with 100ms with a basic app.
+Please check our [quickstart guide](./react-quickstart) if you're trying to get started with 100ms with a basic app.
 
 #### [Server-side APIs](/docs/server-side/v2/introduction/basics)
 
-You can use server-side APIs to programmatically create/update rooms, templates, control peers, record, live stream and more.
+You can use server-side APIs to programmatically create/update rooms and templates, control peers, record, live stream, and more.

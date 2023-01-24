@@ -37,7 +37,7 @@ Use our [Live Streaming Starter Kit](https://www.100ms.live/marketplace/live-str
 
 ![Live streaming starter kit](/docs/docs/v2/live-streaming-starter-kit.png)
 
-1. Make sure that you have [an account with 100ms](https://dashboard.100ms.live/register) and can access the [100ms dashboard](https://dashboard.100ms.live/)
+1. Make sure that you have [an account with 100ms](https://dashboard.100ms.live/register) and can access the [100ms Dashboard](https://dashboard.100ms.live/)
 1. On the dashboard, create a new app using the Live Streaming Starter Kit
 1. Specify a subdomain and region to deploy the app
 
@@ -64,7 +64,7 @@ This starter kit configures your new app with [two roles](/docs/javascript/v2/fo
 
 By default, the live stream is composed in landscape mode for desktop viewers (with an aspect ratio of 16:9). You can customise the live stream for viewers on mobile or to support multiple broadcaster tiles.
 
-1. On the 100ms dashboard, click the gear icon on your app to open configuration settings
+1. On the 100ms Dashboard, click the gear icon on your app to open configuration settings
 2. Go to "destinations" and scroll down to find live stream (HLS) configuration
 3. Update the configuration based on your needs:
     - If your viewers are on mobile, change the video aspect ratio to 9:16
@@ -90,7 +90,7 @@ If your app is based on the Live Streaming Starter Kit (as shown above), the liv
 
 For custom apps, you can enable the live streaming destination manually:
 
-1. Open configuration for your existing app using the 100ms dashboard
+1. Open configuration for your existing app using the 100ms Dashboard
 1. In the "destinations" tab, enable "Live Streaming with HLS"
 1. Ensure that you have roles for the broadcaster (who can publish their audio/video) and the viewer (who cannot publish audio/video)
 

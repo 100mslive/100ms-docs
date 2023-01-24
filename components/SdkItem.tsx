@@ -115,7 +115,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
             {sdkItems[sdk as keyof typeof sdkItems].map((value) => (
                 <Link key={value.id} href={value.link} passHref>
                     <a
-                        target={value.id === 2 || value.id === 3 ? '_blank' : '_self'}
+                        target={value.id === 2 || (value.id === 3 && value.link !== '/javascript/v2/guides/react-sample-app-quickstart') ? '_blank' : '_self'}
                         rel="noopener"
                         style={{ width: 'fit-content' }}>
                         <Box

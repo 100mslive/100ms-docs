@@ -64,7 +64,7 @@ permission_handler:
 
 -   Run `flutter pub get` to download these dependencies to your app.
 
-### Add permissions 
+### Add permissions
 
 <Tabs id="sample-app" items={['Android', 'iOS']} />
 
@@ -137,7 +137,7 @@ Please follow the below instructions to test the app for iOS target platform:
 
 2. Add the target platform version as (`platform :ios, '12.0'`) in "ios/Podfile."
 
-```json 
+```json
 platform :ios, '12.0'
 ```
 
@@ -476,13 +476,13 @@ class _MeetingPageState extends State<MeetingPage>
 
 To test audio/video functionality, you need to connect to a 100ms room; please check the following steps for the same:
 
-1. Navigate to your [100ms dashboard](https://dashboard.100ms.live/dashboard) or [create an account](https://dashboard.100ms.live/register) if you don't have one.
-2. Use the `Video Conferencing Starter Kit` to create a room with a default template assigned to it to test this app quickly.
+1. Navigate to your [100ms Dashboard](https://dashboard.100ms.live/dashboard) or [create an account](https://dashboard.100ms.live/register) if you don't have one.
+2. Use the "Video Conferencing Starter Kit" to create a room with a default template assigned to it to test this app quickly.
 3. Go to the [Rooms page](https://dashboard.100ms.live/rooms) in your dashboard, click on the `Room Id` of the room you created above, and click on the `Join Room` button on the top right.
 4. You will see 100ms demo URLs for the roles created when you deployed the starter kit; you can click on the 'key' icon to copy the token and update the `authToken` in "lib/main.dart" file.
-   
- > Token from 100ms dashboard is for testing purposes only, For production applications you must generate tokens on your own server.
- > Refer to the [Management Token section](./../foundation/security-and-tokens#management-token) in Authentication and Tokens guide for more information.
+
+> Token from 100ms Dashboard is for testing purposes only, For production applications you must generate tokens on your own server.
+> Refer to the [Management Token section](./../foundation/security-and-tokens#management-token) in Authentication and Tokens guide for more information.
 
 <video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
     <source src="/docs/guides/update-token-flutter.mp4" type="video/mp4" />
@@ -531,17 +531,17 @@ In this section, We'll walk through what the code does.
 
 <div className="steps-container">
 
-### Add dependencies in pubspec.yaml 
+### Add dependencies in pubspec.yaml
 
 In your project `pubspec.yaml` dependencies add:
 
 ```yaml section=InstallingTheDependencies
 # 100ms SDK and permissions_handler
 hmssdk_flutter:
-permission_handler: 
+permission_handler:
 ```
 
-### Add permissions for android and iOS 
+### Add permissions for android and iOS
 
 Add the permissions for microphone,camera and bluetooth for android and iOS follow the docs [above](#add-permissions)
 
@@ -676,6 +676,7 @@ class _MeetingPageState extends State<MeetingPage>
   }
 }
 ```
+
 Now in the same class we will override the `HMSUpdateListener` methods to listen to updates.
 
 ### Listen to room and peer updates
@@ -858,6 +859,7 @@ Ensure to add the `HMSVideoView` to your app's Widget tree. Check the [render vi
 
 This section will help you build the user interface that renders the video tracks of local and remote peer in a grid.
 Add this in `MeetingPage` class.For more info about implementation check the complete code [above](#complete-code-example)
+
 ```dart section=stepByStepRenderPeers
 // Widget to render grid of peer tiles and a end button
   @override
@@ -922,7 +924,7 @@ Add this in `MeetingPage` class.For more info about implementation check the com
     );
   }
 ```
- 
+
 </div>
 
 You can refer to the [test the app section](#test-the-app) to test your app for android or iOS platforms.
