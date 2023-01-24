@@ -42,7 +42,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
     if (Object.keys(currentNav).length) {
         const platform = currentNav[currentDocSlug];
         if (slug[0] !== 'v1' && slug[0] !== 'v2') {
-            if (slug?.length > 3) {
+            if (slug?.length > 2) {
                 nav = platform[slug[1]];
                 if (slug[0] === 'api-reference') {
                     // if (slug[1] === 'android') {
@@ -53,6 +53,10 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
             }
         } else nav = platform;
     }
+
+    console.log("currentNav", currentNav)
+    console.log("currentNav[currentDocSlug]", currentNav[currentDocSlug])
+    console.log("nav", nav)
 
     let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]);
     if (slug[0] === 'api-reference')
