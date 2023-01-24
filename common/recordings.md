@@ -104,17 +104,9 @@ The above message ensures that your configuration is successful now, and all you
 
 If a storage destination is not configured for recordings and if you choose to record that room then such recordings are stored for **72 hours** in an internal 100ms bucket. You can access these recordings through [Sessions](https://dashboard.100ms.live/sessions).  
 
-
 ![Recording Links](/docs/docs/v2/recording-links-session.png)
 
-
-If a storage destination is not configured for recordings and if you choose to record that room then such recordings are stored for **72 hours** in an internal 100ms bucket. You can access these recordings through [Sessions](https://dashboard.100ms.live/sessions).  
-
-
-![Recording Links](/docs/docs/v2/session-recording-links-1.png)
-
-
-**If a storage destination is configured for recordings, then you can find recording paths in the following webhook responses:**
+**Storage recording path is available in following webhook responses:**
 
 - Browser Recording: [beam.recording.success](https://www.100ms.live/docs/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `recording_path`)
 - SFU Recording: [recording.success](https://www.100ms.live/docs/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `recording_path`)
