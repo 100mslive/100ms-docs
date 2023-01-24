@@ -42,7 +42,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
     if (Object.keys(currentNav).length) {
         const platform = currentNav[currentDocSlug];
         if (slug[0] !== 'v1' && slug[0] !== 'v2') {
-            if (slug?.length > 2) {
+            if (slug?.length > 3) {
                 nav = platform[slug[1]];
                 if (slug[0] === 'api-reference') {
                     // if (slug[1] === 'android') {
@@ -53,10 +53,9 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
             }
         } else nav = platform;
     }
-
-    console.log("currentNav", currentNav)
-    console.log("currentNav[currentDocSlug]", currentNav[currentDocSlug])
-    console.log("nav", nav)
+    
+    const showPlatformSelector = slug?.[0] !== "foundation"
+    console.log(slug, showPlatformSelector)
 
     let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]);
     if (slug[0] === 'api-reference')
@@ -79,6 +78,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
     return (
         <div className="sidebar">
             {/* Sidebar Version Section */}
+            {showPlatformSelector?
             <section
                 style={{
                     margin: '0px 0.5rem 0.5rem 0.4rem',
@@ -111,7 +111,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                         ))}
                     </Listbox.Options>
                 </Listbox>
-            </section>
+            </section> : null}
             {/* Sidebar Menu Section */}
             {nav
                 ? Object.entries(nav).map(([key, children], index) => (
