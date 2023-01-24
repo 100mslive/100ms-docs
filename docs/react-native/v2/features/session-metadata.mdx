@@ -24,7 +24,7 @@ Any peer can set the session metadata by calling `setSessionMetaData` method on 
 > No updates are sent to other peers after calling `setSessionMetadata` as it's an alpha feature. So, some extra code needs to be written 
 > to send updates. The implementation can be found [here](#detect-when-session-metadata-changes)
 
-```js{2}
+```js{4}
 try {
   const metadata: string = '...'; // metadata to set, this can be stringified object as well i.e. JSON.stringify('{}')
 
@@ -67,7 +67,7 @@ Let's look at them step-by-step:
 
 ### PeerA sets Session Metadata and Broadcast Message with type 'metadata'
 
-```js{2}
+```js
 try {
   const metadata: string = '...'; // metadata to set, this can be stringified object as well i.e. JSON.stringify('{}')
 
