@@ -12,7 +12,7 @@ Yes, our services are supported in all countries.
 
 #### Is 100ms fully optimized for mobile devices?
 
-Our mobile SDKs are optimized to support most of the features and capabilities that are supported in our Web SDK. The rest of the features for Mobile SDKs are in the works.  For example, Virtual background feature is available as a beta feature on Web, Android and iOS native platforms but not in React Native and Flutter.
+Our mobile SDKs are optimized to support most of the features and capabilities that are supported in our Web SDK. The rest of the features for mobile SDKs are in the works.  For example, Virtual background feature is available as a beta feature on Web, Android and iOS native platforms but not in React Native and Flutter.
 
 #### Can I delete apps from dashboard?
 
