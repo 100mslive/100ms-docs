@@ -148,64 +148,123 @@ Add service inside `<application>` tag as follows:
         ...
     </activity>
 
-      // Set Service Type to capture Audio or Video as per your use-case. In most cases, only `microphone` access would be required. Then do not pass the `camera`
+      // Set Service Type to capture Audio or Video as per your use-case. In most cases, only `microphone` access would be required. Then do not pass the `camera`. If stopWithTask set to true then it will stop the notification if app is force killed.
       <service android:name="com.pravera.flutter_foreground_task.service.ForegroundService"
-        android:foregroundServiceType="camera|microphone" />
+        android:foregroundServiceType="camera|microphone"
+        android:stopWithTask="true" />
 
 </application>
 ```
 
-### Start Foreground Service
-Wrap your _Meeting page_ with `WillStartForegroundTask` widget. The page which is shown when an 100ms Room is joined should be encapsulated as shown below:
+### Initialize Foreground Service
+Initialize the `FlutterForegroundTask` in `initState()` and Wrap your _Meeting page_ with `WithForegroundTask` widget. The page which is shown when an 100ms Room is joined should be encapsulated as shown below:
 ```dart
+@override
+void initState() {
+    super.initState();
+    // Call FlutterForegroundTask init method.
+    _initForegroundTask();
+  }
+
+  void _initForegroundTask() {
+    FlutterForegroundTask.init(
+        androidNotificationOptions: AndroidNotificationOptions(
+            channelId: '100ms_flutter_notification',
+            channelName: '100ms Flutter Notification',
+            channelDescription:
+                'This notification appears when the foreground service is running.',
+            channelImportance: NotificationChannelImportance.LOW,
+            priority: NotificationPriority.LOW,
+            iconData: const NotificationIconData(
+              resType: ResourceType.mipmap,
+              resPrefix: ResourcePrefix.ic,
+              name: 'launcher',
+            )),
+        iosNotificationOptions:
+            const IOSNotificationOptions(showNotification: false),
+        foregroundTaskOptions: const ForegroundTaskOptions());
+  }
+
 @override
 Widget build(BuildContext context) {
   return MaterialApp(
-    // A widget to start the foreground service when the app is minimized or closed.
-    // This widget must be declared above the [Scaffold] widget.
-    home: WillStartForegroundTask(
-      onWillStart: () async {
-        // Return whether to start the foreground service.
-        return true;
-      },
-      androidNotificationOptions: AndroidNotificationOptions(
-        channelId: 'notification_channel_id',
-        channelName: 'Foreground Notification',
-        channelDescription: 'This notification appears when the foreground service is running.',
-        channelImportance: NotificationChannelImportance.LOW,
-        priority: NotificationPriority.LOW,
-        iconData: NotificationIconData(
-          resType: ResourceType.mipmap,
-          resPrefix: ResourcePrefix.ic,
-          name: 'launcher',
-        ),
-      ),
-      iosNotificationOptions: const IOSNotificationOptions(
-        showNotification: false,
-        playSound: false,
-      ),
-      foregroundTaskOptions: const ForegroundTaskOptions(
-        interval: 5000,
-        autoRunOnBoot: false,
-        allowWifiLock: false,
-      ),
-      notificationTitle: 'Foreground Service is running',
-      notificationText: 'Tap to return to the app',
-      callback: startCallback,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Your App Title'),
-          centerTitle: true,
-        ),
-        body: MeetingApp(), // your app screen which is shown when 100ms Room is joined
-      ),
-    ),
+    /// A widget that prevents the app from closing when the foreground service is running.
+    /// This widget must be declared above the [Scaffold] widget.
+    home: WithForegroundTask(
+      child: MeetingPage()
+    );
   );
 }
+```
+
+### Start Foreground Service
+
+Start `FlutterForegroundTask` at `onJoin` callback.
+
+```dart
+@override
+  void onJoin({required HMSRoom room}) async {
+    // Start FlutterForegroundTask at onJoin callback.
+      FlutterForegroundTask.startService(
+        notificationTitle: "100ms foreground service running",
+        notificationText: "Tap to return to the app");
+      ...
+  }
+```
+
+### Stop Foreground Service
+
+Stop `FlutterForegroundTask` at `onRemovedFromRoom` and `onSuccess` -> `HMSActionResultListenerMethod.leave` callbacks.
+
+```dart
+
+class Meeting implements HMSActionResultListener{
+  
+  void leave(){
+    //this is the instance of class implementing HMSActionResultListener  
+    await hmsSDK.leave(hmsActionResultListener: this);
+  }
+
+  @override
+  void onRemovedFromRoom({required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer}) {
+    // Clear the local room state
+    // Stop FlutterForegroundTask
+    FlutterForegroundTask.stopService();
+    ...
+  }
+
+  @override
+  void onSuccess({HMSActionResultListenerMethod methodType = HMSActionResultListenerMethod.unknown, Map<String, dynamic>? arguments}) {
+    switch (methodType) {
+      case HMSActionResultListenerMethod.leave:
+      // Room leaved successfully
+      // Clear the local room state
+      // Stop FlutterForegroundTask
+        FlutterForegroundTask.stopService();    
+        break;
+      ...
+    }
+  }
 ```
 </div>
 
 That's it. Now you'll have a Foreground Service up & running in your app.
+
+## Checkout Background Handling in Action (Video)
+
+- The attached video shows the fully featured 100ms Example App using Android Foreground Service when a Room starts & ends
+
+- The Android Foreground Service is started when a Room starts. Similarly, the service is stopped when a Room ends.
+
+- This ensures that microphone access is available to app even in Background Mode after 60+ seconds.
+
+- Using Android Foreground Service ensures consistent behaviour on all different devices of Android OEMs like Samsung, Xiaomi, OnePlus, Motorola, Google, etc.
+
+
+<video controls>
+  <source src="https://user-images.githubusercontent.com/45732601/213716995-81c8453e-a215-4c8d-be48-770dd63afbc4.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
 > Checkout the Background Handling implementations in 100ms Example app [here](https://github.com/100mslive/100ms-flutter/tree/main/example).
   
