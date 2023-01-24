@@ -111,7 +111,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
             {/* Sidebar Menu Section */}
             {nav
                 ? Object.entries(nav).map(([key, children], index) => (
-                      <SidebarSection key={key} value={key} index={index}>
+                      <SidebarSection key={key} value={key} index={index} nested={false}>
                           {children as React.ReactChildren}
                       </SidebarSection>
                   ))
