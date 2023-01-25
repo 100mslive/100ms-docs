@@ -3,7 +3,7 @@ title: HLS Streaming
 nav: 7.2
 ---
 
-[HLS Streaming](./../foundation/live-streaming) allows for scaling to millions of viewers in near real time. You can give a link of your
+[HLS Streaming](/javascript/v2/foundation/live-streaming) allows for scaling to millions of viewers in near real time. You can give a link of your
 web-app which will be converted to a HLS feed by our server and can be played across devices for consumption.
 Behind the scenes, this will be achieved by having a bot join your room and stream what it sees and hears. Once the feed
 is ready, the server will give a URL which can be played using any HLS Player.
@@ -111,7 +111,7 @@ Not all browsers support HLS [natively](https://caniuse.com/?search=hls), howeve
 [Shaka Player](https://github.com/google/shaka-player). In case you need more UI side customisations you can go with something like
 [videojs](https://videojs.com/) which internally uses `hls.js` for the hls piece.
 
-Here is a simple example of using `hls.js` to play the HLS URL given by the SDK (using `hmsStore` selector). `hmsStore` selector hook will help you with selector functions to fetch information from the state at any point in time. Check [here](./../guides/useful-selectors) for more examples.
+Here is a simple example of using `hls.js` to play the HLS URL given by the SDK (using `hmsStore` selector). `hmsStore` selector hook will help you with selector functions to fetch information from the state at any point in time. Check [here](/javascript/v2/get-started/useful-selectors) for more examples.
 
 Make sure you've installed the library(`npm i hls.js`) before using this code.
 
@@ -127,9 +127,7 @@ function renderHLS({ hlsUrl }) {
     const hlsState = hmsStore.getState(selectHLSState);
     const hlsUrl = hlsState.variants[0]?.url;
     const video = document.getElementById('video');
-    const browserHasNativeHLSSupport = video.canPlayType(
-        'application/vnd.apple.mpegurl'
-    );
+    const browserHasNativeHLSSupport = video.canPlayType('application/vnd.apple.mpegurl');
     if (Hls.isSupported()) {
         let hls = new Hls();
         hls.loadSource(hlsUrl);
@@ -179,7 +177,7 @@ function HLSView({ hlsUrl }) {
 
 </Tab>
 
-> **Note:** If you wish to customize the stream, please check [this guide](./../foundation/live-streaming#step-4-customize-the-stream) for more information.
+> **Note:** If you wish to customize the stream, please check [this guide](/javascript/v2/foundation/live-streaming#step-4-customize-the-stream) for more information.
 
 ## Changing the quality of Stream(Hls.js)
 
