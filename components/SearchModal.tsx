@@ -110,7 +110,7 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
                                         totalNumberOfResults: hits?.length,
                                         textInSearch: searchTerm || '',
                                         rankOfSearchResult: i + 1,
-                                        locationOfSearchResult: searchResult.url,
+                                        locationOfSearchResult: searchResult.link,
                                         referrer: document.referrer,
                                         path: window.location.hostname,
                                         pathname: window.location.pathname
