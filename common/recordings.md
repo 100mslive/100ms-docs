@@ -15,11 +15,12 @@ Based on your end goal, you can choose one of the recording types and its implem
     - [Multiresolution Recording](#multiresolution-recording)
 - [Configure storage](#configure-storage)
   - [How to configure recording storage?](#how-to-configure-recording-storage)
+- [Storage path for recordings](#storage-path-for-recordings)
 
 ### Quick Comparison
 
 | Recording Features                   | Browser Recording [Recommended] | SFU Recording [Advanced]         |
-| ------------------------------------ | ------------------------------- | -------------------------------- |
+|--------------------------------------|---------------------------------|----------------------------------|
 | Resolution                           | Upto 1080p                      | Only 720p                        |
 | Participant-level Audio/Video Tracks | Not Available                   | Available                        |
 | Portrait/Landscape Mode              | Available                       | Not Available                    |
@@ -98,3 +99,43 @@ You can specify a cloud storage location for your recording files in your templa
 ![Destinations](/docs/docs/v2/recording-storage-settings-step6.png)
 
 The above message ensures that your configuration is successful now, and all your recordings will start collecting in your configured destination.
+
+## Storage path for recordings
+
+If a storage destination is not configured for recordings and if you choose to record that room then such recordings are stored for **72 hours** in an internal 100ms bucket. You can access these recordings through [Sessions](https://dashboard.100ms.live/sessions).  
+
+![Recording Links](/docs/docs/v2/recording-links-session.png)
+
+**Storage recording path is available in following webhook responses:**
+
+- Browser Recording: [beam.recording.success](https://www.100ms.live/docs/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `recording_path`)
+- SFU Recording: [recording.success](https://www.100ms.live/docs/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `recording_path`)
+- Multiresolution Recording: [hls.recording.success](https://www.100ms.live/docs/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `recording_single_files` ; `recording_path`)
+- VOD Recording: [hls.recording.success](https://www.100ms.live/docs/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `hls_vod_recording_path`)
+
+**The recording path for these respective recordings will look like follows:**
+
+1. Browser Recording: `s3://<location>/<prefix>/beam/<room_id>/<start_date>/Rec-<room_id>-<epoch>.mp4`
+
+2. SFU Recording:
+    1. Composite: `s3://<location>/<prefix>/<room_id>/<start_date>/<session_id>/Rec-<session_id>-<epoch>.mp4`
+
+    2. Individual: `s3://<location>/<prefix>/<room_id>/<start_date>/<session_id>/<peer_id>/<stream_id>/<track_id>.webm`
+
+3. Multiresolution Recording: `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/file-recording/Rec-<room_id>-<epoch>-<layer_index>.mp4`
+
+4. VOD Recording: `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/vod/Rec-<room_id>-<epoch>.zip`
+
+**The breakdown of the aforementioned tags is as follows:**
+
+| Tag Name | Description |
+| --- | --- |
+| Location | Name of the bucket where recordings are stored |
+| Prefix | Prefix for upload path which is configured in storage settings of your template. If not configured, the default value for this will be your Customer ID |
+| Room ID | The identifier for the room which was recorded |
+| Start Date | Start date of the session |
+| Epoch | Start time of the recorder in the session |
+| Peer ID | Unique identifier of a peer in a room |
+| Stream ID | Unique identifier for a particular stream of a room (audio-video/screenshare) |
+| Track ID | Unique identifier for a particular track (audio or video) of a stream |
+| Layer Index | Layer index values show descending HLS resolutions - 0(1080p), 1(720p), 2(480p), 3(360p) and 4(240p). If highest resolution of template is 720p, then 0(720p), 1(480p), 2(360p) and 3(240p) |
