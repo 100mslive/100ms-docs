@@ -1,5 +1,5 @@
 ---
-title: HMSPlaylist<T\>
+title: HMSPlaylist<T>
 ---
 
 ## Type parameters

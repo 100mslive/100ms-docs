@@ -1,3 +1,6 @@
+import React from 'react';
+import Link from 'next/link';
+import merge from 'lodash/merge';
 import {
     BookIcon,
     ChevronRightIcon,
@@ -9,10 +12,7 @@ import {
     WebhookIcon
 } from '@100mslive/react-icons';
 import { Box, CSS, Flex, HorizontalDivider, VerticalDivider } from '@100mslive/react-ui';
-import { Item } from 'components';
-import merge from 'lodash/merge';
-import Link from 'next/link';
-import React from 'react';
+import Item from './Item';
 
 interface Props {
     logo?: React.SVGProps<SVGSVGElement>;
@@ -119,7 +119,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
                         rel="noopener"
                         style={{ width: 'fit-content' }}>
                         <Box
-                        role="button"
+                            role="button"
                             onClick={() =>
                                 window.analytics.track('link.clicked', {
                                     btnId: itemId[value.id],

@@ -8,7 +8,7 @@ interface Props {
     css?: CSS;
     textCSS?: CSS;
     text: string;
-    textVariant?: any;
+    textVariant?: React.ComponentProps<typeof Text>['variant'];
 }
 
 const Item: React.FC<Props> = ({
