@@ -328,12 +328,12 @@ const nextConfig = {
             },
             {
                 source: '/android/v2/features/screen-share',
-                destination: '/android/v2/how--to-guides/set-up-video-conferencing/screen-share/screen-share',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/screen-share',
                 permanent: true
             },
             {
                 source: '/android/v2/features/audio-share',
-                destination: '/android/v2/how--to-guides/set-up-video-conferencing/screen-share/audio-share',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/local-audio-share',
                 permanent: true
             },
             {
@@ -348,27 +348,27 @@ const nextConfig = {
             },
             {
                 source: '/android/v2/features/PeerCount',
-                destination: '/android/v2/how--to-guides/listen-to-room-events/PeerCount',
+                destination: '/android/v2/how--to-guides/listen-to-room-events/room-updates',
                 permanent: true
             },
             {
                 source: '/android/v2/features/change-role',
-                destination: '/android/v2/how--to-guides/control-remote-peers/change-role',
+                destination: '/android/v2/how--to-guides/interact-with-room/interact-with-peer/change-role',
                 permanent: true
             },
             {
                 source: '/android/v2/features/remove-peer',
-                destination: '/android/v2/how--to-guides/control-remote-peers/remove-peer',
+                destination: '/android/v2/how--to-guides/interact-with-room/interact-with-peer/remove-peer',
                 permanent: true
             },
             {
                 source: '/android/v2/features/remote-mute',
-                destination: '/android/v2/how--to-guides/control-remote-peers/remote-mute',
+                destination: '/android/v2/how--to-guides/interact-with-room/interact-with-peer/remote-mute',
                 permanent: true
             },
             {
                 source: '/android/v2/features/end-room',
-                destination: '/android/v2/how--to-guides/control-remote-peers/end-room',
+                destination: '/android/v2/how--to-guides/interact-with-room/end-room',
                 permanent: true
             },
             {
@@ -428,17 +428,17 @@ const nextConfig = {
             },
             {
                 source: '/android/v2/advanced-features/track-settings',
-                destination: '/android/v2/how--to-guides/configure-your-device/track-settings',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/track-settings',
                 permanent: true
             },
             {
                 source: '/android/v2/features/audio-output-routing',
-                destination: '/android/v2/how--to-guides/configure-your-device/audio-output-routing',
+                destination: '/android/v2/how--to-guides/configure-your-device/speaker/audio-output-routing',
                 permanent: true
             },
             {
                 source: '/android/v2/features/audio-mode',
-                destination: '/android/v2/how--to-guides/configure-your-device/audio-mode',
+                destination: '/android/v2/how--to-guides/configure-your-device/speaker/audio-mode',
                 permanent: true
             },
             {
