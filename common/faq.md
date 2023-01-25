@@ -40,7 +40,7 @@ Yes, you can get started with one of our examples from [here](https://www.100ms.
 
 #### I want to integrate live streaming into our app with 100ms - where do I start?
 
-You can start with our [documentation](). We also recommend checking out our GitHub for open source [sample SDKs](https://github.com/100mslive) that can aid in initial integration; here is a piece on our [live streaming capabilities](https://www.100ms.live/interactive-live-streaming).
+You can start with our [documentation](/). We also recommend checking out our GitHub for open source [sample SDKs](https://github.com/100mslive) that can aid in initial integration; here is a piece on our [live streaming capabilities](https://www.100ms.live/interactive-live-streaming).
 
 #### I’d like to make some changes on how the video player looks. Do you have any resources I can pass to my design team so they can get started with the parts that are easy to configure? 
 
