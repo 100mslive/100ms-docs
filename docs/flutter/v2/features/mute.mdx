@@ -34,6 +34,39 @@ hmsSDK.switchCamera();
 }
 ```
 
+## How to get the current mute/unmute state
+
+To get the current mute/unmute state for local peer we will use local peer's `HMSTrack` object.
+
+```dart
+class Meeting implements HMSUpdateListener,HMSActionResultListener{
+
+bool isMicOff = false;
+bool isCameraOff = false;
+...
+@override
+void onTrackUpdate(
+    {required HMSTrack track,
+    required HMSTrackUpdate trackUpdate,
+    required HMSPeer peer}) {
+    
+        //To check mute/unmute status for local peer
+        if (peer.isLocal) {
+            if (track.kind == HMSTrackKind.kHMSTrackKindAudio &&
+                track.source == "REGULAR") {
+                isMicOff = track.isMute;
+            }
+            if (track.kind == HMSTrackKind.kHMSTrackKindVideo &&
+                track.source == "REGULAR") {
+                isCameraOff = track.isMute;
+            }
+        }
+    }
+...
+
+}
+```
+
 ## Mute Remote peers locally 
 
 To mute peers all the peers for yourself `HMSSDK` provides dedicated methods `muteRoomAudioLocally` for audio and `muteRoomVideoLocally` for video. Execution 
