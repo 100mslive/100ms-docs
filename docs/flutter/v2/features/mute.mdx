@@ -34,6 +34,61 @@ hmsSDK.switchCamera();
 }
 ```
 
+## How to mute microphone 
+
+Let's look at how we can mute microphone:
+
+<div className="steps-container">
+
+### Call toggleMicMuteState on HMSSDK instance
+
+To mute microphone we need to call `toggleMicMuteState`
+
+```dart
+class Meeting implements HMSUpdateListener,HMSActionResultListener{
+
+...
+/// To switch local peer's audio on/off.
+hmsSDK.toggleMicMuteState(); //This toggles the current mic status(mute/unmute)
+...
+
+}
+```
+
+### Receive the onTrackUpdate with update type trackUnmuted
+
+After calling `toggleMicMuteState` we will receive `onTrackUpdate` with `HMSTrackUpdate.trackUnmuted` type 
+and track kind as `HMSTrackKind.kHMSTrackKindAudio`
+
+```dart
+class Meeting implements HMSUpdateListener,HMSActionResultListener{
+
+bool isMicOff = true;
+...
+@override
+void onTrackUpdate(
+    {required HMSTrack track,
+    required HMSTrackUpdate trackUpdate,
+    required HMSPeer peer}) {
+    
+        //To check mute/unmute status for local peer
+        if (peer.isLocal) {
+            if ((track.kind == HMSTrackKind.kHMSTrackKindAudio) &&
+                (track.source == "REGULAR") && (trackUpdate == HMSTrackUpdate.trackUnMuted)) {
+                //Here we will receive the trackUnmuted update for audio track of local peer.
+                //i.e. track.isMute will be false
+                isMicOff = track.isMute;
+            }
+            ...
+        }
+    }
+...
+
+}
+```
+
+</div>
+
 ## How to get the current mute/unmute state
 
 To get the current mute/unmute state for local peer we will use local peer's `HMSTrack` object.
