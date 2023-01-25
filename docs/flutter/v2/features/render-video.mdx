@@ -143,7 +143,7 @@ It will select a layer that best matches the current view frame size and reacts 
 
 ## Capture Snapshot
 
-You can capture a snapshot of the video stream of a local or remote peer's video. To capture a snapshot, you call captureSnapshot method on HMSVideoTrack instance to get a Uint8List containing a snapshot of the video stream.
+You can capture a snapshot of the video stream of a local or remote peer's video. To capture a snapshot, you call captureSnapshot method on HMSVideoTrack instance to get a Uint8List containing a snapshot of the video stream. Know more about captureSnapshot [here](../features/capture-snapshot).
 
 ```dart
   HMSVideoTrack videoTrack;
@@ -151,22 +151,7 @@ You can capture a snapshot of the video stream of a local or remote peer's video
 
   //Capture snapshot
   Uint8List? bytes = await videoTrack.captureSnapshot();
-  ...
-
-  //Show Image in Image Widget
-  if(bytes != null){
-    Image imageWidget = Image.memory(bytes);
-    //Show image widget in build Method.
-  }
-
-  //Save Image in Gallery
-  if(bytes != null){
-    Map result = await ImageGallerySaver.saveImage(bytes, quality: 100, name: "imageName");
-    //Use 3rd Party Plugin image_gallery_saver to save image in gallery.
-  }
 ```
-
-> To know more about `image_gallery_saver` plugin click [here](https://pub.dev/packages/image_gallery_saver).
 
 ## Best Practices 
 
