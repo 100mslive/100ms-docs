@@ -12,18 +12,12 @@ interface Props {
     nested: Boolean;
 }
 
-<<<<<<< HEAD
-const SidebarSection: React.FC<Props> = ({ value: key, index, children }) => {
-    const router = useRouter();
-=======
 const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested = false }) => {
     const router = useRouter() as any;
->>>>>>> 105996f61d7f3fb8d50fe79b8b7f312f205edf73
     const {
         asPath,
+        query: { slug }
     } = router;
-
-    const slug = Array.isArray(router.query.slug) ? router.query.slug : []
 
     const activeItem = useRef<HTMLAnchorElement>(null);
 

@@ -3,6 +3,8 @@ title: RTMP Streaming / Recording
 nav: 3.19
 ---
 
+import RtmpExternalConfig from '@/common/rtmp-external-config.md';
+
 Want to preserve your video call for posterity in a recording? Or live stream it out to millions of viewers on Twitch or YouTube or whatever gives you an RTMP ingest URL?
 
 Turn on RTMP Streaming or Recording!
@@ -122,7 +124,7 @@ Let's understand each parameter:
         - "rtmp://a.rtmp.youtube.com/live2/" - RTMP stream URL.
         - "k0jv-329m-1y7f-ktth-ck48" - RTMP stream key.
 
-    <Content alias="rtmpExternalConfig" />
+    <RtmpExternalConfig />
 
 3. **toRecord**: _Boolean_. If the recording is required, set it `true`. If the recording is not required, set false. This value does not affect streaming.
 4. **resolution**: _HMSResolution_. An optional value for the output resolution of the stream. For instance, the default is a landscape at 1280x720 but this could be set for a portrait mode to 720x1280 or smaller values like 480x80. The `HMSResolution` class takes Width and Height.
