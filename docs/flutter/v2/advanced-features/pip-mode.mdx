@@ -1,5 +1,5 @@
 ---
-title: PIP Mode (Android Only)
+title: PIP Mode (beta)
 nav: 4.9
 ---
 
@@ -7,18 +7,17 @@ nav: 4.9
 
 PIP Mode lets the user watch the room video in a small window pinned to a corner of the screen while navigating between apps or browsing content on the main screen.
 
-Currently this functionality is only available on Android.
-
 ## Minimum Requirements
 
-- Minimum version required to support PiP is Android 8.0 (API level 26)
-- Minimum `hmssdk_flutter` SDK version required is 1.0.0
-- To know more about PIP features minimum version requirements please check [Picture-in-picture (PiP) support](https://developer.android.com/develop/ui/views/picture-in-picture)
+- Minimum version required to support PiP is Android 8.0 (API level 26) and iOS 15
+- Minimum `hmssdk_flutter` SDK version required is 1.3.0
+- To know more about PIP features, minimum version requirements for android please check [here](https://developer.android.com/develop/ui/views/picture-in-picture).
+
+## Android
 
 ### How to add PiP support
 
 <div className="steps-container">
-
 
 ### Update the manifest file
 
@@ -34,10 +33,10 @@ You need to update the activity tag in the `AndroidManifest.xml`
 
 ### Check PIP availablility
 
-PIP mode only works above Android API Level 26(Android 8.0) but to check whether the current device supports PIP mode or not `isPipAvailable` method can be used:
+PIP mode only works above Android API Level 26(Android 8.0) but to check whether the current device supports PIP mode or not `HMSAndroidPIPController.isAvailable` method can be used:
 
 ```dart
-hmsSDK.isPipAvailable();
+bool _isPipAvailable = await HMSAndroidPIPController.isAvailable();
 ```
 
 ### Enter PIP mode
@@ -48,19 +47,19 @@ To show PIP mode in the application:
 // enterPipMode is a Future<bool> function where true indicates that the application has entered pip mode successfully.
 ///[autoEnterPip] if true start pip mode will start automatically when app is minimized.For android 12 and above
 ///[aspectRatio]: List of double indicating ratio for PIP window as [width,height]  
-bool isPipEnteredSuccesfully = await hmsSDK.enterPipMode(autoEnterPip: true/false, aspectRatio: [16, 9]);
+bool isPipEnteredSuccesfully = await HMSAndroidPIPController.start(autoEnterPip: true/false, aspectRatio: [16, 9]);
 ```
 </div>
 
-## How to check whether PIP is active
+### How to check whether PIP is active
 
-To check whether PIP mode is currently active use `isPipActive` method as:
+To check whether PIP mode is currently active use `isActive` method as:
 
 ```dart
-hmsSDK.isPipActive();
+bool isPipActive = await HMSAndroidPIPController.isActive();
 ```
 
-> To display UI according to PIP use the `isPipActive` to set the state for PIP mode and render the UI accordingly.
+> To display UI according to PIP use the `isActive` to set the state for PIP mode and render the UI accordingly.
 
 ### Checkout PIP in Action
 
@@ -72,6 +71,122 @@ How PIP mode is implemented in our example app. Checkout here:
   Your browser does not support the video tag.
 </video>
 
+## iOS
+
+### Check PIP availablility
+
+PIP mode only works above iOS 15 but to check whether the current device supports PIP mode or not `HMSIOSPIPController.isAvailable` method can be used:
+
+```dart
+bool _isPipAvailable = await HMSIOSPIPController.isAvailable();
+```
+
+### Setup PIP
+
+In iOS devices PIP is needed to be setup first for that call `HMSIOSPIPController.setup` with the following parameters:
+
+**autoEnterPip** - Enable [autoEnterPip] will start pip mode automatically when app minimized. Default value is `true`
+  
+**aspectRatio** - Ratio for PIP window. For example: [16, 9], [9, 16] ,[1, 1]. Default value is `[16, 9]`.
+  
+**scaleType** - To set the video scaling. scaleType can be one of the following: [SCALE_ASPECT_FIT, SCALE_ASPECT_FILL, SCALE_ASPECT_BALANCED]. Default value is `ScaleType.SCALE_ASPECT_FILL`
+  
+**backgroundColor** - To set the background colour when video is off thst colour will be visible in background of PIP window. Default value is `Colors.black`.
+
+```dart
+  HMSIOSPIPController.setup(autoEnterPip: true, aspectRatio: [9, 16]);
+```
+>Note: Setup PIP function can be called like - onJoin, or on click of a button, or when a Screenshare starts etc
+
+### Change Video Track
+
+The `HMSIOSPIPController.changeVideoTrack` method is called when you want to change the HMSVideoTrack in PIP window. following are the parameters need to be passed at time of calling this method:
+
+**track** - [HMSVideoTrack] need to be passed for changing PIP window track.
+
+**aspectRatio** - Ratio for PIP window. For example: [16, 9], [9, 16] ,[1, 1]. Default value is `[16, 9]`.
+
+**alternativeText** - Alternative text is a textual substitute if HMSVideoTrack is muted.
+
+**scaleType** - To set the video scaling. scaleType can be one of the following: [SCALE_ASPECT_FIT, SCALE_ASPECT_FILL, SCALE_ASPECT_BALANCED]. Default value is `ScaleType.SCALE_ASPECT_FILL`
+
+**backgroundColor** - To set the background colour when video is off thst colour will be visible in background of PIP window. Default value is `Colors.black`.
+
+```dart
+   HMSIOSPIPController.changeVideoTrack(
+            track: videoTrack,
+            aspectRatio: [9, 16],
+            alternativeText: "peer Name",
+            scaleType: ScaleType.SCALE_ASPECT_FILL,
+            backgroundColor: Colors.blue
+            );
+```
+
+>Note: changeVideoTrack method can be callled like - minimizing of app, onUpdateSpeakers or onTrackUpdate etc.
+
+### Change Text
+
+The `HMSIOSPIPController.changeText` method is called when you want to remove or show only text in PIP window. following are the parameters need to be passed at time of calling this method:
+
+**text** - Text you want to show in PIP window. It will replace HMSVideoTrack if it playing in PIP window.
+
+**aspectRatio** - Ratio for PIP window. For example: [16, 9], [9, 16] ,[1, 1]. Default value is `[16, 9]`.
+
+**scaleType** - To set the video scaling. scaleType can be one of the following: [SCALE_ASPECT_FIT, SCALE_ASPECT_FILL, SCALE_ASPECT_BALANCED]. Default value is `ScaleType.SCALE_ASPECT_FILL`
+
+**backgroundColor** - To set the background colour when video is off thst colour will be visible in background of PIP window. Default value is `Colors.black`.
+
+```dart
+  HMSIOSPIPController.changeText(
+          text: "Peer Name",
+          aspectRatio: [9, 16],
+          scaleType: ScaleType.SCALE_ASPECT_FILL,
+          backgroundColor: Colors.blue
+          );
+```
+>Note: changeText method can be callled like - when HMSVideoTrack changes its mute status or want to show text when local peer is speaking.
+
+### How to check whether PIP is active
+
+To check whether PIP mode is currently active use `isActive` method as:
+
+```dart
+  bool isPipActive = await HMSIOSPIPController.isActive();
+```
+
+### Start PIP Manually
+
+To start PIP manually call the following method:
+
+```dart
+  HMSIOSPIPController.start();
+```
+
+### Stop PIP Manually
+
+To stop PIP manually call the following method:
+
+```dart
+  HMSIOSPIPController.stop();
+```
+
+### Destroy PIP
+
+This method is called to destroy PIP window:
+
+```dart
+  HMSIOSPIPController.destroy();
+```
+>Note: This method can be call at time of changing role to hls-viewer role.
+
+### Checkout PIP in Action
+
+How PIP mode is implemented in our example app. Checkout here: 
+
+<video controls height="500">
+  <source src="https://user-images.githubusercontent.com/45732601/214609647-d86da375-9e90-438e-9712-328d0a5362b1.MP4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
 
 You can checkout the 100ms Flutter SDK Github repository which also contains the PIP implementation. [Example app implementation here](https://github.com/100mslive/100ms-flutter/tree/main/example).
 
