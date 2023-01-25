@@ -16,7 +16,7 @@ You must host your server to generate these tokens while transitioning your app 
 To create an Auth Token, you need to use `app_access_key`, `app_secret`, `room_id`, and `user_id`.
 
 -   You can get the `app_access_key` and `app_secret` from the [developer section](https://dashboard.100ms.live/developer) in your 100ms dashboard. This key and secret differ across workspaces so please ensure you are in the intended workspace before copying these credentials.
--   **room_id**: This is the unique identifier for your room. You can get it from the [rooms page](https://dashboard.100ms.live/rooms) in your dashboard or in the response payload of the [create room server-side API](/docs/server-side/v2/Rooms/create-via-api).
+-   **room_id**: This is the unique identifier for your room. You can get it from the [rooms page](https://dashboard.100ms.live/rooms) in your dashboard or in the response payload of the [create room server-side API](/server-side/v2/Rooms/create-via-api).
 -   **user_id**: This identifier can be used to map a 100ms peer to your own internal user object for business logic. Specify your internal user identifier as the peer's user_id. If not available, use any random string.
 
 ### How to use?
@@ -210,12 +210,12 @@ If you are building integration with 100ms, you can get app tokens from the 100m
 
 #### Get app tokens from the dashboard
 
-If you are building your first app by following one of our [quickstart guides](/docs/javascript/v2/guides/javascript-quickstart), you can get the app token directly from 100ms dashboard to join a room for the first time. Refer to [this guide](./../guides/token#get-a-temporary-token-from-100ms-dashboard) for more information.
+If you are building your first app by following one of our [quickstart guides](/javascript/v2/guides/javascript-quickstart), you can get the app token directly from 100ms dashboard to join a room for the first time. Refer to [this guide](/javascript/v2/guides/token#get-a-temporary-token-from-100ms-dashboard) for more information.
 
 ## Management Token
 
 100ms uses management tokens to authenticate REST APIs.
 
-If you're evaluating 100ms [server APIs](/docs/server-side/v2/introduction/basics), you can use our public [Postman collection](/docs/server-side/v2/introduction/postman-guide#fork-the-collection), which doesn't require you to create a management token as we've managed it using a [pre-request script](/docs/server-side/v2/introduction/postman-guide#simplified-token-generation) within the collection.
+If you're evaluating 100ms [server APIs](/server-side/v2/introduction/basics), you can use our public [Postman collection](/server-side/v2/introduction/postman-guide#fork-the-collection), which doesn't require you to create a management token as we've managed it using a [pre-request script](/server-side/v2/introduction/postman-guide#simplified-token-generation) within the collection.
 
 If you're transitioning your app to production, we recommend you create your backend service for management token generation. You must use the `app_access_key` and `app_secret` from the [developer section](https://dashboard.100ms.live/developer) in your 100ms dashboard to create the management token.
