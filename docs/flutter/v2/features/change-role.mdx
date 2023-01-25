@@ -9,7 +9,7 @@ import BulkRoleChangeErrors from '@/common/bulk-role-change-errors.md';
 
 Each `HMSPeer` instance has a `role` property which returns an `HMSRole` instance. You can use this property to do the following:
 
-1. Check what this Role is allowed to publish i.e. can it publish a video (and at what resolution)? Can it publish audio? Can it share a screen? Who can this role subscribe to? 
+1. Check what this Role is allowed to publish, that is, can it publish a video (and at what resolution)? Can it publish audio? Can it share a screen? Who can this role subscribe to? 
 
     For example, a Student Role can only see the Teacher's video. This is can be discovered by checking `publishSettings` and `subscribeSettings` properties.
 
@@ -52,7 +52,7 @@ class Meeting  implements HMSUpdateListener, HMSActionResultListener{
         ///If set to `true` then the role will be changed without asking permission from the [peer]
         ///In case of `false` permissions will be asked and the role will be changed only after the request is accepted. 
         ///[hmsActionResultListener]: an instance of a class which implements HMSActionResultListener
-        //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+        //Here this is an instance of a class that implements HMSActionResultListener that is Meeting
         hmsSDK.changeRoleOfPeer(
         forPeer: peer,
         toRole: roleName,
@@ -152,7 +152,7 @@ class Meeting  implements HMSUpdateListener, HMSActionResultListener{
         ///[toRole]: the role you wish to move peers into(destination role)
         ///[ofRoles]: List of roles whose role needs to be changed
         ///[hmsActionResultListener]: an instance of a class which implements HMSActionResultListener
-        //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+        //Here this is an instance of a class that implements HMSActionResultListener that is Meeting
         hmsSDK.changeRoleOfPeersWithRoles(
         toRole: toRole,
         ofRoles: ofRoles,
@@ -202,7 +202,7 @@ class Meeting  implements HMSUpdateListener, HMSActionResultListener{
 
 1. Note that if an empty list is sent to `ofRoles`, no roles will be changed. This is to avoid accidentally changing roles you may not have intended such as the bots that provide recording and streaming with the roles `beam`.
 
-2. Also, Bulk Role Changes are always forced i.e. no option will be given for the peer to accept it, they will just be changed immediately.
+2. Also, Bulk Role Changes are always forced, that is, no option will be given for the peer to accept it, they will just be changed immediately.
 
 ### Let's have a look at an example of bulk role change
 

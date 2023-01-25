@@ -9,7 +9,7 @@ import BulkRoleChangeErrors from '@/common/bulk-role-change-errors.md';
 
 Each `HMSPeer` instance has a `role` property which returns an `HMSRole` instance. You can use this property to do the following:
 
-1. Check what this Role is allowed to publish i.e. can it publish a video (and at what resolution)? Can it publish audio? Can it share a screen? Who can this role subscribe to? 
+1. Check what this Role is allowed to publish, that is can it publish a video (and at what resolution)? Can it publish audio? Can it share a screen? Who can this role subscribe to? 
 
   For example, a Student Role can only see the Teacher's video. This is can be discovered by checking `publishSettings` and `subscribeSettings` properties.
 
@@ -233,7 +233,7 @@ await hmsInstance.changeRoleOfPeersWithRoles(rolesToChange, hostRole);
 
 1. Note that if an empty list is sent to `ofRoles`, no roles will be changed. This is to avoid accidentally changing roles you may not have intended such as the bots that provide recording and streaming with the roles `beam`.
 
-2. Also, Bulk Role Changes are always forced i.e. no option will be given for the peer to accept it, they will just be changed immediately.
+2. Also, Bulk Role Changes are always forced, that is no option will be given for the peer to accept it, they will just be changed immediately.
 
 
 <BulkRoleChangeErrors />
