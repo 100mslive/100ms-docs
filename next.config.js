@@ -461,6 +461,11 @@ const nextConfig = {
                 destination: '/react-native/v2/foundation/faq',
                 permanent: true
             },
+            {
+                source: '/android/v2/foundation/faq',
+                destination: '/android/v2/how--to-guides/debugging/faq',
+                permanent: true
+            },
         ];
     }
 };
