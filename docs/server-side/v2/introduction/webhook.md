@@ -208,7 +208,7 @@ This event will be sent when any peer joins the room successfully
 | user_id            | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                           |
 | template_id        | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                    |
 | user_name          | `string`             | User name of the joining user <br/><br/> Example: Test user                                             |
-| user_data          | `string`             | User data of the joining user <br/><br/> Example: {"isHandRaised":true}                                 |
+| user_data          | `string`             | User data of the joining user <br/><br/> Example: `{"isHandRaised":true}`                               |
 | role               | `string`             | Role of the joining user <br/><br/> Example: host                                                       |
 | joined_at          | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                     |
 | session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                 |
@@ -253,7 +253,7 @@ This event will be sent when peer leaves the room
 | user_id            | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                                         |
 | template_id        | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                  |
 | user_name          | `string`             | User name of the user <br/><br/> Example: Test user                                                                   |
-| user_data          | `string`             | User data of the user <br/><br/> Example: {"isHandRaised":true}                                                       |
+| user_data          | `string`             | User data of the user <br/><br/> Example: `{"isHandRaised":true}`                                                     |
 | role               | `string`             | Role of the user <br/><br/> Example: host                                                                             |
 | left_at            | `timestamp (in UTC)` | Timestamp when user left <br/><br/> Example: 2020-11-11T17:32:17Z                                                     |
 | duration           | `int`                | Duration the user spent in the room in seconds <br/><br/> Example: 36000                                              |
@@ -332,7 +332,7 @@ This event will be sent when a peer fails to join a room. This can occur when,
 | user_id       | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                           |
 | template_id   | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                    |
 | user_name     | `string`             | User name of the user <br/><br/> Example: Test user                                                     |
-| user_data     | `string`             | User data of the user <br/><br/> Example: {"isHandRaised":true}                                         |
+| user_data     | `string`             | User data of the user <br/><br/> Example: `{"isHandRaised":true}`                                       |
 | role          | `string`             | Role of the user <br/><br/> Example: host                                                               |
 | joined_at     | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                     |
 | error_message | `string`             | Reason for failure <br/><br/> Example: Peer not joined                                                  |
@@ -385,7 +385,7 @@ This event will be sent when the peer leave fails. This can occur when,
 | user_id       | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                           |
 | template_id   | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                    |
 | user_name     | `string`             | User name of the user <br/><br/> Example: Test user                                                     |
-| user_data     | `string`             | User data of the user <br/><br/> Example: {"isHandRaised":true}                                         |
+| user_data     | `string`             | User data of the user <br/><br/> Example: `{"isHandRaised":true}`                                       |
 | role          | `string`             | Role of the user <br/><br/> Example: host                                                               |
 | left_at       | `timestamp (in UTC)` | Timestamp when user left <br/><br/> Example: 2020-11-11T17:32:17Z                                       |
 | duration      | `int`                | Duration the user spent in the room in seconds <br/><br/> Example: 36000                                |
@@ -539,7 +539,7 @@ This event will be sent when the role change for a peer is successful.
 | peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id            | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                           |
 | user_name          | `string`             | User name of the user <br/><br/> Example: Test user                                                     |
-| user_data          | `string`             | User data of the user <br/><br/> Example: {"isHandRaised":true}                                         |
+| user_data          | `string`             | User data of the user <br/><br/> Example: `{"isHandRaised":true}`                                       |
 | previous_role      | `string`             | Previous role of the peer <br/><br/> Example: host                                                      |
 | role               | `string`             | New role of the user <br/><br/> Example: host                                                           |
 | joined_at          | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                     |
@@ -591,7 +591,7 @@ This event will be sent when the role change for a peer fails. For example:
 | peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 | user_id            | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                           |
 | user_name          | `string`             | User name of the user <br/><br/> Example: Test user                                                     |
-| user_data          | `string`             | User data of the user <br/><br/> Example: {"isHandRaised":true}                                         |
+| user_data          | `string`             | User data of the user <br/><br/> Example: `{"isHandRaised":true}`                                       |
 | role               | `string`             | New role of the user <br/><br/> Example: host                                                           |
 | joined_at          | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                     |
 | session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                 |
