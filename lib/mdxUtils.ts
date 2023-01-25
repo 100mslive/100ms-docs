@@ -19,7 +19,6 @@ export const DOCS_PATH = join(process.cwd(), 'docs');
 /**
  * Gets a list of all mdx files inside the `DOCS_PATH` directory
  */
-
 const getFileList = (dirName) => {
     let files: string[] = [];
     const items = readdirSync(dirName, { withFileTypes: true });

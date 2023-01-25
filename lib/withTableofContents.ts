@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { visit } from 'unist-util-visit';
-import { slugify, toMdxJsxFlowElement } from '@/lib/mdxUtils';
+import { toMdxJsxFlowElement } from '@/lib/mdxUtils';
 
 function getTitle(node): string | undefined {
     const children = node.children[0];
@@ -9,6 +9,7 @@ function getTitle(node): string | undefined {
     }
     return undefined;
 }
+import { slugify } from "./utils"
 
 /**
  * Generates a table of contents by parsing a node tree
