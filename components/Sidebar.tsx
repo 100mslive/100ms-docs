@@ -25,7 +25,7 @@ interface Props {
 }
 
 const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
-    const router = useRouter();
+    const router = useRouter() as any;
     const {
         query: { slug }
     } = router;
@@ -39,11 +39,11 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
     const [currentDocSlug] = slug as string[];
 
     let nav;
-    if (Object.keys(currentNav).length && Array.isArray(slug)) {
+    if (Object.keys(currentNav).length) {
         const platform = currentNav[currentDocSlug];
         if (slug[0] !== 'v1' && slug[0] !== 'v2') {
-            if (slug.length > 3) {
-                nav = platform[slug![1]];
+            if (slug?.length > 3) {
+                nav = platform[slug[1]];
                 if (slug[0] === 'api-reference') {
                     // if (slug[1] === 'android') {
                     //     showPagination = false;
@@ -54,8 +54,8 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
         } else nav = platform;
     }
 
-    let indexOf = Array.isArray(slug) ? menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]) : -1;
-    if (Array.isArray(slug) && slug[0] === 'api-reference')
+    let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]);
+    if (slug[0] === 'api-reference')
         indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[1]);
 
     indexOf = indexOf === -1 ? 0 : indexOf;
@@ -63,7 +63,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
 
     const changeTech = (s) => {
         setTech(s);
-        if (Array.isArray(slug) && slug[0] === 'api-reference')
+        if (slug[0] === 'api-reference')
             router.push(s.apiRef, undefined, {
                 shallow: false
             });

@@ -1,0 +1,83 @@
+---
+title: Mirrored Video
+nav: 16
+---
+Whenever the video is rendered on the SurfaceViewRenderer we can flip the video frame on the horizontally i.e creating a mirror frame.
+
+* [Code](#code)
+* [Visual Examples](#visual-examples)
+* [Switching between front and back camera on the same view](#camera-flip-effects)
+
+##  Code
+
+Invoke `setMirror` method with `true`, to flip it horizontally and `false` to restore it in it's original form. Since this is a property of the SurfaceViewRenderer it will persist across release and reinitializations.
+
+
+<Tabs id="switch-device" items={['Kotlin', 'Java']} />
+
+<Tab id='switch-device-0'>
+
+```kotlin
+surfaceViewRenderer.setMirror(true)
+```
+</Tab>
+<Tab id='switch-device-1'>
+
+```java
+surfaceViewRenderer.setMirror(true);
+```
+
+</Tab>
+
+## Sample App Code
+Long press on a video tile in the sample app to get the `Mirror` option. There you can select between inverted or normal views for a given video tile.
+
+
+## Visual Examples
+
+#### Front Camera
+The default view has no mirroring. If you were facing the front camera, here's what that would look like on a display on the phone.
+
+Actual position is how you sit, display position is how it will look in the `SurfaceViewRenderer`.
+
+```
+     Actual Position                       Display Position
+
+┌─────────────────────────┐           ┌─────────────────────────┐
+│                         │           │                         │
+│                         │           │                         │
+│   Phone Front Camera    │           │   Phone Front Camera    │
+│                         │           │                         │
+│                         │           │                         │
+│                         │           │                         │
+│                   You   │           │   You                   │
+│                         │           │                         │
+│                         │           │                         │
+└─────────────────────────┘           └─────────────────────────┘
+```
+
+
+To change this, turn on mirroring with `setMirror(true)`.
+
+```
+     Actual Position                       Display Position
+
+┌─────────────────────────┐           ┌─────────────────────────┐
+│                         │           │                         │
+│                         │           │                         │
+│   Phone Front Camera    │           │   Phone Front Camera    │
+│                         │           │                         │
+│                         │           │                         │
+│                         │           │                         │
+│                   You   │           │                   You   │
+│                         │           │                         │
+│                         │           │                         │
+└─────────────────────────┘           └─────────────────────────┘
+```
+
+#### Back Camera
+Since the left and right for the back camera vs the display are the same, a non mirrored view of the back camera is the same as a mirrored view for the front camera.
+The Actual and Display positions are reverse for the back camera.
+
+## Camera Flip Effects
+If you call `setMirror` on an instance of SurfaceViewRenderer and then flip the camera from front to back or vice versa, the value persists. A given surface once mirrored will remain mirrored. It should be noted however that left for the front facing the camera and left for the back facing camera are opposites. So you may want to change setMirror when flipping for that reason.

@@ -1,0 +1,82 @@
+---
+title: Writing HmsLogs in Local Storage
+nav: 8.03
+---
+
+## Save Logs from SDK in Local Storage
+
+Logs from `hmsSDK` can be saved as a file in local storage by setting the settings from `HmsLogSettings` in Builder of `hmsSDK` instance.
+In this , whenever there is a log printed from hmsSDK it will be saved in a seperate file. 
+
+
+> 💡 Each new meeting will have a seperate `session log` with file name as `session-log-${room_id}` file, where "${room_id}" is a placeholder
+
+
+### Implementation Details
+
+HmsLogSettings must be passed as a parameter in hmsSdk builder object during instantiation.
+
+Params:
+
+`maxDirSizeInBytes` - max dir size in bytes to be maintained for /logs default - set to 10mb. <br />
+> 💡 Note : if the directory size exceeds the `maxDirSizeInBytes` provided by client, then it will delete the oldest files next time user starts a meeting to make room for new ones. <br /><br /> A background service is also started once a day to make sure that size of directory never exceeds the desired size.
+
+`isLogStorageEnabled` - set to true if /logs are to be saved else false default - false. <br />
+`level` - set log level for logs to observe default - HMSLogger.Debug <br />
+ 
+<Tabs id="save-log-dir" items={['Kotlin', 'Java']} />
+
+<Tab id='save-log-dir-0'>
+
+``` kotlin 
+
+    private val hmsLogSettings : HMSLogSettings = HMSLogSettings(LogAlarmManager.DEFAULT_DIR_SIZE,true)
+
+    val hmsSDK = HMSSDK
+        .Builder(application)
+        .setLogSettings(hmsLogSettings)
+        .build()
+
+```
+</Tab>
+
+<Tab id='save-log-dir-1'>
+
+``` java 
+
+    HMSLogSettings hmsLogSettings = new HMSLogSettings(LogAlarmManager.DEFAULT_DIR_SIZE,true, HMSLogger.LogLevel.DEBUG);
+
+    HMSSDK hmssdk = new HMSSDK.Builder(application)
+    .setTrackSettings(hmsTrackSettings)
+    .build();
+
+```
+</Tab>
+
+> 💡 whenever there is a crash in `hmsSDK` , it will be logged in the file named as `crash-log-${room_id}` where ${room_id} is a placeholder.
+
+## Fetching the Log Directory From SDK
+
+It could look something like this:
+
+```kotlin
+
+import live.hms.video.utils.LogUtils
+
+```
+
+<Tabs id="fetch-log-dir" items={['Kotlin', 'Java']} />
+
+<Tab id='fetch-log-dir-0'>
+
+```kotlin
+       val dir : File = LogUtils.getDirPath(context = context)
+```
+</Tab>
+<Tab id='fetch-log-dir-1'>
+
+```java
+       File dir = LogUtils.getDirPath(context)
+```
+
+</Tab>

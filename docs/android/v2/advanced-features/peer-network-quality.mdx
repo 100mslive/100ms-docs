@@ -1,0 +1,77 @@
+---
+title: Show Network Quality For Peers
+nav: 8.03
+---
+
+## Network Quality Information
+
+The network quality for every peer can be retrieved by registering an instance of `HmsUpdateListener` in `hmsSDK`.
+
+## Limitations
+The network quality information per peer is calculated by the server by observing how well the peer can download other peer's videos.
+
+> ⚠️ If the peer is not subscribing to any videos network quality updates will NOT be sent for them to anyone in the call.
+
+This depends only on what videos that peer is seeing, so it's possible in a large call that some people have on-screen only degraded tiles, or tiles where others have videos off and the peer who can't see the videos will not have any network quality information about them sent to others.
+
+## Reading Network Quality Information
+
+Whenever peer network quality changes an update will be fired to `onPeerUpdate(update : HMSPeerUpdate, peer : HMSPeer)`
+of HMSUpdateListener where the update value will be of type `HMSPeerUpdate.NETWORK_QUALITY_UPDATED`.
+
+
+> 💡The`HMSPeer` object represents a person in the call.
+
+
+It could look something like this:
+
+<Tabs id="peer-quality_update" items={['Kotlin', 'Java']} />
+
+<Tab id='peer-quality_update-0'>
+
+
+```kotlin
+override fun onPeerUpdate(type: HMSPeerUpdate, hmsPeer: HMSPeer) {
+    when (type) {
+        HMSPeerUpdate.NETWORK_QUALITY_UPDATED -> {
+            // values can be accessed using hmsPeer.networkQuality?.downlinkQuality    
+            val quality = hmsPeer.networkQuality?.downlinkQuality        
+        }
+    }
+}
+
+```
+
+</Tab>
+
+<Tab id='peer-quality_update-1'>
+
+```java
+    
+@Override
+void onPeerUpdate(HMSPeerUpdate type, HMSPeer hmsPeer) {
+    switch (type) {
+        case NETWORK_QUALITY_UPDATED:
+            HMSNetworkQuality quality = peer.getNetworkQuality();
+            
+            if(quality != null) {
+                int networkQuality = quality.getDownlinkQuality();
+            }
+            break;
+        // ....
+    }
+}  
+
+```
+
+</Tab>
+
+## Interpreting the Values
+`peer.networkQuality?.downlinkQuality` will be a value between 0 and 5.
+- -1 -> Network check failure
+-  0  -> Very bad network or network check failure
+-  1  -> Poor network
+-  2  -> Bad network
+-  3  -> Average
+-  4  -> Good
+-  5  -> Best
