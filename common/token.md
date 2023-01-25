@@ -34,7 +34,7 @@
 
 ## Get a temporary token from 100ms dashboard
 
-Any client connecting calling 100ms' service needs to authenticate using an auth token. In production you would have your own servers generating the tokens (see more [here](/docs/javascript/v2/foundation/security-and-tokens)), but for a quick start you can use the dashboard to create a token for you. The token will expire in 24 hours and should not be hard-coded into a production app.
+Any client connecting calling 100ms' service needs to authenticate using an auth token. In production you would have your own servers generating the tokens (see more [here](/javascript/v2/foundation/security-and-tokens)), but for a quick start you can use the dashboard to create a token for you. The token will expire in 24 hours and should not be hard-coded into a production app.
 
 - To get a temporary token click on "Join room" button.
 
