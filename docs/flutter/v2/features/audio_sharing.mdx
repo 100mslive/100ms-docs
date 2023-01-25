@@ -69,14 +69,14 @@ class Meeting  implements HMSUpdateListener, HMSActionResultListener{
     void startAudioShare() {
         ///[audioMixingMode] HMSAudioMixingMode enum with values discussed above 
         ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
-        //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+        //Here this is an instance of a class that implements HMSActionResultListener that is Meeting
         //For example if the mode needed is TALK_AND_MUSIC 
         hmsSDK.startAudioShare(audioMixingMode: HMSAudioMixingMode.TALK_AND_MUSIC,hmsActionResultListener: this);
     }
 
     void stopAudioShare() {
         ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
-        //Here this is an instance of a class that implements HMSActionResultListener i.e. Meeting
+        //Here this is an instance of a class that implements HMSActionResultListener that is Meeting
         hmsSDK.stopAudioShare(hmsActionResultListener: this);
     }
 
@@ -134,7 +134,7 @@ To change the audio sharing mode, call the `setAudioMixingMode` API and pass one
 hmsSDK.setAudioMixingMode(audioMixingMode:HMSAudioMixingMode.MUSIC_ONLY);
 ```
   
-Note that `TALK_ONLY` mode is equivalent to regular mode, i.e. without starting this API
+Note that `TALK_ONLY` mode is equivalent to regular mode, that is without starting this API
 
 ## iOS Setup
 

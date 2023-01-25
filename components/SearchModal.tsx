@@ -53,7 +53,7 @@ const Result = ({ searchResult }) => {
                 }}>
                 {path.map((text, id) =>
                     id === path.length - 1 ? (
-                        text
+                        text.split('#')[0]
                     ) : (
                         <>
                             <span style={{ whiteSpace: 'nowrap' }}>{text}</span>
@@ -64,7 +64,8 @@ const Result = ({ searchResult }) => {
             </Text>
             <Text
                 dangerouslySetInnerHTML={{
-                    __html: `${searchResult['_snippetResult']?.content?.value}`
+                    // eslint-disable-next-line no-underscore-dangle
+                    __html: `${searchResult._snippetResult ?.content?.value}`
                 }}
             />
         </Box>
@@ -109,7 +110,7 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
                                         totalNumberOfResults: hits?.length,
                                         textInSearch: searchTerm || '',
                                         rankOfSearchResult: i + 1,
-                                        locationOfSearchResult: searchResult.url,
+                                        locationOfSearchResult: searchResult.link,
                                         referrer: document.referrer,
                                         path: window.location.hostname,
                                         pathname: window.location.pathname
@@ -195,6 +196,7 @@ const Search = ({ refine, setSearchTerm, searchTerm }) => {
                     setSearchTerm(event.target.value);
                 }}
                 type="text"
+                // eslint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
                 style={{
                     marginLeft: '13px',
