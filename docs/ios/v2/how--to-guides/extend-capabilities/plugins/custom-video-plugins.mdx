@@ -1,6 +1,6 @@
 ---
 title: Custom Video Effects (Beta)
-nav: 5.2
+nav: 12.1
 ---
 
 Custom video plugins allow you to hook into 100ms' video lifecycle and add your own video processing
@@ -11,7 +11,7 @@ Note that this page is about creating custom new plugins than using existing one
 
 ## Prerequisites
 
-* Basic Knowledge about 100ms SDK, follow our quickstart guides.
+-   Basic Knowledge about 100ms SDK, follow our quickstart guides.
 
 ## Video Plugin Interface
 
@@ -19,33 +19,33 @@ By a 'video plugin' here, we mean a custom class that you can write to to manipu
 
 ```swift
 class GrayscaleVideoPlugin: HMSVideoPlugin {
-  
+
   override func process(_ frame: CVPixelBuffer) -> CVPixelBuffer {
     ...
   }
-  
+
 }
 ```
 
-The process function provides you with an input frame that you can process. After processing, you return an output frame. 
+The process function provides you with an input frame that you can process. After processing, you return an output frame.
 HMSSDK calls the process function whenever a new frame is generated from the camera. The input frames are replaced by the output frames provided by you thus transforming the video stream.
 
 The general approach to write a video plugin that modifies the frames in the video is like below:
 
 ```swift
 class GrayscaleVideoPlugin: HMSVideoPlugin {
-  
+
   override func process(_ frame: CVPixelBuffer) -> CVPixelBuffer {
-      
+
       // Process the 'frame' to transform it into a grayscal frame
       ...
-      
+
       let outputFrame: CVPixelBuffer = ...
-      
+
       // return the output frame
       return outputFrame
   }
-  
+
 }
 ```
 
@@ -53,17 +53,17 @@ In case you are writing a plugin that doesn't modify the video frames but only a
 
 ```swift
 class FaceAttendencePlugin: HMSVideoPlugin {
-  
+
   override func process(_ frame: CVPixelBuffer) -> CVPixelBuffer {
-  
+
      DispatchQueue.global().async {
         // Recognise face and mark attendence
         ...
      }
-     
+
      return frame
   }
-  
+
 }
 ```
 
@@ -75,22 +75,22 @@ Once a plugin implementation is ready, it can be added to the local peer's video
 
 ```swift
      var videoPlugins = [HMSVideoPlugin]()
-   ```
-   
+```
+
 2. Create an instance of HMSVirtualBackgroundPlugin and append it to videoPlugins array, like below
 
 ```swift
      let grayscalePlugin = GrayscaleVideoPlugin()
      grayscalePlugin.activate()
      videoPlugins.append(grayscalePlugin)
-   ```
-   
+```
+
 3. Next, create an instance of HMSVideoTrackSettings passing videoPlugins array
 
 ```swift
      let videoSettings = HMSVideoTrackSettings(... videoPlugins: self.videoPlugins)
-   ```
-   
+```
+
 4. Use this videoSettings instance while setting the trackSettings on HMSSDK
 
 ```swift
@@ -98,8 +98,8 @@ Once a plugin implementation is ready, it can be added to the local peer's video
             sdk.trackSettings = HMSTrackSettings(videoSettings: videoSettings, audioSettings: ...)
             ...
         }
-   ```
-   
+```
+
 That is all you need to do to add a custom video plugin to your HMSSDK session!
 
 ## Activating and deactivating the plugin
@@ -111,26 +111,25 @@ grayscalePlugin.deactivate()
 grayscalePlugin.activate()
 ```
 
-
 ## Implementation Example - Grayscale Filter
 
 Below is a sample implementation of the above interface which converts the local video in grayscale.
 
 ```swift
 class GrayscaleVideoPlugin: HMSVideoPlugin {
-    
+
     static let defaultAttributes: [NSString: NSObject] = [
         kCVPixelBufferPixelFormatTypeKey: NSNumber(value: kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange),
         kCVPixelBufferIOSurfacePropertiesKey : [:] as NSDictionary
     ]
-    
+
     private var attributes: [NSString: NSObject] {
         var attributes: [NSString: NSObject] = Self.defaultAttributes
         attributes[kCVPixelBufferWidthKey] = NSNumber(value: Int(extent.width))
         attributes[kCVPixelBufferHeightKey] = NSNumber(value: Int(extent.height))
         return attributes
     }
-    
+
     private var _pixelBufferPool: CVPixelBufferPool?
     private var pixelBufferPool: CVPixelBufferPool! {
         get {
@@ -145,25 +144,25 @@ class GrayscaleVideoPlugin: HMSVideoPlugin {
             _pixelBufferPool = newValue
         }
     }
-    
+
     private var extent = CGRect.zero {
         didSet {
             guard extent != oldValue else { return }
             pixelBufferPool = nil
         }
     }
-    
+
     let ciContext = CIContext(options: nil)
-    
+
     override func process(_ frame: CVPixelBuffer) -> CVPixelBuffer {
         let inputImage = CIImage(cvPixelBuffer: frame)
-        
+
         guard let outputImage = inputImage.grayscale else { return frame }
-        
+
         var outputBuffer: CVImageBuffer?
-        
+
         extent = outputImage.extent
-        
+
         CVPixelBufferPoolCreatePixelBuffer(nil, pixelBufferPool, &outputBuffer)
 
         if let outputBuffer = outputBuffer {
@@ -200,9 +199,8 @@ let serialGrayscalePluginProcessingQueue = grayscalePlugin.frameProcessingQueue
 
 📲 Download the 100ms fully featured Sample iOS app here: https://testflight.apple.com/join/dhUSE7N8
 
-
 ## Plugin Guidelines
 
-* Feel free to implement more methods outside the interface, options passed in plugin's constructor etc. as required for
-the users of the plugin to give more interaction points. For example, our Virtual background plugin exposes a property to change
-the background as required.
+-   Feel free to implement more methods outside the interface, options passed in plugin's constructor etc. as required for
+    the users of the plugin to give more interaction points. For example, our Virtual background plugin exposes a property to change
+    the background as required.
