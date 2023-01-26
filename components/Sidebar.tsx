@@ -54,7 +54,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
         } else nav = platform;
     }
     
-    const showPlatformSelector = slug?.[0] !== "foundation"
+    const showPlatformSelector = slug?.[0] !== "concepts"
     console.log(slug, showPlatformSelector)
 
     let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]);

@@ -202,7 +202,7 @@ const Homepage = () => {
                                 direction="column"
                                 css={{ marginTop: '$24', marginBottom: '$10' }}>
                                 <h2 style={{ marginTop: '0', marginBottom: '4px' }}>
-                                    <Text variant="h5">Fundamentals</Text>
+                                    <Text variant="h5">Concepts</Text>
                                 </h2>
                                 <Text
                                     variant="body2"
