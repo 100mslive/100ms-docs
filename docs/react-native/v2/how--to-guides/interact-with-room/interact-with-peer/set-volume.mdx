@@ -1,0 +1,40 @@
+---
+title: Set Volume
+nav: 7.25
+---
+
+Sometimes during calls, we need to deafen or turn up a particular peer's volume. For example, suppose a remote peer is too loud compared to others, you may want reduce their volume level and vice-versa.
+
+100ms SDK gives you option to adjust volume of a remote peer's audio. The change in volume level is only effective locally, remote peers remains unaffected. That means only you will hear the lower/higher volume of that Peer. Other peers in Room will continue to listen at the default volume level as before.
+
+You can use `setVolume` method available on `HMSSDK` instance to change volume levels of a remote peer. This method accepts 2 parameters as follows -
+
+1. `track`: `HMSTrack` object of the **audio track** of **remote peer**.
+2. `volume`: New volume level in `number`. It can be in range of `0`(min) to `10`(max). The default value is `1.0`.
+
+An example of using `setVolume` method when track is added -
+
+```js
+const onTrackListener = ({
+    peer,
+    track,
+    type
+}: {
+    peer: HMSPeer,
+    track: HMSTrack,
+    type: HMSTrackUpdate
+}) => {
+    if (
+        type === HMSTrackUpdate.TRACK_ADDED && // When track is added
+        track.type === HMSTrackType.AUDIO && // Making sure track is audio track
+        peer.isLocal === false // Making sure peer is remote peer
+    ) {
+        // Increasing volume level of newly added audio track of remote peer
+        hmsInstance.setVolume(track, 10.0);
+    }
+};
+
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_TRACK_UPDATE, onTrackListener);
+```
+
+> Volume level can vary from 0(min) to 10(max). The default value for volume would be 1.0
