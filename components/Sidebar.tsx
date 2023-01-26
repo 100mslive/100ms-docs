@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
@@ -11,7 +11,6 @@ import { ChevronDownIcon, ChevronLeftIcon } from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
 import { Flex, Text } from '@100mslive/react-ui';
 import SidebarSection from './SidebarSection';
-import Slider from 'react-slick';
 
 type NavRoute = {
     url: string;
@@ -25,20 +24,6 @@ interface Props {
     };
     nav: Record<string, Record<string, NavRoute>>;
 }
-
-const settings = {
-    cssEase: 'ease-in-out',
-    rtl: false,
-    autoplay: false,
-    centerMode: false,
-    variableWidth: false,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    swipeToSlide: true,
-    arrows: false,
-    className: 'slider',
-    speed: 1000
-};
 
 const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
     const router = useRouter() as any;
@@ -88,100 +73,131 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
         else router.push(s.link, undefined, { shallow: false });
     };
 
+    const [showBaseView, setShowBaseView] = useState(false);
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
 
     return (
-        <div style={{ minWidth: '304px' }}>
-            <Slider {...settings}>
-                <div className="sidebar">
-                    <Flex align="center" gap="1" css={{ color: '$primaryLight', pl: '$9' }}>
-                        <ChevronLeftIcon height="16px" width="16px" />
-                        <Text variant="sm" css={{ color: '$primaryLight' }}>
-                            Back to Home
-                        </Text>
-                    </Flex>
-                    {/* Sidebar Version Section */}
-                    {showPlatformSelector ? (
-                        <section
-                            style={{
-                                margin: '0px 0.5rem 0.5rem 0.4rem',
-                                position: 'sticky',
-                                top: '0',
-                                zIndex: '20',
-                                background: 'var(--docs_bg_content)'
-                            }}>
-                            <Listbox value={tech} onChange={changeTech}>
-                                <Listbox.Button className="dropdown">
-                                    <div style={{ display: 'flex ', alignItems: 'center' }}>
-                                        {tech.icon}{' '}
-                                        <span style={{ marginLeft: '1rem' }}>{tech.name}</span>
-                                    </div>
-                                    <ChevronDownIcon />
-                                </Listbox.Button>
-                                <Listbox.Options className="dropdown-options">
-                                    {menuItem.map((m) => (
-                                        <Listbox.Option
-                                            key={m.link}
-                                            value={m}
-                                            className={({ active }) =>
-                                                `${
-                                                    active
-                                                        ? 'dropdown-option dropdown-option-active'
-                                                        : 'dropdown-option'
-                                                }`
-                                            }>
-                                            {m.icon}{' '}
-                                            <span style={{ marginLeft: '1rem' }}>{m.name}</span>
-                                        </Listbox.Option>
-                                    ))}
-                                </Listbox.Options>
-                            </Listbox>
-                        </section>
-                    ) : null}
-                    {/* Sidebar Menu Section */}
-                    {nav
-                        ? Object.entries(nav).map(([key, children], index) => (
-                              <SidebarSection key={key} value={key} index={index} nested={false}>
-                                  {children as React.ReactChildren}
-                              </SidebarSection>
-                          ))
-                        : null}
-                    <style jsx>{`
-                        .sidebar {
-                            padding-bottom: 32px;
-                            display: flex;
-                            width: 304px;
-                            flex-direction: column;
-                            align-items: stretch;
-                            height: calc(100vh - 136px);
-                            overflow-y: scroll;
-                            top: ${menu ? '' : '104px'};
-                            left: 0;
-                            position: sticky;
-                            z-index: 100;
-                            overscroll-behavior: none;
-                        }
-                        ::-webkit-scrollbar {
-                            width: 0px;
-                        }
-                        ::-webkit-scrollbar-thumb {
-                            outline: 0px;
-                        }
-                        a {
-                            text-decoration: none;
-                        }
-                        @media screen and (max-width: 768px) {
-                            .sidebar {
-                                position: sticky;
-                                width: 100vw;
-                                top: 20px;
-                                display: ${menu ? 'flex' : 'none'};
-                                height: 100%;
-                            }
-                        }
-                    `}</style>
-                </div>
-            </Slider>
+        <div
+            style={{
+                display: 'flex',
+                width: '304px',
+                overflowX: 'hidden'
+            }}>
+            <div className={`page ${showBaseView ? 'active-page' : ''}`}>
+                <Flex align="center" gap="1" css={{ color: '$primaryLight', pl: '$9', mt: '$4' }}>
+                    <ChevronLeftIcon height="16px" width="16px" />
+                    <Text variant="sm" css={{ color: '$primaryLight' }}>
+                        Back to Home
+                    </Text>
+                </Flex>
+            </div>
+            <div className={`sidebar ${showBaseView ? 'page' : 'active-page'}`}>
+                <Flex
+                    align="center"
+                    gap="1"
+                    css={{ color: '$primaryLight', pl: '$9', mt: '$4' }}
+                    onClick={() => setShowBaseView(true)}>
+                    <ChevronLeftIcon height="16px" width="16px" />
+                    <Text variant="sm" css={{ color: '$primaryLight' }}>
+                        Back to Home
+                    </Text>
+                </Flex>
+                {/* Sidebar Version Section */}
+                {showPlatformSelector ? (
+                    <section
+                        style={{
+                            margin: '0px 0.5rem 0.5rem 0.4rem',
+                            position: 'sticky',
+                            top: '0',
+                            zIndex: '20',
+                            background: 'var(--docs_bg_content)'
+                        }}>
+                        <Listbox value={tech} onChange={changeTech}>
+                            <Listbox.Button className="dropdown">
+                                <div style={{ display: 'flex ', alignItems: 'center' }}>
+                                    {tech.icon}{' '}
+                                    <span style={{ marginLeft: '1rem' }}>{tech.name}</span>
+                                </div>
+                                <ChevronDownIcon />
+                            </Listbox.Button>
+                            <Listbox.Options className="dropdown-options">
+                                {menuItem.map((m) => (
+                                    <Listbox.Option
+                                        key={m.link}
+                                        value={m}
+                                        className={({ active }) =>
+                                            `${
+                                                active
+                                                    ? 'dropdown-option dropdown-option-active'
+                                                    : 'dropdown-option'
+                                            }`
+                                        }>
+                                        {m.icon}{' '}
+                                        <span style={{ marginLeft: '1rem' }}>{m.name}</span>
+                                    </Listbox.Option>
+                                ))}
+                            </Listbox.Options>
+                        </Listbox>
+                    </section>
+                ) : null}
+                {/* Sidebar Menu Section */}
+                {nav
+                    ? Object.entries(nav).map(([key, children], index) => (
+                          <SidebarSection key={key} value={key} index={index} nested={false}>
+                              {children as React.ReactChildren}
+                          </SidebarSection>
+                      ))
+                    : null}
+            </div>
+            <style jsx>{`
+                .sidebar {
+                    padding-bottom: 32px;
+                    display: flex;
+                    width: 304px;
+                    flex-direction: column;
+                    align-items: stretch;
+                    height: calc(100vh - 136px);
+                    overflow-y: scroll;
+                    top: ${menu ? '' : '104px'};
+                    left: 0;
+                    position: sticky;
+                    z-index: 100;
+                    overscroll-behavior: none;
+                }
+
+                .page {
+                    width: 0;
+                    min-width: 0;
+                    opacity: 0;
+                    overflow-x: hidden;
+                    transition: all ease 0.4s;
+                }
+
+                .active-page {
+                    width: 304px;
+                    opacity: 1;
+                    min-width: 100%;
+                }
+
+                ::-webkit-scrollbar {
+                    width: 0px;
+                }
+                ::-webkit-scrollbar-thumb {
+                    outline: 0px;
+                }
+                a {
+                    text-decoration: none;
+                }
+                @media screen and (max-width: 768px) {
+                    .sidebar {
+                        position: sticky;
+                        width: 100vw;
+                        top: 20px;
+                        display: ${menu ? 'flex' : 'none'};
+                        height: 100%;
+                    }
+                }
+            `}</style>
         </div>
     );
 };
