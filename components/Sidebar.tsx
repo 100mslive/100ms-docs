@@ -11,7 +11,12 @@ import {
     ChevronDownIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
-    LayersIcon
+    LayersIcon,
+    AppleIcon as Ios,
+    FlutterIcon as Flutter,
+    AndroidIcon as Android,
+    ReactIcon as ReactNative,
+    JavascriptIcon as JavaScript
 } from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
 import { Flex, Text } from '@100mslive/react-ui';
@@ -19,6 +24,16 @@ import SidebarSection from './SidebarSection';
 import PlatformAccordion from './PlatformAccordion';
 
 const SIDEBAR_WIDTH = '304px';
+
+const accordionIconStyle = { height: '24px', width: '24px', color: 'inherit' };
+
+const platformOrder = [
+    { text: 'Web', icon: <JavaScript style={accordionIconStyle} /> },
+    { text: 'Android', icon: <Android style={accordionIconStyle} /> },
+    { text: 'iOS', icon: <Ios style={accordionIconStyle} /> },
+    { text: 'Flutter', icon: <Flutter style={accordionIconStyle} /> },
+    { text: 'React Native', icon: <ReactNative style={accordionIconStyle} /> }
+];
 
 type NavRoute = {
     url: string;
@@ -33,16 +48,6 @@ interface Props {
     nav: Record<string, Record<string, NavRoute>>;
     allNav: Record<string, Record<string, NavRoute>>[];
 }
-
-const accordionIconStyle = { height: '24px', width: '24px', color: 'inherit' };
-
-const platformOrder = [
-    { text: 'Web', icon: <JavascriptIcon style={accordionIconStyle} /> },
-    { text: 'Android', icon: <AndroidIcon style={accordionIconStyle} /> },
-    { text: 'iOS', icon: <IosIcon style={accordionIconStyle} /> },
-    { text: 'Flutter', icon: <FlutterIcon style={accordionIconStyle} /> },
-    { text: 'React Native', icon: <ReactIcon style={accordionIconStyle} /> }
-];
 
 const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
     const router = useRouter() as any;
@@ -102,7 +107,14 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
             {/* Top level view */}
             <div
                 className={`page ${showBaseView ? 'active-page' : ''}`}
-                style={showBaseView ? { padding: '1.75rem', paddingTop: '0' } : {}}>
+                style={
+                    showBaseView
+                        ? {
+                              padding: '1.75rem',
+                              paddingTop: '0'
+                          }
+                        : {}
+                }>
                 <Flex
                     align="center"
                     gap="1"
@@ -121,10 +133,19 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                         </Text>
                     </Flex>
                 </a>
+
                 <hr style={{ margin: '24px 0' }} />
+
                 {platformOrder.map((platform) => (
                     <PlatformAccordion title={platform.text} icon={platform.icon} />
                 ))}
+
+                <hr style={{ margin: '24px 0' }} />
+
+                <PlatformAccordion
+                    title={'Server side'}
+                    icon={<ServerIcon style={accordionIconStyle} />}
+                />
             </div>
 
             {/* Platform specific view */}
@@ -211,13 +232,16 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                     z-index: 0;
                     top: 4.75rem;
                     opacity: 0;
-                    whitespace: nowrap;
-                    overflow-x: hidden;
-                    transition: all ease 0.3s;
+                    width: 300px;
+                    box-sizing: border-box;
+                    pointer-events: none;
+                    transition: all ease 0.4s;
                 }
 
                 .active-page {
                     opacity: 1;
+                    pointer-events: auto;
+                    width: ${SIDEBAR_WIDTH}
                     z-index: 10;
                 }
 
@@ -244,6 +268,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
 
                     .page {
                         top: 2.5rem;
+                        width: 100vw;
                     }
                 }
             `}</style>
