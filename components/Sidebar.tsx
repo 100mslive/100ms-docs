@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
@@ -7,10 +7,18 @@ import IosIcon from '@/assets/icons/IosIcon';
 import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import ReactIcon from '@/assets/icons/ReactIcon';
 import ServerIcon from '@/assets/icons/ServerIcon';
-import { ChevronDownIcon, ChevronLeftIcon } from '@100mslive/react-icons';
+import {
+    ChevronDownIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    LayersIcon
+} from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
 import { Flex, Text } from '@100mslive/react-ui';
 import SidebarSection from './SidebarSection';
+import PlatformAccordion from './PlatformAccordion';
+
+const SIDEBAR_WIDTH = '304px';
 
 type NavRoute = {
     url: string;
@@ -23,9 +31,20 @@ interface Props {
         setMenu: React.Dispatch<React.SetStateAction<boolean>>;
     };
     nav: Record<string, Record<string, NavRoute>>;
+    allNav: Record<string, Record<string, NavRoute>>[];
 }
 
-const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
+const accordionIconStyle = { height: '24px', width: '24px', color: 'inherit' };
+
+const platformOrder = [
+    { text: 'Web', icon: <JavascriptIcon style={accordionIconStyle} /> },
+    { text: 'Android', icon: <AndroidIcon style={accordionIconStyle} /> },
+    { text: 'iOS', icon: <IosIcon style={accordionIconStyle} /> },
+    { text: 'Flutter', icon: <FlutterIcon style={accordionIconStyle} /> },
+    { text: 'React Native', icon: <ReactIcon style={accordionIconStyle} /> }
+];
+
+const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
     const router = useRouter() as any;
     const {
         query: { slug }
@@ -56,6 +75,8 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
     }
 
     const showPlatformSelector = slug?.[0] !== 'concepts';
+    console.log(currentNav);
+    console.log('All', allNav);
 
     let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]);
     if (slug[0] === 'api-reference')
@@ -77,31 +98,54 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
 
     return (
-        <div
-            style={{
-                display: 'flex',
-                width: '304px',
-                overflowX: 'hidden'
-            }}>
-            <div className={`page ${showBaseView ? 'active-page' : ''}`}>
-                <Flex align="center" gap="1" css={{ color: '$primaryLight', pl: '$9', mt: '$4' }}>
-                    <ChevronLeftIcon height="16px" width="16px" />
-                    <Text variant="sm" css={{ color: '$primaryLight' }}>
-                        Back to Home
-                    </Text>
-                </Flex>
-            </div>
-            <div className={`sidebar ${showBaseView ? 'page' : 'active-page'}`}>
+        <div className="sidebar">
+            {/* Top level view */}
+            <div
+                className={`page ${showBaseView ? 'active-page' : ''}`}
+                style={showBaseView ? { padding: '1.75rem', paddingTop: '0' } : {}}>
                 <Flex
                     align="center"
                     gap="1"
-                    css={{ color: '$primaryLight', pl: '$9', mt: '$4' }}
+                    css={{ color: '$primaryLight', mt: '$14', mb: '$12', cursor: 'pointer' }}
+                    onClick={() => setShowBaseView(false)}>
+                    <Text variant="sm" css={{ color: '$primaryLight' }}>
+                        Continue exploring
+                    </Text>
+                    <ChevronRightIcon height="16px" width="16px" />
+                </Flex>
+                <a href="docs/concepts/v2/basics/basics">
+                    <Flex gap="2" align="center" css={{ color: '$primaryLight' }}>
+                        <LayersIcon style={{ color: 'inherit' }} />
+                        <Text css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
+                            Concepts
+                        </Text>
+                    </Flex>
+                </a>
+                <hr style={{ margin: '24px 0' }} />
+                {platformOrder.map((platform) => (
+                    <PlatformAccordion title={platform.text} icon={platform.icon} />
+                ))}
+            </div>
+
+            {/* Platform specific view */}
+            <div className={`page ${showBaseView ? '' : 'active-page'}`}>
+                <Flex
+                    align="center"
+                    gap="1"
+                    css={{
+                        color: '$primaryLight',
+                        pl: '$9',
+                        mt: '$14',
+                        mb: '$12',
+                        cursor: 'pointer'
+                    }}
                     onClick={() => setShowBaseView(true)}>
                     <ChevronLeftIcon height="16px" width="16px" />
                     <Text variant="sm" css={{ color: '$primaryLight' }}>
                         Back to Home
                     </Text>
                 </Flex>
+
                 {/* Sidebar Version Section */}
                 {showPlatformSelector ? (
                     <section
@@ -115,7 +159,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                         <Listbox value={tech} onChange={changeTech}>
                             <Listbox.Button className="dropdown">
                                 <div style={{ display: 'flex ', alignItems: 'center' }}>
-                                    {tech.icon}{' '}
+                                    {tech.icon}
                                     <span style={{ marginLeft: '1rem' }}>{tech.name}</span>
                                 </div>
                                 <ChevronDownIcon />
@@ -132,7 +176,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                                                     : 'dropdown-option'
                                             }`
                                         }>
-                                        {m.icon}{' '}
+                                        {m.icon}
                                         <span style={{ marginLeft: '1rem' }}>{m.name}</span>
                                     </Listbox.Option>
                                 ))}
@@ -153,48 +197,53 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                 .sidebar {
                     padding-bottom: 32px;
                     display: flex;
-                    width: 304px;
+                    width: ${SIDEBAR_WIDTH};
                     flex-direction: column;
                     align-items: stretch;
                     height: calc(100vh - 136px);
                     overflow-y: scroll;
                     top: ${menu ? '' : '104px'};
-                    left: 0;
-                    position: sticky;
-                    z-index: 100;
                     overscroll-behavior: none;
                 }
 
                 .page {
-                    width: 0;
-                    min-width: 0;
+                    position: absolute;
+                    z-index: 0;
+                    top: 4.75rem;
                     opacity: 0;
+                    whitespace: nowrap;
                     overflow-x: hidden;
-                    transition: all ease 0.4s;
+                    transition: all ease 0.3s;
                 }
 
                 .active-page {
-                    width: 304px;
                     opacity: 1;
-                    min-width: 100%;
+                    z-index: 10;
                 }
 
                 ::-webkit-scrollbar {
                     width: 0px;
                 }
+
                 ::-webkit-scrollbar-thumb {
                     outline: 0px;
                 }
+
                 a {
                     text-decoration: none;
                 }
+
                 @media screen and (max-width: 768px) {
                     .sidebar {
-                        position: sticky;
+                        position: absolute;
                         width: 100vw;
-                        top: 20px;
+                        top: 2.5rem;
                         display: ${menu ? 'flex' : 'none'};
-                        height: 100%;
+                        min-height: 100vh;
+                    }
+
+                    .page {
+                        top: 2.5rem;
                     }
                 }
             `}</style>

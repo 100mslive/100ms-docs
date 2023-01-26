@@ -47,6 +47,7 @@ interface Props {
         nav: number;
     };
     nav: Record<string, Record<string, NavRoute>>;
+    allNav: Record<string, Record<string, NavRoute>>[];
 
     pagination: {
         previousPost: PaginationType;
@@ -59,7 +60,7 @@ interface Props {
     };
 }
 
-const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
+const DocSlugs = ({ source, frontMatter, pagination, nav, allNav }: Props) => {
     const {
         query: { slug },
         asPath
@@ -149,7 +150,7 @@ const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
                         justifyContent: 'space-between'
                     }}>
                     <div>
-                        <Sidebar menuState={menuState} nav={nav} />
+                        <Sidebar menuState={menuState} nav={nav} allNav={allNav}/>
                     </div>
                     {!menu ? (
                         <article
@@ -201,7 +202,7 @@ export const getStaticProps = async ({ params }) => {
     const { content, data } = matter(source);
 
     const allDocs = getAllDocs();
-    const nav = getNavfromDocs(allDocs);
+    const navItems = getNavfromDocs(allDocs);
     const [currentDocSlug] = params.slug as string[];
     const currentDocs = allDocs.filter((doc) => doc.url.includes(`/${currentDocSlug}/`));
     const { previousPost, nextPost } = getPagination(currentDocs, params.slug as string[]);
@@ -225,7 +226,8 @@ export const getStaticProps = async ({ params }) => {
         props: {
             toc,
             pagination,
-            nav: { [currentDocSlug]: nav[currentDocSlug] },
+            allNav: navItems,
+            nav: { [currentDocSlug]: navItems[currentDocSlug] },
             source: mdxSource, // { compiledSource: mdxSource.compiledSource },
             frontMatter: data
         }
