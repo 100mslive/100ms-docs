@@ -1,15 +1,3 @@
----
-title: Building Breakout Room with 100ms
-devTime: 60mins
-author: Hrashikesh Kulkarni
-tags:
-    - react
-    - javascript
-    - Android
-    - iOS
-    - breakout-room
----
-
 ## Breakout Rooms
 
 ### What are Breakout rooms ? 
