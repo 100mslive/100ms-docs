@@ -1,6 +1,6 @@
 ---
 title: React Sample App Quickstart Guide
-nav: 2.3
+nav: 2.31
 ---
 
 ## Overview
@@ -15,9 +15,24 @@ You can use this app to test:
 
 The app also includes other features and capabilities like custom audio/video tracks, control remote peers, network quality and performance stats, adaptive bitrate (Simulcast), and more.
 
-Please check our [quickstart guide](./react-quickstart) if you're trying to get started with 100ms with a basic app.
+This guide and the upcoming guides related to the sample app will enable you to build and deploy a fully-featured video conferencing/live streaming app.
 
-## Set up the app locally
+If you are a developer trying to build an app from scratch, please check our [quickstart guide](./react-quickstart). You can follow the journey of building a simple video conferencing app from scratch.
+
+## Local development
+
+<StepsToc
+    parentId="local-development"
+    descriptions={[
+        'Clone the sample app repo and set it up on your local development environment.',
+        'Configure 100ms auth token endpoint to manage token generation.',
+        'Start the app, create and join a 100ms room to test the app.'
+    ]}
+/>
+
+<StepsContainer id="local-development">
+
+### Set up the app repo
 
 -   Clone the repository from [GitHub](https://github.com/100mslive/100ms-web).
 
@@ -38,6 +53,8 @@ Please check our [quickstart guide](./react-quickstart) if you're trying to get 
     yarn install
     ```
 
+### Configure auth token endpoint
+
 -   Set environment variables to configure token generation endpoint. Use the following command to copy the values from "example.env" to a new file called ".env".
 
     ```bash section=envVariable sectionIndex=1
@@ -54,13 +71,20 @@ Please check our [quickstart guide](./react-quickstart) if you're trying to get 
     REACT_APP_TOKEN_GENERATION_ENDPOINT = 'https://prod-in2.100ms.live/hmsapi/example.app.100ms.live/'
     ```
 
-## Test the app
+### Start and test the app
 
--   Start the app with the below command. The app should now be running at [http://localhost:3000/](http://localhost:3000/). You should see a welcome message saying, "Almost There!".
+#### Start the app
+
+-   Start the app with the below command.
 
     ```bash section=runApp sectionIndex=1
+    npm start or
     yarn start
     ```
+
+-   The app should now be running at [http://localhost:3000/](http://localhost:3000/). You should see a welcome message saying, "Almost There!".
+
+#### Create and join a room
 
 -   To test audio/video functionality, you need to connect to a 100ms room; please check following steps for the same:
 
@@ -75,90 +99,7 @@ Please check our [quickstart guide](./react-quickstart) if you're trying to get 
     </video>
     <br />
 
-## Customize your app
-
-This sample app allows UI customization, like updating the UI layout, logo, tile aspect ratio, theme, color, etc. To make these customizations, you can use various environment variables in the env file.
-
-### Configure UI layout
-
--   You can customize the layout to arrange the position of video tiles based on roles. The value of `REACT_APP_POLICY_CONFIG` should be a JSON stringified object of the structure:
-
-    ```ts section=configureUi sectionIndex=1
-    type HMSRoleName = string;
-
-    /**
-     * undefined means none
-     * empty array [] for all roles
-     */
-    interface RoleConfig {
-        center?: HMSRoleName[];
-        sidepane?: HMSRoleName[];
-        selfRoleChangeTo?: HMSRoleName[];
-        remoteRoleChangeFor?: HMSRoleName[];
-    }
-
-    interface PolicyConfig {
-        [role: string]: RoleConfig;
-    }
-    ```
-
--   **Example**: If you wish to keep the video tile of the student in the center for the trainer and his video tile on the side pane, you can use the below JSON stringified object.
-
-    ```bash
-    REACT_APP_POLICY_CONFIG = "{"trainer":{"center": ["student"],"sidepane":["trainer"]}}"
-    ```
-
-### Change logo
-
-You can upload your logo in the sample app to customize the UI for your brand. You can achieve this in two ways:
-
--   Using the no-code editor in the UI
-
-    <video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
-        <source src="/docs/guides/logo.mp4" type="video/mp4" />
-    </video>
-    <br />
-
--   Adding the image URL in `REACT_APP_LOGO` variable in the .env file.
-
-### Change tile aspect ratio
-
-You can use the `REACT_APP_TILE_SHAPE` variable to customize the aspect ratio of video tiles; the format is `width-height`.
-
-**Examples:**
-
--   `1-1`: square tiles
--   `4-3`: landscape tiles
--   `16-9`: wide tiles
--   `9:16`: mobile view
-
-### Change theme and color
-
--   Use the `REACT_APP_THEME` variable to switch the theme between dark and light mode
-    -   `dark`: for dark theme
-    -   `light`: for light theme
--   Use the `REACT_APP_COLOR` variable to customize the UI with your brand colors
-    -   You can give a hex code the color will be used for buttons, border audio level and such.
-
-### Change font
-
-You can use `REACT_APP_FONT` variable to update the font used in the app. The font must be imported in your styling for it to work.
-
-### Enable/disable chat and screenshare
-
--   You can set the `REACT_APP_SHOW_CHAT` variable as "false" to disable chat
--   Set `REACT_APP_SHOW_SCREENSHARE` variable as "false" to disable screenshare
-
-> Note: Like [changing logo](#change-logo) using the no-code editor, you can update the theme, brand color, font, tile aspect ratio and download the `env` file from the 100ms demo app links and use it.
-
-### Playlist tracks (watch party)
-
--   You can play music or videos from a URL for everyone in the room to watch together. The support is only for file formats that are supported by the native audio and video elements, but it's super cool.
-
--   You can configure the list of audio/video tracks that can be played by a person in the room for everyone as follows:
-
-    -   `REACT_APP_AUDIO_PLAYLIST`: &lt;audio tracks&gt;
-    -   `REACT_APP_VIDEO_PLAYLIST`: &lt;video tracks&gt;
+</StepsContainer>
 
 ## Next steps
 
