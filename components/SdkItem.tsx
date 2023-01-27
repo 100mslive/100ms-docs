@@ -218,7 +218,7 @@ const sdkItems = {
         { id: 5, link: '/android/v2/changelog/release-notes' }
     ],
     ios: [
-        { id: 1, link: '/ios/v2/guides/quickstart' },
+        { id: 1, link: '/ios/v2/get-started/quickstart' },
         { id: 3, link: 'https://github.com/100mslive/100ms-ios-sdk' },
         { id: 4, link: '/api-reference/ios/v2/home/content' },
         { id: 5, link: '/ios/v2/changelog/release-notes' }
