@@ -57,13 +57,13 @@ Now that the dependencies are installed, let's create basic source files for our
     └── styles.css
 ```
 
-<CH.Scrollycoding lineNumbers={true} rows={25}>
+<CH.Scrollycoding lineNumbers={true}>
 
 ### Initialize the SDK
 
 Let us start with initializing the 100ms libraries for state management and to perform actions such as joining the room, muting our audio, etc.
 
-```jsx index.js focus=5:8
+```jsx index.js
 import { HMSReactiveStore } from '@100mslive/hms-video-store';
 
 const hmsManager = new HMSReactiveStore();
@@ -80,7 +80,7 @@ Now, let's initialize all the HTML elements required to build the user interface
 
 <CH.Code>
 
-```jsx index.js focus=10:17
+```jsx index.js focus=8:15
 import { HMSReactiveStore } from '@100mslive/hms-video-store';
 
 const hmsManager = new HMSReactiveStore();
@@ -310,6 +310,45 @@ Let's use a form to request both of these fields from the user for our applicati
 
 Let's include a way for people to leave the room as well. To leave the room, we can use the `hmsActions` [leave](/api-reference/javascript/v2/interfaces/HMSActions#leave) method. We'll set up the `leave` method to be called whenever the user closes the window or refreshes the tab.
 
+<CH.Code>
+
+```js index.js focus=17:29
+import { HMSReactiveStore } from '@100mslive/hms-video-store';
+
+const hmsManager = new HMSReactiveStore();
+hmsManager.triggerOnSubscribe();
+const hmsStore = hmsManager.getStore();
+const hmsActions = hmsManager.getActions();
+
+const form = document.getElementById('join');
+const joinBtn = document.getElementById('join-btn');
+const conference = document.getElementById('conference');
+const peersContainer = document.getElementById('peers-container');
+const leaveBtn = document.getElementById('leave-btn');
+const muteAudio = document.getElementById('mute-aud');
+const muteVideo = document.getElementById('mute-vid');
+const controls = document.getElementById('controls');
+
+joinBtn.onclick = () => {
+    hmsActions.join({
+        userName: document.getElementById('name').value,
+        authToken: document.getElementById('token').value
+    });
+};
+
+function leaveRoom() {
+    hmsActions.leave();
+}
+
+window.onunload = window.onbeforeunload = leaveRoom;
+leaveBtn.onclick = leaveRoom;
+```
+
+```html index.html focus=13:22
+```
+
+</CH.Code>
+
 ---
 
 ### Render video tiles for peers
@@ -319,6 +358,75 @@ Let us next add a way to show a tile for every participant in the room. We'll ne
 -   We will use the [attachVideo](/api-reference/javascript/v2/interfaces/HMSActions#attach-video) method on `hmsActions` to add the video from an element for a track ID.
 -   And [selectPeers](/api-reference/javascript/v2/home/content#select-peers) selector from `hmsStore`
 
+<CH.Code>
+
+```js index.js focus=1[28:38],31:62
+import { HMSReactiveStore, selectPeers } from '@100mslive/hms-video-store';
+
+const hmsManager = new HMSReactiveStore();
+hmsManager.triggerOnSubscribe();
+const hmsStore = hmsManager.getStore();
+const hmsActions = hmsManager.getActions();
+
+const form = document.getElementById('join');
+const joinBtn = document.getElementById('join-btn');
+const conference = document.getElementById('conference');
+const peersContainer = document.getElementById('peers-container');
+const leaveBtn = document.getElementById('leave-btn');
+const muteAudio = document.getElementById('mute-aud');
+const muteVideo = document.getElementById('mute-vid');
+const controls = document.getElementById('controls');
+
+joinBtn.onclick = () => {
+    hmsActions.join({
+        userName: document.getElementById('name').value,
+        authToken: document.getElementById('token').value
+    });
+};
+
+function leaveRoom() {
+    hmsActions.leave();
+}
+
+window.onunload = window.onbeforeunload = leaveRoom;
+leaveBtn.onclick = leaveRoom;
+
+function createElementWithClass(tag, className) {
+    const newElement = document.createElement(tag);
+    newElement.className = className;
+    return newElement;
+}
+
+function renderPeer(peer) {
+    const peerTileDiv = createElementWithClass('div', 'peer-tile');
+    const videoElement = createElementWithClass('video', 'peer-video');
+    const peerTileName = createElementWithClass('span', 'peer-name');
+    videoElement.autoplay = true;
+    videoElement.muted = true;
+    videoElement.playsinline = true;
+    peerTileName.textContent = peer.name;
+    hmsActions.attachVideo(peer.videoTrack, videoElement);
+    peerTileDiv.append(videoElement);
+    peerTileDiv.append(peerTileName);
+    return peerTileDiv;
+}
+
+function renderPeers() {
+    peersContainer.innerHTML = '';
+    const peers = hmsStore.getState(selectPeers);
+
+    peers.forEach((peer) => {
+        if (peer.videoTrack) {
+            peersContainer.append(renderPeer(peer));
+        }
+    });
+}
+
+hmsStore.subscribe(renderPeers, selectPeers);
+```
+
+</CH.Code>
+
 ---
 
 ### Mute/unmute local tracks
@@ -327,6 +435,94 @@ Right now we are publishing both audio and video feed of the user whenever they 
 We may want to allow the user to mute/unmute their own tracks - both audio and video.
 
 Let's add 2 buttons on the bottom of the page and call the [setLocalAudioEnabled](/api-reference/javascript/v2/interfaces/HMSActions#set-local-audio-enabled) method on `hmsActions` to mute/unmute the local audio tracks and [setLocalVideoEnabled](/api-reference/javascript/v2/interfaces/HMSActions#set-local-video-enabled) method on `hmsActions` to mute/unmute the local video tracks.
+
+<CH.Code>
+
+```js index.js focus=69:81
+import {
+    HMSReactiveStore,
+    selectPeers,
+    selectIsLocalAudioEnabled,
+    selectIsLocalVideoEnabled
+} from '@100mslive/hms-video-store';
+
+const hmsManager = new HMSReactiveStore();
+hmsManager.triggerOnSubscribe();
+const hmsStore = hmsManager.getStore();
+const hmsActions = hmsManager.getActions();
+
+const form = document.getElementById('join');
+const joinBtn = document.getElementById('join-btn');
+const conference = document.getElementById('conference');
+const peersContainer = document.getElementById('peers-container');
+const leaveBtn = document.getElementById('leave-btn');
+const muteAudio = document.getElementById('mute-aud');
+const muteVideo = document.getElementById('mute-vid');
+const controls = document.getElementById('controls');
+
+joinBtn.onclick = () => {
+    hmsActions.join({
+        userName: document.getElementById('name').value,
+        authToken: document.getElementById('token').value
+    });
+};
+
+function leaveRoom() {
+    hmsActions.leave();
+}
+
+window.onunload = window.onbeforeunload = leaveRoom;
+leaveBtn.onclick = leaveRoom;
+
+function createElementWithClass(tag, className) {
+    const newElement = document.createElement(tag);
+    newElement.className = className;
+    return newElement;
+}
+
+function renderPeer(peer) {
+    const peerTileDiv = createElementWithClass('div', 'peer-tile');
+    const videoElement = createElementWithClass('video', 'peer-video');
+    const peerTileName = createElementWithClass('span', 'peer-name');
+    videoElement.autoplay = true;
+    videoElement.muted = true;
+    videoElement.playsinline = true;
+    peerTileName.textContent = peer.name;
+    hmsActions.attachVideo(peer.videoTrack, videoElement);
+    peerTileDiv.append(videoElement);
+    peerTileDiv.append(peerTileName);
+    return peerTileDiv;
+}
+
+function renderPeers() {
+    peersContainer.innerHTML = '';
+    const peers = hmsStore.getState(selectPeers);
+
+    peers.forEach((peer) => {
+        if (peer.videoTrack) {
+            peersContainer.append(renderPeer(peer));
+        }
+    });
+}
+
+hmsStore.subscribe(renderPeers, selectPeers);
+
+muteAudio.onclick = () => {
+    const audioEnabled = !hmsStore.getState(selectIsLocalAudioEnabled);
+    hmsActions.setLocalAudioEnabled(audioEnabled);
+    muteAudio.textContent = audioEnabled ? 'Mute' : 'Unmute';
+};
+
+muteVideo.onclick = () => {
+    const videoEnabled = !hmsStore.getState(selectIsLocalVideoEnabled);
+    hmsActions.setLocalVideoEnabled(videoEnabled);
+    muteVideo.textContent = videoEnabled ? 'Hide' : 'Unhide';
+    // Re-render video tile
+    renderPeers();
+};
+```
+
+</CH.Code>
 
 </CH.Scrollycoding>
 
