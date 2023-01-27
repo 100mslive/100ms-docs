@@ -18,7 +18,9 @@ This page contains FAQ that are generic to 100ms platform and specific to Flutte
 
 HMSSDK works with flutter 3.3.x or above.
 
-#### Not getting event updates after hot reload/restart
+#### Not getting event updates after hot restart
+
+> 🔑 Note: `HMSSDK` supports hot reload if you facing issues in hot reload please check [this](#stopped-getting-callbacks-not-able-to-see-any-peer-after-hot-reload)
 
 This is caused because the platform channel needs to be reinitialized again, hence this is intended behaviour.
 The solution for this is to re-run the app.
@@ -31,6 +33,36 @@ Practices for faster development :
 -   Verify the changes.
 
 The permanent solution for this is in pipeline, we will update once it's done.
+
+#### Stopped getting callbacks, not able to see any peer after hot reload
+
+Ensure that the object instantiation is not done while navigating this causes the room state to initialize again 
+
+For Eg:
+
+We have `HMSStore` as our data store class then if we create the instance while navigating this will cause error while 
+hot reloading.
+
+```dart
+//This will cause the room state to be empty after hot reload
+Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => ListenableProvider.value(
+                            value: HMSStore(),
+                            child: VideoCallScreen(),
+                          )));
+```
+
+To support hot reload the object should be passed in while navigating:
+
+```dart
+//This will cause the room state to be empty after hot reload
+HMSStore dataStore = HMSStore()
+Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => ListenableProvider.value(
+                            value: dataStore,
+                            child: VideoCallScreen(),
+                          )));
+```
 
 #### Issues while using `hmssdk_flutter` with flutter 3.0.x
 
