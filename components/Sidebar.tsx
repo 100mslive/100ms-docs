@@ -28,11 +28,11 @@ const SIDEBAR_WIDTH = '304px';
 const accordionIconStyle = { height: '24px', width: '24px', color: 'inherit' };
 
 const platformOrder = [
-    { text: 'Web', icon: <JavaScript style={accordionIconStyle} /> },
-    { text: 'Android', icon: <Android style={accordionIconStyle} /> },
-    { text: 'iOS', icon: <Ios style={accordionIconStyle} /> },
-    { text: 'Flutter', icon: <Flutter style={accordionIconStyle} /> },
-    { text: 'React Native', icon: <ReactNative style={accordionIconStyle} /> }
+    { text: 'Web', icon: <JavaScript style={accordionIconStyle} />, key: 'javascript' },
+    { text: 'Android', icon: <Android style={accordionIconStyle} />, key: 'android' },
+    { text: 'iOS', icon: <Ios style={accordionIconStyle} />, key: 'ios' },
+    { text: 'Flutter', icon: <Flutter style={accordionIconStyle} />, key: 'flutter' },
+    { text: 'React Native', icon: <ReactNative style={accordionIconStyle} />, key: 'react-native' }
 ];
 
 type NavRoute = {
@@ -80,8 +80,6 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
     }
 
     const showPlatformSelector = slug?.[0] !== 'concepts';
-    console.log(currentNav);
-    console.log('All', allNav);
 
     let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]);
     if (slug[0] === 'api-reference')
@@ -137,7 +135,11 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                 <hr style={{ margin: '24px 0' }} />
 
                 {platformOrder.map((platform) => (
-                    <PlatformAccordion title={platform.text} icon={platform.icon} />
+                    <PlatformAccordion
+                        title={platform.text}
+                        icon={platform.icon}
+                        data={allNav[platform.key]}
+                    />
                 ))}
 
                 <hr style={{ margin: '24px 0' }} />
@@ -145,6 +147,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                 <PlatformAccordion
                     title={'Server side'}
                     icon={<ServerIcon style={accordionIconStyle} />}
+                    data={allNav['server-side']}
                 />
             </div>
 
