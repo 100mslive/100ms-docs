@@ -3,7 +3,7 @@ title: Remove Peer
 nav: 6.3
 ---
 
-If the local peer has [`removeOthers`](./change-role#know-thy-permissions) permission they can remove a peer using the below api.
+If the local peer has [`removeOthers`](/javascript/v2/how--to-guides/control-remote-peers/change-role#know-thy-permissions) permission they can remove a peer using the below api.
 
 ```js
 try {
@@ -15,11 +15,11 @@ try {
 }
 ```
 
-> 🚧 If the local peer doesn't have the required `removeOthers` permission, a [HMSException](error-handling) will be thrown.
+> 🚧 If the local peer doesn't have the required `removeOthers` permission, a [HMSException](/javascript/v2/how--to-guides/debugging/error-handling) will be thrown.
 
 ## Remove Peer Notification
 
-Once the peer with adequate permissions calls `removePeer` for the local peer, the local peer will receive a [notification](notifications) with type `REMOVED_FROM_ROOM` with a [HMSLeaveRoomRequest](../../../api-reference/javascript/v2/interfaces/HMSLeaveRoomRequest) object as the data.
+Once the peer with adequate permissions calls `removePeer` for the local peer, the local peer will receive a [notification](/javascript/v2/how--to-guides/listen-to-room-events/notifications) with type `REMOVED_FROM_ROOM` with a [HMSLeaveRoomRequest](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequest) object as the data.
 
 The SDK automatically calls leave and performs necessary clean ups immediately after this notification is sent, clients should show the appropriate UI(show a dialog, redirect to a 'good-bye' page) on receiving this notification.
 
