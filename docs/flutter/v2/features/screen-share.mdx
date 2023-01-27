@@ -161,10 +161,13 @@ Once you have the correct App Group & Preferred Extension values created in Xcod
 
 
 ```dart
-// Pass the correct App Group & Preferred Extension parameters while contructing the HMSSDK object
-HMSSDK hmsSDK = HMSSDK(
+// Pass the correct App Group & Preferred Extension parameters in HMSIOSScreenshareConfig class.
+HMSIOSScreenshareConfig iOSScreenshareConfig = HMSIOSScreenshareConfig(
     appGroup: "appGroup", // App Group value linked to your Apple Developer Account
-    preferredExtension: "preferredExtension"); // Name of the Broadcast Upload Extension Target created in Xcode
+    preferredExtension: "preferredExtension" // Name of the Broadcast Upload Extension Target created in Xcode
+);
+
+HMSSDK hmsSDK = HMSSDK(iOSScreenshareConfig: iOSScreenshareConfig);
 
 await hmsSDK.build(); // ensure to await while invoking the `build` method
 ```
