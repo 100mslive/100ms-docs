@@ -35,7 +35,7 @@ const PlatformAccordion = ({ title, icon, data }) => {
                     <a
                         href={data['v2'][item][Object.keys(data['v2'][item])[0]].url}
                         key={`${title}-${item}`}>
-                        <Text variant="sm" css={{ pl: '$12', my: '$8' }}>
+                        <Text variant="sm" css={{ pl: '$12', my: '$8', color: "var(--docs_text_primary)" }}>
                             {titleCasing(item)}
                         </Text>
                     </a>
@@ -57,7 +57,6 @@ const PlatformAccordion = ({ title, icon, data }) => {
                     }
 
                     .plat-accordion-content {
-                        position: relative;
                         opacity: 0;
                         max-height: 0;
                         transition: all ease 0.3s;
@@ -65,15 +64,8 @@ const PlatformAccordion = ({ title, icon, data }) => {
                     }
 
                     .active {
-                        top: 0;
                         opacity: 1;
                         max-height: 500px;
-                    }
-
-                    @media screen and (max-width: 768px) {
-                        .plat-accordion {
-                            width: 100vw;
-                        }
                     }
                 `}
             </style>

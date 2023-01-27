@@ -161,7 +161,6 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
             <style jsx>
                 {`
                     .accordion-content {
-                        position: relative;
                         margin-top: 0;
                         padding-left: 0.5rem;
                         opacity: 0;
@@ -171,7 +170,6 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                     }
 
                     .active {
-                        top: 0;
                         opacity: 1;
                         max-height: 3000px;
                     }
