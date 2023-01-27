@@ -23,7 +23,6 @@ import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkA11yEmoji from '@fec/remark-a11y-emoji';
 import { MDXProvider, useMDXComponents } from '@mdx-js/react';
-import imagePlugin from '@/lib/image';
 
 type NavRoute = {
     url: string;
@@ -222,7 +221,6 @@ export const getStaticProps = async ({ params }) => {
         mdxOptions(options) {
             options.remarkPlugins = [
                 ...(options.remarkPlugins ?? []),
-                imagePlugin,
                 remarkGfm,
                 remarkA11yEmoji,
                 remarkCodeHeader,
