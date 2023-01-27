@@ -46,7 +46,7 @@ To show PIP mode in the application:
 ```dart
 // enterPipMode is a Future<bool> function where true indicates that the application has entered pip mode successfully.
 ///[autoEnterPip] if true start pip mode will start automatically when app is minimized.For android 12 and above
-///[aspectRatio]: List of double indicating ratio for PIP window as [width,height]  
+///[aspectRatio]: List of int indicating ratio for PIP window as [width,height]  
 bool isPipEnteredSuccesfully = await HMSAndroidPIPController.start(autoEnterPip: true/false, aspectRatio: [16, 9]);
 ```
 </div>
@@ -87,9 +87,9 @@ In iOS devices PIP is needed to be setup first for that call `HMSIOSPIPControlle
 
 **autoEnterPip** - Enable [autoEnterPip] will start pip mode automatically when app minimized. Default value is `true`
   
-**aspectRatio** - Ratio for PIP window. For example: [16, 9], [9, 16] ,[1, 1]. Default value is `[16, 9]`.
+**aspectRatio** - Ratio for PIP window.List of int indicating ratio for PIP window as [width,height].For example: [16, 9], [9, 16] ,[1, 1]. Default value is `[16, 9]`.
   
-**scaleType** - To set the video scaling. scaleType can be one of the following: [SCALE_ASPECT_FIT, SCALE_ASPECT_FILL, SCALE_ASPECT_BALANCED]. Default value is `ScaleType.SCALE_ASPECT_FILL`
+**scaleType** - To set the video scaling. scaleType can be one of the following: [SCALE_ASPECT_FIT, SCALE_ASPECT_FILL, SCALE_ASPECT_BALANCED]. Default value is `ScaleType.SCALE_ASPECT_FILL`.More info about each of this can be found [here](../features/render-video#2-scaletype)
   
 **backgroundColor** - To set the background colour when video is off thst colour will be visible in background of PIP window. Default value is `Colors.black`.
 
@@ -102,13 +102,18 @@ In iOS devices PIP is needed to be setup first for that call `HMSIOSPIPControlle
 
 The `HMSIOSPIPController.changeVideoTrack` method is called when you want to change the HMSVideoTrack in PIP window. following are the parameters need to be passed at time of calling this method:
 
-**track** - [HMSVideoTrack] need to be passed for changing PIP window track.
+**track** - `HMSVideoTrack` object of the track which you wish to display needs to be passed for changing PIP window track.
 
-**aspectRatio** - Ratio for PIP window. For example: [16, 9], [9, 16] ,[1, 1]. Default value is `[16, 9]`.
+**aspectRatio** - Ratio for PIP window.List of int indicating ratio for PIP window as [width,height].For example: [16, 9], [9, 16] ,[1, 1]. Default value is `[16, 9]`.
 
-**alternativeText** - Alternative text is a textual substitute if HMSVideoTrack is muted.
+**alternativeText** - Alternative text is a textual substitute if HMSVideoTrack is muted.This is the text which you wish to display when video for peer is OFF while in PIP
 
-**scaleType** - To set the video scaling. scaleType can be one of the following: [SCALE_ASPECT_FIT, SCALE_ASPECT_FILL, SCALE_ASPECT_BALANCED]. Default value is `ScaleType.SCALE_ASPECT_FILL`
+**scaleType** - To set the video scaling. scaleType can be one of the following: 
+ - SCALE_ASPECT_FIT
+ - SCALE_ASPECT_FILL
+ - SCALE_ASPECT_BALANCED
+ 
+Default value is `ScaleType.SCALE_ASPECT_FILL`.More info about each of this can be found [here](../features/render-video#2-scaletype)
 
 **backgroundColor** - To set the background colour when video is off thst colour will be visible in background of PIP window. Default value is `Colors.black`.
 
@@ -130,9 +135,9 @@ The `HMSIOSPIPController.changeText` method is called when you want to remove or
 
 **text** - Text you want to show in PIP window. It will replace HMSVideoTrack if it playing in PIP window.
 
-**aspectRatio** - Ratio for PIP window. For example: [16, 9], [9, 16] ,[1, 1]. Default value is `[16, 9]`.
+**aspectRatio** - Ratio for PIP window.List of int indicating ratio for PIP window as [width,height].For example: [16, 9], [9, 16] ,[1, 1]. Default value is `[16, 9]`.
 
-**scaleType** - To set the video scaling. scaleType can be one of the following: [SCALE_ASPECT_FIT, SCALE_ASPECT_FILL, SCALE_ASPECT_BALANCED]. Default value is `ScaleType.SCALE_ASPECT_FILL`
+**scaleType** - To set the video scaling. scaleType can be one of the following: [SCALE_ASPECT_FIT, SCALE_ASPECT_FILL, SCALE_ASPECT_BALANCED]. Default value is `ScaleType.SCALE_ASPECT_FILL`.More info about each of this can be found [here](../features/render-video#2-scaletype)
 
 **backgroundColor** - To set the background colour when video is off thst colour will be visible in background of PIP window. Default value is `Colors.black`.
 
