@@ -1,3 +1,6 @@
+import React from 'react';
+import Link from 'next/link';
+import merge from 'lodash/merge';
 import {
     BookIcon,
     ChevronRightIcon,
@@ -9,10 +12,7 @@ import {
     WebhookIcon
 } from '@100mslive/react-icons';
 import { Box, CSS, Flex, HorizontalDivider, VerticalDivider } from '@100mslive/react-ui';
-import { Item } from 'components';
-import merge from 'lodash/merge';
-import Link from 'next/link';
-import React from 'react';
+import Item from './Item';
 
 interface Props {
     logo?: React.SVGProps<SVGSVGElement>;
@@ -119,7 +119,7 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
                         rel="noopener"
                         style={{ width: 'fit-content' }}>
                         <Box
-                        role="button"
+                            role="button"
                             onClick={() =>
                                 window.analytics.track('link.clicked', {
                                     btnId: itemId[value.id],
@@ -212,7 +212,7 @@ const sdkItems = {
         { id: 5, link: '/server-side/v2/changelog/release-notes' }
     ],
     android: [
-        { id: 1, link: '/android/v2/guides/quickstart' },
+        { id: 1, link: '/android/v2/get-started/quickstart' },
         { id: 3, link: 'https://github.com/100mslive/100ms-android' },
         { id: 4, link: '/api-reference/android/v2/index.html' },
         { id: 5, link: '/android/v2/changelog/release-notes' }

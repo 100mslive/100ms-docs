@@ -35,7 +35,7 @@ Use our [Live Streaming Starter Kit](https://www.100ms.live/marketplace/live-str
 
 ### Create a new app
 
-![Live streaming starter kit](/docs/docs/v2/live-streaming-starter-kit.png)
+![Live streaming starter kit](/docs/v2/live-streaming-starter-kit.png)
 
 1. Make sure that you have [an account with 100ms](https://dashboard.100ms.live/register) and can access the [100ms Dashboard](https://dashboard.100ms.live/)
 1. On the dashboard, create a new app using the Live Streaming Starter Kit
@@ -43,7 +43,7 @@ Use our [Live Streaming Starter Kit](https://www.100ms.live/marketplace/live-str
 
 ### Understand roles
 
-![Live Streaming roles](/docs/docs/v2/live-streaming-roles.png)
+![Live Streaming roles](/docs/v2/live-streaming-roles.png)
 
 This starter kit configures your new app with [two roles](/docs/javascript/v2/foundation/templates-and-roles):
 
@@ -52,7 +52,7 @@ This starter kit configures your new app with [two roles](/docs/javascript/v2/fo
 
 ### Go live
 
-![Go live](/docs/docs/v2/live-streaming-go-live.gif)
+![Go live](/docs/v2/live-streaming-go-live.gif)
 
 1. To go live for the first time, join the room as a `broadcaster` and start the live stream
 2. Once the stream has started, join the room as an `hls-viewer` and you should be able to see the ongoing live stream
@@ -60,7 +60,7 @@ This starter kit configures your new app with [two roles](/docs/javascript/v2/fo
 
 ### Customize the stream
 
-![Go live](/docs/docs/v2/live-streaming-customise.png)
+![Go live](/docs/v2/live-streaming-customise.png)
 
 By default, the live stream is composed in landscape mode for desktop viewers (with an aspect ratio of 16:9). You can customise the live stream for viewers on mobile or to support multiple broadcaster tiles.
 
@@ -84,7 +84,7 @@ To integrate 100ms Interactive Live Streaming in your app, follow these steps:
 
 ### Enable destination
 
-![Enable HLS](/docs/docs/v2/live-streaming-enable.gif)
+![Enable HLS](/docs/v2/live-streaming-enable.gif)
 
 If your app is based on the Live Streaming Starter Kit (as shown above), the live streaming destination is enabled out-of-the-box.
 
@@ -112,7 +112,7 @@ If you need to only enable HLS playback and don't need interactivity, you can fo
 -   **Webhook:** You can listen to `hls.started.success` [webhook event](/docs/server-side/v2/introduction/webhook#hls-started-success) and get the HLS URL from the `url` field. Please check the [webhooks guide](/docs/server-side/v2/introduction/webhook) to learn more about webhooks.
 -   **Static URL:** This configuration will help you get a static URL for playback. You can enable the `Static playback URLs` in your template from the [dashboard](https://dashboard.100ms.live/dashboard). You can go to Destination > enable "Live streaming with HLS" > under "Customise stream video output" section > enable "Static playback URLs."
 
-    ![Enable Static URL](/docs/docs/v2/enable-static-url.png)
+    ![Enable Static URL](/docs/v2/enable-static-url.png)
 
     -   _Format_: https://cdn.100ms.live/beam/<customer_id>/<room_id>/master.m3u8
     -   `customer_id`: replace this placeholder with your customer_id from [developer section](https://dashboard.100ms.live/developer) on your dashboard.
