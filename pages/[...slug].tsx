@@ -1,11 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import fs from 'fs';
 import path from 'path';
-import matter from 'gray-matter';
-import hydrate from 'next-mdx-remote/hydrate';
-import renderToString from 'next-mdx-remote/render-to-string';
 import mdxPrism from 'mdx-prism';
 import EditFile from '@/components/EditFile';
 import components from '@/components/MDXComponents';
@@ -14,12 +11,19 @@ import Sidebar from '@/components/Sidebar';
 import Toc from '@/components/Toc';
 import Header from '@/components/Header';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
-import imagePlugin from '@/lib/image';
 import getPagination from '@/lib/getPagination';
 import { DOCS_PATH, getAllDocs, getDocsPaths, getNavfromDocs } from '@/lib/mdxUtils';
 import withTableofContents from '@/lib/withTableofContents';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
+import { bundleMDX } from 'mdx-bundler';
+import { getMDXComponent } from 'mdx-bundler/client';
+import remarkCodeHeader from '@/lib/remark-code-header';
+import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
+import remarkA11yEmoji from '@fec/remark-a11y-emoji';
+import { MDXProvider, useMDXComponents } from '@mdx-js/react';
+import imagePlugin from '@/lib/image';
 
 type NavRoute = {
     url: string;
@@ -53,22 +57,24 @@ interface Props {
         previousPost: PaginationType;
         nextPost: PaginationType;
     };
-    source: {
-        compiledSource: string;
-        renderedOutput: string;
-        scope: { title: string; nav: number };
-    };
+    source: string;
 }
+
+const MDX_GLOBAL_CONFIG = {
+    MdxJsReact: {
+        useMDXComponents
+    }
+};
 
 const DocSlugs = ({ source, frontMatter, pagination, nav, allNav }: Props) => {
     const {
         query: { slug },
         asPath
-    } = useRouter() as any;
+    } = useRouter();
     const [currentDocSlug] = slug as string[];
     const [activeHeading, setActiveHeading] = React.useState('');
     const [activeSubHeading, setActiveSubHeading] = React.useState('');
-    const content = hydrate(source, { components });
+    const Component = useMemo(() => getMDXComponent(source, MDX_GLOBAL_CONFIG), [source]);
 
     React.useEffect(() => {
         setTimeout(() => {
@@ -111,7 +117,7 @@ const DocSlugs = ({ source, frontMatter, pagination, nav, allNav }: Props) => {
 
     let showPagination = true;
     // Don't show Pagination for Android
-    if (slug[1] === 'android') {
+    if (Array.isArray(slug) && slug[1] === 'android') {
         showPagination = false;
     }
     const [modal, setModal] = React.useState(false);
@@ -119,7 +125,7 @@ const DocSlugs = ({ source, frontMatter, pagination, nav, allNav }: Props) => {
     const menuState = { menu, setMenu };
     useLockBodyScroll(modal);
 
-    const router = useRouter() as any;
+    const router = useRouter();
     const SEO = {
         title: `${frontMatter.title || '100ms Docs'} | 100ms`,
         openGraph: {
@@ -165,7 +171,9 @@ const DocSlugs = ({ source, frontMatter, pagination, nav, allNav }: Props) => {
                                 paddingBottom: '80px'
                             }}>
                             <h1>{frontMatter.title}</h1>
-                            {content}
+                            <MDXProvider components={components}>
+                                <Component />
+                            </MDXProvider>
                             <hr />
                             {pagination.previousPost && showPagination && (
                                 <Pagination
@@ -191,15 +199,10 @@ export default DocSlugs;
 
 export const getStaticProps = async ({ params }) => {
     // Absolute path of the docs file
-    const postFilePath = path.join(DOCS_PATH, `${path.join(...params.slug)}.mdx`);
-    // Raw Mdx File Data Buffer
-    const source = fs.readFileSync(postFilePath);
-
-    /**
-     * Content: Mdx Data
-     * data: FrontMatter Data
-     */
-    const { content, data } = matter(source);
+    let postFilePath = path.join(DOCS_PATH, `${path.join(...params.slug)}.mdx`);
+    if (!fs.existsSync(postFilePath)) {
+        postFilePath = path.join(DOCS_PATH, `${path.join(...params.slug)}.md`);
+    }
 
     const allDocs = getAllDocs();
     const navItems = getNavfromDocs(allDocs);
@@ -207,29 +210,53 @@ export const getStaticProps = async ({ params }) => {
     const currentDocs = allDocs.filter((doc) => doc.url.includes(`/${currentDocSlug}/`));
     const { previousPost, nextPost } = getPagination(currentDocs, params.slug as string[]);
     const pagination = { previousPost, nextPost };
-    const toc = [];
-    const mdxSource = await renderToString(content, {
-        components,
-        // Optionally pass remark/rehype plugins
-        mdxOptions: {
-            remarkPlugins: [
-                require('@/lib/remark-code-header'),
-                require('@fec/remark-a11y-emoji'),
-                withTableofContents(toc),
-                imagePlugin
-            ],
-            rehypePlugins: [mdxPrism]
+    const { code, frontmatter } = await bundleMDX({
+        globals: {
+            '@mdx-js/react': {
+                varName: 'MdxJsReact',
+                namedExports: ['useMDXComponents'],
+                defaultExport: false
+            }
         },
-        scope: data
+        cwd: path.join(DOCS_PATH, path.join(...params.slug.slice(0, -1))),
+        file: postFilePath,
+        mdxOptions(options) {
+            options.remarkPlugins = [
+                ...(options.remarkPlugins ?? []),
+                imagePlugin,
+                remarkGfm,
+                remarkA11yEmoji,
+                remarkCodeHeader,
+                withTableofContents
+            ];
+            options.rehypePlugins = [
+                ...(options.rehypePlugins ?? []),
+                [
+                    rehypeRaw,
+                    {
+                        passThrough: [
+                            'mdxFlowExpression',
+                            'mdxJsxFlowElement',
+                            'mdxJsxTextElement',
+                            'mdxTextExpression',
+                            'mdxjsEsm'
+                        ]
+                    }
+                ],
+                mdxPrism
+            ];
+            options.providerImportSource = '@mdx-js/react';
+            return options;
+        }
     });
+
     return {
         props: {
-            toc,
             pagination,
             allNav: navItems,
             nav: { [currentDocSlug]: navItems[currentDocSlug] },
-            source: mdxSource, // { compiledSource: mdxSource.compiledSource },
-            frontMatter: data
+            source: code, // { compiledSource: mdxSource.compiledSource },
+            frontMatter: frontmatter
         }
     };
 };

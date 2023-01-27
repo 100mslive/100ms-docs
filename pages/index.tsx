@@ -844,14 +844,14 @@ const more = {
         {
             heading: 'Features',
             items: [
-                { name: 'Integrating the SDK', link: '/android/v2/features/integration' },
-                { name: 'Join room', link: '/android/v2/features/join' },
-                { name: 'Leave room', link: '/android/v2/features/leave' },
-                { name: 'End room', link: '/android/v2/features/end-room' },
-                { name: 'Mute / unmute', link: '/android/v2/features/mute' },
+                { name: 'Integrating the SDK', link: '/android/v2/how--to-guides/install-the-sdk/integration' },
+                { name: 'Join room', link: '/android/v2/how--to-guides/set-up-video-conferencing/join' },
+                { name: 'Leave room', link: '/android/v2/how--to-guides/set-up-video-conferencing/leave' },
+                { name: 'End room', link: '/android/v2/how--to-guides/control-remote-peers/end-room' },
+                { name: 'Mute / unmute', link: '/android/v2/how--to-guides/set-up-video-conferencing/mute' },
                 {
                     name: 'View all features',
-                    link: '/android/v2/features/integration',
+                    link: '/android/v2/how--to-guides/install-the-sdk/integration',
                     viewAll: true
                 }
             ]
@@ -859,14 +859,14 @@ const more = {
         {
             heading: 'Advanced Features',
             items: [
-                { name: 'Show audio levels', link: '/android/v2/advanced-features/audio-level' },
+                { name: 'Show audio levels', link: '/android/v2/how--to-guides/set-up-video-conferencing/render-video/audio-level' },
                 {
                     name: 'Peer metadata update',
-                    link: '/android/v2/advanced-features/peer-metadata-update'
+                    link: '/android/v2/how--to-guides/build-interactive-features/peer-metadata-update'
                 },
                 {
                     name: 'Show network quality for peers',
-                    link: '/android/v2/advanced-features/peer-network-quality'
+                    link: '/android/v2/how--to-guides/measure-network-quality-and-performance/peer-network-quality'
                 }
             ]
         },
@@ -875,13 +875,13 @@ const more = {
             items: [
                 {
                     name: 'Writing HmsLogs in Local Storage',
-                    link: '/android/v2/debugging/log_utils'
+                    link: '/android/v2/how--to-guides/debugging/log_utils'
                 }
             ]
         },
         {
             heading: 'Plugins',
-            items: [{ name: 'Virtual background', link: '/android/v2/plugins/virtual-background' }]
+            items: [{ name: 'Virtual background', link: '/android/v2/how--to-guides/extend-capabilities/plugins/virtual-background' }]
         }
     ],
     iOS: [

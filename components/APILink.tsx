@@ -18,10 +18,10 @@ const getAPIPath = ({ type, client = 'javascript', name }: Props & { name: strin
     switch (type) {
         case 'enum':
         case 'interface':
-            typePlural = type + 's';
+            typePlural = `${type}s`;
             break;
         case 'class':
-            typePlural = type + 'es';
+            typePlural = `${type}es`;
             break;
         case 'type-alias':
         case 'selector': {

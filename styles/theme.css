@@ -559,7 +559,7 @@ pre {
     font-family: 'Söhne Mono', menlo, monospace;
     white-space: pre;
     overflow: auto;
-    margin: 16px 0;
+    margin: 0;
     line-height: 1.5;
     color: var(--docs_text_primary);
     text-align: left;
@@ -576,10 +576,19 @@ pre p {
 }
 
 pre code {
-    color: var(--docs_text_primary);
-    font-size: 1rem;
-    line-height: 1.25rem;
+    border: none;
+    border-radius: 0;
+    font-family: 'Söhne Mono', menlo, monospace;
     white-space: pre;
+    overflow: auto;
+    line-height: 1.5;
+    text-align: left;
+    font-size: 0.8125rem;
+    -webkit-overflow-scrolling: touch;
+
+    display: initial;
+    background-color: transparent;
+    padding: 0;
 }
 
 pre code:before,
@@ -823,6 +832,12 @@ pre[class*='language-'] {
     border-radius: 0 0 var(--docs_border_radius_s) var(--docs_border_radius_s);
 }
 
+.request pre {
+    background-color: transparent;
+    border: none;
+    margin: 0;
+}
+
 .request code[class*='language-'],
 .request pre[class*='language-'] {
     border-radius: 0 0 var(--docs_border_radius_s) var(--docs_border_radius_s);
@@ -850,6 +865,12 @@ pre[class*='language-'] {
     line-height: 24px;
 }
 
+.response-box pre {
+    background-color: transparent;
+    border: none;
+    margin: 0;
+}
+
 .response-box code[class*='language-'],
 .response-box pre[class*='language-'] {
     border-radius: 0 0 var(--docs_border_radius_s) var(--docs_border_radius_s);
@@ -861,13 +882,7 @@ pre[class*='language-'] {
 
 .response-box code[class*='language-'],
 .response-box pre[class*='language-'] .copied {
-    background-color: var(--api_surface_light_2);
     border: none;
-}
-
-.response-box code[class*='language-'],
-.response-box pre[class*='language-'] .copied {
-    display: none;
 }
 
 .next-image {
@@ -971,19 +986,15 @@ input {
     height: 15px;
 }
 
-h2:hover .copy-anchor {
+h2:hover .copy-anchor,
+h3:hover .copy-anchor,
+h4:hover .copy-anchor {
     opacity: 1;
 }
 
-h3:hover .copy-anchor {
-    opacity: 1;
-}
-
-h2:hover .copy-anchor:active {
-    opacity: 0.5;
-}
-
-h3:hover .copy-anchor:active {
+h2:hover .copy-anchor:active,
+h3:hover .copy-anchor:active,
+h4:hover .copy-anchor:active {
     opacity: 0.5;
 }
 
