@@ -1,0 +1,377 @@
+---
+title: Audio Share (Beta)
+nav: 3.9992
+---
+
+>    This feature is still in Beta. To know more or report any issues, feel free to reach out to us
+>    over [Discord](https://discord.com/invite/kGdmszyzq2).
+
+
+This feature is the analog of screen capture, but for audio. There may be cases where the application needs to stream music which is either stored in the device locally or from some other app present on the device in the room where the peer is joined.
+
+Examples of such use cases can be a FM like application where the host would want to stream music while also interacting with others in the room or a host in a gaming app who would want to stream music from their device in the room along with their regular audio track.
+
+
+## Android
+
+> Note: The Audio share option currently available in Android 10 and above.
+
+### How does Audio Share works on Android
+
+100ms SDK uses the [MediaProjection](https://developer.android.com/guide/topics/media/av-capture#capture_audio_playback) APIs of Android to capture the device audio and stream it along with the user's regular audio track. To achieve this SDK starts a foreground service and starts capturing the device audio and mixes the bytes with the data collected from mic, so that the stream contains both system music and mic data.
+
+This API gives apps the ability to copy the audio being played by other apps which have set its usage to USAGE_MEDIA, USAGE_GAME, or USAGE_UNKNOWN (Audio from apps like YouTube, Music, etc can be captured)
+
+### Start device Audio Streaming from the App
+
+Follow below steps to start audio share on android devices -
+
+<div className="steps-container">
+
+#### Native file change
+
+Add `FOREGROUND_SERVICE` permission and `HMSAudioshareActivity` activity in the `android/app/src/main/AndroidManifest.xml` file -
+
+```xml{2, 8-10}
+<manifest {...} >
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+  ...
+
+  <application {...} >
+    ...
+
+    <activity
+      android:name="com.reactnativehmssdk.HMSAudioshareActivity"
+      android:label="@string/app_name" />
+
+    ...
+  </application>
+</manifest>
+```
+
+#### Start Audio Share
+
+You can call `startAudioshare` method available on `HMSSDK` instance with the mode in which you want to start the audio stream.
+
+Audio stream mode is of type `HMSAudioMixingMode` enum. Lets take a look at values of `HMSAudioMixingMode` enum -
+
+1. `HMSAudioMixingMode.TALK_ONLY`: Only data captured by the mic will be streamed in the room.
+2. `HMSAudioMixingMode.TALK_AND_MUSIC`: Data captured by the mic and playback audio being captured from the device will be streamed in the room.
+3. `HMSAudioMixingMode.MUSIC_ONLY`: Only the playback audio being captured from the device will be streamed in the room.
+
+Following is the code snippet of using `startAudioshare` method -
+
+```js
+import { HMSAudioMixingMode } from '@100mslive/react-native-hms';
+
+try {
+  await hmsInstance.startAudioshare(HMSAudioMixingMode.MUSIC_ONLY);
+
+  console.log('Start Audio Share Success');
+} catch (error) {
+  console.log('Start Audio Share Error: ', error);
+}
+```
+
+</div>
+
+### Stop device Audio Streaming
+
+You can call `stopAudioshare` method available on `HMSSDK` instance to stop the audio stream -
+
+```js
+try {
+  await hmsInstance.stopAudioshare();
+
+  console.log('Stop Audio Share Success');
+} catch (error) {
+  console.log('Stop Audio Share Error: ', error);
+}
+```
+
+### Change device Audio Streaming mode
+
+To change the Audio Streaming mode while the user is streaming audio, You can call `setAudioMixingMode` method available on `HMSSDK` instance.
+
+`setAudioMixingMode` method accepts a value of `HMSAudioMixingMode` enum as a parameter. Lets take a look at values of `HMSAudioMixingMode` enum -
+
+1. `HMSAudioMixingMode.TALK_ONLY`: Only data captured by the mic will be streamed in the room.
+2. `HMSAudioMixingMode.TALK_AND_MUSIC`: Data captured by the mic and playback audio being captured from the device will be streamed in the room.
+3. `HMSAudioMixingMode.MUSIC_ONLY`: Only the playback audio being captured from the device will be streamed in the room.
+
+> Note that `HMSAudioMixingMode.TALK_ONLY` mode is equivalent to regular mode, that is without starting this API.
+
+Following is the code snippet of using `setAudioMixingMode` method -
+
+```js
+import { HMSAudioMixingMode } from '@100mslive/react-native-hms';
+
+try {
+  await hmsInstance.setAudioMixingMode(HMSAudioMixingMode.MUSIC_ONLY);
+
+  console.log('Set Audio Mixing Mode Success');
+} catch (error) {
+  console.log('Set Audio Mixing Mode Error: ', error);
+}
+```
+
+### Current Audio Share Status
+
+You can call `isAudioShared` method available on `HMSSDK` instance to get the current Audio Share status.
+
+`isAudioShared` method returns `true` incase Audioshare is currently active and being used, and `false` for inactive state.
+
+```js
+try {
+  const shared = await hmsInstance.isAudioShared();
+
+  console.log('Is Audio Shared Success: ', shared);
+} catch (error) {
+  console.log('Is Audio Shared Error: ', error);
+}
+```
+
+
+## iOS
+
+> Note: Minimum iOS version required to support Audio Share is iOS 13
+
+### How does Audio Share works on iOS
+
+The audio that device shares goes to other peers through the mic channel. To be able to share audio, you need to setup the sdk to use a custom audio source instead of default mic.
+
+### Share Audio
+
+Follow below steps to **share audio playing on your iOS device** or **play and stream audio from a local file** on iOS device -
+
+<div className="steps-container">
+
+#### File Player and Mic Nodes
+
+First you need to create instances of `HMSAudioFilePlayerNode` and `HMSMicNode` classes.
+
+`HMSAudioFilePlayerNode` requires a parameter of type `string` which will be used at control music player in room.
+
+```js
+import { HMSAudioFilePlayerNode, HMSMicNode } from '@100mslive/react-native-hms';
+
+// creating File Player Node, which will be used as an audio source
+const audioFilePlayerNode = new HMSAudioFilePlayerNode('audio_file_player_node');
+
+// creating Mic Node, which will be used as an audio source
+const micNode = new HMSMicNode();
+```
+
+#### Audio Mixer Sources
+
+Next, you create an instance of `HMSAudioMixerSource` class using list of nodes that you created in above step -
+
+```js
+import { HMSAudioMixerSource } from '@100mslive/react-native-hms';
+
+const audioMixerSource = new HMSAudioMixerSource({
+  node: [audioFilePlayerNode, micNode],
+});
+```
+
+#### SDK Initialization with Audio Mixer Sources
+
+Now you have custom audio sources to setup audio share in your app.
+
+Next, you set "custom audio source" on `audioSource` property while creating an instance of `HMSAudioTrackSettings` class.
+
+Lets take a look at the SDK Initialization with custom audio sources -
+
+```js
+import { HMSSDK, HMSAudioTrackSettings, HMSTrackSettings } from '@100mslive/react-native-hms';
+
+// creating "Custom Audio Sources" from the "Audio Mixer Source" we created in above step
+const customAudioSources = audioMixerSource.toList();
+
+// Creating Audio Track Settings with "Custom Audio Sources"
+const audioSettings = new HMSAudioTrackSettings({
+  audioSource: customAudioSources,
+});
+
+// Creating Track Settings
+const trackSettings = new HMSTrackSettings({
+  audio: audioSettings,
+});
+
+// Creating instance of `HMSSDK` with custom track settings
+const hmsInstance = await HMSSDK.build({ trackSettings });
+```
+
+#### Play and Stream Audio File(s)
+
+You can use `play` method available on `HMSAudioFilePlayerNode` instance (that we created in [1st step](#file-player-and-mic-nodes)) to play a file on device in meeting room.
+
+`play` method accepts three parameters:
+
+1. `fileUrl`: `string` local URL of the file on device.
+  You can get the local URL of a file on device using library such as [react-native-document-picker](https://www.npmjs.com/package/react-native-document-picker).
+2. `loops`: `boolean[optional]` whether to play file in a loop.
+3. `interrupts`: `boolean[optional]` whether to interrupt the already playing file. If this is set to `false` then current file will be played after already playing file.
+
+> Note: default value of `loops` and `interrupts` parameter is `false`
+
+```js
+try {
+  const audioFilePlayerNode = ... // `HMSAudioFilePlayerNode` instance that we created in 1st step
+
+  await audioFilePlayerNode.play('...file_url...');
+  console.log('Start Audioshare Success');
+} catch(error) {
+  console.log('Start Audioshare Error: ', error);
+}
+```
+
+##### Play multiple files "back-to-back"
+
+You can use `interrupts` property (3rd parameter) of `play` method available on `HMSAudioFilePlayerNode` instance (that we created in [1st step](#file-player-and-mic-nodes)) to play multiple files back-to-back. When you set `interrupts` property to `false` while calling `play` method, the SDK does not interrupts the already playing audio file, if any is playing. Current Audio file will be played after the already playing file.
+
+The default value of `interrupts` property is `false`. So, You don't have to explicitly pass this value to `play` method. You can simply call `play` method multiple times with different files URLS without passing `interrupts` property. This way each audio file will be played back-to-back.
+
+```js
+try {
+  const audioFilePlayerNode = ... // `HMSAudioFilePlayerNode` instance that we created in 1st step
+
+  audioFilePlayerNode.play('...1st_file_url...');
+
+  // `interrupts` property (3rd parameter) usage example
+  // Below statement is same as above
+  audioFilePlayerNode.play('...2nd_file_url...', undefined, false); // 2nd file will be played after 1st one
+
+  audioFilePlayerNode.play('...3rd_file_url...'); // 3rd file will be played after 2nd one
+
+  console.log('Start Audioshare Success');
+} catch(error) {
+  console.log('Start Audioshare Error: ', error);
+}
+```
+
+##### Play multiple files "concurrently"
+
+You can create instance of `HMSAudioMixerSource` class (refer to [step 2](#audio-mixer-sources) for more info) _with multiple instances of `HMSAudioFilePlayerNode` class_ to play multiple files concurrently.
+
+```js
+import { HMSAudioFilePlayerNode, HMSMicNode, HMSAudioMixerSource } from '@100mslive/react-native-hms';
+
+// Multiple `HMSAudioFilePlayerNode` class instances to play multiple files concurrently
+const backgroundMusicNode = new HMSAudioFilePlayerNode('background_music_node');
+const audioFilePlayerNode = new HMSAudioFilePlayerNode('audio_file_player_node');
+
+// Mic node
+const micNode = new HMSMicNode();
+
+// Creating Audio Mixer Source with "Mic" node and multiple "Audio File Player" node
+const audioMixerSource = new HMSAudioMixerSource({
+  node: [backgroundMusicNode, audioFilePlayerNode, micNode],
+});
+
+// Initialize SDK with `audioMixerSource` [refer to step 3]
+```
+
+After SDK initialization with multiple file player nodes, you can play a looping background music at low volume and an audio file at the same time by passing second parameter `loops` in play function as true -
+
+```js
+// Playing background music file in loop and setting value for `interrupts` to `true`
+// so that it can be played with other files
+backgroundMusicNode.play(fileUrl, true, true);
+
+// Playing normal music file and setting value for `interrupts` to `true`
+// so that it can be played with background and other files
+audioFilePlayerNode.play(fileUrl, false, true);
+```
+
+> Note: default value of `loops` and `interrupts` parameter is `false`
+
+
+#### Share Audio playing on your iPhone
+
+Note: iOS allows to get access to audio playing on iOS device (for example, from another app like spotify) only while broadcating your entire iPhone screen. So, you should implement screen sharing in your app for this to work. You should follow [Screen Share setup](./screenshare#ios-setup) docs for iOS to set it up.
+
+After you have completed the screenshare setup for iOS, You can follow below steps to enable device audio broadcasting while sharing your screen:
+
+1. Create instance of `HMSAudioMixerSource` class (refer to [step 2](#audio-mixer-sources) for more info) with instance of `HMSScreenBroadcastAudioReceiverNode` class.
+
+  ```js
+  import { HMSScreenBroadcastAudioReceiverNode, HMSAudioFilePlayerNode, HMSMicNode, HMSAudioMixerSource } from '@100mslive/react-native-hms';
+
+  // creating Node to share audio playing on iOS
+  const screenBroadcastAudioReceiverNode = new HMSScreenBroadcastAudioReceiverNode();
+
+  // creating File Player Node, which will be used as an audio source
+  const audioFilePlayerNode = new HMSAudioFilePlayerNode('audio_file_player_node');
+
+  // creating Mic Node, which will be used as an audio source
+  const micNode = new HMSMicNode();
+
+  // Creating Audio Mixer Source with "Mic" node and multiple "Audio File Player" node
+  const audioMixerSource = new HMSAudioMixerSource({
+    node: [audioFilePlayerNode, micNode, screenBroadcastAudioReceiverNode],
+  });
+
+  // Initialize SDK with `audioMixerSource` [refer to step 3]
+
+  ```
+
+  Now your audio mixer source is set to receive audio from your broadcast extension.
+
+  > Note: You can only pass single instances of `HMSMicNode` and `HMSScreenBroadcastAudioReceiverNode` to `HMSAudioMixerSource`. You will get error if you pass multiple instances of these classes.
+
+
+2. Next, you need to setup broadcast extension to send audio to the main app
+
+  Broadcast extension receives audio that's playing on your iOS device in `processSampleBuffer` function in your `RPBroadcastSampleHandler` class. To send audio from broadcast extension to main app, you call `process`(audioSampleBuffer) function on `HMSScreenRenderer`:
+
+  ```swift
+  override func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType) {
+      ...
+
+      case RPSampleBufferType.audioApp:
+          _ = self.screenRenderer.process(audioSampleBuffer: sampleBuffer)
+          break
+      ...
+  }
+  ```
+
+  Now your broadcast extension is set to send audio to the main app.
+
+  And that's it. Now your custom mixer source in the main app can receive the audio from broadcast extension as well.
+
+</div>
+
+
+### Change volume of different nodes
+
+You can use `setVolume` method on nodes to control the volume level -
+
+```js
+// setting volume of file player node
+audioFilePlayerNode.setVolume(0.5);
+
+// setting volume of peer mic
+micNode.setVolume(0.9);
+```
+
+Note: Volume value ranges from `0.0` to `1.0`
+
+
+### Pause, Resume and Stop Audio File Node playback and more
+
+You can use following methods on `HMSAudioFilePlayerNode` to pause, resume or stop playback and more -
+
+```js
+audioFilePlayerNode.pause(); // this pauses the audio file playback
+
+audioFilePlayerNode.resume(); // this resumes the audio file playback
+
+audioFilePlayerNode.stop(); // this stops the audio file playback
+
+const isPlaying = await audioFilePlayerNode.isPlaying(); // returns playing status of Audio File Player node
+
+const totalPlaybackDuration = await audioFilePlayerNode.duration(); // returns duration of Audio File
+
+const currentPlaybackTime = await audioFilePlayerNode.currentDuration(); // returns current duration of Audio File
+```

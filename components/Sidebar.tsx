@@ -123,7 +123,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                     </Text>
                     <ChevronRightIcon height="16px" width="16px" />
                 </Flex>
-                <a href="docs/concepts/v2/basics/basics">
+                <a href="/docs/concepts/v2/basics/basics">
                     <Flex gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <LayersIcon style={{ color: 'inherit' }} />
                         <Text css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>

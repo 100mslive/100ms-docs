@@ -1,0 +1,120 @@
+---
+title: PIP (Picture-In-Picture) Mode
+nav: 3.9993
+---
+
+100ms React Native SDK provides support for creating Picture in Picture mode experience for video calls.
+
+PIP Mode lets the user watch the room video in a small window pinned to a corner of the screen while navigating between apps or browsing content on the main screen.
+
+Currently this functionality is only available on Android.
+
+## Minimum Requirements
+
+-   Minimum version required to support PiP is Android 8.0 (API level 26)
+-   Minimum `react-native-hms` SDK version required is 1.0.0
+
+### How to add PiP support
+
+1. You need to update the activity tag in the `AndroidManifest.xml`
+
+```xml
+  <activity
+    ....
+    android:supportsPictureInPicture="true"
+    android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|uiMode"
+    ... />
+```
+
+2. Call `enablePipMode` method on "HMS Instance" when you want to start PIP mode.
+
+```js
+  // You can also check if PIP is supported on device or not.
+  const isPIPSupported = await hmsInstance.isPipModeSupported();
+
+  const isEnabled = await hmsInstance.enablePipMode();
+  if (isEnabled) {
+    // App has entered into PIP Mode
+    setPIPModeActive(true);
+  }
+```
+
+You can also add `aspectRatio` for Picture in Picture window.
+
+```js
+  ...
+  const isEnabled = await hmsInstance.enablePipMode({ aspectRatio: [16, 9] });
+  ...
+```
+
+Pip mode resizes your whole activity to a small container. So, you should hide the content that you don't want to show.
+
+3. Detect when App goes to "fullscreen" from PIP mode
+
+```js
+  import { AppState, AppStateStatus } from 'react-native';
+
+  ...
+
+  const appStateRef = useRef(AppState.currentState);
+
+  useEffect(() => {
+    // We will register an AppState listener when App is in PIP Mode
+    if (pipModeActive) {
+      appStateRef.current = AppState.currentState;
+
+      const appStateListener = (nextAppState: AppStateStatus) => {
+        if (
+          appStateRef.current.match(/inactive|background/) &&
+          nextAppState === "active"
+        ) {
+          // Now, App is not in PIP mode
+          setPIPModeActive(false);
+        }
+
+        appStateRef.current = nextAppState;
+      };
+
+      AppState.addEventListener('change', appStateListener);
+
+      return () => {
+        AppState.removeEventListener('change', appStateListener);
+      }
+    }
+  }, [pipModeActive]);
+```
+
+### Example of showing content when App is in PIP Mode
+
+```js
+  // Getting trackId to show in PIP mode
+  // getPreferredTrackId function returns trackId of preferred video track
+  const pipTrackId = getPreferredTrackId()
+
+  ...
+
+  // If PIP mode is active, showing only single peer
+  if (isPipModeActive) {
+    return (
+      <HmsView 
+        ...
+        trackId={pipTrackId}
+        ...
+      />
+    )
+  }
+  
+  // Showing tiles for all the peers
+  return <MultiplePeers />
+
+  ...
+```
+
+## Checkout Video of PIP in Action
+
+<video width="295" height="640" controls>
+  <source src="https://user-images.githubusercontent.com/45194090/205296059-6b9b399d-9a51-4d35-99cf-4413f6368169.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
+👀 To see an example of Picture in Picture implementation in our example app, checkout [our example project](https://github.com/100mslive/react-native-hms/tree/main/example).

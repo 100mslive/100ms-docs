@@ -452,7 +452,7 @@ const fundamentals = [
     {
         title: 'Architecture',
         body: 'Learn the basic architecture to understand how your application communicates with 100ms servers.',
-        link: '/javascript/v2/foundation/basics#architecture',
+        link: '/concepts/v2/basics/basics#architecture',
         logo: <ViewIcon className="childLogo" style={style} />,
         analytics: {
             btnId: 'fundamentalsArchitecture'
@@ -461,7 +461,7 @@ const fundamentals = [
     {
         title: 'Templates and Roles',
         body: 'A collection of roles and video settings that are used by the SDK to decide what happens when a room is created.',
-        link: '/javascript/v2/foundation/templates-and-roles',
+        link: '/concepts/v2/templates-and-roles/templates-and-roles',
         logo: <LegoIcon className="childLogo" style={style} />,
         analytics: {
             btnId: 'fundamentalsTemplatesRoles'
@@ -470,7 +470,7 @@ const fundamentals = [
     {
         title: 'Authentication',
         body: 'A way to control the permissions and capabilities of users in a room.',
-        link: '/javascript/v2/foundation/security-and-tokens',
+        link: '/concepts/v2/tokens/security-and-tokens',
         logo: <GameIcon className="childLogo" style={style} />,
         analytics: {
             btnId: 'fundamentalsAuthentication'
