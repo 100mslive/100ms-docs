@@ -147,6 +147,42 @@ to decide colors
     --docs_font_size_h2: 1.375rem;
     --docs_font_size_h3: 1.125rem;
     --docs_font_size_h4: 1rem;
+
+    --ch-scrollycoding-sticker-width: 900px;
+
+    --display-dark: block;
+    --display-light: none;
+}
+
+.ch-scrollycoding {
+    gap: 2rem;
+}
+
+.ch-scrollycoding-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    min-width: 300px;
+    flex-shrink: 0;
+    flex-basis: 40%;
+}
+
+.ch-scrollycoding-step-content[data-selected],
+.ch-scrollycoding-step-content:hover {
+    background-color: var(--surface_light)
+}
+
+.ch-scrollycoding-step-content:hover {
+    cursor: pointer;
+}
+
+.ch-scrollycoding-step-content[data-selected] {
+    cursor: initial;
+}
+
+.ch-scrollycoding-step-content {
+    padding: 1rem;
+    border-width: 3px;
 }
 
 [data-theme='light'] {
@@ -244,6 +280,9 @@ to decide colors
     --docs_bg_card: hsla(217, 20%, 100%, 1);
     --docs_bg_dropdown: hsla(217, 20%, 100%, 1);
     --docs_bg_dropdown_hover: hsla(217, 20%, 99%, 1);
+
+    --display-dark: none;
+    --display-light: block;
 }
 
 *,
@@ -1393,6 +1432,14 @@ ais-highlight-0000000000 {
     line-height: 1.5rem;
     font-size: 1rem;
     font-weight: 400;
+}
+
+.syntax-light{
+    display: var(--display-light);
+}
+
+.syntax-dark {
+  display: var(--display-dark);
 }
 
 /* Prevents auto zoom for mobile browsers */

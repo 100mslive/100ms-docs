@@ -15,23 +15,7 @@ TL;DR - Use this [Playground](https://codesandbox.io/s/hms-js-quickstart-5rmes) 
 
 ## Get started
 
-<StepsToc
-    parentId="initialize-sdk-steps"
-    descriptions={[
-        'Initialize HMSStore and HMSActions from 100ms SDK for state management and to perform actions like join, leave, etc. in the app.',
-        'Include the HTML elements such as tiles and buttons to render peers and trigger actions like join, leave, etc.',
-        'Pass config object with userName and authToken to join method from HMSActions. Use leave method from HMSActions to leave the room.',
-        'Use attachVideo method from HMSActions to add video and selectPeers selector from hmsStore to display tile for peers.',
-        'Use setLocalAudioEnabled and setLocalVideoEnabled from HMSActions to mute/unmute local audio/video tracks.',
-        'Use selectIsConnectedToRoom selector from hmsStore to manage UI elements based on connection/disconnection.'
-    ]}
-/>
-
-<StepsContainer id="initialize-sdk-steps">
-
 ### Setup a project
-
-<CH.Scrollycoding>
 
 You can set up a project using `npm` or `yarn`.
 
@@ -66,145 +50,26 @@ You can set up a project using `npm` or `yarn`.
 Now that the dependencies are installed, let's create basic source files for our video calling application. Let's create the files and folders in the below manner:
 
 ```
-100ms-test
-  - index.html
-  - src
-    - index.js
-    - styles.css
+100ms-test/
+├── index.html
+└── src
+    ├── index.js
+    └── styles.css
 ```
 
----
+<CH.Scrollycoding lineNumbers={true} rows={25}>
 
 ### Initialize the SDK
 
 Let us start with initializing the 100ms libraries for state management and to perform actions such as joining the room, muting our audio, etc.
 
-```jsx index.js mark=11:14
-import {
-    HMSReactiveStore,
-    selectIsLocalAudioEnabled,
-    selectIsLocalVideoEnabled,
-    selectPeers,
-    selectIsConnectedToRoom,
-    selectVideoTrackByID
-} from '@100mslive/hms-video-store';
+```jsx index.js focus=5:8
+import { HMSReactiveStore } from '@100mslive/hms-video-store';
 
-// Initialize HMS Store
 const hmsManager = new HMSReactiveStore();
 hmsManager.triggerOnSubscribe();
 const hmsStore = hmsManager.getStore();
 const hmsActions = hmsManager.getActions();
-
-// HTML elements
-const form = document.getElementById('join');
-const joinBtn = document.getElementById('join-btn');
-const conference = document.getElementById('conference');
-const peersContainer = document.getElementById('peers-container');
-const leaveBtn = document.getElementById('leave-btn');
-const muteAudio = document.getElementById('mute-aud');
-const muteVideo = document.getElementById('mute-vid');
-const controls = document.getElementById('controls');
-
-// store peer IDs already rendered to avoid re-render on mute/unmute
-const renderedPeerIDs = new Set();
-
-// Joining the room
-joinBtn.onclick = () => {
-    hmsActions.join({
-        userName: document.getElementById('name').value,
-        authToken: document.getElementById('token').value
-    });
-};
-
-// Leaving the room
-function leaveRoom() {
-    hmsActions.leave();
-}
-
-// Cleanup if user refreshes the tab or navigates away
-window.onunload = window.onbeforeunload = leaveRoom;
-leaveBtn.onclick = leaveRoom;
-
-// Helper function to create html elements
-function createElementWithClass(tag, className) {
-    const newElement = document.createElement(tag);
-    newElement.className = className;
-    return newElement;
-}
-
-// Render a single peer
-function renderPeer(peer) {
-    const peerTileDiv = createElementWithClass('div', 'peer-tile');
-    const videoElement = createElementWithClass('video', 'peer-video');
-    const peerTileName = createElementWithClass('div', 'peer-name');
-    videoElement.autoplay = true;
-    videoElement.muted = true;
-    videoElement.playsinline = true;
-    peerTileName.textContent = peer.name;
-
-    hmsStore.subscribe((track) => {
-        if (!track) {
-            return;
-        }
-        if (track.enabled) {
-            hmsActions.attachVideo(track.id, videoElement);
-        } else {
-            hmsActions.detachVideo(track.id, videoElement);
-        }
-    }, selectVideoTrackByID(peer.videoTrack));
-
-    peerTileDiv.append(videoElement);
-    peerTileDiv.append(peerTileName);
-
-    renderedPeerIDs.add(peer.id);
-    return peerTileDiv;
-}
-
-// display a tile for each peer in the peer list
-function renderPeers() {
-    const peers = hmsStore.getState(selectPeers);
-
-    peers.forEach((peer) => {
-        if (!renderedPeerIDs.has(peer.id) && peer.videoTrack) {
-            peersContainer.append(renderPeer(peer));
-        }
-    });
-}
-
-// Reactive state - renderPeers is called whenever there is a change in the peer-list
-hmsStore.subscribe(renderPeers, selectPeers);
-
-// Mute and unmute audio
-muteAudio.onclick = async () => {
-    const audioEnabled = !hmsStore.getState(selectIsLocalAudioEnabled);
-    await hmsActions.setLocalAudioEnabled(audioEnabled);
-    muteAudio.textContent = audioEnabled ? 'Mute' : 'Unmute';
-};
-
-// Mute and unmute video
-muteVideo.onclick = async () => {
-    const videoEnabled = !hmsStore.getState(selectIsLocalVideoEnabled);
-    await hmsActions.setLocalVideoEnabled(videoEnabled);
-    muteVideo.textContent = videoEnabled ? 'Hide' : 'Unhide';
-};
-
-// Showing the required elements on connection/disconnection
-function onConnection(isConnected) {
-    if (isConnected) {
-        form.classList.add('hide');
-        conference.classList.remove('hide');
-        leaveBtn.classList.remove('hide');
-        controls.classList.remove('hide');
-    } else {
-        form.classList.remove('hide');
-        conference.classList.add('hide');
-        leaveBtn.classList.add('hide');
-        controls.classList.add('hide');
-    }
-}
-
-// Listen to the connection state
-hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
 ```
 
 ---
@@ -213,9 +78,223 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
 
 Now, let's initialize all the HTML elements required to build the user interface such as tile for local and remote peers, join and leave button, mute and unmute button, etc.
 
-```jsx index.js mark=16:24
+<CH.Code>
 
+```jsx index.js focus=10:17
+import { HMSReactiveStore } from '@100mslive/hms-video-store';
+
+const hmsManager = new HMSReactiveStore();
+hmsManager.triggerOnSubscribe();
+const hmsStore = hmsManager.getStore();
+const hmsActions = hmsManager.getActions();
+
+const form = document.getElementById('join');
+const joinBtn = document.getElementById('join-btn');
+const conference = document.getElementById('conference');
+const peersContainer = document.getElementById('peers-container');
+const leaveBtn = document.getElementById('leave-btn');
+const muteAudio = document.getElementById('mute-aud');
+const muteVideo = document.getElementById('mute-vid');
+const controls = document.getElementById('controls');
 ```
+
+```html index.html
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Quickstart JS</title>
+        <link rel="stylesheet" href="src/styles.css" />
+        <meta charset="UTF-8" />
+    </head>
+
+    <body>
+        <header>
+            <button id="leave-btn" class="btn-danger hide">Leave Room</button>
+        </header>
+        <form id="join">
+            <h2>Join Room</h2>
+            <div class="input-container">
+                <input id="name" type="text" name="username" placeholder="Your name" />
+            </div>
+            <div class="input-container">
+                <input id="token" type="text" name="token" placeholder="Auth token" />
+            </div>
+            <button type="button" class="btn-primary" id="join-btn">Join</button>
+        </form>
+
+        <div id="conference" class="conference-section hide">
+            <h2>Conference</h2>
+
+            <div id="peers-container"></div>
+        </div>
+
+        <div id="controls" class="control-bar hide">
+            <button id="mute-aud" class="btn-control">Mute</button>
+            <button id="mute-vid" class="btn-control">Hide</button>
+        </div>
+
+        <script type="module" src="src/index.js"></script>
+    </body>
+</html>
+```
+
+```css style.css
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+        'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #263238;
+    color: white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-weight: normal;
+}
+
+header {
+    padding: 10px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+}
+
+.btn-danger {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 6px 14px;
+    background-color: #f44336;
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.hide {
+    display: none !important;
+}
+
+form {
+    max-width: 450px;
+    margin: 30px auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+input {
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    height: 34px;
+    padding: 5px;
+    background: #37474f;
+    color: inherit;
+    font-family: inherit;
+}
+
+input::placeholder {
+    color: #aaa;
+}
+
+.input-container {
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 6px 14px;
+    background-color: #1565c0;
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+form h2,
+.conference-section h2 {
+    margin-bottom: 20px;
+}
+
+.conference-section {
+    padding: 20px 30px;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.conference-section h2 {
+    text-align: center;
+    font-size: 32px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #546e7a;
+}
+
+#peers-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(min-content, 1fr));
+    place-items: center;
+    grid-gap: 10px;
+}
+
+.peer-video {
+    height: 250px;
+    width: 250px;
+    border-radius: 40%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.local.peer-video {
+    transform: scaleX(-1);
+}
+
+.peer-name {
+    font-size: 14px;
+    text-align: center;
+}
+
+.peer-tile {
+    padding: 10px;
+}
+
+.control-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 15px;
+    justify-content: center;
+    z-index: 10;
+}
+
+.control-bar > *:not(:first-child) {
+    margin-left: 8px;
+}
+
+.btn-control {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid #37474f;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    text-align: center;
+    background-color: #607d8b;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    color: white;
+}
+```
+
+</CH.Code>
 
 ---
 
@@ -249,7 +328,7 @@ We may want to allow the user to mute/unmute their own tracks - both audio and v
 
 Let's add 2 buttons on the bottom of the page and call the [setLocalAudioEnabled](/api-reference/javascript/v2/interfaces/HMSActions#set-local-audio-enabled) method on `hmsActions` to mute/unmute the local audio tracks and [setLocalVideoEnabled](/api-reference/javascript/v2/interfaces/HMSActions#set-local-video-enabled) method on `hmsActions` to mute/unmute the local video tracks.
 
----
+</CH.Scrollycoding>
 
 ### Test the app
 
@@ -262,23 +341,29 @@ This will start your development server in http://localhost:3000/. Open this in 
 
 Now, after you click `join`, you should be able to see yourself!
 
-<video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
+<video
+    loop="true"
+    autoplay="autoplay"
+    controls="controls"
+    id="vid"
+    muted
+    style={{ marginBottom: '16px' }}>
     <source src="/docs/guides/peer-1.mp4" type="video/mp4" />
 </video>
-<br />
 
 You can open the app in another tab in the browser to join as the second peer to check audio/video transactions between two or more peers.
 
-<video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
+<video
+    loop="true"
+    autoplay="autoplay"
+    controls="controls"
+    id="vid"
+    muted
+    style={{ marginBottom: '16px' }}>
     <source src="/docs/guides/peer-2.mp4" type="video/mp4" />
 </video>
-<br />
 
 **We have a fully functional video calling application now** 🎉🚀
-
-</CH.Scrollycoding>
-
-</StepsContainer>
 
 ## Next steps
 

@@ -25,7 +25,8 @@ import remarkGfm from 'remark-gfm';
 import remarkA11yEmoji from '@fec/remark-a11y-emoji';
 import { MDXProvider, useMDXComponents } from '@mdx-js/react';
 import { remarkCodeHike } from '@code-hike/mdx';
-import theme from 'shiki/themes/nord.json';
+import theme from 'shiki/themes/github-dark.json';
+import rehypeShikiReloaded from 'rehype-shiki-reloaded';
 
 type NavRoute = {
     url: string;
@@ -230,7 +231,14 @@ export const getStaticProps = async ({ params }) => {
                 // imagePlugin,
                 remarkCodeHeader,
                 withTableofContents,
-                [remarkCodeHike, { theme, lineNumbers: false }]
+                [
+                    remarkCodeHike,
+                    {
+                        theme,
+                        lineNumbers: false,
+                        staticMediaQuery: '(max-width: 1333px)'
+                    }
+                ]
             ];
             options.rehypePlugins = [
                 ...(options.rehypePlugins ?? []),
@@ -245,7 +253,8 @@ export const getStaticProps = async ({ params }) => {
                             'mdxjsEsm'
                         ]
                     }
-                ]
+                ],
+                rehypeShikiReloaded
                 // mdxPrism
             ];
             options.providerImportSource = '@mdx-js/react';

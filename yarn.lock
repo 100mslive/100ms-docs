@@ -3614,6 +3614,11 @@ external-editor@^3.0.3:
     iconv-lite "^0.4.24"
     tmp "^0.0.33"
 
+fast-copy@^2.1.1:
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/fast-copy/-/fast-copy-2.1.7.tgz#affc9475cb4b555fb488572b2a44231d0c9fa39e"
+  integrity sha512-ozrGwyuCTAy7YgFCua8rmqmytECYk/JYAMXcswOcm0qvGoE3tPb7ivBeIHTOK2DiapBhDZgacIhzhQIKU5TCfA==
+
 fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   version "3.1.3"
   resolved "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz"
@@ -4141,7 +4146,7 @@ hast-util-to-parse5@^7.0.0:
     web-namespaces "^2.0.0"
     zwitch "^2.0.0"
 
-hast-util-to-string@^1.0.0:
+hast-util-to-string@^1.0.0, hast-util-to-string@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npmjs.org/hast-util-to-string/-/hast-util-to-string-1.0.4.tgz"
   integrity sha512-eK0MxRX47AV2eZ+Lyr18DCpQgodvaS3fAQO2+b9Two9F5HEoRPhiUMNzoXArMJfZi2yieFzUBMRl3HNJ3Jus3w==
@@ -6829,6 +6834,16 @@ rehype-raw@^6.1.1:
     hast-util-raw "^7.2.0"
     unified "^10.0.0"
 
+rehype-shiki-reloaded@^0.0.11:
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/rehype-shiki-reloaded/-/rehype-shiki-reloaded-0.0.11.tgz#cc1ff6fadd946085f294b19bf2549122878e4a3b"
+  integrity sha512-E6xvmb2juFj92+ajEEb/R7d5OnXZZ3y8TPFpNXDzIMPUiQL5EsqTn5qb4FQoGJOMCN5PDIiQjhvgFGm5dZya1A==
+  dependencies:
+    fast-copy "^2.1.1"
+    hast-util-to-string "^1.0.4"
+    unist-builder "^2.0.3"
+    unist-util-visit "^2.0.3"
+
 rehype-stringify@^8.0.0:
   version "8.0.0"
   resolved "https://registry.npmjs.org/rehype-stringify/-/rehype-stringify-8.0.0.tgz"
@@ -7968,7 +7983,7 @@ unified@^9.2.1:
     trough "^1.0.0"
     vfile "^4.0.0"
 
-unist-builder@2.0.3, unist-builder@^2.0.0:
+unist-builder@2.0.3, unist-builder@^2.0.0, unist-builder@^2.0.3:
   version "2.0.3"
   resolved "https://registry.npmjs.org/unist-builder/-/unist-builder-2.0.3.tgz"
   integrity sha512-f98yt5pnlMWlzP539tPc4grGMsFaQQlP/vM396b00jngsiINumNmsY8rkXjfoi1c6QaM8nQ3vaGDuoKWbe/1Uw==
