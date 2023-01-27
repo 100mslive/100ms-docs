@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box } from '@100mslive/react-ui';
 
 export default function StepsContainer({ children, id }) {

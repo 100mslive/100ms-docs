@@ -4,6 +4,9 @@ const { formatDiagnosticsWithColorAndContext } = require('typescript');
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+    experimental: {
+        esmExternals: 'loose'
+    },
     basePath: '/docs',
     webpack: (config, { isServer, dev }) => {
         // Fixes npm packages that depend on `fs` module
@@ -226,7 +229,250 @@ const nextConfig = {
                 destination: '/javascript/v2/how--to-guides/set-up-video-conferencing/render-video/simulcast',
                 permanent: true
             },
+            {
+                source: '/android/v2/guides/quickstart',
+                destination: '/android/v2/get-started/quickstart',
+                permanent: true
+            },
+            {
+                source: '/android/v2/guides/token',
+                destination: '/android/v2/get-started/token',
+                permanent: true
+            },
+            {
+                source: '/android/v2/guides/token-endpoint',
+                destination: '/android/v2/get-started/token-endpoint',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/integration',
+                destination: '/android/v2/how--to-guides/install-the-sdk/integration',
+                permanent: true
+            },
+            {
+                source: '/android/v2/migrations/jitpack-maven-central',
+                destination: '/android/v2/how--to-guides/install-the-sdk/jitpack-maven-central',
+                permanent: true
+            },
+            {
+                source: '/android/v2/guides/proguard-config',
+                destination: '/android/v2/how--to-guides/install-the-sdk/proguard-config',
+                permanent: true
+            },
+            {
+                source: '/android/v2/foundation/size',
+                destination: '/android/v2/how--to-guides/install-the-sdk/size',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/join',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/join',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/leave',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/leave',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/preview',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/preview',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/render-video',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/render-video/render-video',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/render-video-old',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/render-video/surfaceview/render-video-old',
+                permanent: true
+            },
+            {
+                source: '/android/v2/migrations/surfaceview-migration',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/render-video/surfaceview/surfaceview-migration',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/auto-video-degrade-restore',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/render-video/auto-video-degrade-restore',
+                permanent: true
+            },
+            {
+                source: '/android/v2/advanced-features/simulcast',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/render-video/simulcast',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/Pip-Mode',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/render-video/Pip-Mode',
+                permanent: true
+            },
+            {
+                source: '/android/v2/advanced-features/audio-level',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/render-video/audio-level',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/Mirror',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/render-video/Mirror',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/mute',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/mute',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/chat',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/chat',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/screen-share',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/screen-share',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/audio-share',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/local-audio-share',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/change-user-name',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/change-user-name',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/interruption-handling',
+                destination: '/android/v2/how--to-guides/listen-to-room-events/interruption-handling',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/PeerCount',
+                destination: '/android/v2/how--to-guides/listen-to-room-events/room-updates',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/change-role',
+                destination: '/android/v2/how--to-guides/interact-with-room/interact-with-peer/change-role',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/remove-peer',
+                destination: '/android/v2/how--to-guides/interact-with-room/interact-with-peer/remove-peer',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/remote-mute',
+                destination: '/android/v2/how--to-guides/interact-with-room/interact-with-peer/remote-mute',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/end-room',
+                destination: '/android/v2/how--to-guides/interact-with-room/end-room',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/rtmp-recording',
+                destination: '/android/v2/how--to-guides/record-and-live-stream/rtmp-recording',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/hls',
+                destination: '/android/v2/how--to-guides/record-and-live-stream/hls',
+                permanent: true
+            },
+            {
+                source: '/android/v2/advanced-features/peer-metadata-update',
+                destination: '/android/v2/how--to-guides/build-interactive-features/peer-metadata-update',
+                permanent: true
+            },
+            {
+                source: '/android/v2/advanced-features/hls-timed-metadata',
+                destination: '/android/v2/how--to-guides/build-interactive-features/hls-timed-metadata',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/error-handling',
+                destination: '/android/v2/how--to-guides/debugging/error-handling',
+                permanent: true
+            },
+            {
+                source: '/android/v2/debugging/log_utils',
+                destination: '/android/v2/how--to-guides/debugging/log_utils',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/network-quality-reports',
+                destination: '/android/v2/how--to-guides/measure-network-quality-and-performance/network-quality-reports',
+                permanent: true
+            },
+            {
+                source: '/android/v2/advanced-features/peer-network-quality',
+                destination: '/android/v2/how--to-guides/measure-network-quality-and-performance/peer-network-quality',
+                permanent: true
+            },
+            {
+                source: '/android/v2/advanced-features/webrtc-stats',
+                destination: '/android/v2/how--to-guides/measure-network-quality-and-performance/webrtc-stats',
+                permanent: true
+            },
+            {
+                source: '/android/v2/advanced-features/hls-stats',
+                destination: '/android/v2/how--to-guides/measure-network-quality-and-performance/hls-stats',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/echo-cancellation',
+                destination: '/android/v2/how--to-guides/configure-your-device/echo-cancellation',
+                permanent: true
+            },
+            {
+                source: '/android/v2/advanced-features/track-settings',
+                destination: '/android/v2/how--to-guides/set-up-video-conferencing/track-settings',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/audio-output-routing',
+                destination: '/android/v2/how--to-guides/configure-your-device/speaker/audio-output-routing',
+                permanent: true
+            },
+            {
+                source: '/android/v2/features/audio-mode',
+                destination: '/android/v2/how--to-guides/configure-your-device/speaker/audio-mode',
+                permanent: true
+            },
+            {
+                source: '/android/v2/advanced-features/camera-controls',
+                destination: '/android/v2/how--to-guides/configure-your-device/camera-controls',
+                permanent: true
+            },
+            {
+                source: '/android/v2/plugins/virtual-background',
+                destination: '/android/v2/how--to-guides/extend-capabilities/plugins/virtual-background',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/debugging/faq',
+                destination: '/flutter/v2/foundation/faq',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/guides/faq',
+                destination: '/react-native/v2/foundation/faq',
+                permanent: true
+            },
+            {
+                source: '/android/v2/foundation/faq',
+                destination: '/android/v2/how--to-guides/debugging/faq',
+                permanent: true
+            },
         ];
+    },
+    eslint: {
+        ignoreDuringBuilds: true
     }
 };
 
