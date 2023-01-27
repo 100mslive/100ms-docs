@@ -40,8 +40,10 @@ Ensure that the object instantiation is not done while navigating this causes th
 
 For Eg:
 
-We have `HMSStore` as our data store class then if we create the instance while navigating this will cause error while 
-hot reloading.
+We have `HMSStore` as our data store class then:
+
+
+❌ Create the instance while navigating this will cause error while hot reloading.
 
 ```dart
 //This will cause the room state to be empty after hot reload
@@ -52,10 +54,10 @@ Navigator.of(context).push(MaterialPageRoute(
                           )));
 ```
 
-To support hot reload the object should be passed in while navigating:
+✅ Pass `HMSStore` object while navigating, this supports hot reload:
 
 ```dart
-//This will cause the room state to be empty after hot reload
+//This works well even after hot reload
 HMSStore dataStore = HMSStore()
 Navigator.of(context).push(MaterialPageRoute(
                       builder: (_) => ListenableProvider.value(
