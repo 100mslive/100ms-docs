@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { MinusIcon } from '@100mslive/react-icons';
 
 const SidebarItem = ({ route, index, asPath, activeItem }) => {
-    const isActive = asPath.includes(route.url);
+    const isActive = asPath.split('#')[0] === route.url;
 
     return (
         <Link prefetch={false} href={route.url || ''} key={`${route.url}-${index}`}>
