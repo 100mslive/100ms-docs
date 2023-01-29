@@ -1,4 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
+import React from 'react';
 import {
     AndroidIcon,
     AppleIcon,
@@ -8,7 +9,6 @@ import {
     ServerIcon
 } from '@100mslive/react-icons';
 import { Box, Flex, Text } from '@100mslive/react-ui';
-import React from 'react';
 import DropDownOption from './DropDownOption';
 
 interface Props {
@@ -50,6 +50,7 @@ const HomeDropDown: React.FC<Props> = ({ setDropDownSelection }) => {
                 padding: '$10',
                 borderRadius: '$2',
                 gap: '$8',
+                right: "$1",
                 '@sm': {
                     right: '$0'
                 }

@@ -7,12 +7,15 @@ import { AppProps } from 'next/app';
 import NProgress from 'nprogress';
 import SEO from '../next-seo.config';
 import { currentUser } from '../lib/currentUser';
+import "@code-hike/mdx/dist/index.css"
+import "@/styles/custom-ch.css"
 import '@/styles/nprogress.css';
 import '@/styles/theme.css';
 import 'inter-ui/inter.css';
 
 declare global {
     interface Window {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         analytics: any;
     }
 }

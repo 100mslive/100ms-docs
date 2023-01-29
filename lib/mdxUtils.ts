@@ -1,6 +1,9 @@
-import { readdirSync, readFileSync } from 'fs';
+import { existsSync, readdirSync, readFileSync } from 'fs';
 import matter from 'gray-matter';
 import { join } from 'path';
+import { fromMarkdown } from 'mdast-util-from-markdown';
+import { mdxFromMarkdown } from 'mdast-util-mdx';
+import { mdxjs } from 'micromark-extension-mdxjs';
 import setValue from 'set-value';
 
 /**
@@ -45,7 +48,11 @@ export const getAllDocs = () => {
     const docs = getDocsPaths()
         .map((path) => {
             // Get frontMatter from markdown
-            const source = readFileSync(join(DOCS_PATH, `${path}.mdx`));
+            let filePath = join(DOCS_PATH, `${path}.mdx`)
+            if (!existsSync(filePath)) {
+                filePath = join(DOCS_PATH, `${path}.md`)
+            }
+            const source = readFileSync(filePath);
             const { data, content } = matter(source);
             // Normalize paths for web
             const url = path.replace(/\\/g, '/');
@@ -80,4 +87,26 @@ export const getNavfromDocs = (docs) => {
         setValue(n, pathV, file);
         return n;
     }, {});
+};
+
+export const slugify = (text) => text.toString().toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "").replace(/--+/g, "-").replace(/^-+/, "").replace(/-+$/, "");
+
+/*
+Source: https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery
+    
+    (/\s+/g, '-') //spaces to dashes
+    (/&/g, '-and-') //ampersand to and
+    (/[^\w\-]+/g, '') //remove non-words
+    (/\-\-+/g, '-') //collapse multiple dashes
+    (/^-+/, '') //trim starting dash
+    (/-+$/, ''); //trim ending dash
+    
+*/
+
+export const toMdxJsxFlowElement = (input) => {
+    const tree = fromMarkdown(input, {
+        extensions: [mdxjs()],
+        mdastExtensions: [mdxFromMarkdown()]
+    });
+    return tree.children[0];
 };
