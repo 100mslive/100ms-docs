@@ -79,7 +79,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
         } else nav = platform;
     }
 
-    const showPlatformSelector = slug?.[0] !== 'concepts';
+    const showPlatformSelector = slug?.[0] !== 'foundation';
 
     let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]);
     if (slug[0] === 'api-reference')
@@ -161,7 +161,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                         pl: '$9',
                         mt: '$14',
                         mb: '$12',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
                     }}
                     onClick={() => setShowBaseView(true)}>
                     <ChevronLeftIcon height="16px" width="16px" />
@@ -225,15 +225,16 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                     flex-direction: column;
                     align-items: stretch;
                     height: calc(100vh - 136px);
-                    overflow-y: scroll;
-                    top: ${menu ? '' : '104px'};
+                    overflow-y: auto;
+                    position: sticky;
+                    top: 0;
                     overscroll-behavior: none;
                 }
 
                 .page {
                     position: absolute;
                     z-index: 0;
-                    top: 4.75rem;
+                    top: 0;
                     opacity: 0;
                     width: 300px;
                     box-sizing: border-box;
