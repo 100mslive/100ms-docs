@@ -136,7 +136,7 @@ This returns playlist item for corresponding Id in selection
 
 ▸ (`store`): [`HMSPlaylistSelection`](/api-reference/javascript/v2/interfaces/HMSPlaylistSelection)
 
-This returns playlist selection with {id, hasNext, hasPrev}
+This returns playlist selection with `{ id, hasNext, hasPrev }`
 
 ##### Parameters
 
