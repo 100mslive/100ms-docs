@@ -161,7 +161,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                         pl: '$9',
                         mt: '$14',
                         mb: '$12',
-                        cursor: 'pointer',
+                        cursor: 'pointer'
                     }}
                     onClick={() => setShowBaseView(true)}>
                     <ChevronLeftIcon height="16px" width="16px" />
@@ -284,33 +284,33 @@ export default Sidebar;
 
 const iconStyle = { height: '24px', width: '24px', fill: 'var(--gray12)' };
 
-const menuItem = [
+export const menuItem = [
     {
-        link: '/android/v2/foundation/basics',
+        link: '/android/v2/get-started/quickstart',
         name: 'Android',
         icon: <AndroidIcon style={iconStyle} />,
         apiRef: '/api-reference/android/v2/index.html'
     },
     {
-        link: '/ios/v2/foundation/basics',
+        link: '/ios/v2/guides/quickstart',
         name: 'iOS',
         icon: <IosIcon style={iconStyle} />,
         apiRef: '/api-reference/ios/v2/home/content'
     },
     {
-        link: '/javascript/v2/foundation/basics',
+        link: '/javascript/v2/get-started/javascript-quickstart',
         name: 'JavaScript',
         icon: <JavascriptIcon style={iconStyle} />,
         apiRef: '/api-reference/javascript/v2/home/content'
     },
     {
-        link: '/react-native/v2/foundation/basics',
+        link: '/react-native/v2/guides/quickstart',
         name: 'React-Native',
         icon: <ReactIcon style={iconStyle} />,
         apiRef: '/api-reference/react-native/v2/modules.html'
     },
     {
-        link: '/flutter/v2/foundation/basics',
+        link: '/flutter/v2/guides/quickstart',
         name: 'Flutter',
         icon: <FlutterIcon style={iconStyle} />,
         apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'

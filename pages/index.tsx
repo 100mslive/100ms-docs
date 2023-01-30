@@ -452,7 +452,7 @@ const fundamentals = [
     {
         title: 'Architecture',
         body: 'Learn the basic architecture to understand how your application communicates with 100ms servers.',
-        link: '/foundation/v2/concepts/basics#architecture',
+        link: '/foundation/v2/concepts/basics',
         logo: <ViewIcon className="childLogo" style={style} />,
         analytics: {
             btnId: 'fundamentalsArchitecture'
