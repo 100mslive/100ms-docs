@@ -22,7 +22,7 @@ ___
 
 ### updateDevice
 
-• **updateDevice**: (`__namedParameters`: { `deviceId`: `string` ; `deviceType`: [`DeviceType`](/api-reference/javascript/v2/react/enums/DeviceType)  }) => `Promise`<`void`\>
+• **updateDevice**: (`__namedParameters`: { `deviceId`: `string` ; `deviceType`: `DeviceType`  }) => `Promise`<`void`\>
 
 #### Type declaration
 
@@ -36,7 +36,7 @@ function to call to update device
 | :------ | :------ |
 | `__namedParameters` | `Object` |
 | `__namedParameters.deviceId` | `string` |
-| `__namedParameters.deviceType` | [`DeviceType`](/api-reference/javascript/v2/react/enums/DeviceType) |
+| `__namedParameters.deviceType` | `DeviceType` |
 
 ##### Returns
 
