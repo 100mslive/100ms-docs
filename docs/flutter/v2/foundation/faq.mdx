@@ -141,6 +141,29 @@ You can do using [peer metadata](../advanced-features/peer-metadata-update#use-c
 
 If you have enabled subscribe degradation from the dashboard, the SDK might go in the degradation mode on poor internet connection turning off some videos to ensure good call quality. When this is done, a flag on the track will be turned on to let the UI know. The UI should treat it similar to the track turning off for purpose of displaying avatar etc. More details [here](../features/auto-video-degrade-restore).
 
+#### My device heats up while using 100ms SDK?
+
+Since 100ms SDKs download live audio & videos there are chances that with incorrect API usage some devices can face heating up or quick battery drainage issues.
+When faced with such issues, ensure that -
+
+- Limited number of videos are getting downloaded. Ensure that the videos which are on-screen are only consuming bandwidth.
+
+- Videos which are not visible on screen should not be downloaded.HMSVideoView internally uses `SurfaceView` in android and `UiKitView` in iOS. It is recommended to render at most 3 to 4 videos on a Single page/screen of the app and rest should be paginated for optimum performance.
+
+- Ensure that the application does not download videos while it's in background.Check out our docs on background handling [here](../features/background-handling)
+
+- Check how often the application state gets updated. Avoid unnecessary rebuilds as this causes the `HMSVideoView` to detach and attach again.
+
+- It is suggested to keep the video-conferencing or streaming state management that is HMSSDK separate from application state management, this will help in avoiding rebuilds while in call.
+
+- Ensure the HMSSDK state is properly disposed after leaving the call.Checkout the best practices [here](../features/leave)
+
+- Heating issue might be more prominent in `Debug` builds rather than `Release` ones due to active development.
+
+#### How to mirror screen while debugging the application
+
+To mirror your device you can use tools like [scrcpy](https://github.com/Genymobile/scrcpy#get-the-app),[vysor](https://www.vysor.io/download/), quick time player etc.
+
 #### What is the maximum allowed duration for a session?
 
 The maximum allowed duration for a session on the 100ms platform is 12 hours.
