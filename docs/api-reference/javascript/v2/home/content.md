@@ -1,10 +1,10 @@
 ---
 title: Web SDK API Reference
-nav: 1
 ---
 
 ## Enumerations
 
+- [DeviceType](/api-reference/javascript/v2/enums/DeviceType)
 - [HMSAudioPluginType](/api-reference/javascript/v2/enums/HMSAudioPluginType)
 - [HMSLogLevel](/api-reference/javascript/v2/enums/HMSLogLevel)
 - [HMSNotificationSeverity](/api-reference/javascript/v2/enums/HMSNotificationSeverity)

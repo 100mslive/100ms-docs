@@ -1,11 +1,6 @@
 ---
 title: React Hooks API Reference
-nav: 5.1
 ---
-
-## Enumerations
-
-- [DeviceType](/api-reference/javascript/v2/react/enums/DeviceType)
 
 ## Interfaces
 
