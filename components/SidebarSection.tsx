@@ -80,7 +80,6 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
             key={`${key}-${index}`}>
             {/* <ConditionalLink link={indexURL}> */}
             <Flex
-                align="center"
                 onClick={() => {
                     setOpenSection((prev) => {
                         const currentList = JSON.parse(
@@ -113,6 +112,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                         width: '14px',
                         minWidth: '14px',
                         marginRight: '0.5rem',
+                        marginTop: '0.25rem',
                         transition: 'all 0.2s ease',
                         transform: openSection ? 'rotateZ(90deg)' : ''
                     }}
