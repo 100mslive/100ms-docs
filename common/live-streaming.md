@@ -27,8 +27,9 @@ The [roles primitive](/docs/javascript/v2/foundation/templates-and-roles) can be
 Use our [Live Streaming Starter Kit](https://www.100ms.live/marketplace/live-streaming-starter-kit) to try out the experience before you write a line of code.
 
 <StepsToc
-  parentId="try-live-streaming"
-  descriptions={["Use our Live streaming starter kit to try out the experience before you write a line of code.", "Understand the difference between a stream broadcaster and stream viewer.", "Use the demo app link to go live for the first time as a broadcaster and join the stream as viewer.", "Use the 100ms self-serve dashboard to update the layout, aspect ratio, etc of the stream."]}
+parentId="try-live-streaming"
+descriptions={["Use our Live streaming starter kit to try out the experience before you write a line of code.", "Understand the difference between a stream broadcaster and stream viewer.", "Use the demo app link to go live for the first time as a broadcaster and join the stream as viewer.", "Use the 100ms self-serve dashboard to update the layout, aspect ratio, etc of the stream."]}
+
 >
 
 <StepsContainer id="try-live-streaming">
@@ -77,17 +78,10 @@ By default, the live stream is composed in landscape mode for desktop viewers (w
 
 To integrate 100ms Interactive Live Streaming in your app, follow these steps:
 
-- [Overview](#overview)
-- [Try Interactive Live Streaming](#try-interactive-live-streaming)
-  - [Create a new app](#create-a-new-app)
-  - [Understand roles](#understand-roles)
-  - [Go live](#go-live)
-  - [Customize the stream](#customize-the-stream)
-- [Integrate in your app](#integrate-in-your-app)
-  - [Enable destination](#enable-destination)
-  - [SDK integration](#sdk-integration)
-  - [Live stream playback](#live-stream-playback)
-  - [Video on Demand (VOD) use cases](#video-on-demand-vod-use-cases)
+1. [Enable live streaming destination](#enable-destination)
+2. [Integrate the 100ms SDK in your app](#sdk-integration)
+3. [Integrate live stream playback](#live-stream-playback)
+4. [Video on demand (VOD) use cases](#video-on-demand-vod-use-cases)
 
 ### Enable destination
 
