@@ -78,17 +78,10 @@ By default, the live stream is composed in landscape mode for desktop viewers (w
 
 To integrate 100ms Interactive Live Streaming in your app, follow these steps:
 
-- [Overview](#overview)
-- [Try Interactive Live Streaming](#try-interactive-live-streaming)
-  - [Create a new app](#create-a-new-app)
-  - [Understand roles](#understand-roles)
-  - [Go live](#go-live)
-  - [Customize the stream](#customize-the-stream)
-- [Integrate in your app](#integrate-in-your-app)
-  - [Enable destination](#enable-destination)
-  - [SDK integration](#sdk-integration)
-  - [Live stream playback](#live-stream-playback)
-  - [Video on Demand (VOD) use cases](#video-on-demand-vod-use-cases)
+1. [Enable live streaming destination](#enable-destination)
+2. [Integrate the 100ms SDK in your app](#sdk-integration)
+3. [Integrate live stream playback](#live-stream-playback)
+4. [Video on demand (VOD) use cases](#video-on-demand-vod-use-cases)
 
 ### Enable destination
 
