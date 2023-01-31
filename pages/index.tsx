@@ -202,7 +202,7 @@ const Homepage = () => {
                                 direction="column"
                                 css={{ marginTop: '$24', marginBottom: '$10' }}>
                                 <h2 style={{ marginTop: '0', marginBottom: '4px' }}>
-                                    <Text variant="h5">Foundation</Text>
+                                    <Text variant="h5">Concepts</Text>
                                 </h2>
                                 <Text
                                     variant="body2"
@@ -452,7 +452,7 @@ const fundamentals = [
     {
         title: 'Architecture',
         body: 'Learn the basic architecture to understand how your application communicates with 100ms servers.',
-        link: '/foundation/v2/concepts/basics',
+        link: '/concepts/v2/concepts/basics',
         logo: <ViewIcon className="childLogo" style={style} />,
         analytics: {
             btnId: 'fundamentalsArchitecture'
@@ -461,7 +461,7 @@ const fundamentals = [
     {
         title: 'Templates and Roles',
         body: 'A collection of roles and video settings that are used by the SDK to decide what happens when a room is created.',
-        link: '/foundation/v2/concepts/templates-and-roles',
+        link: '/concepts/v2/concepts/templates-and-roles',
         logo: <LegoIcon className="childLogo" style={style} />,
         analytics: {
             btnId: 'fundamentalsTemplatesRoles'
@@ -470,7 +470,7 @@ const fundamentals = [
     {
         title: 'Authentication',
         body: 'A way to control the permissions and capabilities of users in a room.',
-        link: '/foundation/v2/concepts/security-and-tokens',
+        link: '/concepts/v2/concepts/security-and-tokens',
         logo: <GameIcon className="childLogo" style={style} />,
         analytics: {
             btnId: 'fundamentalsAuthentication'

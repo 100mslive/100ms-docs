@@ -79,7 +79,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
         } else nav = platform;
     }
 
-    const showPlatformSelector = slug?.[0] !== 'foundation';
+    const showPlatformSelector = slug?.[0] !== 'concepts';
 
     let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]);
     if (slug[0] === 'api-reference')
@@ -127,11 +127,11 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                     </Text>
                     <ChevronRightIcon height="16px" width="16px" />
                 </Flex>
-                <a href="/docs/foundation/v2/concepts/basics">
+                <a href="/docs/concepts/v2/concepts/basics">
                     <Flex gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <LayersIcon style={{ color: 'inherit' }} />
                         <Text css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
-                            Foundation
+                            Concepts
                         </Text>
                     </Flex>
                 </a>
