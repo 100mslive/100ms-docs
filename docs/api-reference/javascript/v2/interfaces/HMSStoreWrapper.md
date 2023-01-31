@@ -1,5 +1,6 @@
 ---
 title: HMSStoreWrapper
+nav: 4.54
 ---
 
 HMS store can be used to:

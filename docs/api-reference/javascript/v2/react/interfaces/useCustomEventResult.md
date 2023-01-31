@@ -1,5 +1,6 @@
 ---
 title: useCustomEventResult<T\>
+nav: 5.2.5
 ---
 
 ## Type parameters

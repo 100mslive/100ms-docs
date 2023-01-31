@@ -1,5 +1,6 @@
 ---
 title: ScreenCaptureHandle
+nav: 4.63
 ---
 
 ## Properties

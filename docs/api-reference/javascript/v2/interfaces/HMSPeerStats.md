@@ -1,5 +1,6 @@
 ---
 title: HMSPeerStats
+nav: 4.30
 ---
 
 ## Properties

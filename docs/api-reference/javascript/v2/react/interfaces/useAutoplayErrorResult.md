@@ -1,5 +1,6 @@
 ---
 title: useAutoplayErrorResult
+nav: 5.2.1
 ---
 
 ## Properties
