@@ -100,6 +100,10 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
     const [showBaseView, setShowBaseView] = useState(false);
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
 
+    const [showSidebar, setShowSidebar] = useState(false);
+
+    useEffect(() => setShowSidebar(true), []);
+
     return (
         <div className="sidebar">
             {/* Top level view */}
@@ -152,71 +156,73 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
             </div>
 
             {/* Platform specific view */}
-            <div className={`page ${showBaseView ? '' : 'active-page'}`}>
-                <Flex
-                    align="center"
-                    gap="1"
-                    css={{
-                        color: '$primaryLight',
-                        pl: '$9',
-                        mt: '$14',
-                        mb: '$12',
-                        cursor: 'pointer'
-                    }}
-                    onClick={() => setShowBaseView(true)}>
-                    <ChevronLeftIcon height="16px" width="16px" />
-                    <Text variant="sm" css={{ color: '$primaryLight' }}>
-                        Back to Home
-                    </Text>
-                </Flex>
+            {showSidebar ? (
+                <div className={`page ${showBaseView ? '' : 'active-page'}`}>
+                    <Flex
+                        align="center"
+                        gap="1"
+                        css={{
+                            color: '$primaryLight',
+                            pl: '$9',
+                            mt: '$14',
+                            mb: '$12',
+                            cursor: 'pointer'
+                        }}
+                        onClick={() => setShowBaseView(true)}>
+                        <ChevronLeftIcon height="16px" width="16px" />
+                        <Text variant="sm" css={{ color: '$primaryLight' }}>
+                            Back to Home
+                        </Text>
+                    </Flex>
 
-                {/* Sidebar Version Section */}
-                {showPlatformSelector ? (
-                    <section
-                        style={{
-                            margin: '0px 0.5rem 0.5rem 0.4rem',
-                            position: 'sticky',
-                            top: '0',
-                            zIndex: '20',
-                            background: 'var(--docs_bg_content)'
-                        }}>
-                        <Listbox value={tech} onChange={changeTech}>
-                            <Listbox.Button className="dropdown">
-                                <div style={{ display: 'flex ', alignItems: 'center' }}>
-                                    {tech.icon}
-                                    <span style={{ marginLeft: '1rem' }}>{tech.name}</span>
-                                </div>
-                                <ChevronDownIcon />
-                            </Listbox.Button>
-                            <Listbox.Options className="dropdown-options">
-                                {menuItem.map((m) => (
-                                    <Listbox.Option
-                                        key={m.link}
-                                        value={m}
-                                        className={({ active }) =>
-                                            `${
-                                                active
-                                                    ? 'dropdown-option dropdown-option-active'
-                                                    : 'dropdown-option'
-                                            }`
-                                        }>
-                                        {m.icon}
-                                        <span style={{ marginLeft: '1rem' }}>{m.name}</span>
-                                    </Listbox.Option>
-                                ))}
-                            </Listbox.Options>
-                        </Listbox>
-                    </section>
-                ) : null}
-                {/* Sidebar Menu Section */}
-                {nav
-                    ? Object.entries(nav).map(([key, children], index) => (
-                          <SidebarSection key={key} value={key} index={index} nested={false}>
-                              {children as React.ReactChildren}
-                          </SidebarSection>
-                      ))
-                    : null}
-            </div>
+                    {/* Sidebar Version Section */}
+                    {showPlatformSelector ? (
+                        <section
+                            style={{
+                                margin: '0px 0.5rem 0.5rem 0.4rem',
+                                position: 'sticky',
+                                top: '0',
+                                zIndex: '20',
+                                background: 'var(--docs_bg_content)'
+                            }}>
+                            <Listbox value={tech} onChange={changeTech}>
+                                <Listbox.Button className="dropdown">
+                                    <div style={{ display: 'flex ', alignItems: 'center' }}>
+                                        {tech.icon}
+                                        <span style={{ marginLeft: '1rem' }}>{tech.name}</span>
+                                    </div>
+                                    <ChevronDownIcon />
+                                </Listbox.Button>
+                                <Listbox.Options className="dropdown-options">
+                                    {menuItem.map((m) => (
+                                        <Listbox.Option
+                                            key={m.link}
+                                            value={m}
+                                            className={({ active }) =>
+                                                `${
+                                                    active
+                                                        ? 'dropdown-option dropdown-option-active'
+                                                        : 'dropdown-option'
+                                                }`
+                                            }>
+                                            {m.icon}
+                                            <span style={{ marginLeft: '1rem' }}>{m.name}</span>
+                                        </Listbox.Option>
+                                    ))}
+                                </Listbox.Options>
+                            </Listbox>
+                        </section>
+                    ) : null}
+                    {/* Sidebar Menu Section */}
+                    {nav
+                        ? Object.entries(nav).map(([key, children], index) => (
+                              <SidebarSection key={key} value={key} index={index} nested={false}>
+                                  {children as React.ReactChildren}
+                              </SidebarSection>
+                          ))
+                        : null}
+                </div>
+            ) : null}
             <style jsx>{`
                 .sidebar {
                     padding-bottom: 32px;
