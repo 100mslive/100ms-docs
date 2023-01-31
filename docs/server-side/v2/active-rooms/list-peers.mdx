@@ -1,9 +1,9 @@
 ---
-title: Get Peers
-nav: 3.9
+title: List Peers
+nav: 3.5
 ---
 
-You can use this API for get the active peers in the room. Peers can be filtered by specifying user_id or role in the query params
+You can use this API for get the active peers in the room. Peers can be filtered by specifying `user_id` or `role` in the query params
 
 <PostRequest title="https://api.100ms.live/v2/active-rooms/<room_id>/peers" />
 <Request id="req-0">
@@ -12,8 +12,8 @@ You can use this API for get the active peers in the room. Peers can be filtered
 curl --location --request GET 'https://api.100ms.live/v2/active-rooms/<room_id>/peers' \
 --header 'Authorization: Bearer <management_token>
 ```
-
 </Request>
+
 <ResponseBox id="res-0" status="200 OK">
 
 ```json
@@ -22,31 +22,30 @@ curl --location --request GET 'https://api.100ms.live/v2/active-rooms/<room_id>/
         "dcd88eb0-83e6-486a-bcae-c3be5e0f2c20": {
             "id": "dcd88eb0-83e6-486a-bcae-c3be5e0f2c20",
             "name": "John",
-            "user_id": "da3136fd-622e-468f-96ca-09c8c9f50072",
+            "user_id": "student-3461",
             "metadata": "",
-            "role": "host",
+            "role": "student",
             "joined_at": "2023-01-25T12:06:34.080990401Z"
         },
         "4e03dce3-ddec-4bdd-b91b-0b18be1a7f10": {
             "id": "4e03dce3-ddec-4bdd-b91b-0b18be1a7f10",
             "name": "Nick",
-            "user_id": "8f12c699-53f2-471e-9397-9f937de2f8e7",
+            "user_id": "teacher-81",
             "metadata": "",
-            "role": "host",
+            "role": "teacher",
             "joined_at": "2023-01-25T12:04:30.366388779Z"
         }
     }
 }
 ```
-
 </ResponseBox>
 
 ## Allowed filters
 
-| Name          | Type      | Description                                                       | Required |
-| :------------ | :-------- | :-----------------------------------------------------------------| :------- |
-| user_id <br/> | `string`  | Determines the peers with specified user_id                       | No       |
-| role <br/>    | `string`  | Determines the peers with specified role                          | No       |
+| Name          | Type      | Description                                                                                                               | Required |
+| :------------ | :-------- | :-------------------------------------------------------------------------------------------------------------------------| :------- |
+| user_id <br/> | `string`  | Determines the peers with specified user_id ((your internal user identifier used while creating the auth token for peers) | No       |
+| role <br/>    | `string`  | Determines the peers with specified role                                                                                  | No       |
 
 ## Why would you use this API?
 
