@@ -198,7 +198,7 @@ const sdkItems = {
         { id: 1, link: '/javascript/v2/guides/react-quickstart' },
         { id: 2, link: 'https://codesandbox.io/s/100ms-react-quickstart-kh0hy?file=/src/App.jsx' },
         { id: 3, link: '/javascript/v2/get-started/react-sample-app/quickstart' },
-        { id: 4, link: '/api-reference/javascript/v2/home/content' },
+        { id: 4, link: '/api-reference/javascript/v2/react/home/content' },
         { id: 5, link: '/javascript/v2/changelog/release-notes' }
     ],
     serverSide: [
