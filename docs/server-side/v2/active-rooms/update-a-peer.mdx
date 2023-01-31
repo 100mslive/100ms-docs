@@ -1,0 +1,72 @@
+---
+title: Update a peer
+nav: 3.5
+---
+
+You can use this API to update the details of a connected peer, such as name, role, and metadata (custom/additional information to build real-time interactivity scenarios).
+
+<PostRequest title="https://api.100ms.live/v2/active-rooms/<room_id>/peers/<peer_id>" />
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/active-rooms/<room_id>/peers/<peer_id>' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "nixon-test2",
+    "metadata": "{\"isHandRaised\":false,\"isBRBOn\":true}"
+}'
+```
+
+</Request>
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "2b8bee10-5733-43af-a2f3-ecce623cbb90",
+    "name": "nixon-test2",
+    "user_id": "4f33d87f-e86b-4f58-97c6-d07fc476d936",
+    "metadata": "{\"isHandRaised\":false,\"isBRBOn\":true}",
+    "role": "host",
+    "joined_at": "2022-10-12T12:56:17.759148635Z",
+    "tracks": {
+        "a22befac-b77c-49bf-82ff-7b93c9f49fef": {
+            "id": "a22befac-b77c-49bf-82ff-7b93c9f49fef",
+            "stream_id": "b90ef533-2af9-412c-9442-52cd70e758b6",
+            "mute": true,
+            "type": "audio",
+            "source": "regular",
+            "started_at": "2022-10-12T12:56:17.932404678Z",
+            "description": ""
+        },
+        "a8cfe2d3-9fd8-47a0-b5ca-3203fd84bbd7": {
+            "id": "a8cfe2d3-9fd8-47a0-b5ca-3203fd84bbd7",
+            "stream_id": "b90ef533-2af9-412c-9442-52cd70e758b6",
+            "mute": true,
+            "type": "video",
+            "source": "regular",
+            "started_at": "2022-10-12T12:56:17.932404678Z",
+            "description": ""
+        }
+    }
+}
+```
+
+</ResponseBox>
+
+## Arguments
+
+| Name                        | Type     | Description                                                                                                                                             | Required |
+| :-------------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| room_id <br/> — path param  | `string` | Unique identifier of the room where the peer is active. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                                                 | Yes      |
+| peer_id <br/> — path param  | `string` | Unique identifier of the peer/participant for which you wish to update details. <br/><br/>**Example**: 1038fa72-9345-4651-beab-436f9242ebf4             | Yes      |
+| name <br/> — body param     | `string` | The name of the peer used in the active session.                                                                                                        | No       |
+| role <br/> — body param     | `string` | You can use this to update the role type of the peer. For example, to take the peer to a breakout room.                                                 | No       |
+| metadata <br/> — body param | `object` | You can use a stringified JSON to update various custom/additional information to a peer such as business_user_id, raise_hand/lower_hand info, and more | No       |
+
+## Why would you use this API?
+
+-   You can use these APIs to update various properties of the connected peer, such as avatar, BRB status, hand-raise status, etc.
+-   **Custom Avatar:**
+    -   A user updates their profile information on your app/ongoing session; the data is stored in your data store.
+    -   Use Update peer API and pass the profile picture data from your data store to your client app to display it as the respective connected peer's avatar (based on user_id mapping).

@@ -1,0 +1,69 @@
+---
+title: Retrieve a specific peer
+nav: 3.4
+---
+
+Retrieves the details of a specific peer in an active room. You can use the peer_id to retrieve the details of the peer. Use [retrieve active room state API](/server-side/v2/active-rooms/retrieve-active-room) to get the list of connected peers in an active room.
+
+> **Note:** You can leverage this API to retrieve the details of connected peers in an active room only. To retrieve details of the peers that left the session already, use the [Retrieve a specific session API](/server-side/v2/Sessions/retrieve-a-session)
+
+<GetRequest title="https://api.100ms.live/v2/active-rooms/<room_id>/peers/<peer_id>" />
+<Request id="req-0">
+
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/active-rooms/<room_id>/peers/<peer_id>' \
+--header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "2e8fc83e-6aef-4ca8-9124-bedc253f3529",
+    "name": "nixon-test2",
+    "user_id": "4c661446-f6f2-49c2-a317-16892756a2fa",
+    "metadata": {
+        "Lower_hand": true,
+        "business_user_id": "XYZ_1234"
+    },
+    "role": "backstage",
+    "joined_at": "2022-10-06T05:22:41.635589462Z",
+    "tracks": {
+        "780a28e0-f2df-450b-9954-70307a440530": {
+            "id": "780a28e0-f2df-450b-9954-70307a440530",
+            "stream_id": "2cc4afed-20ba-4793-a223-d4c76c331456",
+            "mute": false,
+            "type": "video",
+            "source": "regular",
+            "started_at": "2022-10-06T05:22:41.752327705Z",
+            "description": ""
+        },
+        "d6831044-3584-42aa-92be-efd051cae353": {
+            "id": "d6831044-3584-42aa-92be-efd051cae353",
+            "stream_id": "2cc4afed-20ba-4793-a223-d4c76c331456",
+            "mute": true,
+            "type": "audio",
+            "source": "regular",
+            "started_at": "2022-10-06T05:22:41.752327705Z",
+            "description": ""
+        }
+    }
+}
+```
+
+</ResponseBox>
+
+## Arguments
+
+| Name                        | Type     | Description                                                                                                                          | Required |
+| :-------------------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| room_id <br/> — path param  | `string` | Unique identifier of the room where the peer is active. <br/><br/>**Example**: 627cda81ab4f3b56a077dc33                              | Yes      |
+| peer_id <br/> — path param | `string` | Unique identifier of the peer/participant you wish to fetch details for. <br/><br/>**Example**: 1038fa72-9345-4651-beab-436f9242ebf4 | Yes      |
+
+## Why would you use this API?
+
+-   To check if a specific peer has enabled/disabled their audio/video/screen-share at a given time in an active room.
+-   To check if a specific peer is on-stage and backstage at a particular time.
+-   You can also use this API to store peer metadata in your database and retrieve it for an abruptly disconnected peer once they join the session again. For example, to enable the user to resume playing the multiplayer game.

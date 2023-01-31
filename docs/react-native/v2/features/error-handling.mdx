@@ -1,0 +1,157 @@
+---
+title: Error Handling
+nav: 3.6
+---
+
+When interacting with the 100ms SDK using the `HMSSDK` instance, or joining and previewing the Room, it may encounter issues that it cannot automatically recover from, and app or user intervention may be required. In such cases, the 100ms SDK emits `HMSUpdateListenerActions.ON_ERROR` event with error encounter by it.
+
+You can subscribe to `HMSUpdateListenerActions.ON_ERROR` event to get notified about the errors encountered by the SDK -
+
+```js
+// this function will be called with `error` as first parameter
+const onError = (error: HMSException) => {
+  // Logging error
+  console.log(`${error.code} ${error.description}`);
+
+  // You should handle error as per its' code
+  // Each code represents different error. Read below section to get more details
+  if (error.code === 4005 || error.code === 1003) {
+    leaveMeeting();
+  }
+};
+
+// Subscribe to get SDK errors
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
+```
+
+
+## HMSException
+
+Function subscribed to `HMSUpdateListenerActions.ON_ERROR` event is called with `error` object, which is an instance of `HMSException` class. Lets take a look at `HMSException` class interface -
+
+```js
+interface HMSException {
+  code: number;
+  description: string;
+  isTerminal: boolean;
+  canRetry?: boolean; // Android Only
+  message?: string; // Android Only
+  name?: string; // Android Only
+  action?: string; // Android Only
+}
+```
+
+Here are the details of each property of `HMSException` object:
+
+### code
+
+The `code` property denotes error code which a unique identifier for the error.
+
+### description
+
+The `description` property denotes what is the source of the error.
+
+### isTerminal
+
+The `isTerminal` property denotes wether error has caused the current session to terminate and the app will need to call join again to reconnect.
+
+Terminal error example:
+
+![Terminal Error](/docs/v2/flutter-errorCode-1003.png)
+
+The error code `1003` (error in above image) occurs when the reconnection attempt fails. The SDK returns this error after attempting to reconnect for 60 seconds. In such cases, the `isTerminal` property can be used to handle updates to the UI.
+
+> 🔑  More info on reconnection handling can be found [here](./reconnecting-reconnected)
+
+### canRetry
+
+It is an `android` only property. The `canRetry` property denotes wether app can call join again with the same configuration it has used before. The value be false in cases like token expiring or room getting locked. You can use this property while implementing infinite retry in your app.
+
+### message
+
+It is an `android` only property. The `message` property denotes error information.
+
+### name
+
+It is an `android` only property. The `name` property denotes error name.
+
+### action
+
+It is an `android` only property. The `action` property tells what to do when a error occurs. For example `SEND_ALL_REQUIRED_KEYS` means you have not sent some required key in the API call.
+
+
+## Different Error Types
+
+Following are the different errors emitted by the SDK with their codes and action you should take to resolve the error -
+
+| **Error Code** | **Cause of the error**                                                                                                              | **Action to be taken**                                                                                              |
+| :------------- | :---------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------ |
+| **1003**       | Websocket disconnected - Happens due to network issues                                                                              | Mention user to check their network connection or try again after some time.                                        |
+| **2002**       | Invalid Endpoint URL                                                                                                                | Check the endpoint provided while calling `join` on `HMSSDK`.                                                       |
+| **2003**       | Endpoint is not reachable                                                                                                           | Mention user to check their network connection or try again after some time.                                        |
+| **2004**       | Token is not in proper JWT format                                                                                                   | The token passed while calling `join` is not in correct format. Retry getting a new token.                          |
+| **3001**       | Cant Access Capture Device                                                                                                          | Ask user to check permission granted to audio/video capture devices.                                                |
+| **3002**       | Capture Device is not Available                                                                                                     | Ask user to check if the audio/video capture device is connected or not.                                            |
+| **3003**       | Capture device is in use by some other application.                                                                                 | Show notification to user mentioning that the capturing device is used by some other application currently.         |
+| **3008**       | Browser has thrown an auto-play exception.                                                                                          | Show notification to user mentioning that the browser blocked auto-play.                                            |
+| **3012**       | [BLUETOOTH_CONNECT](https://developer.android.com/reference/android/Manifest.permission#BLUETOOTH_CONNECT) permission is not given. | Add the BLUETOOTH_CONNECT permission to your app and request it at runtime since it's a dangerous level permission. |
+| **3013**       | [BLUETOOTH](https://developer.android.com/reference/android/Manifest.permission#BLUETOOTH) permission is not given.                 | Add the BLUETOOTH permission to your app.                                                                           |
+| **4001**       | WebRTC error                                                                                                                        | Some webRTC error has occurred. Need more logs to debug.                                                            |
+| **4002**       | WebRTC error                                                                                                                        | Some webRTC error has occurred. Need more logs to debug.                                                            |
+| **4003**       | WebRTC error                                                                                                                        | Some webRTC error has occurred. Need more logs to debug.                                                            |
+| **4004**       | WebRTC error                                                                                                                        | Some webRTC error has occurred. Need more logs to debug.                                                            |
+| **4005**       | ICE Connection Failed due to network issue                                                                                          | Mention user to check their network connection or try again after some time.                                        |
+| **5001**       | Trying to join a room which is already joined                                                                                       | Trying to join an already joined room.                                                                              |
+| **6002**       | webRTC Error: Error while renegotiating                                                                                             | Please try again.                                                                                                   |
+| **40101**      | Token Error: Invalid Access Key                                                                                                     | Access Key provided in the token is wrong.                                                                          |
+| **40102**      | Token Error: Invalid Room Id                                                                                                        | RoomID provided in the token is wrong.                                                                              |
+| **40103**      | Token Error: Invalid Auth Id                                                                                                        | AuthID provided in the token is wrong.                                                                              |
+| **40104**      | Token Error: Invalid App Id                                                                                                         | App ID provided in the token is wrong.                                                                              |
+| **40105**      | Token Error: Invalid Customer Id                                                                                                    | Customer Id provided in the token is wrong.                                                                         |
+| **40107**      | Token Error: Invalid User Id                                                                                                        | User ID provided in the token is wrong.                                                                             |
+| **40108**      | Token Error: Invalid Role                                                                                                           | The role provided in the token is wrong.                                                                            |
+| **40109**      | Token Error: Bad JWT Token                                                                                                          | Bad JWT Token.                                                                                                      |
+| **40100**      | Generic Error                                                                                                                       | Need to debug further with logs.                                                                                    |
+| **40001**      | Invalid Room                                                                                                                        | Room ID provided while fetching the token is an invalid room.                                                       |
+| **40002**      | Room Mismatched with Token                                                                                                          | Room ID provided while fetching the token does not match.                                                           |
+| **40004**      | Peer already joined                                                                                                                 | Peer who is trying to join has already joined the room.                                                             |
+| **41001**      | Peer is gone                                                                                                                        | The peer is no more present in the room.                                                                            |
+| **7001**       | Platform Not Supported                                                                                                              | The platform is not supported for plugin                                                                            |
+| **7002**       | Plugin Init Failed                                                                                                                  | Plugin initialization has failed                                                                                    |
+| **7003**       | Plugin Processing Failed                                                                                                            | Plugin processing failed                                                                                            |
+| **7004**       | Plugin Add Already Going on                                                                                                         | Plugin add is already in progress                                                                                   |
+
+
+## Setting log levels in SDK (Android Only)
+
+Logs can be used to diagnose the performance of room sessions or debug various issues. To enable logging, create an `HMSLogSettings` object and pass it to the `build` method when constructing the `HMSSDK` instance.
+
+The SDK also provides an option to save these logs to disk on **Android devices** using the `isLogStorageEnabled` property of the `HMSLogSettings` object. You can set the `isLogStorageEnabled` property to `true` to enable the SDK to write logs to the disk.
+
+```js
+// Creating the Log Settings object with disk storage turned on
+const logSettings = new HMSLogSettings({
+  level: HMSLogLevel.VERBOSE,
+  isLogStorageEnabled: true,
+  maxDirSizeInBytes: HMSLogAlarmManager.DEFAULT_DIR_SIZE, // Maximum size of the directory where log will be saved
+});
+
+// Pass the Log Settings object to the build function
+c̶o̶n̶s̶t̶ ̶h̶m̶s̶I̶n̶s̶t̶a̶n̶c̶e̶ ̶=̶ ̶a̶w̶a̶i̶t̶ ̶H̶M̶S̶S̶D̶K̶.̶b̶u̶i̶l̶d̶(̶)̶;̶
+const hmsInstance = await HMSSDK.build({ logSettings });
+```
+
+`HMSLogLevel` is an enum with values -
+
+```js
+export enum HMSLogLevel {
+  // To receive all the logs
+  VERBOSE = 'VERBOSE',
+
+  // To receive warnings
+  WARNING = 'WARNING',
+
+  // To receive errors
+  ERROR = 'ERROR',
+}
+```
