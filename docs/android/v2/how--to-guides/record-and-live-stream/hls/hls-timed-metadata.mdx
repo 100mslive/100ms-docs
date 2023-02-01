@@ -1,0 +1,153 @@
+---
+ title: HLS Timed Metadata
+ nav: 11.23
+---
+
+HLS Timed Metadata feature helps you synchronise certain events with the HLS stream. This can be useful for showing interactive quizzes / product overlays etc.
+
+## Requirements
+
+-   100ms Android SDK version 2.5.6 or higher
+-   Active HLS stream
+
+## Sending HLS Timed Metadata
+
+To add HLS timed metadata cue to the currently running HLS stream use `setHlsSessionMetadata` API like this:
+
+<Tabs id="send-hmsTimedMetadata" items={['Kotlin', 'Java']} />
+
+<Tab id='send-hmsTimedMetadata-0'>
+
+```kotlin
+val metadata = HMSHLSTimedMetadata(
+                        payload  = payloadText,
+                        duration = durationText
+                    )
+
+hmsSDK.setHlsSessionMetadata(arrayListOf(hmsHLSTimedMetadata), object : HMSActionResultListener {
+        override fun onError(error: HMSException) {
+            Log.d(TAG, "hls metadata sending failed");
+        }
+
+        override fun onSuccess() {
+            Log.d(TAG, "hls metadata sent successfully");
+        }
+})
+```
+
+</Tab>
+
+<Tab id='send-hmsTimedMetadata-1'>
+
+```java
+
+HMSHLSTimedMetadata metaDataModel = new HMSHLSTimedMetadata(payload,duration,metaData);
+ArrayList<HMSHLSTimedMetadata> metadataModelList = new ArrayList<HMSHLSTimedMetadata>(metaDataModel);
+metadataModelList.add(metaDataModel);
+hmsSDK.setHlsSessionMetadata(metadataModelList, new HMSActionResultListener() {
+    @Override
+    public void onSuccess() {
+        Log.d(TAG, "hls metadata sent successfully");
+    }
+
+    @Override
+    public void onError(@NonNull HMSException e) {
+        Log.d(TAG, "hls metadata sending failed");
+    }
+});
+```
+
+</Tab>
+
+## Receiving HLS Timed Metadata
+
+### Getting metadata from exoplayer
+
+<Tabs id="recieve-hmsTimedMetadata" items={['Kotlin', 'Java']} />
+
+<Tab id='recieve-hmsTimedMetadata-0'>
+
+```kotlin
+        val hlsManifest = exoPlayer.currentManifest as HlsManifest?
+        val windowIndex = exoPlayer.currentMediaItemIndex
+        val timeline = exoPlayer.currentTimeline
+        val window = timeline.getWindow(windowIndex, Timeline.Window())
+        val currentAbsolutePosition = (window.windowStartTimeMs + exoPlayer.currentPosition)
+        val META_DATA_MATCHER = "#EXT-X-DATERANGE:ID=\"(?<id>.*)\",START-DATE=\"(?<startDate>.*)\",DURATION=(?<duration>.*),X-100MSLIVE-PAYLOAD=\"(?<payload>.*)\""
+        var duration = 0;
+        var tagStartTime = 0L;
+        String payload = "";
+
+        hlsManifest?.mediaPlaylist?.tags?.forEach {
+            if (it.contains("EXT-X-DATERANGE")) {
+                val pattern = Pattern.compile(META_DATA_MATCHER)
+                val matcher = pattern.matcher(it)
+                if (matcher.matches()) {
+                    try {
+                        // X-100MSLIVE-PAYLOAD : this contains payload passed in metadata from setHlsSessionMetadata()
+                        payload = matcher.group(4).orEmpty()
+                        // DURATION : this contains duration that was passed in metadata from setHlsSessionMetadata()
+                        duration = matcher.group(3).orEmpty().toLongOrNull()?.times(1000) ?: 0
+                        // START-DATE : this contains start time for metadata
+                        val startDate = matcher.group(2).orEmpty()
+                        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+                        formatter.timeZone = UTC
+                        tagStartTime = formatter.parse(startDate).time
+                        // Syncing of metadata with current player position.
+                        if (tagStartTime <= currentAbsolutePosition && currentAbsolutePosition - tagStartTime <= duration) {
+                            Log.i(TAG,payload);
+                        }
+                        return@lastOrNull tagStartTime <= currentAbsolutePosition
+                    } catch (e: Exception) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            false
+        }
+```
+
+</Tab>
+
+<Tab id='recieve-hmsTimedMetadata-1'>
+
+```java
+        HlsManifest hlsManifest = (HlsManifest) exoPlayer.getCurrentManifest();
+        int windowIndex = exoPlayer.getCurrentMediaItemIndex();
+        Timeline timeline = exoPlayer.getCurrentTimeline();
+        Timeline.Window window = timeline.getWindow(windowIndex, new Timeline.Window());
+        long currentAbsolutePosition = (window.windowStartTimeMs + exoPlayer.getCurrentPosition());
+        String META_DATA_MATCHER = "#EXT-X-DATERANGE:ID=\"(?<id>.*)\",START-DATE=\"(?<startDate>.*)\",DURATION=(?<duration>.*),X-100MSLIVE-PAYLOAD=\"(?<payload>.*)\""
+        String payload = "";
+        long tagStartTime;
+
+        hlsManifest.mediaPlaylist.tags.forEach(new Consumer<String>() {
+            @Override
+            public void accept(String tag) {
+                if (tag.contains("EXT-X-DATERANGE")) {
+                    Pattern pattern = Pattern.compile(META_DATA_MATCHER);
+                    Matcher matcher = pattern.matcher(tag);
+                    if (matcher.matches()) {
+                        try {
+                            String payload = matcher.group(4);
+                            long duration = Long.getLong(Objects.requireNonNull(matcher.group(3))) * (1000);
+                            String startDate = matcher.group(2);
+                            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                            formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+                            tagStartTime = formatter.parse(startDate).getTime();
+                            if (tagStartTime <= currentAbsolutePosition && currentAbsolutePosition - tagStartTime <= duration) {
+                                Log.i(TAG,payload);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+
+```
+
+</Tab>
+
+> Please Note : above step has to be repeated periodically to sync meta-data with playback.
