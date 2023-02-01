@@ -1,3 +1,6 @@
+import React from 'react';
+import Link from 'next/link';
+import merge from 'lodash/merge';
 import {
     BookIcon,
     ChevronRightIcon,
@@ -9,10 +12,7 @@ import {
     WebhookIcon
 } from '@100mslive/react-icons';
 import { Box, CSS, Flex, HorizontalDivider, VerticalDivider } from '@100mslive/react-ui';
-import { Item } from 'components';
-import merge from 'lodash/merge';
-import Link from 'next/link';
-import React from 'react';
+import Item from './Item';
 
 interface Props {
     logo?: React.SVGProps<SVGSVGElement>;
@@ -115,11 +115,11 @@ const SdkItem: React.FC<Props> = ({ logo, text, sdk, css, cssHeading }) => (
             {sdkItems[sdk as keyof typeof sdkItems].map((value) => (
                 <Link key={value.id} href={value.link} passHref>
                     <a
-                        target={value.id === 2 || value.id === 3 ? '_blank' : '_self'}
+                        target={value.id === 2 || (value.id === 3 && value.link !== '/javascript/v2/get-started/react-sample-app/quickstart') ? '_blank' : '_self'}
                         rel="noopener"
                         style={{ width: 'fit-content' }}>
                         <Box
-                        role="button"
+                            role="button"
                             onClick={() =>
                                 window.analytics.track('link.clicked', {
                                     btnId: itemId[value.id],
@@ -197,8 +197,8 @@ const sdkItems = {
     react: [
         { id: 1, link: '/javascript/v2/guides/react-quickstart' },
         { id: 2, link: 'https://codesandbox.io/s/100ms-react-quickstart-kh0hy?file=/src/App.jsx' },
-        { id: 3, link: 'https://github.com/100mslive/100ms-web' },
-        { id: 4, link: '/api-reference/javascript/v2/home/content' },
+        { id: 3, link: '/javascript/v2/get-started/react-sample-app/quickstart' },
+        { id: 4, link: '/api-reference/javascript/v2/react/home/content' },
         { id: 5, link: '/javascript/v2/changelog/release-notes' }
     ],
     serverSide: [

@@ -47,8 +47,7 @@ title: HMSRole
 
 #### Type declaration
 
-| Name                    | Type                         |
-| :---------------------- | :--------------------------- |
-| `maxSubsBitRate`        | `number`                     |
-| `subscribeDegradation?` | `SubscribeDegradationParams` |
-| `subscribeToRoles`      | `string`[]                   |
+| Name               | Type       |
+| :----------------- | :--------- |
+| `maxSubsBitRate`   | `number`   |
+| `subscribeToRoles` | `string`[] |

@@ -5,7 +5,7 @@ nav: 6.5
 
 ![End Room](/guides/end-room.png)
 
-If the local peer has [`endRoom`](./change-role#know-thy-permissions) permission they can end a room using the below api. It's also possible to lock
+If the local peer has [`endRoom`](/javascript/v2/how--to-guides/control-remote-peers/change-role#know-thy-permissions) permission they can end a room using the below api. It's also possible to lock
 the room to prevent any future rejoins.
 
 <Tabs id="endroomcall" items={['JavaScript', 'React']} />
@@ -63,11 +63,11 @@ function EndRoomButton() {
 
 </Tab>
 
-> 🚧 If the local peer doesn't have the required `endRoom` permission, the `hmsActions.endRoom` call will throw an [HMSException error](error-handling).
+> 🚧 If the local peer doesn't have the required `endRoom` permission, the `hmsActions.endRoom` call will throw an [HMSException error](/javascript/v2/how--to-guides/debugging/error-handling).
 
 ## End Room Notification
 
-Once the peer with adequate permissions calls `endRoom`, all other peers in the room will receive a [notification](../features/notifications) with type `ROOM_ENDED` with a [HMSLeaveRoomRequest](../../../api-reference/javascript/v2/interfaces/HMSLeaveRoomRequest) object as the data.
+Once the peer with adequate permissions calls `endRoom`, all other peers in the room will receive a [notification](/javascript/v2/how--to-guides/listen-to-room-events/notifications) with type `ROOM_ENDED` with a [HMSLeaveRoomRequest](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequest) object as the data.
 
 The SDK automatically calls leave and performs necessary clean ups immediately after this notification is sent, clients should show the appropriate UI(show a toast, redirect to a 'good-bye' page) within this period.
 

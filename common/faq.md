@@ -23,7 +23,7 @@ Yes, you can delete an App from your [dashboard](https://dashboard.100ms.live/da
 No, you cannot delete a room. The “delete room” functionality automatically erases all data associated with the room, so we don’t support it. We don't support the "delete room" functionality as it would lead to losing all data associated with the room. However, we support the following options based on why you’d want to delete rooms:
 
 - **Creating new rooms for every session**:  You can create as many rooms as you want, there is no limit on room creation
-- **Disable room**: If you don't want additional requests to join a room, you can disable a room from the dashboard or via [server API](/docs/server-side/v2/Rooms/disable-or-enable). 
+- **Disable room**: If you don't want additional requests to join a room, you can disable a room from the dashboard or via [server API](/server-side/v2/Rooms/disable-or-enable). 
 - **Dev & Prod Env**: If you want to delete rooms from your account as you transition from Development to the Production stage, we recommend using "Workspaces." It enables you to create two or more workspaces per your need and isolate the data for each workspace. Please check this blog for more information.
 
 ## Getting started
@@ -32,7 +32,7 @@ No, you cannot delete a room. The “delete room” functionality automatically 
 
 You can get started with our [video conferencing example](https://www.100ms.live/examples/live-streaming-starter-kit) to see a live demo. You can also clone the [100ms-web sample app](https://github.com/100mslive/100ms-web) to see how you can extend and customize as per your needs.
 
-Meanwhile, check our [docs](/docs/javascript/v2/features/integration) to explore information about various features and capabilities supported on the platform.
+Meanwhile, check our [docs](/javascript/v2/features/integration) to explore information about various features and capabilities supported on the platform.
 
 #### Do you have a live demo app to check how live video/audio functionality works on your platform?
 
@@ -40,7 +40,7 @@ Yes, you can get started with one of our examples from [here](https://www.100ms.
 
 #### I want to integrate live streaming into our app with 100ms - where do I start?
 
-You can start with our [documentation](/docs). We also recommend checking out our GitHub for open source [sample SDKs](https://github.com/100mslive) that can aid in initial integration; here is a piece on our [live streaming capabilities](https://www.100ms.live/interactive-live-streaming).
+You can start with our [documentation](/). We also recommend checking out our GitHub for open source [sample SDKs](https://github.com/100mslive) that can aid in initial integration; here is a piece on our [live streaming capabilities](https://www.100ms.live/interactive-live-streaming).
 
 #### I’d like to make some changes on how the video player looks. Do you have any resources I can pass to my design team so they can get started with the parts that are easy to configure? 
 
@@ -56,7 +56,7 @@ It is powered by the same infra. Same as everything in production that we serve 
 
 #### Can a teacher handle a remote user’s (student) screen (start and stop) like remotely mute/unmute of A/V ?
 
-No, a teacher can only mute/unmute a student using the [mute/unmute remote peer](/docs/javascript/v2/features/remote-mute) feature.
+No, a teacher can only mute/unmute a student using the [mute/unmute remote peer](/javascript/v2/features/remote-mute) feature.
 
 #### Is there a way I can specify my own room_id while creating a room?
 
@@ -64,7 +64,7 @@ No the `room_id` gets generated from our end.
 
 #### Is there a way to get data on how many users are online?
 
-It is possible to get the online user for a specific room based on [active room API](/docs/server-side/v2/active-rooms/overview).
+It is possible to get the online user for a specific room based on [active room API](/server-side/v2/active-rooms/overview).
 
 #### How does pagination between tiles affect the download numbers?
 
@@ -143,15 +143,15 @@ Yes, if any peer joins and is publishing video or audio, it will be billed.
 
 #### Is there an easy method to create an app token?
 
-Yes, you can get App tokens using a couple of approaches based on your app's lifecycle stage. Please check [this guide](/docs/javascript/v2/foundation/security-and-tokens#how-to-use) for more information
+Yes, you can get App tokens using a couple of approaches based on your app's lifecycle stage. Please check [this guide](/javascript/v2/foundation/security-and-tokens#how-to-use) for more information
 
 #### Is there a easy method to create an management token?
 
-Yes, if you're exploring 100ms server APIs, our Postman collection contains a pre-request script which can generate the management token if you just update the App access key and App secret from the [developers page](https://dashboard.100ms.live/developer) on your 100ms dashboard. Please check the [Postman guide](/docs/server-side/v2/introduction/postman-guide#simplified-token-generation) for more information. 
+Yes, if you're exploring 100ms server APIs, our Postman collection contains a pre-request script which can generate the management token if you just update the App access key and App secret from the [developers page](https://dashboard.100ms.live/developer) on your 100ms dashboard. Please check the [Postman guide](/server-side/v2/introduction/postman-guide#simplified-token-generation) for more information. 
 
 #### What is the validity of management and client token?
 
-If you use the code sample from [authentication and tokens guide](/docs/javascript/v2/foundation/security-and-tokens#app-token) the validity of the token will be set as 24 hours. However, you can increase this to a maximum of 90 days by updating the value for expiresIn field.
+If you use the code sample from [authentication and tokens guide](/javascript/v2/foundation/security-and-tokens#app-token) the validity of the token will be set as 24 hours. However, you can increase this to a maximum of 90 days by updating the value for expiresIn field.
 
 #### Why is the “role” variable needed when generating the app token?
 
@@ -160,7 +160,7 @@ The role argument should be assigned with the name of the role created in the te
 - The quality at which they publish their video 
 - Whether or not they have permissions to publish video and/or share screen, mute someone, change someone’s role
 
-Please check [templates and roles guide](/docs/javascript/v2/foundation/templates-and-roles#roles) for more information.
+Please check [templates and roles guide](/javascript/v2/foundation/templates-and-roles#roles) for more information.
 
 #### Can we generate two application access tokens, one for QA and one for production, so that messages from QA don't flood the production environment?
 
@@ -168,7 +168,7 @@ Yes, this is possible with Teams & workspaces on the100ms dashboard - create mul
 
 #### I’d like to use the endpoint of my backend service instead of the 100ms token endpoint for app token generation in the React sample app. How do I do that? 
 
-You can set up a token generation service on your end to create app tokens and block users that are trying to join without a token that's generated from your service. Please check authentication and [tokens guide](/docs/javascript/v2/foundation/security-and-tokens#app-token) for more information.
+You can set up a token generation service on your end to create app tokens and block users that are trying to join without a token that's generated from your service. Please check authentication and [tokens guide](/javascript/v2/foundation/security-and-tokens#app-token) for more information.
 
 You can update the code to point to your own token service (relevant code in the sample - see getToken(...)), your token endpoint can follow a similar interface: for a given room_id and role name, return the app token JWT.
 
@@ -179,7 +179,7 @@ You can continue using the existing routes (room_id/role) or set up your own rou
 
 #### What is the difference between the Beam recording vs. SFU recording?
 
-Beam recording is the browser recording, built to give users a participant-first recording experience. SFU recording is a composite recording which gets created after recording each of the individual peers and merging it. Please check this [guide](/docs/javascript/v2/foundation/recordings) for more information.
+Beam recording is the browser recording, built to give users a participant-first recording experience. SFU recording is a composite recording which gets created after recording each of the individual peers and merging it. Please check this [guide](/javascript/v2/foundation/recordings) for more information.
 
 #### After a live stream ends, how long does it take (for both Beam recording and SFU) to show up in our s3 bucket? 
 
@@ -195,24 +195,24 @@ Beam can capture both streams from video tabs and screenshare content from dynam
 
 #### Can we split room recordings from our end?
 
-If you need to get an individual recording file for each peer in a session, you can use [Individual SFU recording](/docs/server-side/v2/introduction/recordings#sfu-recording-advanced). 
+If you need to get an individual recording file for each peer in a session, you can use [Individual SFU recording](/server-side/v2/introduction/recordings#sfu-recording-advanced). 
 
-If you must split recordings based on different duration of the session, you can use the [Start a recording API](/docs/server-side/v2/Destinations/rtmp-streaming-and-browser-recording#start-streamingrecording) in conjunction with [Stop a recording API](/docs/server-side/v2/Destinations/rtmp-streaming-and-browser-recording#stop-streamingrecording) based on the time intervals as you wish and achieve this. 
+If you must split recordings based on different duration of the session, you can use the [Start a recording API](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording#start-streamingrecording) in conjunction with [Stop a recording API](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording#stop-streamingrecording) based on the time intervals as you wish and achieve this. 
 
 #### How can we retrieve the recording from a room?
 
 There are two ways to retrieve recordings for a room:
 
-1. Using your S3 bucket - You can configure your S3 bucket at a template level to get all recordings for all the rooms associated with that template. Check [this guide](/docs/server-side/v2/introduction/recordings#configure-storage) for more information.
-2. Using webhooks - You can configure your server endpoint as webhook in the developers section on your [dashboard](https://dashboard.100ms.live/developer) to receive all events (including recording related events) to fetch the recording information. You can check our  [webhooks guide](/docs/server-side/v2/introduction/webhook) for more information.
+1. Using your S3 bucket - You can configure your S3 bucket at a template level to get all recordings for all the rooms associated with that template. Check [this guide](/server-side/v2/introduction/recordings#configure-storage) for more information.
+2. Using webhooks - You can configure your server endpoint as webhook in the developers section on your [dashboard](https://dashboard.100ms.live/developer) to receive all events (including recording related events) to fetch the recording information. You can check our  [webhooks guide](/server-side/v2/introduction/webhook) for more information.
 
 #### Is it possible to automatically stop the recording after a certain duration or at a specific timestamp?
 
-Yes - you can do this by scheduling the [stop a recording API](/docs/server-side/v2/Destinations/rtmp-streaming-and-browser-recording#stop-streamingrecording) with the help of a timer so that when the scheduled duration or time interval has reached the API request can be triggered to stop the recording. You can also trigger the [client-side API](/docs/javascript/v2/features/rtmp-recording#start-and-stop-streaming-recording) to start/stop the recording.  
+Yes - you can do this by scheduling the [stop a recording API](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording#stop-streamingrecording) with the help of a timer so that when the scheduled duration or time interval has reached the API request can be triggered to stop the recording. You can also trigger the [client-side API](/javascript/v2/features/rtmp-recording#start-and-stop-streaming-recording) to start/stop the recording.  
 
 #### Can we retrieve the list of all the recordings of a room?
 
-You cannot get the list of recordings using an API. However, you can use the webhook events related to recording ([recording.success](/docs/server-side/v2/introduction/webhook#recordingsuccess), [beam.recording.success](/docs/server-side/v2/introduction/webhook#beamrecordingsuccess), and [hls.recording.success](/docs/server-side/v2/introduction/webhook#hlsrecordingsuccess) ) and store the recording related information like recording location, recording pre-signed URL, etc. As these information are stored in your database, you can fetch the list of recordings for a specific room as you need. 
+You cannot get the list of recordings using an API. However, you can use the webhook events related to recording ([recording.success](/server-side/v2/introduction/webhook#recordingsuccess), [beam.recording.success](/server-side/v2/introduction/webhook#beamrecordingsuccess), and [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess) ) and store the recording related information like recording location, recording pre-signed URL, etc. As these information are stored in your database, you can fetch the list of recordings for a specific room as you need. 
 
 #### Is it possible to stop recording when a specific event occurs?
 
@@ -251,7 +251,7 @@ A delay can also happen if the number of peers in the sessions increase.
 
 #### Is cloud recording available?
 
-Yes, Please check [RTMP streaming and recording guide](/docs/server-side/v2/Destinations/rtmp-streaming-and-browser-recording) for more information.
+Yes, Please check [RTMP streaming and recording guide](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording) for more information.
 
 ## Chat
 
@@ -312,12 +312,12 @@ The average delay of the live streaming is 10-12 seconds.
 You can use the 100ms platform to build interactive live streaming (HLS) apps and to broadcast your live stream to external streaming platforms like YouTube, Twitch, etc using our External streaming service (RTMP). 
 
 Please check these links for more details. 
-1. [Interactive live streaming (HLS)](/docs/javascript/v2/foundation/live-streaming)
-2. [External streaming (RTMP)](/docs/javascript/v2/features/rtmp-recording)
+1. [Interactive live streaming (HLS)](/javascript/v2/foundation/live-streaming)
+2. [External streaming (RTMP)](/javascript/v2/features/rtmp-recording)
 
 #### Can I integrate a feature similar to Twitter super followers using 100ms by only allowing the authenticated users?
 
-Yes, you can use interactive live streaming (HLS) to integrate a similar app and the live feed of the streaming will be available in a room which can be accessed by joining a room with a JWT token ([auth token](/docs/javascript/v2/foundation/security-and-tokens#app-token)) with the viewer role.
+Yes, you can use interactive live streaming (HLS) to integrate a similar app and the live feed of the streaming will be available in a room which can be accessed by joining a room with a JWT token ([auth token](/javascript/v2/foundation/security-and-tokens#app-token)) with the viewer role.
 
 ## External streaming (RTMP)
 
@@ -335,14 +335,14 @@ For RTMP, you will need to set up your own CDN servers or attach 100ms URLs to v
 
 The whiteboard feature is currently available in beta for the web platform. We will build our own communication infra for this but currently this is integrated with Pusher, you can create a Pusher account and integrate this in your app too.
 
-Please check the [collaborative whiteboard guide](/docs/javascript/v2/plugins/collaborative-whiteboard) for more information.
+Please check the [collaborative whiteboard guide](/javascript/v2/plugins/collaborative-whiteboard) for more information.
  
 
 #### Do you have a list of extra plugins that can be added to live sessions?
 
-Currently, you can build additional interactive experiences in your app with the help of [peer metadata](/docs/javascript/v2/advanced-features/peer-metadata). You can integrate features like raise hand, polls, quizzes, etc,. using this. You can also check the existing plugins on our platform such as [collaborative whiteboard](/docs/javascript/v2/plugins/collaborative-whiteboard), [virtual background](/docs/javascript/v2/plugins/virtual-background), [noise suppression](/docs/javascript/v2/plugins/noise-suppression), Custom [audio](/docs/javascript/v2/plugins/custom-audio-plugins) & [video](/docs/javascript/v2/plugins/custom-video-plugins) plugins. Please stay tuned to our product updates by signing up for our newsletter from [here](https://www.100ms.live/blog#email).
+Currently, you can build additional interactive experiences in your app with the help of [peer metadata](/javascript/v2/advanced-features/peer-metadata). You can integrate features like raise hand, polls, quizzes, etc,. using this. You can also check the existing plugins on our platform such as [collaborative whiteboard](/javascript/v2/plugins/collaborative-whiteboard), [virtual background](/javascript/v2/plugins/virtual-background), [noise suppression](/javascript/v2/plugins/noise-suppression), Custom [audio](/javascript/v2/plugins/custom-audio-plugins) & [video](/javascript/v2/plugins/custom-video-plugins) plugins. Please stay tuned to our product updates by signing up for our newsletter from [here](https://www.100ms.live/blog#email).
 
-Currently, you can build additional interactive experiences in your app with the help of [Peer metadata](/docs/javascript/v2/advanced-features/peer-metadata). You can integrate raise hand, polls, quizzes, etc,. using this. You can also check the existing plugins our platform such as [Virtual background](/docs/javascript/v2/plugins/virtual-background), [Noise suppression](/docs/javascript/v2/plugins/noise-suppression), Custom [audio](/docs/javascript/v2/plugins/custom-audio-plugins) & [video](/docs/javascript/v2/plugins/custom-video-plugins) plugins. We will soon be adding a whiteboard plugin as well. Please stay tuned our product updates by signing up for our newsletter from [here](https://www.100ms.live/blog#email).
+Currently, you can build additional interactive experiences in your app with the help of [Peer metadata](/javascript/v2/advanced-features/peer-metadata). You can integrate raise hand, polls, quizzes, etc,. using this. You can also check the existing plugins our platform such as [Virtual background](/javascript/v2/plugins/virtual-background), [Noise suppression](/javascript/v2/plugins/noise-suppression), Custom [audio](/javascript/v2/plugins/custom-audio-plugins) & [video](/javascript/v2/plugins/custom-video-plugins) plugins. We will soon be adding a whiteboard plugin as well. Please stay tuned our product updates by signing up for our newsletter from [here](https://www.100ms.live/blog#email).
 
 ## Network and quality
 
@@ -356,13 +356,13 @@ Latency is calculated based on the network bandwidth of the user, sometimes in l
 
 #### Why am I constantly getting low bandwidth alerts?
 
-This is the [connection quality](/docs/javascript/v2/advanced-features/connection-quality) score which changes in real time on the basis of the bandwidth of the peer at the given time. Even if your network connection is otherwise strong, if it drops at a certain point due to bandwidth, the connection quality will be displayed as poor. 
+This is the [connection quality](/javascript/v2/advanced-features/connection-quality) score which changes in real time on the basis of the bandwidth of the peer at the given time. Even if your network connection is otherwise strong, if it drops at a certain point due to bandwidth, the connection quality will be displayed as poor. 
 
-If you want to investigate further, do check out the [Stats for Nerds](/docs/javascript/v2/how--to-guides/measure-network-quality-and-performance/stats) feature - there are more details to help you understand why the quality of connection dropped. 
+If you want to investigate further, do check out the [Stats for Nerds](/javascript/v2/how--to-guides/measure-network-quality-and-performance/stats) feature - there are more details to help you understand why the quality of connection dropped. 
 
 #### Is it possible to dynamically set the video resolution based on the number of participants?
 
-We have released a new feature, Adaptive Bitrate (affectionately called [Simulcast](/docs/javascript/v2/foundation/adaptive-bitrate) that enables dynamic adjustments to video quality to optimise for end-user experience under diverse network conditions. ABR ensures that every participant is able to consume the highest possible quality video in conferencing or streaming use-cases, based on their bandwidth constraints.
+We have released a new feature, Adaptive Bitrate (affectionately called [Simulcast](/javascript/v2/foundation/adaptive-bitrate) that enables dynamic adjustments to video quality to optimise for end-user experience under diverse network conditions. ABR ensures that every participant is able to consume the highest possible quality video in conferencing or streaming use-cases, based on their bandwidth constraints.
 
 ## Limits
 
@@ -420,7 +420,7 @@ HIPAA: 100ms can sign a BAA
 
 #### Is it ok to potentially create thousands of rooms over time?
 
-Yes, you can create as many rooms as necessary. It's also handy to [disable a room](/docs/server-side/v2/Rooms/disable-or-enable) after you're done using it.
+Yes, you can create as many rooms as necessary. It's also handy to [disable a room](/server-side/v2/Rooms/disable-or-enable) after you're done using it.
 
 #### Can your platform handle end-to-end encryption between just 2 users?
 
@@ -442,9 +442,9 @@ If you’re wondering how, here it is: please subscribe to our monthly newslette
 
 You can get analytics about rooms, sessions, peers and more in multiple ways based on feasibility and your requirements.
 
-1. You can use the [list sessions server API](/docs/server-side/v2/Sessions/list-sessions) to fetch the list of sessions for a particular data/time range and you can also filter these for a particular room. This API will provide data such as list of peers, their room join/leave time, session start/end time, etc,.
+1. You can use the [list sessions server API](/server-side/v2/Sessions/list-sessions) to fetch the list of sessions for a particular data/time range and you can also filter these for a particular room. This API will provide data such as list of peers, their room join/leave time, session start/end time, etc,.
 
-2. If you need to get the session details for an active room (ongoing session), you can use our [Active room server APIs](/docs/server-side/v2/active-rooms/overview) to fetch the details and perform some actions on peers from your server side.
+2. If you need to get the session details for an active room (ongoing session), you can use our [Active room server APIs](/server-side/v2/active-rooms/overview) to fetch the details and perform some actions on peers from your server side.
 
 ## Server-side
 
@@ -452,19 +452,19 @@ You can get analytics about rooms, sessions, peers and more in multiple ways bas
 
 The functionalities of these two APIs are different:
 
-1. [Disable/Enable a room API](/docs/server-side/v2/Rooms/disable-or-enable): you can use this API to disable/enable the room to block/allow peers to join the room.
-2. [End an active room API](/docs/server-side/v2/active-rooms/end-active-room): you can use this API to end an ongoing session in a room. Optionally you can use the `lock` argument to disable the room future peer joins.
+1. [Disable/Enable a room API](/server-side/v2/Rooms/disable-or-enable): you can use this API to disable/enable the room to block/allow peers to join the room.
+2. [End an active room API](/server-side/v2/active-rooms/end-active-room): you can use this API to end an ongoing session in a room. Optionally you can use the `lock` argument to disable the room future peer joins.
 
 #### Is there a way to close a room using a server-side API?
 
-You can use [end an active room API](/docs/server-side/v2/active-rooms/end-active-room) to end an ongoing session in a room. Optionally you can use the `lock` argument to disable the room future peer joins.
+You can use [end an active room API](/server-side/v2/active-rooms/end-active-room) to end an ongoing session in a room. Optionally you can use the `lock` argument to disable the room future peer joins.
 
 #### Is there a way to mute a participant using a server-side API?
 
 You need to follow the below steps to achieve this:
 
-1. Yes. Here are the steps: Create another role in your template by disabling audio publish strategies, for example: no-audio. You can either use the [create a role API](/docs/server-side/v2/policy/create-update-role) or templates page on [dashboard](https://dashboard.100ms.live/dashboard) to do this.
-2. Use the button click from the UI as a trigger to call the [update-peer server side API](/docs/server-side/v2/active-rooms/update-a-peer) or [change role client-side API](/docs/javascript/v2/features/change-role) to change the role of the particular participant (peer) to no-video role to disable audio.
+1. Yes. Here are the steps: Create another role in your template by disabling audio publish strategies, for example: no-audio. You can either use the [create a role API](/server-side/v2/policy/create-update-role) or templates page on [dashboard](https://dashboard.100ms.live/dashboard) to do this.
+2. Use the button click from the UI as a trigger to call the [update-peer server side API](/server-side/v2/active-rooms/update-a-peer) or [change role client-side API](/javascript/v2/features/change-role) to change the role of the particular participant (peer) to no-video role to disable audio.
 
 #### Is there a way to disable video for a participant using a server-side API?
 
@@ -475,12 +475,12 @@ Yes, follow the same process mentioned for the question above ^
 HLS recording events are related to the recording enabled for interactive live streaming sessions, whereas Beam recording events are only applicable to recording enabled for external streaming (RTMP) or browser recording for WebRTC sessions.
 
 Please check the below links for more information: 
-1. [Interactive live streaming (HLS)](/docs/javascript/v2/foundation/live-streaming) 
-2. [RTMP streaming/recording](/docs/server-side/v2/Destinations/rtmp-streaming-and-browser-recording)
+1. [Interactive live streaming (HLS)](/javascript/v2/foundation/live-streaming) 
+2. [RTMP streaming/recording](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording)
 
 #### For incoming webhooks from 100ms to our API, is there a list of IPs that can be whitelisted?
 
-Yes, and [here](/docs/server-side/v2/introduction/webhook#ip-whitelisting) is the list.
+Yes, and [here](/server-side/v2/introduction/webhook#ip-whitelisting) is the list.
 
 #### Is there an API call we can make to set the webhook URL and headers on our account?
 
@@ -490,19 +490,19 @@ No. Currently there is no API to update the webhook URL and headers, but you can
 
 100ms provides two methods to whitelist traffic from 100ms.
 
-1. [Domain and port whitelisting](/docs/server-side/v2/introduction/firewall-and-ports)
-2. [Securing webhooks](/docs/server-side/v2/introduction/webhook#how-to-secure-webhooks) 
+1. [Domain and port whitelisting](/server-side/v2/introduction/firewall-and-ports)
+2. [Securing webhooks](/server-side/v2/introduction/webhook#how-to-secure-webhooks) 
 
 #### Can we end an active session programmatically (reset the room so that everyone is kicked from the meeting and it starts a new session)?
 
-We have an end point that helps you end an active session. You can check [this](/docs/server-side/v2/active-rooms/end-active-room) to understand how the API works.
+We have an end point that helps you end an active session. You can check [this](/server-side/v2/active-rooms/end-active-room) to understand how the API works.
 
 #### Is there any way to limit participants in a room?
 
 We don't limit the participants currently, but you can limit the number of peers as a part of the Role or Template configuration where we can add a maximum number of participants per role by setting the `maxPeerCount` attribute:
 
-- While [creating/updating a role](/docs/server-side/v2/policy/create-update-role) or
-- While creating/updating a template as part of [roles config](/docs/server-side/v2/policy/create-template-via-api#roles-object).
+- While [creating/updating a role](/server-side/v2/policy/create-update-role) or
+- While creating/updating a template as part of [roles config](/server-side/v2/policy/create-template-via-api#roles-object).
 
 #### How can I handle role change requests on my backend? Is there any webhook for it? 
 
@@ -510,7 +510,7 @@ Currently, role change is initiated by a designated role. A role change REST API
 
 #### Is there a way to handle role change requests on the backend, such as through a webhook or API?
 
-Yes, you can use [update a peer API](/docs/server-side/v2/active-rooms/update-a-peer) to change the role of a peer from backend.
+Yes, you can use [update a peer API](/server-side/v2/active-rooms/update-a-peer) to change the role of a peer from backend.
 
 #### Can you access a role created via dashboard or server API across all client SDKs?
 
@@ -518,19 +518,19 @@ Yes - the template created on dashboard/API and the roles associated with it is 
 
 #### Is there a way to schedule rooms for a certain date and time and send invites to certain email ids?
 
-That needs authentication for a user and you would need to handle this on the UI. You can use the [Create room API](/docs/server-side/v2/features/room#create-room-using-api) to Create multiple rooms and schedule meetings as required by using them in queue. Time gate the option to join the room so that they can do so only when it is time for the meeting.
+That needs authentication for a user and you would need to handle this on the UI. You can use the [Create room API](/server-side/v2/features/room#create-room-using-api) to Create multiple rooms and schedule meetings as required by using them in queue. Time gate the option to join the room so that they can do so only when it is time for the meeting.
 
 #### Can we disable a room by id?
 
-Yes this is possible. The [disable/enable a room API](/docs/server-side/v2/Rooms/disable-or-enable) supports room_id as an argument as well.
+Yes this is possible. The [disable/enable a room API](/server-side/v2/Rooms/disable-or-enable) supports room_id as an argument as well.
 
 #### How do I limit the session to a specified duration?
 
-Through the [end an active room API](/docs/server-side/v2/active-rooms/end-active-room).
+Through the [end an active room API](/server-side/v2/active-rooms/end-active-room).
 
 Say you want to limit the duration of a session to 30 minutes: - 
-- Start a timer as soon as the session begins and you receive the [session.open.success](/docs/server-side/v2/introduction/webhook#sessionopensuccess) webhook event
+- Start a timer as soon as the session begins and you receive the [session.open.success](/server-side/v2/introduction/webhook#sessionopensuccess) webhook event
 - Wait till the duration (timer) of the session reaches 30 minutes
-- Once reached, trigger the [end an active room API](/docs/server-side/v2/active-rooms/end-active-room) to end the session and kick out the peers from the session.
+- Once reached, trigger the [end an active room API](/server-side/v2/active-rooms/end-active-room) to end the session and kick out the peers from the session.
 
-> Note: If you set the lock argument to true, it will end the active room, and users will not be able to join the room later. You can use [enable a room API](/docs/server-side/v2/Rooms/disable-or-enable) or [dashboard](https://dashboard.100ms.live/rooms) to enable the room again.
+> Note: If you set the lock argument to true, it will end the active room, and users will not be able to join the room later. You can use [enable a room API](/server-side/v2/Rooms/disable-or-enable) or [dashboard](https://dashboard.100ms.live/rooms) to enable the room again.

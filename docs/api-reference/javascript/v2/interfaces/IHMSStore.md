@@ -52,8 +52,7 @@ IStore.setState
 • **subscribe**: `Subscribe`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)\>
 
 Subscribe to a part of store using selectors, whenever the subscribed part changes, the callback
-is called with both the latest and previous value of the changed part. The subscribe also returns
-a reference to `unsubscribe`, which could be used to unsubscribe the subscription.
+is called with both the latest and previous value of the changed part.
 
 Usage:
 
@@ -61,13 +60,7 @@ Usage:
 const onSpeakerUpdate = (speaker, prevSpeaker) => {
  console.log("speaker changed from - ", prevSpeaker, ", to - ", speaker);
 }
-// The subscribe returns a reference to unsubscribe() which you can use to
-// ubsubscribe from the subscription in the future.
-const unsubscribe = store.subscribe(onSpeakerUpdate, selectDominantSpeaker);
-
-// unsubscribe from the listener.
-unsubscribe();
-
+store.subscribe(onSpeakerUpdate, selectDominantSpeaker);
 ```
 
 #### Inherited from
