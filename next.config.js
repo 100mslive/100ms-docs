@@ -341,37 +341,37 @@ const nextConfig = {
             },
             {
                 source: '/android/v2/features/change-user-name',
-                destination: '/android/v2/how--to-guides/set-up-video-conferencing/change-user-name',
+                destination: '/android/v2/how--to-guides/interact-with-room/peer/change-user-name',
                 permanent: true
             },
             {
                 source: '/android/v2/features/interruption-handling',
-                destination: '/android/v2/how--to-guides/listen-to-room-events/interruption-handling',
+                destination: '/android/v2/how--to-guides/handle-interruptions/interruption-handling',
                 permanent: true
             },
             {
                 source: '/android/v2/features/PeerCount',
-                destination: '/android/v2/how--to-guides/listen-to-room-events/room-updates',
+                destination: '/android/v2/how--to-guides/listen-to-room-updates/room-updates',
                 permanent: true
             },
             {
                 source: '/android/v2/features/change-role',
-                destination: '/android/v2/how--to-guides/interact-with-room/interact-with-peer/change-role',
+                destination: '/android/v2/how--to-guides/interact-with-room/peer/change-role',
                 permanent: true
             },
             {
                 source: '/android/v2/features/remove-peer',
-                destination: '/android/v2/how--to-guides/interact-with-room/interact-with-peer/remove-peer',
+                destination: '/android/v2/how--to-guides/interact-with-room/peer/remove-peer',
                 permanent: true
             },
             {
                 source: '/android/v2/features/remote-mute',
-                destination: '/android/v2/how--to-guides/interact-with-room/interact-with-peer/remote-mute',
+                destination: '/android/v2/how--to-guides/interact-with-room/track/remote-mute',
                 permanent: true
             },
             {
                 source: '/android/v2/features/end-room',
-                destination: '/android/v2/how--to-guides/interact-with-room/end-room',
+                destination: '/android/v2/how--to-guides/interact-with-room/room/end-room',
                 permanent: true
             },
             {
@@ -381,17 +381,17 @@ const nextConfig = {
             },
             {
                 source: '/android/v2/features/hls',
-                destination: '/android/v2/how--to-guides/record-and-live-stream/hls',
+                destination: '/android/v2/how--to-guides/record-and-live-stream/hls/hls',
                 permanent: true
             },
             {
                 source: '/android/v2/advanced-features/peer-metadata-update',
-                destination: '/android/v2/how--to-guides/build-interactive-features/peer-metadata-update',
+                destination: '/android/v2/how--to-guides/interact-with-room/peer/peer-metadata-update',
                 permanent: true
             },
             {
                 source: '/android/v2/advanced-features/hls-timed-metadata',
-                destination: '/android/v2/how--to-guides/build-interactive-features/hls-timed-metadata',
+                destination: '/android/v2/how--to-guides/record-and-live-stream/hls/hls-timed-metadata',
                 permanent: true
             },
             {
@@ -426,12 +426,12 @@ const nextConfig = {
             },
             {
                 source: '/android/v2/features/echo-cancellation',
-                destination: '/android/v2/how--to-guides/configure-your-device/echo-cancellation',
+                destination: '/android/v2/how--to-guides/configure-your-device/microphone/echo-cancellation',
                 permanent: true
             },
             {
                 source: '/android/v2/advanced-features/track-settings',
-                destination: '/android/v2/how--to-guides/set-up-video-conferencing/track-settings',
+                destination: '/android/v2/how--to-guides/interact-with-room/track/track-settings',
                 permanent: true
             },
             {
@@ -446,7 +446,7 @@ const nextConfig = {
             },
             {
                 source: '/android/v2/advanced-features/camera-controls',
-                destination: '/android/v2/how--to-guides/configure-your-device/camera-controls',
+                destination: '/android/v2/how--to-guides/configure-your-device/camera/camera-controls',
                 permanent: true
             },
             {
