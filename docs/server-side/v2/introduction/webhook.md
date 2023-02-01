@@ -494,7 +494,7 @@ This event will be sent when room end is called and the it is unsuccessful.
 | error_message      | `string`             | Error message to indicate the reason of failure <br/><br/> Example: session not found                   |
 | error_code         | `int`                | Error code for failure <br/><br/> Example: 404                                                          |
 
-#### Sample `room.end.success` event
+#### Sample `room.end.failure` event
 
 ```json
 {
@@ -502,7 +502,7 @@ This event will be sent when room end is called and the it is unsuccessful.
     "id": "********-****-****-****-***********",
     "account_id": "************************",
     "timestamp": "2021-11-25T09:10:35Z",
-    "type": "room.end.success",
+    "type": "room.end.failure",
     "data": {
         "peer_id": "********-****-****-****-***********",
         "role": "********",
@@ -530,21 +530,22 @@ This event will be sent when the role change for a peer is successful.
 
 #### Attributes
 
-| Name               | Type                 | Description                                                                                             |
-| :----------------- | :------------------- | :------------------------------------------------------------------------------------------------------ |
-| room_id            | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                     |
-| room_name          | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                 |
-| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                  |
-| template_id        | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                    |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| user_id            | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                           |
-| user_name          | `string`             | User name of the user <br/><br/> Example: Test user                                                     |
-| user_data          | `string`             | User data of the user <br/><br/> Example: `{"isHandRaised":true}`                                       |
-| previous_role      | `string`             | Previous role of the peer <br/><br/> Example: host                                                      |
-| role               | `string`             | New role of the user <br/><br/> Example: host                                                           |
-| joined_at          | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                     |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                 |
-| role_changed_at    | `timestamp (in UTC)` | Timestamp when role changed <br/><br/> Example: 2020-10-11T16:32:17Z                                    |
+| Name                     | Type                 | Description                                                                                                                                                     |
+|:-------------------------|:---------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| room_id                  | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                                             |
+| room_name                | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                                                                         |
+| session_id               | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
+| template_id              | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                                                            |
+| peer_id                  | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                         |
+| user_id                  | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                                                                                   |
+| user_name                | `string`             | User name of the user <br/><br/> Example: Test user                                                                                                             |
+| user_data                | `string`             | User data of the user <br/><br/> Example: `{"isHandRaised":true}`                                                                                               |
+| previous_role            | `string`             | Previous role of the peer <br/><br/> Example: host                                                                                                              |
+| role                     | `string`             | New role of the user <br/><br/> Example: host                                                                                                                   |
+| joined_at                | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                             |
+| session_started_at       | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                         |
+| role_changed_at          | `timestamp (in UTC)` | Timestamp when role changed <br/><br/> Example: 2020-10-11T16:32:17Z                                                                                            |
+| role_change_requested_by | `string`             | Id of the peer who requested for role change. This field won't be present if role is changed using API <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 
 #### Sample `role.change.success` event
 
@@ -559,6 +560,7 @@ This event will be sent when the role change for a peer is successful.
     "data": {
         "joined_at": "2021-11-30T12:58:49.97291247Z",
         "peer_id": "********-****-****-****-***********",
+        "role_change_requested_by": "********-****-****-****-***********",
         "role": "********",
         "room_id": "************************",
         "room_name": "**********",
@@ -582,20 +584,21 @@ This event will be sent when the role change for a peer fails. For example:
 
 #### Attributes
 
-| Name               | Type                 | Description                                                                                             |
-| :----------------- | :------------------- | :------------------------------------------------------------------------------------------------------ |
-| room_id            | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                     |
-| room_name          | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                 |
-| session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                  |
-| template_id        | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                    |
-| peer_id            | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
-| user_id            | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                           |
-| user_name          | `string`             | User name of the user <br/><br/> Example: Test user                                                     |
-| user_data          | `string`             | User data of the user <br/><br/> Example: `{"isHandRaised":true}`                                       |
-| role               | `string`             | New role of the user <br/><br/> Example: host                                                           |
-| joined_at          | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                     |
-| session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                 |
-| error_message      | `string`             | Role change error message (description) <br/><br/> Example: role limit reached                          |
+| Name                     | Type                 | Description                                                                                                                                                     |
+|:-------------------------|:---------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| room_id                  | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                                             |
+| room_name                | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                                                                         |
+| session_id               | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
+| template_id              | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                                                            |
+| peer_id                  | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                         |
+| user_id                  | `string`             | User id assigned by the customer <br/><br/> Example: user.001                                                                                                   |
+| user_name                | `string`             | User name of the user <br/><br/> Example: Test user                                                                                                             |
+| user_data                | `string`             | User data of the user <br/><br/> Example: `{"isHandRaised":true}`                                                                                               |
+| role                     | `string`             | New role of the user <br/><br/> Example: host                                                                                                                   |
+| joined_at                | `timestamp (in UTC)` | Timestamp when user joined <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                             |
+| session_started_at       | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                         |
+| error_message            | `string`             | Role change error message (description) <br/><br/> Example: role limit reached                                                                                  |
+| role_change_requested_by | `string`             | Id of the peer who requested for role change. This field won't be present if role is changed using API <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
 
 #### Sample `role.change.failure` event
 
@@ -609,6 +612,7 @@ This event will be sent when the role change for a peer fails. For example:
     "type": "role.change.failure",
     "data": {
         "peer_id": "********-****-****-****-***********",
+        "role_change_requested_by": "********-****-****-****-***********",
         "role": "********",
         "room_id": "************************",
         "room_name": "**********",
