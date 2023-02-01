@@ -7,7 +7,7 @@ nav: 2.1
 
 This guide will walk you through simple instructions to create a video conferencing app using 100ms Flutter SDK and test it using an emulator or your mobile phone.
 
-Please check our [basic concepts guide](./../foundation/basics) to understand the concepts like rooms, templates, peers, etc.
+Please check our [basic concepts guide](/flutter/v2/foundation/basics) to understand the concepts like rooms, templates, peers, etc.
 
 This guide contains instructions for two approaches to get you started with 100ms Flutter SDK:
 
@@ -482,7 +482,7 @@ To test audio/video functionality, you need to connect to a 100ms room; please c
 4. You will see 100ms demo URLs for the roles created when you deployed the starter kit; you can click on the 'key' icon to copy the token and update the `authToken` in "lib/main.dart" file.
 
 > Token from 100ms dashboard is for testing purposes only, For production applications you must generate tokens on your own server.
-> Refer to the [Management Token section](./../foundation/security-and-tokens#management-token) in Authentication and Tokens guide for more information.
+> Refer to the [Management Token section](/flutter/v2/foundation/security-and-tokens#management-token) in Authentication and Tokens guide for more information.
 
 <video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
     <source src="/docs/guides/update-token-flutter.mp4" type="video/mp4" />
@@ -627,7 +627,7 @@ You can check the below snippet to create a widget as the user interface to show
 
 To join a room, you need to create an `HMSConfig` instance and use that instance to call the join method of `HMSSDK`.
 
-> **Note:** An `Auth token` is required to authenticate a room join request from your client-side app. Please ensure to add the `authToken` by fetching it from your dashboard. Check [fetch token to join a room section](#fetch-token-to-join-the-room) for more information. <br/> Read more about authentication and tokens in [this guide](./../foundation/security-and-tokens)
+> **Note:** An `Auth token` is required to authenticate a room join request from your client-side app. Please ensure to add the `authToken` by fetching it from your dashboard. Check [fetch token to join a room section](#fetch-token-to-join-the-room) for more information. <br/> Read more about authentication and tokens in [this guide](/flutter/v2/foundation/security-and-tokens)
 
 ```dart section=stepByStepMeetingPage
 class MeetingPage extends StatefulWidget {
@@ -681,7 +681,7 @@ Now in the same class we will override the `HMSUpdateListener` methods to listen
 
 ### Listen to room and peer updates
 
-The 100ms SDK sends updates to the application about any change in `HMSPeer` and `HMSRoom` via the callbacks in `HMSUpdateListener`. Our application must listen to the corresponding updates in `onPeerUpdate` and `onRoomUpdate`. Check the [Update Listeners documentation](./../features/update-listener-enums) to understand the types of updates emitted by the SDK for room and peer updates.
+The 100ms SDK sends updates to the application about any change in `HMSPeer` and `HMSRoom` via the callbacks in `HMSUpdateListener`. Our application must listen to the corresponding updates in `onPeerUpdate` and `onRoomUpdate`. Check the [Update Listeners documentation](/flutter/v2/how--to-guides/listen-to-room-updates/update-listener-enums) to understand the types of updates emitted by the SDK for room and peer updates.
 We will add these methods in `MeetingPage` class as they need to override the `HMSUpdateListener` methods.
 
 ```dart section=stepByStepRoomUpdates
@@ -737,7 +737,7 @@ We will add these methods in `MeetingPage` class as they need to override the `H
 
 ### Listen to track updates
 
-100ms SDK also sends updates to the application about any change in `HMSTrack` via the callbacks in `HMSUpdateListener`. Our application must listen to the corresponding updates in `onTrackUpdate`. Check the [Update Listeners documentation](./../features/update-listener-enums#hms-track-update) to understand the types of updates emitted by the SDK for track updates.
+100ms SDK also sends updates to the application about any change in `HMSTrack` via the callbacks in `HMSUpdateListener`. Our application must listen to the corresponding updates in `onTrackUpdate`. Check the [Update Listeners documentation](/flutter/v2/how--to-guides/listen-to-room-updates/update-listener-enums#hms-track-update) to understand the types of updates emitted by the SDK for track updates.
 
 ```dart section=stepByStepTrackUpdates
 // Called when there's a track update - use to update local & remote track variables
@@ -772,7 +772,7 @@ We will add these methods in `MeetingPage` class as they need to override the `H
 
 ### Other callbacks
 
-100ms SDK provides various other callbacks to handle different scenarios in the app. For example, you can use `onAudioDeviceChanged` to get updates whenever a new audio device or an audio device is switched. Please check [here](./../features/update-listeners) for more information about these callbacks.
+100ms SDK provides various other callbacks to handle different scenarios in the app. For example, you can use `onAudioDeviceChanged` to get updates whenever a new audio device or an audio device is switched. Please check [here](/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners) for more information about these callbacks.
 
 ```dart section=stepByStepOtherCallbacks
   // More callbacks - no need to implement for quickstart
@@ -817,7 +817,7 @@ We had initialized the `HMSUpdateListener` class in the [Implement meeting page 
 
 To display a video track, first get the `HMSVideoTrack` & pass it on to `HMSVideoView`.
 
-Ensure to add the `HMSVideoView` to your app's Widget tree. Check the [render video guide](./../features/render-video) for more information.
+Ensure to add the `HMSVideoView` to your app's Widget tree. Check the [render video guide](/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/overview) for more information.
 
 ```dart section=stepByStepRenderTile
 // Widget to render a single video tile
