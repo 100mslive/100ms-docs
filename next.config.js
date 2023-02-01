@@ -655,6 +655,222 @@ const nextConfig = {
                 destination: '/ios/v2/how--to-guides/set-up-video-conferencing/screen-share',
                 permanent: true
             },
+            {
+                // https://www.markhneedham.com/blog/2022/07/27/vercel-redirect-wildcards-nested-paths/
+                source: '/react-native/v2/guides:path(.*)',
+                destination: '/react-native/v2/get-started:path',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/capture-hmsView',
+                destination: '/react-native/v2/how--to-guides/capture-frame/capture-hmsView',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/track-settings',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/track/',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/event-listeners-enums',
+                destination: '/react-native/v2/how--to-guides/listen-to-room-events/',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/rtc-stats',
+                destination: '/react-native/v2/how--to-guides/measure-network-quality-and-performance/rtc-stats',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/echo-cancellation',
+                destination: '/react-native/v2/how--to-guides/configure-your-device/microphone/echo-cancellation',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/audio-mode-change',
+                destination: '/react-native/v2/how--to-guides/configure-your-device/speaker/audio-mode-change',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/audio-output-routing',
+                destination: '/react-native/v2/how--to-guides/configure-your-device/speaker/audio-output-routing',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/error-handling',
+                destination: '/react-native/v2/how--to-guides/debugging/error-handling',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/foundation/faq',
+                destination: '/react-native/v2/how--to-guides/debugging/faq',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/logger',
+                destination: '/react-native/v2/how--to-guides/debugging/logger',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/reconnecting-reconnected',
+                destination: '/react-native/v2/how--to-guides/handle-interruptions/reconnecting-reconnected',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/integration',
+                destination: '/react-native/v2/how--to-guides/install-the-sdk/integration',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/change-metadata',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/peer/change-metadata',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/change-name',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/peer/change-name',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/change-role',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/peer/change-role',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/remove-peer',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/peer/remove-peer',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/end-room',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/room/end-room',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/session-metadata',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/room/session-metadata',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/change-track-state-roles',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/track/change-track-state-roles',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/playback-allowed',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/track/playback-allowed',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/change-track-state',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/track/remote-mute',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/set-volume',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/track/set-volume',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/event-listeners',
+                destination: '/react-native/v2/how--to-guides/listen-to-room-events/event-listeners',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/get-methods',
+                destination: '/react-native/v2/how--to-guides/listen-to-room-events/get-methods',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/network-quality',
+                destination: '/react-native/v2/how--to-guides/measure-network-quality-and-performance/network-quality',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/hls',
+                destination: '/react-native/v2/how--to-guides/record-and-live-stream/hls',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/recording',
+                destination: '/react-native/v2/how--to-guides/record-and-live-stream/recording',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/background-handling',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/background-handling',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/chat',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/chat',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/join',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/join',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/leave',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/leave',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/audio-share',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/local-audio-share',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/mute',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/mute',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/preview',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/preview',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/release-resources',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/release-resources',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/auto-video-degrade',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/render-video/auto-video-degrade',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/render-video/mini-view',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/render-video',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/render-video/overview',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/pip-mode',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/render-video/pip-mode',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/show-audio-level',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/render-video/show-audio-level',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/screenshare',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/screenshare',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/strict-privacy-applications',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/strict-privacy-applications',
+                permanent: true
+            },
         ];
     },
     eslint: {
