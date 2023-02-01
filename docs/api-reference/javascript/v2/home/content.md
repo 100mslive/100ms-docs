@@ -4,6 +4,7 @@ title: Web SDK API Reference
 
 ## Enumerations
 
+- [DeviceType](/api-reference/javascript/v2/enums/DeviceType)
 - [HMSAudioPluginType](/api-reference/javascript/v2/enums/HMSAudioPluginType)
 - [HMSLogLevel](/api-reference/javascript/v2/enums/HMSLogLevel)
 - [HMSNotificationSeverity](/api-reference/javascript/v2/enums/HMSNotificationSeverity)
@@ -663,6 +664,24 @@ Select the peer who's speaking the loudest at the moment
 
 ---
 
+### selectErrors
+
+▸ **selectErrors**(`store`): [`HMSException`](/api-reference/javascript/v2/interfaces/HMSException)[]
+
+Select the current [[]](/api-reference/javascript/v2/interfaces/HMSException) object to monitor the error logs
+
+#### Parameters
+
+| Name    | Type                                                           |
+| :------ | :------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+[`HMSException`](/api-reference/javascript/v2/interfaces/HMSException)[]
+
+---
+
 ### selectHLSState
 
 ▸ **selectHLSState**(`state`): [`HMSHLS`](/api-reference/javascript/v2/interfaces/HMSHLS)
@@ -1030,7 +1049,7 @@ Select the track ID of your local peer's primary audio track
 ▸ **selectLocalMediaSettings**(`store`): [`HMSMediaSettings`](/api-reference/javascript/v2/interfaces/HMSMediaSettings)
 
 Select your media settings
-that is, choose an audio input device, audio output device and video input device.
+i.e., choosen audio input device, audio output device and video input device.
 
 #### Parameters
 
@@ -1533,6 +1552,26 @@ HMSPeer[]
 
 ---
 
+### selectPeersByRoles
+
+▸ **selectPeersByRoles**(`roles`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[], (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]) => [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
+
+Select an array of peers of a particular role
+
+#### Parameters
+
+| Name    | Type       | Description   |
+| :------ | :--------- | :------------ |
+| `roles` | `string`[] | HMSRoleName[] |
+
+#### Returns
+
+`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[], (`res`: [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]) => [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]\>
+
+HMSPeer[]
+
+---
+
 ### selectPeersScreenSharing
 
 ▸ **selectPeersScreenSharing**(`state`): [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]
@@ -1598,6 +1637,24 @@ Select the permissions which determine what actions the local peer can do.
 #### Returns
 
 [`HMSRTMP`](/api-reference/javascript/v2/interfaces/HMSRTMP)
+
+---
+
+### selectRecentError
+
+▸ **selectRecentError**(`state`): `undefined` \| `null` \| [`HMSException`](/api-reference/javascript/v2/interfaces/HMSException)
+
+It will help to get the all the error
+
+#### Parameters
+
+| Name    | Type                                                           |
+| :------ | :------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+`undefined` \| `null` \| [`HMSException`](/api-reference/javascript/v2/interfaces/HMSException)
 
 ---
 

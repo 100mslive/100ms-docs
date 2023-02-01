@@ -341,37 +341,37 @@ const nextConfig = {
             },
             {
                 source: '/android/v2/features/change-user-name',
-                destination: '/android/v2/how--to-guides/set-up-video-conferencing/change-user-name',
+                destination: '/android/v2/how--to-guides/interact-with-room/peer/change-user-name',
                 permanent: true
             },
             {
                 source: '/android/v2/features/interruption-handling',
-                destination: '/android/v2/how--to-guides/listen-to-room-events/interruption-handling',
+                destination: '/android/v2/how--to-guides/handle-interruptions/interruption-handling',
                 permanent: true
             },
             {
                 source: '/android/v2/features/PeerCount',
-                destination: '/android/v2/how--to-guides/listen-to-room-events/room-updates',
+                destination: '/android/v2/how--to-guides/listen-to-room-updates/room-updates',
                 permanent: true
             },
             {
                 source: '/android/v2/features/change-role',
-                destination: '/android/v2/how--to-guides/interact-with-room/interact-with-peer/change-role',
+                destination: '/android/v2/how--to-guides/interact-with-room/peer/change-role',
                 permanent: true
             },
             {
                 source: '/android/v2/features/remove-peer',
-                destination: '/android/v2/how--to-guides/interact-with-room/interact-with-peer/remove-peer',
+                destination: '/android/v2/how--to-guides/interact-with-room/peer/remove-peer',
                 permanent: true
             },
             {
                 source: '/android/v2/features/remote-mute',
-                destination: '/android/v2/how--to-guides/interact-with-room/interact-with-peer/remote-mute',
+                destination: '/android/v2/how--to-guides/interact-with-room/track/remote-mute',
                 permanent: true
             },
             {
                 source: '/android/v2/features/end-room',
-                destination: '/android/v2/how--to-guides/interact-with-room/end-room',
+                destination: '/android/v2/how--to-guides/interact-with-room/room/end-room',
                 permanent: true
             },
             {
@@ -381,17 +381,17 @@ const nextConfig = {
             },
             {
                 source: '/android/v2/features/hls',
-                destination: '/android/v2/how--to-guides/record-and-live-stream/hls',
+                destination: '/android/v2/how--to-guides/record-and-live-stream/hls/hls',
                 permanent: true
             },
             {
                 source: '/android/v2/advanced-features/peer-metadata-update',
-                destination: '/android/v2/how--to-guides/build-interactive-features/peer-metadata-update',
+                destination: '/android/v2/how--to-guides/interact-with-room/peer/peer-metadata-update',
                 permanent: true
             },
             {
                 source: '/android/v2/advanced-features/hls-timed-metadata',
-                destination: '/android/v2/how--to-guides/build-interactive-features/hls-timed-metadata',
+                destination: '/android/v2/how--to-guides/record-and-live-stream/hls/hls-timed-metadata',
                 permanent: true
             },
             {
@@ -426,12 +426,12 @@ const nextConfig = {
             },
             {
                 source: '/android/v2/features/echo-cancellation',
-                destination: '/android/v2/how--to-guides/configure-your-device/echo-cancellation',
+                destination: '/android/v2/how--to-guides/configure-your-device/microphone/echo-cancellation',
                 permanent: true
             },
             {
                 source: '/android/v2/advanced-features/track-settings',
-                destination: '/android/v2/how--to-guides/set-up-video-conferencing/track-settings',
+                destination: '/android/v2/how--to-guides/interact-with-room/track/track-settings',
                 permanent: true
             },
             {
@@ -446,7 +446,7 @@ const nextConfig = {
             },
             {
                 source: '/android/v2/advanced-features/camera-controls',
-                destination: '/android/v2/how--to-guides/configure-your-device/camera-controls',
+                destination: '/android/v2/how--to-guides/configure-your-device/camera/camera-controls',
                 permanent: true
             },
             {
@@ -467,6 +467,608 @@ const nextConfig = {
             {
                 source: '/android/v2/foundation/faq',
                 destination: '/android/v2/how--to-guides/debugging/faq',
+                permanent: true
+            },
+            {
+                // https://www.markhneedham.com/blog/2022/07/27/vercel-redirect-wildcards-nested-paths/
+                source: '/flutter/v2/guides:path(.*)',
+                destination: '/flutter/v2/get-started:path',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/advanced-features/echo-cancellation',
+                destination: '/flutter/v2/how--to-guides/configure-your-device/microphone/echo-cancellation',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/audio-output-routing',
+                destination: '/flutter/v2/how--to-guides/configure-your-device/speaker/audio-output-routing',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/error-handling',
+                destination: '/flutter/v2/how--to-guides/debugging/error-handling',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/foundation/faq',
+                destination: '/flutter/v2/how--to-guides/debugging/faq',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/reconnection-handling',
+                destination: '/flutter/v2/how--to-guides/handle-interruptions/reconnection-handling',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/hmssdk',
+                destination: '/flutter/v2/how--to-guides/install-the-sdk/hmssdk',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/integration',
+                destination: '/flutter/v2/how--to-guides/install-the-sdk/integration',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/change-role',
+                destination: '/flutter/v2/how--to-guides/interact-with-room/peer/change-role',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/change-user-name',
+                destination: '/flutter/v2/how--to-guides/interact-with-room/peer/change-user-name',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/advanced-features/peer-metadata-update',
+                destination: '/flutter/v2/how--to-guides/interact-with-room/peer/peer-metadata-update',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/remove-peer',
+                destination: '/flutter/v2/how--to-guides/interact-with-room/peer/remove-peer',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/end-room',
+                destination: '/flutter/v2/how--to-guides/interact-with-room/room/end-room',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/session-metadata',
+                destination: '/flutter/v2/how--to-guides/interact-with-room/room/session-metadata',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/remote-mute-unmute',
+                destination: '/flutter/v2/how--to-guides/interact-with-room/track/remote-mute-unmute',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/set-playback-allowed',
+                destination: '/flutter/v2/how--to-guides/interact-with-room/track/set-playback-allowed',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/advanced-features/set-track-settings',
+                destination: '/flutter/v2/how--to-guides/interact-with-room/track/set-track-settings',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/advanced-features/set-volume',
+                destination: '/flutter/v2/how--to-guides/interact-with-room/track/set-volume',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/action-result-listeners',
+                destination: '/flutter/v2/how--to-guides/listen-to-room-updates/action-result-listeners',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/advanced-features/get-methods',
+                destination: '/flutter/v2/how--to-guides/listen-to-room-updates/get-methods',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/update-listener-enums',
+                destination: '/flutter/v2/how--to-guides/listen-to-room-updates/update-listener-enums',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/update-listeners',
+                destination: '/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/call-stats',
+                destination: '/flutter/v2/how--to-guides/measure-network-quality-and-performance/call-stats',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/advanced-features/network-quality-reports',
+                destination: '/flutter/v2/how--to-guides/measure-network-quality-and-performance/network-quality-reports',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/hls',
+                destination: '/flutter/v2/how--to-guides/record-and-live-stream/hls',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/recording',
+                destination: '/flutter/v2/how--to-guides/record-and-live-stream/recording',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/background-handling',
+                destination: '/flutter/v2/how--to-guides/set-up-video-conferencing/background-handling',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/chat',
+                destination: '/flutter/v2/how--to-guides/set-up-video-conferencing/chat',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/join',
+                destination: '/flutter/v2/how--to-guides/set-up-video-conferencing/join',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/leave',
+                destination: '/flutter/v2/how--to-guides/set-up-video-conferencing/leave',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/audio_sharing',
+                destination: '/flutter/v2/how--to-guides/set-up-video-conferencing/local-audio-share',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/mute',
+                destination: '/flutter/v2/how--to-guides/set-up-video-conferencing/mute',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/preview',
+                destination: '/flutter/v2/how--to-guides/set-up-video-conferencing/preview',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/advanced-features/adaptive-bitrate',
+                destination: '/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/adaptive-bitrate',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/auto-video-degrade-restore',
+                destination: '/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/auto-video-degrade-restore',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/render-video',
+                destination: '/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/overview',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/advanced-features/pip-mode',
+                destination: '/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/pip-mode',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/advanced-features/show-audio-level',
+                destination: '/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/show-audio-level',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/features/screen-share',
+                destination: '/flutter/v2/how--to-guides/set-up-video-conferencing/screen-share',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/advanced-features/strict-privacy-applications',
+                destination: '/flutter/v2/how--to-guides/set-up-video-conferencing/strict-privacy-applications',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/guides:path(.*)',
+                destination: '/ios/v2/get-started:path',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/error-handling',
+                destination: '/ios/v2/how--to-guides/debugging/error-handling',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/capture-snapshot',
+                destination: '/ios/v2/how--to-guides/capture-frame/capture-snapshot',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/plugins/local-camera-capture',
+                destination: '/ios/v2/how--to-guides/capture-frame/local-camera-capture',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/tap-to-focus',
+                destination: '/ios/v2/how--to-guides/configure-your-device/camera/tap-to-focus',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/audio-output-routing',
+                destination: '/ios/v2/how--to-guides/configure-your-device/speaker/audio-output-routing',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/debugging/bitcode',
+                destination: '/ios/v2/how--to-guides/debugging/bitcode',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/foundation/faq',
+                destination: '/ios/v2/how--to-guides/debugging/faq',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/plugins/custom-video-plugins',
+                destination: '/ios/v2/how--to-guides/extend-capabilities/plugins/custom-video-plugins',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/plugins/virtual-background',
+                destination: '/ios/v2/how--to-guides/extend-capabilities/plugins/virtual-background',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/interruption-handling',
+                destination: '/ios/v2/how--to-guides/handle-interruptions/interruption-handling',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/migration-guides/03to04',
+                destination: '/ios/v2/how--to-guides/install-the-sdk/03to04',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/integration',
+                destination: '/ios/v2/how--to-guides/install-the-sdk/integration',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/change-role',
+                destination: '/ios/v2/how--to-guides/interact-with-room/peer/change-role',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/change-user-name',
+                destination: '/ios/v2/how--to-guides/interact-with-room/peer/change-user-name',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/advanced-features/peer-metadata-update',
+                destination: '/ios/v2/how--to-guides/interact-with-room/peer/peer-metadata-update',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/remove-peer',
+                destination: '/ios/v2/how--to-guides/interact-with-room/peer/remove-peer',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/end-room',
+                destination: '/ios/v2/how--to-guides/interact-with-room/room/end-room',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/remote-mute',
+                destination: '/ios/v2/how--to-guides/interact-with-room/track/remote-mute',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/call-stats',
+                destination: '/ios/v2/how--to-guides/measure-network-quality-and-performance/call-stats',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/hls-stats',
+                destination: '/ios/v2/how--to-guides/measure-network-quality-and-performance/hls-stats',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/network-quality-reports',
+                destination: '/ios/v2/how--to-guides/measure-network-quality-and-performance/',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/advanced-features/hls-timed-metadata',
+                destination: '/ios/v2/how--to-guides/record-and-live-stream/hls/hls-timed-metadata',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/hls',
+                destination: '/ios/v2/how--to-guides/record-and-live-stream/hls/hls',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/rtmp-recording',
+                destination: '/ios/v2/how--to-guides/record-and-live-stream/rtmp-recording',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/audio-share',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/audio-share',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/background-modes',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/background-modes',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/callkit',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/callkit',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/chat',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/chat',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/join',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/join',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/leave',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/leave',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/mute',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/mute',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/preview',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/preview',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/render-video',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/render-video/overview',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/pip-mode',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/render-video/pip-mode',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/advanced-features/simulcast',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/render-video/simulcast',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/screen-share',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/screen-share',
+                permanent: true
+            },
+            {
+                // https://www.markhneedham.com/blog/2022/07/27/vercel-redirect-wildcards-nested-paths/
+                source: '/react-native/v2/guides:path(.*)',
+                destination: '/react-native/v2/get-started:path',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/capture-hmsView',
+                destination: '/react-native/v2/how--to-guides/capture-frame/capture-hmsView',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/track-settings',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/track/',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/event-listeners-enums',
+                destination: '/react-native/v2/how--to-guides/listen-to-room-updates/',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/rtc-stats',
+                destination: '/react-native/v2/how--to-guides/measure-network-quality-and-performance/rtc-stats',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/echo-cancellation',
+                destination: '/react-native/v2/how--to-guides/configure-your-device/microphone/echo-cancellation',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/audio-mode-change',
+                destination: '/react-native/v2/how--to-guides/configure-your-device/speaker/audio-mode-change',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/audio-output-routing',
+                destination: '/react-native/v2/how--to-guides/configure-your-device/speaker/audio-output-routing',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/error-handling',
+                destination: '/react-native/v2/how--to-guides/debugging/error-handling',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/foundation/faq',
+                destination: '/react-native/v2/how--to-guides/debugging/faq',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/logger',
+                destination: '/react-native/v2/how--to-guides/debugging/logger',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/reconnecting-reconnected',
+                destination: '/react-native/v2/how--to-guides/handle-interruptions/reconnecting-reconnected',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/integration',
+                destination: '/react-native/v2/how--to-guides/install-the-sdk/integration',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/change-metadata',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/peer/change-metadata',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/change-name',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/peer/change-name',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/change-role',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/peer/change-role',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/remove-peer',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/peer/remove-peer',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/end-room',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/room/end-room',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/session-metadata',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/room/session-metadata',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/change-track-state-roles',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/track/change-track-state-roles',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/playback-allowed',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/track/playback-allowed',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/change-track-state',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/track/remote-mute',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/set-volume',
+                destination: '/react-native/v2/how--to-guides/interact-with-room/track/set-volume',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/event-listeners',
+                destination: '/react-native/v2/how--to-guides/listen-to-room-updates/event-listeners',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/get-methods',
+                destination: '/react-native/v2/how--to-guides/listen-to-room-updates/get-methods',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/network-quality',
+                destination: '/react-native/v2/how--to-guides/measure-network-quality-and-performance/network-quality',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/hls',
+                destination: '/react-native/v2/how--to-guides/record-and-live-stream/hls',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/recording',
+                destination: '/react-native/v2/how--to-guides/record-and-live-stream/recording',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/background-handling',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/background-handling',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/chat',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/chat',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/join',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/join',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/leave',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/leave',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/audio-share',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/local-audio-share',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/mute',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/mute',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/preview',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/preview',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/release-resources',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/release-resources',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/auto-video-degrade',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/render-video/auto-video-degrade',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/render-video/mini-view',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/render-video',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/render-video/overview',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/pip-mode',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/render-video/pip-mode',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/show-audio-level',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/render-video/show-audio-level',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/features/screenshare',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/screenshare',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/advanced-features/strict-privacy-applications',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/strict-privacy-applications',
                 permanent: true
             },
         ];
