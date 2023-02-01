@@ -230,6 +230,10 @@ If you want to update the name of peer.
 
 Request for a role change of a remote peer. Can be forced.
 
+**`Deprecated`**
+
+Use `changeRoleOfPeer`
+
 #### Parameters
 
 | Name        | Type      | Description                                                                    |
@@ -237,6 +241,45 @@ Request for a role change of a remote peer. Can be forced.
 | `forPeerId` | `string`  | The remote peer id whose role needs to be changed                              |
 | `toRole`    | `string`  | The name of the new role.                                                      |
 | `force?`    | `boolean` | this being true would mean that user won't get a request to accept role change |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### changeRoleOfPeer
+
+▸ **changeRoleOfPeer**(`forPeerId`, `toRole`, `force?`): `Promise`<`void`\>
+
+Request for a role change of a remote peer. Can be forced.
+
+#### Parameters
+
+| Name        | Type      | Description                                                                    |
+| :---------- | :-------- | :----------------------------------------------------------------------------- |
+| `forPeerId` | `string`  | The remote peer id whose role needs to be changed                              |
+| `toRole`    | `string`  | The name of the new role.                                                      |
+| `force?`    | `boolean` | this being true would mean that user won't get a request to accept role change |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### changeRoleOfPeersWithRoles
+
+▸ **changeRoleOfPeersWithRoles**(`roles`, `toRole`): `Promise`<`void`\>
+
+Request for a role change of a remote peer. Can be forced.
+
+#### Parameters
+
+| Name     | Type       | Description                                  |
+| :------- | :--------- | :------------------------------------------- |
+| `roles`  | `string`[] | List of roles whose role needs to be changed |
+| `toRole` | `string`   | The name of the new role.                    |
 
 #### Returns
 
@@ -540,14 +583,7 @@ This api adds EXT-X-DATERANGE tags to the media playlist.
 It is useful for defining timed metadata for interstitial regions such as advertisements,
 but can be used to define any timed metadata needed by your stream.
 usage (e.g)
-const metadataList = [{
-payload: "some string 1",
-duration: 2
-},
-{
-payload: "some string 2",
-duration: 3
-}]
+const metadataList = `[{ payload: "some string 1", duration: 2 }, { payload: "some string 2", duration: 3 }]`
 sendHLSTimedMetadata(metadataList);
 
 #### Parameters
@@ -595,34 +631,17 @@ use it for updating a particular property in the appdata
 
 **`Example`**
 
-```ts
-assume appdata is initially
- {
-    mySettings: {
-      setting1: 'val1',
-      setting2: 'val2',
-    },
-    mySettings2: 43,
-    mySettings3: false,
-  };
+assume appData is initially
+`{ mySettings: { setting1: 'val1', setting2: 'val2', }, mySettings2: 43, mySettings3: false, };`
 
 after calling,
-setAppData("mySettings", {setting1:'val1-edit', setting3:'val3'}, true);
+`setAppData("mySettings", {setting1:'val1-edit', setting3:'val3'}, true);`
 it becomes
- {
-    mySettings: {
-      setting1: 'val1-edit',
-      setting2: 'val2',
-      setting3: 'val3',
-    },
-    mySettings2: 43,
-    mySettings3: false,
-  };
+`{ mySettings: { setting1: 'val1-edit', setting2: 'val2', setting3: 'val3', }, mySettings2: 43, mySettings3: false, };`
 
 Note: This is not suitable for keeping large data or data which updates
 at a high frequency, it is recommended to use app side store for those
 cases.
-```
 
 #### Parameters
 
@@ -677,9 +696,9 @@ Change settings of the local peer's audio track
 
 #### Parameters
 
-| Name       | Type                                                                                                 | Description                                                               |
-| :--------- | :--------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------ |
-| `settings` | `Partial`<[`HMSAudioTrackSettings`](/api-reference/javascript/v2/interfaces/HMSAudioTrackSettings)\> | HMSAudioTrackSettings ({ volume, codec, maxBitrate, deviceId, advanced }) |
+| Name       | Type                                                                                                 | Description                                                                 |
+| :--------- | :--------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------- |
+| `settings` | `Partial`<[`HMSAudioTrackSettings`](/api-reference/javascript/v2/interfaces/HMSAudioTrackSettings)\> | HMSAudioTrackSettings `({ volume, codec, maxBitrate, deviceId, advanced })` |
 
 #### Returns
 
@@ -902,9 +921,9 @@ Change settings of the local peer's video track
 
 #### Parameters
 
-| Name       | Type                                                                                                 | Description                                                                                    |
-| :--------- | :--------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------- |
-| `settings` | `Partial`<[`HMSVideoTrackSettings`](/api-reference/javascript/v2/interfaces/HMSVideoTrackSettings)\> | HMSVideoTrackSettings ({ width, height, codec, maxFramerate, maxBitrate, deviceId, advanced }) |
+| Name       | Type                                                                                                 | Description                                                                                      |
+| :--------- | :--------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------- |
+| `settings` | `Partial`<[`HMSVideoTrackSettings`](/api-reference/javascript/v2/interfaces/HMSVideoTrackSettings)\> | HMSVideoTrackSettings `({ width, height, codec, maxFramerate, maxBitrate, deviceId, advanced })` |
 
 #### Returns
 

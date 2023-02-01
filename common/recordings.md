@@ -73,11 +73,11 @@ You can specify a cloud storage location for your recording files in your templa
 
 2. Go to 100ms Dashboard and go to template **configuration by selecting the configure icon**.
 
-![Create your first app](/docs/docs/v2/recording-storage-settings-step2.png)
+![Create your first app](/docs/v2/recording-storage-settings-step2.png)
 
 3. Head over to the **Destinations** tab.
 
-![Destinations](/docs/docs/v2/recording-storage-settings-step3.png)
+![Destinations](/docs/v2/recording-storage-settings-step3.png)
 
 1. Key in your credentials (using an example of an S3 bucket here):
 
@@ -87,15 +87,15 @@ You can specify a cloud storage location for your recording files in your templa
     - Region: Name of the region, for example, ap-south1
     - Prefix for Upload Path: Define the directory name (optional)
 
-![Destinations](/docs/docs/v2/recording-storage-settings-step4.png)
+![Destinations](/docs/v2/recording-storage-settings-step4.png)
 
 5. Use the **Validate Config** button to test your storage setup.
 
-![Destinations](/docs/docs/v2/recording-storage-settings-step5.png)
+![Destinations](/docs/v2/recording-storage-settings-step5.png)
 
 6. You will see a message that the AWS **configuration was successfully validated**.
 
-![Destinations](/docs/docs/v2/recording-storage-settings-step6.png)
+![Destinations](/docs/v2/recording-storage-settings-step6.png)
 
 The above message ensures that your configuration is successful now, and all your recordings will start collecting in your configured destination.
 
@@ -103,7 +103,7 @@ The above message ensures that your configuration is successful now, and all you
 
 If a storage destination is not configured for recordings and if you choose to record that room then such recordings are stored for **72 hours** in an internal 100ms bucket. You can access these recordings through [Sessions](https://dashboard.100ms.live/sessions).
 
-![Recording Links](/docs/docs/v2/recording-links-session.png)
+![Recording Links](/docs/v2/recording-links-session.png)
 
 **Storage recording path is available in following webhook responses:**
 
