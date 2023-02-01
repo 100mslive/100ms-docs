@@ -1,14 +1,16 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Footer from '@/components/Footer';
 import { AndroidIcon, AppleIcon, FlutterWIthColourIcon, ReactIcon } from '@100mslive/react-icons';
 import { Box, Button, Flex, Text } from '@100mslive/react-ui';
 import Header from 'components/Header';
+import Sidebar from '@/components/Sidebar';
+import Footer from '@/components/Footer';
+import { getAllDocs, getNavfromDocs } from '@/lib/mdxUtils';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
 
-const Homepage = () => {
+const Homepage = ({ allNav }) => {
     const [menu, setMenu] = useState(false);
     const [modal, setModal] = useState(false);
     const menuState = { menu, setMenu };
@@ -17,6 +19,7 @@ const Homepage = () => {
         setRenderComponents(true);
     }, []);
 
+    console.log(allNav);
     useLockBodyScroll(modal);
 
     return (
@@ -31,7 +34,9 @@ const Homepage = () => {
                         menuState={menuState}
                         showReference={false}
                     />
-
+                    <Flex>
+                        <Sidebar menuState={menuState} nav={{}} allNav={allNav} />
+                    </Flex>
                     <Footer css={{ backgroundColor: 'var(--docs_bg_footer)' }} />
                 </>
             ) : null}
@@ -63,3 +68,15 @@ const mobileSDK = [
         id: 'reactNative'
     }
 ];
+
+export const getStaticProps = async ({ params }) => {
+    const allDocs = getAllDocs();
+    const navItems = getNavfromDocs(allDocs);
+
+    return {
+        props: {
+            allNav: navItems,
+            nav: {}
+        }
+    };
+};

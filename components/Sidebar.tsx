@@ -54,36 +54,38 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
     const {
         query: { slug }
     } = router;
-
+    const baseViewOnly = Object.keys(currentNav).length === 0;
     const { menu, setMenu } = menuState;
 
     useEffect(() => {
         setMenu(false);
     }, [router]);
 
-    const [currentDocSlug] = slug as string[];
-
     let nav;
-    if (Object.keys(currentNav).length) {
-        const platform = currentNav[currentDocSlug];
-        if (slug[0] !== 'v1' && slug[0] !== 'v2') {
-            if (slug?.length > 3) {
-                nav = platform[slug[1]];
-                if (slug[0] === 'api-reference') {
-                    // if (slug[1] === 'android') {
-                    //     showPagination = false;
-                    // }
-                    nav = platform[slug[1]][slug[2]];
+    if (!baseViewOnly) {
+        const [currentDocSlug] = slug as string[];
+
+        if (Object.keys(currentNav).length) {
+            const platform = currentNav[currentDocSlug];
+            if (slug[0] !== 'v1' && slug[0] !== 'v2') {
+                if (slug?.length > 3) {
+                    nav = platform[slug[1]];
+                    if (slug[0] === 'api-reference') {
+                        // if (slug[1] === 'android') {
+                        //     showPagination = false;
+                        // }
+                        nav = platform[slug[1]][slug[2]];
+                    }
                 }
-            }
-        } else nav = platform;
-    }
+            } else nav = platform;
+        }
+    } else nav = false;
 
     const showPlatformSelector = slug?.[0] !== 'concepts';
 
-    let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]);
-    if (slug[0] === 'api-reference')
-        indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[1]);
+    let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug?.[0]);
+    if (slug?.[0] === 'api-reference')
+        indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug?.[1]);
 
     indexOf = indexOf === -1 ? 0 : indexOf;
     const [tech, setTech] = useState(menuItem[indexOf]);
@@ -97,7 +99,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
         else router.push(s.link, undefined, { shallow: false });
     };
 
-    const [showBaseView, setShowBaseView] = useState(false);
+    const [showBaseView, setShowBaseView] = useState(baseViewOnly);
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
 
     const [showSidebar, setShowSidebar] = useState(false);
@@ -120,7 +122,14 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                 <Flex
                     align="center"
                     gap="1"
-                    css={{ color: '$primaryLight', mt: '$14', mb: '$12', cursor: 'pointer' }}
+                    css={{
+                        color: '$primaryLight',
+                        mt: '$14',
+                        mb: '$12',
+                        cursor: 'pointer',
+                        opacity: baseViewOnly ? '0' : '1',
+                        pointerEvents: baseViewOnly ? 'none' : 'all'
+                    }}
                     onClick={() => setShowBaseView(false)}>
                     <Text variant="sm" css={{ color: '$primaryLight' }}>
                         Continue exploring
