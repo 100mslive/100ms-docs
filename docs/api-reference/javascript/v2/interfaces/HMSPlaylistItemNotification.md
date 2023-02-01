@@ -1,5 +1,5 @@
 ---
-title: HMSPlaylistItemNotification<T>
+title: HMSPlaylistItemNotification<T\>
 ---
 
 ## Type parameters
