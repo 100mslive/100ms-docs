@@ -3,12 +3,14 @@ title: Webhook Events
 nav: 3.6
 ---
 
+This page contains the list of all webhook events. 
+
 ## List of events
 
 Here's the list of events available on the 100ms platform.
 
 | Event name                         | Description                                                                                                                                                                                                                                                                                  |
-| :--------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|:-----------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | session                            | Triggered during the start and end of a session. <br/><br/>**Events:** [session.open.success](#session-open-success), [session.close.success](#session-close-success)                                                                                                                        |
 | peer                               | Triggered when a peer join/leave succeeds/fails. <br/><br/>**Events:** [peer.join.success](#peer-join-success), [peer.leave.success](#peer-leave-success), [peer.join.failure](#peer-join-failure), [peer.leave.failure](#peer-leave-failure)                                                |
 | room                               | Triggered when a room ends. <br/><br/>**Events:** [room.end.success](#room-end-success)                                                                                                                                                                                                      |
@@ -26,7 +28,7 @@ This event will be sent when session opens successfully.
 #### Attributes
 
 | Name               | Type                 | Description                                                                            |
-| :----------------- | :------------------- | :------------------------------------------------------------------------------------- |
+|:-------------------|:---------------------|:---------------------------------------------------------------------------------------|
 | room_id            | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                    |
 | room_name          | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                |
 | session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df |
@@ -60,7 +62,7 @@ This event will be sent when session closes successfully.
 #### Attributes
 
 | Name               | Type                 | Description                                                                            |
-| :----------------- | :------------------- | :------------------------------------------------------------------------------------- |
+|:-------------------|:---------------------|:---------------------------------------------------------------------------------------|
 | room_id            | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                    |
 | room_name          | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                |
 | session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df |
@@ -100,7 +102,7 @@ This event will be sent when any peer joins the room successfully
 #### Attributes
 
 | Name               | Type                 | Description                                                                                             |
-| :----------------- | :------------------- | :------------------------------------------------------------------------------------------------------ |
+|:-------------------|:---------------------|:--------------------------------------------------------------------------------------------------------|
 | room_id            | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                     |
 | room_name          | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                 |
 | session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                  |
@@ -145,7 +147,7 @@ This event will be sent when peer leaves the room
 #### Attributes
 
 | Name               | Type                 | Description                                                                                                           |
-| :----------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------- |
+|:-------------------|:---------------------|:----------------------------------------------------------------------------------------------------------------------|
 | room_id            | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                   |
 | room_name          | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                               |
 | session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                |
@@ -225,7 +227,7 @@ This event will be sent when a peer fails to join a room. This can occur when,
 #### Attributes
 
 | Name          | Type                 | Description                                                                                             |
-| :------------ | :------------------- | :------------------------------------------------------------------------------------------------------ |
+|:--------------|:---------------------|:--------------------------------------------------------------------------------------------------------|
 | room_id       | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                     |
 | room_name     | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                 |
 | peer_id       | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
@@ -278,7 +280,7 @@ This event will be sent when the peer leave fails. This can occur when,
 #### Attributes
 
 | Name          | Type                 | Description                                                                                             |
-| :------------ | :------------------- | :------------------------------------------------------------------------------------------------------ |
+|:--------------|:---------------------|:--------------------------------------------------------------------------------------------------------|
 | room_id       | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                     |
 | room_name     | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                 |
 | peer_id       | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4 |
@@ -331,7 +333,7 @@ This event will be sent when room end is called and then it is successful.
 #### Attributes
 
 | Name               | Type                 | Description                                                                                             |
-| :----------------- | :------------------- | :------------------------------------------------------------------------------------------------------ |
+|:-------------------|:---------------------|:--------------------------------------------------------------------------------------------------------|
 | room_id            | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                     |
 | room_name          | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                 |
 | session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                  |
@@ -378,7 +380,7 @@ This event will be sent when room end is called and the it is unsuccessful.
 #### Attributes
 
 | Name               | Type                 | Description                                                                                             |
-| :----------------- | :------------------- | :------------------------------------------------------------------------------------------------------ |
+|:-------------------|:---------------------|:--------------------------------------------------------------------------------------------------------|
 | room_id            | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                     |
 | room_name          | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                 |
 | session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                  |
@@ -431,7 +433,7 @@ This event will be sent when the role change for a peer is successful.
 #### Attributes
 
 | Name                     | Type                 | Description                                                                                                                                                     |
-| :----------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|:-------------------------|:---------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | room_id                  | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                                             |
 | room_name                | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                                                                         |
 | session_id               | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
@@ -485,7 +487,7 @@ This event will be sent when the role change for a peer fails. For example:
 #### Attributes
 
 | Name                     | Type                 | Description                                                                                                                                                     |
-| :----------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|:-------------------------|:---------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | room_id                  | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                                             |
 | room_name                | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                                                                         |
 | session_id               | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
@@ -537,7 +539,7 @@ This event will be sent when final composed recording is generated and uploaded 
 #### Attributes
 
 | Name                    | Type                 | Description                                                                                                                                                     |
-| :---------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|:------------------------|:---------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | room_id                 | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312dff                                                                                            |
 | room_name               | `string`             | Room name assigned by you when creating room <br/><br/> Example: class-9-batch-2                                                                                |
 | session_id              | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
@@ -583,7 +585,7 @@ This event will be sent when failure occurs during final recording composition o
 #### Attributes
 
 | Name               | Type                 | Description                                                                            |
-| :----------------- | :------------------- | :------------------------------------------------------------------------------------- |
+|:-------------------|:---------------------|:---------------------------------------------------------------------------------------|
 | room_id            | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                    |
 | room_name          | `string`             | Room name assigned by you when creating room <br/><br/> Example: class-9-batch-2       |
 | session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df |
@@ -623,7 +625,7 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
 #### Attributes
 
 | Name               | Type                 | Description                                                                                             |
-| :----------------- | :------------------- | :------------------------------------------------------------------------------------------------------ |
+|:-------------------|:---------------------|:--------------------------------------------------------------------------------------------------------|
 | beam_id            | `string`             | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                             |
 | job_id             | `string`             | Beam job id <br/><br/> Example: 60b8e1d96eb86d8101b57359                                                |
 | recording_enabled  | `bool`               | Indicates whether recording is enabled or not <br/><br/> Example: true                                  |
@@ -680,7 +682,7 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
 #### Attributes
 
 | Name               | Type                 | Description                                                                                             |
-| :----------------- | :------------------- | :------------------------------------------------------------------------------------------------------ |
+|:-------------------|:---------------------|:--------------------------------------------------------------------------------------------------------|
 | beam_id            | `string`             | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                             |
 | job_id             | `string`             | Beam job id <br/><br/> Example: 60b8e1d96eb86d8101b57359                                                |
 | recording_enabled  | `bool`               | Indicates whether recording is enabled or not <br/><br/> Example: true                                  |
@@ -737,7 +739,7 @@ This event is sent when beam successfully records the room and uploads the video
 #### Attributes
 
 | Name                    | Type                 | Description                                                                                                                                                     |
-| :---------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|:------------------------|:---------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | beam_id                 | `string`             | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                                                                                     |
 | room_id                 | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                                             |
 | peer_id                 | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                         |
@@ -806,7 +808,7 @@ Please check the below table for possible error types, messages and description.
 #### Error types
 
 | Type                | Message                                                                                          | Description                                                                                               |
-| :------------------ | :----------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
+|:--------------------|:-------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------|
 | INTERNAL_ERROR      | Internal error                                                                                   | Internal errors in beam.                                                                                  |
 | MAX_RETRIES_REACHED | Beam couldn't connect to Meeting URL after <max_count> retries. Check if meeting URL is correct. | Sent when Beam cannot join meeting URL after predefined number of max retries.                            |
 | UPLOAD_ERROR        | Failed to upload recordings. Check if upload config is correct.                                  | Sent when there are failures in uploading recordings. This is most likely due to incorrect upload config. |
@@ -815,7 +817,7 @@ Please check the below table for possible error types, messages and description.
 #### Attributes
 
 | Name               | Type                 | Description                                                                                                          |
-| :----------------- | :------------------- | :------------------------------------------------------------------------------------------------------------------- |
+|:-------------------|:---------------------|:---------------------------------------------------------------------------------------------------------------------|
 | beam_id            | `string`             | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                                          |
 | job_id             | `string`             | Beam job id <br/><br/> Example: 60b8e1d96eb86d8101b57359                                                             |
 | recording_enabled  | `bool`               | Indicates whether recording is enabled or not <br/><br/> Example: true                                               |
@@ -881,7 +883,7 @@ This event is sent when HLS streaming is successfully triggered
 #### Attributes
 
 | Name                                    | Type                 | Description                                                                                                                                                                         |
-| :-------------------------------------- | :------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|:----------------------------------------|:---------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | beam_id                                 | `string`             | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                                                                                                         |
 | job_id                                  | `string`             | Beam job id <br/><br/> Example: 60b8e1d96eb86d8101b57359                                                                                                                            |
 | recording_single_file_per_layer_enabled | `bool`               | Indicates whether HLS recording should be available as separate files for various dimensions supported. Output will be Individual mp4 file per HLS layer. <br/><br/> Example: false |
@@ -942,7 +944,7 @@ This event is sent when HLS streaming is successfully stopped
 #### Attributes
 
 | Name                                    | Type                 | Description                                                                                                                                                                         |
-| :-------------------------------------- | :------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|:----------------------------------------|:---------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | beam_id                                 | `string`             | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                                                                                                         |
 | job_id                                  | `string`             | Beam job id <br/><br/> Example: 60b8e1d96eb86d8101b57359                                                                                                                            |
 | recording_single_file_per_layer_enabled | `bool`               | Indicates whether HLS recording should be available as separate files for various dimensions supported. Output will be Individual mp4 file per HLS layer. <br/><br/> Example: false |
@@ -1009,7 +1011,7 @@ Please check the below table for possible error types, messages and description.
 #### Error types
 
 | Type                | Message                                                                                          | Description                                                                                               |
-| :------------------ | :----------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
+|:--------------------|:-------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------|
 | INTERNAL_ERROR      | Internal error                                                                                   | Internal errors in beam.                                                                                  |
 | MAX_RETRIES_REACHED | Beam couldn't connect to Meeting URL after <max_count> retries. Check if meeting URL is correct. | Sent when Beam cannot join meeting URL after predefined number of max retries.                            |
 | UPLOAD_ERROR        | Failed to upload recordings. Check if upload config is correct.                                  | Sent when there are failures in uploading recordings. This is most likely due to incorrect upload config. |
@@ -1018,7 +1020,7 @@ Please check the below table for possible error types, messages and description.
 #### Attributes
 
 | Name                                    | Type                 | Description                                                                                                                                                                         |
-| :-------------------------------------- | :------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|:----------------------------------------|:---------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | beam_id                                 | `string`             | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                                                                                                         |
 | job_id                                  | `string`             | Beam job id <br/><br/> Example: 60b8e1d96eb86d8101b57359                                                                                                                            |
 | recording_single_file_per_layer_enabled | `bool`               | Indicates whether HLS recording should be available as separate files for various dimensions supported. Output will be Individual mp4 file per HLS layer. <br/><br/> Example: false |
@@ -1081,7 +1083,7 @@ This event will be sent when HLS recordings are successful and uploaded to the s
 #### Attributes
 
 | Name                                | Type                 | Description                                                                                                                    |
-| :---------------------------------- | :------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
+|:------------------------------------|:---------------------|:-------------------------------------------------------------------------------------------------------------------------------|
 | beam_id                             | `string`             | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                                                    |
 | room_id                             | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                            |
 | metadata_id                         | `string`             | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                                                   |
