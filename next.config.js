@@ -873,7 +873,7 @@ const nextConfig = {
             },
             {
                 source: '/react-native/v2/features/event-listeners-enums',
-                destination: '/react-native/v2/how--to-guides/listen-to-room-events/',
+                destination: '/react-native/v2/how--to-guides/listen-to-room-updates/',
                 permanent: true
             },
             {
@@ -973,12 +973,12 @@ const nextConfig = {
             },
             {
                 source: '/react-native/v2/features/event-listeners',
-                destination: '/react-native/v2/how--to-guides/listen-to-room-events/event-listeners',
+                destination: '/react-native/v2/how--to-guides/listen-to-room-updates/event-listeners',
                 permanent: true
             },
             {
                 source: '/react-native/v2/advanced-features/get-methods',
-                destination: '/react-native/v2/how--to-guides/listen-to-room-events/get-methods',
+                destination: '/react-native/v2/how--to-guides/listen-to-room-updates/get-methods',
                 permanent: true
             },
             {
