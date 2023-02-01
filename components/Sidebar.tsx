@@ -149,6 +149,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
 
                 {platformOrder.map((platform) => (
                     <PlatformAccordion
+                        key={platform.text}
                         title={platform.text}
                         icon={platform.icon}
                         data={allNav[platform.key]}

@@ -35,7 +35,9 @@ const PlatformAccordion = ({ title, icon, data }) => {
                     <a
                         href={data['v2'][item][Object.keys(data['v2'][item])[0]].url}
                         key={`${title}-${item}`}>
-                        <Text variant="sm" css={{ pl: '$12', my: '$8', color: "var(--docs_text_primary)" }}>
+                        <Text
+                            variant="sm"
+                            css={{ pl: '$12', my: '$8', color: 'var(--docs_text_primary)' }}>
                             {titleCasing(item)}
                         </Text>
                     </a>

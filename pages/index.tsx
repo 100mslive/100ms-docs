@@ -36,6 +36,7 @@ const Homepage = ({ allNav }) => {
                     />
                     <Flex>
                         <Sidebar menuState={menuState} nav={{}} allNav={allNav} />
+                        <Box css={{}}></Box>
                     </Flex>
                     <Footer css={{ backgroundColor: 'var(--docs_bg_footer)' }} />
                 </>
