@@ -581,6 +581,136 @@ const nextConfig = {
                 permanent: true
             },
             {
+                source: '/flutter/v2/how--to-guides/features/update-listeners',
+                destination: '/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/how--to-guides/features/preview',
+                destination: '/flutter/v2/how--to-guides/set-up-video-conferencing/preview',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/how--to-guides/features/update-listeners',
+                destination: '/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners',
+                permanent: true
+            },
+            {
+                source: "/flutter/v2/how--to-guides/features/error-handling",
+                destination: "/flutter/v2/how--to-guides/debugging/error-handling",
+                permanent: true,
+            },
+            {
+                source: "/flutter/v2/how--to-guides/features/auto-video-degrade-restore",
+                destination: "/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/auto-video-degrade-restore",
+                permanent: true,
+            },
+            {
+                source: "/flutter/v2/how--to-guides/advanced-features/peer-metadata-update",
+                destination: "/flutter/v2/how--to-guides/interact-with-room/peer/peer-metadata-update",
+                permanent: true,
+            },
+            {
+                source: "/flutter/v2/how--to-guides/features/background-handling",
+                destination: "/flutter/v2/how--to-guides/set-up-video-conferencing/background-handling",
+                permanent: true,
+            },
+            {
+                source: "/flutter/v2/how--to-guides/features/leave",
+                destination: "/flutter/v2/how--to-guides/set-up-video-conferencing/leave",
+                permanent: true,
+            },
+            {
+                source: "/android/v2/how--to-guides/interact-with-room/interact-with-peer/remove-peer",
+                destination: "/android/v2/how--to-guides/interact-with-room/peer/remove-peer",
+                permanent: true,
+            },
+            {
+                source: "/android/v2/how--to-guides/build-interactive-features/peer-metadata-update",
+                destination: "/android/v2/how--to-guides/interact-with-room/peer/peer-metadata-update",
+                permanent: true,
+            },
+            {
+                source: "/android/v2/how--to-guides/set-up-video-conferencing/track-settings",
+                destination: "/android/v2/how--to-guides/interact-with-room/track/track-settings",
+                permanent: true,
+            },
+            {
+                source: "/react-native/v2/how--to-guides/guides/token",
+                destination: "/react-native/v2/get-started/token",
+                permanent: true,
+            },
+            {
+                source: "/react-native/v2/how--to-guides/interact-with-room/features/mute",
+                destination: "/react-native/v2/how--to-guides/set-up-video-conferencing/mute",
+                permanent: true,
+            },
+            {
+                source: "/react-native/v2/how--to-guides/interact-with-room/features/join",
+                destination: "/react-native/v2/how--to-guides/set-up-video-conferencing/join",
+                permanent: true,
+            },
+            {
+                source: "/react-native/v2/how--to-guides/interact-with-room/features/audio-share",
+                destination: "/react-native/v2/how--to-guides/set-up-video-conferencing/local-audio-share",
+                permanent: true,
+            },
+            {
+                source: "/flutter/v2/how--to-guides/set-up-video-conferencing/features/mute",
+                destination: "/flutter/v2/how--to-guides/set-up-video-conferencing/mute",
+                permanent: true,
+            },
+            {
+                source: "/flutter/v2/how--to-guides/set-up-video-conferencing/features/mute",
+                destination: "/flutter/v2/how--to-guides/set-up-video-conferencing/mute",
+                permanent: true,
+            },
+            {
+                source: "/flutter/v2/how--to-guides/set-up-video-conferencing/advanced-features/set-volume",
+                destination: "/flutter/v2/how--to-guides/interact-with-room/track/set-volume",
+                permanent: true,
+            },
+            {
+                source: "/flutter/v2/how--to-guides/set-up-video-conferencing/advanced-features/adaptive-bitrate",
+                destination: "/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/adaptive-bitrate",
+                permanent: true,
+            },
+            {
+                source: "/react-native/v2/how--to-guides/handle-interruptions/release-resources",
+                destination: "/react-native/v2/how--to-guides/set-up-video-conferencing/release-resources",
+                permanent: true,
+            },
+            {
+                source: "/react-native/v2/how--to-guides/handle-interruptions/error-handling",
+                destination: "/react-native/v2/how--to-guides/debugging/error-handling",
+                permanent: true,
+            },
+            {
+                source: "/react-native/v2/how--to-guides/advanced-features/network-quality",
+                destination: "/react-native/v2/how--to-guides/measure-network-quality-and-performance/network-quality",
+                permanent: true,
+            },
+            {
+                source: "/flutter/v2/how--to-guides/set-up-video-conferencing/render-video",
+                destination: "/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/overview",
+                permanent: true,
+            },
+            {
+                source: "/react-native/v2/how--to-guides/features/screenshare",
+                destination: "/react-native/v2/how--to-guides/set-up-video-conferencing/screenshare",
+                permanent: true,
+            },
+            {
+                source: "/react-native/v2/how--to-guides/features/screenshare",
+                destination: "/react-native/v2/how--to-guides/set-up-video-conferencing/screenshare",
+                permanent: true,
+            },
+            {
+                source: "/react-native/v2/how--to-guides/features/audio-output-routing",
+                destination: "/react-native/v2/how--to-guides/configure-your-device/speaker/audio-output-routing",
+                permanent: true,
+            },
+            {
                 source: '/flutter/v2/features/call-stats',
                 destination: '/flutter/v2/how--to-guides/measure-network-quality-and-performance/call-stats',
                 permanent: true
@@ -1018,6 +1148,11 @@ const nextConfig = {
             },
             {
                 source: '/react-native/v2/features/audio-share',
+                destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/local-audio-share',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/how--to-guides/features/audio-share',
                 destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/local-audio-share',
                 permanent: true
             },
