@@ -19,33 +19,20 @@ TL;DR - Use this [Playground](https://codesandbox.io/s/hms-js-quickstart-5rmes) 
 
 You can set up a project using `npm` or `yarn`.
 
-<Tabs id="setup-project" items={['npm', 'yarn']} />
+1.  Use `npm` or `yarn` to initialize a project and enter the details for your project as you wish.
+2.  Then, install [ParcelJS](https://parceljs.org/getting-started/webapp/) and [100ms SDK](https://www.npmjs.com/package/@100mslive/hms-video-store) into your app like below
 
-<Tab id="setup-project-0">
-
--   Use `npm init` to initialize a project and enter the details for your project as you wish.
--   Then, install [ParcelJS](https://parceljs.org/getting-started/webapp/) and [100ms SDK](https://www.npmjs.com/package/@100mslive/hms-video-store) into your app like below
-
-    ```bash section=InstallingTheDependencies sectionIndex=1
+    <CH.Code>
+    ```bash npm section=InstallingTheDependencies sectionIndex=1
     npm install --save-dev parcel
     npm install @100mslive/hms-video-store
+    ```
+
+    ```bash yarn section=InstallingTheDependencies sectionIndex=1
     yarn add --dev parcel
     yarn add @100mslive/hms-video-store
     ```
-
-</Tab>
-
-<Tab id="setup-project-1">
-
--   Use `yarn init` to initialize a project and enter the details for your project as you wish.
--   Then, install [ParcelJS](https://parceljs.org/getting-started/webapp/) and [100ms SDK](https://www.npmjs.com/package/@100mslive/hms-video-store) into your app like below
-
-    ```bash section=InstallingTheDependencies sectionIndex=1
-    yarn add --dev parcel
-    yarn add @100mslive/hms-video-store
-    ```
-
-</Tab>
+    </CH.Code>
 
 Now that the dependencies are installed, let's create basic source files for our video calling application. Let's create the files and folders in the below manner:
 
@@ -57,7 +44,7 @@ Now that the dependencies are installed, let's create basic source files for our
     └── styles.css
 ```
 
-<CH.Scrollycoding lineNumbers={true}>
+<CH.Scrollycoding>
 
 ### Initialize the SDK
 
@@ -80,7 +67,7 @@ Now, let's initialize all the HTML elements required to build the user interface
 
 <CH.Code>
 
-```jsx index.js focus=8:15
+```jsx index.js mark=8:15
 import { HMSReactiveStore } from '@100mslive/hms-video-store';
 
 const hmsManager = new HMSReactiveStore();
@@ -312,7 +299,7 @@ Let's include a way for people to leave the room as well. To leave the room, we 
 
 <CH.Code>
 
-```js index.js focus=17:29
+```js index.js mark=17:29
 import { HMSReactiveStore } from '@100mslive/hms-video-store';
 
 const hmsManager = new HMSReactiveStore();
@@ -344,7 +331,7 @@ window.onunload = window.onbeforeunload = leaveRoom;
 leaveBtn.onclick = leaveRoom;
 ```
 
-```html index.html focus=13:22
+```html index.html mark=13:22
 ```
 
 </CH.Code>
@@ -360,7 +347,7 @@ Let us next add a way to show a tile for every participant in the room. We'll ne
 
 <CH.Code>
 
-```js index.js focus=1[28:38],31:62
+```js index.js mark=1[28:38],31:62
 import { HMSReactiveStore, selectPeers } from '@100mslive/hms-video-store';
 
 const hmsManager = new HMSReactiveStore();
@@ -438,7 +425,7 @@ Let's add 2 buttons on the bottom of the page and call the [setLocalAudioEnabled
 
 <CH.Code>
 
-```js index.js focus=69:81
+```js index.js mark=69:81
 import {
     HMSReactiveStore,
     selectPeers,

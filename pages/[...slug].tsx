@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import fs from 'fs';
 import path from 'path';
-// import mdxPrism from 'mdx-prism';
+import mdxPrism from 'mdx-prism';
 import EditFile from '@/components/EditFile';
 import components from '@/components/MDXComponents';
 import Pagination from '@/components/Pagination';
@@ -26,7 +26,6 @@ import remarkA11yEmoji from '@fec/remark-a11y-emoji';
 import { MDXProvider, useMDXComponents } from '@mdx-js/react';
 import { remarkCodeHike } from '@code-hike/mdx';
 import theme from 'shiki/themes/github-dark.json';
-import rehypeShikiReloaded from 'rehype-shiki-reloaded';
 
 type NavRoute = {
     url: string;
@@ -230,15 +229,7 @@ export const getStaticProps = async ({ params }) => {
                 remarkA11yEmoji,
                 // imagePlugin,
                 remarkCodeHeader,
-                withTableofContents,
-                [
-                    remarkCodeHike,
-                    {
-                        theme,
-                        lineNumbers: false,
-                        staticMediaQuery: '(max-width: 1333px)'
-                    }
-                ]
+                withTableofContents
             ];
             options.rehypePlugins = [
                 ...(options.rehypePlugins ?? []),
@@ -254,10 +245,21 @@ export const getStaticProps = async ({ params }) => {
                         ]
                     }
                 ],
-                rehypeShikiReloaded
-                // mdxPrism
             ];
             options.providerImportSource = '@mdx-js/react';
+
+            if (params.slug[3] === 'javascript-quickstart') {
+                options.remarkPlugins.push([
+                    remarkCodeHike,
+                    {
+                        theme,
+                        lineNumbers: false,
+                        staticMediaQuery: '(max-width: 1333px)'
+                    }
+                ]);
+            } else {
+                options.rehypePlugins.push(mdxPrism);
+            }
             return options;
         }
     });
