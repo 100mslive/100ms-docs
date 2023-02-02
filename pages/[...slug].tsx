@@ -248,7 +248,7 @@ export const getStaticProps = async ({ params }) => {
             ];
             options.providerImportSource = '@mdx-js/react';
 
-            if (params.slug[3] === 'javascript-quickstart') {
+            if (params.slug[3] === 'javascript-quickstart-beta') {
                 options.remarkPlugins.push([
                     remarkCodeHike,
                     {
@@ -270,7 +270,7 @@ export const getStaticProps = async ({ params }) => {
             nav: { [currentDocSlug]: nav[currentDocSlug] },
             source: code, // { compiledSource: mdxSource.compiledSource },
             frontMatter: frontmatter,
-            showToc: !(params.slug[3] ?? '').endsWith('quickstart')
+            showToc: !(params.slug[3] ?? '').endsWith('quickstart-beta')
         }
     };
 };
