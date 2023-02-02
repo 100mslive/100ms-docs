@@ -224,7 +224,7 @@ const sdkItems = {
         { id: 5, link: '/ios/v2/changelog/release-notes' }
     ],
     flutter: [
-        { id: 1, link: '/flutter/v2/guides/quickstart' },
+        { id: 1, link: '/flutter/v2/get-started/quickstart' },
         {
             id: 3,
             link: 'https://github.com/100mslive/100ms-flutter/tree/main/example'
@@ -236,7 +236,7 @@ const sdkItems = {
         { id: 5, link: '/flutter/v2/changelog/release-notes' }
     ],
     reactNative: [
-        { id: 1, link: '/react-native/v2/guides/quickstart' },
+        { id: 1, link: '/react-native/v2/get-started/quickstart' },
         { id: 3, link: 'https://github.com/100mslive/react-native-hms' },
         { id: 4, link: '/api-reference/react-native/v2/modules.html' },
         { id: 5, link: '/react-native/v2/changelog/release-notes' }
