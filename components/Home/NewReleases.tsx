@@ -49,7 +49,7 @@ const ReleaseItem = ({ platform, version, date }) => (
     <Flex gap="2" css={{ color: '$textHighEmp' }}>
         {SdkList[platform].icon}
         <Box>
-            <Link href={''}>
+            <Link href={SdkList[platform].link}>
                 <a>
                     <Text variant="sm" css={{ color: '$primaryLight' }}>
                         {version} / {platform}
@@ -70,14 +70,20 @@ const ReleaseItem = ({ platform, version, date }) => (
 );
 
 const NewReleases = () => (
-    <Box>
+    <Box css={{ maxWidth: '500px', w: '100%' }}>
         <Text variant="h6" css={{ color: '$textHighEmp', mt: '0' }}>
             New Releases
         </Text>
         <Text variant="sm" css={{ color: '$textMedEmp', mt: '$2', mb: '$10' }}>
             Latest SDK releases from the team with release notes{' '}
         </Text>
-        <Box css={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridColumnGap: '60px' }}>
+        <Box
+            css={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gridColumnGap: '60px',
+                '@sm': { gridColumnGap: '2rem' }
+            }}>
             {releases.map((release) => (
                 <ReleaseItem key={release.version} {...release} />
             ))}

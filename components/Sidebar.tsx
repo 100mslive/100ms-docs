@@ -235,9 +235,11 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
             ) : null}
             <style jsx>{`
                 .sidebar {
+                    z-index: 20;
                     padding-bottom: 32px;
+                    background-color: var(--docs_bg_content);
                     display: flex;
-                    width: ${SIDEBAR_WIDTH};
+                    min-width: ${SIDEBAR_WIDTH};
                     flex-direction: column;
                     align-items: stretch;
                     height: calc(100vh - 136px);
@@ -277,11 +279,11 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                     text-decoration: none;
                 }
 
-                @media screen and (max-width: 768px) {
+                @media screen and (max-width: ${baseViewOnly ? '1024px' : '768px'}) {
                     .sidebar {
                         position: absolute;
                         width: 100vw;
-                        top: 2.5rem;
+                        top: ${baseViewOnly ? '1rem' : '2.5rem'};
                         display: ${menu ? 'flex' : 'none'};
                         min-height: 100vh;
                     }

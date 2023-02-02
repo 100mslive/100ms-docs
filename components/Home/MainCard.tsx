@@ -59,7 +59,13 @@ const MainCard = () => (
             background: MAIN_GRADIENT,
             border: '1px solid',
             borderColor: '$borderDefault',
-            borderRadius: '$2'
+            borderRadius: '$2',
+            '@lg': {
+                gap: '$10'
+            },
+            '@md': {
+                flexDirection: 'column'
+            }
         }}>
         <Flex direction="column" justify="between">
             <Box>
@@ -86,7 +92,13 @@ const MainCard = () => (
         <Box
             css={{
                 width: '1.5px',
-                backgroundColor: '$surfaceLight'
+                my: '0',
+                backgroundColor: '$surfaceLight',
+                '@md': {
+                    width: '100%',
+                    height: '1px',
+                    my: '$12'
+                }
             }}
         />
         <Box>

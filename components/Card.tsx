@@ -25,7 +25,11 @@ const Card: React.FC<CardProps> = ({ icon, title, link, subText }) => (
             maxWidth: '21rem',
             overflow: 'clip',
             cursor: 'pointer',
-            background: MAIN_GRADIENT
+            background: MAIN_GRADIENT,
+            '@md': {
+                maxWidth: '100%',
+                w: '100%'
+            }
         }}>
         <Box>
             <Flex css={{ color: '$textHighEmp', gap: '$2', m: '$10', mb: '$6' }}>

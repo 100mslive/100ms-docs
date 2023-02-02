@@ -71,16 +71,17 @@ const Homepage = ({ allNav }) => {
                     />
 
                     <Flex justify="center" css={{ mx: 'auto' }}>
-                        
                         <Sidebar menuState={menuState} nav={{}} allNav={allNav} />
-
                         <Box
                             css={{
                                 maxWidth: CONTENT_WIDTH,
                                 p: '$12',
                                 border: '1px solid',
                                 borderColor: '$borderDefault',
-                                borderRight: 'none'
+                                borderRight: 'none',
+                                '@sm': {
+                                    p: '$10'
+                                }
                             }}>
                             <Text variant="h4" css={{ color: '$textHighEmp' }}>
                                 100ms Documentation
@@ -95,7 +96,9 @@ const Homepage = ({ allNav }) => {
 
                             <MainCard />
 
-                            <Flex justify="between" css={{ mt: '$12', flexWrap: 'wrap' }}>
+                            <Flex
+                                justify="between"
+                                css={{ mt: '$12', flexWrap: 'wrap', gap: '$10' }}>
                                 {cards.map((card) => (
                                     <Card key={card.link} {...card} />
                                 ))}
@@ -111,12 +114,23 @@ const Homepage = ({ allNav }) => {
                                 }}
                             />
 
-                            <Flex justify="between">
+                            <Flex
+                                justify="between"
+                                css={{
+                                    flexDirection: 'row',
+                                    '@lg': { flexDirection: 'column' }
+                                }}>
                                 <PopularGuides />
                                 <Box
                                     css={{
                                         width: '1.5px',
-                                        backgroundColor: '$surfaceLight'
+                                        my: '0',
+                                        backgroundColor: '$surfaceLight',
+                                        '@lg': {
+                                            width: '100%',
+                                            height: '1px',
+                                            my: '$12'
+                                        }
                                     }}
                                 />
                                 <NewReleases />
