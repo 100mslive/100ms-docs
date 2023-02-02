@@ -1,17 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import {
-    AndroidIcon,
-    AppleIcon,
-    DividerIcon,
-    FlutterWIthColourIcon,
-    JavascriptIcon,
-    LayersIcon,
-    FilesIcon,
-    ReactIcon
-} from '@100mslive/react-icons';
-import { Box, Button, Flex, Text } from '@100mslive/react-ui';
+import { LayersIcon } from '@100mslive/react-icons';
+import { Box, Flex, Text } from '@100mslive/react-ui';
 import Header from 'components/Header';
 import Sidebar from '@/components/Sidebar';
 import MainCard from '@/components/Home/MainCard';
@@ -72,70 +62,72 @@ const Homepage = ({ allNav }) => {
 
                     <Flex justify="center" css={{ mx: 'auto' }}>
                         <Sidebar menuState={menuState} nav={{}} allNav={allNav} />
-                        <Box
-                            css={{
-                                maxWidth: CONTENT_WIDTH,
-                                p: '$12',
-                                border: '1px solid',
-                                borderColor: '$borderDefault',
-                                borderRight: 'none',
-                                '@sm': {
-                                    p: '$10'
-                                }
-                            }}>
-                            <Text variant="h4" css={{ color: '$textHighEmp' }}>
-                                100ms Documentation
-                            </Text>
-
-                            <Text css={{ color: '$textMedEmp', mt: '$2' }}>
-                                Welcome to Docs. With the 100ms SDK, you can easily incorporate live
-                                audio and video capabilities into your own projects,
-                                <br /> such as building virtual meetings and video conferencing
-                                applications
-                            </Text>
-
-                            <MainCard />
-
-                            <Flex
-                                justify="between"
-                                css={{ mt: '$12', flexWrap: 'wrap', gap: '$10' }}>
-                                {cards.map((card) => (
-                                    <Card key={card.link} {...card} />
-                                ))}
-                            </Flex>
-
+                        {!menu ? (
                             <Box
                                 css={{
-                                    height: '1px',
-                                    width: '100%',
-                                    my: '$12',
-                                    borderTop: '1px solid',
-                                    borderColor: '$borderDefault'
-                                }}
-                            />
-
-                            <Flex
-                                justify="between"
-                                css={{
-                                    flexDirection: 'row',
-                                    '@lg': { flexDirection: 'column' }
+                                    maxWidth: CONTENT_WIDTH,
+                                    p: '$12',
+                                    border: '1px solid',
+                                    borderColor: '$borderDefault',
+                                    borderRight: 'none',
+                                    '@sm': {
+                                        p: '$10'
+                                    }
                                 }}>
-                                <PopularGuides />
+                                <Text variant="h4" css={{ color: '$textHighEmp' }}>
+                                    100ms Documentation
+                                </Text>
+
+                                <Text css={{ color: '$textMedEmp', mt: '$2' }}>
+                                    Welcome to Docs. With the 100ms SDK, you can easily incorporate
+                                    live audio and video capabilities into your own projects,
+                                    <br /> such as building virtual meetings and video conferencing
+                                    applications
+                                </Text>
+
+                                <MainCard />
+
+                                <Flex
+                                    justify="between"
+                                    css={{ mt: '$12', flexWrap: 'wrap', gap: '$10' }}>
+                                    {cards.map((card) => (
+                                        <Card key={card.link} {...card} />
+                                    ))}
+                                </Flex>
+
                                 <Box
                                     css={{
-                                        width: '1.5px',
-                                        my: '0',
-                                        backgroundColor: '$surfaceLight',
-                                        '@lg': {
-                                            width: '100%',
-                                            height: '1px',
-                                            my: '$12'
-                                        }
+                                        height: '1px',
+                                        width: '100%',
+                                        my: '$12',
+                                        borderTop: '1px solid',
+                                        borderColor: '$borderDefault'
                                     }}
                                 />
-                                <NewReleases />
-                            </Flex>
-                        </Box>
+
+                                <Flex
+                                    justify="between"
+                                    css={{
+                                        flexDirection: 'row',
+                                        '@lg': { flexDirection: 'column' }
+                                    }}>
+                                    <PopularGuides />
+                                    <Box
+                                        css={{
+                                            width: '1.5px',
+                                            my: '0',
+                                            backgroundColor: '$surfaceLight',
+                                            '@lg': {
+                                                width: '100%',
+                                                height: '1px',
+                                                my: '$12'
+                                            }
+                                        }}
+                                    />
+                                    <NewReleases />
+                                </Flex>
+                            </Box>
+                        ) : null}
                     </Flex>
                     <Footer css={{ backgroundColor: 'var(--docs_bg_footer)' }} />
                 </>

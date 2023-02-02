@@ -285,12 +285,13 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                         width: 100vw;
                         top: ${baseViewOnly ? '1rem' : '2.5rem'};
                         display: ${menu ? 'flex' : 'none'};
-                        min-height: 100vh;
+                        min-height: ${baseViewOnly ? '100%' : '100vh'};
                     }
 
                     .page {
-                        top: 2.5rem;
-                        width: 100vw;
+                        top: 0.5rem;
+                        width: 100vw;                
+                        max-height: 100vh;    
                     }
                 }
             `}</style>

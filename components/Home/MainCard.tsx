@@ -64,7 +64,9 @@ const MainCard = () => (
                 gap: '$10'
             },
             '@md': {
-                flexDirection: 'column'
+                flexDirection: 'column',
+                p: '$8',
+                gap: '0'
             }
         }}>
         <Flex direction="column" justify="between">
