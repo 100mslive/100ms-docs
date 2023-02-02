@@ -14,7 +14,7 @@ The latest HMSVideoView SDK version is:
 <AndroidSdkVersionShield />
 
 
-```json build.gradle
+```json{}:build.gradle section=AddSDKDependencies sectionIndex=1
 dependencies {
  def hmsVersion = "x.x.x"
  implementation "live.100ms:android-sdk:$hmsVersion"    // Essential base sdk
@@ -116,7 +116,7 @@ Complete source code is available [here](https://github.com/100mslive/hello-worl
 
 `stopHMSVideoView` will remove the attched video track.
 
-```kotlin PeerViewHolder.kt
+```kotlin:PeerViewHolder.kt
 class PeerViewHolder(view: View, private val getItem: (Int) -> TrackPeerMap) :
     RecyclerView.ViewHolder(view) {
 
@@ -161,7 +161,7 @@ class PeerViewHolder(view: View, private val getItem: (Int) -> TrackPeerMap) :
 #### PeerAdapter
 
 
-```kotlin PeerAdapter.kt
+```kotlin:PeerAdapter.kt
 
     override fun onBindViewHolder(holder: PeerViewHolder, position: Int) {
         getItem(position)?.let {

@@ -63,7 +63,7 @@ The latest SDK version is:
 
 <Tab id='sdk-imports-0'>
 
-```json settings.gradle mark=5:8
+```json{5-8}:settings.gradle section=AddSDKDependencies sectionIndex=1
 dependencies {
  // See the version in the badge above.
  // There are separate libraries for the sdk, virtual background and hls-player-stats.
@@ -85,7 +85,7 @@ There is one extra step to use the jitpack libraries.
 
 You can open it in Android Studio by double tapping shift and typing `settings.gradle`.
 
-```json settings.gradle mark=7
+```json{7}:settings.gradle section=AddSDKDependencies sectionIndex=1
 dependencyResolutionManagement {
  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
  repositories {
@@ -102,7 +102,7 @@ include ':app'
 
 -   Add the 100ms sdk dependency to your app-level `build.gradle`
 
-```json build.gradle mark=2,4:6
+```json{2,4-6}:build.gradle section=AddSDKDependencies sectionIndex=2
 dependencies {
  def hmsVersion = "x.x.x"
  // See the version in the jitpack badge above.
@@ -137,7 +137,7 @@ The 100ms server will respond with an auth token like this `{"token":"some-token
 
 Camera, Recording Audio and Internet permissions are required. Add them to your manifest.
 
-```xml AndroidManifest.xml
+```xml:AndroidManifest.xml section=Permissions sectionIndex=1
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -153,7 +153,7 @@ Instantiate the HMSSDK like this:
 
 <Tab id='instanstiate-hmssdk-0'>
 
-```kotlin
+```kotlin section=InstantiateHMSSDK sectionIndex=1 tab=Kotlin
     val hmsSdk = HMSSDK
         .Builder(application)
         .build()
@@ -163,7 +163,7 @@ Instantiate the HMSSDK like this:
 
 <Tab id='instanstiate-hmssdk-1'>
 
-```java
+```java section=InstantiateHMSSDK sectionIndex=1 tab=Java
  HMSSDK hmssdk = new HMSSDK
                         .Builder(application)
                         .build();
@@ -191,7 +191,7 @@ The main ones to know are:
 
 <Tab id='join-call-0'>
 
-```kotlin
+```kotlin section=JoinVideoCall sectionIndex=1 tab=Kotlin
 
 val config = HMSConfig("user display name", authToken)
 
@@ -212,7 +212,7 @@ class MyHmsUpdateListener : HMSUpdateListener {
 
 <Tab id='join-call-1'>
 
-```java
+```java section=JoinVideoCall sectionIndex=1 tab=Java
 
 HMSConfig config = new HMSConfig("user display name", authToken);
 
@@ -258,7 +258,7 @@ The adapter data should be a list of class that has both the peer and the track 
 
 Your layout xml for a peer video would need to have an `org.webrtc.SurfaceViewRenderer`
 
-```xml
+```xml section=ShowingVideos sectionIndex=1
 
 <org.webrtc.SurfaceViewRenderer
  android:id="@+id/videoSurfaceView"

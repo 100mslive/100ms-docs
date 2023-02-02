@@ -258,7 +258,7 @@ recipientType: Will be `HMSMessageRecipientType.BROADCAST` for a message being s
 A good way to map this to your own app is a class like `Recipient` below. You could choose to copy this file into your code for the mapping.
 
 
-```kotlin RecipientMapping.kt mark=17:23
+```kotlin{17-23}:RecipientMapping.kt
 
 sealed class Recipient {
     
@@ -288,7 +288,7 @@ sealed class Recipient {
 
 So that if you need to convert the message to your own class you can set the recipient like:
 
-```kotlin mark=7
+```kotlin{7}
 override fun onMessageReceived(message: HMSMessage) {
     ChatMessage(
         message.sender.name,

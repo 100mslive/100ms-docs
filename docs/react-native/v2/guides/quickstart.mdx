@@ -46,7 +46,7 @@ Once you have the prerequisites, follow the steps below to create a React Native
 2. Run the below command to create React Native app:
    ​
 
-```bash
+```bash section=CreateRnApp
 npx react-native init HMSSampleApp --version 0.68.5 --npm && cd ./HMSSampleApp
 ```
 
@@ -61,7 +61,7 @@ npx react-native init HMSSampleApp --version 0.68.5 --npm && cd ./HMSSampleApp
 
     <Tab id="test-run-sample-app-0">
 
-    ```bash
+    ```bash section=BuildApp sectionIndex=1 tab=iOS
     npx react-native run-ios --simulator="iPhone 14"
     ```
 
@@ -69,7 +69,7 @@ npx react-native init HMSSampleApp --version 0.68.5 --npm && cd ./HMSSampleApp
 
     <Tab id="test-run-sample-app-1">
 
-    ```bash
+    ```bash section=BuildApp sectionIndex=1 tab=Android
     npx react-native run-android
     ```
 
@@ -78,7 +78,7 @@ npx react-native init HMSSampleApp --version 0.68.5 --npm && cd ./HMSSampleApp
     b. Start Metro Bundler if it is not already started
     ​
 
-    ```bash
+    ```bash section=BuildApp sectionIndex=2
     npx react-native start
     ```
 
@@ -99,7 +99,7 @@ npm install --save @100mslive/react-native-hms react-native-permissions
 
 Now that your project setup is complete, let's replace the code in the `App.js` file with the complete code sample below -
 
-```js
+```js section=completeCodeExample
 import React, { useState, useRef, useEffect } from 'react';
 import {
     SafeAreaView,
@@ -733,7 +733,7 @@ Follow the instructions in one of the tabs below based on the target platform yo
 Add the below snippet in the `info.plist` file -
 ​
 
-```xml
+```xml section=ForIOSPermissions sectionIndex=1
 <key>NSCameraUsageDescription</key>
 <string>Please allow access to Camera to enable video conferencing</string>
 
@@ -747,7 +747,7 @@ Add the below snippet in the `info.plist` file -
 Add the below snippet in the `ios/Podfile` file -
 ​
 
-```json mark=3:6
+```json{3-6}
 target 'HMSSampleApp' do
 ...
   permissions_path = '../node_modules/react-native-permissions/ios'
@@ -761,7 +761,7 @@ end
 2. Change ios target platform version to '13.0' in the `ios/Podfile` file
    ​
 
-```json mark=4
+```json{4}
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
@@ -776,14 +776,14 @@ Once you've made the above changes, your app is ready for testing. You can build
 1. Install pods
    ​
 
-```bash
+```bash section=RunApp
 cd ios && pod install && cd ../
 ```
 
 2. Build the App
    ​
 
-```bash
+```bash section=InstallPods
 npx react-native run-ios --simulator="iPhone 14"
 ```
 
@@ -807,7 +807,7 @@ Now, after you click `join`, you should be able to see yourself (iOS simulator d
 1. Allow camera, recording audio and internet permissions by adding the below snippet to the `AndroidManifest.xml` file (at the application tag level).
    ​
 
-```xml
+```xml section=androidPermissions
 <uses-feature android:name="android.hardware.camera"/>
 
 <uses-feature android:name="android.hardware.camera.autofocus"/>
@@ -834,7 +834,7 @@ Now, after you click `join`, you should be able to see yourself (iOS simulator d
 2. Change `minSdkVersion` to 21 in the `android/build.gradle` file
    ​
 
-```json mark=4
+```json{4}
 buildscript {
   ext {
     ...
@@ -851,14 +851,14 @@ Once you've made the above changes, your app is ready for testing. You can build
 1. Build the App
    ​
 
-```bash
+```bash section=RunApp sectionIndex=1
 npx react-native run-android
 ```
 
 2. Start Metro Bundler if it is not already started
    ​
 
-```bash
+```bash section=RunApp sectionIndex=2
 npx react-native start
 ```
 
@@ -892,7 +892,7 @@ We need permission from the user to access the media from the user's device. We 
 
 Please ensure to add permissions declarations in the `AndroidManifest.xml` file for Android and `info.plist` file for iOS. Check [test the app section](#test-the-app) for more information.
 
-```js
+```js section=HandleDevicePermissions sectionIndex=1
 import {PERMISSIONS, requestMultiple, RESULTS} from 'react-native-permissions';
 
 export const checkPermissions = async (permissions) => {
@@ -952,7 +952,7 @@ In the above code snippet, first, we have `checkPermissions` function which uses
 
 This section will help you create the join screen user interface. To keep it simple for the quickstart, we have not created many UI elements. You can refer to the [sample app implementation](https://github.com/100mslive/react-native-hms/blob/develop/sample-apps/rn-quickstart-app/src/screens/Welcome/index.tsx) for a complete Preview/Join user interface.
 
-```js
+```js section=ImplementJoinScreen sectionIndex=1
 const HomeScreen = ({ navigate }) => {
   // Function to handle "Join Room" button press
   const handleJoinPress = async () => {
@@ -981,7 +981,7 @@ In the above code snippet, We are implementing UI for "Join Room" button in Home
 
 After requesting required Audio & Video permissions from the user, we are ready to initialize the 100ms SDK to subscribe to updates.
 
-```js
+```js section=InitializingSdk sectionIndex=1
 // Effect to handle HMSSDK initialization and Listeners Setup
 useEffect(() => {
   const joinRoom = async () => {
@@ -1022,7 +1022,7 @@ Our application must subscribe to these events to get the updates.
 
 Check out the [Event Listeners](../features/event-listeners) docs to know more about events emitted by the SDK.
 
-```js
+```js section=JoinAndPeerUpdates sectionIndex=1
 // Subscribing to Join updates
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoinSuccess);
 
@@ -1094,7 +1094,7 @@ The 100ms SDK emits `HMSUpdateListenerActions.ON_TRACK_UPDATE` event when any ch
 
 Check out the [Event Listeners](../features/event-listeners) docs to know more about events emitted by the SDK.
 
-```js
+```js section=TrackUpdates sectionIndex=1
 // Subscribing to Track updates
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_TRACK_UPDATE, onTrackListener);
 
@@ -1171,7 +1171,7 @@ The 100ms SDK emits various other events to handle different scenarios in the ap
 
 Check out the [Event Listeners](../features/event-listeners) docs to know more about events emitted by the SDK.
 
-```js
+```js section=OtherUpdates sectionIndex=1
 // Subscribing to Error updates
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onErrorListener);
 
@@ -1190,7 +1190,7 @@ After adding all required event listeners, you need to create an `HMSConfig` ins
 
 You can learn more about joining the Room from [Join Room](../features/join) docs.
 
-```js
+```js section=JoinRoom sectionIndex=1
 // Effect to handle HMSSDK initialization and Listeners Setup
 useEffect(() => {
   const joinRoom = async () => {
@@ -1227,7 +1227,7 @@ In above code snippet, we have the same `useEffect` hook which initializes the `
 
 We are taking use of `PeerTrackNode` class to render video and avatar of peers. Let's take a look at interface for `PeerTrackNode` class -
 
-```js
+```js section=RenderVideoTile sectionIndex=1
 interface PeerTrackNode {
     id: string; // Unique ID for each peer and track combination
     peer: HMSPeer; // `HMSPeer` object of peer
@@ -1239,7 +1239,7 @@ To display a video track, you can simply get the `trackId` of the Video Tracks i
 
 Check the [Render Video](../features/render-video) guide for more information.
 
-```js
+```js section=RenderVideoTile sectionIndex=2
 // `_renderItem` function returns a Tile UI for each item which is `PeerTrackNode` object
 const _renderItem = ({ item }) => {
     const { peer, track } = item;
@@ -1300,7 +1300,7 @@ In the above code snippet, we have `_renderItem` function which returns Tile UI.
 
 You can create a **list of `PeerTrackNode` objects** (mentioned in [Render Video in a Tile](#render-video-in-a-tile) step) for each Peer and Track combination and then use this list to render Tiles for all the `PeerTrackNodes` objects. We recommend using [FlatList](https://reactnative.dev/docs/flatlist) component to render multiple Tiles. This ensures uniques Tiles are created for each `trackId`.
 
-```js
+```js section=RenderMultipleTiles sectionIndex=1
 const [peerTrackNodes, setPeerTrackNodes] = useState([]); // Use this state to render Peer Tiles
 
 ...
@@ -1335,7 +1335,7 @@ You can leave the meeting once you are done with it. To leave the meeting you ca
 
 You can learn more about leave the room in [Leave Room](../features/leave) docs.
 
-```js
+```js section=LeaveRoom sectionIndex=1
 const handleRoomLeave = async () => {
   try {
     const hmsInstance = hmsInstanceRef.current;
