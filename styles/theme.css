@@ -608,7 +608,21 @@ pre p {
     margin: 0;
 }
 
-pre code {
+code:not(.ch-code-scroll-parent) {
+    display: inline;
+    color: var(--docs_text_primary);
+    background-color: var(--docs_bg_code_highlight);
+    border: 1px solid var(--docs_border_strong);
+    border-radius: var(--docs_border_radius_xs);
+    font-family: 'Source Code Pro', menlo, monospace;
+    font-size: 0.875rem;
+    font-weight: 400;
+    white-space: pre-wrap;
+    padding: 2px 4px;
+}
+
+
+pre code:not(.ch-code-scroll-parent) {
     border: none;
     border-radius: 0;
     font-family: 'Söhne Mono', menlo, monospace;
@@ -650,19 +664,6 @@ pre+h2 {
 
 .note+h2 {
     margin-top: 32px;
-}
-
-code:not(.ch-code-scroll-parent) {
-    display: inline;
-    color: var(--docs_text_primary);
-    background-color: var(--docs_bg_code_highlight);
-    border: 1px solid var(--docs_border_strong);
-    border-radius: var(--docs_border_radius_xs);
-    font-family: 'Source Code Pro', menlo, monospace;
-    font-size: 0.875rem;
-    font-weight: 400;
-    white-space: pre-wrap;
-    padding: 2px 4px;
 }
 
 hr {
