@@ -507,7 +507,208 @@ const nextConfig = {
                 destination:
                     '/android/v2/how--to-guides/extend-capabilities/plugins/virtual-background',
                 permanent: true
-            }
+            },
+            {
+                source: '/flutter/v2/debugging/faq',
+                destination: '/flutter/v2/foundation/faq',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/guides/faq',
+                destination: '/react-native/v2/foundation/faq',
+                permanent: true
+            },
+            {
+                source: '/android/v2/foundation/faq',
+                destination: '/android/v2/how--to-guides/debugging/faq',
+                permanent: true
+            },
+            {
+                // https://www.markhneedham.com/blog/2022/07/27/vercel-redirect-wildcards-nested-paths/
+                source: '/ios/v2/guides:path(.*)',
+                destination: '/ios/v2/get-started:path',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/error-handling',
+                destination: '/ios/v2/how--to-guides/debugging/error-handling',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/capture-snapshot',
+                destination: '/ios/v2/how--to-guides/capture-frame/capture-snapshot',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/plugins/local-camera-capture',
+                destination: '/ios/v2/how--to-guides/capture-frame/local-camera-capture',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/tap-to-focus',
+                destination: '/ios/v2/how--to-guides/configure-your-device/camera/tap-to-focus',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/audio-output-routing',
+                destination: '/ios/v2/how--to-guides/configure-your-device/speaker/audio-output-routing',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/debugging/bitcode',
+                destination: '/ios/v2/how--to-guides/debugging/bitcode',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/foundation/faq',
+                destination: '/ios/v2/how--to-guides/debugging/faq',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/plugins/custom-video-plugins',
+                destination: '/ios/v2/how--to-guides/extend-capabilities/plugins/custom-video-plugins',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/plugins/virtual-background',
+                destination: '/ios/v2/how--to-guides/extend-capabilities/plugins/virtual-background',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/interruption-handling',
+                destination: '/ios/v2/how--to-guides/handle-interruptions/interruption-handling',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/migration-guides/03to04',
+                destination: '/ios/v2/how--to-guides/install-the-sdk/03to04',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/integration',
+                destination: '/ios/v2/how--to-guides/install-the-sdk/integration',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/change-role',
+                destination: '/ios/v2/how--to-guides/interact-with-room/peer/change-role',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/change-user-name',
+                destination: '/ios/v2/how--to-guides/interact-with-room/peer/change-user-name',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/advanced-features/peer-metadata-update',
+                destination: '/ios/v2/how--to-guides/interact-with-room/peer/peer-metadata-update',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/remove-peer',
+                destination: '/ios/v2/how--to-guides/interact-with-room/peer/remove-peer',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/end-room',
+                destination: '/ios/v2/how--to-guides/interact-with-room/room/end-room',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/remote-mute',
+                destination: '/ios/v2/how--to-guides/interact-with-room/track/remote-mute',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/call-stats',
+                destination: '/ios/v2/how--to-guides/measure-network-quality-and-performance/call-stats',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/hls-stats',
+                destination: '/ios/v2/how--to-guides/measure-network-quality-and-performance/hls-stats',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/network-quality-reports',
+                destination: '/ios/v2/how--to-guides/measure-network-quality-and-performance/',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/advanced-features/hls-timed-metadata',
+                destination: '/ios/v2/how--to-guides/record-and-live-stream/hls/hls-timed-metadata',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/hls',
+                destination: '/ios/v2/how--to-guides/record-and-live-stream/hls/hls',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/rtmp-recording',
+                destination: '/ios/v2/how--to-guides/record-and-live-stream/rtmp-recording',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/audio-share',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/audio-share',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/background-modes',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/background-modes',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/callkit',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/callkit',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/chat',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/chat',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/join',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/join',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/leave',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/leave',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/mute',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/mute',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/preview',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/preview',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/render-video',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/render-video/overview',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/pip-mode',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/render-video/pip-mode',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/advanced-features/simulcast',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/render-video/simulcast',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/features/screen-share',
+                destination: '/ios/v2/how--to-guides/set-up-video-conferencing/screen-share',
+                permanent: true
+            },
         ];
     },
     eslint: {
