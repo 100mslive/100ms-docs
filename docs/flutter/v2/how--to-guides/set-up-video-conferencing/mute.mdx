@@ -9,10 +9,8 @@ Mute is something that applies to both audio and video. When you mute audio, you
 
 This example shows implementation of three methods namely :
 
-### 1. switchAudio : To switch local peer's audio on/off.
-
-### 2. switchVideo : To switch local peer's video on/off.
-
+### 1. toggleMicMuteState : To switch local peer's audio on/off.
+### 2. toggleCameraMuteState : To switch local peer's video on/off.
 ### 3. switchCamera: Switch camera to the front or rear mode
 
 Let's look at their implementation:
@@ -22,15 +20,11 @@ class Meeting implements HMSUpdateListener,HMSActionResultListener{
 
 ...
 /// To switch local peer's audio on/off.
-/// Pass the bool value to [isOn] to change the current audio status
-/// [isOn] : Pass the current audio status, that is, true if unmuted and false if muted currently
-hmsSDK.switchAudio(isOn: true); //This mutes local peer(you) audio
+hmsSDK.toggleMicMuteState(); //This toggles the current mic status(mute/unmute)
 
 
 /// To switch local peer's video on/off.
-/// Pass the bool value to [isOn] to change the current video status
-/// [isOn] : Pass the current video status, that is, true if unmuted and false if muted currently
-hmsSDK.switchVideo(isOn: true); //This mutes local peer(you) video
+hmsSDK.toggleCameraMuteState(); //This toggles current camera status(mute/unmute)
 
 /// Switch camera from front or rear mode
 hmsSDK.switchCamera();
@@ -40,7 +34,95 @@ hmsSDK.switchCamera();
 }
 ```
 
-## Mute Remote peers locally
+## How to mute microphone 
+
+Let's look at how we can mute microphone:
+
+<div className="steps-container">
+
+### Call toggleMicMuteState on HMSSDK instance
+
+To mute microphone we need to call `toggleMicMuteState`
+
+```dart
+class Meeting implements HMSUpdateListener,HMSActionResultListener{
+
+...
+/// To switch local peer's audio on/off.
+hmsSDK.toggleMicMuteState(); //This toggles the current mic status(mute/unmute)
+...
+
+}
+```
+
+### Receive the onTrackUpdate with update type trackUnmuted
+
+After calling `toggleMicMuteState` we will receive `onTrackUpdate` with `HMSTrackUpdate.trackUnmuted` type 
+and track kind as `HMSTrackKind.kHMSTrackKindAudio`
+
+```dart
+class Meeting implements HMSUpdateListener,HMSActionResultListener{
+
+bool isMicOff = true;
+...
+@override
+void onTrackUpdate(
+    {required HMSTrack track,
+    required HMSTrackUpdate trackUpdate,
+    required HMSPeer peer}) {
+    
+        //To check mute/unmute status for local peer
+        if (peer.isLocal) {
+            if ((track.kind == HMSTrackKind.kHMSTrackKindAudio) &&
+                (track.source == "REGULAR") && (trackUpdate == HMSTrackUpdate.trackUnMuted)) {
+                //Here we will receive the trackUnmuted update for audio track of local peer.
+                //i.e. track.isMute will be false
+                isMicOff = track.isMute;
+            }
+            ...
+        }
+    }
+...
+
+}
+```
+
+</div>
+
+## How to get the current mute/unmute state
+
+To get the current mute/unmute state for local peer we will use local peer's `HMSTrack` object.
+
+```dart
+class Meeting implements HMSUpdateListener,HMSActionResultListener{
+
+bool isMicOff = false;
+bool isCameraOff = false;
+...
+@override
+void onTrackUpdate(
+    {required HMSTrack track,
+    required HMSTrackUpdate trackUpdate,
+    required HMSPeer peer}) {
+    
+        //To check mute/unmute status for local peer
+        if (peer.isLocal) {
+            if (track.kind == HMSTrackKind.kHMSTrackKindAudio &&
+                track.source == "REGULAR") {
+                isMicOff = track.isMute;
+            }
+            if (track.kind == HMSTrackKind.kHMSTrackKindVideo &&
+                track.source == "REGULAR") {
+                isCameraOff = track.isMute;
+            }
+        }
+    }
+...
+
+}
+```
+
+## Mute Remote peers locally 
 
 To mute peers all the peers for yourself `HMSSDK` provides dedicated methods `muteRoomAudioLocally` for audio and `muteRoomVideoLocally` for video. Execution
 of this method mutes audio and video only locally others will still be able to hear audio and video.

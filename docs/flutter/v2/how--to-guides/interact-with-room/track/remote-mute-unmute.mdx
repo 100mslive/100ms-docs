@@ -203,7 +203,7 @@ Mute callbacks are automatically applied to the receiver. No action is required.
 Let's turn the table now to what happens if a remote peer wishes to mute/unmute our audio/video.
 
 -   In case when remote peer mutes our audio/video `HMSSDK` performs it automatically without asking permission In another case, we get the `onChangeTrackStateRequest` if
-    we accept the request we need to call `switchVideo` or `switchAudio` according to the request.
+    we accept the request we need to call `toggleCameraMuteState` or `toggleMicMuteState` according to the request.
 
 Let's understand this with a diagram:
 
@@ -263,9 +263,9 @@ class Meeting implements HMSUpdateListener, HMSActionResultListener{
 
   public void checkTrack(HMSTrack track) {
     if(track.kind == HMSTrackType.kHMSTrackKindAudio) {
-        hmsSDK.switchAudio(isOn: false);
+        hmsSDK.toggleMicMuteState();
     } else if (track.kind == HMSTrackType.kHMSTrackKindVideo) {
-        hmsSDK.switchVideo(isOn: false);
+        hmsSDK.toggleCameraMuteState();
     }
   }
 
@@ -277,20 +277,18 @@ class Meeting implements HMSUpdateListener, HMSActionResultListener{
 }
 ```
 
-### PeerB calls switchAudio/switchVideo depending on the track kind
+### PeerB calls toggleMicMuteState/toggleCameraMuteState depending on the track kind
 
-If the track is an audio track then PeerB calls `switchAudio`
+If the track is an audio track then PeerB calls `toggleMicMuteState`
 
-```dart
-///[isOn] as false since it's an unmute request
-hmsSDK.switchAudio(isOn: false);
+```dart 
+hmsSDK.toggleMicMuteState();
 ```
 
-If the track is a video track then PeerB calls `switchVideo`
+If the track is a video track then PeerB calls `toggleCameraMuteState`
 
 ```dart
-///[isOn] as false since it's an unmute request
-hmsSDK.switchVideo(isOn: false);
+hmsSDK.toggleCameraMuteState();
 ```
 
 Now all the peers will receive an `onTrackUpdate` with the type as `trackUnmuted`
