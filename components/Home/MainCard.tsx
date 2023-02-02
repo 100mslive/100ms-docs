@@ -86,7 +86,6 @@ const MainCard = () => (
         <Box
             css={{
                 width: '1.5px',
-                height: 'auto',
                 backgroundColor: '$surfaceLight'
             }}
         />

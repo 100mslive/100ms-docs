@@ -16,6 +16,8 @@ import Header from 'components/Header';
 import Sidebar from '@/components/Sidebar';
 import MainCard from '@/components/Home/MainCard';
 import Card from '@/components/Card';
+import PopularGuides from '@/components/Home/PopularGuides';
+import NewReleases from '@/components/Home/NewReleases';
 import Footer from '@/components/Footer';
 import { getAllDocs, getNavfromDocs } from '@/lib/mdxUtils';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
@@ -64,12 +66,14 @@ const Homepage = ({ allNav }) => {
                     <Header
                         modal={modal}
                         setModal={setModal}
-                        showMobileMenu={false}
                         menuState={menuState}
                         showReference={false}
                     />
+
                     <Flex justify="center" css={{ mx: 'auto' }}>
+                        
                         <Sidebar menuState={menuState} nav={{}} allNav={allNav} />
+
                         <Box
                             css={{
                                 maxWidth: CONTENT_WIDTH,
@@ -101,49 +105,22 @@ const Homepage = ({ allNav }) => {
                                 css={{
                                     height: '1px',
                                     width: '100%',
-                                    mt: '$12',
-                                    mb: '$10',
+                                    my: '$12',
                                     borderTop: '1px solid',
                                     borderColor: '$borderDefault'
                                 }}
                             />
 
-                            <Box>
-                                <Text variant="h6" css={{ color: '$textHighEmp', mt: '0' }}>
-                                    Popular how-to guides
-                                </Text>
-                                <Text
-                                    variant="sm"
-                                    css={{ color: '$textMedEmp', mt: '$2', mb: '$10' }}>
-                                    Guides trending in popularity amongst other SDK consumers
-                                </Text>
-                                {guides.map((guide) => (
-                                    <Flex gap="2">
-                                        <FilesIcon style={{ marginTop: '0.25rem' }} />
-                                        <Box>
-                                            <Link href={guide.link}>
-                                                <a>
-                                                    <Text
-                                                        variant="sm"
-                                                        css={{ color: '$primaryLight' }}>
-                                                        {guide.title}
-                                                    </Text>
-                                                </a>
-                                            </Link>
-                                            <Text
-                                                variant="sm"
-                                                css={{
-                                                    color: '$textMedEmp',
-                                                    mt: '$2',
-                                                    mb: '$8',
-                                                    maxWidth: '1/3'
-                                                }}>
-                                                {guide.subText}
-                                            </Text>
-                                        </Box>
-                                    </Flex>
-                                ))}
-                            </Box>
+                            <Flex justify="between">
+                                <PopularGuides />
+                                <Box
+                                    css={{
+                                        width: '1.5px',
+                                        backgroundColor: '$surfaceLight'
+                                    }}
+                                />
+                                <NewReleases />
+                            </Flex>
                         </Box>
                     </Flex>
                     <Footer css={{ backgroundColor: 'var(--docs_bg_footer)' }} />
@@ -152,24 +129,6 @@ const Homepage = ({ allNav }) => {
         </>
     );
 };
-
-const guides = [
-    {
-        title: 'Authentication',
-        subText: 'Learn how to authenticate your rooms via tokens',
-        link: '/concepts/v2/concepts/security-and-tokens'
-    },
-    {
-        title: 'Hand Raise',
-        subText: 'Learn how to implement hand raise using peer meta data',
-        link: '/javascript/v2/how--to-guides/build-interactive-features/peer-metadata'
-    },
-    {
-        title: 'Breakout Rooms',
-        subText: 'Learn how to create breakout rooms using roles ',
-        link: '/concepts/v2/concepts/security-and-tokens'
-    }
-];
 
 export default Homepage;
 

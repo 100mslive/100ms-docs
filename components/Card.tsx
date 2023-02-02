@@ -45,7 +45,7 @@ const Card: React.FC<CardProps> = ({ icon, title, link, subText }) => (
             <Text variant="xs" css={{ color: '$primaryLight', fontWeight: '$semiBold' }}>
                 Read more
             </Text>
-            <ArrowRightIcon height="16px" width="16px" />
+            <ArrowRightIcon height="14px" width="14px" />
         </Flex>
     </Flex>
 );
