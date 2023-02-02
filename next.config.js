@@ -706,7 +706,7 @@ const nextConfig = {
                 permanent: true,
             },
             {
-                source: "react-native/v2/how--to-guides/features/audio-output-routing",
+                source: "/react-native/v2/how--to-guides/features/audio-output-routing",
                 destination: "/react-native/v2/how--to-guides/configure-your-device/speaker/audio-output-routing",
                 permanent: true,
             },
