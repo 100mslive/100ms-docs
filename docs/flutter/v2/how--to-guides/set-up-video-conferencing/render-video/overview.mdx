@@ -133,13 +133,25 @@ Generally true for local peer and false for a remote peers
 
 ### 4. disableAutoSimulcastLayerSelect
 
-HMSVideoView has an automatic simulcast layer selection capability which is enabled if adaptive bitrate is enabled. You can check more about it [here](../advanced-features/adaptive-bitrate).
+HMSVideoView has an automatic simulcast layer selection capability which is enabled if adaptive bitrate is enabled. You can check more about it [here](../../../foundation/adaptive-bitrate).
 
 It will select a layer that best matches the current view frame size and reacts to frame updates. In case manual layer selection is preferred set `disableAutoSimulcastLayerSelect` property to `true`. By default, the track layer is set to `high`.
 
 > Always pass the `Key` parameter to `HMSVideoView` with the unique Video Track's `trackId` value so that it can be disposed of and reset correctly during rebuilds.
 
-## Best Practices
+## Capture Snapshot
+
+You can capture a snapshot of the video stream of a local or remote peer's video. To capture a snapshot, you call captureSnapshot method on HMSVideoTrack instance to get a Uint8List containing a snapshot of the video stream. Know more about captureSnapshot [here](../capture-snapshot).
+
+```dart
+  HMSVideoTrack videoTrack;
+  ...
+
+  //Capture snapshot
+  Uint8List? bytes = await videoTrack.captureSnapshot();
+```
+
+## Best Practices 
 
 ### Dispose HMSVideoView to conserve bandwidth and cleanup elements
 
