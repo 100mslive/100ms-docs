@@ -403,9 +403,9 @@ Fetch the current room metadata from the server and populate it in store
 
 #### Parameters
 
-| Name     | Type                                                             |
-| :------- | :--------------------------------------------------------------- |
-| `config` | [`HMSConfig`](/api-reference/javascript/v2/interfaces/HMSConfig) |
+| Name     | Type                                                                           |
+| :------- | :----------------------------------------------------------------------------- |
+| `config` | [`HMSPreviewConfig`](/api-reference/javascript/v2/interfaces/HMSPreviewConfig) |
 
 #### Returns
 

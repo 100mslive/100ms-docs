@@ -61,6 +61,7 @@ title: Web SDK API Reference
 - [HMSPlaylistItemNotification](/api-reference/javascript/v2/interfaces/HMSPlaylistItemNotification)
 - [HMSPlaylistSelection](/api-reference/javascript/v2/interfaces/HMSPlaylistSelection)
 - [HMSPlaylistSelector](/api-reference/javascript/v2/interfaces/HMSPlaylistSelector)
+- [HMSPreviewConfig](/api-reference/javascript/v2/interfaces/HMSPreviewConfig)
 - [HMSPublishAllowed](/api-reference/javascript/v2/interfaces/HMSPublishAllowed)
 - [HMSRTMP](/api-reference/javascript/v2/interfaces/HMSRTMP)
 - [HMSReconnectionNotification](/api-reference/javascript/v2/interfaces/HMSReconnectionNotification)
@@ -1621,6 +1622,24 @@ Select the permissions which determine what actions the local peer can do.
 #### Returns
 
 `undefined` \| { `browserRecording`: `boolean` ; `changeRole`: `boolean` ; `endRoom`: `boolean` ; `hlsStreaming`: `boolean` ; `mute`: `boolean` ; `removeOthers`: `boolean` ; `rtmpStreaming`: `boolean` ; `unmute`: `boolean` }
+
+---
+
+### selectPreviewPeer
+
+▸ **selectPreviewPeer**(`store`): `undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)
+
+Select the peer object used in preview
+
+#### Parameters
+
+| Name    | Type                                                           |
+| :------ | :------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+`undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)
 
 ---
 
