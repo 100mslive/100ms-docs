@@ -73,7 +73,7 @@ const ReleaseItem = ({ platform, version, date }) => (
 const NewReleases = () => (
     <Box css={{ maxWidth: '500px', w: '100%' }}>
         <Text variant="h6" css={{ color: '$textHighEmp', mt: '0' }}>
-            New Releases
+            New releases
         </Text>
         <Text variant="sm" css={{ color: '$textMedEmp', mt: '$2', mb: '$10' }}>
             Latest SDK releases from the team with release notes{' '}

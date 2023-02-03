@@ -68,9 +68,8 @@ const Homepage = ({ allNav }) => {
                                 css={{
                                     maxWidth: CONTENT_WIDTH,
                                     p: '$12',
-                                    border: '1px solid',
+                                    borderLeft: '1px solid',
                                     borderColor: '$borderDefault',
-                                    borderRight: 'none',
                                     '@sm': {
                                         p: '$10'
                                     }

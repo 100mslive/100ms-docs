@@ -241,7 +241,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                     min-width: ${SIDEBAR_WIDTH};
                     flex-direction: column;
                     align-items: stretch;
-                    height: calc(100vh - 136px);
+                    height: ${baseViewOnly ? 'auto' : 'calc(100vh - 136px);'}
                     overflow-y: auto;
                     position: sticky;
                     top: 0;
