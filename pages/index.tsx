@@ -65,7 +65,7 @@ const Homepage = ({ allNav }) => {
                     <Box
                         css={{
                             maxWidth: CONTENT_WIDTH,
-                            p: '$12',
+                            p: '$14 $16',
                             borderLeft: '1px solid',
                             borderColor: '$borderDefault',
                             '@sm': {
@@ -110,7 +110,7 @@ const Homepage = ({ allNav }) => {
                             css={{
                                 mt: '$12',
                                 display: 'grid',
-                                gap: '$10',
+                                gap: '$12',
                                 gridTemplateColumns: '1fr 1fr 1fr',
                                 '@xl': {
                                     gridTemplateColumns: '1fr 1fr'

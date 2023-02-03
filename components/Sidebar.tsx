@@ -103,11 +103,63 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
     const [showSidebar, setShowSidebar] = useState(false);
     useEffect(() => setShowSidebar(true), []);
 
+    //  padding-bottom: 32px;
+    //     background-color: var(--docs_bg_content);
+    //     display: flex;
+    //     min-width: ${SIDEBAR_WIDTH};
+    //     flex-direction: column;
+    //     align-items: stretch;
+    //     height: ${baseViewOnly ? 'auto' : 'calc(100vh - 136px);'}
+    //     overflow-y: auto;
+    //     position: sticky;
+    //     top: 0;
+    //     overscroll-behavior: none;
+    // }
+
+    // .page {
+    //     position: absolute;
+    //     z-index: 0;
+    //     top: 0;
+    //     opacity: 0;
+    //     width: 300px;
+    //     box-sizing: border-box;
+    //     pointer-events: none;
+    //     transition: all ease 0.4s;
+    // }
+
+    // .active-page {
+    //     opacity: 1;
+    //     pointer-events: auto;
+    //     width: ${SIDEBAR_WIDTH}
+    //     z-index: 10;
+    // }
+
+    // ::-webkit-scrollbar {
+    //     width: 0px;
+    // }
+
+    // ::-webkit-scrollbar-thumb {
+    //     outline: 0px;
+    // }
+
+    // a {
+    //     text-decoration: none;
+    // }
+
+    // @media screen and (max-width: ${baseViewOnly ? '1024px' : '768px'}) {
+    //     .sidebar {
+    //         position: absolute;
+    //         width: 100vw;
+    //         top: ${baseViewOnly ? '1rem' : '2.5rem'};
+    //         display: ${menu ? 'flex' : 'none'};
+    //         min-height: ${baseViewOnly ? '100%' : '100vh'};
+    //     }
+
     return (
         <Box
             className="hide-scrollbar"
             css={{
-                pb: '$12',
+                pt: '$12',
                 minWidth: '304px',
                 display: 'flex',
                 flexDirection: 'column',
@@ -138,23 +190,25 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                           }
                         : {}
                 }>
-                <Flex
-                    align="center"
-                    gap="1"
-                    css={{
-                        color: '$primaryLight',
-                        mt: '$14',
-                        mb: '$12',
-                        cursor: 'pointer',
-                        opacity: baseViewOnly ? '0' : '1',
-                        pointerEvents: baseViewOnly ? 'none' : 'all'
-                    }}
-                    onClick={() => setShowBaseView(false)}>
-                    <Text variant="sm" css={{ color: '$primaryLight' }}>
-                        Continue exploring
-                    </Text>
-                    <ChevronRightIcon height="16px" width="16px" />
-                </Flex>
+                {baseViewOnly ? (
+                    <Box css={{ pt: "$14"}}/>
+                ) : (
+                    <Flex
+                        align="center"
+                        gap="1"
+                        css={{
+                            color: '$primaryLight',
+                            mt: '$14',
+                            mb: '$12',
+                            cursor: 'pointer'
+                        }}
+                        onClick={() => setShowBaseView(false)}>
+                        <Text variant="sm" css={{ color: '$primaryLight' }}>
+                            Continue exploring
+                        </Text>
+                        <ChevronRightIcon height="16px" width="16px" />
+                    </Flex>
+                )}
                 <a style={{ textDecoration: 'none' }} href="/docs/concepts/v2/concepts/basics">
                     <Flex gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <LayersIcon style={{ color: 'inherit' }} />
