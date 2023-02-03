@@ -22,7 +22,7 @@ const Badge: React.FC<BadgeProps> = ({ icon, title, link }) => (
                         p: '$4',
                         backgroundColor: '$surfaceLighter',
                         border: '1px solid',
-                        borderColor: '$surfaceLighter',
+                        borderColor: '$borderDefault'
                     }}>
                     {icon}
                     <Text css={{ color: '$textHighEmp', fontWeight: '$semiBold' }}>{title}</Text>

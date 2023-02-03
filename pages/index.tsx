@@ -41,6 +41,7 @@ const Homepage = ({ allNav }) => {
     const [modal, setModal] = useState(false);
     const menuState = { menu, setMenu };
     const [renderComponents, setRenderComponents] = useState(false);
+    
     useEffect(() => {
         setRenderComponents(true);
     }, []);

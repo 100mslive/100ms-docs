@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import {
     AndroidIcon,
     AppleIcon,
@@ -51,9 +52,13 @@ const learn = [
 const MainCard = () => {
     const { themeType } = useTheme();
     const MAIN_GRADIENT =
-        themeType === 'dark'
-            ? 'linear-gradient(269.07deg, #181B25 1.84%, #0C1112 50.14%, #141A24 98.43%)'
-            : 'linear-gradient(269.07deg, #DEE0ED 1.84%, #E3E7E8 50.14%, #D9E3F2 98.43%)';
+        themeType !== 'dark'
+            ? 'linear-gradient(269.07deg, #F1F3FD 1.84%, #F9FAFA 50.14%, #ECF3FE 98.43%)'
+            : 'linear-gradient(269.07deg, #171B2B 1.84%, #0C1112 50.14%, #111927 98.43%)';
+
+    const [renderBadges, setRenderBadges] = useState(false);
+
+    useEffect(() => setRenderBadges(true), []);
 
     return (
         <Flex
@@ -91,9 +96,7 @@ const MainCard = () => {
                     </Text>
                 </Box>
                 <Flex css={{ gap: '$10', mt: '$10', flexWrap: 'wrap' }}>
-                    {SdkList.map((sdk) => (
-                        <Badge key={sdk.id} {...sdk} />
-                    ))}
+                    {renderBadges ? SdkList.map((sdk) => <Badge key={sdk.id} {...sdk} />) : null}
                 </Flex>
             </Flex>
             <Box
