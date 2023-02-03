@@ -3,7 +3,6 @@ import { ChevronDownIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
 import { titleCasing } from '../lib/utils';
 
-<<<<<<< HEAD
 const references = {
     Web: '/api-reference/javascript/v2/home/content',
     Android: '/api-reference/android/v2/index.html',
@@ -14,8 +13,6 @@ const references = {
     'Server Side': '/server-side/v2/introduction/basics'
 };
 
-=======
->>>>>>> dae551f1dc6bc34f8ec551f91ea39e3d6157963c
 const PlatformAccordion = ({ title, icon, data }) => {
     const [open, setOpen] = useState(false);
 
