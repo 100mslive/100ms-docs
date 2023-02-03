@@ -13,31 +13,31 @@ const SdkList = [
         icon: <JavascriptIcon style={{ color: '#F7DF1E' }} />,
         title: 'JavaScript',
         id: 'javascript',
-        link: '/javascript'
+        link: '/javascript/v2/get-started/javascript-quickstart'
     },
     {
         icon: <AndroidIcon style={{ color: '#6BDEB6' }} />,
         title: 'Android',
         id: 'android',
-        link: '/android'
+        link: '/android/v2/foundation/basics'
     },
     {
         icon: <AppleIcon style={{ color: '#A2ACBA' }} />,
         title: 'iOS',
         id: 'ios',
-        link: 'ios/'
+        link: '/ios/v2/foundation/basics'
     },
     {
         icon: <FlutterWIthColourIcon />,
         title: 'Flutter',
         id: 'flutter',
-        link: '/flutter'
+        link: '/flutter/v2/get-started/quickstart'
     },
     {
         icon: <ReactIcon style={{ color: 'DodgerBlue' }} />,
         title: 'React Native',
         id: 'reactNative',
-        link: '/react-native'
+        link: '/react-native/v2/get-started/quickstart'
     }
 ];
 

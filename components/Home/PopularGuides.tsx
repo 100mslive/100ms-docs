@@ -4,7 +4,7 @@ import { Flex, Box, Text } from '@100mslive/react-ui';
 import { guides } from '../../guides';
 
 const PopularGuides = () => (
-    <Box>
+    <Box css={{w: '50%'}}>
         <Text variant="h6" css={{ color: '$textHighEmp', mt: '0' }}>
             Popular how-to guides
         </Text>

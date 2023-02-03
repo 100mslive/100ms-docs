@@ -137,9 +137,9 @@ const Homepage = ({ allNav }) => {
                                 />
 
                                 <Flex
-                                    justify="between"
                                     css={{
                                         flexDirection: 'row',
+                                        gap: '$12',
                                         '@lg': { flexDirection: 'column' }
                                     }}>
                                     <PopularGuides />
