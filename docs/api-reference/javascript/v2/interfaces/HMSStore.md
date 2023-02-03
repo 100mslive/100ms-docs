@@ -53,6 +53,18 @@ title: HMSStore
 
 ---
 
+### preview
+
+• **preview**: `Object`
+
+#### Type declaration
+
+| Name    | Type                                                         |
+| :------ | :----------------------------------------------------------- |
+| `peer?` | [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer) |
+
+---
+
 ### roleChangeRequests
 
 • **roleChangeRequests**: [`HMSRoleChangeStoreRequest`](/api-reference/javascript/v2/interfaces/HMSRoleChangeStoreRequest)[]

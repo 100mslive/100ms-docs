@@ -79,55 +79,55 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
             }}
             key={`${key}-${index}`}>
             {/* <ConditionalLink link={indexURL}> */}
-                <Flex
-                    align="center"
-                    onClick={() => {
-                        setOpenSection((prev) => {
-                            const currentList = JSON.parse(
-                                sessionStorage.getItem('openedAccordions') || '[]'
-                            );
-                            const updatedList = [
-                                ...new Set(
-                                    prev === false || inFocus
-                                        ? [...currentList, key]
-                                        : currentList.filter((heading) => heading !== key)
-                                )
-                            ];
-                            sessionStorage.setItem('openedAccordions', JSON.stringify(updatedList));
+            <Flex
+                onClick={() => {
+                    setOpenSection((prev) => {
+                        const currentList = JSON.parse(
+                            sessionStorage.getItem('openedAccordions') || '[]'
+                        );
+                        const updatedList = [
+                            ...new Set(
+                                prev === false || inFocus
+                                    ? [...currentList, key]
+                                    : currentList.filter((heading) => heading !== key)
+                            )
+                        ];
+                        sessionStorage.setItem('openedAccordions', JSON.stringify(updatedList));
 
-                            return !prev;
-                        });
+                        return !prev;
+                    });
+                }}
+                css={{
+                    padding: '0 0 0.25rem 1rem',
+                    paddingTop: nested ? '0.25rem' : '0.5rem',
+                    margin: '0',
+                    cursor: 'pointer',
+                    borderRadius: '$0',
+                    color: inFocus ? 'var(--docs_text_primary)' : 'var(--docs_text_secondary)',
+                    '&:hover': { color: '$textHighEmp' }
+                }}>
+                <ChevronRightIcon
+                    style={{
+                        height: '16px',
+                        width: '14px',
+                        minWidth: '14px',
+                        marginRight: '0.5rem',
+                        marginTop: '0.25rem',
+                        transition: 'all 0.2s ease',
+                        transform: openSection ? 'rotateZ(90deg)' : ''
                     }}
+                />
+                <Text
                     css={{
-                        padding: '0 0 0.25rem 1rem',
-                        paddingTop: nested ? '0.25rem' : '0.5rem',
-                        margin: '0',
-                        cursor: 'pointer',
-                        borderRadius: '$0',
-                        color: inFocus ? 'var(--docs_text_primary)' : 'var(--docs_text_secondary)',
-                        '&:hover': { color: '$textHighEmp' }
+                        color: 'inherit',
+                        fontWeight: openSection ? '600' : '500',
+                        fontSize: nested ? '13px' : '15px'
                     }}>
-                    <ChevronRightIcon
-                        style={{
-                            height: '16px',
-                            width: '14px',
-                            minWidth: '14px',
-                            marginRight: '0.5rem',
-                            transition: 'all 0.2s ease',
-                            transform: openSection ? 'rotateZ(90deg)' : ''
-                        }}
-                    />
-                    <Text
-                        css={{
-                            color: 'inherit',
-                            fontWeight: openSection ? '600' : '500',
-                            fontSize: nested ? '13px' : '15px'
-                        }}>
-                        {titleCasing(key)}
-                    </Text>
-                </Flex>
+                    {titleCasing(key)}
+                </Text>
+            </Flex>
             {/* </ConditionalLink> */}
-            <div className={`accordion-content ${openSection ? 'active' : ''}`} style={{}}>
+            <div className={`accordion-content ${openSection ? 'active' : ''}`}>
                 {Object.entries(children as {}).map(([_, route]: [string, any]) =>
                     // && route.url !== indexURL ?
                     Object.prototype.hasOwnProperty.call(route, 'title') ? (
@@ -161,7 +161,6 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
             <style jsx>
                 {`
                     .accordion-content {
-                        position: relative;
                         margin-top: 0;
                         padding-left: 0.5rem;
                         opacity: 0;
@@ -171,7 +170,6 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                     }
 
                     .active {
-                        top: 0;
                         opacity: 1;
                         max-height: 3000px;
                     }

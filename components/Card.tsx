@@ -1,56 +1,63 @@
-import { Box, CSS, Flex, Text, useTheme } from '@100mslive/react-ui';
-import React from 'react';
+import { ArrowRightIcon } from '@100mslive/react-icons';
+import { Flex, Box, Text } from '@100mslive/react-ui';
 
-interface Props {
-    body: React.FC | string;
-    css?: CSS;
-    endComponent?: React.ReactNode;
-    titleComponent?: React.ReactNode;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onClick?: () => void;
+interface CardProps {
+    icon: any;
+    title: String;
+    link: String;
+    subText: String;
+    id: Number;
 }
 
-const Card: React.FC<Props> = ({ body, endComponent, titleComponent, css, onClick }) => (
-    <Box
-        className="hoverParent"
-        onClick={onClick}
-        role="button"
+const MAIN_GRADIENT = 'linear-gradient(267.69deg, $surfaceDefault 1.8%, $surfaceDark 70.32%);';
+const HOVER_GRADIENT = 'linear-gradient(267.69deg, $surfaceDark 1.8%, $surfaceDefault 80.32%);';
+
+const Card: React.FC<CardProps> = ({ icon, title, link, subText, id }) => (
+    <Flex
+        direction="column"
+        justify="between"
+        onClick={() => {
+            window.open(`${window.location.pathname}/${link}`, '_self');
+        }}
         css={{
-            height: '100%',
             borderRadius: '$3',
-            borderWidth: '$1',
-            borderStyle: 'solid',
-            borderColor: 'var(--docs_border_default)',
-            backgroundColor: 'var(--docs_bg_card)',
-            boxSizing: 'border-box',
-            padding: '$10',
-            '&:active': {
-                backgroundColor: useTheme().themeType === 'dark' ? '$surfaceDark' : '$surfaceLight'
-            },
+            border: '1px solid',
+            borderColor: '$borderDefault',
+            width: '100%',
+            overflow: 'clip',
+            cursor: 'pointer',
+            background: MAIN_GRADIENT,
             '&:hover': {
-                borderColor: '$primaryDefault'
+                background: HOVER_GRADIENT
             },
-            '&:hover .hoverChild': {
-                right: '-$11',
-                color: '$primaryLight'
+            '@xl': {
+                gridColumn: id === 2 ? '1/3' : ''
             },
-            '&:hover .childText': {
-                color: '$primaryLight'
-            },
-            '&:hover .childLogo': {
-                color: '$primaryLight'
-            },
-            ...css
+            '@md': {
+                gridColumn: '1'
+            }
         }}>
-        <Flex direction="column" justify="between" css={{ height: '100%' }}>
-            <Flex direction="column" css={{ gap: '$3' }}>
-                {titleComponent}
-                <Text variant="body1" css={{ color: '$textMedEmp', fontWeight: '$regular' }}>
-                    {body}
+        <Box>
+            <Flex align="center" css={{ color: '$textHighEmp', gap: '$2', m: '$10', mb: '$6' }}>
+                {icon}
+                <Text variant="h6" css={{ color: '$textHighEmp' }}>
+                    {title}
                 </Text>
             </Flex>
-            {endComponent}
+            <Text variant="sm" css={{ m: '$10', mt: '$6', color: '$textMedEmp' }}>
+                {subText}
+            </Text>
+        </Box>
+        <Flex
+            align="center"
+            gap="1"
+            css={{ backgroundColor: '$surfaceLight', color: '$primaryLight', padding: '$8 $10' }}>
+            <Text variant="xs" css={{ color: '$primaryLight', fontWeight: '$semiBold' }}>
+                Read more
+            </Text>
+            <ArrowRightIcon height="14px" width="14px" />
         </Flex>
-    </Box>
+    </Flex>
 );
+
 export default Card;
