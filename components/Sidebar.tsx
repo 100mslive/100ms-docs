@@ -103,58 +103,6 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
     const [showSidebar, setShowSidebar] = useState(false);
     useEffect(() => setShowSidebar(true), []);
 
-    //  padding-bottom: 32px;
-    //     background-color: var(--docs_bg_content);
-    //     display: flex;
-    //     min-width: ${SIDEBAR_WIDTH};
-    //     flex-direction: column;
-    //     align-items: stretch;
-    //     height: ${baseViewOnly ? 'auto' : 'calc(100vh - 136px);'}
-    //     overflow-y: auto;
-    //     position: sticky;
-    //     top: 0;
-    //     overscroll-behavior: none;
-    // }
-
-    // .page {
-    //     position: absolute;
-    //     z-index: 0;
-    //     top: 0;
-    //     opacity: 0;
-    //     width: 300px;
-    //     box-sizing: border-box;
-    //     pointer-events: none;
-    //     transition: all ease 0.4s;
-    // }
-
-    // .active-page {
-    //     opacity: 1;
-    //     pointer-events: auto;
-    //     width: ${SIDEBAR_WIDTH}
-    //     z-index: 10;
-    // }
-
-    // ::-webkit-scrollbar {
-    //     width: 0px;
-    // }
-
-    // ::-webkit-scrollbar-thumb {
-    //     outline: 0px;
-    // }
-
-    // a {
-    //     text-decoration: none;
-    // }
-
-    // @media screen and (max-width: ${baseViewOnly ? '1024px' : '768px'}) {
-    //     .sidebar {
-    //         position: absolute;
-    //         width: 100vw;
-    //         top: ${baseViewOnly ? '1rem' : '2.5rem'};
-    //         display: ${menu ? 'flex' : 'none'};
-    //         min-height: ${baseViewOnly ? '100%' : '100vh'};
-    //     }
-
     return (
         <Box
             className="hide-scrollbar"
