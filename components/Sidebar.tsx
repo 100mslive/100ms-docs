@@ -106,7 +106,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
 
     return (
         <div className="sidebar">
-            {/* Top level view */}
+            {/* Base view */}
             <div
                 className={`page ${showBaseView ? 'active-page' : ''}`}
                 style={
