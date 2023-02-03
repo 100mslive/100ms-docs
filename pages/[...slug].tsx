@@ -24,6 +24,8 @@ import remarkGfm from 'remark-gfm';
 import remarkA11yEmoji from '@fec/remark-a11y-emoji';
 import { MDXProvider, useMDXComponents } from '@mdx-js/react';
 import imagePlugin from '@/lib/image';
+import { remarkCodeHike } from '@code-hike/mdx';
+import theme from 'shiki/themes/github-dark.json';
 
 type NavRoute = {
     url: string;
@@ -58,6 +60,7 @@ interface Props {
         nextPost: PaginationType;
     };
     source: string;
+    showToc?: boolean;
 }
 
 const MDX_GLOBAL_CONFIG = {
@@ -66,7 +69,7 @@ const MDX_GLOBAL_CONFIG = {
     }
 };
 
-const DocSlugs = ({ source, frontMatter, pagination, nav, allNav }: Props) => {
+const DocSlugs = ({ source, frontMatter, pagination, nav, showToc = true, allNav }: Props) => {
     const {
         query: { slug },
         asPath
@@ -184,11 +187,13 @@ const DocSlugs = ({ source, frontMatter, pagination, nav, allNav }: Props) => {
                             <EditFile slug={asPath} />
                         </article>
                     ) : null}
-                    <Toc
-                        activeHeading={activeHeading}
-                        activeSubHeading={activeSubHeading}
-                        CurrentDocsSlug={currentDocSlug}
-                    />
+                    {showToc && (
+                        <Toc
+                            activeHeading={activeHeading}
+                            activeSubHeading={activeSubHeading}
+                            CurrentDocsSlug={currentDocSlug}
+                        />
+                    )}
                 </div>
             </div>
         </div>
@@ -243,9 +248,21 @@ export const getStaticProps = async ({ params }) => {
                         ]
                     }
                 ],
-                mdxPrism
             ];
             options.providerImportSource = '@mdx-js/react';
+
+            if (params.slug[3] === 'javascript-quickstart-beta') {
+                options.remarkPlugins.push([
+                    remarkCodeHike,
+                    {
+                        theme,
+                        lineNumbers: false,
+                        staticMediaQuery: '(max-width: 1333px)'
+                    }
+                ]);
+            } else {
+                options.rehypePlugins.push(mdxPrism);
+            }
             return options;
         }
     });
@@ -256,7 +273,8 @@ export const getStaticProps = async ({ params }) => {
             allNav: navItems,
             nav: { [currentDocSlug]: navItems[currentDocSlug] },
             source: code, // { compiledSource: mdxSource.compiledSource },
-            frontMatter: frontmatter
+            frontMatter: frontmatter,
+            showToc: !(params.slug[3] ?? '').endsWith('quickstart-beta')
         }
     };
 };
