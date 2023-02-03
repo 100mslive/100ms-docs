@@ -502,11 +502,6 @@ const nextConfig = {
                 permanent: true
             },
             {
-                source: '/flutter/v2/debugging/faq',
-                destination: '/flutter/v2/foundation/faq',
-                permanent: true
-            },
-            {
                 source: '/react-native/v2/guides/faq',
                 destination: '/react-native/v2/foundation/faq',
                 permanent: true

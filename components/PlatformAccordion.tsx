@@ -44,12 +44,12 @@ const PlatformAccordion = ({ title, icon, data }) => {
                 {Object.keys(data['v2']).map((item) => (
                     // For when all children are accordions
                     <a
-                        href={
+                        href={`/docs${
                             data['v2'][item][Object.keys(data['v2'][item])[0]]?.url ||
                             data['v2'][item][Object.keys(data['v2'][item])[0]][
                                 Object.keys(data['v2'][item][Object.keys(data['v2'][item])[0]])[0]
                             ].url
-                        }
+                        }`}
                         key={`${title}-${item}`}>
                         <Text
                             variant="sm"
