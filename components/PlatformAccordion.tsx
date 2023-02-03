@@ -42,10 +42,18 @@ const PlatformAccordion = ({ title, icon, data }) => {
 
             <div className={`plat-accordion-content ${open ? 'active-plat-accordion' : ''}`}>
                 {Object.keys(data['v2']).map((item) => (
+                    // For when all children are accordions
                     <a
-                        href={data['v2'][item][Object.keys(data['v2'][item])[0]].url}
+                        href={
+                            data['v2'][item][Object.keys(data['v2'][item])[0]]?.url ||
+                            data['v2'][item][Object.keys(data['v2'][item])[0]][
+                                Object.keys(data['v2'][item][Object.keys(data['v2'][item])[0]])[0]
+                            ]
+                        }
                         key={`${title}-${item}`}>
-                        <Text variant="sm" css={{ pl: '$12', my: '$8', color: "var(--docs_text_primary)" }}>
+                        <Text
+                            variant="sm"
+                            css={{ pl: '$12', my: '$8', color: 'var(--docs_text_primary)' }}>
                             {titleCasing(item)}
                         </Text>
                     </a>

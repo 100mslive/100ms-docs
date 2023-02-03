@@ -100,7 +100,9 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
     const [showBaseView, setShowBaseView] = useState(baseViewOnly);
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
 
-    return (
+    const [showSideBar, setShowSideBar] = useState(false);
+    useEffect(() => setShowSideBar(true), []);
+    return showSideBar ? (
         <Box
             className="hide-scrollbar"
             css={{
@@ -250,6 +252,8 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                     : null}
             </div>
         </Box>
+    ) : (
+        <Box css={{ minWidth: '304px' }} />
     );
 };
 
