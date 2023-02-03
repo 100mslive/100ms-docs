@@ -10,6 +10,55 @@ import {
 import { Flex, Box, Text } from '@100mslive/react-ui';
 import { releases } from '../../releases';
 
+const NewReleases = () => (
+    <Box css={{ maxWidth: '500px', w: '100%' }}>
+        <Text variant="h6" css={{ color: '$textHighEmp', mt: '0' }}>
+            New releases
+        </Text>
+        <Text variant="sm" css={{ color: '$textMedEmp', mt: '$2', mb: '$10' }}>
+            Follow our changelog for new features and improvements
+        </Text>
+        <Box
+            css={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gridColumnGap: '60px',
+                '@sm': { gridColumnGap: '2rem' }
+            }}>
+            {releases.map((release) => (
+                <ReleaseItem key={release.version} {...release} />
+            ))}
+        </Box>
+    </Box>
+);
+
+export default NewReleases;
+
+const ReleaseItem = ({ platform, version, date }) => (
+    <Flex gap="2" css={{ color: '$textHighEmp' }}>
+        {SdkList[platform].icon}
+        <Box>
+            <Link href={SdkList[platform].link}>
+                <a>
+                    <Text variant="sm" className="mono" css={{ color: '$primaryLight' }}>
+                        {version} / {platform}
+                    </Text>
+                </a>
+            </Link>
+            <Text
+                variant="sm"
+                className="mono"
+                css={{
+                    color: '$textMedEmp',
+                    mt: '$2',
+                    mb: '$8'
+                }}>
+                {date}
+            </Text>
+        </Box>
+    </Flex>
+);
+
 const iconStyle = { color: 'inherit', marginTop: '0.25rem' };
 
 const SdkList = {
@@ -44,52 +93,3 @@ const SdkList = {
         link: '/server-side/v2/changelog/release-notes'
     }
 };
-
-const ReleaseItem = ({ platform, version, date }) => (
-    <Flex gap="2" css={{ color: '$textHighEmp' }}>
-        {SdkList[platform].icon}
-        <Box>
-            <Link href={SdkList[platform].link}>
-                <a>
-                    <Text variant="sm" className="mono" css={{ color: '$primaryLight' }}>
-                        {version} / {platform}
-                    </Text>
-                </a>
-            </Link>
-            <Text
-                variant="sm"
-                className="mono"
-                css={{
-                    color: '$textMedEmp',
-                    mt: '$2',
-                    mb: '$8'
-                }}>
-                {date}
-            </Text>
-        </Box>
-    </Flex>
-);
-
-const NewReleases = () => (
-    <Box css={{ maxWidth: '500px', w: '100%' }}>
-        <Text variant="h6" css={{ color: '$textHighEmp', mt: '0' }}>
-            New releases
-        </Text>
-        <Text variant="sm" css={{ color: '$textMedEmp', mt: '$2', mb: '$10' }}>
-            Follow our changelog for new features and improvements
-        </Text>
-        <Box
-            css={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gridColumnGap: '60px',
-                '@sm': { gridColumnGap: '2rem' }
-            }}>
-            {releases.map((release) => (
-                <ReleaseItem key={release.version} {...release} />
-            ))}
-        </Box>
-    </Box>
-);
-
-export default NewReleases;
