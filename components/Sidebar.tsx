@@ -19,11 +19,9 @@ import {
     JavascriptIcon as JavaScript
 } from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
-import { Flex, Text } from '@100mslive/react-ui';
+import { Flex, Box, Text } from '@100mslive/react-ui';
 import SidebarSection from './SidebarSection';
 import PlatformAccordion from './PlatformAccordion';
-
-const SIDEBAR_WIDTH = '304px';
 
 const accordionIconStyle = { height: '24px', width: '24px', color: 'inherit' };
 
@@ -106,8 +104,30 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
     useEffect(() => setShowSidebar(true), []);
 
     return (
-        <div className="sidebar">
-            {/* Top level view */}
+        <Box
+            className="hide-scrollbar"
+            css={{
+                pb: '$12',
+                minWidth: '304px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'stretch',
+                height: 'calc(100vh - 136px)',
+                overflowY: 'auto',
+                position: 'sticky',
+                top: '0',
+                overscrollBehavior: 'none',
+                '@md': {
+                    position: 'absolute',
+                    top: '$14',
+                    display: menu ? 'flex' : 'none',
+                    minHeight: '100vh'
+                },
+                '@sm': {
+                    w: '100vw'
+                }
+            }}>
+            {/* Base view */}
             <div
                 className={`page ${showBaseView ? 'active-page' : ''}`}
                 style={
@@ -135,7 +155,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                     </Text>
                     <ChevronRightIcon height="16px" width="16px" />
                 </Flex>
-                <a href="/docs/concepts/v2/concepts/basics">
+                <a style={{ textDecoration: 'none' }} href="/docs/concepts/v2/concepts/basics">
                     <Flex gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <LayersIcon style={{ color: 'inherit' }} />
                         <Text css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
@@ -232,71 +252,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                         : null}
                 </div>
             ) : null}
-            <style jsx>{`
-                .sidebar {
-                    z-index: 20;
-                    padding-bottom: 32px;
-                    background-color: var(--docs_bg_content);
-                    display: flex;
-                    min-width: ${SIDEBAR_WIDTH};
-                    flex-direction: column;
-                    align-items: stretch;
-                    height: ${baseViewOnly ? 'auto' : 'calc(100vh - 136px);'}
-                    overflow-y: auto;
-                    position: sticky;
-                    top: 0;
-                    overscroll-behavior: none;
-                }
-
-                .page {
-                    position: absolute;
-                    z-index: 0;
-                    top: 0;
-                    opacity: 0;
-                    width: 300px;
-                    box-sizing: border-box;
-                    pointer-events: none;
-                    transition: all ease 0.4s;
-                }
-
-                .active-page {
-                    opacity: 1;
-                    pointer-events: auto;
-                    width: ${SIDEBAR_WIDTH}
-                    z-index: 10;
-                }
-
-                ::-webkit-scrollbar {
-                    width: 0px;
-                }
-
-                ::-webkit-scrollbar-thumb {
-                    outline: 0px;
-                }
-
-                a {
-                    text-decoration: none;
-                }
-
-                @media screen and (max-width: ${baseViewOnly ? '1024px' : '768px'}) {
-                    .sidebar {
-                        position: absolute;
-                        width: 100vw;
-                        top: ${baseViewOnly ? '1rem' : '2.5rem'};
-                        display: ${menu ? 'flex' : 'none'};
-                        min-height: ${baseViewOnly ? '100%' : '100vh'};
-                    }
-
-                    .page {
-                        top: 0.5rem;
-                        width: 100vw;                
-                        max-width: 500px;
-                        margin: 0 auto;
-                        max-height: 100vh;    
-                    }
-                }
-            `}</style>
-        </div>
+        </Box>
     );
 };
 

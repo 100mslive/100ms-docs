@@ -40,7 +40,7 @@ const PlatformAccordion = ({ title, icon, data }) => {
                 </Flex>
             </div>
 
-            <div className={`plat-accordion-content ${open ? 'active' : ''}`}>
+            <div className={`plat-accordion-content ${open ? 'active-plat-accordion' : ''}`}>
                 {Object.keys(data['v2']).map((item) => (
                     <a
                         href={data['v2'][item][Object.keys(data['v2'][item])[0]].url}
@@ -60,34 +60,6 @@ const PlatformAccordion = ({ title, icon, data }) => {
                     </Text>
                 </a>
             </div>
-
-            <style jsx={true}>
-                {`
-                    .plat-accordion {
-                        display: flex;
-                        justify-content: space-between;
-                        padding: 0.5rem 0;
-                        margin-top: 1rem;
-                        cursor: pointer;
-                    }
-
-                    .plat-accordion:hover {
-                        opacity: 0.75;
-                    }
-
-                    .plat-accordion-content {
-                        opacity: 0;
-                        max-height: 0;
-                        transition: all ease 0.3s;
-                        overflow: hidden;
-                    }
-
-                    .active {
-                        opacity: 1;
-                        max-height: 500px;
-                    }
-                `}
-            </style>
         </div>
     );
 };
