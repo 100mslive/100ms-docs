@@ -291,6 +291,8 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                     .page {
                         top: 0.5rem;
                         width: 100vw;                
+                        max-width: 500px;
+                        margin: 0 auto;
                         max-height: 100vh;    
                     }
                 }

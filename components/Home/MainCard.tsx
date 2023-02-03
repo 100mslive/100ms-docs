@@ -41,7 +41,7 @@ const SdkList = [
     }
 ];
 
-const MAIN_GRADIENT = 'linear-gradient(267.69deg, #0F1115 1.8%, #13161B 60.32%);';
+const MAIN_GRADIENT = 'linear-gradient(267.69deg, $surfaceDark 1.8%, $surfaceDefault 80.32%);';
 
 const learn = [
     'Create and join a room',
@@ -104,13 +104,13 @@ const MainCard = () => (
             }}
         />
         <Box>
-            <Text variant="sm" css={{ color: '$primaryLight' }}>
+            <Text variant="sm" className='mono' css={{ color: '$primaryLight' }}>
                 {'What you will learn >'}
             </Text>
-            <ul style={{ marginTop: '1rem' }}>
+            <ul style={{ marginTop: '1rem'}}>
                 {learn.map((point) => (
                     <li style={{ margin: '0', marginBottom: '0.25rem' }}>
-                        <Text variant="sm" css={{ color: '$textHighEmp' }}>
+                        <Text variant="sm" className='mono' css={{ color: '$textHighEmp' }}>
                             {point}
                         </Text>
                     </li>

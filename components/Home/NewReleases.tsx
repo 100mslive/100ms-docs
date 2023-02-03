@@ -16,32 +16,32 @@ const SdkList = {
     Web: {
         icon: <JavascriptIcon style={iconStyle} />,
         id: 'javascript',
-        link: '/javascript'
+        link: '/javascript/v2/changelog/release-notes'
     },
     Android: {
         icon: <AndroidIcon style={iconStyle} />,
         id: 'android',
-        link: '/android'
+        link: '/android/v2/changelog/release-notes'
     },
     iOS: {
         icon: <AppleIcon style={iconStyle} />,
         id: 'ios',
-        link: 'ios/'
+        link: '/ios/v2/changelog/release-notes'
     },
     Flutter: {
         icon: <FlutterIcon style={iconStyle} />,
         id: 'flutter',
-        link: '/flutter'
+        link: '/flutter/v2/changelog/release-notes'
     },
     'React Native': {
         icon: <ReactIcon style={iconStyle} />,
         id: 'reactNative',
-        link: '/react-native'
+        link: '/react-native/v2/changelog/release-notes'
     },
     Server: {
         icon: <ServerIcon style={iconStyle} />,
         id: 'server',
-        link: '/server'
+        link: '/server/v2/changelog/release-notes'
     }
 };
 
@@ -51,13 +51,14 @@ const ReleaseItem = ({ platform, version, date }) => (
         <Box>
             <Link href={SdkList[platform].link}>
                 <a>
-                    <Text variant="sm" css={{ color: '$primaryLight' }}>
+                    <Text variant="sm" className="mono" css={{ color: '$primaryLight' }}>
                         {version} / {platform}
                     </Text>
                 </a>
             </Link>
             <Text
                 variant="sm"
+                className="mono"
                 css={{
                     color: '$textMedEmp',
                     mt: '$2',

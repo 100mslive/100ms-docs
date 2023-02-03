@@ -1,6 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from 'react';
-import { LayersIcon } from '@100mslive/react-icons';
+import { LayersIcon, PeopleIcon, ShieldIcon } from '@100mslive/react-icons';
 import { Box, Flex, Text } from '@100mslive/react-ui';
 import Header from 'components/Header';
 import Sidebar from '@/components/Sidebar';
@@ -23,13 +23,13 @@ const cards = [
         link: '/concepts/v2/concepts/basics'
     },
     {
-        icon: <LayersIcon />,
+        icon: <PeopleIcon />,
         title: 'Templates and Roles',
         subText: 'Learn how to create templates for your rooms with roles to control user actions',
         link: '/concepts/v2/concepts/templates-and-roles'
     },
     {
-        icon: <LayersIcon />,
+        icon: <ShieldIcon />,
         title: 'Authentication',
         subText: 'Learn how to authenticate requests coming from your apps and server into 100ms',
         link: '/concepts/v2/concepts/security-and-tokens'
@@ -58,6 +58,7 @@ const Homepage = ({ allNav }) => {
                         setModal={setModal}
                         menuState={menuState}
                         showReference={false}
+                        onHomePage
                     />
 
                     <Flex justify="center" css={{ mx: 'auto' }}>
@@ -78,22 +79,53 @@ const Homepage = ({ allNav }) => {
                                     100ms Documentation
                                 </Text>
 
-                                <Text css={{ color: '$textMedEmp', mt: '$2' }}>
+                                <Text
+                                    css={{
+                                        color: '$textMedEmp',
+                                        mt: '$2',
+                                        display: 'block',
+                                        '@md': {
+                                            display: 'none'
+                                        }
+                                    }}>
                                     Welcome to Docs. With the 100ms SDK, you can easily incorporate
                                     live audio and video capabilities into your own projects,
                                     <br /> such as building virtual meetings and video conferencing
                                     applications
                                 </Text>
 
-                                <MainCard />
+                                <Text
+                                    css={{
+                                        color: '$textMedEmp',
+                                        mt: '$2',
+                                        display: 'none',
+                                        '@md': {
+                                            display: 'block'
+                                        }
+                                    }}>
+                                    100ms gives you everything you need to build scalable live video
+                                    and audio experiences into your application
+                                </Text>
 
-                                <Flex
-                                    justify="between"
-                                    css={{ mt: '$12', flexWrap: 'wrap', gap: '$10' }}>
-                                    {cards.map((card) => (
-                                        <Card key={card.link} {...card} />
+                                <MainCard />
+                                {/* single row after 1280, double after 768 */}
+                                <Box
+                                    css={{
+                                        mt: '$12',
+                                        display: 'grid',
+                                        gap: '$10',
+                                        gridTemplateColumns: '1fr 1fr 1fr',
+                                        '@xl': {
+                                            gridTemplateColumns: '1fr 1fr'
+                                        },
+                                        '@md': {
+                                            gridTemplateColumns: '1fr'
+                                        }
+                                    }}>
+                                    {cards.map((card, i) => (
+                                        <Card key={card.link} {...card} id={i} />
                                     ))}
-                                </Flex>
+                                </Box>
 
                                 <Box
                                     css={{

@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { ArrowRightIcon } from '@100mslive/react-icons';
 import { Flex, Box, Text } from '@100mslive/react-ui';
 
@@ -7,11 +6,13 @@ interface CardProps {
     title: String;
     link: String;
     subText: String;
+    id: Number;
 }
 
-const MAIN_GRADIENT = 'linear-gradient(267.69deg, #0F1115 1.8%, #13161B 60.32%);';
+const MAIN_GRADIENT = 'linear-gradient(267.69deg, $surfaceDefault 1.8%, $surfaceDark 70.32%);';
+const HOVER_GRADIENT = 'linear-gradient(267.69deg, $surfaceDark 1.8%, $surfaceDefault 80.32%);';
 
-const Card: React.FC<CardProps> = ({ icon, title, link, subText }) => (
+const Card: React.FC<CardProps> = ({ icon, title, link, subText, id }) => (
     <Flex
         direction="column"
         justify="between"
@@ -22,17 +23,22 @@ const Card: React.FC<CardProps> = ({ icon, title, link, subText }) => (
             borderRadius: '$3',
             border: '1px solid',
             borderColor: '$borderDefault',
-            maxWidth: '21rem',
+            width: '100%',
             overflow: 'clip',
             cursor: 'pointer',
             background: MAIN_GRADIENT,
+            '&:hover': {
+                background: HOVER_GRADIENT
+            },
+            '@xl': {
+                gridColumn: id === 2 ? '1/3' : ''
+            },
             '@md': {
-                maxWidth: '100%',
-                w: '100%'
+                gridColumn: '1'
             }
         }}>
         <Box>
-            <Flex css={{ color: '$textHighEmp', gap: '$2', m: '$10', mb: '$6' }}>
+            <Flex align="center" css={{ color: '$textHighEmp', gap: '$2', m: '$10', mb: '$6' }}>
                 {icon}
                 <Text variant="h6" css={{ color: '$textHighEmp' }}>
                     {title}
