@@ -8,7 +8,7 @@ export type TocItem = {
 };
 
 const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
-    const [toc, setToc] = React.useState<TocItem[] | []>([]);    
+    const [toc, setToc] = React.useState<TocItem[] | []>([]);
 
     React.useEffect(() => {
         const list: TocItem[] = [];
@@ -35,8 +35,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                                 : ''
                         }`}
                         key={item.slug}>
-                        <a
-                            href={`#${item.slug}`}>
+                        <a style={{ padding: '0 2rem 0 1rem' }} href={`#${item.slug}`}>
                             {item.title}
                         </a>
                     </span>
@@ -84,8 +83,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                     margin: 0.5rem 0;
                     color: var(--docs_text_secondary);
                 }
-                .text a {
-                    padding-left: 1rem !important;
+                .text a {                    
                     display: block;
                 }
                 .child {
