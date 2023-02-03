@@ -103,7 +103,6 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
 
     const [showSidebar, setShowSidebar] = useState(false);
-
     useEffect(() => setShowSidebar(true), []);
 
     return (

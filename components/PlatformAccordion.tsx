@@ -3,6 +3,16 @@ import { ChevronDownIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
 import { titleCasing } from '../lib/utils';
 
+const references = {
+    Web: '/api-reference/javascript/v2/home/content',
+    Android: '/api-reference/android/v2/index.html',
+    'React Native': '/api-reference/react-native/v2/modules.html',
+    Flutter:
+        'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html',
+    iOS: '/api-reference/ios/v2/home/content',
+    'Server Side': '/server-side/v2/introduction/basics'
+};
+
 const PlatformAccordion = ({ title, icon, data }) => {
     const [open, setOpen] = useState(false);
 
@@ -42,6 +52,13 @@ const PlatformAccordion = ({ title, icon, data }) => {
                         </Text>
                     </a>
                 ))}
+                <a href={references[title]}>
+                    <Text
+                        variant="sm"
+                        css={{ pl: '$12', my: '$8', color: 'var(--docs_text_primary)' }}>
+                        API Reference
+                    </Text>
+                </a>
             </div>
 
             <style jsx={true}>
