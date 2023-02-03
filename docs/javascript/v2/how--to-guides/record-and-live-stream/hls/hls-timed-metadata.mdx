@@ -8,6 +8,8 @@ HLS Timed Metadata feature helps you synchronise certain events with the HLS str
 ## Requirements
 
 -   Active HLS stream
+-   hms-video-web min version: 0.4.0
+-   hms-video-store min version: 0.5.0
 
 ## Sending HLS Timed Metadata
 
@@ -30,7 +32,7 @@ The payload is sent in the EXT-X-DATERANGE tag as value for the custom attribure
 
 ```json
 {
-    "start_date": "UTC date", // The time when the event is received. Duplicate of START-DATE
+    "start_date": "UTC date",
     "payload": "payload sent by the user",
     "end_date": "<start_date + duration>"
     "hms_version": "v1.1"
@@ -106,10 +108,10 @@ if (Hls.isSupported()) {
 
 ```
 
->Please Note : Above implementation will be changed after we introducted HLS controller library.
+>Please Note : Above implementation might change in future.
 
-## Limitions
+## Limitations
 
 - It’s hard to sync metadata with stream exactly due to the latency from ffmpeg creating the stream. To address this, we’ve added 2s the actual `START-DATE` attribute.
-- The api now allows sending only three metadata objects at once with each having a `payload` string of max length of 100. These can further be tuned based on experimentation.
-- The payload cannot have `"`(double quotes). So json won’t be supported. This is a limitation from hls spec.
+- The API now allows sending only three metadata objects at once with each having a `payload` string of max length of 100. These can further be tuned based on experimentation.
+- The payload cannot have `"`(double quotes). So json won’t be supported. This is a limitation from HLS spec.
