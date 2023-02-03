@@ -52,36 +52,38 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
     const {
         query: { slug }
     } = router;
-
+    const baseViewOnly = Object.keys(currentNav).length === 0;
     const { menu, setMenu } = menuState;
 
     useEffect(() => {
         setMenu(false);
     }, [router]);
 
-    const [currentDocSlug] = slug as string[];
-
     let nav;
-    if (Object.keys(currentNav).length) {
-        const platform = currentNav[currentDocSlug];
-        if (slug[0] !== 'v1' && slug[0] !== 'v2') {
-            if (slug?.length > 3) {
-                nav = platform[slug[1]];
-                if (slug[0] === 'api-reference') {
-                    // if (slug[1] === 'android') {
-                    //     showPagination = false;
-                    // }
-                    nav = platform[slug[1]][slug[2]];
+    if (!baseViewOnly) {
+        const [currentDocSlug] = slug as string[];
+
+        if (Object.keys(currentNav).length) {
+            const platform = currentNav[currentDocSlug];
+            if (slug[0] !== 'v1' && slug[0] !== 'v2') {
+                if (slug?.length > 3) {
+                    nav = platform[slug[1]];
+                    if (slug[0] === 'api-reference') {
+                        // if (slug[1] === 'android') {
+                        //     showPagination = false;
+                        // }
+                        nav = platform[slug[1]][slug[2]];
+                    }
                 }
-            }
-        } else nav = platform;
-    }
+            } else nav = platform;
+        }
+    } else nav = false;
 
     const showPlatformSelector = slug?.[0] !== 'concepts';
 
-    let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]);
-    if (slug[0] === 'api-reference')
-        indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[1]);
+    let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug?.[0]);
+    if (slug?.[0] === 'api-reference')
+        indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug?.[1]);
 
     indexOf = indexOf === -1 ? 0 : indexOf;
     const [tech, setTech] = useState(menuItem[indexOf]);
@@ -95,156 +97,156 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
         else router.push(s.link, undefined, { shallow: false });
     };
 
-    const [showBaseView, setShowBaseView] = useState(false);
+    const [showBaseView, setShowBaseView] = useState(baseViewOnly);
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
 
-    const [showSidebar, setShowSidebar] = useState(false);
-
-    useEffect(() => setShowSidebar(true), []);
-
-    return (
-        <Box
-            className="hide-scrollbar"
-            css={{
-                pb: '$12',
-                minWidth: '304px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'stretch',
-                height: 'calc(100vh - 136px)',
-                overflowY: 'auto',
-                position: 'sticky',
-                top: '0',
-                overscrollBehavior: 'none',
-                '@md': {
-                    position: 'absolute',
-                    top: '$14',
-                    display: menu ? 'flex' : 'none',
-                    minHeight: '100vh'
-                },
-                '@sm': {
-                    w: '100vw'
-                }
-            }}>
-            {/* Base view */}
-            <div
-                className={`page ${showBaseView ? 'active-page' : ''}`}
-                style={
-                    showBaseView
-                        ? {
-                              padding: '1.75rem',
-                              paddingTop: '0'
-                          }
-                        : {}
-                }>
+    return <Box
+        className="hide-scrollbar"
+        css={{
+            pt: '$12',
+            minWidth: '304px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'stretch',
+            height: 'calc(100vh - 136px)',
+            overflowY: 'auto',
+            position: 'sticky',
+            top: '0',
+            overscrollBehavior: 'none',
+            '@md': {
+                position: 'absolute',
+                top: '$14',
+                display: menu ? 'flex' : 'none',
+                minHeight: '100vh'
+            },
+            '@sm': {
+                w: '100vw'
+            }
+        }}>
+        {/* Base view */}
+        <div
+            className={`page ${showBaseView ? 'active-page' : ''}`}
+            style={
+                showBaseView
+                    ? {
+                          padding: '1.75rem',
+                          paddingTop: '0'
+                      }
+                    : {}
+            }>
+            {baseViewOnly ? (
+                <Box css={{ pt: '$16' }} />
+            ) : (
                 <Flex
                     align="center"
                     gap="1"
-                    css={{ color: '$primaryLight', mt: '$14', mb: '$12', cursor: 'pointer' }}
+                    css={{
+                        color: '$primaryLight',
+                        mt: '$14',
+                        mb: '$12',
+                        cursor: 'pointer'
+                    }}
                     onClick={() => setShowBaseView(false)}>
                     <Text variant="sm" css={{ color: '$primaryLight' }}>
                         Continue exploring
                     </Text>
                     <ChevronRightIcon height="16px" width="16px" />
                 </Flex>
-                <a style={{ textDecoration: 'none' }} href="/docs/concepts/v2/concepts/basics">
-                    <Flex gap="2" align="center" css={{ color: '$primaryLight' }}>
-                        <LayersIcon style={{ color: 'inherit' }} />
-                        <Text css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
-                            Concepts
-                        </Text>
-                    </Flex>
-                </a>
+            )}
+            <a style={{ textDecoration: 'none' }} href="/docs/concepts/v2/concepts/basics">
+                <Flex gap="2" align="center" css={{ color: '$primaryLight' }}>
+                    <LayersIcon style={{ color: 'inherit' }} />
+                    <Text css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>Concepts</Text>
+                </Flex>
+            </a>
 
-                <hr style={{ margin: '24px 0' }} />
+            <hr style={{ margin: '24px 0' }} />
 
-                {platformOrder.map((platform) => (
-                    <PlatformAccordion
-                        title={platform.text}
-                        icon={platform.icon}
-                        data={allNav[platform.key]}
-                    />
-                ))}
-
-                <hr style={{ margin: '24px 0' }} />
-
+            {platformOrder.map((platform) => (
                 <PlatformAccordion
-                    title={'Server side'}
-                    icon={<ServerIcon style={accordionIconStyle} />}
-                    data={allNav['server-side']}
+                    key={platform.text}
+                    title={platform.text}
+                    icon={platform.icon}
+                    data={allNav[platform.key]}
                 />
-            </div>
+            ))}
 
-            {/* Platform specific view */}
-            {showSidebar ? (
-                <div className={`page ${showBaseView ? '' : 'active-page'}`}>
-                    <Flex
-                        align="center"
-                        gap="1"
-                        css={{
-                            color: '$primaryLight',
-                            pl: '$9',
-                            mt: '$14',
-                            mb: '$12',
-                            cursor: 'pointer'
-                        }}
-                        onClick={() => setShowBaseView(true)}>
-                        <ChevronLeftIcon height="16px" width="16px" />
-                        <Text variant="sm" css={{ color: '$primaryLight' }}>
-                            Back to Home
-                        </Text>
-                    </Flex>
+            <hr style={{ margin: '24px 0' }} />
 
-                    {/* Sidebar Version Section */}
-                    {showPlatformSelector ? (
-                        <section
-                            style={{
-                                margin: '0px 0.5rem 0.5rem 0.4rem',
-                                position: 'sticky',
-                                top: '0',
-                                zIndex: '20',
-                                background: 'var(--docs_bg_content)'
-                            }}>
-                            <Listbox value={tech} onChange={changeTech}>
-                                <Listbox.Button className="dropdown">
-                                    <div style={{ display: 'flex ', alignItems: 'center' }}>
-                                        {tech.icon}
-                                        <span style={{ marginLeft: '1rem' }}>{tech.name}</span>
-                                    </div>
-                                    <ChevronDownIcon />
-                                </Listbox.Button>
-                                <Listbox.Options className="dropdown-options">
-                                    {menuItem.map((m) => (
-                                        <Listbox.Option
-                                            key={m.link}
-                                            value={m}
-                                            className={({ active }) =>
-                                                `${
-                                                    active
-                                                        ? 'dropdown-option dropdown-option-active'
-                                                        : 'dropdown-option'
-                                                }`
-                                            }>
-                                            {m.icon}
-                                            <span style={{ marginLeft: '1rem' }}>{m.name}</span>
-                                        </Listbox.Option>
-                                    ))}
-                                </Listbox.Options>
-                            </Listbox>
-                        </section>
-                    ) : null}
-                    {/* Sidebar Menu Section */}
-                    {nav
-                        ? Object.entries(nav).map(([key, children], index) => (
-                              <SidebarSection key={key} value={key} index={index} nested={false}>
-                                  {children as React.ReactChildren}
-                              </SidebarSection>
-                          ))
-                        : null}
-                </div>
+            <PlatformAccordion
+                title={'Server side'}
+                icon={<ServerIcon style={accordionIconStyle} />}
+                data={allNav['server-side']}
+            />
+        </div>
+
+        {/* Platform specific view */}
+        <div className={`page ${showBaseView ? '' : 'active-page'}`}>
+            <Flex
+                align="center"
+                gap="1"
+                css={{
+                    color: '$primaryLight',
+                    pl: '$9',
+                    mt: '$14',
+                    mb: '$12',
+                    cursor: 'pointer'
+                }}
+                onClick={() => setShowBaseView(true)}>
+                <ChevronLeftIcon height="16px" width="16px" />
+                <Text variant="sm" css={{ color: '$primaryLight' }}>
+                    Back to Home
+                </Text>
+            </Flex>
+
+            {/* Sidebar Version Section */}
+            {showPlatformSelector ? (
+                <section
+                    style={{
+                        margin: '0px 0.5rem 0.5rem 0.4rem',
+                        position: 'sticky',
+                        top: '0',
+                        zIndex: '20',
+                        background: 'var(--docs_bg_content)'
+                    }}>
+                    <Listbox value={tech} onChange={changeTech}>
+                        <Listbox.Button className="dropdown">
+                            <div style={{ display: 'flex ', alignItems: 'center' }}>
+                                {tech.icon}
+                                <span style={{ marginLeft: '1rem' }}>{tech.name}</span>
+                            </div>
+                            <ChevronDownIcon />
+                        </Listbox.Button>
+                        <Listbox.Options className="dropdown-options">
+                            {menuItem.map((m) => (
+                                <Listbox.Option
+                                    key={m.link}
+                                    value={m}
+                                    className={({ active }) =>
+                                        `${
+                                            active
+                                                ? 'dropdown-option dropdown-option-active'
+                                                : 'dropdown-option'
+                                        }`
+                                    }>
+                                    {m.icon}
+                                    <span style={{ marginLeft: '1rem' }}>{m.name}</span>
+                                </Listbox.Option>
+                            ))}
+                        </Listbox.Options>
+                    </Listbox>
+                </section>
             ) : null}
-        </Box>
-    );
+            {/* Sidebar Menu Section */}
+            {nav
+                ? Object.entries(nav).map(([key, children], index) => (
+                      <SidebarSection key={key} value={key} index={index} nested={false}>
+                          {children as React.ReactChildren}
+                      </SidebarSection>
+                  ))
+                : null}
+        </div>
+    </Box>;
 };
 
 export default Sidebar;
