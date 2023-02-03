@@ -139,7 +139,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                         : {}
                 }>
                 {baseViewOnly ? (
-                    <Box css={{ pt: "$14"}}/>
+                    <Box css={{ pt: "$16"}}/>
                 ) : (
                     <Flex
                         align="center"
