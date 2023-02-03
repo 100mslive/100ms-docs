@@ -20,13 +20,13 @@ const SdkList = [
         icon: <AndroidIcon style={{ color: '#6BDEB6' }} />,
         title: 'Android',
         id: 'android',
-        link: '/docs/android/v2/get-started/quickstart'
+        link: '/android/v2/get-started/quickstart'
     },
     {
         icon: <AppleIcon style={{ color: '#A2ACBA' }} />,
         title: 'iOS',
         id: 'ios',
-        link: '/docs/ios/v2/get-started/quickstart'
+        link: '/ios/v2/get-started/quickstart'
     },
     {
         icon: <FlutterWIthColourIcon />,
