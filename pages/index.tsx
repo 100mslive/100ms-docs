@@ -145,7 +145,7 @@ const Homepage = ({ allNav }) => {
                                 css={{
                                     width: '1.5px',
                                     my: '0',
-                                    backgroundColor: '$surfaceLight',
+                                    backgroundColor: '$borderDefault',
                                     '@lg': {
                                         width: '100%',
                                         height: '1px',
