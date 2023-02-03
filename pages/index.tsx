@@ -48,123 +48,119 @@ const Homepage = ({ allNav }) => {
     console.log(allNav);
     useLockBodyScroll(modal);
 
-    return (
+    return renderComponents ? (
         <>
-            {renderComponents ? (
-                <>
-                    <SegmentAnalytics options={{}} title="100ms Docs" />
-                    <Header
-                        modal={modal}
-                        setModal={setModal}
-                        menuState={menuState}
-                        showReference={false}
-                        onHomePage
-                    />
+            <SegmentAnalytics options={{}} title="100ms Docs" />
+            <Header
+                modal={modal}
+                setModal={setModal}
+                menuState={menuState}
+                showReference={false}
+                onHomePage
+            />
 
-                    <Flex justify="center" css={{ mx: 'auto' }}>
-                        <Sidebar menuState={menuState} nav={{}} allNav={allNav} />
-                        {!menu ? (
+            <Flex justify="center" css={{ mx: 'auto', h: '100vh' }}>
+                <Sidebar menuState={menuState} nav={{}} allNav={allNav} />
+                {!menu ? (
+                    <Box
+                        css={{
+                            maxWidth: CONTENT_WIDTH,
+                            p: '$12',
+                            borderLeft: '1px solid',
+                            borderColor: '$borderDefault',
+                            '@sm': {
+                                p: '$10'
+                            }
+                        }}>
+                        <Text variant="h4" css={{ color: '$textHighEmp' }}>
+                            100ms Documentation
+                        </Text>
+
+                        <Text
+                            css={{
+                                color: '$textMedEmp',
+                                mt: '$2',
+                                display: 'block',
+                                '@md': {
+                                    display: 'none'
+                                }
+                            }}>
+                            Welcome to Docs. With the 100ms SDK, you can easily incorporate live
+                            audio and video capabilities into your own projects,
+                            <br /> such as building virtual meetings and video conferencing
+                            applications
+                        </Text>
+
+                        <Text
+                            css={{
+                                color: '$textMedEmp',
+                                mt: '$2',
+                                display: 'none',
+                                '@md': {
+                                    display: 'block'
+                                }
+                            }}>
+                            100ms gives you everything you need to build scalable live video and
+                            audio experiences into your application
+                        </Text>
+
+                        <MainCard />
+                        {/* single row after 1280, double after 768 */}
+                        <Box
+                            css={{
+                                mt: '$12',
+                                display: 'grid',
+                                gap: '$10',
+                                gridTemplateColumns: '1fr 1fr 1fr',
+                                '@xl': {
+                                    gridTemplateColumns: '1fr 1fr'
+                                },
+                                '@md': {
+                                    gridTemplateColumns: '1fr'
+                                }
+                            }}>
+                            {cards.map((card, i) => (
+                                <Card key={card.link} {...card} id={i} />
+                            ))}
+                        </Box>
+
+                        <Box
+                            css={{
+                                height: '1px',
+                                width: '100%',
+                                my: '$12',
+                                borderTop: '1px solid',
+                                borderColor: '$borderDefault'
+                            }}
+                        />
+
+                        <Flex
+                            css={{
+                                flexDirection: 'row',
+                                gap: '$12',
+                                '@lg': { flexDirection: 'column' }
+                            }}>
+                            <PopularGuides />
                             <Box
                                 css={{
-                                    maxWidth: CONTENT_WIDTH,
-                                    p: '$12',
-                                    borderLeft: '1px solid',
-                                    borderColor: '$borderDefault',
-                                    '@sm': {
-                                        p: '$10'
-                                    }
-                                }}>
-                                <Text variant="h4" css={{ color: '$textHighEmp' }}>
-                                    100ms Documentation
-                                </Text>
-
-                                <Text
-                                    css={{
-                                        color: '$textMedEmp',
-                                        mt: '$2',
-                                        display: 'block',
-                                        '@md': {
-                                            display: 'none'
-                                        }
-                                    }}>
-                                    Welcome to Docs. With the 100ms SDK, you can easily incorporate
-                                    live audio and video capabilities into your own projects,
-                                    <br /> such as building virtual meetings and video conferencing
-                                    applications
-                                </Text>
-
-                                <Text
-                                    css={{
-                                        color: '$textMedEmp',
-                                        mt: '$2',
-                                        display: 'none',
-                                        '@md': {
-                                            display: 'block'
-                                        }
-                                    }}>
-                                    100ms gives you everything you need to build scalable live video
-                                    and audio experiences into your application
-                                </Text>
-
-                                <MainCard />
-                                {/* single row after 1280, double after 768 */}
-                                <Box
-                                    css={{
-                                        mt: '$12',
-                                        display: 'grid',
-                                        gap: '$10',
-                                        gridTemplateColumns: '1fr 1fr 1fr',
-                                        '@xl': {
-                                            gridTemplateColumns: '1fr 1fr'
-                                        },
-                                        '@md': {
-                                            gridTemplateColumns: '1fr'
-                                        }
-                                    }}>
-                                    {cards.map((card, i) => (
-                                        <Card key={card.link} {...card} id={i} />
-                                    ))}
-                                </Box>
-
-                                <Box
-                                    css={{
-                                        height: '1px',
+                                    width: '1.5px',
+                                    my: '0',
+                                    backgroundColor: '$surfaceLight',
+                                    '@lg': {
                                         width: '100%',
-                                        my: '$12',
-                                        borderTop: '1px solid',
-                                        borderColor: '$borderDefault'
-                                    }}
-                                />
-
-                                <Flex
-                                    css={{
-                                        flexDirection: 'row',
-                                        gap: '$12',
-                                        '@lg': { flexDirection: 'column' }
-                                    }}>
-                                    <PopularGuides />
-                                    <Box
-                                        css={{
-                                            width: '1.5px',
-                                            my: '0',
-                                            backgroundColor: '$surfaceLight',
-                                            '@lg': {
-                                                width: '100%',
-                                                height: '1px',
-                                                my: '$12'
-                                            }
-                                        }}
-                                    />
-                                    <NewReleases />
-                                </Flex>
-                            </Box>
-                        ) : null}
-                    </Flex>
-                    <Footer css={{ backgroundColor: 'var(--docs_bg_footer)' }} />
-                </>
-            ) : null}
+                                        height: '1px',
+                                        my: '$12'
+                                    }
+                                }}
+                            />
+                            <NewReleases />
+                        </Flex>
+                    </Box>
+                ) : null}
+            </Flex>
+            <Footer css={{ backgroundColor: 'var(--docs_bg_footer)' }} />
         </>
-    );
+    ) : null;
 };
 
 export default Homepage;
