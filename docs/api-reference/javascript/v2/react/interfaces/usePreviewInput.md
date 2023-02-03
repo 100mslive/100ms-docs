@@ -4,6 +4,12 @@ title: usePreviewInput
 
 ## Properties
 
+### asRole
+
+• `Optional` **asRole**: `string`
+
+___
+
 ### captureNetworkQualityInPreview
 
 • `Optional` **captureNetworkQualityInPreview**: `boolean`
