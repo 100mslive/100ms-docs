@@ -41,7 +41,7 @@ const SdkList = {
     Server: {
         icon: <ServerIcon style={iconStyle} />,
         id: 'server',
-        link: '/server/v2/changelog/release-notes'
+        link: '/server-side/v2/changelog/release-notes'
     }
 };
 
@@ -76,7 +76,7 @@ const NewReleases = () => (
             New releases
         </Text>
         <Text variant="sm" css={{ color: '$textMedEmp', mt: '$2', mb: '$10' }}>
-            Discover the newest video/audio possibilities with our latest releases{' '}
+            Follow our changelog for new features and improvements
         </Text>
         <Box
             css={{

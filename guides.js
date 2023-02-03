@@ -1,17 +1,17 @@
 export const guides = [
     {
-        title: 'Authentication',
-        subText: 'Learn how to authenticate your rooms via tokens',
-        link: '/concepts/v2/concepts/security-and-tokens'
+        title: 'Interactive Live Streaming',
+        subText: 'Learn how to live stream your rooms and interact with viewers',
+        link: '/concepts/v2/concepts/live-streaming'
     },
     {
         title: 'Hand Raise',
-        subText: 'Learn how to implement hand raise using peer meta data',
+        subText: 'Learn how to implement hand raise using peer metadata',
         link: '/javascript/v2/how--to-guides/build-interactive-features/peer-metadata'
     },
     {
-        title: 'Breakout Rooms',
-        subText: 'Learn how to create breakout rooms using roles ',
-        link: '/concepts/v2/concepts/security-and-tokens'
+        title: 'Recordings',
+        subText: 'Get composite and track-level recordings for video on-demand scenarios',
+        link: '/concepts/v2/concepts/recordings'
     }
 ];

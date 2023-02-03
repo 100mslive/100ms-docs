@@ -60,7 +60,7 @@ const Homepage = ({ allNav }) => {
                 onHomePage
             />
 
-            <Flex justify="center" css={{ mx: 'auto', h: '100vh' }}>
+            <Flex justify="center" css={{ mx: 'auto', minHeight: '100vh' }}>
                 <Sidebar menuState={menuState} nav={{}} allNav={allNav} />
                 {!menu ? (
                     <Box
@@ -85,7 +85,7 @@ const Homepage = ({ allNav }) => {
                             }}>
                             The 100ms SDK gives you everything you need to build scalable,
                             high-quality live video and audio experiences. Explore our docs to learn
-                            how
+                            how.
                         </Text>
 
                         <MainCard />
