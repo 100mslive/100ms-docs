@@ -7,7 +7,7 @@ If you use Apple's AVPlayer to play HLS stream, you can utilise 100ms SDK to mon
 
 ## Minimum Requirements
 
--   SDK version 0.5.1
+-   SDK version 0.6.2
 -   You must be using AVPlayer for HLS Playback
 
 ## How to monitor HLS playback statistics
@@ -15,11 +15,12 @@ If you use Apple's AVPlayer to play HLS stream, you can utilise 100ms SDK to mon
 You create an instance of HMSHLSPlaybackMonitor class passing an instance of AVPlayer that's setup to play an HLS stream.
 
 ```swift
+let sdk = HMSSDK.build()
 var statMonitor: HMSHLSStatsMonitor?
 
 ...
 let player = AVPlayer(playerItem: item)
-statMonitor = HMSHLSStatsMonitor(player: player)
+statMonitor = sdk.hlsStatsMonitor(player: player)
 ```
 
 That's all. Now you can check the properties exposed by HMSHLSStatsMonitor at any moment to get various stats about the current HLS playback.
