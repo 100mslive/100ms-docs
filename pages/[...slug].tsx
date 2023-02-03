@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import fs from 'fs';
@@ -6,6 +6,7 @@ import path from 'path';
 import mdxPrism from 'mdx-prism';
 import EditFile from '@/components/EditFile';
 import components from '@/components/MDXComponents';
+import { Box } from '@100mslive/react-ui';
 import Pagination from '@/components/Pagination';
 import Sidebar from '@/components/Sidebar';
 import Toc from '@/components/Toc';
@@ -139,6 +140,9 @@ const DocSlugs = ({ source, frontMatter, pagination, nav, showToc = true, allNav
         }`
     };
 
+    const [showSideBar, setShowSideBar] = useState(false);
+    useEffect(() => setShowSideBar(true), []);
+
     return (
         <div style={{ margin: '0' }}>
             <NextSeo {...SEO} />
@@ -158,9 +162,11 @@ const DocSlugs = ({ source, frontMatter, pagination, nav, showToc = true, allNav
                         maxWidth: '1500px',
                         justifyContent: 'space-between'
                     }}>
-                    <div>
-                        <Sidebar menuState={menuState} nav={nav} allNav={allNav}/>
-                    </div>
+                    {showSideBar ? (
+                        <Sidebar menuState={menuState} nav={nav} allNav={allNav} />
+                    ) : (
+                        <Box css={{ minWidth: '304px' }} />
+                    )}
                     {!menu ? (
                         <article
                             style={{
@@ -247,7 +253,7 @@ export const getStaticProps = async ({ params }) => {
                             'mdxjsEsm'
                         ]
                     }
-                ],
+                ]
             ];
             options.providerImportSource = '@mdx-js/react';
 

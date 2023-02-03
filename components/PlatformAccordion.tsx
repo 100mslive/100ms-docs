@@ -48,7 +48,7 @@ const PlatformAccordion = ({ title, icon, data }) => {
                             data['v2'][item][Object.keys(data['v2'][item])[0]]?.url ||
                             data['v2'][item][Object.keys(data['v2'][item])[0]][
                                 Object.keys(data['v2'][item][Object.keys(data['v2'][item])[0]])[0]
-                            ]
+                            ].url
                         }
                         key={`${title}-${item}`}>
                         <Text
