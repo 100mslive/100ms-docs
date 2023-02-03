@@ -1224,6 +1224,24 @@ div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a#hs-eu-cookie
     display: none;
 }
 
+.page {
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    opacity: 0;
+    width: 300px;
+    box-sizing: border-box;
+    pointer-events: none;
+    transition: all ease 0.4s;
+}
+
+.active-page {
+    opacity: 1;
+    pointer-events: auto;
+    width: 304px;
+    z-index: 10;
+}
+
 @media screen and (max-width: 1160px) {
 
     .footer-wrapper {
@@ -1262,7 +1280,7 @@ div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a#hs-eu-cookie
     }
 }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 768px) {
     div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner div#hs-en-cookie-confirmation-buttons-area {
         display: flex;
         flex-direction: column;
@@ -1337,6 +1355,10 @@ div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a#hs-eu-cookie
         flex-direction: column;
         gap: 32px;
         margin-bottom: 24px;
+    }
+    .page {
+        top: 2.5rem;
+        width: 100vw;
     }
 }
 
