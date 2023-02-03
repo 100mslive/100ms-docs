@@ -53,8 +53,8 @@ const PlatformAccordion = ({ title, icon, data }) => {
                         key={`${title}-${item}`}>
                         <Text
                             variant="sm"
-                          css={{ pl: '$12', my: '$8', color: 'var(--docs_text_primary)' }}>
-                           {titleCasing(item)}
+                            css={{ pl: '$12', my: '$8', color: 'var(--docs_text_primary)' }}>
+                            {titleCasing(item)}
                         </Text>
                     </a>
                 ))}
