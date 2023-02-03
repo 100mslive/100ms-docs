@@ -91,8 +91,8 @@ const MainCard = () => {
                             color: '$textMedEmp',
                             maxWidth: '$80'
                         }}>
-                        Learn how to setup your first app with 100ms and integrated video into your
-                        use case
+                        Take your first step with live video and audio integration using the 100ms
+                        SDK. Get started now.
                     </Text>
                 </Box>
                 <Flex css={{ gap: '$10', mt: '$10', flexWrap: 'wrap' }}>

@@ -9,7 +9,7 @@ const PopularGuides = () => (
             Popular how-to guides
         </Text>
         <Text variant="sm" css={{ color: '$textMedEmp', mt: '$2', mb: '$10' }}>
-            Guides trending in popularity amongst other SDK consumers
+            Streamline your integration process with our popular guides{' '}
         </Text>
         {guides.map((guide) => (
             <Flex gap="2">

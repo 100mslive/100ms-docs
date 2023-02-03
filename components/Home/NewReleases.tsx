@@ -76,7 +76,7 @@ const NewReleases = () => (
             New releases
         </Text>
         <Text variant="sm" css={{ color: '$textMedEmp', mt: '$2', mb: '$10' }}>
-            Latest SDK releases from the team with release notes{' '}
+            Discover the newest video/audio possibilities with our latest releases{' '}
         </Text>
         <Box
             css={{

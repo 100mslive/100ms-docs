@@ -41,7 +41,7 @@ const Homepage = ({ allNav }) => {
     const [modal, setModal] = useState(false);
     const menuState = { menu, setMenu };
     const [renderComponents, setRenderComponents] = useState(false);
-    
+
     useEffect(() => {
         setRenderComponents(true);
     }, []);
@@ -80,29 +80,11 @@ const Homepage = ({ allNav }) => {
                         <Text
                             css={{
                                 color: '$textMedEmp',
-                                mt: '$2',
-                                display: 'block',
-                                '@md': {
-                                    display: 'none'
-                                }
+                                mt: '$2'
                             }}>
-                            Welcome to Docs. With the 100ms SDK, you can easily incorporate live
-                            audio and video capabilities into your own projects,
-                            <br /> such as building virtual meetings and video conferencing
-                            applications
-                        </Text>
-
-                        <Text
-                            css={{
-                                color: '$textMedEmp',
-                                mt: '$2',
-                                display: 'none',
-                                '@md': {
-                                    display: 'block'
-                                }
-                            }}>
-                            100ms gives you everything you need to build scalable live video and
-                            audio experiences into your application
+                            The 100ms SDK gives you everything you need to build scalable,
+                            high-quality live video and audio experiences. Explore our docs to learn
+                            how
                         </Text>
 
                         <MainCard />
