@@ -89,7 +89,7 @@ const MainCard = () => {
                         css={{
                             mt: '$2',
                             color: '$textMedEmp',
-                            maxWidth: '$80'
+                            maxWidth: '$96'
                         }}>
                         Take your first step with live video and audio integration using the 100ms
                         SDK. Get started now.

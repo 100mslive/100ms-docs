@@ -80,7 +80,8 @@ const Homepage = ({ allNav }) => {
                         <Text
                             css={{
                                 color: '$textMedEmp',
-                                mt: '$2'
+                                mt: '$2',
+                                maxWidth: "600px"
                             }}>
                             The 100ms SDK gives you everything you need to build scalable,
                             high-quality live video and audio experiences. Explore our docs to learn
