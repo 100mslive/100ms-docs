@@ -33,7 +33,7 @@ When you have completed your integration with 100ms, and while transitioning you
 
 #### Code sample: Generate app token
 
-<Tabs id="client-code-token" items={['Node.js', 'Python', 'Java', 'Ruby', 'PHP']} />
+<Tabs id="client-code-token" items={[Node.js, Python, Java, Ruby, PHP]} />
 
 <Tab id='client-code-token-0'>
 
