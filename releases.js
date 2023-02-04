@@ -20,17 +20,17 @@ export const releases = [
     {
         platform: PLATFORM_REACT_NATIVE,
         version: '1.1.1',
-        date: 'December 12, 2022'
+        date: 'December 22, 2022'
     },
     {
         platform: PLATFORM_WEB,
-        version: '2022-12-19',
+        version: '2023-02-03',
         date: 'December 19, 2022'
     },
     {
         platform: PLATFORM_FLUTTER,
         version: '1.3.0',
-        date: 'February 1, 2022'
+        date: 'February 1, 2023'
     },
     {
         platform: PLATFORM_SERVER,
