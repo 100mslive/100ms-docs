@@ -25,12 +25,12 @@ export const releases = [
     {
         platform: PLATFORM_WEB,
         version: '2023-02-03',
-        date: 'December 19, 2022'
+        date: 'February 02, 2023'
     },
     {
         platform: PLATFORM_FLUTTER,
         version: '1.3.0',
-        date: 'February 1, 2023'
+        date: 'February 01, 2023'
     },
     {
         platform: PLATFORM_SERVER,
