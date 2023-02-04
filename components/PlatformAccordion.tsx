@@ -4,13 +4,13 @@ import { Flex, Text } from '@100mslive/react-ui';
 import { titleCasing } from '../lib/utils';
 
 const references = {
-    Web: '/api-reference/javascript/v2/home/content',
-    Android: '/api-reference/android/v2/index.html',
-    'React Native': '/api-reference/react-native/v2/modules.html',
+    Web: '/docs/api-reference/javascript/v2/home/content',
+    Android: '/docs/api-reference/android/v2/index.html',
+    'React Native': '/docs/api-reference/react-native/v2/modules.html',
     Flutter:
         'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html',
-    iOS: '/api-reference/ios/v2/home/content',
-    'Server Side': '/server-side/v2/introduction/basics'
+    iOS: '/docs/api-reference/ios/v2/home/content',
+    'Server side': '/docs/server-side/v2/introduction/basics'
 };
 
 const PlatformAccordion = ({ title, icon, data }) => {
