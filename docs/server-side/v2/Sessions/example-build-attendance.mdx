@@ -82,16 +82,19 @@ var parsedData = response.data;
 ```javascript
 // Calculate individual participants' duration
 const peers = Object.values(parsedData.peers);
-const durationByUser = peers.reduce((acc, peer) => {
-    const duration = moment.duration(moment(peer.left_at).diff(moment(peer.joined_at))).asMinutes();
+const detailsByUser = peers.reduce((acc, peer) => {
+    const duration = moment
+        .duration(moment(peer.left_at).diff(moment(peer.joined_at)))
+        .asMinutes();
     const roundedDuration = Math.round(duration * 100) / 100;
-    acc[peer.user_id] = (acc[peer.user_id] || 0) + roundedDuration;
+    acc[peer.user_id] = {
+        "name": peer.name,
+        "user_id": peer.user_id,
+        "duration": (acc[peer.user_id] || 0) + roundedDuration
+    };
     return acc;
 }, {});
-const result = Object.entries(durationByUser).map(([user_id, duration]) => ({
-    user_id,
-    duration
-}));
+const result = Object.values(detailsByUser);
 console.log(result);
 ```
 
@@ -101,8 +104,8 @@ Calculate aggregated participants' duration by adding the duration of all the pe
 
 ```javascript
 // Calculate aggregated participants' duration
-const totalDuration = Object.values(durationByUser)
-    .reduce((a, b) => a + b)
+const totalDuration = result
+    .reduce((a, b) => a + b.duration, 0)
     .toFixed(2);
 console.log(`Total duration for all peers: ${totalDuration} minutes`);
 ```
@@ -126,8 +129,8 @@ Check the below example to understand how you can store the data in your preferr
 
 ```json
 [
-  { user_id: 'user1', duration: 2.42 },
-  { user_id: 'user2', duration: 2.37 }
+  { name: 'username1', user_id: 'user1', duration: 2.42 },
+  { name: 'username2', user_id: 'user2', duration: 2.37 }
 ]
 Total duration for all peers: 4.79 minutes
 Total session duration is: 2.42 minutes
@@ -221,23 +224,24 @@ app.post('/webhooks', async function (req, res) {
 
             // Calculate individual participants' duration
             const peers = Object.values(parsedData.peers);
-            const durationByUser = peers.reduce((acc, peer) => {
+            const detailsByUser = peers.reduce((acc, peer) => {
                 const duration = moment
                     .duration(moment(peer.left_at).diff(moment(peer.joined_at)))
                     .asMinutes();
                 const roundedDuration = Math.round(duration * 100) / 100;
-                acc[peer.user_id] = (acc[peer.user_id] || 0) + roundedDuration;
+                acc[peer.user_id] = {
+                    "name": peer.name,
+                    "user_id": peer.user_id,
+                    "duration": (acc[peer.user_id] || 0) + roundedDuration
+                };
                 return acc;
             }, {});
-            const result = Object.entries(durationByUser).map(([user_id, duration]) => ({
-                user_id,
-                duration
-            }));
+            const result = Object.values(detailsByUser);
             console.log(result);
 
             // Calculate aggregated participants' duration
-            const totalDuration = Object.values(durationByUser)
-                .reduce((a, b) => a + b)
+            const totalDuration = result
+                .reduce((a, b) => a + b.duration, 0)
                 .toFixed(2);
             console.log(`Total duration for all peers: ${totalDuration} minutes`);
 
