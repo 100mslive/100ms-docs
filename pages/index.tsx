@@ -60,7 +60,12 @@ const Homepage = ({ allNav }) => {
                 onHomePage
             />
 
-            <Flex justify="center" css={{ mx: 'auto', minHeight: '100vh' }}>
+            <Flex
+                justify="center"
+                css={{
+                    mx: 'auto',
+                    minHeight: '100vh'
+                }}>
                 <Sidebar menuState={menuState} nav={{}} allNav={allNav} />
                 {!menu ? (
                     <Box
@@ -69,6 +74,9 @@ const Homepage = ({ allNav }) => {
                             p: '$14 $16',
                             borderLeft: '1px solid',
                             borderColor: '$borderDefault',
+                            backgroundImage: "url('/docs/bg-desktop.png')",
+                            backgroundSize: 'contain',
+                            backgroundRepeat: 'no repeat',
                             '@sm': {
                                 p: '$10'
                             }
@@ -81,7 +89,7 @@ const Homepage = ({ allNav }) => {
                             css={{
                                 color: '$textMedEmp',
                                 mt: '$2',
-                                maxWidth: "600px"
+                                maxWidth: '600px'
                             }}>
                             The 100ms SDK gives you everything you need to build scalable,
                             high-quality live video and audio experiences. Explore our docs to learn
