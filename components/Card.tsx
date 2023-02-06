@@ -9,7 +9,7 @@ interface CardProps {
     id: Number;
 }
 
-const MAIN_GRADIENT = 'linear-gradient(267.69deg, $surfaceLight 25%, $surfaceDark 70%);';
+const MAIN_GRADIENT = 'linear-gradient(235deg, $surfaceLighter 15%, $surfaceDark 70%);';
 
 const Card: React.FC<CardProps> = ({ icon, title, link, subText, id }) => (
     <Flex
@@ -53,7 +53,7 @@ const Card: React.FC<CardProps> = ({ icon, title, link, subText, id }) => (
         <Flex
             align="center"
             gap="1"
-            css={{ backgroundColor: '$surfaceLighter', color: '$primaryLight', padding: '$8 $10' }}>
+            css={{ backgroundColor: '$surfaceLight', color: '$primaryLight', padding: '$8 $10' }}>
             <Text variant="xs" css={{ color: '$primaryLight', fontWeight: '$semiBold' }}>
                 Read more
             </Text>
