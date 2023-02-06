@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Text, Flex, Box } from '@100mslive/react-ui';
 import Header from '@/components/Header';
 import Badge from '@/components/Home/Badge';
@@ -8,6 +8,7 @@ import { ServerIcon } from '@100mslive/react-icons';
 
 const NotFound = () => {
     const router = useRouter();
+    const [renderComponents, setRenderComponents] = useState(false);
     const [menu, setMenu] = useState(false);
     const [modal, setModal] = useState(false);
     const menuState = { menu, setMenu };
@@ -21,7 +22,10 @@ const NotFound = () => {
             link: '/server-side/v2/introduction/basics'
         }
     ];
-    return (
+
+    useEffect(() => setRenderComponents(true), []);
+
+    return renderComponents ? (
         <Box>
             <Header
                 modal={modal}
@@ -76,7 +80,7 @@ const NotFound = () => {
                 </Box>
             </Flex>
         </Box>
-    );
+    ) : null;
 };
 
 export default NotFound;
