@@ -8,17 +8,15 @@ Breakout rooms are a space within the main room where peers can participate in s
 3. During the stream, you want the guests to break out into smaller rooms
 4. Discuss among themselves, with or without watching the main room stream
 
-## Enable breakout room using roles
+## Understand roles to enable breakout room
 
 You can implement breakout rooms using [roles](https://www.100ms.live/docs/javascript/v2/foundation/templates-and-roles) in 100ms. A role is a collection of permissions that allows you to perform a particular set of operations while being part of the room. You can create a role using the [100ms Dashboard](https://dashboard.100ms.live/templates/) or [server API](/server-side/v2/policy/create-update-role).
 
-### Outline
-
 Now, let's decide on the Architecture of Breakout Rooms, which will help create several breakout roles and set permissions accordingly.
 
-- **Publish Strategy**: This determines the tracks (Audio/Video/Screen-share) and their quality that a role can publish.
+- **Publish Strategy**: This determines the tracks (audio/video/screen-share) and their quality that a role can publish.
   - For example:
-    - *Host* - This role can publish Audio and Video and also do screen-share. 
+    - *Host* - This role can publish audio and video and also share screen. 
     - Video Quality at 720p. 
     - Video aspect ratio is 16:9 and screen share quality is 1080p
   
@@ -26,17 +24,20 @@ Now, let's decide on the Architecture of Breakout Rooms, which will help create 
 - **Subscribe Strategy**: This helps define which roles the role can subscribe to; hence, those available tracks/details would be visible.
   - For Example: 
     - *Co-host* is subscribed to the host, co-host, and moderator.
-    - This means peers joining as co-hosts can see other peers with roles of host, co-host, and moderator if they are also publishing the track.
+    - This means participants joining as co-hosts can see other participants with roles of host, co-host, and moderator if they are also publishing the track.
 
   ![Subscribe-Strategy](/breakoutroom/subscribe-strategy.png)
-- **Permissions**: These are params that can be set per role based on which peers joining as the given role can or cannot perform the activities
+- **Permissions**: These are params that can be set per role based on which participants joining as the given role can or cannot perform the activities
   - For Example: *Moderator* - This role can have all permissions similar to host/co-host but does not have permission to end the ongoing session
 
   ![Permission](/breakoutroom/permission.png)
 
-## Example implementation
+## Try breakout room
 
-Host and Co-host are on the main stage of the stream and Moderator in the back stage. Guests are viewers who are watching stream conducted by host and co-host. Now guest want to discuss while watching the stream in breakout room
+Let's consider the below flow to try out breakout room:
+- The host and co-host are on the main stage of the stream, and the moderator in backstage. 
+- Guests are viewers watching a stream conducted by the host and co-host. 
+- Now guests want to discuss while watching the stream in the breakout room.
 
 ### Create roles
 
@@ -81,11 +82,11 @@ Create a template with roles host, co-host, guest, moderator and breakout room.
 
 In this section, we will walk you through a demo of breakout rooms using 100ms demo links.
 
-#### View moving to breakout room
+#### View - before moving to breakout room
 
-You can check how the stream for participants belonging to respective roles look like before moving to breakout room as viewed by each role
+Now, for the roles created from the previous section, you can check how the stream looks for each participant before moving to the breakout room based on their respective role. 
 
-- **Host**: can see/hear Cohost and moderator
+- **Host**: can see/hear co-host and moderator
 
   ![Stream-Host](/breakoutroom/stream-host.png)
 
@@ -97,64 +98,78 @@ You can check how the stream for participants belonging to respective roles look
 
   ![Stream-Moderator](/breakoutroom/stream-moderator.png)
 
-- **Guest**: can see/hear host and Co-host
+- **Guest**: can see/hear host and co-host
 
   ![Stream-Guest](/breakoutroom/stream-guest.png)
 
->Note: This is 100ms sample app UI on Web. The UI can be completely customized as per your requirements.
+> Note: This is 100ms sample app UI on Web. You can customize the UI completely as per your requirements. Refer to [this guide](/javascript/v2/get-started/react-sample-app/quickstart) for more information. 
 
-#### Moving guests to breakout room
+#### Move guests to breakout room
 
-- The moderator can move the participants with guest role to breakout rooms by changing the role from the peer list. 
+- **Fetch list of participants**: The moderator can fetch the list of participants from the peer list.
 
   ![Role-change](/breakoutroom/moderator-to-guest.png)
 
-- Change role to Breakout room role - This can be done in both forced way as well as by taking permission from the guest 
+- **Change role to breakout room role**:
+  - The moderator can change the role of the participants with the *guest* role to move them from the main room to the breakout room.
+  - The role change can be forced by the moderator or upon permission granted by the guest. 
 
   ![Role-change-breakout](/breakoutroom/change-role1.png)
 
-- Role Changed to Breakout room roles
+- **Role changed to breakout room**
 
   ![Role-change-breakout1](/breakoutroom/change-role2.png)
 
 ### View of Breakout room
 
-- Once the roles are changed now guest can see and listen to each other and watch stream in the main room at the same time
+- Once the roles are changed, guests can see and listen to each other and simultaneously watch the stream in the main room.
 
   ![View-breakout1](/breakoutroom/view-breakout.png)
 
-- Permission can be given to guest role to self movement to breakout room as well. In this case guest role should have role change permission which can be set from the template -**
+- You can enable the permission for the guest role in the template to self-movement to the breakout room. 
 
   ![Permission-breakout](/breakoutroom/role-permission.png)
 
-## Manage breakout room using Client SDKs
+## Integrate in your app
 
-If a role has the permission from the template to change participant’s role then this can be achieved using change single peer role API. 
+To integrate breakout rooms in your app, follow these steps:
+1. [Create roles to enable breakout room](#create-roles)
+2. [Client-side integration](#client-side-integration) - to manage breakout room
+3. [Server-side integration](#server-side-integration) - to create roles and manage breakout room
 
-**Change single peer role**: This API will move one peer from one role to another. This can be forced as well as by request. A logic can be written at client side to pick up the peers and change the roles.
+### Client-side integration
+
+Once the template is set up with roles to enable the breakout room, you can change a single peer role API to change a participant's role from one specific role to another. You can force the role change or do it upon permission granted by the guest. 
+
+If a participant has to change another participant's role, you must enable respective permission for that role in the template.
+
+Check the below links for more information on the change role API for respective platforms: 
 - [JS/React](/javascript/v2/how--to-guides/control-remote-peers/change-role#change-single-peer-role-api)
 - [Android](/android/v2/how--to-guides/interact-with-room/peer/change-role#single-peer-role-change)
 - [iOS](/ios/v2/how--to-guides/interact-with-room/peer/change-role)
 - [React Native](/react-native/v2/how--to-guides/interact-with-room/peer/change-role#single-peer-role-change)
 - [Flutter](/flutter/v2/how--to-guides/interact-with-room/peer/change-role)
 
-## Server-side only implementation
-### Create roles
-### Change roles
+### Server-side integration
 
-**Server Side** - From Server side you can use peer update API which lets you update the role of the peer and move it into the breakout room role [here](/server-side/v2/active-rooms/update-a-peer)
+You can use server-sider APIs to manage this entirely from the server side. 
 
-**Note** - Template and roles can be created via server side API’s as well. More on that [here](/server-side/v2/policy/template-object).
+**Create roles:**
+- Create a template with roles host, co-host, guest, moderator, and breakout room with respective publish/subscribe strategies and permissions.
+  - To create a template with these roles, you can use the [create a template API](/server-side/v2/policy/create-template-via-api).
+  - To create these roles to an existing template, you can use the [create a role API](/server-side/v2/policy/create-update-role).
+
+**Change roles:**
+You can use the [update a peer API](/server-side/v2/active-rooms/update-a-peer) in conjunction with the [list peers API](/server-side/v2/active-rooms/list-peers) to fetch the list of participants with role information and change their role to "breakout room" to move them to a breakout room. 
 
 ## Record a breakout room
 
-You can pass the meeting URL of the breakout room role in the browser based recording, where in beam will record the breakout room. 
-More on browser based recording [here](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording)
+You can pass the meeting URL of the breakout room role in the browser-based recording, where the beam will record the breakout room. More on browser-based recording [here](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording).
 
-> Note: Currently, 100ms supports only one beam per room hence you can either record main room or any of the breakout room. Although Supporting Multi beam is in the pipeline.
+> Note: Currently, 100ms supports only one beam per room; hence you can either record the main room or any of the breakout rooms. Although Supporting Multi beam is in the pipeline.
 
 ## Example customer implementation
 
-Mingout automated the matching of peers, created on fly the predefined roles using template API and then automated the movement of peers without any manual intervention.
+Mingout automated the matching of participants, created predefined roles on the fly using template API and then automated the movement of participants without any manual intervention.
 More on that [here](https://www.100ms.live/blog/mingout-100ms-reimagine-online-dating#customizations-to-match-the-problem).
 
