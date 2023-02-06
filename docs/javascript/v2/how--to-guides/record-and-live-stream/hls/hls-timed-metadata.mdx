@@ -31,14 +31,15 @@ The payload is sent in the EXT-X-DATERANGE tag as value for the custom attribure
 
 ```json
 {
-    "start_date": "UTC date",
     "payload": "payload sent by the user",
-    "end_date": "<start_date + duration>"
+    "start_date": "2023-02-06T07:24:11.259+0000",
+    "end_date": "2023-02-06T07:24:21.259+0000",
     "hms_version": "v1.1"
 }
 ```
+start_date and end_date will be in UTC format.
 
-### APP side implementation
+### App side implementation
 
 ```javascript
 const handleTimeUpdateListener = _ => {
@@ -107,10 +108,10 @@ if (Hls.isSupported()) {
 
 ```
 
->Please Note : Above implementation might change in future.
+>Note : Above implementation might change in future.
 
 ## Limitations
 
-- It’s hard to sync metadata with stream exactly due to the latency from FFmpeg creating the stream. To address this, we’ve added 2 s the actual `START-DATE` attribute.
+- It’s hard to sync metadata with stream exactly due to the latency from FFmpeg creating the stream. To address this, we’ve added 2 s delay of the actual `START-DATE` attribute.
 - The API now allows sending only three metadata objects at once with each having a `payload` string of max length of 100. These can further be tuned based on experimentation.
 - The payload cannot have `"`(double quotes). So json won’t be supported. This is a limitation from HLS spec.
