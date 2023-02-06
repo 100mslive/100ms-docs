@@ -25,8 +25,9 @@ const NewReleases = () => (
                 gridColumnGap: '60px',
                 '@sm': { gridColumnGap: '2rem' }
             }}>
-            {releases.map((release) => (
-                <ReleaseItem key={release.version} {...release} />
+            {Object.keys(releases).map((release) => (
+                // <ReleaseItem key={release.version} {...release} />
+                <>{release}</>
             ))}
         </Box>
     </Box>
