@@ -475,6 +475,11 @@ const nextConfig = {
                 permanent: true
             },
             {
+                source: '/android/v2/how--to-guides/configure-your-device/echo-cancellation',
+                destination: '/android/v2/how--to-guides/configure-your-device/microphone/echo-cancellation',
+                permanent: true
+            },
+            {
                 source: '/android/v2/advanced-features/track-settings',
                 destination: '/android/v2/how--to-guides/interact-with-room/track/track-settings',
                 permanent: true
