@@ -10,10 +10,6 @@ import {
 import { Flex, Box, Text } from '@100mslive/react-ui';
 import { releases } from '../../releases';
 
-console.log('Releases');
-
-Object.keys(releases).forEach((release) => console.log(releases[release]));
-
 const NewReleases = () => (
     <Box css={{ maxWidth: '500px', w: '100%' }}>
         <Text variant="h6" css={{ color: '$textHighEmp', mt: '0' }}>
@@ -41,6 +37,31 @@ const NewReleases = () => (
 );
 
 export default NewReleases;
+
+const ReleaseItem = ({ platform, version, date }) => (
+    <Flex gap="2" css={{ color: '$textHighEmp' }}>
+        {SdkList[platform].icon}
+        <Box>
+            <Link href={SdkList[platform].link}>
+                <a>
+                    <Text variant="sm" className="mono" css={{ color: '$primaryLight' }}>
+                        {version} / {platform === 'Server-side' ? 'Server' : platform}
+                    </Text>
+                </a>
+            </Link>
+            <Text
+                variant="sm"
+                className="mono"
+                css={{
+                    color: '$textMedEmp',
+                    mt: '$2',
+                    mb: '$8'
+                }}>
+                {date}
+            </Text>
+        </Box>
+    </Flex>
+);
 
 const iconStyle = { color: 'inherit', marginTop: '0.25rem' };
 
@@ -76,28 +97,3 @@ const SdkList = {
         link: '/server-side/v2/changelog/release-notes'
     }
 };
-
-const ReleaseItem = ({ platform, version, date }) => (
-    <Flex gap="2" css={{ color: '$textHighEmp' }}>
-        {SdkList[platform].icon}
-        <Box>
-            <Link href={SdkList[platform].link}>
-                <a>
-                    <Text variant="sm" className="mono" css={{ color: '$primaryLight' }}>
-                        {version} / {platform === 'Server-side' ? 'Server' : platform}
-                    </Text>
-                </a>
-            </Link>
-            <Text
-                variant="sm"
-                className="mono"
-                css={{
-                    color: '$textMedEmp',
-                    mt: '$2',
-                    mb: '$8'
-                }}>
-                {date}
-            </Text>
-        </Box>
-    </Flex>
-);
