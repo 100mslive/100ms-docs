@@ -46,7 +46,6 @@ const Homepage = ({ allNav }) => {
         setRenderComponents(true);
     }, []);
 
-    console.log(allNav);
     useLockBodyScroll(modal);
 
     return renderComponents ? (

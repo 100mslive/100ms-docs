@@ -12,7 +12,7 @@ const PopularGuides = () => (
             Explore breadth of capabilities with popular guides
         </Text>
         {guides.map((guide) => (
-            <Flex gap="2">
+            <Flex gap="2" key={guide.title}>
                 <FilesIcon style={{ marginTop: '0.15rem' }} />
                 <Box>
                     <Link href={guide.link}>
