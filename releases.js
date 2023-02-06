@@ -6,7 +6,7 @@ const PLATFORM_REACT_NATIVE = 'React Native';
 const PLATFORM_FLUTTER = 'Flutter';
 
 
-export const releases = [
+exports.releases = releases = [
     {
         platform: PLATFORM_ANDROID,
         version: 'v2.5.7',
