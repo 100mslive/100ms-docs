@@ -9,8 +9,7 @@ interface CardProps {
     id: Number;
 }
 
-const MAIN_GRADIENT = 'linear-gradient(267.69deg, $surfaceDefault 1.8%, $surfaceDark 70.32%);';
-const HOVER_GRADIENT = 'linear-gradient(267.69deg, $surfaceDark 1.8%, $surfaceDefault 80.32%);';
+const MAIN_GRADIENT = 'linear-gradient(267.69deg, $surfaceLight 25%, $surfaceDark 70%);';
 
 const Card: React.FC<CardProps> = ({ icon, title, link, subText, id }) => (
     <Flex
@@ -27,8 +26,11 @@ const Card: React.FC<CardProps> = ({ icon, title, link, subText, id }) => (
             overflow: 'clip',
             cursor: 'pointer',
             background: MAIN_GRADIENT,
+            backgroundSize: '200%',
+            backgroundPosition: 'left',
+            transition: 'background-position ease 0.4s',
             '&:hover': {
-                background: HOVER_GRADIENT
+                backgroundPosition: 'right'
             },
             '@xl': {
                 gridColumn: id === 2 ? '1/3' : ''
@@ -51,7 +53,7 @@ const Card: React.FC<CardProps> = ({ icon, title, link, subText, id }) => (
         <Flex
             align="center"
             gap="1"
-            css={{ backgroundColor: '$surfaceLight', color: '$primaryLight', padding: '$8 $10' }}>
+            css={{ backgroundColor: '$surfaceLighter', color: '$primaryLight', padding: '$8 $10' }}>
             <Text variant="xs" css={{ color: '$primaryLight', fontWeight: '$semiBold' }}>
                 Read more
             </Text>
