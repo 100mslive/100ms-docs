@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import fs from 'fs';
@@ -6,6 +6,7 @@ import path from 'path';
 import mdxPrism from 'mdx-prism';
 import EditFile from '@/components/EditFile';
 import components from '@/components/MDXComponents';
+import { Box } from '@100mslive/react-ui';
 import Pagination from '@/components/Pagination';
 import Sidebar from '@/components/Sidebar';
 import Toc from '@/components/Toc';
@@ -24,6 +25,8 @@ import remarkGfm from 'remark-gfm';
 import remarkA11yEmoji from '@fec/remark-a11y-emoji';
 import { MDXProvider, useMDXComponents } from '@mdx-js/react';
 import imagePlugin from '@/lib/image';
+import { remarkCodeHike } from '@code-hike/mdx';
+import theme from 'shiki/themes/github-dark.json';
 
 type NavRoute = {
     url: string;
@@ -51,12 +54,14 @@ interface Props {
         nav: number;
     };
     nav: Record<string, Record<string, NavRoute>>;
+    allNav: Record<string, Record<string, NavRoute>>[];
 
     pagination: {
         previousPost: PaginationType;
         nextPost: PaginationType;
     };
     source: string;
+    showToc?: boolean;
 }
 
 const MDX_GLOBAL_CONFIG = {
@@ -65,7 +70,7 @@ const MDX_GLOBAL_CONFIG = {
     }
 };
 
-const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
+const DocSlugs = ({ source, frontMatter, pagination, nav, showToc = true, allNav }: Props) => {
     const {
         query: { slug },
         asPath
@@ -135,6 +140,9 @@ const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
         }`
     };
 
+    const [showSideBar, setShowSideBar] = useState(false);
+    useEffect(() => setShowSideBar(true), []);
+
     return (
         <div style={{ margin: '0' }}>
             <NextSeo {...SEO} />
@@ -154,9 +162,11 @@ const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
                         maxWidth: '1500px',
                         justifyContent: 'space-between'
                     }}>
-                    <div>
-                        <Sidebar menuState={menuState} nav={nav} />
-                    </div>
+                    {showSideBar ? (
+                        <Sidebar menuState={menuState} nav={nav} allNav={allNav} />
+                    ) : (
+                        <Box css={{ minWidth: '304px' }} />
+                    )}
                     {!menu ? (
                         <article
                             style={{
@@ -183,11 +193,13 @@ const DocSlugs = ({ source, frontMatter, pagination, nav }: Props) => {
                             <EditFile slug={asPath} />
                         </article>
                     ) : null}
-                    <Toc
-                        activeHeading={activeHeading}
-                        activeSubHeading={activeSubHeading}
-                        CurrentDocsSlug={currentDocSlug}
-                    />
+                    {showToc && (
+                        <Toc
+                            activeHeading={activeHeading}
+                            activeSubHeading={activeSubHeading}
+                            CurrentDocsSlug={currentDocSlug}
+                        />
+                    )}
                 </div>
             </div>
         </div>
@@ -204,7 +216,7 @@ export const getStaticProps = async ({ params }) => {
     }
 
     const allDocs = getAllDocs();
-    const nav = getNavfromDocs(allDocs);
+    const navItems = getNavfromDocs(allDocs);
     const [currentDocSlug] = params.slug as string[];
     const currentDocs = allDocs.filter((doc) => doc.url.includes(`/${currentDocSlug}/`));
     const { previousPost, nextPost } = getPagination(currentDocs, params.slug as string[]);
@@ -241,10 +253,22 @@ export const getStaticProps = async ({ params }) => {
                             'mdxjsEsm'
                         ]
                     }
-                ],
-                mdxPrism
+                ]
             ];
             options.providerImportSource = '@mdx-js/react';
+
+            if (params.slug[3] === 'javascript-quickstart-beta') {
+                options.remarkPlugins.push([
+                    remarkCodeHike,
+                    {
+                        theme,
+                        lineNumbers: false,
+                        staticMediaQuery: '(max-width: 1333px)'
+                    }
+                ]);
+            } else {
+                options.rehypePlugins.push(mdxPrism);
+            }
             return options;
         }
     });
@@ -252,9 +276,11 @@ export const getStaticProps = async ({ params }) => {
     return {
         props: {
             pagination,
-            nav: { [currentDocSlug]: nav[currentDocSlug] },
+            allNav: navItems,
+            nav: { [currentDocSlug]: navItems[currentDocSlug] },
             source: code, // { compiledSource: mdxSource.compiledSource },
-            frontMatter: frontmatter
+            frontMatter: frontmatter,
+            showToc: !(params.slug[3] ?? '').endsWith('quickstart-beta')
         }
     };
 };
