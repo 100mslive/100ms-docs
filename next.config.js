@@ -1258,7 +1258,46 @@ const nextConfig = {
                 destination: '/flutter/v2/how--to-guides/capture-frame/capture-snapshot',
                 permanent: true
             },
-
+            {
+                source: '/javascript/v2/how--to-guides/listen-to-room-events/notifications',
+                destination: '/javascript/v2/how--to-guides/listen-to-room-updates/notifications',
+                permanent: true
+            },
+            {
+                source: '/javascript/v2/how--to-guides/control-remote-peers/change-role',
+                destination: '/javascript/v2/how--to-guides/interact-with-room/peer/change-role',
+                permanent: true
+            },
+            {
+                source: '/javascript/v2/how--to-guides/control-remote-peers/remote-mute',
+                destination: '/javascript/v2/how--to-guides/interact-with-room/track/remote-mute',
+                permanent: true
+            },
+            {
+                source: '/javascript/v2/how--to-guides/control-remote-peers/volume-control',
+                destination: '/javascript/v2/how--to-guides/interact-with-room/track/volume-control',
+                permanent: true
+            },
+            {
+                source: '/javascript/v2/how--to-guides/control-remote-peers/end-room',
+                destination: '/javascript/v2/how--to-guides/interact-with-room/room/end-room',
+                permanent: true
+            },
+            {
+                source: '/javascript/v2/how--to-guides/build-interactive-features/peer-metadata',
+                destination: '/javascript/v2/how--to-guides/interact-with-room/peer/peer-metadata',
+                permanent: true
+            },
+            {
+                source: '/javascript/v2/how--to-guides/build-interactive-features/session-metadata',
+                destination: '/javascript/v2/how--to-guides/interact-with-room/room/session-metadata',
+                permanent: true
+            },
+            {
+                source: '/javascript/v2/how--to-guides/set-up-video-conferencing/peer-name',
+                destination: '/javascript/v2/how--to-guides/interact-with-room/peer/peer-name',
+                permanent: true
+            },
         ];
     },
     eslint: {
