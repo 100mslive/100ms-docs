@@ -111,6 +111,6 @@ if (Hls.isSupported()) {
 
 ## Limitations
 
-- It’s hard to sync metadata with stream exactly due to the latency from ffmpeg creating the stream. To address this, we’ve added 2s the actual `START-DATE` attribute.
+- It’s hard to sync metadata with stream exactly due to the latency from FFmpeg creating the stream. To address this, we’ve added 2 s the actual `START-DATE` attribute.
 - The API now allows sending only three metadata objects at once with each having a `payload` string of max length of 100. These can further be tuned based on experimentation.
 - The payload cannot have `"`(double quotes). So json won’t be supported. This is a limitation from HLS spec.
