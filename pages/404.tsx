@@ -1,41 +1,50 @@
-import React from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Text, Box } from '@100mslive/react-ui';
-import { menuItem } from '@/components/Sidebar';
+import { useState } from 'react';
+import { Text, Flex, Box } from '@100mslive/react-ui';
+import Header from '@/components/Header';
+import Badge from '@/components/Home/Badge';
+import { SdkList } from '@/components/Home/MainCard';
 
 const NotFound = () => {
     const router = useRouter();
-
+    const [menu, setMenu] = useState(false);
+    const [modal, setModal] = useState(false);
+    const menuState = { menu, setMenu };
     return (
-        <Box css={{ maxWidth: '500px', pt: '$40', mx: 'auto', px: '$12' }}>
-            <Text variant="h3" css={{ color: '$textAccentHigh', fontWeight: '$semiBold' }}>
-                404
-            </Text>
-            <Text variant="h6" css={{ color: '$textAccentHigh', mt: '$8' }}>
-                {router.asPath} does not exist
-            </Text>
-            <Text
-                css={{
-                    color: '$textAccentHigh',
-                    fontWeight: '$semiBold',
-                    mt: '$8'
-                }}>
-                Refer these links instead:
-            </Text>
-            <ul style={{ marginTop: '1rem' }}>
-                {menuItem.map((item) => (
-                    <Link key={item.link} href={item.link} passHref>
-                        <a style={{ width: 'max-content' }}>
-                            <li>
-                                <Text css={{ color: '$primaryLight', w: 'max-content' }}>
-                                    {item.name}
-                                </Text>
-                            </li>
-                        </a>
-                    </Link>
-                ))}
-            </ul>
+        <Box>
+            <Header
+                modal={modal}
+                setModal={setModal}
+                menuState={menuState}
+                showReference={false}
+                showMobileMenu={false}
+            />
+            <Flex justify="center" css={{ pt: '$20', px: '$12' }}>
+                <Box>
+                    <Text variant="h3" css={{ color: '$textHighEmp', fontWeight: '$semiBold' }}>
+                        404
+                    </Text>
+                    <Text variant="h5" css={{ color: '$textHighEmp', mt: '$8' }}>
+                        Couldn't find the page you were looking for:
+                    </Text>
+                    <Text className="mono" variant="h6" css={{ mt: '$8' }}>
+                        {router.asPath.slice(1)}
+                    </Text>
+                    <Text
+                        variant="h6"
+                        css={{
+                            color: '$textHighEmp',
+                            mt: '$20'
+                        }}>
+                        Refer these links:
+                    </Text>
+                    <Flex css={{ gap: '$10', mt: '$8', flexWrap: 'wrap', w: '100%' }}>
+                        {SdkList.map((sdk) => (
+                            <Badge key={sdk.id} {...sdk} />
+                        ))}
+                    </Flex>
+                </Box>
+            </Flex>
         </Box>
     );
 };

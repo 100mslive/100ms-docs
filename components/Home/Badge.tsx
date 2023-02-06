@@ -20,7 +20,7 @@ const Badge: React.FC<BadgeProps> = ({ icon, title, link }) => (
                         borderRadius: '$1',
                         cursor: 'pointer',
                         p: '$4',
-                        backgroundColor: '$surfaceLighter',
+                        background: '$surfaceLighter',
                         border: '1px solid',
                         borderColor: '$borderDefault'
                     }}>
