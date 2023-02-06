@@ -7,9 +7,31 @@ import IosIcon from '@/assets/icons/IosIcon';
 import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import ReactIcon from '@/assets/icons/ReactIcon';
 import ServerIcon from '@/assets/icons/ServerIcon';
-import { ChevronDownIcon } from '@100mslive/react-icons';
+import {
+    ChevronDownIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    LayersIcon,
+    AppleIcon as Ios,
+    FlutterIcon as Flutter,
+    AndroidIcon as Android,
+    ReactIcon as ReactNative,
+    JavascriptIcon as JavaScript
+} from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
+import { Flex, Box, Text } from '@100mslive/react-ui';
 import SidebarSection from './SidebarSection';
+import PlatformAccordion from './PlatformAccordion';
+
+const accordionIconStyle = { height: '24px', width: '24px', color: 'inherit' };
+
+const platformOrder = [
+    { text: 'Web', icon: <JavaScript style={accordionIconStyle} />, key: 'javascript' },
+    { text: 'Android', icon: <Android style={accordionIconStyle} />, key: 'android' },
+    { text: 'iOS', icon: <Ios style={accordionIconStyle} />, key: 'ios' },
+    { text: 'Flutter', icon: <Flutter style={accordionIconStyle} />, key: 'flutter' },
+    { text: 'React Native', icon: <ReactNative style={accordionIconStyle} />, key: 'react-native' }
+];
 
 type NavRoute = {
     url: string;
@@ -22,41 +44,46 @@ interface Props {
         setMenu: React.Dispatch<React.SetStateAction<boolean>>;
     };
     nav: Record<string, Record<string, NavRoute>>;
+    allNav: Record<string, Record<string, NavRoute>>[];
 }
 
-const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
+const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
     const router = useRouter() as any;
     const {
         query: { slug }
     } = router;
-
+    const baseViewOnly = Object.keys(currentNav).length === 0;
     const { menu, setMenu } = menuState;
 
     useEffect(() => {
         setMenu(false);
     }, [router]);
 
-    const [currentDocSlug] = slug as string[];
-
     let nav;
-    if (Object.keys(currentNav).length) {
-        const platform = currentNav[currentDocSlug];
-        if (slug[0] !== 'v1' && slug[0] !== 'v2') {
-            if (slug?.length > 3) {
-                nav = platform[slug[1]];
-                if (slug[0] === 'api-reference') {
-                    // if (slug[1] === 'android') {
-                    //     showPagination = false;
-                    // }
-                    nav = platform[slug[1]][slug[2]];
-                }
-            }
-        } else nav = platform;
-    }
+    if (!baseViewOnly) {
+        const [currentDocSlug] = slug as string[];
 
-    let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]);
-    if (slug[0] === 'api-reference')
-        indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[1]);
+        if (Object.keys(currentNav).length) {
+            const platform = currentNav[currentDocSlug];
+            if (slug[0] !== 'v1' && slug[0] !== 'v2') {
+                if (slug?.length > 3) {
+                    nav = platform[slug[1]];
+                    if (slug[0] === 'api-reference') {
+                        // if (slug[1] === 'android') {
+                        //     showPagination = false;
+                        // }
+                        nav = platform[slug[1]][slug[2]];
+                    }
+                }
+            } else nav = platform;
+        }
+    } else nav = false;
+
+    const showPlatformSelector = slug?.[0] !== 'concepts';
+
+    let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug?.[0]);
+    if (slug?.[0] === 'api-reference')
+        indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug?.[1]);
 
     indexOf = indexOf === -1 ? 0 : indexOf;
     const [tech, setTech] = useState(menuItem[indexOf]);
@@ -70,44 +97,146 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
         else router.push(s.link, undefined, { shallow: false });
     };
 
+    const [showBaseView, setShowBaseView] = useState(baseViewOnly);
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
 
-    return (
-        <div className="sidebar">
+    return <Box
+        className="hide-scrollbar"
+        css={{
+            pt: '$12',
+            minWidth: '304px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'stretch',
+            height: 'calc(100vh - 136px)',
+            overflowY: 'auto',
+            position: 'sticky',
+            top: '0',
+            overscrollBehavior: 'none',
+            '@md': {
+                position: 'absolute',
+                top: '$14',
+                display: menu ? 'flex' : 'none',
+                minHeight: '100vh'
+            },
+            '@sm': {
+                w: '100vw'
+            }
+        }}>
+        {/* Base view */}
+        <div
+            className={`page ${showBaseView ? 'active-page' : ''}`}
+            style={
+                showBaseView
+                    ? {
+                          padding: '1.75rem',
+                          paddingTop: '0'
+                      }
+                    : {}
+            }>
+            {baseViewOnly ? (
+                <Box css={{ pt: '$16' }} />
+            ) : (
+                <Flex
+                    align="center"
+                    gap="1"
+                    css={{
+                        color: '$primaryLight',
+                        mt: '$14',
+                        mb: '$12',
+                        cursor: 'pointer'
+                    }}
+                    onClick={() => setShowBaseView(false)}>
+                    <Text variant="sm" css={{ color: '$primaryLight' }}>
+                        Continue exploring
+                    </Text>
+                    <ChevronRightIcon height="16px" width="16px" />
+                </Flex>
+            )}
+            <a style={{ textDecoration: 'none' }} href="/docs/concepts/v2/concepts/basics">
+                <Flex gap="2" align="center" css={{ color: '$primaryLight' }}>
+                    <LayersIcon style={{ color: 'inherit' }} />
+                    <Text css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>Concepts</Text>
+                </Flex>
+            </a>
+
+            <hr style={{ margin: '24px 0' }} />
+
+            {platformOrder.map((platform) => (
+                <PlatformAccordion
+                    key={platform.text}
+                    title={platform.text}
+                    icon={platform.icon}
+                    data={allNav[platform.key]}
+                />
+            ))}
+
+            <hr style={{ margin: '24px 0' }} />
+
+            <PlatformAccordion
+                title={'Server side'}
+                icon={<ServerIcon style={accordionIconStyle} />}
+                data={allNav['server-side']}
+            />
+        </div>
+
+        {/* Platform specific view */}
+        <div className={`page ${showBaseView ? '' : 'active-page'}`}>
+            <Flex
+                align="center"
+                gap="1"
+                css={{
+                    color: '$primaryLight',
+                    pl: '$9',
+                    mt: '$14',
+                    mb: '$12',
+                    cursor: 'pointer'
+                }}
+                onClick={() => setShowBaseView(true)}>
+                <ChevronLeftIcon height="16px" width="16px" />
+                <Text variant="sm" css={{ color: '$primaryLight' }}>
+                    Back to Home
+                </Text>
+            </Flex>
+
             {/* Sidebar Version Section */}
-            <section
-                style={{
-                    margin: '0px 0.5rem 0.5rem 0.4rem',
-                    position: 'sticky',
-                    top: '0',
-                    zIndex: '20',
-                    background: 'var(--docs_bg_content)'
-                }}>
-                <Listbox value={tech} onChange={changeTech}>
-                    <Listbox.Button className="dropdown">
-                        <div style={{ display: 'flex ', alignItems: 'center' }}>
-                            {tech.icon} <span style={{ marginLeft: '1rem' }}>{tech.name}</span>
-                        </div>
-                        <ChevronDownIcon />
-                    </Listbox.Button>
-                    <Listbox.Options className="dropdown-options">
-                        {menuItem.map((m) => (
-                            <Listbox.Option
-                                key={m.link}
-                                value={m}
-                                className={({ active }) =>
-                                    `${
-                                        active
-                                            ? 'dropdown-option dropdown-option-active'
-                                            : 'dropdown-option'
-                                    }`
-                                }>
-                                {m.icon} <span style={{ marginLeft: '1rem' }}>{m.name}</span>
-                            </Listbox.Option>
-                        ))}
-                    </Listbox.Options>
-                </Listbox>
-            </section>
+            {showPlatformSelector ? (
+                <section
+                    style={{
+                        margin: '0px 0.5rem 0.5rem 0.4rem',
+                        position: 'sticky',
+                        top: '0',
+                        zIndex: '20',
+                        background: 'var(--docs_bg_content)'
+                    }}>
+                    <Listbox value={tech} onChange={changeTech}>
+                        <Listbox.Button className="dropdown">
+                            <div style={{ display: 'flex ', alignItems: 'center' }}>
+                                {tech.icon}
+                                <span style={{ marginLeft: '1rem' }}>{tech.name}</span>
+                            </div>
+                            <ChevronDownIcon />
+                        </Listbox.Button>
+                        <Listbox.Options className="dropdown-options">
+                            {menuItem.map((m) => (
+                                <Listbox.Option
+                                    key={m.link}
+                                    value={m}
+                                    className={({ active }) =>
+                                        `${
+                                            active
+                                                ? 'dropdown-option dropdown-option-active'
+                                                : 'dropdown-option'
+                                        }`
+                                    }>
+                                    {m.icon}
+                                    <span style={{ marginLeft: '1rem' }}>{m.name}</span>
+                                </Listbox.Option>
+                            ))}
+                        </Listbox.Options>
+                    </Listbox>
+                </section>
+            ) : null}
             {/* Sidebar Menu Section */}
             {nav
                 ? Object.entries(nav).map(([key, children], index) => (
@@ -116,75 +245,41 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
                       </SidebarSection>
                   ))
                 : null}
-            <style jsx>{`
-                .sidebar {
-                    width: 304px;
-                    padding-bottom: 32px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: stretch;
-                    height: calc(100vh - 136px);
-                    overflow-y: scroll;
-                    top: ${menu ? '' : '104px'};
-                    left: 0;
-                    position: sticky;
-                    z-index: 100;
-                    overscroll-behavior: none;
-                }
-                ::-webkit-scrollbar {
-                    width: 0px;
-                }
-                ::-webkit-scrollbar-thumb {
-                    outline: 0px;
-                }
-                a {
-                    text-decoration: none;
-                }
-                @media screen and (max-width: 768px) {
-                    .sidebar {
-                        position: sticky;
-                        width: 100vw;
-                        top: 20px;
-                        display: ${menu ? 'flex' : 'none'};
-                        height: 100%;
-                    }
-                }
-            `}</style>
         </div>
-    );
+    </Box>;
 };
 
 export default Sidebar;
 
 const iconStyle = { height: '24px', width: '24px', fill: 'var(--gray12)' };
 
-const menuItem = [
+export const menuItem = [
     {
-        link: '/android/v2/foundation/basics',
+        link: '/android/v2/get-started/quickstart',
         name: 'Android',
         icon: <AndroidIcon style={iconStyle} />,
         apiRef: '/api-reference/android/v2/index.html'
     },
     {
-        link: '/ios/v2/foundation/basics',
+        link: '/ios/v2/guides/quickstart',
         name: 'iOS',
         icon: <IosIcon style={iconStyle} />,
         apiRef: '/api-reference/ios/v2/home/content'
     },
     {
-        link: '/javascript/v2/foundation/basics',
+        link: '/javascript/v2/get-started/javascript-quickstart',
         name: 'JavaScript',
         icon: <JavascriptIcon style={iconStyle} />,
         apiRef: '/api-reference/javascript/v2/home/content'
     },
     {
-        link: '/react-native/v2/foundation/basics',
+        link: '/react-native/v2/guides/quickstart',
         name: 'React-Native',
         icon: <ReactIcon style={iconStyle} />,
         apiRef: '/api-reference/react-native/v2/modules.html'
     },
     {
-        link: '/flutter/v2/foundation/basics',
+        link: '/flutter/v2/guides/quickstart',
         name: 'Flutter',
         icon: <FlutterIcon style={iconStyle} />,
         apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'

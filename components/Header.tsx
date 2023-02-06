@@ -23,6 +23,7 @@ interface Props {
     modal: boolean;
     showMobileMenu?: boolean;
     showReference?: boolean;
+    onHomePage?: boolean;
 }
 
 const Header: React.FC<Props> = ({
@@ -30,7 +31,8 @@ const Header: React.FC<Props> = ({
     modal,
     setModal,
     showReference = true,
-    showMobileMenu = true
+    showMobileMenu = true,
+    onHomePage = false
 }) => {
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
@@ -189,6 +191,9 @@ const Header: React.FC<Props> = ({
             <Box
                 css={{
                     display: 'none',
+                    '@lg': {
+                        display: onHomePage ? 'flex' : 'none'
+                    },
                     '@md': {
                         display: 'flex'
                     }

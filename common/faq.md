@@ -77,12 +77,12 @@ Video will be downloaded only for the visible tiles, whereas only audio will be 
 There are no feature-level limitations while using a 100ms account. However, an invoice is generated when:
 
 - Your usage exhausts the free credits for
-    - video conferencing (10,000 minutes) or
+    - Video conferencing (10,000 minutes) or
     - HLS (live streaming) viewer minutes (10,000 minutes) or
     - HLS encoding minutes (1,000 minutes)
-- Or if you use the recording feature
-- Or if you use external streaming (RTMP) feature
-- Or if use HD quality for video conferencing (WebRTC), or live streaming viewers (HLS viewer). 
+    - Recording minutes (300 minutes)
+    - External (RTMP) streaming minutes (300 minutes)
+- Although, if you use HD quality for any of the above, you will be charged, and free credits won't apply.
 
 Please check our [pricing page](https://www.100ms.live/pricing) or [contact us](https://www.100ms.live/contact) for more information. 
 
@@ -131,8 +131,7 @@ No, the pricing is different for standard and high definition. Our product exper
 
 #### Does billing on minutes count when the room has only the local peer in it?
 
-Yes, if any peer joins and is publishing video or audio, it will be billed.
-
+When a peer joins a room, a session starts, and usage minutes will be billed even when the peer is not publishing or subscribing to audio/video tracks. 
 
 ## Authentication and tokens
 

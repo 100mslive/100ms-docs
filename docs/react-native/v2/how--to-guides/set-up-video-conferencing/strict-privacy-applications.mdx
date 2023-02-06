@@ -1,0 +1,82 @@
+---
+title: Strict Privacy Applications
+nav: 4.9
+---
+
+Strict Privacy Applications are those that request permissions only as needed, following the principle of least privilege. This means that the application only requests the minimal set of permissions necessary for its intended functionality, rather than requesting all possible permissions in advance.
+
+## Steps to create a Strict Privacy Application
+
+### Join in a role without Video and/or Audio permissions
+
+[Create three roles](/concepts/v2/concepts/security-and-tokens) with permissions as:
+
+-   Host
+
+    ![host](/docs/v2/flutter-host.png)
+
+-   Guest
+
+    ![guest](/docs/v2/flutter-guest.png)
+
+-   Viewer
+
+    ![viewer](/docs/v2/flutter-viewer.png)
+
+When you join a Room with the `Viewer` role, your app does not need to request microphone and camera permissions from the user because users joining with the `Viewer` role do not have video and audio publishing permissions. However, when you join with the `Host` or `Guest` role, you will need to request permissions before joining the room in advance.
+
+> 💡 Note: The roles mentioned above are just for demonstration purposes, you should create your own roles based on your use cases and requirements.
+
+### Request Permissions on Role Change
+
+If you are requested to change from a non-publishing role to a role that has audio-video publishing permission, the app should request permissions before accepting the role change request, if the permissions were not requested during the initial room join.
+
+It is important to note that in case of a **'force'** role change, the app is required to have audio and video permissions in advance.
+
+> 💡 Note: We recommend using the [react-native-permissions](https://www.npmjs.com/package/react-native-permissions) package for requesting permissions from user.
+
+```js
+// `HMSRoleChangeRequest` is a class that contains info about the role change request.
+interface HMSRoleChangeRequest {
+  requestedBy: HMSPeer; // This is an `HMSPeer` object which contains info about the peer who performed the role change
+  suggestedRole: HMSRole; // This is an `HMSRole` object which contains info about the destination role
+}
+
+...
+
+import { PERMISSIONS, request } from 'react-native-permissions';
+
+const onRoleChangeRequest = async ({
+  requestedBy,
+  suggestedRole
+}: HMSRoleChangeRequest) => {
+  try {
+    // Requesting Camera Permission if new role can publish video
+    if(suggestedRole.publishSettings?.allowed.contains("video") ?? false) {
+
+      const cameraResult = await request(PERMISSIONS.ANDROID.CAMERA);
+    }
+
+    // Requesting Microphone and Bluetooth Permission if new role can publish audio
+    if(suggestedRole.publishSettings?.allowed.contains("audio") ?? false) {
+
+      const audioResult = await request(PERMISSIONS.ANDROID.RECORD_AUDIO);
+
+      const blConnectResult = await request(PERMISSIONS.ANDROID.BLUETOOTH_CONNECT);
+    }
+
+    // Open a prompt to Accept or Reject the role change request, OR straightaway accept the request
+    await hmsInstance.acceptRoleChange();
+
+  } catch (error) {
+    console.log('onRoleChangeRequest Error: ', error);
+  }
+};
+
+hmsInstance.addEventListener(
+  HMSUpdateListenerActions.ON_ROLE_CHANGE_REQUEST,
+  onRoleChangeRequest
+);
+```
+
+You can refer to the [Change Role documentation](/react-native/v2/how--to-guides/interact-with-room/peer/change-role) to learn more role changes.
