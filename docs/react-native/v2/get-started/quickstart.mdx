@@ -7,7 +7,7 @@ nav: 2.1
 
 This guide will walk you through simple instructions to create a Video Conferencing app using the 100ms React Native SDK and test it using an Emulator or your Mobile Phone.
 
-Please check our [Basic Concepts Guide](../foundation/basics) to understand the concepts like Templates, Rooms, Peers, Roles, Tracks, etc.
+Please check our [Basic Concepts Guide](/concepts/v2/concepts/basics) to understand the concepts like Templates, Rooms, Peers, Roles, Tracks, etc.
 
 This Guide contains instructions for two approaches to get you started with 100ms React Native SDK:
 
@@ -711,7 +711,7 @@ To test audio/video functionality, you need to connect to a 100ms Room. Please c
 2. Use the `Video Conferencing Starter Kit` to create a room with a default template assigned to it to test this app quickly.
 3. Go to the [Rooms page](https://dashboard.100ms.live/rooms) in your dashboard, click on the `Room Id` of the room you created above, and click on the `Join Room` button on the top right.
 4. You will see 100ms demo URLs for the roles created when you deployed the starter kit; you can click on the 'key' icon to copy the token and update the `AUTH_TOKEN` variable in "App.js" file.
-    > Token from 100ms dashboard is for testing purposes only, For production applications you must generate tokens on your own server. Refer to the [Management Token section](../foundation/security-and-tokens#management-token) in Authentication and Tokens guide for more information.
+    > Token from 100ms dashboard is for testing purposes only, For production applications you must generate tokens on your own server. Refer to the [Management Token section](/concepts/v2/concepts/security-and-tokens#management-token) in Authentication and Tokens guide for more information.
 
 <video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
     <source src="/docs/guides/update-token-react-native.mov" type="video/mp4" />
@@ -1020,7 +1020,7 @@ The 100ms SDK emits:
 
 Our application must subscribe to these events to get the updates.
 
-Check out the [Event Listeners](../features/event-listeners) docs to know more about events emitted by the SDK.
+Check out the [Event Listeners](/react-native/v2/how--to-guides/listen-to-room-updates/event-listeners) docs to know more about events emitted by the SDK.
 
 ```js section=JoinAndPeerUpdates sectionIndex=1
 // Subscribing to Join updates
@@ -1092,7 +1092,7 @@ const onPeerListener = ({ peer, type }) => {
 
 The 100ms SDK emits `HMSUpdateListenerActions.ON_TRACK_UPDATE` event when any change happens for any Track in the Room. Our application must subscribe to this event to get the track updates.
 
-Check out the [Event Listeners](../features/event-listeners) docs to know more about events emitted by the SDK.
+Check out the [Event Listeners](/react-native/v2/how--to-guides/listen-to-room-updates/event-listeners) docs to know more about events emitted by the SDK.
 
 ```js section=TrackUpdates sectionIndex=1
 // Subscribing to Track updates
@@ -1169,7 +1169,7 @@ const onTrackListener = ({ peer, track, type }) => {
 
 The 100ms SDK emits various other events to handle different scenarios in the app. For example, you can use `HMSUpdateListenerActions.ON_ERROR` event to get errors from `HMSSDK`.
 
-Check out the [Event Listeners](../features/event-listeners) docs to know more about events emitted by the SDK.
+Check out the [Event Listeners](/react-native/v2/how--to-guides/listen-to-room-updates/event-listeners) docs to know more about events emitted by the SDK.
 
 ```js section=OtherUpdates sectionIndex=1
 // Subscribing to Error updates
@@ -1186,9 +1186,9 @@ const onErrorListener = (error) => {
 
 After adding all required event listeners, you need to create an `HMSConfig` instance and use that instance to call the `join` method of `HMSSDK` instance to join a Room.
 
-> **Note:** An `Auth token` is required to authenticate a Room join request from your client-side app. Please ensure to set the `AUTH_TOKEN` variable value with correct "Auth Token" by fetching it from your dashboard. Check [fetch token to join a room section](#fetch-token-to-join-the-room) for more information. <br/> Read more about authentication and tokens in [this guide](../foundation/security-and-tokens).
+> **Note:** An `Auth token` is required to authenticate a Room join request from your client-side app. Please ensure to set the `AUTH_TOKEN` variable value with correct "Auth Token" by fetching it from your dashboard. Check [fetch token to join a room section](#fetch-token-to-join-the-room) for more information. <br/> Read more about authentication and tokens in [this guide](/concepts/v2/concepts/security-and-tokens).
 
-You can learn more about joining the Room from [Join Room](../features/join) docs.
+You can learn more about joining the Room from [Join Room](/react-native/v2/how--to-guides/set-up-video-conferencing/join) docs.
 
 ```js section=JoinRoom sectionIndex=1
 // Effect to handle HMSSDK initialization and Listeners Setup
@@ -1237,7 +1237,7 @@ interface PeerTrackNode {
 
 To display a video track, you can simply get the `trackId` of the Video Tracks in `PeerTrackNode` object and pass it to `HmsView` component. If `track` in `PeerTrackNode` object is undefined or null then you can render avatar or name initials of the peer from the `peer.name` property in `PeerTrackNode`.
 
-Check the [Render Video](../features/render-video) guide for more information.
+Check the [Render Video](/react-native/v2/how--to-guides/set-up-video-conferencing/render-video/overview) guide for more information.
 
 ```js section=RenderVideoTile sectionIndex=2
 // `_renderItem` function returns a Tile UI for each item which is `PeerTrackNode` object
@@ -1333,7 +1333,7 @@ In the above code snippet, we are rendering `FlatList` for a list of `PeerTrackN
 
 You can leave the meeting once you are done with it. To leave the meeting you can call the `leave` method on `HMSSDK` instance.
 
-You can learn more about leave the room in [Leave Room](../features/leave) docs.
+You can learn more about leave the room in [Leave Room](/react-native/v2/how--to-guides/set-up-video-conferencing/leave) docs.
 
 ```js section=LeaveRoom sectionIndex=1
 const handleRoomLeave = async () => {
