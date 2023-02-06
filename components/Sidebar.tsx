@@ -187,6 +187,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                     title={'Server side'}
                     icon={<ServerIcon style={accordionIconStyle} />}
                     data={allNav['server-side']}
+                    id={'server-side'}
                     openPlatformAccordion={openPlatformAccordion}
                     setOpenPlatformAccordion={setOpenPlatformAccordion}
                 />
