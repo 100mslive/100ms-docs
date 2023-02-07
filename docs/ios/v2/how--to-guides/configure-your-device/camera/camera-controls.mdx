@@ -1,64 +1,50 @@
 ---
-title: Tap-to-focus (Beta)
-nav: 6.2
+title: Camera Controls (Beta)
+nav: 6.3
 ---
 
-If you have a use-case where users should be able to tap on the screen to lock the camera focus on certain objects, you can use tap-to-focus feature provided by 100ms iOS SDK.
+If you want to modify camera settings like zoom level, flashlight, night-mode, HDR etc. you can use camera control API to do so.
 
 ## Minimum Requirements
 
--   SDK version 0.4.7
+-   SDK version 0.6.3
 
-## What is Tap to Focus?
+## What are camera controls?
 
-If you have used native iOS camera app, you know that you can tap on the camera preview screen to lock focus on certain object in the camera scene. The focus plane of the camera is set to the depth of the object in focus. This is called 'Tap to focus'.
+The iPhone camera offers some settings on camera object that you can configure, like zoom level, flash toggle, night mode, HDR mode etc. You can use these settings to configure camera to your liking. Or you can create camera control UI in your apps to give users a way to change these settings. For example you can implement a UI to change zoom level of the camera.
 
-## What are different camera focus modes
+## How does camera control works in 100ms SDK
 
-There are mainly 3 focus modes:
+100ms SDK gives you safe access to current AVCaptureDevice object that represents camera being used on the iOS device. You change settings on this AVCaptureDevice object to your liking.
 
-### 1. AutoFocus
+## How can you modify camera settings with 100ms SDK
 
-The default focus mode where camera continuously sets focus and exposure based on center point of the scene.
+You call **modifyCaptureDevice** method on HMSLocalVideoTrack instance to get access to AVCaptureDevice object. This object then can be used to change current camera settings.
 
-### 2. TapToAutoFocus
-
-This allows user to tap to focus on an object. Once user moves the camera enough to change the subject of the scene the camera switches to default **Autofocus** mode
-
-### 3.TapToLockFocus
-
-This allows user to tap to lock focus on an object. The focus will not be changed until user taps again to focus on another object.
-
-By default iOS camera uses **autofocus** mode. That means it constantly tries to focus on the center object in the camera scene.
-
-## How to enable Tap-to-focus mode
-
-To enable 'Tap-to-focus' mode, you pass one of the two tap-to-focus modes (**HMSCameraFocusMode**) as a param to the HMSVideoSettings like below:
+For example a zoom level toggle can be implemented like below:
 
 ```swift
-sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettingsBuilder in
-    videoSettingsBuilder.cameraFocusMode = .focusModeTapToAutoFocus
-    ...
+localVideoTrack.modifyCaptureDevice { device in
+
+    guard let device = device else { return }
+    
+    device.videoZoomFactor = device.videoZoomFactor == 1.0 ? 2.0 : 1.0
+}
+```
+Flash light toggle can be implemented like below:
+
+```swift
+localVideoTrack.modifyCaptureDevice { device in
+
+    guard let device = device else { return }
+    guard device.isTorchModeSupported(.on) else { return }
+    
+    device.torchMode = device.torchMode == .off ? .on : .off
 }
 ```
 
-OR
+## What all camera settings are available to modify
 
-```swift
-sdk.trackSettings = HMSTrackSettings.build { videoSettingsBuilder, audioSettingsBuilder in
-    videoSettingsBuilder.cameraFocusMode = .focusModeTapToLockFocus
-    ...
-}
-```
+100ms iOS SDK gives you access to underlying camera device in the form of AVCaptureDevice. This means you have access to all the settings available on AVCaptureDevice object. To reference what all is available go to Apple's documentation [here](https://developer.apple.com/documentation/avfoundation/avcapturedevice).
 
-That's all you need to do. These camera modes are integrated into the **HMSVideoView** that you use to create video tiles. Now whenever user taps on the local camera view (HMSVideoView), the tapped object in the camera scene gets focused according to the focus mode that has been set.
-
-HMSCameraFocusMode has following 3 modes:
-
-1. **kHMSFocusModeAuto**
-2. **kHMSFocusModeTapToAutoFocus**
-3. **kHMSFocusModeTapToLockFocus**
-
-If you don't use **cameraFocusMode** video setting, the **autofocus** mode is used by default.
-
-👀 To see an example iOS tap to focus implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
+👀 To see an example iOS camera controls implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
