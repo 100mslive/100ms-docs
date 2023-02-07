@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from 'react';
 import { LayersIcon, PeopleIcon, ShieldIcon } from '@100mslive/react-icons';
-import { Box, Flex, Text } from '@100mslive/react-ui';
+import { Box, Flex, Text, useTheme } from '@100mslive/react-ui';
 import Header from 'components/Header';
 import Sidebar from '@/components/Sidebar';
 import MainCard from '@/components/Home/MainCard';
@@ -40,13 +40,21 @@ const Homepage = ({ allNav }) => {
     const [menu, setMenu] = useState(false);
     const [modal, setModal] = useState(false);
     const menuState = { menu, setMenu };
+    const [currentTheme, setCurrentTheme] = useState('dark');
+
     const [renderComponents, setRenderComponents] = useState(false);
+
+    useEffect(() => {
+        const updateTheme = (e) => setCurrentTheme(e.detail.theme);
+
+        if (document) document.addEventListener('themeChanged', updateTheme);
+        return () => document.removeEventListener('themeChanged', updateTheme);
+    }, []);
 
     useEffect(() => {
         setRenderComponents(true);
     }, []);
 
-    console.log(allNav);
     useLockBodyScroll(modal);
 
     return renderComponents ? (
@@ -65,11 +73,15 @@ const Homepage = ({ allNav }) => {
                 css={{
                     mx: 'auto',
                     minHeight: '100vh',
-                    backgroundImage: "url('/docs/bg-desktop.png')",
+                    backgroundImage: `url(${
+                        currentTheme === 'dark'
+                            ? '/docs/bg-desktop.png'
+                            : '/docs/bg-desktop-light.png'
+                    })`,
                     backgroundSize: '100% 100%',
                     backgroundPosition: 'center-bottom',
                     backgroundRepeat: 'no repeat',
-                    '@md' : {
+                    '@md': {
                         backgroundSize: 'cover'
                     }
                 }}>
