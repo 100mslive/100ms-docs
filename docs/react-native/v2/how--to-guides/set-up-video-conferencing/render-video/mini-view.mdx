@@ -1,0 +1,29 @@
+---
+title: Mini View
+nav: 4.43
+---
+
+The 100ms React Native SDK provides the `HmsView` component, which renders video on the screen. You can refer to the [Render Video docs](/react-native/v2/how--to-guides/set-up-video-conferencing/render-video/overview) to learn more about the `HmsView` component.
+
+Typically, all `HmsView`s should be rendered side by side in a list or grid layout, which is also the default layout behavior of the `HmsView` component.
+
+However, if you desire a `mini view / main view` layout (like Picture-in-Picture within the app) where one or more `HmsView` components are not in the normal flow of the layout and are overlapping other `HmsView`s, then this special layout can be achieved by using the `setZOrderMediaOverlay` prop on the `HmsView` component.
+
+The `setZOrderMediaOverlay` prop enables the 'Picture-in-picture' feature for the `HmsView` component, where one HmsView is rendered on top of another HmsView by the SDK. By setting the `setZOrderMediaOverlay` prop to `true` on a smaller HmsView, you can place it on top of another larger HmsView. This creates a layout similar to a picture-in-picture layout shown [here](#example-of-mini-view-layout).
+
+```js{8}
+// hms instance acquired from build method
+const HmsView = hmsInstance.HmsView;
+
+<HmsView
+  key={trackId}
+  trackId={trackId}
+  mirror={true}
+  setZOrderMediaOverlay={true} // should be passed true only for the mini view
+  style={{ height: '100%', width: '100%' }}
+/>
+```
+
+## Example of mini view layout
+
+![Mini View](/docs/v2/mini-view.png)

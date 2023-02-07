@@ -1,0 +1,106 @@
+---
+title: Remove Peer
+nav: 8.24
+---
+
+Someone's overstayed their welcome and now you need to remove a peer from the video call room.HMSSDK's `removePeer` comes to rescue.
+
+Let's look at this step-by-step
+
+<div className="steps-container">
+
+### Permissions
+
+Can't let just anyone remove others from the video call room. First you need to create a [role](/concepts/v2/concepts/security-and-tokens) with the permissions to remove others.
+
+In the SDK, the permission to remove others from the room is within `PermissionsParams` `removeOthers` and you should check for that within the `HMSRole` of the peer to see if they have it.
+
+Here's how to check whether the local peer has the permission to end the room:
+
+```dart
+bool isAllowedToRemovePeer() async{
+  return (await hmsSDK.getLocalPeer()).role.permission!.removeOthers;
+}
+```
+
+`hmsSDK.getLocalPeer()` will not return null as long as you're in a preview or in a meeting room. Since you likely won't need to check for permissions if you're not in one it would be ok.
+
+### Removing a peer
+
+Once the permissions are checked to ensure the caller has the permission to remove a peer, remove them by calling `hmsSDK.removePeer`.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+  ...
+
+  void removePeer(
+      {required HMSPeer peerToRemove,
+      required String reason}) {
+      ///[peerToRemove]: HMSPeer that needs to be removed from room
+      ///[reason]: Reason for removal
+      ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+      //Here this is an instance of a class that implements HMSActionResultListener, that is, Meeting
+        hmsSDK.removePeer(
+          peer: peerToRemove,
+          reason: "Reason to remove",
+          hmsActionResultListener: this);
+      }
+
+    @override
+    void onSuccess(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments}) {
+          switch (methodType) {
+          ...
+
+          case HMSActionResultListenerMethod.removePeer:
+          //Peer removed successfully
+          break;
+      }
+  }
+
+
+  @override
+  void onException(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments,
+      required HMSException hmsException}) {
+          switch (methodType) {
+          ...
+
+          case HMSActionResultListenerMethod.removePeer:
+          // Check the HMSException object for details about the error
+          break;
+
+      }
+  }
+
+}
+```
+
+### Handling the remove peer callback
+
+The peer who is removed will receive a callback in `HMSUpdateListener` method `onRemovedFromRoom( HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer)`.
+
+The `HMSRemovedFromPeer` object which is passed into the callback has the structure:
+
+```dart
+class HMSRemovedFromPeer {
+  final HMSPeer peerWhoRemoved;
+  final String reason;
+  final bool roomWasEnded;
+}
+```
+
+`reason`: the string that the caller of `removePeerRequest` sent as the reason they were being removed from the room.
+
+`peerWhoRemoved`: `HMSPeer` instance containing the details of the person who called `removePeerRequest`. This can be used to show the name of the person who removed them.
+
+`roomWasEnded`: This will be false if the peer was removed. If true, it indicates that the peer was not removed, but the entire room was ended. See [End Room](/flutter/v2/how--to-guides/interact-with-room/room/end-room) for details.
+
+> When this callback is received, the UI should be cleaned up from the client side. The video call room would be ended from the SDK once this callback is sent.
+
+</div>

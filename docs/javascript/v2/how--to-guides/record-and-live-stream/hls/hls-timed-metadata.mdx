@@ -1,0 +1,117 @@
+---
+ title: HLS Timed Metadata
+ nav: 7.23
+---
+
+HLS Timed Metadata feature helps you synchronise certain events with the HLS stream. This can be useful for showing interactive quizzes / product overlays etc.
+
+## Requirements
+
+-   Active HLS stream
+-   react-sdk min version: 0.3.0
+
+## Sending HLS Timed Metadata
+
+To add HLS timed metadata cue to the currently running HLS stream use `sendHLSTimedMetadata` API like this:
+Currently there is a limit to send at max 3 metadata at time. 
+
+```javascript
+export interface HLSTimedMetadata {
+	payload: string; // limited to 100 chars, no " (double quotes) allowed
+	duration: number;
+}
+
+sendHLSTimedMetadata(metadatalist: HLSTimedMetadata[]): Promise<void>;
+```
+
+## Receiving HLS Timed Metadata
+### Receiving Payload structure
+
+The payload is sent in the EXT-X-DATERANGE tag as value for the custom attribure X-100MSLIVE-PAYLOAD. It is base64 encoded string of
+
+```json
+{
+    "payload": "payload sent by the user",
+    "start_date": "2023-02-06T07:24:11.259+0000",
+    "end_date": "2023-02-06T07:24:21.259+0000",
+    "hms_version": "v1.1"
+}
+```
+start_date and end_date will be in UTC format.
+
+### App side implementation
+
+```javascript
+const handleTimeUpdateListener = _ => {
+  const textTrackListCount = videoEl.textTracks.length;
+  let metaTextTrack;
+  for (let trackIndex = 0; trackIndex < textTrackListCount; trackIndex++) {
+    const textTrack = videoEl.textTracks[trackIndex];
+    if (textTrack.kind !== "metadata") {
+      continue;
+    }
+    textTrack.mode = "showing";
+    metaTextTrack = textTrack;
+    break;
+  }
+  if (!metaTextTrack) {
+    return;
+  }
+  const cuesLength = metaTextTrack.cues.length;
+  let cueIndex = 0;
+  while (cueIndex < cuesLength) {
+    const cue = metaTextTrack.cues[cueIndex];
+    if (cue.fired) {
+      cueIndex++;
+      continue;
+    }
+    const data = metadataPayloadParser(cue.value.data);
+    const programData = videoEl.getStartDate();
+    const startDate = data.start_date;
+    const endDate = data.end_date;
+    const startTime =
+      new Date(startDate) -
+      new Date(programData) -
+      videoEl.currentTime * 1000;
+    const duration = new Date(endDate) - new Date(startDate);
+    setTimeout(() => {
+      const toast = {
+        title: `Payload from timed Metadata ${data.payload}`,
+        duration: duration,
+      };
+      console.debug("Added toast ", JSON.stringify(toast));
+      ToastManager.addToast(toast);
+    }, startTime);
+    cue.fired = true;
+    cueIndex++;
+  }
+};
+if (Hls.isSupported()) {
+  /**
+   * initialize HLSController and add event listeners.
+   */
+  hlsController = new HLSController(hlsUrl, videoRef);
+  hlsStats = new HlsStats(hlsController.getHlsJsInstance(), videoEl);
+
+  hlsController.on(HLS_STREAM_NO_LONGER_LIVE, handleNoLongerLive);
+  hlsController.on(HLS_TIMED_METADATA_LOADED, metadataLoadedHandler);
+
+  hlsController.on(Hls.Events.MANIFEST_LOADED, manifestLoadedHandler);
+  hlsController.on(Hls.Events.LEVEL_UPDATED, levelUpdatedHandler);
+  hlsController.on(Hls.Events.ERROR, handleHLSError);
+} else if (videoEl.canPlayType("application/vnd.apple.mpegurl")) {
+    // Work where hls.js is not supported
+    videoEl.src = hlsUrl;
+    videoEl.addEventListener("timeupdate", handleTimeUpdateListener);
+    setIsMSENotSupported(true);
+}
+
+```
+
+>Note : Above implementation might change in future.
+
+## Limitations
+
+- It’s hard to sync metadata with stream exactly due to the latency from FFmpeg creating the stream. To address this, we’ve added 2 seconds delay of the actual `START-DATE` attribute.
+- The API now allows sending only three metadata objects at once with each having a `payload` string of max length of 100. These can further be tuned based on experimentation.
+- The payload cannot have `"`(double quotes). So json won’t be supported. This is a limitation from HLS spec.
