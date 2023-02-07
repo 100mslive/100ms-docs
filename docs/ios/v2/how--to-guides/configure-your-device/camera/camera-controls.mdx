@@ -21,9 +21,12 @@ The iPhone camera offers some settings on camera object that you can configure, 
 
 You call **modifyCaptureDevice** method on HMSLocalVideoTrack instance to get access to AVCaptureDevice object. This object then can be used to change current camera settings.
 
-For example a zoom level toggle can be implemented like below:
+### A zoom level toggle can be implemented like below:
 
 ```swift
+let localVideoTrack = peer.localVideoTrack()
+...
+
 localVideoTrack.modifyCaptureDevice { device in
 
     guard let device = device else { return }
@@ -31,9 +34,14 @@ localVideoTrack.modifyCaptureDevice { device in
     device.videoZoomFactor = device.videoZoomFactor == 1.0 ? 2.0 : 1.0
 }
 ```
-Flash light toggle can be implemented like below:
+
+### A flash light toggle can be implemented like below:
+
 
 ```swift
+let localVideoTrack = peer.localVideoTrack()
+...
+
 localVideoTrack.modifyCaptureDevice { device in
 
     guard let device = device else { return }
