@@ -64,7 +64,14 @@ const Homepage = ({ allNav }) => {
                 justify="center"
                 css={{
                     mx: 'auto',
-                    minHeight: '100vh'
+                    minHeight: '100vh',
+                    backgroundImage: "url('/docs/bg-desktop.png')",
+                    backgroundSize: '100% 100%',
+                    backgroundPosition: 'center-bottom',
+                    backgroundRepeat: 'no repeat',
+                    '@md' : {
+                        backgroundSize: 'cover'
+                    }
                 }}>
                 <Sidebar menuState={menuState} nav={{}} allNav={allNav} />
                 {!menu ? (
@@ -74,9 +81,6 @@ const Homepage = ({ allNav }) => {
                             p: '$14 $16',
                             borderLeft: '1px solid',
                             borderColor: '$borderDefault',
-                            backgroundImage: "url('/docs/bg-desktop.png')",
-                            backgroundSize: 'contain',
-                            backgroundRepeat: 'no repeat',
                             '@sm': {
                                 p: '$10'
                             }
