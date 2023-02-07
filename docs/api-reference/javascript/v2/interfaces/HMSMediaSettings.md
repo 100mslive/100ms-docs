@@ -1,5 +1,6 @@
 ---
 title: HMSMediaSettings
+nav: 4.23
 ---
 
 ## Properties

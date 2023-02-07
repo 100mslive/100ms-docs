@@ -1,5 +1,6 @@
 ---
 title: HMSPlaylistSelector
+nav: 4.36
 ---
 
 Helpful selectors for audio and video playlist
