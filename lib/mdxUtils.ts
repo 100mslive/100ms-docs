@@ -85,7 +85,7 @@ export const getAllDocs = () => {
                 url,
                 title: data.title || pathname!.replace(/-/g, ' '),
                 description: data.description || '',
-                nav: data.nav,
+                nav: data.nav ?? '',
                 content
             };
         })
