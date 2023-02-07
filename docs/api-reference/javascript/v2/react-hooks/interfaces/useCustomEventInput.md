@@ -1,5 +1,6 @@
 ---
-title: useCustomEventInput<T\>
+title: useCustomEventInput<T>
+nav: "5.2.3"
 ---
 
 ## Type parameters
