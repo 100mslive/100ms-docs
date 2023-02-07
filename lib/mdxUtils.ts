@@ -42,6 +42,27 @@ export const getDocsPaths = () => {
         .map((path) => path.replace(MARKDOWN_REGEX, ''));
 };
 
+function seperateDots(dotSeperatedNumber) {
+    return dotSeperatedNumber.split('.').map((numStr) => Number.parseInt(numStr));
+}
+
+function dotSeperatedNumberCompare(a, b) {
+    const aNumbers = seperateDots(a),
+        bNumbers = seperateDots(b);
+
+    for (let i = 0; i < Math.min(aNumbers.length, bNumbers.length); i++) {
+        if (aNumbers[i] !== bNumbers[i]) {
+            return aNumbers[i] > bNumbers[i] ? 1 : -1;
+        }
+    }
+
+    if (aNumbers.length === bNumbers.length) {
+        return 0;
+    } else {
+        return aNumbers.length > bNumbers.length ? 1 : -1;
+    }
+}
+
 /**
  * Gets a list of all docs and their meta in the `DOCS_PATH` directory
  */
@@ -49,9 +70,9 @@ export const getAllDocs = () => {
     const docs = getDocsPaths()
         .map((path) => {
             // Get frontMatter from markdown
-            let filePath = join(DOCS_PATH, `${path}.mdx`)
+            let filePath = join(DOCS_PATH, `${path}.mdx`);
             if (!existsSync(filePath)) {
-                filePath = join(DOCS_PATH, `${path}.md`)
+                filePath = join(DOCS_PATH, `${path}.md`);
             }
             const source = readFileSync(filePath);
             const { data, content } = matter(source);
@@ -65,11 +86,11 @@ export const getAllDocs = () => {
                 url,
                 title: data.title || pathname!.replace(/-/g, ' '),
                 description: data.description || '',
-                nav: data.nav ?? Infinity,
+                nav: data.nav,
                 content
             };
         })
-        .sort((a, b) => (a.nav > b.nav ? 1 : -1));
+        .sort((a, b) => dotSeperatedNumberCompare(String(a.nav), String(b.nav)));
     return docs;
 };
 
@@ -90,7 +111,15 @@ export const getNavfromDocs = (docs) => {
     }, {});
 };
 
-export const slugify = (text) => text.toString().toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "").replace(/--+/g, "-").replace(/^-+/, "").replace(/-+$/, "");
+export const slugify = (text) =>
+    text
+        .toString()
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]+/g, '')
+        .replace(/--+/g, '-')
+        .replace(/^-+/, '')
+        .replace(/-+$/, '');
 
 /*
 Source: https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery
