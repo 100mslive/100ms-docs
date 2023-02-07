@@ -53,6 +53,9 @@ const Homepage = ({ allNav }) => {
 
     useEffect(() => {
         setRenderComponents(true);
+        if (window) {
+            setCurrentTheme(window.localStorage.theme || 'dark');
+        }
     }, []);
 
     useLockBodyScroll(modal);
@@ -128,7 +131,12 @@ const Homepage = ({ allNav }) => {
                                 }
                             }}>
                             {cards.map((card, i) => (
-                                <Card key={card.link} {...card} id={i} />
+                                <Card
+                                    key={card.link}
+                                    {...card}
+                                    id={i}
+                                    currentTheme={currentTheme}
+                                />
                             ))}
                         </Box>
 
