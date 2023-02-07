@@ -15,7 +15,7 @@ const NewReleases = () => (
         <Text variant="h6" css={{ color: '$textHighEmp', mt: '0' }}>
             New releases
         </Text>
-        <Text variant="sm" css={{ color: '$textMedEmp', mt: '$2', mb: '$10' }}>
+        <Text variant="sm" css={{ color: '$textMedEmp', mt: '$2', mb: '$8' }}>
             Follow our changelog for new features and improvements
         </Text>
         <Box
