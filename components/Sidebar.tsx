@@ -200,7 +200,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                     onClick={() => setShowBaseView(true)}>
                     <ChevronLeftIcon height="16px" width="16px" />
                     <Text variant="sm" css={{ color: '$primaryLight' }}>
-                        Overview
+                        Content overview
                     </Text>
                 </Flex>
 
