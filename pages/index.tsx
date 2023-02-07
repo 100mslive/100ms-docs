@@ -1,7 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from 'react';
 import { LayersIcon, PeopleIcon, ShieldIcon } from '@100mslive/react-icons';
-import { Box, Flex, Text, useTheme } from '@100mslive/react-ui';
+import { Box, Flex, Text } from '@100mslive/react-ui';
 import Header from 'components/Header';
 import Sidebar from '@/components/Sidebar';
 import MainCard from '@/components/Home/MainCard';
