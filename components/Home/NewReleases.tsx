@@ -15,15 +15,15 @@ const NewReleases = () => (
         <Text variant="h6" css={{ color: '$textHighEmp', mt: '0' }}>
             New releases
         </Text>
-        <Text variant="sm" css={{ color: '$textMedEmp', mt: '$2', mb: '$8' }}>
+        <Text variant="sm" css={{ color: '$textMedEmp', mt: '$2', mb: '$10' }}>
             Follow our changelog for new features and improvements
         </Text>
         <Box
             css={{
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
-                gridColumnGap: '60px',
-                '@sm': { gridColumnGap: '2rem' }
+                gridColumnGap: '$13',
+                '@sm': { gridColumnGap: '$12' }
             }}>
             {releases.map((release) => (
                 <ReleaseItem key={release.version} {...release} />
@@ -50,7 +50,6 @@ const ReleaseItem = ({ platform, version, date }) => (
                 className="mono"
                 css={{
                     color: '$textMedEmp',
-                    mt: '$2',
                     mb: '$8'
                 }}>
                 {date}
