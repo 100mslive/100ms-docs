@@ -3,7 +3,7 @@
  nav: 7.24
 ---
 
-Session metadata is a shared state that is accessible by all peers in the room. It can be used for features such as pinned text or spotlighting a particular peer. The session metadata is persisted throughout a session and cleared once the last peer leaves the room.
+Session metadata is a shared state that is accessible to all participants in a room. It can be used for features such as pinning text or highlighting a particular participant. The session metadata is retained throughout the duration of a session and is cleared once all participants have left the room.
 
 ## Differences between Session Metadata and Peer Metadata
 
@@ -11,7 +11,7 @@ While peer metadata is associated with individual peers and each peer can have t
 
 ## How to store shared data with 100ms SDK
 
-You use **setSessionMetadata** method to update the value of the session metadata for you current room session.
+To update the value of the session metadata for the current room session, use the **setSessionMetadata** method on SDK instance:
 
 ```swift
 let hmsSDK = HMSSDK.build()
@@ -28,6 +28,8 @@ hmsSDK.setSessionMetadata("test") { success, error in
 
 ## How to read shared data with 100ms SDK
 
+To retrieve the session metadata, use the **getSessionMetadata** method:
+
 ```swift
 let hmsSDK = HMSSDK.build()
 ...
@@ -42,13 +44,13 @@ hmsSDK.getSessionMetadata() { metadata, error in
 }
 ```
 
-## Limitations and Workarounds in Alpha Release
+## Limitations and Alternatives in the Alpha Release
 
-Currently there is no callback that client will receive to indicate if there is any change in the session metadata.
+At present, there is no callback that will be triggered to indicate changes in the session metadata.
 
 ## Then how can I notify other users that session metadata has changed
 
-You can send a broadcast message to notify others that session data has changed like shown below:
+To notify others that the session data has been changed, you can send a broadcast message:
 
 ```swift
 let hmsSDK = HMSSDK.build()
@@ -64,7 +66,7 @@ hmsSDK.setSessionMetadata("test") { success, error in
 }
 ```
 
-And on the receiving side you can receive this message to know that session metadata has changed like shown below:
+On the receiving end, you can listen for this message to know that the session metadata has been updated:
 
 ```swift
 func on(message: HMSMessage) {
@@ -83,4 +85,4 @@ func on(message: HMSMessage) {
 }
 ```
 
-👀 To see an example pinned chat support using shared metadata in an iOS app using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
+👀 For an example of how to implement pinned chat support using shared metadata in an iOS app with the 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
