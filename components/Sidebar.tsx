@@ -22,6 +22,7 @@ import { Listbox } from '@headlessui/react';
 import { Flex, Box, Text } from '@100mslive/react-ui';
 import SidebarSection from './SidebarSection';
 import PlatformAccordion from './PlatformAccordion';
+import { platform } from 'os';
 
 const accordionIconStyle = { height: '24px', width: '24px', color: 'inherit' };
 
@@ -32,6 +33,8 @@ const platformOrder = [
     { text: 'Flutter', icon: <Flutter style={accordionIconStyle} />, key: 'flutter' },
     { text: 'React Native', icon: <ReactNative style={accordionIconStyle} />, key: 'react-native' }
 ];
+
+const platformlist = ['javascript', 'android', 'ios', 'flutter', 'react-native', 'server-side'];
 
 type NavRoute = {
     url: string;
@@ -54,6 +57,8 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
     } = router;
     const baseViewOnly = Object.keys(currentNav).length === 0;
     const { menu, setMenu } = menuState;
+
+    const [openPlatformAccordion, setOpenPlatformAccordion] = useState(platformlist[0]);
 
     useEffect(() => {
         setMenu(false);
@@ -110,7 +115,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'stretch',
-                height: 'calc(100vh - 136px)',
+                height: 'calc(100vh - 100px)',
                 overflowY: 'auto',
                 position: 'sticky',
                 top: '$10',
@@ -119,7 +124,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                     position: 'absolute',
                     top: '$14',
                     display: menu ? 'flex' : 'none',
-                    minHeight: '100vh'
+                    height: 'calc(100vh - 200px)'
                 },
                 '@sm': {
                     w: '100vw'
@@ -132,7 +137,9 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                     showBaseView
                         ? {
                               padding: '1.75rem',
-                              paddingTop: '0'
+                              paddingTop: '0',
+                              position: 'sticky',
+                              top: '1rem'
                           }
                         : {}
                 }>
@@ -144,9 +151,12 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                         gap="1"
                         css={{
                             color: '$primaryLight',
-                            mt: '$14',
+                            mt: '$6',
                             mb: '$12',
-                            cursor: 'pointer'
+                            cursor: 'pointer',
+                            '@md': {
+                                pt: '$10'
+                            }
                         }}
                         onClick={() => setShowBaseView(false)}>
                         <Text variant="sm" css={{ color: '$primaryLight' }}>
@@ -168,19 +178,25 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
 
                 {platformOrder.map((platform) => (
                     <PlatformAccordion
+                        id={platform.key}
                         key={platform.text}
                         title={platform.text}
                         icon={platform.icon}
                         data={allNav[platform.key]}
+                        openPlatformAccordion={openPlatformAccordion}
+                        setOpenPlatformAccordion={setOpenPlatformAccordion}
                     />
                 ))}
 
                 <hr style={{ margin: '24px 0' }} />
 
                 <PlatformAccordion
+                    id="server-side"
                     title={'Server side'}
                     icon={<ServerIcon style={accordionIconStyle} />}
                     data={allNav['server-side']}
+                    openPlatformAccordion={openPlatformAccordion}
+                    setOpenPlatformAccordion={setOpenPlatformAccordion}
                 />
             </div>
 
@@ -190,10 +206,14 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                     css={{
                         position: 'sticky',
                         top: '0',
-                        pt: '$10',
+                        pt: '$5',
                         zIndex: '100',
                         boxShadow: '0 1.25rem 3rem 0.5rem rgba(8, 9, 12, 0.8)',
-                        backgroundColor: 'var(--docs_bg_content)'
+                        backgroundColor: 'var(--docs_bg_content)',
+                        '@md': {
+                            pt: '$8',
+                            top: '$10'
+                        }
                     }}>
                     <Flex
                         align="center"

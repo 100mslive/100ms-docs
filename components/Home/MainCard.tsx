@@ -9,7 +9,7 @@ import {
 import { Box, Flex, Text, useTheme } from '@100mslive/react-ui';
 import Badge from '@/components/Home/Badge';
 
-const SdkList = [
+export const SdkList = [
     {
         icon: <JavascriptIcon style={{ color: '#F7DF1E' }} />,
         title: 'JavaScript',
