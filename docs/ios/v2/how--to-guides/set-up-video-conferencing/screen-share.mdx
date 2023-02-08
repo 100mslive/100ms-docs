@@ -27,8 +27,35 @@ You can stop stop sharing your screen like below:
 
 There are 2 approaches that we suggest for checking if user is sharing screen:
 
-1. Check if the screen is added as a local track for the user
-2. Maintain a state variable when you successfully start and stop screen-sharing
+1. Check if the screen is added as a local track for the user like shown below
+
+```swift
+if localPeer?.auxiliaryTracks?.first(where: { $0.source == HMSCommonTrackSource.screen }) != nil {
+    // Screen is getting shared
+}
+```
+
+3. Maintain a state variable when screen track is added or removed like shown below
+
+```swift
+    var isSharingScreen = false
+    func on(track: HMSTrack, update: HMSTrackUpdate, for peer: HMSPeer) {
+        
+        if update == .trackAdded {
+            
+            if peer.isLocal && track.source == HMSCommonTrackSource.screen {
+                isSharingScreen = true
+            }
+        }
+        
+        if update == .trackRemoved {
+            
+            if peer.isLocal && track.source == HMSCommonTrackSource.screen {
+                isSharingScreen = false
+            }
+        }
+    }
+```
 
 # Share The Entire Device Screen
 
@@ -166,10 +193,39 @@ When a user leaves the meeting room from the main app, you will receive an error
 
 ## How to check if user is sharing their screen
 
-There are 2 approaches that we suggest for checking if user is sharing screen:
+There are 3 approaches that we suggest for checking if user is sharing screen:
 
-1. Check if the screen is added as a local track for the user
-2. Use the app group user defaults to store the state of screen sharing from broadcast extension (using broadcastStarted and broadcastFinished functions)
+1. Check if the screen is added as a local track for the user like shown below
+
+```swift
+if localPeer?.auxiliaryTracks?.first(where: { $0.source == HMSCommonTrackSource.screen }) != nil {
+    // Screen is getting shared
+}
+```
+
+2. Maintain a state variable when screen track is added or removed like shown below
+
+```swift
+    var isSharingScreen = false
+    func on(track: HMSTrack, update: HMSTrackUpdate, for peer: HMSPeer) {
+        
+        if update == .trackAdded {
+            
+            if peer.isLocal && track.source == HMSCommonTrackSource.screen {
+                isSharingScreen = true
+            }
+        }
+        
+        if update == .trackRemoved {
+            
+            if peer.isLocal && track.source == HMSCommonTrackSource.screen {
+                isSharingScreen = false
+            }
+        }
+    }
+```
+
+3. Use the app group user-defaults to store the state of screen sharing from broadcast extension (using broadcastStarted and broadcastFinished functions)
 
 ## Debugging issues in your screen-share implementation
 
