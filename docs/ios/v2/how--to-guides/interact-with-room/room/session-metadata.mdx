@@ -1,0 +1,86 @@
+---
+ title: Maintain Shared State in the Room (Session Metadata)
+ nav: 7.23
+---
+
+Session metadata is a shared state that is accessible by all peers in the room. It can be used for features such as pinned text or spotlighting a particular peer. The session metadata is persisted throughout a session and cleared once the last peer leaves the room.
+
+## Differences between Session Metadata and Peer Metadata
+
+While peer metadata is associated with individual peers and each peer can have their own metadata, session metadata remains the same for every peer in the room.
+
+## How to store shared data with 100ms SDK
+
+You use **setSessionMetadata** method to update the value of the session metadata for you current room session.
+
+```swift
+let hmsSDK = HMSSDK.build()
+...
+
+hmsSDK.setSessionMetadata("test") { success, error in
+  if !success {
+		// show error
+  } else {
+	  // update UI
+  }
+}
+```
+
+## How to read shared data with 100ms SDK
+
+```swift
+let hmsSDK = HMSSDK.build()
+...
+
+hmsSDK.getSessionMetadata() { metadata, error in
+  if let metadata = metadata {
+    // session metadata is available, update UI
+  }
+  else {
+    // no session metadata is set
+  }
+}
+```
+
+## Limitations and Workarounds in Alpha Release
+
+Currently there is no callback that client will receive to indicate if there is any change in the session metadata.
+
+## Then how can I notify other users that session metadata has changed
+
+You can send a broadcast message to notify others that session data has changed like shown below:
+
+```swift
+let hmsSDK = HMSSDK.build()
+...
+
+hmsSDK.setSessionMetadata("test") { success, error in
+  if !success {
+		// show error
+  } else {
+	  // update UI
+    hmsSDK.sendBroadcastMessage(type: "metadata", message: "refresh")
+  }
+}
+```
+
+And on the receiving side you can receive this message to know that session metadata has changed like shown below:
+
+```swift
+func on(message: HMSMessage) {
+  switch message.type {
+    case "chat":
+      messages.append(message)
+    case "metadata":
+      hmsSDK.getSessionMetadata() { metadata, error in
+	      if let metadata = metadata {
+				  // update UI with metadata
+	      }
+		   }
+    default:
+      break
+   }
+}
+```
+
+👀 To see an example pinned chat support using shared metadata in an iOS app using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
