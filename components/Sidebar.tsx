@@ -22,7 +22,6 @@ import { Listbox } from '@headlessui/react';
 import { Flex, Box, Text } from '@100mslive/react-ui';
 import SidebarSection from './SidebarSection';
 import PlatformAccordion from './PlatformAccordion';
-import { platform } from 'os';
 
 const accordionIconStyle = { height: '24px', width: '24px', color: 'inherit' };
 
