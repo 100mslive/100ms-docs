@@ -1,5 +1,6 @@
 ---
 title: HMSNotifications
+nav: '4.26'
 ---
 
 ## Methods

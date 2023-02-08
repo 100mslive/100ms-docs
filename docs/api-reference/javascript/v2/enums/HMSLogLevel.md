@@ -1,5 +1,6 @@
 ---
 title: HMSLogLevel
+nav: '2.3'
 ---
 
 ## Enumeration Members

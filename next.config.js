@@ -1253,6 +1253,12 @@ const nextConfig = {
                 destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/strict-privacy-applications',
                 permanent: true
             },
+            {
+                source: '/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/capture-snapshot',
+                destination: '/flutter/v2/how--to-guides/capture-frame/capture-snapshot',
+                permanent: true
+            },
+
         ];
     },
     eslint: {

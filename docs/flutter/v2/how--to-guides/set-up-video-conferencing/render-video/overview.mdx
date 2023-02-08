@@ -79,7 +79,7 @@ class Meeting implements HMSUpdateListener{
 Now, once we have the video tracks we can pass the video track to `HMSVideoView` to get live video on the screen.
 Screenshare as well as normal video tracks can be rendered in the same way which we will see below.
 
-> `HMSSDK` automatically handles audio tracks. So they are not required to be handled in the application. Although [mute/unmute](../features/mute) or [set audio volume](../advanced-features/set-volume) features are provided
+> `HMSSDK` automatically handles audio tracks. So they are not required to be handled in the application. Although [mute/unmute](/flutter/v2/how--to-guides/set-up-video-conferencing/mute) or [set audio volume](/flutter/v2/how--to-guides/interact-with-room/track/set-volume) features are provided
 > by SDK.
 
 ## Render Video
@@ -133,7 +133,7 @@ Generally true for local peer and false for a remote peers
 
 ### 4. disableAutoSimulcastLayerSelect
 
-HMSVideoView has an automatic simulcast layer selection capability which is enabled if adaptive bitrate is enabled. You can check more about it [here](../../../foundation/adaptive-bitrate).
+HMSVideoView has an automatic simulcast layer selection capability which is enabled if adaptive bitrate is enabled. You can check more about it [here](/concepts/v2/concepts/adaptive-bitrate).
 
 It will select a layer that best matches the current view frame size and reacts to frame updates. In case manual layer selection is preferred set `disableAutoSimulcastLayerSelect` property to `true`. By default, the track layer is set to `high`.
 
@@ -141,7 +141,7 @@ It will select a layer that best matches the current view frame size and reacts 
 
 ## Capture Snapshot
 
-You can capture a snapshot of the video stream of a local or remote peer's video. To capture a snapshot, you call captureSnapshot method on HMSVideoTrack instance to get a Uint8List containing a snapshot of the video stream. Know more about captureSnapshot [here](../capture-snapshot).
+You can capture a snapshot of the video stream of a local or remote peer's video. To capture a snapshot, you call captureSnapshot method on HMSVideoTrack instance to get a Uint8List containing a snapshot of the video stream. Know more about captureSnapshot [here](/flutter/v2/how--to-guides/capture-frame/capture-snapshot).
 
 ```dart
   HMSVideoTrack videoTrack;
@@ -151,7 +151,7 @@ You can capture a snapshot of the video stream of a local or remote peer's video
   Uint8List? bytes = await videoTrack.captureSnapshot();
 ```
 
-## Best Practices 
+## Best Practices
 
 ### Dispose HMSVideoView to conserve bandwidth and cleanup elements
 
