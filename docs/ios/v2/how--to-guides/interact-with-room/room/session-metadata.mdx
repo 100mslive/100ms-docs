@@ -11,14 +11,10 @@ While peer metadata is associated with individual peers and each peer can have t
 
 ## How to store shared data with 100ms SDK
 
-To update the value of the session metadata for the current room session, call **setSessionMetadata** method on SDK instance:
+To update the value of the session metadata for the current room session, call **setSessionMetadata** method on SDK instance. In the following example, the "test" string will be saved in the session metadata and accessible to all participants in the room as a shared state.
 
 Make sure you call session metadata API after you joined the room. You should listen to [onJoin()](https://www.100ms.live/docs/ios/v2/how--to-guides/set-up-video-conferencing/join#call-join) callback to proceed.
 ```swift
-let hmsSDK = HMSSDK.build()
-// Make sure you join the room using hmsSDK instance; and then listen to onJoin() callback to proceed.
-...
-
 hmsSDK.setSessionMetadata("test") { success, error in
   if !success {
 		// show error
@@ -34,10 +30,6 @@ To retrieve the session metadata, use the **getSessionMetadata** method:
 
 Make sure you call session metadata API after you joined the room. You should listen to [onJoin()](https://www.100ms.live/docs/ios/v2/how--to-guides/set-up-video-conferencing/join#call-join) callback to proceed.
 ```swift
-let hmsSDK = HMSSDK.build()
-// Make sure you join the room using hmsSDK instance; and then listen to onJoin() callback to proceed.
-...
-
 hmsSDK.getSessionMetadata() { metadata, error in
   if let metadata = metadata {
     // session metadata is available, update UI
@@ -59,10 +51,10 @@ To notify others that the session data has been changed, you can send a broadcas
 ```swift
 hmsSDK.setSessionMetadata("test") { success, error in
   if !success {
-		// show error
+     // show error
   } else {
-	  // update UI
-    hmsSDK.sendBroadcastMessage(type: "metadata", message: "refresh")
+     // update UI
+     hmsSDK.sendBroadcastMessage(type: "metadata", message: "refresh")
   }
 }
 ```
