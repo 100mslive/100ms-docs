@@ -71,7 +71,8 @@ const NotFound = () => {
                             mt: '$8',
                             flexWrap: 'wrap',
                             w: '100%',
-                            maxWidth: '600px'
+                            maxWidth: '600px',
+                            mx: 'auto'
                         }}>
                         {updatedList.map((sdk) => (
                             <Badge key={sdk.id} {...sdk} />
