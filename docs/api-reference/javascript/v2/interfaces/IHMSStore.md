@@ -1,5 +1,6 @@
 ---
 title: IHMSStore
+nav: '4.62'
 ---
 
 HMS Reactive store can be used to subscribe to different parts of the store using selectors

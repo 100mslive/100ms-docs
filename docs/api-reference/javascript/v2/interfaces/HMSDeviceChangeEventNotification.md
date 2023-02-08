@@ -1,5 +1,6 @@
 ---
 title: HMSDeviceChangeEventNotification
+nav: '4.16'
 ---
 
 ## Hierarchy

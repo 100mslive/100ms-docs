@@ -1,5 +1,6 @@
 ---
 title: HMSNotificationTypes
+nav: '2.5'
 ---
 
 ## Enumeration Members
