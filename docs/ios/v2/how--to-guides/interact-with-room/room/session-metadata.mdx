@@ -13,9 +13,10 @@ While peer metadata is associated with individual peers and each peer can have t
 
 To update the value of the session metadata for the current room session, call **setSessionMetadata** method on SDK instance:
 
+Make sure you call session metadata API after you joined the room. You should listen to [onJoin()](https://www.100ms.live/docs/ios/v2/how--to-guides/set-up-video-conferencing/join#call-join) callback to proceed.
 ```swift
 let hmsSDK = HMSSDK.build()
-// Make sure you join the room using hmsSDK instance. You should listen to [onJoin()](https://www.100ms.live/docs/ios/v2/how--to-guides/set-up-video-conferencing/join#call-join) callback to proceed.
+// Make sure you join the room using hmsSDK instance; and then listen to onJoin() callback to proceed.
 ...
 
 hmsSDK.setSessionMetadata("test") { success, error in
@@ -31,9 +32,10 @@ hmsSDK.setSessionMetadata("test") { success, error in
 
 To retrieve the session metadata, use the **getSessionMetadata** method:
 
+Make sure you call session metadata API after you joined the room. You should listen to [onJoin()](https://www.100ms.live/docs/ios/v2/how--to-guides/set-up-video-conferencing/join#call-join) callback to proceed.
 ```swift
 let hmsSDK = HMSSDK.build()
-// Make sure you join the room using hmsSDK instance. You should listen to [onJoin()](https://www.100ms.live/docs/ios/v2/how--to-guides/set-up-video-conferencing/join#call-join) callback to proceed.
+// Make sure you join the room using hmsSDK instance; and then listen to onJoin() callback to proceed.
 ...
 
 hmsSDK.getSessionMetadata() { metadata, error in
