@@ -63,6 +63,21 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
         setMenu(false);
     }, [router]);
 
+    const [currentTheme, setCurrentTheme] = useState('dark');
+
+    useEffect(() => {
+        if (window) {
+            setCurrentTheme(window.localStorage.theme || 'dark');
+        }
+    }, []);
+
+    useEffect(() => {
+        const updateTheme = (e) => setCurrentTheme(e.detail.theme);
+
+        if (document) document.addEventListener('themeChanged', updateTheme);
+        return () => document.removeEventListener('themeChanged', updateTheme);
+    }, []);
+
     let nav;
     if (!baseViewOnly) {
         const [currentDocSlug] = slug as string[];
@@ -117,7 +132,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                 height: 'calc(100vh - 100px)',
                 overflowY: 'auto',
                 position: 'sticky',
-                top: '$10',
+                top: '$20',
                 overscrollBehavior: 'none',
                 '@md': {
                     position: 'absolute',
@@ -150,7 +165,8 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                         gap="1"
                         css={{
                             color: '$primaryLight',
-                            mt: '$6',
+                            mt: '$8',
+                            pt: '0',
                             mb: '$12',
                             cursor: 'pointer',
                             '@md': {
@@ -200,14 +216,17 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
             </div>
 
             {/* Platform specific view */}
-            <div className={`page ${showBaseView ? '' : 'active-page'}`}>
+            <div className={`page ${showBaseView ? '' : 'active-page'}`} style={{}}>
                 <Box
                     css={{
                         position: 'sticky',
                         top: '0',
                         pt: '$5',
                         zIndex: '100',
-                        boxShadow: '0 1.25rem 3rem 0.5rem rgba(8, 9, 12, 0.8)',
+                        boxShadow:
+                            currentTheme === 'dark'
+                                ? '0 1.25rem 3rem 0.5rem rgba(8, 9, 12, 0.8)'
+                                : '0 1.25rem 1rem 0.5rem rgba(250, 250, 250, 0.8)',
                         backgroundColor: 'var(--docs_bg_content)',
                         '@md': {
                             pt: '$8',
