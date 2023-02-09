@@ -132,7 +132,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                 height: 'calc(100vh - 100px)',
                 overflowY: 'auto',
                 position: 'sticky',
-                top: '$10',
+                top: '$20',
                 overscrollBehavior: 'none',
                 '@md': {
                     position: 'absolute',
