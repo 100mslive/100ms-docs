@@ -548,6 +548,17 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | video   | `object` | Video publish parameters.                                 | No       |
 | screen  | `object` | Screenshare publish parameters.                           | No       |
 
+
+### simulcast object
+
+| Name                   | Type            | Description                                                                                                                                                                                                 | Required  |
+| :--------------------- | :-------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------- |
+| layers                 | `object`        | max length of this array can be 3.                                                                                                                                                                          | Yes       |
+| maxBitrate             | `int`           | unsigned long integer indicating the maximum number of kilo bits per second to allow for this encoding. Should be in the range [0, 2e3] (max is 2 Mbps). optional field, defaults to 0.                     | Yes       |
+| maxFramerate           | `int`           | unsigned integer value specifying the maximum number of frames per second to allow for this encoding. Should be in the range [1, 30].                                                                       | Yes       |
+| scaleResolutionDownBy  | `long integer`  | used to specify a factor by which to reduce the size of a video track during encoding. Should be in the range [1.0, 12.0]. The value should always be strictly greater than the value of the previous (if exists) in the layers array. | Yes       |
+| rid                    | `string`        | specifies an RTP stream ID to be sent using the RID header extension. can be one of f, h, q. value should always be strictly smaller than the value of previous (if exists) in the layers array (ordered using rule f > h > q ). no duplicates in values can exist in any two items in the layers array. the first rid should always be f with scaleDownByResolution=1.0. | Yes       |
+
 #### audio object
 
 | Name    | Type     | Description                                                     | Default | Required |
