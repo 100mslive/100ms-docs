@@ -165,7 +165,8 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                         gap="1"
                         css={{
                             color: '$primaryLight',
-                            mt: '$6',
+                            mt: '$8',
+                            pt: '0',
                             mb: '$12',
                             cursor: 'pointer',
                             '@md': {
