@@ -120,7 +120,7 @@ const MainCard = () => {
                 </Text>
                 <ul style={{ marginTop: '1rem' }}>
                     {learn.map((point) => (
-                        <li style={{ margin: '0', marginBottom: '0.25rem' }}>
+                        <li key={point} style={{ margin: '0', marginBottom: '0.25rem' }}>
                             <Text variant="sm" className="mono" css={{ color: '$textHighEmp' }}>
                                 {point}
                             </Text>

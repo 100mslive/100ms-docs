@@ -25,8 +25,12 @@ const NewReleases = () => (
                 gridColumnGap: '$13',
                 '@sm': { gridColumnGap: '$12' }
             }}>
-            {releases.map((release) => (
-                <ReleaseItem key={release.version} {...release} />
+            {Object.keys(releases).map((release) => (
+                <ReleaseItem
+                    key={releases[release].version}
+                    {...releases[release]}
+                    platform={release}
+                />
             ))}
         </Box>
     </Box>
@@ -41,7 +45,7 @@ const ReleaseItem = ({ platform, version, date }) => (
             <Link href={SdkList[platform].link}>
                 <a>
                     <Text variant="sm" className="mono" css={{ color: '$primaryLight' }}>
-                        {version} / {platform}
+                        {version} / {platform === 'Server-side' ? 'Server' : platform}
                     </Text>
                 </a>
             </Link>
@@ -86,7 +90,7 @@ const SdkList = {
         id: 'reactNative',
         link: '/react-native/v2/changelog/release-notes'
     },
-    Server: {
+    'Server-side': {
         icon: <ServerIcon style={iconStyle} />,
         id: 'server',
         link: '/server-side/v2/changelog/release-notes'
