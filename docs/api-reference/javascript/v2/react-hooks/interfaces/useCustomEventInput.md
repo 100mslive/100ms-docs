@@ -13,7 +13,7 @@ nav: "5.2.3"
 
 ### handleError
 
-• `Optional` **handleError**: [`hooksErrHandler`](/api-reference/javascript/v2/react/home/content#hookserrhandler)
+• `Optional` **handleError**: [`hooksErrHandler`](/api-reference/javascript/v2/react-hooks/home/content#hookserrhandler)
 
 function to handle errors happening during sending the event
 

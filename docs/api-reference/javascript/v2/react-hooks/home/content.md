@@ -5,23 +5,23 @@ nav: "5.1.1"
 
 ## Interfaces
 
-- [useAVToggleResult](/api-reference/javascript/v2/react/interfaces/useAVToggleResult)
-- [useAutoplayErrorResult](/api-reference/javascript/v2/react/interfaces/useAutoplayErrorResult)
-- [useCustomEventInput](/api-reference/javascript/v2/react/interfaces/useCustomEventInput)
-- [useCustomEventResult](/api-reference/javascript/v2/react/interfaces/useCustomEventResult)
-- [useDevicesResult](/api-reference/javascript/v2/react/interfaces/useDevicesResult)
-- [useParticipantListResult](/api-reference/javascript/v2/react/interfaces/useParticipantListResult)
-- [useParticipantsResult](/api-reference/javascript/v2/react/interfaces/useParticipantsResult)
-- [usePreviewInput](/api-reference/javascript/v2/react/interfaces/usePreviewInput)
-- [usePreviewResult](/api-reference/javascript/v2/react/interfaces/usePreviewResult)
-- [useRecordingStreamingResult](/api-reference/javascript/v2/react/interfaces/useRecordingStreamingResult)
-- [useRemoteAVToggleResult](/api-reference/javascript/v2/react/interfaces/useRemoteAVToggleResult)
-- [useScreenShareResult](/api-reference/javascript/v2/react/interfaces/useScreenShareResult)
-- [useVideoInput](/api-reference/javascript/v2/react/interfaces/useVideoInput)
-- [useVideoListInput](/api-reference/javascript/v2/react/interfaces/useVideoListInput)
-- [useVideoListTile](/api-reference/javascript/v2/react/interfaces/useVideoListTile)
-- [useVideoOutput](/api-reference/javascript/v2/react/interfaces/useVideoOutput)
-- [useVideoResult](/api-reference/javascript/v2/react/interfaces/useVideoResult)
+- [useAVToggleResult](/api-reference/javascript/v2/react-hooks/interfaces/useAVToggleResult)
+- [useAutoplayErrorResult](/api-reference/javascript/v2/react-hooks/interfaces/useAutoplayErrorResult)
+- [useCustomEventInput](/api-reference/javascript/v2/react-hooks/interfaces/useCustomEventInput)
+- [useCustomEventResult](/api-reference/javascript/v2/react-hooks/interfaces/useCustomEventResult)
+- [useDevicesResult](/api-reference/javascript/v2/react-hooks/interfaces/useDevicesResult)
+- [useParticipantListResult](/api-reference/javascript/v2/react-hooks/interfaces/useParticipantListResult)
+- [useParticipantsResult](/api-reference/javascript/v2/react-hooks/interfaces/useParticipantsResult)
+- [usePreviewInput](/api-reference/javascript/v2/react-hooks/interfaces/usePreviewInput)
+- [usePreviewResult](/api-reference/javascript/v2/react-hooks/interfaces/usePreviewResult)
+- [useRecordingStreamingResult](/api-reference/javascript/v2/react-hooks/interfaces/useRecordingStreamingResult)
+- [useRemoteAVToggleResult](/api-reference/javascript/v2/react-hooks/interfaces/useRemoteAVToggleResult)
+- [useScreenShareResult](/api-reference/javascript/v2/react-hooks/interfaces/useScreenShareResult)
+- [useVideoInput](/api-reference/javascript/v2/react-hooks/interfaces/useVideoInput)
+- [useVideoListInput](/api-reference/javascript/v2/react-hooks/interfaces/useVideoListInput)
+- [useVideoListTile](/api-reference/javascript/v2/react-hooks/interfaces/useVideoListTile)
+- [useVideoOutput](/api-reference/javascript/v2/react-hooks/interfaces/useVideoOutput)
+- [useVideoResult](/api-reference/javascript/v2/react-hooks/interfaces/useVideoResult)
 
 ## Type Aliases
 
@@ -106,7 +106,7 @@ ___
 
 ### useAVToggle
 
-▸ **useAVToggle**(`handleError?`): [`useAVToggleResult`](/api-reference/javascript/v2/react/interfaces/useAVToggleResult)
+▸ **useAVToggle**(`handleError?`): [`useAVToggleResult`](/api-reference/javascript/v2/react-hooks/interfaces/useAVToggleResult)
 
 Use this hook to implement mute/unmute for audio and video.
 isAllowedToPublish can be used to decide whether to show the toggle buttons in the UI.
@@ -115,11 +115,11 @@ isAllowedToPublish can be used to decide whether to show the toggle buttons in t
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `handleError` | [`hooksErrHandler`](/api-reference/javascript/v2/react/home/content#hookserrhandler) | `logErrorHandler` | to handle any error during toggle of audio/video |
+| `handleError` | [`hooksErrHandler`](/api-reference/javascript/v2/react-hooks/home/content#hookserrhandler) | `logErrorHandler` | to handle any error during toggle of audio/video |
 
 #### Returns
 
-[`useAVToggleResult`](/api-reference/javascript/v2/react/interfaces/useAVToggleResult)
+[`useAVToggleResult`](/api-reference/javascript/v2/react-hooks/interfaces/useAVToggleResult)
 
 ___
 
@@ -149,20 +149,20 @@ ___
 
 ### useAutoplayError
 
-▸ **useAutoplayError**(): [`useAutoplayErrorResult`](/api-reference/javascript/v2/react/interfaces/useAutoplayErrorResult)
+▸ **useAutoplayError**(): [`useAutoplayErrorResult`](/api-reference/javascript/v2/react-hooks/interfaces/useAutoplayErrorResult)
 
 Use this hook to show a UI(modal or a toast) when autoplay is blocked by browser and allow the user to
 unblock the browser autoplay block
 
 #### Returns
 
-[`useAutoplayErrorResult`](/api-reference/javascript/v2/react/interfaces/useAutoplayErrorResult)
+[`useAutoplayErrorResult`](/api-reference/javascript/v2/react-hooks/interfaces/useAutoplayErrorResult)
 
 ___
 
 ### useCustomEvent
 
-▸ **useCustomEvent**<`T`\>(`__namedParameters`): [`useCustomEventResult`](/api-reference/javascript/v2/react/interfaces/useCustomEventResult)<`T`\>
+▸ **useCustomEvent**<`T`\>(`__namedParameters`): [`useCustomEventResult`](/api-reference/javascript/v2/react-hooks/interfaces/useCustomEventResult)<`T`\>
 
 A generic function to implement [custom events](https://www.100ms.live/docs/javascript/v2/features/chat#custom-events) in your UI.
 The data to be sent to remote is expected to be a serializable JSON. The serialization
@@ -178,17 +178,17 @@ and deserialization is taken care of by the hook.
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`useCustomEventInput`](/api-reference/javascript/v2/react/interfaces/useCustomEventInput)<`T`\> |
+| `__namedParameters` | [`useCustomEventInput`](/api-reference/javascript/v2/react-hooks/interfaces/useCustomEventInput)<`T`\> |
 
 #### Returns
 
-[`useCustomEventResult`](/api-reference/javascript/v2/react/interfaces/useCustomEventResult)<`T`\>
+[`useCustomEventResult`](/api-reference/javascript/v2/react-hooks/interfaces/useCustomEventResult)<`T`\>
 
 ___
 
 ### useDevices
 
-▸ **useDevices**(`handleError?`): [`useDevicesResult`](/api-reference/javascript/v2/react/interfaces/useDevicesResult)
+▸ **useDevices**(`handleError?`): [`useDevicesResult`](/api-reference/javascript/v2/react-hooks/interfaces/useDevicesResult)
 
 This hook can be used to implement a UI component which allows the user to manually change their
 audio/video device. It returns the list of all devices as well as the currently selected one. The input
@@ -204,11 +204,11 @@ Note:
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `handleError` | [`hooksErrHandler`](/api-reference/javascript/v2/react/modules#hookserrhandler) | `logErrorHandler` | error handler for any errors during device change |
+| `handleError` | [`hooksErrHandler`](/api-reference/javascript/v2/react-hooks/modules#hookserrhandler) | `logErrorHandler` | error handler for any errors during device change |
 
 #### Returns
 
-[`useDevicesResult`](/api-reference/javascript/v2/react/interfaces/useDevicesResult)
+[`useDevicesResult`](/api-reference/javascript/v2/react-hooks/interfaces/useDevicesResult)
 
 ___
 
@@ -354,7 +354,7 @@ filtered by role or metadata with isHandRaised or the entire participants if no 
 
 | Name | Type |
 | :------ | :------ |
-| `params?` | [`useParticipantsParams`](/api-reference/javascript/v2/react/modules#useparticipantsparams) |
+| `params?` | [`useParticipantsParams`](/api-reference/javascript/v2/react-hooks/modules#useparticipantsparams) |
 
 #### Returns
 
@@ -371,7 +371,7 @@ ___
 
 ### usePreviewJoin
 
-▸ **usePreviewJoin**(`__namedParameters`): [`usePreviewResult`](/api-reference/javascript/v2/react/interfaces/usePreviewResult)
+▸ **usePreviewJoin**(`__namedParameters`): [`usePreviewResult`](/api-reference/javascript/v2/react-hooks/interfaces/usePreviewResult)
 
 This hook can be used to build a preview UI component, this lets you call preview every time the passed in
 token changes. This hook is best used in combination with useDevices for changing devices, useAVToggle for
@@ -382,27 +382,27 @@ Any device change or mute/unmute will be carried across to join.
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`usePreviewInput`](/api-reference/javascript/v2/react/interfaces/usePreviewInput) |
+| `__namedParameters` | [`usePreviewInput`](/api-reference/javascript/v2/react-hooks/interfaces/usePreviewInput) |
 
 #### Returns
 
-[`usePreviewResult`](/api-reference/javascript/v2/react/interfaces/usePreviewResult)
+[`usePreviewResult`](/api-reference/javascript/v2/react-hooks/interfaces/usePreviewResult)
 
 ___
 
 ### useRecordingStreaming
 
-▸ **useRecordingStreaming**(): [`useRecordingStreamingResult`](/api-reference/javascript/v2/react/interfaces/useRecordingStreamingResult)
+▸ **useRecordingStreaming**(): [`useRecordingStreamingResult`](/api-reference/javascript/v2/react-hooks/interfaces/useRecordingStreamingResult)
 
 #### Returns
 
-[`useRecordingStreamingResult`](/api-reference/javascript/v2/react/interfaces/useRecordingStreamingResult)
+[`useRecordingStreamingResult`](/api-reference/javascript/v2/react-hooks/interfaces/useRecordingStreamingResult)
 
 ___
 
 ### useRemoteAVToggle
 
-▸ **useRemoteAVToggle**(`audioTrackId`, `videoTrackId`, `handleError?`): [`useRemoteAVToggleResult`](/api-reference/javascript/v2/react/interfaces/useRemoteAVToggleResult)
+▸ **useRemoteAVToggle**(`audioTrackId`, `videoTrackId`, `handleError?`): [`useRemoteAVToggleResult`](/api-reference/javascript/v2/react-hooks/interfaces/useRemoteAVToggleResult)
 
 This hook can be used to implement remote mute/unmute + audio volume changer on tile level.
 
@@ -412,17 +412,17 @@ This hook can be used to implement remote mute/unmute + audio volume changer on 
 | :------ | :------ | :------ | :------ |
 | `audioTrackId` | `string` | `undefined` | of the peer whose tracks need to be managed |
 | `videoTrackId` | `string` | `undefined` | of the peer whose tracks need to be managed |
-| `handleError` | [`hooksErrHandler`](/api-reference/javascript/v2/react/modules#hookserrhandler) | `logErrorHandler` | to handle any error during toggle of audio/video |
+| `handleError` | [`hooksErrHandler`](/api-reference/javascript/v2/react-hooks/modules#hookserrhandler) | `logErrorHandler` | to handle any error during toggle of audio/video |
 
 #### Returns
 
-[`useRemoteAVToggleResult`](/api-reference/javascript/v2/react/interfaces/useRemoteAVToggleResult)
+[`useRemoteAVToggleResult`](/api-reference/javascript/v2/react-hooks/interfaces/useRemoteAVToggleResult)
 
 ___
 
 ### useScreenShare
 
-▸ **useScreenShare**(`handleError?`): [`useScreenShareResult`](/api-reference/javascript/v2/react/interfaces/useScreenShareResult)
+▸ **useScreenShare**(`handleError?`): [`useScreenShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/useScreenShareResult)
 
 This hook can be used to implement a screenshare toggle button as well as know about the screenshare in the room.
 This works best if your application only needs to show one screenshare in large view at a time with other screenshares
@@ -435,17 +435,17 @@ For implementing control bar for local peer, this is used based with useAVToggle
 
 | Name | Type | Default value | Description |
 | :------ | :------ | :------ | :------ |
-| `handleError` | [`hooksErrHandler`](/api-reference/javascript/v2/react/modules#hookserrhandler) | `logErrorHandler` | to handle any errors during screenshare toggle |
+| `handleError` | [`hooksErrHandler`](/api-reference/javascript/v2/react-hooks/modules#hookserrhandler) | `logErrorHandler` | to handle any errors during screenshare toggle |
 
 #### Returns
 
-[`useScreenShareResult`](/api-reference/javascript/v2/react/interfaces/useScreenShareResult)
+[`useScreenShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/useScreenShareResult)
 
 ___
 
 ### useVideo
 
-▸ **useVideo**(`__namedParameters`): [`useVideoOutput`](/api-reference/javascript/v2/react/interfaces/useVideoOutput)
+▸ **useVideo**(`__namedParameters`): [`useVideoOutput`](/api-reference/javascript/v2/react-hooks/interfaces/useVideoOutput)
 
 This hooks can be used to implement a video tile component. Given a track id it will return a ref.
 The returned ref can be used to set on a video element meant to display the video.
@@ -456,17 +456,17 @@ goes out of view to save on bandwidth.
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`useVideoInput`](/api-reference/javascript/v2/react/interfaces/useVideoInput) |
+| `__namedParameters` | [`useVideoInput`](/api-reference/javascript/v2/react-hooks/interfaces/useVideoInput) |
 
 #### Returns
 
-[`useVideoOutput`](/api-reference/javascript/v2/react/interfaces/useVideoOutput)
+[`useVideoOutput`](/api-reference/javascript/v2/react-hooks/interfaces/useVideoOutput)
 
 ___
 
 ### useVideoList
 
-▸ **useVideoList**(`__namedParameters`): [`useVideoResult`](/api-reference/javascript/v2/react/interfaces/useVideoResult)
+▸ **useVideoList**(`__namedParameters`): [`useVideoResult`](/api-reference/javascript/v2/react-hooks/interfaces/useVideoResult)
 
 This hook can be used to build a paginated gallery view of video tiles. You can give the hook
 a list of all the peers which need to be shown and it tells you how to structure the UI by giving
@@ -477,8 +477,8 @@ Please check the documentation of input and output types for more details.
 
 | Name | Type |
 | :------ | :------ |
-| `__namedParameters` | [`useVideoListInput`](/api-reference/javascript/v2/react/interfaces/useVideoListInput) |
+| `__namedParameters` | [`useVideoListInput`](/api-reference/javascript/v2/react-hooks/interfaces/useVideoListInput) |
 
 #### Returns
 
-[`useVideoResult`](/api-reference/javascript/v2/react/interfaces/useVideoResult)
+[`useVideoResult`](/api-reference/javascript/v2/react-hooks/interfaces/useVideoResult)
