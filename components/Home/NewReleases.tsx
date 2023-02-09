@@ -22,8 +22,8 @@ const NewReleases = () => (
             css={{
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
-                gridColumnGap: '60px',
-                '@sm': { gridColumnGap: '2rem' }
+                gridColumnGap: '$13',
+                '@sm': { gridColumnGap: '$12' }
             }}>
             {releases.map((release) => (
                 <ReleaseItem key={release.version} {...release} />
@@ -50,7 +50,6 @@ const ReleaseItem = ({ platform, version, date }) => (
                 className="mono"
                 css={{
                     color: '$textMedEmp',
-                    mt: '$2',
                     mb: '$8'
                 }}>
                 {date}

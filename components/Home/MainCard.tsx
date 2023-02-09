@@ -115,7 +115,7 @@ const MainCard = () => {
                 <Text
                     variant="sm"
                     className="mono"
-                    css={{ color: '$primaryLight', fontWeight: '$medium' }}>
+                    css={{ color: '$textAccentHigh', fontWeight: '700' }}>
                     {'What you will learn >'}
                 </Text>
                 <ul style={{ marginTop: '1rem' }}>

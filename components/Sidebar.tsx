@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
@@ -103,26 +103,27 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
 
     const [showBaseView, setShowBaseView] = useState(baseViewOnly);
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
+    const baseRef = useRef<HTMLDivElement>(null);
 
     return (
         <Box
+            ref={baseRef}
             className="hide-scrollbar"
             css={{
-                pt: '$12',
                 minWidth: '304px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'stretch',
-                height: 'calc(100vh - 136px)',
+                height: 'calc(100vh - 100px)',
                 overflowY: 'auto',
                 position: 'sticky',
-                top: '0',
+                top: '$10',
                 overscrollBehavior: 'none',
                 '@md': {
                     position: 'absolute',
                     top: '$14',
                     display: menu ? 'flex' : 'none',
-                    minHeight: '100vh'
+                    height: 'calc(100vh - 200px)'
                 },
                 '@sm': {
                     w: '100vw'
@@ -135,7 +136,9 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                     showBaseView
                         ? {
                               padding: '1.75rem',
-                              paddingTop: '0'
+                              paddingTop: '0',
+                              position: 'sticky',
+                              top: '1rem'
                           }
                         : {}
                 }>
@@ -147,9 +150,12 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                         gap="1"
                         css={{
                             color: '$primaryLight',
-                            mt: '$14',
+                            mt: '$6',
                             mb: '$12',
-                            cursor: 'pointer'
+                            cursor: 'pointer',
+                            '@md': {
+                                pt: '$10'
+                            }
                         }}
                         onClick={() => setShowBaseView(false)}>
                         <Text variant="sm" css={{ color: '$primaryLight' }}>
@@ -171,10 +177,10 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
 
                 {platformOrder.map((platform) => (
                     <PlatformAccordion
+                        id={platform.key}
                         key={platform.text}
                         title={platform.text}
                         icon={platform.icon}
-                        id={platform.key}
                         data={allNav[platform.key]}
                         openPlatformAccordion={openPlatformAccordion}
                         setOpenPlatformAccordion={setOpenPlatformAccordion}
@@ -184,10 +190,10 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                 <hr style={{ margin: '24px 0' }} />
 
                 <PlatformAccordion
+                    id="server-side"
                     title={'Server side'}
                     icon={<ServerIcon style={accordionIconStyle} />}
                     data={allNav['server-side']}
-                    id={'server-side'}
                     openPlatformAccordion={openPlatformAccordion}
                     setOpenPlatformAccordion={setOpenPlatformAccordion}
                 />
@@ -195,61 +201,74 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
 
             {/* Platform specific view */}
             <div className={`page ${showBaseView ? '' : 'active-page'}`}>
-                <Flex
-                    align="center"
-                    gap="1"
+                <Box
                     css={{
-                        color: '$primaryLight',
-                        pl: '$9',
-                        mt: '$14',
-                        mb: '$12',
-                        cursor: 'pointer'
-                    }}
-                    onClick={() => setShowBaseView(true)}>
-                    <ChevronLeftIcon height="16px" width="16px" />
-                    <Text variant="sm" css={{ color: '$primaryLight' }}>
-                        Back to Home
-                    </Text>
-                </Flex>
-
-                {/* Sidebar Version Section */}
-                {showPlatformSelector ? (
-                    <section
-                        style={{
-                            margin: '0px 0.5rem 0.5rem 0.4rem',
-                            position: 'sticky',
-                            top: '0',
-                            zIndex: '20',
-                            background: 'var(--docs_bg_content)'
+                        position: 'sticky',
+                        top: '0',
+                        pt: '$5',
+                        zIndex: '100',
+                        boxShadow: '0 1.25rem 3rem 0.5rem rgba(8, 9, 12, 0.8)',
+                        backgroundColor: 'var(--docs_bg_content)',
+                        '@md': {
+                            pt: '$8',
+                            top: '$10'
+                        }
+                    }}>
+                    <Flex
+                        align="center"
+                        gap="1"
+                        css={{
+                            color: '$primaryLight',
+                            pl: '$9',
+                            mb: '$12',
+                            cursor: 'pointer'
+                        }}
+                        onClick={() => {
+                            setShowBaseView(true);
+                            if (baseRef.current) baseRef?.current.scrollTo(0, 0);
                         }}>
-                        <Listbox value={tech} onChange={changeTech}>
-                            <Listbox.Button className="dropdown">
-                                <div style={{ display: 'flex ', alignItems: 'center' }}>
-                                    {tech.icon}
-                                    <span style={{ marginLeft: '1rem' }}>{tech.name}</span>
-                                </div>
-                                <ChevronDownIcon />
-                            </Listbox.Button>
-                            <Listbox.Options className="dropdown-options">
-                                {menuItem.map((m) => (
-                                    <Listbox.Option
-                                        key={m.link}
-                                        value={m}
-                                        className={({ active }) =>
-                                            `${
-                                                active
-                                                    ? 'dropdown-option dropdown-option-active'
-                                                    : 'dropdown-option'
-                                            }`
-                                        }>
-                                        {m.icon}
-                                        <span style={{ marginLeft: '1rem' }}>{m.name}</span>
-                                    </Listbox.Option>
-                                ))}
-                            </Listbox.Options>
-                        </Listbox>
-                    </section>
-                ) : null}
+                        <ChevronLeftIcon height="16px" width="16px" />
+                        <Text variant="sm" css={{ color: '$primaryLight' }}>
+                            Content overview
+                        </Text>
+                    </Flex>
+
+                    {/* Sidebar Version Section */}
+                    {showPlatformSelector ? (
+                        <section
+                            style={{
+                                margin: '0px 0.5rem 0.5rem 0.4rem',
+                                background: 'var(--docs_bg_content)'
+                            }}>
+                            <Listbox value={tech} onChange={changeTech}>
+                                <Listbox.Button className="dropdown">
+                                    <div style={{ display: 'flex ', alignItems: 'center' }}>
+                                        {tech.icon}
+                                        <span style={{ marginLeft: '1rem' }}>{tech.name}</span>
+                                    </div>
+                                    <ChevronDownIcon />
+                                </Listbox.Button>
+                                <Listbox.Options className="dropdown-options">
+                                    {menuItem.map((m) => (
+                                        <Listbox.Option
+                                            key={m.link}
+                                            value={m}
+                                            className={({ active }) =>
+                                                `${
+                                                    active
+                                                        ? 'dropdown-option dropdown-option-active'
+                                                        : 'dropdown-option'
+                                                }`
+                                            }>
+                                            {m.icon}
+                                            <span style={{ marginLeft: '1rem' }}>{m.name}</span>
+                                        </Listbox.Option>
+                                    ))}
+                                </Listbox.Options>
+                            </Listbox>
+                        </section>
+                    ) : null}
+                </Box>
                 {/* Sidebar Menu Section */}
                 {nav
                     ? Object.entries(nav).map(([key, children], index) => (
