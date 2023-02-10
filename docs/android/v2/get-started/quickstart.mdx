@@ -227,41 +227,19 @@ The `HMSUpdateListener` has a callback to notify about people joining or leaving
 
 ### How to render audio and video
 
-The SDK plays the audio for every person who joins the call. Audio will begin playing when join succeeds.
-To see the person's video you need to create an instance of `org.webrtc.SurfaceViewRenderer`. The correct version for webrtc is exported via the 100ms android sdk already, so if you have version `2.0.9` and above no additional imports are required to use it.
-
-### Showing Videos
-
-A peer represents one person in the video call.
-
-A peer's video track is in `hmsPeer.videoTrack`. ScreenShares can be found in `val screenShareVideoTrack = hmsPeer.auxiliaryTracks.find { it is HMSVideoTrack }`. i.e the auxiliary tracks is a list of tracks, one of which can be a ScreenShare if they have chosen to share their screen.
-
-You would want a RecyclerView of participants in the video call.
-The adapter data should be a list of class that has both the peer and the track to display. Call it a TrackPeerPair.
-
-Your layout xml for a peer video would need to have an `org.webrtc.SurfaceViewRenderer`
-
-```xml section=ShowingVideos sectionIndex=1
-
-<org.webrtc.SurfaceViewRenderer
- android:id="@+id/videoSurfaceView"
- android:layout_width="wrap_content"
- android:layout_height="wrap_content"
- app:layout_constraintStart_toStartOf="parent"
- app:layout_constraintTop_toTopOf="parent" />
-```
-
-Initialize this when it's added to the window. Release it when it's removed. Call `hmsPeer.videoTrack?.addSink(surfaceViewRenderer)` to start showing videos.
+See how to [set up video](../how--to-guides/set-up-video-conferencing/render-video/render-video)
 
 ### Listening to Updates Effectively
 
-Each time there's a an onJoin, onPeerUpdate, or onTrackUpdate, you can add all the peers from `hmsSdk.getPeers()` into the adapter. You'd need to map them into TrackPeerPair's.
+Each time there's a an onJoin, onPeerUpdate, or onTrackUpdate, you can add all the peers from `hmsSdk.getPeers()` into the adapter. Since peers can have both their own videos and screen shares it's possible for a peer to have more than one video track.
+
+Note that peers with no video tracks will never have onTrackUpdate called with a video (so they should be watched for in onPeerUpdate) and peers with video tracks should be watched for in `onTrackUpdate` since tracks will come a few milliseconds after the the first time a peer appears in onPeerUpdate.
 
 ## Where to go from here
 
-Checkout the [simple version](https://github.com/100mslive/hello-world-android/) of the project.
+Checkout the [simple](https://github.com/100mslive/hello-world-android/) sample app.
 
-Also a full featured [advanced version](https://github.com/100mslive/100ms-android/).
+Also a full featured [advanced](https://github.com/100mslive/100ms-android/) sample app.
 
 ## Glossary
 
