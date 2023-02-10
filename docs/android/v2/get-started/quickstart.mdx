@@ -233,7 +233,7 @@ See how to [set up video](../how--to-guides/set-up-video-conferencing/render-vid
 
 Each time there's a an onJoin, onPeerUpdate, or onTrackUpdate, you can add all the peers from `hmsSdk.getPeers()` into the adapter. Since peers can have both their own videos and screen shares it's possible for a peer to have more than one video track.
 
-Note that peers with no video tracks will never have onTrackUpdate called with a video (so they should be watched for in onPeerUpdate) and peers with video tracks should be watched for in `onTrackUpdate` since tracks will come a few milliseconds after the the first time a peer appears in onPeerUpdate.
+Note that peers with no video tracks will never have onTrackUpdate called with a video (so they should be watched for in onPeerUpdate) and peers with video tracks should be watched for in `onTrackUpdate` since tracks will come a few milliseconds after the first time a peer appears in onPeerUpdate.
 
 ## Where to go from here
 
