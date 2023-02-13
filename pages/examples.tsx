@@ -140,7 +140,7 @@ export default function Examples() {
 
     return (
         <>
-            <SegmentAnalytics options={{}} title="100ms Docs" />
+            <SegmentAnalytics options={{}} title="100ms Docs Examples" />
             <Header modal={modal} setModal={setModal} menuState={menuState} showReference={false} />
 
             <Flex
@@ -153,7 +153,7 @@ export default function Examples() {
                     paddingBottom: '$14',
                     '@md': {
                         paddingInline: '$10',
-                        paddingBottom: '$10',
+                        paddingBottom: '$10'
                     }
                 }}>
                 <Flex
@@ -266,7 +266,9 @@ export default function Examples() {
                     </Box>
                 </Flex>
             </Flex>
-            <Footer css={{ backgroundColor: 'var(--docs_bg_footer)' }} />
+            <Footer
+                css={{ backgroundColor: 'var(--docs_bg_footer)', '.footer': { marginTop: 0 } }}
+            />
         </>
     );
 }
