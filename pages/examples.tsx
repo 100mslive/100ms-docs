@@ -149,7 +149,12 @@ export default function Examples() {
                 direction="column"
                 css={{
                     mx: 'auto',
-                    paddingInline: '$10'
+                    paddingInline: '$14',
+                    paddingBottom: '$14',
+                    '@md': {
+                        paddingInline: '$10',
+                        paddingBottom: '$10',
+                    }
                 }}>
                 <Flex
                     direction="column"
