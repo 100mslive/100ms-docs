@@ -102,7 +102,7 @@ export default function Examples() {
     const [menu, setMenu] = useState(false);
     const [modal, setModal] = useState(false);
     const menuState = { menu, setMenu };
-    const [currentTheme, setCurrentTheme] = useState('dark');
+    const [, setCurrentTheme] = useState('dark');
 
     useEffect(() => {
         const updateTheme = (e) => setCurrentTheme(e.detail.theme);
