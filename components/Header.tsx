@@ -125,7 +125,7 @@ const Header: React.FC<Props> = ({
                     </div>
                 </a>
                 <DividerIcon style={{ strokeWidth: '2px', marginLeft: '-16px' }} />
-                <div>
+                <Flex css={{ gap: '$10' }}>
                     <Link href="/">
                         <p
                             className="company"
@@ -135,10 +135,22 @@ const Header: React.FC<Props> = ({
                                 position: 'relative',
                                 top: '1px'
                             }}>
-                            Docs
+                            Documentation
                         </p>
                     </Link>
-                </div>
+                    <Link href="/examples">
+                        <p
+                            className="company"
+                            style={{
+                                cursor: 'pointer',
+                                fontSize: '1rem',
+                                position: 'relative',
+                                top: '1px'
+                            }}>
+                            Examples
+                        </p>
+                    </Link>
+                </Flex>
             </div>
 
             <div className="nav-links">
