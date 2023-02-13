@@ -31,16 +31,18 @@ export default function Category({
     ...rest
 }: Props) {
     const Icon = typeof icon === 'string' ? reactIcons[icon] : icon;
-    const [hover, setHover] = useState(() => active);
+    const [hover, setHover] = useState(false);
+
+    const changeColor = active || hover;
 
     return (
         <Flex
             as={as}
             css={{
-                color: active || hover ? '$primaryLight' : '$textHighEmp',
+                color: changeColor ? '$primaryLight' : '$textHighEmp',
                 padding: '$6',
                 gap: '$4',
-                backgroundColor: active || hover ? 'hsla(217, 50%, 12%, 1)' : 'transparent',
+                backgroundColor: changeColor ? 'hsla(217, 50%, 12%, 1)' : 'transparent',
                 borderRadius: '$1',
                 border: 'none',
                 '@sm': {
@@ -55,7 +57,7 @@ export default function Category({
             <Text
                 variant="body1"
                 css={{
-                    textShadow: active || hover ? '0px 0px 1px $primaryLight' : 'initial',
+                    textShadow: changeColor ? '0px 0px 1px $primaryLight' : 'initial',
                     fontWeight: '$regular',
                     color: 'inherit'
                 }}>
