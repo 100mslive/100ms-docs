@@ -165,7 +165,7 @@ export default function Examples() {
                         marginBlock: '$24',
                         '@md': { marginBlock: '$10' }
                     }}>
-                    <Box css={{ textAlign: 'center', marginBottom: '$12' }}>
+                    <Box css={{ textAlign: 'center' }}>
                         <Text
                             variant="h3"
                             css={{
@@ -181,7 +181,17 @@ export default function Examples() {
                             Explore what's possible with some example applications
                         </Text>
                     </Box>
-                    <Search refine={setSearch} css={{ width: '100%', boxSizing: 'border-box' }} />
+                    <Search
+                        refine={setSearch}
+                        css={{
+                            width: '100%',
+                            boxSizing: 'border-box',
+                            marginTop: '$12',
+                            '@md': {
+                                display: 'none'
+                            }
+                        }}
+                    />
                 </Flex>
                 <Flex
                     direction={{ '@initial': 'row', '@md': 'column' }}
@@ -293,8 +303,10 @@ const Search = ({ refine, css }) => {
                 ...css
             }}
             onClick={(e) => e.stopPropagation()}>
-            <SearchIcon style={{ color: 'inherit', height: '30px', width: '30px' }} />
-            <input
+            <SearchIcon style={{ color: 'inherit', height: '24px', width: '24px' }} />
+            <Text
+                as="input"
+                variant="body1"
                 placeholder="Search..."
                 value={searchTerm}
                 onChange={(event) => {
@@ -303,15 +315,13 @@ const Search = ({ refine, css }) => {
                 type="text"
                 // eslint-disable-next-line jsx-a11y/no-autofocus
                 autoFocus
-                style={{
-                    marginLeft: '13px',
+                css={{
+                    marginLeft: '16px',
                     backgroundColor: 'inherit',
                     outline: 'none',
                     border: 'none',
-                    height: '24px',
                     width: '100%',
-                    fontWeight: '500',
-                    fontSize: '15px'
+                    fontWeight: '$regular'
                 }}
             />
         </Flex>
