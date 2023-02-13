@@ -58,7 +58,7 @@ function IconList({ icons, showIcon }: IconListProps) {
     if (icons.length === 1) {
         const Icon = reactIcons[icons[0]];
         return (
-            <Flex gap="2">
+            <Flex gap="2" css={{ color: '$textHighEmp' }}>
                 <Icon />
                 <Text>{icons[0].replace('Icon', '')}</Text>
             </Flex>
