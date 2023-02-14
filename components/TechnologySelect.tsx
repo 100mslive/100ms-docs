@@ -56,7 +56,7 @@ export const technologyIconMap: Record<
 };
 
 const SelectTrigger = styled(Select.Trigger, {
-    border: '1px solid #2D3440',
+    border: '1px solid $borderLighter',
     backgroundColor: '$surfaceDefault',
     borderRadius: '$1',
     display: 'flex',

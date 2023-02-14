@@ -321,7 +321,7 @@ const Search = ({ refine, css }) => {
                 color: '$textHighEmp',
                 bg: '$surfaceDefault',
                 padding: '$4 $6',
-                border: '1px solid #2C333F',
+                border: '1px solid $borderLighter',
                 borderRadius: '$1',
                 ...css
             }}
