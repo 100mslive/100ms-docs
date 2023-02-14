@@ -135,14 +135,14 @@ When a peer joins a room, a session starts, and usage minutes will be billed eve
 
 ## Authentication and tokens
 
-#### What is the difference between app token and management token?
+#### What is the difference between auth token and management token?
 
-- **App token** : Used to authenticate and allow end-users (peers) to join 100ms rooms. An App Token controls Peer identity and Room permissions in your real-time or Interactive live-streaming video application.
+- **Auth token** : Used to authenticate and allow end-users (peers) to join 100ms rooms. An App Token controls Peer identity and Room permissions in your real-time or Interactive live-streaming video application.
 - **Management token** : Used to authenticate all the requests to 100ms REST API (server-side).
 
-#### Is there an easy method to create an app token?
+#### Is there an easy method to create an auth token?
 
-Yes, you can get App tokens using a couple of approaches based on your app's lifecycle stage. Please check [this guide](/javascript/v2/foundation/security-and-tokens#how-to-use) for more information
+Yes, you can get Auth tokens using a couple of approaches based on your app's lifecycle stage. Please check [this guide](/javascript/v2/foundation/security-and-tokens#how-to-use) for more information
 
 #### Is there a easy method to create an management token?
 
@@ -150,9 +150,9 @@ Yes, if you're exploring 100ms server APIs, our Postman collection contains a pr
 
 #### What is the validity of management and client token?
 
-If you use the code sample from [authentication and tokens guide](/javascript/v2/foundation/security-and-tokens#app-token) the validity of the token will be set as 24 hours. However, you can increase this to a maximum of 90 days by updating the value for expiresIn field.
+If you use the code sample from [authentication and tokens guide](/javascript/v2/foundation/security-and-tokens#auth-token) the validity of the token will be set as 24 hours. However, you can increase this to a maximum of 90 days by updating the value for expiresIn field.
 
-#### Why is the “role” variable needed when generating the app token?
+#### Why is the “role” variable needed when generating the auth token?
 
 The role argument should be assigned with the name of the role created in the template. A role defines the following: 
 - Who a peer a see/hear 
@@ -163,13 +163,13 @@ Please check [templates and roles guide](/javascript/v2/foundation/templates-and
 
 #### Can we generate two application access tokens, one for QA and one for production, so that messages from QA don't flood the production environment?
 
-Yes, this is possible with Teams & workspaces on the100ms dashboard - create multiple workspaces and use the App access key and App secret from each of these workspaces to create different app tokens or management tokens based on your requirements. For more information, please check [this blog](https://www.100ms.live/blog/launching-teams-workspaces) and also check your [100ms dashboard](https://dashboard.100ms.live/) to see how this works.
+Yes, this is possible with Teams & workspaces on the100ms dashboard - create multiple workspaces and use the App access key and App secret from each of these workspaces to create different auth tokens or management tokens based on your requirements. For more information, please check [this blog](https://www.100ms.live/blog/launching-teams-workspaces) and also check your [100ms dashboard](https://dashboard.100ms.live/) to see how this works.
 
-#### I’d like to use the endpoint of my backend service instead of the 100ms token endpoint for app token generation in the React sample app. How do I do that? 
+#### I’d like to use the endpoint of my backend service instead of the 100ms token endpoint for auth token generation in the React sample app. How do I do that? 
 
-You can set up a token generation service on your end to create app tokens and block users that are trying to join without a token that's generated from your service. Please check authentication and [tokens guide](/javascript/v2/foundation/security-and-tokens#app-token) for more information.
+You can set up a token generation service on your end to create auth tokens and block users that are trying to join without a token that's generated from your service. Please check authentication and [tokens guide](/javascript/v2/foundation/security-and-tokens#auth-token) for more information.
 
-You can update the code to point to your own token service (relevant code in the sample - see getToken(...)), your token endpoint can follow a similar interface: for a given room_id and role name, return the app token JWT.
+You can update the code to point to your own token service (relevant code in the sample - see getToken(...)), your token endpoint can follow a similar interface: for a given room_id and role name, return the auth token JWT.
 
 You can continue using the existing routes (room_id/role) or set up your own routes in the cloned/forked code.
 
@@ -316,7 +316,7 @@ Please check these links for more details.
 
 #### Can I integrate a feature similar to Twitter super followers using 100ms by only allowing the authenticated users?
 
-Yes, you can use interactive live streaming (HLS) to integrate a similar app and the live feed of the streaming will be available in a room which can be accessed by joining a room with a JWT token ([auth token](/javascript/v2/foundation/security-and-tokens#app-token)) with the viewer role.
+Yes, you can use interactive live streaming (HLS) to integrate a similar app and the live feed of the streaming will be available in a room which can be accessed by joining a room with a JWT token ([auth token](/javascript/v2/foundation/security-and-tokens#auth-token)) with the viewer role.
 
 ## External streaming (RTMP)
 

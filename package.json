@@ -23,9 +23,10 @@
     ],
     "scripts": {
         "dev": "next dev -p 4000",
-        "build": "next build && yarn searchindex",
+        "build": "yarn updatereleases && next build && yarn searchindex",
         "searchindex": "node searchIndex.js",
         "start": "next start",
+        "updatereleases" : "node updateReleases.js",
         "lint": "eslint  \"{components,lib}/**/*.{js,ts,tsx}\"",
         "format": "prettier --write 'components/**/*.{js,jsxts,tsx,scss,css,json}'",
         "postbuild": "next-sitemap"

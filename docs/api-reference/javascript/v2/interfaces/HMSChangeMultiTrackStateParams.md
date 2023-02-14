@@ -1,5 +1,6 @@
 ---
 title: HMSChangeMultiTrackStateParams
+nav: '4.8'
 ---
 
 ## Properties

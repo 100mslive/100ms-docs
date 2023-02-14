@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronDownIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
 import { titleCasing } from '../lib/utils';
@@ -13,13 +13,27 @@ const references = {
     // 'Server side': ''
 };
 
-const PlatformAccordion = ({ title, icon, data }) => {
+const PlatformAccordion = ({
+    title,
+    icon,
+    data,
+    openPlatformAccordion,
+    setOpenPlatformAccordion,
+    id
+}) => {
     const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        if (openPlatformAccordion !== id) setOpen(false);
+    });
 
     return (
         <div>
             <div
-                onClick={() => setOpen((prev) => !prev)}
+                onClick={() => {
+                    setOpen((prev) => !prev);
+                    setOpenPlatformAccordion(id);
+                }}
                 className="plat-accordion"
                 style={{
                     minWidth: '240px',

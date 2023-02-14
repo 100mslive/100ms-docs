@@ -9,7 +9,7 @@ import {
 import { Box, Flex, Text, useTheme } from '@100mslive/react-ui';
 import Badge from '@/components/Home/Badge';
 
-const SdkList = [
+export const SdkList = [
     {
         icon: <JavascriptIcon style={{ color: '#F7DF1E' }} />,
         title: 'JavaScript',
@@ -115,12 +115,12 @@ const MainCard = () => {
                 <Text
                     variant="sm"
                     className="mono"
-                    css={{ color: '$primaryLight', fontWeight: '$medium' }}>
+                    css={{ color: '$textAccentHigh', fontWeight: '700' }}>
                     {'What you will learn >'}
                 </Text>
                 <ul style={{ marginTop: '1rem' }}>
                     {learn.map((point) => (
-                        <li style={{ margin: '0', marginBottom: '0.25rem' }}>
+                        <li key={point} style={{ margin: '0', marginBottom: '0.25rem' }}>
                             <Text variant="sm" className="mono" css={{ color: '$textHighEmp' }}>
                                 {point}
                             </Text>

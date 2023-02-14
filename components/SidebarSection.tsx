@@ -127,7 +127,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                 </Text>
             </Flex>
             {/* </ConditionalLink> */}
-            <div className={`accordion-content ${openSection ? 'active' : ''}`}>
+            <div className={`accordion-content ${openSection ? 'active-acc' : ''}`}>
                 {Object.entries(children as {}).map(([_, route]: [string, any]) =>
                     // && route.url !== indexURL ?
                     Object.prototype.hasOwnProperty.call(route, 'title') ? (
@@ -158,27 +158,6 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                     </>
                 ) : null}
             </div>
-            <style jsx>
-                {`
-                    .accordion-content {
-                        margin-top: 0;
-                        padding-left: 0.5rem;
-                        opacity: 0;
-                        max-height: 0;
-                        transition: all ease 0.3s;
-                        overflow: hidden;
-                    }
-
-                    .active {
-                        opacity: 1;
-                        max-height: 3000px;
-                    }
-                    a:hover {
-                        opacity: 1;
-                        color: var(--docs_text_primary) !important;
-                    }
-                `}
-            </style>
         </section>
     ) : null;
 };

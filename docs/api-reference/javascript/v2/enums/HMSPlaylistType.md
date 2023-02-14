@@ -1,5 +1,6 @@
 ---
 title: HMSPlaylistType
+nav: '2.6'
 ---
 
 ## Enumeration Members
