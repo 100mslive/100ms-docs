@@ -1,10 +1,11 @@
 import * as reactIcons from '@100mslive/react-icons';
 import { Box, Flex, HorizontalDivider, Text } from '@100mslive/react-ui';
+import { Technologies, technologyIconMap } from './TechnologySelect';
 
 interface Props extends React.ComponentPropsWithoutRef<typeof Box> {
     title: string;
     description: string;
-    icons?: (keyof typeof reactIcons)[];
+    technologies?: Technologies[];
     showIcon?: boolean;
     tags?: string[];
     as?: React.ElementType;
@@ -13,12 +14,13 @@ interface Props extends React.ComponentPropsWithoutRef<typeof Box> {
 export default function ExampleCard({
     title,
     description,
-    icons = [],
+    technologies = [],
     showIcon = true,
     tags = [],
     css = {},
     ...rest
 }: Props) {
+    const icons = technologies.map((technology) => technologyIconMap[technology].icon);
     return (
         <Box
             css={{
@@ -46,7 +48,7 @@ export default function ExampleCard({
 }
 
 type IconListProps = {
-    icons: NonNullable<Props['icons']>;
+    icons: (keyof typeof reactIcons)[];
     showIcon: Props['showIcon'];
 };
 

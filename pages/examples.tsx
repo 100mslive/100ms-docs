@@ -3,6 +3,7 @@ import ExampleCard from '@/components/ExampleCard';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
+import TechnologySelect, { TECHNOLOGIES, Technologies } from '@/components/TechnologySelect';
 import { SearchIcon } from '@100mslive/react-icons';
 import { Box, Flex, Text } from '@100mslive/react-ui';
 import { useEffect, useMemo, useState } from 'react';
@@ -44,15 +45,15 @@ const examples: {
     title: string;
     description: string;
     url: string;
-    icons: React.ComponentProps<typeof ExampleCard>['icons'];
     tags: string[];
     categories: Exclude<Categories, 'All Categories'>[];
+    technologies: Exclude<Technologies, 'All Technologies'>[];
 }[] = [
     {
         title: 'React Clubhouse Clone 1',
         description: 'A Clubhouse clone in React using 100ms React SDKs.',
         url: 'https://github.com/100mslive/clubhouse-clone-react',
-        icons: ['JavascriptIcon', 'ReactIcon', 'AndroidIcon'],
+        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT, TECHNOLOGIES.ANDROID],
         tags: ['App', 'Advance'],
         categories: [CATEGORIES.APPS]
     },
@@ -60,7 +61,7 @@ const examples: {
         title: 'React Clubhouse Clone 2',
         description: 'A Clubhouse clone in React using 100ms React SDKs.',
         url: 'https://github.com/100mslive/clubhouse-clone-react',
-        icons: ['ReactIcon'],
+        technologies: [TECHNOLOGIES.REACT],
         tags: ['App', 'Advance'],
         categories: [CATEGORIES.EXTRAS]
     },
@@ -68,7 +69,7 @@ const examples: {
         title: 'React Clubhouse Clone 3',
         description: 'A Clubhouse clone in React using 100ms React SDKs.',
         url: 'https://github.com/100mslive/clubhouse-clone-react',
-        icons: ['JavascriptIcon', 'ReactIcon'],
+        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
         tags: ['App', 'Advance'],
         categories: [CATEGORIES.FEATURES]
     },
@@ -76,7 +77,7 @@ const examples: {
         title: 'React Clubhouse Clone 4',
         description: 'A Clubhouse clone in React using 100ms React SDKs.',
         url: 'https://github.com/100mslive/clubhouse-clone-react',
-        icons: ['JavascriptIcon', 'ReactIcon'],
+        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
         tags: ['App', 'Advance'],
         categories: [CATEGORIES.APPS, CATEGORIES.EXTRAS, CATEGORIES.PLUGINS]
     },
@@ -84,7 +85,7 @@ const examples: {
         title: 'React Clubhouse Clone 5',
         description: 'A Clubhouse clone in React using 100ms React SDKs.',
         url: 'https://github.com/100mslive/clubhouse-clone-react',
-        icons: ['JavascriptIcon', 'ReactIcon'],
+        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
         tags: ['App', 'Advance'],
         categories: [CATEGORIES.QUICKSTARTS]
     },
@@ -92,7 +93,7 @@ const examples: {
         title: 'React Clubhouse Clone 6',
         description: 'A Clubhouse clone in React using 100ms React SDKs.',
         url: 'https://github.com/100mslive/clubhouse-clone-react',
-        icons: ['JavascriptIcon', 'ReactIcon'],
+        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
         tags: ['App', 'Advance'],
         categories: [CATEGORIES.APPS, CATEGORIES.EXTRAS]
     }
@@ -117,28 +118,40 @@ export default function Examples() {
         }
     }, []);
 
+    const [technology, setTechnology] = useState<Technologies>(TECHNOLOGIES.ALL_TECHNOLOGIES);
     const [category, setCategory] = useState<Categories>(CATEGORIES.ALL_CATEGORIES);
-
     const [search, setSearch] = useState('');
-    const filteredExamples = useMemo(
-        () =>
-            search.length > 0
-                ? examples
-                      .filter(({ title, categories }) => {
-                          const categoryMatch =
-                              category === CATEGORIES.ALL_CATEGORIES
-                                  ? true
-                                  : categories.indexOf(category) !== -1;
-                          return string_similarity(title, search) > 0.5 && categoryMatch;
-                      })
-                      .sort((a, b) => string_similarity(b.title, search) - string_similarity(a.title, search))
-                : examples.filter(({ categories }) =>
-                      category === CATEGORIES.ALL_CATEGORIES
-                          ? true
-                          : categories.indexOf(category) !== -1
-                  ),
-        [search, category]
-    );
+
+    const filteredExamples = useMemo(() => {
+        if (search.length === 0) {
+            return examples
+                .filter(
+                    ({ categories }) =>
+                        category === CATEGORIES.ALL_CATEGORIES ||
+                        categories.indexOf(category) !== -1
+                )
+                .filter(
+                    ({ technologies }) =>
+                        technology === TECHNOLOGIES.ALL_TECHNOLOGIES ||
+                        technologies.indexOf(technology) !== -1
+                );
+        }
+
+        return examples
+            .filter(
+                ({ categories }) =>
+                    category === CATEGORIES.ALL_CATEGORIES || categories.indexOf(category) !== -1
+            )
+            .filter(
+                ({ technologies }) =>
+                    technology === TECHNOLOGIES.ALL_TECHNOLOGIES ||
+                    technologies.indexOf(technology) !== -1
+            )
+            .filter(({ title }) => string_similarity(title, search) > 0.25)
+            .sort(
+                (a, b) => string_similarity(b.title, search) - string_similarity(a.title, search)
+            );
+    }, [search, category, technology]);
 
     return (
         <>
@@ -207,12 +220,19 @@ export default function Examples() {
                         direction="column"
                         css={{
                             flexGrow: 1,
+                            flexShrink: 0,
+                            width: '260px',
                             maxWidth: '260px',
                             '@md': {
+                                width: 'initial',
                                 maxWidth: 'initial'
                             }
                         }}>
-                        Dropdown
+                        <TechnologySelect
+                            css={{ marginBottom: '$10' }}
+                            value={technology}
+                            setValue={setTechnology}
+                        />
                         <Flex
                             as="ul"
                             direction={{ '@initial': 'column', '@md': 'row' }}
@@ -247,7 +267,8 @@ export default function Examples() {
                             display: 'grid',
                             minWidth: 0,
                             maxWidth: '928px',
-                            gridTemplateColumns: '1fr 1fr',
+                            gridTemplateColumns:
+                                'repeat(auto-fit, minmax(min(100%, max(350px, 50% - 30px*1/2)), 1fr))',
                             columnGap: '30px',
                             rowGap: '40px',
                             flexGrow: 1,
@@ -256,14 +277,14 @@ export default function Examples() {
                                 gridTemplateColumns: '1fr'
                             }
                         }}>
-                        {filteredExamples.map(({ description, icons, tags, title, url }) => (
+                        {filteredExamples.map(({ description, technologies, tags, title, url }) => (
                             <ExampleCard
                                 as="a"
                                 //@ts-ignore
                                 href={url}
                                 target="_blank"
                                 key={title}
-                                icons={icons}
+                                technologies={technologies}
                                 tags={tags}
                                 description={description}
                                 title={title}
@@ -301,7 +322,7 @@ const Search = ({ refine, css }) => {
                 bg: '$surfaceDefault',
                 padding: '$4 $6',
                 border: '1px solid #2C333F',
-                borderRadius: '0.5rem',
+                borderRadius: '$1',
                 ...css
             }}
             onClick={(e) => e.stopPropagation()}>
