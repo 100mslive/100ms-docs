@@ -1,11 +1,12 @@
 ---
 title: Capture Snapshot
-nav: 4.99
+nav: 10.1
 ---
 
 You can capture a snapshot of the video stream of a local or remote peer's video.
 
 ## Minimum Requirements
+
 SDK version 1.3.0
 
 ## How to capture the snapshot
@@ -19,6 +20,7 @@ You can capture a snapshot of the video stream of a local or remote peer's video
   //Capture snapshot will return a nullable Uint8List type.
   Uint8List? bytes = await videoTrack.captureSnapshot();
 ```
+
 ## Display image
 
 To display an image use `Image.memory` widget which will take `Uint8List` as a parameter and return an `Image` widget.
@@ -49,11 +51,10 @@ To save an image in gallery use a 3rd Party plugin `image_gallery_saver` which w
 
 Checkout the example video implemented in our sample app:
 
-<video controls height = "500">
-  <source src="https://user-images.githubusercontent.com/45732601/214611263-92e5a74f-be71-4d78-84d1-3acf9299b953.mp4" type="video/mp4" />
-  Your browser does not support the video tag.
+<video controls height="500">
+    <source
+        src="https://user-images.githubusercontent.com/45732601/214611263-92e5a74f-be71-4d78-84d1-3acf9299b953.mp4"
+        type="video/mp4"
+    />
+    Your browser does not support the video tag.
 </video>
-
-
-
-
