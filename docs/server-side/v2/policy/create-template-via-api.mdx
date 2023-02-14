@@ -24,11 +24,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
         "guest": {
             "name": "guest",
             "publishParams": {
-                "allowed": [
-                    "audio",
-                    "video",
-                    "screen"
-                ],
+                "allowed": ["audio", "video", "screen"],
                 "audio": {
                     "bitRate": 32,
                     "codec": "opus"
@@ -46,14 +42,34 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                     "width": 1920,
                     "height": 1080
                 },
-                "videoSimulcastLayers": {},
-                "screenSimulcastLayers": {}
+                "simulcast": {
+                    "video": {
+                        "layers": [
+                            {
+                                "rid": "f",
+                                "scaleResolutionDownBy": 1,
+                                "maxBitrate": 700,
+                                "maxFramerate": 25
+                            },
+                            {
+                                "rid": "h",
+                                "scaleResolutionDownBy": 2,
+                                "maxBitrate": 350,
+                                "maxFramerate": 25
+                            },
+                            {
+                                "rid": "q",
+                                "scaleResolutionDownBy": 4,
+                                "maxBitrate": 100,
+                                "maxFramerate": 25
+                            }
+                        ]
+                    },
+                    "screen": {}
+                }
             },
             "subscribeParams": {
-                "subscribeToRoles": [
-                    "host",
-                    "guest"
-                ],
+                "subscribeToRoles": ["host", "guest"],
                 "maxSubsBitRate": 3200,
                 "subscribeDegradation": {
                     "packetLossThreshold": 25,
@@ -70,11 +86,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
         "host": {
             "name": "host",
             "publishParams": {
-                "allowed": [
-                    "audio",
-                    "video",
-                    "screen"
-                ],
+                "allowed": ["audio", "video", "screen"],
                 "audio": {
                     "bitRate": 32,
                     "codec": "opus"
@@ -92,14 +104,34 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                     "width": 1920,
                     "height": 1080
                 },
-                "videoSimulcastLayers": {},
-                "screenSimulcastLayers": {}
+                "simulcast": {
+                    "video": {
+                        "layers": [
+                            {
+                                "rid": "f",
+                                "scaleResolutionDownBy": 1,
+                                "maxBitrate": 700,
+                                "maxFramerate": 25
+                            },
+                            {
+                                "rid": "h",
+                                "scaleResolutionDownBy": 2,
+                                "maxBitrate": 350,
+                                "maxFramerate": 25
+                            },
+                            {
+                                "rid": "q",
+                                "scaleResolutionDownBy": 4,
+                                "maxBitrate": 100,
+                                "maxFramerate": 25
+                            }
+                        ]
+                    },
+                    "screen": {}
+                }
             },
             "subscribeParams": {
-                "subscribeToRoles": [
-                    "guest",
-                    "host"
-                ],
+                "subscribeToRoles": ["guest", "host"],
                 "maxSubsBitRate": 3200,
                 "subscribeDegradation": {
                     "packetLossThreshold": 25,
@@ -121,7 +153,6 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
     },
     "settings": {
         "region": "in",
-        "subscribeDegradation": {},
         "recording": {
             "enabled": true,
             "upload": {
@@ -137,8 +168,6 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                 }
             }
         },
-        "screenSimulcastLayers": {},
-        "videoSimulcastLayers": {},
         "roomState": {
             "messageInterval": 5,
             "sendPeerList": false,
@@ -166,11 +195,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                 "width": 1080,
                 "height": 1920,
                 "maxDuration": 1800,
-                "rtmpUrls": [
-                    "url",
-                    "ashdas",
-                    "ddsfsdf"
-                ],
+                "rtmpUrls": ["url", "ashdas", "ddsfsdf"],
                 "recordingEnabled": true
             }
         },
@@ -212,9 +237,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                         "enabled": true,
                         "width": 720,
                         "height": 1920,
-                        "offsets": [
-                            2
-                        ],
+                        "offsets": [2],
                         "fps": 60
                     },
                     "presignDuration": 604800
@@ -256,8 +279,31 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                     "width": 1920,
                     "height": 1080
                 },
-                "videoSimulcastLayers": {},
-                "screenSimulcastLayers": {}
+                "simulcast": {
+                    "video": {
+                        "layers": [
+                            {
+                                "rid": "f",
+                                "scaleResolutionDownBy": 1,
+                                "maxBitrate": 700,
+                                "maxFramerate": 25
+                            },
+                            {
+                                "rid": "h",
+                                "scaleResolutionDownBy": 2,
+                                "maxBitrate": 350,
+                                "maxFramerate": 25
+                            },
+                            {
+                                "rid": "q",
+                                "scaleResolutionDownBy": 4,
+                                "maxBitrate": 100,
+                                "maxFramerate": 25
+                            }
+                        ]
+                    },
+                    "screen": {}
+                }
             },
             "subscribeParams": {
                 "subscribeToRoles": ["host", "guest"],
@@ -298,8 +344,31 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                     "width": 1920,
                     "height": 1080
                 },
-                "videoSimulcastLayers": {},
-                "screenSimulcastLayers": {}
+                "simulcast": {
+                    "video": {
+                        "layers": [
+                            {
+                                "rid": "f",
+                                "scaleResolutionDownBy": 1,
+                                "maxBitrate": 700,
+                                "maxFramerate": 25
+                            },
+                            {
+                                "rid": "h",
+                                "scaleResolutionDownBy": 2,
+                                "maxBitrate": 350,
+                                "maxFramerate": 25
+                            },
+                            {
+                                "rid": "q",
+                                "scaleResolutionDownBy": 4,
+                                "maxBitrate": 100,
+                                "maxFramerate": 25
+                            }
+                        ]
+                    },
+                    "screen": {}
+                }
             },
             "subscribeParams": {
                 "subscribeToRoles": ["guest", "host"],
@@ -327,7 +396,6 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
     },
     "settings": {
         "region": "in",
-        "subscribeDegradation": {},
         "recording": {
             "enabled": true,
             "upload": {
@@ -453,12 +521,12 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 ### publishParams object
 
-| Name    | Type     | Description                                               | Required |
-| :------ | :------- | :-------------------------------------------------------- | :------- |
-| allowed | `array`  | Allowed tracks. Subarray of [`audio`, `video`, `screen`]. | No       |
-| audio   | `object` | Audio publish parameters.                                 | No       |
-| video   | `object` | Video publish parameters.                                 | No       |
-| screen  | `object` | Screenshare publish parameters.                           | No       |
+| Name    | Type     | Description                                                            | Required |
+| :------ | :------- | :--------------------------------------------------------------------- | :------- |
+| allowed | `array`  | Allowed tracks. Subarray of [`audio`, `video`, `screen`, `simulcast`]. | No       |
+| audio   | `object` | Audio publish parameters.                                              | No       |
+| video   | `object` | Video publish parameters.                                              | No       |
+| screen  | `object` | Screenshare publish parameters.                                        | No       |
 
 #### audio object
 
@@ -481,11 +549,21 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 | Name      | Type     | Description                                                | Default | Required |
 | :-------- | :------- | :--------------------------------------------------------- | :------ | :------- |
-| bitRate   | `int`    | Max bitrate of screen track in kbps.<br/>Range: `>=500` `  | 1024    | No       |
+| bitRate   | `int`    | Max bitrate of screen track in kbps.<br/>Range: `>=500`    | 1024    | No       |
 | codec     | `string` | Codec for the screen track.<br/>Options: [`vp8`]           | vp8     | No       |
 | frameRate | `int`    | Max number of screen frames per second<br/>Range: `1`-`30` | 10      | No       |
 | height    | `int`    | Height of the screen track.<br/>Range: `270`-`1080`        | 720     | No       |
 | width     | `int`    | Width of the screen track.<br/>Range: `480`-`1920`         | 1280    | No       |
+
+#### simulcast object
+
+| Name                  | Type           | Description                                                                                                                                                                                                                                                                                                                                                                                                                  | Required |
+| :-------------------- | :------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| layers                | `object`       | Object of type `layers`. Use this to configure various dimensions to be supported for simulcast. <br/>The max length of this array can be 3.                                                                                                                                                                                                                                                                                 | Yes      |
+| maxBitrate            | `int`          | Specifies the maximum number of kilobits per second to allow for encoding. <br/>It should be in the range [0, 2e3] (max is 2 Mbps)—defaults to 0.                                                                                                                                                                                                                                                                            | No       |
+| maxFramerate          | `int`          | Specifies the maximum number of frames per second to allow for encoding. <br/>It should be in the range [1, 30].                                                                                                                                                                                                                                                                                                             | Yes      |
+| scaleResolutionDownBy | `long integer` | Specifies a factor to reduce the size of a video track during encoding. <br/>It should be in the range [1.0, 12.0]. <br/><br/>The value should always be strictly greater than the previous value (if it exists) in the layers array.                                                                                                                                                                                        | Yes      |
+| rid                   | `string`       | Specifies an "RTP stream ID" to be sent using the RID header extension. <br/>Can be one of `f`, `h`, `q`. <br/><br/>The value should always be strictly smaller than the value of the previous (if it exists) in the layers array (ordered using rule f > h > q ). <br/>No value duplicates can exist in any two items in the layers array. <br/><br/>The first `rid` should always be `f` with `scaleDownByResolution=1.0`. | Yes      |
 
 ### subscribeParams object
 
