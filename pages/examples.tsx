@@ -123,13 +123,15 @@ export default function Examples() {
     const filteredExamples = useMemo(
         () =>
             search.length > 0
-                ? examples.filter(({ title, categories }) => {
-                      const categoryMatch =
-                          category === CATEGORIES.ALL_CATEGORIES
-                              ? true
-                              : categories.indexOf(category) !== -1;
-                      return string_similarity(title, search) > 0.2 && categoryMatch;
-                  })
+                ? examples
+                      .filter(({ title, categories }) => {
+                          const categoryMatch =
+                              category === CATEGORIES.ALL_CATEGORIES
+                                  ? true
+                                  : categories.indexOf(category) !== -1;
+                          return string_similarity(title, search) > 0.5 && categoryMatch;
+                      })
+                      .sort((a, b) => string_similarity(b.title, search) - string_similarity(a.title, search))
                 : examples.filter(({ categories }) =>
                       category === CATEGORIES.ALL_CATEGORIES
                           ? true
