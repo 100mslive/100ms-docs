@@ -34,7 +34,7 @@ class Meeting implements HMSUpdateListener{
     void initHMSSDK() async {
         hmsSDK = HMSSDK();
         await hmsSDK.build(); // ensure to await while invoking the `build` method
-        hmsSDK.addUpdateListener(this);
+        hmsSDK.addUpdateListener(listener: this);
         HMSConfig config = HMSConfig(authToken: 'eyJH5c', // client-side token generated from your token service
                                 userName: 'John Appleseed');
         hmsSDK.join(config: config);
@@ -145,7 +145,7 @@ So, to get these updates we need to attach the listener as:
 
 ```dart
 //`this` value corresponds to the instance implementing HMSUpdateListener
-hmsSDK.addUpdateListener(this);
+hmsSDK.addUpdateListener(listener: this);
 ```
 
 ### Create HMSConfig object
@@ -221,7 +221,7 @@ class Meeting implements HMSUpdateListener{
          ̶h̶m̶s̶S̶D̶K̶ ̶=̶ ̶H̶M̶S̶S̶D̶K̶(̶)̶;̶
         HMSSDK hmsSDK = HMSSDK(hmsTrackSetting: trackSettings);
         await hmsSDK.build(); // ensure to await while invoking the `build` method
-        hmsSDK.addUpdateListener(this);
+        hmsSDK.addUpdateListener(listener: this);
         HMSConfig config = HMSConfig(authToken: 'eyJH5c', // client-side token generated from your token service
                                 userName: 'John Appleseed');
         hmsSDK.join(config: config);

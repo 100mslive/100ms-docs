@@ -58,7 +58,7 @@ Full Changelog: [1.2.0...1.3.0](https://github.com/100mslive/100ms-flutter/compa
 
   await hmsSDK.build(); // NEW: adding await while invoking build method on HMSSDK is now Required
 
-  hmsSDK.addUpdateListener(this);
+  hmsSDK.addUpdateListener(listener:this);
   HMSConfig config = HMSConfig(authToken: 'eyJH5c', // client-side token generated from your token service
                           userName: 'John Appleseed');
   hmsSDK.join(config: config);
