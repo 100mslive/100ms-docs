@@ -57,8 +57,8 @@ export default function Category({
             <Text
                 variant="body1"
                 css={{
-                    textShadow: changeColor ? '0px 0px 1px $primaryLight' : 'initial',
-                    fontWeight: '$regular',
+                    fontWeight: changeColor ? '$semiBold' : '$regular',
+                    letterSpacing: '0.5px',
                     color: 'inherit'
                 }}>
                 <Box as="span" css={{ '@md': { display: 'none' } }}>
