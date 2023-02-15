@@ -204,11 +204,13 @@ Renames and re-exports [HMSNotifications](/api-reference/javascript/v2/interface
 Use this to identify what is being screenshared, not all browsers will support
 everything.
 
-application - all windows of an application are shared
-window - a particular window is being shared
-monitor - full screen share of a monitor display
-browser - a browser tab is shared
-selfBrowser - the current browser tab is being shared
+| Enum        | Description                              |
+| :---------- | :--------------------------------------- |
+| application | All windows of an application are shared |
+| window      | A particular window is being shared      |
+| monitor     | Full screen share of a monitor display   |
+| browser     | A browser tab is shared                  |
+| selfBrowser | The current browser tab is being shared  |
 
 ---
 
