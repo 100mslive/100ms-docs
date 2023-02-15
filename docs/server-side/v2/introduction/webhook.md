@@ -531,7 +531,7 @@ This event will be sent when the role change for a peer is successful.
 #### Attributes
 
 | Name                     | Type                 | Description                                                                                                                                                     |
-|:-------------------------|:---------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| :----------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | room_id                  | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                                             |
 | room_name                | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                                                                         |
 | session_id               | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
@@ -585,7 +585,7 @@ This event will be sent when the role change for a peer fails. For example:
 #### Attributes
 
 | Name                     | Type                 | Description                                                                                                                                                     |
-|:-------------------------|:---------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| :----------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | room_id                  | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                                             |
 | room_name                | `string`             | Room name provided when creating the room <br/><br/> Example: Test Room                                                                                         |
 | session_id               | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
@@ -636,20 +636,20 @@ This event will be sent when final composed recording is generated and uploaded 
 
 #### Attributes
 
-| Name                    | Type                 | Description                                                                                                                                                     |
-| :---------------------- | :------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| room_id                 | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312dff                                                                                            |
-| room_name               | `string`             | Room name assigned by you when creating room <br/><br/> Example: class-9-batch-2                                                                                |
-| session_id              | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
-| template_id             | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                                                            |
-| location                | `string`             | (Deprecated, use recording_path) URI of the recorded video along with the storage type<br/><br/> Example: s3://bucket/prefix/ac.mp4                             |
-| location                | `string`             | (Deprecated, use recording_presigned_url) HTTPS url to recorded session file on storage bucket <br/><br/> Example: https://upload-location/bucket/beam/ac.mp4\* |
-| duration                | `int`                | Duration the user spent in the room in seconds <br/><br/> Example: 3600                                                                                         |
-| recording_path          | `string`             | Upload path of the recorded video such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                                                                  |
-| recording_presigned_url | `string`             | Presigned URL for the recorded video, for download. Valid for 24 hours <br/><br/> Example: https://upload-location/bucket/ac.mp4                                |
-| size                    | `int`                | Size of the recorded video (in bytes) <br/><br/> Example: 10024                                                                                                 |
-| session_started_at      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                         |
-| session_stopped_at      | `timestamp (in UTC)` | Timestamp when session ended <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                           |
+| Name                    | Type                 | Description                                                                                                                                                   |
+| :---------------------- | :------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| room_id                 | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312dff                                                                                          |
+| room_name               | `string`             | Room name assigned by you when creating room <br/><br/> Example: class-9-batch-2                                                                              |
+| session_id              | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                        |
+| template_id             | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                                                          |
+| location                | `string`             | (Deprecated, use recording_path) URI of the recorded video along with the storage type<br/><br/> Example: s3://bucket/prefix/ac.mp4                           |
+| URL                     | `string`             | (Deprecated, use recording_presigned_url) HTTPS url to recorded session file on storage bucket <br/><br/> Example: https://upload-location/bucket/beam/ac.mp4 |
+| duration                | `int`                | Duration the user spent in the room in seconds <br/><br/> Example: 3600                                                                                       |
+| recording_path          | `string`             | Upload path of the recorded video such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                                                                |
+| recording_presigned_url | `string`             | Presigned URL for the recorded video, for download. Valid for 24 hours <br/><br/> Example: https://upload-location/bucket/ac.mp4                              |
+| size                    | `int`                | Size of the recorded video (in bytes) <br/><br/> Example: 10024                                                                                               |
+| session_started_at      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                       |
+| session_stopped_at      | `timestamp (in UTC)` | Timestamp when session ended <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                         |
 
 #### Sample `recording.success` event
 
@@ -762,8 +762,6 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
         "session_id": "************************",
         "template_id": "************************",
         "start_delay": 12,
-        "state_name": "Started",
-        "state_timestamp": "2021-11-30T12:58:46.385555859Z",
         "max_width": 1280,
         "max_height": 720,
         "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
@@ -818,8 +816,6 @@ This event is sent when RTMP streaming and/or browser recording is successfully 
         "room_id": "************************",
         "session_id": "************************",
         "template_id": "************************",
-        "state_name": "Stopped",
-        "state_timestamp": "2021-11-30T12:59:57.685503281Z",
         "duration": 56,
         "max_height": 720,
         "max_width": 1280,
@@ -959,9 +955,6 @@ Please check the below table for possible error types, messages and description.
         "room_id": "************************",
         "session_id": "************************",
         "template_id": "************************",
-        "state_message": "[tcp @ 0x55f6cc5f5780] Failed to resolve hostname rvs-isr: Name or service not known",
-        "state_name": "Failed",
-        "state_timestamp": "2021-11-30T20:36:55.799192444Z",
         "max_height": 720,
         "max_width": 1280,
         "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
@@ -1024,8 +1017,6 @@ This event is sent when HLS streaming is successfully triggered
         "session_id": "************************",
         "template_id": "************************",
         "start_delay": 12,
-        "state_name": "HLSStarted",
-        "state_timestamp": "2021-11-30T12:58:46.385555859Z",
         "max_width": 1280,
         "max_height": 720,
         "url": "https://100ms-live.m3u8",
@@ -1087,8 +1078,6 @@ This event is sent when HLS streaming is successfully stopped
         "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
         "session_id": "************************",
         "template_id": "************************",
-        "state_name": "HLSStopped",
-        "state_timestamp": "2021-11-30T12:59:57.685503281Z",
         "duration": 56,
         "started_at": "2021-11-30T12:59:57.797972469Z",
         "stopped_at": "2021-11-30T12:59:57.797972469Z",
@@ -1166,8 +1155,6 @@ Please check the below table for possible error types, messages and description.
         "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
         "session_id": "************************",
         "template_id": "************************",
-        "state_name": "HLSFailed",
-        "state_timestamp": "2021-11-30T20:36:55.799192444Z",
         "duration": 56,
         "session_started_at": "2021-11-30T12:58:49.97291247Z"
     }
