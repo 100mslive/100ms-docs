@@ -20,7 +20,6 @@ export default function ExampleCard({
     css = {},
     ...rest
 }: Props) {
-    const icons = technologies.map((technology) => technologyIconMap[technology].icon);
     return (
         <Box
             css={{
@@ -39,8 +38,8 @@ export default function ExampleCard({
                 {description}
             </Text>
             <HorizontalDivider css={{ backgroundColor: '$borderDefault', marginBlock: '$8' }} />
-            <Flex justify="between">
-                <IconList icons={icons} showIcon={showIcon} />
+            <Flex justify="between" css={{ gap: '$8' }}>
+                <IconList technologies={technologies} showIcon={showIcon} />
                 <TagList tags={tags} />
             </Flex>
         </Box>
@@ -48,32 +47,33 @@ export default function ExampleCard({
 }
 
 type IconListProps = {
-    icons: (keyof typeof reactIcons)[];
+    technologies: Technologies[];
     showIcon: Props['showIcon'];
 };
 
-function IconList({ icons, showIcon }: IconListProps) {
-    if (!showIcon || icons.length === 0) {
+function IconList({ technologies, showIcon }: IconListProps) {
+    if (!showIcon || technologies.length === 0) {
         return null;
     }
 
-    if (icons.length === 1) {
-        const Icon = reactIcons[icons[0]];
+    if (technologies.length === 1) {
+        const technology = technologies[0];
+        const Icon = reactIcons[technologyIconMap[technology].icon];
         return (
             <Flex gap="2" css={{ color: '$textHighEmp' }}>
                 <Icon />
-                <Text>{icons[0].replace('Icon', '')}</Text>
+                <Text>{technology}</Text>
             </Flex>
         );
     } else {
         return (
             <Flex as="ul" gap="2" css={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {icons.map((icon) => {
-                    const Icon = reactIcons[icon];
+                {technologies.map((technology) => {
+                    const Icon = reactIcons[technologyIconMap[technology].icon];
                     return (
                         <Flex
                             as="li"
-                            key={icon}
+                            key={technology}
                             css={{
                                 marginBottom: 0
                             }}>
@@ -92,7 +92,7 @@ type TagListProps = {
 
 function TagList({ tags }: TagListProps) {
     return tags.length > 0 ? (
-        <Flex as="ul" gap="2" css={{ listStyle: 'none', padding: 0, margin: 0 }}>
+        <Flex as="ul" gap="2" css={{ listStyle: 'none', padding: 0, margin: 0, overflow: 'auto' }}>
             {tags.map((tag) => (
                 <Box
                     as="li"
