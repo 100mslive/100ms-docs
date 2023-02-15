@@ -268,13 +268,12 @@ export default function Examples() {
                             ? '/docs/bg-example-transparent.png'
                             : '/docs/bg-example-transparent.png'
                     })`,
-                    backgroundSize: '100% auto',
-                    backgroundPosition: 'top-left',
+                    backgroundPosition: 'center -400px',
                     backgroundRepeat: 'no-repeat',
                     paddingInline: '$14',
                     paddingBottom: '$14',
                     '@md': {
-                        backgroundSize: 'cover',
+                        backgroundPosition: '-550px top',
                         paddingInline: '$10',
                         paddingBottom: '$10'
                     }
@@ -398,6 +397,7 @@ export default function Examples() {
                                 title={title}
                                 css={{
                                     height: 'max-content',
+                                    minWidth: 0,
                                     '&:hover': {
                                         opacity: 1
                                     }
