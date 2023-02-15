@@ -16,28 +16,23 @@ const categories: { text: Categories; textSmall?: string; icon: string }[] = [
     },
     {
         text: 'Quickstarts',
-        icon: 'PlayCircleIcon',
-        textSmall: undefined
+        icon: 'PlayCircleIcon'
     },
     {
         text: 'Apps',
-        icon: 'AllAppsIcon',
-        textSmall: undefined
+        icon: 'AllAppsIcon'
     },
     {
         text: 'Features',
-        icon: 'WrenchIcon',
-        textSmall: undefined
+        icon: 'WrenchIcon'
     },
     {
         text: 'Plugins',
-        icon: 'RocketIcon',
-        textSmall: undefined
+        icon: 'RocketIcon'
     },
     {
         text: 'Extras',
-        icon: 'BoxIcon',
-        textSmall: undefined
+        icon: 'BoxIcon'
     }
 ];
 
@@ -50,52 +45,156 @@ const examples: {
     technologies: Exclude<Technologies, 'All Technologies'>[];
 }[] = [
     {
-        title: 'React Clubhouse Clone 1',
+        title: 'React Clubhouse Clone',
         description: 'A Clubhouse clone in React using 100ms React SDKs.',
         url: 'https://github.com/100mslive/clubhouse-clone-react',
-        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT, TECHNOLOGIES.ANDROID],
-        tags: ['App', 'Advance'],
+        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
+        tags: ['Web App'],
         categories: [CATEGORIES.APPS]
     },
     {
-        title: 'React Clubhouse Clone 2',
+        title: 'React Slack Huddle Clone',
         description: 'A Clubhouse clone in React using 100ms React SDKs.',
-        url: 'https://github.com/100mslive/clubhouse-clone-react',
-        technologies: [TECHNOLOGIES.REACT],
-        tags: ['App', 'Advance'],
-        categories: [CATEGORIES.EXTRAS]
+        url: 'https://github.com/100mslive/slack-huddle-clone',
+        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
+        tags: ['Web App'],
+        categories: [CATEGORIES.APPS]
     },
     {
-        title: 'React Clubhouse Clone 3',
+        title: 'NextJS Discord Stages Clone',
         description: 'A Clubhouse clone in React using 100ms React SDKs.',
-        url: 'https://github.com/100mslive/clubhouse-clone-react',
-        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
-        tags: ['App', 'Advance'],
-        categories: [CATEGORIES.FEATURES]
+        url: 'https://github.com/100mslive/discord-stages-clone-100ms',
+        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT, TECHNOLOGIES.NEXTJS],
+        tags: ['Web App'],
+        categories: [CATEGORIES.APPS]
     },
     {
-        title: 'React Clubhouse Clone 4',
+        title: 'React Pose Detection',
         description: 'A Clubhouse clone in React using 100ms React SDKs.',
-        url: 'https://github.com/100mslive/clubhouse-clone-react',
+        url: 'https://github.com/100mslive/PosenetRealtime',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
-        tags: ['App', 'Advance'],
-        categories: [CATEGORIES.APPS, CATEGORIES.EXTRAS, CATEGORIES.PLUGINS]
+        tags: ['Web App'],
+        categories: [CATEGORIES.APPS]
     },
     {
-        title: 'React Clubhouse Clone 5',
+        title: 'NextJS Virtual Events',
         description: 'A Clubhouse clone in React using 100ms React SDKs.',
-        url: 'https://github.com/100mslive/clubhouse-clone-react',
-        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
-        tags: ['App', 'Advance'],
+        url: 'https://github.com/100mslive/virtual-event-starter-kit',
+        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT, TECHNOLOGIES.NEXTJS],
+        tags: ['Web App', 'Video Guide'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Flutter Telehealth App',
+        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        url: 'https://github.com/ygit/Telehealth_app/',
+        technologies: [TECHNOLOGIES.FLUTTER],
+        tags: ['Mobile'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Flutter Quickstart',
+        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        url: 'https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/flutter-quickstart-app',
+        technologies: [TECHNOLOGIES.FLUTTER],
+        tags: ['Mobile'],
         categories: [CATEGORIES.QUICKSTARTS]
     },
     {
-        title: 'React Clubhouse Clone 6',
+        title: 'Flutter Live Streaming Demo',
         description: 'A Clubhouse clone in React using 100ms React SDKs.',
-        url: 'https://github.com/100mslive/clubhouse-clone-react',
+        url: 'https://github.com/adityathakurxd/live',
+        technologies: [TECHNOLOGIES.FLUTTER],
+        tags: ['Mobile'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Flutter Callkit',
+        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        url: 'https://github.com/Decoder07/demo-app-one-to-one/tree/Fast-preview-join',
+        technologies: [TECHNOLOGIES.FLUTTER],
+        tags: ['Mobile'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Flutter Thirdle',
+        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        url: 'https://github.com/coder-with-a-bushido/thirdle/',
+        technologies: [TECHNOLOGIES.FLUTTER],
+        tags: ['Mobile', 'Video Guide'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Flutter Sample App',
+        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        url: 'https://github.com/100mslive/100ms-flutter/tree/main/example',
+        technologies: [TECHNOLOGIES.FLUTTER],
+        tags: ['Mobile', 'GetX', 'Bloc', 'MobX', 'Riverpod'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Flutter Clubhouse Clone',
+        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        url: 'https://github.com/govindmaheshwari2/clubhouse_100ms/tree/starter',
+        technologies: [TECHNOLOGIES.FLUTTER],
+        tags: ['Mobile'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Android Jetpack Compose Twitter Spaces',
+        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        url: 'https://github.com/JoelKanyi/TwitterSpacesClone/tree/main',
+        technologies: [TECHNOLOGIES.ANDROID],
+        tags: ['Mobile', 'Jetpack Compose'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Android Sample App',
+        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        url: 'https://github.com/100mslive/100ms-android',
+        technologies: [TECHNOLOGIES.ANDROID],
+        tags: ['Mobile', 'Jetpack Compose'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Android Hello World',
+        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        url: 'https://github.com/100mslive/hello-world-android',
+        technologies: [TECHNOLOGIES.ANDROID],
+        tags: ['Mobile'],
+        categories: [CATEGORIES.QUICKSTARTS]
+    },
+    {
+        title: 'iOS Sample App',
+        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        url: 'https://github.com/100mslive/100ms-ios-sdk/tree/main/Example',
+        technologies: [TECHNOLOGIES.IOS],
+        tags: ['Mobile'],
+        categories: [CATEGORIES.QUICKSTARTS]
+    },
+    {
+        title: 'iOS Screen Sharing Example',
+        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        url: 'https://github.com/100mslive/100ms-ios-sdk/tree/main/ScreenSharingExample',
+        technologies: [TECHNOLOGIES.IOS],
+        tags: ['Mobile'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'iOS Clubhouse Clone',
+        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        url: 'https://github.com/100mslive/clubhouse-clone-ios-swift',
+        technologies: [TECHNOLOGIES.IOS],
+        tags: ['Mobile', 'Swift'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Web Sample App',
+        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        url: 'https://github.com/100mslive/100ms-web',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
-        tags: ['App', 'Advance'],
-        categories: [CATEGORIES.APPS, CATEGORIES.EXTRAS]
+        tags: ['Web App'],
+        categories: [CATEGORIES.APPS]
     }
 ];
 
@@ -103,7 +202,7 @@ export default function Examples() {
     const [menu, setMenu] = useState(false);
     const [modal, setModal] = useState(false);
     const menuState = { menu, setMenu };
-    const [, setCurrentTheme] = useState('dark');
+    const [currentTheme, setCurrentTheme] = useState('dark');
 
     useEffect(() => {
         const updateTheme = (e) => setCurrentTheme(e.detail.theme);
@@ -164,9 +263,18 @@ export default function Examples() {
                 direction="column"
                 css={{
                     mx: 'auto',
+                    backgroundImage: `url(${
+                        currentTheme === 'dark'
+                            ? '/docs/bg-example-transparent.png'
+                            : '/docs/bg-example-transparent.png'
+                    })`,
+                    backgroundSize: '100% auto',
+                    backgroundPosition: 'top-left',
+                    backgroundRepeat: 'no-repeat',
                     paddingInline: '$14',
                     paddingBottom: '$14',
                     '@md': {
+                        backgroundSize: 'cover',
                         paddingInline: '$10',
                         paddingBottom: '$10'
                     }
