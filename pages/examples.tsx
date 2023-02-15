@@ -263,21 +263,24 @@ export default function Examples() {
                 direction="column"
                 css={{
                     mx: 'auto',
-                    backgroundImage: `url(${
-                        currentTheme === 'dark'
-                            ? '/docs/bg-example-transparent.png'
-                            : '/docs/bg-example-transparent.png'
-                    })`,
-                    backgroundPosition: 'center -400px',
-                    backgroundRepeat: 'no-repeat',
+                    position: 'relative',
+                    maxWidth: '1512px',
                     paddingInline: '$14',
                     paddingBottom: '$14',
                     '@md': {
-                        backgroundPosition: '-550px top',
                         paddingInline: '$10',
                         paddingBottom: '$10'
                     }
                 }}>
+                <Box
+                    as="img"
+                    src="/docs/bg-example-transparent.png"
+                    css={{
+                        position: 'absolute',
+                        top: '-370px',
+                        pointerEvents: 'none'
+                    }}></Box>
+
                 <Flex
                     direction="column"
                     align="center"
