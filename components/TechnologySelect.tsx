@@ -85,7 +85,9 @@ const SelectContent = styled(Select.Content, {
     backgroundColor: '$surfaceLight',
     borderRadius: '$1',
     width: 'var(--radix-select-trigger-width)',
-    paddingBlock: '$4'
+    maxHeight: 'var(--radix-select-content-available-height)',
+    paddingBlock: '$4',
+    boxSizing: 'border-box'
 });
 
 const SelectItem = styled(Select.Item, {
@@ -123,7 +125,7 @@ export default function TechnologySelect({ css, value, setValue }: Props) {
                 </Select.Icon>
             </SelectTrigger>
             <Select.Portal>
-                <SelectContent position="popper" sideOffset={16} align="center">
+                <SelectContent position="popper" sideOffset={16} align="start">
                     <Select.Viewport>
                         {Object.values(TECHNOLOGIES).map((technology) => {
                             const Icon = reactIcons[technologyIconMap[technology].icon];
