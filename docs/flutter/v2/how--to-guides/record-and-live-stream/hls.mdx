@@ -279,7 +279,8 @@ The room status should be checked in the following places -
 ## How to make the HLS peers join room faster 
 
 Since HLS peers don't publish or subscribe anything there is no point in waiting for `onJoin` or `onTrackUpdate` updates 
-to start showing them the stream as stream only needs the m3u8 URL.
+to start showing them the stream as stream only needs the m3u8 URL. This time reduction might not be observed in small rooms
+but is extremely helpful in larger rooms.
 
 Let's see how we can make this faster for peers joining with HLS roles:
 

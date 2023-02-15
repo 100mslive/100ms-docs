@@ -111,6 +111,11 @@ User can join the room with muted audio/video by default. Please find the docs [
 
 User can get `onPeerUpdate` in preview the docs can be found [here](/flutter/v2/how--to-guides/set-up-video-conferencing/preview#get-on-peer-update-and-room-state-in-preview)
 
+### How to reduce the join time for HLS peers in large rooms
+
+Since HLS peers don't publish or subscribe any track, only thing required to display the stream is m3u8 URL.
+There is a way to reduce the join time for HLS peers especially in large rooms. Checkout the doc [here](/flutter/v2/how--to-guides/record-and-live-stream/hls#how-to-make-the-hls-peers-join-room-faster)
+
 ### Getting updates multiple times in the room
 
 Please ensure removing the `HMSUpdateListener` while leaving the room.
