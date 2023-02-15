@@ -31,9 +31,24 @@ export default function ExampleCard({
                 ...css
             }}
             {...rest}>
-            <Text variant="h6" css={{ color: '$textHighEmp', mb: '$2' }}>
-                {title}
-            </Text>
+            <Flex css={{ mb: '$2' }} justify="between">
+                <Text variant="h6" css={{ color: '$textHighEmp' }}>
+                    {title}
+                </Text>
+                <Box
+                    as="span"
+                    css={{
+                        color: '$textPrimary',
+                        transform: 'translate(40%, -40%)',
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        height: '20px',
+                        width: '20px'
+                    }}>
+                    <reactIcons.ExternalLinkIcon height={13.34} width={13.34} />
+                </Box>
+            </Flex>
             <Text variant="body1" css={{ color: '$textMedEmp', fontWeight: '$regular' }}>
                 {description}
             </Text>
