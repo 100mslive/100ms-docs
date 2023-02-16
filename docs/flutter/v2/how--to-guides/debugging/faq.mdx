@@ -182,6 +182,22 @@ To mirror your device you can use tools like [SCRCPY](https://github.com/Genymob
 
 The maximum allowed duration for a session on the 100ms platform is 12 hours.
 
+### When a participant puts the Flutter iOS app in Background and enables PiP, why does the other participant loses the Remote Camera Video Track?
+
+When your app enters PIP mode, it needs [com.apple.developer.avfoundation.multitasking-camera-access](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_avfoundation_multitasking-camera-access) entitlement to continue using the camera. Without the entitlement, the system disables the camera access for your app. When your app enters PIP mode, it needs this entitlement to continue using the camera. Without the Entitlement approval from Apple, your app won't be able capture camera feed in Background.
+
+### When running the 100ms Flutter iOS Example app, why am I getting the error "No profile for team 'XXXXXXXXXX' matching 'FlutterBroadcastUploadExtension' found"?
+
+The "No profile for team 'XXXXXXXXXX' matching 'FlutterBroadcastUploadExtension' found" error occurs when building the fully featured 100ms Flutter iOS Example app. This error is related to the Target Name used in the app, which is called `FlutterBroadcastUploadExtension`. This Target is required to start Screen Sharing from iOS Devices.
+
+To resolve this error, follow these steps:
+
+1. Delete the `FlutterBroadcastUploadExtension` target to quickly test the app. This will remove the screen sharing feature from the app.
+2. If you want to enable screen sharing from iOS devices, set it up correctly by following the steps [iOS screen sharing setup guide](https://www.100ms.live/docs/flutter/v2/how--to-guides/set-up-video-conferencing/screen-share#ios-setup).
+3. Make sure to configure the screen sharing properly by following the instructions in the guide.
+4. Once the screen sharing setup is complete, try building the app again. The error should no longer occur.
+
+
 ### I want to suggest a new feature.
 
 Awesome, we're always looking out for new ideas and features. Please reach out to us over [discord](https://100ms.live/discord)
