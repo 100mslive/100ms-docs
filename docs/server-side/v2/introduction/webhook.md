@@ -689,8 +689,17 @@ This event will be sent when failure occurs during final recording composition o
 | session_id         | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df |
 | template_id        | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                   |
 | error              | `string`             | Error message <br/><br/> Example: Upload Failure                                       |
+| error_type         | `string`             | Error type <br/><br/> Example: CLOUD_ACCESS_ERROR                                          |
 | session_started_at | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                |
 | session_stopped_at | `timestamp (in UTC)` | Timestamp when session ended <br/><br/> Example: 2020-11-11T16:32:17Z                  |
+
+#### Error types
+
+| Type                                                          | Message                                                                                          | Description                                                                                               |
+| :------------------------------------------------------------ | :----------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- |
+| INPUT_ERROR                                                   | No input streams available to create recording                                                   | Recording could not be created because there were no streams for this session                             |
+| CLOUD_ACCESS_ERROR                                            | Error accessing cloud bucket. Please make sure upload config is correct                          | Unable to access the configured cloud bucket to upload/download streams                                   |
+| CONFIG_ERROR, MEMORY_ERROR, PROCESSING_CMD_ERROR, API_ERROR   | INTERNAL_ERROR                                                                                   | Internal errors                                                                                           |
 
 #### Sample `recording.failed` event
 
@@ -703,7 +712,8 @@ This event will be sent when failure occurs during final recording composition o
     "timestamp": "2021-11-23T09:04:25Z",
     "type": "recording.failed",
     "data": {
-        "error": "Upload Failure",
+        "error": "INTERNAL_ERROR",
+        "error_type": "CONFIG_ERROR",
         "room_id": "************************",
         "room_name": "TestRoom1",
         "session_id": "************************",
