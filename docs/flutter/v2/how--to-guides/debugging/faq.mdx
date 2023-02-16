@@ -182,6 +182,14 @@ To mirror your device you can use tools like [SCRCPY](https://github.com/Genymob
 
 The maximum allowed duration for a session on the 100ms platform is 12 hours.
 
+### when a participant put the iOS application in background and enables PiP, why the other participant loses the remote camera video track?
+
+When your app enters PIP mode, it needs [com.apple.developer.avfoundation.multitasking-camera-access](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_avfoundation_multitasking-camera-access) entitlement to continue using the camera. Without the entitlement, the system disables the camera access for your app.
+
+### Running iOS example app and getting error: No profile for team 'XXXXXXXXXX' matching 'FlutterBroadcastUploadExtension' found?
+
+If you want to test screen share functionality in iOS then you need to follow [this](https://www.100ms.live/docs/flutter/v2/how--to-guides/set-up-video-conferencing/screen-share#ios-setup) guide to add `FlutterBroadcastUploadExtension` in app otherwise you remove it by opening the project>ios folder in Xcode, Select Runner under Targets delete `FlutterBroadcastUploadExtension`.
+
 ### I want to suggest a new feature.
 
 Awesome, we're always looking out for new ideas and features. Please reach out to us over [discord](https://100ms.live/discord)
