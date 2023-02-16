@@ -54,7 +54,7 @@ const examples: {
     },
     {
         title: 'React Slack Huddle Clone',
-        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        description: 'A Slack Huddle clone in React using 100ms React SDKs.',
         url: 'https://github.com/100mslive/slack-huddle-clone',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
         tags: ['Web App'],
@@ -62,7 +62,7 @@ const examples: {
     },
     {
         title: 'NextJS Discord Stages Clone',
-        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        description: 'A Discord Stages clone in Next.js using 100ms React SDKs.',
         url: 'https://github.com/100mslive/discord-stages-clone-100ms',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT, TECHNOLOGIES.NEXTJS],
         tags: ['Web App'],
@@ -70,15 +70,15 @@ const examples: {
     },
     {
         title: 'React Pose Detection',
-        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        description: 'A real time pose estimation app using React and Tensorflow.js using 100ms Rect SDKs.',
         url: 'https://github.com/100mslive/PosenetRealtime',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
-        tags: ['Web App'],
-        categories: [CATEGORIES.APPS]
+        tags: ['Web App', 'Tensorflow.js'],
+        categories: [CATEGORIES.APPS, CATEGORIES.FEATURES]
     },
     {
         title: 'NextJS Virtual Events',
-        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        description: 'A fully customizable virtual live events starter kit in Next.js using 100ms React SDKs.',
         url: 'https://github.com/100mslive/virtual-event-starter-kit',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT, TECHNOLOGIES.NEXTJS],
         tags: ['Web App', 'Video Guide'],
@@ -86,7 +86,7 @@ const examples: {
     },
     {
         title: 'Flutter Telehealth App',
-        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        description: 'A telehealth application that integrates 100ms Flutter SDK with the functionality of booking and joining an audio/visual appointment.',
         url: 'https://github.com/ygit/Telehealth_app/',
         technologies: [TECHNOLOGIES.FLUTTER],
         tags: ['Mobile'],
@@ -94,7 +94,7 @@ const examples: {
     },
     {
         title: 'Flutter Quickstart',
-        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        description: 'A quick start video calling application using 100ms Flutter SDK.',
         url: 'https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/flutter-quickstart-app',
         technologies: [TECHNOLOGIES.FLUTTER],
         tags: ['Mobile'],
@@ -102,7 +102,7 @@ const examples: {
     },
     {
         title: 'Flutter Live Streaming Demo',
-        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        description: ' A Flutter app to demonstrate live streaming using 100ms Flutter SDK.',
         url: 'https://github.com/adityathakurxd/live',
         technologies: [TECHNOLOGIES.FLUTTER],
         tags: ['Mobile'],
@@ -110,15 +110,15 @@ const examples: {
     },
     {
         title: 'Flutter Callkit',
-        description: 'A Clubhouse clone in React using 100ms React SDKs.',
-        url: 'https://github.com/Decoder07/demo-app-one-to-one/tree/Fast-preview-join',
+        description: 'Flutter application for one-to-one calls using 100ms Flutter SDK.',
+        url: 'https://github.com/Decoder07/hms-callkit-demo',
         technologies: [TECHNOLOGIES.FLUTTER],
         tags: ['Mobile'],
         categories: [CATEGORIES.APPS]
     },
     {
         title: 'Flutter Thirdle',
-        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        description: 'A multiplayer Wordle inspired game called Thirdle. ',
         url: 'https://github.com/coder-with-a-bushido/thirdle/',
         technologies: [TECHNOLOGIES.FLUTTER],
         tags: ['Mobile', 'Video Guide'],
@@ -126,15 +126,15 @@ const examples: {
     },
     {
         title: 'Flutter Sample App',
-        description: 'A Clubhouse clone in React using 100ms React SDKs.',
-        url: 'https://github.com/100mslive/100ms-flutter/tree/main/example',
+        description: 'A sample app that contains the implementation of all the features provided by Flutter HMSSDK.',
+        url: 'https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps',
         technologies: [TECHNOLOGIES.FLUTTER],
         tags: ['Mobile', 'GetX', 'Bloc', 'MobX', 'Riverpod'],
         categories: [CATEGORIES.APPS]
     },
     {
         title: 'Flutter Clubhouse Clone',
-        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        description: 'A Clubhouse clone in Flutter using 100ms Flutter SDKs.',
         url: 'https://github.com/govindmaheshwari2/clubhouse_100ms/tree/starter',
         technologies: [TECHNOLOGIES.FLUTTER],
         tags: ['Mobile'],
@@ -142,7 +142,7 @@ const examples: {
     },
     {
         title: 'Android Jetpack Compose Twitter Spaces',
-        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        description: 'A simple Twitter spaces clone app with Jetpack compose using the 100ms SDK.',
         url: 'https://github.com/JoelKanyi/TwitterSpacesClone/tree/main',
         technologies: [TECHNOLOGIES.ANDROID],
         tags: ['Mobile', 'Jetpack Compose'],
@@ -150,7 +150,7 @@ const examples: {
     },
     {
         title: 'Android Sample App',
-        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        description: 'An Android video conferencing app using 100ms SDK.',
         url: 'https://github.com/100mslive/100ms-android',
         technologies: [TECHNOLOGIES.ANDROID],
         tags: ['Mobile', 'Jetpack Compose'],
@@ -158,7 +158,7 @@ const examples: {
     },
     {
         title: 'Android Hello World',
-        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        description: 'The bare minimum required to get a video call working end to end using the 100ms Android SDK.',
         url: 'https://github.com/100mslive/hello-world-android',
         technologies: [TECHNOLOGIES.ANDROID],
         tags: ['Mobile'],
@@ -166,7 +166,7 @@ const examples: {
     },
     {
         title: 'iOS Sample App',
-        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        description: 'An iOS video conferencing app using 100ms SDK.',
         url: 'https://github.com/100mslive/100ms-ios-sdk/tree/main/Example',
         technologies: [TECHNOLOGIES.IOS],
         tags: ['Mobile'],
@@ -174,7 +174,7 @@ const examples: {
     },
     {
         title: 'iOS Screen Sharing Example',
-        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        description: 'A project demonstrating the screen sharing feature implementation with 100ms iOS SDK.',
         url: 'https://github.com/100mslive/100ms-ios-sdk/tree/main/ScreenSharingExample',
         technologies: [TECHNOLOGIES.IOS],
         tags: ['Mobile'],
@@ -182,7 +182,7 @@ const examples: {
     },
     {
         title: 'iOS Clubhouse Clone',
-        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        description: 'A Clubhouse clone on iOS using 100ms SDKs in Swift.',
         url: 'https://github.com/100mslive/clubhouse-clone-ios-swift',
         technologies: [TECHNOLOGIES.IOS],
         tags: ['Mobile', 'Swift'],
@@ -190,12 +190,20 @@ const examples: {
     },
     {
         title: 'Web Sample App',
-        description: 'A Clubhouse clone in React using 100ms React SDKs.',
+        description: 'A conferencing and streaming app built with 100ms SDK.',
         url: 'https://github.com/100mslive/100ms-web',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
         tags: ['Web App'],
         categories: [CATEGORIES.APPS]
-    }
+    },
+    {
+        title: 'Svelte Quickstart',
+        description: 'A conferencing and streaming app built with 100ms SDK.',
+        url: 'https://github.com/100mslive/svelte-100ms',
+        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.SVELTE],
+        tags: ['Web App'],
+        categories: [CATEGORIES.QUICKSTARTS]
+    },
 ];
 
 export default function Examples() {
@@ -266,7 +274,7 @@ export default function Examples() {
                     position: 'relative',
                     maxWidth: '1512px',
                     paddingInline: '$14',
-                    paddingBottom: '$14',
+                    paddingBottom: '$24',
                     '@md': {
                         paddingInline: '$10',
                         paddingBottom: '$10'
@@ -383,7 +391,7 @@ export default function Examples() {
                             rowGap: '40px',
                             flexGrow: 1,
                             '@md': {
-                                rowGap: '24px',
+                                rowGap: '16px',
                                 gridTemplateColumns: '1fr'
                             }
                         }}>
