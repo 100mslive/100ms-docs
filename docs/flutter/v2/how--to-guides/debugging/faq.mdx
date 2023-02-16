@@ -182,13 +182,13 @@ To mirror your device you can use tools like [SCRCPY](https://github.com/Genymob
 
 The maximum allowed duration for a session on the 100ms platform is 12 hours.
 
-### when a participant put the iOS application in background and enables PiP, why the other participant loses the remote camera video track?
+### When a participant puts the Flutter iOS app in Background and enables PiP, why the other participant loses the Remote Camera Video Track?
 
-When your app enters PIP mode, it needs [com.apple.developer.avfoundation.multitasking-camera-access](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_avfoundation_multitasking-camera-access) entitlement to continue using the camera. Without the entitlement, the system disables the camera access for your app.
+When your app enters PIP mode, it needs [com.apple.developer.avfoundation.multitasking-camera-access](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_avfoundation_multitasking-camera-access) entitlement to continue using the camera. Without the entitlement, the system disables the camera access for your app. When your app enters PIP mode, it needs this entitlement to continue using the camera. Without the Entitlement approval from Apple, your app won't be able capture camera feed in Background.
 
-### Running iOS example app and getting error: No profile for team 'XXXXXXXXXX' matching 'FlutterBroadcastUploadExtension' found?
+### On running the 100ms Flutter iOS Example app, why are we getting the error: "No profile for team 'XXXXXXXXXX' matching 'FlutterBroadcastUploadExtension' found"?
 
-If you want to test screen share functionality in iOS then you need to follow [this](https://www.100ms.live/docs/flutter/v2/how--to-guides/set-up-video-conferencing/screen-share#ios-setup) guide to add `FlutterBroadcastUploadExtension` in app otherwise you remove it by opening the project>ios folder in Xcode, Select Runner under Targets delete `FlutterBroadcastUploadExtension`.
+`FlutterBroadcastUploadExtension` is the Target Name used in the fully featured 100ms Flutter iOS Example app to enable starting Screenshare from iOS Devices. You can either delete the Target to do a quick POC. Or do the Screenshare setup correctly to build the App on your system. A complete guide for setting up Screenshare for iOS is available [here](https://www.100ms.live/docs/flutter/v2/how--to-guides/set-up-video-conferencing/screen-share#ios-setup).
 
 ### I want to suggest a new feature.
 
