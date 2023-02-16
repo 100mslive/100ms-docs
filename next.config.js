@@ -64,7 +64,7 @@ const nextConfig = {
             },
             {
                 source: '/flutter/v2/foundation/faq',
-                destination: 'flutter/v2/how--to-guides/debugging/faq',
+                destination: '/flutter/v2/how--to-guides/debugging/faq',
                 permanent: true
             },
             {
