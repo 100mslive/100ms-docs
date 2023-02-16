@@ -77,6 +77,8 @@ const Header: React.FC<Props> = ({
         setIsDark(!isDark);
         // toggle theme
         toggleTheme();
+        const themeChanged = new CustomEvent('themeChanged', { detail: { theme: docHtml.theme } });
+        document.dispatchEvent(themeChanged);
     };
 
     const getCurrentTech = () => {

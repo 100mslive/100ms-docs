@@ -14,7 +14,7 @@ Role is a collection of permissions that allows you to perform certain set of op
 
 ### Name
 
-Every role has a name that should be unique inside a template. This name will be used while generating app tokens and referencing inside a template.
+Every role has a name that should be unique inside a template. This name will be used while generating auth tokens and referencing inside a template.
 
 ### Priority
 
@@ -25,7 +25,7 @@ Priority will determine the order in which the roles will be degraded. A lower n
 Publish strategies will be used to determine the tracks and their quality which can be published by this role.
 
 | Strategy            | Description                                                                                                                                                                                                                                                                                   |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Can share audio     | Whether the role is allowed to publish the audio track or not.                                                                                                                                                                                                                                |
 | Can share video     | Whether the role is allowed to publish the video track or not                                                                                                                                                                                                                                 |
 | Can share screen    | Whether the role is allowed to do screen share or not                                                                                                                                                                                                                                         |
@@ -37,7 +37,7 @@ Publish strategies will be used to determine the tracks and their quality which 
 Subscribe strategies will be used to determine what all roles, this role can subscribe to.
 
 | Strategy              | Description                                                                                                                                                                                                                                                      |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Subscribe to          | You can select all the roles of the template which this role will subscribe                                                                                                                                                                                      |
 | Subscribe Degradation | When this flag is turned on, one or more remote video tracks will be muted automatically when the network condition worsens. Such tracks will be marked as `degraded`. When the network condition improves, the `degraded` tracks will automatically be unmuted. |
 
@@ -46,7 +46,7 @@ Subscribe strategies will be used to determine what all roles, this role can sub
 Permissions will contain a list of additional privileges that this role will have.
 
 | Permission                           | Description                                                                                                                                                                     |
-| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|--------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Can change any participant's role    | With this permission, user will be able to change the role of the other participant's who are present in the room                                                               |
 | Can mute any participant             | With this permission, user will be able to mute any participant's audio and/or video.                                                                                           |
 | Can ask participant to unmute        | With this permission, user will be able to ask any participant to unmute their audio and/or video.                                                                              |
@@ -70,7 +70,7 @@ Preview room state enables you to build a "preview" screen which shows the state
 Preview room state settings define strategy of sending state updates to client SDKs.
 
 | Setting                                  | Description                                                                                                                                                                                                                                        |
-| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Room-state Message Interval (in seconds) | Room-state data will be sent over a regular interval of these many seconds. Consequently, the room state displayed on the preview screen will refresh accordingly. This value must be a multiple of 5, between 5 and 3600 seconds, both inclusive. |
 | Send Peer List in Room-state             | Enabling this will send peer-list info of the room. If disabled, only the peer count is sent.                                                                                                                                                      |
 | Enable Room-State                        | If enabled, room-state data will be sent to the preview screen. If disabled, no such room-state data will be sent.                                                                                                                                 |

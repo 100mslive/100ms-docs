@@ -7,7 +7,7 @@ const SidebarItem = ({ route, index, asPath, activeItem }) => {
 
     return (
         <Link prefetch={false} href={route.url || ''} key={`${route.url}-${index}`}>
-            <a
+            <a className='opaque-link'
                 ref={isActive ? activeItem : null}
                 style={{
                     cursor: 'pointer',

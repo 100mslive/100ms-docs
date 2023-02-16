@@ -1,5 +1,6 @@
 ---
 title: usePreviewInput
+nav: "5.2.8"
 ---
 
 ## Properties
@@ -23,7 +24,7 @@ ___
 
 ### handleError
 
-• `Optional` **handleError**: [`hooksErrHandler`](/api-reference/javascript/v2/react/home/content#hookserrhandler)
+• `Optional` **handleError**: [`hooksErrHandler`](/api-reference/javascript/v2/react-hooks/home/content#hookserrhandler)
 
 function to handle errors happening during preview
 

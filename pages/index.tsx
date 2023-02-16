@@ -40,13 +40,24 @@ const Homepage = ({ allNav }) => {
     const [menu, setMenu] = useState(false);
     const [modal, setModal] = useState(false);
     const menuState = { menu, setMenu };
+    const [currentTheme, setCurrentTheme] = useState('dark');
+
     const [renderComponents, setRenderComponents] = useState(false);
 
     useEffect(() => {
-        setRenderComponents(true);
+        const updateTheme = (e) => setCurrentTheme(e.detail.theme);
+
+        if (document) document.addEventListener('themeChanged', updateTheme);
+        return () => document.removeEventListener('themeChanged', updateTheme);
     }, []);
 
-    console.log(allNav);
+    useEffect(() => {
+        setRenderComponents(true);
+        if (window) {
+            setCurrentTheme(window.localStorage.theme || 'dark');
+        }
+    }, []);
+
     useLockBodyScroll(modal);
 
     return renderComponents ? (
@@ -60,7 +71,23 @@ const Homepage = ({ allNav }) => {
                 onHomePage
             />
 
-            <Flex justify="center" css={{ mx: 'auto', minHeight: '100vh' }}>
+            <Flex
+                justify="center"
+                css={{
+                    mx: 'auto',
+                    minHeight: '100vh',
+                    backgroundImage: `url(${
+                        currentTheme === 'dark'
+                            ? '/docs/bg-desktop.png'
+                            : '/docs/bg-desktop-light.png'
+                    })`,
+                    backgroundSize: '100% 100%',
+                    backgroundPosition: 'center-bottom',
+                    backgroundRepeat: 'no repeat',
+                    '@md': {
+                        backgroundSize: 'cover'
+                    }
+                }}>
                 <Sidebar menuState={menuState} nav={{}} allNav={allNav} />
                 {!menu ? (
                     <Box
@@ -81,7 +108,7 @@ const Homepage = ({ allNav }) => {
                             css={{
                                 color: '$textMedEmp',
                                 mt: '$2',
-                                maxWidth: "600px"
+                                maxWidth: '600px'
                             }}>
                             The 100ms SDK gives you everything you need to build scalable,
                             high-quality live video and audio experiences. Explore our docs to learn
@@ -104,7 +131,12 @@ const Homepage = ({ allNav }) => {
                                 }
                             }}>
                             {cards.map((card, i) => (
-                                <Card key={card.link} {...card} id={i} />
+                                <Card
+                                    key={card.link}
+                                    {...card}
+                                    id={i}
+                                    currentTheme={currentTheme}
+                                />
                             ))}
                         </Box>
 

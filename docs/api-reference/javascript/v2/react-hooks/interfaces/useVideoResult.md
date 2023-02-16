@@ -1,12 +1,13 @@
 ---
 title: useVideoResult
+nav: "5.2.17"
 ---
 
 ## Properties
 
 ### pagesWithTiles
 
-• **pagesWithTiles**: [`useVideoListTile`](/api-reference/javascript/v2/react/interfaces/useVideoListTile)[][]
+• **pagesWithTiles**: [`useVideoListTile`](/api-reference/javascript/v2/react-hooks/interfaces/useVideoListTile)[][]
 
 This returns a list of all pages with every page containing the list of all tiles on it.
 

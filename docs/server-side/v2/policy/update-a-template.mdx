@@ -69,8 +69,31 @@ curl --location --request POST 'https://api.100ms.live/v2/templates/6316d5ca5a26
                     "width": 1920,
                     "height": 1080
                 },
-                "videoSimulcastLayers": {},
-                "screenSimulcastLayers": {}
+                "simulcast": {
+                    "video": {
+                        "layers": [
+                            {
+                                "rid": "f",
+                                "scaleResolutionDownBy": 1,
+                                "maxBitrate": 700,
+                                "maxFramerate": 25
+                            },
+                            {
+                                "rid": "h",
+                                "scaleResolutionDownBy": 2,
+                                "maxBitrate": 350,
+                                "maxFramerate": 25
+                            },
+                            {
+                                "rid": "q",
+                                "scaleResolutionDownBy": 4,
+                                "maxBitrate": 100,
+                                "maxFramerate": 25
+                            }
+                        ]
+                    },
+                    "screen": {}
+                }
             },
             "subscribeParams": {
                 "subscribeToRoles": ["host", "guest"],
@@ -111,8 +134,31 @@ curl --location --request POST 'https://api.100ms.live/v2/templates/6316d5ca5a26
                     "width": 1920,
                     "height": 1080
                 },
-                "videoSimulcastLayers": {},
-                "screenSimulcastLayers": {}
+                "simulcast": {
+                    "video": {
+                        "layers": [
+                            {
+                                "rid": "f",
+                                "scaleResolutionDownBy": 1,
+                                "maxBitrate": 700,
+                                "maxFramerate": 25
+                            },
+                            {
+                                "rid": "h",
+                                "scaleResolutionDownBy": 2,
+                                "maxBitrate": 350,
+                                "maxFramerate": 25
+                            },
+                            {
+                                "rid": "q",
+                                "scaleResolutionDownBy": 4,
+                                "maxBitrate": 100,
+                                "maxFramerate": 25
+                            }
+                        ]
+                    },
+                    "screen": {}
+                }
             },
             "subscribeParams": {
                 "subscribeToRoles": ["guest", "host"],
@@ -140,9 +186,6 @@ curl --location --request POST 'https://api.100ms.live/v2/templates/6316d5ca5a26
     },
     "settings": {
         "region": "in",
-        "subscribeDegradation": {},
-        "screenSimulcastLayers": {},
-        "videoSimulcastLayers": {},
         "recording": null,
         "roomState": {
             "messageInterval": 5,
