@@ -11,7 +11,7 @@ While [peer metadata](https://www.100ms.live/docs/android/v2/how--to-guides/inte
 
 ## How to store shared data with 100ms SDK
 
-To update the value of the session metadata for the current room session, call **setSessionMetadata** method on SDK instance. In the following example, the "test" string will be saved in the session metadata and accessible to all participants in the room as a shared state.
+To update the value of the session metadata for the current room session, call `setSessionMetadata` method on SDK instance. In the following example, the "test" string will be saved in the session metadata and accessible to all participants in the room as a shared state.
 
 Make sure you call session metadata API after you joined the room. You should listen to [onJoin()](https://www.100ms.live/docs/android/v2/how--to-guides/set-up-video-conferencing/join#call-join) callback to proceed.
 
@@ -50,7 +50,7 @@ hmsSdk.setSessionMetaData("some data", new HMSActionResultListener() {
 
 ## How to read shared data with 100ms SDK
 
-To retrieve the session metadata, use the **getSessionMetadata** method:
+To retrieve the session metadata, use the `getSessionMetadata` method:
 
 Make sure you call session metadata API after you joined the room. You should listen to [onJoin()](https://www.100ms.live/docs/ios/v2/how--to-guides/set-up-video-conferencing/join#call-join) callback to proceed.
 
@@ -99,7 +99,7 @@ At present, there is no callback that will be triggered to indicate changes in t
 
 To notify others that the session data has been changed, you can send a broadcast message.
 
-One way to notify other apps of a change in session metadata is to send a custom broadcast message when a set succeeds. The type can be set to something like "metadata" or whatever you choose and this should then be handled in the `onMessagereceived` of all apps. To `getMetaData` at that time instead of showing a message for that type.
+One way to notify other apps of a change in session metadata is to send a custom broadcast message when a set succeeds. The type can be set to something like "metadata" or whatever you choose and this should then be handled in the `onMessageReceived` of all apps. To `getMetaData` at that time instead of showing a message for that type.
 
 1. [Example Set](https://github.com/100mslive/100ms-android/blob/236a34ec8ade318a164765b7ae41dee694039cbc/app/src/main/java/live/hms/app2/ui/meeting/MeetingViewModel.kt#L1379) of how we do it in the sample app. By sending a particular broadcast message when a set succeeds.
 2. [When](https://github.com/100mslive/100ms-android/blob/236a34ec8ade318a164765b7ae41dee694039cbc/app/src/main/java/live/hms/app2/ui/meeting/MeetingViewModel.kt#L621) the broadcast message is received, if it's of the custom type we set it then don't show the message and get metadata instead. 
