@@ -6,7 +6,7 @@ import {
     SearchIcon,
     SunIcon
 } from '@100mslive/react-icons';
-import { Box, Flex, Text, useTheme } from '@100mslive/react-ui';
+import { Flex, Text, useTheme } from '@100mslive/react-ui';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import ActiveLink, { ActiveLinkProps } from './ActiveLink';
@@ -111,7 +111,7 @@ const Header: React.FC<Props> = ({
         return routeLink;
     };
 
-    const isApiRef = router.query.slug && router.query.slug[0] === 'api-reference';
+    // const isApiRef = router.query.slug && router.query.slug[0] === 'api-reference';
     const isNonApiRef = router.query.slug && router.query.slug[0] === 'server-side';
 
     return (
