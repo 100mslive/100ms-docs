@@ -13,3 +13,15 @@ When a telephonic voice call comes in and the user accepts the following happens
 When the call ends the SDK will restore all videos, taking care not to un-mute you if you had muted yourself before the call came in. Neither will it un-mute all the peers if you had muted them from the app.
 
 No code required, this happens automatically for all calls.
+
+
+| **App State** | **Scenario**                               | **Android**                                |
+| :------------ | :----------------------------------------- | :----------------------------------------- |
+| Foreground    | **A Call interrupts Microphone access**    | SDK gets the mic access back after call    |
+| Background    | **A Call interrupts Microphone access**    | SDK doesn't get the mic access after call  |
+| Foreground    | **A Call interrupts Camera access**        | SDK gets the camera access back after call |
+| Background    | **A Call interrupts Camera access**        | SDK gets the camera access back after call |
+| Foreground    | **Other app interrupts Microphone access** | SDK gets the mic access back after call    |
+| Background    | **Other app interrupts Microphone access** | SDK doesn't get the mic access after call  |
+| Foreground    | **Other app interrupts Camera access**     | SDK gets the camera access back after call |
+| Background    | **Other app interrupts Camera access**     | SDK gets the camera access back after call |
