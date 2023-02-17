@@ -256,7 +256,7 @@ const examples: {
     },
     {
         title: 'Quickstart - Svelte',
-        description: 'A conferencing and streaming app built with 100ms SDK.',
+        description: 'A conferencing and streaming app built with Svelte using 100ms SDK.',
         url: 'https://github.com/100mslive/svelte-100ms',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.SVELTE],
         tags: ['Web'],
@@ -278,6 +278,38 @@ const examples: {
         tags: ['Mobile'],
         categories: [CATEGORIES.APPS]
     },
+    {
+        title: 'Whiteboard - Server',
+        description: 'A collaborative whiteboard sample app by integrating with Pusher.',
+        url: 'https://github.com/100mslive/whiteboard-server',
+        technologies: [TECHNOLOGIES.SERVER_SIDE],
+        tags: ['Server Side'],
+        categories: [CATEGORIES.FEATURES, CATEGORIES.EXTRAS]
+    },
+    {
+        title: 'Quickstart - JavaScript',
+        description: 'A conferencing and streaming app built with JavaScript using 100ms SDK.',
+        url: 'https://github.com/100mslive/100ms-examples/tree/main/web/js-quickstart',
+        technologies: [TECHNOLOGIES.JAVASCRIPT],
+        tags: ['Web', 'Vanilla JavaScript'],
+        categories: [CATEGORIES.QUICKSTARTS]
+    },
+    {
+        title: 'Quickstart - React',
+        description: 'A conferencing and streaming app built with React using 100ms SDK.',
+        url: 'https://github.com/100mslive/100ms-examples/tree/main/web/react-quickstart',
+        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
+        tags: ['Web'],
+        categories: [CATEGORIES.QUICKSTARTS]
+    },
+    {
+        title: 'Grayscale Filter',
+        description: 'A demo on adding AR filters to an 100ms application.',
+        url: 'https://github.com/triptu/100ms-face-filters',
+        technologies: [TECHNOLOGIES.JAVASCRIPT],
+        tags: ['Web', 'Jeeliz'],
+        categories: [CATEGORIES.FEATURES, CATEGORIES.PLUGINS]
+    }
 ];
 
 export default function Examples() {

@@ -12,7 +12,8 @@ export const TECHNOLOGIES = {
     SVELTE: 'Svelte',
     JAVASCRIPT: 'JavaScript',
     VUEJS: 'VueJS',
-    REACT: 'React'
+    REACT: 'React',
+    SERVER_SIDE: 'Server-Side'
 } as const;
 
 export type Technologies = typeof TECHNOLOGIES[keyof typeof TECHNOLOGIES];
@@ -52,6 +53,9 @@ export const technologyIconMap: Record<
     },
     [TECHNOLOGIES.REACT]: {
         icon: 'ReactIcon'
+    },
+    [TECHNOLOGIES.SERVER_SIDE]: {
+        icon: 'ServerIcon'
     }
 };
 
