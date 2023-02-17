@@ -17,7 +17,7 @@ Currently there is a limit to send at max 3 metadata at time.
 
 ```javascript
 export interface HLSTimedMetadata {
-	payload: string; // limited to 100 chars, no " (double quotes) allowed
+	payload: string; // limited to 100 chars
 	duration: number;
 }
 
@@ -42,68 +42,64 @@ start_date and end_date will be in UTC format.
 ### App side implementation
 
 ```javascript
-const handleTimeUpdateListener = _ => {
-  const textTrackListCount = videoEl.textTracks.length;
-  let metaTextTrack;
-  for (let trackIndex = 0; trackIndex < textTrackListCount; trackIndex++) {
-    const textTrack = videoEl.textTracks[trackIndex];
-    if (textTrack.kind !== "metadata") {
-      continue;
+
+  const extractMetaTextTrack = (videoEl: HTMLVideoElement | null): TextTrack | null => {
+    const textTrackListCount = videoEl?.textTracks.length || 0;
+    for (let trackIndex = 0; trackIndex < textTrackListCount; trackIndex++) {
+      const textTrack = videoEl?.textTracks[trackIndex];
+      if (textTrack?.kind !== 'metadata') {
+        continue;
+      }
+      textTrack.mode = 'showing';
+      return textTrack;
     }
-    textTrack.mode = "showing";
-    metaTextTrack = textTrack;
-    break;
-  }
-  if (!metaTextTrack) {
+    return null;
+  };
+  const fireCues = (videoEl: HTMLVideoElement | null, cues: TextTrackCueList) => {
+    const cuesLength = cues.length;
+    let cueIndex = 0;
+    while (cueIndex < cuesLength) {
+      const cue: TextTrackCue = cues[cueIndex];
+      if (cue.fired) {
+        cueIndex++;
+        continue;
+      }
+      // here we are converting base64 to actual data.
+      const data: { [key: string]: string } = metadataPayloadParser(cue.value.data);
+      const programData = videoEl?.getStartDate();
+      const startDate = data.start_date;
+      const endDate = data.end_date;
+      const startTime =
+        new Date(startDate).getTime() - new Date(programData).getTime() - (videoEl?.currentTime || 0) * 1000;
+      const duration = new Date(endDate).getTime() - new Date(startDate).getTime();
+      setTimeout(() => {
+        const toast = {
+          title: `Payload from timed Metadata ${data.payload}`,
+          duration: duration,
+        };
+        console.debug("Added toast ", JSON.stringify(toast));
+      }, startTime);
+      cue.fired = true;
+      cueIndex++;
+    }
+  };
+const handleTimeUpdateListener = _ => {
+  // extract timed metadata text track
+  const metaTextTrack: TextTrack | null = this.extractMetaTextTrack(videoEl);
+  if (!metaTextTrack || !metaTextTrack.cues) {
     return;
   }
-  const cuesLength = metaTextTrack.cues.length;
-  let cueIndex = 0;
-  while (cueIndex < cuesLength) {
-    const cue = metaTextTrack.cues[cueIndex];
-    if (cue.fired) {
-      cueIndex++;
-      continue;
-    }
-    const data = metadataPayloadParser(cue.value.data);
-    const programData = videoEl.getStartDate();
-    const startDate = data.start_date;
-    const endDate = data.end_date;
-    const startTime =
-      new Date(startDate) -
-      new Date(programData) -
-      videoEl.currentTime * 1000;
-    const duration = new Date(endDate) - new Date(startDate);
-    setTimeout(() => {
-      const toast = {
-        title: `Payload from timed Metadata ${data.payload}`,
-        duration: duration,
-      };
-      console.debug("Added toast ", JSON.stringify(toast));
-      ToastManager.addToast(toast);
-    }, startTime);
-    cue.fired = true;
-    cueIndex++;
-  }
+  // fire cue for timed meta data extract
+  this.fireCues(videoEl, metaTextTrack.cues);
 };
 if (Hls.isSupported()) {
   /**
    * initialize HLSController and add event listeners.
    */
-  hlsController = new HLSController(hlsUrl, videoRef);
-  hlsStats = new HlsStats(hlsController.getHlsJsInstance(), videoEl);
-
-  hlsController.on(HLS_STREAM_NO_LONGER_LIVE, handleNoLongerLive);
-  hlsController.on(HLS_TIMED_METADATA_LOADED, metadataLoadedHandler);
-
-  hlsController.on(Hls.Events.MANIFEST_LOADED, manifestLoadedHandler);
-  hlsController.on(Hls.Events.LEVEL_UPDATED, levelUpdatedHandler);
-  hlsController.on(Hls.Events.ERROR, handleHLSError);
 } else if (videoEl.canPlayType("application/vnd.apple.mpegurl")) {
     // Work where hls.js is not supported
     videoEl.src = hlsUrl;
     videoEl.addEventListener("timeupdate", handleTimeUpdateListener);
-    setIsMSENotSupported(true);
 }
 
 ```
