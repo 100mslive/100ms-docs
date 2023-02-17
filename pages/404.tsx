@@ -52,7 +52,14 @@ const NotFound = () => {
                     </Text>
                     <Text
                         className="mono"
-                        css={{ textAlign: 'center', color: '$textHighEmp', fontSize: '$h6' }}>
+                        css={{
+                            textAlign: 'center',
+                            color: '$textHighEmp',
+                            fontSize: '$h6',
+                            maxWidth: '45rem',
+                            wordBreak: 'break-all',
+                            mx: 'auto'
+                        }}>
                         {router.asPath}
                     </Text>
                     <Text
