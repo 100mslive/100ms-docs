@@ -1,5 +1,6 @@
 ---
 title: HMSStore
+nav: '4.54'
 ---
 
 ## Properties
@@ -50,6 +51,18 @@ title: HMSStore
 ### playlist
 
 • **playlist**: [`HMSPlaylist`](/api-reference/javascript/v2/interfaces/HMSPlaylist)<`any`\>
+
+---
+
+### preview
+
+• **preview**: `Object`
+
+#### Type declaration
+
+| Name    | Type                                                         |
+| :------ | :----------------------------------------------------------- |
+| `peer?` | [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer) |
 
 ---
 

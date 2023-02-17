@@ -30,7 +30,7 @@ class Meeting implements HMSUpdateListener {
         await hmsSDK.build(); // ensure to await while invoking the `build` method
 
         //`this` corresponds to the instance implementing HMSUpdateListener
-        hmsSDK.addUpdateListener(this);
+        hmsSDK.addUpdateListener(listener:this);
     }
     ...
 }

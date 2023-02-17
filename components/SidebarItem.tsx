@@ -7,7 +7,7 @@ const SidebarItem = ({ route, index, asPath, activeItem }) => {
 
     return (
         <Link prefetch={false} href={route.url || ''} key={`${route.url}-${index}`}>
-            <a
+            <a className='opaque-link'
                 ref={isActive ? activeItem : null}
                 style={{
                     cursor: 'pointer',
@@ -19,13 +19,15 @@ const SidebarItem = ({ route, index, asPath, activeItem }) => {
                         ? '2px solid var(--primary_light)'
                         : '2px solid var(--docs_border_strong)',
                     display: 'flex',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                     paddingLeft: '1rem',
                     marginLeft: '0.95rem'
                 }}>
                 <MinusIcon
                     style={{
                         width: '12px',
+                        height: '12px',
+                        marginTop: '.25rem',
                         minWidth: '12px',
                         marginRight: '0.625rem'
                     }}

@@ -63,6 +63,31 @@ const nextConfig = {
                 basePath: false
             },
             {
+                source: '/flutter/v2/foundation/faq',
+                destination: '/flutter/v2/how--to-guides/debugging/faq',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/guides/faq',
+                destination: '/react-native/v2/debugging/faq',
+                permanent: true
+            },
+            {
+                source: '/android/v2/foundation/faq',
+                destination: '/android/v2/how--to-guides/debugging/faq',
+                permanent: true
+            },
+            {
+                source: '/ios/v2/foundation/faq',
+                destination: 'ios/v2/debugging/faq',
+                permanent: true
+            },
+            {
+                source: '/(android|javascript|flutter|react-native|ios)/v2/foundation/:slug',
+                destination: '/concepts/v2/concepts/:slug',
+                permanent: true
+            },
+            {
                 source: '/server-side/v2/foundation/basics',
                 destination: '/server-side/v2/introduction/basics',
                 permanent: false
@@ -131,7 +156,8 @@ const nextConfig = {
             // start redirects for new JS how-to guides structure
             {
                 source: '/javascript/v2/advanced-features/peer-metadata',
-                destination: '/javascript/v2/how--to-guides/build-interactive-features/peer-metadata',
+                destination:
+                    '/javascript/v2/how--to-guides/build-interactive-features/peer-metadata',
                 permanent: true
             },
             {
@@ -166,7 +192,8 @@ const nextConfig = {
             },
             {
                 source: '/javascript/v2/advanced-features/:slug(custom-tracks|playlist)',
-                destination: '/javascript/v2/how--to-guides/extend-capabilities/custom-tracks/:slug',
+                destination:
+                    '/javascript/v2/how--to-guides/extend-capabilities/custom-tracks/:slug',
                 permanent: true
             },
             {
@@ -196,7 +223,8 @@ const nextConfig = {
             },
             {
                 source: '/javascript/v2/advanced-features/:slug(connection-quality|hls-stats|stats)',
-                destination: '/javascript/v2/how--to-guides/measure-network-quality-and-performance/:slug',
+                destination:
+                    '/javascript/v2/how--to-guides/measure-network-quality-and-performance/:slug',
                 permanent: true
             },
             {
@@ -211,22 +239,26 @@ const nextConfig = {
             },
             {
                 source: '/javascript/v2/advanced-features/audio-level',
-                destination: '/javascript/v2/how--to-guides/set-up-video-conferencing/render-video/audio-level',
+                destination:
+                    '/javascript/v2/how--to-guides/set-up-video-conferencing/render-video/audio-level',
                 permanent: true
             },
             {
                 source: '/javascript/v2/features/render-video',
-                destination: '/javascript/v2/how--to-guides/set-up-video-conferencing/render-video/overview',
+                destination:
+                    '/javascript/v2/how--to-guides/set-up-video-conferencing/render-video/overview',
                 permanent: true
             },
             {
                 source: '/javascript/v2/features/:slug(pip-mode|sub-degradation)',
-                destination: '/javascript/v2/how--to-guides/set-up-video-conferencing/render-video/:slug',
+                destination:
+                    '/javascript/v2/how--to-guides/set-up-video-conferencing/render-video/:slug',
                 permanent: true
             },
             {
                 source: '/javascript/v2/advanced-features/simulcast',
-                destination: '/javascript/v2/how--to-guides/set-up-video-conferencing/render-video/simulcast',
+                destination:
+                    '/javascript/v2/how--to-guides/set-up-video-conferencing/render-video/simulcast',
                 permanent: true
             },
             {
@@ -281,42 +313,50 @@ const nextConfig = {
             },
             {
                 source: '/android/v2/features/render-video',
-                destination: '/android/v2/how--to-guides/set-up-video-conferencing/render-video/render-video',
+                destination:
+                    '/android/v2/how--to-guides/set-up-video-conferencing/render-video/render-video',
                 permanent: true
             },
             {
                 source: '/android/v2/features/render-video-old',
-                destination: '/android/v2/how--to-guides/set-up-video-conferencing/render-video/surfaceview/render-video-old',
+                destination:
+                    '/android/v2/how--to-guides/set-up-video-conferencing/render-video/surfaceview/render-video-old',
                 permanent: true
             },
             {
                 source: '/android/v2/migrations/surfaceview-migration',
-                destination: '/android/v2/how--to-guides/set-up-video-conferencing/render-video/surfaceview/surfaceview-migration',
+                destination:
+                    '/android/v2/how--to-guides/set-up-video-conferencing/render-video/surfaceview/surfaceview-migration',
                 permanent: true
             },
             {
                 source: '/android/v2/features/auto-video-degrade-restore',
-                destination: '/android/v2/how--to-guides/set-up-video-conferencing/render-video/auto-video-degrade-restore',
+                destination:
+                    '/android/v2/how--to-guides/set-up-video-conferencing/render-video/auto-video-degrade-restore',
                 permanent: true
             },
             {
                 source: '/android/v2/advanced-features/simulcast',
-                destination: '/android/v2/how--to-guides/set-up-video-conferencing/render-video/simulcast',
+                destination:
+                    '/android/v2/how--to-guides/set-up-video-conferencing/render-video/simulcast',
                 permanent: true
             },
             {
                 source: '/android/v2/features/Pip-Mode',
-                destination: '/android/v2/how--to-guides/set-up-video-conferencing/render-video/Pip-Mode',
+                destination:
+                    '/android/v2/how--to-guides/set-up-video-conferencing/render-video/Pip-Mode',
                 permanent: true
             },
             {
                 source: '/android/v2/advanced-features/audio-level',
-                destination: '/android/v2/how--to-guides/set-up-video-conferencing/render-video/audio-level',
+                destination:
+                    '/android/v2/how--to-guides/set-up-video-conferencing/render-video/audio-level',
                 permanent: true
             },
             {
                 source: '/android/v2/features/Mirror',
-                destination: '/android/v2/how--to-guides/set-up-video-conferencing/render-video/Mirror',
+                destination:
+                    '/android/v2/how--to-guides/set-up-video-conferencing/render-video/Mirror',
                 permanent: true
             },
             {
@@ -336,7 +376,8 @@ const nextConfig = {
             },
             {
                 source: '/android/v2/features/audio-share',
-                destination: '/android/v2/how--to-guides/set-up-video-conferencing/local-audio-share',
+                destination:
+                    '/android/v2/how--to-guides/set-up-video-conferencing/local-audio-share',
                 permanent: true
             },
             {
@@ -406,26 +447,35 @@ const nextConfig = {
             },
             {
                 source: '/android/v2/features/network-quality-reports',
-                destination: '/android/v2/how--to-guides/measure-network-quality-and-performance/network-quality-reports',
+                destination:
+                    '/android/v2/how--to-guides/measure-network-quality-and-performance/network-quality-reports',
                 permanent: true
             },
             {
                 source: '/android/v2/advanced-features/peer-network-quality',
-                destination: '/android/v2/how--to-guides/measure-network-quality-and-performance/peer-network-quality',
+                destination:
+                    '/android/v2/how--to-guides/measure-network-quality-and-performance/peer-network-quality',
                 permanent: true
             },
             {
                 source: '/android/v2/advanced-features/webrtc-stats',
-                destination: '/android/v2/how--to-guides/measure-network-quality-and-performance/webrtc-stats',
+                destination:
+                    '/android/v2/how--to-guides/measure-network-quality-and-performance/webrtc-stats',
                 permanent: true
             },
             {
                 source: '/android/v2/advanced-features/hls-stats',
-                destination: '/android/v2/how--to-guides/measure-network-quality-and-performance/hls-stats',
+                destination:
+                    '/android/v2/how--to-guides/measure-network-quality-and-performance/hls-stats',
                 permanent: true
             },
             {
                 source: '/android/v2/features/echo-cancellation',
+                destination: '/android/v2/how--to-guides/configure-your-device/microphone/echo-cancellation',
+                permanent: true
+            },
+            {
+                source: '/android/v2/how--to-guides/configure-your-device/echo-cancellation',
                 destination: '/android/v2/how--to-guides/configure-your-device/microphone/echo-cancellation',
                 permanent: true
             },
@@ -436,7 +486,8 @@ const nextConfig = {
             },
             {
                 source: '/android/v2/features/audio-output-routing',
-                destination: '/android/v2/how--to-guides/configure-your-device/speaker/audio-output-routing',
+                destination:
+                    '/android/v2/how--to-guides/configure-your-device/speaker/audio-output-routing',
                 permanent: true
             },
             {
@@ -451,12 +502,8 @@ const nextConfig = {
             },
             {
                 source: '/android/v2/plugins/virtual-background',
-                destination: '/android/v2/how--to-guides/extend-capabilities/plugins/virtual-background',
-                permanent: true
-            },
-            {
-                source: '/flutter/v2/debugging/faq',
-                destination: '/flutter/v2/foundation/faq',
+                destination:
+                    '/android/v2/how--to-guides/extend-capabilities/plugins/virtual-background',
                 permanent: true
             },
             {
@@ -1206,6 +1253,17 @@ const nextConfig = {
                 destination: '/react-native/v2/how--to-guides/set-up-video-conferencing/strict-privacy-applications',
                 permanent: true
             },
+            {
+                source: '/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/capture-snapshot',
+                destination: '/flutter/v2/how--to-guides/capture-frame/capture-snapshot',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/templates-and-roles',
+                destination: '/concepts/v2/concepts/templates-and-roles/overview',
+                permanent: true
+            },
+
         ];
     },
     eslint: {

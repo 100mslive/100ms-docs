@@ -1,5 +1,6 @@
 ---
 title: HMSActions
+nav: '4.5'
 ---
 
 The below interface defines our SDK API Surface for taking room related actions.
@@ -403,9 +404,9 @@ Fetch the current room metadata from the server and populate it in store
 
 #### Parameters
 
-| Name     | Type                                                             |
-| :------- | :--------------------------------------------------------------- |
-| `config` | [`HMSConfig`](/api-reference/javascript/v2/interfaces/HMSConfig) |
+| Name     | Type                                                                           |
+| :------- | :----------------------------------------------------------------------------- |
+| `config` | [`HMSPreviewConfig`](/api-reference/javascript/v2/interfaces/HMSPreviewConfig) |
 
 #### Returns
 

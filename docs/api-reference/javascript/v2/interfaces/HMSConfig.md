@@ -1,8 +1,9 @@
 ---
 title: HMSConfig
+nav: '4.13'
 ---
 
-the config object tells the sdk options you want to join with
+the config object tells the SDK options you want to join with
 
 **`Link`**
 
@@ -11,6 +12,12 @@ https://docs.100ms.live/javascript/v2/features/preview
 **`Link`**
 
 https://docs.100ms.live/javascript/v2/features/join
+
+## Hierarchy
+
+- **`HMSConfig`**
+
+  ↳ [`HMSPreviewConfig`](/api-reference/javascript/v2/interfaces/HMSPreviewConfig)
 
 ## Properties
 
@@ -79,7 +86,7 @@ https://docs.100ms.live/javascript/v2/advanced-features/peer-metadata
 
 • `Optional` **rememberDeviceSelection**: `boolean`
 
-highly recommended to pass this as true, this will make sdk use the local storage
+highly recommended to pass this as true, this will make SDK use the local storage
 to remember any manual device selection for future joins.
 
 ---

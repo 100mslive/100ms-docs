@@ -11,7 +11,7 @@ Let's look at this step-by-step
 
 ### Permissions
 
-Can't let just anyone remove others from the video call room. First you need to create a [role](../foundation/templates-and-roles) with the permissions to remove others.
+Can't let just anyone remove others from the video call room. First you need to create a [role](/concepts/v2/concepts/security-and-tokens) with the permissions to remove others.
 
 In the SDK, the permission to remove others from the room is within `PermissionsParams` `removeOthers` and you should check for that within the `HMSRole` of the peer to see if they have it.
 
@@ -99,7 +99,7 @@ class HMSRemovedFromPeer {
 
 `peerWhoRemoved`: `HMSPeer` instance containing the details of the person who called `removePeerRequest`. This can be used to show the name of the person who removed them.
 
-`roomWasEnded`: This will be false if the peer was removed. If true, it indicates that the peer was not removed, but the entire room was ended. See [End Room](/flutter/v2/features/end-room) for details.
+`roomWasEnded`: This will be false if the peer was removed. If true, it indicates that the peer was not removed, but the entire room was ended. See [End Room](/flutter/v2/how--to-guides/interact-with-room/room/end-room) for details.
 
 > When this callback is received, the UI should be cleaned up from the client side. The video call room would be ended from the SDK once this callback is sent.
 

@@ -1,56 +1,74 @@
-import { Box, CSS, Flex, Text, useTheme } from '@100mslive/react-ui';
-import React from 'react';
+import { ArrowRightIcon } from '@100mslive/react-icons';
+import { Flex, Box, Text } from '@100mslive/react-ui';
 
-interface Props {
-    body: React.FC | string;
-    css?: CSS;
-    endComponent?: React.ReactNode;
-    titleComponent?: React.ReactNode;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onClick?: () => void;
+interface CardProps {
+    icon: any;
+    title: String;
+    link: String;
+    subText: String;
+    id: Number;
+    currentTheme: String;
 }
 
-const Card: React.FC<Props> = ({ body, endComponent, titleComponent, css, onClick }) => (
-    <Box
-        className="hoverParent"
-        onClick={onClick}
-        role="button"
-        css={{
-            height: '100%',
-            borderRadius: '$3',
-            borderWidth: '$1',
-            borderStyle: 'solid',
-            borderColor: 'var(--docs_border_default)',
-            backgroundColor: 'var(--docs_bg_card)',
-            boxSizing: 'border-box',
-            padding: '$10',
-            '&:active': {
-                backgroundColor: useTheme().themeType === 'dark' ? '$surfaceDark' : '$surfaceLight'
-            },
-            '&:hover': {
-                borderColor: '$primaryDefault'
-            },
-            '&:hover .hoverChild': {
-                right: '-$11',
-                color: '$primaryLight'
-            },
-            '&:hover .childText': {
-                color: '$primaryLight'
-            },
-            '&:hover .childLogo': {
-                color: '$primaryLight'
-            },
-            ...css
-        }}>
-        <Flex direction="column" justify="between" css={{ height: '100%' }}>
-            <Flex direction="column" css={{ gap: '$3' }}>
-                {titleComponent}
-                <Text variant="body1" css={{ color: '$textMedEmp', fontWeight: '$regular' }}>
-                    {body}
+const Card: React.FC<CardProps> = ({ icon, title, link, subText, id, currentTheme }) => {
+    const MAIN_GRADIENT =
+        currentTheme === 'dark'
+            ? 'linear-gradient(235deg, $surfaceLighter 15%, $surfaceDark 70%)'
+            : 'linear-gradient(235deg, $surfaceDefault 50%, $surfaceLighter 90%)';
+    return (
+        <Flex
+            direction="column"
+            justify="between"
+            onClick={() => {
+                window.open(`${window.location.pathname}/${link}`, '_self');
+            }}
+            css={{
+                borderRadius: '$3',
+                border: '1px solid',
+                borderColor: '$borderDefault',
+                width: '100%',
+                overflow: 'clip',
+                cursor: 'pointer',
+                background: MAIN_GRADIENT,
+                backgroundSize: '200%',
+                backgroundPosition: 'left',
+                transition: 'background-position ease 0.4s',
+                '&:hover': {
+                    backgroundPosition: 'right'
+                },
+                '@xl': {
+                    gridColumn: id === 2 ? '1/3' : ''
+                },
+                '@md': {
+                    gridColumn: '1'
+                }
+            }}>
+            <Box>
+                <Flex align="center" css={{ color: '$textHighEmp', gap: '$2', m: '$10', mb: '$6' }}>
+                    {icon}
+                    <Text variant="h6" css={{ color: '$textHighEmp' }}>
+                        {title}
+                    </Text>
+                </Flex>
+                <Text variant="sm" css={{ m: '$10', mt: '$6', color: '$textMedEmp' }}>
+                    {subText}
                 </Text>
+            </Box>
+            <Flex
+                align="center"
+                gap="1"
+                css={{
+                    backgroundColor: '$surfaceLight',
+                    color: '$primaryLight',
+                    padding: '$8 $10'
+                }}>
+                <Text variant="xs" css={{ color: '$primaryLight', fontWeight: '$semiBold' }}>
+                    Read more
+                </Text>
+                <ArrowRightIcon height="14px" width="14px" />
             </Flex>
-            {endComponent}
         </Flex>
-    </Box>
-);
+    );
+};
+
 export default Card;

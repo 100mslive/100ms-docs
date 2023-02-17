@@ -42,47 +42,46 @@ start_date and end_date will be in UTC format.
 ### App side implementation
 
 ```javascript
-
-  const extractMetaTextTrack = (videoEl: HTMLVideoElement | null): TextTrack | null => {
-    const textTrackListCount = videoEl?.textTracks.length || 0;
-    for (let trackIndex = 0; trackIndex < textTrackListCount; trackIndex++) {
-      const textTrack = videoEl?.textTracks[trackIndex];
-      if (textTrack?.kind !== 'metadata') {
-        continue;
-      }
-      textTrack.mode = 'showing';
-      return textTrack;
+const extractMetaTextTrack = (videoEl: HTMLVideoElement | null): TextTrack | null => {
+  const textTrackListCount = videoEl?.textTracks.length || 0;
+  for (let trackIndex = 0; trackIndex < textTrackListCount; trackIndex++) {
+    const textTrack = videoEl?.textTracks[trackIndex];
+    if (textTrack?.kind !== 'metadata') {
+      continue;
     }
-    return null;
-  };
-  const fireCues = (videoEl: HTMLVideoElement | null, cues: TextTrackCueList) => {
-    const cuesLength = cues.length;
-    let cueIndex = 0;
-    while (cueIndex < cuesLength) {
-      const cue: TextTrackCue = cues[cueIndex];
-      if (cue.fired) {
-        cueIndex++;
-        continue;
-      }
-      // here we are converting base64 to actual data.
-      const data: { [key: string]: string } = metadataPayloadParser(cue.value.data);
-      const programData = videoEl?.getStartDate();
-      const startDate = data.start_date;
-      const endDate = data.end_date;
-      const startTime =
-        new Date(startDate).getTime() - new Date(programData).getTime() - (videoEl?.currentTime || 0) * 1000;
-      const duration = new Date(endDate).getTime() - new Date(startDate).getTime();
-      setTimeout(() => {
-        const toast = {
-          title: `Payload from timed Metadata ${data.payload}`,
-          duration: duration,
-        };
-        console.debug("Added toast ", JSON.stringify(toast));
-      }, startTime);
-      cue.fired = true;
+    textTrack.mode = 'showing';
+    return textTrack;
+  }
+  return null;
+};
+const fireCues = (videoEl: HTMLVideoElement | null, cues: TextTrackCueList) => {
+  const cuesLength = cues.length;
+  let cueIndex = 0;
+  while (cueIndex < cuesLength) {
+    const cue: TextTrackCue = cues[cueIndex];
+    if (cue.fired) {
       cueIndex++;
+      continue;
     }
-  };
+    // here we are converting base64 to actual data.
+    const data: { [key: string]: string } = metadataPayloadParser(cue.value.data);
+    const programData = videoEl?.getStartDate();
+    const startDate = data.start_date;
+    const endDate = data.end_date;
+    const startTime =
+      new Date(startDate).getTime() - new Date(programData).getTime() - (videoEl?.currentTime || 0) * 1000;
+    const duration = new Date(endDate).getTime() - new Date(startDate).getTime();
+    setTimeout(() => {
+      const toast = {
+        title: `Payload from timed Metadata ${data.payload}`,
+        duration: duration,
+      };
+      console.debug("Added toast ", JSON.stringify(toast));
+    }, startTime);
+    cue.fired = true;
+    cueIndex++;
+  }
+};
 const handleTimeUpdateListener = _ => {
   // extract timed metadata text track
   const metaTextTrack: TextTrack | null = this.extractMetaTextTrack(videoEl);
@@ -101,7 +100,6 @@ if (Hls.isSupported()) {
     videoEl.src = hlsUrl;
     videoEl.addEventListener("timeupdate", handleTimeUpdateListener);
 }
-
 ```
 
 >Note : Above implementation might change in future.

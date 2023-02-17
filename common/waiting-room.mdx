@@ -1,0 +1,103 @@
+## Overview
+
+Waiting rooms (waiting for the host to join) are a common requirement in many businesses. The waiting room is where participants join a session and wait for their turn to connect with the host. For example, patients can hang out in the waiting room until their doctor arrives. This guide will help you implement a waiting room using roles on the 100ms platform. Waiting room is vital in telehealth, ed-tech, or webinar space.
+
+## Try waiting room
+
+TL;DR - Check out this video to implement waiting room using [video conferencing starter kit](https://www.100ms.live/examples/video-conferencing-starter-kit).
+
+<iframe
+    src="https://www.loom.com/embed/116eec8afbbe42918437631658191692"
+    webkitallowfullscreen
+    mozallowfullscreen
+    allowfullscreen
+    allow="fullscreen;"
+    width="100%"
+    height="460"></iframe>
+<br />
+
+Implementing waiting room using roles in 100ms involves the following steps:
+
+1. Create a new app
+2. Understand roles (host, guest, waiting room)
+3. Understand publish/subscribe strategies and permissions
+4. Fetch room join ([joinedAt](/api-reference/javascript/v2/interfaces/HMSPeer#joinedat)) timestamp for each waiting room participant
+5. Move participants from waiting room to main room based on their join time (First Come, First Served)
+
+<StepsContainer id="implement-waiting-room">
+
+### Create a new app
+
+![Create a new app](/guides/waiting-room/video-conf.png)
+
+1. Make sure that you have [an account with 100ms](https://dashboard.100ms.live/register) and can access the [100ms dashboard](https://dashboard.100ms.live/)
+2. On the dashboard, create a new app using the Video Conferencing Starter Kit
+3. Specify a subdomain and region to deploy the app
+
+### Understand roles to set up waiting room
+
+-   This starter kit configures your new app with [two roles](/concepts/v2/concepts/templates-and-roles/overview#roles):
+
+    ![Join URLs](/guides/waiting-room/join-url-waiting.png)
+
+<Tabs id="create-roles-tabs" items={['Host', 'Guest', 'Waiting room']} />
+
+<Tab id="create-roles-tabs-0">
+
+-   `host`: This role represents a host,
+    -   Who publishes their audio/video/screen tracks
+    -   Subscribes to the "guest" and "waiting-room" roles
+    -   And has various permissions to perform actions on the participants such as remove a participant, mute a participant, etc,.
+
+</Tab>
+
+<Tab id="create-roles-tabs-1">
+
+-   `guest`: This role represents the guest,
+    -   Who subscribes to the audio/video/screen tracks of the host
+    -   Publishes tracks audio/video/screen tracks - And shouldn't have any permissions like the host
+
+</Tab>
+
+<Tab id="create-roles-tabs-2">
+
+-   You need to add a new role, `waiting-room` to allow the participants to join a waiting room
+
+    -   This role shouldn't publish any audio/video/screen tracks
+    -   However, they can subscribe to the "waiting-room" role
+    -   And shouldn't have any permissions like the host
+
+        <br />
+        <video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
+            <source src="/docs/guides/waiting-room/waiting-room.mp4" type="video/mp4" />
+        </video>
+        <br />
+
+> **Note**: You have to update the subscribe strategy for `host` role to subscribe to `waiting-room` as its a newly created role.
+
+</Tab>
+
+### Try it out
+
+1. To test the waiting room, go to your dashboard home and use the roles URLs for host to join the room as a host and start the session.
+2. Once the session has started, use the roles URLs for waiting room to join the room as a waiting room participant.
+3. Go to the peer list in the host view and click on the three-dots menu > change role > waiting room to the guest.
+
+    <br />
+    <video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
+        <source src="/docs/guides/waiting-room/move-participant.mp4" type="video/mp4" />
+    </video>
+
+> **Note**: Force the role change action rather than requesting the participant. Change role action leverages the [change role](/javascript/v2/how--to-guides/control-remote-peers/change-role) client-side API.
+
+</StepsContainer>
+
+## Implement it using server-side API
+
+You can follow the same steps you followed in the previous section to implement waiting rooms and manage participants from server-side completely.
+
+-   [Create a template](/server-side/v2/policy/create-template-via-api) with host, guest and waiting room roles
+    -   You can set the publish/subscribe strategies and permissions using the [publishParams](/server-side/v2/policy/create-template-via-api#publishparams-object), [subscribeParams](/server-side/v2/policy/create-template-via-api#subscribeparams-object) and [permissions](/server-side/v2/policy/create-template-via-api#permissions-object) objects.
+    -   If you're trying to use an existing template, you can create a new role `waiting room` using the [create a role API](/server-side/v2/policy/create-update-role) to allow participants to join a waiting room.
+-   Once the template is set up and a session has started with a host participant as a host and waiting room participants, fetch the room join ([joined_at](/server-side/v2/active-rooms/list-peers)) timestamp for each participant.
+-   Use the [update a peer API](/server-side/v2/active-rooms/update-a-peer) with the value for `role` argument as `guest` to move the participant from waiting room to main room.
