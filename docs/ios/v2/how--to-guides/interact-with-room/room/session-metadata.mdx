@@ -78,4 +78,6 @@ func on(message: HMSMessage) {
 }
 ```
 
+Note: To ensure that all participants in the video conference have access to the latest session metadata, it is recommended that you use the getSessionMetadata API within the [onJoin()](https://www.100ms.live/docs/ios/v2/how--to-guides/set-up-video-conferencing/join#call-join) callback. This will allow you to update your app's initial state with any shared metadata that already exists in the session. By doing so, new participants who join the room will be able to view this shared metadata as soon as they enter the session.
+
 👀 For an example of how to implement pinned chat support using shared metadata in an iOS app with the 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
