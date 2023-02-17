@@ -21,7 +21,7 @@ export default function ExampleCard({
     ...rest
 }: Props) {
     return (
-        <Box
+        <Flex
             css={{
                 backgroundImage:
                     'linear-gradient(279.91deg, rgba(19, 22, 27, 0.8) 37.76%, rgba(23, 27, 33, 0.8) 91.22%)',
@@ -30,34 +30,53 @@ export default function ExampleCard({
                 boxShadow: '0px 16px 56px rgba(0, 0, 0, 0.05)',
                 ...css
             }}
+            direction="column"
+            align="strech"
             {...rest}>
-            <Flex css={{ mb: '$2' }} justify="between">
-                <Text variant="h6" css={{ color: '$textHighEmp' }}>
-                    {title}
-                </Text>
-                <Box
-                    as="span"
+            <Box css={{ flexGrow: '1' }}>
+                <Flex css={{ mb: '$2' }} justify="between">
+                    <Text variant="h6" css={{ color: '$textHighEmp' }}>
+                        {title}
+                    </Text>
+                    <Box
+                        as="span"
+                        css={{
+                            color: '$textPrimary',
+                            transform: 'translate(40%, -40%)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: '20px',
+                            width: '20px'
+                        }}>
+                        <reactIcons.ExternalLinkIcon height={13.34} width={13.34} />
+                    </Box>
+                </Flex>
+                <Text
+                    variant="body1"
                     css={{
-                        color: '$textPrimary',
-                        transform: 'translate(40%, -40%)',
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        height: '20px',
-                        width: '20px'
+                        color: '$textMedEmp',
+                        fontWeight: '$regular',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        display: '-webkit-box',
+                        '-webkit-line-clamp': 3,
+                        '-webkit-box-orient': 'vertical',
+                        '@md': {
+                            '-webkit-line-clamp': 2
+                        }
                     }}>
-                    <reactIcons.ExternalLinkIcon height={13.34} width={13.34} />
-                </Box>
-            </Flex>
-            <Text variant="body1" css={{ color: '$textMedEmp', fontWeight: '$regular' }}>
-                {description}
-            </Text>
+                    {description}
+                </Text>
+            </Box>
+
             <HorizontalDivider css={{ backgroundColor: '$borderDefault', marginBlock: '$8' }} />
+
             <Flex justify="between" css={{ gap: '$8' }}>
                 <IconList technologies={technologies} showIcon={showIcon} />
                 <TagList tags={tags} />
             </Flex>
-        </Box>
+        </Flex>
     );
 }
 
