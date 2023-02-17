@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { FilesIcon } from '@100mslive/react-icons';
-import { Flex, Box, Text } from '@100mslive/react-ui';
+import { Box, Text } from '@100mslive/react-ui';
+import Item from './Item';
 import { guides } from '../../guides';
 
 const PopularGuides = () => (
@@ -12,28 +12,13 @@ const PopularGuides = () => (
             Explore breadth of capabilities with popular guides
         </Text>
         {guides.map((guide) => (
-            <Flex gap="2" key={guide.title}>
-                <FilesIcon style={{ marginTop: '0.15rem' }} />
-                <Box>
-                    <Link href={guide.link}>
-                        <a>
-                            <Text variant="sm" css={{ color: '$primaryLight' }}>
-                                {guide.title}
-                            </Text>
-                        </a>
-                    </Link>
-                    <Text
-                        variant="sm"
-                        css={{
-                            color: '$textMedEmp',
-                            mt: '$2',
-                            mb: '$8',
-                            maxWidth: '1/3'
-                        }}>
-                        {guide.subText}
-                    </Text>
-                </Box>
-            </Flex>
+            <Item
+                key={guide.link}
+                title={guide.title}
+                subText={guide.subText}
+                link={guide.link}
+                icon={<FilesIcon style={{ marginTop: '0.15rem' }} />}
+            />
         ))}
     </Box>
 );
