@@ -130,7 +130,11 @@ const Header: React.FC<Props> = ({
             }}>
             <div className="head-left">
                 <a href="https://www.100ms.live" style={{ display: 'flex', marginRight: '40px' }}>
-                    <img src="/docs/logo-full.svg" height={24} alt="100ms Logo" />
+                    <img
+                        src={isDark ? '/docs/logo-full.svg' : '/docs/logo-full-dark.svg'}
+                        height={24}
+                        alt="100ms Logo"
+                    />
                 </a>
                 <Flex css={{ gap: '$14' }}>
                     <HeaderLink href="/">Documentation</HeaderLink>
