@@ -225,8 +225,8 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                         zIndex: '100',
                         boxShadow:
                             currentTheme === 'dark'
-                                ? '0 1.25rem 3rem 0.5rem rgba(8, 9, 12, 0.8)'
-                                : '0 1.25rem 1rem 0.5rem rgba(250, 250, 250, 0.8)',
+                                ? '0 1.25rem 2rem 0.25rem rgba(8, 9, 12, 0.8)'
+                                : '0 1.25rem 1rem 0.25rem rgba(250, 250, 250, 0.8)',
                         backgroundColor: 'var(--docs_bg_content)',
                         '@md': {
                             pt: '$8',
