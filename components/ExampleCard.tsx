@@ -23,6 +23,7 @@ export default function ExampleCard({
     return (
         <Flex
             css={{
+                boxSizing: 'content-box',
                 backgroundImage:
                     'linear-gradient(279.91deg, rgba(19, 22, 27, 0.8) 37.76%, rgba(23, 27, 33, 0.8) 91.22%)',
                 padding: '24px',
@@ -138,7 +139,7 @@ function TagList({ tags }: TagListProps) {
                         paddingBlock: '$1',
                         paddingInline: '$4'
                     }}>
-                    <Text variant="body2" css={{ fontWeight: '$semiBold' }}>
+                    <Text variant="body2" css={{ fontWeight: '$semiBold', whiteSpace: 'nowrap' }}>
                         {tag}
                     </Text>
                 </Box>

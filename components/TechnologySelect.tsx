@@ -11,9 +11,8 @@ export const TECHNOLOGIES = {
     NEXTJS: 'NextJS',
     SVELTE: 'Svelte',
     JAVASCRIPT: 'JavaScript',
-    VUEJS: 'VueJS',
     REACT: 'React',
-    SERVER_SIDE: 'Server-Side'
+    NODEJS: 'Node.js'
 } as const;
 
 export type Technologies = typeof TECHNOLOGIES[keyof typeof TECHNOLOGIES];
@@ -48,13 +47,10 @@ export const technologyIconMap: Record<
     [TECHNOLOGIES.JAVASCRIPT]: {
         icon: 'JavascriptIcon'
     },
-    [TECHNOLOGIES.VUEJS]: {
-        icon: 'BoxIcon'
-    },
     [TECHNOLOGIES.REACT]: {
         icon: 'ReactIcon'
     },
-    [TECHNOLOGIES.SERVER_SIDE]: {
+    [TECHNOLOGIES.NODEJS]: {
         icon: 'ServerIcon'
     }
 };

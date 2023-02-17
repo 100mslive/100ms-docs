@@ -71,7 +71,7 @@ const examples: {
     {
         title: 'Pose Detection - React',
         description:
-            'A real time pose estimation app using React and Tensorflow.js using 100ms Rect SDKs.',
+            'A real time pose estimation app using React and Tensorflow.js using 100ms React SDKs.',
         url: 'https://github.com/100mslive/PosenetRealtime',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
         tags: ['Web', 'Tensorflow.js'],
@@ -282,7 +282,7 @@ const examples: {
         title: 'Whiteboard - Server',
         description: 'A collaborative whiteboard sample app by integrating with Pusher.',
         url: 'https://github.com/100mslive/whiteboard-server',
-        technologies: [TECHNOLOGIES.SERVER_SIDE],
+        technologies: [TECHNOLOGIES.NODEJS],
         tags: ['Server Side'],
         categories: [CATEGORIES.FEATURES, CATEGORIES.EXTRAS]
     },
@@ -367,17 +367,19 @@ export default function Examples() {
     }, [category, technology]);
 
     return (
-        <>
+        <Flex direction="column" css={{ minHeight: '100vh' }}>
             <SegmentAnalytics options={{}} title="100ms Docs Examples" />
             <Header modal={modal} setModal={setModal} menuState={menuState} showReference={false} />
 
             <Flex
-                justify="center"
                 align="center"
                 direction="column"
                 css={{
                     mx: 'auto',
+                    width: '100%',
+                    flexGrow: 1,
                     position: 'relative',
+                    boxSizing: 'border-box',
                     maxWidth: '1512px',
                     paddingInline: '$14',
                     paddingBottom: '$24',
@@ -492,7 +494,9 @@ export default function Examples() {
                             minWidth: 0,
                             maxWidth: '928px',
                             gridTemplateColumns:
-                                'repeat(auto-fit, minmax(min(100%, max(350px, 50% - 30px*1/2)), 1fr))',
+                                filteredExamples.length > 1
+                                    ? 'repeat(auto-fit, minmax(min(100%, max(350px, 50% - 30px*1/2)), 1fr))'
+                                    : '1fr 1fr',
                             columnGap: '30px',
                             rowGap: '40px',
                             flexGrow: 1,
@@ -513,8 +517,8 @@ export default function Examples() {
                                 description={description}
                                 title={title}
                                 css={{
-                                    height: '172px',
-                                    minWidth: 0,
+                                    height: '152px',
+                                    minWidth: filteredExamples.length === 1 ? '350px' : 0,
                                     '@md': {
                                         maxHeight: '142px'
                                     },
@@ -530,7 +534,7 @@ export default function Examples() {
             <Footer
                 css={{ backgroundColor: 'var(--docs_bg_footer)', '.footer': { marginTop: 0 } }}
             />
-        </>
+        </Flex>
     );
 }
 
