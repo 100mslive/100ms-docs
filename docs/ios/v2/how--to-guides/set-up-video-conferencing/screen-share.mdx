@@ -40,16 +40,16 @@ if localPeer?.auxiliaryTracks?.first(where: { $0.source == HMSCommonTrackSource.
 ```swift
     var isSharingScreen = false
     func on(track: HMSTrack, update: HMSTrackUpdate, for peer: HMSPeer) {
-        
+
         if update == .trackAdded {
-            
+
             if peer.isLocal && track.source == HMSCommonTrackSource.screen {
                 isSharingScreen = true
             }
         }
-        
+
         if update == .trackRemoved {
-            
+
             if peer.isLocal && track.source == HMSCommonTrackSource.screen {
                 isSharingScreen = false
             }
@@ -75,7 +75,7 @@ HMSBroadcastExtensionSDK is made specifically to be used in the iOS broadcast up
 
 <iframe
     allow="fullscreen;"
-    width="800"
+    width="700"
     height="460"
     src="https://www.youtube.com/embed/wMGfYtytAEc"></iframe>
 
@@ -208,16 +208,16 @@ if localPeer?.auxiliaryTracks?.first(where: { $0.source == HMSCommonTrackSource.
 ```swift
     var isSharingScreen = false
     func on(track: HMSTrack, update: HMSTrackUpdate, for peer: HMSPeer) {
-        
+
         if update == .trackAdded {
-            
+
             if peer.isLocal && track.source == HMSCommonTrackSource.screen {
                 isSharingScreen = true
             }
         }
-        
+
         if update == .trackRemoved {
-            
+
             if peer.isLocal && track.source == HMSCommonTrackSource.screen {
                 isSharingScreen = false
             }
