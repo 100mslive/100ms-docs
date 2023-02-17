@@ -21,7 +21,7 @@ Implementing waiting room using roles in 100ms involves the following steps:
 1. Create a new app
 2. Understand roles (host, guest, waiting room)
 3. Understand publish/subscribe strategies and permissions
-4. Fetch room join ([joinedAt](https://www.100ms.live/docs/api-reference/javascript/v2/interfaces/HMSPeer#joinedat)) timestamp for each waiting room participant
+4. Fetch room join ([joinedAt](/api-reference/javascript/v2/interfaces/HMSPeer#joinedat)) timestamp for each waiting room participant
 5. Move participants from waiting room to main room based on their join time (First Come, First Served)
 
 <StepsContainer id="implement-waiting-room">
@@ -36,7 +36,7 @@ Implementing waiting room using roles in 100ms involves the following steps:
 
 ### Understand roles to set up waiting room
 
--   This starter kit configures your new app with [two roles](https://www.100ms.live/docs/javascript/v2/foundation/templates-and-roles):
+-   This starter kit configures your new app with [two roles](/concepts/v2/concepts/templates-and-roles/overview#roles):
 
     ![Join URLs](/guides/waiting-room/join-url-waiting.png)
 
@@ -88,7 +88,7 @@ Implementing waiting room using roles in 100ms involves the following steps:
         <source src="/guides/waiting-room/move-participant.mp4" type="video/mp4" />
     </video>
 
-> **Note**: Force the role change action rather than requesting the participant. Change role action leverages the [change role](https://www.100ms.live/docs/javascript/v2/how--to-guides/control-remote-peers/change-role) client-side API.
+> **Note**: Force the role change action rather than requesting the participant. Change role action leverages the [change role](/javascript/v2/how--to-guides/control-remote-peers/change-role) client-side API.
 
 </StepsContainer>
 
@@ -96,8 +96,8 @@ Implementing waiting room using roles in 100ms involves the following steps:
 
 You can follow the same steps you followed in the previous section to implement waiting rooms and manage participants from server-side completely.
 
--   [Create a template](https://www.100ms.live/docs/server-side/v2/policy/create-template-via-api) with host, guest and waiting room roles
-    -   You can set the publish/subscribe strategies and permissions using the [publishParams](https://www.100ms.live/docs/server-side/v2/policy/create-template-via-api#publishparams-object), [subscribeParams](https://www.100ms.live/docs/server-side/v2/policy/create-template-via-api#subscribeparams-object) and [permissions](https://www.100ms.live/docs/server-side/v2/policy/create-template-via-api#permissions-object) objects.
-    -   If you're trying to use an existing template, you can create a new role `waiting room` using the [create a role API](https://www.100ms.live/docs/server-side/v2/policy/create-update-role) to allow participants to join a waiting room.
--   Once the template is set up and a session has started with a host participant as a host and waiting room participants, fetch the room join ([joined_at](https://www.100ms.live/docs/server-side/v2/active-rooms/list-peers)) timestamp for each participant.
--   Use the [update a peer API](https://www.100ms.live/docs/server-side/v2/active-rooms/update-a-peer) with the value for `role` argument as `guest` to move the participant from waiting room to main room.
+-   [Create a template](/server-side/v2/policy/create-template-via-api) with host, guest and waiting room roles
+    -   You can set the publish/subscribe strategies and permissions using the [publishParams](/server-side/v2/policy/create-template-via-api#publishparams-object), [subscribeParams](/server-side/v2/policy/create-template-via-api#subscribeparams-object) and [permissions](/server-side/v2/policy/create-template-via-api#permissions-object) objects.
+    -   If you're trying to use an existing template, you can create a new role `waiting room` using the [create a role API](/server-side/v2/policy/create-update-role) to allow participants to join a waiting room.
+-   Once the template is set up and a session has started with a host participant as a host and waiting room participants, fetch the room join ([joined_at](/server-side/v2/active-rooms/list-peers)) timestamp for each participant.
+-   Use the [update a peer API](/server-side/v2/active-rooms/update-a-peer) with the value for `role` argument as `guest` to move the participant from waiting room to main room.

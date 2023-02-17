@@ -1258,6 +1258,11 @@ const nextConfig = {
                 destination: '/flutter/v2/how--to-guides/capture-frame/capture-snapshot',
                 permanent: true
             },
+            {
+                source: '/concepts/v2/concepts/templates-and-roles',
+                destination: '/concepts/v2/concepts/templates-and-roles/overview',
+                permanent: true
+            },
 
         ];
     },
