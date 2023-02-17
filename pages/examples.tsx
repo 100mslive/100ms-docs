@@ -45,49 +45,49 @@ const examples: {
     technologies: Exclude<Technologies, 'All Technologies'>[];
 }[] = [
     {
-        title: 'React Clubhouse Clone',
+        title: 'Clubhouse Clone - React',
         description: 'A Clubhouse clone in React using 100ms React SDKs.',
         url: 'https://github.com/100mslive/clubhouse-clone-react',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
-        tags: ['Web App'],
+        tags: ['Web'],
         categories: [CATEGORIES.APPS]
     },
     {
-        title: 'React Slack Huddle Clone',
+        title: 'Slack Huddle Clone - React',
         description: 'A Slack Huddle clone in React using 100ms React SDKs.',
         url: 'https://github.com/100mslive/slack-huddle-clone',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
-        tags: ['Web App'],
+        tags: ['Web'],
         categories: [CATEGORIES.APPS]
     },
     {
-        title: 'NextJS Discord Stages Clone',
+        title: 'Discord Stages Clone - Next.js',
         description: 'A Discord Stages clone in Next.js using 100ms React SDKs.',
         url: 'https://github.com/100mslive/discord-stages-clone-100ms',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT, TECHNOLOGIES.NEXTJS],
-        tags: ['Web App'],
+        tags: ['Web'],
         categories: [CATEGORIES.APPS]
     },
     {
-        title: 'React Pose Detection',
+        title: 'Pose Detection - React',
         description:
             'A real time pose estimation app using React and Tensorflow.js using 100ms Rect SDKs.',
         url: 'https://github.com/100mslive/PosenetRealtime',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
-        tags: ['Web App', 'Tensorflow.js'],
+        tags: ['Web', 'Tensorflow.js'],
         categories: [CATEGORIES.APPS, CATEGORIES.FEATURES]
     },
     {
-        title: 'NextJS Virtual Events',
+        title: 'Virtual Events - Next.js',
         description:
             'A fully customizable virtual live events starter kit in Next.js using 100ms React SDKs.',
         url: 'https://github.com/100mslive/virtual-event-starter-kit',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT, TECHNOLOGIES.NEXTJS],
-        tags: ['Web App', 'Video Guide'],
+        tags: ['Web', 'Video Guide'],
         categories: [CATEGORIES.APPS]
     },
     {
-        title: 'Flutter Telehealth App',
+        title: 'Telehealth App - Flutter',
         description:
             'A telehealth application that integrates 100ms Flutter SDK with the functionality of booking and joining an audio/visual appointment.',
         url: 'https://github.com/ygit/Telehealth_app/',
@@ -96,7 +96,7 @@ const examples: {
         categories: [CATEGORIES.APPS]
     },
     {
-        title: 'Flutter Quickstart',
+        title: 'Quickstart - Flutter',
         description: 'A quick start video calling application using 100ms Flutter SDK.',
         url: 'https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/flutter-quickstart-app',
         technologies: [TECHNOLOGIES.FLUTTER],
@@ -104,7 +104,7 @@ const examples: {
         categories: [CATEGORIES.QUICKSTARTS]
     },
     {
-        title: 'Flutter Live Streaming Demo',
+        title: 'Live Streaming - Flutter',
         description: ' A Flutter app to demonstrate live streaming using 100ms Flutter SDK.',
         url: 'https://github.com/adityathakurxd/live',
         technologies: [TECHNOLOGIES.FLUTTER],
@@ -112,7 +112,7 @@ const examples: {
         categories: [CATEGORIES.APPS]
     },
     {
-        title: 'Flutter Callkit',
+        title: 'Callkit - Flutter',
         description: 'Flutter application for one-to-one calls using 100ms Flutter SDK.',
         url: 'https://github.com/Decoder07/hms-callkit-demo',
         technologies: [TECHNOLOGIES.FLUTTER],
@@ -120,24 +120,60 @@ const examples: {
         categories: [CATEGORIES.APPS]
     },
     {
-        title: 'Flutter Thirdle',
-        description: 'A multiplayer Wordle inspired game called Thirdle. ',
+        title: 'Omegle Clone - Flutter',
+        description: 'An Omegle clone built with Flutter using 100ms Flutter SDK.',
+        url: 'https://github.com/pushpam5/Omegle-Clone-100ms.git',
+        technologies: [TECHNOLOGIES.FLUTTER],
+        tags: ['Mobile'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Thirdle - Flutter',
+        description:
+            'A multiplayer Wordle inspired game called Thirdle. Built using the 100ms Flutter SDK.',
         url: 'https://github.com/coder-with-a-bushido/thirdle/',
         technologies: [TECHNOLOGIES.FLUTTER],
         tags: ['Mobile', 'Video Guide'],
         categories: [CATEGORIES.APPS]
     },
     {
-        title: 'Flutter Sample App',
+        title: 'Sample App - Flutter - GetX',
         description:
             'A sample app that contains the implementation of all the features provided by Flutter HMSSDK.',
-        url: 'https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps',
+        url: 'https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/getx',
         technologies: [TECHNOLOGIES.FLUTTER],
-        tags: ['Mobile', 'GetX', 'Bloc', 'MobX', 'Riverpod'],
+        tags: ['Mobile', 'GetX'],
         categories: [CATEGORIES.APPS]
     },
     {
-        title: 'Flutter Clubhouse Clone',
+        title: 'Sample App - Flutter - MobX',
+        description:
+            'A sample app that contains the implementation of all the features provided by Flutter HMSSDK.',
+        url: 'https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/mobx',
+        technologies: [TECHNOLOGIES.FLUTTER],
+        tags: ['Mobile', 'MobX'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Sample App - Flutter - Bloc',
+        description:
+            'A sample app that contains the implementation of all the features provided by Flutter HMSSDK.',
+        url: 'https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/bloc',
+        technologies: [TECHNOLOGIES.FLUTTER],
+        tags: ['Mobile', 'Bloc'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Sample App - Flutter - Riverpod',
+        description:
+            'A sample app that contains the implementation of all the features provided by Flutter HMSSDK.',
+        url: 'https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/riverpod',
+        technologies: [TECHNOLOGIES.FLUTTER],
+        tags: ['Mobile', 'Riverpod'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Clubhouse Clone - Flutter',
         description: 'A Clubhouse clone in Flutter using 100ms Flutter SDKs.',
         url: 'https://github.com/govindmaheshwari2/clubhouse_100ms/tree/starter',
         technologies: [TECHNOLOGIES.FLUTTER],
@@ -145,7 +181,7 @@ const examples: {
         categories: [CATEGORIES.APPS]
     },
     {
-        title: 'Android Jetpack Compose Twitter Spaces',
+        title: 'Twitter Spaces - Android - Jetpack Compose',
         description: 'A simple Twitter spaces clone app with Jetpack compose using the 100ms SDK.',
         url: 'https://github.com/JoelKanyi/TwitterSpacesClone/tree/main',
         technologies: [TECHNOLOGIES.ANDROID],
@@ -153,15 +189,23 @@ const examples: {
         categories: [CATEGORIES.APPS]
     },
     {
-        title: 'Android Sample App',
+        title: 'Sample App - Android',
         description: 'An Android video conferencing app using 100ms SDK.',
         url: 'https://github.com/100mslive/100ms-android',
+        technologies: [TECHNOLOGIES.ANDROID],
+        tags: ['Mobile'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Sample App - Android - Jetpack Compose',
+        description: 'An Android video conferencing app using 100ms SDK.',
+        url: 'https://github.com/100mslive/JetpackComposeSampleAndroid',
         technologies: [TECHNOLOGIES.ANDROID],
         tags: ['Mobile', 'Jetpack Compose'],
         categories: [CATEGORIES.APPS]
     },
     {
-        title: 'Android Hello World',
+        title: 'Hello World - Android',
         description:
             'The bare minimum required to get a video call working end to end using the 100ms Android SDK.',
         url: 'https://github.com/100mslive/hello-world-android',
@@ -170,7 +214,7 @@ const examples: {
         categories: [CATEGORIES.QUICKSTARTS]
     },
     {
-        title: 'iOS Sample App',
+        title: 'Sample App - iOS',
         description: 'An iOS video conferencing app using 100ms SDK.',
         url: 'https://github.com/100mslive/100ms-ios-sdk/tree/main/Example',
         technologies: [TECHNOLOGIES.IOS],
@@ -178,16 +222,16 @@ const examples: {
         categories: [CATEGORIES.QUICKSTARTS]
     },
     {
-        title: 'iOS Screen Sharing Example',
+        title: 'Screen Sharing - iOS',
         description:
             'A project demonstrating the screen sharing feature implementation with 100ms iOS SDK.',
         url: 'https://github.com/100mslive/100ms-ios-sdk/tree/main/ScreenSharingExample',
         technologies: [TECHNOLOGIES.IOS],
         tags: ['Mobile'],
-        categories: [CATEGORIES.APPS]
+        categories: [CATEGORIES.FEATURES]
     },
     {
-        title: 'iOS Clubhouse Clone',
+        title: 'Clubhouse Clone - iOS ',
         description: 'A Clubhouse clone on iOS using 100ms SDKs in Swift.',
         url: 'https://github.com/100mslive/clubhouse-clone-ios-swift',
         technologies: [TECHNOLOGIES.IOS],
@@ -195,21 +239,45 @@ const examples: {
         categories: [CATEGORIES.APPS]
     },
     {
-        title: 'Web Sample App',
+        title: 'Sample App - React',
         description: 'A conferencing and streaming app built with 100ms SDK.',
         url: 'https://github.com/100mslive/100ms-web',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
-        tags: ['Web App'],
+        tags: ['Web'],
         categories: [CATEGORIES.APPS]
     },
     {
-        title: 'Svelte Quickstart',
+        title: 'Sample App - React Native',
+        description: 'A sample app built with React Native using the 100ms React SDK.',
+        url: 'https://github.com/100mslive/react-native-hms/tree/main/example',
+        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT_NATIVE],
+        tags: ['Mobile'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Quickstart - Svelte',
         description: 'A conferencing and streaming app built with 100ms SDK.',
         url: 'https://github.com/100mslive/svelte-100ms',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.SVELTE],
-        tags: ['Web App'],
+        tags: ['Web'],
         categories: [CATEGORIES.QUICKSTARTS]
-    }
+    },
+    {
+        title: 'Google Meet Clone - Flutter',
+        description: 'A Google Meet clone built with Flutter using 100ms Flutter SDK.',
+        url: 'https://github.com/100mslive/svelte-100ms',
+        technologies: [TECHNOLOGIES.FLUTTER],
+        tags: ['Mobile'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Zoom Clone - Flutter',
+        description: 'A Zoom clone built with Flutter using 100ms Flutter SDK.',
+        url: 'https://github.com/govindmaheshwari2/zoom-example-app/tree/starter',
+        technologies: [TECHNOLOGIES.FLUTTER],
+        tags: ['Mobile'],
+        categories: [CATEGORIES.APPS]
+    },
 ];
 
 export default function Examples() {
