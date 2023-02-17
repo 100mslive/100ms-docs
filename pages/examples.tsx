@@ -521,6 +521,13 @@ export default function Examples() {
                                 tags={tags}
                                 description={description}
                                 title={title}
+                                onClick={() =>
+                                    window.analytics.track('example.clicked', {
+                                        title,
+                                        exampleRepo: url,
+                                        page: window?.location?.pathname
+                                    })
+                                }
                                 css={{
                                     height: '152px',
                                     minWidth: filteredExamples.length === 1 ? '350px' : 0,
