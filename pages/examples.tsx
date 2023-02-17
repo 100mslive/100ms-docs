@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
 import TechnologySelect, { TECHNOLOGIES, Technologies } from '@/components/TechnologySelect';
-import { SearchIcon } from '@100mslive/react-icons';
+// import { SearchIcon } from '@100mslive/react-icons';
 import { Box, Flex, Text } from '@100mslive/react-ui';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -70,7 +70,8 @@ const examples: {
     },
     {
         title: 'React Pose Detection',
-        description: 'A real time pose estimation app using React and Tensorflow.js using 100ms Rect SDKs.',
+        description:
+            'A real time pose estimation app using React and Tensorflow.js using 100ms Rect SDKs.',
         url: 'https://github.com/100mslive/PosenetRealtime',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
         tags: ['Web App', 'Tensorflow.js'],
@@ -78,7 +79,8 @@ const examples: {
     },
     {
         title: 'NextJS Virtual Events',
-        description: 'A fully customizable virtual live events starter kit in Next.js using 100ms React SDKs.',
+        description:
+            'A fully customizable virtual live events starter kit in Next.js using 100ms React SDKs.',
         url: 'https://github.com/100mslive/virtual-event-starter-kit',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT, TECHNOLOGIES.NEXTJS],
         tags: ['Web App', 'Video Guide'],
@@ -86,7 +88,8 @@ const examples: {
     },
     {
         title: 'Flutter Telehealth App',
-        description: 'A telehealth application that integrates 100ms Flutter SDK with the functionality of booking and joining an audio/visual appointment.',
+        description:
+            'A telehealth application that integrates 100ms Flutter SDK with the functionality of booking and joining an audio/visual appointment.',
         url: 'https://github.com/ygit/Telehealth_app/',
         technologies: [TECHNOLOGIES.FLUTTER],
         tags: ['Mobile'],
@@ -126,7 +129,8 @@ const examples: {
     },
     {
         title: 'Flutter Sample App',
-        description: 'A sample app that contains the implementation of all the features provided by Flutter HMSSDK.',
+        description:
+            'A sample app that contains the implementation of all the features provided by Flutter HMSSDK.',
         url: 'https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps',
         technologies: [TECHNOLOGIES.FLUTTER],
         tags: ['Mobile', 'GetX', 'Bloc', 'MobX', 'Riverpod'],
@@ -158,7 +162,8 @@ const examples: {
     },
     {
         title: 'Android Hello World',
-        description: 'The bare minimum required to get a video call working end to end using the 100ms Android SDK.',
+        description:
+            'The bare minimum required to get a video call working end to end using the 100ms Android SDK.',
         url: 'https://github.com/100mslive/hello-world-android',
         technologies: [TECHNOLOGIES.ANDROID],
         tags: ['Mobile'],
@@ -174,7 +179,8 @@ const examples: {
     },
     {
         title: 'iOS Screen Sharing Example',
-        description: 'A project demonstrating the screen sharing feature implementation with 100ms iOS SDK.',
+        description:
+            'A project demonstrating the screen sharing feature implementation with 100ms iOS SDK.',
         url: 'https://github.com/100mslive/100ms-ios-sdk/tree/main/ScreenSharingExample',
         technologies: [TECHNOLOGIES.IOS],
         tags: ['Mobile'],
@@ -203,7 +209,7 @@ const examples: {
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.SVELTE],
         tags: ['Web App'],
         categories: [CATEGORIES.QUICKSTARTS]
-    },
+    }
 ];
 
 export default function Examples() {
@@ -227,22 +233,22 @@ export default function Examples() {
 
     const [technology, setTechnology] = useState<Technologies>(TECHNOLOGIES.ALL_TECHNOLOGIES);
     const [category, setCategory] = useState<Categories>(CATEGORIES.ALL_CATEGORIES);
-    const [search, setSearch] = useState('');
+    // const [search, setSearch] = useState('');
 
     const filteredExamples = useMemo(() => {
-        if (search.length === 0) {
-            return examples
-                .filter(
-                    ({ categories }) =>
-                        category === CATEGORIES.ALL_CATEGORIES ||
-                        categories.indexOf(category) !== -1
-                )
-                .filter(
-                    ({ technologies }) =>
-                        technology === TECHNOLOGIES.ALL_TECHNOLOGIES ||
-                        technologies.indexOf(technology) !== -1
-                );
-        }
+        // if (search.length === 0) {
+        //     return examples
+        //         .filter(
+        //             ({ categories }) =>
+        //                 category === CATEGORIES.ALL_CATEGORIES ||
+        //                 categories.indexOf(category) !== -1
+        //         )
+        //         .filter(
+        //             ({ technologies }) =>
+        //                 technology === TECHNOLOGIES.ALL_TECHNOLOGIES ||
+        //                 technologies.indexOf(technology) !== -1
+        //         );
+        // }
 
         return examples
             .filter(
@@ -253,12 +259,12 @@ export default function Examples() {
                 ({ technologies }) =>
                     technology === TECHNOLOGIES.ALL_TECHNOLOGIES ||
                     technologies.indexOf(technology) !== -1
-            )
-            .filter(({ title }) => string_similarity(title, search) > 0.25)
-            .sort(
-                (a, b) => string_similarity(b.title, search) - string_similarity(a.title, search)
             );
-    }, [search, category, technology]);
+        //.filter(({ title }) => string_similarity(title, search) > 0.25)
+        //.sort(
+        //    (a, b) => string_similarity(b.title, search) - string_similarity(a.title, search)
+        //);
+    }, [category, technology]);
 
     return (
         <>
@@ -311,10 +317,10 @@ export default function Examples() {
                         <Text
                             variant="body1"
                             css={{ fontWeight: '$regular', color: '$textSecondary' }}>
-                            Explore what's possible with some example applications
+                            Discover open source examples built with 100ms
                         </Text>
                     </Box>
-                    <Search
+                    {/*<Search
                         refine={setSearch}
                         css={{
                             width: '100%',
@@ -324,7 +330,7 @@ export default function Examples() {
                                 display: 'none'
                             }
                         }}
-                    />
+                    />*/}
                 </Flex>
                 <Flex
                     direction={{ '@initial': 'row', '@md': 'column' }}
@@ -407,8 +413,11 @@ export default function Examples() {
                                 description={description}
                                 title={title}
                                 css={{
-                                    height: 'max-content',
+                                    height: '172px',
                                     minWidth: 0,
+                                    '@md': {
+                                        maxHeight: '142px'
+                                    },
                                     '&:hover': {
                                         opacity: 1
                                     }
@@ -425,7 +434,7 @@ export default function Examples() {
     );
 }
 
-const Search = ({ refine, css }) => {
+/*const Search = ({ refine, css }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
@@ -493,4 +502,4 @@ function string_similarity(str1, str2) {
         if (hits > 0) return (2.0 * hits) / union;
     }
     return 0.0;
-}
+}*/
