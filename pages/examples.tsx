@@ -551,7 +551,7 @@ export default function Examples() {
                                 align="center"
                                 css={{
                                     padding: '0 32px',
-                                    borderRadius: '$0',
+                                    borderRadius: '$3',
                                     border: '1px solid #1D222B',
                                     width: '100%',
                                     height: 'max-content',
