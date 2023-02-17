@@ -5,7 +5,7 @@ import Header from '@/components/Header';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
 import TechnologySelect, { TECHNOLOGIES, Technologies } from '@/components/TechnologySelect';
 // import { SearchIcon } from '@100mslive/react-icons';
-import { Box, Flex, Text } from '@100mslive/react-ui';
+import { Box, Button, Flex, Text } from '@100mslive/react-ui';
 import { useEffect, useMemo, useState } from 'react';
 
 const categories: { text: Categories; textSmall?: string; icon: string }[] = [
@@ -499,7 +499,9 @@ export default function Examples() {
                             minWidth: 0,
                             maxWidth: '928px',
                             gridTemplateColumns:
-                                filteredExamples.length > 1
+                                filteredExamples.length === 0
+                                    ? '1fr'
+                                    : filteredExamples.length > 1
                                     ? 'repeat(auto-fit, minmax(min(100%, max(350px, 50% - 30px*1/2)), 1fr))'
                                     : '1fr 1fr',
                             columnGap: '30px',
@@ -510,36 +512,76 @@ export default function Examples() {
                                 gridTemplateColumns: '1fr'
                             }
                         }}>
-                        {filteredExamples.map(({ description, technologies, tags, title, url }) => (
-                            <ExampleCard
-                                as="a"
-                                //@ts-ignore
-                                href={url}
-                                target="_blank"
-                                key={title}
-                                technologies={technologies}
-                                tags={tags}
-                                description={description}
-                                title={title}
-                                onClick={() =>
-                                    window.analytics.track('example.clicked', {
-                                        title,
-                                        exampleRepo: url,
-                                        page: window?.location?.pathname
-                                    })
-                                }
+                        {filteredExamples.length > 0 ? (
+                            filteredExamples.map(
+                                ({ description, technologies, tags, title, url }) => (
+                                    <ExampleCard
+                                        as="a"
+                                        //@ts-ignore
+                                        href={url}
+                                        target="_blank"
+                                        key={title}
+                                        technologies={technologies}
+                                        tags={tags}
+                                        description={description}
+                                        title={title}
+                                        onClick={() =>
+                                            window.analytics.track('example.clicked', {
+                                                title,
+                                                exampleRepo: url,
+                                                page: window?.location?.pathname
+                                            })
+                                        }
+                                        css={{
+                                            height: '152px',
+                                            minWidth: filteredExamples.length === 1 ? '350px' : 0,
+                                            '@md': {
+                                                maxHeight: '142px'
+                                            },
+                                            '&:hover': {
+                                                opacity: 1
+                                            }
+                                        }}
+                                    />
+                                )
+                            )
+                        ) : (
+                            <Flex
+                                direction="column"
+                                align="center"
                                 css={{
-                                    height: '152px',
-                                    minWidth: filteredExamples.length === 1 ? '350px' : 0,
-                                    '@md': {
-                                        maxHeight: '142px'
-                                    },
-                                    '&:hover': {
-                                        opacity: 1
-                                    }
-                                }}
-                            />
-                        ))}
+                                    padding: '0 32px',
+                                    borderRadius: '$0',
+                                    border: '1px solid #1D222B',
+                                    width: '100%',
+                                    height: 'max-content',
+                                    textAlign: 'center'
+                                }}>
+                                <Text
+                                    variant="h6"
+                                    css={{
+                                        fontWeight: '$semiBold',
+                                        color: '$textHighEmp',
+                                        marginTop: '64px',
+                                        marginBottom: '8px'
+                                    }}>
+                                    {category !== CATEGORIES.ALL_CATEGORIES
+                                        ? `Sorry, we currently do not have ${category.toLowerCase()} built
+                                    with ${technology} yet`
+                                        : `Sorry, we currently do not have examples built with ${technology} yet`}
+                                </Text>
+                                <Text
+                                    css={{
+                                        marginBottom: '48px',
+                                        color: '$textMedEmp'
+                                    }}>{`Discover all of the other examples we have for ${technology}`}</Text>
+                                <Button
+                                    onClick={() => setCategory(CATEGORIES.ALL_CATEGORIES)}
+                                    css={{
+                                        marginBottom: '56px'
+                                    }}>{`View All ${technology} Examples`}</Button>
+                            </Flex>
+                        )}
                     </Box>
                 </Flex>
             </Flex>
