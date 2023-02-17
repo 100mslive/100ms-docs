@@ -23,6 +23,8 @@ Implementing waiting room using roles in 100ms involves the following steps:
 4. Fetch room join ([joinedAt](https://www.100ms.live/docs/api-reference/javascript/v2/interfaces/HMSPeer#joinedat)) timestamp for each waiting room participant
 5. Move participants from waiting room to main room based on their join time (First Come, First Served)
 
+<StepsContainer id="implement-waiting-room">
+
 ### Create a new app
 
 ![Create a new app](/guides/waiting-room/video-conf.png)
@@ -31,20 +33,32 @@ Implementing waiting room using roles in 100ms involves the following steps:
 2. On the dashboard, create a new app using the Video Conferencing Starter Kit
 3. Specify a subdomain and region to deploy the app
 
-### Create roles to set up waiting room
+### Understand roles to set up waiting room
 
 -   This starter kit configures your new app with [two roles](https://www.100ms.live/docs/javascript/v2/foundation/templates-and-roles):
 
     ![Join URLs](/guides/waiting-room/join-url-waiting.png)
 
-    -   `host`: This role represents a host,
-        -   Who publishes their audio/video/screen tracks
-        -   Subscribes to the "guest" and "waiting-room" roles
-        -   And has various permissions to perform actions on the participants such as remove a participant, mute a participant, etc,.
-    -   `guest`: This role represents the guest,
-        -   Who subscribes to the audio/video/screen tracks of the host
-        -   Publishes tracks audio/video/screen tracks
-        -   And shouldn't have any permissions like the host
+<Tabs id="create-roles-tabs" items={['Host', 'Guest', 'Waiting room']} />
+
+<Tab id="create-roles-tabs-0">
+
+-   `host`: This role represents a host,
+    -   Who publishes their audio/video/screen tracks
+    -   Subscribes to the "guest" and "waiting-room" roles
+    -   And has various permissions to perform actions on the participants such as remove a participant, mute a participant, etc,.
+
+</Tab>
+
+<Tab id="create-roles-tabs-1">
+
+-   `guest`: This role represents the guest,
+    -   Who subscribes to the audio/video/screen tracks of the host
+    -   Publishes tracks audio/video/screen tracks - And shouldn't have any permissions like the host
+
+</Tab>
+
+<Tab id="create-roles-tabs-2">
 
 -   You need to add a new role, `waiting-room` to allow the participants to join a waiting room
 
@@ -58,7 +72,9 @@ Implementing waiting room using roles in 100ms involves the following steps:
         </video>
         <br />
 
-        > **Note**: You have to update the subscribe strategy for `host` role to subscribe to `waiting-room` as its a newly created role.
+> **Note**: You have to update the subscribe strategy for `host` role to subscribe to `waiting-room` as its a newly created role.
+
+</Tab>
 
 ### Try it out
 
@@ -72,6 +88,8 @@ Implementing waiting room using roles in 100ms involves the following steps:
     </video>
 
 > **Note**: Force the role change action rather than requesting the participant. Change role action leverages the [change role](https://www.100ms.live/docs/javascript/v2/how--to-guides/control-remote-peers/change-role) client-side API.
+
+</StepsContainer>
 
 ## Implement it using server-side API
 
