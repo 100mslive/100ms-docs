@@ -42,6 +42,8 @@ start_date and end_date will be in UTC format.
 ### App side implementation
 
 ```javascript
+import Hls from 'hls.js';
+
 const extractMetaTextTrack = (videoEl: HTMLVideoElement | null): TextTrack | null => {
   const textTrackListCount = videoEl?.textTracks.length || 0;
   for (let trackIndex = 0; trackIndex < textTrackListCount; trackIndex++) {
@@ -64,7 +66,7 @@ const fireCues = (videoEl: HTMLVideoElement | null, cues: TextTrackCueList) => {
       continue;
     }
     // here we are converting base64 to actual data.
-    const data: { [key: string]: string } = metadataPayloadParser(cue.value.data);
+    const data: Record<string, any> = metadataPayloadParser(cue.value.data);
     const programData = videoEl?.getStartDate();
     const startDate = data.start_date;
     const endDate = data.end_date;
@@ -82,14 +84,14 @@ const fireCues = (videoEl: HTMLVideoElement | null, cues: TextTrackCueList) => {
     cueIndex++;
   }
 };
-const handleTimeUpdateListener = _ => {
+const handleTimeUpdateListener = () => {
   // extract timed metadata text track
-  const metaTextTrack: TextTrack | null = this.extractMetaTextTrack(videoEl);
+  const metaTextTrack: TextTrack | null = extractMetaTextTrack(videoEl);
   if (!metaTextTrack || !metaTextTrack.cues) {
     return;
   }
   // fire cue for timed meta data extract
-  this.fireCues(videoEl, metaTextTrack.cues);
+  fireCues(videoEl, metaTextTrack.cues);
 };
 if (Hls.isSupported()) {
   /**
@@ -101,8 +103,6 @@ if (Hls.isSupported()) {
     videoEl.addEventListener("timeupdate", handleTimeUpdateListener);
 }
 ```
-
->Note : Above implementation might change in future.
 
 ## Limitations
 
