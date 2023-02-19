@@ -78,10 +78,17 @@ By default, the live stream is composed in landscape mode for desktop viewers (w
 
 To integrate 100ms Interactive Live Streaming in your app, follow these steps:
 
-1. [Enable live streaming destination](#enable-destination)
-2. [Integrate the 100ms SDK in your app](#sdk-integration)
-3. [Integrate live stream playback](#live-stream-playback)
-4. [Video on demand (VOD) use cases](#video-on-demand-vod-use-cases)
+-   [Overview](#overview)
+-   [Try Interactive Live Streaming](#try-interactive-live-streaming)
+    -   [Create a new app](#create-a-new-app)
+    -   [Understand roles](#understand-roles)
+    -   [Go live](#go-live)
+    -   [Customize the stream](#customize-the-stream)
+-   [Integrate in your app](#integrate-in-your-app)
+    -   [Enable destination](#enable-destination)
+    -   [SDK integration](#sdk-integration)
+    -   [Live stream playback](#live-stream-playback)
+    -   [Video on Demand (VOD) use cases](#video-on-demand-vod-use-cases)
 
 ### Enable destination
 
@@ -123,4 +130,4 @@ If you need to only enable HLS playback and don't need interactivity, you can fo
 
 If you wish to replay your HLS stream for Video on demand (VOD) use case, 100ms provides the capability to record the HLS stream which will be posted to your webhook as a ZIP file of M3U8 format (same playback format as HLS) with all the chunks once the stream ends.
 
-You can start recording a live stream using the [client-side SDK](/javascript/v2/features/hls) or using the [server API](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording#start-streaming-recording). Once the HLS recording is completed, you will get the details of recording as a callback to the webhook configured in your account. Check `hls.recording.success` [webhook event](/server-side/v2/introduction/webhook#hls-recording-success) for more information.
+You can start recording a live stream using the [client-side SDK](/javascript/v2/how--to-guides/record-and-live-stream/hls/hls) or using the [server API](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording#start-streaming-recording). Once the HLS recording is completed, you will get the details of recording as a callback to the webhook configured in your account. Check `hls.recording.success` [webhook event](/server-side/v2/introduction/webhook#hls-recording-success) for more information.
