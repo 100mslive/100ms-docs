@@ -6,7 +6,6 @@ import path from 'path';
 import mdxPrism from 'mdx-prism';
 import EditFile from '@/components/EditFile';
 import components from '@/components/MDXComponents';
-import { Box } from '@100mslive/react-ui';
 import Pagination from '@/components/Pagination';
 import Sidebar from '@/components/Sidebar';
 import Toc from '@/components/Toc';
@@ -140,9 +139,6 @@ const DocSlugs = ({ source, frontMatter, pagination, nav, showToc = true, allNav
         }`
     };
 
-    const [showSideBar, setShowSideBar] = useState(false);
-    useEffect(() => setShowSideBar(true), []);
-
     return (
         <div style={{ margin: '0' }}>
             <NextSeo {...SEO} />
@@ -162,11 +158,8 @@ const DocSlugs = ({ source, frontMatter, pagination, nav, showToc = true, allNav
                         maxWidth: '1500px',
                         justifyContent: 'space-between'
                     }}>
-                    {showSideBar ? (
-                        <Sidebar menuState={menuState} nav={nav} allNav={allNav} />
-                    ) : (
-                        <Box css={{ minWidth: '304px' }} />
-                    )}
+                    <Sidebar menuState={menuState} nav={nav} allNav={allNav} />
+
                     {!menu ? (
                         <article
                             style={{
@@ -176,7 +169,7 @@ const DocSlugs = ({ source, frontMatter, pagination, nav, showToc = true, allNav
                                 flexGrow: '1',
                                 boxSizing: 'border-box',
                                 padding: '0 2rem',
-                                minHeight: 'calc(100vh - 140px)',
+                                minHeight: '100vh',
                                 paddingBottom: '80px'
                             }}>
                             <h1>{frontMatter.title}</h1>
