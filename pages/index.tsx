@@ -76,6 +76,7 @@ const Homepage = ({ allNav }) => {
                 css={{
                     mx: 'auto',
                     minHeight: '100vh',
+                    position: "relative",
                     backgroundImage: `url(${
                         currentTheme === 'dark'
                             ? '/docs/bg-desktop.png'

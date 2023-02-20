@@ -153,7 +153,8 @@ const DocSlugs = ({ source, frontMatter, pagination, nav, showToc = true, allNav
                     display: 'flex',
                     paddingTop: '1rem',
                     justifyContent: 'center',
-                    width: '100%'
+                    width: '100%',
+                    position: 'relative'
                 }}>
                 <div
                     style={{

@@ -20,7 +20,7 @@ import {
     RocketIcon
 } from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
-import { Flex, Box, Text } from '@100mslive/react-ui';
+import { Flex, Box, Text, CSS } from '@100mslive/react-ui';
 import SidebarSection from './SidebarSection';
 import PlatformAccordion from './PlatformAccordion';
 
@@ -48,9 +48,10 @@ interface Props {
     };
     nav: Record<string, Record<string, NavRoute>>;
     allNav: Record<string, Record<string, NavRoute>>[];
+    css?: CSS;
 }
 
-const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
+const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, css = {} }) => {
     const router = useRouter() as any;
     const {
         query: { slug }
@@ -121,6 +122,8 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
     const baseRef = useRef<HTMLDivElement>(null);
 
+    const { ['@md']: cssMd, ...cssRest } = css;
+
     return (
         <Box
             ref={baseRef}
@@ -137,13 +140,16 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                 overscrollBehavior: 'none',
                 '@md': {
                     position: 'absolute',
-                    top: '$14',
+                    top: '0',
                     display: menu ? 'flex' : 'none',
-                    height: 'calc(100vh - 200px)'
+                    height: 'calc(100vh - 200px)',
+                    width: '100%',
+                    ...(cssMd ?? {})
                 },
                 '@sm': {
-                    w: '100vw'
-                }
+                    w: '100%'
+                },
+                ...cssRest
             }}>
             {/* Base view */}
             <div
@@ -151,15 +157,16 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                 style={
                     showBaseView
                         ? {
-                              padding: '1.75rem',
+                              padding: menu ? '24px' : '1.75rem',
                               paddingTop: '0',
-                              position: 'sticky',
-                              top: '1rem'
+                              position: menu ? 'initial' : 'sticky',
+                              top: '1rem',
+                              width: '100%'
                           }
                         : {}
                 }>
                 {baseViewOnly ? (
-                    <Box css={{ pt: '$16' }} />
+                    <Box css={{ pt: '$16', '@md': { pt: 0 } }} />
                 ) : (
                     <Flex
                         align="center"
@@ -192,7 +199,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                     </a>
                 </Box>
 
-                <Box className='sidebar-examples' css={{ mt: '$10' }}>
+                <Box className="sidebar-examples" css={{ mt: '$10' }}>
                     <a style={{ textDecoration: 'none' }} href="/docs/examples">
                         <Flex gap="2" align="center" css={{ color: '$primaryLight' }}>
                             <RocketIcon style={{ color: 'inherit' }} />
@@ -230,9 +237,10 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
             </div>
 
             {/* Platform specific view */}
-            <div className={`page ${showBaseView ? '' : 'active-page'}`} style={{}}>
+            <div className={`page ${showBaseView ? '' : 'active-page'}`} style={{ width: "100% "}}>
                 <Box
                     css={{
+                        width: '100%',
                         position: 'sticky',
                         top: '0',
                         pt: '$5',

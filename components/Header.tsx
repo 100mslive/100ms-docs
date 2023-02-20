@@ -136,7 +136,7 @@ const Header: React.FC<Props> = ({
                         alt="100ms Logo"
                     />
                 </a>
-                <Flex css={{ gap: '$14' }}>
+                <Flex css={{ gap: '$14', '@md': { display: 'none' } }}>
                     <HeaderLink href="/">Documentation</HeaderLink>
                     <HeaderLink href="/examples">Examples</HeaderLink>
                     {!isNonApiRef && showReference ? (
@@ -145,7 +145,7 @@ const Header: React.FC<Props> = ({
                 </Flex>
             </div>
 
-            <Flex align="center" css={{ height: '40px' }}>
+            <Flex align="center" css={{ height: '40px', gap: '$13', '@md': { gap: '20px' } }}>
                 <Flex
                     align="center"
                     onClick={() => setHelperState((prev) => prev + 1)}
@@ -155,7 +155,6 @@ const Header: React.FC<Props> = ({
                         gap: '$8',
                         color: '$textMedEmp',
                         border: '1px solid $borderDefault',
-                        marginRight: '$13',
                         background: '$surfaceDefault',
                         padding: '$3 $8 $3 $5',
                         '@lg': {
@@ -181,13 +180,14 @@ const Header: React.FC<Props> = ({
                             display: onHomePage ? 'flex' : 'none'
                         },
                         '@md': {
+                            gap: '20px',
                             display: 'flex'
                         }
                     }}>
                     <button
                         onClick={() => setHelperState((prev) => prev + 1)}
                         type="button"
-                        style={{ display: 'flex', padding: 0 }}>
+                        style={{ display: 'flex', padding: 0, cursor: 'pointer' }}>
                         <SearchIcon style={{ width: '24px' }} />
                     </button>
                     {showMobileMenu && (
@@ -195,12 +195,11 @@ const Header: React.FC<Props> = ({
                             aria-label="menu-button"
                             type="button"
                             onClick={() => setMenu(!menu)}
-                            style={{ display: 'flex', padding: 0 }}>
+                            style={{ display: 'flex', padding: 0, cursor: 'pointer' }}>
                             {menu ? <CrossIcon /> : <HamburgerMenuIcon />}
                         </button>
                     )}
                 </Flex>
-
                 <Flex
                     as="button"
                     aria-label="theme-toggle-button"
