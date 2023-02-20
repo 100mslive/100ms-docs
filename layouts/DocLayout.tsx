@@ -48,7 +48,6 @@ export default function DocLayout({ children }: Props) {
                             justifyContent: 'space-between'
                         }}>
                         <Sidebar menuState={menuState} nav={nav} allNav={allNav} />
-
                         {!menu ? children : null}
                     </div>
                 </div>

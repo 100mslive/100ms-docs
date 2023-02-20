@@ -42,25 +42,19 @@ const Homepage = ({ allNav }) => {
     const menuState = { menu, setMenu };
     const [currentTheme, setCurrentTheme] = useState('dark');
 
-    const [renderComponents, setRenderComponents] = useState(false);
-
     useEffect(() => {
         const updateTheme = (e) => setCurrentTheme(e.detail.theme);
-
-        if (document) document.addEventListener('themeChanged', updateTheme);
-        return () => document.removeEventListener('themeChanged', updateTheme);
-    }, []);
-
-    useEffect(() => {
-        setRenderComponents(true);
-        if (window) {
+        if (window && document) {
+            document.addEventListener('themeChanged', updateTheme);
             setCurrentTheme(window.localStorage.theme || 'dark');
         }
+
+        return () => document.removeEventListener('themeChanged', updateTheme);
     }, []);
 
     useLockBodyScroll(modal);
 
-    return renderComponents ? (
+    return (
         <>
             <SegmentAnalytics options={{}} title="100ms Docs" />
             <Header
@@ -88,7 +82,7 @@ const Homepage = ({ allNav }) => {
                         backgroundSize: 'cover'
                     }
                 }}>
-                <Sidebar menuState={menuState} nav={{}} allNav={allNav} />
+                <Sidebar menuState={menuState} nav={{}} allNav={allNav} baseViewOnly />
                 {!menu ? (
                     <Box
                         css={{
@@ -176,7 +170,7 @@ const Homepage = ({ allNav }) => {
             </Flex>
             <Footer css={{ backgroundColor: 'var(--docs_bg_footer)' }} />
         </>
-    ) : null;
+    );
 };
 
 export default Homepage;

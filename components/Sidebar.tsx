@@ -47,14 +47,14 @@ interface Props {
     };
     nav: Record<string, Record<string, NavRoute>>;
     allNav: Record<string, Record<string, NavRoute>>[];
+    baseViewOnly?: boolean;
 }
 
-const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
+const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, baseViewOnly = false }) => {
     const router = useRouter() as any;
     const {
         query: { slug }
     } = router;
-    const baseViewOnly = Object.keys(currentNav).length === 0;
     const { menu, setMenu } = menuState;
 
     const [openPlatformAccordion, setOpenPlatformAccordion] = useState(platformlist[0]);
@@ -66,14 +66,10 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
     const [currentTheme, setCurrentTheme] = useState('dark');
 
     useEffect(() => {
+        const updateTheme = (e) => setCurrentTheme(e.detail.theme);
         if (window) {
             setCurrentTheme(window.localStorage.theme || 'dark');
         }
-    }, []);
-
-    useEffect(() => {
-        const updateTheme = (e) => setCurrentTheme(e.detail.theme);
-
         if (document) document.addEventListener('themeChanged', updateTheme);
         return () => document.removeEventListener('themeChanged', updateTheme);
     }, []);
@@ -88,9 +84,6 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                 if (slug?.length > 3) {
                     nav = platform[slug[1]];
                     if (slug[0] === 'api-reference') {
-                        // if (slug[1] === 'android') {
-                        //     showPagination = false;
-                        // }
                         nav = platform[slug[1]][slug[2]];
                     }
                 }
@@ -118,6 +111,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
 
     const [showBaseView, setShowBaseView] = useState(baseViewOnly);
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
+    
     const baseRef = useRef<HTMLDivElement>(null);
 
     return (

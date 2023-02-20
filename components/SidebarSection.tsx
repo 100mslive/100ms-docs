@@ -29,8 +29,6 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
     const inFocus = isInFocus();
     const [openSection, setOpenSection] = useState(inFocus);
 
-    const [renderComponents, setRenderComponents] = useState(false);
-
     // To open accordions that were not closed before the page reload
     useLayoutEffect(() => {
         if (typeof window !== 'undefined') {
@@ -51,8 +49,6 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                 currentList.push(key);
                 sessionStorage.setItem('openedAccordions', JSON.stringify(currentList));
             }
-            // Styles take some time to load
-            setRenderComponents(true);
         }
     }, []);
 
@@ -69,7 +65,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
         }, 0);
     }, [activeItem]);
 
-    return renderComponents ? (
+    return (
         <section
             style={{
                 margin: nested ? '0 0 0 0.95rem' : '2px 0.5rem 0.5rem 0.25rem',
@@ -157,7 +153,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                 ) : null}
             </div>
         </section>
-    ) : null;
+    );
 };
 
 export default SidebarSection;
