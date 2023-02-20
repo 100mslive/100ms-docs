@@ -128,7 +128,7 @@ const Header: React.FC<Props> = ({
                 boxSizing: 'border-box',
                 gap: '40px',
                 '@md': {
-                    padding: '20px 24px',
+                    padding: '20px 24px'
                 }
             }}>
             <div className="head-left">
@@ -148,7 +148,16 @@ const Header: React.FC<Props> = ({
                 </Flex>
             </div>
 
-            <Flex align="center" css={{ height: '40px', gap: '$13', '@md': { gap: '20px' } }}>
+            <Flex
+                align="center"
+                css={{
+                    height: '40px',
+                    gap: '$13',
+                    '@lg': {
+                        gap: '20px'
+                    },
+                    '@md': { gap: '20px' }
+                }}>
                 <Flex
                     align="center"
                     onClick={() => setHelperState((prev) => prev + 1)}
@@ -180,10 +189,10 @@ const Header: React.FC<Props> = ({
                     css={{
                         display: 'none',
                         '@lg': {
+                            gap: '20px',
                             display: onHomePage ? 'flex' : 'none'
                         },
                         '@md': {
-                            gap: '20px',
                             display: 'flex'
                         }
                     }}>

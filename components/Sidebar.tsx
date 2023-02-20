@@ -199,7 +199,9 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, css = {}
                     </a>
                 </Box>
 
-                <Box className="sidebar-examples" css={{ mt: '$10' }}>
+                <Box
+                    className="sidebar-examples"
+                    css={{ mt: '$10', display: 'none', '@md': { display: 'block ' } }}>
                     <a style={{ textDecoration: 'none' }} href="/docs/examples">
                         <Flex gap="2" align="center" css={{ color: '$primaryLight' }}>
                             <RocketIcon style={{ color: 'inherit' }} />
@@ -237,7 +239,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, css = {}
             </div>
 
             {/* Platform specific view */}
-            <div className={`page ${showBaseView ? '' : 'active-page'}`} style={{ width: "100% "}}>
+            <div className={`page ${showBaseView ? '' : 'active-page'}`} style={{ width: '100% ' }}>
                 <Box
                     css={{
                         width: '100%',
