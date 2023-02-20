@@ -64,7 +64,7 @@ const nextConfig = {
             },
             {
                 source: '/flutter/v2/foundation/faq',
-                destination: '/flutter/v2/debugging/faq',
+                destination: '/flutter/v2/how--to-guides/debugging/faq',
                 permanent: true
             },
             {
@@ -1256,6 +1256,11 @@ const nextConfig = {
             {
                 source: '/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/capture-snapshot',
                 destination: '/flutter/v2/how--to-guides/capture-frame/capture-snapshot',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/templates-and-roles',
+                destination: '/concepts/v2/concepts/templates-and-roles/overview',
                 permanent: true
             },
 
