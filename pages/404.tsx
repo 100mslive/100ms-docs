@@ -62,20 +62,11 @@ const NotFound = () => {
                         }}>
                         {router.asPath}
                     </Text>
-                    <Text
-                        variant="h6"
-                        css={{
-                            color: '$textHighEmp',
-                            my: '$12',
-                            textAlign: 'center'
-                        }}>
-                        Refer these links:
-                    </Text>
                     <Flex
                         justify="center"
                         css={{
                             gap: '$6',
-                            mt: '$8',
+                            mt: '$18',
                             flexWrap: 'wrap',
                             w: '100%',
                             maxWidth: '600px',
