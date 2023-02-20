@@ -65,7 +65,7 @@ const MDX_GLOBAL_CONFIG = {
     }
 };
 
-const DocSlugs = ({ source, frontMatter, pagination, nav, showToc = true, allNav }: Props) => {
+const DocSlugs = ({ source, frontMatter, pagination, showToc = true }: Props) => {
     const {
         query: { slug },
         asPath
