@@ -1,15 +1,22 @@
 ---
 title: Webhook Events
-nav: 1.34
+nav: 3.3
 ---
 
-This page contains the list of all webhook events. 
+| Event name                                                                                                                                                                                     | Theme                              | Description                                                                              |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|------------------------------------------------------------------------------------------|
+| [session.open.success](#session-open-success), <br/> [session.close.success](#session-close-success)                                                                                          | session                            | Triggered during the start and end of a session                                         |
+| [peer.join.success](#peer-join-success),<br/> [peer.leave.success](#peer-leave-success), <br/>[peer.join.failure](#peer-join-failure),<br/> [peer.leave.failure](#peer-leave-failure)         | peer                               | Triggered when a peer join/leave succeeds/fails                                         |
+| [room.end.success](#room-end-success)                                                                                                                                                         | room                               | Triggered when a room ends                                                              |
+| [recording.success](#recording-success), <br/>[recording.failed](#recording-failed)                                                                                                           | SFU recording                      | Triggered during the start, end, and failure of a SFU recording                         |
+| [beam.started.success](#beam-started-success),<br/> [beam.stopped.success](#beam-stopped-success),<br/> [beam.recording.success](#beam-recording-success),<br/> [beam.failure](#beam-failure) | RTMP Streaming & Browser Recording | Triggered during the start, end, and failure of RTMP streaming and/or browser recording |
+| [hls.started.success](#hls-started-success),<br/> [hls.stopped.success](#hls-stopped-success),<br/> [hls.recording.success](#hls-recording-success),<br/> [hls.failure](#hls-failure)         | HLS Streaming Events               | Triggered during the start, end, and failure of HLS streaming and/or HLS recording      |
+| [role.change.success](#role-change-success)                                                                                                                                                   | Role change Events                 | Triggered when a role is updated                                                        |
 
-## Events
+
+## Event payload
 
 Event is a JSON dictionary which has the following keys.
-
-### Event Attributes
 
 | Name        | Type                 | Description                                                                                                      |
 |:------------|:---------------------|:-----------------------------------------------------------------------------------------------------------------|
@@ -22,7 +29,7 @@ Event is a JSON dictionary which has the following keys.
 | type        | `string`             | Type of the event <br/><br/> Example: peer.join.success                                                          |
 | data        | `dict`               | Event data. Its keys will be different for different type of event.<br/><br/> Example: < See description below > |
 
-### Sample Event Payload
+### Sample event
 
 ```json
 {
@@ -44,20 +51,6 @@ Event is a JSON dictionary which has the following keys.
     }
 }
 ```
-
-## List of events
-
-Here's the list of events available on the 100ms platform.
-
-| Event name                                                                                                                                                                                     | Theme                              | Description                                                                              |
-|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|------------------------------------------------------------------------------------------|
-| [session.open.success](#session-open-success), <br/> [session.close.success](#session-close-success).                                                                                          | session                            | Triggered during the start and end of a session.                                         |
-| [peer.join.success](#peer-join-success),<br/> [peer.leave.success](#peer-leave-success), <br/>[peer.join.failure](#peer-join-failure),<br/> [peer.leave.failure](#peer-leave-failure).         | peer                               | Triggered when a peer join/leave succeeds/fails.                                         |
-| [room.end.success](#room-end-success).                                                                                                                                                         | room                               | Triggered when a room ends.                                                              |
-| [recording.success](#recording-success), <br/>[recording.failed](#recording-failed).                                                                                                           | SFU recording                      | Triggered during the start, end, and failure of a SFU recording.                         |
-| [beam.started.success](#beam-started-success),<br/> [beam.stopped.success](#beam-stopped-success),<br/> [beam.recording.success](#beam-recording-success),<br/> [beam.failure](#beam-failure). | RTMP Streaming & Browser Recording | Triggered during the start, end, and failure of RTMP streaming and/or browser recording. |
-| [hls.started.success](#hls-started-success),<br/> [hls.stopped.success](#hls-stopped-success),<br/> [hls.recording.success](#hls-recording-success),<br/> [hls.failure](#hls-failure).         | HLS Streaming Events               | Triggered during the start, end, and failure of HLS streaming and/or HLS recording.      |
-| [role.change.success](#role-change-success).                                                                                                                                                   | Role change Events                 | Triggered when a role is updated.                                                        |
 
 ## Session Events
 
