@@ -1,23 +1,63 @@
 ---
 title: Webhook Events
-nav: 3.6
+nav: 1.34
 ---
 
 This page contains the list of all webhook events. 
+
+## Events
+
+Event is a JSON dictionary which has the following keys.
+
+### Event Attributes
+
+| Name        | Type                 | Description                                                                                                      |
+|:------------|:---------------------|:-----------------------------------------------------------------------------------------------------------------|
+| version     | `string`             | Version of the event <br/><br/> Example: 2.0                                                                     |
+| id          | `string`             | Id of the event <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                         |
+| app_id      | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6                           |
+| account_id  | `string`             | Customer ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f4                      |
+| template_id | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                             |
+| timestamp   | `timestamp (in UTC)` | Timestamp of the event <br/><br/> Example: 2020-11-11T16:32:17Z                                                  |
+| type        | `string`             | Type of the event <br/><br/> Example: peer.join.success                                                          |
+| data        | `dict`               | Event data. Its keys will be different for different type of event.<br/><br/> Example: < See description below > |
+
+### Sample Event Payload
+
+```json
+{
+    "version": "2.0",
+    "id": "6c75de35-b778-4fb0-88ae-114c28dc285f",
+    "account_id": "60b8e13a6eb86d8101b57354",
+    "timestamp": "2021-08-08T07:04:15Z",
+    "type": "peer.join.success",
+    "data": {
+        "joined_at": "2021-08-08T07:04:15.001380432Z",
+        "peer_id": "83b869e1-9a4b-4037-84b2-913cf76e4392",
+        "role": "host",
+        "room_id": "60b8e13a6eb86d8101b57354",
+        "room_name": "test room",
+        "session_id": "610f81ee870dde099a249948",
+        "template_id": "66112497abcd52312556c4gg",
+        "user_id": "user.001",
+        "user_name": "test user"
+    }
+}
+```
 
 ## List of events
 
 Here's the list of events available on the 100ms platform.
 
-| Event name                         | Description                                                                                                                                                                                                                                                                                  |
-|:-----------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| session                            | Triggered during the start and end of a session. <br/><br/>**Events:** [session.open.success](#session-open-success), [session.close.success](#session-close-success)                                                                                                                        |
-| peer                               | Triggered when a peer join/leave succeeds/fails. <br/><br/>**Events:** [peer.join.success](#peer-join-success), [peer.leave.success](#peer-leave-success), [peer.join.failure](#peer-join-failure), [peer.leave.failure](#peer-leave-failure)                                                |
-| room                               | Triggered when a room ends. <br/><br/>**Events:** [room.end.success](#room-end-success)                                                                                                                                                                                                      |
-| SFU recording                      | Triggered during the start, end, and failure of a SFU recording. <br/><br/>**Events:** [recording.success](#recording-success), [recording.failed](#recording-failed)                                                                                                                        |
-| RTMP Streaming & Browser Recording | Triggered during the start, end, and failure of RTMP streaming and/or browser recording.<br/><br/>**Events:** [beam.started.success](#beam-started-success), [beam.stopped.success](#beam-stopped-success), [beam.recording.success](#beam-recording-success), [beam.failure](#beam-failure) |
-| HLS Streaming Events               | Triggered during the start, end, and failure of HLS streaming and/or HLS recording.<br/><br/>**Events:** [hls.started.success](#hls-started-success), [hls.stopped.success](#hls-stopped-success), [hls.recording.success](#hls-recording-success), [hls.failure](#hls-failure)              |
-| Role change Events                 | Triggered when a role is updated. <br/><br/>**Events:** [role.change.success](#role-change-success)                                                                                                                                                                                          |
+| Event name                                                                                                                                                                                     | Theme                              | Description                                                                              |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|------------------------------------------------------------------------------------------|
+| [session.open.success](#session-open-success), <br/> [session.close.success](#session-close-success).                                                                                          | session                            | Triggered during the start and end of a session.                                         |
+| [peer.join.success](#peer-join-success),<br/> [peer.leave.success](#peer-leave-success), <br/>[peer.join.failure](#peer-join-failure),<br/> [peer.leave.failure](#peer-leave-failure).         | peer                               | Triggered when a peer join/leave succeeds/fails.                                         |
+| [room.end.success](#room-end-success).                                                                                                                                                         | room                               | Triggered when a room ends.                                                              |
+| [recording.success](#recording-success), <br/>[recording.failed](#recording-failed).                                                                                                           | SFU recording                      | Triggered during the start, end, and failure of a SFU recording.                         |
+| [beam.started.success](#beam-started-success),<br/> [beam.stopped.success](#beam-stopped-success),<br/> [beam.recording.success](#beam-recording-success),<br/> [beam.failure](#beam-failure). | RTMP Streaming & Browser Recording | Triggered during the start, end, and failure of RTMP streaming and/or browser recording. |
+| [hls.started.success](#hls-started-success),<br/> [hls.stopped.success](#hls-stopped-success),<br/> [hls.recording.success](#hls-recording-success),<br/> [hls.failure](#hls-failure).         | HLS Streaming Events               | Triggered during the start, end, and failure of HLS streaming and/or HLS recording.      |
+| [role.change.success](#role-change-success).                                                                                                                                                   | Role change Events                 | Triggered when a role is updated.                                                        |
 
 ## Session Events
 
