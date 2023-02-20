@@ -371,7 +371,13 @@ export default function Examples({ allNav }) {
     return (
         <Flex direction="column" css={{ minHeight: '100vh' }}>
             <SegmentAnalytics options={{}} title="100ms Docs Examples" />
-            <Header modal={modal} setModal={setModal} menuState={menuState} showReference={false} onHomePage/>
+            <Header
+                modal={modal}
+                setModal={setModal}
+                menuState={menuState}
+                showReference={false}
+                onHomePage
+            />
 
             <Flex
                 align="center"
@@ -383,14 +389,14 @@ export default function Examples({ allNav }) {
                     position: 'relative',
                     boxSizing: 'border-box',
                     maxWidth: '1512px',
-                    paddingInline: '$14',
-                    paddingBottom: '$24',
+                    paddingInline: menu ? 0 : '$14',
+                    paddingBottom: menu ? 0 : '$24',
                     '@md': {
                         paddingInline: menu ? 0 : '$10',
                         paddingBottom: menu ? 0 : '$10'
                     }
                 }}>
-                <Box css={{ width: "100%" }}>
+                <Box css={{ width: '100%' }}>
                     <Sidebar
                         menuState={menuState}
                         allNav={allNav}
