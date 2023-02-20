@@ -123,8 +123,8 @@ const Header: React.FC<Props> = ({
                 position: 'sticky',
                 top: 0,
                 padding: '12px 40px',
-                backgroundColor: '$backgroundDefault',
-                borderBottom: '1px solid $borderDefault',
+                backgroundColor: 'var(--docs_bg_header)',
+                borderBottom: '1px solid var(--docs_border_default)',
                 boxSizing: 'border-box',
                 gap: '40px'
             }}>
