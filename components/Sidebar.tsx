@@ -337,9 +337,9 @@ export const menuItem = [
         apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
     },
     {
-        link: '/server-side/v2/introduction/basics',
+        link: '/server-side/v2/how--to-guides/make-api-calls',
         name: 'Server-Side',
         icon: <ServerIcon />,
-        apiRef: '/server-side/v2/introduction/basics'
+        apiRef: '/server-side/v2/api-reference/Rooms/overview'
     }
 ];

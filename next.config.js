@@ -1263,7 +1263,71 @@ const nextConfig = {
                 destination: '/concepts/v2/concepts/templates-and-roles/overview',
                 permanent: true
             },
-
+            {
+                source: '/docs/server-side/v2/Rooms/:slug',
+                destination: '/server-side/v2/api-reference/Rooms/:slug',
+                permanent: true
+            },
+            {
+                source: '/server-side/v2/active-rooms/:slug',
+                destination: '/server-side/v2/api-reference/active-rooms/:slug',
+                permanent: true
+            },
+            {
+                source: '/server-side/v2/Sessions/:slug',
+                destination: '/server-side/v2/api-reference/Sessions/:slug',
+                permanent: true
+            },
+            {
+                source: '/server-side/v2/policy/:slug',
+                destination: '/server-side/v2/api-reference/policy/:slug',
+                permanent: true
+            },
+            {
+                source: '/server-side/v2/Destinations/:slug',
+                destination: '/server-side/v2/api-reference/Destinations/:slug',
+                permanent: true
+            },
+            // {
+            //     source: '/server-side/v2/legacy-api%20(v1)/:slug',
+            //     destination: '/server-side/v2/api-reference/legacy-api%20(v1)/:slug',
+            //     permanent: true
+            // },
+            {
+                source: '/server-side/v2/introduction/basics',
+                destination: '/concepts/v2/concepts/basics',
+                permanent: true
+            },
+            {
+                source: '/server-side/v2/introduction/request-and-response',
+                destination: '/server-side/v2/how--to-guides/make-api-calls',
+                permanent: true
+            },
+            {
+                source: '/server-side/v2/introduction/authentication-and-tokens',
+                destination: '/concepts/v2/concepts/security-and-tokens',
+                permanent: true
+            },
+            {
+                source: '/server-side/v2/introduction/webhook',
+                destination: '/server-side/v2/how--to-guides/configure-webhooks/overview',
+                permanent: true
+            },
+            {
+                source: '/server-side/v2/introduction/postman-guide',
+                destination: '/server-side/v2/how--to-guides/set-up-postman',
+                permanent: true
+            },
+            {
+                source: '/server-side/v2/introduction/recordings',
+                destination: '/concepts/v2/concepts/recordings',
+                permanent: true
+            },
+            {
+                source: '/server-side/v2/introduction/faq',
+                destination: '/javascript/v2/how--to-guides/debugging/faq',
+                permanent: true
+            },
         ];
     },
     eslint: {
