@@ -1,8 +1,8 @@
 ## Overview
 
-**SFU recording** - This recording does individual peer recording and also post session outputs a mp4 composition as well. SFU recording has two steps it first generates webm files for individual peers and then composes them to form the mp4. SFU recording has a fixed layout and composition.
+**SFU recording** - This recording does individual peer recording and also post session outputs a mp4 composition as well. SFU recording has two steps it first generates WebM files for individual peers and then composes them to form the mp4. SFU recording has a fixed layout and composition.
 
-SFU recording usually takes 1.5x of time to process and return the composed recording. eg 2 peers for 60 min, recording composition will be available 2*60*1 = 120 minutes, once the session is completed.
+SFU recording usually takes 1.5x of time to process and return the composed recording. For example, 2 peers for 60 min, recording composition will be available 2*60*1 = 120 minutes, once the session is completed.
 
 SFU recording composition will be received in a webhook call [recording.success](https://www.100ms.live/docs/server-side/v2/introduction/webhook#recording-success)
 
@@ -94,7 +94,7 @@ SFU recording composition will be received in a webhook call [recording.success]
 <Tab id="configure-storage-tabs-1">
 
 -   You can configure storage using server-side API at a room level or at the template level.
--   **Room:** You can configure recording storage using [create a room](/server-side/v2/api-reference/Rooms/create-via-api) or [update a room](/server-side/v2/api-reference/Rooms/update-a-room) API uisng the [recording_info object](/server-side/v2/api-reference/Rooms/create-via-api#recording_info-arguments).
+-   **Room:** You can configure recording storage using [create a room](/server-side/v2/api-reference/Rooms/create-via-api) or [update a room](/server-side/v2/api-reference/Rooms/update-a-room) API using the [recording_info object](/server-side/v2/api-reference/Rooms/create-via-api#recording_info-arguments).
 -   **Template:** You can configure recording storage using [create a template](/server-side/v2/api-reference/policy/create-template-via-api) or [update a template](/server-side/v2/api-reference/policy/update-a-template) API using the [recording object](/server-side/v2/api-reference/policy/create-template-via-api#recording-object).
 
 </Tab>
@@ -298,8 +298,8 @@ curl \
 
 -   operation : start(this to start the recording)/stop (this is to stop the recording)
 -   room_id : The room id can be taken from the [create room API response](https://www.100ms.live/docs/server-side/v2/Rooms/create-via-api)
--   meeting_url : The meeting url in this case will be the url of the beam user that you need to pass. For example, `https://<domain>/meeting/<room_id>/<rolename>?skip_preview=true`. The beam needs to join the room directly and to bypass our preview screen we pass this query parameter for our web app **skip_preview=true.**
--   rtmp_urls : This is an array of string that is used if you want to output the room to youtube, Facebook etc. Currently a max of 3 urls is supported at any once.
+-   meeting_url : The meeting URL in this case will be the URL of the beam user that you need to pass. For example, `https://<domain>/meeting/<room_id>/<rolename>?skip_preview=true`. The beam needs to join the room directly and to bypass our preview screen we pass this query parameter for our web app **skip_preview=true.**
+-   rtmp_urls : This is an array of string that is used if you want to output the room to YouTube, Facebook etc. Currently a max of 3 urls is supported at any once.
     -   Format: `rtmp://server.com/app/STREAM_KEY`
     -   Example: `rtmp://a.rtmp.youtube.com/live2/k0jv-329m-1y7f-ktth-ck48`
         -   "rtmp://a.rtmp.youtube.com/live2/" - RTMP stream URL.
