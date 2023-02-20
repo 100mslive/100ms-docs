@@ -70,7 +70,6 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, baseView
     useEffect(() => {
         const updateTheme = (e) => setCurrentTheme(e.detail.theme);
         setRenderComponents(true);
-        ß;
         if (window && document) {
             setCurrentTheme(window.localStorage.theme || 'dark');
             document.addEventListener('themeChanged', updateTheme);
