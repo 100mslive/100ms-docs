@@ -1,5 +1,6 @@
 ---
 title: HMSReactiveStore
+nav: '3.1'
 ---
 
 ## Constructors

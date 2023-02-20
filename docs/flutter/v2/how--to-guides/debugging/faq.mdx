@@ -1,6 +1,6 @@
 ---
 title: FAQ
-nav: 10.2
+nav: 11.2
 ---
 
 import Faq from '@/common/faq.md';
@@ -95,7 +95,7 @@ To listen to the room updates please attach `HMSUpdateListener` as:
 ```dart
 class Meeting implements HMSUpdateListener {
     Meeting(){
-        hmsSDK.addUpdateListener(updateListener);
+        hmsSDK.addUpdateListener(listener:updateListener);
     }
     ...
 }
@@ -110,6 +110,11 @@ User can join the room with muted audio/video by default. Please find the docs [
 ### How to get peer updates in Preview?
 
 User can get `onPeerUpdate` in preview the docs can be found [here](/flutter/v2/how--to-guides/set-up-video-conferencing/preview#get-on-peer-update-and-room-state-in-preview)
+
+### How to reduce the join time for HLS peers in large rooms
+
+Since HLS peers don't publish or subscribe any track, only thing required to display the stream is m3u8 URL.
+There is a way to reduce the join time for HLS peers especially in large rooms. Checkout the doc [here](/flutter/v2/how--to-guides/record-and-live-stream/hls#how-to-make-the-hls-peers-join-room-faster)
 
 ### Getting updates multiple times in the room
 
@@ -132,6 +137,15 @@ Logs can be turned OFF using the `hmsLogSettings` parameter of `HMSSDK`. More in
 ### Do I need to do anything to handle poor internet connection?
 
 Not much, just turn on a flag in dashboard, and show a proper UI when a video gets degraded/unsubscribed. More details [here](/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/auto-video-degrade-restore).
+
+### Getting Jitpack error: Could not find WebRTC-m104-hms-1.3.aar
+
+
+This occurs intermittently when Jitpack gets down, to fix this permanently you can update the HMSSDK to latest version. In case you can't update
+the HMSSDK version then please wait till Jitpack is up again.
+
+> 🔑 Note: This doesn't affect the builds already in production. It will work as usual, only if you are currently building the application
+> then you might face this.
 
 ### How do I implement Raise Hand, Polls in application?
 
@@ -167,6 +181,22 @@ To mirror your device you can use tools like [SCRCPY](https://github.com/Genymob
 ### What is the maximum allowed duration for a session?
 
 The maximum allowed duration for a session on the 100ms platform is 12 hours.
+
+### When a participant puts the Flutter iOS app in Background and enables PiP, why does the other participant loses the Remote Camera Video Track?
+
+When your app enters PIP mode, it needs [com.apple.developer.avfoundation.multitasking-camera-access](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_avfoundation_multitasking-camera-access) entitlement to continue using the camera. Without the entitlement, the system disables the camera access for your app. When your app enters PIP mode, it needs this entitlement to continue using the camera. Without the Entitlement approval from Apple, your app won't be able capture camera feed in Background.
+
+### When running the 100ms Flutter iOS Example app, why am I getting the error "No profile for team 'XXXXXXXXXX' matching 'FlutterBroadcastUploadExtension' found"?
+
+The "No profile for team 'XXXXXXXXXX' matching 'FlutterBroadcastUploadExtension' found" error occurs when building the fully featured 100ms Flutter iOS Example app. This error is related to the Target Name used in the app, which is called `FlutterBroadcastUploadExtension`. This Target is required to start Screen Sharing from iOS Devices.
+
+To resolve this error, follow these steps:
+
+1. Delete the `FlutterBroadcastUploadExtension` target to quickly test the app. This will remove the screen sharing feature from the app.
+2. If you want to enable screen sharing from iOS devices, set it up correctly by following the steps [iOS screen sharing setup guide](https://www.100ms.live/docs/flutter/v2/how--to-guides/set-up-video-conferencing/screen-share#ios-setup).
+3. Make sure to configure the screen sharing properly by following the instructions in the guide.
+4. Once the screen sharing setup is complete, try building the app again. The error should no longer occur.
+
 
 ### I want to suggest a new feature.
 

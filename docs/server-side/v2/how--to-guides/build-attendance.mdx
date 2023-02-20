@@ -72,12 +72,12 @@ var parsedData = response.data;
 ### Calculate the individual participants' duration
 
 -   Calculate the individual participants' duration by finding the difference between the `joined_at` and `left_at` fields for the respective peer
-    -   Map the duration against `peer_id` or `user_id` (your internal user identifier used while creating the [auth token](/server-side/v2/introduction/authentication-and-tokens#app-token) for peers).
+    -   Map the duration against `peer_id` or `user_id` (your internal user identifier used while creating the [auth token](/server-side/v2/introduction/authentication-and-tokens#auth-token) for peers).
 
 > **Note**:
 >
 > -   100ms generates a `peer_id` (unique identifier) every time a peer joins a room. If a peer leaves and re-joins the room, they will be assigned a new peer_id.
-> -   A `user_id` will be unique to a peer as it's associated with the [auth token](/server-side/v2/introduction/authentication-and-tokens#app-token) they use to join the room. The below example uses `user_id` to avoid duplicate entries for a single peer.
+> -   A `user_id` will be unique to a peer as it's associated with the [auth token](/server-side/v2/introduction/authentication-and-tokens#auth-token) they use to join the room. The below example uses `user_id` to avoid duplicate entries for a single peer.
 
 ```javascript
 // Calculate individual participants' duration
