@@ -369,7 +369,13 @@ export default function Examples() {
     return (
         <Flex direction="column" css={{ minHeight: '100vh' }}>
             <SegmentAnalytics options={{}} title="100ms Docs Examples" />
-            <Header modal={modal} setModal={setModal} menuState={menuState} showReference={false} />
+            <Header
+                modal={modal}
+                setModal={setModal}
+                menuState={menuState}
+                showReference={false}
+                showMobileMenu={false}
+            />
 
             <Flex
                 align="center"

@@ -130,7 +130,7 @@ export default function TechnologySelect({ css, value, setValue }: Props) {
                         {Object.values(TECHNOLOGIES).map((technology) => {
                             const Icon = reactIcons[technologyIconMap[technology].icon];
                             return (
-                                <SelectItem value={technology}>
+                                <SelectItem value={technology} key={technology}>
                                     <Icon />
                                     <Select.ItemText asChild>
                                         <span style={{ flexGrow: 1, textAlign: 'left' }}>
