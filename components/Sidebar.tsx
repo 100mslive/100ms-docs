@@ -16,7 +16,8 @@ import {
     FlutterIcon as Flutter,
     AndroidIcon as Android,
     ReactIcon as ReactNative,
-    JavascriptIcon as JavaScript
+    JavascriptIcon as JavaScript,
+    RocketIcon
 } from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
 import { Flex, Box, Text } from '@100mslive/react-ui';
@@ -180,14 +181,27 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                         <ChevronRightIcon height="16px" width="16px" />
                     </Flex>
                 )}
-                <a style={{ textDecoration: 'none' }} href="/docs/concepts/v2/concepts/basics">
-                    <Flex gap="2" align="center" css={{ color: '$primaryLight' }}>
-                        <LayersIcon style={{ color: 'inherit' }} />
-                        <Text css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
-                            Concepts
-                        </Text>
-                    </Flex>
-                </a>
+                <Box>
+                    <a style={{ textDecoration: 'none' }} href="/docs/concepts/v2/concepts/basics">
+                        <Flex gap="2" align="center" css={{ color: '$primaryLight' }}>
+                            <LayersIcon style={{ color: 'inherit' }} />
+                            <Text css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
+                                Concepts
+                            </Text>
+                        </Flex>
+                    </a>
+                </Box>
+
+                <Box className='sidebar-examples' css={{ mt: '$10' }}>
+                    <a style={{ textDecoration: 'none' }} href="/docs/examples">
+                        <Flex gap="2" align="center" css={{ color: '$primaryLight' }}>
+                            <RocketIcon style={{ color: 'inherit' }} />
+                            <Text css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
+                                Examples
+                            </Text>
+                        </Flex>
+                    </a>
+                </Box>
 
                 <hr style={{ margin: '24px 0' }} />
 
