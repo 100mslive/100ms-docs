@@ -8,44 +8,329 @@ SFU recording composition will be received in a webhook call [recording.success]
 
 **Browser recording** - This recording gives a mp4 as an output and is basically a virtual browser that joins the room as a peer and recording what it sees. Browser recording can be [customised](https://www.100ms.live/docs/server-side/v2/introduction/authentication-and-tokens) to any look and feel. The recording time post session is close to 5-10 minutes once the session is done. Browser recording will be received in a webhook call [beam.recording.sucess](https://www.100ms.live/docs/server-side/v2/introduction/webhook#beam-recording-success)
 
-## Try Browser Recording
+## Try Recording
 
 <Tabs id="try-recording-tabs" items={['Browser Recording', 'SFU Recording']} />
 
 <Tab id="try-recording-tabs-0">
 
 -   Create a sample video conference app from the 100ms [dashboard](https://dashboard.100ms.live/)
-    ![Screenshot 2023-01-01 at 12.57.20 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9a8e196c-f17e-450b-95fb-120ac9ac664c/Screenshot_2023-01-01_at_12.57.20_PM.png)
+
+    ![Create a new app](/guides/waiting-room/video-conf.png)
+
 -   Create multiples roles say Guest, Host and Beam
-    > **Note**: The beam role is not publishing anything but subscribes to the Guest and Host\*\*
+    -   The beam role is not publishing anything but subscribes to the Guest and Host
 -   So once beam joins the room it will record the Host and Guest.
 -   Also this will make beam video tile of beam from showing up on the UI as well.
-    ![Screenshot 2023-01-01 at 12.58.21 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8099bec8-b658-4e49-8e7a-5b49e7a027bc/Screenshot_2023-01-01_at_12.58.21_PM.png)
+
+    ![Create a new app](/guides/recording/beam-role.png)
+
 -   Join the room as a host and then start the recording of the session.
-    ![Screenshot 2023-01-01 at 1.03.20 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bedb1557-3c93-4a2d-9bc4-faf6dc03446f/Screenshot_2023-01-01_at_1.03.20_PM.png)
+
+    ![Create a new app](/guides/recording/join-host.png)
 
 </Tab>
 
 <Tab id="try-recording-tabs-1">
-    
+
 -   Create a sample video conference app from the 100ms [dashboard](https://dashboard.100ms.live/)
-    ![Screenshot 2023-01-01 at 12.57.20 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9a8e196c-f17e-450b-95fb-120ac9ac664c/Screenshot_2023-01-01_at_12.57.20_PM.png)
+
+    ![Create a new app](/guides/waiting-room/video-conf.png)
+
+-   Once the app is created, enable SFU recording by navigating to the "Destinations" tab.
+
+    <br />
+    <video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
+        <source src="/docs/guides/recording/enable-sfu.mp4" type="video/mp4" />
+    </video>
+    <br />
+
+-   Now, start a meeting using the 100ms demo links, you should be able to see the session getting recorded.
+
+    <br />
+    <video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
+        <source src="/docs/guides/recording/check-sfu.mp4" type="video/mp4" />
+    </video>
+    <br />
+
+-   You can retrieve the recording logs from the [sessions page](https://dashboard.100ms.live/sessions) with recording_url in 1.5x time (processing time) of the session duration.
+
+    ![retrieve recording](/guides/recording/retrieve.png)
 
 </Tab>
 
 ## Configure Storage
 
+<Tabs id="configure-storage-tabs" items={['Dashboard', 'Server API']} />
+
+<Tab id="configure-storage-tabs-0">
+
 -   Login to the 100ms dashboard navigate to templates and then destination
-    ![Screenshot 2023-01-02 at 8.09.10 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ce0c72f4-5af0-427d-9bc7-3d00ed96a2fa/Screenshot_2023-01-02_at_8.09.10_PM.png)
+
+    ![retrieve recording](/guides/recording/configure-storage-1.png)
+
 -   Set the below value
+
     -   Key in your credentials (using an example of an S3 bucket here):
+
         -   Access Key: Access Key generated from AWS IAM Console
         -   Secret Key: Secret Key generated from AWS IAM Console
         -   Bucket: Name of the [bucket](https://s3.console.aws.amazon.com/s3/buckets/) in S3
         -   Region: [Name of the region](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints), for example, ap-south-1
         -   Prefix for Upload Path: Define the directory name (optional)
-            ![Screenshot 2023-01-02 at 8.10.13 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b5ea5996-7a80-41fc-ac1a-2fe5c5b5ad5a/Screenshot_2023-01-02_at_8.10.13_PM.png)
--   Use the **Validate Config** button to test your storage setup.
-    ![Screenshot 2023-01-02 at 8.11.15 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/67088b83-6184-4e95-b459-ee36e703ac18/Screenshot_2023-01-02_at_8.11.15_PM.png)
--   You will see a message that the AWS **configuration was successfully validated**.
-    ![Screenshot 2023-01-02 at 8.11.29 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6a6d83e1-b3a6-4098-b6a5-cec42e249832/Screenshot_2023-01-02_at_8.11.29_PM.png)
+
+            ![retrieve recording](/guides/recording/configure-storage-2.png)
+
+-   Use the **Validate Config** button to test your storage setup.
+
+    ![retrieve recording](/guides/recording/configure-storage-3.png)
+
+-   You will see a message that the AWS **configuration was successfully validated**.
+
+    ![retrieve recording](/guides/recording/configure-storage-4.png)
+
+</Tab>
+
+<Tab id="configure-storage-tabs-1">
+
+-   You can configure storage using server-side API at a room level or at the template level.
+-   **Room:** You can configure recording storage using [create a room](/server-side/v2/api-reference/Rooms/create-via-api) or [update a room](/server-side/v2/api-reference/Rooms/update-a-room) API uisng the [recording_info object](/server-side/v2/api-reference/Rooms/create-via-api#recording_info-arguments).
+-   **Template:** You can configure recording storage using [create a template](/server-side/v2/api-reference/policy/create-template-via-api) or [update a template](/server-side/v2/api-reference/policy/update-a-template) API using the [recording object](/server-side/v2/api-reference/policy/create-template-via-api#recording-object).
+
+</Tab>
+
+## Start/Stop Browser Recording
+
+You can start/stop browser recording using the client-side API available in the 100ms client SDKs or using the server-side API.
+
+> **Note**: SFU recording doesn't require a trigger to start/stop recording, once the destination is enabled, recording happens automatically for all calls.
+
+<Tabs id="start-recording-tabs" items={['Client-side API', 'Server API']} />
+
+<Tab id="start-recording-tabs-0">
+
+APIs are available in all 100ms' client SDKs to start and stop the browser recording.
+
+<Tabs id="code-tabs" items={['Web', 'Android', 'iOS', 'React-Native', 'Flutter']} />
+
+<Tab id="code-tabs-0">
+
+```javascript
+async start() {
+    const params = {
+        meetingURL: "",
+        rtmpURLs: [""],
+        record: true
+    };
+    try {
+        await hmsActions.startRTMPOrRecording(params);
+    } catch(err) {
+        console.error("failed to start RTMP/recording", err);
+    }
+}
+
+async stop() {
+    try {
+        await hmsActions.stopRTMPAndRecording();
+    } catch (err) {
+        console.error("failed to stop RTMP/recording", err);
+    }
+}
+```
+
+</Tab>
+
+    <Tab id="code-tabs-1">
+
+    <Tabs id="android-tabs" items={['Kotlin', 'Java']} />
+
+        <Tab id="android-tabs-0">
+
+        ```kotlin
+        hmsSdk.startRtmpOrRecording(hmsRecordingConfig, object : HMSActionResultListener {
+
+            override fun onSuccess() {
+                // started successfully
+            }
+
+            override fun onError(error: HMSException) {
+                // an error occurred
+            }
+        }
+        )
+
+        hmsSdk.stopRtmpAndRecording(object : HMSActionResultListener {
+
+            override fun onSuccess() {
+                // Stop succeeded.
+            }
+
+            override fun onError(error: HMSException) {
+                // Error while stopping.
+            }
+
+        })
+
+        ```
+
+        </Tab>
+
+        <Tab id="android-tabs-1">
+
+        ```java
+        hmsSdk.startRtmpOrRecording(hmsRecordingConfig, new HMSActionResultListener() {
+            @Override
+            public void onSuccess() {
+                // started successfully
+            }
+
+            @Override
+            public void onError(@NonNull HMSException e) {
+                // an error occurred
+            }
+
+        });
+
+        hmsSdk.stopRtmpAndRecording(new HMSActionResultListener() {
+        @Override
+        public void onSuccess() {
+        // Stop succeeded.
+        }
+
+            @Override
+            public void onError(@NonNull HMSException e) {
+                // Error while stopping.
+            }
+
+        });
+
+        ```
+
+        </Tab>
+
+    </Tab>
+
+<Tab id="code-tabs-2">
+
+```swift
+let config = HMSRTMPConfig(meetingURL: <#meetingURL#>, rtmpURLs: <#rtmpURLs#>, record: <#recordingEnabled#>)
+hmsSDK?.startRTMPOrRecording(config: config) { didStart, error in
+    print(didStart, error)
+}
+
+hmsSDK?.stopRTMPAndRecording() { didStop, error in
+}
+
+```
+
+</Tab>
+
+<Tab id="code-tabs-3">
+
+```javascript
+import { HMSRTMPConfig } from '@100mslive/react-native-hms';
+const recordingDetails = HMSRTMPConfig({
+    record: true,
+    meetingURL: roomID + '/viewer?token=beam_recording',
+    rtmpURLs: []
+});
+
+await instance
+    ?.startRTMPOrRecording(recordingDetails)
+    .then((d) => console.log('Start Recording Success: ', d))
+    .catch((e) => console.log('Start Recording Error: ', e));
+await instance
+    ?.stopRtmpAndRecording()
+    .then((d) => console.log('Stop Recording Success: ', d))
+    .catch((e) => console.log('Stop Recording Error: ', e));
+```
+
+</Tab>
+
+<Tab id="code-tabs-4">
+
+```dart
+void startRtmpOrRecording(
+{required HMSRecordingConfig hmsRecordingConfig,
+HMSActionResultListener? hmsActionResultListener}) async {}
+
+void stopRtmpAndRecording(
+{HMSActionResultListener? hmsActionResultListener}) async
+```
+
+</Tab>
+
+</Tab>
+
+<Tab id="start-recording-tabs-1">
+
+**Start recording API**
+
+```shell
+curl \
+--location \
+--request POST '[https://prod-in2.100ms.live/api/v2/beam](https://prod-in2.100ms.live/api/v2/beam)' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer <management_token>' \
+--data-raw '{
+"operation": "start",
+"room_id": <rooom_id>,
+"meeting_url": <meeting_url>,
+"rtmp_urls": [<rtmp_url_1>, <rtmp_url_2>],
+"record": true,
+"resolution" : {"width": 1280, "height": 720}
+}'
+```
+
+**Stop recording API**
+
+```shell
+curl \
+--location \
+--request POST '[https://prod-in2.100ms.live/api/v2/beam](https://prod-in2.100ms.live/api/v2/beam)' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer <management_token>' \
+--data-raw '{
+"operation": "stop",
+"room_id": <rooom_id>
+}'
+```
+
+-   operation : start(this to start the recording)/stop (this is to stop the recording)
+-   room_id : The room id can be taken from the [create room API response](https://www.100ms.live/docs/server-side/v2/Rooms/create-via-api)
+-   meeting_url : The meeting url in this case will be the url of the beam user that you need to pass. For example, `https://<domain>/meeting/<room_id>/<rolename>?skip_preview=true`. The beam needs to join the room directly and to bypass our preview screen we pass this query parameter for our web app **skip_preview=true.**
+-   rtmp_urls : This is an array of string that is used if you want to output the room to youtube, Facebook etc. Currently a max of 3 urls is supported at any once.
+    -   Format: `rtmp://server.com/app/STREAM_KEY`
+    -   Example: `rtmp://a.rtmp.youtube.com/live2/k0jv-329m-1y7f-ktth-ck48`
+        -   "rtmp://a.rtmp.youtube.com/live2/" - RTMP stream URL.
+        -   "k0jv-329m-1y7f-ktth-ck48" - RTMP stream key.
+-   record: This param needs to be true for recording
+-   resolution: This param is to set the resolution of the recording and default values are `{"width": 1280, "height": 720}`
+-   management token: For all API validation you will need to generate the management token for your account and the values needed to generate this is access key and secret which is found in the [dashboard under the developer section](https://dashboard.100ms.live/developer). To generate the [management token](https://www.100ms.live/docs/server-side/v2/introduction/authentication-and-tokens).
+
+</Tab>
+
+## Retrieve recording
+
+There are a couple of ways to retrieve the recording information such as location, path, etc,.
+
+<Tabs id="retrieve-tabs" items={['Dashboard', 'Webhooks']} />
+
+<Tab id="retrieve-tabs-0">
+
+-   You can retrieve the recording logs from the [sessions page](https://dashboard.100ms.live/sessions) with recording_url.
+
+    ![retrieve recording](/guides/recording/retrieve.png)
+
+</Tab>
+
+<Tab id="retrieve-tabs-1">
+
+**Storage recording path is available in following webhook responses:**
+
+-   Browser Recording: [beam.recording.success](/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `recording_path`)
+-   SFU Recording: [recording.success](/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `recording_path`)
+-   Multiresolution Recording: [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `recording_single_files` ; `recording_path`)
+-   VOD Recording: [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `hls_vod_recording_path`)
+
+</Tab>
