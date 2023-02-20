@@ -56,21 +56,6 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
         }
     }, []);
 
-    // Scroll active page into view
-    useEffect(() => {
-        setTimeout(() => {
-            if (activeItem?.current) {
-                activeItem.current.scrollIntoView({
-                    behavior: 'auto',
-                    block: 'center',
-                    inline: 'nearest'
-                });
-            }
-        }, 0);
-    }, [activeItem]);
-
-    // const indexURL = children?.overview?.url || '';
-
     return renderComponents ? (
         <section
             style={{

@@ -5,11 +5,12 @@ import dynamic from 'next/dynamic';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import NProgress from 'nprogress';
+import FallbackLayout from '@/layouts/FallbackLayout';
 import SEO from '../next-seo.config';
 import { currentUser } from '../lib/currentUser';
-import "@code-hike/mdx/dist/index.css"
-import "@/styles/custom-ch.css"
-import "@/styles/utils.css"
+import '@code-hike/mdx/dist/index.css';
+import '@/styles/custom-ch.css';
+import '@/styles/utils.css';
 import '@/styles/nprogress.css';
 import '@/styles/theme.css';
 import 'inter-ui/inter.css';
@@ -26,7 +27,7 @@ const HMSThemeProvider = dynamic(
     { ssr: true }
 );
 
-const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
+const Application = ({ Component, pageProps }) => {
     const router = useRouter();
     const userDetails = currentUser();
     const [count, setCount] = useState(0);
@@ -42,12 +43,17 @@ const Application: NextPage<AppProps<{}>> = ({ Component, pageProps }) => {
         router.events.on('routeChangeComplete', () => NProgress.done());
         router.events.on('routeChangeError', () => NProgress.done());
     }, []);
+
+    const Layout = Component.Layout || FallbackLayout;
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (
         <>
             <DefaultSeo {...SEO} />
             <HMSThemeProvider>
-                <Component {...pageProps} key={router.asPath} />
+                <Layout>
+                    <Component {...pageProps} key={router.asPath} />
+                </Layout>
             </HMSThemeProvider>
         </>
     );
