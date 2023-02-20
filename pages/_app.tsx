@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { DefaultSeo } from 'next-seo';
 import dynamic from 'next/dynamic';
-import { NextPage } from 'next';
-import { AppProps } from 'next/app';
 import NProgress from 'nprogress';
 import FallbackLayout from '@/layouts/FallbackLayout';
 import SEO from '../next-seo.config';
