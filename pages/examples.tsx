@@ -467,12 +467,7 @@ export default function Examples() {
                                 padding: 0,
                                 margin: 0,
                                 gap: '$4',
-                                overflow: 'auto',
-                                scrollbarWidth: 'none',
-                                '& ::-webkit-scrollbar': {
-                                    width: 0,
-                                    height: 0
-                                }
+                                overflow: 'auto'
                             }}>
                             {categories.map(({ icon, text, textSmall }) => (
                                 <li key={text} style={{ marginBottom: 0, display: 'flex' }}>

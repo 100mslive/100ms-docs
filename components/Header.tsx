@@ -1,15 +1,16 @@
 import useKeyPress from '@/lib/useKeyPress';
 import {
     CrossIcon,
+    DividerIcon,
     HamburgerMenuIcon,
     NightIcon,
     SearchIcon,
     SunIcon
 } from '@100mslive/react-icons';
-import { Flex, Text, useTheme } from '@100mslive/react-ui';
+import { Box, Flex, useTheme } from '@100mslive/react-ui';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import ActiveLink, { ActiveLinkProps } from './ActiveLink';
 import SearchModal from './SearchModal';
 
 interface Props {
@@ -111,54 +112,69 @@ const Header: React.FC<Props> = ({
         return routeLink;
     };
 
-    // const isApiRef = router.query.slug && router.query.slug[0] === 'api-reference';
+    const isApiRef = router.query.slug && router.query.slug[0] === 'api-reference';
     const isNonApiRef = router.query.slug && router.query.slug[0] === 'server-side';
 
     return (
-        <Flex
-            align="center"
-            justify="between"
-            css={{
-                zIndex: 200,
-                position: 'sticky',
-                top: 0,
-                padding: '12px 40px',
-                backgroundColor: 'var(--docs_bg_header)',
-                borderBottom: '1px solid var(--docs_border_default)',
-                boxSizing: 'border-box',
-                gap: '40px'
-            }}>
+        <div className="ctx">
             <div className="head-left">
-                <a href="https://www.100ms.live" style={{ display: 'flex', marginRight: '40px' }}>
-                    <img
-                        src={isDark ? '/docs/logo-full.svg' : '/docs/logo-full-dark.svg'}
-                        height={24}
-                        alt="100ms Logo"
-                    />
+                <a href="https://www.100ms.live">
+                    <div className="logo-ctx">
+                        <img width={36} src="/docs/logo.svg" alt="100ms Logo" />
+                        <p className="company hide-content">100ms</p>
+                    </div>
                 </a>
-                <Flex css={{ gap: '$14' }}>
-                    <HeaderLink href="/">Documentation</HeaderLink>
-                    <HeaderLink href="/examples">Examples</HeaderLink>
-                    {!isNonApiRef && showReference ? (
-                        <HeaderLink href={routeAPIRef()}>API Reference</HeaderLink>
-                    ) : null}
+                <DividerIcon style={{ strokeWidth: '2px', marginLeft: '-16px' }} />
+                <Flex css={{ gap: '$10' }}>
+                    <Link href="/">
+                        <p
+                            className="company"
+                            style={{
+                                cursor: 'pointer',
+                                fontSize: '1rem',
+                                position: 'relative',
+                                top: '1px'
+                            }}>
+                            Documentation
+                        </p>
+                    </Link>
+                    <Link href="/examples">
+                        <p
+                            className="company"
+                            style={{
+                                cursor: 'pointer',
+                                fontSize: '1rem',
+                                position: 'relative',
+                                top: '1px'
+                            }}>
+                            Examples
+                        </p>
+                    </Link>
                 </Flex>
             </div>
 
-            <Flex align="center" css={{ height: '40px' }}>
+            <div className="nav-links">
+                <span style={{ marginRight: '1rem' }} />
+                {isNonApiRef || !showReference ? null : (
+                    <button className={isApiRef ? 'link-btn' : 'link-btn-active'} type="button">
+                        <Link href={routeAPIRef()}>API Reference</Link>
+                    </button>
+                )}
+            </div>
+
+            <div className="head-right">
                 <Flex
-                    align="center"
                     onClick={() => setHelperState((prev) => prev + 1)}
                     css={{
                         borderRadius: '$1',
                         width: '$80',
                         gap: '$8',
                         color: '$textMedEmp',
-                        border: '1px solid $borderDefault',
-                        marginRight: '$13',
-                        background: '$surfaceDefault',
+                        border: '1px solid $borderLighter',
+                        marginRight: '$9',
+                        background: '$surfaceLight',
                         padding: '$3 $8 $3 $5',
-                        '@lg': {
+                        '@md': {
                             display: 'none'
                         },
                         ':hover': {
@@ -167,59 +183,64 @@ const Header: React.FC<Props> = ({
                         }
                     }}>
                     <SearchIcon />
-                    <Text as="span" variant="body2" css={{ fontWeight: '$regular' }}>
-                        Search docs
-                    </Text>
+                    <Box>Search docs</Box>
                     <span className="hot-key">/</span>
                 </Flex>
-
-                <Flex
-                    align="center"
-                    css={{
-                        display: 'none',
-                        '@lg': {
-                            display: onHomePage ? 'flex' : 'none'
-                        },
-                        '@md': {
-                            display: 'flex'
-                        }
-                    }}>
-                    <button
-                        onClick={() => setHelperState((prev) => prev + 1)}
-                        type="button"
-                        style={{ display: 'flex', padding: 0 }}>
-                        <SearchIcon style={{ width: '24px' }} />
-                    </button>
-                    {showMobileMenu && (
-                        <button
-                            aria-label="menu-button"
-                            type="button"
-                            onClick={() => setMenu(!menu)}
-                            style={{ display: 'flex', padding: 0 }}>
-                            {menu ? <CrossIcon /> : <HamburgerMenuIcon />}
-                        </button>
-                    )}
-                </Flex>
-
-                <Flex
-                    as="button"
+                <span
                     aria-label="theme-toggle-button"
-                    type="button"
-                    css={{
-                        padding: 0,
-                        backgroundColor: 'transparent',
-                        border: 'none',
+                    className="pointer theme-btn"
+                    role="button"
+                    style={{
+                        paddingTop: '8px',
+                        margin: '0 2rem 0 0',
                         cursor: 'pointer'
                     }}
                     tabIndex={0}
                     onKeyPress={() => {}}
                     onClick={() => buttonToggleTheme()}>
                     {!isDark ? <NightIcon /> : <SunIcon style={{ color: '#ECC502' }} />}
-                </Flex>
-            </Flex>
+                </span>
+            </div>
             {modal ? <SearchModal setModal={setModal} /> : null}
+            <Box
+                css={{
+                    display: 'none',
+                    '@lg': {
+                        display: onHomePage ? 'flex' : 'none'
+                    },
+                    '@md': {
+                        display: 'flex'
+                    }
+                }}>
+                <button
+                    onClick={() => setHelperState((prev) => prev + 1)}
+                    style={{ marginRight: '0.5rem', marginLeft: '-1rem', marginTop: '0.5rem' }}
+                    type="button">
+                    <SearchIcon style={{ width: '24px' }} />
+                </button>
+                {showMobileMenu && (
+                    <button
+                        style={{ width: '24px', marginTop: '8px', marginRight: '8px' }}
+                        aria-label="menu-button"
+                        type="button"
+                        onClick={() => setMenu(!menu)}>
+                        {menu ? <CrossIcon /> : <HamburgerMenuIcon />}
+                    </button>
+                )}
+            </Box>
             <style jsx>{`
                 .ctx {
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+                    height: 3rem;
+                    z-index: 200;
+                    position: sticky;
+                    margin: 0;
+                    top: 0;
+                    padding: 0.5rem 0 0.5rem 0;
+                    background-color: var(--docs_bg_header);
+                    border-bottom: 1px solid var(--docs_border_default);
                 }
                 .link-btn {
                     background: var(--docs_bg_header_button);
@@ -321,7 +342,7 @@ const Header: React.FC<Props> = ({
                     }
                 }
             `}</style>
-        </Flex>
+        </div>
     );
 };
 
@@ -331,42 +352,3 @@ Header.defaultProps = {
 };
 
 export default Header;
-
-const HeaderLink = ({
-    children,
-    ...rest
-}: React.PropsWithChildren<Omit<ActiveLinkProps, 'activeClassName'>>) => {
-    return (
-        <ActiveLink activeClassName="docs-link-active" passHref {...rest}>
-            {(className) => (
-                <Text
-                    as="a"
-                    variant="body2"
-                    className={className}
-                    css={{
-                        boxSizing: 'border-box',
-                        fontWeight: '$semiBold',
-                        color: '$textMedEmp',
-                        '&:hover': {
-                            opacity: 'initial'
-                        },
-                        '&:not(.docs-link-active):hover': {
-                            color: '$textHighEmp',
-                            backgroundColor: '$surfaceLighter',
-                            padding: '$2 $4',
-                            margin: '-$2 -$4',
-                            borderRadius: '$0'
-                        },
-                        '&.docs-link-active': {
-                            color: '$textHighEmp',
-                            textDecoration: 'underline',
-                            textDecorationThickness: '2px',
-                            textDecorationColor: '$primaryLight'
-                        }
-                    }}>
-                    {children}
-                </Text>
-            )}
-        </ActiveLink>
-    );
-};
