@@ -8,48 +8,18 @@ import SegmentAnalytics from '@/components/SegmentAnalytics';
 import Sidebar from '@/components/Sidebar';
 import TechnologySelect, { TECHNOLOGIES, Technologies } from '@/components/TechnologySelect';
 import { getAllDocs, getNavfromDocs } from '@/lib/mdxUtils';
-// import { SearchIcon } from '@100mslive/react-icons';
 import { Box, Button, Flex, Text } from '@100mslive/react-ui';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 export default function Examples({ allNav }) {
     const [menu, setMenu] = useState(false);
     const [modal, setModal] = useState(false);
     const menuState = { menu, setMenu };
-    const [, setCurrentTheme] = useState('dark');
-
-    useEffect(() => {
-        const updateTheme = (e) => setCurrentTheme(e.detail.theme);
-
-        if (document) document.addEventListener('themeChanged', updateTheme);
-        return () => document.removeEventListener('themeChanged', updateTheme);
-    }, []);
-
-    useEffect(() => {
-        if (window) {
-            setCurrentTheme(window.localStorage.theme || 'dark');
-        }
-    }, []);
 
     const [technology, setTechnology] = useState<Technologies>(TECHNOLOGIES.ALL_TECHNOLOGIES);
     const [category, setCategory] = useState<Categories>(CATEGORIES.ALL_CATEGORIES);
-    // const [search, setSearch] = useState('');
 
     const filteredExamples = useMemo(() => {
-        // if (search.length === 0) {
-        //     return examples
-        //         .filter(
-        //             ({ categories }) =>
-        //                 category === CATEGORIES.ALL_CATEGORIES ||
-        //                 categories.indexOf(category) !== -1
-        //         )
-        //         .filter(
-        //             ({ technologies }) =>
-        //                 technology === TECHNOLOGIES.ALL_TECHNOLOGIES ||
-        //                 technologies.indexOf(technology) !== -1
-        //         );
-        // }
-
         return examples
             .filter(
                 ({ categories }) =>
@@ -60,14 +30,10 @@ export default function Examples({ allNav }) {
                     technology === TECHNOLOGIES.ALL_TECHNOLOGIES ||
                     technologies.indexOf(technology) !== -1
             );
-        //.filter(({ title }) => string_similarity(title, search) > 0.25)
-        //.sort(
-        //    (a, b) => string_similarity(b.title, search) - string_similarity(a.title, search)
-        //);
     }, [category, technology]);
 
     return (
-        <Flex direction="column" css={{ minHeight: '100vh', overflow: "hidden" }}>
+        <Flex direction="column" css={{ minHeight: '100vh', overflow: 'hidden' }}>
             <SegmentAnalytics options={{}} title="100ms Docs Examples" />
             <Header
                 modal={modal}
@@ -310,76 +276,6 @@ export default function Examples({ allNav }) {
         </Flex>
     );
 }
-
-/*const Search = ({ refine, css }) => {
-    const [searchTerm, setSearchTerm] = useState('');
-
-    useEffect(() => {
-        const debounceTimer = setTimeout(() => refine(searchTerm), 400);
-        return () => clearTimeout(debounceTimer);
-    }, [searchTerm]);
-
-    return (
-        <Flex
-            align="center"
-            css={{
-                color: '$textHighEmp',
-                bg: '$surfaceDefault',
-                padding: '$4 $6',
-                border: '1px solid $borderLighter',
-                borderRadius: '$1',
-                ...css
-            }}
-            onClick={(e) => e.stopPropagation()}>
-            <SearchIcon style={{ color: 'inherit', height: '24px', width: '24px' }} />
-            <Text
-                as="input"
-                variant="body1"
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={(event) => {
-                    setSearchTerm(event.target.value);
-                }}
-                type="text"
-                // eslint-disable-next-line jsx-a11y/no-autofocus
-                autoFocus
-                css={{
-                    marginLeft: '16px',
-                    backgroundColor: 'inherit',
-                    outline: 'none',
-                    border: 'none',
-                    width: '100%',
-                    fontWeight: '$regular'
-                }}
-            />
-        </Flex>
-    );
-};
-
-function get_bigrams(string) {
-    let s = string.toLowerCase();
-    let v = s.split('');
-    for (let i = 0; i < v.length; i++) {
-        v[i] = s.slice(i, i + 2);
-    }
-    return v;
-}
-
-function string_similarity(str1, str2) {
-    if (str1.length > 0 && str2.length > 0) {
-        const pairs1 = get_bigrams(str1);
-        const pairs2 = get_bigrams(str2);
-        const union = pairs1.length + pairs2.length;
-        let hits = 0;
-        for (let x = 0; x < pairs1.length; x++) {
-            for (let y = 0; y < pairs2.length; y++) {
-                if (pairs1[x] == pairs2[y]) hits++;
-            }
-        }
-        if (hits > 0) return (2.0 * hits) / union;
-    }
-    return 0.0;
-}*/
 
 export const getStaticProps = async () => {
     const allDocs = getAllDocs();
