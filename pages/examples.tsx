@@ -398,6 +398,7 @@ export default function Examples() {
                     as="img"
                     src="/docs/bg-example-transparent.png"
                     css={{
+                        zIndex: 1,
                         position: 'absolute',
                         top: '-370px',
                         pointerEvents: 'none'
@@ -451,6 +452,7 @@ export default function Examples() {
                     <Flex
                         direction="column"
                         css={{
+                            position: 'relative',
                             flexGrow: 1,
                             flexShrink: 0,
                             width: '260px',
@@ -460,39 +462,41 @@ export default function Examples() {
                                 maxWidth: 'initial'
                             }
                         }}>
-                        <TechnologySelect
-                            css={{ marginBottom: '$10' }}
-                            value={technology}
-                            setValue={setTechnology}
-                        />
-                        <Flex
-                            as="ul"
-                            direction={{ '@initial': 'column', '@md': 'row' }}
-                            css={{
-                                listStyle: 'none',
-                                padding: 0,
-                                margin: 0,
-                                gap: '$4',
-                                overflow: 'auto'
-                            }}>
-                            {categories.map(({ icon, text, textSmall }) => (
-                                <li key={text} style={{ marginBottom: 0, display: 'flex' }}>
-                                    <Category
-                                        active={text === category}
-                                        as="button"
-                                        icon={icon}
-                                        text={text}
-                                        textSmall={textSmall}
-                                        css={{
-                                            cursor: 'pointer',
-                                            width: '100%',
-                                            minWidth: 'max-content'
-                                        }}
-                                        onClick={() => setCategory(text)}
-                                    />
-                                </li>
-                            ))}
-                        </Flex>
+                        <Box css={{ position: 'sticky', top: '105px', zIndex: 0 }}>
+                            <TechnologySelect
+                                css={{ marginBottom: '$10', width: "100%" }}
+                                value={technology}
+                                setValue={setTechnology}
+                            />
+                            <Flex
+                                as="ul"
+                                direction={{ '@initial': 'column', '@md': 'row' }}
+                                css={{
+                                    listStyle: 'none',
+                                    padding: 0,
+                                    margin: 0,
+                                    gap: '$4',
+                                    overflow: 'auto'
+                                }}>
+                                {categories.map(({ icon, text, textSmall }) => (
+                                    <li key={text} style={{ marginBottom: 0, display: 'flex' }}>
+                                        <Category
+                                            active={text === category}
+                                            as="button"
+                                            icon={icon}
+                                            text={text}
+                                            textSmall={textSmall}
+                                            css={{
+                                                cursor: 'pointer',
+                                                width: '100%',
+                                                minWidth: 'max-content'
+                                            }}
+                                            onClick={() => setCategory(text)}
+                                        />
+                                    </li>
+                                ))}
+                            </Flex>
+                        </Box>
                     </Flex>
                     <Box
                         css={{
