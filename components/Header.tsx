@@ -158,7 +158,7 @@ const Header: React.FC<Props> = ({
                         gap: '$8',
                         color: '$textMedEmp',
                         border: '1px solid $borderDefault',
-                        background: '$surfaceDefault',
+                        background: '$surfaceLight',
                         padding: '$3 $8 $3 $5',
                         '@lg': {
                             display: 'none'
@@ -354,7 +354,7 @@ const HeaderLink = ({
                         },
                         '&:not(.docs-link-active):hover': {
                             color: '$textHighEmp',
-                            backgroundColor: '$surfaceLighter',
+                            backgroundColor: '$surfaceLight',
                             padding: '$2 $4',
                             margin: '-$2 -$4',
                             borderRadius: '$0'
@@ -362,6 +362,7 @@ const HeaderLink = ({
                         '&.docs-link-active': {
                             color: '$textHighEmp',
                             textDecoration: 'underline',
+                            textUnderlineOffset: '6px',
                             textDecorationThickness: '2px',
                             textDecorationColor: '$primaryLight'
                         }
