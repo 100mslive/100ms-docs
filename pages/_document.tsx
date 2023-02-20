@@ -49,6 +49,7 @@ class MyDocument extends Document {
             path:window.location.hostname,
             pathname:window.location.pathname,
             href:window.location.href,
+            theme:window.localStorage.getItem('theme') || 'dark',
             utm_source: url.searchParams.get("utm_source"),
             utm_medium: url.searchParams.get("utm_medium"),
             utm_campaign: url.searchParams.get("utm_campaign"),
