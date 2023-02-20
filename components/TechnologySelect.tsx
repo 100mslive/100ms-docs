@@ -4,14 +4,14 @@ import { styled } from '@100mslive/react-ui';
 
 export const TECHNOLOGIES = {
     ALL_TECHNOLOGIES: 'All Technologies',
+    REACT: 'React',
+    JAVASCRIPT: 'JavaScript',
     FLUTTER: 'Flutter',
     ANDROID: 'Android',
-    REACT_NATIVE: 'React Native',
     IOS: 'iOS',
     NEXTJS: 'NextJS',
+    REACT_NATIVE: 'React Native',
     SVELTE: 'Svelte',
-    JAVASCRIPT: 'JavaScript',
-    REACT: 'React',
     NODEJS: 'Node.js'
 } as const;
 
@@ -20,7 +20,7 @@ export type Technologies = typeof TECHNOLOGIES[keyof typeof TECHNOLOGIES];
 export const technologyIconMap: Record<
     Technologies,
     {
-        icon: keyof typeof reactIcons;
+        icon: keyof typeof reactIcons | string;
     }
 > = {
     [TECHNOLOGIES.ALL_TECHNOLOGIES]: {
@@ -51,7 +51,7 @@ export const technologyIconMap: Record<
         icon: 'ReactIcon'
     },
     [TECHNOLOGIES.NODEJS]: {
-        icon: 'ServerIcon'
+        icon: '/docs/NodeJS.svg'
     }
 };
 
@@ -108,7 +108,13 @@ type Props = {
 };
 
 export default function TechnologySelect({ css, value, setValue }: Props) {
-    const CurrentValueIcon = reactIcons[technologyIconMap[value].icon];
+    let CurrentValueIcon;
+    const iconNameOrPath = technologyIconMap[value].icon;
+    if (reactIcons[iconNameOrPath] !== undefined) {
+        CurrentValueIcon = reactIcons[iconNameOrPath];
+    } else {
+        CurrentValueIcon = () => <img src={iconNameOrPath} />;
+    }
 
     return (
         <Select.Root value={value} onValueChange={setValue}>
@@ -128,7 +134,13 @@ export default function TechnologySelect({ css, value, setValue }: Props) {
                 <SelectContent position="popper" sideOffset={16} align="start">
                     <Select.Viewport>
                         {Object.values(TECHNOLOGIES).map((technology) => {
-                            const Icon = reactIcons[technologyIconMap[technology].icon];
+                            let Icon;
+                            const iconNameOrPath = technologyIconMap[technology].icon;
+                            if (reactIcons[iconNameOrPath] !== undefined) {
+                                Icon = reactIcons[iconNameOrPath];
+                            } else {
+                                Icon = () => <img src={iconNameOrPath} />;
+                            }
                             return (
                                 <SelectItem value={technology} key={technology}>
                                     <Icon />

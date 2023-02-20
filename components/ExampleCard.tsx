@@ -98,7 +98,13 @@ function IconList({ technologies, showIcon }: IconListProps) {
 
     if (technologies.length === 1) {
         const technology = technologies[0];
-        const Icon = reactIcons[technologyIconMap[technology].icon];
+        let Icon;
+        const iconNameOrPath = technologyIconMap[technology].icon;
+        if (reactIcons[iconNameOrPath] !== undefined) {
+            Icon = reactIcons[iconNameOrPath];
+        } else {
+            Icon = () => <img src={iconNameOrPath} />;
+        }
         return (
             <Flex gap="2" css={{ color: '$textHighEmp' }}>
                 <Icon />
@@ -109,7 +115,13 @@ function IconList({ technologies, showIcon }: IconListProps) {
         return (
             <Flex as="ul" gap="2" css={{ listStyle: 'none', padding: 0, margin: 0 }}>
                 {technologies.map((technology) => {
-                    const Icon = reactIcons[technologyIconMap[technology].icon];
+                    let Icon;
+                    const iconNameOrPath = technologyIconMap[technology].icon;
+                    if (reactIcons[iconNameOrPath] !== undefined) {
+                        Icon = reactIcons[iconNameOrPath];
+                    } else {
+                        Icon = () => <img src={iconNameOrPath} />;
+                    }
                     return (
                         <Flex
                             as="li"
