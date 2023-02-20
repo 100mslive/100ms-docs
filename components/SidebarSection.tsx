@@ -30,7 +30,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
     const [openSection, setOpenSection] = useState(inFocus);
 
     // To open accordions that were not closed before the page reload
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (typeof window !== 'undefined') {
             const openedAccordions = JSON.parse(sessionStorage.getItem('openedAccordions') || '[]');
             for (const i of openedAccordions)
@@ -87,7 +87,6 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                             )
                         ];
                         sessionStorage.setItem('openedAccordions', JSON.stringify(updatedList));
-
                         return !prev;
                     });
                 }}
