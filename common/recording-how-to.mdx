@@ -1,0 +1,51 @@
+## Overview
+
+**SFU recording** - This recording does individual peer recording and also post session outputs a mp4 composition as well. SFU recording has two steps it first generates webm files for individual peers and then composes them to form the mp4. SFU recording has a fixed layout and composition.
+
+SFU recording usually takes 1.5x of time to process and return the composed recording. eg 2 peers for 60 min, recording composition will be available 2*60*1 = 120 minutes, once the session is completed.
+
+SFU recording composition will be received in a webhook call [recording.success](https://www.100ms.live/docs/server-side/v2/introduction/webhook#recording-success)
+
+**Browser recording** - This recording gives a mp4 as an output and is basically a virtual browser that joins the room as a peer and recording what it sees. Browser recording can be [customised](https://www.100ms.live/docs/server-side/v2/introduction/authentication-and-tokens) to any look and feel. The recording time post session is close to 5-10 minutes once the session is done. Browser recording will be received in a webhook call [beam.recording.sucess](https://www.100ms.live/docs/server-side/v2/introduction/webhook#beam-recording-success)
+
+## Try Browser Recording
+
+<Tabs id="try-recording-tabs" items={['Browser Recording', 'SFU Recording']} />
+
+<Tab id="try-recording-tabs-0">
+
+-   Create a sample video conference app from the 100ms [dashboard](https://dashboard.100ms.live/)
+    ![Screenshot 2023-01-01 at 12.57.20 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9a8e196c-f17e-450b-95fb-120ac9ac664c/Screenshot_2023-01-01_at_12.57.20_PM.png)
+-   Create multiples roles say Guest, Host and Beam
+    > **Note**: The beam role is not publishing anything but subscribes to the Guest and Host\*\*
+-   So once beam joins the room it will record the Host and Guest.
+-   Also this will make beam video tile of beam from showing up on the UI as well.
+    ![Screenshot 2023-01-01 at 12.58.21 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8099bec8-b658-4e49-8e7a-5b49e7a027bc/Screenshot_2023-01-01_at_12.58.21_PM.png)
+-   Join the room as a host and then start the recording of the session.
+    ![Screenshot 2023-01-01 at 1.03.20 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bedb1557-3c93-4a2d-9bc4-faf6dc03446f/Screenshot_2023-01-01_at_1.03.20_PM.png)
+
+</Tab>
+
+<Tab id="try-recording-tabs-1">
+    
+-   Create a sample video conference app from the 100ms [dashboard](https://dashboard.100ms.live/)
+    ![Screenshot 2023-01-01 at 12.57.20 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9a8e196c-f17e-450b-95fb-120ac9ac664c/Screenshot_2023-01-01_at_12.57.20_PM.png)
+
+</Tab>
+
+## Configure Storage
+
+-   Login to the 100ms dashboard navigate to templates and then destination
+    ![Screenshot 2023-01-02 at 8.09.10 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ce0c72f4-5af0-427d-9bc7-3d00ed96a2fa/Screenshot_2023-01-02_at_8.09.10_PM.png)
+-   Set the below value
+    -   Key in your credentials (using an example of an S3 bucket here):
+        -   Access Key: Access Key generated from AWS IAM Console
+        -   Secret Key: Secret Key generated from AWS IAM Console
+        -   Bucket: Name of the [bucket](https://s3.console.aws.amazon.com/s3/buckets/) in S3
+        -   Region: [Name of the region](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints), for example, ap-south-1
+        -   Prefix for Upload Path: Define the directory name (optional)
+            ![Screenshot 2023-01-02 at 8.10.13 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b5ea5996-7a80-41fc-ac1a-2fe5c5b5ad5a/Screenshot_2023-01-02_at_8.10.13_PM.png)
+-   Use the **Validate Config** button to test your storage setup.
+    ![Screenshot 2023-01-02 at 8.11.15 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/67088b83-6184-4e95-b459-ee36e703ac18/Screenshot_2023-01-02_at_8.11.15_PM.png)
+-   You will see a message that the AWS **configuration was successfully validated**.
+    ![Screenshot 2023-01-02 at 8.11.29 PM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6a6d83e1-b3a6-4098-b6a5-cec42e249832/Screenshot_2023-01-02_at_8.11.29_PM.png)
