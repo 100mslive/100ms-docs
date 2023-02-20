@@ -528,7 +528,7 @@ export default function Examples() {
                                             })
                                         }
                                         css={{
-                                            height: '152px',
+                                            height: '157px',
                                             minWidth: filteredExamples.length === 1 ? '350px' : 0,
                                             '@md': {
                                                 maxHeight: '142px'

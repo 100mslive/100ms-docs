@@ -1,5 +1,5 @@
 import * as reactIcons from '@100mslive/react-icons';
-import { Box, Flex, HorizontalDivider, Text } from '@100mslive/react-ui';
+import { Box, Flex, HorizontalDivider, Text, useTheme } from '@100mslive/react-ui';
 import { Technologies, technologyIconMap } from './TechnologySelect';
 
 interface Props extends React.ComponentPropsWithoutRef<typeof Box> {
@@ -20,12 +20,17 @@ export default function ExampleCard({
     css = {},
     ...rest
 }: Props) {
+    const { themeType } = useTheme();
+    const isDark = themeType === 'dark';
+
     return (
         <Flex
             css={{
                 boxSizing: 'content-box',
-                backgroundImage:
-                    'linear-gradient(279.91deg, rgba(19, 22, 27, 0.8) 37.76%, rgba(23, 27, 33, 0.8) 91.22%)',
+                backgroundColor: isDark ? 'transparent' : '$backgroundDefault',
+                backgroundImage: isDark
+                    ? 'linear-gradient(279.91deg, rgba(19, 22, 27, 0.8) 37.76%, rgba(23, 27, 33, 0.8) 91.22%)'
+                    : 'initial',
                 padding: '24px',
                 borderRadius: '16px',
                 boxShadow: '0px 16px 56px rgba(0, 0, 0, 0.05)',
@@ -139,7 +144,13 @@ function TagList({ tags }: TagListProps) {
                         paddingBlock: '$1',
                         paddingInline: '$4'
                     }}>
-                    <Text variant="body2" css={{ fontWeight: '$semiBold', whiteSpace: 'nowrap' }}>
+                    <Text
+                        variant="body2"
+                        css={{
+                            fontWeight: '$semiBold',
+                            whiteSpace: 'nowrap',
+                            color: '$textPrimary'
+                        }}>
                         {tag}
                     </Text>
                 </Box>
