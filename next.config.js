@@ -1263,6 +1263,11 @@ const nextConfig = {
                 destination: '/concepts/v2/concepts/templates-and-roles/overview',
                 permanent: true
             },
+            {
+                source: '/concepts/v2/concepts/recordings',
+                destination: '/concepts/v2/concepts/recording/overview',
+                permanent: true
+            },
 
         ];
     },
