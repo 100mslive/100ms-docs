@@ -49,9 +49,16 @@ interface Props {
     nav: Record<string, Record<string, NavRoute>>;
     allNav: Record<string, Record<string, NavRoute>>[];
     css?: CSS;
+    hideOnDesktop?: boolean;
 }
 
-const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, css = {} }) => {
+const Sidebar: React.FC<Props> = ({
+    hideOnDesktop = false,
+    menuState,
+    nav: currentNav,
+    allNav,
+    css = {}
+}) => {
     const router = useRouter() as any;
     const {
         query: { slug }
@@ -130,7 +137,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, css = {}
             className="hide-scrollbar"
             css={{
                 minWidth: '304px',
-                display: 'flex',
+                display: hideOnDesktop && !menu ? 'none' : 'flex',
                 flexDirection: 'column',
                 alignItems: 'stretch',
                 height: 'calc(100vh - 100px)',
@@ -285,7 +292,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, css = {}
                             }}>
                             <Listbox value={tech} onChange={changeTech}>
                                 <Listbox.Button className="dropdown">
-                                    <div style={{ display: 'flex ', alignItems: 'center' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
                                         {tech.icon}
                                         <span style={{ marginLeft: '1rem' }}>{tech.name}</span>
                                     </div>

@@ -390,12 +390,13 @@ export default function Examples({ allNav }) {
                         paddingBottom: menu ? 0 : '$10'
                     }
                 }}>
-                <Box css={{ display: 'none', '@md': { display: 'block' }, width: "100%" }}>
+                <Box css={{ width: "100%" }}>
                     <Sidebar
                         menuState={menuState}
                         allNav={allNav}
                         nav={{}}
                         css={{ '@md': { position: 'initial' } }}
+                        hideOnDesktop
                     />
                 </Box>
                 {!menu ? (

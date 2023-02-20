@@ -76,7 +76,7 @@ const Homepage = ({ allNav }) => {
                 css={{
                     mx: 'auto',
                     minHeight: '100vh',
-                    position: "relative",
+                    position: 'relative',
                     backgroundImage: `url(${
                         currentTheme === 'dark'
                             ? '/docs/bg-desktop.png'
@@ -89,7 +89,12 @@ const Homepage = ({ allNav }) => {
                         backgroundSize: 'cover'
                     }
                 }}>
-                <Sidebar menuState={menuState} nav={{}} allNav={allNav} />
+                <Sidebar
+                    menuState={menuState}
+                    nav={{}}
+                    allNav={allNav}
+                    css={{ width: menu ? '100%' : 'initial' }}
+                />
                 {!menu ? (
                     <Box
                         css={{
