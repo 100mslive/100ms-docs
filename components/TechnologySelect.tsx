@@ -1,6 +1,7 @@
 import * as Select from '@radix-ui/react-select';
 import * as reactIcons from '@100mslive/react-icons';
 import { styled } from '@100mslive/react-ui';
+import NodeJsIcon from '@/assets/icons/NodeJsIcon';
 
 export const TECHNOLOGIES = {
     ALL_TECHNOLOGIES: 'All Technologies',
@@ -20,7 +21,7 @@ export type Technologies = typeof TECHNOLOGIES[keyof typeof TECHNOLOGIES];
 export const technologyIconMap: Record<
     Technologies,
     {
-        icon: keyof typeof reactIcons | string;
+        icon: keyof typeof reactIcons | React.ReactNode;
     }
 > = {
     [TECHNOLOGIES.ALL_TECHNOLOGIES]: {
@@ -51,7 +52,7 @@ export const technologyIconMap: Record<
         icon: 'ReactIcon'
     },
     [TECHNOLOGIES.NODEJS]: {
-        icon: '/docs/NodeJS.svg'
+        icon: NodeJsIcon
     }
 };
 
@@ -110,10 +111,10 @@ type Props = {
 export default function TechnologySelect({ css, value, setValue }: Props) {
     let CurrentValueIcon;
     const iconNameOrPath = technologyIconMap[value].icon;
-    if (reactIcons[iconNameOrPath] !== undefined) {
+    if (typeof iconNameOrPath === 'string' && reactIcons[iconNameOrPath] !== undefined) {
         CurrentValueIcon = reactIcons[iconNameOrPath];
     } else {
-        CurrentValueIcon = () => <img src={iconNameOrPath} />;
+        CurrentValueIcon = iconNameOrPath;
     }
 
     return (
@@ -136,10 +137,13 @@ export default function TechnologySelect({ css, value, setValue }: Props) {
                         {Object.values(TECHNOLOGIES).map((technology) => {
                             let Icon;
                             const iconNameOrPath = technologyIconMap[technology].icon;
-                            if (reactIcons[iconNameOrPath] !== undefined) {
+                            if (
+                                typeof iconNameOrPath === 'string' &&
+                                reactIcons[iconNameOrPath] !== undefined
+                            ) {
                                 Icon = reactIcons[iconNameOrPath];
                             } else {
-                                Icon = () => <img src={iconNameOrPath} />;
+                                Icon = iconNameOrPath;
                             }
                             return (
                                 <SelectItem value={technology} key={technology}>
