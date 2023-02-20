@@ -369,7 +369,7 @@ export default function Examples({ allNav }) {
     }, [category, technology]);
 
     return (
-        <Flex direction="column" css={{ minHeight: '100vh' }}>
+        <Flex direction="column" css={{ minHeight: '100vh', overflow: "hidden" }}>
             <SegmentAnalytics options={{}} title="100ms Docs Examples" />
             <Header
                 modal={modal}
