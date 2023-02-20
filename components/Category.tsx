@@ -39,10 +39,10 @@ export default function Category({
         <Flex
             as={as}
             css={{
-                color: changeColor ? '$primaryLight' : '$textHighEmp',
+                color: changeColor ? 'var(--docs_text_category)' : '$textHighEmp',
                 padding: '$6',
                 gap: '$4',
-                backgroundColor: changeColor ? 'hsla(217, 50%, 12%, 1)' : 'transparent',
+                backgroundColor: changeColor ? 'var(--docs_bg_category)' : 'transparent',
                 borderRadius: '$1',
                 border: 'none',
                 '@sm': {

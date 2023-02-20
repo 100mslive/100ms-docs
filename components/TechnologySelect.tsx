@@ -97,7 +97,7 @@ const SelectItem = styled(Select.Item, {
     alignItems: 'center',
     padding: '$4 $8',
     '&[data-highlighted]': {
-        backgroundColor: '$secondaryDefault',
+        backgroundColor: '$surfaceLighter',
         outline: 'none'
     }
 });

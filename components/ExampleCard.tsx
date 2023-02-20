@@ -27,10 +27,9 @@ export default function ExampleCard({
         <Flex
             css={{
                 boxSizing: 'content-box',
-                backgroundColor: isDark ? 'transparent' : '$backgroundDefault',
                 backgroundImage: isDark
                     ? 'linear-gradient(279.91deg, rgba(19, 22, 27, 0.8) 37.76%, rgba(23, 27, 33, 0.8) 91.22%)'
-                    : 'initial',
+                    : 'linear-gradient(279.91deg, rgba(240, 242, 244, 0.8) 37.76%, rgba(249, 250, 251, 0.8) 91.22%)',
                 padding: '24px',
                 borderRadius: '16px',
                 boxShadow: '0px 16px 56px rgba(0, 0, 0, 0.05)',
@@ -41,7 +40,17 @@ export default function ExampleCard({
             {...rest}>
             <Box css={{ flexGrow: '1' }}>
                 <Flex css={{ mb: '$2' }} justify="between">
-                    <Text variant="h6" css={{ color: '$textHighEmp' }}>
+                    <Text
+                        variant="h6"
+                        css={{
+                            color: '$textHighEmp',
+
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            display: '-webkit-box',
+                            '-webkit-line-clamp': 1,
+                            '-webkit-box-orient': 'vertical'
+                        }}>
                         {title}
                     </Text>
                     <Box
@@ -66,11 +75,8 @@ export default function ExampleCard({
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
                         display: '-webkit-box',
-                        '-webkit-line-clamp': 3,
-                        '-webkit-box-orient': 'vertical',
-                        '@md': {
-                            '-webkit-line-clamp': 2
-                        }
+                        '-webkit-line-clamp': 2,
+                        '-webkit-box-orient': 'vertical'
                     }}>
                     {description}
                 </Text>
@@ -154,10 +160,11 @@ function TagList({ tags }: TagListProps) {
                     key={tag}
                     css={{
                         marginBottom: 0,
-                        backgroundColor: '$secondaryDark',
+                        backgroundColor: '$surfaceLighter',
                         borderRadius: '4px',
                         paddingBlock: '$1',
-                        paddingInline: '$4'
+                        paddingInline: '$4',
+                        border: '1px solid $borderDefault'
                     }}>
                     <Text
                         variant="body2"

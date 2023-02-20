@@ -464,7 +464,7 @@ export default function Examples() {
                         }}>
                         <Box css={{ position: 'sticky', top: '105px', zIndex: 0 }}>
                             <TechnologySelect
-                                css={{ marginBottom: '$10', width: "100%" }}
+                                css={{ marginBottom: '$10', width: '100%' }}
                                 value={technology}
                                 setValue={setTechnology}
                             />
@@ -538,11 +538,9 @@ export default function Examples() {
                                             })
                                         }
                                         css={{
-                                            height: '157px',
+                                            boxSizing: 'border-box',
+                                            height: '198px',
                                             minWidth: filteredExamples.length === 1 ? '350px' : 0,
-                                            '@md': {
-                                                maxHeight: '142px'
-                                            },
                                             '&:hover': {
                                                 opacity: 1
                                             }
