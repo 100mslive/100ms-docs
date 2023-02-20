@@ -114,7 +114,7 @@ const nextConfig = {
             },
             {
                 source: '/server-side/v2/guides/quickstart',
-                destination: '/docs/server-side/v2/introduction/basics',
+                destination: '/server-side/v2/introduction/basics',
                 permanent: false
             },
             {
@@ -1264,7 +1264,7 @@ const nextConfig = {
                 permanent: true
             },
             {
-                source: '/docs/server-side/v2/Rooms/:slug',
+                source: '/server-side/v2/Rooms/:slug',
                 destination: '/server-side/v2/api-reference/Rooms/:slug',
                 permanent: true
             },
@@ -1288,11 +1288,11 @@ const nextConfig = {
                 destination: '/server-side/v2/api-reference/Destinations/:slug',
                 permanent: true
             },
-            // {
-            //     source: '/server-side/v2/legacy-api%20(v1)/:slug',
-            //     destination: '/server-side/v2/api-reference/legacy-api%20(v1)/:slug',
-            //     permanent: true
-            // },
+            {
+                source: '/server-side/v2/legacy-api%20(v1)/:slug',
+                destination: '/server-side/v2/api-reference/legacy-api%20(v1)/:slug',
+                permanent: true
+            },
             {
                 source: '/server-side/v2/introduction/basics',
                 destination: '/concepts/v2/concepts/basics',
