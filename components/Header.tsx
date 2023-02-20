@@ -126,7 +126,10 @@ const Header: React.FC<Props> = ({
                 backgroundColor: 'var(--docs_bg_header)',
                 borderBottom: '1px solid var(--docs_border_default)',
                 boxSizing: 'border-box',
-                gap: '40px'
+                gap: '40px',
+                '@md': {
+                    padding: '20px 24px',
+                }
             }}>
             <div className="head-left">
                 <a href="https://www.100ms.live" style={{ display: 'flex', marginRight: '40px' }}>
