@@ -32,6 +32,8 @@ export default function Examples({ allNav }) {
             );
     }, [category, technology]);
 
+    const [technologySelectOpen, setTechnologySelectOpen] = useState<boolean>(false);
+
     return (
         <Flex direction="column" css={{ minHeight: '100vh', overflow: 'hidden' }}>
             <SegmentAnalytics options={{}} title="100ms Docs Examples" />
@@ -144,6 +146,7 @@ export default function Examples({ allNav }) {
                                         css={{ marginBottom: '$10', width: '100%' }}
                                         value={technology}
                                         setValue={setTechnology}
+                                        onOpenChange={setTechnologySelectOpen}
                                     />
                                     <Flex
                                         as="ul"
@@ -191,6 +194,7 @@ export default function Examples({ allNav }) {
                                     columnGap: '30px',
                                     rowGap: '40px',
                                     flexGrow: 1,
+                                    opacity: technologySelectOpen ? 0.5 : 1,
                                     '@md': {
                                         rowGap: '16px',
                                         gridTemplateColumns: '1fr'

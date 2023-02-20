@@ -106,9 +106,10 @@ type Props = {
     css?: React.ComponentPropsWithRef<typeof SelectTrigger>['css'];
     value: Technologies;
     setValue: (technology: Technologies) => void;
+    onOpenChange?: (opened: boolean) => void;
 };
 
-export default function TechnologySelect({ css, value, setValue }: Props) {
+export default function TechnologySelect({ css, value, setValue, onOpenChange }: Props) {
     let CurrentValueIcon;
     const iconNameOrPath = technologyIconMap[value].icon;
     if (typeof iconNameOrPath === 'string' && reactIcons[iconNameOrPath] !== undefined) {
@@ -118,7 +119,7 @@ export default function TechnologySelect({ css, value, setValue }: Props) {
     }
 
     return (
-        <Select.Root value={value} onValueChange={setValue}>
+        <Select.Root value={value} onValueChange={setValue} onOpenChange={onOpenChange}>
             <SelectTrigger css={css}>
                 <CurrentValueIcon />
                 <Select.Value asChild>
