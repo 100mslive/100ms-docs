@@ -57,6 +57,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, baseView
     } = router;
     const { menu, setMenu } = menuState;
 
+    const [renderComponents, setRenderComponents] = useState(false);
     const [openPlatformAccordion, setOpenPlatformAccordion] = useState(platformlist[0]);
 
     useEffect(() => {
@@ -71,6 +72,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, baseView
             setCurrentTheme(window.localStorage.theme || 'dark');
         }
         if (document) document.addEventListener('themeChanged', updateTheme);
+        setRenderComponents(true);
         return () => document.removeEventListener('themeChanged', updateTheme);
     }, []);
 
@@ -111,7 +113,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, baseView
 
     const [showBaseView, setShowBaseView] = useState(baseViewOnly);
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
-    
+
     const baseRef = useRef<HTMLDivElement>(null);
 
     return (
@@ -210,86 +212,97 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, baseView
             </div>
 
             {/* Platform specific view */}
-            <div className={`page ${showBaseView ? '' : 'active-page'}`} style={{}}>
-                <Box
-                    css={{
-                        position: 'sticky',
-                        top: '0',
-                        pt: '$5',
-                        zIndex: '100',
-                        boxShadow:
-                            currentTheme === 'dark'
-                                ? '0 1.25rem 2rem 0.25rem rgba(8, 9, 12, 0.8)'
-                                : '0 1.25rem 1rem 0.25rem rgba(250, 250, 250, 0.8)',
-                        backgroundColor: 'var(--docs_bg_content)',
-                        '@md': {
-                            pt: '$8',
-                            top: '$10'
-                        }
-                    }}>
-                    <Flex
-                        align="center"
-                        gap="1"
-                        css={{
-                            color: '$primaryLight',
-                            pl: '$9',
-                            mb: '$12',
-                            cursor: 'pointer'
-                        }}
-                        onClick={() => {
-                            setShowBaseView(true);
-                            if (baseRef.current) baseRef?.current.scrollTo(0, 0);
-                        }}>
-                        <ChevronLeftIcon height="16px" width="16px" />
-                        <Text variant="sm" css={{ color: '$primaryLight' }}>
-                            Content overview
-                        </Text>
-                    </Flex>
-
-                    {/* Sidebar Version Section */}
-                    {showPlatformSelector ? (
-                        <section
-                            style={{
-                                margin: '0px 0.5rem 0.5rem 0.4rem',
-                                background: 'var(--docs_bg_content)'
+            <div className={`page ${showBaseView ? '' : 'active-page'}`}>
+                {renderComponents ? (
+                    <>
+                        <Box
+                            css={{
+                                position: 'sticky',
+                                top: '0',
+                                pt: '$5',
+                                zIndex: '100',
+                                boxShadow:
+                                    currentTheme === 'dark'
+                                        ? '0 1.25rem 2rem 0.25rem rgba(8, 9, 12, 0.8)'
+                                        : '0 1.25rem 1rem 0.25rem rgba(250, 250, 250, 0.8)',
+                                backgroundColor: 'var(--docs_bg_content)',
+                                '@md': {
+                                    pt: '$8',
+                                    top: '$10'
+                                }
                             }}>
-                            <Listbox value={tech} onChange={changeTech}>
-                                <Listbox.Button className="dropdown">
-                                    <div style={{ display: 'flex ', alignItems: 'center' }}>
-                                        {tech.icon}
-                                        <span style={{ marginLeft: '1rem' }}>{tech.name}</span>
-                                    </div>
-                                    <ChevronDownIcon />
-                                </Listbox.Button>
-                                <Listbox.Options className="dropdown-options">
-                                    {menuItem.map((m) => (
-                                        <Listbox.Option
-                                            key={m.link}
-                                            value={m}
-                                            className={({ active }) =>
-                                                `${
-                                                    active
-                                                        ? 'dropdown-option dropdown-option-active'
-                                                        : 'dropdown-option'
-                                                }`
-                                            }>
-                                            {m.icon}
-                                            <span style={{ marginLeft: '1rem' }}>{m.name}</span>
-                                        </Listbox.Option>
-                                    ))}
-                                </Listbox.Options>
-                            </Listbox>
-                        </section>
-                    ) : null}
-                </Box>
-                {/* Sidebar Menu Section */}
-                {nav
-                    ? Object.entries(nav).map(([key, children], index) => (
-                          <SidebarSection key={key} value={key} index={index} nested={false}>
-                              {children as React.ReactChildren}
-                          </SidebarSection>
-                      ))
-                    : null}
+                            <Flex
+                                align="center"
+                                gap="1"
+                                css={{
+                                    color: '$primaryLight',
+                                    pl: '$9',
+                                    mb: '$12',
+                                    cursor: 'pointer'
+                                }}
+                                onClick={() => {
+                                    setShowBaseView(true);
+                                    if (baseRef.current) baseRef?.current.scrollTo(0, 0);
+                                }}>
+                                <ChevronLeftIcon height="16px" width="16px" />
+                                <Text variant="sm" css={{ color: '$primaryLight' }}>
+                                    Content overview
+                                </Text>
+                            </Flex>
+
+                            {showPlatformSelector ? (
+                                <section
+                                    style={{
+                                        margin: '0px 0.5rem 0.5rem 0.4rem',
+                                        background: 'var(--docs_bg_content)'
+                                    }}>
+                                    <Listbox value={tech} onChange={changeTech}>
+                                        <Listbox.Button className="dropdown">
+                                            <div style={{ display: 'flex ', alignItems: 'center' }}>
+                                                {tech.icon}
+                                                <span style={{ marginLeft: '1rem' }}>
+                                                    {tech.name}
+                                                </span>
+                                            </div>
+                                            <ChevronDownIcon />
+                                        </Listbox.Button>
+                                        <Listbox.Options className="dropdown-options">
+                                            {menuItem.map((m) => (
+                                                <Listbox.Option
+                                                    key={m.link}
+                                                    value={m}
+                                                    className={({ active }) =>
+                                                        `${
+                                                            active
+                                                                ? 'dropdown-option dropdown-option-active'
+                                                                : 'dropdown-option'
+                                                        }`
+                                                    }>
+                                                    {m.icon}
+                                                    <span style={{ marginLeft: '1rem' }}>
+                                                        {m.name}
+                                                    </span>
+                                                </Listbox.Option>
+                                            ))}
+                                        </Listbox.Options>
+                                    </Listbox>
+                                </section>
+                            ) : null}
+                        </Box>
+                        {/* Sidebar Menu Section */}
+                        {nav
+                            ? Object.entries(nav).map(([key, children], index) => (
+                                  <SidebarSection
+                                      key={key}
+                                      value={key}
+                                      index={index}
+                                      nested={false}>
+                                      {children as React.ReactChildren}
+                                  </SidebarSection>
+                              ))
+                            : null}
+                    </>
+                ) : null}
             </div>
         </Box>
     );
