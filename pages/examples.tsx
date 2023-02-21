@@ -35,7 +35,7 @@ export default function Examples({ allNav }) {
     const [technologySelectOpen, setTechnologySelectOpen] = useState<boolean>(false);
 
     return (
-        <Flex direction="column" css={{ minHeight: '100vh', overflow: 'hidden' }}>
+        <Flex direction="column" css={{ minHeight: '100vh', contain: 'paint' }}>
             <SegmentAnalytics options={{}} title="100ms Docs Examples" />
             <Header
                 modal={modal}
