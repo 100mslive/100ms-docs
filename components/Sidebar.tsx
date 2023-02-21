@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
@@ -47,34 +48,33 @@ interface Props {
     };
     nav: Record<string, Record<string, NavRoute>>;
     allNav: Record<string, Record<string, NavRoute>>[];
+    baseViewOnly?: boolean;
 }
 
-const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
+const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, baseViewOnly = false }) => {
     const router = useRouter() as any;
     const {
         query: { slug }
     } = router;
-    const baseViewOnly = Object.keys(currentNav).length === 0;
     const { menu, setMenu } = menuState;
 
+    const [renderComponents, setRenderComponents] = useState(false);
     const [openPlatformAccordion, setOpenPlatformAccordion] = useState(platformlist[0]);
 
     useEffect(() => {
         setMenu(false);
     }, [router]);
 
+    const [showBaseView, setShowBaseView] = useState(baseViewOnly);
     const [currentTheme, setCurrentTheme] = useState('dark');
 
     useEffect(() => {
-        if (window) {
-            setCurrentTheme(window.localStorage.theme || 'dark');
-        }
-    }, []);
-
-    useEffect(() => {
         const updateTheme = (e) => setCurrentTheme(e.detail.theme);
-
-        if (document) document.addEventListener('themeChanged', updateTheme);
+        setRenderComponents(true);
+        if (window && document) {
+            setCurrentTheme(window.localStorage.theme || 'dark');
+            document.addEventListener('themeChanged', updateTheme);
+        }
         return () => document.removeEventListener('themeChanged', updateTheme);
     }, []);
 
@@ -88,9 +88,6 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                 if (slug?.length > 3) {
                     nav = platform[slug[1]];
                     if (slug[0] === 'api-reference') {
-                        // if (slug[1] === 'android') {
-                        //     showPagination = false;
-                        // }
                         nav = platform[slug[1]][slug[2]];
                     }
                 }
@@ -116,8 +113,8 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
         else router.push(s.link, undefined, { shallow: false });
     };
 
-    const [showBaseView, setShowBaseView] = useState(baseViewOnly);
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
+
     const baseRef = useRef<HTMLDivElement>(null);
 
     return (
@@ -180,14 +177,14 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                         <ChevronRightIcon height="16px" width="16px" />
                     </Flex>
                 )}
-                <a style={{ textDecoration: 'none' }} href="/docs/concepts/v2/concepts/basics">
-                    <Flex gap="2" align="center" css={{ color: '$primaryLight' }}>
+                <Link passHref href="/concepts/v2/concepts/basics">
+                    <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <LayersIcon style={{ color: 'inherit' }} />
                         <Text css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
                             Concepts
                         </Text>
                     </Flex>
-                </a>
+                </Link>
 
                 <hr style={{ margin: '24px 0' }} />
 
@@ -216,7 +213,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
             </div>
 
             {/* Platform specific view */}
-            <div className={`page ${showBaseView ? '' : 'active-page'}`} style={{}}>
+            <div className={`page ${showBaseView ? '' : 'active-page'}`}>
                 <Box
                     css={{
                         position: 'sticky',
@@ -252,7 +249,6 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                         </Text>
                     </Flex>
 
-                    {/* Sidebar Version Section */}
                     {showPlatformSelector ? (
                         <section
                             style={{
@@ -289,13 +285,15 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                     ) : null}
                 </Box>
                 {/* Sidebar Menu Section */}
-                {nav
-                    ? Object.entries(nav).map(([key, children], index) => (
-                          <SidebarSection key={key} value={key} index={index} nested={false}>
-                              {children as React.ReactChildren}
-                          </SidebarSection>
-                      ))
-                    : null}
+                <Box css={{ opacity: renderComponents ? '1' : '0' }}>
+                    {nav
+                        ? Object.entries(nav).map(([key, children], index) => (
+                              <SidebarSection key={key} value={key} index={index} nested={false}>
+                                  {children as React.ReactChildren}
+                              </SidebarSection>
+                          ))
+                        : null}
+                </Box>
             </div>
         </Box>
     );
