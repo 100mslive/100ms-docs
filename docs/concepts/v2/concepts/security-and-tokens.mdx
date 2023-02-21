@@ -5,20 +5,20 @@ nav: 1.3
 
 In 100ms, two types of JWT tokens are used to authenticate requests coming from your client apps and backend server.
 
--   [Auth token](#auth-token): Allow end-users (peers) to join rooms with **100ms client SDKs**
--   [Management token](#management-token): Authenticate requests to the **100ms server-side REST API**
+-   [Auth token](#auth-token-for-client-sdks): Allow end-users (peers) to join rooms with **100ms client SDKs**
+-   [Management token](#management-token-for-rest-api): Authenticate requests to the **100ms server-side REST API**
 
-Both tokens can be decoded with JWT utilities (like [jwt.io](https://jwt.io)).
+Both tokens can be decoded with JWT utilities, like [jwt.io](https://jwt.io).
 
 ![Tokens overview](/docs/v2/tokens-overview.png)
 
 ## Auth token for client SDKs
 
-100ms client-side SDKs use auth tokens to [join a room](/javascript/v2/features/join). Create an auth token with:
+100ms client-side SDKs use auth tokens to [join a room](/javascript/v2/how--to-guides/set-up-video-conferencing/join). Auth token can be generated with:
 
--   `app_access_key` and `app_secret`: Find these secrets on the [dashboard](https://dashboard.100ms.live/developer).
--   `room_id`: Unique identifier for the room that you want to join. Get it from the [dashboard](https://dashboard.100ms.live/rooms) or in the response of the [create room server-side API](./../Rooms/create-via-api).
--   `user_id`: Specify your internal identifier to map a 100ms peer object to your internal user object.
+-   `app_access_key` and `app_secret`: Find these secrets on the [dashboard](https://dashboard.100ms.live/developer)
+-   `room_id`: Unique identifier for the room that you want to join. Get it from the [dashboard](https://dashboard.100ms.live/rooms) or in the response of the [create room server-side API](/server-side/v2/api-reference/Rooms/create-via-api)
+-   `user_id`: Specify your internal identifier to map a 100ms peer object to your internal user object
 
 ### How to get auth tokens?
 
@@ -26,7 +26,7 @@ Both tokens can be decoded with JWT utilities (like [jwt.io](https://jwt.io)).
 - Use 100ms token server: Our sample apps use the 100ms [token endpoint](/javascript/v2/guides/token-endpoint#get-a-token-using-100ms-token-endpoint) to generate auth tokens
 - [Set up your token server](#set-up-your-token-server): Recommended approach for production
 
-#### Set up your token server
+### Set up your token server
 
 #### Sample code
 
@@ -207,14 +207,6 @@ $token = JWT::encode(
 ```
 
 </Tab>
-
-<Note type="warning">
-    We strictly advise you not to post <i>app_access_key</i> and <i>app_secret</i> publicly; if you
-    need to store them in <strong>Git</strong>, please change the repository from public to private.
-    <br />
-    <br /> You cannot use an <strong>Auth token</strong> to trigger server API requests.
-</Note>
-
 
 ## Management token for REST API
 
