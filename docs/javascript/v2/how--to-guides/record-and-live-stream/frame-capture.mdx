@@ -22,3 +22,35 @@ export const createSnapshotFromVideo = inputVideo => {
   createSnapshotFromCanvas(canvas);
 };
 ```
+
+This snippet can be attached to a button that 
+
+<Tabs id="frame-capture" items={['JavaScript', 'React']} />
+
+<Tab id='frame-capture-0'>
+
+```jsx
+<button onClick="createSnapshotFromVideo(document.querySelector('video'))">
+  Capture snapshot
+</button>
+```
+
+</Tab>
+
+<Tab id='frame-capture-1'>
+
+```jsx
+const VideoTile = () => {
+  const ref = useRef();
+  // code to render video
+
+  return ( 
+    <video ref={ref} />
+    <button onClick={() => {
+      createSnapshotFromVideo(ref.current);
+    }}>Capture snapshot</button>
+  )
+}
+```
+
+</Tab>
