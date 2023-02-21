@@ -122,13 +122,8 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, baseView
             ref={baseRef}
             className="hide-scrollbar"
             css={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'stretch',
                 height: 'calc(100vh - 100px)',
                 overflowY: 'auto',
-                position: 'sticky',
-                top: '$20',
                 overscrollBehavior: 'none',
                 '@md': {
                     position: 'absolute',
@@ -284,15 +279,13 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, baseView
                     ) : null}
                 </Box>
                 {/* Sidebar Menu Section */}
-                <Box css={{ opacity: renderComponents ? '1' : '0' }}>
-                    {nav
-                        ? Object.entries(nav).map(([key, children], index) => (
-                              <SidebarSection key={key} value={key} index={index} nested={false}>
-                                  {children as React.ReactChildren}
-                              </SidebarSection>
-                          ))
-                        : null}
-                </Box>
+                {nav
+                    ? Object.entries(nav).map(([key, children], index) => (
+                          <SidebarSection key={key} value={key} index={index} nested={false}>
+                              {children as React.ReactChildren}
+                          </SidebarSection>
+                      ))
+                    : null}
             </div>
         </Box>
     );
