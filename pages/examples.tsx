@@ -222,7 +222,7 @@ export default function Examples({ allNav }) {
                                                 }
                                                 css={{
                                                     boxSizing: 'border-box',
-                                                    height: '198px',
+                                                    height: '188px',
                                                     minWidth:
                                                         filteredExamples.length === 1 ? '350px' : 0,
                                                     '&:hover': {
@@ -253,7 +253,7 @@ export default function Examples({ allNav }) {
                                                 marginBottom: '8px'
                                             }}>
                                             {category !== CATEGORIES.ALL_CATEGORIES
-                                                ? `Sorry, we currently do not have ${category.toLowerCase()} built
+                                                ? `Sorry, we currently do not have ${category} built
                                     with ${technology} yet`
                                                 : `Sorry, we currently do not have examples built with ${technology} yet`}
                                         </Text>
