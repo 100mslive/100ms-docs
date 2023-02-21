@@ -58,7 +58,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, baseView
     } = router;
     const { menu, setMenu } = menuState;
 
-    const [renderComponents, setRenderComponents] = useState(false);
+    // const [renderComponents, setRenderComponents] = useState(false);
     const [openPlatformAccordion, setOpenPlatformAccordion] = useState(platformlist[0]);
 
     useEffect(() => {
@@ -70,7 +70,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, baseView
 
     useEffect(() => {
         const updateTheme = (e) => setCurrentTheme(e.detail.theme);
-        setRenderComponents(true);
+        // setRenderComponents(true);
         if (window && document) {
             setCurrentTheme(window.localStorage.theme || 'dark');
             document.addEventListener('themeChanged', updateTheme);
