@@ -1,5 +1,6 @@
 ---
 title: HMSExceptionNotification
+nav: '4.18'
 ---
 
 ## Hierarchy

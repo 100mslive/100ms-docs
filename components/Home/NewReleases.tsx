@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import {
     AndroidIcon,
     AppleIcon,
@@ -7,7 +6,8 @@ import {
     ReactIcon,
     ServerIcon
 } from '@100mslive/react-icons';
-import { Flex, Box, Text } from '@100mslive/react-ui';
+import { Box, Text } from '@100mslive/react-ui';
+import Item from './Item';
 import { releases } from '../../releases';
 
 const NewReleases = () => (
@@ -22,42 +22,24 @@ const NewReleases = () => (
             css={{
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr',
-                gridColumnGap: '60px',
-                '@sm': { gridColumnGap: '2rem' }
+                gridColumnGap: '$13',
+                '@sm': { gridColumnGap: '$12' }
             }}>
-            {releases.map((release) => (
-                <ReleaseItem key={release.version} {...release} />
+            {Object.keys(releases).map((release) => (
+                <Item
+                    release
+                    key={releases[release].version}
+                    title={`${releases[release].version} / ${release.split('-')[0]}`}
+                    subText={releases[release].date}
+                    link={SdkList[release].link}
+                    icon={SdkList[release].icon}
+                />
             ))}
         </Box>
     </Box>
 );
 
 export default NewReleases;
-
-const ReleaseItem = ({ platform, version, date }) => (
-    <Flex gap="2" css={{ color: '$textHighEmp' }}>
-        {SdkList[platform].icon}
-        <Box>
-            <Link href={SdkList[platform].link}>
-                <a>
-                    <Text variant="sm" className="mono" css={{ color: '$primaryLight' }}>
-                        {version} / {platform}
-                    </Text>
-                </a>
-            </Link>
-            <Text
-                variant="sm"
-                className="mono"
-                css={{
-                    color: '$textMedEmp',
-                    mt: '$2',
-                    mb: '$8'
-                }}>
-                {date}
-            </Text>
-        </Box>
-    </Flex>
-);
 
 const iconStyle = { color: 'inherit', marginTop: '0.25rem' };
 
@@ -87,7 +69,7 @@ const SdkList = {
         id: 'reactNative',
         link: '/react-native/v2/changelog/release-notes'
     },
-    Server: {
+    'Server-side': {
         icon: <ServerIcon style={iconStyle} />,
         id: 'server',
         link: '/server-side/v2/changelog/release-notes'

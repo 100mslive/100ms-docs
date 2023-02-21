@@ -50,7 +50,7 @@ class Preview implements HMSPreviewListener{
       );
 
       //Here this is an instance of a class that implements HMSPreviewListener, that is, Preview
-      hmsSDK.addPreviewListener(this);
+      hmsSDK.addPreviewListener(listener:this);
       hmsSDK.preview(config: config);
    }
 
@@ -159,7 +159,7 @@ class Meeting implements HMSUpdateListener{
 
    Meeting({required HMSSDK hmsSDKFromPreview,HMSConfig configFromPreview}){
         hmsSDK = hmsSDKFromPreview;
-        hmsSDK.addUpdateListener(this);
+        hmsSDK.addUpdateListener(listener: this);
         hmsSDK.join(config: configFromPreview);
    }
 

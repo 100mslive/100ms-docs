@@ -276,6 +276,107 @@ The room status should be checked in the following places -
 2. In the `onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom)` callback of `HMSUpdateListener`.
    The `HMSRoomUpdate` type will be `HMSRoomUpdate.HLS_STREAMING_STATE_UPDATED`.
 
+## How to make the HLS peers join room faster 
+
+Since HLS peers don't publish or subscribe anything there is no point in waiting for `onJoin` or `onTrackUpdate` updates 
+to start showing them the stream as stream only needs the m3u8 URL. This time reduction might not be observed in small rooms
+but is extremely helpful in larger rooms.
+
+Let's see how we can make this faster for peers joining with HLS roles:
+
+1. Enable room state in preview from dashboard and ensure that the HLS peer is subscribed for the update as. 
+
+![Advanced settings](/docs/v2/flutter-advanced-settings.png)
+
+These options are available in advanced settings:
+
+![Room State in preview](/docs/v2/flutter-room-state-in-preview.png)
+
+In the `Roles with room-state permission` ensure that HLS role is checked to receive the updates.
+
+2. Add Preview in the application before the `join` method call and attach `HMSPreviewListener` to listen to `onRoomUpdate`
+
+```dart 
+class Preview implements HMSPreviewListener{
+
+   late HMSSDK hmsSDK;
+   String? hlsStreamURL = null
+
+   Preview(){
+      initHMSSDK();
+   }
+
+   void initHMSSDK() async {
+      hmsSDK = HMSSDK();
+      await hmsSDK.build(); // ensure to await while invoking the `build` method
+      HMSConfig config = HMSConfig(
+         userName: "John Doe",
+         authToken: "eyJH5c", // client-side token generated from your token service
+      );
+
+      //Here this is an instance of a class that implements HMSPreviewListener, that is, Preview
+      hmsSDK.addPreviewListener(listener:this);
+      hmsSDK.preview(config: config);
+   }
+
+   @override
+   void onPreview({required HMSRoom room, required List<HMSTrack> localTracks}) {
+      //We will get the callback here if the preview succeeds
+   }
+
+   @override
+   void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {
+      switch (update) {
+
+        ...
+        case HMSRoomUpdate.hlsRecordingStateUpdated:
+          isRecordingStarted = room.hmshlsRecordingState?.running ?? false;
+          break;
+
+        case HMSRoomUpdate.rtmpStreamingStateUpdated:
+          isRTMPStreamingStarted = room.hmsRtmpStreamingState?.running ?? false;
+          break;
+
+        case HMSRoomUpdate.hlsStreamingStateUpdated:
+          isHLSStreamingStarted = room.hmshlsStreamingState?.running ?? false;
+
+          //This will contain the m3u8 URL if the HLS streaming is already running in the room
+          //We will use this URL to directly play the stream in player once participant joins the room
+          //rather than waiting for the onRoomUpdate callback in meeting.
+          if(isHLSStreamingStarted){
+              hlsStreamURL = room.hmshlsStreamingState?.variants[0]?.hlsStreamUrl;
+          }
+          break;
+
+        ... 
+        default:
+          break;
+      }
+   }
+
+   @override
+   void onPeerUpdate(
+      {required HMSPeer peer, required HMSPeerUpdate update}) async {
+       //Peer updates: https://www.100ms.live/docs/flutter/v2/features/update-listener-enums#hms-peer-update
+   }
+
+   @override
+   void onHMSError({required HMSException error}) {
+        //Error updates: https://www.100ms.live/docs/flutter/v2/features/error-handling#hms-exception
+   }
+
+   @override
+   void onAudioDeviceChanged(
+      {HMSAudioDevice? currentAudioDevice,
+      List<HMSAudioDevice>? availableAudioDevice}) {
+        //Get notified when the audio device is changed: https://www.100ms.live/docs/flutter/v2/features/audio-output-routing#adding-audio-device-change-event-listener-android-only
+   }
+
+}
+```
+
+3. Use the `hlsStreamURL` to display the stream in HLSPlayer after joining the room.
+
 ## Key Tips
 
 -   If using the dashboard web app from 100ms, please make sure to use a role that doesn't have publish permissions for the beam tile to not show up.
