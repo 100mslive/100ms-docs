@@ -1,22 +1,16 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
-import { NextSeo } from 'next-seo';
 import fs from 'fs';
 import path from 'path';
 import mdxPrism from 'mdx-prism';
 import EditFile from '@/components/EditFile';
 import components from '@/components/MDXComponents';
-import { Box } from '@100mslive/react-ui';
 import Pagination from '@/components/Pagination';
-import Sidebar from '@/components/Sidebar';
 import Toc from '@/components/Toc';
-import Header from '@/components/Header';
-import SegmentAnalytics from '@/components/SegmentAnalytics';
 import getPagination from '@/lib/getPagination';
 import { DOCS_PATH, getAllDocs, getDocsPaths, getNavfromDocs } from '@/lib/mdxUtils';
 import withTableofContents from '@/lib/withTableofContents';
 import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
-import useLockBodyScroll from '@/lib/useLockBodyScroll';
 import { bundleMDX } from 'mdx-bundler';
 import { getMDXComponent } from 'mdx-bundler/client';
 import remarkCodeHeader from '@/lib/remark-code-header';
@@ -26,6 +20,7 @@ import remarkA11yEmoji from '@fec/remark-a11y-emoji';
 import { MDXProvider, useMDXComponents } from '@mdx-js/react';
 import imagePlugin from '@/lib/image';
 import { remarkCodeHike } from '@code-hike/mdx';
+import DocLayout from '@/layouts/DocLayout';
 import theme from 'shiki/themes/github-dark.json';
 
 type NavRoute = {
@@ -70,7 +65,7 @@ const MDX_GLOBAL_CONFIG = {
     }
 };
 
-const DocSlugs = ({ source, frontMatter, pagination, nav, showToc = true, allNav }: Props) => {
+const DocSlugs = ({ source, frontMatter, pagination, showToc = true }: Props) => {
     const {
         query: { slug },
         asPath
@@ -124,86 +119,39 @@ const DocSlugs = ({ source, frontMatter, pagination, nav, showToc = true, allNav
     if (Array.isArray(slug) && slug[1] === 'android') {
         showPagination = false;
     }
-    const [modal, setModal] = React.useState(false);
-    const [menu, setMenu] = React.useState(false);
-    const menuState = { menu, setMenu };
-    useLockBodyScroll(modal);
-
-    const router = useRouter();
-    const SEO = {
-        title: `${frontMatter.title || '100ms Docs'} | 100ms`,
-        openGraph: {
-            title: `${frontMatter.title || '100ms Docs'} | 100ms`
-        },
-        canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${
-            router.asPath === '/' ? '' : router.asPath.split('?')[0]
-        }`
-    };
-
-    const [showSideBar, setShowSideBar] = useState(false);
-    useEffect(() => setShowSideBar(true), []);
 
     return (
-        <div style={{ margin: '0' }}>
-            <NextSeo {...SEO} />
-            <SegmentAnalytics options={{}} title={frontMatter.title} />
-            <Header modal={modal} setModal={setModal} menuState={menuState} />
-            <div
+        <>
+            <article
                 style={{
                     display: 'flex',
-                    paddingTop: '1rem',
-                    justifyContent: 'center',
-                    width: '100%',
-                    position: 'relative'
+                    flexDirection: 'column',
+                    minWidth: '100px',
+                    flexGrow: '1',
+                    boxSizing: 'border-box',
+                    padding: '0 2rem',
+                    minHeight: '100vh',
+                    paddingBottom: '80px'
                 }}>
-                <div
-                    style={{
-                        width: '100%',
-                        display: 'flex',
-                        maxWidth: '1500px',
-                        justifyContent: 'space-between'
-                    }}>
-                    {showSideBar ? (
-                        <Sidebar menuState={menuState} nav={nav} allNav={allNav} />
-                    ) : (
-                        <Box css={{ minWidth: '304px' }} />
-                    )}
-                    {!menu ? (
-                        <article
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                minWidth: '100px',
-                                flexGrow: '1',
-                                boxSizing: 'border-box',
-                                padding: '0 2rem',
-                                minHeight: 'calc(100vh - 140px)',
-                                paddingBottom: '80px'
-                            }}>
-                            <h1>{frontMatter.title}</h1>
-                            <MDXProvider components={components}>
-                                <Component />
-                            </MDXProvider>
-                            <hr />
-                            {pagination.previousPost && showPagination && (
-                                <Pagination
-                                    next={pagination.nextPost}
-                                    prev={pagination.previousPost}
-                                />
-                            )}
-                            <EditFile slug={asPath} />
-                        </article>
-                    ) : null}
-                    {showToc && (
-                        <Toc
-                            activeHeading={activeHeading}
-                            activeSubHeading={activeSubHeading}
-                            CurrentDocsSlug={currentDocSlug}
-                        />
-                    )}
-                </div>
-            </div>
-        </div>
+                <h1>{frontMatter.title}</h1>
+                <MDXProvider components={components}>
+                    <Component />
+                </MDXProvider>
+                <hr />
+                {pagination.previousPost && showPagination && (
+                    <Pagination next={pagination.nextPost} prev={pagination.previousPost} />
+                )}
+                <EditFile slug={asPath} />
+            </article>
+
+            {showToc && (
+                <Toc
+                    activeHeading={activeHeading}
+                    activeSubHeading={activeSubHeading}
+                    CurrentDocsSlug={currentDocSlug}
+                />
+            )}
+        </>
     );
 };
 
@@ -300,3 +248,5 @@ export const getStaticPaths = async () => {
         fallback: false
     };
 };
+
+DocSlugs.Layout = DocLayout

@@ -37,30 +37,25 @@ const cards = [
 ];
 
 const Homepage = ({ allNav }) => {
+    const [renderComponents, setRenderComponents] = useState(false);
     const [menu, setMenu] = useState(false);
     const [modal, setModal] = useState(false);
     const menuState = { menu, setMenu };
     const [currentTheme, setCurrentTheme] = useState('dark');
 
-    const [renderComponents, setRenderComponents] = useState(false);
-
     useEffect(() => {
         const updateTheme = (e) => setCurrentTheme(e.detail.theme);
-
-        if (document) document.addEventListener('themeChanged', updateTheme);
-        return () => document.removeEventListener('themeChanged', updateTheme);
-    }, []);
-
-    useEffect(() => {
-        setRenderComponents(true);
-        if (window) {
+        if (window && document) {
+            document.addEventListener('themeChanged', updateTheme);
             setCurrentTheme(window.localStorage.theme || 'dark');
         }
+        setRenderComponents(true);
+        return () => document.removeEventListener('themeChanged', updateTheme);
     }, []);
 
     useLockBodyScroll(modal);
 
-    return renderComponents ? (
+    return (
         <>
             <SegmentAnalytics options={{}} title="100ms Docs" />
             <Header
@@ -70,119 +65,121 @@ const Homepage = ({ allNav }) => {
                 showReference={false}
                 onHomePage
             />
-
-            <Flex
-                justify="center"
-                css={{
-                    mx: 'auto',
-                    minHeight: '100vh',
-                    position: 'relative',
-                    backgroundImage: `url(${
-                        currentTheme === 'dark'
-                            ? '/docs/bg-desktop.png'
-                            : '/docs/bg-desktop-light.png'
-                    })`,
-                    backgroundSize: '100% 100%',
-                    backgroundPosition: 'center-bottom',
-                    backgroundRepeat: 'no repeat',
-                    '@md': {
-                        backgroundSize: 'cover'
-                    }
-                }}>
-                <Sidebar
-                    menuState={menuState}
-                    nav={{}}
-                    allNav={allNav}
-                    css={{ width: menu ? '100%' : 'initial' }}
-                />
-                {!menu ? (
-                    <Box
+            {renderComponents ? (
+                <>
+                    <Flex
+                        justify="center"
                         css={{
-                            maxWidth: CONTENT_WIDTH,
-                            p: '$14 $16',
-                            borderLeft: '1px solid',
-                            borderColor: '$borderDefault',
-                            '@sm': {
-                                p: '$10'
+                            mx: 'auto',
+                            minHeight: '100vh',
+                            position: 'relative',
+                            backgroundImage: `url(${
+                                currentTheme === 'dark'
+                                    ? '/docs/bg-desktop.png'
+                                    : '/docs/bg-desktop-light.png'
+                            })`,
+                            backgroundSize: '100% 100%',
+                            backgroundPosition: 'center-bottom',
+                            backgroundRepeat: 'no repeat',
+                            '@md': {
+                                backgroundSize: 'cover'
                             }
                         }}>
-                        <Text variant="h4" css={{ color: '$textHighEmp' }}>
-                            100ms Documentation
-                        </Text>
-
-                        <Text
-                            css={{
-                                color: '$textMedEmp',
-                                mt: '$2',
-                                maxWidth: '600px'
-                            }}>
-                            The 100ms SDK gives you everything you need to build scalable,
-                            high-quality live video and audio experiences. Explore our docs to learn
-                            how.
-                        </Text>
-
-                        <MainCard />
-                        {/* single row after 1280, double after 768 */}
-                        <Box
-                            css={{
-                                mt: '$12',
-                                display: 'grid',
-                                gap: '$12',
-                                gridTemplateColumns: '1fr 1fr 1fr',
-                                '@xl': {
-                                    gridTemplateColumns: '1fr 1fr'
-                                },
-                                '@md': {
-                                    gridTemplateColumns: '1fr'
-                                }
-                            }}>
-                            {cards.map((card, i) => (
-                                <Card
-                                    key={card.link}
-                                    {...card}
-                                    id={i}
-                                    currentTheme={currentTheme}
-                                />
-                            ))}
-                        </Box>
-
-                        <Box
-                            css={{
-                                height: '1px',
-                                width: '100%',
-                                my: '$12',
-                                borderTop: '1px solid',
-                                borderColor: '$borderDefault'
-                            }}
+                        <Sidebar
+                            menuState={menuState}
+                            nav={{}}
+                            allNav={allNav}
+                            css={{ width: menu ? '100%' : 'initial' }}
                         />
-
-                        <Flex
-                            css={{
-                                flexDirection: 'row',
-                                gap: '$12',
-                                '@lg': { flexDirection: 'column' }
-                            }}>
-                            <PopularGuides />
+                        {!menu ? (
                             <Box
                                 css={{
-                                    width: '1.5px',
-                                    my: '0',
-                                    backgroundColor: '$borderDefault',
-                                    '@lg': {
-                                        width: '100%',
-                                        height: '1px',
-                                        my: '$12'
+                                    maxWidth: CONTENT_WIDTH,
+                                    p: '$14 $16',
+                                    borderLeft: '1px solid',
+                                    borderColor: '$borderDefault',
+                                    '@sm': {
+                                        p: '$10'
                                     }
-                                }}
-                            />
-                            <NewReleases />
-                        </Flex>
-                    </Box>
-                ) : null}
-            </Flex>
-            <Footer css={{ backgroundColor: 'var(--docs_bg_footer)' }} />
+                                }}>
+                                <Text variant="h4" css={{ color: '$textHighEmp' }}>
+                                    100ms Documentation
+                                </Text>
+
+                                <Text
+                                    css={{
+                                        color: '$textMedEmp',
+                                        mt: '$2',
+                                        maxWidth: '600px'
+                                    }}>
+                                    The 100ms SDK gives you everything you need to build scalable,
+                                    high-quality live video and audio experiences. Explore our docs
+                                    to learn how.
+                                </Text>
+
+                                <MainCard />
+                                <Box
+                                    css={{
+                                        mt: '$12',
+                                        display: 'grid',
+                                        gap: '$12',
+                                        gridTemplateColumns: '1fr 1fr 1fr',
+                                        '@xl': {
+                                            gridTemplateColumns: '1fr 1fr'
+                                        },
+                                        '@md': {
+                                            gridTemplateColumns: '1fr'
+                                        }
+                                    }}>
+                                    {cards.map((card, i) => (
+                                        <Card
+                                            key={card.link}
+                                            {...card}
+                                            id={i}
+                                            currentTheme={currentTheme}
+                                        />
+                                    ))}
+                                </Box>
+
+                                <Box
+                                    css={{
+                                        height: '1px',
+                                        width: '100%',
+                                        my: '$12',
+                                        borderTop: '1px solid',
+                                        borderColor: '$borderDefault'
+                                    }}
+                                />
+
+                                <Flex
+                                    css={{
+                                        flexDirection: 'row',
+                                        gap: '$12',
+                                        '@lg': { flexDirection: 'column' }
+                                    }}>
+                                    <PopularGuides />
+                                    <Box
+                                        css={{
+                                            width: '1.5px',
+                                            my: '0',
+                                            backgroundColor: '$borderDefault',
+                                            '@lg': {
+                                                width: '100%',
+                                                height: '1px',
+                                                my: '$12'
+                                            }
+                                        }}
+                                    />
+                                    <NewReleases />
+                                </Flex>
+                            </Box>
+                        ) : null}
+                    </Flex>
+                    <Footer css={{ backgroundColor: 'var(--docs_bg_footer)' }} />
+                </>
+            ) : null}
         </>
-    ) : null;
+    );
 };
 
 export default Homepage;

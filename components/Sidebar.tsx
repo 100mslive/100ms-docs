@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
@@ -50,45 +51,45 @@ interface Props {
     allNav: Record<string, Record<string, NavRoute>>[];
     css?: CSS;
     hideOnDesktop?: boolean;
+    baseViewOnly?: boolean;
 }
 
 const Sidebar: React.FC<Props> = ({
-    hideOnDesktop = false,
     menuState,
     nav: currentNav,
     allNav,
-    css = {}
+    css = {},
+    hideOnDesktop = false,
+    baseViewOnly = true
 }) => {
     const router = useRouter() as any;
     const {
         query: { slug }
     } = router;
-    const baseViewOnly = Object.keys(currentNav).length === 0;
     const { menu, setMenu } = menuState;
 
+    const [renderComponents, setRenderComponents] = useState(false);
     const [openPlatformAccordion, setOpenPlatformAccordion] = useState(platformlist[0]);
 
     useEffect(() => {
         setMenu(false);
     }, [router]);
 
+    const [showBaseView, setShowBaseView] = useState(baseViewOnly);
     const [currentTheme, setCurrentTheme] = useState('dark');
 
     useEffect(() => {
-        if (window) {
-            setCurrentTheme(window.localStorage.theme || 'dark');
-        }
-    }, []);
-
-    useEffect(() => {
         const updateTheme = (e) => setCurrentTheme(e.detail.theme);
-
-        if (document) document.addEventListener('themeChanged', updateTheme);
+        setRenderComponents(true);
+        if (window && document) {
+            setCurrentTheme(window.localStorage.theme || 'dark');
+            document.addEventListener('themeChanged', updateTheme);
+        }
         return () => document.removeEventListener('themeChanged', updateTheme);
     }, []);
 
     let nav;
-    if (!baseViewOnly) {
+    if (!baseViewOnly && slug) {
         const [currentDocSlug] = slug as string[];
 
         if (Object.keys(currentNav).length) {
@@ -97,9 +98,6 @@ const Sidebar: React.FC<Props> = ({
                 if (slug?.length > 3) {
                     nav = platform[slug[1]];
                     if (slug[0] === 'api-reference') {
-                        // if (slug[1] === 'android') {
-                        //     showPagination = false;
-                        // }
                         nav = platform[slug[1]][slug[2]];
                     }
                 }
@@ -125,8 +123,8 @@ const Sidebar: React.FC<Props> = ({
         else router.push(s.link, undefined, { shallow: false });
     };
 
-    const [showBaseView, setShowBaseView] = useState(baseViewOnly);
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
+
     const baseRef = useRef<HTMLDivElement>(null);
 
     const { ['@md']: cssMd, ...cssRest } = css;
@@ -195,29 +193,32 @@ const Sidebar: React.FC<Props> = ({
                         <ChevronRightIcon height="16px" width="16px" />
                     </Flex>
                 )}
-                <Box>
-                    <a style={{ textDecoration: 'none' }} href="/docs/concepts/v2/concepts/basics">
-                        <Flex gap="2" align="center" css={{ color: '$primaryLight' }}>
-                            <LayersIcon style={{ color: 'inherit' }} />
-                            <Text css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
-                                Concepts
-                            </Text>
-                        </Flex>
-                    </a>
-                </Box>
+                <Link passHref href="/concepts/v2/concepts/basics">
+                    <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
+                        <LayersIcon style={{ color: 'inherit' }} />
+                        <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
+                            Concepts
+                        </Text>
+                    </Flex>
+                </Link>
 
-                <Box
-                    className="sidebar-examples"
-                    css={{ mt: '$10', display: 'none', '@md': { display: 'block ' } }}>
-                    <a style={{ textDecoration: 'none' }} href="/docs/examples">
-                        <Flex gap="2" align="center" css={{ color: '$primaryLight' }}>
-                            <RocketIcon style={{ color: 'inherit' }} />
-                            <Text css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
-                                Examples
-                            </Text>
-                        </Flex>
-                    </a>
-                </Box>
+                <Link passHref href="/examples">
+                    <Flex
+                        as="a"
+                        gap="2"
+                        align="center"
+                        css={{
+                            color: '$primaryLight',
+                            mt: '$10',
+                            display: 'none',
+                            '@md': { display: 'flex' }
+                        }}>
+                        <RocketIcon style={{ color: 'inherit' }} />
+                        <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
+                            Examples
+                        </Text>
+                    </Flex>
+                </Link>
 
                 <hr style={{ margin: '24px 0' }} />
 
@@ -283,7 +284,6 @@ const Sidebar: React.FC<Props> = ({
                         </Text>
                     </Flex>
 
-                    {/* Sidebar Version Section */}
                     {showPlatformSelector ? (
                         <section
                             style={{
@@ -320,13 +320,15 @@ const Sidebar: React.FC<Props> = ({
                     ) : null}
                 </Box>
                 {/* Sidebar Menu Section */}
-                {nav
-                    ? Object.entries(nav).map(([key, children], index) => (
-                          <SidebarSection key={key} value={key} index={index} nested={false}>
-                              {children as React.ReactChildren}
-                          </SidebarSection>
-                      ))
-                    : null}
+                <Box css={{ opacity: renderComponents ? '1' : '0' }}>
+                    {nav
+                        ? Object.entries(nav).map(([key, children], index) => (
+                              <SidebarSection key={key} value={key} index={index} nested={false}>
+                                  {children as React.ReactChildren}
+                              </SidebarSection>
+                          ))
+                        : null}
+                </Box>
             </div>
         </Box>
     );
@@ -368,9 +370,9 @@ export const menuItem = [
         apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
     },
     {
-        link: '/server-side/v2/introduction/basics',
+        link: '/server-side/v2/how--to-guides/make-api-calls',
         name: 'Server-Side',
         icon: <ServerIcon />,
-        apiRef: '/server-side/v2/introduction/basics'
+        apiRef: '/server-side/v2/api-reference/Rooms/overview'
     }
 ];

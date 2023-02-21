@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useLayoutEffect, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { ChevronRightIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
@@ -29,10 +29,8 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
     const inFocus = isInFocus();
     const [openSection, setOpenSection] = useState(inFocus);
 
-    const [renderComponents, setRenderComponents] = useState(false);
-
     // To open accordions that were not closed before the page reload
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (typeof window !== 'undefined') {
             const openedAccordions = JSON.parse(sessionStorage.getItem('openedAccordions') || '[]');
             for (const i of openedAccordions)
@@ -51,8 +49,6 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                 currentList.push(key);
                 sessionStorage.setItem('openedAccordions', JSON.stringify(currentList));
             }
-            // Styles take some time to load
-            setRenderComponents(true);
         }
     }, []);
 
@@ -69,9 +65,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
         }, 0);
     }, [activeItem]);
 
-    // const indexURL = children?.overview?.url || '';
-
-    return renderComponents ? (
+    return (
         <section
             style={{
                 margin: nested ? '0 0 0 0.95rem' : '2px 0.5rem 0.5rem 0.25rem',
@@ -93,7 +87,6 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                             )
                         ];
                         sessionStorage.setItem('openedAccordions', JSON.stringify(updatedList));
-
                         return !prev;
                     });
                 }}
@@ -159,7 +152,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                 ) : null}
             </div>
         </section>
-    ) : null;
+    );
 };
 
 export default SidebarSection;
