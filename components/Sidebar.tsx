@@ -122,7 +122,6 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, baseView
             ref={baseRef}
             className="hide-scrollbar"
             css={{
-                minWidth: '304px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'stretch',
