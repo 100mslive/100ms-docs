@@ -31,6 +31,7 @@ export default function ExampleCard({
                     ? 'linear-gradient(279.91deg, rgba(19, 22, 27, 0.8) 37.76%, rgba(23, 27, 33, 0.8) 91.22%)'
                     : 'linear-gradient(279.91deg, rgba(240, 242, 244, 0.8) 37.76%, rgba(249, 250, 251, 0.8) 91.22%)',
                 padding: '24px',
+                paddingBottom: '16px',
                 borderRadius: '16px',
                 border: '1px solid var(--border_light)',
                 boxShadow: '0px 16px 56px rgba(0, 0, 0, 0.05)',
