@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
@@ -176,14 +177,14 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, baseView
                         <ChevronRightIcon height="16px" width="16px" />
                     </Flex>
                 )}
-                <a style={{ textDecoration: 'none' }} href="/docs/concepts/v2/concepts/basics">
-                    <Flex gap="2" align="center" css={{ color: '$primaryLight' }}>
+                <Link passHref href="/concepts/v2/concepts/basics">
+                    <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <LayersIcon style={{ color: 'inherit' }} />
                         <Text css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
                             Concepts
                         </Text>
                     </Flex>
-                </a>
+                </Link>
 
                 <hr style={{ margin: '24px 0' }} />
 
