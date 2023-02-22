@@ -39,7 +39,7 @@ const examples: {
         url: 'https://github.com/100mslive/100ms-ios-sdk/tree/main/Example',
         technologies: [TECHNOLOGIES.IOS],
         tags: ['Mobile'],
-        categories: [CATEGORIES.QUICKSTARTS]
+        categories: [CATEGORIES.APPS]
     },
     {
         title: 'Sample App - React Native',
@@ -102,6 +102,33 @@ const examples: {
         categories: [CATEGORIES.QUICKSTARTS]
     },
     {
+        title: 'Virtual Events - Next.js',
+        description:
+            'A fully customizable virtual live events starter kit built with Next.js',
+        url: 'https://github.com/100mslive/virtual-event-starter-kit',
+        technologies: [TECHNOLOGIES.NEXTJS],
+        tags: ['Web', 'Events'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Thirdle - Flutter',
+        description:
+            'A multiplayer Wordle inspired game built using the 100ms Flutter SDK',
+        url: 'https://github.com/coder-with-a-bushido/thirdle/',
+        technologies: [TECHNOLOGIES.FLUTTER],
+        tags: ['Mobile', 'Video Guide'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
+        title: 'Telehealth App - Flutter',
+        description:
+            'An app to book and join audio/video appointments built using the 100ms Flutter SDK',
+        url: 'https://github.com/ygit/Telehealth_app/',
+        technologies: [TECHNOLOGIES.FLUTTER],
+        tags: ['Mobile', 'Telehealth'],
+        categories: [CATEGORIES.APPS]
+    },
+    {
         title: 'Live Streaming - Flutter',
         description: 'A Flutter app to demonstrate live streaming using the 100ms Flutter SDK',
         url: 'https://github.com/adityathakurxd/live',
@@ -118,20 +145,19 @@ const examples: {
         categories: [CATEGORIES.APPS]
     },
     {
-        title: 'Thirdle - Flutter',
-        description:
-            'A multiplayer Wordle inspired game built using the 100ms Flutter SDK',
-        url: 'https://github.com/coder-with-a-bushido/thirdle/',
-        technologies: [TECHNOLOGIES.FLUTTER],
-        tags: ['Mobile', 'Video Guide'],
-        categories: [CATEGORIES.APPS]
-    },
-    {
         title: 'Quickstart - React',
         description: 'A conferencing and streaming app built with React using the 100ms SDK',
         url: 'https://github.com/100mslive/100ms-examples/tree/main/web/react-quickstart',
         technologies: [TECHNOLOGIES.REACT],
         tags: ['Web'],
+        categories: [CATEGORIES.QUICKSTARTS]
+    },
+    {
+        title: 'Quickstart - JavaScript',
+        description: 'A conferencing and streaming app built with JavaScript using the 100ms SDK',
+        url: 'https://github.com/100mslive/100ms-examples/tree/main/web/js-quickstart',
+        technologies: [TECHNOLOGIES.JAVASCRIPT],
+        tags: ['Web', 'Vanilla JavaScript'],
         categories: [CATEGORIES.QUICKSTARTS]
     },
     {
@@ -151,29 +177,11 @@ const examples: {
         categories: [CATEGORIES.APPS]
     },
     {
-        title: 'Virtual Events - Next.js',
-        description:
-            'A fully customizable virtual live events starter kit built with Next.js',
-        url: 'https://github.com/100mslive/virtual-event-starter-kit',
-        technologies: [TECHNOLOGIES.NEXTJS],
-        tags: ['Web', 'Events'],
-        categories: [CATEGORIES.APPS]
-    },
-    {
         title: 'Discord Stages Clone - Next.js',
         description: 'A Discord Stages clone with Next.js and the 100ms SDK',
         url: 'https://github.com/100mslive/discord-stages-clone-100ms',
         technologies: [TECHNOLOGIES.NEXTJS],
         tags: ['Web', 'Clone'],
-        categories: [CATEGORIES.APPS]
-    },
-    {
-        title: 'Telehealth App - Flutter',
-        description:
-            'An app to book and join audio/video appointments built using the 100ms Flutter SDK',
-        url: 'https://github.com/ygit/Telehealth_app/',
-        technologies: [TECHNOLOGIES.FLUTTER],
-        tags: ['Mobile', 'Telehealth'],
         categories: [CATEGORIES.APPS]
     },
     {
@@ -257,14 +265,6 @@ const examples: {
         technologies: [TECHNOLOGIES.NODEJS],
         tags: ['Server Side'],
         categories: [CATEGORIES.FEATURES, CATEGORIES.EXTRAS]
-    },
-    {
-        title: 'Quickstart - JavaScript',
-        description: 'A conferencing and streaming app built with JavaScript using the 100ms SDK',
-        url: 'https://github.com/100mslive/100ms-examples/tree/main/web/js-quickstart',
-        technologies: [TECHNOLOGIES.JAVASCRIPT],
-        tags: ['Web', 'Vanilla JavaScript'],
-        categories: [CATEGORIES.QUICKSTARTS]
     },
     {
         title: 'Grayscale Filter',
