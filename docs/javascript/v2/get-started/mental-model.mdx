@@ -153,11 +153,11 @@ import { useHMSActions,
 function ToggleMuteButton() {
 	const audioEnabled = useHMSStore(selectIsLocalAudioEnabled);
 
-  const actions = useHMSActions();
-  const toggleAudio = () => actions.setLocalAudioEnabled(!audioEnabled);
+    const actions = useHMSActions();
+    const toggleAudio = () => actions.setLocalAudioEnabled(!audioEnabled);
 
-  const icon = audioEnabled ? "unmutedAudio" : "mutedAudio";
-  return <Button icon={icon} onClick={toggleAudio}/>
+    const icon = audioEnabled ? "unmutedAudio" : "mutedAudio";
+    return <Button icon={icon} onClick={toggleAudio}/>
 }
 ```
 
