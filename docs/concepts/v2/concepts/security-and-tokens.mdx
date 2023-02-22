@@ -14,19 +14,24 @@ Both tokens can be decoded with JWT utilities, like [jwt.io](https://jwt.io).
 
 ## Auth token for client SDKs
 
-100ms client SDKs use auth tokens to [join a room](/javascript/v2/how--to-guides/set-up-video-conferencing/join). Auth token can be generated with:
-
--   `app_access_key` and `app_secret`: Find these secrets on the [dashboard](https://dashboard.100ms.live/developer)
--   `room_id`: Unique identifier for the room that you want to join. Get it from the [dashboard](https://dashboard.100ms.live/rooms) or in the response of the [create room server-side API](/server-side/v2/api-reference/Rooms/create-via-api)
--   `user_id`: Specify your internal identifier to map a 100ms peer object to your internal user object
+100ms client SDKs use auth tokens to [join a room](/javascript/v2/how--to-guides/set-up-video-conferencing/join).
 
 ### How to get auth tokens?
 
-- No-code to get started: Get auth tokens from the dashboard with [this guide](/javascript/v2/guides/token#get-a-temporary-token-from-100ms-dashboard)
-- Use 100ms token server: Our sample apps use the 100ms [token endpoint](/javascript/v2/guides/token-endpoint#get-a-token-using-100ms-token-endpoint) to generate auth tokens
+- No-code to get started: Get temporary auth tokens from [the dashboard](/javascript/v2/guides/token#get-a-temporary-token-from-100ms-dashboard)
+- Use 100ms token server: Use the 100ms [token endpoint](/javascript/v2/guides/token-endpoint#get-a-token-using-100ms-token-endpoint) to generate auth tokens, just like our sample apps
 - [Set up your token server](#set-up-your-token-server): Recommended approach for production
 
 ### Set up your token server
+
+Your app will call the token server, which generates and returns a JWT auth token for the app to join a 100ms room. This ensures the secret credential of your workspace (called `app_secret`) is not exposed to the client-side. You can also tie it with your internal user authentication: generate auth tokens only when the user is authenticated.
+
+Auth token can be generated with:
+
+-   `app_access_key` and `app_secret`: Find these on the [dashboard](https://dashboard.100ms.live/developer)
+-   `room_id`: Unique identifier for the room that the peer wants to join. Get it from the [dashboard](https://dashboard.100ms.live/rooms) or in the response of the [create room server-side API](/server-side/v2/api-reference/Rooms/create-via-api)
+-   `role`: Name of the role that the peer will join as (e.g. "host")
+-   `user_id`: Your internal identifier, useful to map a 100ms peer object to your internal user object
 
 #### Sample code
 
@@ -213,6 +218,8 @@ $token = JWT::encode(
 ## Management token for REST API
 
 100ms uses management tokens to authenticate REST APIs. Use `app_access_key` and `app_secret` from the [dashboard](https://dashboard.100ms.live/developer) to create the management token.
+
+The management token is not to be exposed on the client-side.
 
 #### Sample code
 
