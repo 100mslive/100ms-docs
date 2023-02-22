@@ -151,7 +151,7 @@ import { useHMSActions,
          selectIsLocalAudioEnabled } from "@100mlive/react-sdk"
 
 function ToggleMuteButton() {
-	const audioEnabled = useHMSStore(selectIsLocalAudioEnabled);
+    const audioEnabled = useHMSStore(selectIsLocalAudioEnabled);
 
     const actions = useHMSActions();
     const toggleAudio = () => actions.setLocalAudioEnabled(!audioEnabled);
