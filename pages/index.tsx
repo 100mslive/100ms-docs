@@ -65,7 +65,6 @@ const Homepage = ({ allNav }) => {
                 showReference={false}
                 onHomePage
             />
-
             {renderComponents ? (
                 <>
                     <Flex
@@ -73,6 +72,7 @@ const Homepage = ({ allNav }) => {
                         css={{
                             mx: 'auto',
                             minHeight: '100vh',
+                            position: 'relative',
                             backgroundImage: `url(${
                                 currentTheme === 'dark'
                                     ? '/docs/bg-desktop.png'
@@ -85,7 +85,12 @@ const Homepage = ({ allNav }) => {
                                 backgroundSize: 'cover'
                             }
                         }}>
-                        <Sidebar menuState={menuState} nav={{}} allNav={allNav} baseViewOnly />
+                        <Sidebar
+                            menuState={menuState}
+                            nav={{}}
+                            allNav={allNav}
+                            css={{ width: menu ? '100%' : 'initial' }}
+                        />
                         {!menu ? (
                             <Box
                                 css={{

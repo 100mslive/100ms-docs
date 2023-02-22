@@ -1,20 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { MutableRefObject, useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
-const useClickOutside = (
-  ref: MutableRefObject<HTMLElement | null>,
-  handler: (event: Event) => void
-) => {
-  useEffect(() => {
-    const callback = (event: Event) => {
-      const el = ref.current
-      if (!event || !el || el.contains((event as any).target)) return
-      handler(event)
-    }
-
-    document.addEventListener('click', callback)
-    return () => document.removeEventListener('click', callback)
-  }, [ref, handler])
+export default function useClickOutside(elementRef, callback) {
+    const callbackRef = useRef(callback)
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (elementRef && elementRef.current && !elementRef.current.contains(event.target)) {
+                // Call Callback only if event happens outside element or descendent elements
+                callbackRef.current()
+            }
+            return
+        }
+        document.addEventListener('click', handleClickOutside, true)
+        return () => {
+            document.removeEventListener('click', handleClickOutside, true)
+        }
+    }, [elementRef, callback])
 }
-
-export default useClickOutside

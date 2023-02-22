@@ -17,10 +17,11 @@ import {
     FlutterIcon as Flutter,
     AndroidIcon as Android,
     ReactIcon as ReactNative,
-    JavascriptIcon as JavaScript
+    JavascriptIcon as JavaScript,
+    RocketIcon
 } from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
-import { Flex, Box, Text } from '@100mslive/react-ui';
+import { Flex, Box, Text, CSS } from '@100mslive/react-ui';
 import SidebarSection from './SidebarSection';
 import PlatformAccordion from './PlatformAccordion';
 
@@ -48,10 +49,19 @@ interface Props {
     };
     nav: Record<string, Record<string, NavRoute>>;
     allNav: Record<string, Record<string, NavRoute>>[];
+    css?: CSS;
+    hideOnDesktop?: boolean;
     baseViewOnly?: boolean;
 }
 
-const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, baseViewOnly = false }) => {
+const Sidebar: React.FC<Props> = ({
+    menuState,
+    nav: currentNav,
+    allNav,
+    css = {},
+    hideOnDesktop = false,
+    baseViewOnly = true
+}) => {
     const router = useRouter() as any;
     const {
         query: { slug }
@@ -79,7 +89,7 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, baseView
     }, []);
 
     let nav;
-    if (!baseViewOnly) {
+    if (!baseViewOnly && slug) {
         const [currentDocSlug] = slug as string[];
 
         if (Object.keys(currentNav).length) {
@@ -117,23 +127,32 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, baseView
 
     const baseRef = useRef<HTMLDivElement>(null);
 
+    const { ['@md']: cssMd, ...cssRest } = css;
+
     return (
         <Box
             ref={baseRef}
             className="hide-scrollbar"
             css={{
+                minWidth: '304px',
+                display: hideOnDesktop && !menu ? 'none' : 'flex',
+                flexDirection: 'column',
+                alignItems: 'stretch',
                 height: 'calc(100vh - 100px)',
                 overflowY: 'auto',
                 overscrollBehavior: 'none',
                 '@md': {
                     position: 'absolute',
-                    top: '$14',
+                    top: '0',
                     display: menu ? 'flex' : 'none',
-                    height: 'calc(100vh - 200px)'
+                    height: 'calc(100vh - 200px)',
+                    width: '100%',
+                    ...(cssMd ?? {})
                 },
                 '@sm': {
-                    w: '100vw'
-                }
+                    w: '100%'
+                },
+                ...cssRest
             }}>
             {/* Base view */}
             <div
@@ -141,15 +160,16 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, baseView
                 style={
                     showBaseView
                         ? {
-                              padding: '1.75rem',
+                              padding: menu ? '24px' : '1.75rem',
                               paddingTop: '0',
-                              position: 'sticky',
-                              top: '1rem'
+                              position: menu ? 'initial' : 'sticky',
+                              top: '1rem',
+                              width: '100%'
                           }
                         : {}
                 }>
                 {baseViewOnly ? (
-                    <Box css={{ pt: '$16' }} />
+                    <Box css={{ pt: '$16', '@md': { pt: 0 } }} />
                 ) : (
                     <Flex
                         align="center"
@@ -174,8 +194,26 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav, baseView
                 <Link passHref href="/concepts/v2/concepts/basics">
                     <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <LayersIcon style={{ color: 'inherit' }} />
-                        <Text css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
+                        <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
                             Concepts
+                        </Text>
+                    </Flex>
+                </Link>
+
+                <Link passHref href="/examples">
+                    <Flex
+                        as="a"
+                        gap="2"
+                        align="center"
+                        css={{
+                            color: '$primaryLight',
+                            mt: '$10',
+                            display: 'none',
+                            '@md': { display: 'flex' }
+                        }}>
+                        <RocketIcon style={{ color: 'inherit' }} />
+                        <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
+                            Examples
                         </Text>
                     </Flex>
                 </Link>

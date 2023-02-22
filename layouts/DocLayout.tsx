@@ -47,7 +47,12 @@ export default function DocLayout({ children }: Props) {
                             maxWidth: '1500px',
                             justifyContent: 'space-between'
                         }}>
-                        <Sidebar menuState={menuState} nav={nav} allNav={allNav} />
+                        <Sidebar
+                            menuState={menuState}
+                            nav={nav}
+                            allNav={allNav}
+                            baseViewOnly={false}
+                        />
                         {!menu ? children : null}
                     </div>
                 </div>

@@ -60,7 +60,7 @@ const PlatformAccordion = ({
                     // For when all children are accordions
                     <Link
                         passHref
-                        href={`/${
+                        href={`${
                             data['v2'][item][Object.keys(data['v2'][item])[0]]?.url ||
                             data['v2'][item][Object.keys(data['v2'][item])[0]][
                                 Object.keys(data['v2'][item][Object.keys(data['v2'][item])[0]])[0]
