@@ -51,6 +51,19 @@ nav: '4.47'
 
 ---
 
+### isPublished
+
+• `Optional` **isPublished**: `boolean`
+
+only applicable for local tracks - to denote if a track has been published or not
+false for preview tracks
+
+#### Inherited from
+
+[HMSAudioTrack](/api-reference/javascript/v2/interfaces/HMSAudioTrack).[isPublished](/api-reference/javascript/v2/interfaces/HMSAudioTrack#ispublished)
+
+---
+
 ### peerId
 
 • `Optional` **peerId**: `string`

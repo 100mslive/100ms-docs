@@ -56,13 +56,16 @@ nav: '4.54'
 
 ### preview
 
-• **preview**: `Object`
+• `Optional` **preview**: `Object`
 
 #### Type declaration
 
-| Name    | Type                                                         |
-| :------ | :----------------------------------------------------------- |
-| `peer?` | [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer) |
+| Name          | Type     |
+| :------------ | :------- |
+| `asRole?`     | `string` |
+| `audioTrack?` | `string` |
+| `localPeer?`  | `string` |
+| `videoTrack?` | `string` |
 
 ---
 

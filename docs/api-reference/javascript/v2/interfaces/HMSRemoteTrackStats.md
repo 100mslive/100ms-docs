@@ -248,6 +248,16 @@ MissingInboundStats.remoteId
 
 ---
 
+### roundTripTime
+
+• `Optional` **roundTripTime**: `number`
+
+#### Inherited from
+
+MissingInboundStats.roundTripTime
+
+---
+
 ### ssrc
 
 • **ssrc**: `number`
@@ -265,6 +275,16 @@ BaseTrackStats.ssrc
 #### Inherited from
 
 BaseTrackStats.timestamp
+
+---
+
+### totalRoundTripTime
+
+• `Optional` **totalRoundTripTime**: `number`
+
+#### Inherited from
+
+MissingInboundStats.totalRoundTripTime
 
 ---
 
