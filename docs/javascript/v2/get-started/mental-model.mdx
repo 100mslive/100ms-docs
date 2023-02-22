@@ -101,7 +101,7 @@ Further, the action doesn’t need to happen as a result of you clicking on the 
 
 ![Action and State](/docs/v2/web-mental-model/action-state-mesh.png)
 
-As the number of actions and states increases, doing this reliably becomes more difficult. Every time a new component needs the muted state, it must be tied to every action which can modify it. Similarly, whenever a new action affects the muted state, it must be connected to all parts of the codebase that rely on the state. With so much going on in a live call(peer join/leave, tracks getting muted/unmuted, chat messages, devices changing, fluctuating network connection, polls, whiteboard, etc.), the codebase will become tightly coupled and fragile.
+As the number of actions and states increases, doing this reliably becomes more difficult. Every time a new component needs the muted state, it must be tied to every action which can modify it. Similarly, whenever a new action affects the muted state, it must be connected to all parts of the codebase that rely on the state. With so much going on in a live call(peer join/leave, tracks getting muted/unmuted, chat messages, devices changing, fluctuating network connection, polls, whiteboard, etc.), the codebase will become tightly [coupled](https://en.wikipedia.org/wiki/Coupling_(computer_programming)) and fragile.
 
 ### Linking Actions and State
 
@@ -148,8 +148,7 @@ For e.g. we give a React wrapper over the vanilla SDK([npm](https://www.npmjs.co
 ```jsx
 import { useHMSActions,
          useHMSStore,
-         selectIsLocalAudioEnabled
-			  } from "@100mlive/react-sdk"
+         selectIsLocalAudioEnabled } from "@100mlive/react-sdk"
 
 function ToggleMuteButton() {
 	const audioEnabled = useHMSStore(selectIsLocalAudioEnabled);
