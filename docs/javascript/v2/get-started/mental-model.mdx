@@ -120,9 +120,11 @@ The actions, global store, and the link between them are where our SDK comes in.
 The above image is what we would like to be the main takeaway from this page. This design and abstraction level makes the application code much simpler to write and reason about. If you want to do something, you reach out to `hmsActions`, and if you want to get any state, you go for `hmsStore`. This is how our pseudo code above for the mute button would look like with these constructs -
 
 ```js
-import {hmsActions,
-        hmsStore,
-        selectAudioState} from "@100mslive/sdk"
+import {
+    hmsActions,
+    hmsStore,
+    selectAudioState,
+} from "@100mslive/sdk";
 
 function ToggleMuteButton() {
     const button = getButtonIcon("unmutedAudio");
@@ -146,9 +148,11 @@ While the SDK can be used as-is in a vanilla JS web app, it's more likely that y
 For e.g. we give a React wrapper over the vanilla SDK([npm](https://www.npmjs.com/package/@100mslive/react-sdk)) to expose both the constructs from easy-to-use hooks `useHMSStore` and `useHMSActions`. Here is a code sample based on the [mute/unmute doc page](https://www.100ms.live/docs/javascript/v2/how--to-guides/set-up-video-conferencing/mute) for creating a toggle mute button -
 
 ```jsx
-import { useHMSActions,
-         useHMSStore,
-         selectIsLocalAudioEnabled } from "@100mlive/react-sdk"
+import {
+    useHMSActions,
+    useHMSStore,
+    selectIsLocalAudioEnabled
+} from "@100mlive/react-sdk";
 
 function ToggleMuteButton() {
     const audioEnabled = useHMSStore(selectIsLocalAudioEnabled);
