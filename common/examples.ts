@@ -125,7 +125,7 @@ const examples: {
         technologies: [TECHNOLOGIES.FLUTTER],
         tags: ['Mobile', 'Video Guide'],
         categories: [CATEGORIES.APPS]
-        },
+    },
     {
         title: 'Quickstart - React',
         description: 'A conferencing and streaming app built with React using the 100ms SDK',
