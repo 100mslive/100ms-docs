@@ -14,7 +14,7 @@ Both tokens can be decoded with JWT utilities, like [jwt.io](https://jwt.io).
 
 ## Auth token for client SDKs
 
-100ms client-side SDKs use auth tokens to [join a room](/javascript/v2/how--to-guides/set-up-video-conferencing/join). Auth token can be generated with:
+100ms client SDKs use auth tokens to [join a room](/javascript/v2/how--to-guides/set-up-video-conferencing/join). Auth token can be generated with:
 
 -   `app_access_key` and `app_secret`: Find these secrets on the [dashboard](https://dashboard.100ms.live/developer)
 -   `room_id`: Unique identifier for the room that you want to join. Get it from the [dashboard](https://dashboard.100ms.live/rooms) or in the response of the [create room server-side API](/server-side/v2/api-reference/Rooms/create-via-api)
@@ -226,15 +226,16 @@ var uuid4 = require('uuid4');
 
 var app_access_key = '<app_access_key>';
 var app_secret = '<app_secret>';
+var payload = {
+    access_key: app_access_key,
+    type: 'management',
+    version: 2,
+    iat: Math.floor(Date.now() / 1000),
+    nbf: Math.floor(Date.now() / 1000)
+};
 
 jwt.sign(
-    {
-        access_key: app_access_key,
-        type: 'management',
-        version: 2,
-        iat: Math.floor(Date.now() / 1000),
-        nbf: Math.floor(Date.now() / 1000)
-    },
+    payload,
     app_secret,
     {
         algorithm: 'HS256',
