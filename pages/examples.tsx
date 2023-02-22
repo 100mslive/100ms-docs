@@ -156,7 +156,11 @@ export default function Examples({ allNav }) {
                                             padding: 0,
                                             margin: 0,
                                             gap: '$4',
-                                            overflow: 'auto'
+                                            overflow: 'auto',
+                                            scrollbarWidth: 'thin',
+                                            '&::-webkit-scrollbar': {
+                                                height: 0
+                                            }
                                         }}>
                                         {categories.map(({ icon, text, textSmall }) => (
                                             <li
