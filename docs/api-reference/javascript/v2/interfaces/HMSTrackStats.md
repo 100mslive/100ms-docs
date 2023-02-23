@@ -317,7 +317,7 @@ https://www.w3.org/TR/webrtc-stats/#dom-rtcremoteinboundrtpstreamstats
 
 #### Inherited from
 
-[HMSLocalTrackStats](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats).[roundTripTime](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats#roundtriptime)
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[roundTripTime](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#roundtriptime)
 
 ---
 
@@ -347,7 +347,7 @@ https://www.w3.org/TR/webrtc-stats/#dom-rtcremoteinboundrtpstreamstats
 
 #### Inherited from
 
-[HMSLocalTrackStats](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats).[totalRoundTripTime](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats#totalroundtriptime)
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[totalRoundTripTime](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#totalroundtriptime)
 
 ---
 
