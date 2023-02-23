@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
@@ -16,10 +17,11 @@ import {
     FlutterIcon as Flutter,
     AndroidIcon as Android,
     ReactIcon as ReactNative,
-    JavascriptIcon as JavaScript
+    JavascriptIcon as JavaScript,
+    RocketIcon
 } from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
-import { Flex, Box, Text } from '@100mslive/react-ui';
+import { Flex, Box, Text, CSS } from '@100mslive/react-ui';
 import SidebarSection from './SidebarSection';
 import PlatformAccordion from './PlatformAccordion';
 
@@ -47,39 +49,47 @@ interface Props {
     };
     nav: Record<string, Record<string, NavRoute>>;
     allNav: Record<string, Record<string, NavRoute>>[];
+    css?: CSS;
+    hideOnDesktop?: boolean;
+    baseViewOnly?: boolean;
 }
 
-const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
+const Sidebar: React.FC<Props> = ({
+    menuState,
+    nav: currentNav,
+    allNav,
+    css = {},
+    hideOnDesktop = false,
+    baseViewOnly = true
+}) => {
     const router = useRouter() as any;
     const {
         query: { slug }
     } = router;
-    const baseViewOnly = Object.keys(currentNav).length === 0;
     const { menu, setMenu } = menuState;
 
+    const [renderComponents, setRenderComponents] = useState(false);
     const [openPlatformAccordion, setOpenPlatformAccordion] = useState(platformlist[0]);
 
     useEffect(() => {
         setMenu(false);
     }, [router]);
 
+    const [showBaseView, setShowBaseView] = useState(baseViewOnly);
     const [currentTheme, setCurrentTheme] = useState('dark');
 
     useEffect(() => {
-        if (window) {
-            setCurrentTheme(window.localStorage.theme || 'dark');
-        }
-    }, []);
-
-    useEffect(() => {
         const updateTheme = (e) => setCurrentTheme(e.detail.theme);
-
-        if (document) document.addEventListener('themeChanged', updateTheme);
+        setRenderComponents(true);
+        if (window && document) {
+            setCurrentTheme(window.localStorage.theme || 'dark');
+            document.addEventListener('themeChanged', updateTheme);
+        }
         return () => document.removeEventListener('themeChanged', updateTheme);
     }, []);
 
     let nav;
-    if (!baseViewOnly) {
+    if (!baseViewOnly && slug) {
         const [currentDocSlug] = slug as string[];
 
         if (Object.keys(currentNav).length) {
@@ -88,9 +98,6 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                 if (slug?.length > 3) {
                     nav = platform[slug[1]];
                     if (slug[0] === 'api-reference') {
-                        // if (slug[1] === 'android') {
-                        //     showPagination = false;
-                        // }
                         nav = platform[slug[1]][slug[2]];
                     }
                 }
@@ -116,9 +123,11 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
         else router.push(s.link, undefined, { shallow: false });
     };
 
-    const [showBaseView, setShowBaseView] = useState(baseViewOnly);
     useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
+
     const baseRef = useRef<HTMLDivElement>(null);
+
+    const { ['@md']: cssMd, ...cssRest } = css;
 
     return (
         <Box
@@ -126,23 +135,24 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
             className="hide-scrollbar"
             css={{
                 minWidth: '304px',
-                display: 'flex',
+                display: hideOnDesktop && !menu ? 'none' : 'flex',
                 flexDirection: 'column',
                 alignItems: 'stretch',
                 height: 'calc(100vh - 100px)',
                 overflowY: 'auto',
-                position: 'sticky',
-                top: '$20',
                 overscrollBehavior: 'none',
                 '@md': {
                     position: 'absolute',
-                    top: '$14',
+                    top: '0',
                     display: menu ? 'flex' : 'none',
-                    height: 'calc(100vh - 200px)'
+                    height: 'calc(100vh - 200px)',
+                    width: '100%',
+                    ...(cssMd ?? {})
                 },
                 '@sm': {
-                    w: '100vw'
-                }
+                    w: '100%'
+                },
+                ...cssRest
             }}>
             {/* Base view */}
             <div
@@ -150,15 +160,16 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                 style={
                     showBaseView
                         ? {
-                              padding: '1.75rem',
+                              padding: menu ? '24px' : '1.75rem',
                               paddingTop: '0',
-                              position: 'sticky',
-                              top: '1rem'
+                              position: menu ? 'initial' : 'sticky',
+                              top: '1rem',
+                              width: '100%'
                           }
                         : {}
                 }>
                 {baseViewOnly ? (
-                    <Box css={{ pt: '$16' }} />
+                    <Box css={{ pt: '$16', '@md': { pt: 0 } }} />
                 ) : (
                     <Flex
                         align="center"
@@ -180,14 +191,32 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
                         <ChevronRightIcon height="16px" width="16px" />
                     </Flex>
                 )}
-                <a style={{ textDecoration: 'none' }} href="/docs/concepts/v2/concepts/basics">
-                    <Flex gap="2" align="center" css={{ color: '$primaryLight' }}>
+                <Link passHref href="/concepts/v2/concepts/basics">
+                    <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <LayersIcon style={{ color: 'inherit' }} />
-                        <Text css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
+                        <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
                             Concepts
                         </Text>
                     </Flex>
-                </a>
+                </Link>
+
+                <Link passHref href="/examples">
+                    <Flex
+                        as="a"
+                        gap="2"
+                        align="center"
+                        css={{
+                            color: '$primaryLight',
+                            mt: '$10',
+                            display: 'none',
+                            '@md': { display: 'flex' }
+                        }}>
+                        <RocketIcon style={{ color: 'inherit' }} />
+                        <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
+                            Examples
+                        </Text>
+                    </Flex>
+                </Link>
 
                 <hr style={{ margin: '24px 0' }} />
 
@@ -216,86 +245,97 @@ const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav, allNav }) => {
             </div>
 
             {/* Platform specific view */}
-            <div className={`page ${showBaseView ? '' : 'active-page'}`} style={{}}>
-                <Box
-                    css={{
-                        position: 'sticky',
-                        top: '0',
-                        pt: '$5',
-                        zIndex: '100',
-                        boxShadow:
-                            currentTheme === 'dark'
-                                ? '0 1.25rem 3rem 0.5rem rgba(8, 9, 12, 0.8)'
-                                : '0 1.25rem 1rem 0.5rem rgba(250, 250, 250, 0.8)',
-                        backgroundColor: 'var(--docs_bg_content)',
-                        '@md': {
-                            pt: '$8',
-                            top: '$10'
-                        }
-                    }}>
-                    <Flex
-                        align="center"
-                        gap="1"
-                        css={{
-                            color: '$primaryLight',
-                            pl: '$9',
-                            mb: '$12',
-                            cursor: 'pointer'
-                        }}
-                        onClick={() => {
-                            setShowBaseView(true);
-                            if (baseRef.current) baseRef?.current.scrollTo(0, 0);
-                        }}>
-                        <ChevronLeftIcon height="16px" width="16px" />
-                        <Text variant="sm" css={{ color: '$primaryLight' }}>
-                            Content overview
-                        </Text>
-                    </Flex>
-
-                    {/* Sidebar Version Section */}
-                    {showPlatformSelector ? (
-                        <section
-                            style={{
-                                margin: '0px 0.5rem 0.5rem 0.4rem',
-                                background: 'var(--docs_bg_content)'
+            <div className={`page ${showBaseView ? '' : 'active-page'}`}>
+                {renderComponents ? (
+                    <>
+                        <Box
+                            css={{
+                                position: 'sticky',
+                                top: '0',
+                                pt: '$5',
+                                zIndex: '100',
+                                boxShadow:
+                                    currentTheme === 'dark'
+                                        ? '0 1.25rem 2rem 0.25rem rgba(8, 9, 12, 0.8)'
+                                        : '0 1.25rem 1rem 0.25rem rgba(250, 250, 250, 0.8)',
+                                backgroundColor: 'var(--docs_bg_content)',
+                                '@md': {
+                                    pt: '$8',
+                                    top: '$10'
+                                }
                             }}>
-                            <Listbox value={tech} onChange={changeTech}>
-                                <Listbox.Button className="dropdown">
-                                    <div style={{ display: 'flex ', alignItems: 'center' }}>
-                                        {tech.icon}
-                                        <span style={{ marginLeft: '1rem' }}>{tech.name}</span>
-                                    </div>
-                                    <ChevronDownIcon />
-                                </Listbox.Button>
-                                <Listbox.Options className="dropdown-options">
-                                    {menuItem.map((m) => (
-                                        <Listbox.Option
-                                            key={m.link}
-                                            value={m}
-                                            className={({ active }) =>
-                                                `${
-                                                    active
-                                                        ? 'dropdown-option dropdown-option-active'
-                                                        : 'dropdown-option'
-                                                }`
-                                            }>
-                                            {m.icon}
-                                            <span style={{ marginLeft: '1rem' }}>{m.name}</span>
-                                        </Listbox.Option>
-                                    ))}
-                                </Listbox.Options>
-                            </Listbox>
-                        </section>
-                    ) : null}
-                </Box>
-                {/* Sidebar Menu Section */}
-                {nav
-                    ? Object.entries(nav).map(([key, children], index) => (
-                          <SidebarSection key={key} value={key} index={index} nested={false}>
-                              {children as React.ReactChildren}
-                          </SidebarSection>
-                      ))
-                    : null}
+                            <Flex
+                                align="center"
+                                gap="1"
+                                css={{
+                                    color: '$primaryLight',
+                                    pl: '$9',
+                                    mb: '$12',
+                                    cursor: 'pointer'
+                                }}
+                                onClick={() => {
+                                    setShowBaseView(true);
+                                    if (baseRef.current) baseRef?.current.scrollTo(0, 0);
+                                }}>
+                                <ChevronLeftIcon height="16px" width="16px" />
+                                <Text variant="sm" css={{ color: '$primaryLight' }}>
+                                    Content overview
+                                </Text>
+                            </Flex>
+
+                            {showPlatformSelector ? (
+                                <section
+                                    style={{
+                                        margin: '0px 0.5rem 0.5rem 0.4rem',
+                                        background: 'var(--docs_bg_content)'
+                                    }}>
+                                    <Listbox value={tech} onChange={changeTech}>
+                                        <Listbox.Button className="dropdown">
+                                            <div style={{ display: 'flex ', alignItems: 'center' }}>
+                                                {tech.icon}
+                                                <span style={{ marginLeft: '1rem' }}>
+                                                    {tech.name}
+                                                </span>
+                                            </div>
+                                            <ChevronDownIcon />
+                                        </Listbox.Button>
+                                        <Listbox.Options className="dropdown-options">
+                                            {menuItem.map((m) => (
+                                                <Listbox.Option
+                                                    key={m.link}
+                                                    value={m}
+                                                    className={({ active }) =>
+                                                        `${
+                                                            active
+                                                                ? 'dropdown-option dropdown-option-active'
+                                                                : 'dropdown-option'
+                                                        }`
+                                                    }>
+                                                    {m.icon}
+                                                    <span style={{ marginLeft: '1rem' }}>
+                                                        {m.name}
+                                                    </span>
+                                                </Listbox.Option>
+                                            ))}
+                                        </Listbox.Options>
+                                    </Listbox>
+                                </section>
+                            ) : null}
+                        </Box>
+                        {/* Sidebar Menu Section */}
+                        {nav
+                            ? Object.entries(nav).map(([key, children], index) => (
+                                  <SidebarSection
+                                      key={key}
+                                      value={key}
+                                      index={index}
+                                      nested={false}>
+                                      {children as React.ReactChildren}
+                                  </SidebarSection>
+                              ))
+                            : null}
+                    </>
+                ) : null}
             </div>
         </Box>
     );
@@ -337,9 +377,9 @@ export const menuItem = [
         apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
     },
     {
-        link: '/server-side/v2/introduction/basics',
+        link: '/server-side/v2/how--to-guides/make-api-calls',
         name: 'Server-Side',
         icon: <ServerIcon />,
-        apiRef: '/server-side/v2/introduction/basics'
+        apiRef: '/server-side/v2/api-reference/Rooms/overview'
     }
 ];
