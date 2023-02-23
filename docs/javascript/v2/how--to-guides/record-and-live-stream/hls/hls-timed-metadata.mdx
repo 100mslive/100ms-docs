@@ -46,7 +46,7 @@ import Hls, { Fragment, LevelParsed } from 'hls.js';
 // reference for video element
 const videoEl;
 const hlsUrl, hls; // reference to hls url
-const removeAudioLevels(levels: LevelParsed[]) {
+const removeAudioLevels = (levels: LevelParsed[]) => {
   return levels.filter(
     ({ videoCodec, width, height }) => !!videoCodec || !!(width && height)
   );
@@ -93,7 +93,7 @@ const fragChangeHandler = (_: any, { frag }: { frag: Fragment }) => {
       if (timeDifference < fragmentDuration) {
         const data = mt.value.data;
         // here we are converting base64 to actual data.
-        const payload: Record<string, any> = metadataPayloadParser(cue.value.data);
+        const payload: Record<string, any> = metadataPayloadParser(data);
         /**
           * we start a timeout for difference seconds.
           * NOTE: Due to how setTimeout works, the time is only the minimum gauranteed
