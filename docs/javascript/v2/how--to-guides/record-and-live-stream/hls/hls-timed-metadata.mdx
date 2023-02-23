@@ -42,9 +42,87 @@ start_date and end_date will be in UTC format.
 ### App side implementation
 
 ```javascript
-import Hls from 'hls.js';
+import Hls, { Fragment, LevelParsed } from 'hls.js';
+// reference for video element
+const videoEl;
+const hlsUrl, hls; // reference to hls url
+const removeAudioLevels(levels: LevelParsed[]) {
+  return levels.filter(
+    ({ videoCodec, width, height }) => !!videoCodec || !!(width && height)
+  );
+}
+const manifestLoadedHandler = (_: any, { levels }: { levels: LevelParsed[] }) => {
+  // get all the quality level present in stream
+  const onlyVideoLevels = removeAudioLevels(levels);
+};
+const levelUpdatedHandler = (_: any, { level }: { level: number }) => {
+  // qualityLevel which is currently subscribed to
+  const qualityLevel = hls.levels[level];
+};
+/**
+  * Metadata are automatically parsed and added to the video element's
+  * textTrack cue by hlsjs as they come through the stream.
+  * in FRAG_CHANGED, we read the cues and emit HLS_METADATA_LOADED
+  * when the current fragment has a metadata to play.
+  */
+const fragChangeHandler = (_: any, { frag }: { frag: Fragment }) => {
+  try {
+    if (videoEl.textTracks.length === 0) {
+      return;
+    }
+    const fragStartTime = frag.start;
+    /**
+      * this destructuring is needed because the cues array not a pure
+      * JS array and prevents us from
+      * performing array operations like map(),filter() etc.
+      */
+    // @ts-ignore
+    const metadata = [...videoEl.textTracks[0].cues];
+    /**
+      * filter out only the metadata that have startTime set to future.
+      * (i.e) more than the current fragment's startime.
+      */
+    const metadataAfterFragStart = metadata.filter(mt => {
+      return mt.startTime >= fragStartTime;
+    });
 
-const extractMetaTextTrack = (videoEl: HTMLVideoElement | null): TextTrack | null => {
+    metadataAfterFragStart.forEach(mt => {
+      const timeDifference = mt.startTime - fragStartTime;
+      const fragmentDuration = frag.end - frag.start;
+
+      if (timeDifference < fragmentDuration) {
+        const data = mt.value.data;
+        const payload = metadataPayloadParser(data).payload;
+        /**
+          * we start a timeout for difference seconds.
+          * NOTE: Due to how setTimeout works, the time is only the minimum gauranteed
+          * time JS will wait before calling emit(). It's not guaranteed even
+          * for timeDifference = 0.
+          */
+        setTimeout(() => {
+          /** Even though duration comes as an attribute in the stream,
+            * HlsJs doesn't give us a property duration directly. So
+            * we calculate it ouselves. This is same as reading
+            * EXT-INF tag.
+            */
+          const duration = mt.endTime - mt.startTime;
+
+          /**
+            * finally emit event letting the user know its time to
+            * do whatever they want with the payload
+            */
+          console.log("metadata", {
+            payload,
+            duration,
+          });
+        }, timeDifference * 1000);
+      }
+    });
+  } catch (e) {
+    console.error('FRAG_CHANGED event error', e);
+  }
+};
+const extractMetaTextTrack = (): TextTrack | null => {
   const textTrackListCount = videoEl?.textTracks.length || 0;
   for (let trackIndex = 0; trackIndex < textTrackListCount; trackIndex++) {
     const textTrack = videoEl?.textTracks[trackIndex];
@@ -56,7 +134,7 @@ const extractMetaTextTrack = (videoEl: HTMLVideoElement | null): TextTrack | nul
   }
   return null;
 };
-const fireCues = (videoEl: HTMLVideoElement | null, cues: TextTrackCueList) => {
+const fireCues = (cues: TextTrackCueList) => {
   const cuesLength = cues.length;
   let cueIndex = 0;
   while (cueIndex < cuesLength) {
@@ -86,21 +164,27 @@ const fireCues = (videoEl: HTMLVideoElement | null, cues: TextTrackCueList) => {
 };
 const handleTimeUpdateListener = () => {
   // extract timed metadata text track
-  const metaTextTrack: TextTrack | null = extractMetaTextTrack(videoEl);
+  const metaTextTrack: TextTrack | null = extractMetaTextTrack();
   if (!metaTextTrack || !metaTextTrack.cues) {
     return;
   }
   // fire cue for timed meta data extract
-  fireCues(videoEl, metaTextTrack.cues);
+  fireCues(metaTextTrack.cues);
 };
 if (Hls.isSupported()) {
   /**
    * initialize HLSController and add event listeners.
    */
+  hls = new Hls();
+  hls.loadSource(hlsUrl);
+  hls.attachMedia(videoEl);
+  hls.on(Hls.Events.MANIFEST_LOADED, this.manifestLoadedHandler);
+  hls.on(Hls.Events.LEVEL_UPDATED, this.levelUpdatedHandler);
+  hls.on(Hls.Events.FRAG_CHANGED, this.fragChangeHandler);
 } else if (videoEl.canPlayType("application/vnd.apple.mpegurl")) {
-    // Work where hls.js is not supported
-    videoEl.src = hlsUrl;
-    videoEl.addEventListener("timeupdate", handleTimeUpdateListener);
+  // Work where hls.js is not supported
+  videoEl.src = hlsUrl;
+  videoEl.addEventListener("timeupdate", handleTimeUpdateListener);
 }
 ```
 
