@@ -185,8 +185,8 @@ const Search = ({ refine, setSearchTerm, searchTerm }) => {
             if (pathChunks.length) {
                 platform =
                     pathChunks[0] === 'api-reference'
-                        ? platformName[pathChunks[1]]
-                        : platformName[pathChunks[0]];
+                        ? platformName[pathChunks[1]] || ''
+                        : platformName[pathChunks[0]] || '';
             }
         }
         const debounceTimer = setTimeout(() => refine(`${searchTerm} ${platform}`), 400);
