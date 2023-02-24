@@ -168,3 +168,38 @@ You can get the HLS URL in several ways based on whether you use 100ms client SD
 #### I get type errors related to WebRTC Stats, for example, 'Cannot find name RTCInboundRtpStreamStats'.
 
 The minimum supported version of TypeScript for the SDK is '4.4'. You could update to any version above 4.4 or if you are on an old version of TypeScript and cannot do a major upgrade you can set `skipLibCheck: true` in your tsconfig file.
+
+#### Why is my screenshare not working on mobile browsers?
+
+The screenshare API(getDisplayMedia) is not yet supported on mobile browsers. Refer [this](https://caniuse.com/?search=getDisplayMedia) for supported browsers.
+
+
+#### Can I have multiple instances of HMSRoomProvider each mapping to a different room?
+
+Starting from this [release](https://www.100ms.live/docs/javascript/v2/changelog/release-notes), you should be able to do it. Here is an example:
+
+const App = () => {
+
+    return (
+        <Fragment>
+          <HMSRoomProvider>
+            <ConfereceApp />
+          </HMSRoomProvider>
+          <HMSRoomProvider>
+            <ConfereceApp />
+          </HMSRoomProvider>
+        </Fragment>
+    )
+}
+
+Gotchas:
+
+- The app should have separation between the multiple HMSRoomProvider's like the example above.
+- The HMSRoomProvider's should not be nested inside each other
+
+
+#### How can I modify noiseSuppression, echoCancellation or autoGainControl on the audio track?
+
+`await hmsActions.setAudioSettings({ advanced:[{ noiseSuppression: false}, { echoCancellation: false }, { autoGainControl: false } ]})`
+
+You can enabled/disable the above properties depending on your use case.
