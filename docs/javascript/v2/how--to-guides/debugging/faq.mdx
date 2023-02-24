@@ -174,30 +174,27 @@ The minimum supported version of TypeScript for the SDK is '4.4'. You could upda
 The screenshare API(getDisplayMedia) is not yet supported on mobile browsers. Refer [this](https://caniuse.com/?search=getDisplayMedia) for supported browsers.
 
 
-#### Can I have multiple instances of HMSRoomProvider each mapping to a different room?
+#### Can I use the sdk to join multiple rooms at the same time?
 
-Starting from this [release](https://www.100ms.live/docs/javascript/v2/changelog/release-notes), you should be able to do it. Here is an example:
+Yes. Although one instance of SDK can be used to join only one room, you can create multiple instances of the SDK which can operate independently. 
+If you're using react-sdk, you can use multiple instances of HMSRoomProvider. A component using hooks from react-sdk will reach out to the nearest HMSRoomProvider in their ancestor tree. For e.g.
 
-```jsx
+``` jsx
 const App = () => {
     return (
         <Fragment>
           <HMSRoomProvider>
-            <Room1> 
-             <ConfereceApp />
-            </Room1>
+            <Conference room="room1" />
           </HMSRoomProvider>
           <HMSRoomProvider>
-            <Room2>
-             <ConfereceApp />
-            </Room2>
+            <Conference room="room2" />
           </HMSRoomProvider>
         </Fragment>
     )
 }
 ```
 
-Room1, Room2 can have the details of the room to which they want to point to
+The above is supported from this [release](https://www.100ms.live/docs/javascript/v2/changelog/release-notes).
 
 Gotchas:
 
