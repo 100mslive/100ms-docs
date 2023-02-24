@@ -277,7 +277,7 @@ const examples: {
     {
         title: 'Virtual Background - Web',
         description: 'Custom video backgrounds using custom video plugins and the 100ms SDK',
-        url: 'https://github.com/100mslive/100ms-web/tree/db7c93aa7c1498f61455ab13764971cc58806600/src/plugins/VirtualBackground',
+        url: 'https://github.com/100mslive/100ms-web/blob/main/src/plugins/VirtualBackground',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
         tags: ['Web', 'Plugins'],
         categories: [CATEGORIES.FEATURES, CATEGORIES.PLUGINS]
@@ -285,7 +285,7 @@ const examples: {
     {
         title: 'Noise Suppression - Web',
         description: 'Background noise suppression using custom audio plugins and the 100ms SDK',
-        url: 'https://github.com/100mslive/100ms-web/blob/db7c93aa7c1498f61455ab13764971cc58806600/src/plugins/NoiseSuppression.js',
+        url: 'https://github.com/100mslive/100ms-web/blob/main/src/plugins/NoiseSuppression.js',
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
         tags: ['Web', 'Plugins'],
         categories: [CATEGORIES.FEATURES, CATEGORIES.PLUGINS]
