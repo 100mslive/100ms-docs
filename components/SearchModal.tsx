@@ -6,15 +6,23 @@ import { Flex, Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, connectHits, connectSearchBox } from 'react-instantsearch-dom';
-
 const searchClient = algoliasearch(
-    process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '',
-    process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY || ''
+    process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '5UAX3T19GE',
+    process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY || '6b2fcf18157b00a2c7f33452512da0ba'
 );
 
 interface SearchModalProps {
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+const platformName = {
+    javascript: 'JavaScript',
+    'react native': 'React Native',
+    flutter: 'Flutter',
+    'server-side': 'Server',
+    ios: 'iOS',
+    android: 'Android'
+};
 
 const Result = ({ searchResult }) => {
     const path = searchResult.link.replace(/-/g, ' ').split('/').slice(1);
@@ -65,7 +73,7 @@ const Result = ({ searchResult }) => {
             <Text
                 dangerouslySetInnerHTML={{
                     // eslint-disable-next-line no-underscore-dangle
-                    __html: `${searchResult._snippetResult ?.content?.value}`
+                    __html: `${searchResult._snippetResult?.content?.value}`
                 }}
             />
         </Box>
@@ -171,7 +179,18 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
 
 const Search = ({ refine, setSearchTerm, searchTerm }) => {
     useEffect(() => {
-        const debounceTimer = setTimeout(() => refine(searchTerm), 400);
+        let platform = '';
+        if (window) {
+            const pathChunks = window.location.pathname.split('/').slice(2);
+            if (pathChunks.length) {
+                platform =
+                    pathChunks[0] === 'api-reference'
+                        ? platformName[pathChunks[1]]
+                        : platformName[pathChunks[0]];
+            }
+        }
+        const debounceTimer = setTimeout(() => refine(`${searchTerm} ${platform}`), 400);
+
         return () => clearTimeout(debounceTimer);
     }, [searchTerm]);
 
@@ -298,7 +317,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
     return (
         <Box
             css={{
-                boxSizing: "content-box",
+                boxSizing: 'content-box',
                 position: 'fixed',
                 left: '0',
                 top: '0',
@@ -309,7 +328,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
             <div className="search-modal" ref={ref}>
                 <InstantSearch
                     searchClient={searchClient}
-                    indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
+                    indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX || 'main'}>
                     <CustomSearchBox setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
                     <CustomHits
                         setModal={setModal}
