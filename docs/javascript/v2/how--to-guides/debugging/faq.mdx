@@ -179,18 +179,23 @@ The screenshare API(getDisplayMedia) is not yet supported on mobile browsers. Re
 Starting from this [release](https://www.100ms.live/docs/javascript/v2/changelog/release-notes), you should be able to do it. Here is an example:
 
 const App = () => {
-
     return (
         <Fragment>
           <HMSRoomProvider>
-            <ConfereceApp />
+            <Room1> 
+             <ConfereceApp />
+            </Room1>
           </HMSRoomProvider>
           <HMSRoomProvider>
+           <Room2>
             <ConfereceApp />
+            </Room2>
           </HMSRoomProvider>
         </Fragment>
     )
 }
+
+Room1, Room2 can have the details of the room to which they want to point to
 
 Gotchas:
 
