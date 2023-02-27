@@ -13,7 +13,6 @@ HLS Timed Metadata feature helps you synchronise certain events with the HLS str
 ## Sending HLS Timed Metadata
 
 To add HLS timed metadata cue to the currently running HLS stream use `sendHLSTimedMetadata` API like this:
-Currently there is a limit to send at max 3 metadata at time. 
 
 ```javascript
 export interface HLSTimedMetadata {
@@ -27,7 +26,7 @@ sendHLSTimedMetadata(metadatalist: HLSTimedMetadata[]): Promise<void>;
 ## Receiving HLS Timed Metadata
 ### Receiving Payload structure
 
-The payload is sent in the EXT-X-DATERANGE tag as value for the custom attribure X-100MSLIVE-PAYLOAD. It is base64 encoded string of
+The HLS timed metadata payload send is base64 encoded string. It can be decoded to as shown below.
 
 ```json
 {
@@ -37,7 +36,7 @@ The payload is sent in the EXT-X-DATERANGE tag as value for the custom attribure
     "hms_version": "v1.1"
 }
 ```
-start_date and end_date will be in UTC format.
+start_date and end_date will be in UTC timezone.
 
 ### App side implementation
 
@@ -192,5 +191,4 @@ if (Hls.isSupported()) {
 ## Limitations
 
 - It’s hard to sync metadata with stream exactly due to the latency from FFmpeg creating the stream. To address this, we’ve added 2 seconds delay of the actual `START-DATE` attribute.
-- The API now allows sending only three metadata objects at once with each having a `payload` string of max length of 100. These can further be tuned based on experimentation.
-- The payload cannot have `"`(double quotes). So json won’t be supported. This is a limitation from HLS spec.
+- The `payload` will be string of max length of 100. These can further be tuned based on experimentation.
