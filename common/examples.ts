@@ -267,10 +267,26 @@ const examples: {
         categories: [CATEGORIES.FEATURES, CATEGORIES.EXTRAS]
     },
     {
-        title: 'Grayscale Filter',
+        title: 'Grayscale Filter - Web',
         description: 'Grayscale filter example using custom video plugins and the 100ms SDK',
         url: 'https://github.com/triptu/100ms-face-filters',
-        technologies: [TECHNOLOGIES.JAVASCRIPT],
+        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
+        tags: ['Web', 'Plugins'],
+        categories: [CATEGORIES.FEATURES, CATEGORIES.PLUGINS]
+    },
+    {
+        title: 'Virtual Background - Web',
+        description: 'Custom video backgrounds using custom video plugins and the 100ms SDK',
+        url: 'https://github.com/100mslive/100ms-web/blob/main/src/plugins/VirtualBackground',
+        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
+        tags: ['Web', 'Plugins'],
+        categories: [CATEGORIES.FEATURES, CATEGORIES.PLUGINS]
+    },
+    {
+        title: 'Noise Suppression - Web',
+        description: 'Background noise suppression using custom audio plugins and the 100ms SDK',
+        url: 'https://github.com/100mslive/100ms-web/blob/main/src/plugins/NoiseSuppression.js',
+        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
         tags: ['Web', 'Plugins'],
         categories: [CATEGORIES.FEATURES, CATEGORIES.PLUGINS]
     },

@@ -736,6 +736,24 @@ Select the number of messages(sent and received).
 
 ---
 
+### selectIsAllowedToPreviewMedia
+
+▸ **selectIsAllowedToPreviewMedia**(`state`): [`HMSPublishAllowed`](/api-reference/javascript/v2/interfaces/HMSPublishAllowed)
+
+Select what streams is the local peer allowed to preview from video, audio
+
+#### Parameters
+
+| Name    | Type                                                           |
+| :------ | :------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+[`HMSPublishAllowed`](/api-reference/javascript/v2/interfaces/HMSPublishAllowed)
+
+---
+
 ### selectIsAllowedToPublish
 
 ▸ **selectIsAllowedToPublish**(`state`): [`HMSPublishAllowed`](/api-reference/javascript/v2/interfaces/HMSPublishAllowed)
@@ -992,6 +1010,22 @@ Select a boolean denoting whether a peer has unmuted video and sharing it to oth
 
 ---
 
+### selectIsRoleAllowedToPublish
+
+▸ **selectIsRoleAllowedToPublish**(`roleName`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), [`HMSPublishAllowed`](/api-reference/javascript/v2/interfaces/HMSPublishAllowed), (`res`: [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)) => [`HMSPublishAllowed`](/api-reference/javascript/v2/interfaces/HMSPublishAllowed)\>
+
+#### Parameters
+
+| Name       | Type     |
+| :--------- | :------- |
+| `roleName` | `string` |
+
+#### Returns
+
+`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), [`HMSPublishAllowed`](/api-reference/javascript/v2/interfaces/HMSPublishAllowed), (`res`: [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)) => [`HMSPublishAllowed`](/api-reference/javascript/v2/interfaces/HMSPublishAllowed)\>
+
+---
+
 ### selectIsScreenShareLocallyMutedByPeerID
 
 ▸ **selectIsScreenShareLocallyMutedByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore), `undefined` \| `boolean`\>
@@ -1067,7 +1101,7 @@ i.e., choosen audio input device, audio output device and video input device.
 
 ### selectLocalPeer
 
-▸ **selectLocalPeer**(`state`): [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)
+▸ **selectLocalPeer**(`state`): `undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)
 
 Select the local peer object object assigned to you.
 
@@ -1079,7 +1113,7 @@ Select the local peer object object assigned to you.
 
 #### Returns
 
-[`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)
+`undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)
 
 ---
 
@@ -1103,7 +1137,7 @@ Select the peer ID of your local peer.
 
 ### selectLocalPeerName
 
-▸ **selectLocalPeerName**(`state`): `string`
+▸ **selectLocalPeerName**(`state`): `undefined` \| `string`
 
 Select the peer name of your local peer.
 
@@ -1115,7 +1149,7 @@ Select the peer name of your local peer.
 
 #### Returns
 
-`string`
+`undefined` \| `string`
 
 ---
 
@@ -1626,11 +1660,27 @@ Select the permissions which determine what actions the local peer can do.
 
 ---
 
-### selectPreviewPeer
+### selectPreviewRole
 
-▸ **selectPreviewPeer**(`store`): `undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)
+▸ **selectPreviewRole**(`state`): `null` \| [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)
 
-Select the peer object used in preview
+Select the [HMSRole](/api-reference/javascript/v2/interfaces/HMSRole) used for preview.
+
+#### Parameters
+
+| Name    | Type                                                           |
+| :------ | :------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore) |
+
+#### Returns
+
+`null` \| [`HMSRole`](/api-reference/javascript/v2/interfaces/HMSRole)
+
+---
+
+### selectPreviewRoleName
+
+▸ **selectPreviewRoleName**(`store`): `undefined` \| `string`
 
 #### Parameters
 
@@ -1640,7 +1690,7 @@ Select the peer object used in preview
 
 #### Returns
 
-`undefined` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)
+`undefined` \| `string`
 
 ---
 
