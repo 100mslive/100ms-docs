@@ -9,7 +9,7 @@ import Sidebar from '@/components/Sidebar';
 import TechnologySelect, { TECHNOLOGIES, Technologies } from '@/components/TechnologySelect';
 import { getAllDocs, getNavfromDocs } from '@/lib/mdxUtils';
 import { Box, Button, Flex, Text } from '@100mslive/react-ui';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export default function Examples({ allNav }) {
     const [menu, setMenu] = useState(false);
@@ -31,6 +31,21 @@ export default function Examples({ allNav }) {
                     technologies.indexOf(technology) !== -1
             );
     }, [category, technology]);
+
+    useEffect(() => {
+        window.analytics.track('examples.technology.clicked', {
+            category,
+            technology
+        });
+    }, [technology]);
+
+    useEffect(() => {
+        if (filteredExamples.length < 1)
+            window.analytics.track('examples.no.results', {
+                category,
+                technology
+            });
+    }, [filteredExamples]);
 
     const [technologySelectOpen, setTechnologySelectOpen] = useState<boolean>(false);
 
@@ -177,7 +192,16 @@ export default function Examples({ allNav }) {
                                                         width: '100%',
                                                         minWidth: 'max-content'
                                                     }}
-                                                    onClick={() => setCategory(text)}
+                                                    onClick={() => {
+                                                        setCategory(text);
+                                                        window.analytics.track(
+                                                            'examples.category.clicked',
+                                                            {
+                                                                category: text,
+                                                                technology
+                                                            }
+                                                        );
+                                                    }}
                                                 />
                                             </li>
                                         ))}
