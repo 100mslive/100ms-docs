@@ -63,6 +63,11 @@ const nextConfig = {
                 basePath: false
             },
             {
+                source: '/server-side/v2/api-reference/Sessions/example-build-attendance',
+                destination: '/server-side/v2/how--to-guides/build-attendance',
+                permanent: true
+            },
+            {
                 source: '/flutter/v2/foundation/faq',
                 destination: '/flutter/v2/how--to-guides/debugging/faq',
                 permanent: true
