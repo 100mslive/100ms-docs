@@ -51,6 +51,7 @@ interface Props {
     allNav: Record<string, Record<string, NavRoute>>[];
     css?: CSS;
     hideOnDesktop?: boolean;
+    hideBorder?: boolean;
     baseViewOnly?: boolean;
 }
 
@@ -60,6 +61,7 @@ const Sidebar: React.FC<Props> = ({
     allNav,
     css = {},
     hideOnDesktop = false,
+    hideBorder = true,
     baseViewOnly = true
 }) => {
     const router = useRouter() as any;
@@ -140,6 +142,8 @@ const Sidebar: React.FC<Props> = ({
                 alignItems: 'stretch',
                 height: 'calc(100vh - 100px)',
                 overflowY: 'auto',
+                borderRight: hideBorder ? 'none' : '1px solid',
+                borderColor: hideBorder ? 'none' : '$borderDefault',
                 overscrollBehavior: 'none',
                 '@md': {
                     position: 'absolute',

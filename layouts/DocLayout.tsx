@@ -52,6 +52,7 @@ export default function DocLayout({ children }: Props) {
                             nav={nav}
                             allNav={allNav}
                             baseViewOnly={false}
+                            hideBorder={false}
                         />
                         {!menu ? children : null}
                     </div>
