@@ -1,15 +1,15 @@
 ---
-title: Start RTMP Streaming and / or recording for a given room
+title: Start RTMP Streaming and / or recording for a given Job ID
 nav: 3.19
 ---
 
-Trigger this request to start rtmp streaming and / or recording .
+Trigger this request to stop rtmp streaming and / or recording.
 
-<PostRequest title="https://api.100ms.live/v2/external-streams/rooms/:room_id/start" />
+<PostRequest title="https://api.100ms.live/v2/external-streams/:job_id/stop" />
 <Request id="req-0">
 
 ```bash
-curl --location --request POST 'https://api.100ms.live/v2/external-streams/rooms/<room_id>/start' \
+curl --location --request POST 'https://api.100ms.live/v2/external-streams/<job_id>/stop' \
 --header 'Authorization: Bearer <management_token>' \
 --header 'Content-Type: application/json' \
 --data-raw '{

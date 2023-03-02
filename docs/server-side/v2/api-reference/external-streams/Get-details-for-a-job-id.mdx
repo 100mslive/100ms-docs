@@ -1,0 +1,45 @@
+---
+title: Get details for a given RTMP Job ID
+nav: 3.19
+---
+
+Trigger this request to get details for a given RTMP job ID.
+
+<PostRequest title="https://api.100ms.live/v2/external-streams/:job_id" />
+<Request id="req-0">
+
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/external-streams/<job_id>' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+
+}'
+```
+
+</Request>
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "<job_id>",
+    "room_id": "<room_id>>",
+    "session_id": "<session_id>",
+    "status": "<status>",
+    "started_by": "<peer_id>",
+    "destination": "<destination_name>",
+    "rtmp_urls": [<rtmp_url_1>, <rtmp_url_2>],
+    "meeting_url": "<meeting_url>",
+    "recording_enabled": true,
+    "recording_location": "<recording_location>",
+    "resolution": {
+        "width": 1280,
+        "height": 720
+    },
+    "created_at": "2023-03-02T07:44:27.010516042Z",
+    "started_at": "0001-01-01T00:00:00Z",
+    "modified_at": "0001-01-01T00:00:00Z"
+}
+```
+
+</ResponseBox>
