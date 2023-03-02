@@ -377,6 +377,42 @@ class Preview implements HMSPreviewListener{
 
 3. Use the `hlsStreamURL` to display the stream in HLSPlayer after joining the room.
 
+## How to set HLS Stream to fit the mobile screen 
+
+If the device you are streaming is a mobile device, and also the people consuming the stream are on mobile follow the below configurations:
+
+1. In your 100ms dashboard, navigate to templates configure tile aspect ratio and stream video aspect ratio for the role which is broadcasting
+
+- Set the tile aspect ratio as 9:16 from destinations:
+
+![tile-aspect-ratio](/docs/v2/dashboard-tile-aspect-ratio.png)
+
+- Set the video aspect ratio from destinations->customise video tile layout
+
+![tile-aspect-ratio](/docs/v2/dashboard-video-aspect-ratio.png)
+
+2. After setting this peer tiles will be 9:16 in streams as well as the stream output will be in 9:16 ratio.
+Since the phones currently in market are not exactly 9:16, So some blank space might be observed on the phone screen.
+To get the output of stream similar to this:
+
+![Chat](/docs/v2/flutter-chat.gif)
+
+
+You need to wrap the player in `Transform.scale` widget as:
+
+```dart 
+//Wrap the player widget with Transform.scale to display the stream in full screen
+
+Transform.scale(
+    scaleX: //Scaling in x-axis(width),
+    scaleY: //Scaling in y-axis(height),
+    child: AspectRatio(
+      aspectRatio: //Aspect ratio of the player(9:16 in this case),
+      child: //Add your player here,
+    ),
+  ),
+```
+
 ## Key Tips
 
 -   If using the dashboard web app from 100ms, please make sure to use a role that doesn't have publish permissions for the beam tile to not show up.
