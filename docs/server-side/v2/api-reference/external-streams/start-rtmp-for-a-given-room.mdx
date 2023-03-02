@@ -52,11 +52,11 @@ curl --location --request POST 'https://api.100ms.live/v2/external-streams/<room
 
 | Name              | Type     | Description                                                                                                                                                               | Required |
 | :---------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |                                                                                                                                                        | Yes      |
-| meeting_url <br/> | `string` | Single click meeting URL which we need to start streaming/recording (see below for more details)                                                                          | Yes      |
+| meeting_url <br/> | `string` | Single click meeting URL which we need to start streaming/recording (see below for more details)                                                                          | No       |
 | rtmp_urls <br/>   | `array`  | List of RTMP output URLs to which the meeting will be streamed. <br/> Required when RTMP streaming needs to be started. <br/> Supports upto 3 `rtmp://` / `rtmps://` urls | No       |
 | record <br/>      | `bool`   | Flag to enable browser recording                                                                                                                                          | No       |
-| resolution <br/>  | `object` | Video resolution for streaming/recording
-| destination <br/> | `string` | destination name  in the template
+| resolution <br/>  | `object` | Video resolution for streaming/recording                                                                                                                                  | No       |
+| destination <br/> | `string` | destination name  in the template                                                                                                                                         | No       |
 
 ##### meeting_url
 
