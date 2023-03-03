@@ -33,6 +33,8 @@ const Header: React.FC<Props> = ({
     showMobileMenu = true,
     onHomePage = false
 }) => {
+    const [renderComponent, setRenderComponent] = useState(false);
+
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
     const router = useRouter();
@@ -59,6 +61,7 @@ const Header: React.FC<Props> = ({
     const { toggleTheme, themeType } = useTheme();
 
     React.useEffect(() => {
+        setRenderComponent(true);
         const theme = window.localStorage.getItem('theme') || 'dark';
         const docHtml = document.documentElement.dataset;
         setIsDark(theme === 'dark');
@@ -114,7 +117,7 @@ const Header: React.FC<Props> = ({
     // const isApiRef = router.query.slug && router.query.slug[0] === 'api-reference';
     const isNonApiRef = router.query.slug && router.query.slug[0] === 'server-side';
 
-    return (
+    return renderComponent ? (
         <Flex
             align="center"
             justify="between"
@@ -333,7 +336,7 @@ const Header: React.FC<Props> = ({
                 }
             `}</style>
         </Flex>
-    );
+    ) : null;
 };
 
 Header.defaultProps = {
