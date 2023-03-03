@@ -3,17 +3,19 @@ title: Overview
 nav: 3.61
 ---
 
-Analytics Events APIs are used to fetch events with an HTTP request. At the moment we support getting [track events](/server-side/v2/api-reference/analytics-events/track-events).
+Analytics Events APIs are used to fetch events with an HTTP request. Currently, we support retrieving [track events](/server-side/v2/api-reference/analytics-events/track-events).
+Event data is queryable for upto last 30 days.
+
 <EndpointRequest title="https://api.100ms.live/v2/analytics/events"/>
 
 ## Response Object
 
-| Attribute | Description                                                                                                                                                                                                                                                                  |
-| --------- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `limit`   | Number of events in the results                                                                                                                                                                                                                                              |
-| `total`   | Total number of events present                                                                                                                                                                                                                                               |
-| `next`    | Used to fetch next set of results, to be specified in request `start` query param. Present only when there are more events present.                                                                                                                                          |
-| `events`  | List of events, refer event page for details (eg. [Track event object](/server-side/v2/api-reference/analytics-events/track-events#track-object))                                                                                                                                |
+| Attribute | Description                                                                                                                                                                                                                                                                                                                                             |
+| --------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `limit`   | Number of events in response                                                                                                                                                                                                                                                                                                                            |
+| `total`   | Total number of events present                                                                                                                                                                                                                                                                                                                          |
+| `next`    | Used to fetch next set of results, to be specified in the `start` query param. Present only when there are more events present. Next set of results will expire after 24 hours from query time.                                                                                                                                                                              |
+| `events`  | List of events, refer individual event page for details (Eg: [Track event object](/server-side/v2/api-reference/analytics-events/track-events#track-object))                                                                                                                                                                                            |
 
 ## Pagination
 
