@@ -4,14 +4,15 @@ nav: 3.62
 ---
 
 Track Events can be used to understand the participants activity during the session, It would get you the reference points
-in time ex. when user have unmuted, shared screen, stopped video. Every event has a `mute` property under `track` to determine mute status at the time of event.
-There are three events currently being published -
-#### track.add.success
-Event is published when track is added, it is represents start of track lifecycle.
-#### track.update.success
-Event is published mainly when user has unmuted/muted.
-#### track.remove.success
-Event is published when the track has ended, has `stopped_at` property as exact time of stopping (should be very close to event timestamp).
+in time e.g. when user have unmuted, shared screen, stopped video. Every event has a `mute` property under `track` to determine mute status at the time of event.
+
+Following are the three set of events published for a track,
+
+**track.add.success**: Published when track is added
+
+**track.update.success**: Published when user has unmuted/muted the track.
+
+**track.remove.success**: Published when the track has ended
 
 <GetRequest title="https://api.100ms.live/v2/analytics/events" />
 <Request id="req-0">
@@ -26,34 +27,34 @@ curl --location --request GET 'https://api.100ms.live/v2/analytics/events' \
 ## Allowed Filters
 To be specified as query parameters
 
-| Name       | Type     | Description                                                                                                                       | Required |
-| ---------- | -------- | --------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| type       | `string` | Type of event, can be specified multiple times (valid values `track.add.success`, `track.update.success`, `track.remove.success`) | yes      |
-| room_id    | `string` | Filter events for a room (mandatory)                                                                                              | yes      |
-| session_id | `string` | Filter events for a room's session                                                                                                | no       |
-| peer_id    | `string` | Filter peer's events by `peer_id`                                                                                                 | no       |
-| user_id    | `string` | Filter peer's events by `user_id` (customer specified identifier)                                                                 | no       |
-| limit      | `int`    | Limits number of events in result (Default:`10`, Max: `100`)                                                                      | no       |
-| start      | `string` | Specify [next]() from response as `start` to get next set of result.                                                              | no       |
+| Name       | Type     | Description                                                                                                                                 | Required |
+| ---------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| type       | `string` | Type of event, can be specified multiple times (valid values `track.add.success`, `track.update.success`, `track.remove.success`)           | yes      |
+| room_id    | `string` | Filter events for a room (mandatory)                                                                                                        | yes      |
+| session_id | `string` | Filter events for a room's session                                                                                                          | no       |
+| peer_id    | `string` | Filter peer's events by `peer_id`                                                                                                           | no       |
+| user_id    | `string` | Filter peer's events by `user_id` (customer specified identifier)                                                                           | no       |
+| limit      | `int`    | Limits number of events in result (Default:`10`, Max: `100`)                                                                                | no       |
+| start      | `string` | Specify [next](/server-side/v2/api-reference/analytics-events/overview#response-object) from response as `start` to get next set of result. | no       |
 
 ### Track Event Object
 
-| Attribute  | Description                                                                                                 |
-| ---------- | ----------------------------------------------------------------------------------------------------------- |
-| event      | Event name (values: `track.add.success`, `track.update.success`, `track.remove.success`)                    |
-| timestamp  | Event timestamp                                                                                             |
-| id         | Event ID                                                                                                    |
-| room_id    | Event room id                                                                                               |
-| session_id | Event session id                                                                                            |
-| room_name  | Event room name                                                                                             |
-| peer       | Peer details such as `id` (peer id), `user_id` (your internal user identifier), `name`, `joined_at`, `role` |
-| track      | Track object (details below)                                                                                |
+| Attribute  | Description                                                                                                                                 |
+| ---------- |---------------------------------------------------------------------------------------------------------------------------------------------|
+| event      | Event name (values: `track.add.success`, `track.update.success`, `track.remove.success`)                                                    |
+| timestamp  | Event timestamp (`Format`: YYYY-MM-DDTHH:mm:ss.sssZ.)                                                                                       |
+| id         | Event id                                                                                                                               |
+| room_id    | Event room id  (Example: 5f9edc6bd238215aec7700df)                                                                                                                              |
+| session_id | Event session id  (Example: 5f9edc6bd238215aec7700df)                                                                                                                           |
+| room_name  | Event room name                                                                                                                             |
+| peer       | Peer details such as `id` (peer id), `user_id` (your internal user identifier), `name`, `joined_at`, `role`                                 |
+| track      | Track object (details below)                                                                                                                |
 
 ### Track Object
 
 | Attribute  | Description                                                |
 | ---------- | ---------------------------------------------------------- |
-| id         | Track ID unique for a peer                                 |
+| id         | Track id (unique for a peer)                                 |
 | stream_id  | Reference to internal stream object                        |
 | type       | Type of track (values: `audio`, `video`)                   |
 | source     | Source of input (values: `regular`, `screen`)              |
