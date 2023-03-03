@@ -1,0 +1,26 @@
+---
+title: Overview
+nav: 3.61
+---
+
+Analytics Events APIs are used to fetch events with an HTTP request. At the moment we support getting [track events](/server-side/v2/api-reference/analytics-events/track-events).
+<EndpointRequest title="https://api.100ms.live/v2/analytics/events"/>
+
+## Response Object
+
+| Attribute | Description                                                                                                                                                                                                                                                                  |
+| --------- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `limit`   | Number of events in the results                                                                                                                                                                                                                                              |
+| `total`   | Total number of events present                                                                                                                                                                                                                                               |
+| `next`    | Used to fetch next set of results, to be specified in request `start` query param. Present only when there are more events present.                                                                                                                                          |
+| `events`  | List of events, refer event page for details (eg. [Track event object](/server-side/v2/api-reference/analytics-events/track-events#track-object))                                                                                                                                |
+
+## Pagination
+
+## Postman collection
+
+You can use our Postman collection to start exploring 100ms APIs.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a?action=collection%2Ffork&collection-url=entityId%3D22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a%26entityType%3Dcollection%26workspaceId%3Dd9145dd6-337b-4761-81d6-21a30b4147a2)
+
+Refer to the [Postman guide](/server-side/v2/introduction/postman-guide) to get started with 100ms API collection.
