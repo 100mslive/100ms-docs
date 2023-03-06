@@ -12,18 +12,18 @@ Event data is queryable for upto last 30 days.
 
 ## Response Object
 
-| Attribute | Description                                                                                                                                                                                                                                                                                                                                             |
-| --------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `limit`   | Number of events in the response                                                                                                                                                                                                                                                                                                                            |
-| `total`   | Total number of events present                                                                                                                                                                                                                                                                                                                          |
-| `next`    | Used to fetch next set of results, to be specified in the `start` query parameter. Present only when there are more events present. Next set of results will expire after 24 hours from query time.                                                                                                                                                                              |
-| `events`  | List of events, refer individual event page for details (Eg: [Track event object](/server-side/v2/api-reference/analytics-events/track-events#track-object))                                                                                                                                                                                            |
+| Attribute | Description                                                                                                                                                                      |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `limit`   | Number of events in current response                                                                                                                                             |
+| `total`   | Total number of events                                                                                                                                                           |
+| `next`    | Used to fetch next set of results, to be specified in the `start` query parameter in subsequent request. Next has non empty value only when there are more events to be queried. |
+| `events`  | List of events, refer individual event page for details (Eg: [Track event object]((/server-side/v2/api-reference/analytics-events/track-events#track-event-object)))                     |
 
 ## Pagination
-- Results are paginated with default events count `10`, which is extendable upto `100` by specifying it in `limit` query parameter.
-- If there are more events available than limit then `next` will have string value. This should be specified in the subsequent call as `start` query parameter to get further events.
-- Results are snapshot when query is executed for the first time, newer events (after first query) won’t appear while iterating next results
-- Next set of results will expire after 24 hours from the query time (Results won't be queryable by specifying `start`)
+- Results are paginated with default events count `10`, extendable upto `100` by specifying it in `limit` query parameter.
+- If there are more events available then `next` will have a string value. This should be specified in the subsequent call as `start` query parameter to get further events.
+- Results are snapshot when query is executed for the first time, newer events (after first query) won’t appear while iterating results
+- Next results will expire after 24 hours from the first query time.
 
 ## Postman collection
 
