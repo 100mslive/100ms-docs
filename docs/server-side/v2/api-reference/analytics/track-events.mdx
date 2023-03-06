@@ -146,7 +146,7 @@ To be specified as query parameters
 
 - To get the active duration of a peer, you can pass `peer_id`/`user_id` in the query parameter while fetching events, this would limit events only to specified peer/user.
     - For each track identifiable with `track_id` you can check `type` and `source` properties in the event to find out if you want to consider this track.
-        (e.g. if you are looking for audio events, you can check for type: `audio`, source: `regular`)
+        (for example if you are looking for audio events, you can check for type: `audio`, source: `regular`)
     - Find the sum of duration starting from the event with `mute: false` (Eunmute<sub>timestamp</sub>) to the next event with `mute: true`(Emute<sub>timestamp</sub>) until we reach `track.remove.success`.  <br />(i.e active duration: Σ Emute<sub>timestamp</sub> - Eunmute<sub>timestamp</sub>)
 
 
