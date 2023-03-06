@@ -90,6 +90,10 @@ const Sidebar: React.FC<Props> = ({
         return () => document.removeEventListener('themeChanged', updateTheme);
     }, []);
 
+    useEffect(() => {
+        if (window && window.location.pathname !== '/docs') setShowBaseView(false);
+    }, [slug]);
+
     let nav;
     if (!baseViewOnly && slug) {
         const [currentDocSlug] = slug as string[];
