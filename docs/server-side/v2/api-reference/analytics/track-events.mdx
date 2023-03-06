@@ -140,6 +140,16 @@ To be specified as query parameters
 ```
 </ResponseBox>
 
+## Why would you use this API?
+- You can use this API to build tools around user activity which can answer questions like "How long a participant was unmuted?",
+"How long did the teacher turn on their video in the class?", "When did a presenter share their screen?"
+
+- To get the active duration of a peer, you can pass `peer_id`/`user_id` in the query parameter while fetching events, this would limit events only for specified peer/user.
+    - For each track identifiable with `track_id` you can check `type` and `source` properties in the event to find out if you want to consider this track.
+        (e.g. if you are looking for audio events, you can check for type: `audio`, source: `regular`)
+    - Find the sum of duration starting from event with `mute: false` (Eunmute<sub>timestamp</sub>) to next event with `mute: true`(Emute<sub>timestamp</sub>) until we reach `track.remove.success`.  <br />(i.e active duration: Σ Emute<sub>timestamp</sub> - Eunmute<sub>timestamp</sub>)
+
+
 ## Postman collection
 
 You can use our Postman collection to start exploring 100ms APIs.
