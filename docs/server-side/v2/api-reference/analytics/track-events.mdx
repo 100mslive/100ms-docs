@@ -3,18 +3,18 @@ title: Track Events
 nav: 3.62
 ---
 
-Track Events can be used to understand the participants activity during the session, It would get you the reference points
-in time e.g. when user have unmuted, shared screen, stopped video. Every event has a `mute` property to determine mute status at the time of event.
+Track Events can be used to understand the participant's activity during the session, It would get you the reference points in time
+e.g. when the user has unmuted audio, shared screen, or stopped the video. Every event has a `mute` property to determine mute status at the time of the event.
 
-Following are the three type of events published for a track,
+Following are the three types of events published for a track,
 
-**track.add.success**: Published when track is added
+**track.add.success**: Published when a track is added
 
-**track.update.success**: Published when user has unmuted/muted the track.
+**track.update.success**: Published when a user has unmuted/muted the track.
 
 **track.remove.success**: Published when the track has ended
 
-Kind of track (e.g. audio, video, screen) can be determined by `type` and `source` parameter in the [track event object](/server-side/v2/api-reference/analytics/track-events#track-event-object).
+Kind of a track (e.g. audio, video, video screenshare) can be determined by `type` and `source` parameter in the [track event object](/server-side/v2/api-reference/analytics/track-events#track-event-object).
 
 <GetRequest title="https://api.100ms.live/v2/analytics/events" />
 <Request id="req-0">
@@ -144,10 +144,10 @@ To be specified as query parameters
 - You can use this API to build tools around user activity which can answer questions like "How long a participant was unmuted?",
 "How long did the teacher turn on their video in the class?", "When did a presenter share their screen?"
 
-- To get the active duration of a peer, you can pass `peer_id`/`user_id` in the query parameter while fetching events, this would limit events only for specified peer/user.
+- To get the active duration of a peer, you can pass `peer_id`/`user_id` in the query parameter while fetching events, this would limit events only to specified peer/user.
     - For each track identifiable with `track_id` you can check `type` and `source` properties in the event to find out if you want to consider this track.
         (e.g. if you are looking for audio events, you can check for type: `audio`, source: `regular`)
-    - Find the sum of duration starting from event with `mute: false` (Eunmute<sub>timestamp</sub>) to next event with `mute: true`(Emute<sub>timestamp</sub>) until we reach `track.remove.success`.  <br />(i.e active duration: Σ Emute<sub>timestamp</sub> - Eunmute<sub>timestamp</sub>)
+    - Find the sum of duration starting from the event with `mute: false` (Eunmute<sub>timestamp</sub>) to the next event with `mute: true`(Emute<sub>timestamp</sub>) until we reach `track.remove.success`.  <br />(i.e active duration: Σ Emute<sub>timestamp</sub> - Eunmute<sub>timestamp</sub>)
 
 
 ## Postman collection
