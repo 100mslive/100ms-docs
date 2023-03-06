@@ -8,7 +8,7 @@ const Item = ({ title, subText, icon, link, release = false }) => (
                 gap="2"
                 css={{
                     color: '$textHighEmp',
-                    width: release ? 'fit-content' : 'auto',
+                    width: release ? '90%' : 'auto',
                     borderRadius: '$1',
                     cursor: 'pointer',
                     padding: release ? '$3 $4 $3 $6' : '$4 $4 $4 $6',

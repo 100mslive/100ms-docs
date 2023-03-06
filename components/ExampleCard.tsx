@@ -88,7 +88,7 @@ export default function ExampleCard({
 
             <Flex justify="between" css={{ gap: '$8' }}>
                 <IconList technologies={technologies} showIcon={showIcon} />
-                <TagList tags={tags} />
+                <TagList tags={tags} title={title} />
             </Flex>
         </Flex>
     );
@@ -151,13 +151,20 @@ function IconList({ technologies, showIcon }: IconListProps) {
 
 type TagListProps = {
     tags: NonNullable<Props['tags']>;
+    title: string;
 };
 
-function TagList({ tags }: TagListProps) {
+function TagList({ tags, title }: TagListProps) {
     return tags.length > 0 ? (
         <Flex as="ul" gap="2" css={{ listStyle: 'none', padding: 0, margin: 0, overflow: 'auto' }}>
             {tags.map((tag) => (
                 <Box
+                    onClick={() =>
+                        window.analytics.track('examples.tag.clicked', {
+                            tag,
+                            title
+                        })
+                    }
                     as="li"
                     key={tag}
                     css={{
