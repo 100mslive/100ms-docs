@@ -152,7 +152,9 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
                             </>
                         ))}
                     </Box>
-                    <Flex gap="4" css={{ pt: '$sm', px: '$md' }}>
+                    <Flex
+                        gap="4"
+                        css={{ pt: '$sm', px: '$md', boxShadow: '0 -28px 32px 8px #111' }}>
                         {searchInfoItems.map((searchInfoItem) => (
                             <InfoItem
                                 title={searchInfoItem.title}
@@ -338,9 +340,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                     backgroundColor: 'var(--gray1)'
                 }}
                 ref={ref}>
-                <InstantSearch
-                    searchClient={searchClient}
-                    indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
+                <InstantSearch searchClient={searchClient} indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
                     <CustomSearchBox setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
                     <CustomHits
                         setModal={setModal}
