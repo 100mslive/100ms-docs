@@ -83,10 +83,10 @@ const Result = ({ searchResult }) => {
                 ))}
             </Text>
             <Text
-                variant="xs"
+                variant="sm"
                 css={{
+                    fontSize: '13px',
                     color: '$textMedEmp',
-                    lineHeight: '20px'
                 }}
                 dangerouslySetInnerHTML={{
                     // eslint-disable-next-line no-underscore-dangle
