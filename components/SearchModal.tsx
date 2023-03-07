@@ -1,71 +1,93 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronRightIcon, SearchIcon } from '@100mslive/react-icons';
+import { SearchIcon, ArrowRightIcon } from '@100mslive/react-icons';
 import { Flex, Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, connectHits, connectSearchBox } from 'react-instantsearch-dom';
+import { titleCasing } from '@/lib/utils';
+import Tag from './Tag';
 
 const searchClient = algoliasearch(
     process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '',
     process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY || ''
 );
 
+const searchInfoItems = [
+    {
+        title: 'to navigate',
+        content: [
+            <ArrowRightIcon height={16} width={16} style={{ transform: 'rotate(-90deg)' }} />,
+            <ArrowRightIcon height={16} width={16} style={{ transform: 'rotate(90deg)' }} />
+        ]
+    },
+    {
+        title: 'to select',
+        content: [
+            <span
+                style={{
+                    fontSize: '14px',
+                    height: '16px',
+                    padding: '2px',
+                    paddingTop: '1px'
+                }}>
+                &#x23CE;
+            </span>
+        ]
+    },
+    { title: 'to close', content: ['esc'] }
+];
+
 interface SearchModalProps {
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Result = ({ searchResult }) => {
-    const path = searchResult.link.replace(/-/g, ' ').split('/').slice(1);
-    path[0] = searchResult.platformName;
-
+    const path = searchResult.link.replace(/-/g, ' ').split('/').slice(3);
     return (
-        <Box css={{ w: '100%' }}>
-            <Text
-                css={{
-                    color: '$textHighEmp',
-                    fontWeight: '$semiBold'
-                }}>
-                {searchResult.title}
+        <Box
+            css={{
+                maxWidth: '100%',
+                pl: '$lg',
+                pr: '$xs'
+            }}>
+            <Flex justify="between" align="start" gap="2">
                 <Text
                     css={{
-                        display: 'inline',
-                        color: 'inherit',
-                        fontWeight: 'inherit',
-                        backgroundColor: '$surfaceLighter',
-                        p: '$1 $2',
-                        whiteSpace: 'nowrap',
-                        borderRadius: '0.25rem',
-                        marginLeft: '0.5rem'
+                        color: '$textHighEmp',
+                        fontWeight: '$semiBold'
                     }}>
-                    {searchResult.platformName}
+                    {searchResult.title}
                 </Text>
-            </Text>
+                <Tag text={searchResult.platformName} />
+            </Flex>
+
             <Text
-                variant="sm"
+                variant="xs"
                 css={{
-                    color: '$textDisabled',
+                    color: '#85A8E0',
                     display: 'flex',
                     flexWrap: 'wrap',
                     alignItems: 'center',
-                    mt: '0.5rem'
+                    mt: '$1',
+                    mb: '$xs'
                 }}>
                 {path.map((text, id) =>
                     id === path.length - 1 ? (
-                        text.split('#')[0]
+                        <span>&nbsp;{titleCasing(text.split('#')[0])}</span>
                     ) : (
-                        <>
-                            <span style={{ whiteSpace: 'nowrap' }}>{text}</span>
-                            <ChevronRightIcon style={{ width: '10px', height: '14px' }} />
-                        </>
+                        <span style={{ whiteSpace: 'nowrap' }}>
+                            &nbsp;{`${titleCasing(text)} >`}
+                        </span>
                     )
                 )}
             </Text>
             <Text
+                variant="xs"
                 dangerouslySetInnerHTML={{
                     // eslint-disable-next-line no-underscore-dangle
-                    __html: `${searchResult._snippetResult ?.content?.value}`
+                    __html: `${searchResult._snippetResult?.content?.value}`
                 }}
             />
         </Box>
@@ -86,45 +108,59 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
                         border: '1px solid',
                         borderColor: '$borderDefault',
                         borderRadius: '$1',
-                        px: '$4',
-                        py: '$3'
+                        py: '$3',
+                        pr: '$2'
                     }}>
                     <Box
                         css={{
                             maxHeight: '60vh',
-                            overflow: 'auto'
+                            overflow: 'auto',
+                            maxWidth: '100%',
+                            borderBottom: '1px solid $borderLighter'
                         }}>
-                        {hits.map((searchResult, i) => (
-                            <Box
-                                id={`res-box-${i}`}
-                                key={searchResult.link}
-                                css={{
-                                    borderColor: '$borderDefault',
-                                    '&:hover': { backgroundColor: '$surfaceLight' },
-                                    px: '$8',
-                                    py: '$8',
-                                    borderRadius: '$0'
-                                }}
-                                onClick={() => {
-                                    window.analytics.track('docs.search.result.clicked', {
-                                        totalNumberOfResults: hits?.length,
-                                        textInSearch: searchTerm || '',
-                                        rankOfSearchResult: i + 1,
-                                        locationOfSearchResult: searchResult.link,
-                                        referrer: document.referrer,
-                                        path: window.location.hostname,
-                                        pathname: window.location.pathname
-                                    });
-                                    setModal(false);
-                                }}>
-                                <Link href={searchResult.link} passHref>
-                                    <a>
-                                        <Result searchResult={searchResult} />
-                                    </a>
-                                </Link>
-                            </Box>
+                        {hits.map((searchResult, i: number) => (
+                            <>
+                                <Box
+                                    id={`res-box-${i}`}
+                                    key={searchResult.link}
+                                    css={{
+                                        '&:hover': { backgroundColor: '$surfaceLight' },
+                                        maxWidth: '100%',
+                                        py: '$8',
+                                        borderRadius: '$0'
+                                    }}
+                                    onClick={() => {
+                                        window.analytics.track('docs.search.result.clicked', {
+                                            totalNumberOfResults: hits?.length,
+                                            textInSearch: searchTerm || '',
+                                            rankOfSearchResult: i + 1,
+                                            locationOfSearchResult: searchResult.link,
+                                            referrer: document.referrer,
+                                            path: window.location.hostname,
+                                            pathname: window.location.pathname
+                                        });
+                                        setModal(false);
+                                    }}>
+                                    <Link href={searchResult.link} passHref>
+                                        <a style={{ color: 'inherit', textDecoration: 'none' }}>
+                                            <Result searchResult={searchResult} />
+                                        </a>
+                                    </Link>
+                                </Box>
+                                <Box
+                                    css={{ backgroundColor: '$borderLighter', w: '100%', h: '1px' }}
+                                />
+                            </>
                         ))}
                     </Box>
+                    <Flex gap="4" css={{ pt: '$sm', px: '$md' }}>
+                        {searchInfoItems.map((searchInfoItem) => (
+                            <InfoItem
+                                title={searchInfoItem.title}
+                                content={searchInfoItem.content}
+                            />
+                        ))}
+                    </Flex>
                 </Box>
             ) : null}
             {hits?.length === 0 && searchTerm ? (
@@ -209,23 +245,6 @@ const Search = ({ refine, setSearchTerm, searchTerm }) => {
                     fontSize: '15px'
                 }}
             />
-            <Flex align="center" gap="2">
-                <Flex
-                    align="center"
-                    css={{
-                        fontWeight: '$semiBold',
-                        fontSize: '$sm',
-                        backgroundColor: '$surfaceLight',
-                        color: '$textMedEmp',
-                        borderRadius: '4px',
-                        padding: '0 4px'
-                    }}>
-                    esc
-                </Flex>
-                <Text variant="xs" css={{ whiteSpace: 'nowrap', color: '$textMedEmp' }}>
-                    to close
-                </Text>
-            </Flex>
         </Flex>
     );
 };
@@ -298,7 +317,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
     return (
         <Box
             css={{
-                boxSizing: "content-box",
+                boxSizing: 'content-box',
                 position: 'fixed',
                 left: '0',
                 top: '0',
@@ -306,10 +325,21 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                 width: '100vw',
                 bg: 'rgba(0, 0, 0, 0.8)'
             }}>
-            <div className="search-modal" ref={ref}>
-                <InstantSearch
-                    searchClient={searchClient}
-                    indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
+            <div
+                className="search-modal"
+                style={{
+                    maxWidth: '800px',
+                    width: '80%',
+                    position: 'absolute',
+                    top: '112px',
+                    left: '50%',
+                    height: '3rem',
+                    borderRadius: '0.5rem',
+                    transform: 'translateX(-50%)',
+                    backgroundColor: 'var(--gray1)'
+                }}
+                ref={ref}>
+                <InstantSearch searchClient={searchClient} indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
                     <CustomSearchBox setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
                     <CustomHits
                         setModal={setModal}
@@ -318,33 +348,33 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                         activeResult={activeResult}
                     />
                 </InstantSearch>
-
-                <style jsx>{`
-                    .search-modal {
-                        max-width: 600px;
-                        width: 100%;
-                        position: absolute;
-                        top: 112px;
-                        left: 50%;
-                        height: 48px;
-                        border-radius: 8px;
-                        transform: translateX(-50%);
-                        background-color: var(--gray1);
-                    }
-                    a {
-                        color: inherit;
-                        text-decoration: none;
-                    }
-                    @media screen and (max-width: 600px) {
-                        .search-modal {
-                            width: 90%;
-                            top: 24px;
-                        }
-                    }
-                `}</style>
             </div>
         </Box>
     );
 };
 
 export default SearchModal;
+
+const InfoItem = ({ title, content }) => (
+    <Flex gap="2" align="center">
+        {content.map((item) => (
+            <Flex
+                gap="1"
+                align="center"
+                justify="center"
+                css={{
+                    backgroundColor: '$surfaceLight',
+                    borderRadius: '$1',
+                    p: '$2',
+                    fontWeight: '$semiBold',
+                    color: '$textHighEmp',
+                    fontSize: '$xs'
+                }}>
+                {item}
+            </Flex>
+        ))}
+        <Text variant="xs" css={{ color: '$textMedEmp' }}>
+            {title}
+        </Text>
+    </Flex>
+);

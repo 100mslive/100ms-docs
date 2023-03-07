@@ -159,12 +159,12 @@ function TagList({ tags, title }: TagListProps) {
         <Flex as="ul" gap="2" css={{ listStyle: 'none', padding: 0, margin: 0, overflow: 'auto' }}>
             {tags.map((tag) => (
                 <Box
-                    onClick={() =>
+                    onClick={() => {
                         window.analytics.track('examples.tag.clicked', {
                             tag,
                             title
-                        })
-                    }
+                        });
+                    }}
                     as="li"
                     key={tag}
                     css={{
