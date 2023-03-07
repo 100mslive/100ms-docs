@@ -66,7 +66,7 @@ const Result = ({ searchResult }) => {
             <Text
                 variant="xs"
                 css={{
-                    color: '#85A8E0',
+                    color: 'hsla(217, 60%, 70%, 1)',
                     display: 'flex',
                     flexWrap: 'wrap',
                     alignItems: 'center',
@@ -75,7 +75,7 @@ const Result = ({ searchResult }) => {
                 }}>
                 {path.map((text, id) => (
                     <span style={{ whiteSpace: 'nowrap' }}>
-                        &nbsp;
+                        {id === 0 ? '' : '\u00A0'}
                         {id === path.length - 1
                             ? titleCasing(text.split('#')[0])
                             : `${titleCasing(text)} >`}
@@ -84,6 +84,10 @@ const Result = ({ searchResult }) => {
             </Text>
             <Text
                 variant="xs"
+                css={{
+                    color: '$textMedEmp',
+                    lineHeight: '20px'
+                }}
                 dangerouslySetInnerHTML={{
                     // eslint-disable-next-line no-underscore-dangle
                     __html: `${searchResult._snippetResult?.content?.value}`
@@ -107,7 +111,7 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
                         border: '1px solid',
                         borderColor: '$borderDefault',
                         borderRadius: '$1',
-                        py: '$3',
+                        pt: '$2',
                         pr: '$2'
                     }}>
                     <Box
@@ -154,9 +158,9 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
                     <Flex
                         gap="4"
                         css={{
-                            pt: '$sm',
+                            py: '$4',
                             px: '$md',
-                            boxShadow: '0 -32px 32px 8px #101010',
+                            boxShadow: '0 -32px 32px 8px #0F1115',
                             borderTop: '1px solid $borderDefault'
                         }}>
                         {searchInfoItems.map((searchInfoItem) => (
@@ -333,7 +337,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
             <div
                 className="search-modal"
                 style={{
-                    maxWidth: '800px',
+                    maxWidth: '600px',
                     width: '80%',
                     position: 'absolute',
                     top: '112px',
