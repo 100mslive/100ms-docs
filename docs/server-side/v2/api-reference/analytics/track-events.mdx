@@ -141,14 +141,30 @@ To be specified as query parameters
 </ResponseBox>
 
 ## Why would you use this API?
-- You can use this API to build tools around user activity which can answer questions like "How long a participant was unmuted?",
-"How long did the teacher turn on their video in the class?", "When did a presenter share their screen?"
 
-- To get the active duration of a peer, you can pass `peer_id`/`user_id` in the query parameter while fetching events, this would limit events only to specified peer/user.
-    - For each track identifiable with `track_id` you can check `type` and `source` properties in the event to find out if you want to consider this track.
+- You can use track events exposed by this API to build tools around user activity which can help you calculate,
+    - "How long a participant was unmuted?"
+    - "How long did the teacher turn on their video in the class?"
+    - "When did a presenter share their screen?"
+
+-  Active duration of a peer can be calculated as follows,
+    - Fetch events by specifying `peer_id`/`user_id` in the query parameter, this would limit events only to specified peer/user.
+    - For each track identifiable with `track_id` you can check `type` and `source` properties in the event to find out if track is audio, video, screenshare.
         (for example if you are looking for audio events, you can check for type: `audio`, source: `regular`)
-    - Find the sum of duration starting from the event with `mute: false` (Eunmute<sub>timestamp</sub>) to the next event with `mute: true`(Emute<sub>timestamp</sub>) until we reach `track.remove.success`.  <br />(i.e active duration: Σ Emute<sub>timestamp</sub> - Eunmute<sub>timestamp</sub>)
+    - For all events that share the same 'track_id', we must calculate the total of duration between an event when a participant unmutes
+        and next event when they mute themselves. Refer the pseudocode below.
 
+    ```
+     ## track_events is a list of track add, update, remove events having the same track id
+     duration = 0
+     last_event = track_events[0]  ## this would be a track.add.success event
+     while event in track_events[1...n]
+         if event.data.mute == true
+             duration += (event.timestamp - last_event.timestamp)  ## last event would have mute = false
+         else
+             last_event = event
+     end
+    ```
 
 ## Postman collection
 
