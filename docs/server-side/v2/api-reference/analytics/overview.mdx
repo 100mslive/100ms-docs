@@ -1,0 +1,39 @@
+---
+title: Overview
+nav: 3.61
+---
+
+## Analytics APIs
+
+Analytics APIs can be utilized to retrieve events via an HTTP request. By using these APIs, you can retrieve [track events](/server-side/v2/api-reference/analytics/track-events).
+
+Event data can be queried up to last 30 days.
+
+### What can I build?
+
+-   You can use track events to get a better understanding of user activity and build tools around it as explained in [use cases](/server-side/v2/api-reference/analytics/track-events#why-would-you-use-this-api)
+
+<EndpointRequest title="https://api.100ms.live/v2/analytics/events"/>
+
+## Response Object
+
+| Attribute | Description                                                                                                                                                                      |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `limit`   | Number of events in current response                                                                                                                                             |
+| `total`   | Total number of events                                                                                                                                                           |
+| `next`    | Used to fetch next set of results, to be specified in the `start` query parameter in subsequent request. Next has non empty value only when there are more events to be queried. |
+| `events`  | List of events, refer individual event page for details (Eg: [Track event object](/server-side/v2/api-reference/analytics/track-events#track-event-object))                     |
+
+## Pagination
+- Results are paginated with default events count `10`, extendable up to `100` by specifying it in `limit` query parameter.
+- If there are more events available then `next` will have a string value. This should be specified in the subsequent call as `start` query parameter to get further events.
+- Results are snapshot when query is executed for the first time, newer events (after first query) won’t appear while iterating results
+- Next results will expire after 24 hours from the first query time.
+
+## Postman collection
+
+You can use our Postman collection to start exploring 100ms APIs.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a?action=collection%2Ffork&collection-url=entityId%3D22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a%26entityType%3Dcollection%26workspaceId%3Dd9145dd6-337b-4761-81d6-21a30b4147a2)
+
+Refer to the [Postman guide](/server-side/v2/introduction/postman-guide) to get started with 100ms API collection.
