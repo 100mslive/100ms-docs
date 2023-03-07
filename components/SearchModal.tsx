@@ -6,8 +6,8 @@ import { Flex, Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, connectHits, connectSearchBox } from 'react-instantsearch-dom';
-import Tag from './Tag';
 import { titleCasing } from '@/lib/utils';
+import Tag from './Tag';
 
 const searchClient = algoliasearch(
     process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '',
@@ -114,8 +114,7 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
                         css={{
                             maxHeight: '60vh',
                             overflow: 'auto',
-                            maxWidth: '100%',
-                            borderBottom: '1px solid $borderLighter'
+                            maxWidth: '100%'
                         }}>
                         {hits.map((searchResult, i: number) => (
                             <>
@@ -147,14 +146,19 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
                                     </Link>
                                 </Box>
                                 <Box
-                                    css={{ backgroundColor: '$borderLighter', w: '100%', h: '1px' }}
+                                    css={{ backgroundColor: '$borderDefault', w: '100%', h: '1px' }}
                                 />
                             </>
                         ))}
                     </Box>
                     <Flex
                         gap="4"
-                        css={{ pt: '$sm', px: '$md', boxShadow: '0 -28px 32px 8px #111' }}>
+                        css={{
+                            pt: '$sm',
+                            px: '$md',
+                            boxShadow: '0 -32px 32px 8px #111',
+                            borderTop: '1px solid $borderDefault'
+                        }}>
                         {searchInfoItems.map((searchInfoItem) => (
                             <InfoItem
                                 title={searchInfoItem.title}
