@@ -156,7 +156,7 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
                         css={{
                             pt: '$sm',
                             px: '$md',
-                            boxShadow: '0 -32px 32px 8px #111',
+                            boxShadow: '0 -32px 32px 8px #101010',
                             borderTop: '1px solid $borderDefault'
                         }}>
                         {searchInfoItems.map((searchInfoItem) => (
