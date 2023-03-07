@@ -73,15 +73,14 @@ const Result = ({ searchResult }) => {
                     mt: '$1',
                     mb: '$xs'
                 }}>
-                {path.map((text, id) =>
-                    id === path.length - 1 ? (
-                        <span>&nbsp;{titleCasing(text.split('#')[0])}</span>
-                    ) : (
-                        <span style={{ whiteSpace: 'nowrap' }}>
-                            &nbsp;{`${titleCasing(text)} >`}
-                        </span>
-                    )
-                )}
+                {path.map((text, id) => (
+                    <span style={{ whiteSpace: 'nowrap' }}>
+                        &nbsp;
+                        {id === path.length - 1
+                            ? titleCasing(text.split('#')[0])
+                            : `${titleCasing(text)} >`}
+                    </span>
+                ))}
             </Text>
             <Text
                 variant="xs"
@@ -339,7 +338,9 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                     backgroundColor: 'var(--gray1)'
                 }}
                 ref={ref}>
-                <InstantSearch searchClient={searchClient} indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
+                <InstantSearch
+                    searchClient={searchClient}
+                    indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
                     <CustomSearchBox setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
                     <CustomHits
                         setModal={setModal}
