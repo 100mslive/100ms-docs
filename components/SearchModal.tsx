@@ -6,8 +6,8 @@ import { Flex, Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, connectHits, connectSearchBox } from 'react-instantsearch-dom';
-import { titleCasing } from '@/lib/utils';
 import Tag from './Tag';
+import { titleCasing } from '@/lib/utils';
 
 const searchClient = algoliasearch(
     process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '',
