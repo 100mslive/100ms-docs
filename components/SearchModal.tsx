@@ -66,7 +66,7 @@ const Result = ({ searchResult }) => {
             <Text
                 variant="xs"
                 css={{
-                    color: 'hsla(217, 60%, 70%, 1)',
+                    color: 'var(--docs_search_result_breadcrumb)',
                     display: 'flex',
                     flexWrap: 'wrap',
                     alignItems: 'center',
@@ -160,7 +160,7 @@ const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) =
                         css={{
                             py: '$4',
                             px: '$md',
-                            boxShadow: '0 -32px 32px 8px #0F1115',
+                            boxShadow: '0 -32px 32px -8px var(--docs_search_result_shadow)',
                             borderTop: '1px solid $borderDefault'
                         }}>
                         {searchInfoItems.map((searchInfoItem) => (
