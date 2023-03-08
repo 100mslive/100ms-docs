@@ -61,6 +61,7 @@ const Result = ({ searchResult }) => {
                     {searchResult.title}
                 </Text>
                 <Tag text={searchResult.platformName} />
+                <Tag text={searchResult.type} />
             </Flex>
 
             <Text
@@ -86,7 +87,7 @@ const Result = ({ searchResult }) => {
                 variant="sm"
                 css={{
                     fontSize: '13px',
-                    color: '$textMedEmp',
+                    color: '$textMedEmp'
                 }}
                 dangerouslySetInnerHTML={{
                     // eslint-disable-next-line no-underscore-dangle
@@ -348,7 +349,9 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                     backgroundColor: 'var(--gray1)'
                 }}
                 ref={ref}>
-                <InstantSearch searchClient={searchClient} indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
+                <InstantSearch
+                    searchClient={searchClient}
+                    indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
                     <CustomSearchBox setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
                     <CustomHits
                         setModal={setModal}
