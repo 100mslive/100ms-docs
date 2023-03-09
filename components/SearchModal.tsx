@@ -60,8 +60,10 @@ const Result = ({ searchResult }) => {
                     }}>
                     {searchResult.title}
                 </Text>
-                <Tag text={searchResult.platformName} />
-                <Tag text={searchResult.type} />
+                <Flex align="center" gap="2">
+                    <Tag text={searchResult.platformName} />
+                    <Tag text={searchResult.type} />
+                </Flex>
             </Flex>
 
             <Text
