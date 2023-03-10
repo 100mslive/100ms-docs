@@ -581,6 +581,8 @@ This event will be sent when final composed recording is generated and uploaded 
 | duration                | `int`                | Duration the user spent in the room in seconds <br/><br/> Example: 3600                                                                                       |
 | recording_path          | `string`             | Upload path of the recorded video such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                                                                |
 | recording_presigned_url | `string`             | Presigned URL for the recorded video, for download. Valid for 24 hours <br/><br/> Example: https://upload-location/bucket/ac.mp4                              |
+| chat_recording_path                 | `string`             | Upload path of chat recording files such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac. |
+| chat_recording_presigned_url        | `string`             | Pre signed url for chat recording files <br/><br/> Example: https://upload-location/bucket/chat.csv |
 | size                    | `int`                | Size of the recorded video (in bytes) <br/><br/> Example: 10024                                                                                               |
 | session_started_at      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                       |
 | session_stopped_at      | `timestamp (in UTC)` | Timestamp when session ended <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                         |
@@ -603,6 +605,8 @@ This event will be sent when final composed recording is generated and uploaded 
         "template_id": "************************",
         "recording_path": "s3://<file-bucket-address>.mp4",
         "recording_presigned_url": "https://<file-access-url>?<signature>",
+        "chat_recording_path": "s3://<chat-recording-address>.csv",
+        "chat_recording_presigned_url": "https://<chat-recording-access-url>?<signature>",
         "size": 13933649,
         "session_started_at": "2021-11-30T12:48:49.97291247Z",
         "session_stopped_at": "2021-11-30T12:58:49.97291247Z"
@@ -794,6 +798,8 @@ This event is sent when beam successfully records the room and uploads the video
 | max_height              | `int`                | Maximum height of the screen supported for recording in pixels <br/><br/> Example: 720                                                                          |
 | recording_path          | `string`             | Upload path of the recorded video such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                                                                  |
 | recording_presigned_url | `string`             | Presigned URL for the recorded video, for download <br/><br/> Example: https://upload-location/bucket/ac.mp4                                                    |
+| chat_recording_path                 | `string`             | Upload path of chat recording files such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac. |
+| chat_recording_presigned_url        | `string`             | Pre signed url for chat recording files <br/><br/> Example: https://upload-location/bucket/chat.csv |
 | meeting_url             | `string`             | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                                                                         |
 | rtmp                    | `array`              | List of RTMP objects provided at rtmp start <br/><br/> Example: [{"url": "http://test.com"}]                                                                    |
 | session_started_at      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                         |
@@ -817,6 +823,8 @@ This event is sent when beam successfully records the room and uploads the video
         "peer_id": "********-****-****-****-***********",
         "recording_path": "s3://bucket/prefix/ac.mp4",
         "recording_presigned_url": "https://<file access URL>",
+        "chat_recording_path": "s3://<chat-recording-address>.csv",
+        "chat_recording_presigned_url": "https://<chat-recording-access-url>?<signature>",
         "room_id": "************************",
         "started_at": "2021-11-30T12:58:34.051Z",
         "stopped_at": "2021-11-30T12:59:56.778Z",
@@ -1122,6 +1130,8 @@ This event will be sent when HLS recordings are successful and uploaded to the s
 | template_id                         | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                           |
 | hls_vod_recording_path              | `string`             | Upload path of the HLS vod playlist such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                               |
 | hls_vod_recording_presigned_url     | `string`             | Pre signed url for HLS vod playlist url <br/><br/> Example: https://upload-location/bucket/hls-vod.zip                         |
+| chat_recording_path                 | `string`             | Upload path of chat recording files such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac. |
+| chat_recording_presigned_url        | `string`             | Pre signed url for chat recording files <br/><br/> Example: https://upload-location/bucket/chat.csv |
 | hls_vod_recording_size              | `int`                | Size of the HLS vod recording (in bytes) <br/><br/> Example: 10024                                                             |
 | max_width                           | `int`                | Maximum width of the screen supported for HLS recording in pixels <br/><br/> Example: 1280                                     |
 | max_height                          | `int`                | Maximum height of the screen supported for HLS recording in pixels <br/><br/> Example: 720                                     |
@@ -1156,6 +1166,8 @@ This event will be sent when HLS recordings are successful and uploaded to the s
         "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
         "hls_vod_recording_path": "s3://<hls-vod-bucket-address>.zip",
         "hls_vod_recording_presigned_url": "https://<hls-vod-access-url>?<signature>",
+        "chat_recording_path": "s3://<chat-recording-address>.csv",
+        "chat_recording_presigned_url": "https://<chat-recording-access-url>?<signature>",
         "hls_vod_recording_size": 10024,
         "recording_single_files": [
             {
