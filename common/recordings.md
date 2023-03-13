@@ -36,7 +36,7 @@ Browser recording is built to give users a participant-first recording experienc
 
 **Resources**
 
--   [How to implement Browser Recording](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording)
+- [How to implement Browser Recording](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording)
 
 ### SFU Recording [Advanced]
 
@@ -44,13 +44,13 @@ SFU recording is built for advanced use cases, which require individual audio an
 
 You can get track recordings in two forms:
 
--   Individual: Media for each peer is provided as a separate mp4 file. This file will have both audio and video of the peer. These files can be used for offline review or in implementing custom composition.
+- Individual: Media for each peer is provided as a separate mp4 file. This file will have both audio and video of the peer. These files can be used for offline review or in implementing custom composition.
 
--   Composite [currently in beta]: Audio and video of all peers are composed as per their joining/leaving the meeting and provided as a single mp4. This file can be used for offline viewing of the meeting.
+- Composite [currently in beta]: Audio and video of all peers are composed as per their joining/leaving the meeting and provided as a single mp4. This file can be used for offline viewing of the meeting.
 
 **Resources**
 
--   [How to implement SFU Recording](/server-side/v2/Destinations/recording)
+- [How to implement SFU Recording](/server-side/v2/Destinations/recording)
 
 ### Recordings for Live Streaming Use-cases
 
@@ -108,10 +108,10 @@ If a storage destination is not configured for recordings and if you choose to r
 
 **Storage recording path is available in following webhook responses:**
 
--   Browser Recording: [beam.recording.success](/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `recording_path`)
--   SFU Recording: [recording.success](/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `recording_path`)
--   Multiresolution Recording: [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `recording_single_files` ; `recording_path`)
--   VOD Recording: [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `hls_vod_recording_path`)
+- Browser Recording: [beam.recording.success](/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `recording_path`)
+- SFU Recording: [recording.success](/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `recording_path`)
+- Multiresolution Recording: [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `recording_single_files` ; `recording_path`)
+- VOD Recording: [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `hls_vod_recording_path`)
 
 **The recording path for these respective recordings will look like follows:**
 
@@ -143,7 +143,19 @@ If a storage destination is not configured for recordings and if you choose to r
 
 ## Chat Recording
 
-Chat recording is a feature through which you will recieve all chats messages sent by peers during the sfu/browser recording. Chat recording is available for both sfu recording and browser recording. Only public chats sent to all roles will be recorded. The `.csv` file will be uploaded to the recording bucket configured for your video recordings. The file header will be: `SenderPeerID,SenderName,SenderUserID,Roles,SentAt,Type,Message`
+Chat recording is a feature through which you will receive all chats messages sent by peers during the sfu/browser recording. Chat recording is available for both sfu recording and browser recording. Only public chats sent to all roles will be recorded. The `.csv` file will be uploaded to the recording bucket configured for your video recordings. The file header will be: `SenderPeerID,SenderName,SenderUserID,Roles,SentAt,Type,Message`
+
+**Header information**
+
+| Header | Description |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SenderPeerID |Sender's peer id |
+| SenderName | Sender's name |
+| SenderUserID | Sender's user id |
+| Roles | Roles array to which the message is sent `[]` in case sent to all roles |
+| SentAt| SentAt in RFC.3339 format |
+| Type| Message type - `chat`|
+| Message| Message that was sent |
 
 **Chat recording path is available in following webhook responses:**
 
