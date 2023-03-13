@@ -1,5 +1,5 @@
 ---
- title: Managing Shared State in a Room with Session Metadata (Beta)
+ title: Shared State with Session Metadata" (Beta)
  nav: 7.24
 ---
 
@@ -11,7 +11,7 @@ While [peer metadata](https://www.100ms.live/docs/android/v2/how--to-guides/inte
 
 ## How to store shared data with 100ms SDK
 
-To update the value of the session metadata for the current room session, call `setSessionMetadata` method on SDK instance. In the following example, the "test" string will be saved in the session metadata and accessible to all participants in the room as a shared state.
+To update the value of the session metadata for the current room session, call `setSessionMetaData` method on SDK instance. In the following example, the "test" string will be saved in the session metadata and accessible to all participants in the room as a shared state.
 
 Make sure you call session metadata API after you joined the room. You should listen to [onJoin()](https://www.100ms.live/docs/android/v2/how--to-guides/set-up-video-conferencing/join#call-join) callback to proceed.
 
@@ -50,7 +50,7 @@ hmsSdk.setSessionMetaData("some data", new HMSActionResultListener() {
 
 ## How to read shared data with 100ms SDK
 
-To retrieve the session metadata, use the `getSessionMetadata` method:
+To retrieve the session metadata, use the `getSessionMetaData` method:
 
 Make sure you call session metadata API after you joined the room. You should listen to [onJoin()](https://www.100ms.live/docs/ios/v2/how--to-guides/set-up-video-conferencing/join#call-join) callback to proceed.
 
@@ -91,11 +91,11 @@ hmsSdk.getSessionMetaData(new HMSSessionMetadataListener() {
 
 </Tab>
 
-## Limitations and Alternatives in the Beta Release
+## Limitations in the Beta Release
 
 At present, there is no callback that will be triggered to indicate changes in the session metadata.
 
-## Then how can I notify other users that session metadata has changed
+## Then how can I notify other users that session metadata has changed?
 
 To notify others that the session data has been changed, you can send a broadcast message.
 
