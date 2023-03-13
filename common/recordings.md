@@ -6,16 +6,17 @@ Based on your end goal, you can choose one of the recording types and its implem
 
 ## Recording types
 
--   [Recording types](#recording-types)
-    -   [Quick Comparison](#quick-comparison)
-    -   [Browser Recording \[Recommended\]](#browser-recording-recommended)
-    -   [SFU Recording \[Advanced\]](#sfu-recording-advanced)
-    -   [Recordings for Live Streaming Use-cases](#recordings-for-live-streaming-use-cases)
-        -   [Video-on-demand Recording](#video-on-demand-recording)
-        -   [Multiresolution Recording](#multiresolution-recording)
--   [Configure storage](#configure-storage)
-    -   [How to configure recording storage?](#how-to-configure-recording-storage)
--   [Storage path for recordings](#storage-path-for-recordings)
+- [Recording types](#recording-types)
+  - [Quick Comparison](#quick-comparison)
+  - [Browser Recording \[Recommended\]](#browser-recording-recommended)
+  - [SFU Recording \[Advanced\]](#sfu-recording-advanced)
+  - [Recordings for Live Streaming Use-cases](#recordings-for-live-streaming-use-cases)
+    - [Video-on-demand Recording](#video-on-demand-recording)
+    - [Multiresolution Recording](#multiresolution-recording)
+- [Configure storage](#configure-storage)
+  - [How to configure recording storage?](#how-to-configure-recording-storage)
+- [Storage path for recordings](#storage-path-for-recordings)
+- [Chat Recording](#chat-recording)
 
 ### Quick Comparison
 
@@ -139,3 +140,27 @@ If a storage destination is not configured for recordings and if you choose to r
 | Stream ID   | Unique identifier for a particular stream of a room (audio-video/screenshare)                                                                                                               |
 | Track ID    | Unique identifier for a particular track (audio or video) of a stream                                                                                                                       |
 | Layer Index | Layer index values show descending HLS resolutions - 0(1080p), 1(720p), 2(480p), 3(360p) and 4(240p). If highest resolution of template is 720p, then 0(720p), 1(480p), 2(360p) and 3(240p) |
+
+## Chat Recording
+
+Chat recording is a feature through which you will recieve all chats messages sent by peers during the sfu/browser recording. Chat recording is available for both sfu recording and browser recording. Only public chats sent to all roles will be recorded. The `.csv` file will be uploaded to the recording bucket configured for your video recordings. The file header will be: `SenderPeerID,SenderName,SenderUserID,Roles,SentAt,Type,Message`
+
+**Chat recording path is available in following webhook responses:**
+
+- Browser Recording: [beam.recording.success](/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `chat_ecording_path` ; `chat_recording_presigned_url`)
+- SFU Recording: [recording.success](/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `chat_recording_path` ; `chat_recording_presigned_url`)
+- Multiresolution Recording: [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `chat_recording_path` ; `chat_recording_presigned_url`)
+
+**The recording path for these respective recordings will look like follows:**
+
+`s3://<location>/<prefix>/chat/<room_id>/<start_date>/Rec-<room_id>-<epoch>.csv`
+
+**The breakdown of the aforementioned tags is as follows:**
+
+| Tag Name    | Description                                                                                                                                                                                 |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Location    | Name of the bucket where recordings are stored                                                                                                                                              |
+| Prefix      | Prefix for upload path which is configured in storage settings of your template. If not configured, the default value for this will be your Customer ID                                     |
+| Room ID     | The identifier for the room which was recorded                                                                                                                                              |
+| Start Date  | Start date of the session                                                                                                                                                                   |
+| Epoch       | Start time of the recorder in the session                                                                                                                                                   |
