@@ -24,7 +24,7 @@ No, you cannot delete a room. The “delete room” functionality automatically 
 
 - **Creating new rooms for every session**:  You can create as many rooms as you want, there is no limit on room creation
 - **Disable room**: If you don't want additional requests to join a room, you can disable a room from the dashboard or via [server API](/server-side/v2/Rooms/disable-or-enable). 
-- **Dev & Prod Env**: If you want to delete rooms from your account as you transition from Development to the Production stage, we recommend using "Workspaces." It enables you to create two or more workspaces per your need and isolate the data for each workspace. Please check this blog for more information.
+- **Dev & Prod Env**: If you want to delete rooms from your account as you transition from Development to the Production stage, we recommend using "Workspaces." It enables you to create two or more workspaces per your need and isolate the data for each workspace. Please check [this blog](https://www.100ms.live/blog/launching-teams-workspaces) for more information.
 
 ## Getting started
 

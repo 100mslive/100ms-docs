@@ -12,7 +12,7 @@ import Badge from '@/components/Home/Badge';
 export const SdkList = [
     {
         icon: <JavascriptIcon style={{ color: '#F7DF1E' }} />,
-        title: 'JavaScript',
+        title: 'Web',
         id: 'javascript',
         link: '/javascript/v2/get-started/javascript-quickstart'
     },
