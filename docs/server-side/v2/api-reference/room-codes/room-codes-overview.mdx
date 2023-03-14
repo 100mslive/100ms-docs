@@ -1,0 +1,89 @@
+---
+title: Overview
+nav: 4.1
+---
+
+Room codes are unique encrypted short codes that carry information such as room_id, role and room code state. A Room Code is always associated to specific to a role and room_id combination.
+
+
+## Why use Room Codes?
+
+
+<Note>
+**Room Links with Room Codes**
+
+Construct Prebuilt room links or your custom domain room links format; embed and share with your users
+
+###### How to use room codes to construct room links?
+
+1. **[Prebuilt Room Links→](/concepts/v2/concepts/Prebuilt)**
+2. **[Custom Room Links→](/concepts/v2/concepts/customUI)**
+
+</Note>
+
+<Note>
+**Room Code Authentication**
+
+Power role specific room code authentication required to join a Room when using 100ms SDKs 
+
+###### How to join a room using a Room Code?
+
+
+1. Prebuilt has built-in support for Room Code based authentication
+2. **Use Room Codes to join a room using SDKs →**
+</Note>
+
+Essentially, Room Codes allow you to create unique room links and room code authentication mechanism for every role in your room. For instance, consider three roles created in a Template with their unique room codes.
+
+| Role   | Room Codes     | 
+| :----- | :------- | 
+| Broadcaster | `wms-xbx-qpx`|  
+| Viewer | `uiw-rwr-weo` |  
+| Moderator | `erw-gdo-wej` |
+
+Room Links for each role
+- 100ms Prebuilt link : `https://<template-subdomain>/meeting/<room-code>`
+- Your custom domain link : `https://<your-domain>/meeting/<room-code>`
+
+
+## Room Codes Basics
+
+- Room codes are 9 digit short codes and follow a standard format - `***-***-***`
+- Room codes require a Template, a Room and at least one role to be created.
+
+
+
+**Room Code Lifecycle**
+
+Room Codes are a binary state entities represented by **enabled: true | false**.
+    - `enabled:true` represents active room codes. Effectively, Room links and Room Code authentication work with only active room codes.
+    - `enabled:false` represents disabled room codes. Room links and Room Code authentication does not work with disabled room codes.
+
+
+You can get the state of a room code `enable:true|false` using **[Get Room Code API](/server-side/v2/api-reference/room-codes/get-room-code-state).** Always make sure that this flag is enabled before creating room links or performing a peer join using room code authentication.
+
+You can manage the state of a room code for a role and make it enabled/disabled using **[Update Room Code API](/server-side/v2/api-reference/room-codes/update-room-code-state)**
+    
+    
+ <Note type='warning'>
+ If you disable a Room Code for a given role, the room code becomes disabled for all peers associated to the role.
+ </Note>
+    
+**Room Codes do not expire**
+
+Room Codes do not have an expiry, thus, you can reuse room codes infinitely. This enables “fixed room links” that can be reused / re-shared or allocated to your end users. No need to generate new room links for every session for a given room_id. However, if your use case requires "fresh room links", you should first disable existing room code and then generate new room codes for a role using **Create Room-code API** or **Create Room Code for all roles in a Room API.**
+
+**Creating Room Codes**
+
+ There are multiple ways a room code can be created
+    1. via 100ms dashboard : For rooms created on 100ms dashboard, a Room Code gets generated for every role in the room by default on room creation.
+    2. via API : If you're using [Create Room API](/server-side/v2/api-reference/Rooms/create-via-api) to create rooms, you need to explicitly create room codes for every role created in the room template. There are potentially two ways to do this:
+    	- Create Room Code for every role in the room at once - via **Create a Room Code API** 
+   	- Create Room Code for a specific role in the room - via **Create a Role specific Room Code API**
+
+
+ **Multiple Room Codes per role**
+
+100ms also supports multiple room codes per role (upto 100 room codes per role). This means that each user for a given role can be associated with a unique room code, and thus allow you to created unique room links for each user and unique room code based authentication. Please handle the logic to map room codes on user level at your end as we support room code creation only on roles and not user_id. Drop a feedback if you want us to support this!
+
+

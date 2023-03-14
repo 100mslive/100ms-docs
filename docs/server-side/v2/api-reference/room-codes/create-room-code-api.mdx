@@ -1,0 +1,100 @@
+---
+title: Create Room Codes
+nav: 4.13
+---
+
+Once you've created a room via [Create Room API](/server-side/v2/Rooms/create-via-api), you need to create Room Codes to be able to create a room link and Join a room.
+
+There are two ways to create room codes:
+
+1. **Create a Room Code API** - creates Room Code for every role in the room at once
+
+<PostRequest title="https://api.100ms.live/v2/room-codes/room/<room_id>" />
+<Request id="req-comp-0">
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/room-codes/room/<room_id>/' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+
+```
+</Request>
+
+
+<ResponseBox id="resp-0" status="200 OK">
+
+```json
+{
+	data: [
+		{
+			code: "wpi-sjb-wer",
+			room_id: "new-room-1662723668",
+			role: "host",
+			enabled: true,
+			created_at: <timestamp>,
+			updated_at: <timestamp>,
+		},
+		{
+			code: "dfj-ewe-oqw",
+			room_id: "new-room-1662723668",
+			role: "guest",
+			enabled: true,
+			created_at: <timestamp>,
+			updated_at: <timestamp>,
+		}
+	]
+}
+```
+
+</ResponseBox>
+
+Errors
+| Description | Code |
+| --- | --- |
+| Room not found | 404 |
+| Room is disabled | 403 |
+| Authentication Error | 401 |
+|  |  |
+
+
+2. **Create Role Room Code API** - creates a room code for a specific Role in a room
+
+<PostRequest title="hhttps://api.100ms.live/v2/room-codes/room/<room_id>/role/" />
+<Request id="req-comp-0">
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/room-codes/room/<room_id>/role//' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+
+```
+</Request>
+    
+    
+    **Arguments**
+    
+ | Field | Type | Description |
+ | :--- | :--- | :---|
+ | role | string | mandatory |
+    
+<ResponseBox id="resp-0" status="200 OK">
+
+    ```json
+    {
+    		code: "wet-qwq-otr",
+    		room_id: "new-room-1662723668",
+    		role: "host",
+    		enabled: true,
+    		created_at: <timestamp>,
+    		updated_at: <timestamp>,
+    }
+    ```
+ </ResponseBox>
+
+    
+    **********************Errors**********************
+    | Description | Code |
+| --- | --- |
+| Room not found | 404 |
+| Room is disabled | 403 |
+| Authentication Error | 401 |
+| Role not found | 404 |
+|  |  |
