@@ -44,7 +44,7 @@ Any application built using 100ms' SDK has 2 components.
 
 5. Now you can **join your room** configured with the video conferencing template. You can join the room either via a 100ms demo link or by using the auth token in SDK or Sandbox.
 
-![Join Room](/docs/v2/Step4_JoinRoom)
+![Join Room](/docs/v2/Step4_JoinRoom.png)
 
 
 ## Where should I start?
