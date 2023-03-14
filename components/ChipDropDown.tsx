@@ -86,14 +86,4 @@ const ChipDropDown = ({ openFilter, setOpenFilter, platformFilter, setPlatformFi
     </Box>
 );
 
-const platformOrder = {
-    'All Platforms': 0,
-    Android: 1,
-    iOS: 2,
-    JavaScript: 3,
-    'React-Native': 4,
-    Flutter: 5,
-    'Server-Side': 6
-};
-
 export default ChipDropDown;
