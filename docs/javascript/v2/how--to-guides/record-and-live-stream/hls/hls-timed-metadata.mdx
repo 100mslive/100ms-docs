@@ -66,7 +66,7 @@ const extractMetaTextTrack = (): TextTrack | null => {
 
 // sync time with cue and trigger event
 const fireCues = (currentAbsTime, tolerance) => {
-  const cues = extractMetaTextTrack()
+  const cues = extractMetaTextTrack()?.cues
   if (!cues) {
     return
   }
@@ -90,7 +90,6 @@ const fireCues = (currentAbsTime, tolerance) => {
           duration: duration,
         };
         console.debug("Added toast ", JSON.stringify(toast));
-        cue.queued = false
       }, timeDiff);
       cue.queued = true;
     }
@@ -122,7 +121,7 @@ const fragChangeHandler = (_: any, { frag }: { frag: Fragment }) => {
     if (videoEl.textTracks.length === 0) {
       return;
     }
-    const fragStartTime = frag.start;
+    const fragStartTime = frag.programDateTime || 0;
     const fragmentDuration = frag.end - frag.start;
     fireCues(fragStartTime, fragmentDuration);
   } catch (e) {
