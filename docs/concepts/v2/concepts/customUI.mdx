@@ -1,0 +1,111 @@
+---
+title: Custom UI
+nav: 5.2
+---
+
+
+Having complete control over your audio/video rooms UI enables you to build customised experiences. With 100ms, our customers can integrate in the following ways: 
+
+- **Customise 100ms Apps** : fork and deploy our feature rich Apps and customise features as per your use cases
+    - adding or removing features requires code changes
+- **Build You Own UI** : Build entire UI from scratch using 100ms server APIs and client SDKs.
+
+**Comparing 100ms Apps vs Building Your Own**
+
+
+Customise 100ms Web App(Recommended)| Build Your Own|
+| :--- |  :--- |
+| Server-Side |  |  |
+| Authentication and Tokens | Required | Required |
+| Create a Room | Required | Required |
+| Creating a Room Links with Room Codes | Required | Required |
+| Features |  |  |
+| Preview Screen | In-built, customisable | Build from scratch |
+| Whiteboard | In-built, customisable | Build from scratch |
+| Hand Raise | In-built, customisable | Build from scratch |
+| Audio/Video Playlist | In-built, customisable | Build from scratch |
+| Audio Sharing | In-built, customisable | Build from scratch |
+| Virtual Background | In-built, customisable | Build from scratch |
+| Screen Sharing | In-built, customisable | Build from scratch |
+| Picture in Picture | In-built, customisable | Build from scratch |
+| Be Right Back | In-built, customisable | Build from scratch |
+| Participant List | In-built, customisable | Build from scratch |
+| Chat | In-built, customisable | Build from scratch |
+| Integration Effort | Low to Medium | Medium to High |
+
+**Pre-requisites to get started**
+
+1. Create your account on [100ms dashboard](https://dashboard.100ms.live/login)
+2. Create a Room Template to define your room configuration
+    1. 100ms dashboard : go to Templates and set up your first Room Template, here you can configure roles and their permissions. 
+    Or
+    2. Programatically create with APIs ; Review the [Template object](https://www.100ms.live/docs/server-side/v2/api-reference/policy/template-object) and create a template with [Create Template API](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-api) 
+3. Rooms on 100ms : A Room gets created by default associated with the template you’ve created. Alternatively, go ahead and create a Room programatically.
+    1. Rooms are created on 100ms server and requires your unique [Management Token](https://www.100ms.live/docs/concepts/v2/concepts/security-and-tokens#management-token-for-rest-api) to authenticate all Create Room requests.
+    2. Review [Rooms object](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/object) and create a room with [Create a Room API](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/create-via-api)
+4. Once you have your first Room ready, you can now create room links.
+
+### Create a Room Link for custom UI
+
+Your users need a room link to be able to join a Room, here we discuss creating a room link that looks something like: `your-domain/<room-code>.`  Read more on [Room Codes](/server-side/v2/api-reference/room-codes/room-code-overview).
+
+
+
+Sample Code workflow to create Room Links with Room Codes
+
+```python
+
+# template info
+template_id = "639cb27a0c77c9782cc50e7b"
+
+# create room 
+room_response = create_room(template_id)
+
+# create room code for the above created room
+room_codes = create_room_codes(room_response["id"])
+
+# create create room links
+room_links = {}
+for data in room_codes:
+	room_links[data["role"]] = create_room_link(data["code"])
+
+print(room_links)
+```
+
+### Authenticating Join Room with Room Codes
+
+You need to authenticate the participants before they Join a Room. Joining a Room requires Authentication Token for each participant. However, you can also use room codes to join a room, while 100ms SDK implicitly handles generating Authentication Token from the room code and allows the peer to join the room
+
+**Implementation**
+
+1. Fetch Room Code : You can fetch the room code in two ways:
+    1. Retrieve the room code from the Room Link
+    2. Use Get a Room Code API to retrieve the room code
+2. You need to then pass the retrieved room code in the join() method in the SDK.
+
+**Other ways to generate Authentication Token**
+
+If you do not wish to use Room Codes, explore other ways:
+
+1. No-code to get started: Get temporary auth tokens from **[the dashboard](https://www.100ms.live/docs/javascript/v2/guides/token#get-a-temporary-token-from-100ms-dashboard)**
+2. Use 100ms token server: Use the 100ms **[token endpoint](https://www.100ms.live/docs/javascript/v2/guides/token-endpoint#get-a-token-using-100ms-token-endpoint)** to generate auth tokens, just like our sample apps
+3. **[Set up your token server](https://www.100ms.live/docs/concepts/v2/concepts/security-and-tokens#set-up-token-server)**: Recommended approach for production
+
+## Start Building
+
+Once you’ve understood how to create Room Links and handle authentication, let’s start building custom experiences.
+
+### Customise with 100ms apps
+
+Fork and deploy 100ms web apps and start customising or ship them as is!
+**[Explore all 100ms apps examples →](https://www.100ms.live/docs/examples)**
+
+
+
+### Build Flows with Client SDKs
+
+Take your first step with live video and audio integration using the 100ms SDK. Get started now.
+
+
+
+

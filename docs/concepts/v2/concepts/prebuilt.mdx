@@ -1,0 +1,115 @@
+---
+title: Prebuilt Room Links
+nav: 1.9
+---
+Embed or share room links without building UI
+
+## Overview
+
+Getting started with 100ms Prebuilt Room Links is the fastest way to test and go live with our ready to use room links. 
+
+
+**Test a Prebuilt Room Link →**
+
+
+**Pre-requisites**
+
+1. Create your account on [100ms Dashboard](https://dashboard.100ms.live/login)
+2. Create a Room Template to define your room configuration
+    1. via 100ms dashboard : Go to Templates and set up your first Room Template, here you can configure roles and their permissions. 
+    2. via Create Template API : Review the [Template object](https://www.100ms.live/docs/server-side/v2/api-reference/policy/template-object) and create a template with [Create Template API](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-api)
+3. Rooms on 100ms : A Room gets created by default associated with the template you’ve created. Alternatively, go ahead and create a Room programatically.
+    1. Rooms are created on 100ms server and requires your unique [Management Token](https://www.100ms.live/docs/concepts/v2/concepts/security-and-tokens#management-token-for-rest-api) to authenticate all Create Room requests.
+    2. Review [Rooms object](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/object) and create a room with [Create a Room API](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/create-via-api)
+4. Once you have your first Room ready, you can now go ahead and create and get room links
+
+### **Creating Prebuilt Room Links**
+
+Here we discuss the approaches to get Prebuilt Room links with 100ms dashboard or by creating it yourself. 
+
+
+The room link that gets generated in each approach is of the format : `https://<template-subdomain>/meeting/<room-code>`
+
+1. **template-subdomain** : this the subdomain that you’ve defined at the time of Template creation. 
+2. **Room Code** : Room codes are unique encrypted codes that carry information such as room_id, role and its state. They help you build a Room Link and power the authentication required to join a Room. Read more on Room Codes and its usage [here](https://www.notion.so/Room-Codes-7af2e4413a964e8caf15b2736432f12c).
+
+
+
+**100ms Dashboard                                                                                                            No-Code**
+
+1. Go to Rooms page on 100ms dashboard and select a room to go to Rooms details page.
+2. On clicking “Join Room”, you can get room links for each role specified in the template
+
+![Screenshot 2023-02-28 at 10.08.09 AM.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/64c34a7c-2183-41b5-9669-3722d1e454dc/Screenshot_2023-02-28_at_10.08.09_AM.png)
+
+
+
+
+**Create with APIs**
+
+1. With a room is created on 100ms dashboard or with API, you can now construct Prebuilt Room Links with format : `https://<template-subdomain>/meeting/<room-code>`
+    1. template-subdomain : Copy this template sub-domain from the 100ms dashboard from the Template Details page.
+    2. Room Code : By default, a room code is generated for every role created on a room template.
+        1. Get Room Code for an existing role
+        2. Get Room Code for all roles in a Room
+        3. Create Room Codes : as Room Codes are non-expirable, you can also generate new Room Codes for every new session to generate “fresh Room Links”
+    
+    Recommended : Review Room Codes and its usage before implementing this.
+    
+2. Construct your Room Link : Append template-subdomain and Room code to the room link format.
+
+Here is an example pseudo code snippet involving creating a room and then creating room links for that room.
+    
+    ```python
+    # template info
+    template_id = "639cb27a0c77c9782cc50e7b"
+    template_subdomain = "piyush.app.100ms.live"
+    
+    # create room 
+    room_response = create_room(template_id)
+    
+    # create room code for the above created room
+    room_codes = create_room_codes(room_response["id"])
+    
+    # create create room links by appending room_code to template_subdomain
+    # room_link = https://<template-subdomain>/meeting/<room-code>
+    room_links = {}
+    for data in room_codes:
+    	room_links[data["role"]] = "https://"+template_subdomain+"/meeting/"+data["code"]
+    
+    print(room_links)
+    ```
+
+
+
+### **Embed or Share Room Links**
+
+#### Embed room links as iFrame on web, mobile-web
+
+If you want a quick integration of a fully featured video conferencing/live streaming app inside your application within a day, iframe is the way to go.
+
+iframe integration benefits:
+
+- You can have a fully-featured video conferencing/live streaming UI added to your web app with minimal development
+- You can customize to a greatest extent as per your requirements
+- You can use this in the framework you're already using in your app
+- Using an iframe you can embed the whole sample web app inside your UI wherever you want
+
+**Implementation**
+
+Embed the Prebuilt Room Link as an iframe in your application
+
+```jsx
+<iframe
+    title="100ms-app"
+    allow="camera *;microphone *;display-capture *"
+    src="<https://<template-subdomain>/meeting/<room-code>>"
+    style="height: 900px; width: 900px;">
+</iframe>
+```
+
+
+
+#### Send shareable links to your users
+
+You can share Room links with you users on the fly as Push notification, SMS, Email etc.
