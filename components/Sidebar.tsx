@@ -268,8 +268,9 @@ const Sidebar: React.FC<Props> = ({
                                         : '0 1.25rem 1rem 0.25rem rgba(250, 250, 250, 0.8)',
                                 backgroundColor: 'var(--docs_bg_content)',
                                 '@md': {
-                                    pt: '$8',
-                                    top: '$10'
+                                    pt: '$18',
+                                    top: '$12',
+                                    backgroundColor: 'var(--docs_bg_content)'
                                 }
                             }}>
                             <Flex
@@ -302,7 +303,7 @@ const Sidebar: React.FC<Props> = ({
                                             <div style={{ display: 'flex ', alignItems: 'center' }}>
                                                 {tech.icon}
                                                 <span style={{ marginLeft: '1rem' }}>
-                                                    {tech.name}
+                                                    {tech.name === 'JavaScript' ? 'Web' : tech.name}
                                                 </span>
                                             </div>
                                             <ChevronDownIcon />
