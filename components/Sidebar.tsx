@@ -78,16 +78,9 @@ const Sidebar: React.FC<Props> = ({
     }, [router]);
 
     const [showBaseView, setShowBaseView] = useState(baseViewOnly);
-    const [currentTheme, setCurrentTheme] = useState('dark');
 
     useEffect(() => {
-        const updateTheme = (e) => setCurrentTheme(e.detail.theme);
         setRenderComponents(true);
-        if (window && document) {
-            setCurrentTheme(window.localStorage.theme || 'dark');
-            document.addEventListener('themeChanged', updateTheme);
-        }
-        return () => document.removeEventListener('themeChanged', updateTheme);
     }, []);
 
     useEffect(() => {
@@ -262,10 +255,7 @@ const Sidebar: React.FC<Props> = ({
                                 top: '0',
                                 pt: '$5',
                                 zIndex: '100',
-                                boxShadow:
-                                    currentTheme === 'dark'
-                                        ? '0 1.25rem 2rem 0.25rem rgba(8, 9, 12, 0.8)'
-                                        : '0 1.25rem 1rem 0.25rem rgba(250, 250, 250, 0.8)',
+                                boxShadow: '0 1.25rem 2rem 0.25rem rgba(8, 9, 12, 0.8)',
                                 backgroundColor: 'var(--docs_bg_content)',
                                 '@md': {
                                     pt: '$18',

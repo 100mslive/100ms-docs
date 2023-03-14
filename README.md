@@ -52,9 +52,9 @@ nav: 14 // Ranking of Item in the Sidebar
 
 By Default Nav is given the value of `Infinity` it's important to add `nav` value to order the Sidebar.
 
-But suppose you wanna update the order of 1 doc , then you don't need to change nav value of all them simply make the nav value in between the preceding and next doc it can be in decimal value too.
+But suppose you need to update the order of 1 doc, then you don't need to change nav value of all them simply make the nav value in between the preceding and next doc it can be in decimal value too.
 
-### 2. To a new Docs (for v3 and soo on)
+### 2. To a new Docs (for v3 and so on)
 
 Suppose we now need a `v3` docs
 
@@ -164,15 +164,6 @@ Super easy just get the `id`
 Every style of docs is fully customisable and is fully built with CSS Variables.
 
 All CSS Tokens , Baseline , Reset can be found in [theme.css](https://github.com/100mslive/100ms-docs/blob/main/styles/theme.css)
-
-```css
-:root {
-    /* Contains Tokens for Dark Mode */
-}
-[data-theme='light'] {
-    /* Contains Tokens for Light Mode */
-}
-```
 
 All CSS Variables prefixed with `token` control the Syntax Highlighting.
 

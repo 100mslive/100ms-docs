@@ -41,16 +41,9 @@ const Homepage = ({ allNav }) => {
     const [menu, setMenu] = useState(false);
     const [modal, setModal] = useState(false);
     const menuState = { menu, setMenu };
-    const [currentTheme, setCurrentTheme] = useState('dark');
 
     useEffect(() => {
-        const updateTheme = (e) => setCurrentTheme(e.detail.theme);
-        if (window && document) {
-            document.addEventListener('themeChanged', updateTheme);
-            setCurrentTheme(window.localStorage.theme || 'dark');
-        }
         setRenderComponents(true);
-        return () => document.removeEventListener('themeChanged', updateTheme);
     }, []);
 
     useLockBodyScroll(modal);
@@ -73,11 +66,7 @@ const Homepage = ({ allNav }) => {
                             mx: 'auto',
                             minHeight: '100vh',
                             position: 'relative',
-                            backgroundImage: `url(${
-                                currentTheme === 'dark'
-                                    ? '/docs/bg-desktop.png'
-                                    : '/docs/bg-desktop-light.png'
-                            })`,
+                            backgroundImage: "url(/docs/bg-desktop.png')",
                             backgroundSize: '100% 100%',
                             backgroundPosition: 'center-bottom',
                             backgroundRepeat: 'no repeat',
@@ -132,12 +121,7 @@ const Homepage = ({ allNav }) => {
                                         }
                                     }}>
                                     {cards.map((card, i) => (
-                                        <Card
-                                            key={card.link}
-                                            {...card}
-                                            id={i}
-                                            currentTheme={currentTheme}
-                                        />
+                                        <Card key={card.link} {...card} id={i} />
                                     ))}
                                 </Box>
 
