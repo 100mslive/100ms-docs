@@ -19,7 +19,7 @@ const searchClient = algoliasearch(
 const ALL_PLATFORMS = 'All Platforms';
 const ALL_TYPES = 'All Types';
 
-const TYPE_FILTERS = ['All Types', 'Guides', 'Concepts', 'FAQs', 'API Reference '];
+const TYPE_FILTERS = ['All Types', 'Guide', 'Concept', 'FAQ', 'API Reference'];
 
 const searchInfoItems = [
     {
@@ -281,7 +281,7 @@ const ResultBox = ({
                                     color: '$textHighEmp',
                                     wordWrap: 'break-word'
                                 }}>
-                                &nbsp;"{searchTerm.slice(0, 25)}{' '}
+                                &nbsp;"{searchTerm.slice(0, 25)}
                                 {searchTerm.length > 25 ? '...' : ''}"
                             </Text>
                         </Text>
@@ -432,7 +432,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                 <InstantSearch
                     searchClient={searchClient}
                     indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX || 'test'}>
-                    <Configure filters={`${platformFilter === ALL_PLATFORMS}`} />
+                    <Configure filters={getFilterQuery(platformFilter, typeFilter)} />
                     <CustomSearchBox setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
                     <CustomHits
                         openFilter={openFilter}
@@ -508,3 +508,11 @@ const FilterBar = ({
         />
     </Flex>
 );
+
+const getFilterQuery = (platformFilter, typeFilter) => {
+    if (platformFilter === ALL_PLATFORMS && typeFilter === ALL_TYPES) return '';
+    if (platformFilter === ALL_PLATFORMS) return `type:${typeFilter}`;
+    if (typeFilter === ALL_TYPES) return `platformName:${platformFilter}`;
+
+    return `platformName:${platformFilter} AND type:${typeFilter}`;
+};
