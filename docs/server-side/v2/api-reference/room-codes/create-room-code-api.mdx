@@ -9,7 +9,7 @@ There are two ways to create room codes:
 
 1. Create a Room Code API - creates Room Code for every role in the room at once
 
-<PostRequest title="https://api.100ms.live/v2/room-codes/room/<room_id>" />
+<PostRequest title="https://api.100ms.live/v2/room-codes/room/<room_id>/" />
 <Request id="req-comp-0">
 ```bash
 curl --location --request POST 'https://api.100ms.live/v2/room-codes/room/<room_id>/' \
@@ -58,10 +58,10 @@ Errors
 
 2. Create Role Room Code API - creates a room code for a specific role in a room
 
-<PostRequest title="hhttps://api.100ms.live/v2/room-codes/room/<room_id>/role/" />
+<PostRequest title="https://api.100ms.live/v2/room-codes/room/<room_id>/role/<role>" />
 <Request id="req-comp-0">
 ```bash
-curl --location --request POST 'https://api.100ms.live/v2/room-codes/room/<room_id>/role//' \
+curl --location --request POST 'https://api.100ms.live/v2/room-codes/room/<room_id>/role/<role>' \
 --header 'Authorization: Bearer <management_token>' \
 --header 'Content-Type: application/json' \
 
