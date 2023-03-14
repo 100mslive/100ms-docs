@@ -55,8 +55,8 @@ Room Links for each role
 **Room Code Lifecycle**
 
 A Room Code is a binary state entity represented by **enabled: true | false**.
-    - `enabled:true` represents an active Room Code. Effectively, Room links and Room Code authentication work with only active Room Codes.
-    - `enabled:false` represents disabled Room Code. Room links and Room Code authentication does not work with disabled Room Codes.
+    - `enabled:true` represents an enabled Room Code. Effectively, Room links and Room Code authentication work with only enabled Room Codes.
+    - `enabled:false` represents a disabled Room Code. Room links and Room Code authentication does not work with disabled Room Codes.
 
 
 You can get the state of a Room Code `enable:true|false` using **[Get Room Code API](/server-side/v2/api-reference/room-codes/get-room-code-state).** Always make sure that this flag is enabled before creating room links or performing a peer join using Room Code authentication.
@@ -69,11 +69,17 @@ Room Codes do not have an expiry, thus, you can reuse Room Codes infinitely. Thi
 
 **Creating Room Codes**
 
+ There are multiple ways a Room Code can be created :
+    1. [via 100ms dashboard](https://dashboard.100ms.live/dashboard) : For Rooms created on 100ms dashboard, a Room Code gets generated for every Role in the Room by default on Room creation.
+    2. via API : If you're using [Create Room API](/server-side/v2/api-reference/Rooms/create-via-api) to create Rooms, you need to explicitly create Room Codes for every Role in the Room. There are two ways to do this:
+        - Create Room Code for every Role in the Room at once - via **[Create a Room Code API](/server-side/v2/api-reference/room-codes/create-room-code-api)
+   	    - Create Room Code for a specific Role in the Room - via **Create a Role specific Room Code API**
+    
  There are multiple ways a Room Code can be created
-    1. via 100ms dashboard : For rooms created on 100ms dashboard, a Room Code gets generated for every role in the room by default on room creation.
+    1. via [100ms dashboard]/(https://dashboard.100ms.live/dashboard) : For rooms created on 100ms dashboard, a Room Code gets generated for every Role in the room by default on Room creation from dashboard.
     2. via API : If you're using [Create Room API](/server-side/v2/api-reference/Rooms/create-via-api) to create rooms, you need to explicitly create Room Codes for every Role created in the room template. There are potentially two ways to do this:
     	- Create Room Code for every role in the room at once - via **Create a Room Code API** 
-   	- Create Room Code for a specific role in the room - via **Create a Role specific Room Code API**
+   	    - Create Room Code for a specific role in the room - via **Create a Role specific Room Code API**
 
 
  **Multiple Room Codes per role**
