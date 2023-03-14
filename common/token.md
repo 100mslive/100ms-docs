@@ -1,36 +1,24 @@
 ## Create a 100ms account
 
--   Create an account at [Dashboard of 100ms](https://dashboard.100ms.live/)
+1. Sign up on 100ms using the **Try For Free** button in the top navbar.
 
-![Create Account](/guides/token/create-account.png)
+![Signup for 100ms account](/docs/v2/signup.png)
 
--   After you have created your account you have to Confirm your Email , check the promotions tab in your Mail Box if you can't find it.
+2. Once you're logged in to the dashboard, click on `Create Room`
 
--   Login to the Dashboard and you will see an option to Create your first app. Click on it.
+![Create Room](/docs/v2/Step-1_CreateRoom.png)
 
-![Create your first app](/guides/token/starter-kit-initialize-first-step.png)
+3. **Hover and select** on one of the Template Presets.(We will use the **Video Conference Template** for this example)
 
--   Then you would see this popup with multiple starter kits, hover over one of the starter kits and click `Deploy`. We will choose "Video Conferencing" for now.
+![Select Template](/docs/v2/Step2_SelectTemplate.png)
 
-![Initialize Started Kit](/guides/token/starter-kit-initialize.png)
+4. You can either choose to configure your template by changing the auto suggested template name and subdomain URL or click on continue to move forward.
 
--   In the `Choose your deployment` step, select 100ms and enter the subdomain you wish in the `Subdomain` field.
+![Configure Template](/docs/v2/Step3_ConfigureTemplate.png)
 
-![Domain details](/guides/token/domain-details.png)
+5. Now you can **join your room** configured with the video conferencing template. You can join the room either via a 100ms demo link or by using the auth token in SDK or Sandbox.
 
--   After you're App is set click on "Go to Dashboard" or [Go Here](https://dashboard.100ms.live/dashboard)
-
-![Dasboard](/guides/token/go-to-dashboard.png)
-
-## Create a room
-
--   Go over to [Room in Dashboard](https://dashboard.100ms.live/rooms) and click on "Create Room" , While creating a room you can specify it's name, roles or enable recording.
-
-![Create Room](/guides/token/create-room.png)
-
--   You will now see "Room Details" section and we have a `room_id` created, copy it somewhere.
-
-![Room Id](/guides/token/room-id.png)
+![Join Room](/docs/v2/Step4_JoinRoom.png)
 
 ## Get a temporary token from 100ms dashboard
 
@@ -40,7 +28,7 @@ Any client connecting calling 100ms' service needs to authenticate using an auth
 
 ![Join Room](/guides/token/join-room.png)
 
--   In the popup that shows up click on icon with a key shape next to the role you want to join as.
+-  You can copy the access token from the Join with SDK section.
 
 ![Copy Token](/guides/token/copy-token.png)
 

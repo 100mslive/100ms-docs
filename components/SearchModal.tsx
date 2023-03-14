@@ -6,8 +6,8 @@ import { Flex, Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, connectHits, connectSearchBox } from 'react-instantsearch-dom';
-import { titleCasing } from '@/lib/utils';
 import Tag from './Tag';
+import { titleCasing } from '@/lib/utils';
 
 const searchClient = algoliasearch(
     process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '',
@@ -60,7 +60,10 @@ const Result = ({ searchResult }) => {
                     }}>
                     {searchResult.title}
                 </Text>
-                <Tag text={searchResult.platformName} />
+                <Flex align="center" gap="2">
+                    <Tag text={searchResult.platformName} />
+                    <Tag text={searchResult.type} />
+                </Flex>
             </Flex>
 
             <Text
@@ -86,7 +89,7 @@ const Result = ({ searchResult }) => {
                 variant="sm"
                 css={{
                     fontSize: '13px',
-                    color: '$textMedEmp',
+                    color: '$textMedEmp'
                 }}
                 dangerouslySetInnerHTML={{
                     // eslint-disable-next-line no-underscore-dangle
@@ -348,7 +351,9 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                     backgroundColor: 'var(--gray1)'
                 }}
                 ref={ref}>
-                <InstantSearch searchClient={searchClient} indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
+                <InstantSearch
+                    searchClient={searchClient}
+                    indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
                     <CustomSearchBox setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
                     <CustomHits
                         setModal={setModal}

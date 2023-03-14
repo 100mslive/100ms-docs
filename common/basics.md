@@ -30,29 +30,21 @@ Any application built using 100ms' SDK has 2 components.
 
 ![Signup for 100ms account](/docs/v2/signup.png)
 
-2. Once you're logged in to the dashboard, click on `Create Your First App`
+2. Once you're logged in to the dashboard, click on `Create Room`
 
-![Signup for 100ms account](/docs/v2/create-your-first-app.png)
+![Create Room](/docs/v2/Step-1_CreateRoom.png)
 
-3. **Hover** on one of the Starter Kits. Deploy one of them. (We will use the **Video Conference Starter Kit** for this example)
+3. **Hover and select** on one of the Template Presets.(We will use the **Video Conference Template** for this example)
 
-![Dashboard _ 100ms.png](/docs/v2/select-starter-kit.png)
+![Select Template](/docs/v2/Step2_SelectTemplate.png)
 
-4. Select your account type and fill in the details
+4. You can either choose to configure your template by changing the auto suggested template name and subdomain URL or click on continue to move forward.
 
-![Dashboard _ 100ms.png](/docs/v2/personal-details.png)
+![Configure Template](/docs/v2/Step3_ConfigureTemplate.png)
 
-5. Choose a deployment option. This could be 100ms or Vercel (based on the Starter Kit you are deploying)
+5. Now you can **join your room** configured with the video conferencing template. You can join the room either via a 100ms demo link or by using the auth token in SDK or Sandbox.
 
-![Video Conferencing Starter Kit](/docs/v2/choose-your-deployment.png)
+![Join Room](/docs/v2/Step4_JoinRoom.png)
 
-6. Enter a subdomain of your choice. Please avoid entering https/http/www or dots while entering the subdomain. Select a region closest to you and hit Continue.
-
-![choose subdomain](/docs/v2/choose-subdomain.png)
-
-7. Join or Invite someone to your deployed app with one of the roles:
-
-
-![join or invite](/docs/v2/demo-your-app.png)
 
 ## Where should I start?
