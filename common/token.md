@@ -18,7 +18,7 @@
 
 5. Now you can **join your room** configured with the video conferencing template. You can join the room either via a 100ms demo link or by using the auth token in SDK or Sandbox.
 
-![Join Room](/docs/v2/Step4_JoinRoom)
+![Join Room](/docs/v2/Step4_JoinRoom.png)
 
 ## Get a temporary token from 100ms dashboard
 
@@ -28,7 +28,7 @@ Any client connecting calling 100ms' service needs to authenticate using an auth
 
 ![Join Room](/guides/token/join-room.png)
 
--   In the popup that shows up click on the copy icon in Join with SDK section.
+-  You can copy the access token from the Join with SDK section.
 
 ![Copy Token](/guides/token/copy-token.png)
 
