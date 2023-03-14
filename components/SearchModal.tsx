@@ -8,11 +8,15 @@ import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, connectHits, connectSearchBox } from 'react-instantsearch-dom';
 import Tag from './Tag';
 import { titleCasing } from '@/lib/utils';
+import Chip from './Chip';
+import ChipDropDown from './ChipDropDown';
 
 const searchClient = algoliasearch(
     process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '',
     process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY || ''
 );
+
+const TYPE_FILTERS = ['All Types', 'Guides', 'Concepts', 'API Reference'];
 
 const searchInfoItems = [
     {
@@ -100,80 +104,149 @@ const Result = ({ searchResult }) => {
     );
 };
 
-const ResultBox = ({ hits, setModal, searchTerm, setHitsCount, activeResult }) => {
+const ResultBox = ({
+    hits,
+    setModal,
+    searchTerm,
+    setHitsCount,
+    activeResult,
+    openFilter,
+    setOpenFilter,
+    platformFilter,
+    setPlatformFilter,
+    typeFilter,
+    setTypeFilter
+}) => {
     setHitsCount(hits?.length || 0);
     activeResult.current = -1;
     return (
         <Box>
             {hits?.length && searchTerm ? (
-                <Box
-                    css={{
-                        position: 'relative',
-                        top: '$8',
-                        backgroundColor: '$surfaceDefault',
-                        border: '1px solid',
-                        borderColor: '$borderDefault',
-                        borderRadius: '$1',
-                        pt: '$2',
-                        pr: '$2'
-                    }}>
+                <>
+                    <Flex justify="between" gap="1" css={{ mt: '$6' }}>
+                        <Flex css={{ flexWrap: 'wrap', gap: '$4' }}>
+                            {TYPE_FILTERS.map((type) => (
+                                <Chip
+                                    key={type}
+                                    innerContent={type}
+                                    onClick={() =>
+                                        setTypeFilter(typeFilter === type ? 'All Types' : type)
+                                    }
+                                    isActive={typeFilter === type}
+                                />
+                            ))}
+                        </Flex>
+                        <ChipDropDown
+                            openFilter={openFilter}
+                            setOpenFilter={setOpenFilter}
+                            setPlatformFilter={setPlatformFilter}
+                            platformFilter={platformFilter}
+                        />
+                    </Flex>
                     <Box
                         css={{
-                            maxHeight: '60vh',
-                            overflow: 'auto',
-                            maxWidth: '100%'
+                            position: 'relative',
+                            top: '$6',
+                            backgroundColor: '$surfaceDefault',
+                            border: '1px solid',
+                            borderColor: '$borderDefault',
+                            borderRadius: '$1',
+                            pt: '$2',
+                            pr: '$2'
                         }}>
-                        {hits.map((searchResult, i: number) => (
-                            <>
-                                <Box
-                                    id={`res-box-${i}`}
-                                    key={searchResult.link}
-                                    css={{
-                                        '&:hover': { backgroundColor: '$surfaceLight' },
-                                        maxWidth: '100%',
-                                        py: '$8',
-                                        borderRadius: '$0'
-                                    }}
-                                    onClick={() => {
-                                        window.analytics.track('docs.search.result.clicked', {
-                                            totalNumberOfResults: hits?.length,
-                                            textInSearch: searchTerm || '',
-                                            rankOfSearchResult: i + 1,
-                                            locationOfSearchResult: searchResult.link,
-                                            referrer: document.referrer,
-                                            path: window.location.hostname,
-                                            pathname: window.location.pathname
-                                        });
-                                        setModal(false);
-                                    }}>
-                                    <Link href={searchResult.link} passHref>
-                                        <a style={{ color: 'inherit', textDecoration: 'none' }}>
-                                            <Result searchResult={searchResult} />
-                                        </a>
-                                    </Link>
-                                </Box>
-                                <Box
-                                    css={{ backgroundColor: '$borderDefault', w: '100%', h: '1px' }}
+                        <Flex
+                            gap="4"
+                            justify="between"
+                            css={{
+                                py: '$4',
+                                px: '$md',
+                                borderBottom: '1px solid $borderDefault',
+                                '@md': {
+                                    display: 'none'
+                                }
+                            }}>
+                            {platformFilter !== 'All Platforms' ? (
+                                <Text variant="xs" css={{ color: '$textMedEmp' }}>
+                                    Showing results in {platformFilter}
+                                </Text>
+                            ) : null}
+                            <Flex align="center" gap="1" css={{ color: '$textMedEmp', ml: 'auto' }}>
+                                <Text variant="xs" css={{ color: '$textMedEmp' }}>
+                                    Search in a specific platform{' '}
+                                </Text>
+                                <ArrowRightIcon
+                                    height={12}
+                                    width={12}
+                                    style={{ transform: 'rotate(-90deg)' }}
                                 />
-                            </>
-                        ))}
+                            </Flex>
+                        </Flex>
+                        <Box
+                            css={{
+                                maxHeight: '60vh',
+                                overflow: 'auto',
+                                maxWidth: '100%'
+                            }}>
+                            {hits.map((searchResult, i: number) => (
+                                <>
+                                    <Box
+                                        id={`res-box-${i}`}
+                                        key={searchResult.link}
+                                        css={{
+                                            '&:hover': { backgroundColor: '$surfaceLight' },
+                                            maxWidth: '100%',
+                                            py: '$8',
+                                            borderRadius: '$0'
+                                        }}
+                                        onClick={() => {
+                                            window.analytics.track('docs.search.result.clicked', {
+                                                totalNumberOfResults: hits?.length,
+                                                textInSearch: searchTerm || '',
+                                                rankOfSearchResult: i + 1,
+                                                locationOfSearchResult: searchResult.link,
+                                                referrer: document.referrer,
+                                                path: window.location.hostname,
+                                                pathname: window.location.pathname
+                                            });
+                                            setModal(false);
+                                        }}>
+                                        <Link href={searchResult.link} passHref>
+                                            <a style={{ color: 'inherit', textDecoration: 'none' }}>
+                                                <Result searchResult={searchResult} />
+                                            </a>
+                                        </Link>
+                                    </Box>
+                                    <Box
+                                        css={{
+                                            backgroundColor: '$borderDefault',
+                                            w: '100%',
+                                            h: '1px'
+                                        }}
+                                    />
+                                </>
+                            ))}
+                        </Box>
+
+                        <Flex
+                            gap="4"
+                            css={{
+                                py: '$4',
+                                px: '$md',
+                                boxShadow: '0 -32px 32px -8px var(--docs_search_result_shadow)',
+                                borderTop: '1px solid $borderDefault',
+                                '@md': {
+                                    display: 'none'
+                                }
+                            }}>
+                            {searchInfoItems.map((searchInfoItem) => (
+                                <InfoItem
+                                    title={searchInfoItem.title}
+                                    content={searchInfoItem.content}
+                                />
+                            ))}
+                        </Flex>
                     </Box>
-                    <Flex
-                        gap="4"
-                        css={{
-                            py: '$4',
-                            px: '$md',
-                            boxShadow: '0 -32px 32px -8px var(--docs_search_result_shadow)',
-                            borderTop: '1px solid $borderDefault'
-                        }}>
-                        {searchInfoItems.map((searchInfoItem) => (
-                            <InfoItem
-                                title={searchInfoItem.title}
-                                content={searchInfoItem.content}
-                            />
-                        ))}
-                    </Flex>
-                </Box>
+                </>
             ) : null}
             {hits?.length === 0 && searchTerm ? (
                 <Flex
@@ -269,6 +342,9 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
     const [searchTerm, setSearchTerm] = React.useState('');
     const activeResult = useRef(-1);
     const [hitsCount, setHitsCount] = useState(0);
+    const [typeFilter, setTypeFilter] = useState('All Types');
+    const [platformFilter, setPlatformFilter] = useState('All Platforms');
+    const [openFilter, setOpenFilter] = useState(false);
 
     React.useEffect(() => {
         const handleNavigation = (e) => {
@@ -356,6 +432,12 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                     indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
                     <CustomSearchBox setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
                     <CustomHits
+                        openFilter={openFilter}
+                        setOpenFilter={setOpenFilter}
+                        platformFilter={platformFilter}
+                        setPlatformFilter={setPlatformFilter}
+                        typeFilter={typeFilter}
+                        setTypeFilter={setTypeFilter}
                         setModal={setModal}
                         searchTerm={searchTerm}
                         setHitsCount={setHitsCount}
