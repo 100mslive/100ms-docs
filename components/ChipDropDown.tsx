@@ -4,17 +4,18 @@ import Chip from './Chip';
 import { Listbox } from '@headlessui/react';
 import { menuItem } from './Sidebar';
 
-const updatedMenuItem = [
-    {
-        name: 'All Platforms',
-        icon: <CodeIcon />
-    },
-    ,
-    ...menuItem
-];
 
-const ChipDropDown = ({ openFilter, setOpenFilter, platformFilter, setPlatformFilter }) => (
-    <Box>
+const ChipDropDown = ({ openFilter, setOpenFilter, platformFilter, setPlatformFilter, ALL_PLATFORMS }) => {
+    const updatedMenuItem = [
+        {
+            name: ALL_PLATFORMS,
+            icon: <CodeIcon />
+        },
+        ,
+        ...menuItem
+    ];
+    
+    return <Box>
         <Listbox
             value={platformFilter}
             onChange={(selection) => {
@@ -29,6 +30,7 @@ const ChipDropDown = ({ openFilter, setOpenFilter, platformFilter, setPlatformFi
                             css={{
                                 padding: '$2 $6',
                                 color: '$textHighEmp',
+                                whiteSpace: 'nowrap',
                                 border: openFilter
                                     ? '1px solid $borderAccent'
                                     : '1px solid $borderLighter',
@@ -43,7 +45,7 @@ const ChipDropDown = ({ openFilter, setOpenFilter, platformFilter, setPlatformFi
                                         : '$surfaceLight'
                                 }
                             }}>
-                            {platformFilter || 'All Platforms'}
+                            {platformFilter || ALL_PLATFORMS}
                             <ChevronDownIcon height={16} width={16} style={{ marginLeft: '4px' }} />
                         </Text>
                     }
@@ -84,6 +86,6 @@ const ChipDropDown = ({ openFilter, setOpenFilter, platformFilter, setPlatformFi
             </Listbox.Options>
         </Listbox>
     </Box>
-);
+};
 
 export default ChipDropDown;

@@ -5,18 +5,21 @@ import { SearchIcon, ArrowRightIcon } from '@100mslive/react-icons';
 import { Flex, Box, Text } from '@100mslive/react-ui';
 import useClickOutside from '@/lib/useClickOutside';
 import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch, connectHits, connectSearchBox } from 'react-instantsearch-dom';
+import { InstantSearch, connectHits, connectSearchBox, Configure } from 'react-instantsearch-dom';
 import Tag from './Tag';
-import { titleCasing } from '@/lib/utils';
 import Chip from './Chip';
 import ChipDropDown from './ChipDropDown';
+import { titleCasing } from '@/lib/utils';
 
 const searchClient = algoliasearch(
     process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || '',
     process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY || ''
 );
 
-const TYPE_FILTERS = ['All Types', 'Guides', 'Concepts', 'API Reference'];
+const ALL_PLATFORMS = 'All Platforms';
+const ALL_TYPES = 'All Types';
+
+const TYPE_FILTERS = ['All Types', 'Guides', 'Concepts', 'FAQs', 'API Reference '];
 
 const searchInfoItems = [
     {
@@ -153,7 +156,7 @@ const ResultBox = ({
                                     display: 'none'
                                 }
                             }}>
-                            {platformFilter !== 'All Platforms' ? (
+                            {platformFilter !== ALL_PLATFORMS ? (
                                 <Text variant="xs" css={{ color: '$textMedEmp' }}>
                                     Showing results in {platformFilter}
                                 </Text>
@@ -252,7 +255,7 @@ const ResultBox = ({
                         direction="column"
                         css={{
                             position: 'relative',
-                            top: '$8',
+                            top: '$6',
                             py: '$12',
                             backgroundColor: '$surfaceDefault',
                             border: '1px solid',
@@ -341,8 +344,8 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
     const [searchTerm, setSearchTerm] = React.useState('');
     const activeResult = useRef(-1);
     const [hitsCount, setHitsCount] = useState(0);
-    const [typeFilter, setTypeFilter] = useState('All Types');
-    const [platformFilter, setPlatformFilter] = useState('All Platforms');
+    const [typeFilter, setTypeFilter] = useState(ALL_TYPES);
+    const [platformFilter, setPlatformFilter] = useState(ALL_PLATFORMS);
     const [openFilter, setOpenFilter] = useState(false);
 
     React.useEffect(() => {
@@ -429,6 +432,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                 <InstantSearch
                     searchClient={searchClient}
                     indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX || 'test'}>
+                    <Configure filters={`${platformFilter === ALL_PLATFORMS}`} />
                     <CustomSearchBox setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
                     <CustomHits
                         openFilter={openFilter}
@@ -482,13 +486,15 @@ const FilterBar = ({
     setPlatformFilter,
     platformFilter
 }) => (
-    <Flex justify="between" gap="1" css={{ mt: '$6' }}>
-        <Flex css={{ flexWrap: 'wrap', gap: '$4' }}>
+    <Flex
+        gap="2"
+        css={{ mt: '$6', justifyContent: 'between', '@md': { justifyContent: 'flex-end' } }}>
+        <Flex css={{ flexWrap: 'wrap', gap: '$4', '@md': { display: 'none' } }}>
             {TYPE_FILTERS.map((type) => (
                 <Chip
                     key={type}
                     innerContent={type}
-                    onClick={() => setTypeFilter(typeFilter === type ? 'All Types' : type)}
+                    onClick={() => setTypeFilter(typeFilter === type ? ALL_TYPES : type)}
                     isActive={typeFilter === type}
                 />
             ))}
@@ -498,6 +504,7 @@ const FilterBar = ({
             setOpenFilter={setOpenFilter}
             setPlatformFilter={setPlatformFilter}
             platformFilter={platformFilter}
+            ALL_PLATFORMS={ALL_PLATFORMS}
         />
     </Flex>
 );
