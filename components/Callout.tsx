@@ -24,7 +24,7 @@ const Callout = ({ title, icon, children }) => {
             css={{
                 borderRadius: '$3',
                 border: '1px solid',
-                borderColor: '$borderDefault',
+                borderColor: '$surfaceLight',
                 width: '100%',
                 overflow: 'clip',
                 background: MAIN_GRADIENT,
