@@ -149,18 +149,20 @@ const ResultBox = ({
                             gap="4"
                             justify="between"
                             css={{
-                                py: '$4',
+                                py: '$3',
                                 px: '$md',
-                                borderBottom: '1px solid $borderDefault',
+                                borderBottom: '1px solid $surfaceLight',
                                 '@md': {
                                     display: 'none'
                                 }
                             }}>
-                            {platformFilter !== ALL_PLATFORMS ? (
-                                <Text variant="xs" css={{ color: '$textMedEmp' }}>
-                                    Showing results in {platformFilter}
-                                </Text>
-                            ) : null}
+                            <Text variant="xs" css={{ color: '$textMedEmp' }}>
+                                Showing results for{' '}
+                                {platformFilter !== ALL_PLATFORMS
+                                    ? platformFilter
+                                    : 'all platforms'}
+                            </Text>
+
                             <Flex align="center" gap="1" css={{ color: '$textMedEmp', ml: 'auto' }}>
                                 <Text variant="xs" css={{ color: '$textMedEmp' }}>
                                     Search in a specific platform{' '}
@@ -209,7 +211,7 @@ const ResultBox = ({
                                     </Box>
                                     <Box
                                         css={{
-                                            backgroundColor: '$borderDefault',
+                                            backgroundColor: '$surfaceLight',
                                             w: '100%',
                                             h: '1px'
                                         }}
@@ -224,7 +226,7 @@ const ResultBox = ({
                                 py: '$4',
                                 px: '$md',
                                 boxShadow: '0 -32px 32px -8px var(--docs_search_result_shadow)',
-                                borderTop: '1px solid $borderDefault',
+                                borderTop: '1px solid $surfaceLight',
                                 '@md': {
                                     display: 'none'
                                 }
@@ -494,7 +496,10 @@ const FilterBar = ({
                 <Chip
                     key={type}
                     innerContent={type}
-                    onClick={() => setTypeFilter(typeFilter === type ? ALL_TYPES : type)}
+                    onClick={() => {
+                        if (typeFilter === type) setTypeFilter(ALL_TYPES);
+                        else setTypeFilter(type);
+                    }}
                     isActive={typeFilter === type}
                 />
             ))}
@@ -510,9 +515,7 @@ const FilterBar = ({
 );
 
 const getFilterQuery = (platformFilter, typeFilter) => {
-    if (platformFilter === ALL_PLATFORMS && typeFilter === ALL_TYPES) return '';
-    if (platformFilter === ALL_PLATFORMS) return `type:${typeFilter}`;
-    if (typeFilter === ALL_TYPES) return `platformName:${platformFilter}`;
-
-    return `platformName:${platformFilter} AND type:${typeFilter}`;
+    return `${platformFilter === ALL_PLATFORMS ? 'NOT ' : ''}platformName:"${platformFilter}" AND ${
+        typeFilter === ALL_TYPES ? 'NOT ' : ''
+    }type:"${typeFilter}"`;
 };
