@@ -15,7 +15,7 @@ const Callout = ({ title, icon, children }) => {
     }, []);
     const MAIN_GRADIENT =
         currentTheme === 'dark'
-            ? 'linear-gradient(102deg, $surfaceDark 28%, $surfaceDefault 65%)'
+            ? 'linear-gradient(102deg, $surfaceDefault 28%, $surfaceDark 65%)'
             : 'linear-gradient(235deg, $surfaceDefault 50%, $surfaceLighter 90%)';
     return (
         <Flex
@@ -24,7 +24,7 @@ const Callout = ({ title, icon, children }) => {
             css={{
                 borderRadius: '$3',
                 border: '1px solid',
-                borderColor: '$surfaceLight',
+                borderColor: '$surfaceLighter',
                 width: '100%',
                 overflow: 'clip',
                 background: MAIN_GRADIENT,
