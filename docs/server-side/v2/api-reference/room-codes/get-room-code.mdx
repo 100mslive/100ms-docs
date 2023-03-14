@@ -3,13 +3,13 @@ title: Retrieve Room Codes
 nav: 4.14
 ---
 
-Retrieves room codes for all roles in a Room. You can also retrive room codes for a specific role or only enabled room codes using these arguments in the endpoint. 
+Retrieves Room Codes for all Roles in a Room. You can choose to retrive Room Codes for a specific Role and/or only enabled Room Codes using these as arguments in the endpoint. 
 
-<GetRequest title="https://api.100ms.live/v2/room-codes/room/<room_id>" />
+<GetRequest title="https://api.100ms.live/v2/room-codes/room/<room_id>/" />
 <Request id="req-comp-0">
 
 ```bash
-curl --location --request GET 'https://api.100ms.live/v2/rooms' \
+curl --location --request GET 'https://api.100ms.live/v2/room-codes/room/<room_id>/' \
 --header 'Authorization: Bearer <management_token>' 
 ```
 </Request>
@@ -20,20 +20,20 @@ curl --location --request GET 'https://api.100ms.live/v2/rooms' \
     	limit: 20,
     	data: [
     		{
-    			code: "hkj-sdf-fda",
-    			room_id: "new-room-1662723668",
-    			role: "host",
-    			enabled: true,
-    			created_at: <timestamp>,
-    			updated_at: <timestamp>,
+    			"code": "hkj-sdf-fda",
+    			"room_id": "329d23d4f772854d9bf633df",
+    			"role": "host",
+    			"enabled": true,
+    			"created_at": 2023-03-03T11:41:08.082Z,
+    			"updated_at": 2023-03-03T11:41:08.082Z,
     		},
     		{
-    			code: "wiw-giw-bzs",
-    			room_id: "new-room-1662723668",
-    			role: "guest",
-    			enabled: true,
-    			created_at: <timestamp>,
-    			updated_at: <timestamp>,
+    			"code": "wiw-giw-bzs",
+    			"room_id": "329d23d4f772854d9bf633df",
+    			"role": "guest",
+    			"enabled": false,
+    			"created_at": 2023-03-03T11:41:08.082Z,
+    			"updated_at": 2023-03-03T11:41:08.082Z,
     		}
     	],
     	last: ""
@@ -41,12 +41,12 @@ curl --location --request GET 'https://api.100ms.live/v2/rooms' \
     ```
 </ResponseBox>    
  
-### Arguments 
+### Allowed Filters  
 
 | Field   | Type     | Description                                                           | Required |
 | :----- | :------- | :----------------------------------------------------------------------- | :------- |
-| role | `string` | When specified, it retrieves all room codes for the specified role in the room. | No       |
-| enabled | `boolean` | Specify enabled : true or false to retrieve relevant room codes | No       |
+| role | `string` | When specified, it retrieves all Room Codes for the specified Role in the room. | No       |
+| enabled | `boolean` | Specify enabled as true or false to retrieve enabled or disabled Room Codes | No       |
 | limit | `int` |  | No       |
 | start | `string` |  | No       |
 
