@@ -3,7 +3,7 @@ title: Overview
 nav: 4.1
 ---
 
-Room codes are unique encrypted short codes that carry information such as room_id, role and room code state. A Room Code is always associated to specific to a role and room_id combination.
+Room codes are unique encrypted short codes that carry information such as room_id and role. A Room Code is always associated to specific to a role and room_id combination.
 
 
 ## Why use Room Codes?
@@ -30,7 +30,7 @@ Power role specific room code authentication required to join a Room when using 
 
 
 1. Prebuilt has built-in support for Room Code based authentication
-2. **Use Room Codes to join a room using SDKs →**
+2. Use Room Codes to join a room using SDKs
 </Note>
 
 Essentially, Room Codes allow you to create unique room links and room code authentication mechanism for every role in your room. For instance, consider three roles created in a Template with their unique room codes.
@@ -48,7 +48,7 @@ Room Links for each role
 
 ## Room Codes Basics
 
-- Room codes are 9 digit short codes and follow a standard format - `***-***-***`
+- Room codes are 10 digit short codes and follow a standard format - `***-****-***`
 - Room codes require a Template, a Room and at least one role to be created.
 
 
@@ -63,11 +63,6 @@ Room Codes are a binary state entities represented by **enabled: true | false**.
 You can get the state of a room code `enable:true|false` using **[Get Room Code API](/server-side/v2/api-reference/room-codes/get-room-code-state).** Always make sure that this flag is enabled before creating room links or performing a peer join using room code authentication.
 
 You can manage the state of a room code for a role and make it enabled/disabled using **[Update Room Code API](/server-side/v2/api-reference/room-codes/update-room-code-state)**
-    
-    
- <Note type='warning'>
- If you disable a Room Code for a given role, the room code becomes disabled for all peers associated to the role.
- </Note>
     
 **Room Codes do not expire**
 
