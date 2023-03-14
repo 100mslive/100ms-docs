@@ -123,26 +123,14 @@ const ResultBox = ({
         <Box>
             {hits?.length && searchTerm ? (
                 <>
-                    <Flex justify="between" gap="1" css={{ mt: '$6' }}>
-                        <Flex css={{ flexWrap: 'wrap', gap: '$4' }}>
-                            {TYPE_FILTERS.map((type) => (
-                                <Chip
-                                    key={type}
-                                    innerContent={type}
-                                    onClick={() =>
-                                        setTypeFilter(typeFilter === type ? 'All Types' : type)
-                                    }
-                                    isActive={typeFilter === type}
-                                />
-                            ))}
-                        </Flex>
-                        <ChipDropDown
-                            openFilter={openFilter}
-                            setOpenFilter={setOpenFilter}
-                            setPlatformFilter={setPlatformFilter}
-                            platformFilter={platformFilter}
-                        />
-                    </Flex>
+                    <FilterBar
+                        typeFilter={typeFilter}
+                        setTypeFilter={setTypeFilter}
+                        openFilter={openFilter}
+                        setOpenFilter={setOpenFilter}
+                        setPlatformFilter={setPlatformFilter}
+                        platformFilter={platformFilter}
+                    />
                     <Box
                         css={{
                             position: 'relative',
@@ -249,42 +237,53 @@ const ResultBox = ({
                 </>
             ) : null}
             {hits?.length === 0 && searchTerm ? (
-                <Flex
-                    justify="center"
-                    align="center"
-                    direction="column"
-                    css={{
-                        position: 'relative',
-                        top: '$8',
-                        py: '$12',
-                        backgroundColor: '$surfaceDefault',
-                        border: '1px solid',
-                        borderColor: '$borderDefault',
-                        borderRadius: '$1',
-                        px: '$4'
-                    }}>
-                    <Image alt="No results" src="/docs/frown.svg" height={48} width={48} />
-                    <Text
+                <>
+                    <FilterBar
+                        typeFilter={typeFilter}
+                        setTypeFilter={setTypeFilter}
+                        openFilter={openFilter}
+                        setOpenFilter={setOpenFilter}
+                        setPlatformFilter={setPlatformFilter}
+                        platformFilter={platformFilter}
+                    />
+                    <Flex
+                        justify="center"
+                        align="center"
+                        direction="column"
                         css={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            color: '$textDisabled',
-                            fontWeight: '$medium',
-                            mt: '$8'
+                            position: 'relative',
+                            top: '$8',
+                            py: '$12',
+                            backgroundColor: '$surfaceDefault',
+                            border: '1px solid',
+                            borderColor: '$borderDefault',
+                            borderRadius: '$1',
+                            px: '$4'
                         }}>
-                        <span>Couldn't find anything for</span>
+                        <Image alt="No results" src="/docs/frown.svg" height={48} width={48} />
                         <Text
                             css={{
-                                fontWeight: 'bold',
-                                color: '$textHighEmp',
-                                wordWrap: 'break-word'
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: '$textDisabled',
+                                fontWeight: '$medium',
+                                mt: '$8'
                             }}>
-                            &nbsp;"{searchTerm.slice(0, 25)} {searchTerm.length > 25 ? '...' : ''}"
+                            <span>Couldn't find anything for</span>
+                            <Text
+                                css={{
+                                    fontWeight: 'bold',
+                                    color: '$textHighEmp',
+                                    wordWrap: 'break-word'
+                                }}>
+                                &nbsp;"{searchTerm.slice(0, 25)}{' '}
+                                {searchTerm.length > 25 ? '...' : ''}"
+                            </Text>
                         </Text>
-                    </Text>
-                </Flex>
+                    </Flex>
+                </>
             ) : null}
         </Box>
     );
@@ -429,7 +428,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                 ref={ref}>
                 <InstantSearch
                     searchClient={searchClient}
-                    indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}>
+                    indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX || 'test'}>
                     <CustomSearchBox setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
                     <CustomHits
                         openFilter={openFilter}
@@ -472,5 +471,33 @@ const InfoItem = ({ title, content }) => (
         <Text variant="xs" css={{ color: '$textMedEmp' }}>
             {title}
         </Text>
+    </Flex>
+);
+
+const FilterBar = ({
+    setTypeFilter,
+    typeFilter,
+    openFilter,
+    setOpenFilter,
+    setPlatformFilter,
+    platformFilter
+}) => (
+    <Flex justify="between" gap="1" css={{ mt: '$6' }}>
+        <Flex css={{ flexWrap: 'wrap', gap: '$4' }}>
+            {TYPE_FILTERS.map((type) => (
+                <Chip
+                    key={type}
+                    innerContent={type}
+                    onClick={() => setTypeFilter(typeFilter === type ? 'All Types' : type)}
+                    isActive={typeFilter === type}
+                />
+            ))}
+        </Flex>
+        <ChipDropDown
+            openFilter={openFilter}
+            setOpenFilter={setOpenFilter}
+            setPlatformFilter={setPlatformFilter}
+            platformFilter={platformFilter}
+        />
     </Flex>
 );
