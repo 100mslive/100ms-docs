@@ -90,6 +90,7 @@ const fireCues = (currentAbsTime, tolerance) => {
           duration: duration,
         };
         console.debug("Added toast ", JSON.stringify(toast));
+        cue.queued = false;
       }, timeDiff);
       cue.queued = true;
     }
