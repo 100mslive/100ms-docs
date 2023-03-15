@@ -1,0 +1,99 @@
+---
+title: Prebuilt Room Links
+nav: 1.9
+---
+Embed or share room links without building UI
+
+Getting started with 100ms Prebuilt Room Links is the fastest way to test and go live with 100ms. 
+
+**Test a Prebuilt Room Link →**
+
+You can generate Prebuilt Room Links with a standard format : `https://<template-subdomain>/meeting/<room-code>`, where
+
+    1. `template-subdomain` - is the subdomain that you’ve defined at the time of Template creation. 
+    2. `room-code` - is a Room Code and belongs to a unique `room_id` and `role` for which you're creating the Room Link. Read more on [Room Codes](/concepts/v2/concepts/Rooms/Room-Codes/room-codes) and its usage.
+
+### Pre-requisites
+
+1. Create your account on [100ms Dashboard](https://dashboard.100ms.live/login)
+2. Create a Room Template to define your Room configuration
+    1. via 100ms dashboard : Go to Templates and set up your first Room Template, here you can configure Roles and their permissions. 
+    2. via Create Template API : Review the [Template object](https://www.100ms.live/docs/server-side/v2/api-reference/policy/template-object) and create a Template with [Create Template API](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-api)
+3. Rooms on 100ms : A Room gets created by default associated with the Template you’ve created. Alternatively, go ahead and create a Room programatically.
+    1. Rooms are created on 100ms server and requires your unique [Management Token](https://www.100ms.live/docs/concepts/v2/concepts/security-and-tokens#management-token-for-rest-api) to authenticate all Create Room requests.
+    2. Review [Rooms object](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/object) and create a Room with [Create a Room API](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/create-via-api)
+4. Once you have your first Room ready, you can now go ahead and create and create Prebuilt Room Links.
+
+##### Create Prebuilt Room Links
+
+#### 1. On 100ms Dashboard [No Code]
+
+1. Go to Rooms page on [100ms dashboard](https://dashboard.100ms.live/dashboard) and select a Room to go to Rooms details page.
+2. On clicking “Join Room”, you can either copy or Join the Prebuilt Link.
+
+#### 2. Construct Prebuilt Link
+
+1. You need a `template-subdomain` and `code` to construct Prebuilt Room Links with format : `https://<template-subdomain>/meeting/<room-code>`
+
+    - Template Subdomain - You can get the template subdomain under Templates > Your Template on [100ms Dashboard](https://dashboard.100ms.live/dashboard).
+    - Room Code
+    
+    Recommended : Review Room Codes and its usage before implementing this.
+    
+2. Create Room Link structure : Append template-subdomain and Room code to the room link format.
+
+Here is an example pseudo code snippet involving creating a room and then creating room links for that room.
+    
+    ```python
+    # template info
+    template_id = "639cb27a0c77c9782cc50e7b"
+    template_subdomain = "piyush.app.100ms.live"
+    
+    # create room 
+    room_response = create_room(template_id)
+    
+    # create room code for the above created room
+    room_codes = create_room_codes(room_response["id"])
+    
+    # create create room links by appending room_code to template_subdomain
+    # room_link = https://<template-subdomain>/meeting/<room-code>
+    room_links = {}
+    for data in room_codes:
+    	room_links[data["role"]] = "https://"+template_subdomain+"/meeting/"+data["code"]
+    
+    print(room_links)
+    ```
+
+
+
+### Embed or Share Room Links
+
+Embed room links as iFrame on web, mobile-web
+
+If you want a quick integration of a fully featured video conferencing/live streaming app inside your application within a day, iframe is the way to go.
+
+iframe integration benefits:
+
+- You can have a fully-featured video conferencing/live streaming UI added to your web app with minimal development
+- You can customize to a greatest extent as per your requirements
+- You can use this in the framework you're already using in your app
+- Using an iframe you can embed the whole sample web app inside your UI wherever you want
+
+**Implementation**
+
+Embed the Prebuilt Room Link as an iframe in your application
+
+```jsx
+<iframe
+    title="100ms-app"
+    allow="camera *;microphone *;display-capture *"
+    src="<https://<template-subdomain>/meeting/<room-code>>"
+    style="height: 900px; width: 900px;">
+</iframe>
+```
+
+
+
+#### Send shareable links to your users
+
+You can share Room links with you users on the fly as Push notification, SMS, Email etc.
