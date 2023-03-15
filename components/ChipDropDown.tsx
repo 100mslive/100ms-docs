@@ -36,6 +36,7 @@ const ChipDropDown = ({
                 onChange={(selection) => {
                     setPlatformFilter(selection.name);
                     setOpenFilter(false);
+                    buttonRef?.current.blur();
                 }}>
                 <Listbox.Button ref={buttonRef} className="filter-dropdown">
                     <Chip
