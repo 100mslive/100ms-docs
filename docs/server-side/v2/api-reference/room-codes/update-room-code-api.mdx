@@ -5,14 +5,13 @@ nav: 4.15
 
 Updates the current state for a given Room Code.
 
-<PostRequest title="https://api.100ms.live/roomcode/v2/code" />
+<PostRequest title="https://api.100ms.live/v2/room-codes/code/<code>" />
 <Request id="req-comp-0">
 ```bash
-curl --location --request POST 'https://api.100ms.live/roomcode/v2/code' \
+curl --location --request POST 'https://api.100ms.live/v2/room-codes/code/<code>' \
 --header 'Authorization: Bearer <management_token>' \
 --header 'Content-Type: application/json' \
 --data '{
-    "code": "eiu-qwq-sdf",
     "enabled": false
 }'
 ```
