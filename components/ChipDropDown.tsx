@@ -38,7 +38,10 @@ const ChipDropDown = ({
                     setOpenFilter(false);
                     buttonRef?.current.blur();
                 }}>
-                <Listbox.Button ref={buttonRef} className="filter-dropdown">
+                <Listbox.Button
+                    onFocusCapture={() => buttonRef?.current.blur()}
+                    ref={buttonRef}
+                    className="filter-dropdown">
                     <Chip
                         innerContent={
                             <Text

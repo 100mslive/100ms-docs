@@ -14,14 +14,6 @@ when attach is false, even if tile is inView or enabled, it won't be rendered
 
 ___
 
-### threshold
-
-• `Optional` **threshold**: `number`
-
-Number between 0 and 1 indication when the element is considered inView
-
-___
-
 ### trackId
 
 • `Optional` **trackId**: `string`
