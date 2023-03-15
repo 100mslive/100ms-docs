@@ -13,11 +13,10 @@ HLS Timed Metadata feature helps you synchronise certain events with the HLS str
 ## Sending HLS Timed Metadata
 
 To add HLS timed metadata cue to the currently running HLS stream use `sendHLSTimedMetadata` API like this:
-Currently there is a limit to send at max 3 metadata at time. 
 
 ```javascript
 export interface HLSTimedMetadata {
-	payload: string; // limited to 100 chars, no " (double quotes) allowed
+	payload: string; // limited to 100 chars
 	duration: number;
 }
 
@@ -27,7 +26,7 @@ sendHLSTimedMetadata(metadatalist: HLSTimedMetadata[]): Promise<void>;
 ## Receiving HLS Timed Metadata
 ### Receiving Payload structure
 
-The payload is sent in the EXT-X-DATERANGE tag as value for the custom attribure X-100MSLIVE-PAYLOAD. It is base64 encoded string of
+The HLS timed metadata payload send is base64 encoded string. It can be decoded to as shown below.
 
 ```json
 {
@@ -37,81 +36,111 @@ The payload is sent in the EXT-X-DATERANGE tag as value for the custom attribure
     "hms_version": "v1.1"
 }
 ```
-start_date and end_date will be in UTC format.
+start_date and end_date will be in UTC timezone.
 
 ### App side implementation
 
+> Note: We're working on making this simpler - if you'd like to try out the feature in beta, please reach out to us on Discord or at hello@100ms.live
+
+Below is an app side sample integration using hls.js.
+
 ```javascript
-const handleTimeUpdateListener = _ => {
-  const textTrackListCount = videoEl.textTracks.length;
-  let metaTextTrack;
+import Hls, { Fragment, LevelParsed } from 'hls.js';
+
+const videoEl; // reference for video element
+const hlsUrl; // reference to hls url
+
+// Extract textTrack
+const extractMetaTextTrack = (): TextTrack | null => {
+  const textTrackListCount = videoEl?.textTracks.length || 0;
   for (let trackIndex = 0; trackIndex < textTrackListCount; trackIndex++) {
-    const textTrack = videoEl.textTracks[trackIndex];
-    if (textTrack.kind !== "metadata") {
+    const textTrack = videoEl?.textTracks[trackIndex];
+    if (textTrack?.kind !== 'metadata') {
       continue;
     }
-    textTrack.mode = "showing";
-    metaTextTrack = textTrack;
-    break;
+    textTrack.mode = 'showing';
+    return textTrack;
   }
-  if (!metaTextTrack) {
-    return;
+  return null;
+};
+
+// sync time with cue and trigger event
+const fireCues = (currentAbsTime, tolerance) => {
+  const cues = extractMetaTextTrack()?.cues
+  if (!cues) {
+    return
   }
-  const cuesLength = metaTextTrack.cues.length;
+  const cuesLength = cues.length;
   let cueIndex = 0;
   while (cueIndex < cuesLength) {
-    const cue = metaTextTrack.cues[cueIndex];
-    if (cue.fired) {
-      cueIndex++;
-      continue;
+    const cue: TextTrackCue = cues[cueIndex];
+    if (cue.queued) {
+      return
     }
-    const data = metadataPayloadParser(cue.value.data);
-    const programData = videoEl.getStartDate();
+    // here we are converting base64 to actual data.
+    const data: Record<string, any> = metadataPayloadParser(cue.value.data);
     const startDate = data.start_date;
     const endDate = data.end_date;
-    const startTime =
-      new Date(startDate) -
-      new Date(programData) -
-      videoEl.currentTime * 1000;
-    const duration = new Date(endDate) - new Date(startDate);
-    setTimeout(() => {
-      const toast = {
-        title: `Payload from timed Metadata ${data.payload}`,
-        duration: duration,
-      };
-      console.debug("Added toast ", JSON.stringify(toast));
-      ToastManager.addToast(toast);
-    }, startTime);
-    cue.fired = true;
+    const timeDiff = new Date(startDate).getTime() - currentAbsTime;
+    const duration = new Date(endDate).getTime() - new Date(startDate).getTime();
+    if (timeDiff <= tolerance) {
+      setTimeout(() => {
+        const toast = {
+          title: `Payload from timed Metadata ${data.payload}`,
+          duration: duration,
+        };
+        console.debug("Added toast ", JSON.stringify(toast));
+        cue.queued = false;
+      }, timeDiff);
+      cue.queued = true;
+    }
     cueIndex++;
   }
 };
+
+// handle time update listener
+const handleTimeUpdateListener = () => {
+  // extract timed metadata text track
+  const metaTextTrack: TextTrack | null = extractMetaTextTrack();
+  if (!metaTextTrack || !metaTextTrack.cues) {
+    return;
+  }
+  const firstFragProgramDateTime = videoEl?.getStartDate();
+  const currentAbsTime = new Date(firstFragProgramDateTime).getTime() + (videoEl?.currentTime || 0) * 1000
+  // fire cue for timed meta data extract
+  fireCues(currentAbsTime, 0.25);
+};
+
+/**
+  * Metadata are automatically parsed and added to the video element's
+  * textTrack cue by hlsjs as they come through the stream.
+  * in FRAG_CHANGED, we read the cues and emit HLS_METADATA_LOADED
+  * when the current fragment has a metadata to play.
+  */
+const fragChangeHandler = (_: any, { frag }: { frag: Fragment }) => {
+  try {
+    if (videoEl.textTracks.length === 0) {
+      return;
+    }
+    const fragStartTime = frag.programDateTime || 0;
+    const fragmentDuration = frag.end - frag.start;
+    fireCues(fragStartTime, fragmentDuration);
+  } catch (e) {
+    console.error('FRAG_CHANGED event error', e);
+  }
+};
+
+/**
+* initialize HLSController and add event listeners.
+*/
 if (Hls.isSupported()) {
-  /**
-   * initialize HLSController and add event listeners.
-   */
-  hlsController = new HLSController(hlsUrl, videoRef);
-  hlsStats = new HlsStats(hlsController.getHlsJsInstance(), videoEl);
-
-  hlsController.on(HLS_STREAM_NO_LONGER_LIVE, handleNoLongerLive);
-  hlsController.on(HLS_TIMED_METADATA_LOADED, metadataLoadedHandler);
-
-  hlsController.on(Hls.Events.MANIFEST_LOADED, manifestLoadedHandler);
-  hlsController.on(Hls.Events.LEVEL_UPDATED, levelUpdatedHandler);
-  hlsController.on(Hls.Events.ERROR, handleHLSError);
+  const hls = new Hls();
+  hls.loadSource(hlsUrl);
+  hls.attachMedia(videoEl);
+  hls.on(Hls.Events.FRAG_CHANGED, fragChangeHandler);
 } else if (videoEl.canPlayType("application/vnd.apple.mpegurl")) {
-    // Work where hls.js is not supported
-    videoEl.src = hlsUrl;
-    videoEl.addEventListener("timeupdate", handleTimeUpdateListener);
-    setIsMSENotSupported(true);
+  // when hls.js is not supported and native player supports HLS playback
+  videoEl.src = hlsUrl;
+  videoEl.addEventListener("timeupdate", handleTimeUpdateListener);
 }
-
 ```
-
->Note : Above implementation might change in future.
-
-## Limitations
-
-- It’s hard to sync metadata with stream exactly due to the latency from FFmpeg creating the stream. To address this, we’ve added 2 seconds delay of the actual `START-DATE` attribute.
-- The API now allows sending only three metadata objects at once with each having a `payload` string of max length of 100. These can further be tuned based on experimentation.
-- The payload cannot have `"`(double quotes). So json won’t be supported. This is a limitation from HLS spec.
