@@ -157,11 +157,11 @@ const ResultBox = ({
                                 }
                             }}>
                             <Text variant="xs" css={{ color: '$textMedEmp' }}>
-                                Showing results for
+                                Showing results for&nbsp;
                                 {platformFilter !== ALL_PLATFORMS
                                     ? platformFilter
-                                    : ' all platforms '}
-                                {typeFilter !== ALL_TYPES ? `under "${typeFilter}s"` : ''}
+                                    : 'all platforms'}
+                                {typeFilter !== ALL_TYPES ? ` under "${typeFilter}s"` : ''}
                             </Text>
                         </Flex>
                         <Box
