@@ -74,7 +74,7 @@ const ChipDropDown = ({
                         }
                         isActive={openFilter}
                         onClick={() => {
-                            setOpenFilter((prev) => !prev);
+                            setOpenFilter((prev: boolean) => !prev);
                         }}
                     />
                 </Listbox.Button>
