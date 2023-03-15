@@ -186,7 +186,9 @@ const ResultBox = ({
                                         id={`res-box-${i}`}
                                         key={searchResult.link}
                                         css={{
-                                            '&:hover': { backgroundColor: '$surfaceLight' },
+                                            '&:hover': {
+                                                backgroundColor: '$surfaceLight !important'
+                                            },
                                             maxWidth: '100%',
                                             py: '$8',
                                             borderRadius: '$0'
