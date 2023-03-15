@@ -375,7 +375,7 @@ export const menuItem = [
     },
     {
         link: '/react-native/v2/guides/quickstart',
-        name: 'React-Native',
+        name: 'React Native',
         icon: <ReactIcon style={iconStyle} />,
         apiRef: '/api-reference/react-native/v2/modules.html'
     },
@@ -387,7 +387,7 @@ export const menuItem = [
     },
     {
         link: '/server-side/v2/how--to-guides/make-api-calls',
-        name: 'Server-Side',
+        name: 'Server-side',
         icon: <ServerIcon />,
         apiRef: '/server-side/v2/api-reference/Rooms/overview'
     }
