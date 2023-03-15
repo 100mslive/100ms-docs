@@ -157,22 +157,12 @@ const ResultBox = ({
                                 }
                             }}>
                             <Text variant="xs" css={{ color: '$textMedEmp' }}>
-                                Showing results for{' '}
+                                Showing results for
                                 {platformFilter !== ALL_PLATFORMS
                                     ? platformFilter
-                                    : 'all platforms'}
+                                    : ' all platforms '}
+                                {typeFilter !== ALL_TYPES ? `under "${typeFilter}s"` : ''}
                             </Text>
-
-                            <Flex align="center" gap="1" css={{ color: '$textMedEmp', ml: 'auto' }}>
-                                <Text variant="xs" css={{ color: '$textMedEmp' }}>
-                                    Search in a specific platform{' '}
-                                </Text>
-                                <ArrowRightIcon
-                                    height={12}
-                                    width={12}
-                                    style={{ transform: 'rotate(-90deg)' }}
-                                />
-                            </Flex>
                         </Flex>
                         <Box
                             css={{
