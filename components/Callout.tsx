@@ -33,7 +33,7 @@ const Callout = ({ title, icon, children }) => {
             <Box css={{ m: '$10' }}>
                 <Flex align="center" css={{ color: '$textHighEmp', gap: '$2', mb: '$2' }}>
                     {getIcon(icon)}
-                    <Text variant="h6" css={{ color: '$textHighEmp' }}>
+                    <Text css={{ color: '$textHighEmp', fontWeight: "$semiBold" }}>
                         {title}
                     </Text>
                 </Flex>
