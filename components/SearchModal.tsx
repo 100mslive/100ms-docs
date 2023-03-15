@@ -359,8 +359,8 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
             }
 
             if (e.code === 'ArrowUp') {
+                e.preventDefault();
                 if (activeResult.current === 0) {
-                    activeResult.current = hitsCount - 1;
                     const top = document.getElementById(`res-box-0`);
                     if (top) top.style.backgroundColor = 'var(--surface_default)';
                 } else activeResult.current -= 1;
@@ -374,8 +374,8 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
                 const prev = document.getElementById(`res-box-${activeResult.current + 1}`);
                 if (prev) prev.style.backgroundColor = 'var(--surface_default)';
             } else if (e.code === 'ArrowDown') {
+                e.preventDefault();
                 if (activeResult.current >= hitsCount - 1) {
-                    activeResult.current = 0;
                     const last = document.getElementById(`res-box-${hitsCount - 1}`);
                     if (last) last.style.backgroundColor = 'var(--surface_default)';
                 } else activeResult.current += 1;
@@ -488,9 +488,7 @@ const FilterBar = ({
     setPlatformFilter,
     platformFilter
 }) => (
-    <Flex
-        gap="2"
-        css={{ mt: '$6', justifyContent: 'between', '@md': { justifyContent: 'flex-end' } }}>
+    <Flex justify="between" gap="2" css={{ mt: '$6', '@md': { justifyContent: 'flex-end' } }}>
         <Flex css={{ flexWrap: 'wrap', gap: '$4', '@md': { display: 'none' } }}>
             {TYPE_FILTERS.map((type) => (
                 <Chip
