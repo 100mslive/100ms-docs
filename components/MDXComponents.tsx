@@ -8,7 +8,6 @@ import BaseRequest from './BaseRequest';
 import Code from './Code';
 import Codesandbox from './Codesandbox';
 import DeleteRequest from './DeleteRequest';
-import DownloadCollection from './DownloadCollection';
 import EndpointRequest from './EndpointRequest';
 import GetRequest from './GetRequest';
 import Note from './Note';
@@ -86,7 +85,6 @@ const MDXComponents = {
     View,
     FlexContainer,
     a: LinkCustom,
-    DownloadCollection,
     APILink,
     StepsToc,
     StepsContainer
