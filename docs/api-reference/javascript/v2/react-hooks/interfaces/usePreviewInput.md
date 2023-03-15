@@ -11,6 +11,12 @@ nav: "5.2.8"
 
 ___
 
+### autoManageVideo
+
+• `Optional` **autoManageVideo**: `boolean`
+
+___
+
 ### captureNetworkQualityInPreview
 
 • `Optional` **captureNetworkQualityInPreview**: `boolean`
