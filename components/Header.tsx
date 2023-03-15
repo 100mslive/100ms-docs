@@ -91,7 +91,12 @@ const Header: React.FC<Props> = ({
                 : router.query.slug?.[0];
 
         if (!techs.includes(currentTech || '')) {
-            currentTech = techs.find((tech) => router.asPath.toLowerCase().includes(tech));
+            currentTech = techs.find((tech) =>
+                router.asPath
+                    .toLowerCase()
+                    .replace('-', ' ')
+                    .includes(tech.toLowerCase().replace('_', ' '))
+            );
         }
 
         return currentTech || 'javascript';
