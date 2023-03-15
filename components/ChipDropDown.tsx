@@ -3,8 +3,8 @@ import { ChevronDownIcon, CodeIcon } from '@100mslive/react-icons';
 import { Box, Text } from '@100mslive/react-ui';
 import Chip from './Chip';
 import { Listbox } from '@headlessui/react';
-import { menuItem } from './Sidebar';
 import useClickOutside from '@/lib/useClickOutside';
+import { menuItem } from './Sidebar';
 
 const ChipDropDown = ({
     openFilter,
