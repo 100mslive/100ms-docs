@@ -7,7 +7,8 @@ Once you've created a Room via [Create Room API](/server-side/v2/Rooms/create-vi
 
 There are two ways to create Room Codes:
 
-1. Create a Room Code API - creates Room Code for every Role in the Room at once
+#### 1. Create a Room Code API
+Creates Room Code for every Role in the Room at once
 
 <PostRequest title="https://api.100ms.live/roomcode/v2/room/<room_id>/" />
 <Request id="req-comp-0">
@@ -26,7 +27,7 @@ curl --location --request POST 'https://api.100ms.live/roomcode/v2/room/<room_id
 {
     "data": [
 	{
-	    "code": "wpi-sjb-wer",
+	    "code": "wpi-srjb-wer",
 	    "room_id": "329ek8g8f2e4g30487862vdb",
 	    "role": "host",
 	    "enabled": true,
@@ -34,23 +35,25 @@ curl --location --request POST 'https://api.100ms.live/roomcode/v2/room/<room_id
 	    "updated_at": "2023-03-14T15:54:20Z",
 	    },
 	{
-	    "code": "dfj-ewe-oqw",
+	    "code": "dfj-ewbe-oqw",
 	    "room_id": "329ek8g8f2e4g30487862vdb",
 	    "role": "guest",
 	    "enabled": true,
-<<<<<<< HEAD
-        "created_at": "2023-03-14T15:14:18Z",
+	    "created_at": "2023-03-14T15:14:18Z",
 	    "updated_at": "2023-03-14T15:24:18Z",
-=======
-            "created_at": "2023-03-14T15:14:18Z",
-	    "updated_at": "2023-03-14T15:24:18Z",
->>>>>>> 059285c5d0f538ff49ecaa37c5946e799b374252
 	}
     ]
 }
 ```
 
 </ResponseBox>
+
+### Arguments
+
+| Field | Type | Description |
+| :--- | :--- | :---|
+| room_id | `string` | mandatory |
+
 
 ### Errors
 
@@ -61,7 +64,8 @@ curl --location --request POST 'https://api.100ms.live/roomcode/v2/room/<room_id
 | Authentication Error | 401 |
 
 
-2. Create Role Room Code API - creates a Room Code for a specific Role in a Room
+#### 2. Create Role Room Code API
+Creates a Room Code for a specific Role in a Room
 
 <PostRequest title="https://api.100ms.live/roomcode/v2/room/<room_id>/role/<role>" />
 <Request id="req-comp-0">
@@ -78,13 +82,14 @@ curl --location --request POST 'https://api.100ms.live/roomcode/v2/room/<room_id
 
 | Field | Type | Description |
 | :--- | :--- | :---|
+| room_id | `string` | mandatory |
 | role | `string` | mandatory |
     
 <ResponseBox id="resp-0" status="200 OK">
 
 ```json
 {
-    "code": "wet-qwq-otr",
+    "code": "wet-qwgq-otr",
     "room_id": "329ek8g8f2e4g30487862vdb",
     "role": "host",
     "enabled": true,
