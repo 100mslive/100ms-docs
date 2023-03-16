@@ -152,7 +152,7 @@ Chat recording is a feature through which you will receive all chats messages se
 | SenderPeerID |Sender's peer id |
 | SenderName | Sender's name |
 | SenderUserID | Sender's user id |
-| Roles | Roles array to which the message is sent `[]` in case sent to all roles |
+| Roles | Roles to which the message is sent; `[]` in case of all roles |
 | SentAt| SentAt in RFC.3339 format |
 | Type| Message type - `chat`|
 | Message| Message that was sent |
