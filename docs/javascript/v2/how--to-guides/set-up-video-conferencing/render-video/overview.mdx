@@ -35,6 +35,13 @@ hmsActions.detachVideo(videoTrack.id, videoElement);
 
 ## When to attach/detach videos
 
+Starting from this [release](https://www.100ms.live/docs/javascript/v2/changelog/release-notes#2023-03-14), sdk handles the subsequent attach/detach automatically.
+- attach needs to be called only the first time the video element is available. subsequent calls will be ignored.
+- detach needs to be called only when the element is removed from the dom while the track is still available. For the majority of cases, calling detach won't be needed.
+
+To disable the auto handling by sdk, pass `autoManageVideo: false` in join or preview config object. Then you will have to follow the below snippet
+to handle video rendering on your end.
+
 We need to re-attach video when it's in view after every:
 
 1. Unmute(when track.enable is true)
