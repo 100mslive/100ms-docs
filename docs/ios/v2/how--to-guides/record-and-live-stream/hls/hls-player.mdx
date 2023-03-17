@@ -173,3 +173,24 @@ class HLSStreamViewController: HMSHLSPlayerDelegate {
 }
 
 ```
+
+## How to use HLS Timed Metadata with 100ms HLS player
+
+Timed Metadata can be embeded in the HLS stream using 100ms SDK. When you use 100ms HLS player to play this HLS stream, onCue(cue: HMSHLSCue) callback is triggered when the player's current time matches that of a timed event in the HLS stream. You can utilise this callback to know about any HLS Timed Metadata cue and use it's data to show any UI like quizes, poll etc. to HLS viewers.
+
+```swift
+
+class HLSStreamViewController: HMSHLSPlayerDelegate {
+    ...
+    
+    hlsPlayer.delegate = self
+    ...
+
+    func onCue(cue: HMSHLSCue) {
+        // Handle the hls timed metadata cue
+    }
+}
+
+```
+
+👀 To see an example iOS HLS Player implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
