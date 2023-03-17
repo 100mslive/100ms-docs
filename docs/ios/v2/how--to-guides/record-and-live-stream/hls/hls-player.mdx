@@ -1,115 +1,175 @@
 ---
 title: HLS Player
-nav: 8.2
+nav: 8.23
 ---
 
-[HLS Streaming](/ios/v2/foundation/live-streaming) allows for scaling to millions of viewers in near real time. You can give a link of your
-web-app which will be converted to a HLS feed by our server and can be played across devices for consumption.
-Behind the scenes, this will be achieved by having a bot join your room and stream what it sees and hears. Once the feed
-is ready, the server will give a URL which can be played using any HLS Player.
+The HMSHLSPlayer is an HLS player offered by 100ms that can be used to play HLS streams. The player takes a URL to play the stream. It also provides the ability to send analytics events related to the HLS playback to the 100ms dashboard when provided with 100ms SDK instance with an active room.
 
-> Note that the media server serving the content in this case is owned by 100ms. If you're looking for a way to stream
-> on YouTube, Twitch etc., please have a look at our RTMP streaming docs [here](/ios/v2/how--to-guides/record-and-live-stream/rtmp-recording).
+## How to integrate HLS Player SDK
 
-## Starting HLS
+You can either use Swift Package Manager or Cocoapods to add HMSHLSPlayerSDK iOS SDK to your project.
 
-HLS can be started in two ways depending on the level of customization you need.
+#### Use Swift Package Manager
+Add HMSHLSPlayerSDK iOS SDK through Swift Package Manager in Xcode. Use https://github.com/100mslive/100ms-ios-hls-sdk.git as the package source.
 
-1. Default View: The simplest view to just begin a stream with default UI and parameters.
-2. Custom Views: To use your own UI for HLS streaming, you need to provide your own web-app URL for our bot to join and stream.
+#### Use Cocoapods
+Assuming your project name is "basicvideocall", create "Podfile" in the project folder with the following contents
+then run `pod install`
 
-#### Default View
+```jsx section=XcodeProjectSetup sectionIndex=1
+platform :ios, '13.0'
 
-Begins a stream with default parameters.
+target 'basicvideocall' do
+  use_frameworks!
+  pod 'HMSHLSPlayerSDK'
 
-```swift
-hmsSDK.startHLSStreaming() { didStart, error in
-    print(didStart, error)
-}
+end
 ```
 
-#### Custom View
+Open .xcworkspace
 
-To use your own web-app UI for HLS, you'll need to pass in a meeting URL. The 100ms bot will open this URL to join your room, so
-it must allow access without any user level interaction. In the future it'll be possible to start HLS for multiple such URLs for the same room.
 
-For this purpose the API supports taking in an array, although currently only the first element of the array will be used. To distinguish between multiple urls an additional field `metadata` can be optionally passed. The `meetingURL` and `metadata` are clubbed together to form what we'll call a `variant`.
+## How to use Play HLS stream
 
-You can call `hmsSDK.startHLSStreaming` with `HMSHLSConfig` having an array of such variants. `HMSHlsRecordingConfig` is optional.
-
-```swift
-let config = HMSHLSConfig(variants: [HMSHLSMeetingURLVariant(meetingURL: meetingURL, metadata: "tag for reference")])
-hmsSDK.startHLSStreaming(config: config) { didStart, error in
-    print(didStart, error)
-}
-```
-
-### Optional HLS Recording
-
-Optionally to record the HLS stream you may specify an `HMSHLSRecordingConfig` within the `HMSHLSConfig`.
-
-Here's what the `HMSHlsRecordingConfig` looks like
+You create an instance of HMSHLSPlayer like below:
 
 ```swift
 
-class HMSHLSRecordingConfig {
-    let singleFilePerLayer: Bool
-    let enableVOD: Bool
-}
+import HMSHLSPlayerSDK
+
+let hlsPlayer = HMSHLSPlayer()
 
 ```
 
-1. `singleFilePerLayer` if the desired end result is a mp4 file per HLS layer, false by default.
-2. `enableVOD` if the desired end result is a zip of m3u8 and all the chunks, false by default.
-
-Here's an example of how to create a recording config:
+Next, you call play on this hlsPlayer instance passing the hls stream url like below:
 
 ```swift
-// Optional recording config
-let recordConfig = HMSHLSRecordingConfig(singleFilePerLayer: true, enableVOD: false)
-let config = HMSHLSConfig(variants: [variant], recording: recordConfig)
+
+let url = URL(string: "HLS-URL-HERE")
+hmsPlayer.play(url)
+
 ```
 
-## Stopping HLS
+## How to show video player UI
 
-You can call `hmsSDK.stopHLSStreaming` to stop HLS Streaming which will stop all the variants.
+You can get access to video player view as a UIView. So that you can add it as a subview to any other view in your app's UI.
+
+You call videoPlayerViewController method on hls player instance to get AVPlayerViewController. You use this AVPlayerViewController instance to show the video player view in your own UIView. Below we show an example of how you can subview the video player view in your own UIViewController.
+
 
 ```swift
-hmsSDK.stopHLSStreaming() { didStop, error in
+
+class HLSStreamViewController: UIViewController {
+
+...
+
+    override func viewDidAppear(_ animated: Bool) {
+    
     ...
+    
+        let playerViewController = hmsPlayer.videoPlayerViewController(showsPlayerControls: true)
+        playerViewController.view.frame = self.view.bounds
+        self.view.addSubview(playerViewController.view)
+    }
 }
+
 ```
 
-## Current Room Status
+## How to stop the playback
 
-The current status for the room is always reflected in the `HMSRoom` object.
+You call stop on the hlsPlayer instance like below:
 
-Here are the relevant properties inside the `HMSRoom` object which you can read to get the current hls streaming status of the room namely: `hlsStreamingState`.
-
-The object contains a boolean `running` which lets you know if it's active on the room right now as well as list of active variants.
-
-1. **hlsStreamingState** an instance of `HMSHLSStreamingState`, which looks like:
 
 ```swift
-@objcMembers public class HMSHLSStreamingState : NSObject {
-    public let running: Bool
-    public let variants: [HMSHLSVariant]
-}
+
+hmsPlayer.stop()
+
 ```
 
-This represents a livestream to one or more HLS urls.
+## How to pause and resume the playback
 
-The room status should be checked in following two places -
+You call pause/resume on the hlsPlayer instance like below:
 
-1. In the `onJoin(room: HMSRoom)` callback of `HMSUpdateListener`
-   The properties mentioned above will be on the `HMSRoom` object.
-2. In the `on(room: HMSRoom, update: HMSRoomUpdate)` callback of `HMSUpdateListener`.
-   The `HMSRoomUpdate` type will be `hlsStreamingStateUpdated`.
 
-## Tips
+```swift
 
--   If you're using the dashboard web-app from 100ms, please make sure to use a role which doesn't have publish permissions for beam tile to not show up.
--   If using your own web-app, do put in place retries for API calls like tokens etc. just in case any call fails. As human users we're
-    used to reloading the page in these scenarios which is difficult to achieve in the automated case.
--   Make sure to not disable the logs for the passed in meeting URL. This will allow for us to have more visibility into the room, refreshing the page
-    if join doesn't happen within a time interval.
+hmsPlayer.pause()
+hmsPlayer.resume()
+
+```
+
+## How to seek forward or backward
+
+You use seekForward and seekBackward methods on the hlsPlayer instance like below:
+
+
+```swift
+
+hmsPlayer.seekForward(seconds: 5)
+hmsPlaye.seekBackward(seconds: 5)
+
+```
+
+## How to seek to live position
+
+You use seekToLivePosition methods on the hlsPlayer instance to go to the live poition like below:
+
+
+```swift
+
+hmsPlayer.seekToLivePosition()
+
+```
+
+## How to change volume of HLS playback
+
+Use volume property to change the volume of HLS player. The volume level is between 0-100. Volume is set to 100 by default.
+
+
+```swift
+
+hmsPlayer.volume = 50
+
+```
+
+
+## How to know the stats related to HLS playback
+
+HMSHLSPlayer exposes statMonitor interface to know about the statistics about current HLS playback. For more information about how to use this HLS Stats Monitor check it's documentation [here]("https://www.100ms.live/docs/ios/v2/how--to-guides/measure-network-quality-and-performance/hls-stats") The following snippet shows how you check check how far is the current HLS playback from live position. To monitor stats continuously you can use a timer to check the values of different stats.
+
+
+```swift
+
+Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+    let distanceFromLivePosition = hmsPlayer.statMonitor.distanceFromLiveEdge
+}
+
+```
+
+
+## How to know when there is an error during hls playback
+
+You can assign a class that follows HMSHLSPlayerDelegate protocol as delegate to the hlsPlayer instance. And listen for onPlaybackFailure callback to know about the errors that happen during playback.
+
+
+```swift
+
+class HLSStreamViewController: HMSHLSPlayerDelegate {
+    ...
+    
+    hlsPlayer.delegate = self
+    ...
+
+    func onPlaybackFailure(error: Error) {
+        guard let error = error as? HMSHLSError else { return }
+        
+        if error.isTerminal {
+            print("Player has encountered a terminal error, we need to restart the player: \(error.localizedDescription)")
+        }
+        else {
+            print("Player has encountered an error, but it's non-fatal and player might recover \(error.localizedDescription)")
+        }
+    }
+}
+
+```
