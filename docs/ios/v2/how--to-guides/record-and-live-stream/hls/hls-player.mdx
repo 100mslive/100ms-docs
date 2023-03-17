@@ -135,13 +135,35 @@ hmsPlayer.volume = 50
 
 ## How to know the stats related to HLS playback
 
-HMSHLSPlayer exposes statMonitor interface to know about the statistics about current HLS playback. For more information about how to use this HLS Stats Monitor check it's documentation [here]("https://www.100ms.live/docs/ios/v2/how--to-guides/measure-network-quality-and-performance/hls-stats") The following snippet shows how you check check how far is the current HLS playback from live position. To monitor stats continuously you can use a timer to check the values of different stats.
+HMSHLSPlayer exposes statMonitor interface to know about the statistics about current HLS playback. For more information about how to use this HLS Stats Monitor check it's documentation [here]("../../measure-network-quality-and-performance/hls-stats") The following snippet shows how you check check how far is the current HLS playback from live position. To monitor stats continuously you can use a timer to check the values of different stats.
 
 
 ```swift
 
 Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
     let distanceFromLivePosition = hmsPlayer.statMonitor.distanceFromLiveEdge
+}
+
+```
+
+## How to know when player changes state during playback
+
+The player can be in one of the following states: playing, stopped, paused, buffering, failed, unknown during playback.
+
+You can assign a class that follows HMSHLSPlayerDelegate protocol as delegate to the hlsPlayer instance. And listen for onPlaybackStateChanged callback to know about the state change event during the playback.
+
+
+```swift
+
+class HLSStreamViewController: HMSHLSPlayerDelegate {
+    ...
+    
+    hlsPlayer.delegate = self
+    ...
+
+    func onPlaybackStateChanged(state: HMSHLSPlaybackState) {
+        // Do player UI related changes
+    }
 }
 
 ```
@@ -192,5 +214,38 @@ class HLSStreamViewController: HMSHLSPlayerDelegate {
 }
 
 ```
+
+Note: following information on HMSHLSCue can be used to know more about what timed event is triggered and show UI accordingly:
+
+```swift
+
+class HMSHLSCue: NSObject {
+    
+    /// Unique id of the timed event
+    public let id: String
+    
+    /// startDate of the timed event
+    public let startDate: Date
+    
+    /// endDate of the timed event
+    public let endDate: Date?
+    
+    /// String payload of the timed event
+    public let payload: String?
+    
+}
+
+```
+
+## How to configure hls player to send analytics events
+
+If your app already has an hmsSDK instance that you are using to join the 100ms room, you can assign this instance to HLS player's analytics interface to enable the player to sent analytics events. Currently only hard failure events (where the player encounters an unrecoverable error and playback can't continue) are sent to analytics.
+
+```swift
+
+hlsPlayer.analytics = hmsSDK
+
+```
+
 
 👀 To see an example iOS HLS Player implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
