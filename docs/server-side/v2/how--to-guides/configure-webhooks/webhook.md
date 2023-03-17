@@ -577,10 +577,12 @@ This event will be sent when final composed recording is generated and uploaded 
 | session_id              | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                        |
 | template_id             | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                                                          |
 | location                | `string`             | (Deprecated, use recording_path) URI of the recorded video along with the storage type<br/><br/> Example: s3://bucket/prefix/ac.mp4                           |
-| URL                     | `string`             | (Deprecated, use recording_presigned_url) HTTPS url to recorded session file on storage bucket <br/><br/> Example: https://upload-location/bucket/beam/ac.mp4 |
+| URL                     | `string`             | (Deprecated, use recording_presigned_url) HTTPS url to recorded session file on storage bucket <br/><br/> Example: <https://upload-location/bucket/beam/ac.mp4> |
 | duration                | `int`                | Duration the user spent in the room in seconds <br/><br/> Example: 3600                                                                                       |
 | recording_path          | `string`             | Upload path of the recorded video such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                                                                |
-| recording_presigned_url | `string`             | Presigned URL for the recorded video, for download. Valid for 24 hours <br/><br/> Example: https://upload-location/bucket/ac.mp4                              |
+| recording_presigned_url | `string`             | Presigned URL for the recorded video, for download. Valid for 24 hours <br/><br/> Example: <https://upload-location/bucket/ac.mp4>                              |
+| chat_recording_path                 | `string`             | Upload path of chat recording files such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.csv |
+| chat_recording_presigned_url        | `string`             | Pre signed url for chat recording files <br/><br/> Example: <https://upload-location/bucket/chat.csv> |
 | size                    | `int`                | Size of the recorded video (in bytes) <br/><br/> Example: 10024                                                                                               |
 | session_started_at      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                       |
 | session_stopped_at      | `timestamp (in UTC)` | Timestamp when session ended <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                         |
@@ -603,6 +605,8 @@ This event will be sent when final composed recording is generated and uploaded 
         "template_id": "************************",
         "recording_path": "s3://<file-bucket-address>.mp4",
         "recording_presigned_url": "https://<file-access-url>?<signature>",
+        "chat_recording_path": "s3://<chat-recording-address>.csv",
+        "chat_recording_presigned_url": "https://<chat-recording-access-url>?<signature>",
         "size": 13933649,
         "session_started_at": "2021-11-30T12:48:49.97291247Z",
         "session_stopped_at": "2021-11-30T12:58:49.97291247Z"
@@ -787,13 +791,15 @@ This event is sent when beam successfully records the room and uploads the video
 | template_id             | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                                                            |
 | created_at              | `timestamp (in UTC)` | Timestamp at which recording was created <br/><br/> Example: 2020-11-11T17:12:17Z                                                                               |
 | duration                | `int`                | Duration of beam recording (seconds) <br/><br/> Example: 79                                                                                                     |
-| location                | `string`             | (Deprecated, use recording_presigned_url) HTTPS url to recorded session file on storage bucket <br/><br/> Example: https://upload-location/bucket/beam/ac.mp4\* |
+| location                | `string`             | (Deprecated, use recording_presigned_url) HTTPS url to recorded session file on storage bucket <br/><br/> Example: <https://upload-location/bucket/beam/ac.mp4>\* |
 | started_at              | `timestamp (in UTC)` | Beam recording started at <br/><br/> Example: 2020-11-11T17:12:27Z                                                                                              |
 | stopped_at              | `timestamp (in UTC)` | Beam recording stopped at <br/><br/> Example: 2020-11-11T17:32:15Z                                                                                              |
 | max_width               | `int`                | Maximum width of the screen supported for recording in pixels <br/><br/> Example: 1280                                                                          |
 | max_height              | `int`                | Maximum height of the screen supported for recording in pixels <br/><br/> Example: 720                                                                          |
 | recording_path          | `string`             | Upload path of the recorded video such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                                                                  |
-| recording_presigned_url | `string`             | Presigned URL for the recorded video, for download <br/><br/> Example: https://upload-location/bucket/ac.mp4                                                    |
+| recording_presigned_url | `string`             | Presigned URL for the recorded video, for download <br/><br/> Example: <https://upload-location/bucket/ac.mp4>                                                    |
+| chat_recording_path                 | `string`             | Upload path of chat recording files such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.csv |
+| chat_recording_presigned_url        | `string`             | Pre signed url for chat recording files <br/><br/> Example: <https://upload-location/bucket/chat.csv> |
 | meeting_url             | `string`             | meeting_url provided at rtmp start <br/><br/> Example: "https://app.100ms.live/room_id"                                                                         |
 | rtmp                    | `array`              | List of RTMP objects provided at rtmp start <br/><br/> Example: [{"url": "http://test.com"}]                                                                    |
 | session_started_at      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                         |
@@ -817,6 +823,8 @@ This event is sent when beam successfully records the room and uploads the video
         "peer_id": "********-****-****-****-***********",
         "recording_path": "s3://bucket/prefix/ac.mp4",
         "recording_presigned_url": "https://<file access URL>",
+        "chat_recording_path": "s3://<chat-recording-address>.csv",
+        "chat_recording_presigned_url": "https://<chat-recording-access-url>?<signature>",
         "room_id": "************************",
         "started_at": "2021-11-30T12:58:34.051Z",
         "stopped_at": "2021-11-30T12:59:56.778Z",
@@ -935,7 +943,7 @@ This event is sent when HLS streaming is successfully triggered
 | state_timestamp                         | `timestamp (in UTC)` | Timestamp at which beam state changed <br/><br/> Example: 2020-11-11T17:32:18Z                                                                                                      |
 | max_width                               | `int`                | Maximum width of the screen supported for streaming / recording in pixels <br/><br/> Example: 1280                                                                                  |
 | max_height                              | `int`                | Maximum height of the screen supported for streaming / recording in pixels <br/><br/> Example: 720                                                                                  |
-| url                                     | `string`             | HLS live streaming url <br/><br/> Example: https://100ms-live.m3u8                                                                                                                  |
+| url                                     | `string`             | HLS live streaming url <br/><br/> Example: <https://100ms-live.m3u8>                                                                                                                  |
 | started_at                              | `timestamp (in UTC)` | Timestamp at which HLS started <br/><br/> Example: 2020-11-11T17:32:18Z                                                                                                             |
 | session_started_at                      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                                             |
 
@@ -993,7 +1001,7 @@ This event is sent when HLS streaming is successfully stopped
 | metadata_timestamp                      | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> Example: 2020-11-11T17:32:17Z                                                                                                         |
 | state_name                              | `string`             | Beam state identifier <br/><br/> Example: HLSStopped                                                                                                                                |
 | state_timestamp                         | `timestamp (in UTC)` | Timestamp at which beam state changed <br/><br/> Example: 2020-11-11T17:32:18Z                                                                                                      |
-| url                                     | `string`             | HLS live streaming url <br/><br/> Example: https://100ms-live.m3u8                                                                                                                  |
+| url                                     | `string`             | HLS live streaming url <br/><br/> Example: <https://100ms-live.m3u8>                                                                                                                  |
 | duration                                | `int`                | Duration of HLS streaming in seconds <br/><br/> Example: 12                                                                                                                         |
 | started_at                              | `timestamp (in UTC)` | Timestamp at which HLS started <br/><br/> Example: 2020-11-11T17:32:18Z                                                                                                             |
 | stopped_at                              | `timestamp (in UTC)` | Timestamp at which HLS stopped <br/><br/> Example: 2020-11-11T17:32:18Z                                                                                                             |
@@ -1121,7 +1129,9 @@ This event will be sent when HLS recordings are successful and uploaded to the s
 | session_id                          | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                         |
 | template_id                         | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                           |
 | hls_vod_recording_path              | `string`             | Upload path of the HLS vod playlist such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                               |
-| hls_vod_recording_presigned_url     | `string`             | Pre signed url for HLS vod playlist url <br/><br/> Example: https://upload-location/bucket/hls-vod.zip                         |
+| hls_vod_recording_presigned_url     | `string`             | Pre signed url for HLS vod playlist url <br/><br/> Example: <https://upload-location/bucket/hls-vod.zip>                         |
+| chat_recording_path                 | `string`             | Upload path of chat recording files such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.csv |
+| chat_recording_presigned_url        | `string`             | Pre signed url for chat recording files <br/><br/> Example: <https://upload-location/bucket/chat.csv> |
 | hls_vod_recording_size              | `int`                | Size of the HLS vod recording (in bytes) <br/><br/> Example: 10024                                                             |
 | max_width                           | `int`                | Maximum width of the screen supported for HLS recording in pixels <br/><br/> Example: 1280                                     |
 | max_height                          | `int`                | Maximum height of the screen supported for HLS recording in pixels <br/><br/> Example: 720                                     |
@@ -1156,6 +1166,8 @@ This event will be sent when HLS recordings are successful and uploaded to the s
         "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
         "hls_vod_recording_path": "s3://<hls-vod-bucket-address>.zip",
         "hls_vod_recording_presigned_url": "https://<hls-vod-access-url>?<signature>",
+        "chat_recording_path": "s3://<chat-recording-address>.csv",
+        "chat_recording_presigned_url": "https://<chat-recording-access-url>?<signature>",
         "hls_vod_recording_size": 10024,
         "recording_single_files": [
             {

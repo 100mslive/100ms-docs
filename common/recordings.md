@@ -6,16 +6,17 @@ Based on your end goal, you can choose one of the recording types and its implem
 
 ## Recording types
 
--   [Recording types](#recording-types)
-    -   [Quick Comparison](#quick-comparison)
-    -   [Browser Recording \[Recommended\]](#browser-recording-recommended)
-    -   [SFU Recording \[Advanced\]](#sfu-recording-advanced)
-    -   [Recordings for Live Streaming Use-cases](#recordings-for-live-streaming-use-cases)
-        -   [Video-on-demand Recording](#video-on-demand-recording)
-        -   [Multiresolution Recording](#multiresolution-recording)
--   [Configure storage](#configure-storage)
-    -   [How to configure recording storage?](#how-to-configure-recording-storage)
--   [Storage path for recordings](#storage-path-for-recordings)
+- [Recording types](#recording-types)
+  - [Quick Comparison](#quick-comparison)
+  - [Browser Recording \[Recommended\]](#browser-recording-recommended)
+  - [SFU Recording \[Advanced\]](#sfu-recording-advanced)
+  - [Recordings for Live Streaming Use-cases](#recordings-for-live-streaming-use-cases)
+    - [Video-on-demand Recording](#video-on-demand-recording)
+    - [Multiresolution Recording](#multiresolution-recording)
+- [Configure storage](#configure-storage)
+  - [How to configure recording storage?](#how-to-configure-recording-storage)
+- [Storage path for recordings](#storage-path-for-recordings)
+- [Chat Recording](#chat-recording)
 
 ### Quick Comparison
 
@@ -35,7 +36,7 @@ Browser recording is built to give users a participant-first recording experienc
 
 **Resources**
 
--   [How to implement Browser Recording](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording)
+- [How to implement Browser Recording](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording)
 
 ### SFU Recording [Advanced]
 
@@ -43,13 +44,13 @@ SFU recording is built for advanced use cases, which require individual audio an
 
 You can get track recordings in two forms:
 
--   Individual: Media for each peer is provided as a separate mp4 file. This file will have both audio and video of the peer. These files can be used for offline review or in implementing custom composition.
+- Individual: Media for each peer is provided as a separate mp4 file. This file will have both audio and video of the peer. These files can be used for offline review or in implementing custom composition.
 
--   Composite [currently in beta]: Audio and video of all peers are composed as per their joining/leaving the meeting and provided as a single mp4. This file can be used for offline viewing of the meeting.
+- Composite [currently in beta]: Audio and video of all peers are composed as per their joining/leaving the meeting and provided as a single mp4. This file can be used for offline viewing of the meeting.
 
 **Resources**
 
--   [How to implement SFU Recording](/server-side/v2/Destinations/recording)
+- [How to implement SFU Recording](/server-side/v2/Destinations/recording)
 
 ### Recordings for Live Streaming Use-cases
 
@@ -107,10 +108,10 @@ If a storage destination is not configured for recordings and if you choose to r
 
 **Storage recording path is available in following webhook responses:**
 
--   Browser Recording: [beam.recording.success](/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `recording_path`)
--   SFU Recording: [recording.success](/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `recording_path`)
--   Multiresolution Recording: [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `recording_single_files` ; `recording_path`)
--   VOD Recording: [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `hls_vod_recording_path`)
+- Browser Recording: [beam.recording.success](/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `recording_path`)
+- SFU Recording: [recording.success](/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `recording_path`)
+- Multiresolution Recording: [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `recording_single_files` ; `recording_path`)
+- VOD Recording: [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `hls_vod_recording_path`)
 
 **The recording path for these respective recordings will look like follows:**
 
@@ -139,3 +140,39 @@ If a storage destination is not configured for recordings and if you choose to r
 | Stream ID   | Unique identifier for a particular stream of a room (audio-video/screenshare)                                                                                                               |
 | Track ID    | Unique identifier for a particular track (audio or video) of a stream                                                                                                                       |
 | Layer Index | Layer index values show descending HLS resolutions - 0(1080p), 1(720p), 2(480p), 3(360p) and 4(240p). If highest resolution of template is 720p, then 0(720p), 1(480p), 2(360p) and 3(240p) |
+
+## Chat Recording
+
+Chat recording is a feature through which you will receive all chats messages sent by peers during the SFU/browser recording. Chat recording is available for both SFU recording and browser recording. Only public chats sent to all roles will be recorded. The `.csv` file will be uploaded to the recording bucket configured for your video recordings. The file header will be: `SenderPeerID,SenderName,SenderUserID,Roles,SentAt,Type,Message`
+
+**Header information**
+
+| Header | Description |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SenderPeerID |Sender's peer id |
+| SenderName | Sender's name |
+| SenderUserID | Sender's user id |
+| Roles | Roles to which the message is sent; `[]` in case of all roles |
+| SentAt| SentAt in RFC.3339 format |
+| Type| Message type - `chat`|
+| Message| Message that was sent |
+
+**Chat recording path is available in following webhook responses:**
+
+- Browser Recording: [beam.recording.success](/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `chat_ecording_path` ; `chat_recording_presigned_url`)
+- SFU Recording: [recording.success](/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `chat_recording_path` ; `chat_recording_presigned_url`)
+- Multiresolution Recording: [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `chat_recording_path` ; `chat_recording_presigned_url`)
+
+**The recording path for these respective recordings will look like follows:**
+
+`s3://<location>/<prefix>/chat/<room_id>/<start_date>/Rec-<room_id>-<epoch>.csv`
+
+**The breakdown of the aforementioned tags is as follows:**
+
+| Tag Name    | Description                                                                                                                                                                                 |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Location    | Name of the bucket where recordings are stored                                                                                                                                              |
+| Prefix      | Prefix for upload path which is configured in storage settings of your template. If not configured, the default value for this will be your Customer ID                                     |
+| Room ID     | The identifier for the room which was recorded                                                                                                                                              |
+| Start Date  | Start date of the session                                                                                                                                                                   |
+| Epoch       | Start time of the recorder in the session                                                                                                                                                   |
