@@ -59,7 +59,12 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
             <pre>
                 <Box css={{ position: 'relative', minWidth: 'min-content' }}>
                     <Box
-                        css={{ position: 'absolute', width: '100%', top: '6px' }}
+                        css={{
+                            position: 'absolute',
+                            width: '100%',
+                            top: '6px',
+                            pointerEvents: 'none'
+                        }}
                         className="code-block">
                         {!copy ? (
                             <button
@@ -77,6 +82,7 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                                     position: 'sticky',
                                     cursor: 'pointer',
                                     right: '12px',
+                                    pointerEvents: 'auto',
                                     borderRadius: '20px',
                                     border: '1px solid var(--docs_border_strong)'
                                 }}>
@@ -98,6 +104,7 @@ const Code: React.FC<PropsWithChildren<{ section?: string; sectionIndex?: number
                                     position: 'sticky',
                                     cursor: 'pointer',
                                     right: '12px',
+                                    pointerEvents: 'auto',
                                     borderRadius: '20px',
                                     border: '1px solid var(--docs_border_strong)'
                                 }}>
