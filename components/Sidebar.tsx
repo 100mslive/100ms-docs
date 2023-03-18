@@ -391,7 +391,7 @@ export const menuItem = [
     },
     {
         link: '/server-side/v2/how--to-guides/make-api-calls',
-        name: 'Server side',
+        name: 'Server-side',
         key: 'server-side',
         icon: <ServerIcon />,
         apiRef: '/server-side/v2/api-reference/Rooms/overview'
