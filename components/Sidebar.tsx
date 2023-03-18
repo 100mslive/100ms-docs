@@ -113,9 +113,8 @@ const Sidebar: React.FC<Props> = ({
 
     const showPlatformSelector = slug?.[0] !== 'concepts';
 
-    let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug?.[0]);
-    if (slug?.[0] === 'api-reference')
-        indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug?.[1]);
+    let indexOf = menuItem.findIndex((e) => e.key === slug?.[0]);
+    if (slug?.[0] === 'api-reference') indexOf = menuItem.findIndex((e) => e.key === slug?.[1]);
 
     indexOf = indexOf === -1 ? 0 : indexOf;
     const [tech, setTech] = useState(menuItem[indexOf]);
@@ -358,36 +357,42 @@ export const menuItem = [
     {
         link: '/android/v2/get-started/quickstart',
         name: 'Android',
+        key: 'android',
         icon: <AndroidIcon style={iconStyle} />,
         apiRef: '/api-reference/android/v2/index.html'
     },
     {
         link: '/ios/v2/guides/quickstart',
         name: 'iOS',
+        key: 'ios',
         icon: <IosIcon style={iconStyle} />,
         apiRef: '/api-reference/ios/v2/home/content'
     },
     {
         link: '/javascript/v2/get-started/javascript-quickstart',
         name: 'JavaScript',
+        key: 'javascript',
         icon: <JavascriptIcon style={iconStyle} />,
         apiRef: '/api-reference/javascript/v2/home/content'
     },
     {
         link: '/react-native/v2/guides/quickstart',
         name: 'React Native',
+        key: 'react-native',
         icon: <ReactIcon style={iconStyle} />,
         apiRef: '/api-reference/react-native/v2/modules.html'
     },
     {
         link: '/flutter/v2/guides/quickstart',
         name: 'Flutter',
+        key: 'flutter',
         icon: <FlutterIcon style={iconStyle} />,
         apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
     },
     {
         link: '/server-side/v2/how--to-guides/make-api-calls',
-        name: 'Server-side',
+        name: 'Server side',
+        key: 'server-side',
         icon: <ServerIcon />,
         apiRef: '/server-side/v2/api-reference/Rooms/overview'
     }
