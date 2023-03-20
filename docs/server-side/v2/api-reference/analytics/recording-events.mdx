@@ -11,8 +11,9 @@ Currently there is support for `beam.recording.success` event. This event is sen
 <Request id="req-0">
 
 ```bash
-curl --location --request GET 'https://api.100ms.live/v2/analytics/events' \
---header 'Authorization: Bearer <management_token>'
+curl --location --request GET \
+    'https://api.100ms.live/v2/analytics/events?type=beam.recording.success&room_id=<room_id>' \
+    --header 'Authorization: Bearer <management_token>'
 ```
 
 </Request>
