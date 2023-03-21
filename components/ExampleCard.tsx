@@ -1,5 +1,5 @@
 import * as reactIcons from '@100mslive/react-icons';
-import { Box, Flex, HorizontalDivider, Text, useTheme } from '@100mslive/react-ui';
+import { Box, Flex, HorizontalDivider, Text } from '@100mslive/react-ui';
 import { Technologies, technologyIconMap } from './TechnologySelect';
 
 interface Props extends React.ComponentPropsWithoutRef<typeof Box> {
@@ -20,16 +20,12 @@ export default function ExampleCard({
     css = {},
     ...rest
 }: Props) {
-    const { themeType } = useTheme();
-    const isDark = themeType === 'dark';
-
     return (
         <Flex
             css={{
                 boxSizing: 'content-box',
-                backgroundImage: isDark
-                    ? 'linear-gradient(279.91deg, rgba(19, 22, 27, 0.8) 37.76%, rgba(23, 27, 33, 0.8) 91.22%)'
-                    : 'linear-gradient(279.91deg, rgba(240, 242, 244, 0.8) 37.76%, rgba(249, 250, 251, 0.8) 91.22%)',
+                backgroundImage:
+                    'linear-gradient(279.91deg, rgba(19, 22, 27, 0.8) 37.76%, rgba(23, 27, 33, 0.8) 91.22%)',
                 padding: '24px',
                 paddingBottom: '16px',
                 borderRadius: '16px',

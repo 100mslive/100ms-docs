@@ -7,14 +7,9 @@ interface CardProps {
     link: String;
     subText: String;
     id: Number;
-    currentTheme: String;
 }
 
-const Card: React.FC<CardProps> = ({ icon, title, link, subText, id, currentTheme }) => {
-    const MAIN_GRADIENT =
-        currentTheme === 'dark'
-            ? 'linear-gradient(235deg, $surfaceLighter 15%, $surfaceDark 70%)'
-            : 'linear-gradient(235deg, $surfaceDefault 50%, $surfaceLighter 90%)';
+const Card: React.FC<CardProps> = ({ icon, title, link, subText, id }) => {
     return (
         <Flex
             direction="column"
@@ -29,7 +24,7 @@ const Card: React.FC<CardProps> = ({ icon, title, link, subText, id, currentThem
                 width: '100%',
                 overflow: 'clip',
                 cursor: 'pointer',
-                background: MAIN_GRADIENT,
+                background: 'linear-gradient(235deg, $surfaceLighter 15%, $surfaceDark 70%)',
                 backgroundSize: '200%',
                 backgroundPosition: 'left',
                 transition: 'background-position ease 0.4s',

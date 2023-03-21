@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useKeyPress from '@/lib/useKeyPress';
-import {
-    CrossIcon,
-    HamburgerMenuIcon,
-    NightIcon,
-    SearchIcon,
-    SunIcon
-} from '@100mslive/react-icons';
+import { CrossIcon, HamburgerMenuIcon, SearchIcon } from '@100mslive/react-icons';
 import { Flex, Text, useTheme } from '@100mslive/react-ui';
 import ActiveLink, { ActiveLinkProps } from './ActiveLink';
 import SearchModal from './SearchModal';
@@ -62,26 +56,12 @@ const Header: React.FC<Props> = ({
 
     useEffect(() => {
         setRenderComponent(true);
-        const theme = window.localStorage.getItem('theme') || 'dark';
+        const theme = 'dark';
         const docHtml = document.documentElement.dataset;
-        setIsDark(theme === 'dark');
+        setIsDark(true);
         docHtml.theme = theme;
         if (themeType !== theme) toggleTheme();
     }, []);
-
-    const buttonToggleTheme = () => {
-        // update the html data
-        const docHtml = document.documentElement.dataset;
-        docHtml.theme = `${!isDark ? 'dark' : 'light'}`;
-        // set local storage
-        window.localStorage.setItem('theme', `${!isDark ? 'dark' : 'light'}`);
-        // update the state
-        setIsDark(!isDark);
-        // toggle theme
-        toggleTheme();
-        const themeChanged = new CustomEvent('themeChanged', { detail: { theme: docHtml.theme } });
-        document.dispatchEvent(themeChanged);
-    };
 
     const getCurrentTech = () => {
         const techs = ['android', 'flutter', 'ios', 'javascript', 'react-native', 'server-side'];
@@ -219,21 +199,6 @@ const Header: React.FC<Props> = ({
                             {menu ? <CrossIcon /> : <HamburgerMenuIcon />}
                         </button>
                     )}
-                </Flex>
-                <Flex
-                    as="button"
-                    aria-label="theme-toggle-button"
-                    type="button"
-                    css={{
-                        padding: 0,
-                        backgroundColor: 'transparent',
-                        border: 'none',
-                        cursor: 'pointer'
-                    }}
-                    tabIndex={0}
-                    onKeyPress={() => {}}
-                    onClick={() => buttonToggleTheme()}>
-                    {!isDark ? <NightIcon /> : <SunIcon style={{ color: '#ECC502' }} />}
                 </Flex>
             </Flex>
             {modal ? <SearchModal setModal={setModal} /> : null}
