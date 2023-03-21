@@ -14,8 +14,8 @@ Based on your end goal, you can choose one of the recording types and its implem
     - [Video-on-demand Recording](#video-on-demand-recording)
     - [Multiresolution Recording](#multiresolution-recording)
 - [Configure storage](#configure-storage)
-  - [How to configure recording storage?](#how-to-configure-recording-storage)
-  - [Google and Alibaba Cloud Storage for Recordings](#google-and-alibaba-cloud-storage-for-recordings)
+  - [Configure recording storage with 100ms Dashboard](#configure-recording-storage-with-100ms-dashboard)
+  - [Configure recording storage with 100ms API](#configure-recording-storage-with-100ms-api)
 - [Storage path for recordings](#storage-path-for-recordings)
 - [Chat Recording](#chat-recording)
 
@@ -67,9 +67,15 @@ A multi-resolution recording is available for Interactive Live Streaming capabil
 
 ## Configure storage
 
-To store your recordings on the cloud, configure the destination settings in your template. Our platform supports popular cloud storage options like Amazon S3 (UI + API), Google Cloud Storage(API-only for now), and Alibaba Object Storage Service (API-only for now). Once you set up a cloud storage destination in your template, your recordings will automatically be deposited in the configured bucket.
+You can store your recordings on a cloud storage provider through the destination settings of your template. Our platform supports popular cloud storage platforms like:
 
-### How to configure recording storage?
+- Amazon Simple Storage Service (AWS S3)
+- Google Cloud Storage (GCP)
+- Alibaba Object Storage (OSS)
+
+### Configure recording storage with 100ms Dashboard
+
+You can configure recording storage in the destination Settings of your template on the 100ms Dashboard. Currently, the dashboard configuration supports AWS S3, while Google Cloud Storage and Alibaba OSS will be supported soon (already available via API).
 
 1. Generate your credentials; for this example, you can check out a [guide from AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html). You can skip this step if you already have credentials. Please note that if you are running a Browser recording, you need to give upload permission to your key, but if you are running an SFU recording, you need to give both upload and download permission.
 
@@ -99,12 +105,12 @@ To store your recordings on the cloud, configure the destination settings in you
 
 ![Destinations](/docs/v2/recording-storage-settings-step6.png)
 
-The above message ensures that your configuration is successful now, and all your recordings will start collecting in your configured destination. You can also activate these settings by utilizing the [Policy](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-api) API. To do so, set the `type` field within the recording object to `s3` and include the previously mentioned details.
+The above message ensures that your configuration is successful now, and all your recordings will start collecting in your configured destination.
 
 
-### Google and Alibaba Cloud Storage for Recordings
+### Configure recording storage with 100ms API
 
-Google Cloud and Alibaba OSS storage is currently supported through [Policy](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-api) API. You can configure the `type` field of recording object to `oss` for Alibaba Object Storage Service and `gs` for Google Cloud Storage with the following details:
+Recording storage for cloud providers like Amazon S3, Google Cloud and Alibaba OSS storage is currently supported through [Policy](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-api) API. You can configure the **`type`** field of recording object to `s3` for AWS, `oss` for Alibaba Object Storage Service and `gs` for Google Cloud Storage with the following details:
 
 - Access Key: Access Key for your OSS/GCP Bucket
 - Secret Key: Secret Key for your OSS/GCP Bucket
