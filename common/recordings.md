@@ -100,6 +100,17 @@ You can specify a cloud storage location for your recording files in your templa
 
 The above message ensures that your configuration is successful now, and all your recordings will start collecting in your configured destination.
 
+
+## Google and Alibaba Cloud Storage for Recordings
+
+Google Cloud and Alibaba OSS storage is currently supported through [Rooms](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/create-via-api) and [Policy](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-api) APIs. You can configure the `type` field of recording object to `oss` for Alibaba Object Storage Service and `gs` for Google Cloud Storage with the following details:
+
+- Access Key: Access Key for your OSS/GCP Bucket
+- Secret Key: Secret Key for your OSS/GCP Bucket
+- Bucket: Name of the bucket
+- Region: Name of the region where your bucket is located in
+- Prefix for Upload Path: Define the directory name (optional)
+
 ## Storage path for recordings
 
 If a storage destination is not configured for recordings and if you choose to record that room then such recordings are stored for **72 hours** in an internal 100ms bucket. You can access these recordings through [Sessions](https://dashboard.100ms.live/sessions).
