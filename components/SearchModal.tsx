@@ -122,6 +122,20 @@ const ResultBox = ({
 }) => {
     setHitsCount(hits?.length || 0);
     activeResult.current = -1;
+    useEffect(() => {
+        if (hits.length === 0) {
+            window.analytics.track('no.results', {
+                title: document.title,
+                referrer: document.referrer,
+                path: window.location.hostname,
+                pathname: window.location.pathname,
+                href: window.location.href,
+                platformSelected: platformFilter,
+                typeSelected: typeFilter,
+                searchTerm: searchTerm || ''
+            });
+        }
+    }, [hits]);
     return (
         <Box>
             {hits?.length && searchTerm ? (
@@ -488,7 +502,17 @@ const FilterBar = ({
                     innerContent={type}
                     onClick={() => {
                         if (typeFilter === type) setTypeFilter(ALL_TYPES);
-                        else setTypeFilter(type);
+                        else {
+                            window.analytics.track('type.changed', {
+                                title: document.title,
+                                referrer: document.referrer,
+                                path: window.location.hostname,
+                                pathname: window.location.pathname,
+                                href: window.location.href,
+                                typeSelected: type
+                            });
+                            setTypeFilter(type);
+                        }
                     }}
                     isActive={typeFilter === type}
                 />

@@ -34,6 +34,14 @@ const ChipDropDown = ({
             <Listbox
                 value={platformFilter}
                 onChange={(selection) => {
+                    window.analytics.track('platform.changed', {
+                        title: document.title,
+                        referrer: document.referrer,
+                        path: window.location.hostname,
+                        pathname: window.location.pathname,
+                        href: window.location.href,
+                        platformSelected: selection.name
+                    });
                     setPlatformFilter(selection.name);
                     setOpenFilter(false);
                     buttonRef?.current.blur();
