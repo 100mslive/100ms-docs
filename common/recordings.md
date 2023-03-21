@@ -67,15 +67,17 @@ A multi-resolution recording is available for Interactive Live Streaming capabil
 
 ## Configure storage
 
-You can store your recordings on a cloud storage provider through the destination settings of your template. Our platform supports popular cloud storage platforms like:
+You can store your recordings on a cloud storage provider through the destination settings of your template. If you haven't configured a cloud storage service, then a recording will be stored temporarily (15 days) in a 100ms bucket. Our platform supports popular cloud storage platforms like:
 
 - Amazon Simple Storage Service (AWS S3)
 - Google Cloud Storage (GCP)
 - Alibaba Object Storage (OSS)
 
+Recording links can be accessed through the [Sessions](https://dashboard.100ms.live/sessions) page on 100ms dashboard.
+
 ### Configure recording storage with 100ms Dashboard
 
-You can configure recording storage in the destination Settings of your template on the 100ms Dashboard. Currently, the dashboard configuration supports AWS S3, while Google Cloud Storage and Alibaba OSS will be supported soon (already available via API).
+You can setup cloud recording storage in your template's destination settings on the 100ms Dashboard. At present, the dashboard supports AWS S3 for storage configuration, with Google Cloud Storage and Alibaba OSS coming soon (already accessible through API).
 
 1. Generate your credentials; for this example, you can check out a [guide from AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html). You can skip this step if you already have credentials. Please note that if you are running a Browser recording, you need to give upload permission to your key, but if you are running an SFU recording, you need to give both upload and download permission.
 
