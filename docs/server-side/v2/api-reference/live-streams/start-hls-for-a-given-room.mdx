@@ -1,22 +1,23 @@
 ---
-title: Start RTMP Streaming for a given room
+title: Start HLS Streaming for a given room
 nav: 3.19
 ---
 
-Trigger this request to start rtmp streaming and / or recording .
+Trigger this request to start HLS streaming  .
 
-<PostRequest title="https://api.100ms.live/v2/external-streams/room/:room_id/start" />
+<PostRequest title="https://api.100ms.live/v2/live-streams/room/:room_id/start" />
 <Request id="req-0">
 
 ```bash
-curl --location --request POST 'https://api.100ms.live/v2/external-streams/room/<room_id>/start' \
+curl --location --request POST 'https://api.100ms.live/v2/live-streams/room/<room_id>/start' \
 --header 'Authorization: Bearer <management_token>' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "meeting_url" : "<meeting_url>",
-    "rtmp_urls": [<rtmp_url_1>, <rtmp_url_2>],
-    "recording": true,
-    "resolution" : {"width": 1280, "height": 720},
+    "recording": {
+         "hls_vod": true,
+          "single_file_per_layer": true
+          },
     "destination": "<destination_name>"
 }'
 ```
@@ -31,20 +32,18 @@ curl --location --request POST 'https://api.100ms.live/v2/external-streams/room/
   "session_id": "<session_id>",
   "status": "<status>",
   "destination": "<destination_name>",
-  "rtmp_urls": [
-    <rtmp_url_1>,
-    <rtmp_url_2>
-  ],
+  "playback": {
+    "url": "<master-manifest>"
+  },
   "meeting_url": "<meeting_url>",
-  "recording": true,
-  "resolution": {
-    "width": 1280,
-    "height": 720
+  "recording": {
+    "hls_vod": <true/false>,
+    "single_file_paer_layer": <true/false>
   },
   "created_at": "2023-03-02T07:44:27.010516042Z",
   "started_at": "2023-03-02T07:44:27.010516042Z",
-  "stopped_at": "2023-03-02T07:44:27.010516042Z",
   "updated_at": "2023-03-02T07:44:27.010516042Z",
+  "stopped_at": "2023-03-02T07:44:27.010516042Z",
   "started_by": "<peer_id>",
   "stopped_by": "<peer_id>",
   "recording_assets": [
@@ -55,7 +54,7 @@ curl --location --request POST 'https://api.100ms.live/v2/external-streams/room/
       ],
       "duration": <media_duration>,
       "path": "<recording_path",
-      "status": "<status",
+      "status": "<status>",
       "created_at": "2023-03-02T07:44:27.010516042Z",
       "type": "<asset-type>",
       "size": <asset-file-size>,
@@ -64,11 +63,27 @@ curl --location --request POST 'https://api.100ms.live/v2/external-streams/room/
           "width": 1280,
           "height": 720
         },
-        "max_width": 1920,
-        "max_height": 1080
+        "layer": "<layer_idx>",
       }
     }
-  ]
+  ],
+  {
+        "id": "<asset-id>",
+        "thumbnails": [
+          "<thumbnail_path"
+        ],
+        "duration": <media_duration>,
+        "path": "<recording_path",
+        "status": "<status>",
+        "created_at": "2023-03-02T07:44:27.010516042Z",
+        "type": "<asset-type>",
+        "size": <asset-file-size>,
+        "metadata": {
+          "num_layers": "<num_layers>",
+          "max_width": 1920,
+          "max_height": 1080
+        }
+      }
 }
 ```
 
@@ -79,11 +94,8 @@ curl --location --request POST 'https://api.100ms.live/v2/external-streams/room/
 | Name              | Type     | Description                                                                                                                                                               | Required |
 | :---------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
 | meeting_url <br/> | `string` | Single click meeting URL which we need to start streaming/recording (see below for more details)                                                                          | No       |
-| rtmp_urls <br/>   | `array`  | List of RTMP output URLs to which the meeting will be streamed. <br/> Required when RTMP streaming needs to be started. <br/> Supports upto 3 `rtmp://` / `rtmps://` urls | No       |
-| recording <br/>      | `bool`   | Flag to enable browser recording                                                                                                                                          | No       |
-| resolution <br/>  | `object` | Video resolution for streaming/recording                                                                                                                                  | No       |
 | destination <br/> | `string` | destination name  in the template                                                                                                                                         | No       |
-
+| recording   <br/> | `object` | recording configuration
 ##### meeting_url
 
 This is a URL which lands into the meeting directly. If you are using 100ms apps then this will be like - `https://<domain>.app.100ms.live/preview/<room_id>/<role>?skip_preview=true`.
@@ -100,21 +112,11 @@ Example - `https://myname.app.100ms.live/preview/61101349d0f56e684b608c08/__inte
 
 **Note:** Ensure `meeting_url` belongs to the `room_id` so that beam is aware of the meeting session.
 
-##### rtmp_urls
-
-This URL is the combination of RTMP server URL and stream key. You can add upto 3 RTMP URLs (as array of strings) for this argument.
-
--   Format: `rtmp://server.com/app/STREAM_KEY`
--   Example: `rtmp://a.rtmp.youtube.com/live2/k0jv-329m-1y7f-ktth-ck48`
-
 <RtmpExternalConfig />
 
-##### resolution
+##### recording
 
-Minimum Resolution supported from 500x480 (in landscape mode) and 500x500 (in portrait mode)
-Maximum Resolution supported upto 1920x1080 (in landscape mode) and 1080x1920 (in portrait mode)
-
-| Name         | Type  | Description                                                                                             | Required |
-| :----------- | :---- | :------------------------------------------------------------------------------------------------------ | :------- |
-| width <br/>  | `int` | Width of the video. <br/> Range: `500`-`1920`. If height>1080 then max width=1080. <br/>Default: `1280` | Yes      |
-| height <br/> | `int` | Height of the video. <br/> Range: `480`-`1920`. If width>1080 then max height=1080. <br/>Default: `720` | Yes      |
+| Name                        | Type   | Description                                                                                             | Required |
+| :-----------                | :----  | :------------------------------------------------------------------------------------------------------ | :------- |
+| hls_vod <br/>               | `bool` | To enable vod composite recording                                                                       | No       |
+| single_file_per_layer <br/> | `bool` | To enable room composite recording per layer                                                            | No       |

@@ -1,15 +1,15 @@
 ---
-title: Stop RTMP Streaming for a given Job ID
+title: Stop HLS Streaming for a given Job ID
 nav: 3.19
 ---
 
-Trigger this request to stop rtmp streaming and / or recording.
+Trigger this request to stop HLS streaming .
 
-<PostRequest title="https://api.100ms.live/v2/external-streams/:job_id/stop" />
+<PostRequest title="https://api.100ms.live/v2/live-streams/:job_id/stop" />
 <Request id="req-0">
 
 ```bash
-curl --location --request POST 'https://api.100ms.live/v2/external-streams/<job_id>/stop' \
+curl --location --request POST 'https://api.100ms.live/v2/live-streams/<job_id>/stop' \
 --header 'Authorization: Bearer <management_token>' \
 ```
 
@@ -23,20 +23,18 @@ curl --location --request POST 'https://api.100ms.live/v2/external-streams/<job_
   "session_id": "<session_id>",
   "status": "<status>",
   "destination": "<destination_name>",
-  "rtmp_urls": [
-    <rtmp_url_1>,
-    <rtmp_url_2>
-  ],
+  "playback": {
+    "url": "<master-manifest>"
+  },
   "meeting_url": "<meeting_url>",
-  "recording": true,
-  "resolution": {
-    "width": 1280,
-    "height": 720
+  "recording": {
+    "hls_vod": <true/false>,
+    "single_file_paer_layer": <true/false>
   },
   "created_at": "2023-03-02T07:44:27.010516042Z",
   "started_at": "2023-03-02T07:44:27.010516042Z",
-  "stopped_at": "2023-03-02T07:44:27.010516042Z",
   "updated_at": "2023-03-02T07:44:27.010516042Z",
+  "stopped_at": "2023-03-02T07:44:27.010516042Z",
   "started_by": "<peer_id>",
   "stopped_by": "<peer_id>",
   "recording_assets": [
@@ -47,7 +45,7 @@ curl --location --request POST 'https://api.100ms.live/v2/external-streams/<job_
       ],
       "duration": <media_duration>,
       "path": "<recording_path",
-      "status": "<status",
+      "status": "<status>",
       "created_at": "2023-03-02T07:44:27.010516042Z",
       "type": "<asset-type>",
       "size": <asset-file-size>,
@@ -56,11 +54,27 @@ curl --location --request POST 'https://api.100ms.live/v2/external-streams/<job_
           "width": 1280,
           "height": 720
         },
-        "max_width": 1920,
-        "max_height": 1080
+        "layer": "<layer_idx>",
       }
     }
-  ]
+  ],
+  {
+        "id": "<asset-id>",
+        "thumbnails": [
+          "<thumbnail_path"
+        ],
+        "duration": <media_duration>,
+        "path": "<recording_path",
+        "status": "<status>",
+        "created_at": "2023-03-02T07:44:27.010516042Z",
+        "type": "<asset-type>",
+        "size": <asset-file-size>,
+        "metadata": {
+          "num_layers": "<num_layers>",
+          "max_width": 1920,
+          "max_height": 1080
+        }
+      }
 }
 ```
 

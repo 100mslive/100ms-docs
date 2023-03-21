@@ -1,0 +1,86 @@
+---
+title: Un Pause HLS recording for a given job ID
+nav: 3.19
+---
+
+Trigger this request to unpause HLS recording .
+
+<PostRequest title="https://api.100ms.live/v2/live-streams/:job_id/unpause-recording" />
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/live-streams/<job_id>/unpause-recording' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "payload": "<payload>",
+    "duration": <duration>
+}'
+```
+
+</Request>
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+  "id": "<job_id>",
+  "room_id": "<room_id>>",
+  "session_id": "<session_id>",
+  "status": "<status>",
+  "destination": "<destination_name>",
+  "playback": {
+    "url": "<master-manifest>"
+  },
+  "meeting_url": "<meeting_url>",
+  "recording": {
+    "hls_vod": <true/false>,
+    "single_file_paer_layer": <true/false>
+  },
+  "created_at": "2023-03-02T07:44:27.010516042Z",
+  "started_at": "2023-03-02T07:44:27.010516042Z",
+  "updated_at": "2023-03-02T07:44:27.010516042Z",
+  "stopped_at": "2023-03-02T07:44:27.010516042Z",
+  "started_by": "<peer_id>",
+  "stopped_by": "<peer_id>",
+  "recording_assets": [
+    {
+      "id": "<asset-id>",
+      "thumbnails": [
+        "<thumbnail_path"
+      ],
+      "duration": <media_duration>,
+      "path": "<recording_path",
+      "status": "<status>",
+      "created_at": "2023-03-02T07:44:27.010516042Z",
+      "type": "<asset-type>",
+      "size": <asset-file-size>,
+      "metadata": {
+        "resolution": {
+          "width": 1280,
+          "height": 720
+        },
+        "layer": "<layer_idx>",
+      }
+    }
+  ],
+  {
+        "id": "<asset-id>",
+        "thumbnails": [
+          "<thumbnail_path"
+        ],
+        "duration": <media_duration>,
+        "path": "<recording_path",
+        "status": "<status>",
+        "created_at": "2023-03-02T07:44:27.010516042Z",
+        "type": "<asset-type>",
+        "size": <asset-file-size>,
+        "metadata": {
+          "num_layers": "<num_layers>",
+          "max_width": 1920,
+          "max_height": 1080
+        }
+      }
+}
+```
+
+</ResponseBox>
