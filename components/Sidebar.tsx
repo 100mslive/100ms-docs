@@ -51,6 +51,7 @@ interface Props {
     allNav: Record<string, Record<string, NavRoute>>[];
     css?: CSS;
     hideOnDesktop?: boolean;
+    hideBorder?: boolean;
     baseViewOnly?: boolean;
 }
 
@@ -60,6 +61,7 @@ const Sidebar: React.FC<Props> = ({
     allNav,
     css = {},
     hideOnDesktop = false,
+    hideBorder = true,
     baseViewOnly = true
 }) => {
     const router = useRouter() as any;
@@ -88,6 +90,10 @@ const Sidebar: React.FC<Props> = ({
         return () => document.removeEventListener('themeChanged', updateTheme);
     }, []);
 
+    useEffect(() => {
+        if (window && window.location.pathname !== '/docs') setShowBaseView(false);
+    }, [slug]);
+
     let nav;
     if (!baseViewOnly && slug) {
         const [currentDocSlug] = slug as string[];
@@ -107,9 +113,8 @@ const Sidebar: React.FC<Props> = ({
 
     const showPlatformSelector = slug?.[0] !== 'concepts';
 
-    let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug?.[0]);
-    if (slug?.[0] === 'api-reference')
-        indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug?.[1]);
+    let indexOf = menuItem.findIndex((e) => e.key === slug?.[0]);
+    if (slug?.[0] === 'api-reference') indexOf = menuItem.findIndex((e) => e.key === slug?.[1]);
 
     indexOf = indexOf === -1 ? 0 : indexOf;
     const [tech, setTech] = useState(menuItem[indexOf]);
@@ -140,6 +145,8 @@ const Sidebar: React.FC<Props> = ({
                 alignItems: 'stretch',
                 height: 'calc(100vh - 100px)',
                 overflowY: 'auto',
+                borderRight: hideBorder ? 'none' : '1px solid',
+                borderColor: hideBorder ? 'none' : '$borderDefault',
                 overscrollBehavior: 'none',
                 '@md': {
                     position: 'absolute',
@@ -260,8 +267,9 @@ const Sidebar: React.FC<Props> = ({
                                         : '0 1.25rem 1rem 0.25rem rgba(250, 250, 250, 0.8)',
                                 backgroundColor: 'var(--docs_bg_content)',
                                 '@md': {
-                                    pt: '$8',
-                                    top: '$10'
+                                    pt: '$18',
+                                    top: '$12',
+                                    backgroundColor: 'var(--docs_bg_content)'
                                 }
                             }}>
                             <Flex
@@ -294,7 +302,7 @@ const Sidebar: React.FC<Props> = ({
                                             <div style={{ display: 'flex ', alignItems: 'center' }}>
                                                 {tech.icon}
                                                 <span style={{ marginLeft: '1rem' }}>
-                                                    {tech.name}
+                                                    {tech.name === 'JavaScript' ? 'Web' : tech.name}
                                                 </span>
                                             </div>
                                             <ChevronDownIcon />
@@ -349,36 +357,42 @@ export const menuItem = [
     {
         link: '/android/v2/get-started/quickstart',
         name: 'Android',
+        key: 'android',
         icon: <AndroidIcon style={iconStyle} />,
         apiRef: '/api-reference/android/v2/index.html'
     },
     {
         link: '/ios/v2/guides/quickstart',
         name: 'iOS',
+        key: 'ios',
         icon: <IosIcon style={iconStyle} />,
         apiRef: '/api-reference/ios/v2/home/content'
     },
     {
         link: '/javascript/v2/get-started/javascript-quickstart',
         name: 'JavaScript',
+        key: 'javascript',
         icon: <JavascriptIcon style={iconStyle} />,
         apiRef: '/api-reference/javascript/v2/home/content'
     },
     {
         link: '/react-native/v2/guides/quickstart',
-        name: 'React-Native',
+        name: 'React Native',
+        key: 'react-native',
         icon: <ReactIcon style={iconStyle} />,
         apiRef: '/api-reference/react-native/v2/modules.html'
     },
     {
         link: '/flutter/v2/guides/quickstart',
         name: 'Flutter',
+        key: 'flutter',
         icon: <FlutterIcon style={iconStyle} />,
         apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
     },
     {
         link: '/server-side/v2/how--to-guides/make-api-calls',
-        name: 'Server-Side',
+        name: 'Server-side',
+        key: 'server-side',
         icon: <ServerIcon />,
         apiRef: '/server-side/v2/api-reference/Rooms/overview'
     }

@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import useKeyPress from '@/lib/useKeyPress';
 import {
     CrossIcon,
@@ -7,8 +9,6 @@ import {
     SunIcon
 } from '@100mslive/react-icons';
 import { Flex, Text, useTheme } from '@100mslive/react-ui';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
 import ActiveLink, { ActiveLinkProps } from './ActiveLink';
 import SearchModal from './SearchModal';
 
@@ -33,16 +33,18 @@ const Header: React.FC<Props> = ({
     showMobileMenu = true,
     onHomePage = false
 }) => {
+    const [renderComponent, setRenderComponent] = useState(false);
+
     const escPressed = useKeyPress('Escape');
     const slashPressed = useKeyPress('/');
     const router = useRouter();
-    React.useEffect(() => {
+    useEffect(() => {
         if (escPressed) {
             setModal(false);
         }
     }, [escPressed]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (slashPressed) {
             setModal(true);
         }
@@ -58,7 +60,8 @@ const Header: React.FC<Props> = ({
     const [isDark, setIsDark] = React.useState<boolean>(true);
     const { toggleTheme, themeType } = useTheme();
 
-    React.useEffect(() => {
+    useEffect(() => {
+        setRenderComponent(true);
         const theme = window.localStorage.getItem('theme') || 'dark';
         const docHtml = document.documentElement.dataset;
         setIsDark(theme === 'dark');
@@ -88,7 +91,12 @@ const Header: React.FC<Props> = ({
                 : router.query.slug?.[0];
 
         if (!techs.includes(currentTech || '')) {
-            currentTech = techs.find((tech) => router.asPath.toLowerCase().includes(tech));
+            currentTech = techs.find((tech) =>
+                router.asPath
+                    .toLowerCase()
+                    .replace('-', ' ')
+                    .includes(tech.toLowerCase().replace('_', ' '))
+            );
         }
 
         return currentTech || 'javascript';
@@ -114,7 +122,7 @@ const Header: React.FC<Props> = ({
     // const isApiRef = router.query.slug && router.query.slug[0] === 'api-reference';
     const isNonApiRef = router.query.slug && router.query.slug[0] === 'server-side';
 
-    return (
+    return renderComponent ? (
         <Flex
             align="center"
             justify="between"
@@ -333,7 +341,7 @@ const Header: React.FC<Props> = ({
                 }
             `}</style>
         </Flex>
-    );
+    ) : null;
 };
 
 Header.defaultProps = {

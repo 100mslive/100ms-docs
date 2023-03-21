@@ -113,8 +113,8 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                 <Text
                     css={{
                         color: 'inherit',
-                        fontWeight: openSection ? '600' : '500',
-                        fontSize: nested ? '13px' : '15px'
+                        fontWeight: openSection ? '600' : '400',
+                        fontSize: nested ? '14px' : '15px'
                     }}>
                     {titleCasing(key)}
                 </Text>

@@ -3,6 +3,26 @@ title: Release Notes
 nav: 4
 description: Release Notes for 100ms Android SDK
 ---
+## v2.5.9 - 2023-03-17
+
+### Added
+Short Codes to join rooms - Rather than requiring your server infrastructure for authenticating users, you can now use a 100ms API to generate tokens for users. A user with a given short code can login as a certain role. One short code per role for each room.
+
+### Fixed
+Analytics improvements to better measure 100ms performance.
+
+## v2.5.8 - 2023-03-07
+
+### Added 
+- Allow echo cancellation, noise suppression and automatic gain control to be configureable from `HMSAudioTrackSettings`.
+- Limit the number of peers in the room with [Max Peer Count](https://www.100ms.live/docs/javascript/v2/how--to-guides/debugging/faq#is-there-any-way-to-limit-participants-in-a-room).
+- Added extra analytics for 100ms. (cluster)
+- Improved manual focus for the camera.
+
+### Fixed
+- Fixed Remote peer’s HMSRole having empty permissions, publish params and subscribe params.
+- Pixel 3 phones now always use software decoders to resolve an issue that happens when they don't.
+- Send screenshare track info separately in local statistics.
 
 ## v2.5.7 - 2023-01-20
 

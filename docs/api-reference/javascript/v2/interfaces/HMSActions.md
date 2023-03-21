@@ -309,6 +309,35 @@ attachVideo
 
 ---
 
+### enableBeamSpeakerLabelsLogging
+
+▸ **enableBeamSpeakerLabelsLogging**(): `Promise`<`void`\>
+
+enable sending audio speaker data to beam
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### getAuthTokenByRoomCode
+
+▸ **getAuthTokenByRoomCode**(`tokenRequest`, `tokenRequestOptions?`): `Promise`<[`TokenResult`](/api-reference/javascript/v2/interfaces/TokenResult)\>
+
+#### Parameters
+
+| Name                   | Type                                                                                 |
+| :--------------------- | :----------------------------------------------------------------------------------- |
+| `tokenRequest`         | [`TokenRequest`](/api-reference/javascript/v2/interfaces/TokenRequest)               |
+| `tokenRequestOptions?` | [`TokenRequestOptions`](/api-reference/javascript/v2/interfaces/TokenRequestOptions) |
+
+#### Returns
+
+`Promise`<[`TokenResult`](/api-reference/javascript/v2/interfaces/TokenResult)\>
+
+---
+
 ### ignoreMessageTypes
 
 ▸ **ignoreMessageTypes**(`msgTypes`, `replace?`): `void`

@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react'
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import APILink from './APILink';
@@ -8,7 +8,6 @@ import BaseRequest from './BaseRequest';
 import Code from './Code';
 import Codesandbox from './Codesandbox';
 import DeleteRequest from './DeleteRequest';
-import DownloadCollection from './DownloadCollection';
 import EndpointRequest from './EndpointRequest';
 import GetRequest from './GetRequest';
 import Note from './Note';
@@ -21,6 +20,8 @@ import StepsToc from './StepsToc';
 import StepsContainer from './StepsContainer';
 import Text from './Text';
 import View from './View';
+import Callout from './Callout';
+import FlexContainer from './FlexContainer';
 
 const CodeCustom = (props: any) => <Code {...props}>{props.children}</Code>;
 
@@ -71,6 +72,7 @@ const MDXComponents = {
     Request,
     ResponseBox,
     Note,
+    Callout,
     Image,
     blockquote: NoteCustom,
     pre: CodeCustom,
@@ -81,11 +83,11 @@ const MDXComponents = {
     Codesandbox,
     Text,
     View,
+    FlexContainer,
     a: LinkCustom,
-    DownloadCollection,
     APILink,
     StepsToc,
-    StepsContainer,
+    StepsContainer
 };
 
 export default MDXComponents;

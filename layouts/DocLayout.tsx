@@ -36,7 +36,6 @@ export default function DocLayout({ children }: Props) {
                 <div
                     style={{
                         display: 'flex',
-                        paddingTop: '1rem',
                         justifyContent: 'center',
                         width: '100%'
                     }}>
@@ -52,6 +51,7 @@ export default function DocLayout({ children }: Props) {
                             nav={nav}
                             allNav={allNav}
                             baseViewOnly={false}
+                            hideBorder={false}
                         />
                         {!menu ? children : null}
                     </div>

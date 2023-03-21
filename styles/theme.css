@@ -163,6 +163,8 @@ to decide colors
 
     --display-dark: block;
     --display-light: none;
+    --docs_search_result_breadcrumb: hsla(217, 60%, 70%, 1);
+    --docs_search_result_shadow: #0F1115;
 }
 
 .ch-scrollycoding {
@@ -291,6 +293,8 @@ to decide colors
 
     --display-dark: none;
     --display-light: block;
+    --docs_search_result_breadcrumb: hsla(217, 80%, 50%, 1);
+    --docs_search_result_shadow: #d9d9d9;
 }
 
 *,
@@ -1111,6 +1115,20 @@ ul.dropdown-options {
     margin-top: 1rem;
 }
 
+.filter-dropdown {
+    background: none;
+    outline: none;
+    padding: 0;
+    border: 0;
+}
+
+.filter-options {
+    left: unset;
+    right: 0;
+    width: 240px;
+    top: 100px;
+}
+
 .flex {
     display: flex;
 }
@@ -1278,6 +1296,7 @@ div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a#hs-eu-cookie
 .active-page {
     opacity: 1;
     pointer-events: auto;
+    background-color: 'var(--docs_bg_content)';
     width: 304px;
     z-index: 10;
 }
@@ -1412,10 +1431,6 @@ ol+p>img {
     width: calc(100% - 16px);
 }
 
-li>p:nth-child(n+2) {
-    margin-top: 16px;
-}
-
 /* Matched term in snippets returned from 
 algolia search are wrapped in this tag */
 
@@ -1523,5 +1538,11 @@ ais-highlight-0000000000 {
 
     .head-items {
         display: none;
+    }
+}
+@media screen and (max-width: 600px) {
+    .search-modal {
+        width: 90%;
+        top: 24px;
     }
 }
