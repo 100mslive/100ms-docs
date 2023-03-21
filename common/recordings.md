@@ -101,7 +101,7 @@ To store your recordings on the cloud, configure the destination settings in you
 The above message ensures that your configuration is successful now, and all your recordings will start collecting in your configured destination.
 
 
-## Google and Alibaba Cloud Storage for Recordings
+### Google and Alibaba Cloud Storage for Recordings
 
 Google Cloud and Alibaba OSS storage is currently supported through [Rooms](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/create-via-api) and [Policy](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-api) APIs. You can configure the `type` field of recording object to `oss` for Alibaba Object Storage Service and `gs` for Google Cloud Storage with the following details:
 
