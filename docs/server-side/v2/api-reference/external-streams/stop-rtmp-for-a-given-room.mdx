@@ -19,7 +19,7 @@ curl --location --request POST 'https://api.100ms.live/v2/external-streams/room/
 ```json
 {
 "error": "<error>"
-"jobs" : [{
+"data" : [{
             "id": "<job_id>",
             "room_id": "<room_id>>",
             "session_id": "<session_id>",
@@ -63,7 +63,9 @@ curl --location --request POST 'https://api.100ms.live/v2/external-streams/room/
                 }
               }
             ]
-          }]
+          }],
+          "limit": <limit>,
+          "last": "<last_job_id>"
 }
 ```
 
