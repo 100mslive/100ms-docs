@@ -66,7 +66,7 @@ A multi-resolution recording is available for Interactive Live Streaming capabil
 
 ## Configure storage
 
-You can specify a cloud storage location for your recording files in your template. Our current offering allows you to store your recordings in Amazon S3 buckets. Once you configure the S3 config of your bucket in a template, all respective recordings of sessions created via those templates will be sent to your configured bucket. This holds true for all types of aforementioned recordings.
+To store your recordings on the cloud, configure the destination settings in your template. Our platform supports popular cloud storage options like Amazon S3, Google Cloud Storage, and Alibaba Object Storage Service. Once you set up a cloud storage destination in your template, your recordings will automatically be deposited in the configured bucket.
 
 ### How to configure recording storage?
 
