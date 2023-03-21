@@ -18,24 +18,51 @@ curl --location --request GET 'https://api.100ms.live/v2/external-streams/<job_i
 
 ```json
 {
-    "id": "<job_id>",
-    "room_id": "<room_id>>",
-    "session_id": "<session_id>",
-    "status": "<status>",
-    "started_by": "<peer_id>",
-    "destination": "<destination_name>",
-    "rtmp_urls": [<rtmp_url_1>, <rtmp_url_2>],
-    "meeting_url": "<meeting_url>",
-    "recording_enabled": true,
-    "recording_location": "<recording_location>",
-    "resolution": {
-        "width": 1280,
-        "height": 720
-    },
-    "created_at": "2023-03-02T07:44:27.010516042Z",
-    "started_at": "0001-01-01T00:00:00Z",
-    "modified_at": "0001-01-01T00:00:00Z",
-    "stopped_at": "0001-01-01T00:00:00Z"
+  "id": "<job_id>",
+  "room_id": "<room_id>>",
+  "session_id": "<session_id>",
+  "status": "<status>",
+  "destination": "<destination_name>",
+  "rtmp_urls": [
+    <rtmp_url_1>,
+    <rtmp_url_2>
+  ],
+  "meeting_url": "<meeting_url>",
+  "recording": true,
+  "resolution": {
+    "width": 1280,
+    "height": 720
+  },
+  "created_at": "2023-03-02T07:44:27.010516042Z",
+  "started_at": "2023-03-02T07:44:27.010516042Z",
+  "stopped_at": "2023-03-02T07:44:27.010516042Z",
+  "updated_at": "2023-03-02T07:44:27.010516042Z",
+  "started_by": "<peer_id>",
+  "stopped_by": "<peer_id>",
+  "recording_assets": [
+    {
+      "id": "<asset-id>",
+      "thumbnails": [
+        "<thumbnail_path"
+      ],
+      "duration": "<media_duration>",
+      "path": "<recording_path",
+      "status": "<status",
+      "created_at": "2023-03-02T07:44:27.010516042Z",
+      "type": "<asset-type>",
+      "size": "<asset-file-size>",
+      "metadata": {
+        "resolution": {
+          "width": 1280,
+          "height": 720
+        },
+        "num_layers": "<num_layers>",
+        "layer": "<layer_idx>",
+        "max_width": 1920,
+        "max_height": 1080
+      }
+    }
+  ]
 }
 ```
 
