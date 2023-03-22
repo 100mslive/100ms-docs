@@ -7,20 +7,45 @@ If you use Apple's AVPlayer to play HLS stream, you can utilise 100ms SDK to mon
 
 ## Minimum Requirements
 
--   SDK version 0.6.2
--   You must be using AVPlayer for HLS Playback
+-   100ms HLS Player SDK version 0.0.2
+
+## How to integrate HLS Player SDK
+
+You can either use Swift Package Manager or Cocoapods to add HMSHLSPlayerSDK iOS SDK to your project.
+
+#### Use Swift Package Manager
+Add HMSHLSPlayerSDK iOS SDK through Swift Package Manager in Xcode. Use https://github.com/100mslive/100ms-ios-hls-sdk.git as the package source.
+
+#### Use Cocoapods
+Assuming your project name is "basicvideocall", create "Podfile" in the project folder with the following contents
+then run `pod install`
+
+```jsx section=XcodeProjectSetup sectionIndex=1
+platform :ios, '13.0'
+
+target 'basicvideocall' do
+  use_frameworks!
+  pod 'HMSHLSPlayerSDK'
+
+end
+```
+
+Open .xcworkspace
 
 ## How to monitor HLS playback statistics
 
 You create an instance of HMSHLSPlaybackMonitor class passing an instance of AVPlayer that's setup to play an HLS stream.
 
 ```swift
-let sdk = HMSSDK.build()
 var statMonitor: HMSHLSStatsMonitor?
 
 ...
 let player = AVPlayer(playerItem: item)
-statMonitor = sdk.hlsStatsMonitor(player: player)
+statMonitor = HMSHLSStatsMonitor(player: player)
+
+// Optionally add hmsSDK connected to a room to send analytics events related to hls playback
+// Currently only unrecoverable playback failure error are sent to analytics
+statMonitor.analytics = hmsSDK
 ```
 
 That's all. Now you can check the properties exposed by HMSHLSStatsMonitor at any moment to get various stats about the current HLS playback.
@@ -66,7 +91,7 @@ class YourClass: HMSHLSPlaybackDelegate {
   statMonitor.delegate = self
   ...
 
-  // HMSHLSPlaybackDelegate
+  // HMSHLSPlayerDelegate
   func playerDidChangeResolution(videoSize: CGSize) {
     print("Resolution Changed: \(videoSize)")
   }
