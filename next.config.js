@@ -1399,6 +1399,16 @@ const nextConfig = {
                 source: '/server-side/v2/introduction/faq',
                 destination: '/javascript/v2/how--to-guides/debugging/faq',
                 permanent: true
+            },
+            {
+                source: '/server-side/v2/api-reference/Destinations/recording',
+                destination: '/server-side/v2/api-reference/legacy-api-v1/destinations/recording',
+                permanent: true
+            },
+            {
+                source: '/server-side/v2/api-reference/Destinations/rtmp-streaming-and-browser-recording',
+                destination: '/server-side/v2/api-reference/legacy-api-v1/destinations/rtmp-streaming-and-browser-recording',
+                permanent: true
             }
         ];
     },
