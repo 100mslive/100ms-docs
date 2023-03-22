@@ -3,7 +3,11 @@ title: Start external stream for a room
 nav: 3.151
 ---
 
+import MeetingUrlConfig from '@/common/meeting-url.md';
+
 Use this to start an external stream for a room. This will stream to a list of RTMP endpoints (up to 3).
+
+The external stream will be `starting` state to begin with, and turn into `running` shortly.
 
 <PostRequest title="https://api.100ms.live/v2/external-streams/room/<room_id>/start" />
 <Request id="req-0">
@@ -28,7 +32,7 @@ curl --location --request POST 'https://api.100ms.live/v2/external-streams/room/
     "id": "<job_id>",
     "room_id": "<room_id>>",
     "session_id": "<session_id>",
-    "status": "<status>",
+    "status": "starting",
     "destination": "<destination_name>",
     "rtmp_urls": ["<rtmp_url_1>", "<rtmp_url_2>"],
     "meeting_url": "<meeting_url>",
@@ -43,7 +47,7 @@ curl --location --request POST 'https://api.100ms.live/v2/external-streams/room/
     "updated_at": "2023-03-02T07:44:27.010516042Z",
     "started_by": "<peer_id>",
     "stopped_by": "<peer_id>",
-    "recording_assets": []
+    "recording_assets": null
 }
 ```
 
@@ -55,25 +59,13 @@ curl --location --request POST 'https://api.100ms.live/v2/external-streams/room/
 |--------------|----------|---------------------------------------------------------------------------------------|----------|
 | meeting_url  | `string` | Single click meeting URL for the stream                                               | Yes      |
 | rtmp_urls    | `array`  | List of RTMP output URLs to stream to (up to 3 `rtmp://` / `rtmps://` URLs supported) | Yes      |
-| recording    | `bool`   | Flag to enable browser recording                                                      | No       |
+| recording    | `bool`   | Flag to enable recording                                                              | No       |
 | resolution   | `object` | Video resolution for stream                                                           | No       |
 | destination  | `string` | Name of destination from template to pick up configuration                            | No       |
 
 ##### meeting_url
 
-This is a URL which lands into the room directly. You can use 100ms room links that look like:
-
-```
-https://<domain>.app.100ms.live/preview/<room_id>/<role>?skip_preview=true
-```
-
-Other supported query parameters:
-
--   `skip_preview=true`: skips the preview page and directly joins the meeting with header and controls disabled
--   `skip_preview_headful=true`: skips the preview page and directly joins the meeting with header and controls enabled
--   `auth_token=token1234`: Use this to pass an auth token to authenticate the room join action
--   `ui_mode=activespeaker`: Render active speaker mode by default
--   `name=johndoe`: Use this to add a name for the peer
+<MeetingUrlConfig />
 
 ##### rtmp_urls
 
