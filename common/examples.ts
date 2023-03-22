@@ -18,6 +18,14 @@ const examples: {
         categories: [CATEGORIES.APPS]
     },
     {
+        title: 'Quickstart - JavaScript',
+        description: 'A conferencing and streaming app built with JavaScript using the 100ms SDK',
+        url: 'https://github.com/100mslive/100ms-examples/tree/main/web/js-quickstart',
+        technologies: [TECHNOLOGIES.JAVASCRIPT],
+        tags: ['Web', 'Vanilla JavaScript'],
+        categories: [CATEGORIES.QUICKSTARTS]
+    },
+    {
         title: 'Sample App - Android',
         description: 'An Android video conferencing app using the 100ms Android SDK',
         url: 'https://github.com/100mslive/100ms-android',
@@ -150,14 +158,6 @@ const examples: {
         url: 'https://github.com/100mslive/100ms-examples/tree/main/web/react-quickstart',
         technologies: [TECHNOLOGIES.REACT],
         tags: ['Web'],
-        categories: [CATEGORIES.QUICKSTARTS]
-    },
-    {
-        title: 'Quickstart - JavaScript',
-        description: 'A conferencing and streaming app built with JavaScript using the 100ms SDK',
-        url: 'https://github.com/100mslive/100ms-examples/tree/main/web/js-quickstart',
-        technologies: [TECHNOLOGIES.JAVASCRIPT],
-        tags: ['Web', 'Vanilla JavaScript'],
         categories: [CATEGORIES.QUICKSTARTS]
     },
     {
