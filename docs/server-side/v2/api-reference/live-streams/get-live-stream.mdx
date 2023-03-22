@@ -1,0 +1,82 @@
+---
+title: Get live stream
+nav: 3.163
+---
+
+Use this request to get the live stream object, at any point after it has been created.
+
+This can be used to fetch recording assets that are generated after the stream has completed.
+
+<GetRequest title="https://api.100ms.live/v2/live-streams/<stream_id>" />
+<Request id="req-0">
+
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/live-streams/<stream_id>' \
+--header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "<job_id>",
+    "room_id": "<room_id>>",
+    "session_id": "<session_id>",
+    "status": "<status>",
+    "destination": "<destination_name>",
+    "playback": {
+        "url": "<master-manifest>"
+    },
+    "meeting_url": "<meeting_url>",
+    "recording": {
+        "hls_vod": true,
+        "single_file_per_layer": true
+    },
+    "created_at": "2023-03-02T07:44:27.010516042Z",
+    "started_at": "2023-03-02T07:44:27.010516042Z",
+    "updated_at": "2023-03-02T07:44:27.010516042Z",
+    "stopped_at": "2023-03-02T07:44:27.010516042Z",
+    "started_by": "<peer_id>",
+    "stopped_by": "<peer_id>",
+    "recording_assets": [{
+            "id": "<asset-id>",
+            "thumbnails": [
+                "<thumbnail_path"
+            ],
+            "duration": 42,
+            "path": "<recording_path",
+            "status": "<status>",
+            "created_at": "2023-03-02T07:44:27.010516042Z",
+            "type": "<asset-type>",
+            "size": 42,
+            "metadata": {
+                "resolution": {
+                    "width": 1280,
+                    "height": 720
+                },
+                "layer": "<layer_idx>"
+            }
+        },
+        {
+            "id": "<asset-id>",
+            "thumbnails": [
+                "<thumbnail_path"
+            ],
+            "duration": 42,
+            "path": "<recording_path",
+            "status": "<status>",
+            "created_at": "2023-03-02T07:44:27.010516042Z",
+            "type": "<asset-type>",
+            "size": 42,
+            "metadata": {
+                "num_layers": "<num_layers>",
+                "max_width": 1920,
+                "max_height": 1080
+            }
+        }
+    ]
+}
+```
+
+</ResponseBox>

@@ -1,0 +1,56 @@
+---
+title: Send timed metadata
+nav: 3.166
+---
+
+Use this API to send timed metadata for a running live stream. Live stream video players can parse this metadata object and trigger UI-side behavior (for example, showing a UI modal.)
+
+<PostRequest title="https://api.100ms.live/v2/live-streams/<stream_id>/timed-metadata" />
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/live-streams/<stream_id>/timed-metadata' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "payload": "Hi, this is a test event",
+    "duration": 5
+}'
+```
+
+</Request>
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "<stream_id>",
+    "room_id": "<room_id>",
+    "session_id": "<session_id>",
+    "status": "running",
+    "meeting_url": "<meeting_url>",
+    "playback": {
+        "url": "<master-manifest-url>"
+    },
+    "recording": {
+        "hls_vod": true,
+        "single_file_per_layer": true
+    },
+    "destination": "<destination_name>",
+    "created_at": "2023-03-22T04:24:10Z",
+    "started_at": "2023-03-22T04:25:11Z",
+    "updated_at": "2023-03-22T04:25:11Z",
+    "started_by": "",
+    "stopped_at": null,
+    "stopped_by": "",
+    "recording_assets": null
+}
+```
+
+</ResponseBox>
+
+## Parameters
+
+| Name     | Type     | Description     | Required |
+|----------|----------|---------------- |----------|
+| payload  | `string` | Payload (up to 100 characters) to be sent as timed metadata in the live stream | Yes   |
+| duration | `int`    | Duration value (in seconds) | Yes   |
