@@ -19,7 +19,7 @@ const NotFound = () => {
             icon: <ServerIcon color="inherit" />,
             title: 'Server side',
             id: 'serverSide',
-            link: '/server-side/v2/introduction/basics'
+            link: '/server-side/v2/how--to-guides/make-api-calls'
         }
     ];
 
