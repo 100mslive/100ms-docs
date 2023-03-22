@@ -179,7 +179,7 @@ Chat recording is a feature through which you will receive all chats messages se
 
 **Chat recording path is available in following webhook responses:**
 
-- Browser Recording: [beam.recording.success](/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `chat_ecording_path` ; `chat_recording_presigned_url`)
+- Browser Recording: [beam.recording.success](/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `chat_recording_path` ; `chat_recording_presigned_url`)
 - SFU Recording: [recording.success](/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `chat_recording_path` ; `chat_recording_presigned_url`)
 - Multiresolution Recording: [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `chat_recording_path` ; `chat_recording_presigned_url`)
 
