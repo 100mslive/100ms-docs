@@ -3,13 +3,15 @@ title: Pause recording for stream
 nav: 3.167
 ---
 
-Trigger this request to pause HLS recording.
+Use this API to pause recording that is running for the live stream.
 
-<PostRequest title="https://api.100ms.live/v2/live-streams/:job_id/pause-recording" />
+In situations when the broadcaster gets disconnected or leaves the room, it is useful to pause recordings. When the broadcaster is back, the recording can be [resumed](./resume-live-stream-recording). This ensures that the recording is fit for video on-demand playback.
+
+<PostRequest title="https://api.100ms.live/v2/live-streams/<stream_id>/pause-recording" />
 <Request id="req-0">
 
 ```bash
-curl --location --request POST 'https://api.100ms.live/v2/live-streams/<job_id>/pause-recording' \
+curl --location --request POST 'https://api.100ms.live/v2/live-streams/<stream_id>/pause-recording' \
 --header 'Authorization: Bearer <management_token>' \
 ```
 
@@ -18,63 +20,26 @@ curl --location --request POST 'https://api.100ms.live/v2/live-streams/<job_id>/
 
 ```json
 {
-  "id": "<job_id>",
-  "room_id": "<room_id>>",
-  "session_id": "<session_id>",
-  "status": "<status>",
-  "destination": "<destination_name>",
-  "playback": {
-    "url": "<master-manifest>"
-  },
-  "meeting_url": "<meeting_url>",
-  "recording": {
-    "hls_vod": <true/false>,
-    "single_file_paer_layer": <true/false>
-  },
-  "created_at": "2023-03-02T07:44:27.010516042Z",
-  "started_at": "2023-03-02T07:44:27.010516042Z",
-  "updated_at": "2023-03-02T07:44:27.010516042Z",
-  "stopped_at": "2023-03-02T07:44:27.010516042Z",
-  "started_by": "<peer_id>",
-  "stopped_by": "<peer_id>",
-  "recording_assets": [
-    {
-      "id": "<asset-id>",
-      "thumbnails": [
-        "<thumbnail_path"
-      ],
-      "duration": <media_duration>,
-      "path": "<recording_path",
-      "status": "<status>",
-      "created_at": "2023-03-02T07:44:27.010516042Z",
-      "type": "<asset-type>",
-      "size": <asset-file-size>,
-      "metadata": {
-        "resolution": {
-          "width": 1280,
-          "height": 720
-        },
-        "layer": "<layer_idx>",
-      }
-    }
-  ],
-  {
-        "id": "<asset-id>",
-        "thumbnails": [
-          "<thumbnail_path"
-        ],
-        "duration": <media_duration>,
-        "path": "<recording_path",
-        "status": "<status>",
-        "created_at": "2023-03-02T07:44:27.010516042Z",
-        "type": "<asset-type>",
-        "size": <asset-file-size>,
-        "metadata": {
-          "num_layers": "<num_layers>",
-          "max_width": 1920,
-          "max_height": 1080
-        }
-      }
+    "id": "<stream_id>",
+    "room_id": "<room_id>",
+    "session_id": "<session_id>",
+    "status": "running",
+    "meeting_url": "<meeting_url>",
+    "playback": {
+        "url": "<master-manifest-url>"
+    },
+    "recording": {
+        "hls_vod": true,
+        "single_file_per_layer": true
+    },
+    "destination": "<destination_name>",
+    "created_at": "2023-03-22T04:24:10Z",
+    "started_at": "2023-03-22T04:25:11Z",
+    "updated_at": "2023-03-22T04:25:11Z",
+    "started_by": "",
+    "stopped_at": null,
+    "stopped_by": "",
+    "recording_assets": null
 }
 ```
 
