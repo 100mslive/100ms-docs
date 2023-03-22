@@ -489,7 +489,7 @@ No. Currently there is no API to update the webhook URL and headers, but you can
 
 100ms provides two methods to whitelist traffic from 100ms.
 
-1. [Domain and port whitelisting](/server-side/v2/introduction/firewall-and-ports)
+1. [Domain and port whitelisting](/server-side/v2/how--to-guides/firewall-and-ports)
 2. [Securing webhooks](/server-side/v2/introduction/webhook#how-to-secure-webhooks) 
 
 #### Can we end an active session programmatically (reset the room so that everyone is kicked from the meeting and it starts a new session)?

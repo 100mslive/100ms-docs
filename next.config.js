@@ -113,9 +113,9 @@ const nextConfig = {
                 permanent: false
             },
             {
-                source: '/server-side/v2/foundation/firewall-and-ports',
+                source: '/server-side/v2/introduction/firewall-and-ports',
                 destination: '/server-side/v2/how--to-guides/firewall-and-ports',
-                permanent: false
+                permanent: true
             },
             {
                 source: '/server-side/v2/guides/quickstart',
