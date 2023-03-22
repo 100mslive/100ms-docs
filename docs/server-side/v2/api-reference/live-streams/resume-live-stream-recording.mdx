@@ -1,0 +1,19 @@
+---
+title: Stop HLS Streaming for a given Job ID
+nav: 3.168
+---
+
+Trigger this request to stop HLS streaming
+
+<PostRequest title="https://api.100ms.live/v2/live-streams/<stream_id>/unpause-recording" />
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/live-streams/<stream_id>/unpause-recording' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "payload": "<payload>",
+    "duration": <duration>
+}'
+```

@@ -3,14 +3,14 @@ title: Stop live stream for a room
 nav: 3.162
 ---
 
-Trigger this request to stop HLS streaming  .
+Use this to stop all live streams running in the room. This returns a paginated response for all live streams that were stopped in the room.
 
-<PostRequest title="https://api.100ms.live/v2/live-streams/room/:room_id/stop" />
+<PostRequest title="https://api.100ms.live/v2/live-streams/room/<room_id>/stop" />
 <Request id="req-0">
 
 ```bash
 curl --location --request POST 'https://api.100ms.live/v2/live-streams/room/<room_id>/stop' \
---header 'Authorization: Bearer <management_token>' \
+--header 'Authorization: Bearer <management_token>'
 ```
 
 </Request>
@@ -18,68 +18,31 @@ curl --location --request POST 'https://api.100ms.live/v2/live-streams/room/<roo
 
 ```json
 {
-"error": "<error>"
-"data" : [{
-            "id": "<job_id>",
-            "room_id": "<room_id>>",
-            "session_id": "<session_id>",
-            "status": "<status>",
-            "destination": "<destination_name>",
-            "playback": {
-              "url": "<master-manifest>"
-            },
-            "meeting_url": "<meeting_url>",
-            "recording": {
-              "hls_vod": <true/false>,
-              "single_file_paer_layer": <true/false>
-            },
-            "created_at": "2023-03-02T07:44:27.010516042Z",
-            "started_at": "2023-03-02T07:44:27.010516042Z",
-            "updated_at": "2023-03-02T07:44:27.010516042Z",
-            "stopped_at": "2023-03-02T07:44:27.010516042Z",
-            "started_by": "<peer_id>",
-            "stopped_by": "<peer_id>",
-            "recording_assets": [
-              {
-                "id": "<asset-id>",
-                "thumbnails": [
-                  "<thumbnail_path"
-                ],
-                "duration": <media_duration>,
-                "path": "<recording_path",
-                "status": "<status>",
-                "created_at": "2023-03-02T07:44:27.010516042Z",
-                "type": "<asset-type>",
-                "size": <asset-file-size>,
-                "metadata": {
-                  "resolution": {
-                    "width": 1280,
-                    "height": 720
-                  },
-                  "layer": "<layer_idx>",
-                }
-              }
-            ],
-            {
-                  "id": "<asset-id>",
-                  "thumbnails": [
-                    "<thumbnail_path"
-                  ],
-                  "duration": <media_duration>,
-                  "path": "<recording_path",
-                  "status": "<status>",
-                  "created_at": "2023-03-02T07:44:27.010516042Z",
-                  "type": "<asset-type>",
-                  "size": <asset-file-size>,
-                  "metadata": {
-                    "num_layers": "<num_layers>",
-                    "max_width": 1920,
-                    "max_height": 1080
-                  }
-                }
-          }],
-          "limit": <limit>,
-          "last": "<last_job_id>"
+    "error": "<error>",
+    "data": [{
+        "id": "<job_id>",
+        "room_id": "<room_id>>",
+        "session_id": "<session_id>",
+        "status": "<status>",
+        "destination": "<destination_name>",
+        "playback": {
+            "url": "<master-manifest>"
+        },
+        "meeting_url": "<meeting_url>",
+        "recording": {
+            "hls_vod": false,
+            "single_file_per_layer": false
+        },
+        "created_at": "2023-03-02T07:44:27.012Z",
+        "started_at": "2023-03-02T07:44:27.012Z",
+        "updated_at": "2023-03-02T07:44:27.012Z",
+        "stopped_at": "2023-03-02T07:44:27.014Z",
+        "started_by": "<peer_id>",
+        "stopped_by": "<peer_id>",
+        "recording_assets": null
+    }],
+    "limit": 10,
+    "last": "<last_job_id>"
 }
 ```
 

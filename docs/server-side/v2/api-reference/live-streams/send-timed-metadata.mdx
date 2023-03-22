@@ -1,16 +1,21 @@
 ---
-title: Stop HLS Streaming for a given Job ID
-nav: 3.168
+title: Send timed metadata
+nav: 3.166
 ---
 
-Trigger this request to stop HLS streaming .
+Trigger this request to unpause HLS recording .
 
-<PostRequest title="https://api.100ms.live/v2/live-streams/:job_id/stop" />
+<PostRequest title="https://api.100ms.live/v2/live-streams/<stream_id>/timed-metadata" />
 <Request id="req-0">
 
 ```bash
-curl --location --request POST 'https://api.100ms.live/v2/live-streams/<job_id>/stop' \
+curl --location --request POST 'https://api.100ms.live/v2/live-streams/<stream_id>/timed-metadata' \
 --header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "payload": "<payload>",
+    "duration": <duration>
+}'
 ```
 
 </Request>
