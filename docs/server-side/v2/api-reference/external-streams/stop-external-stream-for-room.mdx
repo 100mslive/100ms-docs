@@ -1,0 +1,48 @@
+---
+title: Stop external stream for room
+nav: 3.152
+---
+
+Use this to stop all external streams running in the room. This returns a paginated response for all external streams that were stopped in the room.
+
+<PostRequest title="https://api.100ms.live/v2/external-streams/room/<room_id>/stop" />
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/external-streams/room/<room_id>/stop' \
+--header 'Authorization: Bearer <management_token>' \
+```
+
+</Request>
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "error": "<error>",
+    "data": [{
+        "id": "<job_id>",
+        "room_id": "<room_id>>",
+        "session_id": "<session_id>",
+        "status": "<status>",
+        "destination": "<destination_name>",
+        "rtmp_urls": ["<rtmp_url_1>", "<rtmp_url_2>"],
+        "meeting_url": "<meeting_url>",
+        "recording": false,
+        "resolution": {
+            "width": 1280,
+            "height": 720
+        },
+        "created_at": "2023-03-02T07:44:27.010516042Z",
+        "started_at": "2023-03-02T07:44:27.010516042Z",
+        "stopped_at": "2023-03-02T07:44:27.010516042Z",
+        "updated_at": "2023-03-02T07:44:27.010516042Z",
+        "started_by": "<peer_id>",
+        "stopped_by": "<peer_id>",
+        "recording_assets": []
+    }],
+    "limit": 10,
+    "last": "<last_job_id>"
+}
+```
+
+</ResponseBox>
