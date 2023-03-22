@@ -21,6 +21,7 @@ const Callout = ({ title, icon, children }) => {
         <Flex
             direction="column"
             justify="between"
+            className='callout'
             css={{
                 borderRadius: '$3',
                 border: '1px solid',
@@ -30,7 +31,7 @@ const Callout = ({ title, icon, children }) => {
                 background: MAIN_GRADIENT,
                 backgroundSize: '200%'
             }}>
-            <Box css={{ m: '$10' }}>
+            <Box css={{ margin: '$10 $10' }}>
                 <Flex align="center" css={{ color: '$textHighEmp', gap: '$2', mb: '$2' }}>
                     {getIcon(icon)}
                     <Text css={{ color: '$textHighEmp', fontWeight: "$semiBold" }}>
