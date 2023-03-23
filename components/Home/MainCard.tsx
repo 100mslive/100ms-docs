@@ -6,7 +6,7 @@ import {
     JavascriptIcon,
     ReactIcon
 } from '@100mslive/react-icons';
-import { Box, Flex, Text, useTheme } from '@100mslive/react-ui';
+import { Box, Flex, Text } from '@100mslive/react-ui';
 import Badge from '@/components/Home/Badge';
 
 export const SdkList = [
@@ -50,12 +50,6 @@ const learn = [
 ];
 
 const MainCard = () => {
-    const { themeType } = useTheme();
-    const MAIN_GRADIENT =
-        themeType !== 'dark'
-            ? 'linear-gradient(269.07deg, #F1F3FD 1.84%, #F9FAFA 50.14%, #ECF3FE 98.43%)'
-            : 'linear-gradient(269.07deg, #171B2B 1.84%, #0C1112 50.14%, #111927 98.43%)';
-
     const [renderBadges, setRenderBadges] = useState(false);
 
     useEffect(() => setRenderBadges(true), []);
@@ -66,7 +60,8 @@ const MainCard = () => {
                 mt: '$12',
                 p: '$10 $12',
                 gap: '$12',
-                background: MAIN_GRADIENT,
+                background:
+                    'linear-gradient(269.07deg, #171B2B 1.84%, #0C1112 50.14%, #111927 98.43%)',
                 border: '1px solid',
                 borderColor: '$borderDefault',
                 borderRadius: '$2',
