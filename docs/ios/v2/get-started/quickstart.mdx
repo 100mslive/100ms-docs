@@ -94,8 +94,13 @@ Add `joinRoom()` function with room id and token you obtained in previous steps.
 
 ```swift section=JoinRoom sectionIndex=1
 func joinRoom() {
-    let config = HMSConfig(userName: "John Doe", authToken: "replace with token")
-    hmsSDK.join(config: config, delegate: self)
+
+    HMSSDK.getAuthTokenByRoomCode("room-code") { token, error in
+        if let token = token {
+            let config = HMSConfig(userName: "John Doe", authToken: token)
+            hmsSDK.join(config: config, delegate: self)
+        }
+    }
 }
 
 override func viewDidLoad() {
