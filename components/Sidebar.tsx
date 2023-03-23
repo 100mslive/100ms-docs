@@ -311,7 +311,7 @@ const Sidebar: React.FC<Props> = ({
                                                     }>
                                                     {m.icon}
                                                     <span style={{ marginLeft: '1rem' }}>
-                                                        {m.name}
+                                                        {m.name === 'JavaScript' ? 'Web' : m.name}
                                                     </span>
                                                 </Listbox.Option>
                                             ))}
