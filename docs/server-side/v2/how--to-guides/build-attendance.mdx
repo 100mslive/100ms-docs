@@ -90,7 +90,7 @@ const detailsByUser = peers.reduce((acc, peer) => {
     acc[peer.user_id] = {
         "name": peer.name,
         "user_id": peer.user_id,
-        "duration": (acc[peer.user_id] || 0) + roundedDuration
+        "duration": (acc[peer.user_id]?.duration || 0) + roundedDuration
     };
     return acc;
 }, {});
@@ -232,7 +232,7 @@ app.post('/webhooks', async function (req, res) {
                 acc[peer.user_id] = {
                     "name": peer.name,
                     "user_id": peer.user_id,
-                    "duration": (acc[peer.user_id] || 0) + roundedDuration
+                    "duration": (acc[peer.user_id]?.duration || 0) + roundedDuration
                 };
                 return acc;
             }, {});
