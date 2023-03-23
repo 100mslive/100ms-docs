@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { ChevronDownIcon, CodeIcon } from '@100mslive/react-icons';
 import { Box, Text } from '@100mslive/react-ui';
 import Chip from './Chip';
@@ -16,6 +16,7 @@ const ChipDropDown = ({
     const updatedMenuItem = [
         {
             name: ALL_PLATFORMS,
+            key: 'all-platforms',
             icon: <CodeIcon />
         },
         ,
@@ -28,6 +29,18 @@ const ChipDropDown = ({
         setOpenFilter(false);
         buttonRef?.current.blur();
     });
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            let setFilter = false;
+            updatedMenuItem.forEach((plat) => {
+                if (!setFilter && plat && window.location.pathname.includes(plat.key)) {
+                    setPlatformFilter(plat.name);
+                    setFilter = true;
+                }
+            });
+        }
+    }, []);
 
     return (
         <Box ref={optionsRef}>
