@@ -165,15 +165,6 @@ Every style of docs is fully customisable and is fully built with CSS Variables.
 
 All CSS Tokens , Baseline , Reset can be found in [theme.css](https://github.com/100mslive/100ms-docs/blob/main/styles/theme.css)
 
-```css
-:root {
-    /* Contains Tokens for Dark Mode */
-}
-[data-theme='light'] {
-    /* Contains Tokens for Light Mode */
-}
-```
-
 All CSS Variables prefixed with `token` control the Syntax Highlighting.
 
 ## 📇 Linting

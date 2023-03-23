@@ -51,14 +51,12 @@ const Header: React.FC<Props> = ({
         if (helperState) setModal((prev) => !prev);
     }, [helperState]);
 
-    const [isDark, setIsDark] = React.useState<boolean>(true);
     const { toggleTheme, themeType } = useTheme();
 
     useEffect(() => {
         setRenderComponent(true);
         const theme = 'dark';
         const docHtml = document.documentElement.dataset;
-        setIsDark(true);
         docHtml.theme = theme;
         if (themeType !== theme) toggleTheme();
     }, []);
@@ -121,11 +119,7 @@ const Header: React.FC<Props> = ({
             }}>
             <div className="head-left">
                 <a href="https://www.100ms.live" style={{ display: 'flex', marginRight: '40px' }}>
-                    <img
-                        src={isDark ? '/docs/logo-full.svg' : '/docs/logo-full-dark.svg'}
-                        height={24}
-                        alt="100ms Logo"
-                    />
+                    <img src="/docs/logo-full.svg" height={24} alt="100ms Logo" />
                 </a>
                 <Flex css={{ gap: '$14', '@md': { display: 'none' } }}>
                     <HeaderLink href="/">Documentation</HeaderLink>
