@@ -136,7 +136,7 @@ const Sidebar: React.FC<Props> = ({
                 display: hideOnDesktop && !menu ? 'none' : 'flex',
                 flexDirection: 'column',
                 alignItems: 'stretch',
-                height: 'calc(100vh - 100px)',
+                height: 'calc(100vh - 64px)',
                 overflowY: 'auto',
                 borderRight: hideBorder ? 'none' : '1px solid',
                 borderColor: hideBorder ? 'none' : '$borderDefault',
@@ -185,7 +185,7 @@ const Sidebar: React.FC<Props> = ({
                             }
                         }}
                         onClick={() => setShowBaseView(false)}>
-                        <Text variant="sm" css={{ color: '$primaryLight' }}>
+                        <Text variant="sm" css={{ color: '$primaryLight', fontWeight: '$semiBold' }}>
                             Continue exploring
                         </Text>
                         <ChevronRightIcon height="16px" width="16px" />
@@ -276,7 +276,7 @@ const Sidebar: React.FC<Props> = ({
                                     if (baseRef.current) baseRef?.current.scrollTo(0, 0);
                                 }}>
                                 <ChevronLeftIcon height="16px" width="16px" />
-                                <Text variant="sm" css={{ color: '$primaryLight' }}>
+                                <Text variant="sm" css={{ color: '$primaryLight', fontWeight:'$semiBold' }}>
                                     Content overview
                                 </Text>
                             </Flex>
