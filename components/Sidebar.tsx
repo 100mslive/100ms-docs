@@ -145,7 +145,7 @@ const Sidebar: React.FC<Props> = ({
                     position: 'absolute',
                     top: '0',
                     display: menu ? 'flex' : 'none',
-                    height: 'calc(100vh - 200px)',
+                    height: '100vh',
                     width: '100%',
                     ...(cssMd ?? {})
                 },
