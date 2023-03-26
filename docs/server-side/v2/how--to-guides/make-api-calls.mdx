@@ -5,52 +5,52 @@ nav: 1
 
 ## Request
 
-Our REST APIs enable you to access various capabilities to complete your integration based on the requirements for your use case.
+Use the 100ms REST API to interact with 100ms objects (like rooms, sessions, templates) and integrate your backend application with 100ms.
 
 <BaseRequest title="https://api.100ms.live/v2/" />
 
-You can leverage these requests using the common HTTP methods:
+The REST API uses common HTTP methods:
 
-1. **GET** - retrieves data from 100ms server. **Example**: Retrieve details of a specific room
-2. **POST** - sends new data to 100ms server. **Example**: Create a room
-3. **DELETE** - removes existing data from 100ms server. **Example**: Delete a role from a template.
+1. `GET` retrieves data from 100ms server. For example, retrieving details of a specific room
+2. `POST` sends new data to 100ms server. For example, creating a room
+3. `DELETE` removes existing data from 100ms server. For example, deleting a role from a template
 
-### Content type
+### Headers
 
-The input of the request should be of the type application/json. The payload for all POST requests should be passed as a JSON object with the Content-Type as `application/json`.
+| Name          | Value                       | Required |
+| :------------ | :-------------------------- | :------- |
+| Authorization | Bearer `<management token>` | Yes      |
+| Content-type  | application/json            | Yes      |
 
-Most of the GET request arguments must be passed as a path param whereas some of the APIs accept it as a query param.
+#### Authorization
 
-DELETE request arguments should be passed as a path param.
+Pass the [management token](../../../concepts/v2/concepts/security-and-tokens#management-token-for-rest-api) with your requests for successful authorization.
 
-#### Headers
+#### Content-type
 
-| Name                | Value                       | Required |
-| :------------------ | :-------------------------- | :------- |
-| Content-type <br/>  | application/json            | Yes      |
-| Authorization <br/> | Bearer `<management token>` | Yes      |
+The payload for all POST requests should be passed as a JSON object with `Content-Type` header as `application/json`.
 
 ## Response
 
 100ms API responds to all requests with a response in JSON format along with an HTTP status code to indicate whether the request was successful.
 
-### HTTP status codes
+### Status codes
 
 All requests return one of these standard HTTP status codes
 
-| Code               | Description                                                       |
-| ------------------ | ----------------------------------------------------------------- |
-| 200 - OK           | The request has succeeded.                                        |
-| 204 - No Content   | Resource deleted.                                                 |
-| 401 - Unauthorized | No valid API management token provided.                           |
-| 403 - Forbidden    | The API management token provided doesn't have enough permission. |
-| 404 - Not Found    | The request resource was not found.                               |
-| 500 - Server Error | Something went wrong with 100ms servers. (These are rare).        |
+| Code               | Description                                    |
+| ------------------ | ---------------------------------------------- |
+| 200 - OK           | The request has succeeded                      |
+| 204 - No Content   | Resource deleted successfully                  |
+| 401 - Unauthorized | No valid API management token provided         |
+| 403 - Forbidden    | The API management token provided doesn't have enough permission |
+| 404 - Not Found    | The request resource was not found             |
+| 500 - Server Error | Something went wrong with 100ms servers        |
 
 ### Errors
 
--   API responses with `4XX` and `5XX HTTP status codes` indicate that the request has failed.
--   `4XX`: This can be either 401 or 403 or 404. You can refer to the [status codes section](#http-status-codes) for more information. Also, the response body will contain the error message that will help to resolve the error and resend the request.
+-   API responses with `4XX` and `5XX` HTTP status codes indicate that the request failed
+-   `4XX`: The response body will contain the error message that will help to resolve the error and resend the request
 
     #### Example:
 
@@ -64,27 +64,27 @@ All requests return one of these standard HTTP status codes
     }
     ```
 
--   `5XX`: Server errors. This happens when something is wrong with 100ms servers(these are rare).
+-   `5XX`: This indicates an error with the 100ms servers, and we work to ensure that these are rare
 
 ## Pagination
 
-All API resources support bulk fetches via “list” API methods (For example, list all rooms). These APIs use query parameters - limit, start, and last - to support pagination.
+All API resources support bulk fetches via “list” API methods (for example, list all rooms). These APIs support pagination through query parameters: limit and start.
 
 To fetch the first page of 10 objects, set `limit=10` as a query param. This API will respond with a list of objects in key `data`. The response also has key `last` with the unique identifier for the last object in `data`.
 
 To fetch the second page of 10 objects (11 to 20), pass the previous `last` value as the `start` query param. Set `limit = 10` and `start = <last value from previous response>`.
 
-### List API response variables
+### List API response structure
 
-| Name        | Type       | Description                                                                                                            |
-| :---------- | :--------- | :--------------------------------------------------------------------------------------------------------------------- |
-| limit <br/> | `int`      | Number of objects the API tried to find. If returned array has lesser number of results, only those number were found. |
-| data <br/>  | `array`    | Array of objects.                                                                                                      |
-| last <br/>  | `ObjectID` | The last object in the list of objects in the response. Can be used as `start` for subsequent request.                 |
+| Name  | Type  | Description   |
+| ----- | ----- | ------------- |
+| limit | `int` | Number of objects the API tried to find. If returned array has lesser number of results, only those number were found |
+| data  | `array`  | Array of objects  |
+| last  | `string` | Identifier of the last object in the list of objects in the response. Can be used as `start` for subsequent request |
 
 ### Params used for pagination
 
 | Name  | Type     | Description                                                                                            |
-| :---- | :------- | :----------------------------------------------------------------------------------------------------- |
+| ----- | -------- | ------------------------------------------------------------------------------------------------------ |
 | limit | `int`    | A limit on the number of objects to be returned.<br/> `Default value`: 10<br/> `Allowed range`: 10-100 |
-| start | `object` | Determines the starting point in the list of objects to be returned in the response.                   |
+| start | `string` | Determines the starting point in the list of objects to be returned in the response                    |
