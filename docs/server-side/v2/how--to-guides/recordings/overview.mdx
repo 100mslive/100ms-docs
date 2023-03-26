@@ -9,7 +9,7 @@ This guide focuses on using room composite (browser-based) recordings.
 
 A composite recording is a single MP4 file that records all peers and their tracks (audio, video and screen share). It captures the experience that a peer has in the room and is equivalent to recordings generated from Google Meet and Zoom.
 
-A composite recording is different from track-level recordings: single file per track (audio, video). To use track-level recordings instead of composite, enable [SFU recordings](../../api-reference/legacy-api-v1/destinations/recording) on your template.
+A composite recording is different from track-level recordings, which generate single file per audio/video track. To use track-level recordings, enable [SFU recordings](../../api-reference/legacy-api-v1/destinations/recording) on your template.
 
 <StepsToc
     parentId="start-stop-recording"
@@ -18,7 +18,7 @@ A composite recording is different from track-level recordings: single file per 
         "Combine room lifecycle events with recording API to automate recordings",
         "Use server-side webhooks to listen to recording status changes",
         "Use server-side REST API to stop recording",
-        "Multiple ways to get recording assets (files)",
+        "Choose a way to get recording assets (files)",
     ]}
 />
 
@@ -33,9 +33,7 @@ Use the server-side API to start recording for a given room (passed as `room_id`
 <Request id="req-0">
 
 ```bash
-curl \
-    --location \
-    --request POST 'https://prod-in2.100ms.live/api/v2/beam' \
+curl --request POST 'https://prod-in2.100ms.live/api/v2/beam' \
     --header 'Content-Type: application/json' \
     --header 'Authorization: Bearer <management_token>' \
     --data-raw '{
@@ -83,9 +81,7 @@ By default, recording automatically ends in 5 minutes when all peers have left t
 <Request id="req-0">
 
 ```bash
-curl \
-    --location \
-    --request POST 'https://prod-in2.100ms.live/api/v2/beam' \
+curl --request POST 'https://prod-in2.100ms.live/api/v2/beam' \
     --header 'Content-Type: application/json' \
     --header 'Authorization: Bearer <management_token>' \
     --data-raw '{
@@ -98,7 +94,7 @@ curl \
 
 ### Get recording assets
 
-There are multiple ways to get the recording assets (files). By default, recording assets are saved in 100ms' storage buckets and retained up to 15 days. We recommend configuring your own storage buckets so that assets are automatically transferred and you control their retention lifecycle.
+There are multiple ways to get the recording assets (files). By default, recording assets are saved in 100ms storage buckets and retained up to 15 days. We recommend configuring your own storage buckets so that assets are automatically transferred and you control their retention lifecycle.
 
 If you are relying on the 100ms storage bucket, we recommend downloading the asset from the dashboard or programmatically via the webhook/API.
 
