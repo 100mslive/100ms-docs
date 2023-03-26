@@ -1,0 +1,123 @@
+---
+title: Start and stop recording
+nav: 3.2
+---
+
+import MeetingUrlConfig from '@/common/meeting-url.md';
+
+This guide focuses on using room composite (browser-based) recordings.
+
+A composite recording is a single MP4 file that records all peers and their tracks (audio, video and screen share). It captures the experience that a peer has in the room and is equivalent to recordings generated from Google Meet and Zoom.
+
+A composite recording is different from track-level recordings: single file per track (audio, video). To use track-level recordings instead of composite, enable [SFU recordings](../../api-reference/legacy-api-v1/destinations/recording) on your template.
+
+<StepsToc
+    parentId="start-stop-recording"
+    descriptions={[
+        "Use server-side REST API to start recording",
+        "Combine room lifecycle events with recording API to automate recordings",
+        "Use server-side webhooks to listen to recording status changes",
+        "Use server-side REST API to stop recording",
+        "Multiple ways to get recording assets (files)",
+    ]}
+/>
+
+<StepsContainer id="start-stop-recording">
+
+### Start recording with API
+
+Use the server-side API to start recording for a given room (passed as `room_id` in the request body).
+
+<PostRequest title="https://prod-in2.100ms.live/api/v2/beam" />
+
+<Request id="req-0">
+
+```bash
+curl \
+    --location \
+    --request POST 'https://prod-in2.100ms.live/api/v2/beam' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer <management_token>' \
+    --data-raw '{
+        "operation": "start",
+        "room_id": "<room_id>",
+        "meeting_url": "<meeting_url>",
+        "record": true,
+        "resolution" : {"width": 1280, "height": 720}
+    }'
+```
+
+</Request>
+
+Internally, this API launches a browser window that opens the `meeting_url` of the room. This browser instance joins the room and records it, similar to what a peer would do. You can [define a role](./customize) for this peer to ensure the peer's tile is not visible.
+
+##### meeting_url
+
+<MeetingUrlConfig />
+
+### Automate start recording (Optional)
+
+Instead of relying on peers in the room to start recording, you use room lifecycle events to automate start recording.
+
+To do so, set up a [webhook listener](../configure-webhooks/overview) and act on the relevant webhook:
+
+- Start recording for every session: Use the [`session.open.success` event](../configure-webhooks/webhook#sessionopensuccess) to start recording (with the above API)
+- Start recording when a particular peer joins: Use the [`peer.join.success` event](../configure-webhooks/webhook#peerjoinsuccess) to start recording (with the above API)
+
+### Listen to recording status updates
+
+Start recording is asynchronous and you can listen to status changes to the recording jobs with [webhooks](../configure-webhooks/overview).
+
+- [`beam.started.success` event](../configure-webhooks/webhook#beamstartedsuccess): This is sent when recording starts successfully
+- [`beam.recording.success` event](../configure-webhooks/webhook#beamrecordingsuccess): This is sent when recording ends successfully
+- [`beam.failure` event](../configure-webhooks/webhook#beamfailure): This is sent when there is a failure
+
+### Stop recording with API
+
+Use the server-side API to end recording for a given room (passed as `room_id` in the request body). This can be combined with webhook events like [`session.close.success`](../configure-webhooks/webhook#sessionclosesuccess) for automation.
+
+By default, recording automatically ends in 5 minutes when all peers have left the room.
+
+<PostRequest title="https://prod-in2.100ms.live/api/v2/beam" />
+
+<Request id="req-0">
+
+```bash
+curl \
+    --location \
+    --request POST 'https://prod-in2.100ms.live/api/v2/beam' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer <management_token>' \
+    --data-raw '{
+        "operation": "stop",
+        "room_id": "<room_id>"
+    }'
+```
+
+</Request>
+
+### Get recording assets
+
+There are multiple ways to get the recording assets (files). By default, recording assets are saved in 100ms' storage buckets and retained up to 15 days. We recommend configuring your own storage buckets so that assets are automatically transferred and you control their retention lifecycle.
+
+If you are relying on the 100ms storage bucket, we recommend downloading the asset from the dashboard or programmatically via the webhook/API.
+
+#### Configure your own storage
+
+100ms supports AWS S3, Google Cloud Storage and Alibaba OSS as storage buckets. These can be configured on [the 100ms dashboard](../../../../concepts/v2/concepts/recordings#configure-storage).
+
+#### Download assets from dashboard
+
+Recording assets can be downloaded from the 100ms dashboard. Use the [sessions page](https://dashboard.100ms.live/sessions) to navigate to the relevant session page, which has links to the recorded assets.
+
+![Recording links](/docs/v2/recording-links.png)
+
+#### Download assets via webhooks
+
+The [`beam.recording.success` webhook event](../configure-webhooks/webhook#beamrecordingsuccess) contains the pre-signed URL to the recording asset (in the property called `recording_presigned_url`). This is a short-lived URL, that can be used to download the asset.
+
+#### Fetch assets via API
+
+Coming soon: We're adding new API endpoints to [recording assets](../../api-reference/recording-assets/overview). Reach out to us if you'd like to become an early adopter.
+
+</StepsContainer>
