@@ -22,7 +22,7 @@
 
 ## Get Room-Code from 100ms dashboard
 
-Any client connecting calling 100ms' service needs to authenticate using an auth token. In production you would have your own servers generating the tokens (see more [here](/javascript/v2/foundation/security-and-tokens)). But for a quick start you can use one of the following methods:
+Any client calling 100ms' service needs to authenticate using an auth token. In production you would have your own servers generating the tokens (see more [here](/javascript/v2/foundation/security-and-tokens)). But for a quick start you can use one of the following methods:
 
 1. Get Room-Code from dashboard and use getAuthTokenByRoomCode API from the SDK to get an auth token
 2. Get a temporary auth token from the dashboard, this token will expire in 24 hours and should not be hard-coded into a production app.
