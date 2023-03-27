@@ -5,6 +5,7 @@ export default function StepsContainer({ children, id }) {
     return (
         <Box
             id={id}
+            className="steps-container"
             css={{
                 marginLeft: '1rem',
                 paddingLeft: '1.5rem',
@@ -23,13 +24,13 @@ export default function StepsContainer({ children, id }) {
                     height: '33px',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    color: 'var(--docs_text_secondary)',
+                    color: 'var(--docs_text_primary)',
                     borderRadius: '100%',
                     border: '4px solid var(--docs_bg_content)',
                     background: 'var(--docs_bg_code_highlight)',
                     lineHeight: '1.5rem',
-                    fontSize: '1rem',
-                    fontWeight: 400
+                    fontSize: '0.875rem',
+                    fontWeight: 500
                 }
             }}>
             {children}

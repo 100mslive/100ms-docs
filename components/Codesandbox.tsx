@@ -5,7 +5,7 @@ export default function Codesandbox({ id, tests }) {
     const hasQueryParam = id.includes("?");
     const paramSeparator = hasQueryParam ? "&" : "?";
     return (
-        <div>
+        <div className='sandbox'>
             <LazyLoad height={400} once>
                 <iframe
                     title="Code Sandbox"
@@ -20,7 +20,6 @@ export default function Codesandbox({ id, tests }) {
                 div {
                     border: 1px solid var(--docs_border_strong);
                     border-radius: var(--docs_border_radius_s);
-                    margin-bottom: 2rem;
                     overflow: hidden;
                 }
                 iframe {

@@ -5,7 +5,6 @@ const Callout = ({ title, icon, children }) => (
     <Flex
         direction="column"
         justify="between"
-        className='callout'
         css={{
             borderRadius: '$3',
             border: '1px solid',

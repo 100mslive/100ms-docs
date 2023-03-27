@@ -38,6 +38,7 @@ export default function StepsToc({
 
     return (
         <Box
+            className='steps-toc'
             as="section"
             css={{
                 display: 'grid',
@@ -59,7 +60,7 @@ export default function StepsToc({
                         border: '1px solid var(--docs_border_default)',
                         padding: '20px',
                         '&:hover': {
-                            borderColor: 'var(--docs_primary_light)'
+                            borderColor: 'var(--primary_light)'
                         }
                     }}>
                     <Box
@@ -67,6 +68,8 @@ export default function StepsToc({
                             borderRadius: '50%',
                             backgroundColor: 'var(--docs_bg_code_highlight)',
                             marginBottom: '10px',
+                            color: 'var(--docs_text_primary)',
+                            fontWeight: 600,
                             height: '40px',
                             width: '40px',
                             display: 'flex',
@@ -76,7 +79,7 @@ export default function StepsToc({
                         {index + 1}
                     </Box>
                     <Text variant="lg">{item.title}</Text>
-                    <Text css={{ marginTop: '15px' }}>{item.description}</Text>
+                    <p style={{ marginTop: '4px' }}>{item.description}</p>
                 </Box>
             ))}
         </Box>
