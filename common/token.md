@@ -16,20 +16,23 @@
 
 ![Configure Template](/docs/v2/Step3_ConfigureTemplate.png)
 
-5. Now you can **join your room** configured with the video conferencing template. You can join the room either via a 100ms demo link or by using the auth token in SDK or Sandbox.
+5. Now you can **join your room** configured with the video conferencing template. You can join the room either via a 100ms demo link or by using room-code/auth-token in SDK or Sandbox.
 
 ![Join Room](/docs/v2/Step4_JoinRoom.png)
 
-## Get a temporary token from 100ms dashboard
+## Get Room-Code/Auth-Token from 100ms dashboard
 
-Any client connecting calling 100ms' service needs to authenticate using an auth token. In production you would have your own servers generating the tokens (see more [here](/javascript/v2/foundation/security-and-tokens)), but for a quick start you can use the dashboard to create a token for you. The token will expire in 24 hours and should not be hard-coded into a production app.
+Any client connecting calling 100ms' service needs to authenticate using an auth token. In production you would have your own servers generating the tokens (see more [here](/javascript/v2/foundation/security-and-tokens)). But for a quick start you can use one of the following methods:
 
--   To get a temporary token click on "Join room" button.
+1. Get Room-Code from dashboard and use getAuthTokenByRoomCode API from the sdk to get an auth token
+2. Get a temporary auth token from the dashboard, this token will expire in 24 hours and should not be hard-coded into a production app.
+
+-   To get room-code or temporary token click on "Join room" button.
 
 ![Join Room](/guides/token/join-room.png)
 
--  You can copy the access token from the Join with SDK section.
+-  You can copy the room-code from the Join with SDK section. (you could also copy the auth token directly if needed)
 
 ![Copy Token](/guides/token/copy-token.png)
 
-The token will be copied to your clipboard. Use this along with the `room_id` to proceed with the quickstart guide.
+The room-code will be copied to your clipboard. Use this to proceed with the quickstart guide.
