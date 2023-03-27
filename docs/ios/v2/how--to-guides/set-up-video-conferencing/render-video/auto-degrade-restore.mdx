@@ -3,21 +3,15 @@ title: Auto Video Degrade/Restore
 nav: 4.43
 ---
 
-Sometimes people have bad internet connections but everyone deserves a good meeting.
+The Auto Video Degradation/Restoration feature allows for improved audio quality and avoidance of disconnections in situations where network bandwidth is too slow to support audio and video conversations simultaneously. This feature automatically turns off downloading other peer's videos to improve audio quality, and if the network quality improves, videos will be restored automatically. By following the steps outlined in this documentation, you can enable and use this feature to provide a better communication experience for your users.
 
-When the network is too slow to support audio and video conversations together, the 100ms SDK can automatically turn off downloading other peer's videos, which may improve the audio quality and avoid disconnections.
+## Enabling the Feature
 
-If the network quality improves, the videos will be restored automatically as well.
+To enable the subscribe degradation feature in your room, open the [templates](https://dashboard.100ms.live/templates) in the dashboard and enable it for roles there. For more information about templates and roles, please refer to the [templates documentation](/ios/v2/foundation/templates-and-roles).
 
-To turn on subscribe degradation in your room, open the [templates](https://dashboard.100ms.live/templates) in the dashboard and enable it for roles there. Here's more information about [templates](/ios/v2/foundation/templates-and-roles).
+## Using the Feature
 
-## Responding in the app
+All HMSVideoTracks within the HMSPeer have a variable called isDegraded. If isDegraded is true, it means that the network is too slow to support video communication, and the video should be treated as turned off in the user interface. It is important to note that addSink and removeSink still need to be called on the video even if it's degraded. Failure to do so may result in the following issues:
 
-All `HMSVideoTracks`, within the `HMSPeer`'s have a variable called `isDegraded`.
-
-If `isDegraded` is true, in the UI, treat it as if the video is turned off. If the UI is not changed, the video tile will appear black.
-
-An important note here is that `addSink` and `removeSink` still need to be called on the video even if it's degraded. If this isn't done:
-
-1. Subscribe degradation will not know how many videos are supposed to be shown and videos may degrade, never to be restored again.
-2. In the case where a video was on screen and then was degraded, remove sink may not be called for it depending on your code. If this were to happen and the video was restored later you would end up downloading multiple more videos than what are being shown.
+1. The subscribe degradation feature will not know how many videos are supposed to be shown, and videos may degrade, never to be restored again.
+2. In case a video was on-screen and then was degraded, remove sink may not be called for it depending on your code. If this happens and the video is restored later, you may end up downloading multiple more videos than what are being shown.
