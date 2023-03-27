@@ -20,7 +20,7 @@
 
 ![Join Room](/docs/v2/Step4_JoinRoom.png)
 
-## Get Room-Code/Auth-Token from 100ms dashboard
+## Get Room-Code from 100ms dashboard
 
 Any client connecting calling 100ms' service needs to authenticate using an auth token. In production you would have your own servers generating the tokens (see more [here](/javascript/v2/foundation/security-and-tokens)). But for a quick start you can use one of the following methods:
 
