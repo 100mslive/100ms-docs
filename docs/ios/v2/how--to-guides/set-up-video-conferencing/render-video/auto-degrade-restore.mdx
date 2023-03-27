@@ -1,0 +1,17 @@
+---
+title: Auto Video Degrade/Restore
+nav: 4.43
+---
+
+The Auto Video Degradation/Restoration feature allows for improved audio quality and avoidance of disconnections in situations where network bandwidth is too slow to support audio and video conversations simultaneously. This feature automatically turns off downloading other peer's videos to improve audio quality, and if the network quality improves, videos will be restored automatically. By following the steps outlined in this documentation, you can enable and use this feature to provide a better communication experience for your users.
+
+## Enabling the Feature
+
+To enable the subscribe degradation feature in your room, open the [templates](https://dashboard.100ms.live/templates) in the dashboard and enable it for roles there. For more information about templates and roles, please refer to the [templates documentation](/ios/v2/foundation/templates-and-roles).
+
+## Using the Feature
+
+All HMSVideoTracks within the HMSPeer have a variable called isDegraded. If isDegraded is true, it means that the network is too slow to support video communication, and the video should be treated as turned off in the user interface. It is important to note that addSink and removeSink still need to be called on the video even if it's degraded. Failure to do so may result in the following issues:
+
+1. The subscribe degradation feature will not know how many videos are supposed to be shown, and videos may degrade, never to be restored again.
+2. In case a video was on-screen and then was degraded, remove sink may not be called for it depending on your code. If this happens and the video is restored later, you may end up downloading multiple more videos than what are being shown.
