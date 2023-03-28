@@ -191,11 +191,11 @@ const Sidebar: React.FC<Props> = ({
                         <ChevronRightIcon height="16px" width="16px" />
                     </Flex>
                 )}
-                <Link passHref href="/concepts/v2/concepts/basics">
+                <Link passHref href="/concepts/v2/getting-started/overview">
                     <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <LayersIcon style={{ color: 'inherit' }} />
                         <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
-                            Concepts
+                            Getting Started
                         </Text>
                     </Flex>
                 </Link>
