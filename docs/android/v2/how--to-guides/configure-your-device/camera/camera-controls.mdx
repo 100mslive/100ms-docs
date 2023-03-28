@@ -150,6 +150,26 @@ cameraControl.captureImageAtMaxSupportedResolution(
 
 ```
 
+## Switch Camera Face
+
+> 💡 This will work on SDK 2.5.10 and above 
+
+Flips the camera face i.e Front facing camera will flip to back facing camera and vice versa.
+
+```kotlin
+
+cameraControl.switchCamera(onAction: HMSActionResultListener?)
+
+```
+
+Switches the camera to the desire facing side
+
+```kotlin
+
+cameraControl.switchCamera([HMSVideoTrackSettings.CameraFacing.FRONT] / [HMSVideoTrackSettings.CameraFacing.BACK] ,onAction: HMSActionResultListener?)
+
+```
+
 ## Wiring camera controls with gestures
 
 Here's an example how you can wire camera controls with gestures.
