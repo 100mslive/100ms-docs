@@ -9,9 +9,13 @@ This guide will walk you through step-by-step instructions to create a video con
 
 Please check our [basic concepts](/javascript/v2/foundation/basics) guide to understand the concepts like rooms, templates, peers, etc.
 
-TL;DR - Try out this complete example in [CodeSandbox](https://codesandbox.io/s/hms-js-quickstart-5rmes).
+TL;DR - Try out this complete example in [CodeSandbox](https://codesandbox.io/s/github/100mslive/100ms-examples/tree/main/web/js-quickstart).
 
-<Codesandbox id="5rmes" />
+<Codesandbox id="github/100mslive/100ms-examples/tree/main/web/js-quickstart" />
+
+You can join the above room using room code from [dashboard](https://dashboard.100ms.live/dashboard). Refer [this](https://www.100ms.live/docs/concepts/v2/concepts/rooms/room-codes/room-codes) for more details about room code.
+
+![Dashboard Join Room](/guides/room-code-auth-token.png)
 
 ## Create a sample app locally
 
@@ -90,16 +94,23 @@ const controls = document.getElementById("controls");
 const renderedPeerIDs = new Set();
 
 // Joining the room
-joinBtn.onclick = () => {
+joinBtn.onclick = async () => {
+  const roomCode = document.getElementById("room-code").value
+  const userName = document.getElementById("name").value
+
+  const resp = await hmsActions.getAuthTokenByRoomCode({ roomCode })
+  const authToken = resp.token
+
   hmsActions.join({
-    userName: document.getElementById("name").value,
-    authToken: document.getElementById("token").value
+    userName,
+    authToken
   });
 };
 
 // Leaving the room
-function leaveRoom() {
-  hmsActions.leave();
+async function leaveRoom() {
+  await hmsActions.leave();
+  peersContainer.innerHTML = "";
 }
 
 // Cleanup if user refreshes the tab or navigates away
@@ -213,7 +224,7 @@ hmsStore.subscribe(onConnection, selectIsConnectedToRoom);
         <input id="name" type="text" name="username" placeholder="Your name" />
       </div>
       <div class="input-container">
-        <input id="token" type="text" name="token" placeholder="Auth token" />
+        <input id="room-code" type="text" name="roomCode" placeholder="Room code" />
       </div>
       <button type="button" class="btn-primary" id="join-btn">
         Join
@@ -407,29 +418,44 @@ To test the application, run the application using:
 
 This will start your development server in http://localhost:3000/. Open this in your browser to test the video conferencing app you created above.
 
-#### Fetch token to join the room
+#### Use room code to join the room
 
 To test audio/video functionality, you need to connect to a 100ms room; please check following steps for the same:
 
 1. Navigate to your [100ms dashboard](https://dashboard.100ms.live/dashboard) or [create an account](https://dashboard.100ms.live/register) if you don't have one.
-2. Use the `Video Conferencing Starter Kit` to create a room with a default template assigned to it to test this app quickly.
-3. Go to [Rooms page](https://dashboard.100ms.live/rooms) in your dashboard, click on the `Room Id` of the room you created above, and click on the `Join room` button on the top right.
-4. You will see two 100ms demo URLs for two roles created when you deployed the starter kit; you can click on the 'key' icon to copy the token and use the same to join the room in your browser.
+2. Use the `Video Conferencing` template to create a room and test this app quickly.
+3. Once the room is created, you will be shown a `Join Room` pop-up with options to join a room. Copy the room code shown in the pop-up.
+4. Enter a user name and paste the room code copied in above step.
 
-    ![Join room key](/guides/join_room_key.png)
+![Dashboard Join Room](/guides/room-code-auth-token.png)
 
 Now, after you click `join`, you should be able to see yourself!
 
-<video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
-    <source src="/docs/guides/peer-1.mp4" type="video/mp4" />
-</video>
+<iframe 
+  src="https://www.loom.com/embed/6547b535fc1049a9b3b5f97588884c98"
+  frameborder="0" 
+  webkitallowfullscreen 
+  mozallowfullscreen 
+  allowfullscreen 
+  width="100%"
+  height="460"
+  >
+</iframe>
 <br />
 
 You can open the app in another tab in the browser to join as the second peer to check audio/video transactions between two or more peers.
 
-<video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
-    <source src="/docs/guides/peer-2.mp4" type="video/mp4" />
-</video>
+<iframe
+  src="https://www.loom.com/embed/0f1c5e0ed84343629058c4d9d5e4ac57" 
+  frameborder="0" 
+  webkitallowfullscreen 
+  mozallowfullscreen 
+  allowfullscreen 
+  width="100%"
+  height="460"
+>
+</iframe>
+
 <br />
 
 **We have a fully functional video conferencing application now** 🎉🚀
@@ -522,7 +548,7 @@ const controls = document.getElementById("controls");
         <input id="name" type="text" name="username" placeholder="Your name" />
       </div>
       <div class="input-container">
-        <input id="token" type="text" name="token" placeholder="Auth token" />
+        <input id="room-code" type="text" name="roomCode" placeholder="Room code" />
       </div>
       <button type="button" class="btn-primary" id="join-btn">
         Join
@@ -725,16 +751,23 @@ Let's include a way for people to leave the room as well. To leave the room, we 
 
 ```jsx:index.js section=JoiningRoom sectionIndex=1 tab=JS
 // Joining the room
-joinBtn.onclick = () => {
+joinBtn.onclick = async () => {
+  const userName = document.getElementById("name").value
+  const roomCode = document.getElementById("room-code").value
+  // use room code to fetch auth token
+  const { token } = await hmsActions.getAuthTokenByRoomCode({ roomCode })
+  const authToken = token
+  // join room using username and auth token
   hmsActions.join({
-    userName: document.getElementById("name").value,
-    authToken: document.getElementById("token").value
+    userName,
+    authToken
   });
 };
 
 // Leaving the room
-function leaveRoom() {
-  hmsActions.leave();
+async function leaveRoom() {
+  await hmsActions.leave();
+  peersContainer.innerHTML = "";
 }
 
 // Cleanup if user refreshes the tab or navigates away
@@ -765,7 +798,7 @@ leaveBtn.onclick = leaveRoom;
         <input id="name" type="text" name="username" placeholder="Your name" />
       </div>
       <div class="input-container">
-        <input id="token" type="text" name="token" placeholder="Auth token" />
+        <input id="room-code" type="text" name="roomCode" placeholder="Room code" />
       </div>
       <button type="button" class="btn-primary" id="join-btn">
         Join
@@ -1091,9 +1124,7 @@ Refer to [Test the app section](/javascript/v2/guides/javascript-quickstart#test
 
 Here's the complete example.
 
-<Codesandbox id="5rmes" />
-
-There is also a version of the above quickstart using CDN [here](https://codepen.io/triptu/pen/dymxmoR?editors=0010).
+<Codesandbox id="github/100mslive/100ms-examples/tree/main/web/js-quickstart" />
 
 That wraps it up for this guide. We hope you had fun. There are plenty of cool stuff which can be done with our SDK, be sure to check the [features section](/javascript/v2/features/integration) for more information.
 
