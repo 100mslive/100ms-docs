@@ -19,7 +19,6 @@ import remarkGfm from 'remark-gfm';
 import remarkA11yEmoji from '@fec/remark-a11y-emoji';
 import { MDXProvider, useMDXComponents } from '@mdx-js/react';
 import imagePlugin from '@/lib/image';
-import { remarkCodeHike } from '@code-hike/mdx';
 import DocLayout from '@/layouts/DocLayout';
 import theme from 'shiki/themes/github-dark.json';
 
