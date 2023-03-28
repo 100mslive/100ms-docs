@@ -205,19 +205,7 @@ export const getStaticProps = async ({ params }) => {
                 ]
             ];
             options.providerImportSource = '@mdx-js/react';
-
-            if (params.slug[3] === 'javascript-quickstart-beta') {
-                options.remarkPlugins.push([
-                    remarkCodeHike,
-                    {
-                        theme,
-                        lineNumbers: false,
-                        staticMediaQuery: '(max-width: 1333px)'
-                    }
-                ]);
-            } else {
-                options.rehypePlugins.push(mdxPrism);
-            }
+            options.rehypePlugins.push(mdxPrism);
             return options;
         }
     });
@@ -229,7 +217,7 @@ export const getStaticProps = async ({ params }) => {
             nav: { [currentDocSlug]: navItems[currentDocSlug] },
             source: code, // { compiledSource: mdxSource.compiledSource },
             frontMatter: frontmatter,
-            showToc: !(params.slug[3] ?? '').endsWith('quickstart-beta')
+            showToc: true
         }
     };
 };
