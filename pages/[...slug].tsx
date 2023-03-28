@@ -20,7 +20,6 @@ import remarkA11yEmoji from '@fec/remark-a11y-emoji';
 import { MDXProvider, useMDXComponents } from '@mdx-js/react';
 import imagePlugin from '@/lib/image';
 import DocLayout from '@/layouts/DocLayout';
-import theme from 'shiki/themes/github-dark.json';
 
 type NavRoute = {
     url: string;
