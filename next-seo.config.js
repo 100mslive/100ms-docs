@@ -10,7 +10,7 @@ export default {
         site_name: '100ms.live',
         images: [
             {
-                url: `https://100ms.live/images/banner.png`,
+                url: `https://storage.googleapis.com/100ms-cms-prod/cms/SEO_Image_dc5b503498/SEO_Image_dc5b503498.png`,
                 alt: '100ms Banner'
             }
         ]
