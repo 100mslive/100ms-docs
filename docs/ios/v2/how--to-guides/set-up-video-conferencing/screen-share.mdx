@@ -235,6 +235,19 @@ if localPeer?.auxiliaryTracks?.first(where: { $0.source == HMSCommonTrackSource.
 
 2. If you are getting a crash while running with screen share feature, please make sure that the app group identifier is not misspelled in both the main app and the broadcast extension. Also make sure your entitlement file has the correct app group name.
 
+## Frequently asked questions
+
+1. I use RPSystemBroadcastPickerView to show the screen share extension. But user sees a list of available broadcast extensions on along with my extension. How can I show only my extenstion to the user when they want to share the screen?
+
+You can assign a preferredExtension to the instance of your RPSystemBroadcastPickerView so the system shown only your extension in the list:
+
+```swift
+    let systemBroadcastPicker = RPSystemBroadcastPickerView(frame: CGRect(x: 0, y:0, width: 44, height: 44))
+    systemBroadcastPicker.preferredExtension = "live.100ms.videoapp.screenshare"
+```
+
+Where live.100ms.videoapp.screenshare is the bundle id of your broadcast extension.
+
 ## Example implementation
 
 👀 To see an Example iOS broadcast upload extension implementation for screen sharing using 100ms Broadcast extension SDK, checkout [our Example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
