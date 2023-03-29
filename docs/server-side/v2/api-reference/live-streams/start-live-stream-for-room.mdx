@@ -1,0 +1,75 @@
+---
+title: Start live stream for a room
+nav: 3.161
+---
+
+import MeetingUrlConfig from '@/common/meeting-url.md';
+
+Use this to start a live stream for a room. This would return a playback URL (in m3u8 format) that can be shared with HLS player clients for playback.
+
+The live stream will be `starting` state to begin with, and turn into `running` shortly.
+
+<PostRequest title="https://api.100ms.live/v2/live-streams/room/<room_id>/start" />
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/live-streams/room/<room_id>/start' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "meeting_url" : "<meeting_url>",
+    "recording": {
+        "hls_vod": true,
+        "single_file_per_layer": true
+    }
+}'
+```
+
+</Request>
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "<stream_id>",
+    "room_id": "<room_id>",
+    "session_id": "<session_id>",
+    "status": "starting",
+    "meeting_url": "<meeting_url>",
+    "playback": {
+        "url": "<master-manifest-url>"
+    },
+    "recording": {
+        "hls_vod": true,
+        "single_file_per_layer": true
+    },
+    "destination": "<destination_name>",
+    "created_at": "2023-03-22T04:24:10.155978231Z",
+    "started_at": null,
+    "updated_at": "2023-03-22T04:24:10.155978231Z",
+    "started_by": "",
+    "stopped_at": null,
+    "stopped_by": "",
+    "recording_assets": null
+}
+```
+
+</ResponseBox>
+
+## Parameters
+
+| Name         | Type     | Description                                                | Required |
+|--------------|----------|----------------------------------------------------------- |----------|
+| meeting_url  | `string` | Single click meeting URL for the stream                    | Yes      |
+| recording    | `object` | Flags to enable recording                                  | No       |
+| destination  | `string` | Name of destination from template to pick up configuration | No       |
+
+##### meeting_url
+
+<MeetingUrlConfig />
+
+##### recording
+
+| Name         | Type   | Description | Required |
+| :----------- | :----- | :---------- | :------- |
+| hls_vod      | `bool` | Generate a `room-vod` asset for on-demand playback use-case | No  |
+| single_file_per_layer | `bool` | Generate `room-composite` assets, one for each layer | No  |

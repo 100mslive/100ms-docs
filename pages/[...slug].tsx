@@ -1,26 +1,30 @@
+import React, { useMemo } from 'react';
+import { useRouter } from 'next/router';
+import fs from 'fs';
+import path from 'path';
+import mdxPrism from 'mdx-prism';
 import EditFile from '@/components/EditFile';
 import components from '@/components/MDXComponents';
 import Pagination from '@/components/Pagination';
 import Toc from '@/components/Toc';
-import DocLayout from '@/layouts/DocLayout';
 import getPagination from '@/lib/getPagination';
-import imagePlugin from '@/lib/image';
 import { DOCS_PATH, getAllDocs, getDocsPaths, getNavfromDocs } from '@/lib/mdxUtils';
-import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
 import withTableofContents from '@/lib/withTableofContents';
-import fs from 'fs';
-import matter from 'gray-matter';
-import mdxPrism from 'mdx-prism';
-import hydrate from 'next-mdx-remote/hydrate';
-import renderToString from 'next-mdx-remote/render-to-string';
-import { useRouter } from 'next/router';
-import path from 'path';
-import React from 'react';
+import { scrollToUrlHash } from '@/lib/scrollToUrlHash';
+import { bundleMDX } from 'mdx-bundler';
+import { getMDXComponent } from 'mdx-bundler/client';
+import remarkCodeHeader from '@/lib/remark-code-header';
+import rehypeRaw from 'rehype-raw';
+import remarkGfm from 'remark-gfm';
+import remarkA11yEmoji from '@fec/remark-a11y-emoji';
+import { MDXProvider, useMDXComponents } from '@mdx-js/react';
+import imagePlugin from '@/lib/image';
+import DocLayout from '@/layouts/DocLayout';
 
-// type NavRoute = {
-//     url: string;
-//     title: string;
-// };
+type NavRoute = {
+    url: string;
+    title: string;
+};
 
 export type AllDocsType = {
     url: string;
@@ -42,36 +46,43 @@ interface Props {
         title: string;
         nav: number;
     };
-    // nav: Record<string, Record<string, NavRoute>>;
+    nav: Record<string, Record<string, NavRoute>>;
+    allNav: Record<string, Record<string, NavRoute>>[];
+
     pagination: {
         previousPost: PaginationType;
         nextPost: PaginationType;
     };
-    // allDocs: AllDocsType[];
-    source: {
-        compiledSource: string;
-        renderedOutput: string;
-        scope: { title: string; nav: number };
-    };
+    source: string;
+    showToc?: boolean;
 }
 
-const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
+const MDX_GLOBAL_CONFIG = {
+    MdxJsReact: {
+        useMDXComponents
+    }
+};
+
+const DocSlugs = ({ source, frontMatter, pagination, showToc = true }: Props) => {
     const {
         query: { slug },
         asPath
-    } = useRouter() as any;
+    } = useRouter();
     const [currentDocSlug] = slug as string[];
     const [activeHeading, setActiveHeading] = React.useState('');
     const [activeSubHeading, setActiveSubHeading] = React.useState('');
-    const content = hydrate(source, { components });
+    const Component = useMemo(() => getMDXComponent(source, MDX_GLOBAL_CONFIG), [source]);
 
     React.useEffect(() => {
         setTimeout(() => {
             scrollToUrlHash(asPath);
         }, 500);
     }, [asPath]);
+
     React.useEffect(() => {
-        if (!window.location.href.includes('#')) window.scrollTo(0, 0);
+        setTimeout(() => {
+            if (!window.location.href.includes('#')) window.scrollTo(0, 0);
+        }, 0);
         const getTopIndex = (arr) => {
             for (let i = arr.length - 1; i >= 0; i--)
                 if (Math.floor(arr[i].getBoundingClientRect().top) < 200) return i;
@@ -89,7 +100,7 @@ const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
                 if (
                     h3Index >= 0 &&
                     h3Array[h3Index].getBoundingClientRect().top >
-                    h2Array[h2Index].getBoundingClientRect().top
+                        h2Array[h2Index].getBoundingClientRect().top
                 )
                     setActiveSubHeading(h3Array[h3Index].id);
                 else setActiveSubHeading('');
@@ -100,39 +111,44 @@ const DocSlugs = ({ source, frontMatter, pagination }: Props) => {
 
         return () => window.removeEventListener('scroll', getActiveLinks);
     }, []);
+
     let showPagination = true;
     // Don't show Pagination for Android
-    if (slug[1] === 'android') {
+    if (Array.isArray(slug) && slug[1] === 'android') {
         showPagination = false;
     }
+
     return (
         <>
-            <article>
+            <article
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    minWidth: '100px',
+                    flexGrow: '1',
+                    boxSizing: 'border-box',
+                    padding: '0 2rem',
+                    minHeight: '100vh',
+                    paddingBottom: '80px'
+                }}>
                 <h1>{frontMatter.title}</h1>
-                {content}
+                <MDXProvider components={components}>
+                    <Component />
+                </MDXProvider>
                 <hr />
                 {pagination.previousPost && showPagination && (
                     <Pagination next={pagination.nextPost} prev={pagination.previousPost} />
                 )}
                 <EditFile slug={asPath} />
             </article>
-            <Toc
-                activeHeading={activeHeading}
-                activeSubHeading={activeSubHeading}
-                CurrentDocsSlug={currentDocSlug}
-            />
-            <style jsx>{`
-                 article {
-                     min-width: 100px;
-                     flex-grow: 1;
-                     box-sizing: border-box;
-                     padding: 0 2rem;
-                     min-height: calc(100vh - 140px);
-                     padding-bottom: 80px;
-                     display: flex;
-                     flex-direction: column;
-                 }
-             `}</style>
+
+            {showToc && (
+                <Toc
+                    activeHeading={activeHeading}
+                    activeSubHeading={activeSubHeading}
+                    CurrentDocsSlug={currentDocSlug}
+                />
+            )}
         </>
     );
 };
@@ -141,44 +157,65 @@ export default DocSlugs;
 
 export const getStaticProps = async ({ params }) => {
     // Absolute path of the docs file
-    const postFilePath = path.join(DOCS_PATH, `${path.join(...params.slug)}.mdx`);
-    // Raw Mdx File Data Buffer
-    const source = fs.readFileSync(postFilePath);
-
-    /**
-     * Content: Mdx Data
-     * data: FrontMatter Data
-     */
-    const { content, data } = matter(source);
+    let postFilePath = path.join(DOCS_PATH, `${path.join(...params.slug)}.mdx`);
+    if (!fs.existsSync(postFilePath)) {
+        postFilePath = path.join(DOCS_PATH, `${path.join(...params.slug)}.md`);
+    }
 
     const allDocs = getAllDocs();
-    const nav = getNavfromDocs(allDocs);
+    const navItems = getNavfromDocs(allDocs);
     const [currentDocSlug] = params.slug as string[];
     const currentDocs = allDocs.filter((doc) => doc.url.includes(`/${currentDocSlug}/`));
     const { previousPost, nextPost } = getPagination(currentDocs, params.slug as string[]);
     const pagination = { previousPost, nextPost };
-    const toc = [];
-    const mdxSource = await renderToString(content, {
-        components,
-        // Optionally pass remark/rehype plugins
-        mdxOptions: {
-            remarkPlugins: [
-                require('@/lib/remark-code-header'),
-                require('@fec/remark-a11y-emoji'),
-                withTableofContents(toc),
-                imagePlugin
-            ],
-            rehypePlugins: [mdxPrism]
+    const { code, frontmatter } = await bundleMDX({
+        globals: {
+            '@mdx-js/react': {
+                varName: 'MdxJsReact',
+                namedExports: ['useMDXComponents'],
+                defaultExport: false
+            }
         },
-        scope: data
+        cwd: path.join(DOCS_PATH, path.join(...params.slug.slice(0, -1))),
+        file: postFilePath,
+        mdxOptions(options) {
+            options.remarkPlugins = [
+                ...(options.remarkPlugins ?? []),
+                imagePlugin,
+                remarkGfm,
+                remarkA11yEmoji,
+                remarkCodeHeader,
+                withTableofContents
+            ];
+            options.rehypePlugins = [
+                ...(options.rehypePlugins ?? []),
+                [
+                    rehypeRaw,
+                    {
+                        passThrough: [
+                            'mdxFlowExpression',
+                            'mdxJsxFlowElement',
+                            'mdxJsxTextElement',
+                            'mdxTextExpression',
+                            'mdxjsEsm'
+                        ]
+                    }
+                ]
+            ];
+            options.providerImportSource = '@mdx-js/react';
+            options.rehypePlugins.push(mdxPrism);
+            return options;
+        }
     });
+
     return {
         props: {
-            toc,
             pagination,
-            nav: { [currentDocSlug]: nav[currentDocSlug] },
-            source: mdxSource, // { compiledSource: mdxSource.compiledSource },
-            frontMatter: data,
+            allNav: navItems,
+            nav: { [currentDocSlug]: navItems[currentDocSlug] },
+            source: code, // { compiledSource: mdxSource.compiledSource },
+            frontMatter: frontmatter,
+            showToc: true
         }
     };
 };
@@ -198,6 +235,4 @@ export const getStaticPaths = async () => {
     };
 };
 
-DocSlugs.getLayout = function getLayout(page) {
-    return <DocLayout>{page}</DocLayout>;
-};
+DocSlugs.Layout = DocLayout

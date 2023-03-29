@@ -1,14 +1,41 @@
 /* eslint-disable react/no-array-index-key */
+import React, { useEffect, useState, useRef } from 'react';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 import FlutterIcon from '@/assets/FlutterIcon';
 import AndroidIcon from '@/assets/icons/AndroidIcon';
 import IosIcon from '@/assets/icons/IosIcon';
 import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import ReactIcon from '@/assets/icons/ReactIcon';
 import ServerIcon from '@/assets/icons/ServerIcon';
+import {
+    ChevronDownIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    LayersIcon,
+    AppleIcon as Ios,
+    FlutterIcon as Flutter,
+    AndroidIcon as Android,
+    ReactIcon as ReactNative,
+    JavascriptIcon as JavaScript,
+    RocketIcon
+} from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import { Flex, Box, Text, CSS } from '@100mslive/react-ui';
+import SidebarSection from './SidebarSection';
+import PlatformAccordion from './PlatformAccordion';
+
+const accordionIconStyle = { height: '24px', width: '24px', color: 'inherit' };
+
+const platformOrder = [
+    { text: 'Web', icon: <JavaScript style={accordionIconStyle} />, key: 'javascript' },
+    { text: 'Android', icon: <Android style={accordionIconStyle} />, key: 'android' },
+    { text: 'iOS', icon: <Ios style={accordionIconStyle} />, key: 'ios' },
+    { text: 'Flutter', icon: <Flutter style={accordionIconStyle} />, key: 'flutter' },
+    { text: 'React Native', icon: <ReactNative style={accordionIconStyle} />, key: 'react-native' }
+];
+
+const platformlist = ['javascript', 'android', 'ios', 'flutter', 'react-native', 'server-side'];
 
 type NavRoute = {
     url: string;
@@ -21,299 +48,342 @@ interface Props {
         setMenu: React.Dispatch<React.SetStateAction<boolean>>;
     };
     nav: Record<string, Record<string, NavRoute>>;
+    allNav: Record<string, Record<string, NavRoute>>[];
+    css?: CSS;
+    hideOnDesktop?: boolean;
+    hideBorder?: boolean;
+    baseViewOnly?: boolean;
 }
 
-const Sidebar: React.FC<Props> = ({ menuState, nav: currentNav }) => {
+const Sidebar: React.FC<Props> = ({
+    menuState,
+    nav: currentNav,
+    allNav,
+    css = {},
+    hideOnDesktop = false,
+    hideBorder = true,
+    baseViewOnly = true
+}) => {
     const router = useRouter() as any;
     const {
-        query: { slug },
-        asPath
+        query: { slug }
     } = router;
-
     const { menu, setMenu } = menuState;
+
+    const [renderComponents, setRenderComponents] = useState(false);
+    const [openPlatformAccordion, setOpenPlatformAccordion] = useState(platformlist[0]);
+
     useEffect(() => {
         setMenu(false);
     }, [router]);
 
-    const [currentDocSlug] = slug as string[];
-    const [navAPI, setNavAPI] = useState(currentNav);
+    const [showBaseView, setShowBaseView] = useState(baseViewOnly);
+
     useEffect(() => {
-        fetch('/docs/api/content?query=nav')
-            .then((res) => res.json())
-            .then((result) => setNavAPI(result.nav))
-            .catch();
+        setRenderComponents(true);
     }, []);
 
-    let nav;
-    if (Object.keys(navAPI).length) {
-        const platform = navAPI[currentDocSlug];
-        if (slug[0] !== 'v1' && slug[0] !== 'v2') {
-            if (slug?.length > 3) {
-                nav = platform[slug[1]];
-                if (slug[0] === 'api-reference') {
-                    // if (slug[1] === 'android') {
-                    //     showPagination = false;
-                    // }
-                    nav = platform[slug[1]][slug[2]];
-                }
-            }
-        } else {
-            nav = platform;
-        }
-    }
+    useEffect(() => {
+        if (window && window.location.pathname !== '/docs') setShowBaseView(false);
+    }, [slug]);
 
-    let indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[0]);
-    if (slug[0] === 'api-reference') {
-        indexOf = menuItem.findIndex((e) => e.name.toLowerCase() === slug[1]);
-    }
+    let nav;
+    if (!baseViewOnly && slug) {
+        const [currentDocSlug] = slug as string[];
+
+        if (Object.keys(currentNav).length) {
+            const platform = currentNav[currentDocSlug];
+            if (slug[0] !== 'v1' && slug[0] !== 'v2') {
+                if (slug?.length > 3) {
+                    nav = platform[slug[1]];
+                    if (slug[0] === 'api-reference') {
+                        nav = platform[slug[1]][slug[2]];
+                    }
+                }
+            } else nav = platform;
+        }
+    } else nav = false;
+
+    const showPlatformSelector = slug?.[0] !== 'concepts';
+
+    let indexOf = menuItem.findIndex((e) => e.key === slug?.[0]);
+    if (slug?.[0] === 'api-reference') indexOf = menuItem.findIndex((e) => e.key === slug?.[1]);
+
     indexOf = indexOf === -1 ? 0 : indexOf;
     const [tech, setTech] = useState(menuItem[indexOf]);
+
     const changeTech = (s) => {
         setTech(s);
-        if (slug[0] === 'api-reference') {
+        if (slug[0] === 'api-reference')
             router.push(s.apiRef, undefined, {
                 shallow: false
             });
-        } else {
-            router.push(s.link, undefined, { shallow: false });
-        }
+        else router.push(s.link, undefined, { shallow: false });
     };
-useEffect(() => setTech(menuItem[indexOf]), [indexOf])
+
+    useEffect(() => setTech(menuItem[indexOf]), [indexOf]);
+
+    const baseRef = useRef<HTMLDivElement>(null);
+
+    const { ['@md']: cssMd, ...cssRest } = css;
+
     return (
-        <div className="sidebar">
-            {/* Sidebar Version Section */}
-            <section className="menu-container">
-                <div className="menu-title">PLATFORM</div>
-                <Listbox value={tech} onChange={changeTech}>
-                    <Listbox.Button className="dropdown">
-                        <div style={{ display: 'flex ', alignItems: 'center' }}>
-                            {tech.icon} <span style={{ marginLeft: '1rem' }}>{tech.name}</span>
-                        </div>
-                        <ChevronDown />{' '}
-                    </Listbox.Button>
-                    <Listbox.Options className="dropdown-options">
-                        {menuItem.map((m) => (
-                            <Listbox.Option
-                                key={m.link}
-                                value={m}
-                                className={({ active }) =>
-                                    `${
-                                        active
-                                            ? 'dropdown-option dropdown-option-active'
-                                            : 'dropdown-option'
-                                    }`
-                                }>
-                                {m.icon} <span style={{ marginLeft: '1rem' }}>{m.name}</span>
-                            </Listbox.Option>
-                        ))}
-                    </Listbox.Options>
-                </Listbox>
-            </section>
-            {/* Sidebar Menu Section */}
-            {nav
-                ? Object.entries(nav).map(([key, children], index) => (
-                      <section className="menu-container" key={`${key}-${index}`}>
-                          <div className="menu-title">{key.replace(/-/g, ' ')}</div>
-                          {Object.entries(children as {}).map(([_, route]: [unknown, any]) =>
-                              Object.prototype.hasOwnProperty.call(route, 'title') ? (
-                                  <Link
-                                      scroll={false}
-                                      prefetch={false}
-                                      href={route.url || ''}
-                                      key={`${route.url}-${index}`}>
-                                      <a
-                                          className={`menu-item ${
-                                              route.url === asPath ? 'active-link' : ''
-                                          }`}>
-                                          {route.title}
-                                      </a>
-                                  </Link>
-                              ) : null
-                          )}
-                          {key === 'features' && slug[0] !== 'server-side' ? (
-                              <>
-                                  {aliasMenu.map((a) => (
-                                      <Link
-                                          scroll={false}
-                                          prefetch={false}
-                                          href={a.url}
-                                          key={a.url}>
-                                          <a
-                                              className={`menu-item ${
-                                                  a.url === asPath ? 'active-link' : ''
-                                              }`}>
-                                              {a.title}
-                                          </a>
-                                      </Link>
-                                  ))}
-                              </>
-                          ) : null}
-                      </section>
-                  ))
-                : null}
-            <style jsx>{`
-                .sidebar {
-                    width: 304px;
-                    padding-bottom: 32px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: stretch;
-                    height: calc(100vh - 136px);
-                    overflow-y: scroll;
-                    top: ${menu ? '' : '104px'};
-                    left: 0;
-                    position: sticky;
-                    z-index: 100;
-                }
-                ::-webkit-scrollbar {
-                    width: 0px;
-                }
-                ::-webkit-scrollbar-thumb {
-                    outline: 0px;
-                }
-                .menu-container {
-                    margin-top: 2px;
-                    margin-left: 0.5rem;
-                    margin-bottom: 9px;
-                    margin-right: 1.5rem;
-                }
-                .menu-container:first-of-type {
-                    margin-top: 0px;
-                    position: sticky;
-                    top: 0px;
-                    z-index: 100;
-                    background: var(--docs_bg_content);
-                    margin-bottom: 10px;
-                }
-                .menu-item {
-                    cursor: pointer;
-                    padding: 4px 0;
-                    color: var(--gray11);
-                    font-weight: 400;
-                    font-size: 13px;
-                    display: flex;
-                    align-items: center;
-                    padding-left: 1rem;
-                    margin-left: 1rem;
-                }
-                .sub-title {
-                    padding-left: 30px;
-                    font-weight: 700;
-                    font-size: 12px;
-                    margin-top: 20px;
-                    margin-bottom: 5px;
-                }
-                .sub-menu-item {
-                    cursor: pointer;
-                    padding: 8px 0;
-                    color: var(--gray11);
-                    font-weight: 400;
-                    font-size: 13px;
-                    display: flex;
-                    align-items: center;
-                    padding-left: 30px;
-                }
-                a {
-                    text-decoration: none;
-                }
-                .sub-menu-item:hover {
-                    background-color: var(--blue5);
-                }
-                .menu-title {
-                    padding-left: 1rem;
-                    text-transform: uppercase;
-                    font-weight: 700;
-                    font-size: 15px;
-                    margin: 5px 0;
-                }
-                @media screen and (max-width: 768px) {
-                    .sidebar {
-                        position: sticky;
-                        width: 100vw;
-                        top: 20px;
-                        display: ${menu ? 'flex' : 'none'};
-                        height: 100%;
-                    }
-                }
-            `}</style>
-        </div>
+        <Box
+            ref={baseRef}
+            className="hide-scrollbar"
+            css={{
+                minWidth: '304px',
+                display: hideOnDesktop && !menu ? 'none' : 'flex',
+                flexDirection: 'column',
+                alignItems: 'stretch',
+                height: 'calc(100vh - 100px)',
+                overflowY: 'auto',
+                borderRight: hideBorder ? 'none' : '1px solid',
+                borderColor: hideBorder ? 'none' : '$borderDefault',
+                overscrollBehavior: 'none',
+                '@md': {
+                    position: 'absolute',
+                    top: '0',
+                    display: menu ? 'flex' : 'none',
+                    height: 'calc(100vh - 200px)',
+                    width: '100%',
+                    ...(cssMd ?? {})
+                },
+                '@sm': {
+                    w: '100%'
+                },
+                ...cssRest
+            }}>
+            {/* Base view */}
+            <div
+                className={`page ${showBaseView ? 'active-page' : ''}`}
+                style={
+                    showBaseView
+                        ? {
+                              padding: menu ? '24px' : '1.75rem',
+                              paddingTop: '0',
+                              position: menu ? 'initial' : 'sticky',
+                              top: '1rem',
+                              width: '100%'
+                          }
+                        : {}
+                }>
+                {baseViewOnly ? (
+                    <Box css={{ pt: '$16', '@md': { pt: 0 } }} />
+                ) : (
+                    <Flex
+                        align="center"
+                        gap="1"
+                        css={{
+                            color: '$primaryLight',
+                            mt: '$8',
+                            pt: '0',
+                            mb: '$12',
+                            cursor: 'pointer',
+                            '@md': {
+                                pt: '$10'
+                            }
+                        }}
+                        onClick={() => setShowBaseView(false)}>
+                        <Text variant="sm" css={{ color: '$primaryLight' }}>
+                            Continue exploring
+                        </Text>
+                        <ChevronRightIcon height="16px" width="16px" />
+                    </Flex>
+                )}
+                <Link passHref href="/concepts/v2/concepts/basics">
+                    <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
+                        <LayersIcon style={{ color: 'inherit' }} />
+                        <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
+                            Concepts
+                        </Text>
+                    </Flex>
+                </Link>
+
+                <Link passHref href="/examples">
+                    <Flex
+                        as="a"
+                        gap="2"
+                        align="center"
+                        css={{
+                            color: '$primaryLight',
+                            mt: '$10',
+                            display: 'none',
+                            '@md': { display: 'flex' }
+                        }}>
+                        <RocketIcon style={{ color: 'inherit' }} />
+                        <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
+                            Examples
+                        </Text>
+                    </Flex>
+                </Link>
+
+                <hr style={{ margin: '24px 0' }} />
+
+                {platformOrder.map((platform) => (
+                    <PlatformAccordion
+                        id={platform.key}
+                        key={platform.text}
+                        title={platform.text}
+                        icon={platform.icon}
+                        data={allNav[platform.key]}
+                        openPlatformAccordion={openPlatformAccordion}
+                        setOpenPlatformAccordion={setOpenPlatformAccordion}
+                    />
+                ))}
+
+                <hr style={{ margin: '24px 0' }} />
+
+                <PlatformAccordion
+                    id="server-side"
+                    title={'Server side'}
+                    icon={<ServerIcon style={accordionIconStyle} />}
+                    data={allNav['server-side']}
+                    openPlatformAccordion={openPlatformAccordion}
+                    setOpenPlatformAccordion={setOpenPlatformAccordion}
+                />
+            </div>
+
+            {/* Platform specific view */}
+            <div className={`page ${showBaseView ? '' : 'active-page'}`}>
+                {renderComponents ? (
+                    <>
+                        <Box
+                            css={{
+                                position: 'sticky',
+                                top: '0',
+                                pt: '$5',
+                                zIndex: '100',
+                                boxShadow: '0 1.25rem 2rem 0.25rem rgba(8, 9, 12, 0.8)',
+                                backgroundColor: 'var(--docs_bg_content)',
+                                '@md': {
+                                    pt: '$18',
+                                    top: '$12',
+                                    backgroundColor: 'var(--docs_bg_content)'
+                                }
+                            }}>
+                            <Flex
+                                align="center"
+                                gap="1"
+                                css={{
+                                    color: '$primaryLight',
+                                    pl: '$9',
+                                    mb: '$12',
+                                    cursor: 'pointer'
+                                }}
+                                onClick={() => {
+                                    setShowBaseView(true);
+                                    if (baseRef.current) baseRef?.current.scrollTo(0, 0);
+                                }}>
+                                <ChevronLeftIcon height="16px" width="16px" />
+                                <Text variant="sm" css={{ color: '$primaryLight' }}>
+                                    Content overview
+                                </Text>
+                            </Flex>
+
+                            {showPlatformSelector ? (
+                                <section
+                                    style={{
+                                        margin: '0px 0.5rem 0.5rem 0.4rem',
+                                        background: 'var(--docs_bg_content)'
+                                    }}>
+                                    <Listbox value={tech} onChange={changeTech}>
+                                        <Listbox.Button className="dropdown">
+                                            <div style={{ display: 'flex ', alignItems: 'center' }}>
+                                                {tech.icon}
+                                                <span style={{ marginLeft: '1rem' }}>
+                                                    {tech.name === 'JavaScript' ? 'Web' : tech.name}
+                                                </span>
+                                            </div>
+                                            <ChevronDownIcon />
+                                        </Listbox.Button>
+                                        <Listbox.Options className="dropdown-options">
+                                            {menuItem.map((m) => (
+                                                <Listbox.Option
+                                                    key={m.link}
+                                                    value={m}
+                                                    className={({ active }) =>
+                                                        `${
+                                                            active
+                                                                ? 'dropdown-option dropdown-option-active'
+                                                                : 'dropdown-option'
+                                                        }`
+                                                    }>
+                                                    {m.icon}
+                                                    <span style={{ marginLeft: '1rem' }}>
+                                                        {m.name === 'JavaScript' ? 'Web' : m.name}
+                                                    </span>
+                                                </Listbox.Option>
+                                            ))}
+                                        </Listbox.Options>
+                                    </Listbox>
+                                </section>
+                            ) : null}
+                        </Box>
+                        {/* Sidebar Menu Section */}
+                        {nav
+                            ? Object.entries(nav).map(([key, children], index) => (
+                                  <SidebarSection
+                                      key={key}
+                                      value={key}
+                                      index={index}
+                                      nested={false}>
+                                      {children as React.ReactChildren}
+                                  </SidebarSection>
+                              ))
+                            : null}
+                    </>
+                ) : null}
+            </div>
+        </Box>
     );
 };
 
 export default Sidebar;
 
-const ChevronDown = () => (
-    <svg
-        viewBox="0 0 24 24"
-        width="24"
-        height="24"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-        shapeRendering="geometricPrecision"
-        style={{ color: 'var(--docs_text_primary)' }}>
-        <path d="M6 9l6 6 6-6" />
-    </svg>
-);
-
 const iconStyle = { height: '24px', width: '24px', fill: 'var(--gray12)' };
 
-const menuItem = [
+export const menuItem = [
     {
-        link: '/android/v2/foundation/basics',
+        link: '/android/v2/get-started/quickstart',
         name: 'Android',
+        key: 'android',
         icon: <AndroidIcon style={iconStyle} />,
         apiRef: '/api-reference/android/v2/index.html'
     },
     {
-        link: '/ios/v2/foundation/basics',
+        link: '/ios/v2/guides/quickstart',
         name: 'iOS',
+        key: 'ios',
         icon: <IosIcon style={iconStyle} />,
         apiRef: '/api-reference/ios/v2/home/content'
     },
     {
-        link: '/javascript/v2/foundation/basics',
+        link: '/javascript/v2/get-started/javascript-quickstart',
         name: 'JavaScript',
+        key: 'javascript',
         icon: <JavascriptIcon style={iconStyle} />,
         apiRef: '/api-reference/javascript/v2/home/content'
     },
     {
-        link: '/react-native/v2/foundation/basics',
-        name: 'React-Native',
+        link: '/react-native/v2/guides/quickstart',
+        name: 'React Native',
+        key: 'react-native',
         icon: <ReactIcon style={iconStyle} />,
         apiRef: '/api-reference/react-native/v2/modules.html'
     },
     {
-        link: '/flutter/v2/foundation/basics',
+        link: '/flutter/v2/guides/quickstart',
         name: 'Flutter',
+        key: 'flutter',
         icon: <FlutterIcon style={iconStyle} />,
         apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
     },
     {
-        link: '/server-side/v2/introduction/basics',
-        name: 'Server-Side',
+        link: '/server-side/v2/how--to-guides/make-api-calls',
+        name: 'Server-side',
+        key: 'server-side',
         icon: <ServerIcon />,
-        apiRef: '/server-side/v2/introduction/basics'
+        apiRef: '/server-side/v2/api-reference/Rooms/overview'
     }
-];
-
-const aliasMenu = [
-    {
-        title: 'Room APIs',
-        url: '/server-side/v2/Rooms/object'
-    },
-    {
-        title: 'Webhooks',
-        url: '/server-side/v2/introduction/webhook'
-    },
-    {
-        title: 'SFU Recording',
-        url: '/server-side/v2/Destinations/recording'
-    }
-    // {
-    //     title: 'Simulcast',
-    //     url: '/docs/server-side/v2/features/simulcast'
-    // }
 ];

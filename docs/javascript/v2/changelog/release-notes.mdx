@@ -12,6 +12,66 @@ description: Release Notes for 100ms JavaScript SDK
 | @100mslive/react-sdk                   | [![npm version](https://badge.fury.io/js/%40100mslive%2Freact-sdk.svg)](https://badge.fury.io/js/%40100mslive%2Freact-sdk)             |
 | @100mslive/hms-video-react(deprecated) | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-react.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-react) |
 
+## 2023-03-14
+
+Released: `@100mslive/hms-video-store@0.9.0`, `@100mslive/react-sdk@0.7.0`
+
+#### Added:
+- [`getAuthTokenByRoomCode`](https://www.100ms.live/docs/api-reference/javascript/v2/interfaces/HMSActions#getauthtokenbyroomcode) in hmsActions to get token for room short code.
+- The SDK now handles auto subscribing/unsubscribing while [rendering video](../how--to-guides/set-up-video-conferencing/render-video/overview) based on the element's visibility. If Simulcast is enabled, the appropriate resolution based on the video element's dimensions will also be auto-selected. Note that this was already available for react-sdk via the useVideo hook. With this release, we've also added it for the core SDK.
+
+#### Breaking:
+- SDK now handles subscribing and unsubscribing to video based on the element's visibility. If you're using hmsActions.detachVideo function to unsubscribe to video for e.g. when it's not visible, you may have to pass the flag `autoManageVideo: false` in join config. This will avoid any conflict between SDK and your app's code by disabling SDK's functionality. For more details, please check our docs for [rendering video](../how--to-guides/set-up-video-conferencing/render-video/overview).
+
+## 2023-02-22
+
+Released: `@100mslive/hms-video-store@0.8.4`, `@100mslive/react-sdk@0.6.4`
+
+#### Added:
+- Preview field in HMSStore and role related selectors helpful for preview
+
+#### Fixed:
+- Return type of `selectLocalPeer` which will now return `HMSPeer | undefined`
+- Network interruption during join
+- Video background not always updating in virtual background plugin
+- Camera light not turning off at times
+- In some chrome versions, default devices are not prefixed with default- which is resulting in device not being selected on device change
+- Make error in `setRemoteDescription` terminal
+- Browser tab showing indicator that mic is active even when audio disabled
+- `No sender found` log while stopping playlist
+
+## 2023-02-03
+
+Released: `@100mslive/hms-video-store@0.8.3`, `@100mslive/react-sdk@0.6.3`
+
+#### Added:
+- Preview and join using different roles. Use `asRole` in preview config to pass the name of the role you want to use
+
+#### Fixed:
+- Screenshare quality degrading after role change
+- Detect slow network/disconnection earlier using ice connection state disconnected
+- Apply frame rate specified in template on tracks
+- Media decode error on certain audio elements
+- Blank video or no audio when there is an error on device change
+- `requested_by` is added to webhook on role change
+- Remote track update coming in before peer list leading to no peer tile
+- Analytics and debug logs improved.
+
+
+## 2022-12-19
+
+Released: `@100mslive/hms-video-store@0.8.1`, `@100mslive/react-sdk@0.6.1`
+
+#### Added:
+- [Bulk role change API](https://www.100ms.live/docs/javascript/v2/features/change-role#change-bulk-peer-role-api)
+
+#### Fixed:
+- Analytics fixes
+- FPS for the `HMSVBPlugin`
+- Device change not working sometimes with some bluetooth devices
+- Audio track not received on remote end on role change due to no data being sent
+- Reestablishment of audio track after external call interuption
+
 ## 2022-11-25
 
 Released: `@100mslive/hms-video-store@0.8.0`, `@100mslive/react-sdk@0.6.0`
@@ -315,7 +375,7 @@ Released: `@100mslive/hms-video@0.1.39`, `@100mslive/hms-video-store@0.2.85`, `@
 
 #### Added:
 
--   [HLS streaming](../features/hls) for streaming a room to a large number of viewers
+-   [HLS streaming](/javascript/v2/how--to-guides/record-and-live-stream/hls/hls) for streaming a room to a large number of viewers
 -   Support for Multiple [video plugins](../plugins/custom-video-plugins)
 -   `startedAt` field in room to know since when the call is running
 -   An additional boolean `showTileForAllPeers` in VideoList component to show peers with no tiles.

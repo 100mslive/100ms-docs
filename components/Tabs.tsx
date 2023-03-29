@@ -1,4 +1,5 @@
-import React, { PropsWithChildren, useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { PropsWithChildren, useCallback, useEffect, useState } from 'react';
 
 /**
  *
@@ -21,51 +22,78 @@ interface TabsProps {
 }
 
 export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
-    const def = 0;
-    const [tab, setTab] = useState(def);
-    const changeTab = (idx: number) => {
-        items.forEach((_, i) => {
-            if (i !== idx) {
-                const ele = document.getElementById(`${id}-${i}`);
-                if (ele) {
-                    ele.style.display = 'none';
+    const [tab, setTab] = useState(0);
+    const [currentPlatform, setCurrentPlatform] = useState('');
+
+    const router = useRouter();
+    useEffect(() => {
+        const platform = router.asPath.split('/')?.[1];
+        setCurrentPlatform(platform);
+    }, [router?.asPath]);
+
+    const changeTab = useCallback(
+        (idx: number) => {
+            items.forEach((_, i) => {
+                if (i !== idx) {
+                    const ele = document.getElementById(`${id}-${i}`);
+                    if (ele) ele.style.display = 'none';
                 }
-            }
-        });
-        const ele = document.getElementById(`${id}-${idx}`);
-        if (ele) {
-            ele.style.display = 'block';
-        }
+            });
+            const ele = document.getElementById(`${id}-${idx}`);
+            if (ele) ele.style.display = 'block';
+            setTab(idx);
+        },
+        [items, setTab]
+    );
+
+    const updateTab = useCallback(
+        (name) => {
+            const currentValue = items.indexOf(name);
+            const idx = currentValue !== -1 ? currentValue : 0;
+            setTab(idx);
+            changeTab(idx);
+            const obj = JSON.parse(localStorage.getItem('tabSelection') || '{}');
+            obj[currentPlatform] = name;
+            localStorage.setItem('tabSelection', JSON.stringify(obj));
+        },
+        [items, currentPlatform, setTab, changeTab]
+    );
+
+    // For setting value on future visits / reload
+    React.useEffect(() => {
+        const tabSelection = JSON.parse(localStorage.getItem('tabSelection') || '{}');
+        const storedValue = items.indexOf(tabSelection[currentPlatform]);
+        const idx = storedValue !== -1 ? storedValue : 0;
         setTab(idx);
-    };
+        changeTab(idx);
+    }, [currentPlatform]);
+
     return (
-        <div className="tab-ctx">
+        <div
+            style={{
+                borderBottom: '0.5px solid var(--docs_border_strong)',
+                marginBottom: 'var(--docs_spacing_2)'
+            }}>
             {items.map((el, i) => (
                 <button
-                    onClick={() => changeTab(i)}
+                    onClick={() => {
+                        updateTab(items[i]);
+                        document.dispatchEvent(new CustomEvent('tabChanged'));
+                    }}
                     type="button"
-                    className={tab === i ? 'tab-active' : ''}
+                    style={{
+                        background: 'none',
+                        outline: 'none',
+                        cursor: 'pointer',
+                        border: 'none',
+                        marginRight: '1rem',
+                        borderBottom: tab === i ? '2px solid var(--gray12)' : 'none'
+                    }}
                     key={el}
-                    id={i.toString()}>
+                    id={`${id}-button-${i}`}>
                     {el}
                 </button>
             ))}
-            <style jsx>{`
-                .tab-ctx {
-                    border-bottom: 0.5px solid var(--docs_border_strong);
-                    margin-bottom: var(--docs_spacing_2);
-                }
-                button {
-                    background: none;
-                    outline: none;
-                    cursor: pointer;
-                    border: none;
-                    margin-right: 1rem;
-                }
-                .tab-active {
-                    border-bottom: 2px solid var(--gray12);
-                }
-            `}</style>
         </div>
     );
 };

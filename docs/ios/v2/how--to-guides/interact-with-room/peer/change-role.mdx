@@ -1,0 +1,82 @@
+---
+title: Change Role
+nav: 7.22
+---
+
+import BulkRoleChangeErrors from '@/common/bulk-role-change-errors.md';
+
+Role is a powerful concept that takes a lot of complexity away in handling permissions and supporting features like breakout rooms. [Learn more about roles here.](/concepts/v2/concepts/templates-and-roles/overview)
+
+Each `HMSPeer` instance has a `role` property which returns an `HMSRole` instance. You can use this property to do following:
+
+1. Check what this role is allowed to publish. I.e can it send video (and at what resolution)? can it send audio? can it share screen? Who can this role subscribe to? (I.e student can only see the teacher's video) This is can be discovered by checking `publishSettings` and `subscribeSettings` properties
+2. Check what actions this role can perform. i.e can it change someone else current role, end meeting, remove someone from the room. This is can be discovered by checking `permissions` property
+
+In certain scenarios you may want to change someone's role. Imagine an audio room with 2 roles "speaker" and "listener." Only someone with a "speaker" role can publish audio to the room while "listener" can only subscribe. Now at some point "speaker" may decide to nominate some "listener" to become a "speaker." This is where the `changeRole` API comes in.
+
+To invoke the API you will need 2 things. An instance of `HMSPeer` of the peer who's role you want to change and the `HMSRole` instance for the target role. All the peers that are in the current room are accessible via `peers` property of `HMSRoom` instance that you can get via `room` property of `HMSSDK` instance after successful room join. A list of all available roles in the current room can be accessed via `roles` property of `HMSSDK`
+
+Once you have both you can invoke
+
+```swift
+ hmsSDK.changeRole(for: targetPeer, role: targetRole)
+```
+
+If the change role succeeds you will get a
+
+```swift
+func on(peer: HMSPeer, update: HMSPeerUpdate)
+```
+
+delegate callback with the the same peer you passed as targetPeer and a `roleUpdated` update type.
+
+`changeRole` has an optional `force` parameter which is `false` by default meaning that `changeRole` is basically a polite request: "Would you like to change you role from listener to speaker?" which can be ignored by the other party. The way it works is the other party will first receive a
+
+```swift
+func on(roleChangeRequest: HMSRoleChangeRequest)
+```
+
+delegate callback. At which point app can choose to show a prompt to the user asking for permission. If the user accepts, app should call
+
+```swift
+hmsSDK.accept(changeRole: roleChangeRequest)
+```
+
+which completes the `changeRole` loop. Both parties will receive a `roleUpdated` callback so that they both can do necessary UI updates. Now the user actually becomes a speaker and the audio publishing will start automatically.
+
+Now lets imagine the newly nominated speaker is not behaving nicely and we want to move him back to listener without a prompt. This is where the `force` parameter comes in. When it is set to `true` the other party will not receive a confirmation `roleChangeRequest` but instead will straight away receive a new set of updated permissions and stop publishing. `roleUpdated` callback will still be fired so that the app can update the user's UI state.
+
+## Bulk Role Change
+
+Bulk role change is used when you want to change roles of all users from a list of roles, to another role.
+
+For example if peers join a room with a `waiting` role and you want to change them all to `viewers` then you'd use this API.
+
+Here is the method signature.
+
+```swift
+func changeRolesOfAllPeers(to role: HMSRole, limitToRoles: [HMSRole]? = nil, completion: ((Bool, Error?) -> Void)? = nil)
+```
+
+1. `role` is the `HMSRole` they should be changed to.
+2. `limitToRoles` is a list of `HMSRole` whose role should be changed.
+3. `completion` is the optional completion handler to be invoked when the request succeeds or fails with an error.
+
+You should avoid omitting `limitToRoles` param as this can result in accidentally changing roles you may not have intended such as the bots that provide recording and streaming with the roles `beam`.
+
+Also bulk role changes are always forced, no dialog will be given for the peer to accept it, they will just be changed immediately.
+
+Here's how the method could be called to change all `guest` and `waiting` roles to `host`:
+
+```swift
+func changeRoles(hmsSdk: HMSSDK) {
+        var sourceRoles = roles.filter({ role in
+            role.name == "guest" || role.name == "waiting"
+        })
+        var toRole = roles.first { $0.name == "host" }
+
+        hmsSdk.changeRolesOfAllPeers(to: toRole, limitToRoles: sourceRoles)
+    }
+```
+
+<BulkRoleChangeErrors />

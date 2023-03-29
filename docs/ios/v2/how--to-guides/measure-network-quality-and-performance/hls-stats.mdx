@@ -1,0 +1,114 @@
+---
+title: HLS Playback Stats (Beta)
+nav: 11.3
+---
+
+If you use Apple's AVPlayer to play HLS stream, you can utilise 100ms SDK to monitor statistics of your HLS playback. You can use these stats to help you debug issues or show useful statistics about your HLS playback.
+
+## Minimum Requirements
+
+-   100ms HLS Player SDK version 0.0.2
+
+## How to integrate HLS Player SDK
+
+You can either use Swift Package Manager or Cocoapods to add HMSHLSPlayerSDK iOS SDK to your project.
+
+#### Use Swift Package Manager
+Add HMSHLSPlayerSDK iOS SDK through Swift Package Manager in Xcode. Use https://github.com/100mslive/100ms-ios-hls-sdk.git as the package source.
+
+#### Use Cocoapods
+Assuming your project name is "basicvideocall", create "Podfile" in the project folder with the following contents
+then run `pod install`
+
+```jsx section=XcodeProjectSetup sectionIndex=1
+platform :ios, '13.0'
+
+target 'basicvideocall' do
+  use_frameworks!
+  pod 'HMSHLSPlayerSDK'
+
+end
+```
+
+Open .xcworkspace
+
+## How to monitor HLS playback statistics
+
+You create an instance of HMSHLSPlaybackMonitor class passing an instance of AVPlayer that's setup to play an HLS stream.
+
+```swift
+var statMonitor: HMSHLSStatsMonitor?
+
+...
+let player = AVPlayer(playerItem: item)
+statMonitor = HMSHLSStatsMonitor(player: player)
+
+// Optionally add hmsSDK connected to a room to send analytics events related to hls playback
+// Currently only unrecoverable playback failure error are sent to analytics
+statMonitor.analytics = hmsSDK
+```
+
+That's all. Now you can check the properties exposed by HMSHLSStatsMonitor at any moment to get various stats about the current HLS playback.
+
+HMSHLSStatsMonitor exposes following properties to give you stats of current HLS playback:
+
+1. **estimatedBandwidth** - The network bandwidth estimated by the player. This is the bitrate observed by the player in current network conditions (bits per second)
+2. **bitrate** - The bitrate of current HLS stream (layer) indicated by the server (bits per second)
+3. **bytesDownloaded** - Total number of bytes downloaded till this moment
+4. **bufferedDuration** - The duration of forward buffer that player has downloaded and ready to play (milliseconds)
+5. **distanceFromLiveEdge** - The distance of current playback position from the live edge of HLS stream (milliseconds)
+6. **droppedFrames** - The total number of frames dropped till this moment
+7. **videoSize** - The resolution of the HLS stream
+8. **watchDuration** - Total duration that the user has watched the stream includes any rewatch time (milliseconds)
+
+## How can I keep monitoring these stats continuously
+
+You use a timer to check the stats you are interested in like below:
+
+```swift
+Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+
+  print(statMonitor.estimatedBandwidth)
+  print(statMonitor.distanceFromLiveEdge)
+
+}
+```
+
+## Observing playback state
+
+Set the delegate property of HMSHLSStatsMonitor to an instance conforming to HMSHLSPlaybackDelegate protocol to listen to some important changes during HLS playback.
+
+Following delegate callbacks are available:
+
+1. **onPlaybackFailure** - Player has encountered an error. This error could be a recoverable or unrecoverable (terminal) error. You can find out the type of error with isTerminal property like below.
+2. **playerDidChangeResolution** - Player has switched to different resolution layer of HLS stream - due to improved/degraded network condition or when user manually picks a different resolution
+
+```swift
+
+class YourClass: HMSHLSPlaybackDelegate {
+
+  ...
+  statMonitor.delegate = self
+  ...
+
+  // HMSHLSPlayerDelegate
+  func playerDidChangeResolution(videoSize: CGSize) {
+    print("Resolution Changed: \(videoSize)")
+  }
+
+  func onPlaybackFailure(error: Error) {
+    guard let error = error as? HMSError else { return }
+
+    if error.isTerminal {
+      print("Player has encountered a terminal error, we need to restart the player: \(error.localizedDescription)")
+    }
+    else {
+      print("Player has encountered an error, but it's non-fatal and player might recover \(error.localizedDescription)")
+    }
+  }
+
+}
+
+```
+
+👀 To see an example iOS HLS Stats implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).

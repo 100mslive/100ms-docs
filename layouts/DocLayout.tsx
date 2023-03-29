@@ -1,28 +1,27 @@
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
 import Header from '@/components/Header';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
 import Sidebar from '@/components/Sidebar';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
-import { NextSeo } from 'next-seo';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
 
 interface Props {
     children: JSX.Element;
 }
 
-export default function Layout({ children }: Props) {
-    const { frontMatter, nav } = children.props;
+export default function DocLayout({ children }: Props) {
+    const { frontMatter, nav, allNav } = children.props;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const router = useRouter() as any;
     const SEO = {
-        title: `${frontMatter.title || '100ms Docs'
-            } | 100ms`,
+        title: `${frontMatter.title || '100ms Docs'} | 100ms`,
         openGraph: {
-            title: `${frontMatter.title || '100ms Docs'
-                } | 100ms`
+            title: `${frontMatter.title || '100ms Docs'} | 100ms`
         },
-        canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${router.asPath === '/' ? '' : router.asPath.split('?')[0]
-            }`
+        canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${
+            router.asPath === '/' ? '' : router.asPath.split('?')[0]
+        }`
     };
     const [menu, setMenu] = useState(false);
     const [modal, setModal] = useState(false);
@@ -34,35 +33,30 @@ export default function Layout({ children }: Props) {
                 <NextSeo {...SEO} />
                 <SegmentAnalytics options={{}} title={frontMatter.title} />
                 <Header modal={modal} setModal={setModal} menuState={menuState} />
-                <div className="ctx">
-                    <div className="content-wrapper">
-                        <div
-                            className="sidebar-container">
-                            <Sidebar menuState={menuState} nav={nav} />
-                        </div>
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        width: '100%'
+                    }}>
+                    <div
+                        style={{
+                            width: '100%',
+                            display: 'flex',
+                            maxWidth: '1500px',
+                            justifyContent: 'space-between'
+                        }}>
+                        <Sidebar
+                            menuState={menuState}
+                            nav={nav}
+                            allNav={allNav}
+                            baseViewOnly={false}
+                            hideBorder={false}
+                        />
                         {!menu ? children : null}
                     </div>
                 </div>
             </div>
-            <style jsx>{`
-                .ctx {
-                    display: flex;
-                    padding-top: 16px;
-                    justify-content: center;
-                    width: 100%;
-                    background-color: var(--docs_bg_content) !important;
-                }
-                .content-wrapper {
-                    width: 100%;
-                    display: flex;
-                    max-width: 1500px;
-                    justify-content: space-between;
-                    background-color: var(--docs_bg_content);
-                }
-                .sidebar-container {
-                    background-color: var(--docs_bg_content) !important;
-                }
-            `}</style>
         </>
     );
 }

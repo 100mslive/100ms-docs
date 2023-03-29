@@ -1,0 +1,31 @@
+---
+title: Interruption Handling
+nav: 6.2
+---
+
+You're chatting away on your video call and, uh-oh, a phone call comes in. No worries, the 100ms SDK abstracts away handling this situation for you.
+
+When a telephonic voice call comes in and the user accepts the following happens.
+
+-   All videos including your own are turned off.
+-   You are muted.
+
+When the call ends the SDK will restore all videos, taking care not to un-mute you if you had muted yourself before the call came in. Neither will it un-mute all the peers if you had muted them from the app.
+
+No code required, this happens automatically for all calls.
+
+In Android you will get an update on the `onRoomUpdate` method with the update type `HMSRoomUpdate.roomMuted` when the call start and `HMSRoomUpdate.roomUnmuted` when the call end
+and also `onTrackUpdate` for local peer with update type `HMSTrackUpdate.trackMuted` when call starts and `HMSTrackUpdate.trackUnMuted` when call ends if the tracks were unmuted earlier.
+
+![interruptionHandle](/docs/v2/flutter-interruption-handle.png)
+
+| **App State** | **Scenario**                               | **Android**                                | **iOS**                                    |
+| :------------ | :----------------------------------------- | :----------------------------------------- | :----------------------------------------- |
+| Foreground    | **A Call interrupts Microphone access**    | SDK gets the mic access back after call    | SDK gets the mic access back after call    |
+| Background    | **A Call interrupts Microphone access**    | SDK doesn't get the mic access after call  | SDK gets the mic access back after call    |
+| Foreground    | **A Call interrupts Camera access**        | SDK gets the camera access back after call | SDK gets the camera access back after call |
+| Background    | **A Call interrupts Camera access**        | SDK gets the camera access back after call | SDK gets the camera access back after call |
+| Foreground    | **Other app interrupts Microphone access** | SDK gets the mic access back after call    | SDK gets the mic access back after call    |
+| Background    | **Other app interrupts Microphone access** | SDK doesn't get the mic access after call  | SDK gets the mic access back after call    |
+| Foreground    | **Other app interrupts Camera access**     | SDK gets the camera access back after call | SDK gets the camera access back after call |
+| Background    | **Other app interrupts Camera access**     | SDK gets the camera access back after call | SDK gets the camera access back after call |

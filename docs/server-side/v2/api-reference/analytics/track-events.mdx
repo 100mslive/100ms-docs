@@ -1,0 +1,176 @@
+---
+title: Track Events
+nav: 3.62
+---
+
+Track Events can be used to understand the participant's activity during the session, It would get you the reference points in time
+e.g. when the user has unmuted audio, shared screen, or stopped the video. Every event has a `mute` property to determine mute status at the time of the event.
+
+Following are the three types of events published for a track,
+
+**track.add.success**: Published when a track is added
+
+**track.update.success**: Published when a user has unmuted/muted the track.
+
+**track.remove.success**: Published when the track has ended
+
+Kind of a track (e.g. audio, video, video screenshare) can be determined by `type` and `source` parameter in the [track event object](/server-side/v2/api-reference/analytics/track-events#track-event-object).
+
+<GetRequest title="https://api.100ms.live/v2/analytics/events" />
+<Request id="req-0">
+
+```bash
+curl --location --request GET \
+    'https://api.100ms.live/v2/analytics/events?type=track.add.success&room_id=<room_id>' \
+    --header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+
+## Allowed Filters
+To be specified as query parameters
+
+| Name       | Type     | Description                                                                                                                                                                                                                                             | Required |
+| ---------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| type       | `string` | Type of events to be fetched (valid values `track.add.success`, `track.update.success`, `track.remove.success`) <br /><br /> Can be specified multiple times to include more than one event (e.g. `type=track.add.success&` `type=track.update.success`) | yes      |
+| room_id    | `string` | Unique identifier of the room you wish to fetch events for                                                                                                                                                                                              | yes      |
+| session_id | `string` | Unique session identifier (Can be found in using [sessions APIs](/server-side/v2/api-reference/Sessions/object))                                                                                                                                        | no       |
+| peer_id    | `string` | Unique identifier of peer/participant                                                                                                                                                                                                                   | no       |
+| user_id    | `string` | Filter events based on your internal user identifier                                                                                                                                                                                                    | no       |
+| limit      | `int`    | Determines the number of event objects to be included in response (Default:`10`, Min: `1`, Max: `100`)                                                                                                                                                  | no       |
+| start      | `string` | Specify [next](/server-side/v2/api-reference/analytics/overview#response-object) value from the last response to get next set of result.                                                                                                                | no       |
+
+
+### Track Event Object
+
+| Attribute  | Type                 | Description                                                                                                        |
+| ---------- | -------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| room_id    | `string`             | Unique identifier of the room  (Example: `5f9edc6bd238215aec7700df`)                                               |
+| session_id | `string`             | Unique identifier of the session (Example: `5f9edc6bd238215aec7700df`)                                             |
+| room_name  | `string`             | Room name provided when creating the room                                                                          |
+| peer_id    | `string`             | Unique identifier of the peer/participant                                                                          |
+| user_id    | `string`             | Your internal user identifier                                                                                      |
+| user_name  | `string`             | User name of the user                                                                                              |
+| joined_at  | `timestamp (in UTC)` | Timestamp when the peer joined the session in RFC3339 format e.g. `2022-02-09T05:53:23.375Z`                       |
+| role       | `string`             | Peer role                                                                                                          |
+| track_id   | `string`             | Track id                                                                                                           |
+| stream_id  | `string`             | Reference to internal stream object                                                                                |
+| type       | `string`             | Type of track (values: `audio`, `video`)                                                                           |
+| source     | `string`             | Source of input (values: `regular`, `screen`)                                                                      |
+| mute       | `bool`               | Mute state of track at the time of event                                                                           |
+| started_at | `timestamp (in UTC)` | Track start time in RFC3339 format e.g. `2022-02-09T05:53:23.375Z`.                                                |
+| stopped_at | `timestamp (in UTC)` | Track stop time in RFC3339 format e.g. `2022-02-09T05:53:23.375Z` (only specified in `track.remove.success` event) |
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "limit": 3,
+    "total": 6,
+    "next": "e88863db-094e-4cf0-b126-ad7840ee24f0:Zv2ehb7:0~Cxn9G9I9AhU-Jl6RiYr-_XEmSYnnk-QLC3Kw4oF1ddvLTE-V4sAEdj8Fi2mx2R93iC1Mu5agwUCY7-LJhH6Ch2yWpp35E3zS7C998Vt3R-s=",
+    "events": [
+        {
+            "version": "2.0",
+            "id": "5ff0ce7b-0901-4566-8962-7543613b0456",
+            "timestamp": "2023-02-23T10:12:00.78311898Z",
+            "type": "track.add.success",
+            "data": {
+                "room_id": "633a78ee3bea2af508356a34",
+                "session_id": "63f73bf05223403c9671c5c9",
+                "room_name": "exp",
+                "peer_id": "c8e85ab4-d533-4de0-ba7c-4c58a4de6c74",
+                "user_id": "187a1a92-150f-4506-83b7-d8a1cd716fb0",
+                "user_name": "John",
+                "joined_at": "2023-02-23T10:12:00.587243415Z",
+                "role": "host",
+                "track_id": "d3c7a05d-81ee-48a0-8a6a-ec36be966312",
+                "stream_id": "cc6934ca-0c91-4cb7-8a97-293be2d0d8a8",
+                "type": "audio",
+                "source": "regular",
+                "mute": true,
+                "started_at": "2023-02-23T10:12:00.781851067Z"
+            }
+        },
+        {
+            "version": "2.0",
+            "id": "ff3242c5-9838-4979-8f71-23fdd98cc319",
+            "timestamp": "2023-02-23T10:20:52.911740569Z",
+            "type": "track.update.success",
+                "data": {
+                "room_id": "633a78ee3bea2af508356a34",
+                "session_id": "63f73bf05223403c9671c5c9",
+                "room_name": "exp",
+                "peer_id": "c8e85ab4-d533-4de0-ba7c-4c58a4de6c74",
+                "user_id": "187a1a92-150f-4506-83b7-d8a1cd716fb0",
+                "user_name": "John",
+                "joined_at": "2023-02-23T10:12:00.587243415Z",
+                "role": "host",
+                "track_id": "d3c7a05d-81ee-48a0-8a6a-ec36be966312",
+                "stream_id": "cc6934ca-0c91-4cb7-8a97-293be2d0d8a8",
+                "type": "audio",
+                "source": "regular",
+                "mute": false,
+                "started_at": "2023-02-23T10:12:00.781851067Z"
+            }
+        },
+        {
+            "version": "2.0",
+            "id": "f64ebeec-9ab2-4d36-b445-affe5cda90a0",
+            "timestamp": "2023-02-23T10:22:30.720047276Z",
+            "type": "track.remove.success",
+            "data": {
+                "room_id": "633a78ee3bea2af508356a34",
+                "session_id": "63f73bf05223403c9671c5c9",
+                "room_name": "exp",
+                "peer_id": "c8e85ab4-d533-4de0-ba7c-4c58a4de6c74",
+                "user_id": "187a1a92-150f-4506-83b7-d8a1cd716fb0",
+                "user_name": "John",
+                "joined_at": "2023-02-23T10:12:00.587243415Z",
+                "role": "host",
+                "track_id": "d3c7a05d-81ee-48a0-8a6a-ec36be966312",
+                "stream_id": "cc6934ca-0c91-4cb7-8a97-293be2d0d8a8",
+                "type": "audio",
+                "source": "regular",
+                "mute": false,
+                "started_at": "2023-02-23T10:12:00.781851067Z"
+                "stopped_at": "2023-02-23T10:22:30.718237635Z"
+            }
+        }
+    ]
+}
+```
+</ResponseBox>
+
+## Why would you use this API?
+
+- You can use track events exposed by this API to build tools around user activity which can help you calculate,
+    - "How long a participant was unmuted?"
+    - "How long did the teacher turn on their video in the class?"
+    - "When did a presenter share their screen?"
+
+-  Active duration of a peer can be calculated as follows,
+    - Fetch events by specifying `peer_id`/`user_id` in the query parameter, this would limit events only to specified peer/user.
+    - For each track identifiable with `track_id` you can check `type` and `source` properties in the event to find out if track is audio, video, screenshare.
+        (for example if you are looking for audio events, you can check for type: `audio`, source: `regular`)
+    - For all events that share the same 'track_id', we must calculate the total of duration between an event when a participant unmutes
+        and next event when they mute themselves. Refer the pseudocode below.
+
+    ```
+     ## track_events is a list of track add, update, remove events having the same track id
+     duration = 0
+     last_event = track_events[0]  ## this would be a track.add.success event
+     while event in track_events[1...n]
+         if event.data.mute == true
+             duration += (event.timestamp - last_event.timestamp)  ## last event would have mute = false
+         else
+             last_event = event
+     end
+    ```
+
+## Postman collection
+
+You can use our Postman collection to start exploring 100ms APIs.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a?action=collection%2Ffork&collection-url=entityId%3D22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a%26entityType%3Dcollection%26workspaceId%3Dd9145dd6-337b-4761-81d6-21a30b4147a2)
+
+Refer to the [Postman guide](/server-side/v2/introduction/postman-guide) to get started with 100ms API collection.

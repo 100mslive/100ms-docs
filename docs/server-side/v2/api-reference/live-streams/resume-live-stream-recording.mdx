@@ -1,0 +1,44 @@
+---
+title: Resume recording for stream
+nav: 3.168
+---
+
+Use this API to resume recording that was [paused](./pause-live-stream-recording) for the live stream.
+
+<PostRequest title="https://api.100ms.live/v2/live-streams/<stream_id>/resume-recording" />
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/live-streams/<stream_id>/resume-recording' \
+--header 'Authorization: Bearer <management_token>' \
+```
+
+</Request>
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "<stream_id>",
+    "room_id": "<room_id>",
+    "session_id": "<session_id>",
+    "status": "running",
+    "meeting_url": "<meeting_url>",
+    "playback": {
+        "url": "<master-manifest-url>"
+    },
+    "recording": {
+        "hls_vod": true,
+        "single_file_per_layer": true
+    },
+    "destination": "<destination_name>",
+    "created_at": "2023-03-22T04:24:10Z",
+    "started_at": "2023-03-22T04:25:11Z",
+    "updated_at": "2023-03-22T04:25:11Z",
+    "started_by": "",
+    "stopped_at": null,
+    "stopped_by": "",
+    "recording_assets": null
+}
+```
+
+</ResponseBox>
