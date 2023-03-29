@@ -12,13 +12,13 @@ import {
     ChevronDownIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
-    LayersIcon,
     AppleIcon as Ios,
     FlutterIcon as Flutter,
     AndroidIcon as Android,
     ReactIcon as ReactNative,
     JavascriptIcon as JavaScript,
-    RocketIcon
+    RocketIcon,
+    PlaySolidIcon
 } from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
 import { Flex, Box, Text, CSS } from '@100mslive/react-ui';
@@ -160,16 +160,16 @@ const Sidebar: React.FC<Props> = ({
                 style={
                     showBaseView
                         ? {
-                              padding: menu ? '24px' : '1.75rem',
+                              padding: menu ? '32px' : '32px',
                               paddingTop: '0',
                               position: menu ? 'initial' : 'sticky',
-                              top: '1rem',
+                              top: '16px',
                               width: '100%'
                           }
                         : {}
                 }>
                 {baseViewOnly ? (
-                    <Box css={{ pt: '$16', '@md': { pt: 0 } }} />
+                    <Box css={{ pt: '32px', '@md': { pt: 0 } }} />
                 ) : (
                     <Flex
                         align="center"
@@ -193,7 +193,7 @@ const Sidebar: React.FC<Props> = ({
                 )}
                 <Link passHref href="/concepts/v2/getting-started/overview">
                     <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
-                        <LayersIcon style={{ color: 'inherit' }} />
+                        <PlaySolidIcon style={{ color: 'inherit' }} />
                         <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
                             Getting Started
                         </Text>
