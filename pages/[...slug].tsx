@@ -129,7 +129,8 @@ const DocSlugs = ({ source, frontMatter, pagination, showToc = true }: Props) =>
                     minWidth: '100px',
                     flexGrow: '1',
                     boxSizing: 'border-box',
-                    padding: '0 2rem',
+                    maxWidth: '976px',
+                    padding: '0 40px',
                     minHeight: '100vh',
                     paddingBottom: '80px'
                 }}>

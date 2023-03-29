@@ -393,7 +393,7 @@ h6 {
 
 h1 {
     font-size: var(--docs_font_size_h1);
-    margin-top: 32px;
+    margin-top: 40px;
     margin-bottom: 16px;
     letter-spacing: -0.025rem;
     line-height: 2rem;
@@ -1181,18 +1181,20 @@ div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a#hs-eu-cookie
     z-index: 0;
     top: 1.5rem;
     opacity: 0;
-    width: 300px;
+    width: 320px;
     box-sizing: border-box;
     pointer-events: none;
-    transition: all ease 0.4s;
+    transition: opacity ease 100ms, transform ease 300ms;
+    transform: translateX(-15%);
 }
 
 .active-page {
     opacity: 1;
     pointer-events: auto;
     background-color: 'var(--docs_bg_content)';
-    width: 304px;
+    width: 320px;
     z-index: 10;
+    transform: translateX(0%);
 }
 
 @media screen and (max-width: 1160px) {
