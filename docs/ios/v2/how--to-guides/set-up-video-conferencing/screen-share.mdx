@@ -237,16 +237,16 @@ if localPeer?.auxiliaryTracks?.first(where: { $0.source == HMSCommonTrackSource.
 
 ## Frequently asked questions
 
-1. I use RPSystemBroadcastPickerView to show the screen share extension. But user sees a list of available broadcast extensions on along with my extension. How can I show only my extenstion to the user when they want to share the screen?
+1. How can I show only my screen share extension to the user when they want to share the screen using RPSystemBroadcastPickerView?
 
-You can assign a preferredExtension to the instance of your RPSystemBroadcastPickerView so the system shown only your extension in the list:
+You can configure your RPSystemBroadcastPickerView instance to display only your extension by assigning a preferredExtension value to it:
 
 ```swift
     let systemBroadcastPicker = RPSystemBroadcastPickerView(frame: CGRect(x: 0, y:0, width: 44, height: 44))
     systemBroadcastPicker.preferredExtension = "live.100ms.videoapp.screenshare"
 ```
 
-Where live.100ms.videoapp.screenshare is the bundle id of your broadcast extension.
+Replace "live.100ms.videoapp.screenshare" with the bundle ID of your own broadcast extension. This ensures that only your screen share extension is displayed to the user when selecting the option to share their screen.
 
 ## Example implementation
 
