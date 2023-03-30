@@ -210,7 +210,7 @@ const Sidebar: React.FC<Props> = ({
                             color: '$primaryLight',
                             mt: '$8',
                             pt: '0',
-                            mb: '$12',
+                            mb: '$8',
                             cursor: 'pointer',
                             '@md': {
                                 pt: '$10'
@@ -301,7 +301,7 @@ const Sidebar: React.FC<Props> = ({
                                 css={{
                                     color: '$primaryLight',
                                     pl: '$9',
-                                    mb: '$12',
+                                    mb: '$8',
                                     cursor: 'pointer'
                                 }}
                                 onClick={() => {
