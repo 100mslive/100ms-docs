@@ -9,7 +9,6 @@ import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import ReactIcon from '@/assets/icons/ReactIcon';
 import ServerIcon from '@/assets/icons/ServerIcon';
 import useKeyPress from '@/lib/useKeyPress';
-import SearchModal from './SearchModal';
 import {
     ChevronDownIcon,
     ChevronLeftIcon,
@@ -372,7 +371,6 @@ const Sidebar: React.FC<Props> = ({
                     </>
                 ) : null}
             </div>
-            {modal ? <SearchModal setModal={setModal} /> : null}
         </Box>
     );
 };

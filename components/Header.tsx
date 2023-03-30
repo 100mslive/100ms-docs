@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import useKeyPress from '@/lib/useKeyPress';
-import { CrossIcon, HamburgerMenuIcon, SearchIcon } from '@100mslive/react-icons';
+import { CrossIcon, HamburgerMenuIcon } from '@100mslive/react-icons';
 import { Flex, Text, useTheme } from '@100mslive/react-ui';
 import ActiveLink, { ActiveLinkProps } from './ActiveLink';
 import SearchModal from './SearchModal';
@@ -12,8 +11,8 @@ interface Props {
         setMenu: React.Dispatch<React.SetStateAction<boolean>>;
     };
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
+    modal: boolean,
     // docs: { url: string; title: string; description: string; nav: number; content: string }[];
-    modal: boolean;
     showMobileMenu?: boolean;
     showReference?: boolean;
     onHomePage?: boolean;
@@ -21,36 +20,16 @@ interface Props {
 
 const Header: React.FC<Props> = ({
     menuState,
-    modal,
     setModal,
+    modal,
     showReference = true,
     showMobileMenu = true,
     onHomePage = false
 }) => {
     const [renderComponent, setRenderComponent] = useState(false);
 
-    const escPressed = useKeyPress('Escape');
-    const slashPressed = useKeyPress('/');
     const router = useRouter();
-    useEffect(() => {
-        if (escPressed) {
-            setModal(false);
-        }
-    }, [escPressed]);
-
-    useEffect(() => {
-        if (slashPressed) {
-            setModal(true);
-        }
-    }, [slashPressed]);
-
     const { menu, setMenu } = menuState;
-    const [helperState, setHelperState] = useState(0);
-
-    useEffect(() => {
-        if (helperState) setModal((prev) => !prev);
-    }, [helperState]);
-
     const { toggleTheme, themeType } = useTheme();
 
     useEffect(() => {
@@ -142,32 +121,6 @@ const Header: React.FC<Props> = ({
                 }}>
                 <Flex
                     align="center"
-                    onClick={() => setHelperState((prev) => prev + 1)}
-                    css={{
-                        borderRadius: '$1',
-                        width: '$80',
-                        gap: '$8',
-                        color: '$textMedEmp',
-                        border: '1px solid $borderDefault',
-                        background: '$surfaceLight',
-                        padding: '$3 $8 $3 $5',
-                        '@lg': {
-                            display: 'none'
-                        },
-                        ':hover': {
-                            opacity: '0.8',
-                            cursor: 'pointer'
-                        }
-                    }}>
-                    <SearchIcon />
-                    <Text as="span" variant="body2" css={{ fontWeight: '$regular' }}>
-                        Search docs
-                    </Text>
-                    <span className="hot-key">/</span>
-                </Flex>
-
-                <Flex
-                    align="center"
                     css={{
                         display: 'none',
                         '@lg': {
@@ -178,12 +131,6 @@ const Header: React.FC<Props> = ({
                             display: 'flex'
                         }
                     }}>
-                    <button
-                        onClick={() => setHelperState((prev) => prev + 1)}
-                        type="button"
-                        style={{ display: 'flex', padding: 0, cursor: 'pointer' }}>
-                        <SearchIcon style={{ width: '24px' }} />
-                    </button>
                     {showMobileMenu && (
                         <button
                             aria-label="menu-button"
