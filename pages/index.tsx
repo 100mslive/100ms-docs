@@ -76,6 +76,8 @@ const Homepage = ({ allNav }) => {
                         }}>
                         <Sidebar
                             menuState={menuState}
+                            modal={modal}
+                            setModal={setModal}
                             nav={{}}
                             allNav={allNav}
                             css={{ width: menu ? '100%' : 'initial' }}

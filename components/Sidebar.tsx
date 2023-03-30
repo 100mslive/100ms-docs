@@ -8,6 +8,8 @@ import IosIcon from '@/assets/icons/IosIcon';
 import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import ReactIcon from '@/assets/icons/ReactIcon';
 import ServerIcon from '@/assets/icons/ServerIcon';
+import useKeyPress from '@/lib/useKeyPress';
+import SearchModal from './SearchModal';
 import {
     ChevronDownIcon,
     ChevronLeftIcon,
@@ -18,7 +20,8 @@ import {
     ReactIcon as ReactNative,
     JavascriptIcon as JavaScript,
     RocketIcon,
-    PlaySolidIcon
+    PlaySolidIcon,
+    SearchIcon
 } from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
 import { Flex, Box, Text, CSS } from '@100mslive/react-ui';
@@ -51,15 +54,21 @@ interface Props {
     allNav: Record<string, Record<string, NavRoute>>[];
     css?: CSS;
     hideOnDesktop?: boolean;
+    modal: boolean;
+    setModal: React.Dispatch<React.SetStateAction<boolean>>;
     hideBorder?: boolean;
     baseViewOnly?: boolean;
 }
+
+
 
 const Sidebar: React.FC<Props> = ({
     menuState,
     nav: currentNav,
     allNav,
     css = {},
+    modal,
+    setModal,
     hideOnDesktop = false,
     hideBorder = true,
     baseViewOnly = true
@@ -70,8 +79,27 @@ const Sidebar: React.FC<Props> = ({
     } = router;
     const { menu, setMenu } = menuState;
 
+    const escPressed = useKeyPress('Escape');
+    const slashPressed = useKeyPress('/');
     const [renderComponents, setRenderComponents] = useState(false);
     const [openPlatformAccordion, setOpenPlatformAccordion] = useState(platformlist[0]);
+    const [helperState, setHelperState] = useState(0);
+
+    useEffect(() => {
+        if (escPressed) {
+            setModal(false);
+        }
+    }, [escPressed]);
+
+    useEffect(() => {
+        if (slashPressed) {
+            setModal(true);
+        }
+    }, [slashPressed]);
+
+    useEffect(() => {
+        if (helperState) setModal((prev) => !prev);
+    }, [helperState]);
 
     useEffect(() => {
         setMenu(false);
@@ -154,6 +182,8 @@ const Sidebar: React.FC<Props> = ({
                 },
                 ...cssRest
             }}>
+                
+            
             {/* Base view */}
             <div
                 className={`page ${showBaseView ? 'active-page' : ''}`}
@@ -169,7 +199,9 @@ const Sidebar: React.FC<Props> = ({
                         : {}
                 }>
                 {baseViewOnly ? (
+                    <div>
                     <Box css={{ pt: '32px', '@md': { pt: 0 } }} />
+                    </div>
                 ) : (
                     <Flex
                         align="center"
@@ -191,6 +223,7 @@ const Sidebar: React.FC<Props> = ({
                         <ChevronRightIcon height="16px" width="16px" />
                     </Flex>
                 )}
+                <div style={{margin: '0px 0px 32px 0px'}}><DocsSearchBar setHelperState={setHelperState}/></div>
                 <Link passHref href="/concepts/v2/getting-started/overview">
                     <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <PlaySolidIcon style={{ color: 'inherit' }} />
@@ -281,6 +314,8 @@ const Sidebar: React.FC<Props> = ({
                                 </Text>
                             </Flex>
 
+                            <div style={{margin: '0px 32px 16px 24px'}}><DocsSearchBar setHelperState={setHelperState}/></div>
+
                             {showPlatformSelector ? (
                                 <section
                                     style={{
@@ -335,11 +370,39 @@ const Sidebar: React.FC<Props> = ({
                     </>
                 ) : null}
             </div>
+            {modal ? <SearchModal setModal={setModal} /> : null}
         </Box>
     );
 };
 
 export default Sidebar;
+
+const DocsSearchBar = ({ setHelperState }) => {
+    return (
+      <Flex
+        align="center"
+        onClick={() => setHelperState((prev) => prev + 1)}
+        css={{
+          borderRadius: '$1',
+          gap: '$8',
+          color: '$textMedEmp',
+          border: '1px solid $borderDefault',
+          background: '$surfaceLight',
+          padding: '8px 8px',
+          ':hover': {
+            opacity: '0.8',
+            cursor: 'pointer',
+          },
+        }}
+      >
+        <SearchIcon style={{ width: '24px' }} />
+        <Text as="span" variant="body2" css={{ fontWeight: '$regular', flexGrow: '1' }}>
+          Search docs…
+        </Text>
+        <span className="hot-key">/</span>
+      </Flex>
+    );
+  };
 
 const iconStyle = { height: '24px', width: '24px', fill: 'var(--gray12)' };
 
