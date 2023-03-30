@@ -182,25 +182,25 @@ const Sidebar: React.FC<Props> = ({
                 },
                 ...cssRest
             }}>
-                
-            
+
+
             {/* Base view */}
             <div
                 className={`page ${showBaseView ? 'active-page' : ''}`}
                 style={
                     showBaseView
                         ? {
-                              padding: menu ? '32px' : '32px',
-                              paddingTop: '0',
-                              position: menu ? 'initial' : 'sticky',
-                              top: '16px',
-                              width: '100%'
-                          }
+                            padding: menu ? '32px' : '32px',
+                            paddingTop: '0',
+                            position: menu ? 'initial' : 'sticky',
+                            top: '16px',
+                            width: '100%'
+                        }
                         : {}
                 }>
                 {baseViewOnly ? (
                     <div>
-                    <Box css={{ pt: '32px', '@md': { pt: 0 } }} />
+                        <Box css={{ pt: '32px', '@md': { pt: 0 } }} />
                     </div>
                 ) : (
                     <Flex
@@ -223,7 +223,7 @@ const Sidebar: React.FC<Props> = ({
                         <ChevronRightIcon height="16px" width="16px" />
                     </Flex>
                 )}
-                <div style={{margin: '0px 0px 32px 0px'}}><DocsSearchBar setHelperState={setHelperState}/></div>
+                <div style={{ margin: '0px 0px 32px 0px' }}><DocsSearchBar setHelperState={setHelperState} /></div>
                 <Link passHref href="/concepts/v2/getting-started/overview">
                     <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <PlaySolidIcon style={{ color: 'inherit' }} />
@@ -287,7 +287,7 @@ const Sidebar: React.FC<Props> = ({
                                 top: '0',
                                 pt: '$5',
                                 zIndex: '100',
-                                boxShadow: '0 1.25rem 2rem 0.25rem rgba(8, 9, 12, 0.8)',
+                                boxShadow: '0 8px 8px 0.25rem rgba(8, 9, 12, 0.8)',
                                 backgroundColor: 'var(--docs_bg_content)',
                                 '@md': {
                                     pt: '$18',
@@ -314,7 +314,7 @@ const Sidebar: React.FC<Props> = ({
                                 </Text>
                             </Flex>
 
-                            <div style={{margin: '0px 32px 16px 24px'}}><DocsSearchBar setHelperState={setHelperState}/></div>
+                            <div style={{ margin: '0px 32px 16px 24px' }}><DocsSearchBar setHelperState={setHelperState} /></div>
 
                             {showPlatformSelector ? (
                                 <section
@@ -323,14 +323,16 @@ const Sidebar: React.FC<Props> = ({
                                         background: 'var(--docs_bg_content)'
                                     }}>
                                     <Listbox value={tech} onChange={changeTech}>
-                                        <Listbox.Button className="dropdown">
-                                            <div style={{ display: 'flex ', alignItems: 'center' }}>
-                                                {tech.icon}
-                                                <span style={{ marginLeft: '1rem' }}>
-                                                    {tech.name === 'JavaScript' ? 'Web' : tech.name}
-                                                </span>
+                                        <Listbox.Button className="dropdown" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <div style={{ display: 'flex', flexDirection: 'column', flexGrow: '1', justifyContent: 'center' }}>
+                                                <Text variant={'xs'}>Platform Selected</Text>
+                                                <Text variant={'lg'}>{tech.name === 'JavaScript' ? 'Web' : tech.name}</Text>
                                             </div>
-                                            <ChevronDownIcon />
+                                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                <div className='dropdown-chevron-container'>
+                                                    <ChevronDownIcon className='dropdown-chevron'></ChevronDownIcon>
+                                                </div>
+                                            </div>
                                         </Listbox.Button>
                                         <Listbox.Options className="dropdown-options">
                                             {menuItem.map((m) => (
@@ -338,10 +340,9 @@ const Sidebar: React.FC<Props> = ({
                                                     key={m.link}
                                                     value={m}
                                                     className={({ active }) =>
-                                                        `${
-                                                            active
-                                                                ? 'dropdown-option dropdown-option-active'
-                                                                : 'dropdown-option'
+                                                        `${active
+                                                            ? 'dropdown-option dropdown-option-active'
+                                                            : 'dropdown-option'
                                                         }`
                                                     }>
                                                     {m.icon}
@@ -352,20 +353,21 @@ const Sidebar: React.FC<Props> = ({
                                             ))}
                                         </Listbox.Options>
                                     </Listbox>
+                                    <hr style={{width: '240px', margin: '16px 0px 16px 24px'}}/>
                                 </section>
                             ) : null}
                         </Box>
                         {/* Sidebar Menu Section */}
                         {nav
                             ? Object.entries(nav).map(([key, children], index) => (
-                                  <SidebarSection
-                                      key={key}
-                                      value={key}
-                                      index={index}
-                                      nested={false}>
-                                      {children as React.ReactChildren}
-                                  </SidebarSection>
-                              ))
+                                <SidebarSection
+                                    key={key}
+                                    value={key}
+                                    index={index}
+                                    nested={false}>
+                                    {children as React.ReactChildren}
+                                </SidebarSection>
+                            ))
                             : null}
                     </>
                 ) : null}
@@ -379,30 +381,30 @@ export default Sidebar;
 
 const DocsSearchBar = ({ setHelperState }) => {
     return (
-      <Flex
-        align="center"
-        onClick={() => setHelperState((prev) => prev + 1)}
-        css={{
-          borderRadius: '$1',
-          gap: '$8',
-          color: '$textMedEmp',
-          border: '1px solid $borderDefault',
-          background: '$surfaceLight',
-          padding: '8px 8px',
-          ':hover': {
-            opacity: '0.8',
-            cursor: 'pointer',
-          },
-        }}
-      >
-        <SearchIcon style={{ width: '24px' }} />
-        <Text as="span" variant="body2" css={{ fontWeight: '$regular', flexGrow: '1' }}>
-          Search docs…
-        </Text>
-        <span className="hot-key">/</span>
-      </Flex>
+        <Flex
+            align="center"
+            onClick={() => setHelperState((prev) => prev + 1)}
+            css={{
+                borderRadius: '$1',
+                gap: '$8',
+                color: '$textMedEmp',
+                border: '1px solid $borderDefault',
+                background: '$surfaceLight',
+                padding: '8px 8px',
+                ':hover': {
+                    opacity: '0.8',
+                    cursor: 'pointer',
+                },
+            }}
+        >
+            <SearchIcon style={{ width: '24px' }} />
+            <Text as="span" variant="body2" css={{ fontWeight: '$regular', flexGrow: '1' }}>
+                Search docs…
+            </Text>
+            <span className="hot-key">/</span>
+        </Flex>
     );
-  };
+};
 
 const iconStyle = { height: '24px', width: '24px', fill: 'var(--gray12)' };
 
