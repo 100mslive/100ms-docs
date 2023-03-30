@@ -346,7 +346,7 @@ const Sidebar: React.FC<Props> = ({
                                                         }`
                                                     }>
                                                     {m.icon}
-                                                    <span style={{ marginLeft: '1rem' }}>
+                                                    <span>
                                                         {m.name === 'JavaScript' ? 'Web' : m.name}
                                                     </span>
                                                 </Listbox.Option>
@@ -383,19 +383,8 @@ const DocsSearchBar = ({ setHelperState }) => {
     return (
         <Flex
             align="center"
+            className='docs-search-bar'
             onClick={() => setHelperState((prev) => prev + 1)}
-            css={{
-                borderRadius: '$1',
-                gap: '$8',
-                color: '$textMedEmp',
-                border: '1px solid $borderDefault',
-                background: '$surfaceLight',
-                padding: '8px 8px',
-                ':hover': {
-                    opacity: '0.8',
-                    cursor: 'pointer',
-                },
-            }}
         >
             <SearchIcon style={{ width: '24px' }} />
             <Text as="span" variant="body2" css={{ fontWeight: '$regular', flexGrow: '1' }}>

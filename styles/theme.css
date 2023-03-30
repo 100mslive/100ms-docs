@@ -605,6 +605,29 @@ blockquote :global(*:last-child) {
     background-color: rgba(31, 90, 158, 0.5);
 }
 
+.docs-search-bar {
+    border-radius: 8px;
+    gap: 8px;
+    color: var(--docs_text_primary);
+    border: 1px solid var(--border_default);
+    background: var(--surface_default);
+    padding: 8px 8px;
+    transition: background-color 100ms ease-in-out; /* Add a transition effect to the background-color property */
+  }
+  
+  .docs-search-bar:hover {
+    cursor: pointer;
+  }
+
+  .hot-key {
+    margin-left: auto !important;
+    border-radius: var(--docs_border_radius_xs);
+    padding: 0 8px;
+    color: var(--docs_text_primary);
+    border: 1px solid var(--docs_border_strong);
+}
+  
+
 table {
     margin-bottom: 2rem;
     border-collapse: separate;
@@ -1022,6 +1045,7 @@ ul.dropdown-options {
 
 .dropdown-option span {
     color: var(--docs_text_primary);
+    margin-left: 12px;
     font-weight: 500;
 }
 
@@ -1210,14 +1234,6 @@ div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a#hs-eu-cookie
     pointer-events: none;
     transition: opacity ease 100ms, transform ease 300ms;
     transform: translateX(-15%);
-}
-
-.hot-key {
-    margin-left: auto !important;
-    border-radius: var(--docs_border_radius_xs);
-    padding: 0 8px;
-    color: var(--docs_text_primary);
-    border: 1px solid var(--gray6);
 }
 
 .active-page {
