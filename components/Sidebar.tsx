@@ -325,8 +325,8 @@ const Sidebar: React.FC<Props> = ({
                                     <Listbox value={tech} onChange={changeTech}>
                                         <Listbox.Button className="dropdown" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                             <div style={{ display: 'flex', flexDirection: 'column', flexGrow: '1', justifyContent: 'center' }}>
-                                                <Text variant={'xs'}>Platform Selected</Text>
-                                                <Text variant={'lg'}>{tech.name === 'JavaScript' ? 'Web' : tech.name}</Text>
+                                                <Text variant={'xs'} style={{color: 'var(--docs_text_secondary)'}}>Platform Selected</Text>
+                                                <Text variant={'h6'} style={{marginTop: '2px', fontWeight: 'bold'}}>{tech.name === 'JavaScript' ? 'Web' : tech.name}</Text>
                                             </div>
                                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                                 <div className='dropdown-chevron-container'>
