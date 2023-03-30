@@ -406,7 +406,7 @@ const DocsSearchBar = ({ setHelperState }) => {
     );
 };
 
-const iconStyle = { height: '24px', width: '24px', fill: 'var(--gray12)' };
+const iconStyle = { height: '20px', width: '20px', fill: 'var(--docs_text_primary)' };
 
 export const menuItem = [
     {
@@ -448,7 +448,7 @@ export const menuItem = [
         link: '/server-side/v2/how--to-guides/make-api-calls',
         name: 'Server-side',
         key: 'server-side',
-        icon: <ServerIcon />,
+        icon: <ServerIcon style={{...iconStyle, fill:'transparent'}}/>,
         apiRef: '/server-side/v2/api-reference/Rooms/overview'
     }
 ];
