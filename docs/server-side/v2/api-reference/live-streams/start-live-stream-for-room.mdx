@@ -7,7 +7,7 @@ import MeetingUrlConfig from '@/common/meeting-url.md';
 
 Use this to start a live stream for a room. This would return a playback URL (in m3u8 format) that can be shared with HLS player clients for playback.
 
-The live stream will be `starting` state to begin with, and turn into `running` shortly.
+The live stream will be in `starting` state to begin with, and turn into `running` shortly.
 
 <PostRequest title="https://api.100ms.live/v2/live-streams/room/<room_id>/start" />
 <Request id="req-0">
@@ -26,6 +26,7 @@ curl --location --request POST 'https://api.100ms.live/v2/live-streams/room/<roo
 ```
 
 </Request>
+
 <ResponseBox id="res-0" status="200 OK">
 
 ```json
