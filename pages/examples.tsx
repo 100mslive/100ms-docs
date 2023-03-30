@@ -79,6 +79,8 @@ export default function Examples({ allNav }) {
                 }}>
                 <Box css={{ width: '100%' }}>
                     <Sidebar
+                        modal={modal}
+                        setModal={setModal}
                         menuState={menuState}
                         allNav={allNav}
                         nav={{}}
