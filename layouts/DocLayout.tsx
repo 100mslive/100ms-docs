@@ -47,7 +47,6 @@ export default function DocLayout({ children }: Props) {
                         }}>
                         <Sidebar
                             menuState={menuState}
-                            modal = {modal} 
                             setModal={setModal}
                             nav={nav}
                             allNav={allNav}

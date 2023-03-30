@@ -53,7 +53,6 @@ interface Props {
     allNav: Record<string, Record<string, NavRoute>>[];
     css?: CSS;
     hideOnDesktop?: boolean;
-    modal: boolean;
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
     hideBorder?: boolean;
     baseViewOnly?: boolean;
@@ -66,7 +65,6 @@ const Sidebar: React.FC<Props> = ({
     nav: currentNav,
     allNav,
     css = {},
-    modal,
     setModal,
     hideOnDesktop = false,
     hideBorder = true,
