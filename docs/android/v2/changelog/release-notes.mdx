@@ -3,13 +3,25 @@ title: Release Notes
 nav: 4
 description: Release Notes for 100ms Android SDK
 ---
+## v2.6.0 - 2023-03-31
+
+### Breaking Changes
+- getToken() is an isntance level api and returns a string in onSuccess instead of a TokenResult object. It modifies an API introduced in 2.5.9. [Docs](https://www.100ms.live/docs/android/v2/get-started/quickstart#get-auth-token)
+- `customerUserID` is now nullable for both `HMSLocalPeer` and `HMSRemotePeer`.
+
+### Added
+- Audio is unsubscribed from if the volume is set to zero. This saves data during calls with a lot of muted peers.
+
+### Fixed
+- Updated internal analytics properties.
+
 ## v2.5.9 - 2023-03-17
 
 ### Added
-Short Codes to join rooms - Rather than requiring your server infrastructure for authenticating users, you can now use a 100ms API to generate tokens for users. A user with a given short code can login as a certain role. One short code per role for each room.
+- Short Codes to join rooms - Rather than requiring your server infrastructure for authenticating users, you can now use a 100ms API to generate tokens for users. A user with a given short code can login as a certain role. One short code per role for each room.
 
 ### Fixed
-Analytics improvements to better measure 100ms performance.
+- Analytics improvements to better measure 100ms performance.
 
 ## v2.5.8 - 2023-03-07
 
