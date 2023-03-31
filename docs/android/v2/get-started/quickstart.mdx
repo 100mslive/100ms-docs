@@ -52,7 +52,11 @@ To join a video call you need an authentication `token`. You can generate token 
 
 ```kotlin section=JoinRoom sectionIndex=1
 func generateToken() {
-   TokenUtils.getAuthTokenByRoomCode(TokenRequest(#room-code, #user-id), null , object :
+   val hmsInstance = HMSSDK
+    .Builder(application)
+    .build()
+ 
+   hmsInstance.getAuthTokenByRoomCode(TokenRequest(#room-code, #user-id), null , object :
       HMSTokenListener {
       override fun onError(error: HMSException) {}
 
