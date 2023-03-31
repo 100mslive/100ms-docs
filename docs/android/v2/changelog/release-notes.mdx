@@ -6,8 +6,8 @@ description: Release Notes for 100ms Android SDK
 ## v2.6.0 - 2023-03-31
 
 ### Breaking Changes
-- Joining the room via [Short Code](https://www.100ms.live/docs/concepts/v2/concepts/rooms/room-codes/room-codes) is simplified with the new `getAuthTokenByRoomCode` API. Here's how the android flow is [streamlined](https://www.100ms.live/docs/android/v2/get-started/quickstart#get-auth-token). It was moved from external to internal to the SDK.
-- `customerUserID` is now nullable for both local and remote peers.
+- getToken() is an isntance level api and returns a string in onSuccess instead of a TokenResult object. It modifies an API introduced in 2.5.9. [Docs](https://www.100ms.live/docs/android/v2/get-started/quickstart#get-auth-token)
+- `customerUserID` is now nullable for both `HMSLocalPeer` and `HMSRemotePeer`.
 
 ### Added
 - Audio is unsubscribed from if the volume is set to zero. This saves data during calls with a lot of muted peers.
