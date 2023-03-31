@@ -282,7 +282,7 @@ const Sidebar: React.FC<Props> = ({
                             css={{
                                 position: 'sticky',
                                 top: '0',
-                                pt: '$5',
+                                pt: '32px',
                                 zIndex: '100',
                                 boxShadow: '0 8px 8px 0.25rem rgba(8, 9, 12, 0.8)',
                                 backgroundColor: 'var(--docs_bg_content)',
