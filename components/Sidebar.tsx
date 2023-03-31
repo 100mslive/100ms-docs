@@ -187,13 +187,13 @@ const Sidebar: React.FC<Props> = ({
                 style={
                     showBaseView
                         ? {
-                            padding: menu ? '32px' : '32px',
-                            paddingTop: '0',
                             position: menu ? 'initial' : 'sticky',
                             top: '16px',
-                            width: '100%'
                         }
-                        : {}
+                        : {
+                            position: menu ? 'initial' : 'sticky',
+                            top: '16px'
+                        }
                 }>
                 {baseViewOnly ? (
                     <div>
@@ -297,7 +297,6 @@ const Sidebar: React.FC<Props> = ({
                                 gap="1"
                                 css={{
                                     color: '$primaryLight',
-                                    pl: '$9',
                                     mb: '$8',
                                     cursor: 'pointer'
                                 }}
@@ -311,19 +310,19 @@ const Sidebar: React.FC<Props> = ({
                                 </Text>
                             </Flex>
 
-                            <div style={{ margin: '0px 32px 16px 24px' }}><DocsSearchBar setHelperState={setHelperState} /></div>
+                            <div style={{ marginBottom: '16px' }}><DocsSearchBar setHelperState={setHelperState} /></div>
 
                             {showPlatformSelector ? (
                                 <section
                                     style={{
-                                        margin: '0px 0.5rem 0.5rem 0.4rem',
+                                        margin: '0px 0px 8px 0px',
                                         background: 'var(--docs_bg_content)'
                                     }}>
                                     <Listbox value={tech} onChange={changeTech}>
-                                        <Listbox.Button className="dropdown" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                        <Listbox.Button className="dropdown" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: '16px' }}>
                                             <div style={{ display: 'flex', flexDirection: 'column', flexGrow: '1', justifyContent: 'center' }}>
-                                                <Text variant={'xs'} style={{color: 'var(--docs_text_secondary)'}}>Platform Selected</Text>
-                                                <Text variant={'lg'} style={{ fontWeight: 'bold'}}>{tech.name === 'JavaScript' ? 'Web' : tech.name}</Text>
+                                                <Text variant={'xs'} style={{ color: 'var(--docs_text_secondary)' }}>Platform Selected</Text>
+                                                <Text variant={'lg'} style={{ fontWeight: 'bold' }}>{tech.name === 'JavaScript' ? 'Web' : tech.name}</Text>
                                             </div>
                                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                                 <div className='dropdown-chevron-container'>
@@ -350,7 +349,7 @@ const Sidebar: React.FC<Props> = ({
                                             ))}
                                         </Listbox.Options>
                                     </Listbox>
-                                    <hr style={{width: '240px', margin: '16px 0px 16px 24px'}}/>
+                                    <hr style={{ width: '100%', margin: '16px 0px' }} />
                                 </section>
                             ) : null}
                         </Box>
@@ -433,7 +432,7 @@ export const menuItem = [
         link: '/server-side/v2/how--to-guides/make-api-calls',
         name: 'Server-side',
         key: 'server-side',
-        icon: <ServerIcon style={{...iconStyle, fill:'transparent'}}/>,
+        icon: <ServerIcon style={{ ...iconStyle, fill: 'transparent' }} />,
         apiRef: '/server-side/v2/api-reference/Rooms/overview'
     }
 ];
