@@ -77,7 +77,9 @@ const Header: React.FC<Props> = ({
     };
 
     // const isApiRef = router.query.slug && router.query.slug[0] === 'api-reference';
-    const isNonApiRef = router.query.slug && router.query.slug[0] === 'server-side';
+    const isNonApiRef =
+        router.query.slug &&
+        (router.query.slug.includes('server-side') || router.query.slug.includes('concepts'));
 
     return renderComponent ? (
         <Flex
