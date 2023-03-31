@@ -91,7 +91,6 @@ nav: '1.1'
 - [ScreenCaptureHandle](/api-reference/javascript/v2/interfaces/ScreenCaptureHandle)
 - [TokenRequest](/api-reference/javascript/v2/interfaces/TokenRequest)
 - [TokenRequestOptions](/api-reference/javascript/v2/interfaces/TokenRequestOptions)
-- [TokenResult](/api-reference/javascript/v2/interfaces/TokenResult)
 
 ## References
 
