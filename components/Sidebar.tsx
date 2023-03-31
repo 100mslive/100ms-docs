@@ -161,7 +161,7 @@ const Sidebar: React.FC<Props> = ({
                 display: hideOnDesktop && !menu ? 'none' : 'flex',
                 flexDirection: 'column',
                 alignItems: 'stretch',
-                height: 'calc(100vh - 100px)',
+                height: 'calc(100vh - 64px)',
                 overflowY: 'auto',
                 borderRight: hideBorder ? 'none' : '1px solid',
                 borderColor: hideBorder ? 'none' : '$borderDefault',
@@ -221,11 +221,11 @@ const Sidebar: React.FC<Props> = ({
                     </Flex>
                 )}
                 <div style={{ margin: '0px 0px 32px 0px' }}><DocsSearchBar setHelperState={setHelperState} /></div>
-                <Link passHref href="/concepts/v2/getting-started/overview">
+                <Link passHref href="/concepts/v2/get-started/overview">
                     <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <PlaySolidIcon style={{ color: 'inherit' }} />
                         <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
-                            Getting Started
+                            Get started
                         </Text>
                     </Flex>
                 </Link>
@@ -307,7 +307,7 @@ const Sidebar: React.FC<Props> = ({
                                 }}>
                                 <ChevronLeftIcon height="16px" width="16px" />
                                 <Text variant="sm" css={{ color: '$primaryLight' }}>
-                                    Content overview
+                                    Go back up
                                 </Text>
                             </Flex>
 
