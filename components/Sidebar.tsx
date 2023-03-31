@@ -221,7 +221,7 @@ const Sidebar: React.FC<Props> = ({
                     </Flex>
                 )}
                 <div style={{ margin: '0px 0px 32px 0px' }}><DocsSearchBar setHelperState={setHelperState} /></div>
-                <Link passHref href="/concepts/v2/get-started/overview">
+                <Link passHref href="/concepts/v2/concepts/basics">
                     <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <PlaySolidIcon style={{ color: 'inherit' }} />
                         <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
