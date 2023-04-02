@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { CrossIcon, HamburgerMenuIcon } from '@100mslive/react-icons';
+import {
+    CrossIcon,
+    HamburgerMenuIcon,
+    DiscordIcon,
+    GithubIcon,
+    ExternalLinkIcon,
+    SearchIcon
+} from '@100mslive/react-icons';
 import { Flex, Text, useTheme } from '@100mslive/react-ui';
 import ActiveLink, { ActiveLinkProps } from './ActiveLink';
 import SearchModal from './SearchModal';
+import { WebsiteLink, DashboardLink, GitHubLink, DiscordLink, ContactLink } from '@/lib/utils';
 
 interface Props {
     menuState: {
@@ -11,12 +20,20 @@ interface Props {
         setMenu: React.Dispatch<React.SetStateAction<boolean>>;
     };
     setModal: React.Dispatch<React.SetStateAction<boolean>>;
-    modal: boolean,
+    modal: boolean;
     // docs: { url: string; title: string; description: string; nav: number; content: string }[];
     showMobileMenu?: boolean;
     showReference?: boolean;
     onHomePage?: boolean;
 }
+
+const iconStyle = { height: '24px', width: '24px', color: 'inherit' };
+const linkCSS = {
+    color: '$textMedEmp',
+    display: 'flex',
+    alignItems: 'center',
+    '&:hover': { color: '$primaryLight' }
+};
 
 const Header: React.FC<Props> = ({
     menuState,
@@ -89,165 +106,109 @@ const Header: React.FC<Props> = ({
                 zIndex: 200,
                 position: 'sticky',
                 top: 0,
-                padding: '12px 40px',
+                padding: '15px 40px',
                 backgroundColor: 'var(--docs_bg_header)',
                 borderBottom: '1px solid var(--docs_border_default)',
                 boxSizing: 'border-box',
                 gap: '40px',
                 '@md': {
-                    padding: '20px 24px'
+                    padding: '16px 24px'
                 }
             }}>
-            <div className="head-left">
-                <a href="https://www.100ms.live" style={{ display: 'flex', marginRight: '40px' }}>
+            <Flex align="center">
+                <a
+                    href={WebsiteLink}
+                    style={{ marginRight: '32px', position: 'relative', top: '4px' }}>
                     <img src="/docs/logo-full.svg" height={24} alt="100ms Logo" />
                 </a>
-                <Flex css={{ gap: '$14', '@md': { display: 'none' } }}>
+                <Flex css={{ gap: '$12', '@md': { display: 'none' } }}>
                     <HeaderLink href="/">Documentation</HeaderLink>
                     <HeaderLink href="/examples">Examples</HeaderLink>
                     {!isNonApiRef && showReference ? (
                         <HeaderLink href={routeAPIRef()}>API Reference</HeaderLink>
                     ) : null}
                 </Flex>
-            </div>
+            </Flex>
 
             <Flex
                 align="center"
                 css={{
-                    height: '40px',
-                    gap: '$13',
+                    color: '$textMedEmp',
+                    gap: '$12',
                     '@lg': {
                         gap: '20px'
                     },
                     '@md': { gap: '20px' }
                 }}>
                 <Flex
+                    onClick={() => setModal(true)}
+                    css={{ color: '$textHighEmp', display: 'none', '@md': { display: 'flex' } }}>
+                    <SearchIcon style={iconStyle} />
+                </Flex>
+                <Flex align="center" className="hide-before-768" css={{ gap: '$12' }}>
+                    <Link href={WebsiteLink}>
+                        <a className="hide-before-1024">
+                            <Text variant="sm" css={linkCSS}>
+                                100ms.live
+                                <ExternalLinkIcon
+                                    height={12}
+                                    width={12}
+                                    style={{ marginLeft: '4px' }}
+                                />
+                            </Text>
+                        </a>
+                    </Link>
+                    <Link href={ContactLink}>
+                        <a className="hide-before-1024">
+                            <Text variant="sm" css={linkCSS}>
+                                Talk to Sales
+                            </Text>
+                        </a>
+                    </Link>
+                    <Link href={DashboardLink}>
+                        <a>
+                            <Text variant="sm" css={linkCSS}>
+                                Dashboard
+                            </Text>
+                        </a>
+                    </Link>
+                    <Link href={DiscordLink}>
+                        <a>
+                            <Text css={linkCSS}>
+                                <DiscordIcon height={18} width={18} />
+                            </Text>
+                        </a>
+                    </Link>
+                    <Link href={GitHubLink}>
+                        <a>
+                            <Text css={linkCSS}>
+                                <GithubIcon style={iconStyle} />
+                            </Text>
+                        </a>
+                    </Link>
+                </Flex>
+                <Flex
                     align="center"
                     css={{
                         display: 'none',
-                        '@lg': {
-                            gap: '20px',
-                            display: onHomePage ? 'flex' : 'none'
-                        },
                         '@md': {
                             display: 'flex'
                         }
                     }}>
                     {showMobileMenu && (
-                        <button
-                            aria-label="menu-button"
-                            type="button"
-                            onClick={() => setMenu(!menu)}
-                            style={{ display: 'flex', padding: 0, cursor: 'pointer' }}>
-                            {menu ? <CrossIcon /> : <HamburgerMenuIcon />}
-                        </button>
+                        <Flex
+                            css={{ color: '$textHighEmp' }}
+                            onClick={() => setMenu((prev) => !prev)}>
+                            {menu ? (
+                                <CrossIcon style={iconStyle} />
+                            ) : (
+                                <HamburgerMenuIcon style={iconStyle} />
+                            )}
+                        </Flex>
                     )}
                 </Flex>
             </Flex>
             {modal ? <SearchModal setModal={setModal} /> : null}
-            <style jsx>{`
-                .ctx {
-                }
-                .link-btn {
-                    background: var(--docs_bg_header_button);
-                    border-radius: var(--docs_border_radius_xs);
-                    padding: 5px 8px;
-                }
-                p.hide-content {
-                    margin-right: 16px;
-                }
-                button a {
-                    color: var(--gray11) !important;
-                    text-decoration: none;
-                }
-                a:hover {
-                    opacity: 1;
-                }
-                .head-left {
-                    display: flex;
-                    align-items: center;
-                }
-                .left-content {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                }
-                .head-right {
-                    display: flex;
-                    margin-left: auto;
-                }
-                .logo-ctx {
-                    display: flex;
-                    align-items: center;
-                    color: var(--gray12);
-                    font-size: 24px;
-                }
-                .logo-ctx img {
-                    margin: 0 1rem;
-                }
-                .search-btn {
-                    opacity: 1;
-                    background-color: transparent;
-                    display: flex;
-                    width: 100%;
-                    align-items: center;
-                    border-radius: var(--docs_border_radius_s);
-                    cursor: pointer;
-                    border-bottom-width: 1px;
-                }
-                .search-btn span {
-                    margin-left: 1rem;
-                    text-align: left;
-                }
-                .search-btn:hover {
-                    opacity: 0.8;
-                }
-                .hot-key {
-                    margin-left: auto !important;
-                    border-radius: var(--docs_border_radius_xs);
-                    padding: 0 5px;
-                    color: var(--docs_text_primary);
-                    border: 1px solid var(--gray6);
-                }
-                .company {
-                    font-size: 1.2rem;
-                    font-weight: 700;
-                    margin: 0;
-                }
-                .company span {
-                    font-size: 1rem;
-                    font-weight: 500;
-                    color: var(--gray9);
-                }
-                button {
-                    background: transparent;
-                    outline: none;
-                    border: none;
-                }
-                .nav-links {
-                    height: 100%;
-                    display: flex;
-                    align-items: center;
-                }
-                @media screen and (max-width: 1024px) {
-                    .nav-links {
-                        display: none;
-                    }
-                }
-                @media screen and (max-width: 600px) {
-                    .ctx {
-                        justify-content: flex-end;
-                    }
-                    .theme-btn {
-                        margin-left: auto;
-                    }
-                }
-                @media screen and (max-width: 375px) {
-                    p.hide-content {
-                        display: none !important;
-                    }
-                }
-            `}</style>
         </Flex>
     ) : null;
 };
