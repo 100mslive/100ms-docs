@@ -5,12 +5,14 @@ import React, { useState, useEffect } from 'react';
 export type ActiveLinkProps = LinkProps & {
     className?: string;
     activeClassName: string;
+    onClick: any;
 };
 
 const ActiveLink = ({
     children,
     activeClassName,
     className,
+    onClick = () => {},
     ...props
 }: ActiveLinkProps & {
     children: (className: string) => React.ReactNode;
@@ -40,7 +42,11 @@ const ActiveLink = ({
         }
     }, [asPath, isReady, props.as, props.href, activeClassName, className, computedClassName]);
 
-    return <Link {...props}>{children(computedClassName ?? '')}</Link>;
+    return (
+        <Link {...props}>
+            <a onClick={onClick}>{children(computedClassName ?? '')}</a>
+        </Link>
+    );
 };
 
 export default ActiveLink;

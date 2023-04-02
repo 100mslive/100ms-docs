@@ -136,7 +136,16 @@ const Sidebar: React.FC<Props> = ({
     const [tech, setTech] = useState(menuItem[indexOf]);
 
     const changeTech = (s) => {
-        setTech(s);
+        console.log(s);
+        setTech((prevSelection) => {
+            window.analytics.track('link.clicked', {
+                btnId: 'platform.switched',
+                switchedTo: s.name,
+                switchedFrom: prevSelection.name,
+                currentPage: window.location.href
+            });
+            return s;
+        });
         if (slug[0] === 'api-reference')
             router.push(s.apiRef, undefined, {
                 shallow: false
@@ -306,6 +315,10 @@ const Sidebar: React.FC<Props> = ({
                                 }}
                                 onClick={() => {
                                     setShowBaseView(true);
+                                    window.analytics.track('btn.clicked', {
+                                        btnId: 'content.overview.clicked',
+                                        currentPage: window.location.href
+                                    });
                                     if (baseRef.current) baseRef?.current.scrollTo(0, 0);
                                 }}>
                                 <ChevronLeftIcon height="16px" width="16px" />

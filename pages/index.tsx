@@ -51,13 +51,7 @@ const Homepage = ({ allNav }) => {
     return (
         <>
             <SegmentAnalytics options={{}} title="100ms Docs" />
-            <Header
-                modal={modal}
-                setModal={setModal}
-                menuState={menuState}
-                showReference={false}
-                onHomePage
-            />
+            <Header modal={modal} setModal={setModal} menuState={menuState} showReference={false} />
             {renderComponents ? (
                 <>
                     <Flex

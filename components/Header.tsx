@@ -40,8 +40,7 @@ const Header: React.FC<Props> = ({
     setModal,
     modal,
     showReference = true,
-    showMobileMenu = true,
-    onHomePage = false
+    showMobileMenu = true
 }) => {
     const [renderComponent, setRenderComponent] = useState(false);
 
@@ -117,15 +116,48 @@ const Header: React.FC<Props> = ({
             }}>
             <Flex align="center">
                 <a
+                    onClick={() =>
+                        window.analytics.track('link.clicked', {
+                            btnId: 'logo.clicked',
+                            currentPage: window.location.href
+                        })
+                    }
                     href={WebsiteLink}
                     style={{ marginRight: '32px', position: 'relative', top: '4px' }}>
                     <img src="/docs/logo-full.svg" height={24} alt="100ms Logo" />
                 </a>
                 <Flex css={{ gap: '$12', '@md': { display: 'none' } }}>
-                    <HeaderLink href="/">Documentation</HeaderLink>
-                    <HeaderLink href="/examples">Examples</HeaderLink>
+                    <HeaderLink
+                        onClick={() =>
+                            window.analytics.track('link.clicked', {
+                                btnId: 'docs.clicked',
+                                currentPage: window.location.href
+                            })
+                        }
+                        href="/">
+                        Documentation
+                    </HeaderLink>
+                    <HeaderLink
+                        onClick={() =>
+                            window.analytics.track('link.clicked', {
+                                btnId: 'examples.clicked',
+                                currentPage: window.location.href
+                            })
+                        }
+                        href="/examples">
+                        Examples
+                    </HeaderLink>
                     {!isNonApiRef && showReference ? (
-                        <HeaderLink href={routeAPIRef()}>API Reference</HeaderLink>
+                        <HeaderLink
+                            onClick={() =>
+                                window.analytics.track('link.clicked', {
+                                    btnId: 'api.reference.clicked',
+                                    currentPage: window.location.href
+                                })
+                            }
+                            href={routeAPIRef()}>
+                            API Reference
+                        </HeaderLink>
                     ) : null}
                 </Flex>
             </Flex>
@@ -147,7 +179,14 @@ const Header: React.FC<Props> = ({
                 </Flex>
                 <Flex align="center" className="hide-before-768" css={{ gap: '$12' }}>
                     <Link href={WebsiteLink}>
-                        <a className="hide-before-1024">
+                        <a
+                            className="hide-before-1024"
+                            onClick={() =>
+                                window.analytics.track('link.clicked', {
+                                    btnId: '100mslive.clicked',
+                                    currentPage: window.location.href
+                                })
+                            }>
                             <Text variant="sm" css={linkCSS}>
                                 100ms.live
                                 <ExternalLinkIcon
@@ -159,28 +198,53 @@ const Header: React.FC<Props> = ({
                         </a>
                     </Link>
                     <Link href={ContactLink}>
-                        <a className="hide-before-1024">
+                        <a
+                            className="hide-before-1024"
+                            onClick={() =>
+                                window.analytics.track('link.clicked', {
+                                    btnId: 'sales.clicked',
+                                    currentPage: window.location.href
+                                })
+                            }>
                             <Text variant="sm" css={linkCSS}>
                                 Talk to Sales
                             </Text>
                         </a>
                     </Link>
                     <Link href={DashboardLink}>
-                        <a>
+                        <a
+                            onClick={() =>
+                                window.analytics.track('link.clicked', {
+                                    btnId: 'dashboard.clicked',
+                                    currentPage: window.location.href
+                                })
+                            }>
                             <Text variant="sm" css={linkCSS}>
                                 Dashboard
                             </Text>
                         </a>
                     </Link>
                     <Link href={DiscordLink}>
-                        <a>
+                        <a
+                            onClick={() =>
+                                window.analytics.track('link.clicked', {
+                                    btnId: 'discord.clicked',
+                                    currentPage: window.location.href
+                                })
+                            }>
                             <Text css={linkCSS}>
                                 <DiscordIcon height={18} width={18} />
                             </Text>
                         </a>
                     </Link>
                     <Link href={GitHubLink}>
-                        <a>
+                        <a
+                            onClick={() =>
+                                window.analytics.track('link.clicked', {
+                                    btnId: 'github.clicked',
+                                    currentPage: window.location.href
+                                })
+                            }>
                             <Text css={linkCSS}>
                                 <GithubIcon style={iconStyle} />
                             </Text>
