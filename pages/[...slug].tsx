@@ -80,9 +80,6 @@ const DocSlugs = ({ source, frontMatter, pagination, showToc = true }: Props) =>
     }, [asPath]);
 
     React.useEffect(() => {
-        setTimeout(() => {
-            if (!window.location.href.includes('#')) window.scrollTo(0, 0);
-        }, 0);
         const getTopIndex = (arr) => {
             for (let i = arr.length - 1; i >= 0; i--)
                 if (Math.floor(arr[i].getBoundingClientRect().top) < 200) return i;
@@ -236,4 +233,4 @@ export const getStaticPaths = async () => {
     };
 };
 
-DocSlugs.Layout = DocLayout
+DocSlugs.Layout = DocLayout;
