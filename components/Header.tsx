@@ -116,6 +116,8 @@ const Header: React.FC<Props> = ({
             }}>
             <Flex align="center">
                 <a
+                    target="_blank"
+                    rel="noreferrer"
                     onClick={() =>
                         window.analytics.track('link.clicked', {
                             btnId: 'logo.clicked',
@@ -180,6 +182,8 @@ const Header: React.FC<Props> = ({
                 <Flex align="center" className="hide-before-768" css={{ gap: '$12' }}>
                     <Link href={WebsiteLink}>
                         <a
+                            target="_blank"
+                            rel="noreferrer"
                             className="hide-before-1024"
                             onClick={() =>
                                 window.analytics.track('link.clicked', {
@@ -199,6 +203,8 @@ const Header: React.FC<Props> = ({
                     </Link>
                     <Link href={ContactLink}>
                         <a
+                            target="_blank"
+                            rel="noreferrer"
                             className="hide-before-1024"
                             onClick={() =>
                                 window.analytics.track('link.clicked', {
@@ -213,6 +219,8 @@ const Header: React.FC<Props> = ({
                     </Link>
                     <Link href={DashboardLink}>
                         <a
+                            target="_blank"
+                            rel="noreferrer"
                             onClick={() =>
                                 window.analytics.track('link.clicked', {
                                     btnId: 'dashboard.clicked',
@@ -226,6 +234,8 @@ const Header: React.FC<Props> = ({
                     </Link>
                     <Link href={DiscordLink}>
                         <a
+                            target="_blank"
+                            rel="noreferrer"
                             onClick={() =>
                                 window.analytics.track('link.clicked', {
                                     btnId: 'discord.clicked',
@@ -233,12 +243,18 @@ const Header: React.FC<Props> = ({
                                 })
                             }>
                             <Text css={linkCSS}>
-                                <DiscordIcon height={18} width={18} />
+                                <DiscordIcon
+                                    height={18}
+                                    width={18}
+                                    style={{ marginRight: '-14px' }}
+                                />
                             </Text>
                         </a>
                     </Link>
                     <Link href={GitHubLink}>
                         <a
+                            target="_blank"
+                            rel="noreferrer"
                             onClick={() =>
                                 window.analytics.track('link.clicked', {
                                     btnId: 'github.clicked',
@@ -293,11 +309,10 @@ const HeaderLink = ({
             {(className) => (
                 <Text
                     as="a"
-                    variant="body2"
+                    variant="sm"
                     className={className}
                     css={{
                         boxSizing: 'border-box',
-                        fontWeight: '$semiBold',
                         color: '$textMedEmp',
                         '&:hover': {
                             opacity: 'initial'
