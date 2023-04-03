@@ -12,12 +12,28 @@ description: Release Notes for 100ms JavaScript SDK
 | @100mslive/react-sdk                   | [![npm version](https://badge.fury.io/js/%40100mslive%2Freact-sdk.svg)](https://badge.fury.io/js/%40100mslive%2Freact-sdk)             |
 | @100mslive/hms-video-react(deprecated) | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-react.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-react) |
 
+## 2023-03-31
+
+Released: `@100mslive/hms-video-store@0.10.0`, `@100mslive/react-sdk@0.8.0`
+
+#### Added
+- alpha release of `@100mslive/hls-player` is done.
+ `@100mslive/hls-player` is currently a wrapper on hls.js with easy to use interface and few add-ons for [100ms's interactive live streaming feature](/javascript/v2/how--to-guides/record-and-live-stream/hls/hls).
+
+#### Fixed:
+- SDK causing memory exception in preview when room state peer list is enabled for 1500+ peers.
+- All servers setting `isTerminal: true` on the `HMSException`. Now only the terminal server errors will set `isTerminal: true`
+- Analytics events
+
+#### Breaking:
+- [`getAuthTokenByRoomCode`](/docs/api-reference/javascript/v2/interfaces/HMSActions#getauthtokenbyroomcode) in hmsActions now returns the token as a string in response.
+
 ## 2023-03-14
 
 Released: `@100mslive/hms-video-store@0.9.0`, `@100mslive/react-sdk@0.7.0`
 
 #### Added:
-- [`getAuthTokenByRoomCode`](https://www.100ms.live/docs/api-reference/javascript/v2/interfaces/HMSActions#getauthtokenbyroomcode) in hmsActions to get token for room short code.
+- [`getAuthTokenByRoomCode`](/docs/api-reference/javascript/v2/interfaces/HMSActions#getauthtokenbyroomcode) in hmsActions to get token for room short code.
 - The SDK now handles auto subscribing/unsubscribing while [rendering video](../how--to-guides/set-up-video-conferencing/render-video/overview) based on the element's visibility. If Simulcast is enabled, the appropriate resolution based on the video element's dimensions will also be auto-selected. Note that this was already available for react-sdk via the useVideo hook. With this release, we've also added it for the core SDK.
 
 #### Breaking:
@@ -103,7 +119,7 @@ Released: `@100mslive/hms-video-store@0.7.1`, `@100mslive/react-sdk@0.5.1`
 - Stats for nerds for HLS - @alpha release
 
 #### Breaking
-- `customerDescription` on [`HMSPeer`](https://www.100ms.live/docs/api-reference/javascript/v2/interfaces/HMSPeer) is now removed. Use `metadata` field instead
+- `customerDescription` on [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer) is now removed. Use `metadata` field instead
 - Screenshare config is updated. Please refer [here](https://www.100ms.live/docs/api-reference/javascript/v2/interfaces/HMSScreenShareConfig)
 
 ## 2022-10-20
