@@ -1,0 +1,224 @@
+---
+title: Auth Token
+nav: 3.14
+---
+
+100ms uses Auth Tokens as one of the ways to Join a Room. Explore Join Room Authentication ar
+
+<FlexContainer>
+<Callout icon="link" title="Auth Token Basics">
+- Auth Tokens are jwt tokens that can be used to Join a Room.
+- **Expiry Check :** Auth Tokens have a default expiry of 24 hours once generated. Alternatively, you can explicitly define the expiry while generating the token
+</Callout>
+</FlexContainer>
+
+## Generating Auth Token
+
+### No Code Auth Token Setup
+
+- Get temporary auth tokens from 100ms **[dashboard](https://www.100ms.live/docs/javascript/v2/guides/token#get-a-temporary-token-from-100ms-dashboard)**
+- This approach is recommended for Quickstart Guides or for testing scenarios
+- Do not use Auth Token from 100ms Dashboard for live scenarios as they expire after 24 hours of generation.
+
+![Auth Token from Join Room Modal](/docs/v2/join-room-blurred.png)
+
+### Set up Auth Token Programatically
+
+#### **Set up your token server**
+
+Your app will call the token server, which generates and returns a JWT auth token for the app to join a 100ms room. This ensures the secret credential of your workspace (called `app_secret`) is not exposed to the client-side. You can also tie it with your internal user authentication: generate auth tokens only when the user is authenticated.
+
+You can programatically generate Auth Tokens using:
+
+| Field | Description | Attribute |
+| --- | --- | --- |
+| App Access Key | Secret credential for your 100ms account; Access from Developer Section on 100ms Dashboard  | Required |
+| App Secret | Secret credential for your 100ms account; Access from Developer Section on 100ms Dashboard | Required |
+| Room ID | Unique identifier for the room that the peer wants to join. Get it from Room details page on [100ms Dashboard](https://dashboard.100ms.live/rooms) or in the response of the [Create Room API](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/create-via-api) | Required |
+| Role | Name of the Role that the peer will join as (e.g. "host") | Required |
+| Expiry | Validity of the Auth token; Default Expiry : 24 hours | Required |
+| User ID | Your internal identifier, useful to map a 100ms peer object to your internal user object | Optional |
+
+
+
+#### Sample code
+
+<Tabs id="client-code-token" items={['Node.js', 'Python', 'Java', 'Ruby', 'PHP']} />
+
+<Tab id='client-code-token-0'>
+
+```javascript
+var jwt = require('jsonwebtoken');
+var uuid4 = require('uuid4');
+
+var app_access_key = '<app_access_key>';
+var app_secret = '<app_secret>';
+
+var payload = {
+    access_key: app_access_key,
+    room_id: '<room_id>',
+    user_id: '<user_id>',
+    role: '<role>',
+    type: 'app',
+    version: 2,
+    iat: Math.floor(Date.now() / 1000),
+    nbf: Math.floor(Date.now() / 1000)
+};
+
+jwt.sign(
+    payload,
+    app_secret,
+    {
+        algorithm: 'HS256',
+        expiresIn: '24h',
+        jwtid: uuid4()
+    },
+    function (err, token) {
+        console.log(token);
+    }
+);
+```
+
+</Tab>
+
+<Tab id='client-code-token-1'>
+
+```python
+#!/usr/bin/env python3
+import jwt
+import uuid
+import datetime
+import sys
+
+app_access_key = "<app_access_key>"
+app_secret = "<app_secret>"
+
+def generate(room_id, user_id, role):
+    expires = expires or 24 * 3600
+    now = datetime.datetime.utcnow()
+    exp  = now+ datetime.timedelta(seconds=expires)
+    return jwt.encode(payload={
+                "access_key": app_access_key,
+                "type":"app",
+                "version":2,
+                "room_id": room_id,
+                "user_id": user_id,
+                "role":role,
+                "jti": str(uuid.uuid4()),
+                "exp": exp,
+                "iat": now,
+                "nbf": now,
+                }, key=app_secret)
+
+if __name__ == "__main__":
+    if len(sys.argv) == 3:
+        room_id = sys.argv[0]
+        user_id = sys.argv[1]
+        role = sys.argv[2]
+    print(generate(room_id=room_id, user_id=user_id, role=role))
+```
+
+</Tab>
+
+<Tab id='client-code-token-2'  >
+
+```java
+import java.time.Instant;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
+private void generateHmsClientToken() {
+    Map<String, Object> payload = new HashMap<>();
+    payload.put("access_key", "<app_access_key>");
+    payload.put("room_id", "<room_id>");
+    payload.put("user_id", "<user_id>");
+    payload.put("role", "<role>");
+    payload.put("type", "app");
+    payload.put("version", 2);
+    String token = Jwts.builder().setClaims(payload).setId(UUID.randomUUID().toString())
+        .setExpiration(new Date(System.currentTimeMillis() + 86400 * 1000))
+        .setIssuedAt(Date.from(Instant.ofEpochMilli(System.currentTimeMillis() - 60000)))
+        .setNotBefore(new Date(System.currentTimeMillis()))
+        .signWith(SignatureAlgorithm.HS256, "<app_secret>".getBytes()).compact();
+}
+```
+
+</Tab>
+
+<Tab id='client-code-token-3'  >
+
+```ruby
+require 'jwt'
+require 'securerandom'
+
+$app_access_key = "<app_access_key>"
+$app_secret = "app_secret"
+
+def generateAppToken(room_id, user_id, role)
+    now = Time.now
+    exp = now + 86400
+    payload = {
+        access_key: $app_access_key,
+        room_id: room_id,
+        user_id: user_id,
+        role: role,
+        type: "app",
+        jti: SecureRandom.uuid,
+        version: 2,
+        iat: now.to_i,
+        nbf: now.to_i,
+        exp: exp.to_i
+    }
+
+    token = JWT.encode(payload, $app_secret, 'HS256')
+end
+
+puts generateAppToken "<room_id>", "<user_id>", "<role>"
+
+```
+
+</Tab>
+
+<Tab id='client-code-token-4'>
+
+```php
+<?php
+use Firebase\JWT\JWT;
+use Ramsey\Uuid\Uuid;
+
+$issuedAt  = new DateTimeImmutable();
+$expire    = $issuedAt->modify('+24 hours')->getTimestamp();
+$accessKey = "<app_access_key>";
+$secret    = "<app_secret>";
+$version   = 2;
+$type      = "app";
+$role      = "<role>";
+$roomId    = "<room_id>";
+$userId    = "<user_id>";
+
+$payload = [
+    'iat'  => $issuedAt->getTimestamp(),
+    'nbf'  => $issuedAt->getTimestamp(),
+    'exp'  => $expire,
+    'access_key' => $accessKey,
+    'type' => "app",
+    'jti' =>  Uuid::uuid4()->toString()
+    'version' => 2,
+    'role' => $role,
+    'room_id' => $roomId,
+    'user_id' => $userId
+];
+
+$token = JWT::encode(
+    $payload,
+    $secret,
+    'HS256'
+);
+?>
+```
+
+</Tab>

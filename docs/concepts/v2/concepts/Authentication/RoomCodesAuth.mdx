@@ -1,0 +1,71 @@
+---
+title: Room Code Authentication
+nav: 3.15
+---
+
+100ms uses [Room Codes](https://www.100ms.live/docs/concepts/v2/concepts/rooms/room-codes/room-codes) as a secondary way to Join a Room. Check out [Join Room Authentication](/concepts/v2/concepts/Authentication/JoinRoomAuthentication) for more details.
+
+<FlexContainer>
+<Callout icon="link" title="Room Code Authentication Basics">
+- When using Room Codes to Join a Room, it eliminates the need to generate [Auth Token](/concepts/v2/concepts/Authentication/AuthToken) at your end.
+    - If you're using 100ms [Prebuilt](https://www.100ms.live/docs/concepts/v2/concepts/prebuilt) solution, Prebuilt takes care of generating the Auth Token using Room Codes.
+    - When building a Custom UI, you need to make an additional SDK API call to generate the Auth Token.
+- Room Codes can also be used to generate [Room Links](https://www.100ms.live/docs/concepts/v2/concepts/rooms/room-links).
+- As Room Codes do not expire, Room Code based Authentication can be 
+</Callout>
+</FlexContainer>
+
+## Generating Room Codes
+
+### No Code Setup
+You can access Role specific Room Codes from [100ms Dashboard](https://dashboard.100ms.live/dashboard)
+1. Go to Rooms -> Select a Room
+2. Click on Join Room
+3. Copy Role specific Room Code and use it to Join a Room.
+
+![Room Code from Join Room Modal](/docs/v2/join-room-blurred.png)
+
+### Programatically Generate Room Codes
+
+#### Create Room Codes
+
+For every Room created via [Create Room API](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/create-via-api), you need to explicitly create Room Codes for each Role in the Room. Use [Create Room Code API](https://www.100ms.live/docs/server-side/v2/api-reference/room-codes/create-room-code-api) to create
+- Room Codes for [all Roles in a Room](https://www.100ms.live/docs/server-side/v2/api-reference/room-codes/create-room-code-api#1-create-a-room-code-api)
+- Room Codes for [specific Roles in a Room](https://www.100ms.live/docs/server-side/v2/api-reference/room-codes/create-room-code-api#2-create-role-room-code-api)
+
+#### Join a Room with a Room Code
+
+1. Firstly, retrieve the Room Code - You can get the Room Code in two ways:
+
+    - Retrieve the Room Code from the [Room Link](/concepts/v2/concepts/Rooms/room-links) that you generate.
+    - Use [Get Room Code API](/server-side/v2/api-reference/room-codes/retrieve-room-code-api) to retrieve Role specific Room Code.
+
+2. Use the retrived Room Code to call getAuthTokenByRoomCode SDK method to generaate Auth Token and Join a Room using Auth Token. Note that Auth Token generation is taken care by the SDK using the Room Code you pass.
+
+
+##### Sample Code
+<Tabs id="test-code" items={['iOS']} />
+
+
+<Tab id="test-code-0">
+
+```swift section=JoinRoom sectionIndex=1
+func joinRoom() {
+
+    hmsSDK.getAuthTokenByRoomCode("room-code") { token, error in
+        if let token = token {
+            let config = HMSConfig(userName: "John Doe", authToken: token)
+            hmsSDK.join(config: config, delegate: self)
+        }
+    }
+}
+
+override func viewDidLoad() {
+    super.viewDidLoad()
+    joinRoom()
+}
+```
+
+</Tab>
+
+
