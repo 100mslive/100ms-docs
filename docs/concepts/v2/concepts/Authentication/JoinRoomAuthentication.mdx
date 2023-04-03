@@ -1,0 +1,50 @@
+---
+title: Join Room Authentication
+nav: 3.13
+---
+
+## Overview
+
+Join Room Authentication is a client-side authentication mechanism that allows end-users (peers) to join Rooms with 100ms client SDKs. 
+
+
+<FlexContainer>
+<Callout icon="link" title="Two Ways to Join a Room">
+
+- Since inception, Auth Token has been the primary way to Join Rooms on 100ms. 
+- We’ve now introduced a new, simpler way for you to set up Authentication to join Rooms using [Room Codes](https://www.100ms.live/docs/concepts/v2/concepts/rooms/room-codes/room-codes) as a secondary way to Join Rooms. You don't need to set up a Token service to generate Auth Token when using Room Codes.
+
+- **Auth Token vs Room Code** - Jump to [Choosing between Auth Token and Room Codes](/concepts/v2/concepts/Authentication/JoinRoomAuthentication#choosing-between-auth-token-and-room-codes)
+
+</Callout>
+
+</FlexContainer>
+
+### Quick References to Get Started
+
+|Auth Mechanism| Implementation Guide |
+| :----------- | :---------- |
+| [Auth Token](/concepts/v2/concepts/Authentication/AuthToken) | 1. [No-Code Setup](/concepts/v2/concepts/Authentication/AuthToken#no-code-auth-token-setup) 2. [Programatically Generate Auth Token](/concepts/v2/concepts/Authentication/AuthToken#set-up-auth-token-programatically) |
+| [Room Code Authentication](/concepts/v2/concepts/Authentication/RoomCodesAuth) | 1. [No-Code Setup](/concepts/v2/concepts/Authentication/RoomCodesAuth#no-code-setup) 2. [Programatically Generate Room Codes](/concepts/v2/concepts/Authentication/RoomCodesAuth#programatically-generate-room-codes) |
+
+
+
+
+
+
+### Choosing Between Auth Token and Room Codes
+
+By default, Joining a Room requires Auth Token. You can choose to authenticate users directly using Auth Token or simply use Room Codes, which the SDK can use to generate Auth token and Join the Room. By using Room Codes, it eliminates the need to generate Auth Token at your end.
+
+![Join Room Authentication](/guides/JoinRoomAuthv2.png)
+
+
+|Factors| Room Codes | Auth Token |
+| :------------------------------------------- | :--------------------------------- | :--------------------------------- |
+| What are they? | Unique, encrypted short codes representing a `role` and `room_id` combination | JWT tokens representing `room_id`, `role` and your secret credentials such as `app_access_key` and `app_secret` 
+| Expiry and Re-usability | Room Codes do not expire and can be used infinitely, unless disabled explicitly  | Transient, short-lived token with default expiry of 24 hours; You can define an expiry while generating Auth Token. You'd need to generate Auth Token once expired  |
+| Usage  | Room Codes can also be used to generate [Room Links](https://www.100ms.live/docs/concepts/v2/concepts/rooms/room-links)  | Auth Token only serves the purpose of Join Room Authentication  |
+| Join Room Implementation | 1. Generate Room Codes 2. Get Auth Token from Room Code 3. Join Using Auth Token | Requires Setting up a backend Auth Token generation service at your end | 
+
+
+
