@@ -7,6 +7,8 @@ Session store is a shared realtime key-value store that is accessible by everyon
 
 Session store is persisted throughout a session and is cleared once the last peer leaves the room.
 
+It is recommended to plan an interface for session store so that the app gets to know before hand what keys it needs to observe. If you're using Typescript, using an interface for session store also provides better type-safety and auto-completion. Read [Typescript Usage](#typescript-usage) section to know more.
+
 <Note>
 💡 Session Store vs Peer Metadata
 
@@ -40,7 +42,7 @@ To get updates with the latest values from the session store for a set of keys, 
 
 This could be done after being successfully connected to the room.
 
-```js
+```jsx
 // in a top level component
 const Conference = () => {
     const hmsActions = useHMSActions();
@@ -52,7 +54,7 @@ const Conference = () => {
         }
     }, [hmsActions, isConnected]);
 
-    return; // layout to render peers;
+    return <div>{/** layout to render peers */}</div>;
 };
 ```
 
@@ -78,12 +80,6 @@ const val = useHMSStore(selectSessionStore('key1'));
 ```
 
 </Tab>
-
-<Note>
-
-It is recommended to plan an interface for session store so that the app gets to know before hand what keys it needs to observe. If you're using Typescript, using an interface for session store also provides better type-safety and auto-completion. Read on to know more.
-
-</Note>
 
 ## Typescript Usage
 
