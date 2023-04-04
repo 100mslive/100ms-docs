@@ -1,0 +1,197 @@
+---
+title: Management Token
+nav: 3.12
+---
+
+100ms uses a Management Token to authenticate all 100ms Server-Side APIs. All APIs follow basic HTTP communication and adheres to the standards of REST. 
+
+Management Token for 100ms APIs
+
+<FlexContainer>
+<Callout icon="link" title="Management Token Basics">
+- Management Tokens are JWT tokens generated using the HS256 algorithm (HMAC with SHA-256).
+- Management Token should not be exposed on the client-side.
+- **Expiry Check :** Management Tokens have a default expiry of 24 hours once generated. Alternatively, you can explicitly define the expiry while generating the token. You'd have regenerate management token
+</Callout>
+</FlexContainer>
+
+## Generating Management Token
+
+### No Code Management Token Setup
+Authenticate Server-Side APIs using 100ms Server Side [Postman Collection](https://god.gw.postman.com/run-collection/22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a?action=collection%2Ffork&collection-url=entityId%3D22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a%26entityType%3Dcollection%26workspaceId%3Dd9145dd6-337b-4761-81d6-21a30b4147a2) that has built-in support for Management Token generation without setting up a backend service.
+
+
+- Import a copy of the Postman Collection
+- Update the collection variables APP_ACCESS_KEY and APP_SECRET in the 100ms API Collection. You can access the **App Access Key** and **App Secret** from 100ms **[dashboard](https://dashboard.100ms.live/developer)** under [Developer Section](https://dashboard.100ms.live/developer)
+- We have added a pre-request script within the collection, which will generate the Management Token and set the same as a collection variable (TOKEN) in the forked Postman collection. 
+- Automatically, this will be used as authentication for all the APIs in the 100ms collection.
+
+![Set up APP_ACCESS_KEY and APP_SECRET](/docs/v2/postman-management-token.png)
+
+### Generate Management Token Programmatically
+Since Management Tokens can expire, it is recommended that you set up a backend service to generate them programmatically.
+
+Generating a Management Token requires the following:
+
+| Field | Description | Attribute |
+| --- | --- | --- |
+| App Access Key | Secret credential for your 100ms account; Access from [Developer Section](https://dashboard.100ms.live/developer) on 100ms Dashboard | Required |
+| App Secret| Secret credential for your 100ms account; Access from [Developer Section](https://dashboard.100ms.live/developer) on 100ms Dashboard  | Required |
+| Expiry | Validity of the Management token; Default Expiry : 24 hours | Required |
+
+
+Here is an example code for generating Management Tokens.
+
+#### Sample code
+
+<Tabs id="test-code" items={['Node.js', 'Python', 'Java', 'Ruby', 'PHP']} />
+
+<Tab id='test-code-0'>
+
+```js
+var jwt = require('jsonwebtoken');
+var uuid4 = require('uuid4');
+
+var app_access_key = '<app_access_key>';
+var app_secret = '<app_secret>';
+var payload = {
+    access_key: app_access_key,
+    type: 'management',
+    version: 2,
+    iat: Math.floor(Date.now() / 1000),
+    nbf: Math.floor(Date.now() / 1000)
+};
+
+jwt.sign(
+    payload,
+    app_secret,
+    {
+        algorithm: 'HS256',
+        expiresIn: '24h',
+        jwtid: uuid4()
+    },
+    function (err, token) {
+        console.log(token);
+    }
+);
+```
+
+</Tab>
+
+<Tab id='test-code-1'>
+
+```py
+#!/usr/bin/env python3
+import jwt
+import uuid
+import datetime
+
+app_access_key = '<app_access_key>'
+app_secret = '<app_secret>'
+
+
+def generateManagementToken():
+    expires = 24 * 3600
+    now = datetime.datetime.utcnow()
+    exp = now + datetime.timedelta(seconds=expires)
+    return jwt.encode(payload={
+        'access_key': app_access_key,
+        'type': 'management',
+        'version': 2,
+        'jti': str(uuid.uuid4()),
+        'iat': now,
+        'exp': exp,
+        'nbf': now
+        }, key=app_secret)
+
+if __name__ == '__main__':
+    print(generateManagementToken())
+```
+
+</Tab>
+
+<Tab id="test-code-2">
+
+```java
+import java.time.Instant;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
+private void generateManagementToken() {
+    Map<String, Object> payload = new HashMap<>();
+    payload.put("access_key", "<app_access_key>");
+    payload.put("type", "management");
+    payload.put("version", 2);
+    String token = Jwts.builder().setClaims(payload).setId(UUID.randomUUID().toString())
+        .setExpiration(new Date(System.currentTimeMillis() + 86400 * 1000))
+        .setIssuedAt(Date.from(Instant.ofEpochMilli(System.currentTimeMillis() - 60000)))
+        .setNotBefore(new Date(System.currentTimeMillis()))
+        .signWith(SignatureAlgorithm.HS256, "<app_secret>".getBytes()).compact();
+  }
+```
+
+</Tab>
+
+<Tab id="test-code-3">
+
+```ruby
+require 'jwt'
+require 'securerandom'
+
+$app_access_key = "<app_access_key>"
+$app_secret = "<app_secret>"
+
+def generateManagementToken()
+    now = Time.now
+    exp = now + 86400
+    payload = {
+    access_key: $app_access_key,
+    type: "management",
+    version: 2,
+    jti: SecureRandom.uuid,
+    iat: now.to_i,
+    nbf: now.to_i,
+    exp: exp.to_i
+}
+token = JWT.encode(payload, $app_secret, 'HS256')
+return token
+end
+
+puts generateManagementToken
+```
+
+</Tab>
+
+<Tab id="test-code-4">
+
+```php
+<?php
+
+use Firebase\JWT\JWT;
+use Ramsey\Uuid\Uuid;
+
+$app_access_key = "<app_access_key>";
+$app_secret = "<app_secret>";
+
+$issuedAt   = new DateTimeImmutable();
+$expire     = $issuedAt->modify('+24 hours')->getTimestamp();
+
+$payload = [
+    'access_key' => $app_access_key,
+    'type' => 'management',
+    'version' => 2,
+    'jti' =>  Uuid::uuid4()->toString(),
+    'iat'  => $issuedAt->getTimestamp(),
+    'nbf'  => $issuedAt->getTimestamp(),
+    'exp'  => $expire,
+];
+
+$token = JWT::encode($payload, $app_secret, 'HS256');
+?>
+```
+
+</Tab>
