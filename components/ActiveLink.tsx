@@ -5,6 +5,8 @@ import React, { useState, useEffect } from 'react';
 export type ActiveLinkProps = LinkProps & {
     className?: string;
     activeClassName: string;
+    noHighlight?: boolean;
+    target?: string;
     onClick: any;
 };
 
@@ -12,6 +14,7 @@ const ActiveLink = ({
     children,
     activeClassName,
     className,
+    noHighlight = false,
     onClick = () => {},
     ...props
 }: ActiveLinkProps & {
@@ -44,7 +47,9 @@ const ActiveLink = ({
 
     return (
         <Link {...props}>
-            <a onClick={onClick}>{children(computedClassName ?? '')}</a>
+            <a rel="noreferrer" target={props?.target || '_self'} onClick={onClick}>
+                {children(computedClassName ?? '')}
+            </a>
         </Link>
     );
 };

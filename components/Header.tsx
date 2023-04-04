@@ -137,7 +137,7 @@ const Header: React.FC<Props> = ({
                             })
                         }
                         href="/">
-                        Documentation
+                        Docs
                     </HeaderLink>
                     <HeaderLink
                         onClick={() =>
@@ -180,58 +180,46 @@ const Header: React.FC<Props> = ({
                     <SearchIcon style={iconStyle} />
                 </Flex>
                 <Flex align="center" className="hide-before-768" css={{ gap: '$12' }}>
-                    <Link href={WebsiteLink}>
-                        <a
-                            target="_blank"
-                            rel="noreferrer"
-                            className="hide-before-1024"
-                            onClick={() =>
-                                window.analytics.track('link.clicked', {
-                                    btnId: '100mslive.clicked',
-                                    currentPage: window.location.href
-                                })
-                            }>
-                            <Text variant="sm" css={linkCSS}>
-                                100ms.live
-                                <ExternalLinkIcon
-                                    height={12}
-                                    width={12}
-                                    style={{ marginLeft: '4px' }}
-                                />
-                            </Text>
-                        </a>
-                    </Link>
-                    <Link href={ContactLink}>
-                        <a
-                            target="_blank"
-                            rel="noreferrer"
-                            className="hide-before-1024"
-                            onClick={() =>
-                                window.analytics.track('link.clicked', {
-                                    btnId: 'sales.clicked',
-                                    currentPage: window.location.href
-                                })
-                            }>
-                            <Text variant="sm" css={linkCSS}>
-                                Talk to Sales
-                            </Text>
-                        </a>
-                    </Link>
-                    <Link href={DashboardLink}>
-                        <a
-                            target="_blank"
-                            rel="noreferrer"
-                            onClick={() =>
-                                window.analytics.track('link.clicked', {
-                                    btnId: 'dashboard.clicked',
-                                    currentPage: window.location.href
-                                })
-                            }>
-                            <Text variant="sm" css={linkCSS}>
-                                Dashboard
-                            </Text>
-                        </a>
-                    </Link>
+                    <HeaderLink
+                        noHighlight
+                        target="_blank"
+                        onClick={() =>
+                            window.analytics.track('link.clicked', {
+                                btnId: '100ms.live.clicked',
+                                currentPage: window.location.href
+                            })
+                        }
+                        href={WebsiteLink}>
+                        100ms.live
+                        <ExternalLinkIcon height={12} width={12} style={{ marginLeft: '4px' }} />
+                    </HeaderLink>
+
+                    <HeaderLink
+                        noHighlight
+                        target="_blank"
+                        onClick={() =>
+                            window.analytics.track('link.clicked', {
+                                btnId: 'sales.clicked',
+                                currentPage: window.location.href
+                            })
+                        }
+                        href={ContactLink}>
+                        Talk to Sales
+                    </HeaderLink>
+
+                    <HeaderLink
+                        noHighlight
+                        target="_blank"
+                        onClick={() =>
+                            window.analytics.track('link.clicked', {
+                                btnId: 'dashboard.clicked',
+                                currentPage: window.location.href
+                            })
+                        }
+                        href={DashboardLink}>
+                        Dashboard
+                    </HeaderLink>
+
                     <Link href={DiscordLink}>
                         <a
                             target="_blank"
@@ -302,10 +290,11 @@ export default Header;
 
 const HeaderLink = ({
     children,
+    noHighlight,
     ...rest
 }: React.PropsWithChildren<Omit<ActiveLinkProps, 'activeClassName'>>) => {
     return (
-        <ActiveLink activeClassName="docs-link-active" passHref {...rest}>
+        <ActiveLink activeClassName={noHighlight ? '' : 'docs-link-active'} passHref {...rest}>
             {(className) => (
                 <Text
                     as="a"
@@ -313,6 +302,9 @@ const HeaderLink = ({
                     className={className}
                     css={{
                         boxSizing: 'border-box',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '$2',
                         color: '$textMedEmp',
                         '&:hover': {
                             opacity: 'initial'
