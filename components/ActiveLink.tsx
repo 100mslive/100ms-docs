@@ -30,11 +30,6 @@ const ActiveLink = ({
     useEffect(() => {
         // Check if the router fields are updated client-side
         if (isReady) {
-            // Dynamic route will be matched via props.as
-            // Static route will be matched via props.href
-            const linkPathname = new URL((props.as || props.href) as string, location.href)
-                .pathname;
-
             let newClassNameIsSet = false;
             // Get rid of query and hash
             const activePathname = window.location.href.split('?')[0].split('#')[0];
