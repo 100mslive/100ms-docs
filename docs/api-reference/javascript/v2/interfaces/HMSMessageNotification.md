@@ -1,6 +1,6 @@
 ---
 title: HMSMessageNotification
-nav: '4.25'
+nav: '4.26'
 ---
 
 ## Hierarchy

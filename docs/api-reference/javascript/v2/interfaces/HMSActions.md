@@ -1,5 +1,5 @@
 ---
-title: HMSActions
+title: HMSActions<T>
 nav: '4.5'
 ---
 
@@ -16,6 +16,12 @@ about passing props if you use them.
 
 There is a one to one mapping between an instance of this class and a 100ms room,
 in case you're creating multiple rooms please create new instance per room.
+
+## Type parameters
+
+| Name | Type                                                                                                                                  |
+| :--- | :------------------------------------------------------------------------------------------------------------------------------------ |
+| `T`  | extends [`HMSGenericTypes`](/api-reference/javascript/v2/interfaces/HMSGenericTypes) = { `sessionStore`: `Record`<`string`, `any`\> } |
 
 ## Properties
 
@@ -49,6 +55,17 @@ If lock is passed as true, the room cannot be used further.
 ##### Returns
 
 `Promise`<`void`\>
+
+---
+
+### sessionStore
+
+• **sessionStore**: [`IHMSSessionStoreActions`](/api-reference/javascript/v2/interfaces/IHMSSessionStoreActions)<`T`[``"sessionStore"``]\>
+
+actions that can be performed on the real-time key-value store
+
+Values in the session store are available to every peer in the room(who have observed the relevant keys) and
+is persisted throughout a session till the last peer leaves a room(cleared after the last peer leaves the room)
 
 ---
 
@@ -419,7 +436,9 @@ This function can be used to leave the room, if the call is repeated it's ignore
 
 Fetch the current room metadata from the server and populate it in store
 
-- the API is not stable and might have breaking changes later
+**`Deprecated`**
+
+use `actions.sessionStore.observe` instead
 
 #### Returns
 
@@ -929,7 +948,9 @@ JSON.stringify.
 Session metadata is available to every peer in the room and is persisted throughout a session
 till the last peer leaves a room
 
-- the API is not stable and might have breaking changes later
+**`Deprecated`**
+
+use `actions.sessionStore.set` instead
 
 #### Parameters
 
