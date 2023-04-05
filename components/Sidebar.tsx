@@ -192,13 +192,13 @@ const Sidebar: React.FC<Props> = ({
                 style={
                     showBaseView
                         ? {
-                              position: menu ? 'initial' : 'sticky',
-                              top: '16px'
-                          }
+                            position: menu ? 'initial' : 'sticky',
+                            top: '16px'
+                        }
                         : {
-                              position: menu ? 'initial' : 'sticky',
-                              top: '16px'
-                          }
+                            position: menu ? 'initial' : 'sticky',
+                            top: '16px'
+                        }
                 }>
                 {baseViewOnly ? (
                     <div>
@@ -297,7 +297,6 @@ const Sidebar: React.FC<Props> = ({
                                 top: '0',
                                 pt: '32px',
                                 zIndex: '100',
-                                boxShadow: '0 8px 8px 0.25rem rgba(8, 9, 12, 0.8)',
                                 backgroundColor: 'var(--docs_bg_content)',
                                 '@md': {
                                     pt: '$18',
@@ -381,10 +380,9 @@ const Sidebar: React.FC<Props> = ({
                                                     key={m.link}
                                                     value={m}
                                                     className={({ active }) =>
-                                                        `${
-                                                            active
-                                                                ? 'dropdown-option dropdown-option-active'
-                                                                : 'dropdown-option'
+                                                        `${active
+                                                            ? 'dropdown-option dropdown-option-active'
+                                                            : 'dropdown-option'
                                                         }`
                                                     }>
                                                     {m.icon}
@@ -396,20 +394,21 @@ const Sidebar: React.FC<Props> = ({
                                         </Listbox.Options>
                                     </Listbox>
                                     <hr style={{ width: '100%', margin: '16px 0px' }} />
+                                    <Box css={{ position: 'absolute', top: '185px', width: '100%', height: '16px', boxShadow: '0 8px 8px 0.25rem rgba(8, 9, 12, 0.8)', '@md': {display: 'none'} }}></Box>
                                 </section>
                             ) : null}
                         </Box>
                         {/* Sidebar Menu Section */}
                         {nav
                             ? Object.entries(nav).map(([key, children], index) => (
-                                  <SidebarSection
-                                      key={key}
-                                      value={key}
-                                      index={index}
-                                      nested={false}>
-                                      {children as React.ReactChildren}
-                                  </SidebarSection>
-                              ))
+                                <SidebarSection
+                                    key={key}
+                                    value={key}
+                                    index={index}
+                                    nested={false}>
+                                    {children as React.ReactChildren}
+                                </SidebarSection>
+                            ))
                             : null}
                     </>
                 ) : null}

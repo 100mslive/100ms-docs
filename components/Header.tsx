@@ -306,12 +306,13 @@ const HeaderLink = ({
                     className={className}
                     css={{
                         boxSizing: 'border-box',
+                        fontWeight: 400,
                         display: 'flex',
                         alignItems: 'center',
                         gap: '$2',
                         color: '$textMedEmp',
                         '&:hover': {
-                            opacity: 'initial'
+                            opacity: 'initial',
                         },
                         '&:not(.docs-link-active):hover': {
                             color: '$textHighEmp',
@@ -322,6 +323,7 @@ const HeaderLink = ({
                         },
                         '&.docs-link-active': {
                             color: '$textHighEmp',
+                            fontWeight: '600',
                             textDecoration: 'underline',
                             textUnderlineOffset: '6px',
                             textDecorationThickness: '2px',
