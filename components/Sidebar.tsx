@@ -18,7 +18,8 @@ import {
     AndroidIcon as Android,
     ReactIcon as ReactNative,
     JavascriptIcon as JavaScript,
-    RocketIcon
+    RocketIcon,
+    PlaySolidIcon
 } from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
 import { Flex, Box, Text, CSS } from '@100mslive/react-ui';
@@ -193,9 +194,9 @@ const Sidebar: React.FC<Props> = ({
                 )}
                 <Link passHref href="/concepts/v2/get-started/overview">
                     <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
-                        <LayersIcon style={{ color: 'inherit' }} />
+                        <PlaySolidIcon style={{ color: 'inherit' }} />
                         <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
-                            Concepts
+                            Get Started
                         </Text>
                     </Flex>
                 </Link>
