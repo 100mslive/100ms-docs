@@ -12,7 +12,6 @@ import {
     ChevronDownIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
-    LayersIcon,
     AppleIcon as Ios,
     FlutterIcon as Flutter,
     AndroidIcon as Android,
