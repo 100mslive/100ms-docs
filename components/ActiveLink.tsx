@@ -8,13 +8,17 @@ export type ActiveLinkProps = LinkProps & {
     noHighlight?: boolean;
     target?: string;
     onClick: any;
+    URLincludes?: string[];
+    URLexcludes?: string[];
 };
 
 const ActiveLink = ({
     children,
     activeClassName,
-    className,
+    className = '',
     noHighlight = false,
+    URLincludes = [],
+    URLexcludes = [],
     onClick = () => {},
     ...props
 }: ActiveLinkProps & {
@@ -31,14 +35,36 @@ const ActiveLink = ({
             const linkPathname = new URL((props.as || props.href) as string, location.href)
                 .pathname;
 
-            // Using URL().pathname to get rid of query and hash
-            const activePathname = new URL(asPath, location.href).pathname;
+            let newClassNameIsSet = false;
+            // Get rid of query and hash
+            const activePathname = window.location.href.split('?')[0].split('#')[0];
+            let newClassName;
+            if (URLincludes.length && URLexcludes.length) {
+                newClassName = '';
+                URLexcludes.forEach((excludeValue) => {
+                    if (newClassNameIsSet === false && activePathname.includes(excludeValue)) {
+                        newClassName = className;
+                        newClassNameIsSet = true;
+                    }
+                });
 
-            const newClassName =
-                linkPathname === activePathname
+                if (newClassNameIsSet === false) {
+                    URLincludes.forEach((includeValue) => {
+                        if (newClassNameIsSet === false && !activePathname.includes(includeValue)) {
+                            newClassNameIsSet = true;
+                            newClassName = className;
+                            console.log('includevalue', includeValue, activePathname);
+                        }
+                    });
+
+                    if (newClassNameIsSet === false)
+                        newClassName = `${className} ${activeClassName}`.trim();
+                }
+            } else {
+                newClassName = activePathname.includes(URLincludes[0])
                     ? `${className} ${activeClassName}`.trim()
                     : className;
-
+            }
             if (newClassName !== computedClassName) {
                 setComputedClassName(newClassName);
             }

@@ -136,6 +136,8 @@ const Header: React.FC<Props> = ({
                                 currentPage: window.location.href
                             })
                         }
+                        URLexcludes={['api-reference', '/docs/examples']}
+                        URLincludes={['/docs']}
                         href="/">
                         Docs
                     </HeaderLink>
@@ -146,11 +148,13 @@ const Header: React.FC<Props> = ({
                                 currentPage: window.location.href
                             })
                         }
+                        URLincludes={['/docs/examples']}
                         href="/examples">
                         Examples
                     </HeaderLink>
                     {!isNonApiRef && showReference ? (
                         <HeaderLink
+                            URLincludes={['/docs/api-reference/']}
                             onClick={() =>
                                 window.analytics.track('link.clicked', {
                                     btnId: 'api.reference.clicked',
