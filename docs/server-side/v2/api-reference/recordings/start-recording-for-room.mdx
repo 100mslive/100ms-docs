@@ -1,0 +1,60 @@
+---
+title: Start recording for room
+nav: 3.141
+---
+
+import MeetingUrlConfig from '@/common/meeting-url.md';
+
+Use this to start a recording job for a room.
+
+The recoding will be in `starting` state to begin with, and turn into `running` shortly.
+
+<PostRequest title="https://api.100ms.live/v2/recordings/room/<room_id>/start" />
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/recordings/room/<room_id>/start' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "meeting_url" : "<meeting_url>",
+    "resolution" : {"width": 1280, "height": 720}
+}'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+```json
+{
+    "id": "<recording-id>",
+    "room_id": "<room-id>",
+    "session_id": "<session-id>",
+    "status": "starting",
+    "created_at": "2023-03-30T05:14:04.007990308Z",
+    "started_at": null,
+    "updated_at": "2023-03-30T05:14:04.007990308Z",
+    "stopped_at": null,
+    "meeting_url": "<meeting-url>",
+    "started_by": "",
+    "stopped_by": "",
+    "asset_types": [
+        "room-composite",
+        "chat"
+    ],
+    "recording_assets": null
+}
+```
+</ResponseBox>
+
+
+## Parameters
+
+| Name         | Type     | Description                             | Required |
+|--------------|----------|-----------------------------------------|----------|
+| meeting_url  | `string` | Single click meeting URL for the stream | Yes      |
+| resolution   | `object` | Video resolution for stream             | No       |
+
+##### meeting_url
+
+<MeetingUrlConfig />
