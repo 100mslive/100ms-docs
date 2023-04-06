@@ -1,0 +1,100 @@
+---
+title: Error Logging
+nav: 11.3
+---
+
+Logs are really helpful for debugging the issues. HMSSDK provides api's to get all the logs in a single callback.
+To get the logs we will need to attach the `HMSLogListener` and override the `onLogMessage` method.
+Also `HMSSDK` exposes a method `getAllLogs` to get all the native SDK logs at once according to the log levels we set in `startHMSLogger`.
+
+
+## How to add logger in your application 
+
+Let's check how we can add logging in our applications:
+
+<div className="steps-container">
+
+### Start HMSLogger 
+
+To start listening to logs we need to call `startHMSLogger` with `HMSLogLevel` for both `webRTC` and `HMSSDK`.
+`HMSLogLevel` is an enum as:
+
+```dart 
+enum HMSLogLevel {
+  //To get all the logs
+  VERBOSE,
+
+  //To get warnings 
+  WARN,
+
+  //To only get error logs
+  ERROR,
+
+  //To turn off the logging 
+  OFF,
+
+  //This is the default level corresponding to OFF
+  Unknown
+}
+```
+
+Now let's see how we can call `startHMSLogger` to get only `Error logs` for WebRTC and `all logs` from SDK.
+
+```dart
+    hmsSDK.startHMSLogger(webRtclogLevel: HMSLogLevel.ERROR, logLevel: HMSLogLevel.VERBOSE);
+```
+
+### Listen to the logs from HMSLogger
+
+To listen the logs from HMSSDK we need to implement the `HMSLogListener` in the class where we wish to get the logs 
+& override the `onLogMessage` method.
+
+```dart 
+class Meeting  implements HMSUpdateListener, HMSActionResultListener,HMSLogListener{
+
+    ...
+
+    //Here this is an instance of a class that implements HMSLogListener that is Meeting
+    hmsSDK.addLogListener(hmsLogListener: this);
+
+
+
+    @override
+    void onLogMessage({required HMSLogList hmsLogList}) {
+        //Here we will get an object of HMSLogList
+    }
+
+
+    //Once we are done we can stop listening to logs by removing the HMSLogListener as:
+    hmsSDK.removeLogListener(hmsLogListener: this);
+    
+    ...
+
+}
+```
+
+>  `onLogMessage` doesn't provide instantaneous logs we batch them in group of 1000 and then send the updates.
+
+### Stop HMSLogger
+
+Once we are done with the logs we can stop the `HMSLogger` as:
+
+```dart 
+hmsSDK.removeHMSLogger();
+```
+</div>
+
+## Get All the SDK logs at once 
+
+To get all the SDK logs at once we can use `getAllLogs`. This returns an object of `HMSLogList` which contains 
+a list of logs in `hmsLog` property.
+
+> `getAllLogs` only returns logs if we have called `startHMSLogger` as mentioned above.
+
+```dart 
+    HMSLogList? logs = await hmsSDK.getAllLogs();
+
+    logs?.hmsLog.forEach((element) {
+        //Check the individual logs here
+  });
+```
