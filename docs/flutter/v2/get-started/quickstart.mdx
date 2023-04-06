@@ -475,21 +475,21 @@ class _MeetingPageState extends State<MeetingPage>
 ### Fetch token to join the room
 
 
-#### Fetch token using room-code methods(Recommended) 
+#### Fetch token using room-code method(Recommended) 
 
-We can get the authentication token using room-code from meeting URL as well.
+We can get the authentication token using room-code from meeting URL.
 
 Let's understand the subdomain and code from the sample URL
-In this url: http://100ms-rocks.app.100ms.live/meeting/abc-defg-hij
- -  subdomain is 100ms-rocks
- -  room code is abc-defg-ghi
+In this url: `http://100ms-rocks.app.100ms.live/meeting/abc-defg-hij`
+ -  Subdomain is `100ms-rocks`
+ -  Room code is `abc-defg-ghi`
 
 Now to get the room-code from meeting URL you can write your own logic or you can use the `getCode` method from [here](https://github.com/100mslive/100ms-flutter/blob/main/example/lib/service/room_service.dart)
 
 To generate token we will be using `getAuthTokenByRoomCode` method of `HMSSDK`. This method has `roomCode` as a required
 parameter, `userId` & `endPoint` as optional parameter.
 
-> This method should be called after calling the `build` method. Also, passing user name as userId is not compulsory. You can directly pass the user name in HMSConfig while joining the room.
+> This method should be called after calling the `build` method.
 
 Let's checkout the implementation:
 
@@ -502,7 +502,7 @@ Let's checkout the implementation:
 
   if(authToken is String){
     HMSConfig roomConfig = HMSConfig(
-        authToken: _tokenData,
+        authToken: authToken,
         userName: userName,
       );
 
@@ -512,9 +512,6 @@ Let's checkout the implementation:
     // Handle the error
   }
 ```
-
-> 🔑 Note: If the user can join with an emoji in it's user name then it is recommended to not pass `userId` in `getAuthTokenByRoomCode` this may lead to crashes sometime. Although you can
->          pass it in the HMSConfig.
 
 #### Get temporary token from dashboard
 
