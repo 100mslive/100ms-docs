@@ -58,7 +58,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
             if (activeItem?.current) {
                 activeItem.current.scrollIntoView({
                     behavior: 'auto',
-                    block: 'center',
+                    block: 'nearest',
                     inline: 'nearest'
                 });
             }
