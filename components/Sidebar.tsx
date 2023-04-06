@@ -26,6 +26,7 @@ import { Listbox } from '@headlessui/react';
 import { Flex, Box, Text, CSS } from '@100mslive/react-ui';
 import SidebarSection from './SidebarSection';
 import PlatformAccordion from './PlatformAccordion';
+import { getUpdatedPlatformName } from '@/lib/utils';
 
 const accordionIconStyle = { height: '24px', width: '24px', color: 'inherit' };
 
@@ -192,13 +193,13 @@ const Sidebar: React.FC<Props> = ({
                 style={
                     showBaseView
                         ? {
-                            position: menu ? 'initial' : 'sticky',
-                            top: '16px'
-                        }
+                              position: menu ? 'initial' : 'sticky',
+                              top: '16px'
+                          }
                         : {
-                            position: menu ? 'initial' : 'sticky',
-                            top: '16px'
-                        }
+                              position: menu ? 'initial' : 'sticky',
+                              top: '16px'
+                          }
                 }>
                 {baseViewOnly ? (
                     <div>
@@ -220,7 +221,10 @@ const Sidebar: React.FC<Props> = ({
                         }}
                         onClick={() => setShowBaseView(false)}>
                         <Text variant="sm" css={{ color: '$primaryLight' }}>
-                            Continue exploring
+                            Explore&nbsp;
+                            {slug?.[0] !== 'concepts'
+                                ? getUpdatedPlatformName(tech.name)
+                                : 'Concepts'}
                         </Text>
                         <ChevronRightIcon height="16px" width="16px" />
                     </Flex>
@@ -365,7 +369,7 @@ const Sidebar: React.FC<Props> = ({
                                                     Platform Selected
                                                 </Text>
                                                 <Text variant={'lg'} style={{ fontWeight: 'bold' }}>
-                                                    {tech.name === 'JavaScript' ? 'Web' : tech.name}
+                                                    {getUpdatedPlatformName(tech.name)}
                                                 </Text>
                                             </div>
                                             <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -380,35 +384,42 @@ const Sidebar: React.FC<Props> = ({
                                                     key={m.link}
                                                     value={m}
                                                     className={({ active }) =>
-                                                        `${active
-                                                            ? 'dropdown-option dropdown-option-active'
-                                                            : 'dropdown-option'
+                                                        `${
+                                                            active
+                                                                ? 'dropdown-option dropdown-option-active'
+                                                                : 'dropdown-option'
                                                         }`
                                                     }>
                                                     {m.icon}
-                                                    <span>
-                                                        {m.name === 'JavaScript' ? 'Web' : m.name}
-                                                    </span>
+                                                    <span>{getUpdatedPlatformName(m.name)}</span>
                                                 </Listbox.Option>
                                             ))}
                                         </Listbox.Options>
                                     </Listbox>
                                     <hr style={{ width: '100%', margin: '16px 0px' }} />
-                                    <Box css={{ position: 'absolute', top: '185px', width: '100%', height: '16px', boxShadow: '0 8px 8px 0.25rem rgba(8, 9, 12, 0.8)', '@md': {display: 'none'} }}></Box>
+                                    <Box
+                                        css={{
+                                            position: 'absolute',
+                                            top: '185px',
+                                            width: '100%',
+                                            height: '16px',
+                                            boxShadow: '0 8px 8px 0.25rem rgba(8, 9, 12, 0.8)',
+                                            '@md': { display: 'none' }
+                                        }}></Box>
                                 </section>
                             ) : null}
                         </Box>
                         {/* Sidebar Menu Section */}
                         {nav
                             ? Object.entries(nav).map(([key, children], index) => (
-                                <SidebarSection
-                                    key={key}
-                                    value={key}
-                                    index={index}
-                                    nested={false}>
-                                    {children as React.ReactChildren}
-                                </SidebarSection>
-                            ))
+                                  <SidebarSection
+                                      key={key}
+                                      value={key}
+                                      index={index}
+                                      nested={false}>
+                                      {children as React.ReactChildren}
+                                  </SidebarSection>
+                              ))
                             : null}
                     </>
                 ) : null}
