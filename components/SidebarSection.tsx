@@ -67,8 +67,9 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
 
     return (
         <section
+            className='sidebar-section'
             style={{
-                margin: nested ? '0 0 0 0.95rem' : '2px 0.5rem 0.5rem 0.25rem',
+                margin: nested ? '0 0 0 0.95rem' : '0px 0px 8px 0px',
                 borderLeft: nested ? '2px solid var(--docs_border_strong' : 'none'
             }}
             key={`${key}-${index}`}>
@@ -92,7 +93,8 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                 }}
                 css={{
                     padding: '0 0 0.25rem 1rem',
-                    paddingTop: nested ? '0.25rem' : '0.5rem',
+                    paddingLeft: nested ? '16px' : '0px',
+                    paddingTop: nested ? '4px' : '8px',
                     margin: '0',
                     cursor: 'pointer',
                     borderRadius: '$0',
