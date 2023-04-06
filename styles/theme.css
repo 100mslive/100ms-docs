@@ -134,7 +134,7 @@ to decide colors
     --docs_bg_header_button: hsla(217, 20%, 15%, 1);
     --docs_bg_card: hsla(217, 20%, 6%, 1);
     --docs_bg_dropdown: hsla(217, 20%, 12%, 1);
-    --docs_bg_dropdown_hover: hsla(217, 20%, 15%, 1);
+    --docs_bg_dropdown_hover: var(--surface_light);
 
     --docs_bg_category: hsla(217, 50%, 12%, 1);
 
@@ -393,7 +393,7 @@ h6 {
 
 h1 {
     font-size: var(--docs_font_size_h1);
-    margin-top: 32px;
+    margin-top: 40px;
     margin-bottom: 16px;
     letter-spacing: -0.025rem;
     line-height: 2rem;
@@ -604,6 +604,29 @@ blockquote :global(*:last-child) {
     color: var(--docs_text_primary);
     background-color: rgba(31, 90, 158, 0.5);
 }
+
+.docs-search-bar {
+    border-radius: 8px;
+    gap: 8px;
+    color: var(--docs_text_primary);
+    border: 1px solid var(--border_default);
+    background: var(--surface_default);
+    padding: 8px 8px;
+    transition: background-color 100ms ease-in-out; /* Add a transition effect to the background-color property */
+  }
+  
+  .docs-search-bar:hover {
+    cursor: pointer;
+  }
+
+  .hot-key {
+    margin-left: auto !important;
+    border-radius: var(--docs_border_radius_xs);
+    padding: 0 8px;
+    color: var(--docs_text_primary);
+    border: 1px solid var(--docs_border_strong);
+}
+  
 
 table {
     margin-bottom: 2rem;
@@ -944,20 +967,54 @@ h4:hover .copy-anchor:active {
     text-align: left;
     outline: none;
     border: var(--docs_border_dropdown);
-    width: 240px;
+    width: 100%;
     height: 24px;
-    background-color: var(--docs_bg_dropdown);
+    background-color: transparent;
     color: var(--docs_text_primary);
-    border-radius: var(--docs_border_radius_s);
-    margin: 0 0 15px 1rem;
+    margin: 0;
+    padding: 28px 0px 28px 4px;
     position: relative;
-    padding: 24px;
     cursor: pointer;
     font-weight: 600;
+    border-radius: 8px;
+}
+.sidebar-section .sidebar-section {
+    margin-left: -1px!important;
 }
 
-.dropdown:hover {
-    background-color: var(--docs_bg_dropdown_hover)
+.sidebar-section .sidebar-section .opaque-link {
+    margin-left: 15px!important;
+}
+
+.sidebar-section .sidebar-section .sidebar-section {
+    margin-left: 15px!important;
+}
+
+.dropdown-chevron-container {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px;
+    gap: 8px;
+    background: var(--surface_light);
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    border: 1px solid var(--border_light);
+    border-radius: 8px;
+}
+
+.dropdown-chevron {
+    width: 20px;
+    height: 20px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.dropdown-chevron-container:hover {
+    background-color: hsla(217, 18%, 20%, 1)
 }
 
 .dropdown:focus-visible {
@@ -979,9 +1036,8 @@ ul.dropdown-options {
     border: var(--docs_border_dropdown);
     background-color: var(--docs_bg_dropdown);
     position: absolute;
-    left: 22px;
-    width: 240px;
-    top: 120px;
+    width: 100%;
+    top: 192px;
     cursor: pointer;
 }
 
@@ -990,6 +1046,7 @@ ul.dropdown-options {
     align-items: center;
     padding: 8px 0;
     padding-left: 16px;
+    margin-bottom: 8px;
 }
 
 .dropdown-option:hover {
@@ -998,6 +1055,7 @@ ul.dropdown-options {
 
 .dropdown-option span {
     color: var(--docs_text_primary);
+    margin-left: 12px;
     font-weight: 500;
 }
 
@@ -1006,7 +1064,7 @@ ul.dropdown-options {
 }
 
 .dropdown-option:first-of-type {
-    margin-top: 1rem;
+    margin-top: 8px;
 }
 
 .filter-dropdown {
@@ -1019,7 +1077,7 @@ ul.dropdown-options {
 .filter-options {
     left: unset;
     right: 0;
-    width: 240px;
+    width: 248px;
     top: 100px;
 }
 
@@ -1179,12 +1237,14 @@ div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a#hs-eu-cookie
 .page {
     position: absolute;
     z-index: 0;
-    top: 1.5rem;
     opacity: 0;
-    width: 300px;
+    padding: 32px;
+    padding-top: 0px;
+    width: 304px;
     box-sizing: border-box;
     pointer-events: none;
-    transition: all ease 0.4s;
+    transition: opacity ease 100ms, transform ease 300ms;
+    transform: translateX(-12%);
 }
 
 .active-page {
@@ -1193,6 +1253,7 @@ div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a#hs-eu-cookie
     background-color: 'var(--docs_bg_content)';
     width: 304px;
     z-index: 10;
+    transform: translateX(0%);
 }
 
 @media screen and (max-width: 1160px) {
@@ -1313,6 +1374,9 @@ div#hs-eu-cookie-confirmation div#hs-eu-cookie-confirmation-inner a#hs-eu-cookie
         top: 2.5rem;
         width: 100vw;
     }
+    .hide-before-768 {
+        display: none !important;
+    }
 }
 
 .note>p {
@@ -1379,6 +1443,12 @@ ais-highlight-0000000000 {
     body {
         -webkit-text-size-adjust: 100%;
         -moz-text-size-adjust: 100%;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .hide-before-1024 {
+       display: none;
     }
 }
 

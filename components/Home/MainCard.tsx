@@ -77,7 +77,7 @@ const MainCard = () => {
             <Flex direction="column" justify="between">
                 <Box>
                     <Text variant="h6" css={{ color: '$textHighEmp' }}>
-                        Getting Started
+                        Quickstart
                     </Text>
                     <Text
                         variant="sm"
