@@ -474,6 +474,47 @@ class _MeetingPageState extends State<MeetingPage>
 
 ### Fetch token to join the room
 
+
+#### Fetch token using room-code method(Recommended) 
+
+We can get the authentication token using room-code from meeting URL.
+
+Let's understand the subdomain and code from the sample URL
+In this url: `http://100ms-rocks.app.100ms.live/meeting/abc-defg-hij`
+ -  Subdomain is `100ms-rocks`
+ -  Room code is `abc-defg-ghi`
+
+Now to get the room-code from meeting URL we can write our own logic or use the `getCode` method from [here](https://github.com/100mslive/100ms-flutter/blob/main/example/lib/service/room_service.dart)
+
+To generate token we will be using `getAuthTokenByRoomCode` method of `HMSSDK`. This method has `roomCode` as a required
+parameter, `userId` & `endPoint` as optional parameter.
+
+> This method should be called after calling the `build` method.
+
+Let's checkout the implementation:
+
+```dart
+  //This returns an object of Future<dynamic> which can be either
+  //of HMSException type or String? type based on whether
+  //method execution is completed successfully or not
+
+  dynamic authToken = await hmsSDK.getAuthTokenByRoomCode(roomCode: 'YOUR_ROOM_CODE');
+
+  if(authToken is String){
+    HMSConfig roomConfig = HMSConfig(
+        authToken: authToken,
+        userName: userName,
+      );
+
+    hmsSDK.join(config: roomConfig);
+  }
+  else if(authToken is HMSException){
+    // Handle the error
+  }
+```
+
+#### Get temporary token from dashboard
+
 To test audio/video functionality, you need to connect to a 100ms room; please check the following steps for the same:
 
 1. Navigate to your [100ms dashboard](https://dashboard.100ms.live/dashboard) or [create an account](https://dashboard.100ms.live/register) if you don't have one.
