@@ -705,6 +705,59 @@ export const updateNode = (data) => {
 
 ### Fetch token to Join the Room
 
+
+#### Fetch token using room-code method(Recommended)
+
+We can get the authentication token using room-code from meeting URL.
+
+Let's understand the subdomain and code from the sample URL
+
+In this sample url: `http://100ms-rocks.app.100ms.live/meeting/abc-defg-hij`
+ -  Subdomain is `100ms-rocks`
+ -  Room code is `abc-defg-ghi`
+
+Now to get the room-code from meeting URL, we can write our own logic or use the `getCode` method from [here](https://github.com/100mslive/react-native-hms/blob/main/example/src/utils/getRoomLinkDetails.ts)
+
+To generate token we will be using `getAuthTokenByRoomCode` method available on `HMSSDK` instance. This method has `roomCode` as a required
+parameter and `userId` & `endPoint` as optional parameter.
+
+Let's checkout the implementation:
+
+```js section=FetchTokenToJoinTheRoom sectionIndex=1
+try {
+  /**
+   * Important Note: Don't build new `HMSSDK` instance before destroying the previous one.
+   * for more info checkout {@link https://www.100ms.live/docs/react-native/v2/how--to-guides/install-the-sdk/hmssdk#what-does-destroy-method-do}
+   */
+  const hmsInstance = await HMSSDK.build();
+
+  // Saving `hmsInstance` in ref
+  hmsInstanceRef.current = hmsInstance;
+
+  /**
+   * `getAuthTokenByRoomCode` returns a promise which is resolved with "auth token"
+   * checkout {@link https://www.100ms.live/docs/react-native/v2/how--to-guides/install-the-sdk/hmssdk#what-does-destroy-method-do}
+   */
+  const token = await hmsInstance.getAuthTokenByRoomCode('YOUR_ROOM_CODE');
+
+  // ... Adding HMSSDK Event Listeners before calling Join method on HMSSDK instance ...
+
+  /**
+   * Create `HMSConfig` with the above auth token and username
+   */
+  const hmsConfig = new HMSConfig({ authToken: token, username: USERNAME });
+
+  /**
+   * Joining Room. For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/features/join#join-a-room | Join a Room}
+   */
+  hmsInstance.join(hmsConfig);
+} catch (error) {
+  // Handle errors here
+}
+```
+
+#### Get temporary token from dashboard
+
 To test audio/video functionality, you need to connect to a 100ms Room. Please check the following steps for the same -
 
 1. Navigate to your [100ms dashboard](https://dashboard.100ms.live/dashboard) or [create an account](https://dashboard.100ms.live/register) if you don't have one.
