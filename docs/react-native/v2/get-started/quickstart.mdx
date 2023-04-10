@@ -705,8 +705,7 @@ export const updateNode = (data) => {
 
 ### Fetch token to Join the Room
 
-
-#### Fetch token using room-code method(Recommended)
+***Fetch token using room-code method(Recommended)***
 
 We can get the authentication token using room-code from meeting URL.
 
@@ -714,12 +713,12 @@ Let's understand the subdomain and code from the sample URL
 
 In this sample url: `http://100ms-rocks.app.100ms.live/meeting/abc-defg-hij`
  -  Subdomain is `100ms-rocks`
- -  Room code is `abc-defg-ghi`
+ -  Room code is `abc-defg-hij`
 
 Now to get the room-code from meeting URL, we can write our own logic or use the `getCode` method from [here](https://github.com/100mslive/react-native-hms/blob/main/example/src/utils/getRoomLinkDetails.ts)
 
 To generate token we will be using `getAuthTokenByRoomCode` method available on `HMSSDK` instance. This method has `roomCode` as a required
-parameter and `userId` & `endPoint` as optional parameter.
+parameter and `userId` & `endpoint` as optional parameter.
 
 Let's checkout the implementation:
 
@@ -756,7 +755,7 @@ try {
 }
 ```
 
-#### Get temporary token from dashboard
+***Get temporary token from dashboard***
 
 To test audio/video functionality, you need to connect to a 100ms Room. Please check the following steps for the same -
 
