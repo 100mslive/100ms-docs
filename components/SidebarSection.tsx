@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { ChevronRightIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
@@ -6,55 +6,52 @@ import SidebarItem from './SidebarItem';
 import { titleCasing } from '../lib/utils';
 
 interface Props {
-    value: String;
-    index: Number;
+    value: string;
+    index: number;
     children: any;
-    nested: Boolean;
+    nested: boolean;
 }
 
 const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested = false }) => {
-    const router = useRouter() as any;
+    const router = useRouter();
     const {
         asPath,
         query: { slug }
     } = router;
-
     const activeItem = useRef<HTMLAnchorElement>(null);
+    const [openSection, setOpenSection] = useState(false);
+    const [isInFocus, setIsInFocus] = useState(false);
 
-    const isInFocus = useCallback(() => {
-        for (const i of slug) if (i === key) return true;
-        return false;
-    }, [slug, key]);
+    useEffect(() => {
+        if (window) {
+            // Add active sections to localStorage
+            const currentList = JSON.parse(localStorage.getItem('openedAccordions') || '[]');
+            if (openSection) {
+                currentList.push(key);
+                localStorage.setItem('openedAccordions', JSON.stringify(currentList));
+            }
+        }
+    }, [openSection, key, slug]);
 
-    const inFocus = isInFocus();
-    const [openSection, setOpenSection] = useState(inFocus);
-
-    // To open accordions that were not closed before the page reload
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            const openedAccordions = JSON.parse(sessionStorage.getItem('openedAccordions') || '[]');
-            for (const i of openedAccordions)
-                if (i === key) {
-                    setOpenSection(true);
-                    return;
-                }
+            // Open sections that were not closed before page reload
+            const openedAccordions = JSON.parse(localStorage.getItem('openedAccordions') || '[]');
+            if (openedAccordions.includes(key)) {
+                setOpenSection(true);
+            }
         }
     }, [key]);
 
     useEffect(() => {
-        if (window) {
-            // Add active accordions to the list - when users directly navigate via links
-            const currentList = JSON.parse(sessionStorage.getItem('openedAccordions') || '[]');
-            if (openSection) {
-                currentList.push(key);
-                sessionStorage.setItem('openedAccordions', JSON.stringify(currentList));
-            }
-        }
-    }, []);
+        const value = slug?.includes(key) || false;
+        setIsInFocus(value);
+        setOpenSection(value);
+    }, [slug]);
 
-    // Scroll active page into view
     useEffect(() => {
         setTimeout(() => {
+            // Scroll active item into view
             if (activeItem?.current) {
                 activeItem.current.scrollIntoView({
                     behavior: 'auto',
@@ -67,27 +64,26 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
 
     return (
         <section
-            className='sidebar-section'
+            className="sidebar-section"
             style={{
                 margin: nested ? '0 0 0 0.95rem' : '0px 0px 8px 0px',
                 borderLeft: nested ? '2px solid var(--docs_border_strong' : 'none'
             }}
             key={`${key}-${index}`}>
-            {/* <ConditionalLink link={indexURL}> */}
             <Flex
                 onClick={() => {
                     setOpenSection((prev) => {
                         const currentList = JSON.parse(
-                            sessionStorage.getItem('openedAccordions') || '[]'
+                            localStorage.getItem('openedAccordions') || '[]'
                         );
                         const updatedList = [
                             ...new Set(
-                                prev === false || inFocus
+                                prev === false || isInFocus
                                     ? [...currentList, key]
                                     : currentList.filter((heading) => heading !== key)
                             )
                         ];
-                        sessionStorage.setItem('openedAccordions', JSON.stringify(updatedList));
+                        localStorage.setItem('openedAccordions', JSON.stringify(updatedList));
                         return !prev;
                     });
                 }}
@@ -98,7 +94,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                     margin: '0',
                     cursor: 'pointer',
                     borderRadius: '$0',
-                    color: inFocus ? 'var(--docs_text_primary)' : 'var(--docs_text_secondary)',
+                    color: isInFocus ? 'var(--docs_text_primary)' : 'var(--docs_text_secondary)',
                     '&:hover': { color: '$textHighEmp' }
                 }}>
                 <ChevronRightIcon
@@ -121,10 +117,9 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                     {titleCasing(key)}
                 </Text>
             </Flex>
-            {/* </ConditionalLink> */}
+
             <div className={`accordion-content ${openSection ? 'active-acc' : ''}`}>
                 {Object.entries(children as {}).map(([_, route]: [string, any]) =>
-                    // && route.url !== indexURL ?
                     Object.prototype.hasOwnProperty.call(route, 'title') ? (
                         <SidebarItem
                             key={route.title}
@@ -139,41 +134,9 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                         </SidebarSection>
                     )
                 )}
-                {key === 'features' && slug[0] !== 'server-side' ? (
-                    <>
-                        {aliasMenu.map((route) => (
-                            <SidebarItem
-                                key={route.title}
-                                asPath={asPath}
-                                route={route}
-                                activeItem={activeItem}
-                                index={index}
-                            />
-                        ))}
-                    </>
-                ) : null}
             </div>
         </section>
     );
 };
 
 export default SidebarSection;
-
-const aliasMenu = [
-    {
-        title: 'Room APIs',
-        url: '/server-side/v2/Rooms/object'
-    },
-    {
-        title: 'Webhooks',
-        url: '/server-side/v2/introduction/webhook'
-    },
-    {
-        title: 'SFU Recording',
-        url: '/server-side/v2/Destinations/recording'
-    }
-    // {
-    //     title: 'Simulcast',
-    //     url: '/docs/server-side/v2/features/simulcast'
-    // }
-];
