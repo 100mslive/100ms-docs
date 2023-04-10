@@ -100,7 +100,7 @@ npm install --save @100mslive/react-native-hms react-native-permissions
 Now that your project setup is complete, let's replace the code in the `App.js` file with the complete code sample below -
 
 ```js section=completeCodeExample
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import {
     SafeAreaView,
     FlatList,
@@ -108,7 +108,8 @@ import {
     Text,
     View,
     TouchableHighlight,
-    ActivityIndicator
+    ActivityIndicator,
+    Alert,
 } from 'react-native';
 import { PERMISSIONS, request, requestMultiple, RESULTS } from 'react-native-permissions';
 import {
@@ -121,10 +122,18 @@ import {
 } from '@100mslive/react-native-hms';
 
 /**
+ * Take Room Code from Dashbaord for this sample app.
+ * For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/get-started/token#get-room-code-from-100ms-dashboard | Room Code}
+ */
+const ROOM_CODE = ''; // PASTE ROOM CODE FROM DASHBOARD HERE
+
+/**
+ * using `ROOM_CODE` is recommended over `AUTH_TOKEN` approach
+ *
  * Take Auth Token from Dashbaord for this sample app.
  * For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/foundation/security-and-tokens | Token Concept}
  */
-const AUTH_TOKEN = 'PASTE_AUTH_TOKEN_FROM_DASHBOARD_HERE';
+const AUTH_TOKEN = ''; // PASTE AUTH TOKEN FROM DASHBOARD HERE
 
 const USERNAME = 'Test User';
 
@@ -132,14 +141,16 @@ const USERNAME = 'Test User';
 const App = () => {
     const [joinRoom, setJoinRoom] = useState(false);
 
+    const navigate = useCallback((screen) => setJoinRoom(screen === 'RoomScreen'), []);
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#EFF7FF' }}>
             <StatusBar barStyle={'dark-content'} />
 
             {joinRoom ? (
-                <RoomScreen navigate={() => setJoinRoom(false)} />
+                <RoomScreen navigate={navigate} />
             ) : (
-                <HomeScreen navigate={() => setJoinRoom(true)} />
+                <HomeScreen navigate={navigate} />
             )}
         </SafeAreaView>
     );
@@ -189,7 +200,7 @@ const RoomScreen = ({ navigate }) => {
      *  2. loading - We can show loader while Room Room join is under process.
      *  3. leaveRoom - This is a function that can be called on a button press to leave room and go back to Welcome screen.
      */
-    const { peerTrackNodes, loading, leaveRoom, hmsInstanceRef } = usePeerTrackNodes();
+    const { peerTrackNodes, loading, leaveRoom, hmsInstanceRef } = usePeerTrackNodes({ navigate });
 
     const HmsView = hmsInstanceRef.current?.HmsView;
 
@@ -316,7 +327,7 @@ const RoomScreen = ({ navigate }) => {
  * Sets up HMSSDK instance, Adds required Event Listeners
  * Checkout Quick Start guide to know things covered {@link https://www.100ms.live/docs/react-native/v2/guides/quickstart | Quick Start Guide}
  */
-export const usePeerTrackNodes = () => {
+export const usePeerTrackNodes = ({ navigate }) => {
     const hmsInstanceRef = useRef(null); // We will save `hmsInstance` in this ref
     const [loading, setLoading] = useState(true);
     const [peerTrackNodes, setPeerTrackNodes] = useState([]); // Use this state to render Peer Tiles
@@ -511,6 +522,7 @@ export const usePeerTrackNodes = () => {
     // Effect to handle HMSSDK initialization and Listeners Setup
     useEffect(() => {
         const joinRoom = async () => {
+          try {
             setLoading(true);
 
             /**
@@ -521,6 +533,13 @@ export const usePeerTrackNodes = () => {
 
             // Saving `hmsInstance` in ref
             hmsInstanceRef.current = hmsInstance;
+
+            let token = AUTH_TOKEN;
+
+            // if `AUTH_TOKEN` is not valid, generate auth token from `ROOM_CODE`
+            if (!token) {
+              token = await hmsInstance.getAuthTokenByRoomCode(ROOM_CODE);
+            }
 
             /**
              * Adding HMSSDK Event Listeners before calling Join method on HMSSDK instance
@@ -539,10 +558,13 @@ export const usePeerTrackNodes = () => {
 
             /**
              * Joining Room. For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/features/join#join-a-room | Join a Room}
-             *
-             * Please make sure you are passing correct AUTH_TOKEN to join method
              */
-            hmsInstance.join(new HMSConfig({ authToken: AUTH_TOKEN, username: USERNAME }));
+            hmsInstance.join(new HMSConfig({ authToken: token, username: USERNAME }));
+          } catch (error) {
+            navigate('HomeScreen');
+            console.error(error);
+            Alert.alert('Error', 'Check your console to see error logs!');
+          }
         };
 
         joinRoom();
@@ -551,7 +573,7 @@ export const usePeerTrackNodes = () => {
         return () => {
             handleRoomLeave();
         };
-    }, []);
+    }, [navigate]);
 
     return { loading, leaveRoom: handleRoomLeave, peerTrackNodes, hmsInstanceRef };
 };
