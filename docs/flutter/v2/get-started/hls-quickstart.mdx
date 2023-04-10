@@ -1459,9 +1459,24 @@ Now in the same class we will override the `HMSUpdateListener` methods to listen
 
 ### Listen to room updates
 
-We will listen to `hlsStreamingStateUpdated` room update to get the update regarding HLS playback.
+We will listen to `hlsStreamingStateUpdated` room update or `onJoin` callback to get the update regarding HLS playback.
 
 ```dart section=stepByStepRoomUpdates
+@override
+void onJoin({required HMSRoom room}) {
+  if (room.hmshlsStreamingState?.running ?? false) {
+    if (room.hmshlsStreamingState?.variants[0]?.hlsStreamUrl != null) {
+      _controller = VideoPlayerController.network(
+        room.hmshlsStreamingState!.variants[0]!.hlsStreamUrl!,
+      );
+      _initializeVideoPlayerFuture = _controller!.initialize();
+      _controller!.play();
+      _controller!.setLooping(true);
+    }
+  }
+  setState(() {});
+}
+
 @override
 void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {
 // Checkout the docs for room updates here: https://www.100ms.live/docs/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners
@@ -1489,8 +1504,6 @@ if (update == HMSRoomUpdate.hlsStreamingStateUpdated) {
 100ms SDK provides various other callbacks to handle different scenarios in the app. For example, you can use `onAudioDeviceChanged` to get updates whenever a new audio device or an audio device is switched. Please check [here](/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners) for more information about these callbacks.
 
 ```dart section=stepByStepOtherCallbacks
-@override
-void onJoin({required HMSRoom room}) {}
 
 @override
 void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) {}
@@ -1593,7 +1606,7 @@ We have multiple example apps to get you started with 100ms Flutter SDK.
 ### HLS Streaming blog
 
 Checkout the HLS Streaming blog [here](https://www.100ms.live/blog/flutter-streaming).
-Checkout the repo [here](https://github.com/adityathakurxd/flutter-live)
+Checkout the repository [here](https://github.com/adityathakurxd/flutter-live)
 
 ### Basic example
 
