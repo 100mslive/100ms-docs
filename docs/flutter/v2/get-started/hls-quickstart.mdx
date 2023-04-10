@@ -670,7 +670,19 @@ class _HLSViewerPageState extends State<HLSViewerPage>
   }
 
   @override
-  void onJoin({required HMSRoom room}) {}
+  void onJoin({required HMSRoom room}) {
+    if (room.hmshlsStreamingState?.running ?? false) {
+      if (room.hmshlsStreamingState?.variants[0]?.hlsStreamUrl != null) {
+        _controller = VideoPlayerController.network(
+          room.hmshlsStreamingState!.variants[0]!.hlsStreamUrl!,
+        );
+        _initializeVideoPlayerFuture = _controller!.initialize();
+        _controller!.play();
+        _controller!.setLooping(true);
+      }
+    }
+    setState(() {});
+  }
 
   @override
   void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) {}
