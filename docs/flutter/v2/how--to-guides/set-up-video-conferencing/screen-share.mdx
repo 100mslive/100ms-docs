@@ -375,6 +375,26 @@ See /usr/include/servers/bootstrap_defs.h for the error codes.
 
 To resolve this issue ensure that you create a Unique App Group which is linked to your Apple Developer Account. If you do not have an Active Apple Developer Account or do not have permissions to create a New App Group, then you won't be able to this feature.
 
+### iOS Screenshare should show only my app's Screenshare Extension name when starting Screenshare
+
+Ensure that your app's Screenshare extension name is passed as the `preferredExtension` name to `HMSIOSScreenshareConfig`.
+
+Ensure that there are no typos/spelling mistakes in the name passed. 
+
+Your `preferredExtension` name in Xcode under Signing and Capabilities section under Target > yourExtensionName.
+
+```dart
+// Pass the correct App Group & Preferred Extension parameters in HMSIOSScreenshareConfig class.
+HMSIOSScreenshareConfig iOSScreenshareConfig = HMSIOSScreenshareConfig(
+    appGroup: "appGroup", // App Group value linked to your Apple Developer Account
+    preferredExtension: "preferredExtension" // pass correct preferredExtension to show only your app name while starting Screenshare
+);
+
+HMSSDK hmsSDK = HMSSDK(iOSScreenshareConfig: iOSScreenshareConfig);
+
+await hmsSDK.build(); // ensure to await while invoking the `build` method
+```
+
 ### Running on Simulator
 
 Starting Screenshare from an iOS Simulator is not supported by Apple. You can start Screenshare only from an actual iOS device like an iPhone or iPad.
