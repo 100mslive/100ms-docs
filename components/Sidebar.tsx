@@ -8,22 +8,25 @@ import IosIcon from '@/assets/icons/IosIcon';
 import JavascriptIcon from '@/assets/icons/JavascriptIcon';
 import ReactIcon from '@/assets/icons/ReactIcon';
 import ServerIcon from '@/assets/icons/ServerIcon';
+import useKeyPress from '@/lib/useKeyPress';
 import {
     ChevronDownIcon,
     ChevronLeftIcon,
     ChevronRightIcon,
-    LayersIcon,
     AppleIcon as Ios,
     FlutterIcon as Flutter,
     AndroidIcon as Android,
     ReactIcon as ReactNative,
     JavascriptIcon as JavaScript,
-    RocketIcon
+    RocketIcon,
+    LayersIcon,
+    SearchIcon
 } from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
 import { Flex, Box, Text, CSS } from '@100mslive/react-ui';
 import SidebarSection from './SidebarSection';
 import PlatformAccordion from './PlatformAccordion';
+import { getUpdatedPlatformName } from '@/lib/utils';
 
 const accordionIconStyle = { height: '24px', width: '24px', color: 'inherit' };
 
@@ -51,6 +54,7 @@ interface Props {
     allNav: Record<string, Record<string, NavRoute>>[];
     css?: CSS;
     hideOnDesktop?: boolean;
+    setModal: React.Dispatch<React.SetStateAction<boolean>>;
     hideBorder?: boolean;
     baseViewOnly?: boolean;
 }
@@ -60,6 +64,7 @@ const Sidebar: React.FC<Props> = ({
     nav: currentNav,
     allNav,
     css = {},
+    setModal,
     hideOnDesktop = false,
     hideBorder = true,
     baseViewOnly = true
@@ -70,8 +75,27 @@ const Sidebar: React.FC<Props> = ({
     } = router;
     const { menu, setMenu } = menuState;
 
+    const escPressed = useKeyPress('Escape');
+    const slashPressed = useKeyPress('/');
     const [renderComponents, setRenderComponents] = useState(false);
     const [openPlatformAccordion, setOpenPlatformAccordion] = useState(platformlist[0]);
+    const [helperState, setHelperState] = useState(0);
+
+    useEffect(() => {
+        if (escPressed) {
+            setModal(false);
+        }
+    }, [escPressed]);
+
+    useEffect(() => {
+        if (slashPressed) {
+            setModal(true);
+        }
+    }, [slashPressed]);
+
+    useEffect(() => {
+        if (helperState) setModal((prev) => !prev);
+    }, [helperState]);
 
     useEffect(() => {
         setMenu(false);
@@ -113,7 +137,16 @@ const Sidebar: React.FC<Props> = ({
     const [tech, setTech] = useState(menuItem[indexOf]);
 
     const changeTech = (s) => {
-        setTech(s);
+        console.log(s);
+        setTech((prevSelection) => {
+            window.analytics.track('link.clicked', {
+                btnId: 'platform.switched',
+                switchedTo: s.name,
+                switchedFrom: prevSelection.name,
+                currentPage: window.location.href
+            });
+            return s;
+        });
         if (slug[0] === 'api-reference')
             router.push(s.apiRef, undefined, {
                 shallow: false
@@ -136,7 +169,7 @@ const Sidebar: React.FC<Props> = ({
                 display: hideOnDesktop && !menu ? 'none' : 'flex',
                 flexDirection: 'column',
                 alignItems: 'stretch',
-                height: 'calc(100vh - 100px)',
+                height: 'calc(100vh - 64px)',
                 overflowY: 'auto',
                 borderRight: hideBorder ? 'none' : '1px solid',
                 borderColor: hideBorder ? 'none' : '$borderDefault',
@@ -145,7 +178,7 @@ const Sidebar: React.FC<Props> = ({
                     position: 'absolute',
                     top: '0',
                     display: menu ? 'flex' : 'none',
-                    height: 'calc(100vh - 200px)',
+                    height: '100vh',
                     width: '100%',
                     ...(cssMd ?? {})
                 },
@@ -160,16 +193,18 @@ const Sidebar: React.FC<Props> = ({
                 style={
                     showBaseView
                         ? {
-                              padding: menu ? '24px' : '1.75rem',
-                              paddingTop: '0',
                               position: menu ? 'initial' : 'sticky',
-                              top: '1rem',
-                              width: '100%'
+                              top: '16px'
                           }
-                        : {}
+                        : {
+                              position: menu ? 'initial' : 'sticky',
+                              top: '16px'
+                          }
                 }>
                 {baseViewOnly ? (
-                    <Box css={{ pt: '$16', '@md': { pt: 0 } }} />
+                    <div>
+                        <Box css={{ pt: '32px', '@md': { pt: 0 } }} />
+                    </div>
                 ) : (
                     <Flex
                         align="center"
@@ -178,19 +213,31 @@ const Sidebar: React.FC<Props> = ({
                             color: '$primaryLight',
                             mt: '$8',
                             pt: '0',
-                            mb: '$12',
+                            mb: '$8',
                             cursor: 'pointer',
                             '@md': {
-                                pt: '$10'
+                                pt: '90px'
                             }
                         }}
                         onClick={() => setShowBaseView(false)}>
                         <Text variant="sm" css={{ color: '$primaryLight' }}>
-                            Continue exploring
+                            Explore&nbsp;
+                            {slug?.[0] !== 'concepts'
+                                ? getUpdatedPlatformName(tech.name)
+                                : 'Concepts'}
                         </Text>
                         <ChevronRightIcon height="16px" width="16px" />
                     </Flex>
                 )}
+                <Box
+                    css={{
+                        display: 'block',
+                        margin: '0',
+                        marginBottom: '$12',
+                        '@md': { display: 'none' }
+                    }}>
+                    <DocsSearchBar setHelperState={setHelperState} />
+                </Box>
                 <Link passHref href="/concepts/v2/concepts/basics">
                     <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <LayersIcon style={{ color: 'inherit' }} />
@@ -252,9 +299,8 @@ const Sidebar: React.FC<Props> = ({
                             css={{
                                 position: 'sticky',
                                 top: '0',
-                                pt: '$5',
+                                pt: '32px',
                                 zIndex: '100',
-                                boxShadow: '0 1.25rem 2rem 0.25rem rgba(8, 9, 12, 0.8)',
                                 backgroundColor: 'var(--docs_bg_content)',
                                 '@md': {
                                     pt: '$18',
@@ -267,35 +313,70 @@ const Sidebar: React.FC<Props> = ({
                                 gap="1"
                                 css={{
                                     color: '$primaryLight',
-                                    pl: '$9',
-                                    mb: '$12',
+                                    mb: '$8',
                                     cursor: 'pointer'
                                 }}
                                 onClick={() => {
                                     setShowBaseView(true);
+                                    window.analytics.track('btn.clicked', {
+                                        btnId: 'content.overview.clicked',
+                                        currentPage: window.location.href
+                                    });
                                     if (baseRef.current) baseRef?.current.scrollTo(0, 0);
                                 }}>
                                 <ChevronLeftIcon height="16px" width="16px" />
                                 <Text variant="sm" css={{ color: '$primaryLight' }}>
-                                    Content overview
+                                    Go back up
                                 </Text>
                             </Flex>
+
+                            <Box
+                                css={{
+                                    display: 'block',
+                                    margin: '0',
+                                    marginBottom: '$md',
+                                    '@md': { display: 'none' }
+                                }}>
+                                <DocsSearchBar setHelperState={setHelperState} />
+                            </Box>
 
                             {showPlatformSelector ? (
                                 <section
                                     style={{
-                                        margin: '0px 0.5rem 0.5rem 0.4rem',
+                                        margin: '0px 0px 8px 0px',
                                         background: 'var(--docs_bg_content)'
                                     }}>
                                     <Listbox value={tech} onChange={changeTech}>
-                                        <Listbox.Button className="dropdown">
-                                            <div style={{ display: 'flex ', alignItems: 'center' }}>
-                                                {tech.icon}
-                                                <span style={{ marginLeft: '1rem' }}>
-                                                    {tech.name === 'JavaScript' ? 'Web' : tech.name}
-                                                </span>
+                                        <Listbox.Button
+                                            className="dropdown"
+                                            style={{
+                                                display: 'flex',
+                                                flexDirection: 'row',
+                                                justifyContent: 'space-between',
+                                                alignItems: 'center',
+                                                gap: '16px'
+                                            }}>
+                                            <div
+                                                style={{
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    flexGrow: '1',
+                                                    justifyContent: 'center'
+                                                }}>
+                                                <Text
+                                                    variant={'xs'}
+                                                    style={{ color: 'var(--docs_text_secondary)' }}>
+                                                    Platform Selected
+                                                </Text>
+                                                <Text variant={'lg'} style={{ fontWeight: 'bold' }}>
+                                                    {getUpdatedPlatformName(tech.name)}
+                                                </Text>
                                             </div>
-                                            <ChevronDownIcon />
+                                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                <div className="dropdown-chevron-container">
+                                                    <ChevronDownIcon className="dropdown-chevron"></ChevronDownIcon>
+                                                </div>
+                                            </div>
                                         </Listbox.Button>
                                         <Listbox.Options className="dropdown-options">
                                             {menuItem.map((m) => (
@@ -310,13 +391,21 @@ const Sidebar: React.FC<Props> = ({
                                                         }`
                                                     }>
                                                     {m.icon}
-                                                    <span style={{ marginLeft: '1rem' }}>
-                                                        {m.name === 'JavaScript' ? 'Web' : m.name}
-                                                    </span>
+                                                    <span>{getUpdatedPlatformName(m.name)}</span>
                                                 </Listbox.Option>
                                             ))}
                                         </Listbox.Options>
                                     </Listbox>
+                                    <hr style={{ width: '100%', margin: '16px 0px' }} />
+                                    <Box
+                                        css={{
+                                            position: 'absolute',
+                                            top: '185px',
+                                            width: '100%',
+                                            height: '16px',
+                                            boxShadow: '0 8px 8px 0.25rem rgba(8, 9, 12, 0.8)',
+                                            '@md': { display: 'none' }
+                                        }}></Box>
                                 </section>
                             ) : null}
                         </Box>
@@ -341,7 +430,22 @@ const Sidebar: React.FC<Props> = ({
 
 export default Sidebar;
 
-const iconStyle = { height: '24px', width: '24px', fill: 'var(--gray12)' };
+const DocsSearchBar = ({ setHelperState }) => {
+    return (
+        <Flex
+            align="center"
+            className="docs-search-bar"
+            onClick={() => setHelperState((prev) => prev + 1)}>
+            <SearchIcon style={{ width: '24px' }} />
+            <Text as="span" variant="body2" css={{ fontWeight: '$regular', flexGrow: '1' }}>
+                Search docs…
+            </Text>
+            <span className="hot-key">/</span>
+        </Flex>
+    );
+};
+
+const iconStyle = { height: '20px', width: '20px', fill: 'var(--docs_text_primary)' };
 
 export const menuItem = [
     {
@@ -383,7 +487,7 @@ export const menuItem = [
         link: '/server-side/v2/how--to-guides/make-api-calls',
         name: 'Server-side',
         key: 'server-side',
-        icon: <ServerIcon />,
+        icon: <ServerIcon style={{ ...iconStyle, fill: 'transparent' }} />,
         apiRef: '/server-side/v2/api-reference/Rooms/overview'
     }
 ];

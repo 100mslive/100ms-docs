@@ -1,0 +1,58 @@
+---
+title: List all recording assets
+nav: 3.193
+---
+
+Use this request to list and filter through recording assets of a workspace. The response is paginated.
+
+This list can be filtered by `room_id`, `session_id` or `status` to find the relevant recording asset object.
+
+<GetRequest title="https://api.100ms.live/v2/recording-assets" />
+<Request id="req-0">
+
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/recording-assets' \
+--header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "limit": 1,
+    "data": [
+        {
+            "id": "<asset-id>",
+            "job_id": "<job-id>",
+            "room_id": "<room-id>",
+            "session_id": "<session-id>",
+            "type": "room-vod",
+            "path": "<storage-path>",
+            "thumbnails": null,
+            "metadata": {
+                "num_layers": "4",
+                "max_width": 1280,
+                "max_height": 720
+            },
+            "duration": 30,
+            "size": 364582,
+            "status": "completed",
+            "created_at": "2023-03-30T06:23:03.216Z"
+        }
+    ],
+    "last": "<last-asset-id>"
+}
+```
+
+</ResponseBox>
+
+## Query params
+
+| Name   | Description | Required |
+| ------ | -------- | ------- |
+| room_id | Filter assets for a particular room with its identifier | No |
+| session_id | Filter assets for a particular session with its identifier | No |
+| status | Can be one of `completed`, `failed` | No |
+| start | Sets the starting point for pagination | No |
+| limit | Sets the number of objects to returned in the response | No |

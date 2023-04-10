@@ -43,11 +43,11 @@ export default function DocLayout({ children }: Props) {
                         style={{
                             width: '100%',
                             display: 'flex',
-                            maxWidth: '1500px',
-                            justifyContent: 'space-between'
+                            justifyContent: 'center'
                         }}>
                         <Sidebar
                             menuState={menuState}
+                            setModal={setModal}
                             nav={nav}
                             allNav={allNav}
                             baseViewOnly={false}

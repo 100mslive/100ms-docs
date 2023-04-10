@@ -1,0 +1,41 @@
+---
+title: Get recording asset
+nav: 3.191
+---
+
+Use this request to get the recording asset object.
+
+<GetRequest title="https://api.100ms.live/v2/recording-assets/<asset_id>" />
+<Request id="req-0">
+
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/recording-assets/<asset_id>' \
+--header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "<asset-id>",
+    "thumbnails": null,
+    "metadata": {
+        "resolution": {
+            "width": 1920,
+            "height": 1080
+        }
+    },
+    "duration": 100,
+    "path": "<storage-path>",
+    "status": "completed",
+    "created_at": "2023-03-28T04:51:16.041Z",
+    "type": "room-composite",
+    "size": 892154,
+    "job_id": "<job-id>",
+    "room_id": "<room-id>",
+    "session_id": "<session-id>"
+}
+```
+
+</ResponseBox>
