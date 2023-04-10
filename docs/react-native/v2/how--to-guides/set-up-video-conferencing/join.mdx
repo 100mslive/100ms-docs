@@ -32,6 +32,11 @@ First, create an instance of `HMSSDK` using the `build` function.
 import { HMSSDK } from '@100mslive/react-native-hms';
 
 // create HMSSDK instance using the build function
+
+/**
+ * Important Note: Don't build new `HMSSDK` instance before destroying the previous one.
+ * for more info checkout @link{https://www.100ms.live/docs/react-native/v2/how--to-guides/install-the-sdk/hmssdk#what-does-destroy-method-do}
+ */
 const hmsInstance = await HMSSDK.build();
 ```
 
@@ -133,6 +138,11 @@ Now, create an instance of `HMSSDK` by passing the `HMSTrackSettings` object cre
 ```js
 import { HMSSDK } from '@100mslive/react-native-hms';
 
+/**
+ * Important Note: Don't build new `HMSSDK` instance before destroying the previous one.
+ * for more info checkout @link{https://www.100ms.live/docs/react-native/v2/how--to-guides/install-the-sdk/hmssdk#what-does-destroy-method-do}
+ */
+
 // Pass the Track Settings object to the build function
 c̶o̶n̶s̶t̶ ̶h̶m̶s̶I̶n̶s̶t̶a̶n̶c̶e̶ ̶=̶ ̶a̶w̶a̶i̶t̶ ̶H̶M̶S̶S̶D̶K̶.̶b̶u̶i̶l̶d̶(̶)̶;̶
 const hmsInstance = await HMSSDK.build({ trackSettings });
@@ -159,6 +169,10 @@ Depending on your use case, you'll need to implement a selective set of the Upda
 You'll need to implement these listeners to perform UI Actions, update App State, etc. These updates can be used to render the video on screen or to display other info regarding the room.
 
 ```js
+/**
+ * Important Note: Don't build new `HMSSDK` instance before destroying the previous one.
+ * for more info checkout @link{https://www.100ms.live/docs/react-native/v2/how--to-guides/install-the-sdk/hmssdk#what-does-destroy-method-do}
+ */
 const hmsInstance = await HMSSDK.build();
 
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoinListener);

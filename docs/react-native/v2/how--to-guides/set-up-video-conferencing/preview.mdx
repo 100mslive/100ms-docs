@@ -24,6 +24,11 @@ First, create an instance of `HMSSDK` using the `build` function.
 import { HMSSDK } from '@100mslive/react-native-hms';
 
 // create HMSSDK instance using the build function
+
+/**
+ * Important Note: Don't build new `HMSSDK` instance before destroying the previous one.
+ * for more info checkout @link{https://www.100ms.live/docs/react-native/v2/how--to-guides/install-the-sdk/hmssdk#what-does-destroy-method-do}
+ */
 const hmsInstance = await HMSSDK.build();
 ```
 
