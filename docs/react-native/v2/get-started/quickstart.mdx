@@ -1280,10 +1280,8 @@ useEffect(() => {
 
     /**
      * Joining Room. For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/features/join#join-a-room | Join a Room}
-     *
-     * Please make sure you are passing correct AUTH_TOKEN to join method
      */
-    hmsInstance.join(new HMSConfig({ authToken: AUTH_TOKEN, username: USERNAME }));
+    hmsInstance.join(new HMSConfig({ authToken: token, username: USERNAME }));
   };
 
   joinRoom();
