@@ -40,6 +40,20 @@ import { HMSSDK } from '@100mslive/react-native-hms';
 const hmsInstance = await HMSSDK.build();
 ```
 
+### Generate Auth Token
+
+You need Authentication Token to join 100ms rooms. The recommended way to generate Auth Tokens is by using `getAuthTokenByRoomCode` method on `HMSSDK` instance.
+You can learn more about this method in [Getter Methods](../listen-to-room-updates/get-methods#getAuthTokenByRoomCode) docs
+
+> Checkout [Room Code](/concepts/v2/concepts/rooms/room-codes/room-codes) docs to learn more about Room Codes
+
+```js
+// Use Room Code for your room here
+const roomCode = 'abc-defg-hij'; // Sample Room Code
+
+const token = await hmsInstance.getAuthTokenByRoomCode(roomCode);
+```
+
 ### Attach Event Listeners
 
 You'll need to add Event Listeners for `HMSUpdateListenerActions`, which are invoked to notify about updates happening in the room like a peer joins/leaves, a track got muted/unmuted, etc.
@@ -56,7 +70,7 @@ Next, create an object of [HMSConfig class](https://www.100ms.live/docs/api-refe
 
 ```js
 let config = new HMSConfig({
-    authToken: 'eyJH5c...', // client-side token generated from your token service
+    authToken: token, // client-side token generated from `getAuthTokenByRoomCode` method
     username: 'John Appleseed'
 });
 ```

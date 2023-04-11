@@ -32,6 +32,20 @@ import { HMSSDK } from '@100mslive/react-native-hms';
 const hmsInstance = await HMSSDK.build();
 ```
 
+### Generate Auth Token
+
+You need Authentication Token to preview 100ms rooms. The recommended way to generate Auth Tokens is by using `getAuthTokenByRoomCode` method on `HMSSDK` instance.
+You can learn more about this method in [Getter Methods](../listen-to-room-updates/get-methods#getAuthTokenByRoomCode) docs
+
+> Checkout [Room Code](/concepts/v2/concepts/rooms/room-codes/room-codes) docs to learn more about Room Codes
+
+```js
+// Use Room Code for your room here
+const roomCode = 'abc-defg-hij'; // Sample Room Code
+
+const token = await hmsInstance.getAuthTokenByRoomCode(roomCode);
+```
+
 ### Attach Event Listeners
 
 It is advised to attach Event Listeners for `HMSUpdateListenerActions.ON_ERROR` and `HMSUpdateListenerActions.ON_PREVIEW` before calling the `preview` function to get updates if preview got executed successfully or if it failed.
@@ -53,7 +67,7 @@ Next, create an object of `HMSConfig` class using the available joining configur
 
 ```js
 const config = new HMSConfig({
-    authToken: 'eyJH5c...', // client-side token generated from your token service
+    authToken: token, // client-side token generated from `getAuthTokenByRoomCode` method
     username: 'John Appleseed'
 });
 ```
