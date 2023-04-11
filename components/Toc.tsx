@@ -29,11 +29,10 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
             {toc.map((item) =>
                 item.title !== '' ? (
                     <span
-                        className={`${item.slug === activeHeading ? 'active-toc' : ''} text ${
-                            item.depth === 3
-                                ? `child ${item.slug === activeSubHeading ? 'active-sublink' : ''}`
-                                : ''
-                        }`}
+                        className={`${item.slug === activeHeading ? 'active-toc' : ''} text ${item.depth === 3
+                            ? `child ${item.slug === activeSubHeading ? 'active-sublink' : ''}`
+                            : ''
+                            }`}
                         key={item.slug}>
                         <a style={{ padding: '0 2rem 0 1rem' }} href={`#${item.slug}`}>
                             {item.title}
