@@ -39,6 +39,9 @@ The following snippet shows how to attach the listener -
 // create HMSSDK instance using the build function
 const hmsInstance = await HMSSDK.build();
 
+// Generate Auth Token from `HMSSDK` instance
+const token = await hmsInstance.getAuthTokenByRoomCode('abc-defg-hij'); // Sample Room Code used here, use Room Code for your room here
+
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoinSuccess);
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_PEER_UPDATE, onPeerUpdate);
 
@@ -48,7 +51,7 @@ hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
 
 // Next, create an object of HMSConfig class using the available joining configurations.
 let config = new HMSConfig({
-    authToken: 'eyJH5c...', // client-side token generated from your token service
+    authToken: token, // client-side token generated from `getAuthTokenByRoomCode` method
     username: 'John Appleseed'
 });
 
