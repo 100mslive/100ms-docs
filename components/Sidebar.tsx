@@ -20,7 +20,6 @@ import {
     JavascriptIcon as JavaScript,
     RocketIcon,
     PlaySolidIcon,
-    LayersIcon,
     SearchIcon
 } from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
