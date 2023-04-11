@@ -206,9 +206,9 @@ hlsPlayer.on(HMSHLSPlayerEvents.SEEK_POS_BEHIND_LIVE_EDGE, (event: HMSHLSPlayerE
 
 ```
 
-### HLS timed-meta data
+### HLS timed-metadata
 
-HLS player will parse and send the timed meta data.
+HLS player will parse and send the timed-metadata.
 
 ```javascript
 
@@ -243,4 +243,16 @@ hlsPlayer.on(HMSHLSPlayerEvents.AUTOPLAY_BLOCKED, (event: HMSHLSPlayerEvents, da
 
 ```javascript
 hlsPlayer.on(HMSHLSPlayerEvents.CURRENT_TIME, (event: HMSHLSPlayerEvents, data: number): void => {});
+```
+
+### Example for events usage
+
+Below are the simple example of how to use hls player's event
+
+```javascript
+
+const isPlaying = false;
+const playbackEventHandler = data => isPlaying = data.state === HLSPlaybackState.paused;
+hlsPlayer.on(HMSHLSPlayerEvents.PLAYBACK_STATE, playbackEventHandler);
+
 ```
