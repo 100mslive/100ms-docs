@@ -90,7 +90,11 @@ const controls = document.getElementById("controls");
 const renderedPeerIDs = new Set();
 
 // Joining the room
-joinBtn.onclick = () => {
+joinBtn.onclick = async () => {
+  const roomCode = document.getElementById("room-code").value
+  const userName = document.getElementById("name").value
+  const authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode })
+
   hmsActions.join({
     userName: document.getElementById("name").value,
     authToken: document.getElementById("token").value
@@ -725,7 +729,12 @@ Let's include a way for people to leave the room as well. To leave the room, we 
 
 ```jsx:index.js section=JoiningRoom sectionIndex=1 tab=JS
 // Joining the room
-joinBtn.onclick = () => {
+joinBtn.onclick = async () => {
+  const userName = document.getElementById("name").value
+  const roomCode = document.getElementById("room-code").value
+  // use room code to fetch auth token
+  const authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode })
+  // join room using username and auth token
   hmsActions.join({
     userName: document.getElementById("name").value,
     authToken: document.getElementById("token").value

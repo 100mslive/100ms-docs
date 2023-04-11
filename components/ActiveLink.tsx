@@ -5,12 +5,21 @@ import React, { useState, useEffect } from 'react';
 export type ActiveLinkProps = LinkProps & {
     className?: string;
     activeClassName: string;
+    noHighlight?: boolean;
+    target?: string;
+    onClick: any;
+    URLincludes?: string[];
+    URLexcludes?: string[];
 };
 
 const ActiveLink = ({
     children,
     activeClassName,
-    className,
+    className = '',
+    noHighlight = false,
+    URLincludes = [],
+    URLexcludes = [],
+    onClick = () => {},
     ...props
 }: ActiveLinkProps & {
     children: (className: string) => React.ReactNode;
@@ -21,26 +30,49 @@ const ActiveLink = ({
     useEffect(() => {
         // Check if the router fields are updated client-side
         if (isReady) {
-            // Dynamic route will be matched via props.as
-            // Static route will be matched via props.href
-            const linkPathname = new URL((props.as || props.href) as string, location.href)
-                .pathname;
+            let newClassNameIsSet = false;
+            // Get rid of query and hash
+            const activePathname = window.location.href.split('?')[0].split('#')[0];
+            let newClassName;
+            if (URLincludes.length && URLexcludes.length) {
+                newClassName = '';
+                URLexcludes.forEach((excludeValue) => {
+                    if (newClassNameIsSet === false && activePathname.includes(excludeValue)) {
+                        newClassName = className;
+                        newClassNameIsSet = true;
+                    }
+                });
 
-            // Using URL().pathname to get rid of query and hash
-            const activePathname = new URL(asPath, location.href).pathname;
+                if (newClassNameIsSet === false) {
+                    URLincludes.forEach((includeValue) => {
+                        if (newClassNameIsSet === false && !activePathname.includes(includeValue)) {
+                            newClassNameIsSet = true;
+                            newClassName = className;
+                            console.log('includevalue', includeValue, activePathname);
+                        }
+                    });
 
-            const newClassName =
-                linkPathname === activePathname
+                    if (newClassNameIsSet === false)
+                        newClassName = `${className} ${activeClassName}`.trim();
+                }
+            } else {
+                newClassName = activePathname.includes(URLincludes[0])
                     ? `${className} ${activeClassName}`.trim()
                     : className;
-
+            }
             if (newClassName !== computedClassName) {
                 setComputedClassName(newClassName);
             }
         }
     }, [asPath, isReady, props.as, props.href, activeClassName, className, computedClassName]);
 
-    return <Link {...props}>{children(computedClassName ?? '')}</Link>;
+    return (
+        <Link {...props}>
+            <a rel="noreferrer" target={props?.target || '_self'} onClick={onClick}>
+                {children(computedClassName ?? '')}
+            </a>
+        </Link>
+    );
 };
 
 export default ActiveLink;

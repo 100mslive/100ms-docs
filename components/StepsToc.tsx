@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Text } from '@100mslive/react-ui';
 
 export type TocItem = {
@@ -20,8 +20,11 @@ export default function StepsToc({
         descriptions = JSON.parse(descriptionString) as string[];
     }
 
+    const [toc, setToc] = useState<TocItem[]>([]);
+
     const parentIdHash = parentId ? `#${parentId}` : '';
-    const toc = useMemo(() => {
+
+    useEffect(() => {
         const list: TocItem[] = [];
         if (typeof window !== 'undefined') {
             const ids = document.querySelectorAll(`${parentIdHash} h3`);
@@ -33,8 +36,8 @@ export default function StepsToc({
                 })
             );
         }
-        return list;
-    }, [descriptions, parentIdHash]);
+        setToc(list);
+    }, []);
 
     return (
         <Box

@@ -93,10 +93,19 @@ function JoinForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await hmsActions.join({
-      userName: inputValues.name,
-      authToken: inputValues.token
-    });
+    const { 
+      userName = '',
+      roomCode = '',
+    } = inputValues
+
+    // use room code to fetch auth token
+    const authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode })
+  
+    try { 
+      await hmsActions.join({ userName, authToken });
+    } catch (e) {
+      console.error(e)
+    }
   };
 
   return (

@@ -323,7 +323,7 @@ enable sending audio speaker data to beam
 
 ### getAuthTokenByRoomCode
 
-▸ **getAuthTokenByRoomCode**(`tokenRequest`, `tokenRequestOptions?`): `Promise`<[`TokenResult`](/api-reference/javascript/v2/interfaces/TokenResult)\>
+▸ **getAuthTokenByRoomCode**(`tokenRequest`, `tokenRequestOptions?`): `Promise`<`string`\>
 
 #### Parameters
 
@@ -334,7 +334,7 @@ enable sending audio speaker data to beam
 
 #### Returns
 
-`Promise`<[`TokenResult`](/api-reference/javascript/v2/interfaces/TokenResult)\>
+`Promise`<`string`\>
 
 ---
 

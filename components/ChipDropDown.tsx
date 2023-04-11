@@ -5,6 +5,7 @@ import Chip from './Chip';
 import { Listbox } from '@headlessui/react';
 import useClickOutside from '@/lib/useClickOutside';
 import { menuItem } from './Sidebar';
+import { getUpdatedPlatformName } from '@/lib/utils';
 
 const ChipDropDown = ({
     openFilter,
@@ -85,7 +86,7 @@ const ChipDropDown = ({
                                             : '$primaryDefault'
                                     }
                                 }}>
-                                {platformFilter || ALL_PLATFORMS}
+                                {getUpdatedPlatformName(platformFilter || ALL_PLATFORMS)}
                                 <ChevronDownIcon
                                     height={16}
                                     width={16}
@@ -117,7 +118,7 @@ const ChipDropDown = ({
                             }>
                             {m?.icon}
                             <Text variant="sm" css={{ marginLeft: '$md', color: '$textHighEmp' }}>
-                                {m?.name}
+                                {getUpdatedPlatformName(m?.name)}
                             </Text>
                         </Listbox.Option>
                     ))}
