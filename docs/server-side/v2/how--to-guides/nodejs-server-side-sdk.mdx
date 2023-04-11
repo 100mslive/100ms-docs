@@ -1,0 +1,256 @@
+---
+title: Server side Node.js SDK
+nav: 3
+---
+
+The 100ms Node.js SDK provides an easy-to-use wrapper around [100ms REST APIs](https://www.100ms.live/docs/server-side/v2/introduction/request-and-response) to be used on the server side.
+
+🔧 **This is beta, APIs might change**
+
+Some examples on how to use the SDK can be found in the `examples/nodejs` folder on [the source code](https://github.com/100mslive/server-sdks).
+
+## Installation
+
+Install the package with:
+
+```
+# via NPM:
+npm install --save @100mslive/server-sdk
+
+# via Yarn:
+yarn add @100mslive/server-sdk
+```
+
+## Usage
+
+The SDK needs to be configured with the **Access Key** and **App Secret** from the [100ms Dashboard's Developer Section](https://dashboard.100ms.live/developer). This can be done in 2 ways:
+
+1. Passing in the credentials when initializing the SDK.
+
+```js
+import HMS from "@100mslive/server-sdk";
+
+const hms = new HMS.SDK(accessKey, secret);
+```
+
+**OR**
+
+2. Configuring Environment variables with the credentials,
+
+```
+HMS_ACCESS_KEY=accessKey123 // access key
+HMS_SECRET=secret456 // app secret
+```
+
+Then initializing the SDK like this:
+
+```js
+import HMS from "@100mslive/server-sdk";
+
+const hms = new HMS.SDK();
+```
+
+### Usage with TypeScript
+
+The SDK supports `ts`, `esm` and `cjs` completely. Here's how you can import the types from the SDK and use them.
+
+```ts
+import HMS from "@100mslive/server-sdk";
+
+const hms = new HMS.SDK();
+// create a room with options -
+let roomWithOptions: HMS.Room;
+const roomCreateOptions: HMS.RoomCreateOptions = {
+  name,
+  description,
+  template_id,
+  recording_info,
+  region,
+};
+roomWithOptions = await hms.rooms.create(roomCreateOptions);
+```
+
+### Auth token
+
+You can generate [auth token](https://www.100ms.live/docs/concepts/v2/concepts/security-and-tokens#auth-token-for-client-sdks) for client SDKs to join a room.
+
+```js
+import HMS from "@100mslive/server-sdk";
+
+const hms = new HMS.SDK();
+const tokenConfig = { roomId, role, userId };
+console.log(await hms.auth.getAuthToken());
+// with additional token options -
+const additionalTokenConfig = {
+  roomId,
+  role,
+  userId,
+  issuedAt,
+  notValidBefore,
+  validForSeconds,
+};
+console.log(await hms.auth.getAuthToken(additionalTokenConfig));
+```
+
+### Room APIs
+
+Here's an example for creating and updating a room, using [the room APIs](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/object) in the SDK.
+
+```js
+import HMS from "@100mslive/server-sdk";
+
+const hms = new HMS.SDK();
+// creating a room -
+const room = await hms.rooms.create();
+// with room options -
+const roomCreateOptions = {
+  name,
+  description,
+  template_id,
+  recording_info,
+  region,
+};
+const roomWithOptions = await hms.rooms.create(roomCreateOptions);
+
+// updating a room -
+const roomUpdateOptions = { name };
+const updatedRoom = await hms.rooms.update(room.id, roomUpdateOptions);
+console.log(room, roomWithOptions, updatedRoom);
+```
+
+### Active room APIs
+
+Here's an example of listing the peers in an active room and then sending a broadcast message to that room, using [the active room APIs](https://www.100ms.live/docs/server-side/v2/api-reference/active-rooms/object).
+
+```js
+import HMS from "@100mslive/server-sdk";
+
+const hms = new HMS.SDK();
+// list peers in active room -
+const peers = await hms.activeRooms.retrieveActivePeers(roomId);
+console.log(peers);
+
+// send broadcast message to all peers -
+await hms.activeRooms.sendMessage(roomId, { message: "test" });
+```
+
+### Room code APIs
+
+Here's an example of creating room codes for a room and then disabling one of them, using [the room code APIs](https://www.100ms.live/docs/server-side/v2/api-reference/room-codes/room-code-object).
+
+```js
+import HMS from "@100mslive/server-sdk";
+
+const hms = new HMS.SDK();
+// create room codes -
+const roomCodesForRoom = await hms.roomCodes.create(roomId);
+console.log(roomCodesForRoom);
+
+// disable a room code -
+const disabledRoomCode = await hms.roomCodes.enableOrDisable(roomCodesForRoom[0].code, false);
+console.log(disabledRoomCode);
+```
+
+### Session APIs
+
+Here's an example of listing all the sessions and sessions for a particular room using [the session APIs](https://www.100ms.live/docs/server-side/v2/api-reference/Sessions/object).
+
+```js
+import HMS from "@100mslive/server-sdk";
+
+const hms = new HMS.SDK();
+// list all sessions -
+const allSessionsIterable = hms.sessions.list();
+for await (const session of allSessionsIterable) {
+  console.log(session);
+  if (!allSessionsIterable.isNextCached) {
+    console.log("the next loop is gonna take some time");
+  }
+}
+
+// list sessions associated with a specific room -
+const sessionFilters = {
+  room_id: "test_room_id",
+  limit: 10, // specifies the max no. of objects in one page
+  // this means `iterable.isNextCached` will be `false` once every 10 times
+};
+const sessionsByRoomIterable = hms.sessions.list(sessionFilters);
+for await (const session of sessionsByRoomIterable) {
+  console.log(session);
+}
+```
+
+### Errors
+
+Errors will follow the below interface, code is HTTP Status Code.
+
+```ts
+interface SDKException {
+  code?: number;
+  name: string;
+  message: string;
+}
+```
+
+e.g.
+
+```js
+const hlsErr = {
+  code: 404,
+  name: "Not Found",
+  message: "hls not running",
+};
+```
+
+## Currently Supported Endpoints
+
+1. [Rooms APIs](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/object)
+2. [Active Rooms APIs](https://www.100ms.live/docs/server-side/v2/api-reference/active-rooms/object)
+3. [Room Codes APIs](https://www.100ms.live/docs/server-side/v2/api-reference/room-codes/room-code-object)
+4. [Sessions APIs](https://www.100ms.live/docs/server-side/v2/api-reference/Sessions/object)
+
+### Make calls to unsupported 100ms APIs
+
+Support for other endpoints are being added. If you want to consume them before it's available in the SDK, feel free to use the `api` property to make the API calls:
+
+```js
+import HMS from "@100mslive/server-sdk";
+
+const hms = new HMS.SDK();
+const hmsObject = await hms.api.get(path, params);
+console.log(hmsObject);
+```
+
+Here's an example of listing the enabled room codes for a room:
+```js
+import HMS from "@100mslive/server-sdk";
+
+const hms = new HMS.SDK();
+/**
+ * cURL call:
+ * `curl --location --request GET 'https://api.100ms.live/v2/rooms/<room_id>' --header 'Authorization: Bearer <management_token>'`
+ */
+const params = {}; // the request's body goes here
+// appropriate header configuration (incl. management token authorization) is handled internally
+const room = await hms.api.get(`rooms/${roomId}`, params);
+// `room` contains the room object, mapped from response's body
+console.log(room)
+```
+
+### Management token
+
+If you want to make 100ms API calls on your own without using the `api` property of SDK, you can generate just the [management token](https://www.100ms.live/docs/concepts/v2/concepts/security-and-tokens#management-token-for-rest-api) to be used for authorization.
+
+```js
+import HMS from "@100mslive/server-sdk";
+
+const hms = new HMS.SDK();
+console.log(await hms.auth.getManagementToken());
+// with token options -
+const tokenConfig = {
+  issuedAt,
+  notValidBefore,
+  validForSeconds,
+};
+console.log(await hms.auth.getManagementToken(tokenConfig));
+```
