@@ -63,6 +63,7 @@ const nextConfig = {
                 basePath: false
             },
             { source: '/:path*/v2/:slug*', destination: '/:path*/:slug*', permanent: true },
+            { source: '/concepts/:slug*', destination: '/get-started/:slug*', permanent: true },
             {
                 source: '/android/get-started/:slug*',
                 destination: '/android/quickstart/:slug*',

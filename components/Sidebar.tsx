@@ -124,7 +124,7 @@ const Sidebar: React.FC<Props> = ({
         }
     } else nav = false;
 
-    const showPlatformSelector = slug?.[0] !== 'concepts';
+    const showPlatformSelector = slug?.[0] !== 'get-started';
 
     let indexOf = menuItem.findIndex((e) => e.key === slug?.[0]);
     if (slug?.[0] === 'api-reference') indexOf = menuItem.findIndex((e) => e.key === slug?.[1]);
@@ -218,9 +218,7 @@ const Sidebar: React.FC<Props> = ({
                         onClick={() => setShowBaseView(false)}>
                         <Text variant="sm" css={{ color: '$primaryLight' }}>
                             Explore&nbsp;
-                            {slug?.[0] !== 'concepts'
-                                ? getUpdatedPlatformName(tech.name)
-                                : 'Concepts'}
+                            {showPlatformSelector ? getUpdatedPlatformName(tech.name) : 'Concepts'}
                         </Text>
                         <ChevronRightIcon height="16px" width="16px" />
                     </Flex>
@@ -234,7 +232,7 @@ const Sidebar: React.FC<Props> = ({
                     }}>
                     <DocsSearchBar setHelperState={setHelperState} />
                 </Box>
-                <Link passHref href="/concepts/concepts/basics">
+                <Link passHref href="/get-started/concepts/basics">
                     <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <LayersIcon style={{ color: 'inherit' }} />
                         <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
