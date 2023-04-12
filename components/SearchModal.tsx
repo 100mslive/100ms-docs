@@ -59,7 +59,13 @@ const Result = ({ searchResult }) => {
                 pl: '$lg',
                 pr: '$xs'
             }}>
-            <Flex justify="between" align="start" gap="2">
+            <Flex
+                align="start"
+                css={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    '@md': { flexDirection: 'column-reverse', justifyContent: 'flex-start' }
+                }}>
                 <Text
                     css={{
                         color: '$textHighEmp',
