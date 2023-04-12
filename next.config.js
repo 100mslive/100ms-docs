@@ -62,6 +62,37 @@ const nextConfig = {
                 permanent: true,
                 basePath: false
             },
+            { source: '/:path*/v2/:slug*', destination: '/:path*/:slug*', permanent: true },
+            {
+                source: '/android/get-started/:slug*',
+                destination: '/android/quickstart/:slug*',
+                permanent: true
+            },
+            {
+                source: '/react-native/get-started/:slug*',
+                destination: '/react-native/quickstart/:slug*',
+                permanent: true
+            },
+            {
+                source: '/server-side/get-started/:slug*',
+                destination: '/server-side/quickstart/:slug*',
+                permanent: true
+            },
+            {
+                source: '/flutter/get-started/:slug*',
+                destination: '/flutter/quickstart/:slug*',
+                permanent: true
+            },
+            {
+                source: '/ios/guides/:slug*',
+                destination: '/ios/quickstart/:slug*',
+                permanent: true
+            },
+            {
+                source: '/javascript/get-started/:slug*',
+                destination: '/javascript/quickstart/:slug*',
+                permanent: true
+            },
             {
                 source: '/server-side/v2/api-reference/Sessions/example-build-attendance',
                 destination: '/server-side/v2/how--to-guides/build-attendance',
@@ -1407,7 +1438,8 @@ const nextConfig = {
             },
             {
                 source: '/server-side/v2/api-reference/Destinations/rtmp-streaming-and-browser-recording',
-                destination: '/server-side/v2/api-reference/legacy-api-v1/destinations/rtmp-streaming-and-browser-recording',
+                destination:
+                    '/server-side/v2/api-reference/legacy-api-v1/destinations/rtmp-streaming-and-browser-recording',
                 permanent: true
             }
         ];

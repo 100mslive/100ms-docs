@@ -27,14 +27,14 @@ All Docs reside in the [/docs](https://github.com/100mslive/100ms-docs/tree/main
 
 ### 1. To an existing Doc
 
-Suppose you wanna add a new section `VUE SDK` in `/v2` docs
+Suppose you wanna add a new section `VUE SDK` docs
 
--   Create a Folder inside `/v2/vue-sdk`
+-   Create a Folder inside `/vue-sdk`
 -   Folder name would be capitalised and "-" would be replaced with space for the section header
 
 Now you wanna add docs in section
 
--   Create .mdx files in `v2/vue-sdk/file-name.mdx`
+-   Create .mdx files in `/vue-sdk/file-name.mdx`
 -   Avoid decimal numbers (For example `v-1.3.2.mdx`) in filename (doesn't cause any loss)
 -   Avoid adding `ampersand` / `&` in filenames as it breaks Sitemaps generation
 -   It's important to add `FrontMatter` to the MDX File on top
@@ -54,26 +54,7 @@ By Default Nav is given the value of `Infinity` it's important to add `nav` valu
 
 But suppose you wanna update the order of 1 doc , then you don't need to change nav value of all them simply make the nav value in between the preceding and next doc it can be in decimal value too.
 
-### 2. To a new Docs (for v3 and soo on)
-
-Suppose we now need a `v3` docs
-
--   Create a folder `/docs/v3`
--   Create a file in `/pages/v3/index.tsx`
-
-in the File add the following
-
-```jsx
-import redirect from '@/lib/redirect';
-
-export default redirect('/v3/100ms-v3/basics');
-```
-
-This is needed because we need it to route somewhere if someone hits `/v3` this would redirect it to `/v3/100ms-v3/basics` i.e the MDX file `/v3/100ms-v3/basics.mdx`
-
-Then Follow the Steps in 1. to add docs to it.
-
-### 3. Aliasing Repeating Content
+### 2. Aliasing Repeating Content
 
 So you don't have to copy paste it again and again.
 

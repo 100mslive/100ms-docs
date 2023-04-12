@@ -113,18 +113,14 @@ const Sidebar: React.FC<Props> = ({
 
     let nav;
     if (!baseViewOnly && slug) {
-        const [currentDocSlug] = slug as string[];
-
         if (Object.keys(currentNav).length) {
-            const platform = currentNav[currentDocSlug];
-            if (slug[0] !== 'v1' && slug[0] !== 'v2') {
-                if (slug?.length > 3) {
-                    nav = platform[slug[1]];
-                    if (slug[0] === 'api-reference') {
-                        nav = platform[slug[1]][slug[2]];
-                    }
+            const platform = currentNav;
+            if (slug?.length > 2) {
+                nav = platform[slug[0]];
+                if (slug[0] === 'api-reference') {
+                    nav = platform[slug[0]][slug[1]];
                 }
-            } else nav = platform;
+            }
         }
     } else nav = false;
 
@@ -238,7 +234,7 @@ const Sidebar: React.FC<Props> = ({
                     }}>
                     <DocsSearchBar setHelperState={setHelperState} />
                 </Box>
-                <Link passHref href="/concepts/v2/concepts/basics">
+                <Link passHref href="/concepts/concepts/basics">
                     <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <LayersIcon style={{ color: 'inherit' }} />
                         <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
@@ -405,7 +401,8 @@ const Sidebar: React.FC<Props> = ({
                                             height: '16px',
                                             boxShadow: '0 8px 8px 0.25rem rgba(8, 9, 12, 0.8)',
                                             '@md': { display: 'none' }
-                                        }}></Box>
+                                        }}
+                                    />
                                 </section>
                             ) : null}
                         </Box>
@@ -449,45 +446,45 @@ const iconStyle = { height: '20px', width: '20px', fill: 'var(--docs_text_primar
 
 export const menuItem = [
     {
-        link: '/android/v2/get-started/quickstart',
+        link: '/android/get-started/quickstart',
         name: 'Android',
         key: 'android',
         icon: <AndroidIcon style={iconStyle} />,
-        apiRef: '/api-reference/android/v2/index.html'
+        apiRef: '/api-reference/android/index.html'
     },
     {
-        link: '/ios/v2/guides/quickstart',
+        link: '/ios/guides/quickstart',
         name: 'iOS',
         key: 'ios',
         icon: <IosIcon style={iconStyle} />,
-        apiRef: '/api-reference/ios/v2/home/content'
+        apiRef: '/api-reference/ios/home/content'
     },
     {
-        link: '/javascript/v2/get-started/javascript-quickstart',
+        link: '/javascript/get-started/javascript-quickstart',
         name: 'JavaScript',
         key: 'javascript',
         icon: <JavascriptIcon style={iconStyle} />,
-        apiRef: '/api-reference/javascript/v2/home/content'
+        apiRef: '/api-reference/javascript/home/content'
     },
     {
-        link: '/react-native/v2/guides/quickstart',
+        link: '/react-native/guides/quickstart',
         name: 'React Native',
         key: 'react-native',
         icon: <ReactIcon style={iconStyle} />,
-        apiRef: '/api-reference/react-native/v2/modules.html'
+        apiRef: '/api-reference/react-native/modules.html'
     },
     {
-        link: '/flutter/v2/guides/quickstart',
+        link: '/flutter/guides/quickstart',
         name: 'Flutter',
         key: 'flutter',
         icon: <FlutterIcon style={iconStyle} />,
         apiRef: 'https://pub.dev/documentation/hmssdk_flutter/latest/hmssdk_flutter/hmssdk_flutter-library.html'
     },
     {
-        link: '/server-side/v2/how--to-guides/make-api-calls',
+        link: '/server-side/how--to-guides/make-api-calls',
         name: 'Server-side',
         key: 'server-side',
         icon: <ServerIcon style={{ ...iconStyle, fill: 'transparent' }} />,
-        apiRef: '/server-side/v2/api-reference/Rooms/overview'
+        apiRef: '/server-side/api-reference/Rooms/overview'
     }
 ];

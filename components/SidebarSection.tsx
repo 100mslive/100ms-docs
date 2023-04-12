@@ -67,7 +67,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
 
     return (
         <section
-            className='sidebar-section'
+            className="sidebar-section"
             style={{
                 margin: nested ? '0 0 0 0.95rem' : '0px 0px 8px 0px',
                 borderLeft: nested ? '2px solid var(--docs_border_strong' : 'none'
@@ -139,41 +139,9 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                         </SidebarSection>
                     )
                 )}
-                {key === 'features' && slug[0] !== 'server-side' ? (
-                    <>
-                        {aliasMenu.map((route) => (
-                            <SidebarItem
-                                key={route.title}
-                                asPath={asPath}
-                                route={route}
-                                activeItem={activeItem}
-                                index={index}
-                            />
-                        ))}
-                    </>
-                ) : null}
             </div>
         </section>
     );
 };
 
 export default SidebarSection;
-
-const aliasMenu = [
-    {
-        title: 'Room APIs',
-        url: '/server-side/v2/Rooms/object'
-    },
-    {
-        title: 'Webhooks',
-        url: '/server-side/v2/introduction/webhook'
-    },
-    {
-        title: 'SFU Recording',
-        url: '/server-side/v2/Destinations/recording'
-    }
-    // {
-    //     title: 'Simulcast',
-    //     url: '/docs/server-side/v2/features/simulcast'
-    // }
-];

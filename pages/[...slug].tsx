@@ -114,7 +114,7 @@ const DocSlugs = ({ source, frontMatter, pagination, showToc = true }: Props) =>
 
     let showPagination = true;
     // Don't show Pagination for Android
-    if (Array.isArray(slug) && slug[1] === 'android') {
+    if (Array.isArray(slug) && slug[0] === 'android') {
         showPagination = false;
     }
 
@@ -236,4 +236,4 @@ export const getStaticPaths = async () => {
     };
 };
 
-DocSlugs.Layout = DocLayout
+DocSlugs.Layout = DocLayout;
