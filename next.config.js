@@ -1407,7 +1407,77 @@ const nextConfig = {
             },
             {
                 source: '/server-side/v2/api-reference/Destinations/rtmp-streaming-and-browser-recording',
-                destination: '/server-side/v2/api-reference/legacy-api-v1/destinations/rtmp-streaming-and-browser-recording',
+                destination:
+                    '/server-side/v2/api-reference/legacy-api-v1/destinations/rtmp-streaming-and-browser-recording',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/basics',
+                destination: '/concepts/v2/get-started/core-concepts/basics',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/templates-and-roles/overview',
+                destination: '/concepts/v2/get-started/core-concepts/templates-and-roles',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/recordings',
+                destination: '/concepts/v2/get-started/features/recordings',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/live-streaming',
+                destination: '/concepts/v2/get-started/features/live-streaming',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/templates-and-roles/breakout-rooms',
+                destination:
+                    '/concepts/v2/get-started/features/interaction-and-controls/breakout-rooms',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/templates-and-roles/waiting-room',
+                destination:
+                    '/concepts/v2/get-started/features/interaction-and-controls/waiting-room',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/adaptive-bitrate',
+                destination: '/concepts/v2/get-started/features/quality/adaptive-bitrate',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/handling-audio-video-edge-cases',
+                destination:
+                    '/concepts/v2/get-started/features/quality/handling-audio-video-edge-cases',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/prebuilt',
+                destination: '/concepts/v2/get-started/prebuilt-or-custom-UI/prebuilt',
+                permanent: true
+            },
+
+            {
+                source: '/concepts/v2/concepts/rooms/room-codes/room-codes',
+                destination: '/concepts/v2/get-started/authentication/room-codes/overview',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/rooms/room-codes/room-code-auth',
+                destination: '/concepts/v2/get-started/authentication/room-codes/room-code-auth',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/rooms/room-links',
+                destination: '/concepts/v2/get-started/authentication/room-codes/room-links',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/security-and-tokens',
+                destination: '/concepts/v2/get-started/authentication/security-and-tokens',
                 permanent: true
             }
         ];
