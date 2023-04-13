@@ -1,0 +1,87 @@
+---
+title: Session Store (Alpha)
+nav: 7.24
+---
+
+Session store is a shared realtime key-value store that is accessible by everyone in the room. Think of it as additional top-level data associated with a session. Session store can be used to achieve features like pinned text, spotlight (bringing a particular peer into a center stage for everyone in the room), etc.
+
+Session store is persisted throughout a session and is cleared once the last peer leaves the room.
+
+<Note>
+💡 Session Store vs Peer Metadata
+
+While peer metadata is associated with individual peers and each peer can have their own metadata, session store remains the same for every peer in the room.
+
+</Note>
+
+## Usage
+
+Session store is only available after user joins the session. To get the reference to the session store you need to override 
+`func on(sessionStoreAvailable store: HMSSessionStore)` function of the `HMSUpdateListener` protocol. Once you get the reference to the store you can save it in your app for accessing later.
+
+### Setting a value for a key
+
+Use the set method to set a value under a particular key. Once a value is set under a key, it will be available for other peers in the room who are observing this key.
+
+```swift
+store.set("new value", forKey: "my key") { finalValue, error in
+    if error == nil {
+        print("Value was updated successfuly to: \(finalValue)")
+    }
+}
+```
+
+## Getting a value for a key
+
+### Get the current value and listen for updates
+
+Most of the time the application is interested not just in a current value of a key but also any updates to that value. To get the initial value and all subsequent ones use the observeChanges API.
+It takes a list of keys to observe and a closure that will be called for initial value and every time an update is received.
+
+```swift
+store.observeChanges(forKeys: ["date", "time"]) { [weak self] key, value in
+    switch key {
+    case "date":
+        self?.onDateUpdated(value as? String)
+    case "time":
+        self?.onTimeUpdated(value as? String)
+    default:
+        break
+        
+    }
+}
+```
+
+You can have multiple observers running in parallel.
+
+### Managing observer lifecycle
+
+During the app lifecycle it may want to subscribe and unsubscribe for value updates. To unsubscribe we first need to get the observer reference by passing a completion closure to the `observeChanges` API:
+```swift
+store.observeChanges(forKeys: ["key", "key2"], changeObserver: { [weak self] key, value in
+    // ... update handling code
+}) { [weak self] observer, error in
+    self?.observer = observer
+}
+```
+Later when the observer is no longer needed call `store.removeObserver(observer)` API to stop receiving update.
+
+
+### Get the current value once
+
+Use `object(forKey:completion)` API if your application is not interested in getting updates for the key
+
+```swift
+store.object(forKey: "my key") { value, error in
+    if error == nil {
+        print("Value was fetched successfuly: \(value)")
+    }
+}
+```
+
+## Limitations and workarounds in Alpha release
+
+-   No permission support - anyone can read/write session metadata. If you want to restrict access to session metadata, you have to do it on your app level logic.
+-   Locks to ensure consistency of the data. If two peers update it at the same time, it will be a race condition for which one succeeds last, overwriting whatever was before.
+
+👀 For an example of how to implement pinned chat support using session store in an iOS app with the 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
