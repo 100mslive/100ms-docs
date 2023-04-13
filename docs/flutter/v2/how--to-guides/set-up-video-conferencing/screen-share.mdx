@@ -379,7 +379,7 @@ To resolve this issue ensure that you create a Unique App Group which is linked 
 
 Ensure that your app's Screenshare extension name is passed as the `preferredExtension` name to `HMSIOSScreenshareConfig`.
 
-Ensure that there are no typos/spelling mistakes in the name passed. 
+Ensure that there are no typos/spelling mistakes in the name passed.
 
 Your `preferredExtension` name in Xcode is under Signing and Capabilities section under Target > yourExtensionName.
 
@@ -395,6 +395,10 @@ HMSSDK hmsSDK = HMSSDK(iOSScreenshareConfig: iOSScreenshareConfig);
 await hmsSDK.build(); // ensure to await while invoking the `build` method
 ```
 
+<span className="img-container">
+    ![Incorrect preferredExtension](/docs/v2/Screenshare4.PNG) ![Other apps showing
+    up](/docs/v2/Screenshare5.PNG) ![Correct setup](/docs/v2/Screenshare2.jpeg)
+</span>
 ### Running on Simulator
 
 Starting Screenshare from an iOS Simulator is not supported by Apple. You can start Screenshare only from an actual iOS device like an iPhone or iPad.
