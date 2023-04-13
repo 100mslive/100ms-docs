@@ -1407,9 +1407,11 @@ const nextConfig = {
             },
             {
                 source: '/server-side/v2/api-reference/Destinations/rtmp-streaming-and-browser-recording',
-                destination: '/server-side/v2/api-reference/legacy-api-v1/destinations/rtmp-streaming-and-browser-recording',
+                destination:
+                    '/server-side/v2/api-reference/legacy-api-v1/destinations/rtmp-streaming-and-browser-recording',
                 permanent: true
-            }
+            },
+            { source: '/concepts/:slug*', destination: '/get-started/:slug*', permanent: true }
         ];
     },
     eslint: {
