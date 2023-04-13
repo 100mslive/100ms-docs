@@ -16,8 +16,14 @@ export default function DocLayout({ children }: Props) {
     const router = useRouter() as any;
     const SEO = {
         title: `${frontMatter.title || '100ms Docs'} | 100ms`,
+        description:
+            frontMatter?.description ||
+            'Quick to integrate native iOS, Android & Web SDKs to add live video & audio conferencing to your applications.',
         openGraph: {
-            title: `${frontMatter.title || '100ms Docs'} | 100ms`
+            title: `${frontMatter.title || '100ms Docs'} | 100ms`,
+            description:
+                frontMatter?.description ||
+                'Quick to integrate native iOS, Android & Web SDKs to add live video & audio conferencing to your applications.'
         },
         canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${
             router.asPath === '/' ? '' : router.asPath.split('?')[0]
