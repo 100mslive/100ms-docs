@@ -62,7 +62,6 @@ const nextConfig = {
                 permanent: true,
                 basePath: false
             },
-            { source: '/:path*/v2/:slug*', destination: '/:path*/:slug*', permanent: true },
             { source: '/concepts/:slug*', destination: '/get-started/:slug*', permanent: true },
             {
                 source: '/android/get-started/:slug*',
@@ -1442,7 +1441,9 @@ const nextConfig = {
                 destination:
                     '/server-side/v2/api-reference/legacy-api-v1/destinations/rtmp-streaming-and-browser-recording',
                 permanent: true
-            }
+            },
+            { source: '/:path*/v2/:slug*', destination: '/:path*/:slug*', permanent: true },
+
         ];
     },
     eslint: {
