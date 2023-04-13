@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { ChevronRightIcon } from '@100mslive/react-icons';
 import { Flex, Text } from '@100mslive/react-ui';
 import SidebarItem from './SidebarItem';
+import { updateOpenedAccordionsList, getOpenedAccordionsList } from '../lib/utils';
 import { titleCasing } from '../lib/utils';
 
 interface Props {
@@ -25,10 +26,10 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
     useEffect(() => {
         if (window) {
             // Add active sections to localStorage
-            const currentList = JSON.parse(localStorage.getItem('openedAccordions') || '[]');
+            const currentList = getOpenedAccordionsList();
             if (openSection) {
                 currentList.push(key);
-                localStorage.setItem('openedAccordions', JSON.stringify(currentList));
+                updateOpenedAccordionsList(currentList);
             }
         }
     }, [openSection, key, slug]);
@@ -36,7 +37,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
     useEffect(() => {
         if (typeof window !== 'undefined') {
             // Open sections that were not closed before page reload
-            const openedAccordions = JSON.parse(localStorage.getItem('openedAccordions') || '[]');
+            const openedAccordions = getOpenedAccordionsList();
             if (openedAccordions.includes(key)) {
                 setOpenSection(true);
             }
@@ -73,9 +74,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
             <Flex
                 onClick={() => {
                     setOpenSection((prev) => {
-                        const currentList = JSON.parse(
-                            localStorage.getItem('openedAccordions') || '[]'
-                        );
+                        const currentList = getOpenedAccordionsList();
                         const updatedList = [
                             ...new Set(
                                 prev === false || isInFocus
@@ -83,7 +82,7 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                                     : currentList.filter((heading) => heading !== key)
                             )
                         ];
-                        localStorage.setItem('openedAccordions', JSON.stringify(updatedList));
+                        updateOpenedAccordionsList(updatedList);
                         return !prev;
                     });
                 }}
