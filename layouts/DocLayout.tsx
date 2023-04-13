@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import SegmentAnalytics from '@/components/SegmentAnalytics';
 import Sidebar from '@/components/Sidebar';
 import useLockBodyScroll from '@/lib/useLockBodyScroll';
+import { SEOText } from '@/lib/utils';
 
 interface Props {
     children: JSX.Element;
@@ -16,8 +17,10 @@ export default function DocLayout({ children }: Props) {
     const router = useRouter() as any;
     const SEO = {
         title: `${frontMatter.title || '100ms Docs'} | 100ms`,
+        description: frontMatter?.description || SEOText,
         openGraph: {
-            title: `${frontMatter.title || '100ms Docs'} | 100ms`
+            title: `${frontMatter.title || '100ms Docs'} | 100ms`,
+            description: frontMatter?.description || SEOText
         },
         canonical: `${process.env.NEXT_PUBLIC_CANONICAL_BASE_URL}${
             router.asPath === '/' ? '' : router.asPath.split('?')[0]

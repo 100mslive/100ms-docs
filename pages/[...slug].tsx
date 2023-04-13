@@ -236,4 +236,4 @@ export const getStaticPaths = async () => {
     };
 };
 
-DocSlugs.Layout = DocLayout
+DocSlugs.Layout = DocLayout;
