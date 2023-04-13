@@ -1411,6 +1411,75 @@ const nextConfig = {
                     '/server-side/v2/api-reference/legacy-api-v1/destinations/rtmp-streaming-and-browser-recording',
                 permanent: true
             },
+            {
+                source: '/get-started/v2/concepts/basics',
+                destination: '/get-started/v2/concepts/core-concepts/basics',
+                permanent: true
+            },
+            {
+                source: '/get-started/v2/concepts/templates-and-roles/overview',
+                destination: '/get-started/v2/concepts/core-concepts/templates-and-roles',
+                permanent: true
+            },
+            {
+                source: '/get-started/v2/concepts/recordings',
+                destination: '/get-started/v2/concepts/features/recordings',
+                permanent: true
+            },
+            {
+                source: '/get-started/v2/concepts/live-streaming',
+                destination: '/get-started/v2/concepts/features/live-streaming',
+                permanent: true
+            },
+            {
+                source: '/get-started/v2/concepts/templates-and-roles/breakout-rooms',
+                destination:
+                    '/get-started/v2/concepts/features/interaction-and-controls/breakout-rooms',
+                permanent: true
+            },
+            {
+                source: '/get-started/v2/concepts/templates-and-roles/waiting-room',
+                destination:
+                    '/get-started/v2/concepts/features/interaction-and-controls/waiting-room',
+                permanent: true
+            },
+            {
+                source: '/get-started/v2/concepts/adaptive-bitrate',
+                destination: '/get-started/v2/concepts/features/quality/adaptive-bitrate',
+                permanent: true
+            },
+            {
+                source: '/get-started/v2/concepts/handling-audio-video-edge-cases',
+                destination:
+                    '/get-started/v2/concepts/features/quality/handling-audio-video-edge-cases',
+                permanent: true
+            },
+            {
+                source: '/get-started/v2/concepts/prebuilt',
+                destination: '/get-started/v2/concepts/prebuilt-or-custom-UI/prebuilt',
+                permanent: true
+            },
+
+            {
+                source: '/get-started/v2/concepts/rooms/room-codes/room-codes',
+                destination: '/get-started/v2/concepts/authentication/room-codes/overview',
+                permanent: true
+            },
+            {
+                source: '/get-started/v2/concepts/rooms/room-codes/room-code-auth',
+                destination: '/get-started/v2/concepts/authentication/room-codes/room-code-auth',
+                permanent: true
+            },
+            {
+                source: '/get-started/v2/concepts/rooms/room-links',
+                destination: '/get-started/v2/concepts/authentication/room-codes/room-links',
+                permanent: true
+            },
+            {
+                source: '/get-started/v2/concepts/security-and-tokens',
+                destination: '/get-started/v2/concepts/authentication/security-and-tokens',
+                permanent: true
+            },
             { source: '/concepts/:slug*', destination: '/get-started/:slug*', permanent: true }
         ];
     },
