@@ -10,6 +10,10 @@ The HMSHLSPlayer is an HLS player offered by 100ms that can be used to play HLS 
 You can use Node package manager or yarn to add HMSHLSPlayer sdk to your project.
 Use https://www.npmjs.com/package/@100mslive/hls-player as the package source.
 
+```
+npm i @100mslive/hls-player
+```
+
 ## How to use Player's HLS Stream
 
 You create an instance of HMSHLSPlayer like below:
@@ -20,9 +24,9 @@ import { HMSHLSPlayer } from '@100mslive/hls-player';
 
 // hls url should be provided which player will run. 
 // second parameter is optional, if you had video element then pass to player else we will create one.
-const hlsPlayer = new HMSHLSPlayer(hlsURL, videoEl?)
+const hlsPlayer = new HMSHLSPlayer(hlsURL, videoEl)
 
-// if video element is not present, we will create a new video element which will be attached to your ui.
+// if video element is not present, we will create a new video element which can be attached to your ui.
 const videoEl = hlsPlayer.getVideoElement();
 
 ```
@@ -256,3 +260,82 @@ const playbackEventHandler = data => isPlaying = data.state === HLSPlaybackState
 hlsPlayer.on(HMSHLSPlayerEvents.PLAYBACK_STATE, playbackEventHandler);
 
 ```
+
+## HLS Player example
+
+Below is a simple example in which hls-player will be used in you app.
+
+<Tabs id="hls-player" items={['JavaScript', 'React']} />{' '}
+
+<Tab id='hls-player-0'>
+
+```javascript
+import { HLSPlaybackState, HMSHLSPlayer, HMSHLSPlayerEvents } from "@100mslive/hls-player";
+
+
+const videoEl; // reference for video element
+const hlsUrl; // reference to hls url
+
+// variable to handle ui and take some actions
+let isLive = true, isPaused = false, isAutoBlockedPaused = false;
+
+const handleError = data => console.error("[HLSView] error in hls", data);
+const handleNoLongerLive = ({ isLive }) => isLive = isLive;
+
+const playbackEventHandler = data => isPaused = (data.state === HLSPlaybackState.paused);
+
+const handleAutoplayBlock = data => isAutoBlockedPaused = !!data;
+
+const hlsPlayer = new HMSHLSPlayer(hlsUrl, videoEl);
+
+hlsPlayer.on(HMSHLSPlayerEvents.SEEK_POS_BEHIND_LIVE_EDGE, handleNoLongerLive);
+hlsPlayer.on(HMSHLSPlayerEvents.ERROR, handleError);
+hlsPlayer.on(HMSHLSPlayerEvents.PLAYBACK_STATE, playbackEventHandler);
+hlsPlayer.on(HMSHLSPlayerEvents.AUTOPLAY_BLOCKED, handleAutoplayBlock);
+
+```
+
+</Tab>
+
+<Tab  id='hls-player-1'>
+
+```jsx
+
+import { HLSPlaybackState, HMSHLSPlayer, HMSHLSPlayerEvents } from "@100mslive/hls-player";
+import { useEffect, useState } from 'react';
+
+const videoEl; // reference for video element
+const hlsUrl; // reference to hls url
+
+// variable to handle ui and take some actions
+const [isVideoLive, setIsVideoLive] = useState(true);
+const [isHlsAutoplayBlocked, setIsHlsAutoplayBlocked] = useState(false);
+const [isPaused, setIsPaused] = useState(false);
+
+useEffect(() => {
+    const handleError = data => console.error("[HLSView] error in hls", data);
+    const handleNoLongerLive = ({ isLive }) => {
+        setIsVideoLive(isLive);
+    };
+
+    const playbackEventHandler = data =>
+        setIsPaused(data.state === HLSPlaybackState.paused);
+
+    const handleAutoplayBlock = data => setIsHlsAutoplayBlocked(!!data);
+    const hlsPlayer = new HMSHLSPlayer(hlsUrl, videoEl);
+
+    hlsPlayer.on(HMSHLSPlayerEvents.SEEK_POS_BEHIND_LIVE_EDGE, handleNoLongerLive);
+    hlsPlayer.on(HMSHLSPlayerEvents.ERROR, handleError);
+    hlsPlayer.on(HMSHLSPlayerEvents.PLAYBACK_STATE, playbackEventHandler);
+    hlsPlayer.on(HMSHLSPlayerEvents.AUTOPLAY_BLOCKED, handleAutoplayBlock);
+    return () => {
+        hlsPlayer.off(HMSHLSPlayerEvents.SEEK_POS_BEHIND_LIVE_EDGE, handleNoLongerLive);
+        hlsPlayer.off(HMSHLSPlayerEvents.ERROR, handleError);
+        hlsPlayer.off(HMSHLSPlayerEvents.PLAYBACK_STATE, playbackEventHandler);
+        hlsPlayer.off(HMSHLSPlayerEvents.AUTOPLAY_BLOCKED, handleAutoplayBlock);
+    }
+}, []);
+
+```
+
+</Tab>
