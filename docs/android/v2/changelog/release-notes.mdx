@@ -3,6 +3,24 @@ title: Release Notes
 nav: 4
 description: Release Notes for 100ms Android SDK
 ---
+## v2.6.1 - 2023-04-14
+
+### Breaking Changes
+- Hls stats is overhauled and now part of the new hls-player library.
+
+### Added
+- [HmsHlsPlayer](../how--to-guides/record-and-live-stream/hls-player). A new library that simplifies co-ordinating events on hls live streams with the app.
+- [Session Store](https://www.100ms.live/docs/android/v2/how--to-guides/interact-with-room/room/session-store) a room level real time key-value store that can be updated and listened to by any peer.
+
+### Changed
+- `volume` is a public property on `HMSRemoteAudioTrack.kt`
+
+### Fix
+- Bug that caused tracks to disappear after a peer's role was changed, with certain types of roles.
+- When logging was enabled, logs weren't being cleared in some cases resulting in the disk filling up on the device.
+- Internal analytics changes.
+- Crash with a certain type of notification.
+
 ## v2.6.0 - 2023-03-31
 
 ### Breaking Changes
