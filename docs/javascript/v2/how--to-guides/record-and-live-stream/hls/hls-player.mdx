@@ -14,7 +14,58 @@ Use https://www.npmjs.com/package/@100mslive/hls-player as the package source.
 npm i @100mslive/hls-player
 ```
 
-## How to use Player's HLS Stream
+## HMSHLSPlayer methods
+
+Below shows all the methods exposed from player
+
+```javascript
+
+interface IHMSHLSPlayer {
+  /**
+   * @returns get html video element
+   */
+  getVideoElement(): HTMLVideoElement;
+
+  /**
+   * set video volumne
+   * @param { volume } - in range [0,100]
+   */
+  setVolume(volume: number): void;
+  /**
+   *
+   * @returns returns HMSHLSLayer which represents current
+   * quality.
+   */
+  getLayer(): HMSHLSLayer | null;
+  /**
+   *
+   * @param { HMSHLSLayer } layer - layer we want to set the stream to.
+   * set { height: auto } to set the layer to auto
+   */
+  setLayer(layer: HMSHLSLayer): void;
+  /**
+   * move the video to Live
+   */
+  seekToLivePosition(): Promise<void>;
+  /**
+   * play stream
+   * call this when autoplay error is received
+   */
+  play(): Promise<void>;
+  /**
+   * pause stream
+   */
+  pause(): void;
+
+  /**
+   * It will update the video element current time
+   * @param seekValue Pass currentTime in second
+   */
+  seekTo(seekValue: number): void;
+}
+
+```
+### How to use Player's HLS Stream
 
 You create an instance of HMSHLSPlayer like below:
 
@@ -31,7 +82,7 @@ const videoEl = hlsPlayer.getVideoElement();
 
 ```
 
-## How to pause and resume the playback
+### How to pause and resume the playback
 
 You call play/pause on the hlsPlayer instance like below:
 
@@ -45,7 +96,7 @@ hmsPlayer.pause()
 
 ```
 
-## How to seek forward or backward
+### How to seek forward or backward
 
 You use seekTo methods on the hlsPlayer to seek to any position in video, below is given example:
 
@@ -57,7 +108,7 @@ hmsPlayer.seekTo(5)
 
 ```
 
-## How to seek to live position
+### How to seek to live position
 
 You use seekToLivePosition methods on the hlsPlayer instance to go to the live poition like below:
 
@@ -68,7 +119,7 @@ hmsPlayer.seekToLivePosition()
 
 ```
 
-## How to change volume of HLS playback
+### How to change volume of HLS playback
 
 Use volume property to change the volume of HLS player. The volume level is between 0-100. Volume is set to 100 by default.
 
@@ -80,7 +131,7 @@ hlsPlayer.setVolume(50);
 ```
 
 
-## Set video quality level to hls player
+### Set video quality level to hls player
 
 ```javascript
 
