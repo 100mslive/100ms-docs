@@ -100,7 +100,7 @@ const DocSlugs = ({ source, frontMatter, pagination, showToc = true }: Props) =>
                 if (
                     h3Index >= 0 &&
                     h3Array[h3Index].getBoundingClientRect().top >
-                        h2Array[h2Index].getBoundingClientRect().top
+                    h2Array[h2Index].getBoundingClientRect().top
                 )
                     setActiveSubHeading(h3Array[h3Index].id);
                 else setActiveSubHeading('');
@@ -127,7 +127,7 @@ const DocSlugs = ({ source, frontMatter, pagination, showToc = true }: Props) =>
                     minWidth: '100px',
                     flexGrow: '1',
                     boxSizing: 'border-box',
-                    maxWidth: '976px',
+                    maxWidth: '896px',
                     padding: '0 48px',
                     minHeight: '100vh',
                     paddingBottom: '80px'
