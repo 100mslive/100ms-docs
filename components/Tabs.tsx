@@ -106,7 +106,7 @@ export const Tab: React.FC<PropsWithChildren<TabProps>> = ({ id, children }) => 
     // if it's the 1st tab
     const bool = id.includes('0');
     return (
-        <div id={id} style={{ display: `${bool ? 'block' : 'none'}`, marginTop: '16px' }}>
+        <div id={id} style={{ display: `${bool ? 'block' : 'none'}`, marginTop: '8px' }}>
             {children}
         </div>
     );
