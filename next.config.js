@@ -1413,7 +1413,7 @@ const nextConfig = {
             },
             {
                 source: '/get-started/v2/concepts/basics',
-                destination: '/get-started/v2/concepts/core-concepts/basics',
+                destination: '/get-started/v2/concepts/overview',
                 permanent: true
             },
             {
