@@ -5,7 +5,7 @@ nav: 11.2
 
 import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 
-The HMSHLSPlayer is an HLS player offered by 100ms that can be used to play HLS streams. The player takes a URL to play the stream. It also provides the ability to send analytics events related to the HLS playback to the 100ms dashboard when provided with 100ms SDK instance with an active room.
+The HmsHlsPlayer is an HLS player offered by 100ms that can be used to play HLS streams. The player takes a URL to play the stream. It also provides the ability to send analytics events related to the HLS playback to the 100ms dashboard when provided with 100ms SDK instance with an active room.
 
 ## How to integrate HLS Player SDK
 
@@ -16,10 +16,10 @@ Add the import:
 
 ## How to use Play HLS stream
 
-You create an instance of HlsPlayer like below:
+You create an instance of HmsHlsPlayer like below:
 
 ```kotlin
-let hlsPlayer = HlsPlayer(context, hmsSdk)
+let hlsPlayer = HmsHlsPlayer(context, hmsSdk)
 ```
 
 > hmssdk is optional, it can be null.
@@ -102,7 +102,7 @@ hmsPlayer.volume = 50
 
 ## How to know the stats related to HLS playback
 
-`HlsPlayer` exposes statMonitor interface to know about the statistics about current HLS playback. For more information about how to use this HLS Stats Monitor check it's documentation [here](/android/v2/how--to-guides/measure-network-quality-and-performance/hls-stats) The following snippet shows how you check check how far is the current HLS playback from live position. To monitor stats continuously you can use a timer to check the values of different stats.
+`HmsHlsPlayer` exposes statMonitor interface to know about the statistics about current HLS playback. For more information about how to use this HLS Stats Monitor check it's documentation [here](/android/v2/how--to-guides/measure-network-quality-and-performance/hls-stats) The following snippet shows how you check check how far is the current HLS playback from live position. To monitor stats continuously you can use a timer to check the values of different stats.
 
 Override the onEventUpdate from `StatsMonitor`
 
@@ -193,7 +193,7 @@ public data class HmsHlsCue(
 If your app already has an hmsSDK instance that you are using to join the 100ms room, you can assign this instance to HLS player's analytics interface to enable the player to sent analytics events. Currently only hard failure events (where the player encounters an unrecoverable error and playback can't continue) are sent to analytics.
 
 ```kotlin
-let hlsPlayer = HlsPlayer(context, hmsSdk)
+let hlsPlayer = HmsHlsPlayer(context, hmsSdk)
 ```
 
 OR
