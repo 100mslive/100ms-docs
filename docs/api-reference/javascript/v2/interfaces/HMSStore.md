@@ -1,7 +1,13 @@
 ---
-title: HMSStore
-nav: '4.54'
+title: HMSStore<T>
+nav: '4.55'
 ---
+
+## Type parameters
+
+| Name | Type                                                                                                                                  |
+| :--- | :------------------------------------------------------------------------------------------------------------------------------------ |
+| `T`  | extends [`HMSGenericTypes`](/api-reference/javascript/v2/interfaces/HMSGenericTypes) = { `sessionStore`: `Record`<`string`, `any`\> } |
 
 ## Properties
 
@@ -90,6 +96,16 @@ nav: '4.54'
 ### sessionMetadata
 
 • `Optional` **sessionMetadata**: `any`
+
+**`Deprecated`**
+
+use `sessionStore` instead
+
+---
+
+### sessionStore
+
+• **sessionStore**: `T`[``"sessionStore"``]
 
 ---
 
