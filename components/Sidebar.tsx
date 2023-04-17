@@ -193,13 +193,13 @@ const Sidebar: React.FC<Props> = ({
                 style={
                     showBaseView
                         ? {
-                            position: menu ? 'initial' : 'sticky',
-                            top: '16px'
-                        }
+                              position: menu ? 'initial' : 'sticky',
+                              top: '16px'
+                          }
                         : {
-                            position: menu ? 'initial' : 'sticky',
-                            top: '16px'
-                        }
+                              position: menu ? 'initial' : 'sticky',
+                              top: '16px'
+                          }
                 }>
                 {baseViewOnly ? (
                     <div>
@@ -221,10 +221,9 @@ const Sidebar: React.FC<Props> = ({
                         }}
                         onClick={() => setShowBaseView(false)}>
                         <Text variant="sm" css={{ color: '$primaryLight' }}>
-                            Explore&nbsp;
                             {showPlatformSelector
-                                ? getUpdatedPlatformName(tech.name)
-                                : 'to get started'}
+                                ? `Explore ${getUpdatedPlatformName(tech.name)}`
+                                : 'Getting started'}
                         </Text>
                         <ChevronRightIcon height="16px" width="16px" />
                     </Flex>
@@ -384,9 +383,10 @@ const Sidebar: React.FC<Props> = ({
                                                     key={m.link}
                                                     value={m}
                                                     className={({ active }) =>
-                                                        `${active
-                                                            ? 'dropdown-option dropdown-option-active'
-                                                            : 'dropdown-option'
+                                                        `${
+                                                            active
+                                                                ? 'dropdown-option dropdown-option-active'
+                                                                : 'dropdown-option'
                                                         }`
                                                     }>
                                                     {m.icon}
@@ -411,14 +411,14 @@ const Sidebar: React.FC<Props> = ({
                         {/* Sidebar Menu Section */}
                         {nav
                             ? Object.entries(nav).map(([key, children], index) => (
-                                <SidebarSection
-                                    key={key}
-                                    value={key}
-                                    index={index}
-                                    nested={false}>
-                                    {children as React.ReactChildren}
-                                </SidebarSection>
-                            ))
+                                  <SidebarSection
+                                      key={key}
+                                      value={key}
+                                      index={index}
+                                      nested={false}>
+                                      {children as React.ReactChildren}
+                                  </SidebarSection>
+                              ))
                             : null}
                     </>
                 ) : null}

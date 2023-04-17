@@ -1480,7 +1480,17 @@ const nextConfig = {
                 destination: '/get-started/v2/concepts/authentication/security-and-tokens',
                 permanent: true
             },
-            { source: '/concepts/:slug*', destination: '/get-started/:slug*', permanent: true }
+            {
+                source: '/get-started/v2/get-started/core-concepts/:slug*',
+                destination: '/get-started/v2/get-started/concepts/:slug*',
+                permanent: true
+            },
+            { source: '/concepts/:slug*', destination: '/get-started/:slug*', permanent: true },
+            {
+                source: '/get-started/v2/concepts/:slug*',
+                destination: '/get-started/v2/get-started/:slug*',
+                permanent: true
+            }
         ];
     },
     eslint: {
