@@ -221,10 +221,9 @@ const Sidebar: React.FC<Props> = ({
                         }}
                         onClick={() => setShowBaseView(false)}>
                         <Text variant="sm" css={{ color: '$primaryLight' }}>
-                            Explore&nbsp;
                             {showPlatformSelector
-                                ? getUpdatedPlatformName(tech.name)
-                                : 'and get started'}
+                                ? `Explore ${getUpdatedPlatformName(tech.name)}`
+                                : 'Getting started'}
                         </Text>
                         <ChevronRightIcon height="16px" width="16px" />
                     </Flex>
@@ -238,7 +237,7 @@ const Sidebar: React.FC<Props> = ({
                     }}>
                     <DocsSearchBar setHelperState={setHelperState} />
                 </Box>
-                <Link passHref href="/get-started/v2/concepts/basics">
+                <Link passHref href="/get-started/v2/get-started/overview">
                     <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
                         <PlayIcon style={{ color: 'inherit' }} />
                         <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>

@@ -1412,72 +1412,72 @@ const nextConfig = {
                 permanent: true
             },
             {
-                source: '/get-started/v2/concepts/basics',
-                destination: '/get-started/v2/concepts/core-concepts/basics',
+                source: '/concepts/v2/concepts/basics',
+                destination: '/get-started/v2/get-started/concepts/basics',
                 permanent: true
             },
             {
-                source: '/get-started/v2/concepts/templates-and-roles/overview',
-                destination: '/get-started/v2/concepts/core-concepts/templates-and-roles',
+                source: '/concepts/v2/concepts/templates-and-roles/overview',
+                destination: '/get-started/v2/get-started/concepts/templates-and-roles',
                 permanent: true
             },
             {
-                source: '/get-started/v2/concepts/recordings',
-                destination: '/get-started/v2/concepts/features/recordings',
+                source: '/concepts/v2/concepts/recordings',
+                destination: '/get-started/v2/get-started/features/recordings',
                 permanent: true
             },
             {
-                source: '/get-started/v2/concepts/live-streaming',
-                destination: '/get-started/v2/concepts/features/live-streaming',
+                source: '/concepts/v2/concepts/live-streaming',
+                destination: '/get-started/v2/get-started/features/live-streaming',
                 permanent: true
             },
             {
-                source: '/get-started/v2/concepts/templates-and-roles/breakout-rooms',
+                source: '/concepts/v2/concepts/templates-and-roles/breakout-rooms',
                 destination:
-                    '/get-started/v2/concepts/features/interaction-and-controls/breakout-rooms',
+                    '/get-started/v2/get-started/features/interaction-and-controls/breakout-rooms',
                 permanent: true
             },
             {
-                source: '/get-started/v2/concepts/templates-and-roles/waiting-room',
+                source: '/concepts/v2/concepts/templates-and-roles/waiting-room',
                 destination:
-                    '/get-started/v2/concepts/features/interaction-and-controls/waiting-room',
+                    'get-started/v2/get-started/features/interaction-and-controls/waiting-room',
                 permanent: true
             },
             {
-                source: '/get-started/v2/concepts/adaptive-bitrate',
-                destination: '/get-started/v2/concepts/features/quality/adaptive-bitrate',
+                source: '/concepts/v2/concepts/adaptive-bitrate',
+                destination: '/get-started/v2/get-started/features/quality/adaptive-bitrate',
                 permanent: true
             },
             {
-                source: '/get-started/v2/concepts/handling-audio-video-edge-cases',
+                source: '/concepts/v2/concepts/handling-audio-video-edge-cases',
                 destination:
-                    '/get-started/v2/concepts/features/quality/handling-audio-video-edge-cases',
+                    '/get-started/v2/get-started/features/quality/handling-audio-video-edge-cases',
                 permanent: true
             },
             {
-                source: '/get-started/v2/concepts/prebuilt',
-                destination: '/get-started/v2/concepts/prebuilt-or-custom-UI/prebuilt',
+                source: '/concepts/v2/concepts/prebuilt',
+                destination: '/get-started/v2/get-started/prebuilt/prebuilt',
                 permanent: true
             },
 
             {
-                source: '/get-started/v2/concepts/rooms/room-codes/room-codes',
-                destination: '/get-started/v2/concepts/authentication/room-codes/overview',
+                source: '/concepts/v2/concepts/rooms/room-codes/room-codes',
+                destination: '/get-started/v2/get-started/prebuilt/room-codes/overview',
                 permanent: true
             },
             {
-                source: '/get-started/v2/concepts/rooms/room-codes/room-code-auth',
-                destination: '/get-started/v2/concepts/authentication/room-codes/room-code-auth',
+                source: '/concepts/v2/concepts/rooms/room-codes/room-code-auth',
+                destination: '/get-started/v2/get-started/prebuilt/room-codes/room-code-auth',
                 permanent: true
             },
             {
-                source: '/get-started/v2/concepts/rooms/room-links',
-                destination: '/get-started/v2/concepts/authentication/room-codes/room-links',
+                source: '/concepts/v2/concepts/rooms/room-links',
+                destination: '/get-started/v2/get-started/prebuilt/room-codes/room-links',
                 permanent: true
             },
             {
-                source: '/get-started/v2/concepts/security-and-tokens',
-                destination: '/get-started/v2/concepts/authentication/security-and-tokens',
+                source: '/concepts/v2/concepts/security-and-tokens',
+                destination: '/get-started/v2/get-started/security-and-tokens',
                 permanent: true
             },
             { source: '/concepts/:slug*', destination: '/get-started/:slug*', permanent: true },
@@ -1510,8 +1510,7 @@ const nextConfig = {
                 source: '/:slug*/how--to-guides/:path*',
                 destination: '/:slug*/how-to-guides/:path*',
                 permanent: true
-            },
-
+            }
         ];
     },
     eslint: {
