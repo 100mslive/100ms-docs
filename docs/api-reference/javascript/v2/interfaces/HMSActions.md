@@ -972,9 +972,9 @@ Change settings of the local peer's video track
 
 #### Parameters
 
-| Name       | Type                                                                                                 | Description                                                                                      |
-| :--------- | :--------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------- |
-| `settings` | `Partial`<[`HMSVideoTrackSettings`](/api-reference/javascript/v2/interfaces/HMSVideoTrackSettings)\> | HMSVideoTrackSettings `({ width, height, codec, maxFramerate, maxBitrate, deviceId, advanced })` |
+| Name       | Type                                                                                                 | Description                                                                                                  |
+| :--------- | :--------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------- |
+| `settings` | `Partial`<[`HMSVideoTrackSettings`](/api-reference/javascript/v2/interfaces/HMSVideoTrackSettings)\> | HMSVideoTrackSettings `({ width, height, codec, maxFramerate, maxBitrate, deviceId, advanced, facingMode })` |
 
 #### Returns
 
@@ -1061,6 +1061,18 @@ If you want to stop HLS streaming. The passed in arguments is not considered at 
 ▸ **stopRTMPAndRecording**(): `Promise`<`void`\>
 
 If you want to stop both RTMP streaming and recording.
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### switchCamera
+
+▸ **switchCamera**(): `Promise`<`void`\>
+
+Toggle the camera between front and back if the both the camera's exist
 
 #### Returns
 
