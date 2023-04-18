@@ -23,6 +23,12 @@ nav: '4.60'
 
 ---
 
+### facingMode
+
+• `Optional` **facingMode**: `HMSFacingMode`
+
+---
+
 ### height
 
 • `Optional` **height**: `number`
