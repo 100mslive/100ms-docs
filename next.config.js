@@ -1479,6 +1479,37 @@ const nextConfig = {
                 source: '/concepts/v2/concepts/security-and-tokens',
                 destination: '/get-started/v2/get-started/security-and-tokens',
                 permanent: true
+            },
+            { source: '/concepts/:slug*', destination: '/get-started/:slug*', permanent: true },
+            {
+                source: '/ios/v2/get-started/:slug*',
+                destination: '/ios/v2/quickstart/:slug*',
+                permanent: true
+            },
+            {
+                source: '/android/v2/get-started/:slug*',
+                destination: '/android/v2/quickstart/:slug*',
+                permanent: true
+            },
+            {
+                source: '/javascript/v2/get-started/:slug*',
+                destination: '/javascript/v2/quickstart/:slug*',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/get-started/:slug*',
+                destination: '/flutter/v2/quickstart/:slug*',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/get-started/:slug*',
+                destination: '/react-native/v2/quickstart/:slug*',
+                permanent: true
+            },
+            {
+                source: '/:slug*/how--to-guides/:path*',
+                destination: '/:slug*/how-to-guides/:path*',
+                permanent: true
             }
         ];
     },
