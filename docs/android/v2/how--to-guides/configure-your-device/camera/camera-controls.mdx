@@ -134,7 +134,7 @@ cameraControl.setFlash(enable: Boolean)
 
 ## Capture at the highest resolution offered by the camera
 
-Takes the highest quality picture from the local video stream in `JPEG` irrespective of publisher's resolution.
+Takes the highest quality picture from the local video stream in `jpg` or `jpeg` irrespective of publisher's resolution.
 You need to provide a file object where the desired image is to be saved. If it's on the external directory proper,
 app permission has to be taken before.
 
@@ -149,6 +149,8 @@ cameraControl.captureImageAtMaxSupportedResolution(
 )
 
 ```
+
+> 🔑 Note: To get correct orientation of the captured image, ensure the image extension(jpg or jpeg) is correct while saving the file.
 
 ## Wiring camera controls with gestures
 
@@ -180,7 +182,8 @@ val gestureDetector = GestureDetectorCompat(context, object : GestureDetector.Si
 
         val cachePath = File(context.cacheDir, "images")
         cachePath.mkdirs()
-        val imageSavePath = File(cachePath, "image.jpeg")
+        // The image file can have jpeg or jpg as it's extension
+        val imageSavePath = File(cachePath, "image.jpg")
 
         cameraControl.captureImageAtMaxSupportedResolution(imageSavePath) { isSuccess ->
 
