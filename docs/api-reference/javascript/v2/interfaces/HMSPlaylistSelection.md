@@ -1,6 +1,6 @@
 ---
 title: HMSPlaylistSelection
-nav: '4.35'
+nav: '4.36'
 ---
 
 ## Properties

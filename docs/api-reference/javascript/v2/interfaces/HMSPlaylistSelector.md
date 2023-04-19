@@ -1,6 +1,6 @@
 ---
 title: HMSPlaylistSelector
-nav: '4.36'
+nav: '4.37'
 ---
 
 Helpful selectors for audio and video playlist
@@ -9,7 +9,7 @@ Helpful selectors for audio and video playlist
 
 ### currentTime
 
-• **currentTime**: (`store`: [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)) => `number`
+• **currentTime**: (`store`: [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>) => `number`
 
 #### Type declaration
 
@@ -19,9 +19,9 @@ returns the current time of the playlist in seconds
 
 ##### Parameters
 
-| Name    | Type                                                           |
-| :------ | :------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore) |
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
 
 ##### Returns
 
@@ -31,7 +31,7 @@ returns the current time of the playlist in seconds
 
 ### list
 
-• **list**: <T\>(`store`: [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)) => [`HMSPlaylistItem`](/api-reference/javascript/v2/interfaces/HMSPlaylistItem)<`T`\>[]
+• **list**: <T\>(`store`: [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>) => [`HMSPlaylistItem`](/api-reference/javascript/v2/interfaces/HMSPlaylistItem)<`T`\>[]
 
 #### Type declaration
 
@@ -47,9 +47,9 @@ returns the playlist items list as set initially
 
 ##### Parameters
 
-| Name    | Type                                                           |
-| :------ | :------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore) |
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
 
 ##### Returns
 
@@ -59,7 +59,7 @@ returns the playlist items list as set initially
 
 ### playbackRate
 
-• **playbackRate**: (`store`: [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)) => `number`
+• **playbackRate**: (`store`: [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>) => `number`
 
 #### Type declaration
 
@@ -69,9 +69,9 @@ returns the playback rate, a number between 0.25-2.0.
 
 ##### Parameters
 
-| Name    | Type                                                           |
-| :------ | :------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore) |
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
 
 ##### Returns
 
@@ -81,7 +81,7 @@ returns the playback rate, a number between 0.25-2.0.
 
 ### progress
 
-• **progress**: (`store`: [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)) => `number`
+• **progress**: (`store`: [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>) => `number`
 
 #### Type declaration
 
@@ -91,9 +91,9 @@ returns the current progress percentage, a number between 0-100
 
 ##### Parameters
 
-| Name    | Type                                                           |
-| :------ | :------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore) |
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
 
 ##### Returns
 
@@ -103,7 +103,7 @@ returns the current progress percentage, a number between 0-100
 
 ### selectedItem
 
-• **selectedItem**: <T\>(`store`: [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)) => [`HMSPlaylistItem`](/api-reference/javascript/v2/interfaces/HMSPlaylistItem)<`T`\>
+• **selectedItem**: <T\>(`store`: [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>) => [`HMSPlaylistItem`](/api-reference/javascript/v2/interfaces/HMSPlaylistItem)<`T`\>
 
 #### Type declaration
 
@@ -119,9 +119,9 @@ This returns playlist item for corresponding Id in selection
 
 ##### Parameters
 
-| Name    | Type                                                           |
-| :------ | :------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore) |
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
 
 ##### Returns
 
@@ -131,7 +131,7 @@ This returns playlist item for corresponding Id in selection
 
 ### selection
 
-• **selection**: (`store`: [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)) => [`HMSPlaylistSelection`](/api-reference/javascript/v2/interfaces/HMSPlaylistSelection)
+• **selection**: (`store`: [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>) => [`HMSPlaylistSelection`](/api-reference/javascript/v2/interfaces/HMSPlaylistSelection)
 
 #### Type declaration
 
@@ -141,9 +141,9 @@ This returns playlist selection with `{ id, hasNext, hasPrev }`
 
 ##### Parameters
 
-| Name    | Type                                                           |
-| :------ | :------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore) |
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
 
 ##### Returns
 
@@ -153,7 +153,7 @@ This returns playlist selection with `{ id, hasNext, hasPrev }`
 
 ### volume
 
-• **volume**: (`store`: [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)) => `number`
+• **volume**: (`store`: [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>) => `number`
 
 #### Type declaration
 
@@ -163,9 +163,9 @@ returns the current volume the playlist is playing at, a number between 0-100
 
 ##### Parameters
 
-| Name    | Type                                                           |
-| :------ | :------------------------------------------------------------- |
-| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore) |
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
 
 ##### Returns
 

@@ -66,22 +66,27 @@ ___
 
 ### HMSRoomProvider
 
-▸ **HMSRoomProvider**(`props`, `context?`): ``null`` \| `ReactElement`<`any`, `any`\>
+▸ **HMSRoomProvider**<`T`\>(`__namedParameters`): `FunctionComponentElement`<`ProviderProps`<``null`` \| `HMSContextProviderProps`\>\>
 
 top level wrapper for using react sdk hooks. This doesn't have any mandatory arguments, if you are already
 initialising the sdk on your side, you can pass in the primitives from there as well to use hooks for
 react part of your code.
 
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `HMSGenericTypes` = { `sessionStore`: `Record`<`string`, `any`\>  } |
+
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `props` | `PropsWithChildren`<`HMSRoomProviderProps`\> |
-| `context?` | `any` |
+| `__namedParameters` | `PropsWithChildren`<`HMSRoomProviderProps`<`T`\>\> |
 
 #### Returns
 
-``null`` \| `ReactElement`<`any`, `any`\>
+`FunctionComponentElement`<`ProviderProps`<``null`` \| `HMSContextProviderProps`\>\>
 
 ___
 
@@ -214,11 +219,11 @@ ___
 
 ### useHMSActions
 
-▸ **useHMSActions**(): `IHMSActions`
+▸ **useHMSActions**(): `IHMSActions`<{}\>
 
 #### Returns
 
-`IHMSActions`
+`IHMSActions`<{}\>
 
 ___
 
@@ -286,7 +291,7 @@ The hook can only be used in a component if HMSRoomProvider is present in its an
 
 | Name | Type | Default value |
 | :------ | :------ | :------ |
-| `selector` | `StateSelector`<`HMSStore`, `StateSlice`\> | `undefined` |
+| `selector` | `StateSelector`<`HMSStore`<{}\>, `StateSlice`\> | `undefined` |
 | `equalityFn` | `EqualityChecker`<`StateSlice`\> | `shallow` |
 
 #### Returns
@@ -307,7 +312,7 @@ ___
 
 ### useHMSVanillaStore
 
-▸ **useHMSVanillaStore**(): `IHMSReactStore`<`HMSStore`\>
+▸ **useHMSVanillaStore**(): `IHMSReactStore`<`HMSStore`<{}\>\>
 
 `useHMSVanillaStore` is a read only hook which returns the vanilla HMSStore.
 Usage:
@@ -322,7 +327,7 @@ For almost every case, `useHMSStore` would get the job done.
 
 #### Returns
 
-`IHMSReactStore`<`HMSStore`\>
+`IHMSReactStore`<`HMSStore`<{}\>\>
 
 ___
 
