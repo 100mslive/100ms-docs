@@ -121,6 +121,12 @@ use `sessionStore` instead
 
 ---
 
+### templateAppData
+
+• **templateAppData**: `Record`<`string`, `string`\>
+
+---
+
 ### tracks
 
 • **tracks**: `Record`<`string`, [`HMSTrack`](/api-reference/javascript/v2/home/content#hmstrack)\>
