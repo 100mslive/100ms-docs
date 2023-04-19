@@ -1,0 +1,295 @@
+---
+title: Session Store
+nav: 8.2
+---
+
+Session store is a shared realtime key-value store that is accessible by everyone in the room. Think of it as additional top-level data associated with a session. Session store can be used to achieve features like pinned text, spotlight (bringing a particular peer into a center stage for everyone in the room), etc.
+
+Session store is persisted throughout a session and is cleared once the last peer leaves the room.
+
+It is recommended to plan an interface for session store so that the app gets to know before hand what keys it needs to observe. If you're using Typescript, using an interface for session store also provides better type-safety and auto-completion. Read [Typescript Usage](#typescript-usage) section to know more.
+
+<Note>
+💡 Session Store vs Peer Metadata
+
+While peer metadata is associated with individual peers and each peer can have their own metadata, session store remains the same for every peer in the room.
+
+</Note>
+
+## Usage
+
+Actions required to operate session store live under `hmsActions.sessionStore`.
+
+### Setting session store
+
+Use the set method to set a value under a particular key. Once a value is set under a key, it will be available for other peers in the room who are observing this key.
+
+```js
+hmsActions.sessionStore.set('key1', 'value1');
+```
+
+To remove a particular a key, you can call set with the key alone(which is equivalent to setting the value under the key to undefined).
+
+```js
+hmsActions.sessionStore.set('key1');
+```
+
+## Fetching session metadata
+
+### Observe/unobserve
+
+To get updates with the latest values from the session store for a set of keys, the app needs to observe that particular set of keys. This is done keeping in mind the scalability of the session store and not every peer will need access to every key.
+
+This could be done after being successfully connected to the room.
+
+```jsx
+// in a top level component
+const Conference = () => {
+    const hmsActions = useHMSActions();
+    const isConnected = useHMSStore(selectIsConnectedToRoom);
+
+    useEffect(() => {
+        if (isConnected) {
+            hmsActions.sessionStore.observe(['pinnedMessage', 'spotlight']);
+        }
+    }, [hmsActions, isConnected]);
+
+    return <div>{/** layout to render peers */}</div>;
+};
+```
+
+### Access a particular key
+
+The latest value under a key can be accessed from HMSStore using the `selectSessionStore` selector.
+
+<Tabs id="access" items={['Javascript', 'React']} />
+
+<Tab id="access-0">
+
+```js
+const val = hmsStore.getState(selectSessionStore('key1');
+
+const unsub = hmsStore.subscribe(val => console.log(val), selectSessionStore('key1'));
+```
+
+</Tab>
+<Tab id="access-1">
+
+```js
+const val = useHMSStore(selectSessionStore('key1'));
+```
+
+</Tab>
+
+## Typescript Usage
+
+It is recommended to use an interface for session store when instantiating `HMSReactiveStore` or `HMSRoomProvider`. This provides type-safety and better auto-completion when using set/observe actions increasing developer productivity and reducing surface area for bugs.
+
+<Tabs id="session-store-interface" items={['Javascript', 'React']} />
+
+<Tab id="session-store-interface-0">
+
+```js
+interface SessionStore {
+    pinnedMessage: string;
+    spotlight: string;
+    usefulLinks: string[];
+}
+
+const hms = new HMSReactiveStore<{ sessionStore: SessionStore }>();
+```
+
+</Tab>
+
+<Tab id="session-store-interface-1">
+
+```jsx
+interface SessionStore {
+    pinnedMessage: string;
+    spotlight: string;
+    usefulLinks: string[];
+}
+
+const TypedHMSRoomProvider = HMSRoomProvider<{ sessionStore: SessionStore }>;
+
+const App = () => {
+
+    return (
+        <TypedHMSRoomProvider>
+            ...
+        </TypedHMSRoomProvider>
+    )
+}
+
+```
+
+</Tab>
+
+## Limitations and workarounds in Alpha release
+
+-   No permission support - anyone can read/write session metadata. If you want to restrict access to session metadata, you have to do it on your app level logic.
+-   Locks to ensure consistency of the data. If two peers update it at the same time, it will be a race condition for which one succeeds last, overwriting whatever was before.
+
+## Example - Pin Message
+
+You can use session store to pin information so that it's available for everyone in the room - even for newly joined peers. In this example we'll pin a chat message that's important in React.
+
+![PinnedChat](/docs/v2/pinned-chat.png)
+
+### Hook to set pinned message - useSetPinnedMessage
+
+```js
+import { useCallback } from 'react';
+import {
+    selectPeerNameByID,
+    selectSessionStore,
+    useHMSActions,
+    useHMSStore,
+    useHMSVanillaStore
+} from '@100mslive/react-sdk';
+
+export const useSetPinnedMessage = () => {
+    const hmsActions = useHMSActions();
+    const vanillaStore = useHMSVanillaStore();
+    const pinnedMessage = useHMSStore(selectSessionStore('pinnedMessage'));
+
+    const setPinnedMessage = useCallback(
+        /**
+         * @param {import("@100mslive/react-sdk").HMSMessage | undefined} message
+         */
+        async (message) => {
+            const peerName =
+                vanillaStore.getState(selectPeerNameByID(message?.sender)) || message?.senderName;
+            const newPinnedMessage = message
+                ? peerName
+                    ? `${peerName}: ${message.message}`
+                    : message.message
+                : null;
+            if (newPinnedMessage !== pinnedMessage) {
+                await hmsActions.sessionStore.set('pinnedMessage', newPinnedMessage);
+            }
+        },
+        [hmsActions, vanillaStore, pinnedMessage]
+    );
+
+    return { setPinnedMessage };
+};
+```
+
+### Display the pinned message
+
+We'll also use the same function returned from the hook to clear the pinned chat by passing in no arguments
+
+```js
+import { useHMSStore } from '@100mslive/react-sdk';
+import { Box, Flex, IconButton, Text } from '@100mslive/react-ui';
+import { CrossIcon, PinIcon } from '@100mslive/react-icons';
+import { useSetPinnedMessage } from '../hooks/useSetPinnedMessage';
+
+const PinnedMessage = () => {
+    const pinnedMessage = useHMSStore(selectSessionStore('pinnedMessage'));
+    const { setPinnedMessage } = useSetPinnedMessage();
+
+    return pinnedMessage ? (
+        <Flex>
+            <Box>
+                <PinIcon />
+            </Box>
+            <Text variant="sm">{pinnedMessage}</Text>
+            <IconButton onClick={() => setPinnedMessage()}>
+                <CrossIcon />
+            </IconButton>
+        </Flex>
+    ) : null;
+};
+```
+
+## Example - Spotlight
+
+You can use session store to bring a particular peer/set of peers to center stage for everyone in the room
+
+### Action to spotlight a particular tile
+
+```jsx
+// https://github.com/100mslive/100ms-web/blob/sync-webapp/src/components/TileMenu.jsx
+
+import { selectSessionStore, useHMSActions, useHMSStore } from '@100mslive/react-sdk';
+import { StyledMenuTile } from '@100mslive/react-ui';
+
+const isSameTile = ({ trackId, videoTrackID, audioTrackID }) =>
+    trackId &&
+    ((videoTrackID && videoTrackID === trackId) || (audioTrackID && audioTrackID === trackId));
+
+// render it in your tile menu
+const SpotlightActions = ({ audioTrackID, videoTrackID }) => {
+    const hmsActions = useHMSActions();
+    const spotlightTrackId = useHMSStore(selectSessionStore('spotlight'));
+    const isTileSpotlighted = isSameTile({
+        trackId: spotlightTrackId,
+        videoTrackID,
+        audioTrackID
+    });
+
+    const setSpotlightTrackId = (trackId) => hmsActions.sessionStore.set('spotlight', trackId);
+
+    return (
+        <StyledMenuTile.ItemButton
+            onClick={() =>
+                isTileSpotlighted
+                    ? setSpotlightTrackId()
+                    : setSpotlightTrackId(videoTrackID || audioTrackID)
+            }>
+            <StarIcon />
+            <span>
+                {isTileSpotlighted ? 'Remove from Spotlight' : 'Spotlight Tile for everyone'}
+            </span>
+        </StyledMenuTile.ItemButton>
+    );
+};
+```
+
+### Center Stage/Spotlight View
+
+```jsx
+// https://github.com/100mslive/100ms-web/blob/sync-webapp/src/layouts/PinnedTrackView.jsx
+
+import React from 'react';
+import { selectPeers, selectVideoTrackByPeerID, useHMSStore } from '@100mslive/react-sdk';
+import { Flex } from '@100mslive/react-ui';
+import VideoTile from '../components/VideoTile';
+
+const CenterStageView = () => {
+    // can be audio or video track, if tile with only audio track is pinned
+    const spotlightTrackId = useHMSStore(selectSessionStore('spotlight'));
+    const spotlightTrack = useHMSStore(selectTrackByID(spotlightTrackId));
+    const peerVideoTrack = useHMSStore(selectVideoTrackByPeerID(spotlightTrack.peerId));
+    const spotlightVideoTrack =
+        spotlightTrack && spotlightTrack.type === 'audio' ? peerVideoTrack : spotlightTrack;
+    const peers = (useHMSStore(selectPeers) || []).filter(
+        (peer) => peer.videoTrack || peer.audioTrack || peer.auxiliaryTracks.length > 0
+    );
+    if (peers.length === 0) {
+        return null;
+    }
+    const showSidePane = spotlightTrack && peers.length > 1;
+
+    return (
+        <Flex css={{ size: '100%' }}>
+            <Flex>
+                <VideoTile
+                    key={spotlightTrack.id}
+                    trackId={spotlightVideoTrack?.id}
+                    peerId={spotlightTrack.peerId}
+                />
+            </Flex>
+            {showSidePane && (
+                <GridSidePaneView
+                    peers={peers.filter((peer) => peer.id !== spotlightTrack.peerId)}
+                />
+            )}
+        </Flex>
+    );
+};
+
+export default CenterStageView;
+```

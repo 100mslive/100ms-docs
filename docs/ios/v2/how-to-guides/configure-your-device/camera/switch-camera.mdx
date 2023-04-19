@@ -29,4 +29,18 @@ if let localTrack = hmsSDK.localPeer?.videoTrack as? HMSLocalVideoTrack {
 }
 ```
 
+## How to know when switch camera operation has been completed?
+
+You can pass a completion handler to switchCamera method like below:
+
+```swift
+if let localTrack = hmsSDK.localPeer?.videoTrack as? HMSLocalVideoTrack {
+  localTrack.switchCamera() { error in
+      // Switch camera operation has been completed
+  }
+}
+```
+
+You can utilise this completion handler to time a transition effect while camera is switching for example.
+
 👀 To see a complete example of switching cameras in an iOS app using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).
