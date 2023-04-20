@@ -36,7 +36,8 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 super.onActivityResult(requestCode, resultCode, data)
 
     if (requestCode == Constants.AUDIO_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK){
-        HmssdkFlutterPlugin.hmssdkFlutterPlugin?.requestAudioShare(data)
+            data?.action = "ACTIVITY_RECEIVER"
+            activity.sendBroadcast(data?.putExtra("method_name", "REQUEST_AUDIO_SHARE"))
     }
 
 }
