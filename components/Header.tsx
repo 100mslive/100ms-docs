@@ -92,10 +92,9 @@ const Header: React.FC<Props> = ({
         return routeLink;
     };
 
-    // const isApiRef = router.query.slug && router.query.slug[0] === 'api-reference';
     const isNonApiRef =
         router.query.slug &&
-        (router.query.slug.includes('server-side') || router.query.slug.includes('concepts'));
+        (router.query.slug.includes('server-side') || router.query.slug.includes('get-started'));
 
     return renderComponent ? (
         <Flex
@@ -312,7 +311,7 @@ const HeaderLink = ({
                         gap: '$2',
                         color: '$textMedEmp',
                         '&:hover': {
-                            opacity: 'initial',
+                            opacity: 'initial'
                         },
                         '&:not(.docs-link-active):hover': {
                             color: '$textHighEmp',
