@@ -14,6 +14,12 @@ Add the import:
 
 `implementation "live.100ms:hls-player:$hmsVersion"`
 
+## How to start HLS
+- Take a look at the [HLS](/hls/hls) section about how to start an hls stream in a HMS room.
+- [Here's](/hls/hls#current-room-status) how to read the hls url from the room.
+
+So you'd get the url from `onJoin` and `onRoomUpdate` as mentioned in the link above.
+
 ## How to use Play HLS stream
 
 You create an instance of HmsHlsPlayer like below:
@@ -27,9 +33,23 @@ let hlsPlayer = HmsHlsPlayer(context, hmsSdk)
 Next, you call play on this hlsPlayer instance passing the hls stream url like below:
 
 ```kotlin
-val url = "HLS-URL-HERE"
-hmsPlayer.play(url)
+val hlsUrl = room.hlsStreamingState?.variants?.get(0)?.hlsStreamUrl
+hmsPlayer.play(hlsUrl)
 ```
+Note you may need to get this in both `onJoin` and `onRoomUpdated`. The type for `onRoomUpdated` should be something like:
+
+```kotlin
+override fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) {
+    if (type == HMSRoomUpdate.HLS_STREAMING_STATE_UPDATED) {
+        val hlsUrl = room.hlsStreamingState?.variants?.get(0)?.hlsStreamUrl
+    }
+}
+```
+
+Take a look at [how the sample app does this](https://github.com/100mslive/100ms-android/blob/94b027efc89222d33db608fcd677b22f62a79784/app/src/main/java/live/hms/app2/ui/meeting/MeetingViewModel.kt#L604) if not clear.
+
+The actual url will look something like:
+`"https://cdn.100ms.live/beam/62a1bfa2071e483b48ef37f6/63b2bacc1d485406b9a2f27c/20230420/1681980133192/master.m3u8"`
 
 ## How to show video player UI
 
