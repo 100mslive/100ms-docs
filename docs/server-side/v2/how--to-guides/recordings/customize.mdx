@@ -14,6 +14,7 @@ We will cover the following customizations:
 - Record a specific set of roles
 - Change the composition UI: useful when you want to add branding to the recorded output
 - Configure the video output: useful to generate a mobile-friendly (portrait) or high resolution output
+- Get an audio-only recording
 
 <StepsToc
     parentId="customize-recording"
@@ -23,6 +24,7 @@ We will cover the following customizations:
         "Modify subscribe strategies for the role",
         "Modify the recorded UI with a custom web app ",
         "Configure video resolution for the output",
+        "Get an audio-only recording",
     ]}
 />
 
@@ -65,5 +67,9 @@ This can be modified to:
 
 - Have a lower or higher video resolution (for example, `"width": 1920` and `"height": 1080`)
 - Have a mobile-first portrait output, which has an aspect ratio of 9:16 (for example, `"width": 720` and `"height": 1280`)
+
+### Get an audio-only recording
+
+The [start recording API](./overview) accepts optional boolean input `audio_only` which can be passed as `true` to get an audio-only composite recording. This would return 1 file with combined audio for all peers in the room.
 
 </StepsContainer>

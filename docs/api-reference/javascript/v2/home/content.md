@@ -2146,6 +2146,22 @@ Select the current simulcast layer of a track given a track ID.
 
 ---
 
+### selectTemplateAppData
+
+▸ **selectTemplateAppData**(`store`): `Record`<`string`, `string`\>
+
+#### Parameters
+
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `store` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+
+#### Returns
+
+`Record`<`string`, `string`\>
+
+---
+
 ### selectTrackAudioByID
 
 ▸ **selectTrackAudioByID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `number`\>
