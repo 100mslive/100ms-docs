@@ -50,6 +50,39 @@ hmsPlayer.play(url)
 
 ```
 
+## How do I get the HLS URL of the room?
+
+There can be 2 cases:
+
+1. HLS streaming is already in progress when you join the room
+2. HLS stream is started after you have joined the session
+
+You should handle both cases by listening to onJoin and onRoomUpdate callbacks respectively, like below:
+
+```swift
+
+// Case 1 - play the hls stream if room has an active hls url
+func on(join room: HMSRoom) {
+  let hlsUrl = room.hlsStreamingState.variants.first?.url
+  hmsPlayer.play(hlsUrl)
+}
+
+// Case 2 - listen to hlsStreamingStateUpdated update to handle starting and stopping of hls playback
+func on(room: HMSRoom, update: HMSRoomUpdate) {
+  switch update {
+  case .hlsStreamingStateUpdated:
+    if let hlsUrl = room.hlsStreamingState.variants.first?.url {
+      hmsPlayer.play(hlsUrl)
+    }
+    else {
+      // Stop the playback if url is empty - that means streaming is stopped
+      hmsPlayer.stop()
+    }
+  }
+}
+
+```
+
 ## How to show video player UI
 
 You can get access to video player view as a UIView. So that you can add it as a subview to any other view in your app's UI.
