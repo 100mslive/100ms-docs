@@ -63,8 +63,9 @@ You should handle both cases by listening to onJoin and onRoomUpdate callbacks r
 
 // Case 1 - play the hls stream if room has an active hls url
 func on(join room: HMSRoom) {
-  let hlsUrl = room.hlsStreamingState.variants.first?.url
-  hmsPlayer.play(hlsUrl)
+  if let hlsUrl = room.hlsStreamingState.variants.first?.url {
+    hmsPlayer.play(hlsUrl)
+  }
 }
 
 // Case 2 - listen to hlsStreamingStateUpdated update to handle starting and stopping of hls playback
@@ -73,10 +74,6 @@ func on(room: HMSRoom, update: HMSRoomUpdate) {
   case .hlsStreamingStateUpdated:
     if let hlsUrl = room.hlsStreamingState.variants.first?.url {
       hmsPlayer.play(hlsUrl)
-    }
-    else {
-      // Stop the playback if url is empty - that means streaming is stopped
-      hmsPlayer.stop()
     }
   }
 }
