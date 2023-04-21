@@ -1,5 +1,5 @@
 ---
-title: Local Audio Share (Beta)
+title: Local Audio Share
 nav: 4.8
 ---
 
@@ -36,8 +36,8 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 super.onActivityResult(requestCode, resultCode, data)
 
     if (requestCode == Constants.AUDIO_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK){
-            data?.action = Constants.HMSSDK_RECEIVER
-            activity.sendBroadcast(data?.putExtra(Constants.METHOD_CALL, Constants.AUDIO_SHARE_REQUEST))
+        data?.action = Constants.HMSSDK_RECEIVER
+        activity.sendBroadcast(data?.putExtra(Constants.METHOD_CALL, Constants.AUDIO_SHARE_REQUEST))
     }
 }
 
@@ -71,7 +71,12 @@ if (requestCode == Constants.AUDIO_SHARE_INTENT_REQUEST_CODE && resultCode == Ac
 }
 ```
 
+Here's a Screenshot showing the Git Diff between older and the implementation in version 1.5.0 and above.
+![FlutterAudioshareDiff](/docs/v2/FlutterAudioshareDiff.png)
+
+
 That's it 🥳🥳 
+
 You can run the application now and use the Audio Share functionality. 
 
 ### How to start/stop device audio streaming from the application

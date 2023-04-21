@@ -26,10 +26,10 @@ import live.hms.hmssdk_flutter.Constants
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 super.onActivityResult(requestCode, resultCode, data)
 
-      if (requestCode == Constants.SCREEN_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-          data?.action = Constants.HMSSDK_RECEIVER
-          activity.sendBroadcast(data?.putExtra(Constants.METHOD_CALL, Constants.SCREEN_SHARE_REQUEST))
-      }
+    if (requestCode == Constants.SCREEN_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        data?.action = Constants.HMSSDK_RECEIVER
+        activity.sendBroadcast(data?.putExtra(Constants.METHOD_CALL, Constants.SCREEN_SHARE_REQUEST))
+    }
 }
 ```
 
@@ -61,7 +61,12 @@ if (requestCode == Constants.SCREEN_SHARE_INTENT_REQUEST_CODE && resultCode == A
 }
 ```
 
+Here's a Screenshot showing the Git Diff between older and the implementation in version 1.5.0 and above.
+![FlutterScreenshareDiff](/docs/v2/FlutterScreenshareDiff.png)
+
+
 That's it 🥳🥳 
+
 You can run the application now.
 
 ### iOS Setup
