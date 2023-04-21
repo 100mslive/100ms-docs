@@ -109,37 +109,25 @@ should only happen once in your app lifecycle.
 // ref to keep reference to `HMSSDK` instance
 const hmsInstanceRef = useRef(null);
 
-...
+try {
+  // Before creating `HMSSDK` instance with `build` method,
+  // Check if you already have reference to previously build `HMSSDK` instance
+  // You can reuse it instead of creating new instance
 
-// Will only create `HMSSDK` instance if we don't have one
-if (
-  // checking if we already have `HMSSDK` instance
-  !(hmsInstanceRef.current instanceof HMSSDK)
-) {
-  // saving reference to `HMSSDK` instance
   hmsInstanceRef.current = await HMSSDK.build();
+} catch (error) {
+  // Handle errors
 }
-```
-
-If you want to create new `HMSSDK` instances everytime, then before creating the new instance, you always have to _[destroy](#what-does-destroy-method-do) the previous `HMSSDK` instance._
-
-```js
-// ref to keep reference to `HMSSDK` instance
-const hmsInstanceRef = useRef(null);
 
 ...
 
-// checking if we already have `HMSSDK` instance
-if (hmsInstanceRef.current instanceof HMSSDK) {
-  // destroying previous `HMSSDK` instance before creating new instance
-  await hmsInstanceRef.current.destroy();
+// If you want to create new `HMSSDK` instances everytime instead of reusing previously build instance,
+// You should **always** destroy the previous `HMSSDK` instance before creating the new instance
 
-  // clear hms reference from other places
-}
-
-// creating new `HMSSDK` instance
-hmsInstanceRef.current = await HMSSDK.build();
-// set hms reference in other places
+// Before creating `HMSSDK` instance with `build` method,
+// Check if you already have reference to previously build `HMSSDK` instance
+// Destroy it by calling `destroy` method on it, and then create new instance
+hmsInstanceRef.current.destroy();
 ```
 
 
@@ -156,6 +144,8 @@ After calling `destroy` you should also remove all references to `HMSSDK` instan
 const hmsInstance = await HMSSDK.build();
 
 // ... perform Room actions like join room, chat, streaming, recording, screenshare, etc. ...
+
+...
 
 // When you are done with meeting, call `leave` method on HMSSDK instance
 await hmsInstance.leave():
