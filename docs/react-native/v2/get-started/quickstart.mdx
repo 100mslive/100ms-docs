@@ -526,10 +526,6 @@ export const usePeerTrackNodes = ({ navigate }) => {
             setLoading(true);
 
             /**
-             * Important Note: Don't build new `HMSSDK` instance before destroying the previous one.
-             * for more info checkout {@link https://www.100ms.live/docs/react-native/v2/how--to-guides/install-the-sdk/hmssdk#what-does-destroy-method-do}
-             */
-            /**
              * creating {@link HMSSDK} instance to join room
              * For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/features/join#join-a-room | Join a Room}
              */
@@ -750,10 +746,6 @@ Let's checkout the implementation:
 
 ```js section=FetchTokenToJoinTheRoom sectionIndex=1
 try {
-  /**
-   * Important Note: Don't build new `HMSSDK` instance before destroying the previous one.
-   * for more info checkout {@link https://www.100ms.live/docs/react-native/v2/how--to-guides/install-the-sdk/hmssdk#what-does-destroy-method-do}
-   */
   const hmsInstance = await HMSSDK.build();
 
   // Saving `hmsInstance` in ref
@@ -1066,10 +1058,6 @@ useEffect(() => {
     setLoading(true);
 
     /**
-     * Important Note: Don't build new `HMSSDK` instance before destroying the previous one.
-     * for more info checkout {@link https://www.100ms.live/docs/react-native/v2/how--to-guides/install-the-sdk/hmssdk#what-does-destroy-method-do}
-     */
-    /**
       * creating {@link HMSSDK} instance to join room
       * For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/features/join#join-a-room | Join a Room}
       */
@@ -1278,10 +1266,6 @@ useEffect(() => {
   const joinRoom = async () => {
     setLoading(true);
 
-    /**
-     * Important Note: Don't build new `HMSSDK` instance before destroying the previous one.
-     * for more info checkout {@link https://www.100ms.live/docs/react-native/v2/how--to-guides/install-the-sdk/hmssdk#what-does-destroy-method-do}
-     */
     /**
      * creating {@link HMSSDK} instance to join room
      * For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/features/join#join-a-room | Join a Room}

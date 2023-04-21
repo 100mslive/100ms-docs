@@ -209,11 +209,6 @@ To start screen share, app needs to call the `startScreenshare` method of `HMSSD
 To start screen share in iOS you need to pass App Group and Preferred Extension name while creating HMSSDK instance as follows:
 
 ```js
-/**
- * Important Note: Don't build new `HMSSDK` instance before destroying the previous one.
- * for more info checkout {@link https://www.100ms.live/docs/react-native/v2/how--to-guides/install-the-sdk/hmssdk#what-does-destroy-method-do}
- */
-
 // Create `HMSSDK` instance with `appGroup` and `preferredExtension` properties
 const hmsInstance = await HMSSDK.build({
     appGroup: 'group.reactnativehms', // ensure to pass the correct App Group linked to your Apple Developer Account

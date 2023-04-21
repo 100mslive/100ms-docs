@@ -183,10 +183,6 @@ Depending on your use case, you'll need to implement a selective set of the Upda
 You'll need to implement these listeners to perform UI Actions, update App State, etc. These updates can be used to render the video on screen or to display other info regarding the room.
 
 ```js
-/**
- * Important Note: Don't build new `HMSSDK` instance before destroying the previous one.
- * for more info checkout {@link https://www.100ms.live/docs/react-native/v2/how--to-guides/install-the-sdk/hmssdk#what-does-destroy-method-do}
- */
 const hmsInstance = await HMSSDK.build();
 
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoinListener);
