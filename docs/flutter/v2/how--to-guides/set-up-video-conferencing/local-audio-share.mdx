@@ -36,10 +36,9 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 super.onActivityResult(requestCode, resultCode, data)
 
     if (requestCode == Constants.AUDIO_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK){
-            data?.action = "ACTIVITY_RECEIVER"
-            activity.sendBroadcast(data?.putExtra("method_name", "REQUEST_AUDIO_SHARE"))
+            data?.action = Constants.HMSSDK_RECEIVER
+            activity.sendBroadcast(data?.putExtra(Constants.METHOD_CALL, Constants.AUDIO_SHARE_REQUEST))
     }
-
 }
 
 ```
@@ -49,6 +48,31 @@ super.onActivityResult(requestCode, resultCode, data)
 ```kotlin
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 ```
+
+### Migrating from older HMSSDK version to 1.5.0
+
+Since there is a breaking change in the audio share setup in `1.5.0` version of HMSSDK compared to older versions.
+Let's see how we can migrate from older versions to 1.5.0
+
+Replace these two line of application's `MainActivity.kt` file:
+
+```kotlin
+if (requestCode == Constants.AUDIO_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+    HmssdkFlutterPlugin.hmssdkFlutterPlugin?.requestAudioShare(data)
+}
+```
+
+with these lines:
+
+```kotlin
+if (requestCode == Constants.AUDIO_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+    data?.action = Constants.HMSSDK_RECEIVER
+    activity.sendBroadcast(data?.putExtra(Constants.METHOD_CALL, Constants.AUDIO_SHARE_REQUEST))
+}
+```
+
+That's it 🥳🥳 
+You run the application now.
 
 ### How to start/stop device audio streaming from the application
 

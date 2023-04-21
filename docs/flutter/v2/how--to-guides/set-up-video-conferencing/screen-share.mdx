@@ -26,13 +26,11 @@ import live.hms.hmssdk_flutter.Constants
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 super.onActivityResult(requestCode, resultCode, data)
 
-    if (requestCode == Constants.SCREEN_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK){
-            data?.action = "ACTIVITY_RECEIVER"
-            activity.sendBroadcast(data?.putExtra("method_name", "REQUEST_SCREEN_SHARE"))
-    }
-
+      if (requestCode == Constants.SCREEN_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+          data?.action = Constants.HMSSDK_RECEIVER
+          activity.sendBroadcast(data?.putExtra(Constants.METHOD_CALL, Constants.SCREEN_SHARE_REQUEST))
+      }
 }
-
 ```
 
 > DONOT forget to add the permission for foreground service in AndroidManifest.xml
@@ -40,6 +38,31 @@ super.onActivityResult(requestCode, resultCode, data)
 ```kotlin
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 ```
+
+### Migrating from older HMSSDK version to 1.5.0
+
+Since there is a breaking change in the audio share setup in `1.5.0` version of HMSSDK compared to older versions.
+Let's see how we can migrate from older versions to 1.5.0
+
+Replace these two lines of application's `MainActivity.kt` file:
+
+```kotlin
+if (requestCode == Constants.SCREEN_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+    HmssdkFlutterPlugin.hmssdkFlutterPlugin?.requestScreenShare(data)
+}
+```
+
+with these lines:
+
+```kotlin
+if (requestCode == Constants.SCREEN_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+    data?.action = Constants.HMSSDK_RECEIVER
+    activity.sendBroadcast(data?.putExtra(Constants.METHOD_CALL, Constants.SCREEN_SHARE_REQUEST))
+}
+```
+
+That's it 🥳🥳 
+You run the application now.
 
 ### iOS Setup
 
