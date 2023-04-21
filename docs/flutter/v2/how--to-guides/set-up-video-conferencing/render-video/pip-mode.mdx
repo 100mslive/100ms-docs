@@ -45,7 +45,7 @@ The `isAvailable` method returns a boolean value that indicates whether PIP mode
 
 ### Setup PIP 
 
-To enable `autoEnterPip` below android 12 we need to call `setupPIP` method from our SDK.
+To enable `autoEnterPip` below Android 12 we need to call `setupPIP` method from HMSSDK.
 It has two parameters:
 
 - `autoEnterPip` : Sends the application to PIP automatically while minimizing the application. Default value is `true`.
@@ -57,6 +57,8 @@ Let's see an example where application will not enter PIP automatically and the 
 /// Setting [aspectRatio] as [9:16]
 HMSAndroidPIPController.setup(autoEnterPip: false,aspectRatio: [9,16]);
 ```
+
+Usually, if the Peers in Room have joined from other Mobile devices then setting `aspectRatio` to `[9:16]` is recommended.
 
 > 🔑 Note: If there is no support for auto enter PIP on minimizing the application then you can skip the `setup` method call and 
 >          use the `start` method mentioned below to start PIP.
