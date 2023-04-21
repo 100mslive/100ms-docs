@@ -29,11 +29,10 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
             {toc.map((item) =>
                 item.title !== '' ? (
                     <span
-                        className={`${item.slug === activeHeading ? 'active-toc' : ''} text ${
-                            item.depth === 3
-                                ? `child ${item.slug === activeSubHeading ? 'active-sublink' : ''}`
-                                : ''
-                        }`}
+                        className={`${item.slug === activeHeading ? 'active-toc' : ''} text ${item.depth === 3
+                            ? `child ${item.slug === activeSubHeading ? 'active-sublink' : ''}`
+                            : ''
+                            }`}
                         key={item.slug}>
                         <a style={{ padding: '0 2rem 0 1rem' }} href={`#${item.slug}`}>
                             {item.title}
@@ -59,12 +58,11 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                     flex-direction: column;
                     padding-top: 16px;
                     position: sticky;
-                    top: 96px;
+                    top: 80px;
                     right: 0;
-                    height: calc(100vh - 96px);
+                    height: calc(100vh - 80px);
                     overflow-y: auto;
                     overflow-x: clip;
-                    margin-left: 16px;
                     padding-left: 10px;
                 }
                 .menu-title {

@@ -1,6 +1,6 @@
 ---
 title: HMSMessage
-nav: '4.24'
+nav: '4.25'
 ---
 
 ## Properties

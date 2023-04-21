@@ -28,19 +28,18 @@ A composite recording is different from track-level recordings, which generate s
 
 Use the server-side API to start recording for a given room (passed as `room_id` in the request body).
 
-<PostRequest title="https://prod-in2.100ms.live/api/v2/beam" />
+Also see [API reference](../../api-reference/recordings/start-recording-for-room).
+
+<PostRequest title="https://api.100ms.live/v2/recordings/room/<room_id>/start" />
 
 <Request id="req-0">
 
 ```bash
-curl --request POST 'https://prod-in2.100ms.live/api/v2/beam' \
+curl --request POST 'https://api.100ms.live/v2/recordings/room/<room_id>/start' \
     --header 'Content-Type: application/json' \
     --header 'Authorization: Bearer <management_token>' \
     --data-raw '{
-        "operation": "start",
-        "room_id": "<room_id>",
-        "meeting_url": "<meeting_url>",
-        "record": true,
+        "meeting_url" : "<meeting_url>",
         "resolution" : {"width": 1280, "height": 720}
     }'
 ```
@@ -76,18 +75,16 @@ Use the server-side API to end recording for a given room (passed as `room_id` i
 
 By default, recording automatically ends in 5 minutes when all peers have left the room.
 
-<PostRequest title="https://prod-in2.100ms.live/api/v2/beam" />
+Also see [API reference](../../api-reference/recordings/stop-recording-for-room).
+
+<PostRequest title="https://api.100ms.live/v2/recordings/room/<room_id>/stop" />
 
 <Request id="req-0">
 
 ```bash
-curl --request POST 'https://prod-in2.100ms.live/api/v2/beam' \
+curl --request POST 'https://api.100ms.live/v2/recordings/room/<room_id>/stop' \
     --header 'Content-Type: application/json' \
-    --header 'Authorization: Bearer <management_token>' \
-    --data-raw '{
-        "operation": "stop",
-        "room_id": "<room_id>"
-    }'
+    --header 'Authorization: Bearer <management_token>'
 ```
 
 </Request>
@@ -114,6 +111,9 @@ The [`beam.recording.success` webhook event](../configure-webhooks/webhook#beamr
 
 #### Fetch assets via API
 
-Coming soon: We're adding new API endpoints to [recording assets](../../api-reference/recording-assets/overview). Reach out to us if you'd like to become an early adopter.
+You can use the [recording assets](../../api-reference/recording-assets/overview) REST APIs to fetch the assets:
+
+* [List recording assets](../../api-reference/recording-assets/list-all-assets) for a room/session
+* [Generate a pre-signed URL for an asset](../../api-reference/recording-assets/get-presigned-url)
 
 </StepsContainer>

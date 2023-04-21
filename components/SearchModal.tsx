@@ -59,7 +59,13 @@ const Result = ({ searchResult }) => {
                 pl: '$lg',
                 pr: '$xs'
             }}>
-            <Flex justify="between" align="start" gap="2">
+            <Flex
+                align="start"
+                css={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    '@md': { flexDirection: 'column-reverse', justifyContent: 'flex-start' }
+                }}>
                 <Text
                     css={{
                         color: '$textHighEmp',
@@ -84,7 +90,7 @@ const Result = ({ searchResult }) => {
                     mb: '$xs'
                 }}>
                 {path.map((text, id) => (
-                    <span style={{ whiteSpace: 'nowrap' }}>
+                    <span key={text} style={{ whiteSpace: 'nowrap' }}>
                         {id === 0 ? '' : '\u00A0'}
                         {id === path.length - 1
                             ? titleCasing(text.split('#')[0])
@@ -239,6 +245,7 @@ const ResultBox = ({
                             }}>
                             {searchInfoItems.map((searchInfoItem) => (
                                 <InfoItem
+                                    key={searchInfoItem.title}
                                     title={searchInfoItem.title}
                                     content={searchInfoItem.content}
                                 />
@@ -466,6 +473,7 @@ const InfoItem = ({ title, content }) => (
     <Flex gap="2" align="center">
         {content.map((item) => (
             <Flex
+                key={item}
                 gap="1"
                 align="center"
                 justify="center"

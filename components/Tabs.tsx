@@ -72,7 +72,7 @@ export const Tabs: React.FC<TabsProps> = ({ items, id }) => {
         <div
             style={{
                 borderBottom: '0.5px solid var(--docs_border_strong)',
-                marginBottom: 'var(--docs_spacing_2)'
+                marginTop: 'var(--docs_spacing_2)'
             }}>
             {items.map((el, i) => (
                 <button
@@ -106,7 +106,7 @@ export const Tab: React.FC<PropsWithChildren<TabProps>> = ({ id, children }) => 
     // if it's the 1st tab
     const bool = id.includes('0');
     return (
-        <div id={id} style={{ display: `${bool ? 'block' : 'none'}` }}>
+        <div id={id} style={{ display: `${bool ? 'block' : 'none'}`, marginTop: '8px' }}>
             {children}
         </div>
     );
