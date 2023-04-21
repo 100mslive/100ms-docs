@@ -26,12 +26,11 @@ import live.hms.hmssdk_flutter.Constants
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 super.onActivityResult(requestCode, resultCode, data)
 
-    if (requestCode == Constants.SCREEN_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK){
-        HmssdkFlutterPlugin.hmssdkFlutterPlugin?.requestScreenShare(data)
+    if (requestCode == Constants.SCREEN_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+        data?.action = Constants.HMSSDK_RECEIVER
+        activity.sendBroadcast(data?.putExtra(Constants.METHOD_CALL, Constants.SCREEN_SHARE_REQUEST))
     }
-
 }
-
 ```
 
 > DONOT forget to add the permission for foreground service in AndroidManifest.xml
@@ -39,6 +38,36 @@ super.onActivityResult(requestCode, resultCode, data)
 ```kotlin
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 ```
+
+### Migrating from older HMSSDK version to 1.5.0 or above
+
+There is a change in the Screenshare setup in HMSSDK version [1.5.0](https://github.com/100mslive/100ms-flutter/releases/tag/1.5.0) as compared to older versions.
+Let's see how we can migrate from older versions to 1.5.0 or above.
+
+Replace these two lines of application's `MainActivity.kt` file:
+
+```kotlin
+if (requestCode == Constants.SCREEN_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+    HmssdkFlutterPlugin.hmssdkFlutterPlugin?.requestScreenShare(data)
+}
+```
+
+with these lines:
+
+```kotlin
+if (requestCode == Constants.SCREEN_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+    data?.action = Constants.HMSSDK_RECEIVER
+    activity.sendBroadcast(data?.putExtra(Constants.METHOD_CALL, Constants.SCREEN_SHARE_REQUEST))
+}
+```
+
+Here's a Screenshot showing the Git Diff between older and the implementation in version 1.5.0 and above.
+![FlutterScreenshareDiff](/docs/v2/FlutterScreenshareDiff.png)
+
+
+That's it 🥳🥳 
+
+You can run the application now.
 
 ### iOS Setup
 
