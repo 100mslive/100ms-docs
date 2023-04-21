@@ -109,15 +109,12 @@ should only happen once in your app lifecycle.
 // ref to keep reference to `HMSSDK` instance
 const hmsInstanceRef = useRef(null);
 
-try {
-  // Before creating `HMSSDK` instance with `build` method,
-  // Check if you already have reference to previously build `HMSSDK` instance
-  // You can reuse it instead of creating new instance
 
-  hmsInstanceRef.current = await HMSSDK.build();
-} catch (error) {
-  // Handle errors
-}
+// Before creating `HMSSDK` instance with `build` method,
+// Check if you already have reference to previously build `HMSSDK` instance
+// You can reuse it instead of creating new instance
+
+hmsInstanceRef.current = await HMSSDK.build();
 
 ...
 
