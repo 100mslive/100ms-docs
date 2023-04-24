@@ -1,0 +1,85 @@
+---
+title: Camera Controls (Beta)
+nav: 7.3
+---
+
+You can use `HMSCameraControls` class to access the camera controls APIs.
+
+## Minimum Requirements
+
+- SDK version 1.5.0 or higher
+
+## Capture at the highest resolution offered by the camera
+
+By using static `captureImageAtMaxSupportedResolution` method on `HMSCameraControls` class 
+allows you to take the highest quality picture from the local video stream irrespective of 
+network quality and video quality set in `HMSRole` of local peer.
+
+`captureImageAtMaxSupportedResolution` accepts an optional parameter named `flash`, It's 
+default value is `false`, if `true` is passed then device flashlight will be used while 
+capturing the picture.
+
+It returns a `Promise` which is resolved with the "path" of the captured picture saved on 
+your device.
+
+> 🔑 Note: `captureImageAtMaxSupportedResolution` method only works if camera is turned ON
+
+> 🔑 Note: The captured picture is in `jpg` format on Android and in `png` format on iOS
+
+```js
+import { PermissionsAndroid, Platform } from 'react-native';
+import { HMSCameraControl } from '@100mslive/react-native-hms';
+
+...
+
+// state to save captured image file path on device
+const [capturedImageFilePath, setCapturedImageFilePath] = React.useState('');
+
+...
+
+try {
+  // Step 1: Request External Storage Permission (WRITE_EXTERNAL_STORAGE)
+
+  // Note: You can also use (react-native-permissions)[https://www.npmjs.com/package/react-native-permissions] lib to handle permissions
+  const granted = Platform.OS === 'ios'
+    ? true
+    : await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        {
+          title: 'Storage Permission Required',
+          message: 'Application needs access to your storage to save image file',
+          buttonPositive: 'true',
+        },
+      );
+
+  // Step 2: Capture Image
+
+  const withFlash = true; // Use flashlight on device while capturing image
+
+  // After the external storage permission has been granted, You can call method to capture image
+  const imagePath: string = await HMSCameraControl.captureImageAtMaxSupportedResolution(withFlash);
+
+  // Now you can use the image path to show the image, present a sharesheet or any other usecase
+
+  // You may need to prefix `file://` on this path to show captured image in Image component provided by react native
+  setCapturedImageFilePath(`file://${imagePath}`);
+
+} catch (error) {
+  // Handle the Error occured while trying to capture image accordingly
+}
+
+...
+
+// Showing captured image to app users
+<Image
+  source={{ uri: capturedImageFilePath }} // `capturedImageFilePath` has "file://" prefixed
+  style={{ width: '80%', height: '80%' }}
+  resizeMode="contain"
+/>
+```
+
+> 🔑 Note: You have to request the storage permission before calling this method because it will save the image on the device
+
+> 🔑 Note: If flashlight is not supported on the device and `true` value is passed to the 
+`captureImageAtMaxSupportedResolution` method for `flash` parameter, then this method will
+throw and error
