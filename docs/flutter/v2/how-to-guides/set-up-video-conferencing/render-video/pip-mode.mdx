@@ -43,6 +43,23 @@ bool isPipAvailable = await HMSAndroidPIPController.isAvailable();
 
 The `isAvailable` method returns a boolean value that indicates whether PIP mode is supported on the current device. If it returns `true`, you can use PIP mode in your app. Otherwise, PIP mode is not supported and you should handle this scenario accordingly.
 
+### Setup PIP 
+
+To enable `autoEnterPip` below Android 12 we need to call `setupPIP` method from HMSSDK.
+It has two parameters:
+
+- `autoEnterPip` : Sends the application to PIP automatically while minimizing the application. Default value is `true`.
+- `aspectRatio` : Aspect ratio of PIP window.`[16,9]` by default.
+
+Let's see an example where application will not enter PIP automatically and the aspect ratio is `9:16`
+```dart 
+/// Setting [autoEnterPip] as false
+/// Setting [aspectRatio] as [9:16]
+HMSAndroidPIPController.setup(autoEnterPip: false,aspectRatio: [9,16]);
+```
+Usually, if the Peers in Room have joined from other Mobile devices then setting `aspectRatio` to `[9:16]` is recommended.
+> 🔑 Note: If there is no support for auto enter PIP on minimizing the application then you can skip the `setup` method call and 
+>          use the `start` method mentioned below to start PIP.
 
 ### Enter PIP mode
 
@@ -66,6 +83,28 @@ bool isPipActive = await HMSAndroidPIPController.isActive();
 ```
 
 > To display UI according to PIP use the `isActive` to set the state for PIP mode and render the UI accordingly.
+
+### To support Auto Enter PIP below Android 12
+
+To support auto enter PIP below android 12 we will need to override `onUserLeaveHint` method in our `MainActivity.kt` file.
+Also we need to call `setupPIP` from application side with `autoEnterPip` as `true`.
+
+Now we need to add `onUserLeaveHint` in our `MainActivity.kt` file to make it work.
+
+```kotlin 
+    override fun onUserLeaveHint() {
+        super.onUserLeaveHint()
+        // This should only work for android version above 8 since PIP is only supported after
+        // android 8 and will not be called after android 12 since it automatically gets handled by android.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            HMSPipAction.autoEnterPipMode(this)
+        }
+    }
+```
+> 🔑 Note: The `HMSAndroidPIPController.setup` method is independent of `HMSAndroidPIPController.start` method. Both will help you in entering PIP mode.
+>          The difference is that `HMSAndroidPIPController.start` method can be used to enter PIP mode by clicking some button on UI.
+>          whereas `HMSAndroidPIPController.setup` can be used to enter PIP mode automatically on minimizing the application below android 12.
+>          On android 12 or above the `autoEnterPip` in  `HMSAndroidPIPController.start` does the work.
 
 ### Checkout PIP in Action
 

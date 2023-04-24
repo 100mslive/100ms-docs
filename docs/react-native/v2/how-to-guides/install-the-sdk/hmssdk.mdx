@@ -1,0 +1,157 @@
+---
+title: HMSSDK Constructor
+nav: 3.2
+---
+
+## HMSSDK lifecycle
+
+![hmssdk-lifecycle](/docs/v2/flutter-hmssdk-lifecycle.png)
+
+Let's look this in detail:
+
+
+## Instantiate HMSSDK
+
+You can call static `build` method on `HMSSDK` class, it returns a `promise` which is resolved with the new `HMSSDK` instance -
+
+```js
+// Importing HMSSDK class
+import { HMSSDK } from '@100mslive/react-native-hms';
+
+...
+
+// creating new HMSSDK instance
+const hmsInstance = await HMSSDK.build();
+```
+
+For Advanced use-cases, 100ms provides following optional parameters while constructing the `HMSSDK` instance -
+
+-   `trackSettings`: To customize local peer's Audio & Video track settings like Joining with Muted Audio or Video, changing default Camera (Front or Back), using Software Decoder for Video Rendering, etc. More details about Track Settings are available [here](../interact-with-room/track/track-settings).
+
+-   `appGroup` & `preferredExtension`: (iOS Only) App Group & Preferred Extension are iOS only parameters required if you want to Start Screenshare from iOS devices. Passing correct App Group & Preferred Extension is required to allow users to perform Screenshare in a Room from iPhone or iPads. Refer iOS Screen share guide [here](../set-up-video-conferencing/screenshare#ios-setup).
+
+-   `logSettings`: (Android Only) 100ms provides ability to save logs to disk on Android devices. These logs can be used to diagnose performance of room sessions. By default, logging is disabled i.e. set to `HMSLogLevel.OFF`. To enable logging, create the `HMSLogSettings` object & pass it while constructing the `HMSSDK` instance. This functionality of saving logs to Disk is not available on iOS. More details are available [here](../debugging/error-handling#setting-log-levels-in-sdk-android-only).
+
+
+## Initializing HMSSDK for Advanced Use-cases
+
+You can initialize `HMSSDK` with either one or multiple of following optional parameters as per your use-cases. Say, for example, you want to Join with Muted Audio & Video and also allow users to start Screenshare from their iOS devices then pass the `trackSettings`, `appGroup` & `preferredExtension` parameters while constructing `HMSSDK` object.
+
+1. Customize Track Settings using `trackSettings` parameter
+
+  Following example shows creation of `HMSTrackSettings` object to join with Muted Audio & Video. By default, when you join a room, Camera & Microphone are ON. Using `HMSTrackSettings` you can allow users to choose to join with either Muted or Unmuted Audio & Video.
+
+  ```js
+  // create the Audio Track Settings object
+  let audioSettings = new HMSAudioTrackSettings({
+    initialState: HMSTrackSettingsInitState.MUTED
+  });
+
+  // create the Video Track Settings object
+  let videoSettings = new HMSVideoTrackSettings({
+    initialState: HMSTrackSettingsInitState.MUTED
+  });
+
+  // use the above Audio & Video Track Settings object to create HMSTrackSettings
+  const trackSettings = new HMSTrackSettings({
+    video: videoSettings,
+    audio: audioSettings,
+  });
+
+  // Now, pass the Track Settings parameter while contructing the HMSSDK instance
+  const hmsInstance = await HMSSDK.build({ trackSettings: trackSettings });
+  ```
+
+2. iOS Screenshare
+
+  For adding `appGroup` and `preferredExtension` follow the iOS Screenshare guide [here](../set-up-video-conferencing/screenshare#ios-setup).
+  After successfully following the iOS Screenshare guide you can find `appGroup` and `preferredExtension` name in Xcode under `Signing and Capabilities` section under `target > yourExtensionName`.
+
+  Once you have the correct App Group & Preferred Extension values created in Xcode & linked to your Apple Developer Account, you can now use them to start Screenshare from iOS devices.
+
+  ```js
+  // Create `HMSSDK` instance with `appGroup` and `preferredExtension` properties
+  const hmsInstance = await HMSSDK.build({
+    appGroup: 'group.reactnativehms', // ensure to pass the correct App Group linked to your Apple Developer Account
+    preferredExtension: 'RHHMSExampleBroadcastUpload', // ensure to pass the correct Extension Target name created in Xcode
+  });
+  ```
+
+  ![iOS Screenshare Parameters](/docs/v2/RNParameter.png)
+
+3. Android Logging to Disk
+
+  To diagnose 100ms room sessions you can enable Logging to Disk on Android devices by creating the `HMSLogSettings` object.
+  The following example shows how to create the `HMSLogSettings` object and set debug level to `VERBOSE` -
+
+  ```js
+  const logSettings = new HMSLogSettings({
+    level: HMSLogLevel.VERBOSE, // pass the appropriate log level - Verbose, Warn or Error
+    isLogStorageEnabled: true, // pass `true` to enable storage to Disk
+    maxDirSizeInBytes: HMSLogAlarmManager.DEFAULT_DIR_SIZE,
+  });
+
+  // pass the Log Settings while contructing the HMSSDK instance
+  const hmsInstance = await HMSSDK.build({ logSettings });
+  ```
+
+
+## What does Build Method do?
+
+The static `build` method of `HMSSDK` class creates an instance of 100ms SDK on Native iOS / Android platforms 
+and returns a promise which is resolved with the `HMSSDK` class instance which is linked with the instance 
+created on native platforms.
+It's recommended that you only create a single instance of `HMSSDK` and reuse it for joining rooms. This allows 
+for quick & simple integration & avoids State Management complexities. So the invocation of `build` method 
+should only happen once in your app lifecycle.
+
+```js
+// ref to keep reference to `HMSSDK` instance
+const hmsInstanceRef = useRef(null);
+
+
+// Before creating `HMSSDK` instance with `build` method,
+// Check if you already have reference to previously build `HMSSDK` instance
+// You can reuse it instead of creating new instance
+
+hmsInstanceRef.current = await HMSSDK.build();
+
+...
+
+// If you want to create new `HMSSDK` instances everytime instead of reusing previously build instance,
+// You should **always** destroy the previous `HMSSDK` instance before creating the new instance
+
+// Before creating `HMSSDK` instance with `build` method,
+// Check if you already have reference to previously build `HMSSDK` instance
+// Destroy it by calling `destroy` method on it, and then create new instance
+await hmsInstanceRef.current.destroy();
+```
+
+
+## What does Destroy Method do?
+
+The `destroy` method performs the opposite action of `build`. It removes & clears 100ms SDK instances from 
+Native iOS / Android platforms. `destroy` should be called - 
+- when the user has left a meeting room & you now want to perform cleanup of all references to 100ms, and
+- when you don't want to reuse previously created `HMSSDK` instance for any reason and want to create a new `HMSSDK` instance from scratch.
+
+After calling `destroy` you should also remove all references to `HMSSDK` instance on JS side.
+
+```js
+const hmsInstance = await HMSSDK.build();
+
+// ... perform Room actions like join room, chat, streaming, recording, screenshare, etc. ...
+
+...
+
+// When you are done with meeting, call `leave` method on HMSSDK instance
+await hmsInstance.leave():
+
+// when leave is successful and you are going back to App Screen where 100ms Rooms are not required, call destroy method
+await hmsInstance.destroy();
+
+// clear up all references to `hmsInstance`
+clearHMSInstanceReferences(); // your custom function to clear references
+```
+
+Now, if you want to join a room again, first initialize the `HMSSDK` with `build` method & then call the [Join](../set-up-video-conferencing/join) method.

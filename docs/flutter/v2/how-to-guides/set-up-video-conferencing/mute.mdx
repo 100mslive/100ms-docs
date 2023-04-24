@@ -122,6 +122,75 @@ void onTrackUpdate(
 }
 ```
 
+## When to show mic/camera buttons on UI 
+
+On UI we only want to show mic or camera buttons when the peer has permissions to publish audio or video respectively.
+This can be done by leveraging publish permissions for a particular role.
+
+### Display mic mute/unmute button
+
+```dart
+//Setting a variable for checking whether to display mic button or not
+bool displayMicrophoneButton = true;
+
+//Here we get all the track updates in the room
+@override
+void onTrackUpdate(
+      {required HMSTrack track,
+      required HMSTrackUpdate trackUpdate,
+      required HMSPeer peer}) {
+
+    //Checking whether peer is local or not
+    if (peer.isLocal) {
+       if(peer?.role.publishSettings?.allowed.contains("audio")??false){
+            displayMicrophoneButton = true;
+       }
+       else{
+        displayMicrophoneButton = false;
+       }
+       setState(() {});
+    }
+
+}
+
+///Here we will add the check to render the widget on screen or not based on [displayMicrophoneButton] variable
+if(displayMicrophoneButton){
+    //Show the mic button widget here
+}
+```
+
+### Display camera mute/unmute button
+
+```dart
+//Setting a variable for checking whether to display camera button or not
+bool displayCameraButton = true;
+
+//Here we get all the track updates in the room
+@override
+void onTrackUpdate(
+      {required HMSTrack track,
+      required HMSTrackUpdate trackUpdate,
+      required HMSPeer peer}) {
+
+    //Checking whether peer is local or not
+    if (peer.isLocal) {
+       if(peer?.role.publishSettings?.allowed.contains("video")??false){
+            displayCameraButton = true;
+       }
+       else{
+        displayCameraButton = false;
+       }
+       setState(() {});
+    }
+
+}
+
+///Here we will add the check to add the widget on screen or not based on [displayCameraButton] variable
+if(displayCameraButton){
+    //Show the camera button widget here
+}
+```
+
 ## Mute Remote peers locally 
 
 To mute peers all the peers for yourself `HMSSDK` provides dedicated methods `muteRoomAudioLocally` for audio and `muteRoomVideoLocally` for video. Execution
