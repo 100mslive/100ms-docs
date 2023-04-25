@@ -1,0 +1,71 @@
+---
+title: Overview
+nav: 1.0
+---
+
+100ms provides infrastructure and client-side SDKs for you to build real-time, audio-video interactive experiences in your app. 100ms combines the capabilities of video conferencing (built over WebRTC), live streaming (built over [HLS](https://en.wikipedia.org/wiki/HTTP_Live_Streaming)) and real-time databases. These capabilities can be used to build engaging live experiences—like virtual classrooms, live streams, tele-health consultations and multiplayer social gaming—in your web or mobile apps.
+
+## Understanding 100ms
+
+### Rooms and roles
+
+Everything in 100ms happens inside **rooms**. Your users can join a room, publish audio/video and interact with each other while they are in the room, and then leave the room.
+
+The room contains references to **peers** (users in the room) and **tracks** (audio, video, screen share) in the room. When the first peer joins a room, a new **session** is created. When the last peer leaves, the session ends. A room can have multiple sessions.
+
+Peers inside a room belong to a **role**, which defines what a peer can do in the room. For example, can they publish video, can they mute other peers, and so on. A peer can change roles while they are in the room.
+
+Learn about other [100ms primitives](/get-started/v2/get-started/concepts/basics).
+
+### Interactivity in the room
+
+The room can be used to enable different levels of interactivity.
+
+![Circles of interactivity](/docs/v2/concepts/circles-of-interactivity.png)
+
+#### Level 1: Full duplex audio/video in real-time
+
+Level 1 participants publish their audio/video, and interact with others in sub-second latency. This is real-time video conferencing, similar to Zoom or Google Meet.
+
+#### Level 2: Webinar-style audience in real-time
+
+    Level 2 participants consume audio/video from level 1 participants with sub-second latency, without publishing their own audio/video. Level 2 participants can engage with level 1 through messaging (chat, emojis, custom events). This is similar to a Zoom webinar.
+
+    Levels 1 and 2 are enabled using WebRTC.
+
+#### Level 3: Live stream audience consuming in near real-time
+
+    Level 3 participants consume a composite live stream in near real-time (\<10 secs of latency) without publishing their audio/video. They can interact with other participants via messaging. This is similar to viewers on Twitch or YouTube Live.
+
+#### Read more
+
+-   [Basic architecture](/get-started/v2/get-started/concepts/basics)
+-   [Primitives](/get-started/v2/get-started/concepts/basics)
+-   [Authentication](/get-started/v2/get-started/security-and-tokens)
+
+## Integration paths
+
+100ms can be used to make embedded, custom live video integrations that blend with the rest of your application. For some use-cases, it is faster to start with a "pre-built" web app. Pick an option that suits your use-case.
+
+<FlexContainer>
+
+<Callout icon="link" title="Pre-built">
+Generate room links or embed the 100ms web app as an iframe in your app
+
+[Integrate pre-built](/get-started/v2/get-started/prebuilt/prebuilt)
+
+</Callout>
+
+<Callout icon="shield" title="Custom UI">
+Build a custom UI with our headless client SDKs for web, Android, iOS, React Native and Flutter
+
+[Choose a client SDK to get started](/)
+
+</Callout>
+
+</FlexContainer>
+
+## Feature guides
+
+-   [Recordings](/get-started/v2/get-started/features/recordings)
+-   [Live streaming](/get-started/v2/get-started/features/live-streaming)

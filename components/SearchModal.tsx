@@ -19,7 +19,7 @@ const searchClient = algoliasearch(
 const ALL_PLATFORMS = 'All Platforms';
 const ALL_TYPES = 'All Types';
 
-const TYPE_FILTERS = ['All Types', 'Guide', 'Concept', 'FAQ', 'API Reference'];
+const TYPE_FILTERS = ['All Types', 'Guide', 'Get started', 'FAQ', 'API Reference'];
 
 const searchInfoItems = [
     {
