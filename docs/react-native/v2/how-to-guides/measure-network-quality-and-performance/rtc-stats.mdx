@@ -23,17 +23,9 @@ Let's see how we can get Stats by subscribing to above events -
 
 <div className="steps-container">
 
-### Enable Receiving Stats Events
-
-By default, Stats Events are not sent from the native platform to React Native side. To enable receiving these events on React Native side, the `enableRTCStats` method must be called on `HMSSDK` instance.
-
-```js
-hmsInstance.enableRTCStats();
-```
-
 ### Subscribe to Events
 
-Now, You can subscribe to stats events as per your use case:
+You can subscribe to stats events as per your use case:
 
 -   `HMSUpdateListenerActions.ON_RTC_STATS`: This event provides combined stats for the Room session.
 -   `HMSUpdateListenerActions.ON_LOCAL_AUDIO_STATS`: This event provides stats for local audio track.
@@ -107,19 +99,13 @@ hmsInstance.addEventListener(
 );
 ```
 
-### Disable Receiving Stats Events
-
-After you are done with these stats and don't want to receive these event updates anymore. You can stop receiving these events on React Native side by calling `disableRTCStats` method on `HMSSDK` instance.
-
-```js
-hmsInstance.disableRTCStats();
-```
-
 ### Unsubscribe from Events
 
-Now you can also remove your event subscriptions because subscribed functions will not receive any events until you again [enable receiving these events](#enable-receiving-stats-events) -
+You can remove your event subscriptions after you are done with these stats and don't want to receive these event updates anymore -
 
 ```js
+hmsInstance.removeEventListener(HMSUpdateListenerActions.ON_RTC_STATS);
+
 hmsInstance.removeEventListener(HMSUpdateListenerActions.ON_LOCAL_AUDIO_STATS);
 
 hmsInstance.removeEventListener(HMSUpdateListenerActions.ON_LOCAL_VIDEO_STATS);

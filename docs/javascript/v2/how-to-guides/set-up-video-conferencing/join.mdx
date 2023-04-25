@@ -143,3 +143,11 @@ or closing the tab. We can set up leave to be called on window unload event.
 window.addEventListener('beforeunload', () => hmsActions.leave());
 window.addEventListener('onunload', () => hmsActions.leave());
 ```
+
+Leave on tab close is automatically done when using `HMSRoomProvider` from our `@100mslive/react-sdk`. If you don't want to leave on
+page leave or tab close, you can opt out of this by passing the following prop.
+
+`<HMSRoomProvider leaveOnUnload={false} />`
+
+> Note: Leave does not happen on page unload in all browsers. For example, iOS Safari and Chrome, this doesn't happen as there won't
+be enough time for the leave request to be completed.
