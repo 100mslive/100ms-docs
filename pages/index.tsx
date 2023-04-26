@@ -1,6 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from 'react';
-import { LayersIcon, LayoutIcon, PeopleIcon, RocketIcon, ShieldIcon } from '@100mslive/react-icons';
+import { LayersIcon, LayoutIcon, RocketIcon } from '@100mslive/react-icons';
 import { Box, Flex, Text } from '@100mslive/react-ui';
 import Header from 'components/Header';
 import Sidebar from '@/components/Sidebar';
