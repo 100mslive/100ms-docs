@@ -10,7 +10,7 @@ interface CardProps {
     id: Number;
 }
 
-const Card: React.FC<CardProps> = ({ icon, title, link, subText, id, cta }) => {
+const Card: React.FC<CardProps> = ({ icon, title, link, subText, id, cta = "Read more" }) => {
     return (
         <Flex
             direction="column"
@@ -58,7 +58,7 @@ const Card: React.FC<CardProps> = ({ icon, title, link, subText, id, cta }) => {
                     padding: '$8 $10'
                 }}>
                 <Text variant="xs" css={{ color: '$primaryLight', fontWeight: '$semiBold' }}>
-                    {cta ?? "Read more"}
+                    {cta}
                 </Text>
                 <ArrowRightIcon height="14px" width="14px" />
             </Flex>
