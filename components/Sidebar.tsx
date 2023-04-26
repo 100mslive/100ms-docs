@@ -19,7 +19,7 @@ import {
     ReactIcon as ReactNative,
     JavascriptIcon as JavaScript,
     RocketIcon,
-    LayersIcon,
+    PlayIcon,
     SearchIcon
 } from '@100mslive/react-icons';
 import { Listbox } from '@headlessui/react';
@@ -128,7 +128,7 @@ const Sidebar: React.FC<Props> = ({
         }
     } else nav = false;
 
-    const showPlatformSelector = slug?.[0] !== 'concepts';
+    const showPlatformSelector = slug?.[0] !== 'get-started';
 
     let indexOf = menuItem.findIndex((e) => e.key === slug?.[0]);
     if (slug?.[0] === 'api-reference') indexOf = menuItem.findIndex((e) => e.key === slug?.[1]);
@@ -221,10 +221,9 @@ const Sidebar: React.FC<Props> = ({
                         }}
                         onClick={() => setShowBaseView(false)}>
                         <Text variant="sm" css={{ color: '$primaryLight' }}>
-                            Explore&nbsp;
-                            {slug?.[0] !== 'concepts'
-                                ? getUpdatedPlatformName(tech.name)
-                                : 'Concepts'}
+                            {showPlatformSelector
+                                ? `Explore ${getUpdatedPlatformName(tech.name)}`
+                                : 'Getting started'}
                         </Text>
                         <ChevronRightIcon height="16px" width="16px" />
                     </Flex>
@@ -238,11 +237,11 @@ const Sidebar: React.FC<Props> = ({
                     }}>
                     <DocsSearchBar setHelperState={setHelperState} />
                 </Box>
-                <Link passHref href="/concepts/v2/concepts/basics">
+                <Link passHref href="/get-started/v2/get-started/overview">
                     <Flex as="a" gap="2" align="center" css={{ color: '$primaryLight' }}>
-                        <LayersIcon style={{ color: 'inherit' }} />
+                        <PlayIcon style={{ color: 'inherit' }} />
                         <Text as="span" css={{ fontWeight: '$semiBold', color: '$textHighEmp' }}>
-                            Concepts
+                            Get started
                         </Text>
                     </Flex>
                 </Link>

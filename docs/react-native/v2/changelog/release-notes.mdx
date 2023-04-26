@@ -3,6 +3,41 @@ title: Release Notes
 nav: 4.1
 ---
 
+## 1.5.0 - 2023-04-25
+
+### Added
+
+- Added support for Adaptive Bitrate (Simulcast)
+
+  Adaptive Bitrate refers to features that enable dynamic adjustments in video quality to optimize for end-user experience under diverse network conditions.
+
+  To learn more about how ABR works & how it enhances your app, refer the guide [here](https://www.100ms.live/docs/concepts/v2/concepts/adaptive-bitrate).
+
+- Using HMSVideoView on Android
+
+  HMSVideoView on Android provides a better abstraction to render live video and handles edge cases like managing Release/Init states. It has in-built support to subscribe to video of the correct resolution.
+
+  To learn more about Rendering Video, refer the guide [here](https://www.100ms.live/docs/react-native/v2/how--to-guides/set-up-video-conferencing/render-video/overview).
+
+
+- Added Simulcast support for RTC Stats
+
+  RTC Call Stats are updated to show Simulcast layer data if available for Local Peer's Video Track. This can be used to diagnose user experience with metrics such as Audio/Video Bitrate, Round Trip Time, Packet loss, etc.
+
+  To learn more about using RTC Call Stats, refer the guide [here](https://www.100ms.live/docs/react-native/v2/how--to-guides/measure-network-quality-and-performance/rtc-stats).
+
+- Camera Control Capabilities
+
+  The latest update includes the ability to capture an image from a local peer feed at the maximum resolution supported by the Camera.
+
+  Read more about the [Camera Controls here](https://www.100ms.live/docs/react-native/v2/how--to-guides/configure-your-device/camera/camera-controls).
+
+
+Updated to Android SDK 2.6.1 & iOS SDK 0.9.2
+
+Full Changelog: [1.4.0...1.5.0](https://github.com/100mslive/react-native-hms/compare/1.4.0...1.5.0)
+
+
 ## 1.4.0 - 2023-04-11
 
 ### Added

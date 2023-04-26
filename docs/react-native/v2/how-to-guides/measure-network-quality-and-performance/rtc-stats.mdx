@@ -1,0 +1,262 @@
+---
+title: RTC Call Stats
+nav: 12.2
+---
+
+Sometimes you need a way to capture certain metrics related to a call. This may be helpful
+if you want to tailor the experience to your users or debug issues. Typical metrics of interest
+are audio/video bitrate, round trip time, total consumed bandwidth and packet loss.
+
+100ms SDK provides this data via certain events. These events are
+emitted continuously within a fixed interval of one second after a room has been joined. You can get stats:
+
+-   as an overall summary by subscribing to `HMSUpdateListenerActions.ON_RTC_STATS` event, or
+-   on a per track basis by subscribing to
+    -   `HMSUpdateListenerActions.ON_LOCAL_AUDIO_STATS` event for local audio stats,
+    -   `HMSUpdateListenerActions.ON_LOCAL_VIDEO_STATS` event for local video stats,
+    -   `HMSUpdateListenerActions.ON_REMOTE_AUDIO_STATS` event for remote peers' audio stats,
+    -   `HMSUpdateListenerActions.ON_REMOTE_VIDEO_STATS` event for remote peers' video stats
+
+> To get a list of all events emitted by the 100ms React Native SDK, check out [Event Listener guide](/react-native/v2/how--to-guides/listen-to-room-updates/event-listeners)
+
+Let's see how we can get Stats by subscribing to above events -
+
+<div className="steps-container">
+
+### Subscribe to Events
+
+You can subscribe to stats events as per your use case:
+
+-   `HMSUpdateListenerActions.ON_RTC_STATS`: This event provides combined stats for the Room session.
+-   `HMSUpdateListenerActions.ON_LOCAL_AUDIO_STATS`: This event provides stats for local audio track.
+-   `HMSUpdateListenerActions.ON_LOCAL_VIDEO_STATS`: This event provides stats for local video track with all the available layers.
+-   `HMSUpdateListenerActions.ON_REMOTE_AUDIO_STATS`: This event provides stats for remote peers' audio tracks.
+-   `HMSUpdateListenerActions.ON_REMOTE_VIDEO_STATS`: This event provides stats for remote peers' video tracks.
+
+```js
+const onChangeRtcStats = (data: {
+    rtcStats: HMSRTCStatsReport // `HMSRTCStatsReport` is explained in 'Supplementary bytes' section
+}) => {
+    console.log(data.rtcStats);
+};
+
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_RTC_STATS, onChangeRtcStats);
+
+// This function is subscribed to `ON_LOCAL_AUDIO_STATS` event
+const onChangeLocalAudioStats = (data: {
+    localAudioStats: HMSLocalAudioStats, // `HMSLocalAudioStats` is explained in 'Supplementary bytes' section
+    track: HMSLocalAudioTrack,
+    peer: HMSPeer
+}) => {
+    console.log(data.localAudioStats);
+};
+
+hmsInstance.addEventListener(
+    HMSUpdateListenerActions.ON_LOCAL_AUDIO_STATS,
+    onChangeLocalAudioStats
+);
+
+// This function is subscribed to `ON_LOCAL_VIDEO_STATS` event
+const onChangeLocalVideoStats = (data: {
+    localVideoStats: HMSLocalVideoStats, // `HMSLocalVideoStats` is explained in 'Supplementary bytes' section
+    track: HMSLocalVideoTrack,
+    peer: HMSPeer
+}) => {
+    console.log(data.localVideoStats);
+};
+
+hmsInstance.addEventListener(
+    HMSUpdateListenerActions.ON_LOCAL_VIDEO_STATS,
+    onChangeLocalVideoStats
+);
+
+// This function is subscribed to `ON_REMOTE_AUDIO_STATS` event
+const onChangeRemoteAudioStats = (data: {
+    remoteAudioStats: HMSRemoteAudioStats, // `HMSRemoteAudioStats` is explained in 'Supplementary bytes' section
+    track: HMSRemoteAudioTrack,
+    peer: HMSPeer
+}) => {
+    console.log(data.remoteAudioStats);
+};
+
+hmsInstance.addEventListener(
+    HMSUpdateListenerActions.ON_REMOTE_AUDIO_STATS,
+    onChangeRemoteAudioStats
+);
+
+// This function is subscribed to `ON_REMOTE_VIDEO_STATS` event
+const onChangeRemoteVideoStats = (data: {
+    remoteVideoStats: HMSRemoteVideoStats, // `HMSRemoteVideoStats` is explained in 'Supplementary bytes' section
+    track: HMSRemoteVideoTrack,
+    peer: HMSPeer
+}) => {
+    console.log(data.remoteVideoStats);
+};
+
+hmsInstance.addEventListener(
+    HMSUpdateListenerActions.ON_REMOTE_VIDEO_STATS,
+    onChangeRemoteVideoStats
+);
+```
+
+### Unsubscribe from Events
+
+You can remove your event subscriptions after you are done with these stats and don't want to receive these event updates anymore -
+
+```js
+hmsInstance.removeEventListener(HMSUpdateListenerActions.ON_RTC_STATS);
+
+hmsInstance.removeEventListener(HMSUpdateListenerActions.ON_LOCAL_AUDIO_STATS);
+
+hmsInstance.removeEventListener(HMSUpdateListenerActions.ON_LOCAL_VIDEO_STATS);
+
+hmsInstance.removeEventListener(HMSUpdateListenerActions.ON_REMOTE_AUDIO_STATS);
+
+hmsInstance.removeEventListener(HMSUpdateListenerActions.ON_REMOTE_VIDEO_STATS);
+```
+
+</div>
+
+## Supplementary bytes
+
+### HMSRTCStatsReport
+
+This class will contain the combined stats for the Room. Interface for `HMSRTCStatsReport` class looks like -
+
+```js
+interface HMSRTCStats {
+    // Total bytes sent in the current session.
+    bytesSent?: number;
+
+    // Total bytes received in the current session.
+    bytesReceived?: number;
+
+    // Total packets received in the current session.
+    packetsReceived?: number;
+
+    // Total packets lost in the current session.
+    packetsLost?: number;
+
+    // Total outgoing bitrate observed since previous report.
+    bitrateSent?: number;
+
+    // Total incoming bitrate observed since previous report in Kb/s.
+    bitrateReceived?: number;
+
+    // Average round trip time observed since previous report in seconds.
+    roundTripTime?: number;
+}
+
+interface HMSRTCStatsReport {
+    // Summary of all video tracks
+    video?: HMSRTCStats;
+
+    // Summary of all audio tracks
+    audio?: HMSRTCStats;
+
+    // Combined audio + video values
+    combined?: HMSRTCStats;
+}
+```
+
+### HMSLocalAudioStats
+
+This class contains stats related to local audio track. Interface for `HMSLocalAudioStats` class looks like -
+
+```js
+interface HMSLocalAudioStats {
+    // Round trip time observed since previous report.
+    roundTripTime?: number;
+
+    // Total bytes sent by this track in the current session.
+    bytesSent?: number;
+
+    // Outgoing bitrate of this track observed since previous report in Kb/s.
+    bitrate?: number;
+}
+```
+
+### HMSLocalVideoStats
+
+This class contains stats related to local video track. Interface for `HMSLocalVideoStats` class looks like -
+
+```js
+interface HMSVideoResolution {
+    height?: number;
+    width?: number;
+}
+
+interface HMSLocalVideoStats {
+    // Round trip time observed since previous report.
+    roundTripTime?: number;
+
+    // Total bytes sent by this track in the current session.
+    bytesSent?: number;
+
+    // Outgoing bitrate of this track observed since previous report in Kb/s.
+    bitrate?: number;
+
+    // Resolution of video frames being sent.
+    resolution?: HMSVideoResolution;
+
+    // Frame rate of video frames being sent (FPS).
+    frameRate?: number;
+}
+```
+
+### HMSRemoteAudioStats
+
+This class contains stats related to remote audio track. Interface for `HMSRemoteAudioStats` class looks like -
+
+```js
+class HMSRemoteAudioStats {
+  // Packet Jitter measured in seconds for this track. Calculated as defined in section 6.4.1. of RFC3550.
+  jitter?: number;
+
+  // Total bytes received by this track in the current session.
+  bytesReceived?: number;
+
+  // Incoming bitrate of this track observed since previous report in Kb/s.
+  bitrate?: number;
+
+  // Total packets received by this track in the current session.
+  packetsReceived?: number;
+
+  // Total packets lost by this track in the current session.
+  packetsLost?: number;
+}
+```
+
+### HMSRemoteVideoStats
+
+This class contains stats related to remote video track. Interface for `HMSRemoteVideoStats` class looks like -
+
+```js
+interface HMSVideoResolution {
+  height?: number;
+  width?: number;
+}
+
+class HMSRemoteVideoStats {
+  // Packet Jitter measured in seconds for this track. Calculated as defined in section 6.4.1. of RFC3550.
+  jitter?: number;
+
+  // Total bytes received by this track in the current session.
+  bytesReceived?: number;
+
+  // Incoming bitrate of this track observed since previous report in Kb/s.
+  bitrate?: number;
+
+  // Total packets received by this track in the current session.
+  packetsReceived?: number;
+
+  // Total packets lost by this track in the current session.
+  packetsLost?: number;
+
+  // Resolution of video frames being received.
+  resolution?: HMSVideoResolution;
+
+  // Frame rate of video frames being received (FPS).
+  frameRate?: number;
+}
+```
