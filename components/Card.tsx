@@ -6,10 +6,11 @@ interface CardProps {
     title: String;
     link: String;
     subText: String;
+    cta: String;
     id: Number;
 }
 
-const Card: React.FC<CardProps> = ({ icon, title, link, subText, id }) => {
+const Card: React.FC<CardProps> = ({ icon, title, link, subText, id, cta = "Read more" }) => {
     return (
         <Flex
             direction="column"
@@ -20,16 +21,14 @@ const Card: React.FC<CardProps> = ({ icon, title, link, subText, id }) => {
             css={{
                 borderRadius: '$3',
                 border: '1px solid',
-                borderColor: '$borderDefault',
+                borderColor: 'var(--docs_border_strong)',
                 width: '100%',
                 overflow: 'clip',
                 cursor: 'pointer',
-                background: 'linear-gradient(235deg, $surfaceLighter 15%, $surfaceDark 70%)',
-                backgroundSize: '200%',
-                backgroundPosition: 'left',
-                transition: 'background-position ease 0.4s',
+                background: 'var(--docs_bg_home_page_card)',
+                transition: 'background ease 150ms',
                 '&:hover': {
-                    backgroundPosition: 'right'
+                    background: 'var(--docs_bg_home_page_card_hover)'
                 },
                 '@xl': {
                     gridColumn: id === 2 ? '1/3' : ''
@@ -39,13 +38,13 @@ const Card: React.FC<CardProps> = ({ icon, title, link, subText, id }) => {
                 }
             }}>
             <Box>
-                <Flex align="center" css={{ color: '$textHighEmp', gap: '$2', m: '$10', mb: '$6' }}>
+                <Flex align="center" css={{ color: '$textHighEmp', gap: '$2', m: '$10', mb: '$0', mt: '$9' }}>
                     {icon}
-                    <Text variant="h6" css={{ color: '$textHighEmp' }}>
+                    <Text variant="h6" css={{ color: '$textHighEmp', ml: '$2' }}>
                         {title}
                     </Text>
                 </Flex>
-                <Text variant="sm" css={{ m: '$10', mt: '$6', color: '$textMedEmp' }}>
+                <Text variant="sm" css={{ m: '$10', mt: '$4', color: '$textMedEmp' }}>
                     {subText}
                 </Text>
             </Box>
@@ -53,12 +52,13 @@ const Card: React.FC<CardProps> = ({ icon, title, link, subText, id }) => {
                 align="center"
                 gap="1"
                 css={{
-                    backgroundColor: '$surfaceLight',
+                    borderTop: '1px solid var(--docs_border_strong)',
+                    background: 'var(--docs_bg_home_page_card_button)',
                     color: '$primaryLight',
                     padding: '$8 $10'
                 }}>
                 <Text variant="xs" css={{ color: '$primaryLight', fontWeight: '$semiBold' }}>
-                    Read more
+                    {cta}
                 </Text>
                 <ArrowRightIcon height="14px" width="14px" />
             </Flex>
