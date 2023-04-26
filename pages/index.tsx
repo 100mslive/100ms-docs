@@ -34,7 +34,8 @@ const cards = [
         icon: <RocketIcon width={20} />,
         title: 'Examples',
         subText: 'Discover platform specific opensource examples built with 100ms',
-        link: '/examples'
+        link: '/examples',
+        cta: "View Examples"
     }
 ];
 
