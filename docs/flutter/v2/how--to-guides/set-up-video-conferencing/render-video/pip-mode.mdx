@@ -72,6 +72,33 @@ To show PIP mode in the application:
 bool isPipEnteredSuccesfully = await HMSAndroidPIPController.start(autoEnterPip: true/false, aspectRatio: [16, 9]);
 ```
 
+### Listen for PIP Callback
+
+To listen whether application has entered PIP mode successfully after calling `HMSAndroidPIPController.start` method.
+Add the below code in application's `MainActivity.kt` file:
+
+```kotlin 
+//This method gives update about whether application has entered PIP mode
+//successfully or not.
+//The application also gets update in it's app lifecycle listener
+//as the application's state is changed from resumed -> paused
+override fun onPictureInPictureModeChanged(
+    isInPictureInPictureMode: Boolean,
+    newConfig: Configuration?
+) {
+    if (isInPictureInPictureMode) {
+        if (HMSPipAction.pipResult != null) {
+            HMSPipAction.pipResult?.success(true)
+            HMSPipAction.pipResult = null
+        }
+    } else {
+        Log.i("PIP Mode", "Exited PIP Mode")
+    }
+}
+```
+
+Application can also get this update by the `didChangeAppLifecycleState` callback as application moves from `AppLifecycleState.resumed` to `AppLifecycleState.paused`
+
 </div>
 
 ### How to check whether PIP is active
