@@ -23,8 +23,8 @@ As discussed in the [Build and deploy guide](/javascript/v2/get-started/react-sa
     title="100ms-app"
     allow="camera *;microphone *;display-capture *"
     src="<your-deployed-url-here>"
-    style="height: 900px; width: 900px;"
-></iframe>
+    style="height: 100vh; width: 100%; border:0;">
+</iframe>
 ```
 
 Adding and testing the iframe in a simple web app:
@@ -37,13 +37,19 @@ Adding and testing the iframe in a simple web app:
 
 ```html
 <html>
+    <style>
+      /* normalize css snippet */
+      body {
+        margin: 0;
+      }
+    </style>
     <body>
         <iframe
             title="100ms-app"
             allow="camera *;microphone *;display-capture *"
             src="https://lambent-nougat-3c526c.netlify.app/633fcdd84208780bf665346a/host"
-            style="height: 900px; width: 900px"
-        ></iframe>
+            style="height: 100vh; width: 100%; border:0;">
+        </iframe>
     </body>
 </html>
 ```
