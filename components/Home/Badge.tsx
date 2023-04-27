@@ -17,16 +17,17 @@ const Badge: React.FC<BadgeProps> = ({ icon, title, link }) => (
                     icon
                     variant="standard"
                     css={{
-                        borderRadius: '$1',
+                        borderRadius: '8px',
                         cursor: 'pointer',
-                        p: '$4',
-                        backgroundColor: '$surfaceLighter',
-                        border: '1px solid',
-                        borderColor: '$borderDefault',
-                        color: "$textHighEmp"
+                        py: '$2',
+                        pl: '$4',
+                        pr: '$5',
+                        backgroundColor: '$secondaryDark',
+                        borderColor: 'transparent',
+                        color: "$textHighEmp",
                     }}>
                     {icon}
-                    <Text css={{ color: '$textHighEmp', fontWeight: '$semiBold' }}>{title}</Text>
+                    <Text variant={'sub1'} css={{ color: '$textHighEmp', fontWeight: '$semiBold' }}>{title}</Text>
                 </Button>
             </a>
         </Link>
