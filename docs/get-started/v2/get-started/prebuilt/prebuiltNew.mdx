@@ -1,0 +1,59 @@
+---
+title: 100ms Prebuilt
+nav: 4.3
+---
+
+100ms Prebuilt is a feature rich video conferencing / live streaming app built on top on our [sample web app]. Share Prebuilt room links with users or [embed it as an iFrame](/get-started/v2/get-started/prebuilt/prebuiltNew#embedding-as-iframe) in your application.
+
+Getting started with 100ms Prebuilt Room Links is the fastest way to test and go live with 100ms. 
+
+<FlexContainer>
+<Callout icon="link" title="Prebuilt Basics">
+
+- Try role specific Prebuilt Room Links on 100ms dashboard. Follow [this](/get-started/v2/get-started/concepts/basics#what-are-the-steps-to-build-a-live-app-with-100ms) to set up your 100ms account and join your room
+![Links](/docs/v2/joinprebuilt.png)
+
+
+- Customise Prebuilt that fits your use case **[coming soon]**
+	- Customise features for roles
+	- Set up video layouts modes for 1:1 calling, small/group calls
+    
+</Callout>
+</FlexContainer>
+
+## Get started with Prebuilt links
+
+In this guide, we will create role specific prebuilt room links and share/embed the link as an iFrame in your application.
+
+<FlexContainer>
+<Callout icon="link" title="Prebuilt Link Structure">
+Prebuilt links are role specific room links with a format `https://<template-subdomain>.app.100ms.live/<room-code>` where,
+    - `template-subdomain`- is the subdomain that you’ve defined at the time of template creation on [100ms Dashboard](https://dashboard.100ms.live/dashboard). Copy `template-subdomain` from Template details page on 100ms Dashboard
+    - `room-code`- is a [room code](/concepts/v2/concepts/rooms/room-codes/room-codes) that belongs to a unique`room_id` and `role` for which you're creating the room link. Get room codes for each role 
+			- Copy role specific room code from Join Room section for a role in a room
+			- [Create Room Codes API](/server-side/v2/api-reference/room-codes/create-room-code-api) to create room codes
+</Callout>
+</FlexContainer>
+
+
+### Construct the link
+
+Once you have the template-subdomain and room code ready, append these to the link structure for all roles in your room.
+
+- Host Prebuilt Link : https://`template-subdomain`/meeting/`room-code-for-host`
+- Guest Prebuilt Link : https://`template-subdomain`/meeting/`room-code-for-guest`
+
+
+### Share or Embed as iFrame
+
+Once you have a Prebuilt room link ready, you can share it with your users on the fly as Push notification, SMS, Email etc or directly embed the link in your application. Refer a sample code snippet
+
+
+```jsx
+<iframe
+    title="100ms-app"
+    allow="camera *;microphone *;display-capture *"
+    src="https://<your-template-subdomain>/meeting/<room-code>"
+    style="height: 900px; width: 900px;">
+</iframe>
+```
