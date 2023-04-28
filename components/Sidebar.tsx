@@ -459,7 +459,7 @@ export const menuItem = [
         name: 'iOS',
         key: 'ios',
         icon: <IosIcon style={iconStyle} />,
-        apiRef: '/api-reference/ios/v2/home/content'
+        apiRef: '/api-reference/ios/v2/documentation/hmssdk'
     },
     {
         link: '/javascript/v2/get-started/javascript-quickstart',
