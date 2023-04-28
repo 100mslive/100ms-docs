@@ -28,7 +28,7 @@ Use the `set` API to assign a value to a specific key. Once a value is assigned,
 <Tab id='sessionstoreset-0'>
 
 ```kotlin
-fun updateSessionStore(data: String?, key : String, hmsActionResultListener: HMSActionResultListener) {
+fun updateSessionStore(data: Any?, key : String, hmsActionResultListener: HMSActionResultListener) {
     hmsSessionStore.set(data, key, hmsActionResultListener)
 }
 ```
@@ -40,7 +40,7 @@ fun updateSessionStore(data: String?, key : String, hmsActionResultListener: HMS
 
 ```java
 HmsSessionStore sessionStore;
-void updateSessionStore(String data, String key, HMSActionResultListener listener) {
+void updateSessionStore(String data, Object key, HMSActionResultListener listener) {
         sessionStore.set(data,key, listener);
 }
 ```
@@ -61,7 +61,7 @@ It takes a list of keys to observe and a closure that will be called for initial
 
 ```kotlin
 sessionStore.addKeyChangeListener(listOf("date", "time"), object : HMSKeyChangeListener {
-            override fun onKeyChanged(key: String, value: String?) {
+            override fun onKeyChanged(key: String, value: Any?) {
                 when(key) {
                     "date" -> { /* handle date change*/}
                     "time" -> { /* handle time change*/}
@@ -84,7 +84,7 @@ sessionStore.addKeyChangeListener(listOf("date", "time"), object : HMSKeyChangeL
 sessionStore.addKeyChangeListener(Arrays.asList("date", "time"),
         new HMSKeyChangeListener() {
             @Override
-            public void onKeyChanged(@NonNull String key, @Nullable String value) {
+            public void onKeyChanged(@NonNull String key, @Nullable Object value) {
                 switch (key) {
                     case "date":
                         // Handle date change
@@ -130,7 +130,7 @@ Use the `get(forKey:completion)` API if your application does not require update
 
 ```kotlin
 sessionStore.get("mykey", object : HMSSessionMetadataListener {
-    override fun onSuccess(sessionMetadata: String?) {
+    override fun onSuccess(sessionMetadata: Any?) {
         // Use value
     }
 
@@ -150,7 +150,7 @@ sessionStore.get("mykey", object : HMSSessionMetadataListener {
 sessionStore.get("mykey",new  HMSSessionMetadataListener(){
 
     @Override
-    public void onSuccess(@Nullable String sessionMetadata) {
+    public void onSuccess(@Nullable Object sessionMetadata) {
         // Use value
     }
 
