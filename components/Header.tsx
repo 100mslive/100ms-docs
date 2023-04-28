@@ -85,6 +85,9 @@ const Header: React.FC<Props> = ({
         if (currentTech === 'android') {
             return `/api-reference/android/v2/index.html`;
         }
+        if (currentTech === 'ios') {
+            return `/api-reference/ios/v2/documentation/hmssdk`;
+        }
         const routeLink = `/api-reference/${currentTech}/v2/home/content`;
         if (router.query.slug && router.query.slug[0] === 'api-reference') {
             return router.asPath;
