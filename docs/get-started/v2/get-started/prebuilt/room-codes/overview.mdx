@@ -15,13 +15,13 @@ Essentially, Room Codes allow you to create unique Room Links and Room Code Auth
 <Callout icon="link" title="Room Links">
 Construct Prebuilt or custom domain Room Links; embed and share with your users
 
-[Room Links using Room Codes](/concepts/v2/concepts/rooms/room-links)
+[Room Links using Room Codes →](/concepts/v2/concepts/rooms/room-links)
 </Callout>
 
 <Callout icon="shield" title="Room Code Authentication">
 Power Role specific authentication required to Join a Room
 
-[Join with Room Codes](/concepts/v2/concepts/rooms/room-codes/room-code-auth)
+[Join with Room Codes →](/concepts/v2/concepts/rooms/room-codes/room-code-auth)
 </Callout>
 
 </FlexContainer>
@@ -48,11 +48,24 @@ Room Codes do not have an expiry, thus, you can reuse Room Codes infinitely. Thi
 
 ### Creating Room Codes
 
-There are multiple ways a Room Code can be created :
-    1. [via 100ms dashboard](https://dashboard.100ms.live/dashboard) : For Rooms created on 100ms dashboard, a Room Code gets generated for every Role in the Room by default.
-    2. via API : If you're using [Create Room API](/server-side/v2/api-reference/Rooms/create-via-api) to create Rooms, you need to explicitly create Room Codes for every Role in the Room. Refer [Create Room Codes API](/server-side/v2/api-reference/room-codes/create-room-code-api). This API allows you to create Room Code for
-    	- every Role in the Room at once 
-   	    - a specific Role in the Room 
+<Tabs id="test-code" items={['via Dashboard','Create Room Code API']} />
+
+<Tab id='test-code-0'>
+
+For Rooms created on [100ms dashboard](https://dashboard.100ms.live/dashboard), a room code gets generated for every role in the room by default.
+
+![JoinRoomModal](/docs/v2/JoinRoomModal.png)
+
+</Tab>
+
+
+<Tab id="test-code-1">
+
+If you're using [Create Room API](/server-side/v2/api-reference/Rooms/create-via-api) to create Rooms, you need to explicitly create room codes for every role in the Room. Refer [Create Room Codes API](/server-side/v2/api-reference/room-codes/create-room-code-api). This API allows you to create room code for
+        - every role in the room at once  using [Create Room Code API](/server-side/v2/api-reference/room-codes/create-room-code-api#1-create-a-room-code-api) 
+        - a specific role in the room using [Create Role Room Code API](server-side/v2/api-reference/room-codes/create-room-code-api#2-create-role-room-code-api)
+
+</Tab>
 
 ### Multiple Room Codes per role
 
