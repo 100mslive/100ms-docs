@@ -3,6 +3,18 @@ title: Release Notes
 nav: 4
 description: Release Notes for 100ms Android SDK
 ---
+## v2.6.2 - 2023-05-01
+
+### Breaking Changes
+- KeyChangeListener for the session store now returns `Any` instead of `String` as data. This is equivalent to `Object` in Java.
+
+### Added 
+Simplifying how the videos can be shown on the app. [Here's](https://github.com/100mslive/100ms-android/pull/358/files) the code it reduces.
+
+### Fix
+- Removing the key listeners in `HmsSessionStore` when disconnected could've crashed the app.
+- Role changing a non-hls role to hls and back would result in its tracks not being seen by new peers joining the call.
+
 ## v2.6.1 - 2023-04-14
 
 ### Breaking Changes
