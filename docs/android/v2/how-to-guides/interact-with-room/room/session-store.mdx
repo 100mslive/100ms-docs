@@ -171,3 +171,9 @@ sessionStore.get("mykey",new  HMSSessionMetadataListener(){
 -   Locks are required to ensure consistency of the data. If two peers update the data at the same time, it may result in a race condition where the last update overwrites the previous ones.
 
 👀 For an example of how to implement pinned chat support using session store in an Android app with the 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-android/blob/dev/app/src/main/java/live/hms/app2/ui/meeting/SessionMetadataUseCase.kt).
+
+## Limits
+
+- Max payload size for data can be 1KB.
+- Maximum 100 keys are supported with 64KB limit applied to all keys combined.
+- Metadata size for 64 KB also include the key size.
