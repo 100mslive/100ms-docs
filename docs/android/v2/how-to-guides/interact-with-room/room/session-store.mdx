@@ -49,7 +49,7 @@ void updateSessionStore(String data, Object key, HMSActionResultListener listene
 
 </Tab>
 
-> ⚠️ It's important to make sure the object is serializeable if not primitive. String, Boolean etc are fine to pass and read with casting. For a custom class, do add `Gson` `Serializable` annotations or otherwise ensure that the object can be recreated after being sent across the network. `Keep` annotations would also work and might possibly be the easiest.
+> ⚠️ It's important to make sure the object is serializeable if not primitive. String, Boolean etc are fine to pass and read with casting. For a custom class, do add `Gson` `Serializable` annotations or otherwise ensure that the object can be recreated after being sent across the network. [`Keep`](https://developer.android.com/reference/androidx/annotation/Keep) annotations on the data classes to prevent obfuscation might be the easiest way to do this.
 
 ## Retrieving a value for a specific key
 
