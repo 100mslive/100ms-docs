@@ -134,6 +134,7 @@ Use the `get(forKey:completion)` API if your application does not require update
 sessionStore.get("mykey", object : HMSSessionMetadataListener {
     override fun onSuccess(sessionMetadata: Any?) {
         // Use value
+        val data = sessionMetadata as CustomMetadata
     }
 
     override fun onError(error: HMSException) {
@@ -154,6 +155,7 @@ sessionStore.get("mykey",new  HMSSessionMetadataListener(){
     @Override
     public void onSuccess(@Nullable Object sessionMetadata) {
         // Use value
+        CustomMetadata data = (CustomMetadata) sessionMetadata
     }
 
     @Override
