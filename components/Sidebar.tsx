@@ -412,7 +412,7 @@ const Sidebar: React.FC<Props> = ({
                         {nav
                             ? Object.entries(nav).map(([key, children], index) => (
                                   <SidebarSection
-                                      key={key}
+                                      key={`${key}-${index}`}
                                       value={key}
                                       index={index}
                                       nested={false}>

@@ -308,6 +308,11 @@ const ResultBox = ({
 };
 
 const Search = ({ refine, setSearchTerm, searchTerm }) => {
+    const inputRef = useRef<HTMLInputElement>(null);
+    useEffect(() => {
+        setTimeout(() => inputRef?.current && inputRef.current.focus(), 0);
+    }, []);
+
     useEffect(() => {
         const debounceTimer = setTimeout(() => refine(searchTerm), 400);
         return () => clearTimeout(debounceTimer);
@@ -333,9 +338,8 @@ const Search = ({ refine, setSearchTerm, searchTerm }) => {
                 onChange={(event) => {
                     setSearchTerm(event.target.value);
                 }}
+                ref={inputRef}
                 type="text"
-                // eslint-disable-next-line jsx-a11y/no-autofocus
-                autoFocus
                 style={{
                     marginLeft: '13px',
                     backgroundColor: 'inherit',
@@ -363,7 +367,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
     const [platformFilter, setPlatformFilter] = useState(ALL_PLATFORMS);
     const [openFilter, setOpenFilter] = useState(false);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const handleNavigation = (e) => {
             if (e.code === 'Enter' && activeResult.current !== -1) {
                 const ele = document.getElementById(`res-box-${activeResult.current}`)
