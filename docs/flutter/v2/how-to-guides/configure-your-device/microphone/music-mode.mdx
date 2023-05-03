@@ -50,12 +50,7 @@ class Meeting implements HMSUpdateListener{
         /// `HMSAudioMode.MUSIC` to enable music mode
         hmsSDK = HMSSDK(hmsTrackSetting: trackSettingsForMusicMode);
 
-        /// Continue with rest of the hmssdk method calls to join the room
-        await hmsSDK.build(); // ensure to await while invoking the `build` method
-        hmsSDK.addUpdateListener(listener: this);
-        HMSConfig config = HMSConfig(authToken: 'eyJH5c', // client-side token generated from your token service
-                                userName: 'John Appleseed');
-        hmsSDK.join(config: config);
+        /// Continue with rest of the hmssdk method calls like build,join etc.
     }
 }
   ```
