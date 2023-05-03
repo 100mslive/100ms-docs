@@ -37,7 +37,7 @@ Browser recording is built to give users a participant-first recording experienc
 
 **Resources**
 
-- [How to implement Browser Recording](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording)
+- [How to implement Browser Recording](/server-side/v2/how-to-guides/recordings/overview)
 
 ### SFU Recording [Advanced]
 
