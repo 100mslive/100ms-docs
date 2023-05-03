@@ -26,32 +26,32 @@ the max-bandwidth limit for audio to 320 Kbps so that music doesn't get compress
 ## How to turn on Music Mode?
 
 1. You can create an instance of the `HMSAudioTrackSettings` class with the `audioMode` property set
-to `HMSIOSAudioMode.MUSIC`. When the `audioMode` property is set to `HMSIOSAudioMode.MUSIC`, the
-SDK will use 320 Kbps bandwidth for publishing audio instead of default 32 Kbps max-bandwidth.
+  to `HMSIOSAudioMode.MUSIC`. When the `audioMode` property is set to `HMSIOSAudioMode.MUSIC`, the
+  SDK will use 320 Kbps bandwidth for publishing audio instead of default 32 Kbps max-bandwidth.
 
-Then, you can use this `HMSAudioTrackSettings` instance when building an instance of the `HMSDK`
-class using the static `build` method.
+  Then, you can use this `HMSAudioTrackSettings` instance when building an instance of the `HMSDK`
+  class using the static `build` method.
 
-```js{3}
-// Creating Audio Setting with 'hardware echo cancellation' set to false
-const audioSettings = new HMSAudioTrackSettings({
-  audioMode: HMSIOSAudioMode.MUSIC
-});
+  ```js{3}
+  // Creating Audio Setting with 'audioMode' set to `HMSIOSAudioMode.MUSIC`
+  const audioSettings = new HMSAudioTrackSettings({
+    audioMode: HMSIOSAudioMode.MUSIC
+  });
 
-// Creating Track settings with Audio Settings for HMSSDK
-const trackSettings = HMSTrackSettings({
-  audio: audioSettings
-});
+  // Creating Track settings with Audio Settings for HMSSDK
+  const trackSettings = HMSTrackSettings({
+    audio: audioSettings
+  });
 
-// Pass the Track Settings object to the `build` method
-// Now, the SDK will not use hardware echo cancellation
-c̶o̶n̶s̶t̶ ̶h̶m̶s̶I̶n̶s̶t̶a̶n̶c̶e̶ ̶=̶ ̶a̶w̶a̶i̶t̶ ̶H̶M̶S̶S̶D̶K̶.̶b̶u̶i̶l̶d̶(̶)̶;̶
-const hmsInstance = await HMSSDK.build({ trackSettings });
-```
+  // Pass the Track Settings object to the `build` method
+  // Now, the SDK will not use hardware echo cancellation
+  c̶o̶n̶s̶t̶ ̶h̶m̶s̶I̶n̶s̶t̶a̶n̶c̶e̶ ̶=̶ ̶a̶w̶a̶i̶t̶ ̶H̶M̶S̶S̶D̶K̶.̶b̶u̶i̶l̶d̶(̶)̶;̶
+  const hmsInstance = await HMSSDK.build({ trackSettings });
+  ```
 
-If you don't want to use Music Mode, don't create `HMSAudioTrackSettings` class with `audioMode`
-property, it's an optional property.
+  If you don't want to use Music Mode, don't create `HMSAudioTrackSettings` class with `audioMode`
+  property, it's an optional property.
 
 2. In the newer iPhones (iPhone XS onwards) make sure that 'Wide Spectrum' mic mode is selected
-in the control center. If you select 'Standard' or 'Voice Isolation' mode then your iPhone might
-apply voice processing on top to affect the music quality.
+  in the control center. If you select 'Standard' or 'Voice Isolation' mode then your iPhone might
+  apply voice processing on top to affect the music quality.
