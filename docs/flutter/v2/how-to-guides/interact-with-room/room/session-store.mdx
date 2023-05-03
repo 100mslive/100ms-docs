@@ -18,6 +18,26 @@ While peer metadata is associated with individual peers and each peer can have t
 
 Session store is only available after user joins the session. To obtain a reference to the session store, you need to override the `void onSessionStoreAvailable({HMSSessionStore? hmsSessionStore})` function of the `HMSUpdateListener` protocol. Once you get the reference to the store you can save it in your app for accessing later.
 
+```dart
+class Meeting implements HMSUpdateListener{
+
+    ... 
+
+    ///[_hmsSessionStore] : This instance will be used in future to access any session metadata methods
+    HMSSessionStore? _hmsSessionStore;
+
+    ///Here we get the instance of HMSSessionStore using which
+    ///we will be performing the session metadata actions
+    @override
+    void onSessionStoreAvailable({HMSSessionStore? hmsSessionStore}) {
+        _hmsSessionStore = hmsSessionStore;
+    }
+
+    ...
+
+}
+```
+
 ### Setting a value for a specific key
 
 Use the `setSessionMetadataForKey` method to assign a value to a specific key. Once a value is assigned, it will be available for other peers in the room who are observing this key.
