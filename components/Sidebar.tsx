@@ -203,7 +203,7 @@ const Sidebar: React.FC<Props> = ({
                 }>
                 {baseViewOnly ? (
                     <div>
-                        <Box css={{ pt: '32px', '@md': { pt: '40px' } }} />
+                        <Box css={{ pt: '32px' }} />
                     </div>
                 ) : (
                     <Flex
