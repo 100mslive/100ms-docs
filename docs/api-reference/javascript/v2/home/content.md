@@ -238,6 +238,12 @@ selfBrowser - the current browser tab is being shared
 
 Ƭ **HMSTrackType**: `"audio"` \| `"video"`
 
+---
+
+### RID
+
+Ƭ **RID**: `"f"` \| `"h"` \| `"q"`
+
 ## Variables
 
 ### parsedUserAgent
