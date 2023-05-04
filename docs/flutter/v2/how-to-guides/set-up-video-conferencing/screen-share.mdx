@@ -449,3 +449,33 @@ Starting Screenshare from an iOS Simulator is not supported by Apple. You can st
 Ensure that the [Role](/concepts/v2/concepts/security-and-tokens) used to Join the Room has Screenshare permission Enabled from the [100ms Dashboard](https://dashboard.100ms.live/). If the Screenshare permission is not Enabled from the Dashboard, any users joining with this Role won't be able to start Screenshare. These users would still be able to see Screenshare performed by other Peers who have Screenshare permissions.
 
 ![Screen Share Permission](/docs/v2/screenshare-permission.png)
+
+### Avoid infinite looping of video when local peer is sharing screen
+
+When you share your screen, you'll notice an infinite looping of the shared screen within the user interface, resembling something like this:
+
+![Screen Share Looping](/docs/v2/flutter-screenshare-loop.png)
+
+To prevent this, you can display a custom widget when the local peer shares their screen by utilizing the isLocal check on the HMSPeer object.
+
+The check can be implemented as:
+
+```dart
+
+Widget screenShareWidget(HMSPeer peer){
+
+    /// If the peer sharing screen is a local peer then we can render a custom widget
+    if(peer.isLocal){
+        ///Render a custom widget
+    }
+    else{
+        ///Render the screen share widget using HMSVideoView
+    }
+}
+```
+
+You can render a custom widget like this: 
+
+![Screen Share Looping](/docs/v2/flutter-local-screenshare.png)
+
+Explore the code for the aforementioned UI to eliminate any screen looping concerns [here](https://github.com/100mslive/100ms-flutter/blob/7bcce35cbbc126aad73be7a4b47e3de7195cbc21/example/lib/meeting_modes/basic_grid_view.dart#L36)
