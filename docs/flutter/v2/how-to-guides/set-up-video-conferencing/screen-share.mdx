@@ -452,15 +452,12 @@ Ensure that the [Role](/concepts/v2/concepts/security-and-tokens) used to Join t
 
 ### Avoid infinite looping of video when local peer is sharing screen
 
-When you share your screen, you'll notice an infinite looping of the shared screen within the user interface, resembling something like this:
+When you share your screen, you'll notice an infinite looping of the shared screen within the user interface, resembling something like the left image.
+To prevent this, you can display a custom widget when the local peer shares their screen by utilizing the isLocal check on the HMSPeer object like the image on the right.
 
 <span className="img-container">
     ![Screen share looping](/docs/v2/flutter-screenshare-loop.png) ![Local Screen share](/docs/v2/flutter-local-screenshare.png)
 </span>
-
-To prevent this, you can display a custom widget when the local peer shares their screen by utilizing the isLocal check on the HMSPeer object.
-
-The check can be implemented as:
 
 ```dart
 
