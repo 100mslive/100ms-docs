@@ -220,6 +220,10 @@ class Meeting implements HMSUpdateListener{
         // pass the trackSettings while constructing the HMSSDK instance
          ̶h̶m̶s̶S̶D̶K̶ ̶=̶ ̶H̶M̶S̶S̶D̶K̶(̶)̶;̶
         HMSSDK hmsSDK = HMSSDK(hmsTrackSetting: trackSettings);
+        setupHMSSDK();
+    }
+
+    void setupHMSSDK() async{
         await hmsSDK.build(); // ensure to await while invoking the `build` method
         hmsSDK.addUpdateListener(listener: this);
         HMSConfig config = HMSConfig(authToken: 'eyJH5c', // client-side token generated from your token service
