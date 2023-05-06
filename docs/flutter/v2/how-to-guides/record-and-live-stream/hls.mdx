@@ -247,16 +247,16 @@ class Meeting implements HMSUpdateListener, HMSActionResultListener{
     @override
   void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {
 
-     ...
+    ...
 
-     //this contains info about whether HLS is running in the room or not
-     bool isHLSRunning = room.hmshlsStreamingState?.running??false;
+    /// this contains info about whether HLS is running in the room or not
+    ///  bool isHLSRunning = room.hmshlsStreamingState?.running??false;
 
-     //this contains the m3u8 URL if the HLS stream is running
-     //This URL can be passed to the video player to display HLS Stream.
-     String? hlsm3u8Url = hmshlsStreamingState?.variants[0]?.hlsStreamUrl
+    /// this contains the m3u8 URL if the HLS stream is running
+    /// This URL can be passed to the video player to display HLS Stream.
+    String? hlsm3u8Url = hmshlsStreamingState?.variants[0]?.hlsStreamUrl
 
-     ...
+    ...
   }
 }
 ```
@@ -299,33 +299,33 @@ In the `Roles with room-state permission` ensure that HLS role is checked to rec
 ```dart 
 class Preview implements HMSPreviewListener{
 
-   late HMSSDK hmsSDK;
-   String? hlsStreamURL = null
+    late HMSSDK hmsSDK;
+    String? hlsStreamURL = null
 
-   Preview(){
+    Preview(){
       initHMSSDK();
-   }
+    }
 
-   void initHMSSDK() async {
+    void initHMSSDK() async {
       hmsSDK = HMSSDK();
       await hmsSDK.build(); // ensure to await while invoking the `build` method
       HMSConfig config = HMSConfig(
-         userName: "John Doe",
-         authToken: "eyJH5c", // client-side token generated from your token service
+          userName: "John Doe",
+          authToken: "eyJH5c", // client-side token generated from your token service
       );
 
       //Here this is an instance of a class that implements HMSPreviewListener, that is, Preview
       hmsSDK.addPreviewListener(listener:this);
       hmsSDK.preview(config: config);
-   }
+    }
 
-   @override
-   void onPreview({required HMSRoom room, required List<HMSTrack> localTracks}) {
+    @override
+    void onPreview({required HMSRoom room, required List<HMSTrack> localTracks}) {
       //We will get the callback here if the preview succeeds
-   }
+    }
 
-   @override
-   void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {
+    @override
+    void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {
       switch (update) {
 
         ...
@@ -352,25 +352,31 @@ class Preview implements HMSPreviewListener{
         default:
           break;
       }
-   }
+    }
 
-   @override
-   void onPeerUpdate(
+    @override
+    void onPeerUpdate(
       {required HMSPeer peer, required HMSPeerUpdate update}) async {
        //Peer updates: https://www.100ms.live/docs/flutter/v2/features/update-listener-enums#hms-peer-update
-   }
+    }
 
-   @override
-   void onHMSError({required HMSException error}) {
+    @override
+    void onHMSError({required HMSException error}) {
         //Error updates: https://www.100ms.live/docs/flutter/v2/features/error-handling#hms-exception
-   }
+    }
 
-   @override
-   void onAudioDeviceChanged(
+    @override
+    void onAudioDeviceChanged(
       {HMSAudioDevice? currentAudioDevice,
       List<HMSAudioDevice>? availableAudioDevice}) {
         //Get notified when the audio device is changed: https://www.100ms.live/docs/flutter/v2/features/audio-output-routing#adding-audio-device-change-event-listener-android-only
-   }
+    }
+
+    @override
+    void onSessionStoreAvailable(
+      {HMSSessionStore? hmsSessionStore}) {
+        // Get notified when the Session Store is available for usage. Read more about Session Store here: https://www.100ms.live/docs/flutter/v2/how-to-guides/interact-with-room/room/session-store
+    }
 
 }
 ```
