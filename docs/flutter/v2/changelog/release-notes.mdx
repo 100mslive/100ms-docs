@@ -13,7 +13,16 @@ nav: 99
 
   Learn more about [Session Store here](https://www.100ms.live/docs/flutter/v2/how-to-guides/interact-with-room/room/session-store).
 
-  Checkout the migration guide [here](/flutter/v2/how-to-guides/interact-with-room/room/session-store#migrating-from-older-hmssdk-version-to-160-or-above-for-using-session-store)
+  If you are upgrading from an older version, you'll need to add override the new method `onSessionStoreAvailable`.
+  ```dart
+  class Meeting implements HMSUpdateLister {
+    ...
+    @override
+    void onSessionStoreAvailable(
+      {HMSSessionStore? hmsSessionStore}) { ... }
+  }
+  ```
+  Checkout more about updating for Session Store [here](/flutter/v2/how-to-guides/interact-with-room/room/session-store#migrating-from-older-hmssdk-version-to-160-or-above-for-using-session-store).
 
 - Music Mode on iOS
 
