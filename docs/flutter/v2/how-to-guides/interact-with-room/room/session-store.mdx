@@ -74,6 +74,8 @@ class Meeting implements HMSUpdateListener, HMSActionResultListener,HMSKeyChange
 
     ...
 
+    HMSSessionStore? _hmsSessionStore;
+
     void addKeyListener(List<String> keysToBeListened){
         
         ///[keysToBeListened]: List of String containing the session keys which are needed to be listened
@@ -146,4 +148,44 @@ class Meeting implements HMSUpdateListener, HMSActionResultListener,HMSKeyChange
 - Maximum 100 keys are supported with 64KB limit applied to all keys combined.
 - Metadata size for 64 KB also include the key size.
 
+## Migrating from older HMSSDK version to 1.6.0 or above for using session store
 
+With the introduction of session store, `HMSUpdateListener` has undergone some changes. 
+One notable addition is the `onSessionStoreAvailable` callback, which enables developers to implement session store functionality in their apps.
+This callback is particularly useful because it is triggered when the session store becomes available, allowing developers to retrieve and manage the data stored within it.
+
+<div className="steps-container">
+
+### Update the HMSSDK version to 1.6.0 or above
+
+```yaml
+hmssdk_flutter: ^1.6.0
+```
+
+Run `flutter pub get` and ensure that SDK is updated
+
+### Add onSessionStoreAvailable override in class which implements HMSUpdateListener
+
+```dart
+class Meeting implements HMSUpdateLister{
+
+
+    //We will be storing the HMSSessionStore instance in _hmsSessionStore variable for future usages.
+    //This instance can be shared with other classes as well.
+    HMSSessionStore? _hmsSessionStore;
+    ...
+
+    ///Here we get the instance of HMSSessionStore using which
+    ///we will be performing the session metadata actions
+    @override
+    void onSessionStoreAvailable({HMSSessionStore? hmsSessionStore}) {
+        _hmsSessionStore = hmsSessionStore;
+    }
+
+    ...
+}
+```
+
+</div>
+
+That's it. You are all set to use Session Store.

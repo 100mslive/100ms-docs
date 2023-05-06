@@ -345,6 +345,9 @@ class _MeetingPageState extends State<MeetingPage>
       List<HMSAudioDevice>? availableAudioDevice}) {}
 
   @override
+  void onSessionStoreAvailable({HMSSessionStore? hmsSessionStore}) {}
+
+  @override
   void onChangeTrackStateRequest(
       {required HMSTrackChangeRequest hmsTrackChangeRequest}) {}
 
@@ -821,6 +824,9 @@ We will add these methods in `MeetingPage` class as they need to override the `H
   void onAudioDeviceChanged(
       {HMSAudioDevice? currentAudioDevice,
       List<HMSAudioDevice>? availableAudioDevice}) {}
+
+  @override
+  void onSessionStoreAvailable({HMSSessionStore? hmsSessionStore}) {}
 
   @override
   void onChangeTrackStateRequest(

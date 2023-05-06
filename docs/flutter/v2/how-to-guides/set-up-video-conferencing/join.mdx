@@ -43,74 +43,89 @@ class Meeting implements HMSUpdateListener{
 
     @override
     void onJoin({required HMSRoom room}) async {
-       // User Joined successfully.
+       /// The User has joined the Room successfully. Among other operations, you can now start rendering Videos now: https://www.100ms.live/docs/flutter/v2/how-to-guides/set-up-video-conferencing/render-video/overview
     }
 
     @override
-    void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {
-        //Room updates: https://www.100ms.live/docs/flutter/v2/features/update-listener-enums#hms-room-update
+    void onRoomUpdate(
+        {required HMSRoom room,
+        required HMSRoomUpdate update}) {
+            /// Room updates: https://www.100ms.live/docs/flutter/v2/features/update-listener-enums#hms-room-update
     }
 
     @override
     void onPeerUpdate(
-      {required HMSPeer peer, required HMSPeerUpdate update}) async {
-       //Peer updates: https://www.100ms.live/docs/flutter/v2/features/update-listener-enums#hms-peer-update
+        {required HMSPeer peer,
+        required HMSPeerUpdate update}) async {
+            /// Peer updates: https://www.100ms.live/docs/flutter/v2/features/update-listener-enums#hms-peer-update
     }
 
     @override
     void onTrackUpdate(
-      {required HMSTrack track,
-      required HMSTrackUpdate trackUpdate,
-      required HMSPeer peer}) {
-        //Track updates: https://www.100ms.live/docs/flutter/v2/features/update-listener-enums#hms-track-update
+        {required HMSTrack track,
+        required HMSTrackUpdate trackUpdate,
+        required HMSPeer peer}) {
+            /// Track updates: https://www.100ms.live/docs/flutter/v2/features/update-listener-enums#hms-track-update
     }
 
     @override
-    void onHMSError({required HMSException error}) {
-        //Error updates: https://www.100ms.live/docs/flutter/v2/features/error-handling#hms-exception
+    void onHMSError(
+        {required HMSException error}) {
+            /// Error updates: https://www.100ms.live/docs/flutter/v2/features/error-handling#hms-exception
     }
 
 
     @override
-    void onMessage({required HMSMessage message}) {
-        //Message updates: https://www.100ms.live/docs/flutter/v2/features/chat#receiving-chat-messages
+    void onMessage(
+        {required HMSMessage message}) {
+            /// Message updates: https://www.100ms.live/docs/flutter/v2/features/chat#receiving-chat-messages
     }
 
     @override
-    void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest}) {
-        //role change request: https://www.100ms.live/docs/flutter/v2/features/change-role#accept-role-change-request
+    void onRoleChangeRequest(
+        {required HMSRoleChangeRequest roleChangeRequest}) {
+            /// Role Change Request: https://www.100ms.live/docs/flutter/v2/features/change-role#accept-role-change-request
     }
 
     @override
-    void onUpdateSpeakers({required List<HMSSpeaker> updateSpeakers}) {
-        //This is triggered every second with a list of speakers who are currently speaking.
+    void onUpdateSpeakers(
+        {required List<HMSSpeaker> updateSpeakers}) {
+            /// This is triggered every second with a list of speakers who are currently speaking.
     }
 
     @override
     void onReconnecting() {
-        //Reconnection callback: https://www.100ms.live/docs/flutter/v2/features/reconnection-handling#reconnecting-and-reconnected-callbacks
+        /// Reconnection callback: https://www.100ms.live/docs/flutter/v2/features/reconnection-handling#reconnecting-and-reconnected-callbacks
     }
 
     @override
     void onReconnected() {
-        //Reconnection callback: https://www.100ms.live/docs/flutter/v2/features/reconnection-handling#reconnecting-and-reconnected-callbacks
+        /// Reconnection callback: https://www.100ms.live/docs/flutter/v2/features/reconnection-handling#reconnecting-and-reconnected-callbacks
     }
 
     @override
-    void onChangeTrackStateRequest({required HMSTrackChangeRequest hmsTrackChangeRequest}) {
-        //Getting mute-unmute callback: https://www.100ms.live/docs/flutter/v2/features/remote-mute-unmute#handling-an-unmute-callback
+    void onChangeTrackStateRequest(
+        {required HMSTrackChangeRequest hmsTrackChangeRequest}) {
+            /// Getting mute-unmute callback: https://www.100ms.live/docs/flutter/v2/features/remote-mute-unmute#handling-an-unmute-callback
     }
 
     @override
-    void onRemovedFromRoom({required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer}) {
-        //Handle peer removal case: https://www.100ms.live/docs/flutter/v2/features/remove-peer#handling-the-remove-peer-callback
+    void onRemovedFromRoom(
+        {required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer}) {
+            /// Handle peer removal case: https://www.100ms.live/docs/flutter/v2/features/remove-peer#handling-the-remove-peer-callback
     }
 
     @override
     void onAudioDeviceChanged(
-      {HMSAudioDevice? currentAudioDevice,
-      List<HMSAudioDevice>? availableAudioDevice}) {
-        //Get notified when the audio device is changed: https://www.100ms.live/docs/flutter/v2/features/audio-output-routing#adding-audio-device-change-event-listener-android-only
+        {HMSAudioDevice? currentAudioDevice,
+        List<HMSAudioDevice>? availableAudioDevice}) {
+            /// Get notified when the audio device is changed: https://www.100ms.live/docs/flutter/v2/features/audio-output-routing#adding-audio-device-change-event-listener-android-only
+    }
+
+    @override
+    void onSessionStoreAvailable(
+        {HMSSessionStore? hmsSessionStore}) {
+            /// Get notified when the Session Store is available for usage. Read more about Session Store here: https://www.100ms.live/docs/flutter/v2/how-to-guides/interact-with-room/room/session-store
     }
 }
 ```
@@ -154,7 +169,7 @@ Next, create an object of [HMSConfig class](https://pub.dev/documentation/hmssdk
 
 ```dart
 HMSConfig config = HMSConfig(authToken: 'eyJH5c', // client-side token generated from your token service
-                              userName: 'John Appleseed');
+                            userName: 'John Appleseed');
 ```
 
 ### Invoke Join
@@ -191,11 +206,11 @@ Here `trackInitialState` property of `HMSVideoTrackSetting` and `HMSAudioTrackSe
 ```dart
 enum HMSTrackInitState {
 
-  //If the track needs to be kept mute while joining
-   MUTED,
+    /// If the track needs to be kept mute while joining
+    MUTED,
 
-  //If the track needs to be kept unmute while joining
-   UNMUTED,
+    /// If the track needs to be kept unmute while joining
+    UNMUTED,
 }
 ```
 
@@ -205,9 +220,9 @@ Let's see how this can be achieved in the following steps.
 
 ```dart
 HMSTrackSetting trackSettings = HMSTrackSetting(
-        // This is for joining with muted audio(mic off) and muted video(camera off)
-         audioTrackSetting: HMSAudioTrackSetting(trackInitialState: HMSTrackInitState.MUTED),
-         videoTrackSetting: HMSVideoTrackSetting(trackInitialState: HMSTrackInitState.MUTED));
+        /// This is for joining with muted audio(mic off) and muted video(camera off)
+        audioTrackSetting: HMSAudioTrackSetting(trackInitialState: HMSTrackInitState.MUTED),
+        videoTrackSetting: HMSVideoTrackSetting(trackInitialState: HMSTrackInitState.MUTED));
 ```
 
 2. Now, create the `HMSSDK` object by passing the `HMSTrackSetting` object created above :
@@ -227,7 +242,7 @@ class Meeting implements HMSUpdateListener{
         await hmsSDK.build(); // ensure to await while invoking the `build` method
         hmsSDK.addUpdateListener(listener: this);
         HMSConfig config = HMSConfig(authToken: 'eyJH5c', // client-side token generated from your token service
-                                userName: 'John Appleseed');
+                                    userName: 'John Appleseed');
         hmsSDK.join(config: config);
     }
 }
