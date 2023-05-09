@@ -33,14 +33,19 @@ const ChipDropDown = ({
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            let setFilter = false;
-            updatedMenuItem.forEach((plat) => {
-                if (!setFilter && plat && window.location.pathname.includes(plat.key)) {
-                    setPlatformFilter(plat.name);
-                    setFilter = true;
-                }
-            });
+            const url = localStorage.getItem('platformFilterSetAt') || '';
+            if (url !== location.href.toString()) {
+                localStorage.setItem('platformFilterSetAt', location.href.toString());
+                let setFilter = false;
+                updatedMenuItem.forEach((plat) => {
+                    if (!setFilter && plat && window.location.pathname.includes(plat.key)) {
+                        setPlatformFilter(plat.name);
+                        setFilter = true;
+                    }
+                });
+            }
         }
+        return () => console.log('Unmounting dropdown');
     }, []);
 
     return (
