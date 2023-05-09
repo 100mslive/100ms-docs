@@ -119,16 +119,19 @@ Most of the time the application is interested not just in a current value of a 
 updates to that value. To obtain the initial value and receive updates, you can use the
 `addKeyChangeListener` method available on `HMSSessionStore` class instance.
 
-It takes a 'list of keys' to observe as first parameter and a 'callback' function as second parameter
-that will be called for initial value and every time an update is received. This 'callback' function
-receives any `error` occured (or null if no error occured) while adding the listener as first parameter
-and actual data that we are interested in as second parameter. The second parameter 'data' has 
+It takes a 'list of keys' to observe as first parameter and a `callback` function as second parameter
+that will be called for initial value and every time an update is received.
+
+This 'callback' function receives any `error` occured (or null if no error occured) while adding the listener as first parameter
+and actual data that we are interested in as second parameter.
+
+The second parameter 'data' has `key` and `value` which are both of `string` types.
 
 ```js
 // Adding key change listener for `spotlight` & `pinnedMessage` keys on Session Store
 hmsSessionStore.addKeyChangeListener(
   // list of keys to observe
-  ['spotlight', 'pinnedMessage'], 
+  ['spotlight', 'pinnedMessage'],
 
   // callback function which is called initially and every time an update is received
   (
