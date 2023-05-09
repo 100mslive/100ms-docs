@@ -193,6 +193,22 @@ const onChangeRemoteVideoStats = (data: {
 }) => {
     // This contains stats related to remote video track.
 };
+
+
+hmsInstance?.addEventListener(
+    HMSUpdateListenerActions.ON_SESSION_STORE_AVAILABLE,
+    onSessionStoreAvailableListener,
+);
+
+const onSessionStoreAvailableListener = ({
+    sessionStore,
+  }: {
+    sessionStore: HMSSessionStore;
+}) => {
+    // You can use the SessionStore object provided here according to your app logic
+    // For example, below we are saving `sessionStore` reference in `Redux`
+    dispatch(saveUserData({hmsSessionStore: sessionStore}));
+};
 ```
 
 Check out the [Event Listener Enums](/react-native/v2/features/event-listeners-enums) docs to understand the Update Types emitted by the SDK for events like `ON_PEER_UPDATE`, `ON_TRACK_UPDATE`, `ON_ROOM_UPDATE`, etc.
