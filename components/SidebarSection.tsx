@@ -121,14 +121,14 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
                 {Object.entries(children as {}).map(([_, route]: [string, any], i: number) =>
                     Object.prototype.hasOwnProperty.call(route, 'title') ? (
                         <SidebarItem
-                            key={`${route.title}-${i}`}
+                            key={`${route.title}-${i}-item`}
                             asPath={asPath}
                             route={route}
                             activeItem={activeItem}
                             index={index}
                         />
                     ) : (
-                        <SidebarSection key={`${route.title}-${i}`} index={index} value={_} nested>
+                        <SidebarSection key={`${route.title}-${i}-title`} index={index} value={_} nested>
                             {route}
                         </SidebarSection>
                     )
