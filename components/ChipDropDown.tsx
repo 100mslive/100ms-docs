@@ -45,7 +45,6 @@ const ChipDropDown = ({
                 });
             }
         }
-        return () => console.log('Unmounting dropdown');
     }, []);
 
     return (
