@@ -67,13 +67,26 @@ https://docs.100ms.live/javascript/v2/foundation/security-and-tokens
 
 • `Optional` **autoManageVideo**: `boolean`
 
-if this flag is enabled, the sdk takes care of unsubscribing to the video when it goes out of view.
+if this flag is enabled, the SDK takes care of unsubscribing to the video when it goes out of view.
 Additionally if simulcast is enabled, it takes care of auto managing simulcast layers based on the
 dimensions of the video element to conserve bandwidth.
 
 #### Inherited from
 
 [HMSConfig](/api-reference/javascript/v2/interfaces/HMSConfig).[autoManageVideo](/api-reference/javascript/v2/interfaces/HMSConfig#automanagevideo)
+
+---
+
+### autoManageWakeLock
+
+• `Optional` **autoManageWakeLock**: `boolean`
+
+if this flag is enabled, wake lock will be acquired automatically(if supported) when joining the room, so the device
+will be kept awake.
+
+#### Inherited from
+
+[HMSConfig](/api-reference/javascript/v2/interfaces/HMSConfig).[autoManageWakeLock](/api-reference/javascript/v2/interfaces/HMSConfig#automanagewakelock)
 
 ---
 

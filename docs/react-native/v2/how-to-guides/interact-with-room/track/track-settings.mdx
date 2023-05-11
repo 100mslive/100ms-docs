@@ -64,13 +64,18 @@ Audio Track settings are defined by `HMSAudioTrackSettings` class. We have follo
 
     Property to configure audio nodes for audio sharing. More info about this can be found in [Audio Share](/react-native/v2/how--to-guides/set-up-video-conferencing/local-audio-share) docs.
 
+-   `audioMode` [iOS Only]
+
+    Property to capture audio from device in its highest quality by disabling voice processing and increasing the bandwidth limit from 32 Kbps to 320 Kbps. More info about this can be found in [Music Mode](/react-native/v2/how--to-guides/set-up-video-conferencing/music-mode) docs.
+
 We can create `HMSAudioTrackSettings` with above mentioned properties as follows -
 
 ```js
 const audioTrackSettings = new HMSAudioTrackSettings({
     initialState: HMSTrackSettingsInitState.UNMUTED,
     useHardwareEchoCancellation: true,
-    audioSource: ['audio_file_player_node']
+    audioSource: ['audio_file_player_node'],
+    audioMode: HMSIOSAudioMode.MUSIC,
 });
 ```
 
@@ -164,7 +169,8 @@ const getTrackSettings = () => {
     const audioTrackSettings = new HMSAudioTrackSettings({
         initialState: HMSTrackSettingsInitState.UNMUTED,
         useHardwareEchoCancellation: true,
-        audioSource: ['audio_file_player_node']
+        audioSource: ['audio_file_player_node'],
+        audioMode: HMSIOSAudioMode.MUSIC,
     });
 
     const videoTrackSettings = new HMSVideoTrackSettings({

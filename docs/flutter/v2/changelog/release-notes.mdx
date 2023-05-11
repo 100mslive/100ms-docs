@@ -3,6 +3,48 @@ title: Release Notes
 nav: 99
 ---
 
+## 1.6.0 - 2023-05-05
+
+### New Features
+
+- Session Store
+
+  You can now use Session Store, a shared real-time key-value store accessible by everyone in the Room. This can be used to implement new features such as Pinned Messages and Spotlight Video Tiles, which brings a particular peer to the center stage for everyone in the Room.
+
+  Learn more about [Session Store here](https://www.100ms.live/docs/flutter/v2/how-to-guides/interact-with-room/room/session-store).
+
+  If upgrading from an older version to 1.6.0 or above, override the new method `onSessionStoreAvailable`.
+  ```dart
+  class Meeting implements HMSUpdateLister {
+    ...
+    @override
+    void onSessionStoreAvailable(
+      {HMSSessionStore? hmsSessionStore}) { ... }
+  }
+  ```
+  Checkout more about updating for Session Store [here](/flutter/v2/how-to-guides/interact-with-room/room/session-store#migrating-from-older-hmssdk-version-to-160-or-above-for-using-session-store).
+
+- Music Mode on iOS
+
+  The latest update adds the ability to achieve high-quality audio recordings with full, rich sound, whether you are recording music, podcasts, or any other type of audio.
+
+  Learn more about the [Music Mode here](https://www.100ms.live/docs/flutter/v2/how-to-guides/configure-your-device/microphone/music-mode).
+
+### Changes
+
+- Android version 12+: We've made changes to Android 12+ so that adding PIP declaration in the Manifest file is now optional, except for those using the PIP Feature.
+
+  Check out more in the [Picture-in-Picture (PIP) documentation](https://www.100ms.live/docs/flutter/v2/how-to-guides/set-up-video-conferencing/render-video/pip-mode).
+
+- This version includes a significant improvement in the usability of Local Audio Share APIs. By optimizing the ergonomics, we have made it more intuitive and user-friendly for you to interact with these APIs.
+
+  Read more about [Local Audio Share here](https://www.100ms.live/docs/flutter/v2/how-to-guides/set-up-video-conferencing/local-audio-share).
+
+Updated to Android SDK 2.6.2 & iOS SDK 0.9.3
+
+**Full Changelog**: [1.5.0...1.6.0](https://github.com/100mslive/100ms-flutter/compare/1.5.0...1.6.0)
+
+
 ## 1.5.0 - 2023-04-21
 
 ### Breaking

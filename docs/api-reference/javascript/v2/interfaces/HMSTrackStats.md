@@ -303,7 +303,7 @@ https://www.w3.org/TR/webrtc-stats/#dom-rtcremoteinboundrtpstreamstats
 
 ### rid
 
-• `Optional` **rid**: `RID`
+• `Optional` **rid**: [`RID`](/api-reference/javascript/v2/home/content#rid)
 
 #### Inherited from
 
