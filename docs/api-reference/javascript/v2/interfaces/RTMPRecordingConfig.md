@@ -7,7 +7,7 @@ nav: '4.65'
 
 ### meetingURL
 
-• **meetingURL**: `string`
+• `Optional` **meetingURL**: `string`
 
 ---
 
