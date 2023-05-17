@@ -224,15 +224,16 @@ class HMSMessage(
 -   _time_: DateTime of when the messaging server receives this message. This can be used for accurate ordering of your messages.
 -   _sender_: The `HMSPeer` who is sending this message.
 
-### Identifying Messages:
-
-Use the `messageId` an attribute which will be in:
-1. Remote Messaages: `void onMessage({required HMSMessage message})` of `HMSUpdateListener`.
-2. Local Messages: The `void onSuccess()` callback of the `HMSActionResultListener` while sending any kind of message.
-
 Let's break down each parameter a bit more in detail :
 
 <div className="steps-container">
+
+### Identifying Messages:
+
+Use the `messageId` an attribute which will be in:
+
+1. Remote Messaages: `void onMessage({required HMSMessage message})` of `HMSUpdateListener`.
+2. Local Messages: The `void onSuccess()` callback of the `HMSActionResultListener` while sending any kind of message.
 
 ### Identifying Senders:
 
