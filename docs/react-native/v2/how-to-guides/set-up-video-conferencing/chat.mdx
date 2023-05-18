@@ -92,6 +92,8 @@ try {
 
 After [Joining the Room](/react-native/v2/how--to-guides/set-up-video-conferencing/join), you can add a listener for `HMSUpdateListenerActions.ON_MESSAGE` event to receive new messages as `HMSMessage` object during the call.
 
+Each new message has a unique identifier that separates it from other messages. This uniqueId is available on `messageId` property and you can use it to differentiate between messages.
+
 ```js
 // instance acquired from build() method
 hmsInstance.addEventListener(HMSUpdateListenerActions.ON_MESSAGE, onMessageReceived);
@@ -105,6 +107,7 @@ Let's look at what the `HMSMessage` looks like -
 
 ```js
 interface HMSMessage {
+    messageId: string; // Unique Id of the Message
     message: string;
     type: HMSMessageType;
     time: Date;
