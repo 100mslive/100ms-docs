@@ -209,6 +209,7 @@ data class HMSMessage internal constructor(
   val recipient: HMSMessageRecipient = HMSMessageRecipient(),
   var serverReceiveTime: Date,
   var sender: HMSPeer
+  val messageId: String
 )
 ```
 
@@ -217,6 +218,13 @@ data class HMSMessage internal constructor(
 -   recipient: The intended recipient(s) of this message as a `HMSMessageRecipient`.
 -   serverReceiveTime: timestamp of when the messaging server receives this message. Update the time in your own messages when this comes back from the server in `HMSUpdateListener.onMessageReceived` for accurate ordering of your own messages.
 -   sender: The `HMSPeer` who is sending this message.
+-   messageId: A unique ID assigned by the server which identifies this message.
+
+Identifying Messages:
+
+Use the `messageId` an attribute which will be in:
+1. Remote Messaages: `onMessageReceived(message: HMSMessage)` of `HMSUpdateListener`.
+2. Local Messages: The `onMessageonSuccess(hmsMessage: HMSMessage)` callback of the `HMSMessageResultListener` while sending any kind of message.
 
 Identifying Senders:
 
