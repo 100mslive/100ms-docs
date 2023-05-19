@@ -58,6 +58,16 @@ BaseTrackStats.codecId
 
 ---
 
+### enabled
+
+• `Optional` **enabled**: `boolean`
+
+#### Inherited from
+
+BaseTrackStats.enabled
+
+---
+
 ### firCount
 
 • `Optional` **firCount**: `number`
@@ -185,6 +195,25 @@ MissingOutboundStats.pliCount
 #### Inherited from
 
 MissingOutboundStats.qpSum
+
+---
+
+### qualityLimitationDurations
+
+• `Optional` **qualityLimitationDurations**: `Object`
+
+#### Type declaration
+
+| Name        | Type     |
+| :---------- | :------- |
+| `bandwidth` | `number` |
+| `cpu`       | `number` |
+| `none`      | `number` |
+| `other`     | `number` |
+
+#### Inherited from
+
+MissingOutboundStats.qualityLimitationDurations
 
 ---
 
