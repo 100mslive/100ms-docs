@@ -10,13 +10,20 @@ interface CardProps {
     id: Number;
 }
 
-const Card: React.FC<CardProps> = ({ icon, title, link, subText, id, cta = "Read more" }) => {
+const Card: React.FC<CardProps> = ({ icon, title, link, subText, id, cta = 'Read more' }) => {
     return (
         <Flex
             direction="column"
             justify="between"
             onClick={() => {
-                window.open(`${window.location.pathname}/${link}`, '_self');
+                if (link) {
+                    window.analytics.track('card.clicked', {
+                        title,
+                        link,
+                        currentPage: window.location.href
+                    });
+                    window.open(`${window.location.pathname}/${link}`, '_self');
+                }
             }}
             css={{
                 borderRadius: '$3',
@@ -38,7 +45,9 @@ const Card: React.FC<CardProps> = ({ icon, title, link, subText, id, cta = "Read
                 }
             }}>
             <Box>
-                <Flex align="center" css={{ color: '$textHighEmp', gap: '$2', m: '$10', mb: '$0', mt: '$9' }}>
+                <Flex
+                    align="center"
+                    css={{ color: '$textHighEmp', gap: '$2', m: '$10', mb: '$0', mt: '$9' }}>
                     {icon}
                     <Text variant="h6" css={{ color: '$textHighEmp', ml: '$2' }}>
                         {title}
