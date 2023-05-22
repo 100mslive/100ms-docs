@@ -1213,28 +1213,40 @@ This event will be sent when HLS recordings are successful and uploaded to the s
         "hls_vod_recording_size": 10024,
         "recording_single_files": [
             {
+                "asset_id": "646acb659348ac0ada47d9ef",
                 "layer": "0",
                 "recording_path": "s3://<file-0-bucket-address>.mp4",
                 "recording_presigned_url": "https://<file-0-access-url>?<signature-0>",
-                "size": 10024
+                "size": 10024,
+                "width": 1920,
+                "height": 1080
             },
             {
+                "asset_id": "646acb659348ac0ada47d0cb",
                 "layer": "1",
                 "recording_path": "s3://<file-1-bucket-address>.mp4",
                 "recording_presigned_url": "https://<file-1-access-url>?<signature-1>",
-                "size": 5012
+                "size": 5012,
+                "width": 1280,
+                "height": 720
             },
             {
+                "asset_id": "646acb659348ac0ada4748fc",
                 "layer": "2",
                 "recording_path": "s3://<file-2-bucket-address>.mp4",
                 "recording_presigned_url": "https://<file-2-access-url>?<signature-2>",
-                "size": 2506
+                "size": 2506,
+                "width": 640,
+                "height": 480
             },
             {
+                "asset_id": "646acb659348ac0aba470cdc",
                 "layer": "3",
                 "recording_path": "s3://<file-3-bucket-address>.mp4",
                 "recording_presigned_url": "https://<file-3-access-url>?<signature-3>",
-                "size": 1024
+                "size": 1024,
+                "width": 480,
+                "height": 360
             }
         ],
         "recording_thumbnails": [
