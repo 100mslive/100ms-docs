@@ -71,11 +71,7 @@ Start recording is asynchronous and you can listen to status changes to the reco
 
 ### Stop recording with API
 
-Use the server-side API to end recording for a given room (passed as `room_id` in the request body). This can be combined with webhook events like [`session.close.success`](../configure-webhooks/webhook#sessionclosesuccess) for automation.
-
-By default, recording automatically ends in 5 minutes when all peers have left the room.
-
-Also see [API reference](../../api-reference/recordings/stop-recording-for-room).
+Use the server-side API to end recording for a given room (passed as `room_id` in the request body).
 
 <PostRequest title="https://api.100ms.live/v2/recordings/room/<room_id>/stop" />
 
@@ -88,6 +84,18 @@ curl --request POST 'https://api.100ms.live/v2/recordings/room/<room_id>/stop' \
 ```
 
 </Request>
+
+Also see [API reference](../../api-reference/recordings/stop-recording-for-room).
+
+#### Automatically stop recording
+
+Note that recording automatically ends in 5 minutes after all peers (excluding Beam) have left the room.
+
+To instantly end recording when peers have left the room, you can also chain up our APIs to run relevant business logic before stopping the recording. This ensures the video file will not have the extra 5 minutes of empty frames.
+
+* Listen to the [`peer.leave.success` webhook event](../configure-webhooks/webhook#peerleavesuccess)
+* Make an API call to get peers in the session with the active room APIs: [fetching the active room (session)](../../api-reference/active-rooms/retrieve-active-room) and [relevant peer info](../../api-reference/active-rooms/retrieve-peer)
+* If Beam (bot peer that records the session) is the only peer in the room, you can end the recording with the above API
 
 ### Get recording assets
 
