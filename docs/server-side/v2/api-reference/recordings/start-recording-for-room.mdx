@@ -36,6 +36,7 @@ curl --location --request POST 'https://api.100ms.live/v2/recordings/room/<room_
     "updated_at": "2023-03-30T05:14:04.007990308Z",
     "stopped_at": null,
     "meeting_url": "<meeting-url>",
+    "destination": "<destination_name>",
     "started_by": "",
     "stopped_by": "",
     "asset_types": [
@@ -50,11 +51,12 @@ curl --location --request POST 'https://api.100ms.live/v2/recordings/room/<room_
 
 ## Parameters
 
-| Name         | Type     | Description                             | Required |
-|--------------|----------|-----------------------------------------|----------|
-| meeting_url  | `string` | Single click meeting URL for the stream | Yes      |
-| resolution   | `object` | Video resolution for stream             | No       |
+| Name         | Type      | Description                             | Required |
+|--------------|-----------|-----------------------------------------|----------|
+| meeting_url  | `string`  | Single click meeting URL for the stream | Yes      |
+| resolution   | `object`  | Video resolution for stream             | No       |
 | audio_only   | `boolean` | Pass `true` to get an audio-only recording asset | No       |
+ destination   | `string`  | Name of destination from template to pick up configuration | No       |
 
 ##### meeting_url
 
