@@ -16,6 +16,9 @@ What's a video call without being able to send messages to each other too? 100ms
 
 ## Sending Chat Messages
 
+> 🔑 Note: The `onMessage` callback is not triggered for messages sent by the local peer. In other words, if you send a message yourself, you will not receive the `onMessage` callback for that particular message.
+> To ensure that the message sent by the local peer is included in your messages list, you will need to store it manually. You can achieve this by handling the `onSuccess` callback of the `HMSActionResultListener` and adding the message to your messages list, as shown in the example below.
+
 Let's look at a simple implementation for chat methods:
 
 ```dart
@@ -77,14 +80,17 @@ class Meeting implements HMSUpdateListener, HMSActionResultListener{
 
           case HMSActionResultListenerMethod.sendBroadcastMessage:
           //Broadcast Message sent successfully
+          //Add the message to messages list
           break;
 
           case HMSActionResultListenerMethod.sendGroupMessage:
           //Group Message sent successfully
+          //Add the message to messages list
           break;
 
           case HMSActionResultListenerMethod.sendDirectMessage:
           //Direct Message sent successfully
+          //Add the message to messages list
           break;
           ...
       }
