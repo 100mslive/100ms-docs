@@ -137,7 +137,6 @@ const Sidebar: React.FC<Props> = ({
     const [tech, setTech] = useState(menuItem[indexOf]);
 
     const changeTech = (s) => {
-        console.log(s);
         setTech((prevSelection) => {
             window.analytics.track('link.clicked', {
                 btnId: 'platform.switched',
