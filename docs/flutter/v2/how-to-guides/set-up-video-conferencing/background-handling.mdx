@@ -15,6 +15,60 @@ There are 2 prominent behaviours that are mainly affected when apps transition t
 
 Let's breakdown how your apps can implement efficient handling of Background states on iOS & Android Platforms.
 
+## How to prevent mobile device from getting locked while on a call?
+
+To prevent the device from locking during lengthy video or audio calls, you can utilize the [wakelock](https://pub.dev/packages/wakelock) package. By default, devices are configured to lock the screen after a certain period of inactivity as defined in the device settings. However, during calls, where user interactions on the screen are minimal, this behavior can become disruptive.
+To address this issue, the wakelock package can be employed.
+
+It allows you to acquire a wake lock, ensuring that the device remains awake and the screen stays active during the call. By utilizing this package, you can prevent the device from locking automatically and provide a seamless call experience.
+
+Let's see how we can add the package in our applications:
+
+<div className="steps-container">
+
+### Add wakelock to pubspec.yaml file
+
+```yaml
+dependencies:
+  wakelock:
+```
+
+### Enable wakelock in the application
+
+The `Wakelock` package offers convenient methods to enable and disable the wakelock feature within your application. This allows you to selectively enable wakelock only in specific screens where it is necessary.
+
+For example, to enable wakelock in whole application:
+
+```dart
+void main(){
+  Wakelock.enable();
+}
+```
+
+### Disable wakelock in the application
+
+To disable wakelock we can use the `disable` method:
+
+```dart
+Wakelock.disable();
+```
+
+</div>
+
+## Managing Wakelock and Earpiece Audio Source in Your App
+
+During phone calls, when using the Wakelock feature to keep the screen on, we often place our phones near our ears. However, this proximity sometimes results in unintentional button presses on the app, as the phone's screen comes into contact with our face. To
+handle such cases we will need to disable wakelock and enable the proximity sensor's default behaviour.
+
+We can use the `proximity_screen_lock` package to enable this functionality. Just add this package in `pubspec.yaml`, run `flutter pub get`
+and add the below code in your application to enable this:
+
+```dart
+if (ProximityLockScreen.isProximityLockSupported()) {
+  ProximityLockScreen.setActive(true)
+}
+```
+
 ## iOS Background Handling
 
 When your app goes into the background, by default it can no longer access camera or microphone and publish it to other peers in the room. Also, you cannot hear audio of other participants in the call if your app is in the background without enabling Background Modes.
