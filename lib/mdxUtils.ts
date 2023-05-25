@@ -41,26 +41,26 @@ export const getDocsPaths = () => {
         .map((path) => path.replace(MARKDOWN_REGEX, ''));
 };
 
-function seperateDots(dotSeperatedNumber) {
-    return dotSeperatedNumber.split('.').map((numStr) => Number.parseInt(numStr));
-}
+// function seperateDots(dotSeperatedNumber) {
+//     return dotSeperatedNumber.split('.').map((numStr) => Number.parseInt(numStr));
+// }
 
-function dotSeperatedNumberCompare(a, b) {
-    const aNumbers = seperateDots(a),
-        bNumbers = seperateDots(b);
+// function dotSeperatedNumberCompare(a, b) {
+//     const aNumbers = seperateDots(a),
+//         bNumbers = seperateDots(b);
 
-    for (let i = 0; i < Math.min(aNumbers.length, bNumbers.length); i++) {
-        if (aNumbers[i] !== bNumbers[i]) {
-            return aNumbers[i] > bNumbers[i] ? 1 : -1;
-        }
-    }
+//     for (let i = 0; i < Math.min(aNumbers.length, bNumbers.length); i++) {
+//         if (aNumbers[i] !== bNumbers[i]) {
+//             return aNumbers[i] > bNumbers[i] ? 1 : -1;
+//         }
+//     }
 
-    if (aNumbers.length === bNumbers.length) {
-        return 0;
-    } else {
-        return aNumbers.length > bNumbers.length ? 1 : -1;
-    }
-}
+//     if (aNumbers.length === bNumbers.length) {
+//         return 0;
+//     } else {
+//         return aNumbers.length > bNumbers.length ? 1 : -1;
+//     }
+// }
 
 /**
  * Gets a list of all docs and their meta in the `DOCS_PATH` directory
