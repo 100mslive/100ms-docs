@@ -55,6 +55,8 @@ interface Props {
     };
     source: string;
     showToc?: boolean;
+    currentDocs?: any;
+    allDocs?: any;
 }
 
 const MDX_GLOBAL_CONFIG = {
@@ -63,7 +65,14 @@ const MDX_GLOBAL_CONFIG = {
     }
 };
 
-const DocSlugs = ({ source, frontMatter, pagination, showToc = true }: Props) => {
+const DocSlugs = ({
+    source,
+    frontMatter,
+    pagination,
+    showToc = true,
+    currentDocs,
+    allDocs
+}: Props) => {
     const {
         query: { slug },
         asPath
@@ -117,6 +126,9 @@ const DocSlugs = ({ source, frontMatter, pagination, showToc = true }: Props) =>
     if (Array.isArray(slug) && slug[1] === 'android') {
         showPagination = false;
     }
+    console.log('currentDocs', currentDocs);
+    console.log(pagination);
+    console.log('allDocs', allDocs);
 
     return (
         <>
@@ -167,6 +179,7 @@ export const getStaticProps = async ({ params }) => {
     const navItems = getNavfromDocs(allDocs);
     const [currentDocSlug] = params.slug as string[];
     const currentDocs = allDocs.filter((doc) => doc.url.includes(`/${currentDocSlug}/`));
+
     const { previousPost, nextPost } = getPagination(currentDocs, params.slug as string[]);
     const pagination = { previousPost, nextPost };
     const { code, frontmatter } = await bundleMDX({
@@ -216,7 +229,9 @@ export const getStaticProps = async ({ params }) => {
             nav: { [currentDocSlug]: navItems[currentDocSlug] },
             source: code, // { compiledSource: mdxSource.compiledSource },
             frontMatter: frontmatter,
-            showToc: true
+            showToc: true,
+            currentDocs: currentDocs,
+            allDocs: allDocs
         }
     };
 };

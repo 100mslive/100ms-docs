@@ -1,6 +1,6 @@
 ---
 title: Manage Audio Volume
-nav: 6.4
+nav: 1.26
 ---
 
 ![Change Volume](/guides/volume.png)
@@ -8,7 +8,7 @@ nav: 6.4
 ## Change Volume API
 
 Audio volume refers to the volume of an audio track as perceived on the receiving end. This is a number between 0 to 100.
-To modify audio volume - 
+To modify audio volume -
 
 <Tabs id="volume" items={['Javascript', 'React']} />
 
@@ -21,10 +21,10 @@ const volume = 70;
 hmsActions.setVolume(volume);
 
 // set the volume for a specific track
-hmsActions.setVolume(volume, "<track_id>");
+hmsActions.setVolume(volume, '<track_id>');
 
 // get the currrent volume for a specific track
-hmsStore.getState(selectAudioTrackVolume("<track_id>"));
+hmsStore.getState(selectAudioTrackVolume('<track_id>'));
 ```
 
 </Tab>
@@ -32,19 +32,19 @@ hmsStore.getState(selectAudioTrackVolume("<track_id>"));
 <Tab id='volume-1'>
 
 ```jsx
-function PeerVolumeController({peerID}) {
-  const track = useHMSStore(selectAudioTrackByPeerID(peerID));
-  const currVolume = useHMSStore(selectAudioTrackVolume(track?.id));
-  const hmsActions = useHMSActions();
+function PeerVolumeController({ peerID }) {
+    const track = useHMSStore(selectAudioTrackByPeerID(peerID));
+    const currVolume = useHMSStore(selectAudioTrackVolume(track?.id));
+    const hmsActions = useHMSActions();
 
-  const setVolume = (volume) => {
-    if (track) {
-      console.log(`setting volume for track=${track.id}, prev=${currVolume}, new=${volume}`);
-      hmsActions.setVolume(volume, track.id);
-    }
-  }
+    const setVolume = (volume) => {
+        if (track) {
+            console.log(`setting volume for track=${track.id}, prev=${currVolume}, new=${volume}`);
+            hmsActions.setVolume(volume, track.id);
+        }
+    };
 
-  return <Slider onChange={setVolume}/>;
+    return <Slider onChange={setVolume} />;
 }
 ```
 
@@ -55,17 +55,16 @@ function PeerVolumeController({peerID}) {
 Availability of peer doesn't mean availability of their audio track. The below code can silence the whole room if peer's audio track is not yet present.
 
 ```js
-const peer = hmsStore.getState(selectPeerById("peer-id"));
-hmsActions.setVolume(0, peer?.audioTrack);  // 
+const peer = hmsStore.getState(selectPeerById('peer-id'));
+hmsActions.setVolume(0, peer?.audioTrack); //
 ```
 
-If you want to set volume for specific track, always do a check before calling setVolume - 
-
+If you want to set volume for specific track, always do a check before calling setVolume -
 
 ```js
-const peer = hmsStore.getState(selectPeerById("peer-id"));
+const peer = hmsStore.getState(selectPeerById('peer-id'));
 if (peer?.audioTrack) {
-  hmsActions.setVolume(0, peer.audioTrack);
+    hmsActions.setVolume(0, peer.audioTrack);
 }
 ```
 
@@ -75,23 +74,22 @@ if (peer?.audioTrack) {
 
 If you're building a 2D/3D world, where peers can navigate around and you want the audio to be based on how close two people are, you can use this action to decide an appropriate audio level based on proximity.
 
-
 ### Silence a role
 
-To silence a particular role, you can get all the peers for the role and silence the tracks in a loop - 
+To silence a particular role, you can get all the peers for the role and silence the tracks in a loop -
 
 ```js
 function setVolumeByRole(roleName, volume) {
-  const peers = hmsStore.getState(selectPeersByRole(roleName));
-  for (const peer of peers) {
-    if (peer.audioTrack) {
-      hmsActions.setVolume(volume, peer.audioTrack);
+    const peers = hmsStore.getState(selectPeersByRole(roleName));
+    for (const peer of peers) {
+        if (peer.audioTrack) {
+            hmsActions.setVolume(volume, peer.audioTrack);
+        }
     }
-  }
 }
 
 // silence a role
-setVolumeByRole("role-name", 0);
+setVolumeByRole('role-name', 0);
 // revert the silence
-setVolumeByRole("role-name", 100);
+setVolumeByRole('role-name', 100);
 ```
