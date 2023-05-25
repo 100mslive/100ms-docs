@@ -55,8 +55,6 @@ interface Props {
     };
     source: string;
     showToc?: boolean;
-    currentDocs?: any;
-    allDocs?: any;
 }
 
 const MDX_GLOBAL_CONFIG = {
@@ -65,14 +63,7 @@ const MDX_GLOBAL_CONFIG = {
     }
 };
 
-const DocSlugs = ({
-    source,
-    frontMatter,
-    pagination,
-    showToc = true,
-    currentDocs,
-    allDocs
-}: Props) => {
+const DocSlugs = ({ source, frontMatter, pagination, showToc = true }: Props) => {
     const {
         query: { slug },
         asPath
@@ -126,9 +117,6 @@ const DocSlugs = ({
     if (Array.isArray(slug) && slug[1] === 'android') {
         showPagination = false;
     }
-    console.log('currentDocs', currentDocs);
-    console.log(pagination);
-    console.log('allDocs', allDocs);
 
     return (
         <>
@@ -229,9 +217,7 @@ export const getStaticProps = async ({ params }) => {
             nav: { [currentDocSlug]: navItems[currentDocSlug] },
             source: code, // { compiledSource: mdxSource.compiledSource },
             frontMatter: frontmatter,
-            showToc: true,
-            currentDocs: currentDocs,
-            allDocs: allDocs
+            showToc: true
         }
     };
 };

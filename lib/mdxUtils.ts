@@ -89,7 +89,7 @@ export const getAllDocs = () => {
                 content
             };
         })
-        .sort((a, b) => dotSeperatedNumberCompare(String(a.nav), String(b.nav)));
+        .sort((a, b) => Number(a.nav) - Number(b.nav));
     return docs;
 };
 
@@ -119,18 +119,6 @@ export const slugify = (text) =>
         .replace(/--+/g, '-')
         .replace(/^-+/, '')
         .replace(/-+$/, '');
-
-/*
-Source: https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery
-    
-    (/\s+/g, '-') //spaces to dashes
-    (/&/g, '-and-') //ampersand to and
-    (/[^\w\-]+/g, '') //remove non-words
-    (/\-\-+/g, '-') //collapse multiple dashes
-    (/^-+/, '') //trim starting dash
-    (/-+$/, ''); //trim ending dash
-    
-*/
 
 export const toMdxJsxFlowElement = (input) => {
     const tree = fromMarkdown(input, {

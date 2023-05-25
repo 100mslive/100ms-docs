@@ -48,7 +48,6 @@ const ActiveLink = ({
                         if (newClassNameIsSet === false && !activePathname.includes(includeValue)) {
                             newClassNameIsSet = true;
                             newClassName = className;
-                            console.log('includevalue', includeValue, activePathname);
                         }
                     });
 
