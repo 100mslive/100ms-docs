@@ -1,0 +1,27 @@
+---
+title: Overview
+nav: 4.1
+---
+
+## Introduction
+
+Webhook is an HTTP(S) endpoint used for pushing the notifications to your application. Event-based webhooks/user-defined HTTP webhooks, can be used to track the events in your room and build business logic, allowing you to create analytics on your traffic. Create an attendance system, for instance. Every session, 100ms sends a list of events to the URL you specify in the webhook configuration. For analytics and/or debugging, you can store these data on your server.
+
+To handle a webhook, you must create a listener to accept these HTTP requests from 100ms.
+
+## Requirements
+
+-   Webhook MUST implement `POST` HTTP method for receiving notifications. 100ms notifications are in JSON format so it should be handled accordingly.
+-   To handle webhooks in your app, your endpoint should:
+    -   Capture HTTP requests
+    -   Respond to the requests
+-   When 100ms sends the HTTP request callbacks to the webhook during an event, you should capture the request and respond with a 200 OK response. You can store the webhook data in your database for later processing.
+    > **Note:** 100ms automatically retries webhooks three times if your server does not return an HTTP 200 status code.
+    >
+    > -   First at 1 second after the original attempt.
+    > -   Second at 3 seconds after the first retry attempt.
+    > -   Third at 10 seconds after the second retry attempt.
+
+## How to configure Webhook
+
+Webhook can be configured using [Developer](https://dashboard.100ms.live/developer) section of [100ms Dashboard](https://dashboard.100ms.live/). Each workspace can have its own webhook configuration.

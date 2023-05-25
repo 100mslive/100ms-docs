@@ -1,0 +1,75 @@
+---
+title: Music Mode (Beta) (iOS Only)
+nav: 7.2
+---
+
+Use music mode to enable high quality audio streaming. This is useful when you have a use-case
+of streaming music that's getting captured through the mic.
+
+## Minimum Requirements
+
+- SDK version 1.6.0 or higher
+- iOS Platform only. Android support will be released soon.
+
+
+## What is Music Mode?
+
+Music Mode is a feature that allows you to capture audio in its highest quality by disabling voice processing and increasing the maximum bandwidth limit. By default, audio is processed to enhance human voice clarity, which includes techniques like noise cancellation and automatic gain control. However, this processing can suppress background music and lower its quality.
+
+With Music Mode, you can remove these voice processing methods and capture all types of frequencies with your microphone, making it ideal for recording music or any other audio that isn't focused solely on voice. Additionally, the maximum bandwidth limit for audio is increased from 32 Kbps to 320 Kbps. This higher limit ensures that music is not compressed too much and is captured in its original quality.
+
+To enable Music Mode, simply update the Audio Track Settings while building the HMSSDK. With this feature, you can achieve high-quality audio recordings with full, rich sound, whether you're recording music, podcasts, or any other type of audio.
+
+
+## How to turn on Music Mode?
+
+1. You can create an instance of the `HMSAudioTrackSetting` with the `audioMode` property set
+  to `HMSAudioMode.MUSIC`. When the `audioMode` property is set to `HMSAudioMode.MUSIC`, the
+  SDK will use 320 Kbps bandwidth for publishing audio instead of default 32 Kbps max-bandwidth.
+
+  Then, you can use this `HMSAudioTrackSetting` instance when building an instance of the `HMSSDK`
+  class using the static `build` method.
+
+Now, let's take a look at how we can activate the Music Mode in a Flutter application:
+
+```dart
+class Meeting implements HMSUpdateListener{
+
+    late HMSSDK hmsSDK;
+
+    ///[audioMode]: HMSAudioMode enum with `MUSIC` and `VOICE` as values
+    ///Here we are passing as `HMSAudioMode.MUSIC` to enable music mode
+
+    HMSTrackSetting trackSettingsForMusicMode = HMSTrackSetting(audioTrackSetting: HMSAudioTrackSetting(audioMode: HMSAudioMode.MUSIC));
+
+    Meeting(){
+        /// pass the trackSettings with audioMode while constructing the HMSSDK instance
+         ̶h̶m̶s̶S̶D̶K̶ ̶=̶ ̶H̶M̶S̶S̶D̶K̶(̶)̶;̶
+
+        /// Here we are passing the `HMSTrackSetting` instance which we created above with `audioMode` as 
+        /// `HMSAudioMode.MUSIC` to enable music mode
+        hmsSDK = HMSSDK(hmsTrackSetting: trackSettingsForMusicMode);
+
+        /// Continue with rest of the hmssdk method calls like build,join etc.
+        setupHMSSDK();
+    }
+
+    void setupHMSSDK() async{
+        await hmsSDK.build(); // ensure to await while invoking the `build` method
+        hmsSDK.addUpdateListener(listener: this);
+        HMSConfig config = HMSConfig(authToken: 'eyJH5c', // client-side token generated from your token service
+                                userName: 'John Appleseed');
+        hmsSDK.join(config: config);
+    }
+}
+  ```
+
+> The default audio mode of the OS is selected by default. For regular audio and video calls, there is no requirement to pass the audioMode parameter explicitly.
+
+If you prefer not to use the Music Mode, you can create an instance of HMSSDK without passing the audioMode parameter in the HMSAudioTrackSetting instance since it's an optional parameter.
+
+2. In the newer iPhones (iPhone XS onwards) make sure that 'Wide Spectrum' mic mode is selected
+  in the control center. If you select 'Standard' or 'Voice Isolation' mode then your iPhone might
+  apply voice processing on top to affect the music quality.
+
+To witness how we've leveraged audio modes in our sample application, take a peek at our sample app [here](https://github.com/100mslive/100ms-flutter/blob/7bcce35cbbc126aad73be7a4b47e3de7195cbc21/example/lib/common/util/utility_function.dart#L225).

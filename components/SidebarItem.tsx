@@ -21,7 +21,7 @@ const SidebarItem = ({ route, index, asPath, activeItem }) => {
                     display: 'flex',
                     alignItems: 'flex-start',
                     paddingLeft: '1rem',
-                    marginLeft: '0.95rem'
+                    marginLeft: '-1px'
                 }}>
                 <MinusIcon
                     style={{

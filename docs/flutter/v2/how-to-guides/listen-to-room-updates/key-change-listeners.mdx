@@ -1,0 +1,126 @@
+---
+title: Session Store Key Change Listeners
+nav: 5.5
+---
+
+The `HMSKeyChangeListener` is a listener designed to detect changes in session store values. If a specific key has a `HMSKeyChangeListener` attached, the listener will trigger an `onKeyChanged` event every time that key's value is updated.
+
+> `HMSKeyChangeListener` can be attached wherever we want to listen the session store changes for corresponding keys.
+> Multiple `keyChangeListener` can be attached for different keys as well as same keys.
+
+## How to add an HMSKeyChangeListener?
+
+This section contains info about how we can add HMSKeyChangeListener to our class:
+
+<div className="steps-container">
+
+### Get the session store instance
+
+To get the `HMSSessionStore` instance we will need to override the `onSessionStoreAvailable` method of `HMSUpdateListener`.
+We will be storing the `HMSSessionStore` instance for future usages.
+
+```dart
+class Meeting implements HMSUpdateLister{
+
+
+    /// We will be storing the HMSSessionStore instance in _hmsSessionStore variable for future usages.
+    /// This instance can be shared with other classes as well.
+    HMSSessionStore? _hmsSessionStore;
+    ...
+
+    /// Here we get the instance of HMSSessionStore using which
+    /// We will be performing the session metadata actions
+    @override
+    void onSessionStoreAvailable({HMSSessionStore? hmsSessionStore}) {
+        _hmsSessionStore = hmsSessionStore;
+    }
+
+    ...
+}
+```
+
+> `HMSSessionStore` instance can be shared across classes. There is no need to implement `HMSUpdateListener` in all the classes.
+
+### Implement HMSKeyChangeListener
+
+To receive updates for a specific key's value in the session store, you can implement the HMSKeyChangeListener interface in a class of your choice. Once implemented, attach an instance of the class to the key whose updates you want to monitor, and the onKeyChanged method will be triggered every time the key's value changes.
+
+> `onKeyChanged` is only called when we have attached the `keyChangeListener` for corresponding keys. Steps about how to attach the 
+> `keyChangeListener` is mentioned below.
+
+```dart
+class Meeting implements HMSUpdateListener,HMSKeyChangeListener{
+
+    ...
+
+
+    /// We get this call everytime metadata corresponding to a key is changed
+    ///
+    /// Note: This only gets called when we have attached [HMSKeyChangeListener] using
+    ///       addKeyChangeListener method with keys to be listened
+    @override
+    void onKeyChanged({required String key, required String? value}) {
+        //Here we will get the updated `value` for the corresponding `key` 
+    }
+}
+```
+
+### Add keyChangeListener
+
+To receive updates about value changes for a corresponding key we will need to attach `keyChangeListener` using `addKeyChangeListener` method.
+
+```dart
+class Meeting implements HMSUpdateListener,HMSKeyChangeListener{
+
+    ...
+
+    /// We will be storing the HMSSessionStore instance in _hmsSessionStore variable for future usages.
+    /// This instance can be shared with other classes as well.
+    HMSSessionStore? _hmsSessionStore;
+    ...
+
+    /// Here we get the instance of HMSSessionStore using which
+    /// We will be performing the session metadata actions
+    @override
+    void onSessionStoreAvailable({HMSSessionStore? hmsSessionStore}) {
+        _hmsSessionStore = hmsSessionStore;
+    }
+
+    /// This method can be called to attach listener for value changes 
+    void addKeyListener(List<String> keysToBeListened){
+        
+        /// [keysToBeListened]: List of String containing the session keys which are needed to be listened
+        /// Example for keys parameter: ["spotlight","pinnedMessage"]
+        /// [hmsKeyChangeListener]: an instance of a class which implements HMSKeyChangeListener
+        /// Here this is an instance of a class that implements HMSKeyChangeListener, that is, Meeting
+        _hmsSessionStore?.addKeyChangeListener(keys: keysToBeListened,hmsKeyChangeListener: this);
+    }
+}
+```
+
+That's it now we will start getting updates regarding the change in values for the keys.
+
+</div>
+
+## How to remove key change listener
+
+To stop receiving updates on key values, especially in cases like when you leave the room, you can utilize the removeKeyChangeListener method.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener,HMSKeyChangeListener{
+
+    ...
+
+    /// [hmsKeyChangeListener]: an instance of a class which implements HMSKeyChangeListener which was passed
+    /// in addKeyChangeListener method while adding the key change listener
+    /// Here this is an instance of a class that implements HMSKeyChangeListener, that is, Meeting
+    _hmsSessionStore?.removeKeyChangeListener(hmsKeyChangeListener: this);
+
+    ...
+
+}
+```
+
+> It is recommended to remove all the key change listeners while leaving the Room.
+
+Read more about Session Store [here](/flutter/v2/how-to-guides/interact-with-room/room/session-store).

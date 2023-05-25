@@ -1,0 +1,83 @@
+---
+ title: Metadata (Deprecated)
+ nav: 7.25
+---
+
+Session metadata is a shared state that is accessible to all participants in a room. It can be used for features such as pinning text or highlighting a particular participant. The session metadata is retained throughout the duration of a session and is cleared once all participants have left the room.
+
+## Differences between Session Metadata and Peer Metadata
+
+While peer metadata is associated with individual peers and each peer can have their own metadata, session metadata remains the same for every peer in the room.
+
+## How to store shared data with 100ms SDK
+
+To update the value of the session metadata for the current room session, call **setSessionMetadata** method on SDK instance. In the following example, the "test" string will be saved in the session metadata and accessible to all participants in the room as a shared state.
+
+Make sure you call session metadata API after you joined the room. You should listen to [onJoin()](https://www.100ms.live/docs/ios/v2/how--to-guides/set-up-video-conferencing/join#call-join) callback to proceed.
+```swift
+hmsSDK.setSessionMetadata("test") { success, error in
+  if !success {
+		// show error
+  } else {
+	  // update UI
+  }
+}
+```
+
+## How to read shared data with 100ms SDK
+
+To retrieve the session metadata, use the **getSessionMetadata** method:
+
+Make sure you call session metadata API after you joined the room. You should listen to [onJoin()](https://www.100ms.live/docs/ios/v2/how--to-guides/set-up-video-conferencing/join#call-join) callback to proceed.
+```swift
+hmsSDK.getSessionMetadata() { metadata, error in
+  if let metadata = metadata {
+    // session metadata is available, update UI
+  }
+  else {
+    // no session metadata is set
+  }
+}
+```
+
+## Limitations and Alternatives in the Beta Release
+
+At present, there is no callback that will be triggered to indicate changes in the session metadata.
+
+## Then how can I notify other users that session metadata has changed
+
+To notify others that the session data has been changed, you can send a broadcast message:
+
+```swift
+hmsSDK.setSessionMetadata("test") { success, error in
+  if !success {
+     // show error
+  } else {
+     // update UI
+     hmsSDK.sendBroadcastMessage(type: "metadata", message: "refresh")
+  }
+}
+```
+
+On the receiving end, you can listen for this message to know that the session metadata has been updated:
+
+```swift
+func on(message: HMSMessage) {
+  switch message.type {
+    case "chat":
+      messages.append(message)
+    case "metadata":
+      hmsSDK.getSessionMetadata() { metadata, error in
+	 if let metadata = metadata {
+	    // update UI with metadata
+	 }
+      }
+    default:
+      break
+   }
+}
+```
+
+Note: To ensure that all participants in the video conference have access to the latest session metadata, it is recommended that you use the getSessionMetadata API within the [onJoin()](https://www.100ms.live/docs/ios/v2/how--to-guides/set-up-video-conferencing/join#call-join) callback. This will allow you to update your app's initial state with any shared metadata that already exists in the session. By doing so, new participants who join the room will be able to view this shared metadata as soon as they enter the session.
+
+👀 For an example of how to implement pinned chat support using shared metadata in an iOS app with the 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).

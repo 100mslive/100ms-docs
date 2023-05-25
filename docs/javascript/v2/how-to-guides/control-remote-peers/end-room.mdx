@@ -1,0 +1,122 @@
+---
+title: End Room for All
+nav: 1.27
+---
+
+![End Room](/guides/end-room.png)
+
+If the local peer has [`endRoom`](/javascript/v2/how--to-guides/control-remote-peers/change-role#know-thy-permissions) permission they can end a room using the below api. It's also possible to lock
+the room to prevent any future rejoins.
+
+<Tabs id="endroomcall" items={['JavaScript', 'React']} />
+
+<Tab id='endroomcall-0'>
+
+```js
+function renderEndRoomButton(permissions) {
+    const endRoomButton = document.getElementById('end-room-button');
+
+    if (permissions.endRoom) {
+        endRoomButton.addEventListener('click', function () {
+            try {
+                const lock = false; // set to true to disallow rejoins
+                const reason = 'party is over';
+                await hmsActions.endRoom(lock, reason);
+            } catch (error) {
+                // Permission denied or not connected to room
+                console.error(error);
+            }
+        });
+        endRoomButton.style.display = 'inline-block';
+    } else {
+        endRoomButton.style.display = 'none';
+    }
+}
+
+// subscribe to the permissions, so render is called whenever there is a change due to role change
+hmsStore.subscribe(renderEndRoomButton, selectPermissions);
+```
+
+</Tab>
+
+<Tab id='endroomcall-1'>
+
+```jsx
+function EndRoomButton() {
+    const permissions = useHMSStore(selectPermissions);
+    const hmsActions = useHMSActions();
+
+    const endRoom = () => {
+        try {
+            const lock = false; // set to true to disallow rejoins
+            const reason = 'party is over';
+            await hmsActions.endRoom(lock, reason);
+        } catch (error) {
+            // Permission denied or not connected to room
+            console.error(error);
+        }
+    };
+
+    return permissions.endRoom ? <button onClick={endRoom}>End Room</button> : null;
+}
+```
+
+</Tab>
+
+> 🚧 If the local peer doesn't have the required `endRoom` permission, the `hmsActions.endRoom` call will throw an [HMSException error](/javascript/v2/how--to-guides/debugging/error-handling).
+
+## End Room Notification
+
+Once the peer with adequate permissions calls `endRoom`, all other peers in the room will receive a [notification](/javascript/v2/how--to-guides/listen-to-room-events/notifications) with type `ROOM_ENDED` with a [HMSLeaveRoomRequest](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequest) object as the data.
+
+The SDK automatically calls leave and performs necessary clean ups immediately after this notification is sent, clients should show the appropriate UI(show a toast, redirect to a 'good-bye' page) within this period.
+
+<Tabs id="endroomhandle" items={['JavaScript', 'React']} />
+
+<Tab id='endroomhandle-0'>
+
+```js
+hmsNotifications.onNotification((notification) => {
+    if (!notification) {
+        return;
+    }
+
+    switch (notification.type) {
+        // ...Other notification type cases
+        case 'ROOM_ENDED':
+            // Redirect or Show toast to user
+            toast(notification.data.reason);
+            break;
+    }
+});
+```
+
+</Tab>
+
+<Tab id='endroomhandle-1'>
+
+```jsx
+import { useHMSNotifications } from '@100mslive/react-sdk';
+
+function Notification() {
+    const notification = useHMSNotifications();
+
+    useEffect(() => {
+        if (!notification) {
+            return;
+        }
+
+        switch (notification.type) {
+            // ...Other notification type cases
+            case 'ROOM_ENDED':
+                // Redirect or Show toast to user
+                toast(notification.data.reason);
+                break;
+        }
+    }, [notification]);
+
+    return <div>Notification: {notification?.type}</div>;
+}
+```
+
+</Tab>

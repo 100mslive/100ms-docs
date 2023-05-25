@@ -127,7 +127,8 @@ const DocSlugs = ({ source, frontMatter, pagination, showToc = true }: Props) =>
                     minWidth: '100px',
                     flexGrow: '1',
                     boxSizing: 'border-box',
-                    padding: '0 2rem',
+                    maxWidth: '976px',
+                    padding: '0 48px',
                     minHeight: '100vh',
                     paddingBottom: '80px'
                 }}>
@@ -166,6 +167,7 @@ export const getStaticProps = async ({ params }) => {
     const navItems = getNavfromDocs(allDocs);
     const [currentDocSlug] = params.slug as string[];
     const currentDocs = allDocs.filter((doc) => doc.url.includes(`/${currentDocSlug}/`));
+
     const { previousPost, nextPost } = getPagination(currentDocs, params.slug as string[]);
     const pagination = { previousPost, nextPost };
     const { code, frontmatter } = await bundleMDX({
@@ -235,4 +237,4 @@ export const getStaticPaths = async () => {
     };
 };
 
-DocSlugs.Layout = DocLayout
+DocSlugs.Layout = DocLayout;

@@ -1,0 +1,146 @@
+---
+title: HLS Timed Metadata
+nav: 1.31
+---
+
+HLS Timed Metadata feature helps you synchronise certain events with the HLS stream. This can be useful for showing interactive quizzes / product overlays etc.
+
+## Requirements
+
+-   Active HLS stream
+-   react-sdk min version: 0.3.0
+
+## Sending HLS Timed Metadata
+
+To add HLS timed metadata cue to the currently running HLS stream use `sendHLSTimedMetadata` API like this:
+
+```javascript
+export interface HLSTimedMetadata {
+	payload: string; // limited to 100 chars
+	duration: number;
+}
+
+sendHLSTimedMetadata(metadatalist: HLSTimedMetadata[]): Promise<void>;
+```
+
+## Receiving HLS Timed Metadata
+### Receiving Payload structure
+
+The HLS timed metadata payload send is base64 encoded string. It can be decoded to as shown below.
+
+```json
+{
+    "payload": "payload sent by the user",
+    "start_date": "2023-02-06T07:24:11.259+0000",
+    "end_date": "2023-02-06T07:24:21.259+0000",
+    "hms_version": "v1.1"
+}
+```
+start_date and end_date will be in UTC timezone.
+
+### App side implementation
+
+> Note: We're working on making this simpler - if you'd like to try out the feature in beta, please reach out to us on Discord or at hello@100ms.live
+
+Below is an app side sample integration using hls.js.
+
+```javascript
+import Hls, { Fragment, LevelParsed } from 'hls.js';
+
+const videoEl; // reference for video element
+const hlsUrl; // reference to hls url
+
+// Extract textTrack
+const extractMetaTextTrack = (): TextTrack | null => {
+  const textTrackListCount = videoEl?.textTracks.length || 0;
+  for (let trackIndex = 0; trackIndex < textTrackListCount; trackIndex++) {
+    const textTrack = videoEl?.textTracks[trackIndex];
+    if (textTrack?.kind !== 'metadata') {
+      continue;
+    }
+    textTrack.mode = 'showing';
+    return textTrack;
+  }
+  return null;
+};
+
+// sync time with cue and trigger event
+const fireCues = (currentAbsTime, tolerance) => {
+  const cues = extractMetaTextTrack()?.cues
+  if (!cues) {
+    return
+  }
+  const cuesLength = cues.length;
+  let cueIndex = 0;
+  while (cueIndex < cuesLength) {
+    const cue: TextTrackCue = cues[cueIndex];
+    if (cue.queued) {
+      return
+    }
+    // here we are converting base64 to actual data.
+    const data: Record<string, any> = metadataPayloadParser(cue.value.data);
+    const startDate = data.start_date;
+    const endDate = data.end_date;
+    const timeDiff = new Date(startDate).getTime() - currentAbsTime;
+    const duration = new Date(endDate).getTime() - new Date(startDate).getTime();
+    if (timeDiff <= tolerance) {
+      setTimeout(() => {
+        const toast = {
+          title: `Payload from timed Metadata ${data.payload}`,
+          duration: duration,
+        };
+        console.debug("Added toast ", JSON.stringify(toast));
+        cue.queued = false;
+      }, timeDiff);
+      cue.queued = true;
+    }
+    cueIndex++;
+  }
+};
+
+// handle time update listener
+const handleTimeUpdateListener = () => {
+  // extract timed metadata text track
+  const metaTextTrack: TextTrack | null = extractMetaTextTrack();
+  if (!metaTextTrack || !metaTextTrack.cues) {
+    return;
+  }
+  const firstFragProgramDateTime = videoEl?.getStartDate();
+  const currentAbsTime = new Date(firstFragProgramDateTime).getTime() + (videoEl?.currentTime || 0) * 1000
+  // fire cue for timed meta data extract
+  fireCues(currentAbsTime, 0.25);
+};
+
+/**
+  * Metadata are automatically parsed and added to the video element's
+  * textTrack cue by hlsjs as they come through the stream.
+  * in FRAG_CHANGED, we read the cues and emit HLS_METADATA_LOADED
+  * when the current fragment has a metadata to play.
+  */
+const fragChangeHandler = (_: any, { frag }: { frag: Fragment }) => {
+  try {
+    if (videoEl.textTracks.length === 0) {
+      return;
+    }
+    const fragStartTime = frag.programDateTime || 0;
+    const fragmentDuration = frag.end - frag.start;
+    fireCues(fragStartTime, fragmentDuration);
+  } catch (e) {
+    console.error('FRAG_CHANGED event error', e);
+  }
+};
+
+/**
+* initialize HLSController and add event listeners.
+*/
+if (Hls.isSupported()) {
+  const hls = new Hls();
+  hls.loadSource(hlsUrl);
+  hls.attachMedia(videoEl);
+  hls.on(Hls.Events.FRAG_CHANGED, fragChangeHandler);
+} else if (videoEl.canPlayType("application/vnd.apple.mpegurl")) {
+  // when hls.js is not supported and native player supports HLS playback
+  videoEl.src = hlsUrl;
+  videoEl.addEventListener("timeupdate", handleTimeUpdateListener);
+}
+```

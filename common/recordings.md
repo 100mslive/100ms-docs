@@ -37,7 +37,7 @@ Browser recording is built to give users a participant-first recording experienc
 
 **Resources**
 
-- [How to implement Browser Recording](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording)
+- [How to implement Browser Recording](/server-side/v2/how-to-guides/recordings/overview)
 
 ### SFU Recording [Advanced]
 
@@ -163,7 +163,7 @@ If a storage destination is not configured for recordings and if you choose to r
 
 ## Chat Recording
 
-Chat recording is a feature through which you will receive all chats messages sent by peers during the SFU/browser recording. Chat recording is available for both SFU recording and browser recording. Only public chats sent to all roles will be recorded. The `.csv` file will be uploaded to the recording bucket configured for your video recordings. The file header will be: `SenderPeerID,SenderName,SenderUserID,Roles,SentAt,Type,Message`
+Chat recording is a feature through which you will receive all chats messages sent by peers during the SFU/browser recording. Chat recording is available for both SFU recording and browser recording. Only chats sent to some or all roles will be recorded. The `.csv` file will be uploaded to the recording bucket configured for your video recordings. The file header will be: `SenderPeerID,SenderName,SenderUserID,Roles,SentAt,Type,Message`
 
 **Header information**
 

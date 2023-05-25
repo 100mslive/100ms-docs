@@ -1,0 +1,66 @@
+---
+title: Camera Controls (Beta)
+nav: 7.3
+---
+
+To use the camera controls, we can use `HMSCameraControls` class to access it's functionality.
+
+## Minimum Requirements
+
+-   SDK version 1.5.0 or higher
+
+## Capture at the highest resolution offered by the camera
+
+Takes the highest quality picture from the local video stream in `jpg` format irrespective of publisher's resolution.
+It contains `withFlash` parameter which if `true` turns on the flash while capturing image. Default value of `withFlash`
+parameter is `false`.
+
+> 🔑 Note: `captureImageAtMaxSupportedResolution` method only works if camera is turned ON
+
+```dart
+//To capture image with `withFlash` as true
+//`filePath` can return either the filePath string or an HMSException object in case of error
+
+dynamic filePath = await HMSCameraControls.captureImageAtMaxSupportedResolution(withFlash: true);
+
+if(filePath is HMSException) {
+    //Log the error here
+    //Handle the error accordingly
+}
+else{
+    //Create image file and use it accordingly
+    File imageFile = File(filePath);
+
+    // We can display the image using `Image.file` widget in our applications
+    // Image.file(imageFile)
+}
+```
+
+## Flash
+
+### Check if flash feature is available
+
+Checks if the current facing camera has a flash device.
+
+```dart
+dynamic isFlashSupported = await HMSCameraControls.isFlashSupported();
+
+if(isFlashSupported is HMSException) {
+    //Log the error here
+    //Handle the error accordingly
+}
+else{
+    //Check here whether flash is supported or not
+    //isFlashSupported will be a boolean
+}
+```
+
+### Toggle flash
+
+This method is used to toggle flash, i.e. if its ON it turns it OFF and vice-versa.
+
+```dart
+HMSCameraControls.toggleFlash();
+```
+
+> 🔑 Note: If camera is toggled while flash is ON, then flash turns OFF.

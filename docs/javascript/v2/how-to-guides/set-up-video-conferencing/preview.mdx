@@ -1,0 +1,101 @@
+---
+title: Preview Screen
+nav: 1.11
+---
+
+Preview screen is a frequently used UX element which allows users to check if their input devices are working properly and
+set the initial state (mute/unmute) of their audio and video tracks before joining.
+100ms SDKs provide an easy-to-use API to back this feature.
+Additionally, the SDK will try to establish a connection to 100ms server to verify there are no network issues and that the
+auth credentials are valid so that if everything is in order the subsequent room join is instant.
+
+To invoke this API call
+
+```js
+const config = {
+    userName: 'Jon Snow',
+    authToken: '<Auth token>', // client-side token generated from your token service
+    settings: {
+        // initial states
+        isAudioMuted: true,
+        isVideoMuted: false
+    },
+    metaData: JSON.stringify({ city: 'Winterfell', knowledge: 'nothing' }),
+    rememberDeviceSelection: true, // remember manual device change
+    captureNetworkQualityInPreview: false // whether to measure network score in preview
+};
+await hmsActions.preview(config);
+```
+
+You would need the same config object that you would pass to [join API](/javascript/v2/how--to-guides/set-up-video-conferencing/join). The interface to render video, mute/unmute etc. remains the same.
+
+> Note that if you use preview, there is no need of maintaining any state on your side for settings(device id, audio, video on). Selections
+> during preview will be moved across to the join call.
+
+## Post Preview call
+
+Once you have made the preview call, these things will happen -
+
+-   SDK will connect with the 100ms backend to ensure that the token is correct and fetch the permissions for the role.
+-   Network speed will be measured and a connection score will be notified to the UI if [turned on](/javascript/v2/how--to-guides/measure-network-quality-and-performance/connection-quality).
+-   One peer for the local peer will be added to the store, accessible via `selectLocalPeer` selector.
+-   Permission prompt will be given to the user for camera/mic if permissions are not there
+-   Audio, Video tracks will be created as per the role permissions.
+-   The video can be rendered [similarly as post join](/javascript/v2/how--to-guides/set-up-video-conferencing/render-video/overview).
+-   [Audio Level](/javascript/v2/how--to-guides/set-up-video-conferencing/render-video/audio-level) will start reflecting for the microphone, this can be used to verify that
+    the microphone is working properly.
+-   User will be able to see and modify input/output [devices](/javascript/v2/how--to-guides/set-up-video-conferencing/device-change).
+
+## When you do join
+
+When join is done after the preview call, changes done by the user during preview such as changing device or muting their
+tracks will be carry forwarded when user enters the room.
+
+## Know Others in the room
+
+It's also possible to know about the room state and other peers in the room, if the permission to receive room state is given for the
+role in dashboard. The peers present in the room can be known by using the `selectPeers` selector as given [here](/javascript/v2/get-started/useful-selectors#who-all-are-in-my-room).
+
+<Tabs id="peers" items={['Javascript', 'React']} />
+
+<Tab id='peers-0'>
+
+```js
+const peers = hmsStore.getState(selectRemotePeers);
+```
+
+</Tab>
+
+<Tab id='peers-1'>
+
+```jsx
+const peers = useHMSStore(selectRemotePeers);
+```
+
+</Tab>
+
+## Network Quality in preview
+
+Follow [this section](/javascript/v2/how--to-guides/measure-network-quality-and-performance/connection-quality#connection-quality-score-in-preview) to get a sense of user's network quality in preview.
+
+## Preview and Join with different roles
+
+You can use different roles for your peer in preview and join.
+
+Let's say you want your user to initally join as a viewer(with no audio/vidoe publishing permissions) but they could be upgraded to another audio/video publishing role when asked to speak up. To avoid any device failures mid-session, you might want to test your users camera & microphone devices in preview even if they join as a viewer.
+
+In this scenario, you'd want to use a publishing role in preview and viewer role in join. You can do this by setting `asRole: <your-role-name>` in your [preview config](/api-reference/javascript/v2/interfaces/HMSPreviewConfig).
+
+```js
+/** @type HMSPreviewConfig */
+const config = {
+    userName: 'Jon Snow',
+    asRole: '<your-role-name>', // preview will use this role to fetch tracks
+    authToken: '<Auth token>', // client-side token generated from your token service
+};
+await hmsActions.preview(config);
+```
+
+- You can use [`selectPreviewRole`](/api-reference/javascript/v2/home/content#selectpreviewrole) to know the role used in preview. This selector will return the role passed in `config.asRole` if passed, else it will return the role from the auth token.
+
+- You can use [`selectIsAllowedToPreviewMedia`](/api-reference/javascript/v2/home/content#selectisallowedtopreviewmedia) similar to [`selectIsAllowedToPublish`](/api-reference/javascript/v2/home/content#selectisallowedtopublish) to show audio/video toggle button based on the publish permissions of the role used in preview.

@@ -1,0 +1,212 @@
+---
+title: Overview
+nav: 4.4
+---
+
+It all comes down to this. All the setup so far has been done so that we can show live-streaming videos in our beautiful app.
+
+100ms Flutter Package provides the `HMSVideoView` widget that renders the video on the screen.
+
+We simply have to pass a Video Track object to the `HMSVideoView` to begin automatic rendering of Live Video Stream.
+
+We can also optionally pass props like `key`, `scaleType`, `mirror` or `matchParent` to customize the `HMSVideoView` widget.
+
+```dart
+HMSVideoView(
+  track: videoTrack,
+  key: Key(videoTrack.trackId),
+),
+```
+
+## How to get HMSVideoTrack
+
+This section contains info about how to get video tracks so that we can display them on screen.
+
+`HMSVideoTrack` is used to render video in HMSVideoView. Single `HMSVideoView` can be attached to only one `HMSVideoTrack`.
+
+> For resetting the track or updating any property in `HMSVideoView` it is required to use the new HMSVideoView widget.
+
+To get tracks we will be listening to HMSUpdateListener's `onTrackUpdate`.
+
+`onTrackUpdate` provides updates for both Audio & Video tracks so to segregate them we can put a check like below:
+
+```dart
+/// check if the track is video or audio
+
+/// For Audio
+track.kind == HMSTrackKind.kHMSTrackKindAudio
+
+/// For Video
+track.kind == HMSTrackKind.kHMSTrackKindVideo
+```
+
+Let's see an example of how we can extract the video tracks from `onTrackUpdate`:
+
+```dart
+class Meeting implements HMSUpdateListener{
+
+  late HMSSDK hmsSDK;
+  ...
+
+  void onTrackUpdate(
+      {required HMSTrack track,
+      required HMSTrackUpdate trackUpdate,
+      required HMSPeer peer}) {
+
+        if (track.kind == HMSTrackKind.kHMSTrackKindVideo) {
+          //We will get all the video tracks
+          if(track.source == "REGULAR"){
+            //We will get only camera feed(Normal Video) tracks of peer here
+            if(peer.isLocal){
+              //We will get the local peer video track here
+            }
+            else{
+              //We will get the remote peer video tracks here
+            }
+          }
+          else{
+            //To get screenshare or other video tracks from peers
+            //For screenshare
+            if(track.source == "SCREEN"){
+              //We will get screen share track here
+            }
+          }
+        }
+      }
+}
+```
+
+Now, once we have the video tracks we can pass the video track to `HMSVideoView` to get live video on the screen.
+Screenshare as well as normal video tracks can be rendered in the same way which we will see below.
+
+> `HMSSDK` automatically handles audio tracks. So they are not required to be handled in the application. Although [mute/unmute](/flutter/v2/how--to-guides/set-up-video-conferencing/mute) or [set audio volume](/flutter/v2/how--to-guides/interact-with-room/track/set-volume) features are provided
+> by SDK.
+
+## Render Video
+
+This section contains information about how we can render the video once we have the track.
+
+To display video tracks `HMSSDK` provides the `HMSVideoView` widget.
+We just need to pass the `track` which is `HMSVideoTrack` instance to get our video running as:
+
+```dart
+//videoTrack is an instance of HMSVideoTrack
+HMSVideoView(track: videoTrack);
+```
+
+## Configuring video view
+
+`HMSVideoView` has several properties to configure the way video is rendered as:
+
+### 1. matchParent (Deprecated)
+
+This is a `bool` type parameter, `true` indicates that `HMSVideoView` can take the size of parent widget. It will have no impact on the functionality or behavior of the `HMSVideoView` component.
+In upcoming versions of the HMSSDK, this deprecated property will be completely removed.
+
+### 2. scaleType
+
+The `ScaleType` property decides how much space the video will take from the available space.
+`ScaleType` is an enum with values:
+
+```dart
+enum ScaleType {
+
+  //Video maintains the aspect ratio so it only occupies space based on the aspect ratio
+  SCALE_ASPECT_FIT,
+
+  //Video occupies all the available space and may get cropped
+  SCALE_ASPECT_FILL,
+
+  //Video aspect ratio is balanced similar to SCALE_ASPECT_FIT
+  SCALE_ASPECT_BALANCED
+}
+```
+
+> 🔑 Note: `SCALE_ASPECT_FIT` is the default `scaleType` for HMSVideoView
+
+`SCALE_ASPECT_FILL` might crop the video if the parent widget is small. So, for cases like screen share where cropping is not acceptable
+use the default type i.e `SCALE_ASPECT_FIT`.
+
+### 3. setMirror
+
+This is a `bool` type parameter, `true` indicates that the video feed gets mirrored and `false` shows the track as it is.
+Generally true for local peer and false for a remote peers
+
+### 4. disableAutoSimulcastLayerSelect
+
+HMSVideoView has an automatic simulcast layer selection capability which is enabled if adaptive bitrate is enabled. You can check more about it [here](/concepts/v2/concepts/adaptive-bitrate).
+
+It will select a layer that best matches the current view frame size and reacts to frame updates. In case manual layer selection is preferred set `disableAutoSimulcastLayerSelect` property to `true`. By default, the track layer is set to `high`.
+
+> Always pass the `Key` parameter to `HMSVideoView` with the unique Video Track's `trackId` value so that it can be disposed of and reset correctly during rebuilds.
+
+## Capture Snapshot
+
+You can capture a snapshot of the video stream of a local or remote peer's video. To capture a snapshot, you call captureSnapshot method on HMSVideoTrack instance to get a Uint8List containing a snapshot of the video stream. Know more about captureSnapshot [here](/flutter/v2/how--to-guides/capture-frame/capture-snapshot).
+
+```dart
+  HMSVideoTrack videoTrack;
+  ...
+
+  //Capture snapshot
+  Uint8List? bytes = await videoTrack.captureSnapshot();
+```
+
+## Best Practices
+
+### Dispose HMSVideoView to conserve bandwidth and cleanup elements
+
+Remove the HMSVideoView from UI and it will not render its video & conserve network bandwidth.
+
+It is always advised to stop rendering video when it is not required to save bandwidth consumption.
+This is done in the example app by setting the `isOffscreen` property of `PeerTrackNode` as true when the peer tile is off-screen. So that app does not download the video track when the tile is off-screen.
+
+### Limit the number of HMSVideoView on-screen at a time
+
+`HMSVideoView` internally uses `SurfaceView` in android and `UiKitView` in iOS. It is recommended to render at most 4-6 videos at a time on-screen and
+rest should be paginated for better performance.
+
+Check out our fully featured [Example app here](https://github.com/100mslive/100ms-flutter/tree/main/example).
+
+### Display Screen Share Tracks without getting cropped from edges
+
+A peer in Room can broadcast their Screen from any platform like Web, Android, iOS, etc. If a peer shares their Screen from Web & the viewer is on a Mobile platform, some content on the Screen can get cropped. It's necessary to configure the `HMSVideoView` correctly to ensure the complete Screen share content is visible without any clipping/cropping from edges.
+
+Always create the `HMSVideoView` with `ScaleType` as `ScaleType.SCALE_ASPECT_FIT` for correctly showing Screenshare Tracks.
+
+Let's look at the implementation:
+
+```dart
+ HMSVideoView(
+  track: screenShareTrack,  // pass the screen share track here
+  scaleType: ScaleType.SCALE_ASPECT_FIT, // always set to Aspect Fit for Screenshare Tracks
+  key: Key(videoTrack.trackId),   // set a unique identifier using the trackId
+)
+```
+
+## HMSVideoView Widget
+
+The 100ms Video View Widget named `HMSVideoView` is built over the Stateless Widget.
+This `HMSVideoView` widget and all of its available properties are listed below.
+
+```dart
+class HMSVideoView extends StatelessWidget {
+
+  /// This will render video with trackId present in the track
+  /// [track] - the video track to be displayed
+  final HMSVideoTrack track;
+
+  // [matchParent] - to match the size of the parent widget
+  ///@Deprecated("matchParent is not longer necessary and will be removed in future version")
+  final bool matchParent;
+
+  // [scaleType] - To set the video scaling
+  final ScaleType scaleType;
+
+  // [setMirror] - To set mirroring of video
+  final bool setMirror;
+
+  // [disableAutoSimulcastLayerSelect] - To disable auto simulcast (Adaptive Bitrate)
+  final bool disableAutoSimulcastLayerSelect;
+}
+```

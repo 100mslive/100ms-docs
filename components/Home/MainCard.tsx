@@ -29,7 +29,7 @@ export const SdkList = [
         link: '/ios/v2/get-started/quickstart'
     },
     {
-        icon: <FlutterWIthColourIcon />,
+        icon: <FlutterWIthColourIcon width={16} />,
         title: 'Flutter',
         id: 'flutter',
         link: '/flutter/v2/get-started/quickstart'
@@ -77,7 +77,7 @@ const MainCard = () => {
             <Flex direction="column" justify="between">
                 <Box>
                     <Text variant="h6" css={{ color: '$textHighEmp' }}>
-                        Getting Started
+                        Quickstart
                     </Text>
                     <Text
                         variant="sm"
@@ -90,7 +90,7 @@ const MainCard = () => {
                         SDK. Get started now.
                     </Text>
                 </Box>
-                <Flex css={{ gap: '$10', mt: '$10', flexWrap: 'wrap' }}>
+                <Flex css={{ gap: '$8', mt: '$10', flexWrap: 'wrap' }}>
                     {renderBadges ? SdkList.map((sdk) => <Badge key={sdk.id} {...sdk} />) : null}
                 </Flex>
             </Flex>

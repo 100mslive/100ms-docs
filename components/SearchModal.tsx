@@ -19,7 +19,7 @@ const searchClient = algoliasearch(
 const ALL_PLATFORMS = 'All Platforms';
 const ALL_TYPES = 'All Types';
 
-const TYPE_FILTERS = ['All Types', 'Guide', 'Concept', 'FAQ', 'API Reference'];
+const TYPE_FILTERS = ['All Types', 'Guide', 'Get started', 'FAQ', 'API Reference'];
 
 const searchInfoItems = [
     {
@@ -59,7 +59,13 @@ const Result = ({ searchResult }) => {
                 pl: '$lg',
                 pr: '$xs'
             }}>
-            <Flex justify="between" align="start" gap="2">
+            <Flex
+                align="start"
+                css={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    '@md': { flexDirection: 'column-reverse', justifyContent: 'flex-start' }
+                }}>
                 <Text
                     css={{
                         color: '$textHighEmp',
@@ -84,7 +90,7 @@ const Result = ({ searchResult }) => {
                     mb: '$xs'
                 }}>
                 {path.map((text, id) => (
-                    <span style={{ whiteSpace: 'nowrap' }}>
+                    <span key={text} style={{ whiteSpace: 'nowrap' }}>
                         {id === 0 ? '' : '\u00A0'}
                         {id === path.length - 1
                             ? titleCasing(text.split('#')[0])
@@ -239,6 +245,7 @@ const ResultBox = ({
                             }}>
                             {searchInfoItems.map((searchInfoItem) => (
                                 <InfoItem
+                                    key={searchInfoItem.title}
                                     title={searchInfoItem.title}
                                     content={searchInfoItem.content}
                                 />
@@ -301,6 +308,11 @@ const ResultBox = ({
 };
 
 const Search = ({ refine, setSearchTerm, searchTerm }) => {
+    const inputRef = useRef<HTMLInputElement>(null);
+    useEffect(() => {
+        setTimeout(() => inputRef?.current && inputRef.current.focus(), 0);
+    }, []);
+
     useEffect(() => {
         const debounceTimer = setTimeout(() => refine(searchTerm), 400);
         return () => clearTimeout(debounceTimer);
@@ -326,9 +338,8 @@ const Search = ({ refine, setSearchTerm, searchTerm }) => {
                 onChange={(event) => {
                     setSearchTerm(event.target.value);
                 }}
+                ref={inputRef}
                 type="text"
-                // eslint-disable-next-line jsx-a11y/no-autofocus
-                autoFocus
                 style={{
                     marginLeft: '13px',
                     backgroundColor: 'inherit',
@@ -356,7 +367,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ setModal }) => {
     const [platformFilter, setPlatformFilter] = useState(ALL_PLATFORMS);
     const [openFilter, setOpenFilter] = useState(false);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const handleNavigation = (e) => {
             if (e.code === 'Enter' && activeResult.current !== -1) {
                 const ele = document.getElementById(`res-box-${activeResult.current}`)
@@ -466,6 +477,7 @@ const InfoItem = ({ title, content }) => (
     <Flex gap="2" align="center">
         {content.map((item) => (
             <Flex
+                key={item}
                 gap="1"
                 align="center"
                 justify="center"

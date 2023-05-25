@@ -52,13 +52,7 @@ export default function Examples({ allNav }) {
     return (
         <Flex direction="column" css={{ minHeight: '100vh', contain: 'paint' }}>
             <SegmentAnalytics options={{}} title="100ms Docs Examples" />
-            <Header
-                modal={modal}
-                setModal={setModal}
-                menuState={menuState}
-                showReference={false}
-                onHomePage
-            />
+            <Header modal={modal} setModal={setModal} menuState={menuState} showReference={false} />
 
             <Flex
                 align="center"
@@ -79,6 +73,7 @@ export default function Examples({ allNav }) {
                 }}>
                 <Box css={{ width: '100%' }}>
                     <Sidebar
+                        setModal={setModal}
                         menuState={menuState}
                         allNav={allNav}
                         nav={{}}

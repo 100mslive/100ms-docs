@@ -1,0 +1,325 @@
+---
+title: Virtual Background
+nav: 1.47
+---
+
+<Note type="warning">
+    This feature is still in Beta. To know more or report any issues, feel free to reach out to us
+    over <a href={'https://discord.com/invite/kGdmszyzq2'}>Discord</a>.
+</Note>
+
+## Introduction
+
+Virtual background plugin helps in customising one’s background. The customising options are blurring the background or replacing it with a static image.
+This guide provides an overview of usage of the virtual background plugin of 100ms.
+
+![VirtualBackground](/docs/v2/virtual.gif)
+
+## Supported Devices
+
+Virtual background is currently only supported on web in Chrome, Firefox, Brave and Edge browsers.<br/>
+We have not extended support for Mobile browsers in this release.
+
+## Basic Concepts
+
+-   `blur background` - This is an action where the background of the video is blurred. No external image is used/required.
+-   `image background` - This is where the plugin will replace the video background with the image provided by user.
+-   `plugin load time` - The time taken by plugin to load model. This is in the range of 3-5 seconds for first time. Subsequent loads take less than 100 milliseconds.
+
+## Pre-requisites
+
+**Get the 100ms VirtualBackground Package**
+
+```bash section=GetHMSVirtualBackgroundPackage sectionIndex=1
+npm install --save @100mslive/hms-virtual-background@latest
+```
+
+## Usage
+
+```jsx section=ImportPlugin sectionIndex=1
+import { HMSVirtualBackgroundPlugin } from '@100mslive/hms-virtual-background';
+```
+
+## Instantiate Virtual Background
+
+This accepts background as a parameter, It can be of 3 types:
+
+-   `blur` - String - This will set the background to blur
+-   `image` - HTMLImageElement - This will replace the background to the image provide
+-   `none` - String - This will remove the background effect from the video
+
+```jsx section=InstantiateVirtualBackground sectionIndex=1
+// background : {'blur' | image | 'none'}
+const virtualBackground = new HMSVirtualBackgroundPlugin(background : {'blur' | image | 'none'});
+```
+
+## Interfaces
+
+### Check if plugin is supported
+
+validateVideoPluginSupport can be used to check if the browser/input device is supported or not.
+It will return True in case of plugin is supported and return error message if it is not.
+
+```jsx section=CheckIfPluginIsSupported sectionIndex=1
+import { hmsActions } from './hms';
+
+const pluginSupport = hmsActions.validateVideoPluginSupport(virtualBackground);
+if (pluginSupport.isSupported) {
+    console.log('Platform is supported');
+} else {
+    const err = pluginSupport.errMsg;
+    console.error(err);
+}
+```
+
+### Init(Optional)
+
+Init is used to load model of virtual background for the first time.
+It takes on an average 3-5 seconds.<br/>
+Calling init is handled internally by SDK if not done by user, in this case addPlugin call will
+take 3-5 seconds for the first time and then less than 100 milliseconds in the subsequent calls.
+Check [this section](#start-and-stop-virtual-background) for addPlugin API usage
+
+```jsx section=Init sectionIndex=1
+virtualBackground.init();
+```
+
+Init can also be used by user to show a loader icon for background selector component during the plugin loading stage
+
+```jsx section=Init sectionIndex=2
+virtualBackground.init().then(() => console.log('background can be changed now'));
+```
+
+### Start and Stop Virtual Background
+
+<Tabs id="plugin-code" items={['JavaScript', 'React']} />
+
+Check [this section](#tuning-plugin-frame-rate-optional) to use custom pluginFrameRate
+
+<Tab id='plugin-code-0'>
+
+```js section=StartAndStopVirtualBackground sectionIndex=1 tab=JS
+import { hmsActions, hmsStore } from './hms';
+import { selectIsLocalVideoPluginPresent } from '@100mslive/hms-video-store';
+
+async function toggleVB() {
+    const isVirtualBackgroundEnabled = hmsStore.getState(
+        selectIsLocalVideoPluginPresent(virtualBackground.getName())
+    );
+    try {
+        if (!isVirtualBackgroundEnabled) {
+            // Recommended value
+            const pluginFrameRate = 15;
+            // add virtual background
+            await hmsActions.addPluginToVideoTrack(virtualBackground, pluginFrameRate);
+        } else {
+            // remove virtual background
+            await hmsActions.removePluginFromVideoTrack(virtualBackground);
+        }
+    } catch (err) {
+        console.log('virtual background failure - ', isVirtualBackgroundEnabled, err);
+    }
+}
+```
+
+</Tab>
+
+<Tab id='plugin-code-1'>
+
+```jsx section=StartAndStopVirtualBackground sectionIndex=1 tab=React
+import { useHMSStore, useHMSActions, selectIsLocalVideoPluginPresent } from '@100mslive/react-sdk';
+
+function VirtualBackground() {
+    const isVirtualBackgroundEnabled = useHMSStore(
+        selectIsLocalVideoPluginPresent(virtualBackground.getName())
+    );
+    const hmsActions = useHMSActions();
+
+    const toggleVB = async () => {
+        try {
+            if (!isVirtualBackgroundEnabled) {
+                // Recommended value
+                const pluginFrameRate = 15;
+                await hmsActions.addPluginToVideoTrack(virtualBackground, pluginFrameRate);
+            } else {
+                await hmsActions.removePluginFromVideoTrack(virtualBackground);
+            }
+        } catch (err) {
+            console.log('virtual background failure - ', isVirtualBackgroundEnabled, err);
+        }
+    };
+
+    return <Button onClick={toggleVB} />;
+}
+```
+
+</Tab>
+
+> Note that `hmsActions.attachVideo` should be called on toggling virtual background. Refer [Render Video](/javascript/v2/how--to-guides/set-up-video-conferencing/render-video/overview#when-to-attachdetach-videos) section to see how to handle it.
+
+### Change Background
+
+The function `setBackground` can be used to update the background again later.
+It accepts string or HTMLImageElement as a parameter
+Image will get fit to the video by maintaining the aspect ratio.
+If the aspect ratio of the background image is not the same as the video, the image will be cropped to fit in the background.
+
+```jsx section=ChangeBackground sectionIndex=1
+// background parameter is explained in Instantiate Virtual Background section
+try{
+  virtualBackground.setBackground(background : {'blur' | image | 'none'});
+}catch(err){
+  console.log("Failed to update background", err);
+}
+```
+
+### Tuning pluginFrameRate(Optional)
+
+`pluginFrameRate`- number - pluginFrameRate helps in controlling the performance and experience of Virtual background plugin.
+pluginFrameRate translates to the number of frames for which background is detected. Higher value will use more resources
+(cpu/memory/battery), while making the virtual background experience smooth. Lower value will be generous on resources,
+while lowering the virtual background smoothness. Recommended value is 15. Values higher than this will not significantly
+improve virtual background smoothness but will be heavy on resources. For lower end devices value can be in the range of 7-10.
+
+### Recommendations For Better User Experience
+
+For enhancing the performance of virtual background plugin we recommend enabling SIMD on the browser.
+With SIMD enabled, browsers can process multiple data points with each instruction, resulting in a performance boost of more than 2x.
+
+-   `Chrome` - Open `chrome://flags/` in browser, search for simd, enable WebAssembly SIMD support and restart.
+-   `Firefox`- Open `about:config` in browser, search for simd, set javascript.options.wasm_simd=true and restart.
+-   `Edge` - Open `about:flags` in browser, search for simd, enable WebAssembly SIMD support and restart.
+-   `Brave` - Open `about:flags` in browser, search for simd, enable WebAssembly SIMD support and restart.
+
+## New VirtualBackground Plugin:
+
+The new virtual background plugin comes with improved performance(reduced cpu usage) and updated interfaces with proper types. It is part of the same package
+
+## Supported Devices
+
+Virtual background is currently only supported on web in Chrome, Firefox, Brave and Edge browsers.<br/>
+
+## Usage:
+
+<Tabs id="vb-plugin-code" items={['JavaScript', 'React']} />
+
+Check [this section](#tuning-plugin-frame-rate-optional) to use custom pluginFrameRate
+
+<Tab id='vb-plugin-code-0'>
+
+```js
+import { hmsActions, hmsStore } from './hms';
+import { selectIsLocalVideoPluginPresent } from '@100mslive/hms-video-store';
+import { HMSVBPlugin, HMSVirtualBackgroundTypes } from '@100mslive/hms-virtual-background';
+
+const virtualBackground = new HMSVBPlugin(
+    HMSVirtualBackgroundTypes.NONE,
+    HMSVirtualBackgroundTypes.NONE
+);
+
+const checkSupport = () => {
+    const { isPluginSupported, errType, errMsg } = virtualBackground.checkSupport();
+    // errType and errMsg will be available if the plugin does not support the browser or os etc.
+    return isPluginSupported;
+}
+
+const changeBackground = async () => {
+    // for blurring the background
+    await virtualBackground.current.setBackground(HMSVirtualBackgroundTypes.BLUR, HMSVirtualBackgroundTypes.BLUR);
+    // for setting an image
+    const image = document.createElement('img');
+    image.src = <image url>;
+    await virtualBackground.current.setBackground(image, HMSVirtualBackgroundTypes.IMAGE)
+}
+
+async function toggleVB() {
+    const isVirtualBackgroundEnabled = hmsStore.getState(
+        selectIsLocalVideoPluginPresent(virtualBackground.getName())
+    );
+    try {
+        if (!isVirtualBackgroundEnabled) {
+            // Recommended value
+            const pluginFrameRate = 15;
+            // add virtual background
+            await hmsActions.addPluginToVideoTrack(virtualBackground, pluginFrameRate);
+        } else {
+            // remove virtual background
+            await hmsActions.removePluginFromVideoTrack(virtualBackground);
+        }
+    } catch (error) {
+        console.log('failed to set virtual background -', error);
+    }
+}
+```
+
+</Tab>
+
+<Tab id='vb-plugin-code-1'>
+
+This is a very basic implementation. Refer the sample app [implementation](https://github.com/100mslive/100ms-web/blob/main/src/plugins/VirtualBackground/VirtualBackground.jsx) for more detail.
+
+```jsx
+import {  useRef } from "react";
+import { useHMSStore, useHMSActions, selectIsLocalVideoPluginPresent } from '@100mslive/react-sdk';
+import { HMSVBPlugin, HMSVirtualBackgroundTypes } from '@100mslive/hms-virtual-background';
+
+
+function VirtualBackground() {
+    const virtualBackground = useRef(new HMSVBPlugin(
+        HMSVirtualBackgroundTypes.NONE,
+        HMSVirtualBackgroundTypes.NONE
+    ));
+    const isVirtualBackgroundEnabled = useHMSStore(
+        selectIsLocalVideoPluginPresent(virtualBackground.current.getName())
+    );
+    const hmsActions = useHMSActions();
+
+    const changeBackground = async () => {
+        // for blurring the background
+        await virtualBackground.current.setBackground(HMSVirtualBackgroundTypes.BLUR, HMSVirtualBackgroundTypes.BLUR);
+        // for setting an image
+        const image = document.createElement('img');
+        image.src = <image url>;
+        await virtualBackground.current.setBackground(image, HMSVirtualBackgroundTypes.IMAGE)
+    }
+
+    const checkSupport = () => {
+        const { isPluginSupported, errType, errMsg } = virtualBackground.current.checkSupport();
+        // errType and errMsg will be available if the plugin does not support the browser or os etc.
+        return isPluginSupported;
+    }
+
+    const toggleVB = useCallback(async () => {
+        try {
+        if (!isVirtualBackgroundEnabled) {
+            // Recommended value
+            const pluginFrameRate = 15;
+            // call changeBackground if it is not initialised with the right background can be done after adding the plugin as well
+            await hmsActions.addPluginToVideoTrack(virtualBackground.current, pluginFrameRate);
+        } else {
+            await hmsActions.removePluginFromVideoTrack(virtualBackground.current);
+        }
+        } catch (error) {
+        console.log("virtual background failure - ", error);
+        }
+    }, [hmsActions]);
+
+    return checkSupport() ? <Button onClick={toggleVB} /> : null;
+}
+```
+
+</Tab>
+
+
+## Recommendations
+
+- Use background images that match the video publish aspect ratio set from dashboard template.
+  Eg: For 4:3 aspect ratio, image should be a minimum of 640x480 or higher.
+- The video element also should be ideally in the same aspect ratio as publish.
+- Maximum resolution of the image should be 1080p(1920x1080) 
+
+## Supported Formats for virtual background
+
+- For images, all image formats that are supported by native `img` tag are supported. Eg: .jpeg, .png, .jpg etc.
+- For videos, all video formats that are supported by native `video` tag are supported.  We recommend to use mp4.
+- For GIF'S, only .gif extensions are supported as of now.

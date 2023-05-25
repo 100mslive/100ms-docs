@@ -1,0 +1,198 @@
+---
+title: Room Code Authentication
+nav: 5.3
+---
+
+[Room Codes](/concepts/v2/concepts/rooms/room-codes/room-codes) are 100ms generated short codes, representing a Room ID and Role combination. Room codes not only simpify authentication, they can also be used to generate [Room Links.](https://www.100ms.live/docs/concepts/v2/concepts/rooms/room-links)
+
+<FlexContainer>
+<Callout icon="link" title="Room Code Authentication Basics">
+- When using Room Codes, it eliminates the need to generate [auth token](/concepts/v2/concepts/Authentication/AuthToken) at your end to join a room.
+    - If you're using 100ms [Prebuilt](https://www.100ms.live/docs/concepts/v2/concepts/prebuilt) solution, Prebuilt inherently takes care of generating the auth token using room codes.
+    - When building a custom UI, you need to make an additional SDK API call `getAuthTokenByRoomCode` to generate the auth token.
+</Callout>
+</FlexContainer>
+
+
+
+
+## Join rooms with room codes for custom UI
+
+When building a custom UI and using room codes to generate room links, you can also use room codes to power authentication to join room without setting up an auth token server at your end.  
+
+
+<StepsToc
+parentId="room-code-auth"
+descriptions={["Create room codes for specific roles in a 100ms room", "Fetch role specific room codes to generate auth token", "Pass room code to SDK method and get auth token to join rooms", "Get started with room code authentication with our quickstart guides."]}
+
+/>
+
+<StepsContainer id="room-code-auth">
+
+
+### Create Room Codes
+
+Room codes can be made available in two ways:
+
+<Tabs id="implementation" items={['via Dashboard','Create Room Code API']} />
+
+    <Tab id='implementation-0'>
+
+    For Rooms created on [100ms dashboard](https://dashboard.100ms.live/dashboard), a room code gets generated for every role in the room by default.
+
+    ![RoomCodeFromJoinRoomModal](/docs/v2/JoinRoomModal.png)
+
+    </Tab>
+
+
+    <Tab id="implementation-1">
+
+    If you're using [Create Room API](/server-side/v2/api-reference/Rooms/create-via-api) to create Rooms, you need to explicitly create room codes for every role in the room. Refer [Create Room Codes API](/server-side/v2/api-reference/room-codes/create-room-code-api). This API allows you to create Room Code for
+             - every role in the room at once  using [Create Room Code API](/server-side/v2/api-reference/room-codes/create-room-code-api#1-create-a-room-code-api) 
+             - a specific role in the room using [Create Role Room Code API](server-side/v2/api-reference/room-codes/create-room-code-api#2-create-role-room-code-api)
+
+    </Tab>
+
+### Retrieve role specific room code
+
+    - **No-Code** 
+        - Select a room from Room page on [100ms Dashboard](https://dashboard.100ms.live/rooms) and click on "Join Room"
+        - Copy room code for the role you want to authenticate
+    ![RoomCodeFromJoinRoomModal](/docs/v2/JoinRoomModal.png)
+       
+        
+
+    - Programmatically,
+        - From the [Room Link](/concepts/v2/concepts/rooms/room-links) that you generate. For instance, you can retrieve room code from a custom room link ` https://<your-template-subdomain>.app.100ms.live/meeting/<room-code> `
+        - Alternatively, you can use [Get Room Code API](/server-side/v2/api-reference/room-codes/get-room-code-api) to retrieve the room code for the role joining the room.
+
+### Get auth token using room codes
+Once you have a role specific room code, call the SDK function `getAuthTokenByRoomCode` with the retrieved room code. This function retrieves the auth token that is required to join the room.
+
+
+#### Sample Code 
+You can use these code snippets to get auth token from room code. 
+
+<Tabs id="sample-code" items={['JavaScript','React Native','Android','iOS','Flutter']} />
+
+<Tab id='sample-code-0'>
+
+```js section=SampleCode sectionIndex=1 tab=JavsScript
+const authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode });
+
+try {
+  await hmsActions.join({ userName, authToken });
+} catch (e) {
+  console.error(e);
+}
+```
+
+</Tab>
+
+<Tab id="sample-code-1">
+
+```js section=SampleCode sectionIndex=2 tab=React Native
+
+try {
+  /**
+   * Important Note: Don't build new `HMSSDK` instance before destroying the previous one.
+   * for more info checkout {@link https://www.100ms.live/docs/react-native/v2/how--to-guides/install-the-sdk/hmssdk#what-does-destroy-method-do}
+   */
+  const hmsInstance = await HMSSDK.build();
+
+  // Saving `hmsInstance` in ref
+  hmsInstanceRef.current = hmsInstance;
+
+  /**
+   * `getAuthTokenByRoomCode` returns a promise which is resolved with "auth token"
+   * checkout {@link https://www.100ms.live/docs/react-native/v2/how--to-guides/install-the-sdk/hmssdk#what-does-destroy-method-do}
+   */
+  const token = await hmsInstance.getAuthTokenByRoomCode('YOUR_ROOM_CODE');
+
+  // ... Adding HMSSDK Event Listeners before calling Join method on HMSSDK instance ...
+
+  /**
+   * Create `HMSConfig` with the above auth token and username
+   */
+  const hmsConfig = new HMSConfig({ authToken: token, username: USERNAME });
+
+  /**
+   * Joining Room. For more info, Check out {@link https://www.100ms.live/docs/react-native/v2/features/join#join-a-room | Join a Room}
+   */
+  hmsInstance.join(hmsConfig);
+} catch (error) {
+  // Handle errors here
+}
+``` 
+</Tab>
+
+
+<Tab id="sample-code-2">
+
+```kotlin section=SampleCode sectionIndex=3 tab=Kotlin
+func generateToken() {
+   val hmsInstance = HMSSDK
+    .Builder(application)
+    .build()
+ 
+   hmsInstance.getAuthTokenByRoomCode(TokenRequest(#room-code, #user-id), null , object :
+      HMSTokenListener {
+      override fun onError(error: HMSException) {}
+
+      override fun onTokenSuccess(string: String) {
+        //here's the token !
+      }
+
+    })
+}
+```
+
+</Tab>
+
+<Tab id="sample-code-3">
+
+```swift section=SampleCode sectionIndex=4 tab=iOS
+func joinRoom() {
+    hmsSDK.getAuthTokenByRoomCode("room-code") { token, error in
+        if let token = token {
+            let config = HMSConfig(userName: "John Doe", authToken: token)
+            hmsSDK.join(config: config, delegate: self)
+        }
+    }
+}
+override func viewDidLoad() {
+    super.viewDidLoad()
+    joinRoom()
+}
+```
+
+</Tab>
+
+<Tab id="sample-code-4">
+
+```dart section=SampleCode sectionIndex=5 tab=Flutter
+  dynamic authToken = await hmsSDK.getAuthTokenByRoomCode(roomCode: 'YOUR_ROOM_CODE');
+
+  if(authToken is String){
+    HMSConfig roomConfig = HMSConfig(
+        authToken: authToken,
+        userName: userName,
+      );
+
+    hmsSDK.join(config: roomConfig);
+  }
+  else if(authToken is HMSException){
+    // Handle the error
+  }
+```
+</Tab>
+
+### Quickstart with room code authentication
+
+1. [JavaScript Quickstart](/javascript/v2/get-started/javascript-quickstart)
+2. [Android Quickstart](/android/v2/get-started/quickstart)
+3. [iOS Quickstart](/ios/v2/get-started/quickstart)
+4. [Flutter Quickstart](/flutter/v2/get-started/quickstart)
+5. [React Quickstart](/javascript/v2/get-started/react-quickstart)
+
+</StepsContainer>

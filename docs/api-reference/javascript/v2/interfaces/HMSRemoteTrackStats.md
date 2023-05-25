@@ -1,6 +1,6 @@
 ---
 title: HMSRemoteTrackStats
-nav: '4.42'
+nav: '4.43'
 ---
 
 Extends RTCInboundRtpStreamStats
@@ -55,6 +55,16 @@ BaseTrackStats.codec
 #### Inherited from
 
 BaseTrackStats.codecId
+
+---
+
+### enabled
+
+• `Optional` **enabled**: `boolean`
+
+#### Inherited from
+
+BaseTrackStats.enabled
 
 ---
 

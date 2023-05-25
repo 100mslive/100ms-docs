@@ -1,6 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { useEffect, useState } from 'react';
-import { LayersIcon, PeopleIcon, ShieldIcon } from '@100mslive/react-icons';
+import { LayersIcon, LayoutIcon, RocketIcon } from '@100mslive/react-icons';
 import { Box, Flex, Text } from '@100mslive/react-ui';
 import Header from 'components/Header';
 import Sidebar from '@/components/Sidebar';
@@ -17,22 +17,25 @@ const CONTENT_WIDTH = '1200px';
 
 const cards = [
     {
-        icon: <LayersIcon />,
-        title: 'Basic Concepts',
-        subText: 'Learn the basic architecture to understand how your app talks to 100ms servers',
-        link: '/concepts/v2/concepts/basics'
+        icon: <LayersIcon width={20} />,
+        title: 'Concepts',
+        subText: 'Learn concepts to help you model your usecase with 100ms',
+        link: '/get-started/v2/get-started/concepts/basics',
+        cta: "View Concepts"
     },
     {
-        icon: <PeopleIcon />,
-        title: 'Templates and Roles',
-        subText: 'Learn how to create templates for your rooms with roles to control user actions',
-        link: '/concepts/v2/concepts/templates-and-roles'
+        icon: <LayoutIcon width={20} />,
+        title: 'Prebuilt',
+        subText: 'Embed or share room links without building UI using Room Links',
+        link: '/get-started/v2/get-started/prebuilt/prebuilt',
+        cta: "View Prebuilt"
     },
     {
-        icon: <ShieldIcon />,
-        title: 'Authentication',
-        subText: 'Learn how to authenticate requests coming from your apps and server into 100ms',
-        link: '/concepts/v2/concepts/security-and-tokens'
+        icon: <RocketIcon width={20} />,
+        title: 'Examples',
+        subText: 'Discover platform specific opensource examples built with 100ms',
+        link: '/examples',
+        cta: "View Examples"
     }
 ];
 
@@ -51,13 +54,7 @@ const Homepage = ({ allNav }) => {
     return (
         <>
             <SegmentAnalytics options={{}} title="100ms Docs" />
-            <Header
-                modal={modal}
-                setModal={setModal}
-                menuState={menuState}
-                showReference={false}
-                onHomePage
-            />
+            <Header modal={modal} setModal={setModal} menuState={menuState} showReference={false} />
             {renderComponents ? (
                 <>
                     <Flex
@@ -76,6 +73,7 @@ const Homepage = ({ allNav }) => {
                         }}>
                         <Sidebar
                             menuState={menuState}
+                            setModal={setModal}
                             nav={{}}
                             allNav={allNav}
                             css={{ width: menu ? '100%' : 'initial' }}

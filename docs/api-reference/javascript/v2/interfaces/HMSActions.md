@@ -1,5 +1,5 @@
 ---
-title: HMSActions
+title: HMSActions<T>
 nav: '4.5'
 ---
 
@@ -16,6 +16,12 @@ about passing props if you use them.
 
 There is a one to one mapping between an instance of this class and a 100ms room,
 in case you're creating multiple rooms please create new instance per room.
+
+## Type parameters
+
+| Name | Type                                                                                                                                  |
+| :--- | :------------------------------------------------------------------------------------------------------------------------------------ |
+| `T`  | extends [`HMSGenericTypes`](/api-reference/javascript/v2/interfaces/HMSGenericTypes) = { `sessionStore`: `Record`<`string`, `any`\> } |
 
 ## Properties
 
@@ -49,6 +55,17 @@ If lock is passed as true, the room cannot be used further.
 ##### Returns
 
 `Promise`<`void`\>
+
+---
+
+### sessionStore
+
+• **sessionStore**: [`IHMSSessionStoreActions`](/api-reference/javascript/v2/interfaces/IHMSSessionStoreActions)<`T`[``"sessionStore"``]\>
+
+actions that can be performed on the real-time key-value store
+
+Values in the session store are available to every peer in the room(who have observed the relevant keys) and
+is persisted throughout a session till the last peer leaves a room(cleared after the last peer leaves the room)
 
 ---
 
@@ -323,7 +340,7 @@ enable sending audio speaker data to beam
 
 ### getAuthTokenByRoomCode
 
-▸ **getAuthTokenByRoomCode**(`tokenRequest`, `tokenRequestOptions?`): `Promise`<[`TokenResult`](/api-reference/javascript/v2/interfaces/TokenResult)\>
+▸ **getAuthTokenByRoomCode**(`tokenRequest`, `tokenRequestOptions?`): `Promise`<`string`\>
 
 #### Parameters
 
@@ -334,7 +351,7 @@ enable sending audio speaker data to beam
 
 #### Returns
 
-`Promise`<[`TokenResult`](/api-reference/javascript/v2/interfaces/TokenResult)\>
+`Promise`<`string`\>
 
 ---
 
@@ -419,7 +436,9 @@ This function can be used to leave the room, if the call is repeated it's ignore
 
 Fetch the current room metadata from the server and populate it in store
 
-- the API is not stable and might have breaking changes later
+**`Deprecated`**
+
+use `actions.sessionStore.observe` instead
 
 #### Returns
 
@@ -929,7 +948,9 @@ JSON.stringify.
 Session metadata is available to every peer in the room and is persisted throughout a session
 till the last peer leaves a room
 
-- the API is not stable and might have breaking changes later
+**`Deprecated`**
+
+use `actions.sessionStore.set` instead
 
 #### Parameters
 
@@ -951,9 +972,9 @@ Change settings of the local peer's video track
 
 #### Parameters
 
-| Name       | Type                                                                                                 | Description                                                                                      |
-| :--------- | :--------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------- |
-| `settings` | `Partial`<[`HMSVideoTrackSettings`](/api-reference/javascript/v2/interfaces/HMSVideoTrackSettings)\> | HMSVideoTrackSettings `({ width, height, codec, maxFramerate, maxBitrate, deviceId, advanced })` |
+| Name       | Type                                                                                                 | Description                                                                                                  |
+| :--------- | :--------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------- |
+| `settings` | `Partial`<[`HMSVideoTrackSettings`](/api-reference/javascript/v2/interfaces/HMSVideoTrackSettings)\> | HMSVideoTrackSettings `({ width, height, codec, maxFramerate, maxBitrate, deviceId, advanced, facingMode })` |
 
 #### Returns
 
@@ -1040,6 +1061,18 @@ If you want to stop HLS streaming. The passed in arguments is not considered at 
 ▸ **stopRTMPAndRecording**(): `Promise`<`void`\>
 
 If you want to stop both RTMP streaming and recording.
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### switchCamera
+
+▸ **switchCamera**(): `Promise`<`void`\>
+
+Toggle the camera between front and back if the both the camera's exist
 
 #### Returns
 

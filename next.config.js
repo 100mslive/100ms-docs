@@ -1407,7 +1407,128 @@ const nextConfig = {
             },
             {
                 source: '/server-side/v2/api-reference/Destinations/rtmp-streaming-and-browser-recording',
-                destination: '/server-side/v2/api-reference/legacy-api-v1/destinations/rtmp-streaming-and-browser-recording',
+                destination:
+                    '/server-side/v2/api-reference/legacy-api-v1/destinations/rtmp-streaming-and-browser-recording',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/basics',
+                destination: '/get-started/v2/get-started/concepts/basics',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/templates-and-roles/overview',
+                destination: '/get-started/v2/get-started/concepts/templates-and-roles',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/recordings',
+                destination: '/get-started/v2/get-started/features/recordings',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/live-streaming',
+                destination: '/get-started/v2/get-started/features/live-streaming',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/templates-and-roles/breakout-rooms',
+                destination:
+                    '/get-started/v2/get-started/features/interaction-and-controls/breakout-rooms',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/templates-and-roles/waiting-room',
+                destination:
+                    'get-started/v2/get-started/features/interaction-and-controls/waiting-room',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/adaptive-bitrate',
+                destination: '/get-started/v2/get-started/features/quality/adaptive-bitrate',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/handling-audio-video-edge-cases',
+                destination:
+                    '/get-started/v2/get-started/features/quality/handling-audio-video-edge-cases',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/prebuilt',
+                destination: '/get-started/v2/get-started/prebuilt/prebuilt',
+                permanent: true
+            },
+
+            {
+                source: '/concepts/v2/concepts/rooms/room-codes/room-codes',
+                destination: '/get-started/v2/get-started/prebuilt/room-codes/overview',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/rooms/room-codes/room-code-auth',
+                destination: '/get-started/v2/get-started/prebuilt/room-codes/room-code-auth',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/rooms/room-links',
+                destination: '/get-started/v2/get-started/prebuilt/room-codes/room-links',
+                permanent: true
+            },
+            {
+                source: '/concepts/v2/concepts/security-and-tokens',
+                destination: '/get-started/v2/get-started/security-and-tokens',
+                permanent: true
+            },
+            { source: '/concepts/:slug*', destination: '/get-started/:slug*', permanent: true },
+            {
+                source: '/ios/v2/get-started/:slug*',
+                destination: '/ios/v2/quickstart/:slug*',
+                permanent: true
+            },
+            {
+                source: '/android/v2/get-started/:slug*',
+                destination: '/android/v2/quickstart/:slug*',
+                permanent: true
+            },
+            {
+                source: '/javascript/v2/get-started/:slug*',
+                destination: '/javascript/v2/quickstart/:slug*',
+                permanent: true
+            },
+            {
+                source: '/flutter/v2/get-started/:slug*',
+                destination: '/flutter/v2/quickstart/:slug*',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/get-started/:slug*',
+                destination: '/react-native/v2/quickstart/:slug*',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/how-to-guides/handle-interruptions/release-resources',
+                destination: '/react-native/v2/how-to-guides/set-up-video-conferencing/release-resources',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/how-to-guides/handle-interruptions/error-handling',
+                destination: '/react-native/v2/how-to-guides/debugging/error-handling',
+                permanent: true
+            },
+            {
+                destination: '/javascript/v2/how-to-guides/record-and-live-stream/hls/rtmp-recording',
+                source: '/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording',
+                permanent: true
+            },
+            {
+                source: '/server-side/v2/how-to-guides/active-rooms/:slug*',
+                destination: '/server-side/v2/api-reference/active-rooms/:slug*',
+                permanent: true
+            },
+            {
+                source: '/:slug*/how--to-guides/:path*',
+                destination: '/:slug*/how-to-guides/:path*',
                 permanent: true
             }
         ];

@@ -1,0 +1,1675 @@
+---
+title: HLS Streaming QuickStart Guide
+nav: 2.4
+---
+
+## Overview
+
+This guide will walk you through simple instructions to create a HLS Live Streaming Application using 100ms Flutter SDK and test it using an emulator or your mobile phone.
+
+Please check our [basic concepts guide](/flutter/v2/foundation/basics) to understand the concepts like rooms, templates, peers, etc.
+
+This guide contains instructions for two approaches to get you started with 100ms Flutter SDK:
+
+1. [Create a sample app](#create-a-sample-app) — instructions to create a flutter app quickly with a complete code sample.
+2. [Building step-by-step](#building-step-by-step) — instructions to walk you through the implementation of the app in a step-by-step manner.
+
+Checkout the github repository for quickstart application [here](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps)
+
+## Create a sample app
+
+This section contains instructions to create a simple Flutter video conferencing app. We will help you with instructions to understand the project setup and complete code sample to implement this quickly.
+
+### Prerequisites
+
+To complete this implementation for the Android platform, you must have the following:
+
+-   A [100ms account](https://dashboard.100ms.live/register) if you don't have one already.
+-   [Flutter](https://docs.flutter.dev/get-started/install) `3.3.0` or higher
+-   Dart `2.12.0` or above
+-   Use [VS code](https://code.visualstudio.com/), [Android Studio](https://developer.android.com/studio), or any other IDE that supports Flutter. For more information on setting up an IDE, check [Flutter's official guide](https://docs.flutter.dev/get-started/editor).
+
+### Create a Flutter app
+
+Once you have the prerequisites, follow the steps below to create a Flutter app. This guide will use VS code, but you can use any IDE that supports Flutter.
+
+-   Create a Flutter app using the terminal; you can get the [Flutter SDK](https://docs.flutter.dev/get-started/install/macos#get-sdk) and use the below command:
+
+    ```bash section=createFlutterApp
+    flutter create my_app
+    ```
+
+-   Once the app is created, open it in VS code.
+
+### Add 100ms SDK to your project
+
+Once you have created a Flutter app, you must add the 100ms Flutter SDK,[permission_handler package](https://pub.dev/packages/permission_handler) (to handle audio/video permissions from microphone and camera) and [video player](https://pub.dev/packages/video_player)(to play the HLS Stream) to your app.
+
+-   Add the below snippet to the `pubspec.yaml`.
+
+```yaml section=InstallingTheDependencies
+# 100ms SDK and permissions_handler
+hmssdk_flutter:
+permission_handler:
+video_player:
+```
+
+-   Run `flutter pub get` to download these dependencies to your app.
+
+### Add permissions
+
+<Tabs id="sample-app" items={['Android', 'iOS']} />
+
+<Tab id="sample-app-0">
+
+Please follow the below instructions to test the app for the android target platform:
+
+1. Allow camera, recording audio and internet permissions by adding the below snippet to the `AndroidManifest.xml` file (at the application tag level).
+
+    <br />
+
+    ```xml section=androidPermissions
+    <uses-feature android:name="android.hardware.camera"/>
+
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    ```
+
+2. Add minimum SDK version (`minSdkVersion 21`) in "android/app/build.gradle" file (inside "defaultConfig").
+
+```json
+...
+  defaultConfig {
+      ...
+      minSdkVersion 21
+      ...
+  }
+...
+```
+
+You will also need to request camera and record audio permissions at runtime before you join a call or display a preview. Please follow the [Android Documentation](https://developer.android.com/training/permissions/requesting#request-permission) for runtime permissions.
+
+</Tab>
+
+<Tab id="sample-app-1">
+
+Please follow the below instructions to test the app for iOS target platform:
+
+1. Allow camera, recording audio and internet permissions by adding the below snippet to the `info.plist` file.
+
+    <br />
+
+    ```xml section=iosPermissions
+    <key>NSMicrophoneUsageDescription</key>
+    <string>{YourAppName} wants to use your microphone</string>
+
+    <key>NSCameraUsageDescription</key>
+    <string>{YourAppName} wants to use your camera</string>
+
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>{YourAppName} App wants to use your local network</string>
+    ```
+
+2. Add the target platform version as (`platform :ios, '12.0'`) in "ios/Podfile."
+
+```json
+platform :ios, '12.0'
+```
+
+</Tab>
+
+### Complete code example
+
+Now that your project setup is complete let's replace the code in the `lib/main.dart` file with the complete code sample below.
+
+After running the below code your application will look similar to this:
+
+![hls-quickstart-gif](https://user-images.githubusercontent.com/93931528/235787427-d837ec88-a55d-48f3-be7e-65e02df6fa8c.gif)
+
+```dart section=completeCodeExample
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:hmssdk_flutter/hmssdk_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:video_player/video_player.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: '100ms HLS Quickstart Guide',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(title: '100ms HLS Integration Guide'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  bool res = false;
+  String userName = "Test";
+
+  static Future<bool> getPermissions() async {
+    if (Platform.isIOS) return true;
+    await Permission.camera.request();
+    await Permission.microphone.request();
+    await Permission.bluetoothConnect.request();
+
+    while ((await Permission.camera.isDenied)) {
+      await Permission.camera.request();
+    }
+    while ((await Permission.microphone.isDenied)) {
+      await Permission.microphone.request();
+    }
+    while ((await Permission.bluetoothConnect.isDenied)) {
+      await Permission.bluetoothConnect.request();
+    }
+    return true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        color: Colors.black,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            //Button to join as broadcaster
+            ElevatedButton(
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ))),
+              onPressed: () async => {
+                res = await getPermissions(),
+                if (res)
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (_) => MeetingPage(
+                              authToken:
+                                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXJzaW9uIjoyLCJ0eXBlIjoiYXBwIiwiYXBwX2RhdGEiOm51bGwsImFjY2Vzc19rZXkiOiI2MThiNTU5MGJlNmMzYzBiMzUxNTBhYmEiLCJyb2xlIjoiaG9zdCIsInJvb21faWQiOiI2MThiNTVkOGJlNmMzYzBiMzUxNTBhYmQiLCJ1c2VyX2lkIjoiMThmYzFlODgtM2YzNS00MDhkLTg3OTYtNDE5YjI3MTEyMTk0IiwiZXhwIjoxNjgxMTkzNTU0LCJqdGkiOiI5ZTkwZDczMS0wYThhLTQ5NWEtOTQxNC1mY2Q1YWFhMTY5NTkiLCJpYXQiOjE2ODExMDcxNTQsImlzcyI6IjYxOGI1NTkwYmU2YzNjMGIzNTE1MGFiOCIsIm5iZiI6MTY4MTEwNzE1NCwic3ViIjoiYXBpIn0.-QobyOO90TVMXfgnWkbJ9a8X3U9Sc3vWKwGoLkv9s4w",
+                              userName: userName)))
+              },
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                child: Text(
+                  'Join as Broadcaster',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            //Button to join as HLSViewer
+            ElevatedButton(
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ))),
+              onPressed: () async => {
+                res = await getPermissions(),
+                if (res)
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (_) => HLSViewerPage(
+                              authToken:
+                                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXJzaW9uIjoyLCJ0eXBlIjoiYXBwIiwiYXBwX2RhdGEiOm51bGwsImFjY2Vzc19rZXkiOiI2MThiNTU5MGJlNmMzYzBiMzUxNTBhYmEiLCJyb2xlIjoiaGxzLXZpZXdlciIsInJvb21faWQiOiI2MThiNTVkOGJlNmMzYzBiMzUxNTBhYmQiLCJ1c2VyX2lkIjoiZmUwOGQyYjQtM2Y4ZS00OTliLThlNzctNTkyYWQ4ZDQwOWRmIiwiZXhwIjoxNjgxMTk1NzM1LCJqdGkiOiI0OTk2NDQxMi0zYjlkLTRjZDQtOTg1YS0xODQxZTliNWJiOWEiLCJpYXQiOjE2ODExMDkzMzUsImlzcyI6IjYxOGI1NTkwYmU2YzNjMGIzNTE1MGFiOCIsIm5iZiI6MTY4MTEwOTMzNSwic3ViIjoiYXBpIn0.6GeiCmweoCAUv1xLD6icsSkSi1dixMS3YZMGYFrtNos",
+                              userName: userName)))
+              },
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                child: Text(
+                  'Join as HLS Viewer',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MeetingPage extends StatefulWidget {
+  final String authToken;
+  final String userName;
+  const MeetingPage(
+      {super.key, required this.authToken, required this.userName});
+
+  @override
+  State<MeetingPage> createState() => _MeetingPageState();
+}
+
+class _MeetingPageState extends State<MeetingPage>
+    implements HMSUpdateListener {
+  late HMSSDK _hmsSDK;
+  bool _isHLSRunning = false, _isLoading = false;
+  HMSPeer? _localPeer, _remotePeer;
+  HMSVideoTrack? _localPeerVideoTrack, _remotePeerVideoTrack;
+  @override
+  void initState() {
+    super.initState();
+    initHMSSDK();
+  }
+
+//To know more about HMSSDK setup and initialization checkout the docs here: https://www.100ms.live/docs/flutter/v2/how--to-guides/install-the-sdk/hmssdk
+  void initHMSSDK() async {
+    _hmsSDK = HMSSDK();
+    await _hmsSDK.build();
+    _hmsSDK.addUpdateListener(listener: this);
+    _hmsSDK.join(
+        config:
+            HMSConfig(authToken: widget.authToken, userName: widget.userName));
+  }
+
+  @override
+  void dispose() {
+    _remotePeer = null;
+    _remotePeerVideoTrack = null;
+    _localPeer = null;
+    _localPeerVideoTrack = null;
+    super.dispose();
+  }
+
+  @override
+  void onJoin({required HMSRoom room}) {
+    room.peers?.forEach((peer) {
+      if (peer.isLocal) {
+        _localPeer = peer;
+        if (peer.videoTrack != null) {
+          _localPeerVideoTrack = peer.videoTrack;
+        }
+        if (mounted) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            setState(() {});
+          });
+        }
+      }
+    });
+  }
+
+  @override
+  void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) {
+    if (update == HMSPeerUpdate.networkQualityUpdated) {
+      return;
+    }
+    if (update == HMSPeerUpdate.peerJoined) {
+      if (!peer.isLocal && !peer.role.name.contains("recorder")) {
+        if (mounted) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            setState(() {
+              _remotePeer = peer;
+            });
+          });
+        }
+      }
+    } else if (update == HMSPeerUpdate.peerLeft) {
+      if (!peer.isLocal && !peer.role.name.contains("recorder")) {
+        if (mounted) {
+          setState(() {
+            _remotePeer = null;
+          });
+        }
+      } else {
+        if (mounted) {
+          setState(() {
+            _localPeer = null;
+          });
+        }
+      }
+    }
+  }
+
+  @override
+  void onTrackUpdate(
+      {required HMSTrack track,
+      required HMSTrackUpdate trackUpdate,
+      required HMSPeer peer}) {
+    if (track.kind == HMSTrackKind.kHMSTrackKindVideo) {
+      if (trackUpdate == HMSTrackUpdate.trackRemoved) {
+        if (peer.isLocal) {
+          if (mounted) {
+            setState(() {
+              _localPeerVideoTrack = null;
+            });
+          }
+        } else if (!peer.role.name.contains("recorder")) {
+          if (mounted) {
+            setState(() {
+              _remotePeerVideoTrack = null;
+            });
+          }
+        }
+        return;
+      }
+      if (peer.isLocal) {
+        if (mounted) {
+          setState(() {
+            _localPeerVideoTrack = track as HMSVideoTrack;
+          });
+        }
+      } else if (!peer.role.name.contains("recorder")) {
+        if (mounted) {
+          setState(() {
+            _remotePeerVideoTrack = track as HMSVideoTrack;
+          });
+        }
+      }
+    }
+  }
+
+  @override
+  void onAudioDeviceChanged(
+    {HMSAudioDevice? currentAudioDevice,
+    List<HMSAudioDevice>? availableAudioDevice}) {
+      // Checkout the docs about handling onAudioDeviceChanged updates here: https://www.100ms.live/docs/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners
+  }
+
+  @override
+  void onSessionStoreAvailable(
+    {HMSSessionStore? hmsSessionStore}) {
+      // Get notified when the Session Store is available for usage. Read more about Session Store here: https://www.100ms.live/docs/flutter/v2/how-to-guides/interact-with-room/room/session-store
+  }
+
+  @override
+  void onChangeTrackStateRequest(
+      {required HMSTrackChangeRequest hmsTrackChangeRequest}) {
+    // Checkout the docs for handling the unmute request here: https://www.100ms.live/docs/flutter/v2/how--to-guides/interact-with-room/track/remote-mute-unmute
+  }
+
+  @override
+  void onHMSError({required HMSException error}) {
+    // To know more about handling errors please checkout the docs here: https://www.100ms.live/docs/flutter/v2/how--to-guides/debugging/error-handling
+  }
+
+  @override
+  void onMessage({required HMSMessage message}) {
+    // Checkout the docs for chat messaging here: https://www.100ms.live/docs/flutter/v2/how--to-guides/set-up-video-conferencing/chat
+  }
+
+  @override
+  void onReconnected() {
+    // Checkout the docs for reconnection handling here: https://www.100ms.live/docs/flutter/v2/how--to-guides/handle-interruptions/reconnection-handling
+  }
+
+  @override
+  void onReconnecting() {
+    // Checkout the docs for reconnection handling here: https://www.100ms.live/docs/flutter/v2/how--to-guides/handle-interruptions/reconnection-handling
+  }
+
+  @override
+  void onRemovedFromRoom(
+      {required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer}) {
+    // Checkout the docs for handling the peer removal here: https://www.100ms.live/docs/flutter/v2/how--to-guides/interact-with-room/peer/remove-peer
+  }
+
+  @override
+  void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest}) {
+    // Checkout the docs for handling the role change request here: https://www.100ms.live/docs/flutter/v2/how--to-guides/interact-with-room/peer/change-role#accept-role-change-request
+  }
+
+  @override
+  void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {
+    // Checkout the docs for room updates here: https://www.100ms.live/docs/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners
+    if (update == HMSRoomUpdate.hlsStreamingStateUpdated) {
+      if (room.hmshlsStreamingState?.running ?? false) {
+        _isHLSRunning = true;
+      } else {
+        _isHLSRunning = false;
+      }
+      _isLoading = false;
+      setState(() {});
+    }
+  }
+
+  @override
+  void onUpdateSpeakers({required List<HMSSpeaker> updateSpeakers}) {
+    // Checkout the docs for handling the updates regarding who is currently speaking here: https://www.100ms.live/docs/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/show-audio-level
+  }
+
+  void _leaveRoom() {
+    _hmsSDK.leave();
+    _hmsSDK.removeUpdateListener(listener: this);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async {
+        _leaveRoom();
+        Navigator.pop(context);
+        return true;
+      },
+      child: SafeArea(
+          child: Scaffold(
+        body: Stack(
+          children: [
+            Container(
+                color: Colors.black,
+                height: MediaQuery.of(context).size.height,
+                child: GridView(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      mainAxisExtent: (_remotePeerVideoTrack == null)
+                          ? MediaQuery.of(context).size.height
+                          : MediaQuery.of(context).size.height / 2,
+                      crossAxisCount: 1),
+                  children: [
+                    if (_remotePeerVideoTrack != null && _remotePeer != null)
+                      peerTile(
+                          Key(_remotePeerVideoTrack?.trackId ?? "" "mainVideo"),
+                          _remotePeerVideoTrack,
+                          _remotePeer,
+                          context),
+                    peerTile(
+                        Key(_localPeerVideoTrack?.trackId ?? "" "mainVideo"),
+                        _localPeerVideoTrack,
+                        _localPeer,
+                        context)
+                  ],
+                )),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                color: Colors.black,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          GestureDetector(
+                            onTap: () async {
+                              setState(() {
+                                _isLoading = true;
+                              });
+                              if (_isHLSRunning) {
+                                _hmsSDK.stopHlsStreaming();
+                                return;
+                              }
+                              _hmsSDK.startHlsStreaming();
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: _isHLSRunning
+                                          ? Colors.red.withAlpha(60)
+                                          : Colors.blue.withAlpha(60),
+                                      blurRadius: 3.0,
+                                      spreadRadius: 5.0,
+                                    ),
+                                  ]),
+                              child: CircleAvatar(
+                                radius: 25,
+                                backgroundColor:
+                                    _isHLSRunning ? Colors.red : Colors.blue,
+                                child: _isLoading
+                                    ? const CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: Colors.white,
+                                      )
+                                    : const Icon(
+                                        Icons.broadcast_on_personal_outlined,
+                                        color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 3,),
+                          Text(_isHLSRunning?"STOP HLS":"START HLS",style: const TextStyle(color: Colors.white),),
+                        ],
+                      ),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          GestureDetector(
+                            onTap: () async {
+                              _leaveRoom();
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              decoration:
+                                  BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                                BoxShadow(
+                                  color: Colors.red.withAlpha(60),
+                                  blurRadius: 3.0,
+                                  spreadRadius: 5.0,
+                                ),
+                              ]),
+                              child: const CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Colors.red,
+                                child: Icon(Icons.call_end, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                            const SizedBox(height: 3,),
+                            const Text("Leave Room",style: TextStyle(color: Colors.white),),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      )),
+    );
+  }
+
+  Widget peerTile(
+      Key key, HMSVideoTrack? videoTrack, HMSPeer? peer, BuildContext context) {
+    return Container(
+      key: key,
+      color: Colors.black,
+      child: (videoTrack != null && !(videoTrack.isMute))
+// To know more about HMSVideoView checkout the docs here: https://www.100ms.live/docs/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/overview
+          ? HMSVideoView(
+              track: videoTrack,
+            )
+          : Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.blue.withAlpha(4),
+                  shape: BoxShape.circle,
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.blue,
+                      blurRadius: 20.0,
+                      spreadRadius: 5.0,
+                    ),
+                  ],
+                ),
+                child: Text(
+                  peer?.name.substring(0, 1) ?? "D",
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
+    );
+  }
+}
+
+class HLSViewerPage extends StatefulWidget {
+  final String authToken;
+  final String userName;
+  const HLSViewerPage(
+      {super.key, required this.authToken, required this.userName});
+
+  @override
+  State<HLSViewerPage> createState() => _HLSViewerPageState();
+}
+
+class _HLSViewerPageState extends State<HLSViewerPage>
+    implements HMSUpdateListener {
+  late HMSSDK _hmsSDK;
+  VideoPlayerController? _controller;
+  late Future<void> _initializeVideoPlayerFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    initHMSSDK();
+  }
+
+//To know more about HMSSDK setup and initialization checkout the docs here: https://www.100ms.live/docs/flutter/v2/how--to-guides/install-the-sdk/hmssdk
+  void initHMSSDK() async {
+    _hmsSDK = HMSSDK();
+    await _hmsSDK.build();
+    _hmsSDK.addUpdateListener(listener: this);
+    _hmsSDK.join(
+        config:
+            HMSConfig(authToken: widget.authToken, userName: widget.userName));
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    _controller = null;
+    super.dispose();
+  }
+
+  @override
+  void onJoin({required HMSRoom room}) {
+    if (room.hmshlsStreamingState?.running ?? false) {
+      if (room.hmshlsStreamingState?.variants[0]?.hlsStreamUrl != null) {
+        _controller = VideoPlayerController.network(
+          room.hmshlsStreamingState!.variants[0]!.hlsStreamUrl!,
+        );
+        _initializeVideoPlayerFuture = _controller!.initialize();
+        _controller!.play();
+        _controller!.setLooping(true);
+      }
+    }
+    setState(() {});
+  }
+
+  @override
+  void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) {}
+
+  @override
+  void onTrackUpdate(
+      {required HMSTrack track,
+      required HMSTrackUpdate trackUpdate,
+      required HMSPeer peer}) {}
+
+  @override
+  void onAudioDeviceChanged(
+      {HMSAudioDevice? currentAudioDevice,
+      List<HMSAudioDevice>? availableAudioDevice}) {
+    // Checkout the docs about handling onAudioDeviceChanged updates here: https://www.100ms.live/docs/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners
+  }
+
+  @override
+  void onSessionStoreAvailable(
+    {HMSSessionStore? hmsSessionStore}) {
+      // Get notified when the Session Store is available for usage. Read more about Session Store here: https://www.100ms.live/docs/flutter/v2/how-to-guides/interact-with-room/room/session-store
+  }
+
+  @override
+  void onChangeTrackStateRequest(
+      {required HMSTrackChangeRequest hmsTrackChangeRequest}) {
+    // Checkout the docs for handling the unmute request here: https://www.100ms.live/docs/flutter/v2/how--to-guides/interact-with-room/track/remote-mute-unmute
+  }
+
+  @override
+  void onHMSError({required HMSException error}) {
+    // To know more about handling errors please checkout the docs here: https://www.100ms.live/docs/flutter/v2/how--to-guides/debugging/error-handling
+  }
+
+  @override
+  void onMessage({required HMSMessage message}) {
+    // Checkout the docs for chat messaging here: https://www.100ms.live/docs/flutter/v2/how--to-guides/set-up-video-conferencing/chat
+  }
+
+  @override
+  void onReconnected() {
+    // Checkout the docs for reconnection handling here: https://www.100ms.live/docs/flutter/v2/how--to-guides/handle-interruptions/reconnection-handling
+  }
+
+  @override
+  void onReconnecting() {
+    // Checkout the docs for reconnection handling here: https://www.100ms.live/docs/flutter/v2/how--to-guides/handle-interruptions/reconnection-handling
+  }
+
+  @override
+  void onRemovedFromRoom(
+      {required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer}) {
+    // Checkout the docs for handling the peer removal here: https://www.100ms.live/docs/flutter/v2/how--to-guides/interact-with-room/peer/remove-peer
+  }
+
+  @override
+  void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest}) {
+    // Checkout the docs for handling the role change request here: https://www.100ms.live/docs/flutter/v2/how--to-guides/interact-with-room/peer/change-role#accept-role-change-request
+  }
+
+  @override
+  void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {
+    // Checkout the docs for room updates here: https://www.100ms.live/docs/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners
+    if (update == HMSRoomUpdate.hlsStreamingStateUpdated) {
+      if (room.hmshlsStreamingState?.running ?? false) {
+        if (room.hmshlsStreamingState?.variants[0]?.hlsStreamUrl != null) {
+          _controller = VideoPlayerController.network(
+            room.hmshlsStreamingState!.variants[0]!.hlsStreamUrl!,
+          );
+          _initializeVideoPlayerFuture = _controller!.initialize();
+          _controller!.play();
+          _controller!.setLooping(true);
+        }
+      } else {
+        _controller?.dispose();
+        _controller = null;
+      }
+      setState(() {});
+    }
+  }
+
+  @override
+  void onUpdateSpeakers({required List<HMSSpeaker> updateSpeakers}) {
+    // Checkout the docs for handling the updates regarding who is currently speaking here: https://www.100ms.live/docs/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/show-audio-level
+  }
+
+  void _leaveRoom() {
+    _hmsSDK.leave();
+    _hmsSDK.removeUpdateListener(listener: this);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async {
+        _leaveRoom();
+        Navigator.pop(context);
+        return true;
+      },
+      child: SafeArea(
+          child: Scaffold(
+        body: Stack(
+          children: [
+            Container(
+              color: Colors.black,
+              height: MediaQuery.of(context).size.height,
+              child: (_controller == null)
+                  ? const Center(
+                      child: Text(
+                        "Please wait for the stream to start",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    )
+                  : FutureBuilder(
+                      future: _initializeVideoPlayerFuture,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return Center(
+                            child: Transform.scale(
+                              scaleX: 1.1,
+                              scaleY: 1.3,
+                              child: AspectRatio(
+                                aspectRatio: _controller!.value.aspectRatio,
+                                child: VideoPlayer(_controller!),
+                              ),
+                            ),
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                color: Colors.black,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          GestureDetector(
+                            onTap: () async {
+                              _leaveRoom();
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              decoration:
+                                  BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                                BoxShadow(
+                                  color: Colors.red.withAlpha(60),
+                                  blurRadius: 3.0,
+                                  spreadRadius: 5.0,
+                                ),
+                              ]),
+                              child: const CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Colors.red,
+                                child: Icon(Icons.call_end, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                             const SizedBox(height: 3,),
+                          const Text("Leave Room",style: TextStyle(color: Colors.white),),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      )),
+    );
+  }
+}
+
+```
+### Fetch token to join the room
+
+
+#### Fetch token using room-code method(Recommended) 
+
+We can get the authentication token using room-code from meeting URL.
+
+Let's understand the subdomain and code from the sample URL
+In this url: `http://100ms-rocks.app.100ms.live/meeting/abc-defg-hij`
+ -  Subdomain is `100ms-rocks`
+ -  Room code is `abc-defg-ghi`
+
+Now to get the room-code from meeting URL we can write our own logic or use the `getCode` method from [here](https://github.com/100mslive/100ms-flutter/blob/main/example/lib/service/room_service.dart)
+
+To generate token we will be using `getAuthTokenByRoomCode` method of `HMSSDK`. This method has `roomCode` as a required
+parameter, `userId` & `endPoint` as optional parameter.
+
+> This method should be called after calling the `build` method.
+
+Let's checkout the implementation:
+
+```dart
+  //This returns an object of Future<dynamic> which can be either
+  //of HMSException type or String? type based on whether
+  //method execution is completed successfully or not
+
+  dynamic authToken = await hmsSDK.getAuthTokenByRoomCode(roomCode: 'YOUR_ROOM_CODE');
+
+  if(authToken is String){
+    HMSConfig roomConfig = HMSConfig(
+        authToken: authToken,
+        userName: userName,
+      );
+
+    hmsSDK.join(config: roomConfig);
+  }
+  else if(authToken is HMSException){
+    // Handle the error
+  }
+```
+
+> 🔑 Note: There will be separate room codes for `broadcaster` and `hls-viewer` roles so please use room codes accordingly.
+
+#### Get temporary token from dashboard
+
+To test audio/video functionality, you need to connect to a 100ms room; please check the following steps for the same:
+
+1. Navigate to your [100ms dashboard](https://dashboard.100ms.live/dashboard) or [create an account](https://dashboard.100ms.live/register) if you don't have one.
+2. Use the `Live Streaming` template to create a room with a default template assigned to it to test this app quickly.
+3. Go to the [Rooms page](https://dashboard.100ms.live/rooms) in your dashboard, click on the `Room Id` of the room you created above, and click on the `Join Room` button on the top right.
+4. In the Join with SDK section you can find the `Auth Token for role` ; you can click on the 'copy' icon to copy the authentication token and update the `authToken` in "lib/main.dart" file for both roles.
+
+> Token from 100ms dashboard is for testing purposes only, For production applications you must generate tokens on your own server.
+> Refer to the [Management Token section](/flutter/v2/foundation/security-and-tokens#management-token) in Authentication and Tokens guide for more information.
+
+<video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
+    <source src="/docs/guides/update-token-flutter.mp4" type="video/mp4" />
+</video>
+<br />
+
+### Test the app
+
+After adding the required code let's run the app
+
+#### Build and run the app
+
+<Tabs id="platform" items={['Android', 'iOS']} />
+
+<Tab id="platform-0">
+
+-   Once you've made the above changes, your app is ready for testing. You can build the app and run it in an emulator or an actual android device.
+-   Go to _Run > Start debugging > select a device to use_ (android emulator or android phone).
+
+Now, after you click `Join as Broadcaster`, you should be able to see yourself (android emulator doesn't support actual video, you can connect an actual device to see your video in real-time). You can join the room using a browser as the second peer to check audio/video transactions between two or more peers.
+If you click `Join as HLS Viewer`, you should be able to watch the stream if it's started or the text `Please wait for the stream to start` if it's not started yet
+
+
+</Tab>
+
+<Tab id="platform-1">
+
+-   Once you've made the above changes, your app is ready for testing. You can build the app and run it in a simulator or an actual iOS device.
+-   Go to _Run > Start debugging > select a device to use_ (iOS simulator or iPhone).
+
+Now, after you click `Join as Broadcaster`, a black video will come up in case of iOS Simulator (iOS simulator doesn't support video, you can connect an actual device to see your video in real-time). You can join the room using a browser as the second peer to check audio/video transactions between two or more peers.
+If you click `Join as HLS Viewer`, you should be able to watch the stream if it's started or the text `Please wait for the stream to start` if it's not started yet
+
+</Tab>
+
+## Building step-by-step
+
+In this section, We'll walk through what the code does.
+
+<div className="steps-container">
+
+### Add dependencies in pubspec.yaml
+
+In your project `pubspec.yaml` dependencies add:
+
+```yaml section=InstallingTheDependencies
+# 100ms SDK and permissions_handler
+hmssdk_flutter:
+permission_handler:
+video_player:
+```
+
+### Add permissions for android and iOS
+
+Add the permissions for microphone,camera and bluetooth for android and iOS follow the docs [above](#add-permissions)
+
+### Handle device runtime permissions
+
+We need permission from the user to access the media from the user's device. We must urge the user to grant permission to access camera, microphone, and bluetooth devices. We use the [permission_handler](https://pub.dev/packages/permission_handler) package that provides a cross-platform (iOS, Android) API to request permissions and check their status.
+
+Please ensure to update permissions in the `AndroidManifest.xml` file for android and `info.plist` file for iOS. Check [Add Permission section](#add-permissions) for more information.
+`getPermissions` takes required permission for microphone, camera and bluetooth.
+
+```dart section=stepByStepPermissions
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  Future<bool> getPermissions() async {
+    if (Platform.isIOS) return true;
+    await Permission.camera.request();
+    await Permission.microphone.request();
+    await Permission.bluetoothConnect.request();
+
+    while ((await Permission.camera.isDenied)) {
+      await Permission.camera.request();
+    }
+    while ((await Permission.microphone.isDenied)) {
+      await Permission.microphone.request();
+    }
+    while ((await Permission.bluetoothConnect.isDenied)) {
+      await Permission.bluetoothConnect.request();
+    }
+    return true;
+  }
+}
+```
+### Implement join screen
+
+This section will help you create the join screen user interface. To keep it simple for the quickstart, we have not created many UI elements; you can refer to the [sample app implementation](https://github.com/100mslive/100ms-flutter/tree/main/example/lib/preview) for a complete Preview/Join user interface.
+Add the below code in `HomePage` class.
+
+```dart section=stepByStepJoinScreen
+// UI to render join screen
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        color: Colors.black,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            //Button to join as broadcaster
+            ElevatedButton(
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ))),
+              onPressed: () async => {
+                res = await getPermissions(),
+                if (res)
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (_) => MeetingPage(
+                              authToken:
+                                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXJzaW9uIjoyLCJ0eXBlIjoiYXBwIiwiYXBwX2RhdGEiOm51bGwsImFjY2Vzc19rZXkiOiI2MThiNTU5MGJlNmMzYzBiMzUxNTBhYmEiLCJyb2xlIjoiaG9zdCIsInJvb21faWQiOiI2MThiNTVkOGJlNmMzYzBiMzUxNTBhYmQiLCJ1c2VyX2lkIjoiMThmYzFlODgtM2YzNS00MDhkLTg3OTYtNDE5YjI3MTEyMTk0IiwiZXhwIjoxNjgxMTkzNTU0LCJqdGkiOiI5ZTkwZDczMS0wYThhLTQ5NWEtOTQxNC1mY2Q1YWFhMTY5NTkiLCJpYXQiOjE2ODExMDcxNTQsImlzcyI6IjYxOGI1NTkwYmU2YzNjMGIzNTE1MGFiOCIsIm5iZiI6MTY4MTEwNzE1NCwic3ViIjoiYXBpIn0.-QobyOO90TVMXfgnWkbJ9a8X3U9Sc3vWKwGoLkv9s4w",
+                              userName: userName)))
+              },
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                child: Text(
+                  'Join as Broadcaster',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            //Button to join as HLSViewer
+            ElevatedButton(
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ))),
+              onPressed: () async => {
+                res = await getPermissions(),
+                if (res)
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (_) => HLSViewerPage(
+                              authToken:
+                                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2ZXJzaW9uIjoyLCJ0eXBlIjoiYXBwIiwiYXBwX2RhdGEiOm51bGwsImFjY2Vzc19rZXkiOiI2MThiNTU5MGJlNmMzYzBiMzUxNTBhYmEiLCJyb2xlIjoiaGxzLXZpZXdlciIsInJvb21faWQiOiI2MThiNTVkOGJlNmMzYzBiMzUxNTBhYmQiLCJ1c2VyX2lkIjoiZmUwOGQyYjQtM2Y4ZS00OTliLThlNzctNTkyYWQ4ZDQwOWRmIiwiZXhwIjoxNjgxMTk1NzM1LCJqdGkiOiI0OTk2NDQxMi0zYjlkLTRjZDQtOTg1YS0xODQxZTliNWJiOWEiLCJpYXQiOjE2ODExMDkzMzUsImlzcyI6IjYxOGI1NTkwYmU2YzNjMGIzNTE1MGFiOCIsIm5iZiI6MTY4MTEwOTMzNSwic3ViIjoiYXBpIn0.6GeiCmweoCAUv1xLD6icsSkSi1dixMS3YZMGYFrtNos",
+                              userName: userName)))
+              },
+              child: const Padding(
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                child: Text(
+                  'Join as HLS Viewer',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+```
+
+### Implement meeting page
+
+You can check the below snippet to create a widget as the user interface to show the video tiles of local and remote peers. `HMSUpdateListener` plays a significant role in rendering video or displaying any information regarding the room.
+
+100ms SDK provides callbacks to the client app about any change or update happening in the room after a user has joined by implementing `HMSUpdateListener`.
+
+To join a room, you need to create an `HMSConfig` instance and use that instance to call the join method of `HMSSDK`.
+
+> **Note:** An `Auth token` is required to authenticate a room join request from your client-side app. Please ensure to add the `authToken` by fetching it from your dashboard. Check [fetch token to join a room section](#fetch-token-to-join-the-room) for more information. <br/> Read more about authentication and tokens in [this guide](/flutter/v2/foundation/security-and-tokens)
+
+```dart section=stepByStepMeetingPage
+class MeetingPage extends StatefulWidget {
+  final String authToken;
+  final String userName;
+  const MeetingPage(
+      {super.key, required this.authToken, required this.userName});
+
+  @override
+  State<MeetingPage> createState() => _MeetingPageState();
+}
+
+class _MeetingPageState extends State<MeetingPage>
+    implements HMSUpdateListener {
+  //SDK
+  late HMSSDK hmsSDK;
+
+  // Variables required for rendering video and peer info
+  bool _isHLSRunning = false, _isLoading = false;
+  HMSPeer? _localPeer, _remotePeer;
+  HMSVideoTrack? _localPeerVideoTrack, _remotePeerVideoTrack;
+
+  // Initialize variables and join room
+  @override
+  void initState() {
+    super.initState();
+    initHMSSDK();
+  }
+
+  void initHMSSDK() async {
+    hmsSDK = HMSSDK();
+    await hmsSDK.build(); // ensure to await while invoking the `build` method
+    hmsSDK.addUpdateListener(listener: this);
+    _hmsSDK.join(
+        config:
+            HMSConfig(authToken: widget.authToken, userName: widget.userName));
+  }
+
+  // Clear all variables
+  @override
+  void dispose() {
+    _remotePeer = null;
+    _remotePeerVideoTrack = null;
+    _localPeer = null;
+    _localPeerVideoTrack = null;
+    super.dispose();
+  }
+}
+```
+
+Now in the same class we will override the `HMSUpdateListener` methods to listen to updates.
+
+### Listen to room and peer updates
+
+The 100ms SDK sends updates to the application about any change in `HMSPeer` and `HMSRoom` via the callbacks in `HMSUpdateListener`. Our application must listen to the corresponding updates in `onPeerUpdate` and `onRoomUpdate`. Check the [Update Listeners documentation](/flutter/v2/how--to-guides/listen-to-room-updates/update-listener-enums) to understand the types of updates emitted by the SDK for room and peer updates.
+We will add these methods in `MeetingPage` class as they need to override the `HMSUpdateListener` methods.
+
+```dart section=stepByStepRoomUpdates
+// Called when peer joined the room - get current state of room by using HMSRoom obj
+  @override
+  void onJoin({required HMSRoom room}) {
+    room.peers?.forEach((peer) {
+      if (peer.isLocal) {
+        _localPeer = peer;
+        if (peer.videoTrack != null) {
+          _localPeerVideoTrack = peer.videoTrack;
+        }
+        if (mounted) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            setState(() {});
+          });
+        }
+      }
+    });
+  }
+
+  // Called when there's a peer update - use to update local & remote peer variables
+  @override
+  void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) {
+    if (update == HMSPeerUpdate.networkQualityUpdated) {
+      return;
+    }
+    if (update == HMSPeerUpdate.peerJoined) {
+      if (!peer.isLocal && !peer.role.name.contains("recorder")) {
+        if (mounted) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            setState(() {
+              _remotePeer = peer;
+            });
+          });
+        }
+      }
+    } else if (update == HMSPeerUpdate.peerLeft) {
+      if (!peer.isLocal && !peer.role.name.contains("recorder")) {
+        if (mounted) {
+          setState(() {
+            _remotePeer = null;
+          });
+        }
+      } else {
+        if (mounted) {
+          setState(() {
+            _localPeer = null;
+          });
+        }
+      }
+    }
+  }
+```
+
+### Listen to track updates
+
+100ms SDK also sends updates to the application about any change in `HMSTrack` via the callbacks in `HMSUpdateListener`. Our application must listen to the corresponding updates in `onTrackUpdate`. Check the [Update Listeners documentation](/flutter/v2/how--to-guides/listen-to-room-updates/update-listener-enums#hms-track-update) to understand the types of updates emitted by the SDK for track updates.
+
+```dart section=stepByStepTrackUpdates
+// Called when there's a track update - use to update local & remote track variables
+  @override
+  void onTrackUpdate(
+      {required HMSTrack track,
+      required HMSTrackUpdate trackUpdate,
+      required HMSPeer peer}) {
+    if (track.kind == HMSTrackKind.kHMSTrackKindVideo) {
+      if (trackUpdate == HMSTrackUpdate.trackRemoved) {
+        if (peer.isLocal) {
+          if (mounted) {
+            setState(() {
+              _localPeerVideoTrack = null;
+            });
+          }
+        } else if (!peer.role.name.contains("recorder")) {
+          if (mounted) {
+            setState(() {
+              _remotePeerVideoTrack = null;
+            });
+          }
+        }
+        return;
+      }
+      if (peer.isLocal) {
+        if (mounted) {
+          setState(() {
+            _localPeerVideoTrack = track as HMSVideoTrack;
+          });
+        }
+      } else if (!peer.role.name.contains("recorder")) {
+        if (mounted) {
+          setState(() {
+            _remotePeerVideoTrack = track as HMSVideoTrack;
+          });
+        }
+      }
+    }
+  }
+```
+
+### Listen to room updates 
+
+100ms SDK also sends updates to the application about any change in the `roomState` i.e. whether `peerCount` is updated, `HLS Stream` is started or ended, `Recording` is started or ended etc.
+Our application must listen to the corresponding updates in `onRoomUpdate`. Check the [Update Listeners documentation](/flutter/v2/how--to-guides/listen-to-room-updates/update-listener-enums##hms-room-update) to understand the types of updates emitted by the SDK for room updates.
+
+```dart section=stepByStepRoomUpdates
+  @override
+  void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {
+    // Checkout the docs for room updates here: https://www.100ms.live/docs/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners
+    if (update == HMSRoomUpdate.hlsStreamingStateUpdated) {
+      if (room.hmshlsStreamingState?.running ?? false) {
+        _isHLSRunning = true;
+      } else {
+        _isHLSRunning = false;
+      }
+      _isLoading = false;
+      setState(() {});
+    }
+  }
+```
+
+### Other callbacks
+
+100ms SDK provides various other callbacks to handle different scenarios in the app. For example, you can use `onAudioDeviceChanged` to get updates whenever a new audio device or an audio device is switched. Please check [here](/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners) for more information about these callbacks.
+
+```dart section=stepByStepOtherCallbacks
+  // More callbacks - no need to implement for quickstart
+  @override
+  void onAudioDeviceChanged(
+      {HMSAudioDevice? currentAudioDevice,
+      List<HMSAudioDevice>? availableAudioDevice}) {}
+
+  @override
+  void onSessionStoreAvailable(
+    {HMSSessionStore? hmsSessionStore}) {}
+
+  @override
+  void onChangeTrackStateRequest(
+      {required HMSTrackChangeRequest hmsTrackChangeRequest}) {}
+
+  @override
+  void onHMSError({required HMSException error}) {}
+
+  @override
+  void onMessage({required HMSMessage message}) {}
+
+  @override
+  void onReconnected() {}
+
+  @override
+  void onReconnecting() {}
+
+  @override
+  void onRemovedFromRoom(
+      {required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer}) {}
+
+  @override
+  void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest}) {}
+
+  @override
+  void onUpdateSpeakers({required List<HMSSpeaker> updateSpeakers}) {}
+```
+
+### Render video in a tile
+
+We had initialized the `HMSUpdateListener` class in the [Implement meeting page section](#step-3-implement-meeting-page); now, we can use the same to render video tracks in a tile.
+
+To display a video track, first get the `HMSVideoTrack` & pass it on to `HMSVideoView`.
+
+Ensure to add the `HMSVideoView` to your app's Widget tree. Check the [render video guide](/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/overview) for more information.
+
+```dart section=stepByStepRenderTile
+// Widget to render a single video tile
+  Widget peerTile(Key key, HMSVideoTrack? videoTrack, HMSPeer? peer) {
+    return Container(
+      key: key,
+      child: (videoTrack != null && !(videoTrack.isMute))
+          // Actual widget to render video
+          ? HMSVideoView(
+              track: videoTrack,
+            )
+          : Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.blue.withAlpha(4),
+                  shape: BoxShape.circle,
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.blue,
+                      blurRadius: 20.0,
+                      spreadRadius: 5.0,
+                    ),
+                  ],
+                ),
+                child: Text(
+                  peer?.name.substring(0, 1) ?? "D",
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
+    );
+  }
+```
+
+### Render video tiles for remote peer
+
+This section will help you build the user interface that renders the video tracks of local and remote peer in a grid.
+Add this in `MeetingPage` class.For more info about implementation check the complete code [above](#complete-code-example)
+
+```dart section=stepByStepRenderPeers
+// Widget to render grid of peer tiles and a end button
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      // Used to call "leave room" upon clicking back button [in android]
+      onWillPop: () async {
+        hmsSDK.leave();
+        Navigator.pop(context);
+        return true;
+      },
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.black,
+          body: Stack(
+            children: [
+              // Grid of peer tiles
+              Container(
+                height: MediaQuery.of(context).size.height,
+                child: GridView(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      mainAxisExtent: (remotePeerVideoTrack == null)
+                          ? MediaQuery.of(context).size.height
+                          : MediaQuery.of(context).size.height / 2,
+                      crossAxisCount: 1),
+                  children: [
+                    if (remotePeerVideoTrack != null && remotePeer != null)
+                      peerTile(
+                          Key(remotePeerVideoTrack?.trackId ?? "" "mainVideo"),
+                          remotePeerVideoTrack,
+                          remotePeer),
+                    peerTile(
+                        Key(localPeerVideoTrack?.trackId ?? "" "mainVideo"),
+                        localPeerVideoTrack,
+                        localPeer)
+                  ],
+                ),
+              ),
+              // End button to leave the room
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: RawMaterialButton(
+                  onPressed: () {
+                    hmsSDK.leave();
+                    Navigator.pop(context);
+                  },
+                  elevation: 2.0,
+                  fillColor: Colors.red,
+                  padding: const EdgeInsets.all(15.0),
+                  shape: const CircleBorder(),
+                  child: const Icon(
+                    Icons.call_end,
+                    size: 25.0,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+```
+
+### Implement HLS Viewer page
+
+You can check the below snippet to create a widget as the user interface to show the HLS stream. `HMSUpdateListener` plays a significant role in rendering stream or displaying any information regarding the room.
+
+```dart section=stepByStepHLSViewerPage
+class HLSViewerPage extends StatefulWidget {
+  final String authToken;
+  final String userName;
+  const HLSViewerPage(
+      {super.key, required this.authToken, required this.userName});
+
+  @override
+  State<HLSViewerPage> createState() => _HLSViewerPageState();
+}
+
+class _HLSViewerPageState extends State<HLSViewerPage>
+    implements HMSUpdateListener {
+  late HMSSDK _hmsSDK;
+  VideoPlayerController? _controller;
+  late Future<void> _initializeVideoPlayerFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    initHMSSDK();
+  }
+
+//To know more about HMSSDK setup and initialization checkout the docs here: https://www.100ms.live/docs/flutter/v2/how--to-guides/install-the-sdk/hmssdk
+  void initHMSSDK() async {
+    _hmsSDK = HMSSDK();
+    await _hmsSDK.build();
+    _hmsSDK.addUpdateListener(listener: this);
+    _hmsSDK.join(
+        config:
+            HMSConfig(authToken: widget.authToken, userName: widget.userName));
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    _controller = null;
+    super.dispose();
+  }
+  
+}
+```
+
+Now in the same class we will override the `HMSUpdateListener` methods to listen to updates.
+
+### Listen to room updates
+
+We will listen to `hlsStreamingStateUpdated` room update or `onJoin` callback to get the update regarding HLS playback.
+
+```dart section=stepByStepRoomUpdates
+@override
+void onJoin({required HMSRoom room}) {
+  if (room.hmshlsStreamingState?.running ?? false) {
+    if (room.hmshlsStreamingState?.variants[0]?.hlsStreamUrl != null) {
+      _controller = VideoPlayerController.network(
+        room.hmshlsStreamingState!.variants[0]!.hlsStreamUrl!,
+      );
+      _initializeVideoPlayerFuture = _controller!.initialize();
+      _controller!.play();
+      _controller!.setLooping(true);
+    }
+  }
+  setState(() {});
+}
+
+@override
+void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {
+// Checkout the docs for room updates here: https://www.100ms.live/docs/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners
+if (update == HMSRoomUpdate.hlsStreamingStateUpdated) {
+    if (room.hmshlsStreamingState?.running ?? false) {
+    if (room.hmshlsStreamingState?.variants[0]?.hlsStreamUrl != null) {
+        _controller = VideoPlayerController.network(
+        room.hmshlsStreamingState!.variants[0]!.hlsStreamUrl!,
+        );
+        _initializeVideoPlayerFuture = _controller!.initialize();
+        _controller!.play();
+        _controller!.setLooping(true);
+    }
+    } else {
+    _controller?.dispose();
+    _controller = null;
+    }
+    setState(() {});
+}
+}
+```
+
+### Other callbacks
+
+100ms SDK provides various other callbacks to handle different scenarios in the app. For example, you can use `onAudioDeviceChanged` to get updates whenever a new audio device or an audio device is switched. Please check [here](/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners) for more information about these callbacks.
+
+```dart section=stepByStepOtherCallbacks
+
+@override
+void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update}) {}
+
+@override
+void onTrackUpdate(
+    {required HMSTrack track,
+    required HMSTrackUpdate trackUpdate,
+    required HMSPeer peer}) {}
+
+@override
+void onAudioDeviceChanged(
+    {HMSAudioDevice? currentAudioDevice,
+    List<HMSAudioDevice>? availableAudioDevice}) {
+    // Checkout the docs about handling onAudioDeviceChanged updates here: https://www.100ms.live/docs/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners
+}
+
+@override
+void onSessionStoreAvailable(
+  {HMSSessionStore? hmsSessionStore}) {
+    // Get notified when the Session Store is available for usage. Read more about Session Store here: https://www.100ms.live/docs/flutter/v2/how-to-guides/interact-with-room/room/session-store
+}
+
+@override
+void onChangeTrackStateRequest(
+    {required HMSTrackChangeRequest hmsTrackChangeRequest}) {
+// Checkout the docs for handling the unmute request here: https://www.100ms.live/docs/flutter/v2/how--to-guides/interact-with-room/track/remote-mute-unmute
+}
+
+@override
+void onHMSError({required HMSException error}) {
+// To know more about handling errors please checkout the docs here: https://www.100ms.live/docs/flutter/v2/how--to-guides/debugging/error-handling
+}
+
+@override
+void onMessage({required HMSMessage message}) {
+// Checkout the docs for chat messaging here: https://www.100ms.live/docs/flutter/v2/how--to-guides/set-up-video-conferencing/chat
+}
+
+@override
+void onReconnected() {
+// Checkout the docs for reconnection handling here: https://www.100ms.live/docs/flutter/v2/how--to-guides/handle-interruptions/reconnection-handling
+}
+
+@override
+void onReconnecting() {
+// Checkout the docs for reconnection handling here: https://www.100ms.live/docs/flutter/v2/how--to-guides/handle-interruptions/reconnection-handling
+}
+
+@override
+void onRemovedFromRoom(
+    {required HMSPeerRemovedFromPeer hmsPeerRemovedFromPeer}) {
+// Checkout the docs for handling the peer removal here: https://www.100ms.live/docs/flutter/v2/how--to-guides/interact-with-room/peer/remove-peer
+}
+
+@override
+void onRoleChangeRequest({required HMSRoleChangeRequest roleChangeRequest}) {
+// Checkout the docs for handling the role change request here: https://www.100ms.live/docs/flutter/v2/how--to-guides/interact-with-room/peer/change-role#accept-role-change-request
+}
+
+@override
+void onUpdateSpeakers({required List<HMSSpeaker> updateSpeakers}) {
+// Checkout the docs for handling the updates regarding who is currently speaking here: https://www.100ms.live/docs/flutter/v2/how--to-guides/set-up-video-conferencing/render-video/show-audio-level
+}
+```
+
+### Display HLS Stream 
+
+To display HLS Stream we will be using `video_player` package. To display the HLS stream we need m3u8 URL, which we 
+are fetching above in `onRoomUpdate`.
+
+```dart section=stepByStepDisplayHLSStream
+FutureBuilder(
+    future: _initializeVideoPlayerFuture,
+    builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.done) {
+        return Center(
+        child: Transform.scale(
+            scaleX: 1.1,
+            scaleY: 1.3,
+            child: AspectRatio(
+            aspectRatio: _controller!.value.aspectRatio,
+            child: VideoPlayer(_controller!),
+            ),
+        ),
+        );
+    } else {
+        return const Center(
+        child: CircularProgressIndicator(),
+        );
+    }
+    },
+)
+```
+
+To know more about how to modify the resolution of stream or the view checkout the docs [here](https://www.100ms.live/docs/flutter/v2/how--to-guides/record-and-live-stream/hls)
+
+</div>
+
+You can refer to the [test the app section](#test-the-app) to test your app for android or iOS platforms.
+
+## Next steps
+
+We have multiple example apps to get you started with 100ms Flutter SDK.
+
+### HLS Streaming blog
+
+Checkout the HLS Streaming blog [here](https://www.100ms.live/blog/flutter-streaming).
+Checkout the repository [here](https://github.com/adityathakurxd/flutter-live)
+
+### Basic example
+
+For a basic example, see the [sample app](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/flutter-quickstart-app) on GitHub.
+
+### Full-fledged example
+
+You can also check out the full-fledged example app implementation in the 100ms Flutter SDK [GitHub repository](https://github.com/100mslive/100ms-flutter/tree/main/example) showcasing multiple features provided by 100ms. This uses the [provider package](https://pub.dev/packages/provider) as the state management library.
+
+### Examples with other state management libraries
+
+For implementations with other state management libraries, visit :
+
+-   [Bloc](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/bloc)
+-   [Getx](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/getx)
+-   [Riverpod](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/riverpod)
+-   [Mobx](https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/mobx)
+
+### App store / Play store
+
+You can download & check out the 100ms Flutter app -
+
+🤖 Flutter Android app from [Google Play Store](https://play.google.com/store/apps/details?id=live.hms.flutter).
+
+📱 Flutter iOS app from [Apple App Store](https://apps.apple.com/app/100ms-live/id1576541989).
+
+

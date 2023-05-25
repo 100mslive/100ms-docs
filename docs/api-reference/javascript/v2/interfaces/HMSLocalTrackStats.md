@@ -1,6 +1,6 @@
 ---
 title: HMSLocalTrackStats
-nav: '4.22'
+nav: '4.23'
 ---
 
 Extends RTCOutboundRtpStreamStats
@@ -55,6 +55,16 @@ BaseTrackStats.codec
 #### Inherited from
 
 BaseTrackStats.codecId
+
+---
+
+### enabled
+
+• `Optional` **enabled**: `boolean`
+
+#### Inherited from
+
+BaseTrackStats.enabled
 
 ---
 
@@ -188,6 +198,25 @@ MissingOutboundStats.qpSum
 
 ---
 
+### qualityLimitationDurations
+
+• `Optional` **qualityLimitationDurations**: `Object`
+
+#### Type declaration
+
+| Name        | Type     |
+| :---------- | :------- |
+| `bandwidth` | `number` |
+| `cpu`       | `number` |
+| `none`      | `number` |
+| `other`     | `number` |
+
+#### Inherited from
+
+MissingOutboundStats.qualityLimitationDurations
+
+---
+
 ### qualityLimitationReason
 
 • `Optional` **qualityLimitationReason**: `string`
@@ -221,7 +250,7 @@ MissingOutboundStats.remoteId
 
 ### rid
 
-• `Optional` **rid**: `RID`
+• `Optional` **rid**: [`RID`](/api-reference/javascript/v2/home/content#rid)
 
 #### Inherited from
 

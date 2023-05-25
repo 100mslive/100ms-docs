@@ -1,6 +1,6 @@
 ---
 title: HMSTrackStats
-nav: '4.57'
+nav: '4.58'
 ---
 
 Extends RTCOutboundRtpStreamStats
@@ -63,6 +63,16 @@ Ref: https://www.w3.org/TR/webrtc-stats/#dom-rtcoutboundrtpstreamstats
 #### Inherited from
 
 [HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[codecId](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#codecid)
+
+---
+
+### enabled
+
+• `Optional` **enabled**: `boolean`
+
+#### Inherited from
+
+[HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[enabled](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#enabled)
 
 ---
 
@@ -266,6 +276,25 @@ Ref: https://www.w3.org/TR/webrtc-stats/#dom-rtcoutboundrtpstreamstats
 
 ---
 
+### qualityLimitationDurations
+
+• `Optional` **qualityLimitationDurations**: `Object`
+
+#### Type declaration
+
+| Name        | Type     |
+| :---------- | :------- |
+| `bandwidth` | `number` |
+| `cpu`       | `number` |
+| `none`      | `number` |
+| `other`     | `number` |
+
+#### Inherited from
+
+[HMSLocalTrackStats](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats).[qualityLimitationDurations](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats#qualitylimitationdurations)
+
+---
+
 ### qualityLimitationReason
 
 • `Optional` **qualityLimitationReason**: `string`
@@ -303,7 +332,7 @@ https://www.w3.org/TR/webrtc-stats/#dom-rtcremoteinboundrtpstreamstats
 
 ### rid
 
-• `Optional` **rid**: `RID`
+• `Optional` **rid**: [`RID`](/api-reference/javascript/v2/home/content#rid)
 
 #### Inherited from
 

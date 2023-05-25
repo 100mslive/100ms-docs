@@ -1,0 +1,388 @@
+---
+title: Authentication and Tokens
+nav: 5.2
+---
+
+100ms uses two types of JWT tokens to authenticate requests coming from your client apps and backend server.
+
+-   [Auth token](#auth-token-for-client-sdks): Allow end-users (peers) to join rooms with **100ms client SDKs**
+-   [Management token](#management-token-for-rest-api): Authenticate requests to the **100ms server-side REST API**
+
+Both tokens can be decoded with JWT utilities, like [jwt.io](https://jwt.io).
+
+![Tokens overview](/docs/v2/tokens-overview.png)
+
+## Auth token for client SDKs
+
+100ms client SDKs use auth tokens to [join a room](/javascript/v2/how--to-guides/set-up-video-conferencing/join).
+
+<FlexContainer>
+<Callout icon="shield" title="How to get auth tokens?">
+
+1. No-Code way to get started - Get temporary auth tokens from [the dashboard](/javascript/v2/guides/token#get-a-temporary-token-from-100ms-dashboard)
+2. [Auth token server](#set-up-your-token-server) - Programmatically generate auth tokens by setting up an auth token server
+3. Via **[Room Codes](/concepts/v2/concepts/rooms/room-codes/room-codes)** - Get auth tokens by generating unique room codes. Head to [Room Code Authentication](/concepts/v2/concepts/rooms/room-codes/room-code-auth) for more details.
+
+
+
+<Callout icon="link" title="Room Links with Room Codes">
+
+
+Room Codes also come in handy if you want to generate [Room Links](/concepts/v2/concepts/rooms/room-links) that can be shared with your users or embedded an as iframe in your application.
+</Callout>
+
+</Callout>
+</FlexContainer>
+
+### Set up your token server
+
+Your app will call the token server, which generates and returns a JWT auth token for the app to join a 100ms room. This ensures the secret credential of your workspace (called `app_secret`) is not exposed to the client-side. You can also tie it with your internal user authentication: generate auth tokens only when the user is authenticated.
+
+Auth token can be generated with:
+
+-   `app_access_key` and `app_secret`: Find these on the [dashboard](https://dashboard.100ms.live/developer)
+-   `room_id`: Unique identifier for the room that the peer wants to join. Get it from the [dashboard](https://dashboard.100ms.live/rooms) or in the response of the [create room server-side API](/server-side/v2/api-reference/Rooms/create-via-api)
+-   `role`: Name of the role that the peer will join as (e.g. "host")
+-   `user_id`: Your internal identifier, useful to map a 100ms peer object to your internal user object
+
+#### Sample code
+
+<Tabs id="client-code-token" items={['Node.js', 'Python', 'Java', 'Ruby', 'PHP']} />
+
+<Tab id='client-code-token-0'>
+
+```javascript
+var jwt = require('jsonwebtoken');
+var uuid4 = require('uuid4');
+
+var app_access_key = '<app_access_key>';
+var app_secret = '<app_secret>';
+
+var payload = {
+    access_key: app_access_key,
+    room_id: '<room_id>',
+    user_id: '<user_id>',
+    role: '<role>',
+    type: 'app',
+    version: 2,
+    iat: Math.floor(Date.now() / 1000),
+    nbf: Math.floor(Date.now() / 1000)
+};
+
+jwt.sign(
+    payload,
+    app_secret,
+    {
+        algorithm: 'HS256',
+        expiresIn: '24h',
+        jwtid: uuid4()
+    },
+    function (err, token) {
+        console.log(token);
+    }
+);
+```
+
+</Tab>
+
+<Tab id='client-code-token-1'>
+
+```python
+#!/usr/bin/env python3
+import jwt
+import uuid
+import datetime
+import sys
+
+app_access_key = "<app_access_key>"
+app_secret = "<app_secret>"
+
+def generate(room_id, user_id, role):
+    expires = expires or 24 * 3600
+    now = datetime.datetime.utcnow()
+    exp  = now+ datetime.timedelta(seconds=expires)
+    return jwt.encode(payload={
+                "access_key": app_access_key,
+                "type":"app",
+                "version":2,
+                "room_id": room_id,
+                "user_id": user_id,
+                "role":role,
+                "jti": str(uuid.uuid4()),
+                "exp": exp,
+                "iat": now,
+                "nbf": now,
+                }, key=app_secret)
+
+if __name__ == "__main__":
+    if len(sys.argv) == 3:
+        room_id = sys.argv[0]
+        user_id = sys.argv[1]
+        role = sys.argv[2]
+    print(generate(room_id=room_id, user_id=user_id, role=role))
+```
+
+</Tab>
+
+<Tab id='client-code-token-2'  >
+
+```java
+import java.time.Instant;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
+private void generateHmsClientToken() {
+    Map<String, Object> payload = new HashMap<>();
+    payload.put("access_key", "<app_access_key>");
+    payload.put("room_id", "<room_id>");
+    payload.put("user_id", "<user_id>");
+    payload.put("role", "<role>");
+    payload.put("type", "app");
+    payload.put("version", 2);
+    String token = Jwts.builder().setClaims(payload).setId(UUID.randomUUID().toString())
+        .setExpiration(new Date(System.currentTimeMillis() + 86400 * 1000))
+        .setIssuedAt(Date.from(Instant.ofEpochMilli(System.currentTimeMillis() - 60000)))
+        .setNotBefore(new Date(System.currentTimeMillis()))
+        .signWith(SignatureAlgorithm.HS256, "<app_secret>".getBytes()).compact();
+}
+```
+
+</Tab>
+
+<Tab id='client-code-token-3'  >
+
+```ruby
+require 'jwt'
+require 'securerandom'
+
+$app_access_key = "<app_access_key>"
+$app_secret = "app_secret"
+
+def generateAppToken(room_id, user_id, role)
+    now = Time.now
+    exp = now + 86400
+    payload = {
+        access_key: $app_access_key,
+        room_id: room_id,
+        user_id: user_id,
+        role: role,
+        type: "app",
+        jti: SecureRandom.uuid,
+        version: 2,
+        iat: now.to_i,
+        nbf: now.to_i,
+        exp: exp.to_i
+    }
+
+    token = JWT.encode(payload, $app_secret, 'HS256')
+end
+
+puts generateAppToken "<room_id>", "<user_id>", "<role>"
+
+```
+
+</Tab>
+
+<Tab id='client-code-token-4'>
+
+```php
+<?php
+use Firebase\JWT\JWT;
+use Ramsey\Uuid\Uuid;
+
+$issuedAt  = new DateTimeImmutable();
+$expire    = $issuedAt->modify('+24 hours')->getTimestamp();
+$accessKey = "<app_access_key>";
+$secret    = "<app_secret>";
+$version   = 2;
+$type      = "app";
+$role      = "<role>";
+$roomId    = "<room_id>";
+$userId    = "<user_id>";
+
+$payload = [
+    'iat'  => $issuedAt->getTimestamp(),
+    'nbf'  => $issuedAt->getTimestamp(),
+    'exp'  => $expire,
+    'access_key' => $accessKey,
+    'type' => "app",
+    'jti' =>  Uuid::uuid4()->toString()
+    'version' => 2,
+    'role' => $role,
+    'room_id' => $roomId,
+    'user_id' => $userId
+];
+
+$token = JWT::encode(
+    $payload,
+    $secret,
+    'HS256'
+);
+?>
+```
+
+</Tab>
+
+## Management token for REST API
+
+100ms uses management tokens to authenticate REST APIs. Use `app_access_key` and `app_secret` from the [dashboard](https://dashboard.100ms.live/developer) to create the management token.
+
+The management token is not to be exposed on the client-side.
+
+#### Sample code
+
+<Tabs id="test-code" items={['Node.js', 'Python', 'Java', 'Ruby', 'PHP']} />
+
+<Tab id='test-code-0'>
+
+```js
+var jwt = require('jsonwebtoken');
+var uuid4 = require('uuid4');
+
+var app_access_key = '<app_access_key>';
+var app_secret = '<app_secret>';
+var payload = {
+    access_key: app_access_key,
+    type: 'management',
+    version: 2,
+    iat: Math.floor(Date.now() / 1000),
+    nbf: Math.floor(Date.now() / 1000)
+};
+
+jwt.sign(
+    payload,
+    app_secret,
+    {
+        algorithm: 'HS256',
+        expiresIn: '24h',
+        jwtid: uuid4()
+    },
+    function (err, token) {
+        console.log(token);
+    }
+);
+```
+
+</Tab>
+
+<Tab id='test-code-1'>
+
+```py
+#!/usr/bin/env python3
+import jwt
+import uuid
+import datetime
+
+app_access_key = '<app_access_key>'
+app_secret = '<app_secret>'
+
+
+def generateManagementToken():
+    expires = 24 * 3600
+    now = datetime.datetime.utcnow()
+    exp = now + datetime.timedelta(seconds=expires)
+    return jwt.encode(payload={
+        'access_key': app_access_key,
+        'type': 'management',
+        'version': 2,
+        'jti': str(uuid.uuid4()),
+        'iat': now,
+        'exp': exp,
+        'nbf': now
+        }, key=app_secret)
+
+if __name__ == '__main__':
+    print(generateManagementToken())
+```
+
+</Tab>
+
+<Tab id="test-code-2">
+
+```java
+import java.time.Instant;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
+private void generateManagementToken() {
+    Map<String, Object> payload = new HashMap<>();
+    payload.put("access_key", "<app_access_key>");
+    payload.put("type", "management");
+    payload.put("version", 2);
+    String token = Jwts.builder().setClaims(payload).setId(UUID.randomUUID().toString())
+        .setExpiration(new Date(System.currentTimeMillis() + 86400 * 1000))
+        .setIssuedAt(Date.from(Instant.ofEpochMilli(System.currentTimeMillis() - 60000)))
+        .setNotBefore(new Date(System.currentTimeMillis()))
+        .signWith(SignatureAlgorithm.HS256, "<app_secret>".getBytes()).compact();
+  }
+```
+
+</Tab>
+
+<Tab id="test-code-3">
+
+```ruby
+require 'jwt'
+require 'securerandom'
+
+$app_access_key = "<app_access_key>"
+$app_secret = "<app_secret>"
+
+def generateManagementToken()
+    now = Time.now
+    exp = now + 86400
+    payload = {
+    access_key: $app_access_key,
+    type: "management",
+    version: 2,
+    jti: SecureRandom.uuid,
+    iat: now.to_i,
+    nbf: now.to_i,
+    exp: exp.to_i
+}
+token = JWT.encode(payload, $app_secret, 'HS256')
+return token
+end
+
+puts generateManagementToken
+```
+
+</Tab>
+
+<Tab id="test-code-4">
+
+```php
+<?php
+
+use Firebase\JWT\JWT;
+use Ramsey\Uuid\Uuid;
+
+$app_access_key = "<app_access_key>";
+$app_secret = "<app_secret>";
+
+$issuedAt   = new DateTimeImmutable();
+$expire     = $issuedAt->modify('+24 hours')->getTimestamp();
+
+$payload = [
+    'access_key' => $app_access_key,
+    'type' => 'management',
+    'version' => 2,
+    'jti' =>  Uuid::uuid4()->toString(),
+    'iat'  => $issuedAt->getTimestamp(),
+    'nbf'  => $issuedAt->getTimestamp(),
+    'exp'  => $expire,
+];
+
+$token = JWT::encode($payload, $app_secret, 'HS256');
+?>
+```
+
+</Tab>
