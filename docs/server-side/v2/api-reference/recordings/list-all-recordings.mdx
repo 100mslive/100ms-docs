@@ -11,11 +11,7 @@ This list can be filtered by `room_id`, `session_id` or `status` to find the rel
 
 > Note: This API does not return the list of [recording assets](../recording-assets/overview) to optimize for performance. To fetch the list of assets for a recording job, use the [get recording API](./get-recording).
 
-A common scenario is to fetch the recording assets for a room or session. To do so, follow these steps
-
-1. Get the recording job with the `room_id` or `session_id` query parameter on the list API shown below.
-2. Get the recording job `id` from the filtered response.
-3. Use the [get recording API](./get-recording) with the above `id` to get assets for the recording job.
+A common scenario is to fetch the recording assets for a room or session. To do so, use the [list recording assets API](../recording-assets/list-all-assets), and pass the `room_id` or `session_id` query parameter to filter the response.
 
 ## API reference
 
