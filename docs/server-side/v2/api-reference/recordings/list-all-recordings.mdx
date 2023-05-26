@@ -5,7 +5,19 @@ nav: 3.144
 
 Use this request to list and filter through recording jobs of a workspace. The response is paginated.
 
-This list can be filtered by `room_id`, `session_id` or `status` to find the relevant recording object.
+This list can be filtered by `room_id`, `session_id` or `status` to find the relevant recording object for a room or session.
+
+## Recording assets
+
+> Note: This API does not return the list of recording assets to optimize for performance. To fetch the list of assets for a recording job, use the [get recording API](./get-recording).
+
+A common scenario is to fetch the recording assets for a room or session. To do so, follow these steps
+
+1. Get the recording job with the `room_id` or `session_id` query parameter on the list API shown below.
+2. Get the recording job `id` from the filtered response.
+3. Use the [get recording API](./get-recording) with the above `id` to get assets for the recording job.
+
+## API reference
 
 <GetRequest title="https://api.100ms.live/v2/recordings" />
 <Request id="req-0">
@@ -37,24 +49,6 @@ curl --location --request GET 'https://api.100ms.live/v2/recordings' \
             "stopped_by": "",
             "asset_types": [
                 "room-composite"
-            ],
-            "recording_assets": [
-                {
-                    "id": "6425320e94091a5af841456f",
-                    "thumbnails": null,
-                    "metadata": {
-                        "resolution": {
-                            "width": 1280,
-                            "height": 720
-                        }
-                    },
-                    "duration": 55,
-                    "path": "<storage-path>",
-                    "status": "completed",
-                    "created_at": "2023-03-30T06:54:06.45Z",
-                    "type": "room-composite",
-                    "size": 26361961
-                }
             ]
         }
     ],
