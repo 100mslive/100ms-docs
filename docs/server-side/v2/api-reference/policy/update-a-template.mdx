@@ -3,7 +3,16 @@ title: Update a template
 nav: 3.36
 ---
 
-This endpoint is used to modify a Template. You need to provide all options for roles and settings to which you want to apply.
+This endpoint is used to modify a Template. Updating the template involves a three-step process:
+
+1. Use the [Get API](/server-side/v2/policy/retrieve-a-template) to retrieve the template object.
+2. Modify the template object to update it.
+3. Use this API to post the updated object as the request body.
+
+<Note type="warning">
+    When updating a template object, please provide all fields, even if only some fields are being modified. 
+    This method overwrites all fields.
+</Note>
 
 ## Understand sub-objects hierarchy
 
@@ -214,8 +223,3 @@ curl --location --request POST 'https://api.100ms.live/v2/templates/6316d5ca5a26
 | settings <br/>                 | `object`  | Modified settings. Since this is a POST request, you need to provide the whole settings object to modify/persist/override it. <br/><br/>check the [settings object arguments section](/server-side/v2/policy/create-template-via-api#settings-object) for the list of arguments supported              | Yes      |
 | name <br/>                     | `string`  | If you don't provide the `name`, earlier provided name is used. Trying to modify a template's name to match another existing template's name produces overwrite error.                                                                                                                                 | No       |
 | default <br/>                  | `boolean` | Whether this is default template for customer. The default template for a customer is used when no template is provided in create room API.                                                                                                                                                            | No       |
-
-<Note type="warning">
-    When updating a template object, please provide all fields, even if only some fields are being modified. 
-    This method overwrites all fields.
-</Note>
