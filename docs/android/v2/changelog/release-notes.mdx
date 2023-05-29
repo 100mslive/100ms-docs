@@ -3,6 +3,17 @@ title: Release Notes
 nav: 4
 description: Release Notes for 100ms Android SDK
 ---
+## v2.6.6 - 2023-05-29
+
+### Fix
+- SessionStore API fix: While it can still take `Any` datatypes, it must return `JsonElement` because the SDK can't parse the values back. Do see changes to the [doc](../how-to-guides/interact-with-room/room/session-store.mdx)
+- Internal library path updates, no client visible changes.
+- HMSTrack when compared to null, would crash. `track == track?` for instance.
+
+### Added
+- MeetingUrl is now optional for rtmp/recordings
+
+
 ## v2.6.5 - 2023-05-23
 
 ### Fix
