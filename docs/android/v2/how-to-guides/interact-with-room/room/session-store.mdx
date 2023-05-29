@@ -46,26 +46,39 @@ void updateSessionStore(String data, Object key, HMSActionResultListener listene
 
 </Tab>
 
-> 💡 It's important to make sure the object is serializeable. Primitive types Int, Boolean etc are fine to pass and read with casting. For a custom class, add `Gson` `Serializable` annotations or otherwise ensure that the object can be recreated after being sent across the network. [`Keep`](https://developer.android.com/reference/androidx/annotation/Keep) annotations on the data classes to prevent obfuscation might be the easiest way to do this.
+> 💡 It's important to make sure the object is serializeable. Primitive types Int, Boolean etc are fine to pass and read with parsing. For a custom class, add `Gson` `SerializedName` annotations or otherwise ensure that the object can be recreated after being sent across the network. If not `SerializedName`, consider [`Keep`](https://developer.android.com/reference/androidx/annotation/Keep) annotations on the data classes to prevent obfuscation might be the easiest way to do this.
 
 ## Retrieving a value for a specific key
 
 ### Retrieve the current value and receive updates
 
-Most of the time the application is interested not just in a current value of a key but also any updates to that value. To obtain the initial value and receive updates, use the `observeChanges` API.
+Most of the time the application is interested not just in a current value of a key but also any updates to that value. To obtain the initial value and receive updates, use the `addKeyChangeListener` API.
 It takes a list of keys to observe and a closure that will be called for initial value and every time an update is received.
 
+> There are different ways to receive primitive values, objects and lists of objects.
 
 <Tabs id="sessionstoreget" items={['Kotlin', 'Java']} />
 
 <Tab id='sessionstoreget-0'>
 
 ```kotlin
-sessionStore.addKeyChangeListener(listOf("date", "time"), object : HMSKeyChangeListener {
-            override fun onKeyChanged(key: String, value: Any?) {
+sessionStore.addKeyChangeListener(listOf("time","cat","cats"), object : HMSKeyChangeListener {
+            override fun onKeyChanged(key: String, value: JsonElement?) {
                 when(key) {
-                    "date" -> { /* handle date change*/}
-                    "time" -> { /* handle time change*/}
+                    // Primitive values
+                    "time" -> { val time : Long? = value?.asLong }
+                    // Objects
+                    "cat" -> {
+                        if(value != null)
+                            val cat : Cat = Gson().fromJson(value as JsonElement, Cat::class.java)
+                    }
+                    // Lists of objects
+                    "cats" -> { 
+                        val type = TypeToken.getParameterized(List::class.java, Cat::class.java).type
+
+                        if(value !=null && key == catKey)
+                            val cats: List<Cats> = Gson().fromJson(value, type)                        
+                     }
                 }
             }
         },
@@ -82,19 +95,30 @@ sessionStore.addKeyChangeListener(listOf("date", "time"), object : HMSKeyChangeL
 <Tab id='sessionstoreget-1'>
 
 ```java
-sessionStore.addKeyChangeListener(Arrays.asList("date", "time"),
+sessionStore.addKeyChangeListener(Arrays.asList("time","cat","cats"),
         new HMSKeyChangeListener() {
-            @Override
-            public void onKeyChanged(@NonNull String key, @Nullable Object value) {
-                switch (key) {
-                    case "date":
-                        // Handle date change
+        @Override
+        public void onKeyChanged(@NonNull String key, @Nullable JsonElement value) {
+
+            switch (key) {
+                case "time":
+                    if (value != null) {
+                        Long time = value.getAsLong();
+                    }
                     break;
-                    
-                    case "time":
-                        // Handle time change
+
+                case "cat":
+                    if (value != null) {
+                        Cat cat = new Gson().fromJson(value, Cat.class);
+                    }
                     break;
-                }
+
+                case "cats":
+                    if (value != null) {
+                        Type type = TypeToken.getParameterized(List.class, Cat.class).getType();
+                        List<Cat> cats = new Gson().fromJson(value, type);
+                    }
+                    break;
             }
         },
         new HMSActionResultListener() {
@@ -116,13 +140,13 @@ You can have multiple observers running concurrently.
 
 ### Managing the lifecycle of observers
 
-During the lifecycle of the app, you may need to subscribe and unsubscribe for value updates. To unsubscribe keep a reference to the [HMSKeyChangeListener]:
+During the lifecycle of the app, you may need to subscribe and unsubscribe for value updates. To unsubscribe keep a reference to the `HMSKeyChangeListener`:
 
 Later when the observer is no longer needed call `sessionStore.removeKeyChangeListener(keyChangeListener)` API to stop receiving update.
 
 ### Retrieve the current value once
 
-Use the `get(forKey:completion)` API if your application does not require updates for the key.
+Use the `get(key : String, listener: HMSSessionMetadataListener)` API if your application does not require updates for the key.
 
 <Tabs id="sessionstoresingle" items={['Kotlin', 'Java']} />
 
@@ -131,9 +155,9 @@ Use the `get(forKey:completion)` API if your application does not require update
 
 ```kotlin
 sessionStore.get("mykey", object : HMSSessionMetadataListener {
-    override fun onSuccess(sessionMetadata: Any?) {
+    override fun onSuccess(sessionMetadata: JsonElement?) {
         // Use value
-        val data = sessionMetadata as CustomMetadata
+        val data = Gson().fromJson(value, CustomMetadata::class.java)
     }
 
     override fun onError(error: HMSException) {
@@ -152,9 +176,9 @@ sessionStore.get("mykey", object : HMSSessionMetadataListener {
 sessionStore.get("mykey",new  HMSSessionMetadataListener(){
 
     @Override
-    public void onSuccess(@Nullable Object sessionMetadata) {
+    public void onSuccess(@Nullable JsonElement sessionMetadata) {
         // Use value
-        CustomMetadata data = (CustomMetadata) sessionMetadata
+        CustomMetadata data = new Gson().fromJson(sessionMetadata, CustomMetadata.class);
     }
 
     @Override
