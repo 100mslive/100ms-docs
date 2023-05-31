@@ -5,6 +5,10 @@ description: Release Notes for 100ms Android SDK
 ---
 ## v2.6.6 - 2023-05-29
 
+### Breaking Changes
+- SessionStore's `onKeyChangeListener` now returns `JsonElement` instead of `Any`
+- The deprecated methods for `setSessionMetaData` and `getSessionMetaData` were removed. Please use the [SessionStore](../how-to-guides/interact-with-room/room/session-store) directly instead.
+
 ### Fix
 - SessionStore API fix: While it can still take `Any` datatypes, it must return `JsonElement` because the SDK can't parse the values back. Do see changes to the [doc](../how-to-guides/interact-with-room/room/session-store)
 - Internal library path updates, no client visible changes.
