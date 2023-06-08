@@ -139,6 +139,10 @@ platform :ios, '12.0'
 
 Now that your project setup is complete let's replace the code in the `lib/main.dart` file with the complete code sample below.
 
+After running the below code your application will look similar to this:
+
+![hls-quickstart-gif](https://user-images.githubusercontent.com/93931528/235787427-d837ec88-a55d-48f3-be7e-65e02df6fa8c.gif)
+
 ```dart section=completeCodeExample
 import 'dart:io';
 
@@ -401,9 +405,15 @@ class _MeetingPageState extends State<MeetingPage>
 
   @override
   void onAudioDeviceChanged(
-      {HMSAudioDevice? currentAudioDevice,
-      List<HMSAudioDevice>? availableAudioDevice}) {
-    // Checkout the docs about handling onAudioDeviceChanged updates here: https://www.100ms.live/docs/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners
+    {HMSAudioDevice? currentAudioDevice,
+    List<HMSAudioDevice>? availableAudioDevice}) {
+      // Checkout the docs about handling onAudioDeviceChanged updates here: https://www.100ms.live/docs/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners
+  }
+
+  @override
+  void onSessionStoreAvailable(
+    {HMSSessionStore? hmsSessionStore}) {
+      // Get notified when the Session Store is available for usage. Read more about Session Store here: https://www.100ms.live/docs/flutter/v2/how-to-guides/interact-with-room/room/session-store
   }
 
   @override
@@ -580,9 +590,8 @@ class _MeetingPageState extends State<MeetingPage>
                               ),
                             ),
                           ),
-                             const SizedBox(height: 3,),
-                          const Text("Leave Room",style: TextStyle(color: Colors.white),),
-                       
+                            const SizedBox(height: 3,),
+                            const Text("Leave Room",style: TextStyle(color: Colors.white),),
                         ],
                       ),
                     ],
@@ -700,6 +709,12 @@ class _HLSViewerPageState extends State<HLSViewerPage>
       {HMSAudioDevice? currentAudioDevice,
       List<HMSAudioDevice>? availableAudioDevice}) {
     // Checkout the docs about handling onAudioDeviceChanged updates here: https://www.100ms.live/docs/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners
+  }
+
+  @override
+  void onSessionStoreAvailable(
+    {HMSSessionStore? hmsSessionStore}) {
+      // Get notified when the Session Store is available for usage. Read more about Session Store here: https://www.100ms.live/docs/flutter/v2/how-to-guides/interact-with-room/room/session-store
   }
 
   @override
@@ -1282,6 +1297,10 @@ Our application must listen to the corresponding updates in `onRoomUpdate`. Chec
       List<HMSAudioDevice>? availableAudioDevice}) {}
 
   @override
+  void onSessionStoreAvailable(
+    {HMSSessionStore? hmsSessionStore}) {}
+
+  @override
   void onChangeTrackStateRequest(
       {required HMSTrackChangeRequest hmsTrackChangeRequest}) {}
 
@@ -1532,7 +1551,13 @@ void onTrackUpdate(
 void onAudioDeviceChanged(
     {HMSAudioDevice? currentAudioDevice,
     List<HMSAudioDevice>? availableAudioDevice}) {
-// Checkout the docs about handling onAudioDeviceChanged updates here: https://www.100ms.live/docs/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners
+    // Checkout the docs about handling onAudioDeviceChanged updates here: https://www.100ms.live/docs/flutter/v2/how--to-guides/listen-to-room-updates/update-listeners
+}
+
+@override
+void onSessionStoreAvailable(
+  {HMSSessionStore? hmsSessionStore}) {
+    // Get notified when the Session Store is available for usage. Read more about Session Store here: https://www.100ms.live/docs/flutter/v2/how-to-guides/interact-with-room/room/session-store
 }
 
 @override

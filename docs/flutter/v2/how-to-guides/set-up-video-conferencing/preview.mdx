@@ -55,19 +55,10 @@ class Preview implements HMSPreviewListener{
    }
 
    @override
-   void onPreview({required HMSRoom room, required List<HMSTrack> localTracks}) {
-      //We will get the callback here if the preview succeeds
-   }
-
-   @override
-   void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {
-        //Room updates: https://www.100ms.live/docs/flutter/v2/features/update-listener-enums#hms-room-update
-   }
-
-   @override
-   void onPeerUpdate(
-      {required HMSPeer peer, required HMSPeerUpdate update}) async {
-       //Peer updates: https://www.100ms.live/docs/flutter/v2/features/update-listener-enums#hms-peer-update
+   void onPreview(
+      {required HMSRoom room,
+      required List<HMSTrack> localTracks}) {
+         /// We will get the callback here if the preview succeeds
    }
 
    @override
@@ -76,12 +67,25 @@ class Preview implements HMSPreviewListener{
    }
 
    @override
+   void onRoomUpdate(
+      {required HMSRoom room, required HMSRoomUpdate update}) {
+         /// Only sent when Preview Room State is enabled.
+         /// Room updates: https://www.100ms.live/docs/flutter/v2/features/update-listener-enums#hms-room-update
+   }
+
+   @override
+   void onPeerUpdate(
+      {required HMSPeer peer, required HMSPeerUpdate update}) async {
+         /// Only sent when Preview Room State is enabled.
+         /// Peer updates: https://www.100ms.live/docs/flutter/v2/features/update-listener-enums#hms-peer-update
+   }   
+
+   @override
    void onAudioDeviceChanged(
       {HMSAudioDevice? currentAudioDevice,
       List<HMSAudioDevice>? availableAudioDevice}) {
-        //Get notified when the audio device is changed: https://www.100ms.live/docs/flutter/v2/features/audio-output-routing#adding-audio-device-change-event-listener-android-only
+         /// Get notified when the audio device is changed: https://www.100ms.live/docs/flutter/v2/features/audio-output-routing#adding-audio-device-change-event-listener-android-only
    }
-
 }
 ```
 
@@ -93,7 +97,7 @@ After calling preview your app will be provided an update from the 100ms SDK.
 
 ### Render Preview
 
-In case of success `onPreview` provides an array of local tracks in the parameter `localTracks` that you can display to the user (see [Render Video](render-video) and [Mute](mute) sections for more details).
+In case of success `onPreview` provides an array of local tracks in the parameter `localTracks` that you can display to the user (see [Render Video](/flutter/v2/how-to-guides/set-up-video-conferencing/render-video/overview) and [Mute](mute) sections for more details).
 
 -   Fetching the track in `onPreview` callback:
 
@@ -158,9 +162,9 @@ class Meeting implements HMSUpdateListener{
    late HMSSDK hmsSDK;
 
    Meeting({required HMSSDK hmsSDKFromPreview,HMSConfig configFromPreview}){
-        hmsSDK = hmsSDKFromPreview;
-        hmsSDK.addUpdateListener(listener: this);
-        hmsSDK.join(config: configFromPreview);
+         hmsSDK = hmsSDKFromPreview;
+         hmsSDK.addUpdateListener(listener: this);
+         hmsSDK.join(config: configFromPreview);
    }
 
    @override
@@ -202,42 +206,44 @@ Now, let's take a look at the listener class in detail.
 /// Check out the [Sample App] to know about how we are implementing it: https://github.com/100mslive/100ms-flutter.
 
 abstract class HMSPreviewListener {
-  ///when an error is caught [onError] will be called
-  ///
-  /// - Parameters:
-  ///   - error: error which you get.
-  void onHMSError({required HMSException error});
+   ///when an error is caught [onError] will be called
+   ///
+   /// - Parameters:
+   ///   - error: error which you get.
+   void onHMSError({required HMSException error});
 
-  ///when you want to preview listen to this callback
-  ///
-  /// - Parameters:
-  ///   - room: the room which was joined
-  ///   - localTracks: local audio/video tracks list
-  void onPreview({required HMSRoom room, required List<HMSTrack> localTracks});
+   ///when you want to preview listen to this callback
+   ///
+   /// - Parameters:
+   ///   - room: the room which was joined
+   ///   - localTracks: local audio/video tracks list
+   void onPreview({required HMSRoom room, required List<HMSTrack> localTracks});
 
-  /// This is called when there is a change in any property of the Room
-  ///
-  /// - Parameters:
-  ///   - room: the room which was joined
-  ///   - update: the triggered update type. Should be used to perform different UI Actions
-  void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update});
+   /// This is called when there is a change in any property of the Room. 
+   /// Only sent when Preview Room State is enabled.
+   ///
+   /// - Parameters:
+   ///   - room: the room which was joined
+   ///   - update: the triggered update type. Should be used to perform different UI Actions
+   void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update});
 
-  /// This will be called whenever there is an update on an existing peer
-  /// or a new peer got added/existing peer is removed.
-  ///
-  /// This callback can be used to keep a track of all the peers in the room
-  /// - Parameters:
-  ///   - peer: the peer who joined/left or was updated
-  ///   - update: the triggered update type. Should be used to perform different UI Actions
-  void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update});
+   /// This will be called whenever there is an update on an existing peer
+   /// or a new peer got added/existing peer is removed.
+   /// Only sent when Preview Room State is enabled.
+   ///
+   /// This callback can be used to keep a track of all the peers in the room
+   /// - Parameters:
+   ///   - peer: the peer who joined/left or was updated
+   ///   - update: the triggered update type. Should be used to perform different UI Actions
+   void onPeerUpdate({required HMSPeer peer, required HMSPeerUpdate update});
 
-  ///whenever a new audio device is plugged in or the audio output is changed we
-  ///get the onAudioDeviceChanged update
-  ///This callback is only fired on Android devices. On iOS, this callback will not be triggered.
-  /// - Parameters:
-  ///   - currentAudioDevice: Current audio output route
-  ///   - availableAudioDevice: List of available audio output devices
-  void onAudioDeviceChanged(
+   ///whenever a new audio device is plugged in or the audio output is changed we
+   ///get the onAudioDeviceChanged update
+   ///This callback is only fired on Android devices. On iOS, this callback will not be triggered.
+   /// - Parameters:
+   ///   - currentAudioDevice: Current audio output route
+   ///   - availableAudioDevice: List of available audio output devices
+   void onAudioDeviceChanged(
       {HMSAudioDevice? currentAudioDevice,
       List<HMSAudioDevice>? availableAudioDevice});
 }

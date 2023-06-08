@@ -1507,6 +1507,26 @@ const nextConfig = {
                 permanent: true
             },
             {
+                source: '/react-native/v2/how-to-guides/handle-interruptions/release-resources',
+                destination: '/react-native/v2/how-to-guides/set-up-video-conferencing/release-resources',
+                permanent: true
+            },
+            {
+                source: '/react-native/v2/how-to-guides/handle-interruptions/error-handling',
+                destination: '/react-native/v2/how-to-guides/debugging/error-handling',
+                permanent: true
+            },
+            {
+                destination: '/javascript/v2/how-to-guides/record-and-live-stream/hls/rtmp-recording',
+                source: '/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording',
+                permanent: true
+            },
+            {
+                source: '/server-side/v2/how-to-guides/active-rooms/:slug*',
+                destination: '/server-side/v2/api-reference/active-rooms/:slug*',
+                permanent: true
+            },
+            {
                 source: '/:slug*/how--to-guides/:path*',
                 destination: '/:slug*/how-to-guides/:path*',
                 permanent: true

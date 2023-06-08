@@ -39,6 +39,8 @@ public class HMSNetworkQuality {
 After the room has been joined, it might be useful to give users an indication of network health of other participants in the room. In case of network issues this can reduce confusion regarding wether it is my network at fault or the other party's.
 No special configuration is required to enable network health callbacks. Starting with iOS SDK version 0.2.9 this information will be sent via `on(peer: HMSPeer, update: HMSPeerUpdate)` callback of `HMSUpdateListener`. The peer will signify which peer the network health is being reported for.
 
+> 🔑 Note: The update is only fired when there is a change in peer's network quality value.
+
 ## Interpreting the Values
 
 `peer.networkQuality?.downlinkQuality` will be a value between -1 and 5.

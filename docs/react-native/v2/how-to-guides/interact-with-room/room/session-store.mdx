@@ -1,0 +1,208 @@
+---
+title: Session Store
+nav: 8.2
+---
+
+Session store is a shared realtime key-value store that is accessible by everyone in the room. Consider it as additional data associated with the session at the top level. Session store can be utilized to implement features such as pinned text, spotlight (which brings a particular peer to the center stage for everyone in the room), and more.
+
+The session store persists throughout the session and is cleared when the last peer leaves the room.
+
+<Note>
+💡 Session Store vs Peer Metadata
+
+While peer metadata is associated with individual peers and each peer can have their own metadata, session store remains the same for every peer in the room.
+
+</Note>
+
+
+## How to use
+
+Session store is only available after user joins the session. To use session store, you need to
+obtain a reference to the `HMSSessionStore` class instance, you can add an event listener for the
+`HMSUpdateListenerActions.ON_SESSION_STORE_AVAILABLE` event on `HMSSDK` instance using
+the `addEventListener` method. Once you get the reference to the session store you can save it
+in your app for accessing later.
+
+```js
+import { HMSSessionStore, HMSUpdateListenerActions, HMSSDK } from '@100mslive/react-native-hms';
+
+...
+
+const hmsInstance = await HMSSDK.build();
+
+// subscription function for `ON_SESSION_STORE_AVAILABLE` event
+const onSessionStoreAvailableListener = (data: { sessionStore: HMSSessionStore; }) => {
+
+  // Saving `sessionStore` refernce in global store
+  // We can use this `HMSSessionStore` instance to get/set value from/on room session
+  dispatch(saveSessionStoreInstance({ hmsSessionStore: data.sessionStore }));
+};
+
+// Adding event listener for `ON_SESSION_STORE_AVAILABLE` event
+hmsInstance.addEventListener(
+  HMSUpdateListenerActions.ON_SESSION_STORE_AVAILABLE,
+  onSessionStoreAvailableListener,
+);
+```
+
+### Setting a value for a specific key
+
+You can use the `set` method on `HMSSessionStore` class instance to set a value for a specific key.
+Once a value is assigned, it will be available for other peers in the room who are listening for
+changes in value for that specific key.
+
+Note that you can only use `string` or `null` types as value. Use `string` type for setting a value for
+any key and use `null` as value to clear value already set for any key.
+
+However, if you want to set an `object` as a value for a key, then you can `serialize` it with
+`JSON.stringify` method call, and use the resulting `string` as a value.
+
+```js
+// Example 1: Setting a value for `pinnedMessage` key
+
+const messageToPin = 'Jatin Nagar: hello world';
+
+await hmsSessionStore.set(
+  messageToPin,     // Value for `pinnedMessage` key
+  'pinnedMessage',  // key
+);
+
+...
+
+// Example 2: Clearing value of `pinnedMessage` key
+
+await hmsSessionStore.set(
+  null,             // Value for `pinnedMessage` key
+  'pinnedMessage',  // key
+);
+
+...
+
+// Example 3: Setting an serialized `object` as a value
+
+const config = { adminName: 'Jatin Nagar' };
+
+const serializedConfig = JSON.stringify(config);
+
+await hmsSessionStore.set(
+  serializedConfig, // Value for `pinnedMessage` key
+  'pinnedMessage',  // key
+);
+```
+
+
+## Retrieving a value for a specific key
+
+### Retrieve the current value once
+
+You can obtain the value of any specified key on session store using the `get` method available
+on `HMSSessionStore` class instance. Note that you will not get updates for any change in value
+of the specified key, `get` method returns the latest value at the time it was called.
+
+```js
+try {
+  // 'pinnedMessage' will be `string` type if value for `pinnedMessage` key is set on session store,
+  // or `null` or `undefined` otherwise
+  const pinnedMessage: string | null | undefined = await hmsSessionStore.get('pinnedMessage');
+
+  // Handle pinned message as per your usecase
+
+} catch (error) {
+  // Handle error
+  console.log('Error while getting value for `pinnedMessage` key: ', error);
+}
+```
+
+### Retrieve the current value and receive updates
+
+Most of the time the application is interested not just in a current value of a key but also any
+updates to that value. To obtain the initial value and receive updates, you can use the
+`addKeyChangeListener` method available on `HMSSessionStore` class instance.
+
+It takes a 'list of keys' to observe as first parameter and a `callback` function as second parameter
+that will be called for initial value and every time an update is received.
+
+This 'callback' function receives any `error` occured (or null if no error occured) while adding the listener as first parameter
+and actual data that we are interested in as second parameter.
+
+The second parameter 'data' has `key` and `value` which are both of `string` types.
+
+```js
+// Adding key change listener for `spotlight` & `pinnedMessage` keys on Session Store
+hmsSessionStore.addKeyChangeListener(
+  // list of keys to observe
+  ['spotlight', 'pinnedMessage'],
+
+  // callback function which is called initially and every time an update is received
+  (
+    error: string | null, // any error occurred while adding key change listener
+    data: { key: string; value: string | null | undefined } | null;
+  ) => {
+    // If error occurs, handle error and return early
+    if (error !== null) {
+      console.log(
+        '`spotlight` & `pinnedMessage` key listener Error -> ',
+        error,
+      );
+      return;
+    }
+
+    // If no error, handle data
+    if (data !== null) {
+      switch (data.key) {
+        case 'spotlight': {
+          // Handle spotlight tile change
+          console.log('value for `spotlight` key: ', data.value);
+          break;
+        }
+        case 'pinnedMessage': {
+          console.log('value for `pinnedMessage` key: ', data.value);
+          break;
+        }
+      }
+    }
+  }
+);
+```
+
+Also, You can have multiple key change listeners running concurrently.
+
+### Stop listening to updates for keys
+
+When you don't want to receive key change updates anymore, you can remove these change listeners.
+`addKeyChangeListener` method returns a 'subscription' object, which has remove method on it, you can
+call `remove` method on a 'subscription' object to remove key change listener added for that particular
+subscription.
+
+```js
+// refer to "Retrieve the current value and receive updates" section
+// for more details about adding key change listener
+
+React.useEffect(() => {
+  // `subscription` for this particular key change listener
+  const subscription = hmsSessionStore.addKeyChangeListener(...);
+
+  return () => {
+    // call `remove` method on above `subscription` to remove key change listener
+    subscription.remove();
+  }
+}, [hmsSessionStore]);
+```
+
+> It is recommended to remove all the key change listeners while leaving the room or when the room is ended.
+
+
+## Limitations and workarounds in Alpha release
+
+-   There is no permission support, which means anyone can read/write session metadata. If you want to restrict access to session metadata, you have to implement it at the app level logic.
+-   Locks are required to ensure consistency of the data. If two peers update the data at the same time, it may result in a race condition where the last update overwrites the previous ones.
+
+👀 For an example of how to implement pinned chat support using session store in a React Native app with the 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-flutter/blob/main/example/lib/meeting/meeting_store.dart).
+
+## Limits
+
+- Max payload size for data can be 1KB.
+- Maximum 100 keys are supported with 64KB limit applied to all keys combined.
+- Metadata size for 64 KB also include the key size.
+
+That's it. You are all set to use Session Store.

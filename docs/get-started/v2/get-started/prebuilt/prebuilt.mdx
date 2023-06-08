@@ -1,83 +1,54 @@
 ---
-title: Prebuilt Room Links
-nav: 4.2
+title: 100ms Prebuilt
+nav: 4.3
 ---
-Embed or share room links without building UI
 
-Getting started with 100ms Prebuilt Room Links is the fastest way to test and go live with 100ms. 
+100ms Prebuilt is a feature rich video conferencing / live streaming app built on top on our [sample web app](https://github.com/100mslive/100ms-web/). Share Prebuilt room links with users or [embed it as an iFrame](/get-started/v2/get-started/prebuilt/prebuilt#share-or-embed-as-iframe) in your application.
 
-[Test Prebuilt Link→](https://examples-videoconferencing.app.100ms.live/meeting/tmz-qdi-cyp)
+Getting started with 100ms Prebuilt Room Links is the fastest way to test and go live with 100ms. [Test Prebuilt Link→](https://examples-videoconferencing.app.100ms.live/meeting/tmz-qdi-cyp)
 
-You can generate Prebuilt Room Links with a standard format : `https://<template-subdomain>/meeting/<room-code>`, where
 
-    1. `template-subdomain` - is the subdomain that you’ve defined at the time of Template creation. 
-    2. `room-code` - is a Room Code and belongs to a unique `room_id` and `role` for which you're creating the Room Link. Read more on [Room Codes](/get-started/v2/get-started/prebuilt/room-codes/overview) and its usage.
+<FlexContainer>
+<Callout icon="link" title="Prebuilt Basics">
 
-## Pre-requisites
+- Try role specific Prebuilt Room Links on 100ms dashboard. Follow [this](/get-started/v2/get-started/concepts/basics#what-are-the-steps-to-build-a-live-app-with-100ms) to set up your 100ms account and join your room
+![Links](/docs/v2/JoinRoomModal.png)
 
-1. Create your account on [100ms Dashboard](https://dashboard.100ms.live/login)
-2. Create a Room Template to define your Room configuration
-    - via 100ms dashboard : Go to Templates and set up your first Room Template, here you can configure Roles and their permissions. 
-    - via Create Template API : Review the [Template object](https://www.100ms.live/docs/server-side/v2/api-reference/policy/template-object) and create a Template with [Create Template API](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-api)
-3. Rooms on 100ms : A Room gets created by default associated with the Template you’ve created. Alternatively, go ahead and create a Room programatically.
-    1. Rooms are created on 100ms server and requires your unique [Management Token](https://www.100ms.live/docs/concepts/v2/concepts/security-and-tokens#management-token-for-rest-api) to authenticate all Create Room requests.
-    2. Review [Rooms object](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/object) and create a Room with [Create a Room API](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/create-via-api)
-4. Once you have your first Room ready, you can now go ahead and create and create Prebuilt Room Links.
 
-## Create Prebuilt Room Links
-
-### 1. On 100ms Dashboard [No Code]
-
-1. Go to Rooms page on [100ms dashboard](https://dashboard.100ms.live/dashboard) and select a Room to go to Rooms details page.
-2. On clicking “Join Room”, you can either copy or Join the Prebuilt Link.
-
-### 2. Construct Prebuilt Link
-
-1. You need a Template-subdomain and Room Code to construct Prebuilt Room Links with format : `https://<template-subdomain>/meeting/<room-code>`
-
-    - Template Subdomain - You can get the template subdomain under Templates > Your Template on [100ms Dashboard](https://dashboard.100ms.live/dashboard)
-    - Room Code - Get Room Code from [Create Room Code API](/server-side/v2/api-reference/Rooms/create-via-api) 
-        
-2. Create Room Link structure : Append template-subdomain and Room code to the room link format.
-   
-   Here is an example pseudo code snippet involving creating a room and then creating room links for that room.
+- Customise Prebuilt that fits your use case ***[coming soon⚒️]***
+    - Customise features for roles
+    - Set up video layouts modes for 1:1 calling, small/group calls
     
-    ```python
-    # template info
-    template_id = "639cb27a0c77c9782cc50e7b"
-    template_subdomain = "piyush.app.100ms.live"
-    
-    # create room 
-    room_response = create_room(template_id)
-    
-    # create room code for the above created room
-    room_codes = create_room_codes(room_response["id"])
-    
-    # create create room links by appending room_code to template_subdomain
-    # room_link = https://<template-subdomain>/meeting/<room-code>
-    room_links = {}
-    for data in room_codes:
-    	room_links[data["role"]] = "https://"+template_subdomain+"/meeting/"+data["code"]
-    
-    print(room_links)
-    ```
+</Callout>
+</FlexContainer>
 
-## Embed or Share Room Links
+## Get started with Prebuilt links
 
-Embed Prebuilt links as iFrame on web, mobile-web
+In this guide, we will create role specific prebuilt room links and share/embed the link as an iFrame in your application.
 
-If you want a quick integration of a fully featured video conferencing/live streaming app inside your application within a day, iframe is the way to go.
+<FlexContainer>
+<Callout icon="link" title="Prebuilt Link Structure">
+Prebuilt links are role specific room links with a format `https://<template-subdomain>.app.100ms.live/<room-code>` where,
+    - `template-subdomain`- is the subdomain that you’ve defined at the time of template creation on [100ms Dashboard](https://dashboard.100ms.live/dashboard). Copy `template-subdomain` from Template details page on 100ms Dashboard
+    - `room-code`- is a [room code](/concepts/v2/concepts/rooms/room-codes/room-codes) that belongs to a unique`room_id` and `role` for which you're creating the room link. Get room codes for each role 
+            - Copy role specific room code from Join Room section for a role in a room
+            - [Create Room Codes API](/server-side/v2/api-reference/room-codes/create-room-code-api) to create room codes
+</Callout>
+</FlexContainer>
 
-**iframe integration benefits:**
 
-- You can have a fully-featured video conferencing/live streaming UI added to your web app with minimal development
-- You can customize to a greatest extent as per your requirements
-- You can use this in the framework you're already using in your app
-- Using an iframe you can embed the whole sample web app inside your UI wherever you want
+### Construct the link
 
-**Implementation**
+Once you have the template-subdomain and room code ready, append these to the link structure for all roles in your room.
 
-Embed the Prebuilt Room Link as an iframe in your application
+- Host Prebuilt Link : https://`template-subdomain`/meeting/`room-code-for-host`
+- Guest Prebuilt Link : https://`template-subdomain`/meeting/`room-code-for-guest`
+
+
+### Share or Embed as iFrame
+
+Once you have a Prebuilt room link ready, you can share it with your users on the fly as Push notification, SMS, Email etc or directly embed the link in your application. Refer a sample code snippet to embed the prebuilt link as an iFrame.
+
 
 ```html
 <iframe
@@ -87,7 +58,3 @@ Embed the Prebuilt Room Link as an iframe in your application
     style="height: 100vh; width: 100%; border:0;">
 </iframe>
 ```
-
-### Send shareable links to your users
-
-You can share Room links with you users on the fly as Push notification, SMS, Email etc.

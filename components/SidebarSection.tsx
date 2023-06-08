@@ -118,17 +118,17 @@ const SidebarSection: React.FC<Props> = ({ value: key, index, children, nested =
             </Flex>
 
             <div className={`accordion-content ${openSection ? 'active-acc' : ''}`}>
-                {Object.entries(children as {}).map(([_, route]: [string, any]) =>
+                {Object.entries(children as {}).map(([_, route]: [string, any], i: number) =>
                     Object.prototype.hasOwnProperty.call(route, 'title') ? (
                         <SidebarItem
-                            key={route.title}
+                            key={`${route.title}-${i}-item`}
                             asPath={asPath}
                             route={route}
                             activeItem={activeItem}
                             index={index}
                         />
                     ) : (
-                        <SidebarSection index={index} value={_} nested>
+                        <SidebarSection key={`${route.title}-${i}-title`} index={index} value={_} nested>
                             {route}
                         </SidebarSection>
                     )

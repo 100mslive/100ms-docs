@@ -58,6 +58,16 @@ BaseTrackStats.codecId
 
 ---
 
+### enabled
+
+• `Optional` **enabled**: `boolean`
+
+#### Inherited from
+
+BaseTrackStats.enabled
+
+---
+
 ### firCount
 
 • `Optional` **firCount**: `number`

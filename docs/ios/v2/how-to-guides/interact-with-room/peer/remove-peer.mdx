@@ -7,7 +7,7 @@ Someone's overstayed their welcome and now you need to remove a peer from the ch
 
 ### Permissions
 
-Can't let just anyone remove others from the room. First you need to create a [role](/concepts/v2/concepts/templates-and-roles/overview) with the permissions to end a room.
+Can't let just anyone remove others from the room. First you need to create a [role](/get-started/v2/get-started/concepts/templates-and-roles) with the permissions to end a room.
 
 The permission to end a room is called `removeOthers` and you should check for that within the `permissions` property of `HMSRole` of the peer to see if they have it.
 
@@ -42,7 +42,7 @@ class HMSRemovedFromRoomNotification {
 }
 ```
 
-> 💡 This is the same callback that will be triggered if a room was [ended](end-room) as well. Except that `roomEnded` will be false.
+> 💡 This is the same callback that will be triggered if a room was [ended](../room/end-room) as well. Except that `roomEnded` will be false.
 
 reason: The string message detailing why the peer is being removed.
 
