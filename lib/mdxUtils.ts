@@ -41,26 +41,26 @@ export const getDocsPaths = () => {
         .map((path) => path.replace(MARKDOWN_REGEX, ''));
 };
 
-function seperateDots(dotSeperatedNumber) {
-    return dotSeperatedNumber.split('.').map((numStr) => Number.parseInt(numStr));
-}
+// function seperateDots(dotSeperatedNumber) {
+//     return dotSeperatedNumber.split('.').map((numStr) => Number.parseInt(numStr));
+// }
 
-function dotSeperatedNumberCompare(a, b) {
-    const aNumbers = seperateDots(a),
-        bNumbers = seperateDots(b);
+// function dotSeperatedNumberCompare(a, b) {
+//     const aNumbers = seperateDots(a),
+//         bNumbers = seperateDots(b);
 
-    for (let i = 0; i < Math.min(aNumbers.length, bNumbers.length); i++) {
-        if (aNumbers[i] !== bNumbers[i]) {
-            return aNumbers[i] > bNumbers[i] ? 1 : -1;
-        }
-    }
+//     for (let i = 0; i < Math.min(aNumbers.length, bNumbers.length); i++) {
+//         if (aNumbers[i] !== bNumbers[i]) {
+//             return aNumbers[i] > bNumbers[i] ? 1 : -1;
+//         }
+//     }
 
-    if (aNumbers.length === bNumbers.length) {
-        return 0;
-    } else {
-        return aNumbers.length > bNumbers.length ? 1 : -1;
-    }
-}
+//     if (aNumbers.length === bNumbers.length) {
+//         return 0;
+//     } else {
+//         return aNumbers.length > bNumbers.length ? 1 : -1;
+//     }
+// }
 
 /**
  * Gets a list of all docs and their meta in the `DOCS_PATH` directory
@@ -89,7 +89,7 @@ export const getAllDocs = () => {
                 content
             };
         })
-        .sort((a, b) => dotSeperatedNumberCompare(String(a.nav), String(b.nav)));
+        .sort((a, b) => Number(a.nav) - Number(b.nav));
     return docs;
 };
 
@@ -119,18 +119,6 @@ export const slugify = (text) =>
         .replace(/--+/g, '-')
         .replace(/^-+/, '')
         .replace(/-+$/, '');
-
-/*
-Source: https://stackoverflow.com/questions/1053902/how-to-convert-a-title-to-a-url-slug-in-jquery
-    
-    (/\s+/g, '-') //spaces to dashes
-    (/&/g, '-and-') //ampersand to and
-    (/[^\w\-]+/g, '') //remove non-words
-    (/\-\-+/g, '-') //collapse multiple dashes
-    (/^-+/, '') //trim starting dash
-    (/-+$/, ''); //trim ending dash
-    
-*/
 
 export const toMdxJsxFlowElement = (input) => {
     const tree = fromMarkdown(input, {

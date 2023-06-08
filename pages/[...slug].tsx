@@ -167,6 +167,7 @@ export const getStaticProps = async ({ params }) => {
     const navItems = getNavfromDocs(allDocs);
     const [currentDocSlug] = params.slug as string[];
     const currentDocs = allDocs.filter((doc) => doc.url.includes(`/${currentDocSlug}/`));
+
     const { previousPost, nextPost } = getPagination(currentDocs, params.slug as string[]);
     const pagination = { previousPost, nextPost };
     const { code, frontmatter } = await bundleMDX({

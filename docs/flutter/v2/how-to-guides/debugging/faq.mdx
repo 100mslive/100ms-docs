@@ -201,6 +201,12 @@ To resolve this error, follow these steps:
 
 To display mic or camera mute/unmute button based on role publish permissions checkout the doc [here](https://www.100ms.live/docs/flutter/v2/how--to-guides/set-up-video-conferencing/mute#when-to-show-miccamera-buttons-on-ui)
 
+### I am not getting `onMessage` callback after sending messages
+
+The `onMessage` callback is not triggered for messages sent by the local peer. In other words, if you send a message yourself, you will not receive the `onMessage` callback for that particular message.
+If you are not receiving the callback for remote messages as well, please check the docs [here](https://www.100ms.live/docs/flutter/v2/how-to-guides/set-up-video-conferencing/chat)
+To ensure that the message sent by the local peer is included in your messages list, you will need to store it manually. You can achieve this by handling the `onSuccess` callback of the `HMSActionResultListener` and adding the message to your messages list, as shown in the example [here](https://www.100ms.live/docs/flutter/v2/how-to-guides/set-up-video-conferencing/chat#sending-chat-messages) 
+
 ### I want to suggest a new feature.
 
 Awesome, we're always looking out for new ideas and features. Please reach out to us over [discord](https://100ms.live/discord)
