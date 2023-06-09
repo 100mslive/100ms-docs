@@ -1,98 +1,97 @@
 ---
 title: Web SDK API Reference
-nav: '2.01'
+nav: '1.1'
 ---
 
 ## Enumerations
 
--   [DeviceType](/api-reference/javascript/v2/enums/DeviceType)
--   [HMSAudioPluginType](/api-reference/javascript/v2/enums/HMSAudioPluginType)
--   [HMSLogLevel](/api-reference/javascript/v2/enums/HMSLogLevel)
--   [HMSNotificationSeverity](/api-reference/javascript/v2/enums/HMSNotificationSeverity)
--   [HMSNotificationTypes](/api-reference/javascript/v2/enums/HMSNotificationTypes)
--   [HMSPlaylistType](/api-reference/javascript/v2/enums/HMSPlaylistType)
--   [HMSRoomState](/api-reference/javascript/v2/enums/HMSRoomState)
--   [HMSSimulcastLayer](/api-reference/javascript/v2/enums/HMSSimulcastLayer)
--   [HMSVideoPluginCanvasContextType](/api-reference/javascript/v2/enums/HMSVideoPluginCanvasContextType)
--   [HMSVideoPluginType](/api-reference/javascript/v2/enums/HMSVideoPluginType)
+- [DeviceType](/api-reference/javascript/v2/enums/DeviceType)
+- [HMSAudioPluginType](/api-reference/javascript/v2/enums/HMSAudioPluginType)
+- [HMSLogLevel](/api-reference/javascript/v2/enums/HMSLogLevel)
+- [HMSNotificationSeverity](/api-reference/javascript/v2/enums/HMSNotificationSeverity)
+- [HMSNotificationTypes](/api-reference/javascript/v2/enums/HMSNotificationTypes)
+- [HMSPlaylistType](/api-reference/javascript/v2/enums/HMSPlaylistType)
+- [HMSRoomState](/api-reference/javascript/v2/enums/HMSRoomState)
+- [HMSSimulcastLayer](/api-reference/javascript/v2/enums/HMSSimulcastLayer)
+- [HMSVideoPluginCanvasContextType](/api-reference/javascript/v2/enums/HMSVideoPluginCanvasContextType)
+- [HMSVideoPluginType](/api-reference/javascript/v2/enums/HMSVideoPluginType)
 
 ## Classes
 
--   [HMSReactiveStore](/api-reference/javascript/v2/classes/HMSReactiveStore)
+- [HMSReactiveStore](/api-reference/javascript/v2/classes/HMSReactiveStore)
 
 ## Core Interfaces
 
--   [HMSActions](/api-reference/javascript/v2/interfaces/HMSActions)
--   [HMSNotifications](/api-reference/javascript/v2/interfaces/HMSNotifications)
--   [HMSStoreWrapper](/api-reference/javascript/v2/interfaces/HMSStoreWrapper)
+- [HMSActions](/api-reference/javascript/v2/interfaces/HMSActions)
+- [HMSNotifications](/api-reference/javascript/v2/interfaces/HMSNotifications)
+- [HMSStoreWrapper](/api-reference/javascript/v2/interfaces/HMSStoreWrapper)
 
 ## Other Interfaces
 
--   [DeviceMap](/api-reference/javascript/v2/interfaces/DeviceMap)
--   [HLSConfig](/api-reference/javascript/v2/interfaces/HLSConfig)
--   [HLSMeetingURLVariant](/api-reference/javascript/v2/interfaces/HLSMeetingURLVariant)
--   [HLSVariant](/api-reference/javascript/v2/interfaces/HLSVariant)
--   [HMSAudioTrack](/api-reference/javascript/v2/interfaces/HMSAudioTrack)
--   [HMSAudioTrackSettings](/api-reference/javascript/v2/interfaces/HMSAudioTrackSettings)
--   [HMSChangeMultiTrackStateParams](/api-reference/javascript/v2/interfaces/HMSChangeMultiTrackStateParams)
--   [HMSChangeMultiTrackStateRequest](/api-reference/javascript/v2/interfaces/HMSChangeMultiTrackStateRequest)
--   [HMSChangeMultiTrackStateRequestNotification](/api-reference/javascript/v2/interfaces/HMSChangeMultiTrackStateRequestNotification)
--   [HMSChangeTrackStateRequest](/api-reference/javascript/v2/interfaces/HMSChangeTrackStateRequest)
--   [HMSChangeTrackStateRequestNotification](/api-reference/javascript/v2/interfaces/HMSChangeTrackStateRequestNotification)
--   [HMSConfig](/api-reference/javascript/v2/interfaces/HMSConfig)
--   [HMSConfigInitialSettings](/api-reference/javascript/v2/interfaces/HMSConfigInitialSettings)
--   [HMSDeviceChangeEvent](/api-reference/javascript/v2/interfaces/HMSDeviceChangeEvent)
--   [HMSDeviceChangeEventNotification](/api-reference/javascript/v2/interfaces/HMSDeviceChangeEventNotification)
--   [HMSException](/api-reference/javascript/v2/interfaces/HMSException)
--   [HMSExceptionNotification](/api-reference/javascript/v2/interfaces/HMSExceptionNotification)
--   [HMSGenericTypes](/api-reference/javascript/v2/interfaces/HMSGenericTypes)
--   [HMSHLS](/api-reference/javascript/v2/interfaces/HMSHLS)
--   [HMSLeaveRoomRequest](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequest)
--   [HMSLeaveRoomRequestNotification](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequestNotification)
--   [HMSLocalTrackStats](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats)
--   [HMSMediaSettings](/api-reference/javascript/v2/interfaces/HMSMediaSettings)
--   [HMSMessage](/api-reference/javascript/v2/interfaces/HMSMessage)
--   [HMSMessageNotification](/api-reference/javascript/v2/interfaces/HMSMessageNotification)
--   [HMSPeer](/api-reference/javascript/v2/interfaces/HMSPeer)
--   [HMSPeerListNotification](/api-reference/javascript/v2/interfaces/HMSPeerListNotification)
--   [HMSPeerNotification](/api-reference/javascript/v2/interfaces/HMSPeerNotification)
--   [HMSPeerStats](/api-reference/javascript/v2/interfaces/HMSPeerStats)
--   [HMSPeerWithMuteStatus](/api-reference/javascript/v2/interfaces/HMSPeerWithMuteStatus)
--   [HMSPlaylist](/api-reference/javascript/v2/interfaces/HMSPlaylist)
--   [HMSPlaylistItem](/api-reference/javascript/v2/interfaces/HMSPlaylistItem)
--   [HMSPlaylistItemNotification](/api-reference/javascript/v2/interfaces/HMSPlaylistItemNotification)
--   [HMSPlaylistSelection](/api-reference/javascript/v2/interfaces/HMSPlaylistSelection)
--   [HMSPlaylistSelector](/api-reference/javascript/v2/interfaces/HMSPlaylistSelector)
--   [HMSPreviewConfig](/api-reference/javascript/v2/interfaces/HMSPreviewConfig)
--   [HMSPublishAllowed](/api-reference/javascript/v2/interfaces/HMSPublishAllowed)
--   [HMSRTMP](/api-reference/javascript/v2/interfaces/HMSRTMP)
--   [HMSReconnectionNotification](/api-reference/javascript/v2/interfaces/HMSReconnectionNotification)
--   [HMSRecording](/api-reference/javascript/v2/interfaces/HMSRecording)
--   [HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats)
--   [HMSRole](/api-reference/javascript/v2/interfaces/HMSRole)
--   [HMSRoleChangeRequest](/api-reference/javascript/v2/interfaces/HMSRoleChangeRequest)
--   [HMSRoleChangeStoreRequest](/api-reference/javascript/v2/interfaces/HMSRoleChangeStoreRequest)
--   [HMSRoom](/api-reference/javascript/v2/interfaces/HMSRoom)
--   [HMSScreenAudioTrack](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack)
--   [HMSScreenShareConfig](/api-reference/javascript/v2/interfaces/HMSScreenShareConfig)
--   [HMSScreenVideoTrack](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)
--   [HMSSimulcastLayerDefinition](/api-reference/javascript/v2/interfaces/HMSSimulcastLayerDefinition)
--   [HMSSpeaker](/api-reference/javascript/v2/interfaces/HMSSpeaker)
--   [HMSStatsStore](/api-reference/javascript/v2/interfaces/HMSStatsStore)
--   [HMSStatsStoreWrapper](/api-reference/javascript/v2/interfaces/HMSStatsStoreWrapper)
--   [HMSStore](/api-reference/javascript/v2/interfaces/HMSStore)
--   [HMSTrackNotification](/api-reference/javascript/v2/interfaces/HMSTrackNotification)
--   [HMSTrackStats](/api-reference/javascript/v2/interfaces/HMSTrackStats)
--   [HMSVideoTrack](/api-reference/javascript/v2/interfaces/HMSVideoTrack)
--   [HMSVideoTrackSettings](/api-reference/javascript/v2/interfaces/HMSVideoTrackSettings)
--   [IHMSPlaylistActions](/api-reference/javascript/v2/interfaces/IHMSPlaylistActions)
--   [IHMSSessionStoreActions](/api-reference/javascript/v2/interfaces/IHMSSessionStoreActions)
--   [IHMSStatsStore](/api-reference/javascript/v2/interfaces/IHMSStatsStore)
--   [IHMSStore](/api-reference/javascript/v2/interfaces/IHMSStore)
--   [RTMPRecordingConfig](/api-reference/javascript/v2/interfaces/RTMPRecordingConfig)
--   [ScreenCaptureHandle](/api-reference/javascript/v2/interfaces/ScreenCaptureHandle)
--   [TokenRequest](/api-reference/javascript/v2/interfaces/TokenRequest)
--   [TokenRequestOptions](/api-reference/javascript/v2/interfaces/TokenRequestOptions)
+- [DeviceMap](/api-reference/javascript/v2/interfaces/DeviceMap)
+- [HLSConfig](/api-reference/javascript/v2/interfaces/HLSConfig)
+- [HLSMeetingURLVariant](/api-reference/javascript/v2/interfaces/HLSMeetingURLVariant)
+- [HLSVariant](/api-reference/javascript/v2/interfaces/HLSVariant)
+- [HMSAudioTrack](/api-reference/javascript/v2/interfaces/HMSAudioTrack)
+- [HMSAudioTrackSettings](/api-reference/javascript/v2/interfaces/HMSAudioTrackSettings)
+- [HMSChangeMultiTrackStateParams](/api-reference/javascript/v2/interfaces/HMSChangeMultiTrackStateParams)
+- [HMSChangeMultiTrackStateRequest](/api-reference/javascript/v2/interfaces/HMSChangeMultiTrackStateRequest)
+- [HMSChangeMultiTrackStateRequestNotification](/api-reference/javascript/v2/interfaces/HMSChangeMultiTrackStateRequestNotification)
+- [HMSChangeTrackStateRequest](/api-reference/javascript/v2/interfaces/HMSChangeTrackStateRequest)
+- [HMSChangeTrackStateRequestNotification](/api-reference/javascript/v2/interfaces/HMSChangeTrackStateRequestNotification)
+- [HMSConfig](/api-reference/javascript/v2/interfaces/HMSConfig)
+- [HMSConfigInitialSettings](/api-reference/javascript/v2/interfaces/HMSConfigInitialSettings)
+- [HMSDeviceChangeEvent](/api-reference/javascript/v2/interfaces/HMSDeviceChangeEvent)
+- [HMSDeviceChangeEventNotification](/api-reference/javascript/v2/interfaces/HMSDeviceChangeEventNotification)
+- [HMSException](/api-reference/javascript/v2/interfaces/HMSException)
+- [HMSExceptionNotification](/api-reference/javascript/v2/interfaces/HMSExceptionNotification)
+- [HMSGenericTypes](/api-reference/javascript/v2/interfaces/HMSGenericTypes)
+- [HMSHLS](/api-reference/javascript/v2/interfaces/HMSHLS)
+- [HMSLeaveRoomRequest](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequest)
+- [HMSLeaveRoomRequestNotification](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequestNotification)
+- [HMSLocalTrackStats](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats)
+- [HMSMediaSettings](/api-reference/javascript/v2/interfaces/HMSMediaSettings)
+- [HMSMessage](/api-reference/javascript/v2/interfaces/HMSMessage)
+- [HMSMessageNotification](/api-reference/javascript/v2/interfaces/HMSMessageNotification)
+- [HMSPeer](/api-reference/javascript/v2/interfaces/HMSPeer)
+- [HMSPeerListNotification](/api-reference/javascript/v2/interfaces/HMSPeerListNotification)
+- [HMSPeerNotification](/api-reference/javascript/v2/interfaces/HMSPeerNotification)
+- [HMSPeerStats](/api-reference/javascript/v2/interfaces/HMSPeerStats)
+- [HMSPeerWithMuteStatus](/api-reference/javascript/v2/interfaces/HMSPeerWithMuteStatus)
+- [HMSPlaylist](/api-reference/javascript/v2/interfaces/HMSPlaylist)
+- [HMSPlaylistItem](/api-reference/javascript/v2/interfaces/HMSPlaylistItem)
+- [HMSPlaylistItemNotification](/api-reference/javascript/v2/interfaces/HMSPlaylistItemNotification)
+- [HMSPlaylistSelection](/api-reference/javascript/v2/interfaces/HMSPlaylistSelection)
+- [HMSPlaylistSelector](/api-reference/javascript/v2/interfaces/HMSPlaylistSelector)
+- [HMSPreviewConfig](/api-reference/javascript/v2/interfaces/HMSPreviewConfig)
+- [HMSPublishAllowed](/api-reference/javascript/v2/interfaces/HMSPublishAllowed)
+- [HMSRTMP](/api-reference/javascript/v2/interfaces/HMSRTMP)
+- [HMSReconnectionNotification](/api-reference/javascript/v2/interfaces/HMSReconnectionNotification)
+- [HMSRecording](/api-reference/javascript/v2/interfaces/HMSRecording)
+- [HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats)
+- [HMSRole](/api-reference/javascript/v2/interfaces/HMSRole)
+- [HMSRoleChangeRequest](/api-reference/javascript/v2/interfaces/HMSRoleChangeRequest)
+- [HMSRoleChangeStoreRequest](/api-reference/javascript/v2/interfaces/HMSRoleChangeStoreRequest)
+- [HMSRoom](/api-reference/javascript/v2/interfaces/HMSRoom)
+- [HMSScreenAudioTrack](/api-reference/javascript/v2/interfaces/HMSScreenAudioTrack)
+- [HMSScreenShareConfig](/api-reference/javascript/v2/interfaces/HMSScreenShareConfig)
+- [HMSScreenVideoTrack](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)
+- [HMSSpeaker](/api-reference/javascript/v2/interfaces/HMSSpeaker)
+- [HMSStatsStore](/api-reference/javascript/v2/interfaces/HMSStatsStore)
+- [HMSStatsStoreWrapper](/api-reference/javascript/v2/interfaces/HMSStatsStoreWrapper)
+- [HMSStore](/api-reference/javascript/v2/interfaces/HMSStore)
+- [HMSTrackNotification](/api-reference/javascript/v2/interfaces/HMSTrackNotification)
+- [HMSTrackStats](/api-reference/javascript/v2/interfaces/HMSTrackStats)
+- [HMSVideoTrack](/api-reference/javascript/v2/interfaces/HMSVideoTrack)
+- [HMSVideoTrackSettings](/api-reference/javascript/v2/interfaces/HMSVideoTrackSettings)
+- [IHMSPlaylistActions](/api-reference/javascript/v2/interfaces/IHMSPlaylistActions)
+- [IHMSSessionStoreActions](/api-reference/javascript/v2/interfaces/IHMSSessionStoreActions)
+- [IHMSStatsStore](/api-reference/javascript/v2/interfaces/IHMSStatsStore)
+- [IHMSStore](/api-reference/javascript/v2/interfaces/IHMSStore)
+- [RTMPRecordingConfig](/api-reference/javascript/v2/interfaces/RTMPRecordingConfig)
+- [ScreenCaptureHandle](/api-reference/javascript/v2/interfaces/ScreenCaptureHandle)
+- [TokenRequest](/api-reference/javascript/v2/interfaces/TokenRequest)
+- [TokenRequestOptions](/api-reference/javascript/v2/interfaces/TokenRequestOptions)
 
 ## References
 
@@ -414,8 +413,8 @@ Select the local audio volume of an audio track given a track ID.
 
 NOTE: **Volume** of a track is different from **Audio Level** of a track,
 
--   Audio Level measures the audio of a track and it comes from 100ms's servers.
--   Volume is how loud you hear the audio of a track, this is controlled by you at the client side.
+- Audio Level measures the audio of a track and it comes from 100ms's servers.
+- Volume is how loud you hear the audio of a track, this is controlled by you at the client side.
 
 #### Parameters
 
@@ -1360,9 +1359,7 @@ Selects the first peer passing the condition given by the argument predicate fun
 Ex: to select a peer whose metadata has spotlight set to true(assuming peer.metadata is a valid json string), use
 
 ```js
-const spotlightPeer = useHMSStore(
-    selectPeerByCondition((peer) => JSON.parse(peer.metadata).spotlight)
-);
+const spotlightPeer = useHMSStore(selectPeerByCondition(peer => JSON.parse(peer.metadata).spotlight));
 ```
 
 #### Parameters
@@ -1565,9 +1562,7 @@ Selects all peers passing the condition given by the argument predicate function
 Ex: to select peers with isHandRaised set to true in their metadata(assuming peer.metadata is a valid json string), use
 
 ```js
-const handRaisedPeers = useHMSStore(
-    selectPeersByCondition((peer) => JSON.parse(peer.metadata).isHandRaised)
-);
+const handRaisedPeers = useHMSStore(selectPeersByCondition(peer => JSON.parse(peer.metadata).isHandRaised));
 ```
 
 #### Parameters
@@ -2046,7 +2041,7 @@ Select the local audio volume of the screen share of a peer given a peer ID.
 
 **`Deprecated`**
 
--   use `selectSessionStore` instead
+- use `selectSessionStore` instead
 
 #### Parameters
 

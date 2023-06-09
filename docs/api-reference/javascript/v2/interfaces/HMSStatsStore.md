@@ -1,6 +1,6 @@
 ---
 title: HMSStatsStore
-nav: '4.53'
+nav: '4.52'
 ---
 
 ## Properties

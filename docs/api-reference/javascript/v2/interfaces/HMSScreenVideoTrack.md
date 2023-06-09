@@ -112,7 +112,7 @@ Omit.layer
 
 ### layerDefinitions
 
-• `Optional` **layerDefinitions**: [`HMSSimulcastLayerDefinition`](/api-reference/javascript/v2/interfaces/HMSSimulcastLayerDefinition)[]
+• `Optional` **layerDefinitions**: `HMSSimulcastLayerDefinition`[]
 
 #### Inherited from
 

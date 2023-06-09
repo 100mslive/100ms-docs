@@ -1,6 +1,6 @@
 ---
 title: HMSVideoTrack
-nav: '4.59'
+nav: '4.58'
 ---
 
 ## Hierarchy
@@ -90,7 +90,7 @@ BaseTrack.isPublished
 
 ### layerDefinitions
 
-• `Optional` **layerDefinitions**: [`HMSSimulcastLayerDefinition`](/api-reference/javascript/v2/interfaces/HMSSimulcastLayerDefinition)[]
+• `Optional` **layerDefinitions**: `HMSSimulcastLayerDefinition`[]
 
 ---
 
