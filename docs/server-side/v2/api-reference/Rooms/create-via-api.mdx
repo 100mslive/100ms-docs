@@ -50,7 +50,7 @@ curl --location --request POST 'https://api.100ms.live/v2/rooms' \
 | description <br/>    | `string` | A string to describe your room's usage. For example "9PM English Class Batch 2"                                                                                                                                                                                                                                                                                | No       |
 | template_id <br/>    | `string` | Template ID of template you wish to associate with the room. You can get template ID either from the templates section on the [dashboard](https://dashboard.100ms.live/dashboard) or use the [Template API](../policy/retrieve-a-template). <br/><br/>**Note**: `default template` will be assigned if template is not specified in the `create room request`. | No       |
 | recording_info <br/> | `object` | Object of type `recording_info`. This object contains information for enabling recording/setting storage location for recordings. <br/><br/>Check the [recording_info arguments](#recording-info-arguments) below for more information.                                                                                                                        | No       |
-| region <br/>         | `string` | Region in which you want to create a room. <br/><br/> `eu` - European Union <br/><br/> `in` - India <br/><br/> `us` - United States <br/><br/><br/> `auto` Fallback to region of the template (default value)                                                                                                                                        | No       |
+| region <br/>         | `string` | Region in which you want to create a room. <br/><br/> `eu` - European Union <br/><br/> `in` - India <br/><br/> `us` - United States <br/><br/><br/> `auto` Fallback to region of the template (default value)                                                                                                                                                  | No       |
 
 > **Warning:** If you create a room with the name of an existing room, the same room will be updated with the new configuration passed in the request payload. <br/> For example, if the existing room was assigned to template-ABC earlier and in the request payload you've used template-DEF, then template-DEF will be assigned to the existing room.
 
@@ -95,3 +95,17 @@ To know more about recording please visit [Recording](/server-side/v2/Destinatio
 
 The access keys should have read(GetObject) and write(PutObject) permissions for the storage bucket.
 For more details check - https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html
+
+### Errors
+
+| Description                                   | Code |
+| :-------------------------------------------- | :--- |
+| Authentication error                          | 401  |
+| Token validation error                        | 401  |
+| Bucket location is missing                    | 400  |
+| Invalid upload configuration                  | 400  |
+| Invalid body param: template. Use template_id | 400  |
+| Error: region not supported                   | 400  |
+| Error: template not found                     | 400  |
+| Invalid body param: template. Use template_id | 400  |
+| Invalid body param: template. Use template_id | 400  |
