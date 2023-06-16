@@ -25,6 +25,17 @@ Widget HLSPlayer(){
 }
 ```
 
+To get a player with default OS player controls and stats enabled:
+
+```dart
+Widget HLSPlayer(){
+    return HMSHLSPlayer(
+        showPlayerControls: true,
+        isHLSStatsRequired: true
+    );
+}
+```
+
 ## HLS Player controls
 
 HMSSDK exposes `HMSHLSPlayerController` to control the HLS Player. We can have our own custom UI over HLS Player and use 
@@ -32,7 +43,7 @@ this controller to control the player.
 
 ### How to start/stop the playback
 
-- Start
+- **Start**
 
 To start the HLS Player we can use the `start` method. This takes an optional `hlsUrl` String which is HLS m3u8 stream URL.
 
@@ -42,7 +53,7 @@ To start the HLS Player we can use the `start` method. This takes an optional `h
 HMSHLSPlayerController.start();
 ```
 
-- Stop
+- **Stop**
 
 To stop HLS Player we can use the `stop` method.
 
@@ -55,7 +66,7 @@ HMSHLSPlayerController.stop();
 
 ### How to Pause and Resume the Playback
 
-- Pause
+- **Pause**
 
 To pause the HLS stream we can use the `pause` method
 
@@ -63,7 +74,7 @@ To pause the HLS stream we can use the `pause` method
 HMSHLSPlayerController.pause();
 ```
 
-- Resume 
+- **Resume**
 
 To resume the paused stream we can use the `resume` method
 
@@ -81,7 +92,7 @@ HMSHLSPlayerController.seekToLivePosition();
 
 ### How to Seek Forward or Backward
 
-- seekForward
+- **seekForward**
 
 To seek forward we can use the `seekForward` method
 
@@ -89,7 +100,7 @@ To seek forward we can use the `seekForward` method
 HMSHLSPlayerController.seekForward(seconds:"Time in seconds you wish to seek forward");
 ```
 
-- seekBackward
+- **seekBackward**
 
 To seek backward we can use the `seekBackward` method
 
@@ -205,7 +216,7 @@ class HMSHLSCue {
 
 To get the stats for HLS Player `HMSHLSPlayerController` provides a method to attach and detach the stats listener similar to other listeners like HMSUpdateListener, HMSKeyChangeListener etc.
 
-- Attach the listener 
+- **Attach a listener**
 
 To start getting HLS Stats  we need to call the `addHLSStatsListener` method
 
@@ -213,7 +224,7 @@ To start getting HLS Stats  we need to call the `addHLSStatsListener` method
 HMSHLSPlayerController.addHLSStatsListener();
 ```
 
-- Detach the listener
+- **Detach a listener**
 
 To stop getting HLS Stats we need to call the `removeHLSStatsListener` method
 
