@@ -12,12 +12,13 @@ const Callout = ({ title, icon, children }) => (
             width: '100%',
             overflow: 'clip',
             background: 'linear-gradient(102deg, $surfaceDefault 28%, $surfaceDark 65%)',
-            backgroundSize: '200%'
+            backgroundSize: '200%',
+            mt: "$4"
         }}>
         <Box css={{ m: '20px 24px' }}>
             <Flex align="center" css={{ color: '$textHighEmp', gap: '$2', mb: '$2' }}>
                 {getIcon(icon)}
-                <Text css={{ color: '$textHighEmp', fontWeight: '$semiBold' }}>{title}</Text>
+                <Text css={{ color: '$textHighEmp', fontWeight: '$semiBold', mt: "0 !important" }}>{title}</Text>
             </Flex>
             {children}
         </Box>
