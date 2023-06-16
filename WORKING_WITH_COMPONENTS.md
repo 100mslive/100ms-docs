@@ -12,7 +12,7 @@
 
 ## Note
 
-The Note component can be used to display a styled note with different types: warning, success, or error. The default type is success.
+The `Note` component can be used to display a styled note with different types: warning, success, or error. The default type is success.
 
 ### Usage
 
@@ -29,7 +29,7 @@ While peer metadata is associated with individual peers and each peer can have t
 
 ## Callout
 
-The Callout component is a card component that displays a styled callout box with a title and icon. Icons currently supported: link, shield and info. The info icon is used by default.
+The `Callout` component is a card component that displays a styled callout box with a title and icon. Icons currently supported: link, shield and info. The info icon is used by default.
 
 ### Usage
 
@@ -47,7 +47,7 @@ Generate room links or embed the 100ms web app as an iframe in your app
 ## Code
 
 Code should be wrapped between triple backticks (```) and the language must be specified to enable syntax highlighting and the copy button.
-The double quotes have been added for displaying the syntax and should be excluded.
+The double quotes have been added for displaying the syntax and should be excluded. Specific words can also be wrapped between single backticks to highlight them like `this`.
 
 ### Usage
 
@@ -57,7 +57,7 @@ Specify the language after the first set of backticks - js, dart, kotlin etc
 
 ## Tabs
 
-The Tab component allows you to create tabbed content. It provides a navigation bar with clickable buttons representing different tabs and corresponding content for each tab.
+The `Tab` component allows you to create tabbed content. It provides a navigation bar with clickable buttons representing different tabs and corresponding content for each tab.
 
 ### Usage
 
