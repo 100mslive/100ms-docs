@@ -15,10 +15,11 @@
 The Note component can be used to display a styled note with different types: warning, success, or error. The default type is success.
 
 ### Usage
+
 ```
 <Note type="success">
-💡 Session Store vs Peer Metadata
 
+💡 Session Store vs Peer Metadata
 While peer metadata is associated with individual peers and each peer can have their own metadata, session store remains the same for every peer in the room.
 
 </Note>
@@ -34,8 +35,8 @@ The Callout component is a card component that displays a styled callout box wit
 
 ```
 <Callout icon="link" title="Pre-built">
-Generate room links or embed the 100ms web app as an iframe in your app
 
+Generate room links or embed the 100ms web app as an iframe in your app
 [Integrate pre-built](https://100ms.live/docs/get-started/v2/get-started/prebuilt/prebuilt)
 
 </Callout>
@@ -45,31 +46,12 @@ Generate room links or embed the 100ms web app as an iframe in your app
 
 ## Code
 
-Code should be wrapped between triple backticks (`) and the language must be specified to enable syntax highlighting and the copy button.
+Code should be wrapped between triple backticks (```) and the language must be specified to enable syntax highlighting and the copy button.
 The double quotes have been added for displaying the syntax and should be excluded.
 
 ### Usage
 
-```
-```{specify language}
-import {
-useHMSActions,
-useHMSStore,
-selectIsLocalAudioEnabled,
-} from "@100mlive/react-sdk";
-
-function ToggleMuteButton() {
-const audioEnabled = useHMSStore(selectIsLocalAudioEnabled);
-
-    const actions = useHMSActions();
-    const toggleAudio = () => actions.setLocalAudioEnabled(!audioEnabled);
-
-    const icon = audioEnabled ? "unmutedAudio" : "mutedAudio";
-    return <Button icon={icon} onClick={toggleAudio}/>
-
-}
-``\`
-```
+Specify the language after the first set of backticks - js, dart, kotlin etc
 
 #### [View page using this component](https://100ms.live/docs/javascript/v2/quickstart/mental-model#fitting-in-the-js-world)
 
@@ -101,8 +83,7 @@ A wrapper that allows you to place components side by side
 
 ```
 <FlexContainer>
-    <Note>
-    <Note>
+    {Components go here}
 </FlexContainer>
 ```
 
@@ -121,23 +102,17 @@ The Steps components are `StepsToc` and `StepsContainer`. `StepsToc` provides th
 />
 
 <StepsContainer id="example-steps">
-
 ### Heading 1
-
     {content}
 
 ### Heading 2
-
     {content}
 
 ### Heading 3
-
     {content}
 
 ### Heading 4
-
     {content}
-
 </StepsContainer>
 ```
 
