@@ -15,13 +15,14 @@
 The Note component can be used to display a styled note with different types: warning, success, or error. The default type is success.
 
 ### Usage
-
+```
 <Note type="success">
 💡 Session Store vs Peer Metadata
 
 While peer metadata is associated with individual peers and each peer can have their own metadata, session store remains the same for every peer in the room.
 
 </Note>
+```
 
 #### [View page using this component](https://100ms.live/docs/javascript/v2/how-to-guides/build-interactive-features/session-store)
 
@@ -31,12 +32,14 @@ The Callout component is a card component that displays a styled callout box wit
 
 ### Usage
 
+```
 <Callout icon="link" title="Pre-built">
 Generate room links or embed the 100ms web app as an iframe in your app
 
 [Integrate pre-built](https://100ms.live/docs/get-started/v2/get-started/prebuilt/prebuilt)
 
 </Callout>
+```
 
 #### [View page using this component](https://100ms.live/docs/get-started/v2/get-started/overview#integration-paths)
 
