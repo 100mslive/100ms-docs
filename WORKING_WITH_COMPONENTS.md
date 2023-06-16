@@ -50,7 +50,8 @@ The double quotes have been added for displaying the syntax and should be exclud
 
 ### Usage
 
-"```jsx"
+```
+```{specify language}
 import {
 useHMSActions,
 useHMSStore,
@@ -67,7 +68,8 @@ const audioEnabled = useHMSStore(selectIsLocalAudioEnabled);
     return <Button icon={icon} onClick={toggleAudio}/>
 
 }
-"```"
+``\`
+```
 
 #### [View page using this component](https://100ms.live/docs/javascript/v2/quickstart/mental-model#fitting-in-the-js-world)
 
@@ -81,15 +83,11 @@ The Tab component allows you to create tabbed content. It provides a navigation 
 <Tabs id="example" items={['A', 'B']} />
 
 <Tab id='example-0'>
-
     { Content for tab A }
-
 </Tab>
 
 <Tab  id='example-1'>
-
     {Content for tab B}
-
 </Tab>
 ```
 
@@ -118,11 +116,12 @@ The Steps components are `StepsToc` and `StepsContainer`. `StepsToc` provides th
 
 ```
 <StepsToc
-parentId="example-steps"
-descriptions={["Step 1", "Step 2", "Step 3", "Step 4"]}
+    parentId="example-steps"
+    descriptions={["Step 1", "Step 2", "Step 3", "Step 4"]}
 />
 
 <StepsContainer id="example-steps">
+
 ### Heading 1
 
     {content}
