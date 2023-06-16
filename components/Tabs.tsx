@@ -10,12 +10,6 @@ import React, { PropsWithChildren, useCallback, useEffect, useState } from 'reac
  * </Tab>
  */
 
-/**
- * Just because Compound Component React Pattern
- * Wasn't Working in MDX (children code not getting parsed)
- * So Took this Vanilla API approahc WORKS.
- */
-
 interface TabsProps {
     items: string[];
     id: string;
