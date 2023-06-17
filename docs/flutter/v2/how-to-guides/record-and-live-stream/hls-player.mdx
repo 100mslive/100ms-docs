@@ -274,8 +274,9 @@ class Meeting implements HMSUpdateListener, HMSActionResultListener,HMSHLSPlayba
 
     /// metadata is a list of HMSHLSTimedMetadata objects 
     /// since we can send multiple messages at the same time.
-    /// [hmsActionResultListener] is an instance of class implementing HMSActionResultListener
-    /// this is the instance of class which implements HMSActionResultListener
+    ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+    
+    ///Here this is an instance of a class that implements HMSActionResultListener, that is, Meeting
 
     void sendHLSTimedMetadata() {
         hmsSDK.sendHLSTimedMetadata(metadata: hlsMetadata, hmsActionResultListener: this);
