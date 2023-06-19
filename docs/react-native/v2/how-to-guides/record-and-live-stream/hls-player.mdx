@@ -10,28 +10,34 @@ playback to the 100ms dashboard.
 
 ## Requirements
 
-`HMSHLSPlayer` component is available in `v1.7.0` and above of `@100mslive/react-native-hms` package.
+- SDK version 1.7.0 or higher
 
 
 ## How to Start HLS
-- Take a look at the [HLS](./hls) section about how to start an hls stream in a HMS room.
+
+- Take a look at the [HLS Streaming](./hls) docs about how to start a hls stream in a HMS room.
+
 - [Here's](./hls#current-room-status) how to read the hls url from the room.
 
-Therefore, you can get the HLS stream URL from `ON_JOIN` and `ON_ROOM_UPDATE` events as mentioned
-in the link above.
+From above links, we now know that we can get the HLS stream URL from `ON_JOIN` and `ON_ROOM_UPDATE`
+events.
 
 
 ## How to Play a HLS Stream
 
-- Import `HMSHLSPlayer` component
+<div className="steps-container">
 
-  ```js
-  import { HMSHLSPlayer } from '@100mslive/react-native-hms';
-  ```
+### Import HMSHLSPlayer component
 
-- Play the HLS Stream as soon as `HMSHLSPlayer` component is visible on screen
+```js
+import { HMSHLSPlayer } from '@100mslive/react-native-hms';
+```
 
-   can render `HMSHLSPlayer` component and pass hls stream url to it to play HLS stream
+### Play HLS Stream on HMSHLSPlayer component
+
+- <strong>Play the HLS Stream as soon as `HMSHLSPlayer` component is visible on screen</strong>
+
+  We can render `HMSHLSPlayer` component and pass hls stream url to it to play HLS stream
 
   ```js
   const streamURL = room.hlsStreamingState?.variants?.get(0)?.hlsStreamUrl;
@@ -61,7 +67,7 @@ in the link above.
   Checkout 2nd point of [How to Start HLS](#how-to-start-hls) section to know how to check if HLS Stream
   is running or not.
 
-- Render `HMSHLSPlayer` component first and Play later
+- <strong>Render `HMSHLSPlayer` component first and Play later</strong>
 
   We can also call `play` method available on ref of `HMSHLSPlayer` component to play the HLS Stream.
   `play` method accepts the HLS stream URL as a first parameter. However, It's optional, if we don't pass
@@ -83,8 +89,7 @@ in the link above.
   ```
 
 Take a look at [how the sample app does this](#) if not clear.
-
-> The actual HLS Stream URL looks something like: `"https://cdn.100ms.live/beam/....../master.m3u8"`
+</div>
 
 
 ## How to Stop the playback
@@ -115,7 +120,7 @@ By default, Video Player UI or Controls are visible to user.
 
 We can hide Video Player UI or Controls by using `enableControls` prop on `HMSHLSPlayer` component -
 
-```js
+```js{3}
 <HMSHLSPlayer
   // Pass `false` to `enableControls` prop to hide the Video Player Controls
   enableControls={false} 
@@ -195,7 +200,7 @@ hmsHlsPlayerRef.current?.seekToLivePosition();
 We can use `setVolume` method available on the `ref` of `HMSHLSPlayer` component to change the playback volume levels.
 `setVolume` method accepts volume level as a first parameter, valid volume level is in `[0-100]` range.
 
-> Volume is set to `100` by default
+> Volume is set to `100` level by default.
 
 ```js{12}
 // Create `ref` for `HMSHLSPlayer` component
@@ -216,83 +221,73 @@ hmsHlsPlayerRef.current?.setVolume(50); // use value from 0-100 range
 
 ... TODO: some introduction line here ...
 
-- Enable HLS Stats on the `HMSHLSPlayer` component
+<div className="steps-container">
 
-  By default, `HMSHLSPlayer` component does not send playback stats. We can enable HLS Stats on
-  the `HMSHLSPlayer` component using the `enableStats` prop -
+### Enable HLS Stats on the `HMSHLSPlayer` component
 
-  ```js
-  <HMSHLSPlayer
-    // Pass `true` to `enableStats` prop to enable the HLS Player Stats
-    enableStats={true}
-  />
-  ```
+By default, `HMSHLSPlayer` component does not send playback stats. We can enable HLS Stats on
+the `HMSHLSPlayer` component using the `enableStats` prop -
 
-- Use HLS Stats received from the `HMSHLSPlayer` component
+```js{3}
+<HMSHLSPlayer
+  // Pass `true` to `enableStats` prop to enable the HLS Player Stats
+  enableStats={true}
+/>
+```
 
-  Now, we can use `useHMSHLSPlayerStats` hook in any component to get the stats object -
+### Use HLS Stats received from the `HMSHLSPlayer` component
 
-  ```js{9}
-  // Step 1: Import `useHMSHLSPlayerStats` hook
-  import { useHMSHLSPlayerStats } from '@100mslive/react-native-hms';
+Now, we can use `useHMSHLSPlayerStats` hook in any component to get the stats object -
 
-  ...
+```js{9}
+// Step 1: Import `useHMSHLSPlayerStats` hook
+import { useHMSHLSPlayerStats } from '@100mslive/react-native-hms';
 
-  // Step 2: use `useHMSHLSPlayerStats` hook inside any Component
-  const HLSStatsView = () => {
+...
 
-    const { stats, error } = useHMSHLSPlayerStats();
-  }
-  ```
+// Step 2: use `useHMSHLSPlayerStats` hook inside any Component
+const HLSStatsView = () => {
 
-  `stats` object has the following interface -
+  const { stats, error } = useHMSHLSPlayerStats();
+}
+```
 
-  // TODO: complete description of stats
-  ```js
-  type HMSHLSPlayerStatsUpdateEventData = {
-    // current network speed of the user
-    bandWidthEstimate: number;
+`stats` object has the following interface -
 
-    // total Bytes downloaded in a session
-    totalBytesLoaded: number;
+```js
+interface HMSHLSPlayerStatsUpdateEventData {
+  // current network speed of the user
+  bandWidthEstimate: number;
 
-    // An estimate of the total buffered duration from the current position
-    bufferedDuration: number;
+  // total Bytes downloaded till this moment
+  totalBytesLoaded: number;
 
-    /**
-     * [iOS only]
-     * 
-     */
-    watchDuration?: number;
+  // An estimate of the total buffered duration from the current position
+  bufferedDuration: number;
 
-    // Distance of current playing position from live edge
-    distanceFromLive: number;
+  // [iOS only] Total duration that the user has watched the stream
+  watchDuration?: number;
 
-    // total number of dropped frames
-    droppedFrameCount: number;
+  // Distance of current playing position from live edge
+  distanceFromLive: number;
 
-    /**
-     * [Android only]
-     */
-    totalFrameCount?: number;
+  // total number of dropped frames
+  droppedFrameCount: number;
 
-    // bitrate of the current layer being played
-    averageBitrate: number;
+  // bitrate of the current layer being played
+  averageBitrate: number;
 
-    /**
-     * [Android only]
-     * The frame rate
-     */
-    frameRate?: number;
+  // [Android only] The frame rate per second (FPS)
+  frameRate?: number;
 
-    // The height of the video
-    videoHeight: number;
+  // The height of the resolution of video
+  videoHeight: number;
 
-    // The width of the video
-    videoWidth: number;
-  };
-  ```
-
+  // The width of the resolution of video
+  videoWidth: number;
+};
+```
+</div>
 
 An example of usage of `useHMSHLSPlayerCue` hook is provided in the sample app in [HLSPlayerStatsView Component](#).
 
