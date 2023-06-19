@@ -3,17 +3,35 @@ title: Audio Output Routing
 nav: 7.21
 ---
 
-**"These are Android only APIs."**
-
 Audio Output Routing is helpful when users want to switch the audio output to a connected device other than the default one.
 
 For example, you can implement an in-call speaker button that toggles audio output between the speaker, earpiece or any other connected earphones - wired or wireless, etc.
+
+## iOS APIs
+
+### Switch Audio Output Device using iOS AirPlay UI
+
+The `switchAudioOutputUsingIOSUI` method available on the `HMSSDK` instance allows us to display the native iOS UI for switching the audio output device. Something similar to this -
+
+![Switch Audio Output](/docs/v2/flutter-switch-audio.PNG)
+
+Let's look at the method usage -
+
+```js{4}
+// Call `switchAudioOutputUsingIOSUI` method on `HMSSDK` instance
+// When you want to switch Audio Output device
+
+hmsInstance.switchAudioOutputUsingIOSUI();
+```
+
+
+## Android APIs
 
 Let's see how we can use HMSSDK to implement this:
 
 <div className="steps-container">
 
-### Fetch Available Audio Devices
+#### Fetch Available Audio Devices
 
 You can use `getAudioDevicesList` method available on `HMSSDK` instance to fetch the list of available audio devices.
 
@@ -46,7 +64,7 @@ try {
 -   BLUETOOTH - connected Bluetooth device
 -   AUTOMATIC - other automatic device
 
-### Switch Audio Focus to Another Device
+#### Switch Audio Focus to Another Device
 
 You can use `switchAudioOutput` method available on `HMSSDK` instance to switch the device audio output to different device.
 
@@ -71,7 +89,7 @@ try {
 }
 ```
 
-### Receive the device change updates
+#### Receive the device change updates
 
 You can add a listener to get updates whenever a audio device is removed or attached to the device such as Bluetooth, Wired Headset etc.
 
@@ -101,7 +119,7 @@ hmsInstance.removeEventListener(HMSUpdateListenerActions.ON_AUDIO_DEVICE_CHANGED
 
 </div>
 
-## Get Current Focussed Device
+### Get Current Focussed Device
 
 You can use `getAudioOutputRouteType` method available on `HMSSDK` instance to get the current focused audio output device.
 
