@@ -22,6 +22,7 @@ import Text from './Text';
 import View from './View';
 import Callout from './Callout';
 import FlexContainer from './FlexContainer';
+import { PortraitImage } from './PortraitImage';
 
 const CodeCustom = (props: any) => <Code {...props}>{props.children}</Code>;
 
@@ -87,7 +88,8 @@ const MDXComponents = {
     a: LinkCustom,
     APILink,
     StepsToc,
-    StepsContainer
+    StepsContainer,
+    PortraitImage
 };
 
 export default MDXComponents;
