@@ -1530,7 +1530,7 @@ const nextConfig = {
                 source: '/:slug*/how--to-guides/:path*',
                 destination: '/:slug*/how-to-guides/:path*',
                 permanent: true
-            }
+            },
         ];
     },
     eslint: {
