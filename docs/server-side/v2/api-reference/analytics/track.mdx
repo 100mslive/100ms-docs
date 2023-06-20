@@ -1,0 +1,104 @@
+---
+title: Recording Events
+nav: 3.63
+---
+
+Analytics APIs can be used to fetch the recording events similar to [webhook](/server-side/v2/how--to-guides/configure-webhooks/webhook#beamrecordingsuccess)
+
+Currently there is support for `beam.recording.success` event. This event is sent when beam successfully records the room and uploads the video to storage.
+
+<GetRequest title="https://api.100ms.live/v2/analytics/events" />
+<Request id="req-0">
+
+```bash
+curl --location --request GET \
+    'https://api.100ms.live/v2/analytics/events?type=beam.recording.success&room_id=<room_id>' \
+    --header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+
+## Allowed Filters
+To be specified as query parameters
+
+| Name       | Type     | Description                                                                                                                              | Required |
+| ---------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| type       | `string` | Type of events to be fetched (valid values `beam.recording.success`)                                                                     | yes      |
+| room_id    | `string` | Unique identifier of the room you wish to fetch events for                                                                               | yes      |
+| session_id | `string` | Unique session identifier (Can be found in using [sessions APIs](/server-side/v2/api-reference/Sessions/object))                         | no       |
+| peer_id    | `string` | Unique identifier of peer/participant                                                                                                    | no       |
+| beam_id    | `string` | Unique beam id                                                                                                                           | no       |
+| limit      | `int`    | Determines the number of event objects to be included in response (Default:`10`, Min: `1`, Max: `100`)                                   | no       |
+| start      | `string` | Specify [next](/server-side/v2/api-reference/analytics/overview#response-object) value from the last response to get next set of result. | no       |
+
+
+## Recording Event Object
+
+| Attribute               | Type                 | Description                                                                                                                                                     |
+| ----------------------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| beam_id                 | `string`             | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                                                                                     |
+| room_id                 | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                                                             |
+| peer_id                 | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4                                                         |
+| session_id              | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                                                          |
+| template_id             | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                                                            |
+| created_at              | `timestamp (in UTC)` | Timestamp at which recording was created <br/><br/> Example: 2020-11-11T17:12:17Z                                                                               |
+| duration                | `int`                | Duration of beam recording (seconds) <br/><br/> Example: 79                                                                                                     |
+| location                | `string`             | (Deprecated, use recording_presigned_url) HTTPS url to recorded session file on storage bucket <br/><br/> Example: https://upload-location/bucket/beam/ac.mp4\* |
+| started_at              | `timestamp (in UTC)` | Beam recording started at <br/><br/> Example: 2020-11-11T17:12:27Z                                                                                              |
+| stopped_at              | `timestamp (in UTC)` | Beam recording stopped at <br/><br/> Example: 2020-11-11T17:32:15Z                                                                                              |
+| max_width               | `int`                | Maximum width of the screen supported for recording in pixels <br/><br/> Example: 1280                                                                          |
+| max_height              | `int`                | Maximum height of the screen supported for recording in pixels <br/><br/> Example: 720                                                                          |
+| recording_path          | `string`             | Upload path of the recorded video such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                                                                  |
+| recording_presigned_url | `string`             | Presigned URL for the recorded video, for download <br/><br/> Example: https://upload-location/bucket/ac.mp4                                                    |
+| meeting_url             | `string`             | meeting_url provided at rtmp start <br/><br/> Example: https://app.100ms.live/room_id                                                                           |
+| rtmp                    | `array`              | List of RTMP objects provided at rtmp start <br/><br/> Example: `[{"url": "http://test.com"}]`                                                                  |
+| session_started_at      | `timestamp (in UTC)` | Timestamp when session started <br/><br/> Example: 2020-11-11T16:32:17Z                                                                                         |
+| size                    | `int`                | Size of the recording (in bytes) <br/><br/> Example: 10024                                                                                                      |
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+    {
+        "limit": 1,
+        "total": 1,
+        "next": "",
+        "events": [
+            {
+                "version": "2.0",
+                "id": "f3f18235-058c-432b-b8c2-8344c92743f6",
+                "timestamp": "2023-01-09T06:18:29.462240675Z",
+                "type": "beam.recording.success",
+                "data": {
+                    "beam_id": "63bbb18fac740d9e9da5b4e9",
+                    "room_id": "639924066893d18d47c86935",
+                    "session_id": "63bbb18057b67ff2f92480b4",
+                    "peer_id": "03a9c974-de21-49c0-8aa1-99a0db86794d",
+                    "template_id": "639924068e1ce361bfce18a2",
+                    "created_at": "2023-01-09T06:18:28.933778219Z",
+                    "duration": 33,
+                    "started_at": "2023-01-09T06:17:51.686Z",
+                    "stopped_at": "2023-01-09T06:18:24.821Z",
+                    "max_width": 1280,
+                    "max_height": 720,
+                    "recording_path": "s3://bucket/prefix/ac.mp4",
+                    "recording_presigned_url": "https://<file access URL>",
+                    "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
+                    "rtmp": [{ "url": "http://test.com" }],
+                    "session_started_at": "2023-01-09T06:17:36.823Z",
+                    "size": 15316104
+                }
+            }
+        ]
+    }
+```
+
+</ResponseBox>
+
+
+## Postman collection
+
+You can use our Postman collection to start exploring 100ms APIs.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a?action=collection%2Ffork&collection-url=entityId%3D22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a%26entityType%3Dcollection%26workspaceId%3Dd9145dd6-337b-4761-81d6-21a30b4147a2)
+
+Refer to the [Postman guide](/server-side/v2/introduction/postman-guide) to get started with 100ms API collection.
