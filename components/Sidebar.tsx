@@ -411,7 +411,7 @@ const Sidebar: React.FC<Props> = ({
                         {/* Sidebar Menu Section */}
                         {nav
                             ? Object.entries(nav).map(([key, children], index) =>
-                                  children?.['release-notes']?.url ? (
+                                  children?.['release-notes'] ? (
                                       <ReleaseNotes dataObj={children['release-notes']} />
                                   ) : (
                                       <SidebarSection
