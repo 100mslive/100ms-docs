@@ -112,7 +112,7 @@ const Sidebar: React.FC<Props> = ({
         if (window && window.location.pathname !== '/docs') setShowBaseView(false);
     }, [slug]);
 
-    let nav;
+    let nav: Record<string, any> | boolean = false;
     if (!baseViewOnly && slug) {
         const [currentDocSlug] = slug as string[];
 
