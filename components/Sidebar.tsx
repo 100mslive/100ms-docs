@@ -25,6 +25,7 @@ import {
 import { Listbox } from '@headlessui/react';
 import { Flex, Box, Text, CSS } from '@100mslive/react-ui';
 import SidebarSection from './SidebarSection';
+import ReleaseNotes from './ReleaseNotes';
 import PlatformAccordion from './PlatformAccordion';
 import { getUpdatedPlatformName } from '@/lib/utils';
 
@@ -409,15 +410,19 @@ const Sidebar: React.FC<Props> = ({
                         </Box>
                         {/* Sidebar Menu Section */}
                         {nav
-                            ? Object.entries(nav).map(([key, children], index) => (
-                                  <SidebarSection
-                                      key={`${key}-${index}-section`}
-                                      value={key}
-                                      index={index}
-                                      nested={false}>
-                                      {children as React.ReactChildren}
-                                  </SidebarSection>
-                              ))
+                            ? Object.entries(nav).map(([key, children], index) =>
+                                  children?.['release-notes']?.url ? (
+                                      <ReleaseNotes dataObj={children['release-notes']} />
+                                  ) : (
+                                      <SidebarSection
+                                          key={`${key}-${index}-section`}
+                                          value={key}
+                                          index={index}
+                                          nested={false}>
+                                          {children as React.ReactChildren}
+                                      </SidebarSection>
+                                  )
+                              )
                             : null}
                     </>
                 ) : null}
