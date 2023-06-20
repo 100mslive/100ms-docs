@@ -7,16 +7,14 @@ Sometimes it is required to customize local peer's Audio & Video track settings 
 
 These settings are optional parameters and are meant to be passed in the `HMSSDK` function as the `hmsTrackSetting` parameter which is an `HMSTrackSetting` object.
 
-## Set audio track settings
+## Set Audio Track Settings
 
-For the audio track, we have following settings:
+For the audio track, we have the following settings:
 
 #### - useHardwareAcousticEchoCanceler
 
-Property to enable Hardware echo cancellation. By default, it's set to `true` if the device supports it.
-Please note that on some devices the hardware wrongly reports the HW echo canceler to be present whereas it does not work
-In such cases, the application needs to set this to `false`, so that SW echo canceler is picked up
-This setting uses the phone's Acoustic echo Cancellation instead of relying on the SDK's software-based implementation.
+Property to enable Hardware echo cancellation. It's set to `false` by default which implies that Software Echo Cancellation is enabled by default.
+Passing a `true` value here forces the device to use the phone's Hardware Acoustic echo Cancellation instead of relying on the 100ms' Software-based implementation.
 
 #### - audioSource
 
@@ -24,7 +22,7 @@ Property to configure audio nodes for audio sharing.(iOS Only) More info about t
 
 #### - trackInitialState
 
-Property to set the initial state of the audio track i.e Mute/Unmute. More info about this can be found [here](/flutter/v2/how--to-guides/set-up-video-conferencing/mute#setting-video-and-mic-off-while-joining)
+Property to set the audio track's initial state, i.e. Mute/Unmute. More info about this can be found [here](/flutter/v2/how--to-guides/set-up-video-conferencing/mute#setting-video-and-mic-off-while-joining)
 
 We can create HMSAudioTrackSetting with these properties:
 
