@@ -114,25 +114,32 @@ const hmsHlsPlayerRef = useRef(null);
 hmsHlsPlayerRef.current?.stop();
 ```
 
-## How to Hide Video Player UI
+## How to Show Video Player UI
 
-By default, Video Player UI or Controls are visible to user.
+By default, Video Player UI or Controls are hidden.
 
 <PortraitImage
-    src="/docs/docs/v2/hls-player-controls-ui-showcase.png"
+    src="/docs/docs/v2/hls-player-ui-without-controls-showcase.png"
     alt="HLS Player Controls UI Showcase"
     width="100%"
     height=""
 />
 
-We can hide Video Player UI or Controls by using `enableControls` prop on `HMSHLSPlayer` component -
+We can show Video Player UI or Controls by passing `true` to `enableControls` prop on `HMSHLSPlayer` component -
 
 ```js{3}
 <HMSHLSPlayer
-  // Pass `false` to `enableControls` prop to hide the Video Player Controls
-  enableControls={false} 
+  // Pass `true` to `enableControls` prop to show the Video Player Controls
+  enableControls={true} 
 />
 ```
+
+<PortraitImage
+    src="/docs/docs/v2/hls-player-ui-with-controls-showcase.png"
+    alt="HLS Player Controls UI Showcase"
+    width="100%"
+    height=""
+/>
 
 
 ## How to Pause and Resume the Playback
