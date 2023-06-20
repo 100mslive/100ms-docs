@@ -123,7 +123,7 @@ To set volume for HLS Playback we can use the `setVolume` method
 HMSHLSPlayerController.seekBackward(volume:"Volume between 0 to 100");
 ```
 
-> Note: `volume` can only take values from 0 to 100.
+> Note: `volume` can only take values from 0 to 100. It is set to 100 by default.
 
 ### How to get HLS Callbacks
 
@@ -398,3 +398,7 @@ class Meeting implements HMSUpdateListener, HMSActionResultListener,HMSHLSPlayba
 Let's understand the HLS Timed metadata flow with the help of a diagram:
 
 ![HLS Timed Metadata](/docs/v2/flutter-timed-metadata.png)
+
+## How to Configure HLS Player to Send Analytics Events
+
+There is no configuration required to send the HLS Playback analytics to 100ms dashboard, `HMSHLSPlayer` sends all the analytics events to 100ms dashboard by default.
