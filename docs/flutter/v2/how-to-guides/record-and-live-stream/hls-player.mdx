@@ -25,16 +25,23 @@ Widget HLSPlayer(){
 }
 ```
 
+This is how the HLS Player will look like this:
+
+![hls-player](/docs/v2/flutter-hls-player.png)
+
 To get a player with default OS player controls and stats enabled:
 
 ```dart
 Widget HLSPlayer(){
     return HMSHLSPlayer(
-        showPlayerControls: true,
-        isHLSStatsRequired: true
+        showPlayerControls: true
     );
 }
 ```
+
+With controls enabled the HLS Player will look like this:
+
+![hls-player](/docs/v2/flutter-hls-player-controls.png)
 
 ## HLS Player controls
 
@@ -216,21 +223,123 @@ class HMSHLSCue {
 
 To get the stats for HLS Player `HMSHLSPlayerController` provides a method to attach and detach the stats listener similar to other listeners like HMSUpdateListener, HMSKeyChangeListener etc.
 
-- **Attach a listener**
-
-To start getting HLS Stats  we need to call the `addHLSStatsListener` method
+To enable stats in HLS Player by default, use the `isHLSStatsRequired` property of `HMSHLSPlayer`.
+Let's see how we can enable the stats by default in HLS Player:
 
 ```dart
-HMSHLSPlayerController.addHLSStatsListener();
+Widget HLSPlayer(){
+    return HMSHLSPlayer(
+        isHLSStatsRequired: true
+    );
+}
 ```
 
-- **Detach a listener**
+> 🔑 Note: If `isHLSStatsRequired` is set as `true` in `HMSHLSPlayer` then there is no need to call `addHLSStatsListener` method again.
+
+Let's look at the step by step implementation to attach stats listener in HLS Player:
+
+<div className="steps-container">
+
+### Attach a listener
+
+To start getting HLS Stats we need to call the `addHLSStatsListener` method
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener,HMSHLSPlaybackEventsListener{
+
+    ...
+
+    ///This method enables the HLS Player Stats
+    void enableStats(){
+        HMSHLSPlayerController.addHLSStatsListener();
+    }
+
+    ...
+
+
+    ///Implement all the override methods here
+}
+```
+
+### Listen to onHLSEventUpdate method callback
+
+We get the HLS Stats in `onHLSEventUpdate` method:
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener,HMSHLSPlaybackEventsListener{
+
+    ...
+
+    ///This method enables the HLS Player Stats
+    void enableStats(){
+        HMSHLSPlayerController.addHLSStatsListener();
+    }
+
+    ...
+
+
+    @override
+    void onHLSEventUpdate({required HMSHLSPlayerStats playerStats}) {
+        ///We will get the stats here in playerStats parameter
+    }
+
+    @override
+    void onHLSError({required HMSException hlsException}) {
+      // If there is any failure in HLS Stats we will get the callback here
+    }
+
+}
+```
+
+Let us understand the `HMSHLSPlayerStats` class and it's properties:
+
+```dart
+class HMSHLSPlayerStats {
+  final double bandWidthEstimate;
+  final int totalBytesLoaded;
+  final double bufferedDuration;
+  final double distanceFromLive;
+  final double averageBitrate;
+  final double videoHeight;
+  final double videoWidth;
+  final int droppedFrameCount;
+}
+```
+
+- **bandWidthEstimate**:  The current bandwidth, as estimated by the player
+
+- **totalBytesLoaded**: The total bytes downloaded within the given poll duration
+
+- **bufferedDuration**: An estimate of the total buffered duration from the current position
+
+- **distanceFromLive**: Distance of current playing position from live edge
+
+- **averageBitrate**:  bitrate of the current layer being played
+
+- **videoHeight**:  The height of the video
+
+- **videoWidth**:  The width of the video
+
+- **droppedFrameCount**: The number of dropped frames since the last call to this method
+
+Based on these properties we can render the HLS Player UI as:
+
+<PortraitImage
+    src="/docs/docs/v2/flutter-ios-hls-stats.jpg"
+    alt="HLS Player Stats"
+    height="400"
+    width="200"
+/>
+
+### Detach a listener
 
 To stop getting HLS Stats we need to call the `removeHLSStatsListener` method
 
 ```dart
 HMSHLSPlayerController.removeHLSStatsListener();
 ```
+
+</div>
 
 ### How to send HLS Timed Metadata
 
