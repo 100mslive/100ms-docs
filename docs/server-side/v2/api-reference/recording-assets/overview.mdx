@@ -11,7 +11,7 @@ If a cloud storage location (for example, AWS S3 or GCS) is configured on the te
 
 ## Asset types
 
-* `room-composite`: This type composes a single video (mp4) out of all peers in the room.
+* `composite-room`: This type composes a single video (mp4) out of all peers in the room.
 * `room-vod`: This is also a composition of all peers in the room and is available in HLS (or m3u8) format for on-demand playback.
 * `chat`: This type captures chat messages that were exchanged while recording was running.
 
@@ -23,7 +23,7 @@ If a cloud storage location (for example, AWS S3 or GCS) is configured on the te
 | job_id     | Unique identifier for the [recording job](../recordings/overview) that generated the asset |
 | room_id    | Unique identifier of the room which was recorded |
 | session_id | Unique identifier of the session which was recorded |
-| type      | Type of recording asset (`room-composite`, `room-vod`, `chat`) |
+| type      | Type of recording asset (`composite-room`, `room-vod`, `chat`) |
 | status    | Status for this asset, can be `completed` or `failed` |
 | path      | Path of the recording asset (pointing to your or 100ms cloud storage bucket) |
 | size      | Size of the asset (in bytes)  |
