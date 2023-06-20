@@ -177,8 +177,8 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
     },
     "destinations": {
         "browserRecordings": {
-            "test": {
-                "name": "test",
+            "<recording destination name>": {
+                "name": "<recording destination name>",
                 "width": 1920,
                 "height": 1080,
                 "maxDuration": 1800,
@@ -186,22 +186,23 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                     "width": 0,
                     "height": 0
                 },
-                "presignDuration": 3600
+                "presignDuration": 3600,
+                "role": "host"
             }
         },
         "rtmpDestinations": {
-            "test": {
-                "name": "test",
+            "<rtmp destination name>": {
+                "name": "<rtmp destination name>",
                 "width": 1080,
                 "height": 1920,
                 "maxDuration": 1800,
-                "rtmpUrls": ["url", "ashdas", "ddsfsdf"],
+                "rtmpUrls": ["<rtmp url>", "<rtmp url>"],
                 "recordingEnabled": true
             }
         },
         "hlsDestinations": {
-            "test": {
-                "name": "test",
+            "<hlsdestination name>": {
+                "name": "<hls destination name>",
                 "maxDuration": 28800,
                 "layers": [
                     {
@@ -421,8 +422,8 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
     },
     "destinations": {
         "browserRecordings": {
-            "test": {
-                "name": "test",
+            "<destination name>": {
+                "name": "<destination name>",
                 "width": 1920,
                 "height": 1080,
                 "maxDuration": 1800,
@@ -434,8 +435,8 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
             }
         },
         "rtmpDestinations": {
-            "test": {
-                "name": "test",
+            "<destination name>": {
+                "name": "<destination name>",
                 "width": 1080,
                 "height": 1920,
                 "maxDuration": 1800,
@@ -444,8 +445,8 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
             }
         },
         "hlsDestinations": {
-            "test": {
-                "name": "test",
+            "<destination name>": {
+                "name": "<destination name>",
                 "maxDuration": 28800,
                 "layers": [
                     {
@@ -663,7 +664,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 ### rtmpDestinations object
 
 | Name             | Type      | Description                                                                                                        | Required |
-| :--------------- | :-------- | :----------------------------------------------------------------------------------------------------------------- | :------- |
+| :--------------- | :-------- | :-------------------------------------- --------------------------------------------------------------------------- | :------- |
 | name             | `string`  | The name you can assign to identify the RTMP destination                                                           | No       |
 | width            | `int`     | Indicates the width of the screen to be recorded in pixels. For example, 1280 pixels                               | No       |
 | height           | `int`     | Indicates the height of the screen to be recorded in pixels. For example, 720 pixels                               | No       |
