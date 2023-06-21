@@ -1,0 +1,418 @@
+---
+title: HLS Player
+nav: 9.3
+---
+
+The `HMSHLSPlayer` component is an HLS player offered by 100ms that can be used to play HLS streams.
+The player can take a URL to play the stream. It also sends analytics events related to the HLS
+playback to the 100ms dashboard. 
+
+
+## Requirements
+
+- SDK version 1.7.0 or higher
+
+
+## How to Start HLS
+
+- Take a look at the [HLS Streaming](./hls) docs about how to start HLS stream in a rRoom.
+
+- [Here's](./hls#current-room-status) how to read the HLS URL from the room.
+
+From the above links, we now know that we can get the HLS stream URL from `ON_JOIN` and `ON_ROOM_UPDATE`
+events.
+
+
+## How to Play an HLS Stream
+
+<div className="steps-container">
+
+### Import HMSHLSPlayer component
+
+```js
+import { HMSHLSPlayer } from '@100mslive/react-native-hms';
+```
+
+### Play HLS Stream on HMSHLSPlayer component
+
+- <strong>Play the HLS Stream as soon as `HMSHLSPlayer` component is visible on screen</strong>
+
+  We can render the `HMSHLSPlayer` component and pass the HLS Stream URL to it to play the HLS stream.
+
+  ```js
+  const streamURL = room.hlsStreamingState?.variants?.get(0)?.hlsStreamUrl;
+
+  ...
+
+  <HMSHLSPlayer url={streamURL} />
+  ```
+
+  The `url` prop of HMSHLSPlayer component is optional, HMSHLSPlayer can automatically get the HLS
+  stream URL from the HMSRoom if you render it when HLS stream has started -
+
+  ```js
+  // --- snip ---
+
+  const isHLSStreamRunning = room.hlsStreamingState?.running;
+
+  ...
+
+  if (isHLSStreamRunning) {
+    return <HMSHLSPlayer />;
+  }
+
+  return <Text>Waiting for strem to start</Text>;
+  ```
+
+  Checkout 2nd point of [How to Start HLS](#how-to-start-hls) section to know how to check if HLS Stream
+  is running or not.
+
+- <strong>Render `HMSHLSPlayer` component first and Play later</strong>
+
+  We can also call `play` method available on ref of `HMSHLSPlayer` component to play the HLS Stream.
+  `play` method accepts the HLS stream URL as a first parameter. However, It's optional, if we don't pass
+  it, then `HMSHLSPlayer` component tries to read URL from HMSRoom.
+
+  ```js{12}
+  // Create `ref` for `HMSHLSPlayer` component
+  const hmsHlsPlayerRef = useRef(null);
+
+  ...
+
+  // Assign above created ref to `ref` prop of `HMSHLSPlayer` component
+  <HMSHLSPlayer ref={hmsHlsPlayerRef} />
+
+  ...
+
+  // Now, we can call `play` method on `hmsHlsPlayerRef` anytime
+  hmsHlsPlayerRef.current?.play();
+  ```
+
+Take a look at [how the sample app does this](#) if not clear.
+</div>
+
+
+## How to Stop the Playback
+
+When the `HMSHLSPlayer` component is unmounted, HLS stream playback is automatically stopped.
+
+If you want to stop the stream playback without unmounting the `HMSHLSPlayer` component, you can call `stop`
+method available on the `ref` of `HMSHLSPlayer` component -
+
+```js{12}
+// Create `ref` for `HMSHLSPlayer` component
+const hmsHlsPlayerRef = useRef(null);
+
+...
+
+// Assign above created ref to `ref` prop of `HMSHLSPlayer` component
+<HMSHLSPlayer ref={hmsHlsPlayerRef} />
+
+...
+
+// Now, we can call `stop` method on `hmsHlsPlayerRef`
+hmsHlsPlayerRef.current?.stop();
+```
+
+## How to Show Video Player UI
+
+By default, Video Player UI or Controls are hidden.
+
+<PortraitImage
+    src="/docs/docs/v2/hls-player-ui-without-controls-showcase.png"
+    alt="HLS Player Controls UI Showcase"
+    width="100%"
+    height=""
+/>
+
+We can show Video Player UI or Controls by passing `true` to `enableControls` prop on `HMSHLSPlayer` component -
+
+```js{3}
+<HMSHLSPlayer
+  // Pass `true` to `enableControls` prop to show the Video Player Controls
+  enableControls={true} 
+/>
+```
+
+<PortraitImage
+    src="/docs/docs/v2/hls-player-ui-with-controls-showcase.png"
+    alt="HLS Player Controls UI Showcase"
+    width="100%"
+    height=""
+/>
+
+
+## How to Pause and Resume the Playback
+
+We can Pause and/or Resume the HLS Playback using the `pause` and `resume` methods respectively
+available on the `ref` of `HMSHLSPlayer` component -
+
+```js{11-12}
+// Create `ref` for `HMSHLSPlayer` component
+const hmsHlsPlayerRef = useRef(null);
+
+...
+
+// Assign the above created ref to `ref` prop of `HMSHLSPlayer` component
+<HMSHLSPlayer ref={hmsHlsPlayerRef} />
+
+...
+
+hmsHlsPlayerRef.current?.pause();
+hmsHlsPlayerRef.current?.resume();
+```
+
+
+## How to Seek Forward or Backward
+
+We can seek forward and/or backwards on the HLS Playback using the `seekForward` and `seekBackward` methods respectively
+available on the `ref` of `HMSHLSPlayer` component.
+
+`seekForward` and `seekBackward` methods accept number of seconds to seek by as a first parameter.
+
+```js{11-15}
+// Create `ref` for `HMSHLSPlayer` component
+const hmsHlsPlayerRef = useRef(null);
+
+...
+
+// Assign above created ref to `ref` prop of `HMSHLSPlayer` component
+<HMSHLSPlayer ref={hmsHlsPlayerRef} />
+
+...
+
+// Seek Forward by 5 seconds
+hmsHlsPlayerRef.current?.seekForward(5);
+
+// Seek Backward by 5 seconds
+hmsHlsPlayerRef.current?.seekBackward(5);
+```
+
+
+## How to Seek to Live Position
+
+We can use `seekToLivePosition` method available on the `ref` of `HMSHLSPlayer` component to go to the live position -
+
+```js{12}
+// Create `ref` for `HMSHLSPlayer` component
+const hmsHlsPlayerRef = useRef(null);
+
+...
+
+// Assign above created ref to `ref` prop of `HMSHLSPlayer` component
+<HMSHLSPlayer ref={hmsHlsPlayerRef} />
+
+...
+
+// Go to Live Position on HLS Stream
+hmsHlsPlayerRef.current?.seekToLivePosition();
+```
+
+
+## How to Change the Volume of HLS Playback
+
+We can use `setVolume` method available on the `ref` of `HMSHLSPlayer` component to change the playback volume levels.
+`setVolume` method accepts volume level as a first parameter, valid volume level is in `[0-100]` range.
+
+> Volume is set to `100` level by default.
+
+```js{12}
+// Create `ref` for `HMSHLSPlayer` component
+const hmsHlsPlayerRef = useRef(null);
+
+...
+
+// Assign above created ref to `ref` prop of `HMSHLSPlayer` component
+<HMSHLSPlayer ref={hmsHlsPlayerRef} />
+
+...
+
+hmsHlsPlayerRef.current?.setVolume(50); // use value from 0-100 range
+```
+
+
+## How to Know the Stats Related to HLS Playback
+
+
+
+<div className="steps-container">
+
+### Enable HLS Stats on the `HMSHLSPlayer` component
+
+By default, `HMSHLSPlayer` component does not send playback stats. We can enable HLS Stats on
+the `HMSHLSPlayer` component using the `enableStats` prop -
+
+```js{3}
+<HMSHLSPlayer
+  // Pass `true` to `enableStats` prop to enable the HLS Player Stats
+  enableStats={true}
+/>
+```
+
+### Use HLS Stats received from the `HMSHLSPlayer` component
+
+Now, we can use `useHMSHLSPlayerStats` hook in any component to get the stats object -
+
+```js{9}
+// Step 1: Import `useHMSHLSPlayerStats` hook
+import { useHMSHLSPlayerStats } from '@100mslive/react-native-hms';
+
+...
+
+// Step 2: use `useHMSHLSPlayerStats` hook inside any Component
+const HLSStatsView = () => {
+
+  const { stats, error } = useHMSHLSPlayerStats();
+}
+```
+
+`stats` object has the following interface -
+
+```js
+interface HMSHLSPlayerStatsUpdateEventData {
+  // current network speed of the user
+  bandWidthEstimate: number;
+
+  // total Bytes downloaded till this moment
+  totalBytesLoaded: number;
+
+  // An estimate of the total buffered duration from the current position
+  bufferedDuration: number;
+
+  // Distance of current playing position from live edge
+  distanceFromLive: number;
+
+  // total number of dropped frames
+  droppedFrameCount: number;
+
+  // bitrate of the current layer being played
+  averageBitrate: number;
+
+  // The height of the resolution of video
+  videoHeight: number;
+
+  // The width of the resolution of video
+  videoWidth: number;
+};
+```
+</div>
+
+An example of usage of `useHMSHLSPlayerCue` hook is provided in the sample app in [HLSPlayerStatsView Component](#).
+
+
+## How to Know When Player Changes State During Playback
+
+The HLS player can be in one of the following states: `playing`, `stopped`, `paused`, `buffering`, `failed`, or `unknown` during playback.
+
+We can use `useHMSHLSPlayerPlaybackState` hook to know about the state change event during the playback -
+
+```js{10}
+// Step 1: Import `useHMSHLSPlayerPlaybackState` hook
+import { useHMSHLSPlayerPlaybackState } from '@100mslive/react-native-hms';
+
+...
+
+// Step 2: use `useHMSHLSPlayerPlaybackState` hook inside any Component
+
+const HLSView = () => {
+
+  const playbackState = useHMSHLSPlayerPlaybackState();
+}
+```
+
+HLS Player playback state can be one of variant of `HMSHLSPlayerPlaybackState` enum -
+
+```js
+enum HMSHLSPlayerPlaybackState {
+  BUFFERING = 'buffering',
+  FAILED = 'failed',
+  PAUSED = 'paused',
+  PLAYING = 'playing',
+  STOPPED = 'stopped',
+  UNKNOWN = 'unknown',
+}
+```
+
+### How to Know When There is an Error During HLS Playback
+
+We can use `useHMSHLSPlayerPlaybackError` hook to know about the errors that happen during playback.
+
+`useHMSHLSPlayerPlaybackError` hook usage is just like the usage of [`useEffect` hook](https://react.dev/reference/react/useEffect).
+We pass a callback function to the `useHMSHLSPlayerPlaybackError` hook as a first parameter and dependency array as a second parameter.
+Whenever there is an error during playback, passed callback function will be called with error occurred.
+
+```js
+useHMSHLSPlayerPlaybackError(
+  // callback function
+  (err) => {
+    // logging playback error to console
+    console.log(err);
+  },
+  // dependency array
+  []
+);
+```
+
+HLS Player Playback Error has the following interface -
+
+```js
+interface HLSPlayerPlackbackError {
+  errorCode: string;
+  errorCodeName: string;
+  message?: string;
+};
+```
+
+
+## How to Use HLS Timed Metadata with 100ms HLS player
+
+When we use the 100ms HLS player to play the HLS stream, we can use `useHMSHLSPlayerCue` hook to
+get timed cue events when the player's current time matches that of a timed event in the HLS stream and use it's data to
+show any UI like quizzes, poll etc. to HLS viewers.
+
+`useHMSHLSPlayerCue` hook usage is just like the usage of [`useEffect` hook](https://react.dev/reference/react/useEffect).
+We pass a callback function to the `useHMSHLSPlayerCue` hook as a first parameter and dependency array as a second parameter.
+Whenever there is a timed cue event, passed callback function will be called with cue data.
+
+```js
+useHMSHLSPlayerCue(
+  // callback function
+  (cue) => {
+    const payloadStr = cue.payloadval;
+
+    if (typeof payloadStr === 'string') {
+      // use the cue data payload as per your usecase like quizzes, polls and emoticons etc.
+    }
+  },
+  // dependency array
+  []
+);
+```
+
+HLS Player Cue data has the following interface -
+
+```js
+interface HMSHLSPlayerPlaybackCue {
+  // Unique id of the timed event
+  id?: string;
+
+  // String payload of the timed event
+  payloadval?: string;
+
+  // endDate of the timed event
+  endDate?: Date;
+
+  // startDate of the timed event
+  startDate: Date;
+};
+```
+
+An example of usage of `useHMSHLSPlayerCue` hook is provided in the sample app in [HLSPlayerEmoticons Component](#).
+
+
+## How to Configure HLS Player to Send Analytics Events
+
+There is no configuration needed, `HMSHLSPlayer` component automatically sends Analytics Events to 100ms dashboard when the Room is active.
+
+
+👀 To see an example Android HLS Player implementation using 100ms SDK, checkout [HLSView Component](#) from our example project.
