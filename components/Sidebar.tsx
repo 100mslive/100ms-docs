@@ -25,6 +25,7 @@ import {
 import { Listbox } from '@headlessui/react';
 import { Flex, Box, Text, CSS } from '@100mslive/react-ui';
 import SidebarSection from './SidebarSection';
+import ReleaseNotes from './ReleaseNotes';
 import PlatformAccordion from './PlatformAccordion';
 import { getUpdatedPlatformName } from '@/lib/utils';
 
@@ -111,7 +112,7 @@ const Sidebar: React.FC<Props> = ({
         if (window && window.location.pathname !== '/docs') setShowBaseView(false);
     }, [slug]);
 
-    let nav;
+    let nav: Record<string, any> | boolean = false;
     if (!baseViewOnly && slug) {
         const [currentDocSlug] = slug as string[];
 
@@ -409,15 +410,19 @@ const Sidebar: React.FC<Props> = ({
                         </Box>
                         {/* Sidebar Menu Section */}
                         {nav
-                            ? Object.entries(nav).map(([key, children], index) => (
-                                  <SidebarSection
-                                      key={`${key}-${index}-section`}
-                                      value={key}
-                                      index={index}
-                                      nested={false}>
-                                      {children as React.ReactChildren}
-                                  </SidebarSection>
-                              ))
+                            ? Object.entries(nav).map(([key, children], index) =>
+                                  children?.['release-notes'] ? (
+                                      <ReleaseNotes dataObj={children['release-notes']} />
+                                  ) : (
+                                      <SidebarSection
+                                          key={`${key}-${index}-section`}
+                                          value={key}
+                                          index={index}
+                                          nested={false}>
+                                          {children as React.ReactChildren}
+                                      </SidebarSection>
+                                  )
+                              )
                             : null}
                     </>
                 ) : null}
