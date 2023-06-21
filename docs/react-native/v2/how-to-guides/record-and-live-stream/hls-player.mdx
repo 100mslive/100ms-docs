@@ -15,15 +15,15 @@ playback to the 100ms dashboard.
 
 ## How to Start HLS
 
-- Take a look at the [HLS Streaming](./hls) docs about how to start a hls stream in a HMS room.
+- Take a look at the [HLS Streaming](./hls) docs about how to start HLS stream in a rRoom.
 
-- [Here's](./hls#current-room-status) how to read the hls url from the room.
+- [Here's](./hls#current-room-status) how to read the HLS URL from the room.
 
-From above links, we now know that we can get the HLS stream URL from `ON_JOIN` and `ON_ROOM_UPDATE`
+From the above links, we now know that we can get the HLS stream URL from `ON_JOIN` and `ON_ROOM_UPDATE`
 events.
 
 
-## How to Play a HLS Stream
+## How to Play an HLS Stream
 
 <div className="steps-container">
 
@@ -37,7 +37,7 @@ import { HMSHLSPlayer } from '@100mslive/react-native-hms';
 
 - <strong>Play the HLS Stream as soon as `HMSHLSPlayer` component is visible on screen</strong>
 
-  We can render `HMSHLSPlayer` component and pass hls stream url to it to play HLS stream
+  We can render the `HMSHLSPlayer` component and pass the HLS Stream URL to it to play the HLS stream.
 
   ```js
   const streamURL = room.hlsStreamingState?.variants?.get(0)?.hlsStreamUrl;
@@ -79,7 +79,7 @@ import { HMSHLSPlayer } from '@100mslive/react-native-hms';
 
   ...
 
-  // assign above created ref to `ref` prop of `HMSHLSPlayer` component
+  // Assign above created ref to `ref` prop of `HMSHLSPlayer` component
   <HMSHLSPlayer ref={hmsHlsPlayerRef} />
 
   ...
@@ -92,7 +92,7 @@ Take a look at [how the sample app does this](#) if not clear.
 </div>
 
 
-## How to Stop the playback
+## How to Stop the Playback
 
 When the `HMSHLSPlayer` component is unmounted, HLS stream playback is automatically stopped.
 
@@ -105,7 +105,7 @@ const hmsHlsPlayerRef = useRef(null);
 
 ...
 
-// assign above created ref to `ref` prop of `HMSHLSPlayer` component
+// Assign above created ref to `ref` prop of `HMSHLSPlayer` component
 <HMSHLSPlayer ref={hmsHlsPlayerRef} />
 
 ...
@@ -153,7 +153,7 @@ const hmsHlsPlayerRef = useRef(null);
 
 ...
 
-// assign above created ref to `ref` prop of `HMSHLSPlayer` component
+// Assign the above created ref to `ref` prop of `HMSHLSPlayer` component
 <HMSHLSPlayer ref={hmsHlsPlayerRef} />
 
 ...
@@ -165,10 +165,10 @@ hmsHlsPlayerRef.current?.resume();
 
 ## How to Seek Forward or Backward
 
-We can seek forward and/or backward on the HLS Playback using the `seekForward` and `seekBackward` methods respectively
+We can seek forward and/or backwards on the HLS Playback using the `seekForward` and `seekBackward` methods respectively
 available on the `ref` of `HMSHLSPlayer` component.
 
-`seekForward` and `seekBackward` methods accepts number of seconds to seek by as a first parameter.
+`seekForward` and `seekBackward` methods accept number of seconds to seek by as a first parameter.
 
 ```js{11-15}
 // Create `ref` for `HMSHLSPlayer` component
@@ -176,7 +176,7 @@ const hmsHlsPlayerRef = useRef(null);
 
 ...
 
-// assign above created ref to `ref` prop of `HMSHLSPlayer` component
+// Assign above created ref to `ref` prop of `HMSHLSPlayer` component
 <HMSHLSPlayer ref={hmsHlsPlayerRef} />
 
 ...
@@ -199,7 +199,7 @@ const hmsHlsPlayerRef = useRef(null);
 
 ...
 
-// assign above created ref to `ref` prop of `HMSHLSPlayer` component
+// Assign above created ref to `ref` prop of `HMSHLSPlayer` component
 <HMSHLSPlayer ref={hmsHlsPlayerRef} />
 
 ...
@@ -209,7 +209,7 @@ hmsHlsPlayerRef.current?.seekToLivePosition();
 ```
 
 
-## How to Change Volume of HLS Playback
+## How to Change the Volume of HLS Playback
 
 We can use `setVolume` method available on the `ref` of `HMSHLSPlayer` component to change the playback volume levels.
 `setVolume` method accepts volume level as a first parameter, valid volume level is in `[0-100]` range.
@@ -222,7 +222,7 @@ const hmsHlsPlayerRef = useRef(null);
 
 ...
 
-// assign above created ref to `ref` prop of `HMSHLSPlayer` component
+// Assign above created ref to `ref` prop of `HMSHLSPlayer` component
 <HMSHLSPlayer ref={hmsHlsPlayerRef} />
 
 ...
@@ -233,7 +233,7 @@ hmsHlsPlayerRef.current?.setVolume(50); // use value from 0-100 range
 
 ## How to Know the Stats Related to HLS Playback
 
-... TODO: some introduction line here ...
+
 
 <div className="steps-container">
 
