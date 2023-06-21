@@ -3,6 +3,43 @@ title: Release Notes
 nav: 4.1
 ---
 
+## 1.7.0 - 2023-06-21
+
+### Breaking
+
+- On Android, incremented the `compileSdkVersion` & `targetSdkVersion` to `31`. For the changes in `build.gradle` file, refer [here](https://github.com/100mslive/react-native-hms/pull/1064/files#diff-197b190e4a3512994d2cebed8aff5479ff88e136b8cc7a4b148ec9c3945bd65a).
+
+- Removed Session Metadata methods
+
+  The `setSessionMetadata` and `getSessionMetadata` methods which were deprecated in previous versions have been removed now.
+
+  Utilize the Session Store functionality which is more convenient to implement features like Spotlight a Peer in Room, Keep a Message Pinned, etc. Read more about Session Store [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/interact-with-room/room/session-store).
+
+### New Features
+
+- Added HLS Player
+
+  Introducing the 100ms HLS Player named `HMSHLSPlayer` a comprehensive end-to-end solution for playing Live Streaming content with inbuilt support for [Timed Metadata](https://www.100ms.live/docs/react-native/v2/how-to-guides/record-and-live-stream/hls-player#how-to-use-hls-timed-metadata-with-100ms-hls-player), [HLS Diagnostic Stats](https://www.100ms.live/docs/react-native/v2/how-to-guides/record-and-live-stream/hls-player#how-to-know-the-stats-related-to-hls-playback) & [Custom Player Controls](https://www.100ms.live/docs/react-native/v2/how-to-guides/record-and-live-stream/hls-player#how-to-show-video-player-ui).
+
+  Learn more about `HMSHLSPlayer` [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/record-and-live-stream/hls-player).
+
+- Switch Audio Output using Native iOS UI
+
+  On iOS devices, you can now show the Native Airplay UI provided by iOS. Users can control the connected device which can be Airpods, any Bluetooth earphones, Wired Headsets, etc through which the Room's audio should be routed.
+
+  Learn more about it [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/configure-your-device/speaker/audio-output-routing#switch-audio-output-device-using-ios-airplay-ui).
+
+### Changed
+
+- RTMP Streaming can now be started without the `meetingUrl`. It is now an optional parameter. Learn more about RTMP Streaming [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/record-and-live-stream/recording#start-streaming-recording).
+
+- [Software Audio Echo Cancellation](https://www.100ms.live/docs/react-native/v2/how-to-guides/configure-your-device/microphone/echo-cancellation) is now enabled by default. To further customize Audio & Video Track Settings, refer the docs [here](https://www.100ms.live/docs/react-native/v2/how-to-guides/interact-with-room/track/track-settings).
+
+
+Updated to Android SDK 2.6.7 & iOS SDK 0.9.5
+
+**Full Changelog**: [1.6.2...1.7.0](https://github.com/100mslive/react-native-hms/compare/1.6.2...1.7.0)
+
 ## 1.6.2 - 2023-05-18
 
 ### Added
