@@ -141,6 +141,26 @@ class Meeting implements HMSHLSPlaybackEventsListener{}
 
 This will show error since we will need to implement the HMSHLSPlaybackEventsListener
 
+### Call addHMSHLSPlaybackEventsListener listener method
+
+To start getting the playback events we call the `addHMSHLSPlaybackEventsListener` method.
+
+```dart
+class Meeting implements HMSHLSPlaybackEventsListener{
+
+    ...
+
+    ///Here we add the HLS Playback event listener
+    //Here this is an instance of class that implements HMSHLSPlaybackEventsListener, that is, Meeting
+    void addHLSPlaybackEventListener(){
+        HMSHLSPlayerController.addHMSHLSPlaybackEventsListener(this);
+    }
+
+    ...
+
+}
+```
+
 ### Override the HMSHLSPlaybackEventsListener methods:
 
 ```dart
@@ -188,6 +208,26 @@ class Meeting implements HMSHLSPlaybackEventsListener{
 
 }
 ```
+
+### Call removeHMSHLSPlaybackEventsListener listener method
+
+To stop getting the playback events we call the `removeHMSHLSPlaybackEventsListener` method.
+
+```dart
+class Meeting implements HMSHLSPlaybackEventsListener{
+
+    ...
+
+    ///Here we remove the HLS Playback event listener
+    //Here this is an instance of class that implements HMSHLSPlaybackEventsListener, that is, Meeting
+    void removeHMSHLSPlaybackEventsListener(){
+      HMSHLSPlayerController.removeHMSHLSPlaybackEventsListener(this);
+    }
+
+    ...
+}
+```
+
 </div>
 
 Let us understand the `HMSHLSCue` class:
