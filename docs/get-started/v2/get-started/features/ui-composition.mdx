@@ -1,0 +1,42 @@
+---
+title: Custom UI composition
+nav: 3.21
+---
+
+When a 100ms room is being [live streamed](./live-streaming) or [recorded](./recordings), the video output is a **composition** of tracks from all peers in the room. In 100ms, this is made possible through "Beam", which is an internal component that combines a web browser and a video encoder that composes video.
+
+## How it works
+
+The Beam web browser opens a web app, using a URL (also called "meeting URL"). This web app needs to use the [100ms web SDK](../../../../javascript/v2/quickstart/javascript-quickstart), so that it can [join a 100ms room](../../../../javascript/v2/how-to-guides/set-up-video-conferencing/join) and [render video](../../../../javascript/v2/how-to-guides/set-up-video-conferencing/render-video/overview) for peers in the room.
+
+The web app is composing different tracks, and Beam ensures the rendered output is sent to the relevant destination (live stream, recording).
+
+## Default composition
+
+By default, 100ms live streams and recordings use [100ms pre-built links](../prebuilt/prebuilt) for composition. These links are auto-generated for every pair of role and room, and can be accessed from the dashboard or via [the API](../prebuilt/room-codes/room-links).
+
+## Custom composition
+
+Pre-built links are easy to use, but can be limited in customization. Since Beam can open any web app, you can customize the composition UI with HTML/CSS/JavaScript.
+
+You can start from scratch or use the [100ms sample web app](../../../../javascript/v2/quickstart/react-sample-app/quickstart) (which is used by pre-built links) as a starting point for this customization.
+
+### Things to note
+
+While making your custom web app, ensure that the web app fulfills these conditions:
+
+* Joins the room on page load: without any user interaction (for example, on a call preview screen) or authentication
+* Joins the room within 10 secs of page load to satisfy the Beam health check
+
+### Beam health check
+
+Our job as software builders is to expect things can go wrong, and to ensure potential issues are gracefully handled with limited downstream impact. For example, a broken web app that cannot be opened in Beam could cause a broken live stream.
+
+To ensure higher reliability, Beam is built on top of a JavaScript Bridge that can peak into the web app running in its browser to handle edge cases and more. Currently, this Bridge enables two benefits:
+
+1. If the web app does not load correctly, it retries up to 3 times
+    * A correct page load is defined as a "successful room join"
+    * To fulfill this condition, your app must join the 100ms room successfully **within 10 seconds** of page load
+1. Auto-stop when beam is the only one in the room
+    * If all peers have left the room and there are no re-joins within 5 minutes, recording stops automatically 
+
