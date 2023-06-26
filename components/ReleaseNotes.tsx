@@ -14,14 +14,9 @@ const ReleaseNotes = ({ dataObj }) => {
                     padding: '0.25rem 0',
                     color: isActive ? 'var(--docs_text_primary)' : 'var(--docs_text_secondary)',
                     fontWeight: isActive ? '500' : '400',
-                    fontSize: '14px',
-                    borderLeft: isActive
-                        ? '2px solid var(--primary_light)'
-                        : '2px solid var(--docs_border_strong)',
+                    fontSize: '15px',
                     display: 'flex',
-                    alignItems: 'flex-start',
-                    paddingLeft: '1rem',
-                    marginLeft: '6px'
+                    alignItems: 'flex-start'
                 }}>
                 <MinusIcon
                     style={{
