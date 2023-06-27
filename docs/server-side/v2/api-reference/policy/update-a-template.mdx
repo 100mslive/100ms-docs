@@ -3,7 +3,16 @@ title: Update a template
 nav: 3.36
 ---
 
-This endpoint is used to modify a Template. You need to provide all options for roles and settings to which you want to apply.
+This endpoint is used to modify a Template. Updating the template involves a three-step process:
+
+1. Use the [Get API](/server-side/v2/policy/retrieve-a-template) to retrieve the template object.
+2. Modify the template object to update it.
+3. Use this API to post the updated object as the request body.
+
+<Note type="warning">
+    When updating a template object, please provide all fields, even if only some fields are being modified. 
+    This method overwrites all fields.
+</Note>
 
 ## Understand sub-objects hierarchy
 
