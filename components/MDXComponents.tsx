@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import APILink from './APILink';
 import BaseRequest from './BaseRequest';
 import Code from './Code';
@@ -35,8 +36,16 @@ const TableCustom = (props: any) => (
 );
 
 const LinkCustom = (props) => {
-    const { href } = props;
+    let { href } = props;
     const isInternalLink = href && !href.startsWith('http');
+    const router = useRouter();
+
+    // FIX for a next/link bug where its not able to resolve relative path for current directory
+    if (href.startsWith('./')) {
+        const { asPath } = router;
+        href = asPath.substring(0, asPath.lastIndexOf('/')) + href.replace('./', '/');
+    }
+
     if (isInternalLink) {
         return (
             <Link href={href}>
