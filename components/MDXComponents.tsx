@@ -42,7 +42,7 @@ const LinkCustom = (props) => {
 
     // FIX for a next/link bug where its not able to resolve relative path for current directory
     if (href.startsWith('./')) {
-        const { asPath } = router;
+        const { asPath = '' } = router;
         href = asPath.substring(0, asPath.lastIndexOf('/')) + href.replace('./', '/');
     }
 
