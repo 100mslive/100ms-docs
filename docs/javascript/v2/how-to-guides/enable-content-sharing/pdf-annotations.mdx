@@ -7,7 +7,7 @@ You can now enable PDF annotations and sharing, allowing users to share and anno
 
 {/* Todo: Replace Video with newest version */}
 <video loop="true" autoplay="autoPlay" controls="false" id="vid" muted>
-    <source src="/docs/docs/v2/pdf-sharing-video.mp4" type="video/mp4" />
+    <source src="/docs/docs/v2/pdf-sharing/pdf-sharing-video.mp4" type="video/mp4" />
 </video>
 <br></br>
 
@@ -21,7 +21,7 @@ If you are currently using a fork of our sample app, make sure to pull the most 
 If you aren't using our Sample App and are building a completely custom UI, there are a few steps required to enable PDF annotations and sharing.
 
 <StepsToc
-  parentId="pdf-annotations"
+  parentId="pdf-sharing"
   descriptions={[
     "Add UI elements to enable PDF sharing for your users and enhance collaboration.",
     "Add UI to prompt the user to select a local PDF file or provide a URL.",
@@ -29,19 +29,19 @@ If you aren't using our Sample App and are building a completely custom UI, ther
   ]}
 />
 
-<StepsContainer id="pdf-annotations">
+<StepsContainer id="pdf-sharing">
 
 ### Add UI to Enable PDF Sharing
 
-![Enable PDF Sharing](/docs/v2/pdf-sharing-start-sharing.png)
+![Enable PDF Sharing](/docs/v2/pdf-sharing/pdf-sharing-start-sharing.png)
 
-Add UI elements to enable PDF sharing for your users. Use role permissions to decide if you want to allow PDF sharing for users in a room. Note: PDF sharing should be disabled when there's an ongoing sharing session. 
+Add UI elements to enable PDF sharing for your users. Use role permissions to decide if you want to allow PDF sharing for users in a room. Note: Disable PDF sharing UI for users when there's an ongoing sharing session. 
 
 You can refer to the code snippet in our repository to learn more about how we built this. [View Snippet](https://github.com/100mslive/100ms-web/blob/main/src/components/pdfAnnotator/shareScreenOptions.jsx)
 
 ### Add UI Enable PDF Selection
 
-![PDF Selection](/docs/v2/pdf-sharing-user-input.png)
+![PDF Selection](/docs/v2/pdf-sharing/pdf-sharing-user-input.png)
 
 Next, you need to prompt the user to provide input, either by selecting a local PDF file or providing a PDF URL. We also recommend implementing validation to handle scenarios such as:
   1. Invalid local PDF file.
@@ -51,7 +51,7 @@ Check out the code snippet in our repository to see how we built this. [View Sni
 
 ### Render and Share the PDF
 
-![Embed PDF Viewer](/docs/v2/pdf-sharing-embed.png)
+![Embed PDF Viewer](/docs/v2/pdf-sharing/pdf-sharing-embed.png)
 
 Finally, add an iframe element that points to the PDF viewer and start screen sharing. You can refer to the code snippet and comments below:
 
