@@ -44,6 +44,49 @@ HMSAudioTrackSetting audioTrackSetting = HMSAudioTrackSetting(
     audioMode: HMSAudioMode.MUSIC);
 ```
 
+#### - phoneCallState (Android Only)
+
+Property to set the microphone state when you receive a phone call. `phoneCallState` is an enum of type `HMSAndroidPhoneCallState` which can be set to the following values:
+
+```dart
+enum HMSAndroidPhoneCallState {
+
+  /// To keep the microphone unmuted while receiving a phone call
+  DISABLE_MUTE_ON_VOIP_PHONE_CALL_RING,
+
+  /// To mute the microphone while receiving a phone call
+  ENABLE_MUTE_ON_PHONE_CALL_RING,
+}
+```
+
+> 🔑 Note: If you set the `phoneCallState` to `DISABLE_MUTE_ON_VOIP_PHONE_CALL_RING` then too the microphone gets muted if you accept the call. In this case you 
+           will get `onRoomUpdate` callback with type as `roomMuted` as the call starts and `roomUnmuted` as the call ends.
+
+```dart
+//To set the microphone to stay unmuted when you receive a call
+HMSAudioTrackSetting audioTrackSetting = HMSAudioTrackSetting(
+  phoneCallState: HMSAndroidPhoneCallState.ENABLE_MUTE_ON_PHONE_CALL_RING
+);
+```
+By default it is set to `DISABLE_MUTE_ON_VOIP_PHONE_CALL_RING`
+
+- For Android Versions >= 12
+
+You need to add the call permissions in `AndroidManifest.xml` file as follows:
+
+```xml
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+```
+
+In Dart, if you are using the `permission_handler` package, make sure to request the following permission before joining the room:
+
+```dart
+void getPermissions(){
+  await Permission.phone.request();
+}
+```
+
 ## Set Video Track Settings
 
 For the video track, we can set the following properties:
