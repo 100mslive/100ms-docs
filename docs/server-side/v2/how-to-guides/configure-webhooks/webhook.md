@@ -12,7 +12,11 @@ nav: 4.3
 | [beam.started.success](#beamstartedsuccess),<br/> [beam.stopped.success](#beamstoppedsuccess),<br/> [beam.recording.success](#beamrecordingsuccess),<br/> [beam.failure](#beamfailure) | RTMP Streaming & Browser Recording                          | Triggered during the start, end, and failure of RTMP streaming and/or browser recording |
 | [hls.started.success](#hlsstartedsuccess),<br/> [hls.stopped.success](#hlsstoppedsuccess),<br/> [hls.recording.success](#hlsrecordingsuccess),<br/> [hls.failure](#hlsfailure)         | HLS Streaming Events                             | Triggered during the start, end, and failure of HLS streaming and/or HLS recording      |
 | [role.change.success](#rolechangesuccess)                                                                                                                                              | Role change Events                             | Triggered when a role is updated              
+<<<<<<< Updated upstream
 | [transcription.stared.success](#rolechangesuccess),<br/>[transcription.success](#transcriptionsuccess),<br/> [transcription.failure](#transcriptionfailure)                                                                                                                                                                  | Transcription Events                             | Triggered at the start and end of a transcription job
+=======
+| [transcription.started.success](#transcriptionstartedsuccess),<br/>[transcription.success](#transcriptionsuccess),<br/> [transcription.failure](#transcriptionfailure)                                                                                                                                                                  | Transcription Events                             | Triggered at the start and end of a transcription job
+>>>>>>> Stashed changes
 
 ## Event payload
 
@@ -1310,7 +1314,11 @@ This event is sent when transcription job is started post completion of the reco
         "room_id": "***********************",
         "transcription_id": "***********************",
         "session_id": "***********************",
+<<<<<<< Updated upstream
 		"duration": 23,
+=======
+        "duration": 23,
+>>>>>>> Stashed changes
         "summary_json_asset_id": "***********************",
         "transcript_json_asset_id": "***********************",
         "transcript_srt_asset_id": "***********************",
@@ -1352,7 +1360,10 @@ This event is sent when transcription job is successful and the assets are uploa
 #### Sample `transcription.success` event
 
 ```json
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 {
     "version": "2.0",
     "id": "********-****-****-****-***********",
@@ -1369,7 +1380,11 @@ This event is sent when transcription job is successful and the assets are uploa
             "room_id": "***********************",
             "transcription_id": "***********************",
             "session_id": "***********************",
+<<<<<<< Updated upstream
 		    "duration": 23,
+=======
+            "duration": 23,
+>>>>>>> Stashed changes
             "summary_json_asset_id": "***********************",
             "summary_json_path": "s3://<summary-json-address>.json",
             "summary_json_presigned_url": "https://<file-access-url>?<signature>",
@@ -1413,7 +1428,10 @@ This event is sent when transcription job fails.
 #### Sample `transcription.failure` event
 
 ```json
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 {
     "version": "2.0",
     "id": "********-****-****-****-***********",
@@ -1430,7 +1448,11 @@ This event is sent when transcription job fails.
             "room_id": "***********************",
             "transcription_id": "***********************",
             "session_id": "***********************",
+<<<<<<< Updated upstream
 		    "duration": 23,
+=======
+            "duration": 23,
+>>>>>>> Stashed changes
             "summary_json_asset_id": "***********************",
             "transcript_json_asset_id": "***********************",
             "transcript_srt_asset_id": "***********************",
