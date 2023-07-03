@@ -244,6 +244,37 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                     "presignDuration": 604800
                 }
             }
+        },
+        "transcriptions": {
+            "<transcription destination name>": {
+                "name": "<transcription destination name>",
+                "role": "host",
+                "outputModes": [ "txt", "srt", "json" ],
+                "customVocabulary": ["100ms", "SDK", "Sundar", "Pichai" ],
+                "summary": {
+                    "enabled": true,
+                    "context": "this is a meeting between 100ms SDK team and a user representative",
+                    "temperature": 0.5,
+                    "sections": [
+                        {
+                            "title": "Agenda",
+                            "format": "bullets"
+                        },
+                        {
+                            "title": "Key Points",
+                            "format": "bullets"
+                        },
+                        {
+                            "title": "Action Items",
+                            "format": "bullets"
+                        },
+                        {
+                            "title": "Short Summary",
+                            "format": "paragraph"
+                        }
+                    ]
+                }
+            }
         }
     }
 }'
@@ -432,6 +463,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                     "height": 0
                 },
                 "presignDuration": 3600
+                "role": "host"
             }
         },
         "rtmpDestinations": {
@@ -488,6 +520,37 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                     "presignDuration": 604800
                 }
             }
+        },
+        "transcriptions": {
+            "<destination name>": {
+                "name": "<destination name>",
+                "role": "host",
+                "outputModes": [ "txt", "srt", "json" ],
+                "customVocabulary": ["100ms", "SDK", "Sundar", "Pichai" ],
+                "summary": {
+                    "enabled": true,
+                    "context": "this is a meeting between 100ms SDK team and a user representative",
+                    "temperature": 0.5,
+                    "sections": [
+                        {
+                            "title": "Agenda",
+                            "format": "bullets"
+                        },
+                        {
+                            "title": "Key Points",
+                            "format": "bullets"
+                        },
+                        {
+                            "title": "Action Items",
+                            "format": "bullets"
+                        },
+                        {
+                            "title": "Short Summary",
+                            "format": "paragraph"
+                        }
+                    ]
+                }
+            }
         }
     },
     "createdAt": "2022-09-16T12:03:40.068Z",
@@ -507,7 +570,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | default <br/>      | `boolean` | Whether this is default template for a customer. Default template for a customer is used when no template is provided in [create room API](/server-side/v2/Rooms/create-via-api).                                                                                                                                                          | No       |
 | roles <br/>        | `object`  | Map of `{roleName:roleObject}`. Some sane defaults are set for values that are not provided in the roles object.                                                                                                                                                                                                                           | No       |
 | settings <br/>     | `object`  | Global settings for this template.                                                                                                                                                                                                                                                                                                         | No       |
-| destinations <br/> | `object`  | Object of type `destinations`. This object contains information for enabling/configuring features like `browserRecordings`, `rtmpDestinations`, & `hlsDestinations`.                                                                                                                                                                       | No       |
+| destinations <br/> | `object`  | Object of type `destinations`. This object contains information for enabling/configuring features like `browserRecordings`, `rtmpDestinations`, `hlsDestinations`, & `transcriptions`                                                                                                                                                                       | No       |
 
 ## roles object
 
@@ -653,19 +716,20 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 ### browserRecordings object
 
 | Name            | Type     | Description                                                                                             | Required |
-| :-------------- | :------- | :------------------------------------------------------------------------------------------------------ | :------- |
-| name            | `string` | The name you can assign to identify the browser recording                                               | No       |
+| --------------- | -------- | ------------------------------------------------------------------------------------------------------- | -------- |
+| name            | `string` | The name you can assign to identify the browser recording                                               | Yes      |
 | width           | `int`    | Indicates the width of the screen to be recorded in pixels. For example, 1280 pixels                    | No       |
 | height          | `int`    | Indicates the height of the screen to be recorded in pixels. For example, 720 pixels                    | No       |
 | maxDuration     | `int`    | Sets the maximum duration, in seconds, of the recording. For example, 1800 seconds(30 mins)             | No       |
 | thumbnails      | `object` | Object of type `thumbnails`. This can be used to configure thumbnail's dimension                        | No       |
-| presignDuration | `int`    | Indicates the expiry of the pre-signed URLs—the duration for which the pre-signed URL should be signed. | No       |
+| presignDuration | `int`    | Indicates the expiry of the pre-signed URLs—the duration for which the pre-signed URL should be signed | No       |
+| role            | `string` | Indicates the role use to start browser recording                                                       | Yes      |
 
 ### rtmpDestinations object
 
 | Name             | Type      | Description                                                                                                        | Required |
 | :--------------- | :-------- | :----------------------------------------------------------------------------------------------------------------- | :------- |
-| name             | `string`  | The name you can assign to identify the RTMP destination                                                           | No       |
+| name             | `string`  | The name you can assign to identify the RTMP destination                                                           | Yes       |
 | width            | `int`     | Indicates the width of the screen to be recorded in pixels. For example, 1280 pixels                               | No       |
 | height           | `int`     | Indicates the height of the screen to be recorded in pixels. For example, 720 pixels                               | No       |
 | maxDuration      | `int`     | Sets the maximum duration, in seconds, of the recording. For example, 1800 seconds(30 mins)                        | No       |
@@ -676,7 +740,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 | Name                    | Type      | Description                                                                                                                                                                                        | Required |
 | :---------------------- | :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| name                    | `string`  | The name you can assign to identify the HLS destination                                                                                                                                            | No       |
+| name                    | `string`  | The name you can assign to identify the HLS destination                                                                                                                                            | Yes       |
 | maxDuration             | `int`     | Sets the maximum duration, in seconds, of the recording. For example, 1800 seconds(30 minutes)                                                                                                     | No       |
 | layers                  | `object`  | Object of type `layers`. This can be used to configure the various dimensions to be supported for HLS streaming. The layers are expected to be in descending order of resolution and video bitrate | No       |
 | playlistType            | `string`  | Indicates the type of playlist. Can be of type `event` or `live`.                                                                                                                                  | No       |
@@ -695,3 +759,29 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | layers             | `object`  | Object of type `layers`. This can be used to configure the various dimensions to be supported for HLS recording - both `hlsVod` and `singleFilePerLayer`. `recording.layers` should be subset of `hlsDestinations.layers` and has the same validations as `hlsDestinations.layers`. When not specified, recordings will be generated for all `hlsDestinations.layers` | No       |
 | thumbnails         | `object`  | Object of type `thumbnails`. This can be used to configure thumbnail's dimension                                                                                                                                                                                                                                                                                      | No       |
 | presignDuration    | `int`     | Indicates the expiry of the pre-signed URLs—the duration for which the pre-signed URL should be signed.                                                                                                                                                                                                                                                               | No       |
+
+### transcriptions object
+
+| Name             | Type     | Description                                                                                                                                                         | Required |
+| ---------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| name             | `string` | The name you can assign to identify transcription destination. (Note: Transcription here refers to post call transcription)                                         | Yes      |
+| role             | `string` | Indicates the role use to transcribe. Call will be transcribed with the perspective of a peer having mentioned role                                                 | Yes      |
+| outputModes      | `array`  | Array of ouput modes for transcript. Valid values: [ `txt`, `srt`, `json` ] (`txt`: Plain text, `srt`: SubRip text, `json`: Granular timestamped word and sentences | No       |
+| customVocabulary | `array`  | Array of custom vocabulary words to be used for transcription. This can consist of non-dictionary words like names, slang, abbreviations and domain specific words  | No       |
+| summary          | `object` | Object of type `summary`. This can be used to enabled and configure summary                                                                                                     | No       |
+
+#### transcriptions - summary object
+
+| Name        | Type      | Description                                                                                                                                          | Required |
+| ----------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| enable      | `boolean` | Set this to `true` to enable summary                                                                                                                 | No       |
+| context     | `string`  | Provide context of the meetings to help AI get holistic understand about the call. Enabling it to generate better summary (limit: 300 characters)                | No       |
+| temperature | `float`   | Temperature determines creativity. Higher values makes AI be more creative, lower values makes it more deterministic and predictable. (default: 0.5) | No       |
+| sections    | `array`   | Sections has list of objects. Refers to sections in summary like `Agenda`, `Short Summary`, `Questions raised by participants` (max count: 6)        | No       |
+
+#### transcriptions - summary - sections object
+
+| Name   | Type     | Description                                                                | Required |
+| ------ | -------- | -------------------------------------------------------------------------- | -------- |
+| title  | `string` | Title of the section eg. `Agenda`, `Short Summary`  (limit: 100 character) | Yes      |
+| format | `string` | Format of section. Valid values: [`bullets`, `paragraph`]                  | Yes      |

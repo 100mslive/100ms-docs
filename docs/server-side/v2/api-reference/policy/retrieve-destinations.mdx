@@ -3,7 +3,7 @@ title: Retrieve destinations
 nav: 12
 ---
 
-This endpoint is used to fetch destinations.
+This endpoint is used to fetch [destinations](/server-side/v2/policy/create-template-via-api#destinations-object).
 
 <GetRequest title="https://api.100ms.live/v2/templates/<template_id>/destinations" />
 
@@ -20,9 +20,18 @@ curl --location --request GET 'https://api.100ms.live/v2/templates/<template_id>
 
 ```json
 {
-    "browserRecordings": {},
-    "rtmpDestinations": {},
-    "hlsDestinations": {}
+    "browserRecordings": {
+        ...
+    },
+    "rtmpDestinations": {
+        ...
+    },
+    "hlsDestinations": {
+        ...
+    },
+    "transcriptions": {
+        ...
+    }
 }
 ```
 

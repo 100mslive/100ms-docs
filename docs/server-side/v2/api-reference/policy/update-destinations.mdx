@@ -3,7 +3,7 @@ title: Update destinations
 nav: 13
 ---
 
-This endpoint is used to update destinations.
+This endpoint is used to update [destinations](/server-side/v2/policy/create-template-via-api#destinations-object).
 
 <PostRequest title="https://api.100ms.live/v2/templates/<template_id>/destinations" />
 
@@ -81,6 +81,37 @@ curl --location --request POST 'https://api.100ms.live/v2/<template_id>/destinat
                 "presignDuration": 604800
             }
         }
+    },
+    "transcriptions": {
+        "test": {
+            "name": "test",
+            "role": "host",
+            "outputModes": [ "txt", "srt", "json" ],
+            "customVocabulary": ["100ms", "SDK", "Sundar", "Pichai" ],
+            "summary": {
+                "enabled": true,
+                "context": "this is a meeting between 100ms SDK team and a user representative",
+                "temperature": 0.5,
+                "sections": [
+                    {
+                        "title": "Agenda",
+                        "format": "bullets"
+                    },
+                    {
+                        "title": "Key Points",
+                        "format": "bullets"
+                    },
+                    {
+                        "title": "Action Items",
+                        "format": "bullets"
+                    },
+                    {
+                        "title": "Short Summary",
+                        "format": "paragraph"
+                    }
+                ]
+            }
+        }
     }
 }'
 ```
@@ -156,6 +187,37 @@ curl --location --request POST 'https://api.100ms.live/v2/<template_id>/destinat
                     "fps": 60
                 },
                 "presignDuration": 604800
+            }
+        }
+    },
+    "transcriptions": {
+        "test": {
+            "name": "test",
+            "role": "host",
+            "outputModes": [ "txt", "srt", "json" ],
+            "customVocabulary": ["100ms", "SDK", "Sundar", "Pichai" ],
+            "summary": {
+                "enabled": true,
+                "context": "this is a meeting between 100ms SDK team and a user representative",
+                "temperature": 0.5,
+                "sections": [
+                    {
+                        "title": "Agenda",
+                        "format": "bullets"
+                    },
+                    {
+                        "title": "Key Points",
+                        "format": "bullets"
+                    },
+                    {
+                        "title": "Action Items",
+                        "format": "bullets"
+                    },
+                    {
+                        "title": "Short Summary",
+                        "format": "paragraph"
+                    }
+                ]
             }
         }
     }
