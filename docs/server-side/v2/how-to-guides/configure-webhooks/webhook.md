@@ -5,13 +5,14 @@ nav: 4.3
 
 | Event name                                                                                                                                                                             | Theme                              | Description                                                                             |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- | --------------------------------------------------------------------------------------- |
-| [session.open.success](#sessionopensuccess), <br/> [session.close.success](#sessionclosesuccess)                                                                                       | session                            | Triggered during the start and end of a session                                         |
-| [peer.join.success](#peerjoinsuccess),<br/> [peer.leave.success](#peerleavesuccess), <br/>[peer.join.failure](#peerjoinfailure),<br/> [peer.leave.failure](#peerleavefailure)          | peer                               | Triggered when a peer join/leave succeeds/fails                                         |
-| [room.end.success](#roomendsuccess)                                                                                                                                                    | room                               | Triggered when a room ends                                                              |
-| [recording.success](#recordingsuccess), <br/>[recording.failed](#recordingfailed)                                                                                                      | SFU recording                      | Triggered during the start, end, and failure of a SFU recording                         |
-| [beam.started.success](#beamstartedsuccess),<br/> [beam.stopped.success](#beamstoppedsuccess),<br/> [beam.recording.success](#beamrecordingsuccess),<br/> [beam.failure](#beamfailure) | RTMP Streaming & Browser Recording | Triggered during the start, end, and failure of RTMP streaming and/or browser recording |
-| [hls.started.success](#hlsstartedsuccess),<br/> [hls.stopped.success](#hlsstoppedsuccess),<br/> [hls.recording.success](#hlsrecordingsuccess),<br/> [hls.failure](#hlsfailure)         | HLS Streaming Events               | Triggered during the start, end, and failure of HLS streaming and/or HLS recording      |
-| [role.change.success](#rolechangesuccess)                                                                                                                                              | Role change Events                 | Triggered when a role is updated                                                        |
+| [session.open.success](#sessionopensuccess), <br/> [session.close.success](#sessionclosesuccess)                                                                                       | Session                            | Triggered during the start and end of a session                                         |
+| [peer.join.success](#peerjoinsuccess),<br/> [peer.leave.success](#peerleavesuccess), <br/>[peer.join.failure](#peerjoinfailure),<br/> [peer.leave.failure](#peerleavefailure)          | Peer                               | Triggered when a peer join/leave succeeds/fails                                         |
+| [room.end.success](#roomendsuccess)                                                                                                                                                    | Room                               | Triggered when a room ends                                                              |
+| [recording.success](#recordingsuccess), <br/>[recording.failed](#recordingfailed)                                                                                                      | SFU recording                          | Triggered at the end of a SFU recording                                                 |
+| [beam.started.success](#beamstartedsuccess),<br/> [beam.stopped.success](#beamstoppedsuccess),<br/> [beam.recording.success](#beamrecordingsuccess),<br/> [beam.failure](#beamfailure) | RTMP Streaming & Browser Recording                          | Triggered during the start, end, and failure of RTMP streaming and/or browser recording |
+| [hls.started.success](#hlsstartedsuccess),<br/> [hls.stopped.success](#hlsstoppedsuccess),<br/> [hls.recording.success](#hlsrecordingsuccess),<br/> [hls.failure](#hlsfailure)         | HLS Streaming Events                             | Triggered during the start, end, and failure of HLS streaming and/or HLS recording      |
+| [role.change.success](#rolechangesuccess)                                                                                                                                              | Role change Events                             | Triggered when a role is updated              
+| [transcription.stared.success](#rolechangesuccess),<br/>[transcription.success](#transcriptionsuccess),<br/> [transcription.failure](#transcriptionfailure)                                                                                                                                                                  | Transcription Events                             | Triggered at the start and end of a transcription job
 
 ## Event payload
 
@@ -1265,3 +1266,176 @@ This event will be sent when HLS recordings are successful and uploaded to the s
     }
 }
 ```
+
+## Transcription Events
+
+### transcription.started.success
+
+This event is sent when transcription job is started post completion of the recording.
+
+#### Attributes
+
+| Name                     | Type                 | Description                                                                                                 |
+| :----------------------- | :------------------- | :-----------------------------------------------------------------------------------------------------------|
+| account_id               | `string`             | Customer ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f4                 |
+| app_id                   | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6                      |
+| recording_id             | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4     |
+| room_id                  | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                         |
+| session_id               | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                      |
+| metadata_id              | `string`             | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                                |
+| transcription_id         | `string`             | 100ms assigned id to identify the transcription job <br/><br/> Example: 648aabbcafd9fc711c815270            |
+| metadata_timestamp       | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> Example: 2020-11-11T17:32:17Z                                 |
+| duration                 | `int`                | Duration of the recording file that is transcribed in seconds <br/><br/> Example:                           |
+| summary_json_asset_id    | `string`             | 100ms assigned id to the generated summary (json) asset <br/> <br/> Example: 64899f07651605b7aadc2579       |
+| transcript_json_asset_id | `string`             | 100ms assigned id to the generated transcription (json) asset <br/> <br/> Example: 64899f07651605b7aadc2578 |
+| transcript_srt_asset_id  | `string`             | 100ms assigned id to the generated transcription (srt) asset <br/> <br/> Example: 64899f07651605b7aadc2577  |
+| transcript_txt_asset_id  | `string`             | 100ms assigned id to the generated transcription (txt) asset <br/> <br/> Example: 64899f07651605b7aadc2576  |
+
+### Sample `transcription.started.success` event
+
+```json
+{
+    "version": "2.0",
+    "id": "********-****-****-****-***********",
+    "account_id": "************************",
+    "app_id": "************************",
+    "timestamp": "2023-06-15T06:17:39Z",
+    "type": "transcription.started.success",
+    "data": {
+        "account_id": "***********************",
+        "app_id": "***********************",
+        "metadata_id": "********-****-****-****-***********",
+        "metadata_timestamp": "2023-06-15T06:17:39.986637275Z",
+        "recording_id": "***********************",
+        "room_id": "***********************",
+        "transcription_id": "***********************",
+        "session_id": "***********************",
+		"duration": 23,
+        "summary_json_asset_id": "***********************",
+        "transcript_json_asset_id": "***********************",
+        "transcript_srt_asset_id": "***********************",
+        "transcript_txt_asset_id": "***********************"
+    }
+}
+```
+
+### transcription.success
+
+This event is sent when transcription job is successful and the assets are uploaded to the storage.
+
+#### Attributes
+
+| Name                          | Type                 | Description                                                                                                 |
+| :---------------------------- | :------------------- | :-----------------------------------------------------------------------------------------------------------|
+| account_id                    | `string`             | Customer ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f4                 |
+| app_id                        | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6                      |
+| recording_id                  | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4     |
+| room_id                       | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                         |
+| session_id                    | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                      |
+| metadata_id                   | `string`             | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                                |
+| transcription_id              | `string`             | 100ms assigned id to identify the transcription job <br/><br/> Example: 648aabbcafd9fc711c815270            |
+| metadata_timestamp            | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> Example: 2020-11-11T17:32:17Z                                 |
+| duration                      | `int`                | Duration of the recording file that is transcribed in seconds <br/><br/> Example: 25                        |
+| summary_json_asset_id         | `string`             | 100ms assigned id to the generated summary (json) asset <br/> <br/> Example: 64899f07651605b7aadc2579       |
+| summary_json_path             | `string`             | Upload path of the summary (json) <br/><br/> Example: s3://bucket/prefix/ac.mp4                             |
+| summary_json_presigned_url    | `string`             | Pre-signed URL of summary (json)                                                                            |
+| transcript_json_asset_id      | `string`             | 100ms assigned id to the generated transcription (json) asset <br/> <br/> Example: 64899f07651605b7aadc2578 |
+| transcript_json_path          | `string`             | Upload path of the transcript (json) <br/><br/> Example: s3://bucket/prefix/ac.mp4                          |
+| transcript_json_presigned_url | `string`             | Pre-signed URL of transcript (json)                                                                         |
+| transcript_srt_asset_id       | `string`             | 100ms assigned id to the generated transcription (srt) asset <br/> <br/> Example: 64899f07651605b7aadc2577  |
+| transcript_srt_path           | `string`             | Upload path of the transcript (srt) <br/><br/> Example: s3://bucket/prefix/ac.mp4                           |
+| transcript_srt_presigned_url  | `string`             | Pre-signed URL of transcript (srt)                                                                          |
+| transcript_txt_asset_id       | `string`             | 100ms assigned id to the generated transcription (txt) asset <br/> <br/> Example: 64899f07651605b7aadc2576  |
+| transcript_txt_path           | `string`             | Upload path of the transcript (txt) <br/><br/> Example: s3://bucket/prefix/ac.mp4                           |
+| transcript_txt_presigned_url  | `string`             | Pre-signed URL of transcript (txt)
+
+#### Sample `transcription.success` event
+
+```json
+
+{
+    "version": "2.0",
+    "id": "********-****-****-****-***********",
+    "account_id": "************************",
+    "app_id": "************************",
+    "timestamp": "2023-06-15T06:17:39Z",
+    "type": "transcription.success",
+    "data": {
+            "account_id": "***********************",
+            "app_id": "***********************",
+            "metadata_id": "********-****-****-****-***********",
+            "metadata_timestamp": "2023-06-15T06:17:39.986637275Z",
+            "recording_id": "***********************",
+            "room_id": "***********************",
+            "transcription_id": "***********************",
+            "session_id": "***********************",
+		    "duration": 23,
+            "summary_json_asset_id": "***********************",
+            "summary_json_path": "s3://<summary-json-address>.json",
+            "summary_json_presigned_url": "https://<file-access-url>?<signature>",
+            "transcript_json_asset_id": "***********************",
+            "transcript_json_path": "s3://<transcript-json-address>.json",
+            "transcript_json_presigned_url": "https://<file-access-url>?<signature>",
+            "transcript_srt_asset_id": "***********************",
+            "transcript_srt_path": "s3://<transcript-srt-address>.json",
+            "transcript_srt_presigned_url": "https://<file-access-url>?<signature>",
+            "transcript_txt_asset_id": "***********************",
+            "transcript_txt_path": "s3://<transcript-txt-address>.json",
+            "transcript_txt_presigned_url": "https://<file-access-url>?<signature>"
+    }
+}
+```
+
+### transcription.failure
+
+This event is sent when transcription job fails.
+
+#### Attributes
+
+| Name                          | Type                 | Description                                                                                                 |
+| :---------------------------- | :------------------- | :-----------------------------------------------------------------------------------------------------------|
+| account_id                    | `string`             | Customer ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f4                 |
+| app_id                        | `string`             | App ID from which this event is generated <br/><br/> Example: 5ff5881b80b66969e1fb35f6                      |
+| recording_id                  | `string`             | 100ms assigned id to identify the joining user <br/><br/> Example: bd0c76fd-1ab1-4d7d-ab8d-bbfa74b620c4     |
+| room_id                       | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                         |
+| session_id                    | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                      |
+| metadata_id                   | `string`             | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                                |
+| transcription_id              | `string`             | 100ms assigned id to identify the transcription job <br/><br/> Example: 648aabbcafd9fc711c815270            |
+| metadata_timestamp            | `timestamp (in UTC)` | Webhook message creation timestamp <br/><br/> Example: 2020-11-11T17:32:17Z                                 |
+| duration                      | `int`                | Duration of the recording file that is transcribed in seconds <br/><br/> Example: 25                        |
+| summary_json_asset_id         | `string`             | 100ms assigned id to the generated summary (json) asset <br/> <br/> Example: 64899f07651605b7aadc2579       |
+| transcript_json_asset_id      | `string`             | 100ms assigned id to the generated transcription (json) asset <br/> <br/> Example: 64899f07651605b7aadc2578 |
+| transcript_srt_asset_id       | `string`             | 100ms assigned id to the generated transcription (srt) asset <br/> <br/> Example: 64899f07651605b7aadc2577  |
+| transcript_txt_asset_id       | `string`             | 100ms assigned id to the generated transcription (txt) asset <br/> <br/> Example: 64899f07651605b7aadc2576  |
+
+
+
+#### Sample `transcription.failure` event
+
+```json
+
+{
+    "version": "2.0",
+    "id": "********-****-****-****-***********",
+    "account_id": "************************",
+    "app_id": "************************",
+    "timestamp": "2023-06-15T06:17:39Z",
+    "type": "transcription.failure",
+    "data": {
+            "account_id": "***********************",
+            "app_id": "***********************",
+            "metadata_id": "********-****-****-****-***********",
+            "metadata_timestamp": "2023-06-15T06:17:39.986637275Z",
+            "recording_id": "***********************",
+            "room_id": "***********************",
+            "transcription_id": "***********************",
+            "session_id": "***********************",
+		    "duration": 23,
+            "summary_json_asset_id": "***********************",
+            "transcript_json_asset_id": "***********************",
+            "transcript_srt_asset_id": "***********************",
+            "transcript_txt_asset_id": "***********************"
+    }
+}
+```
+
