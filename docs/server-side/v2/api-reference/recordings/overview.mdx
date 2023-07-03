@@ -13,26 +13,28 @@ Currently the following asset types are supported
 
 * `room-composite`
 * `chat`
+* `transcript`
+* `summary`
 
 <EndpointRequest title="https://api.100ms.live/v2/recordings" />
 
 ## Object
 
-| Property         | Description                                      |
-|------------------|--------------------------------------------------|
-| id               | Unique identifier for the recording job |
-| room_id          | Identifier of the room where this recording happened |
-| session_id       | Identifier of the session where this recording happened |
-| status           | Status of the live stream, can be one of `starting`, `running`, `stopping`, `post_processing`, `completed`, `failed` |
-| meeting_url      | Meeting URL opened in the web browser that is composing the recording |
-| asset_types      | Array of generated asset types |
-| recording_assets | Array of [recording assets](../recording-assets/overview) that are generated out of the recording |
-| created_at       | Timestamp for when the recording job was created |
-| started_at       | Timestamp for when the recording job was started |
-| started_by       | Identifier of the peer who started the recording job. If the recording was started from server-side, this is an empty string |
-| stopped_at       | Timestamp for when the recording job was stopped |
-| stopped_by       | Identifier of the peer who stopped the recording job. If the recording was stopped from server-side, this is an empty string |
-| updated_at       | Timestamp for when the recording job was updated |
+| Property         | Description                                                                                                                           |
+| ---------------- |---------------------------------------------------------------------------------------------------------------------------------------|
+| id               | Unique identifier for the recording job                                                                                               |
+| room_id          | Identifier of the room where this recording happened                                                                                  |
+| session_id       | Identifier of the session where this recording happened                                                                               |
+| status           | Status of the live stream, can be one of `starting`, `running`, `stopping`, `post_processing`, `completed`, `failed`                  |
+| meeting_url      | Meeting URL opened in the web browser that is composing the recording                                                                 |
+| asset_types      | Array of generated asset types, can have values from [`room-composite`, `chat`, `transcript`, `summary`]                                                                                                  |
+| recording_assets | Array of [recording assets](../recording-assets/overview) that are generated out of the recording                                     |
+| created_at       | Timestamp for when the recording job was created                                                                                      |
+| started_at       | Timestamp for when the recording job was started                                                                                      |
+| started_by       | Identifier of the peer who started the recording job. If the recording was started from server-side, this is an empty string          |
+| stopped_at       | Timestamp for when the recording job was stopped                                                                                      |
+| stopped_by       | Identifier of the peer who stopped the recording job. If the recording was stopped from server-side, this is an empty string          |
+| updated_at       | Timestamp for when the recording job was updated                                                                                      |
 
 ## Postman collection
 
