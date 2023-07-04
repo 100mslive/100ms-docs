@@ -35,8 +35,7 @@ const examples: {
     },
     {
         title: 'Sample App - Android (Jetpack Compose)',
-        description:
-            'An Android video conferencing app with Jetpack Compose using the 100ms Android SDK',
+        description: 'An Android video conferencing app with Jetpack Compose using the 100ms Android SDK',
         url: 'https://github.com/100mslive/JetpackComposeSampleAndroid',
         technologies: [TECHNOLOGIES.ANDROID],
         tags: ['Mobile', 'Jetpack Compose'],
@@ -60,8 +59,7 @@ const examples: {
     },
     {
         title: 'Sample Backend App - Node.js',
-        description:
-            'Sample backend app built on Node.js with Express.js middleware and the 100ms REST APIs',
+        description: 'Sample backend app built on Node.js with Express.js middleware and the 100ms REST APIs',
         url: 'https://github.com/100mslive/100ms-sample-backend-nodejs',
         technologies: [TECHNOLOGIES.NODEJS],
         tags: ['Web', 'Server Side', 'Express.js'],
@@ -113,7 +111,8 @@ const examples: {
     },
     {
         title: 'Virtual Events - Next.js',
-        description: 'A fully customizable virtual live events starter kit built with Next.js',
+        description:
+            'A fully customizable virtual live events starter kit built with Next.js',
         url: 'https://github.com/100mslive/virtual-event-starter-kit',
         technologies: [TECHNOLOGIES.NEXTJS],
         tags: ['Web', 'Events'],
@@ -121,7 +120,8 @@ const examples: {
     },
     {
         title: 'Thirdle - Flutter',
-        description: 'A multiplayer Wordle inspired game built using the 100ms Flutter SDK',
+        description:
+            'A multiplayer Wordle inspired game built using the 100ms Flutter SDK',
         url: 'https://github.com/coder-with-a-bushido/thirdle/',
         technologies: [TECHNOLOGIES.FLUTTER],
         tags: ['Mobile', 'Video Guide'],
@@ -211,8 +211,7 @@ const examples: {
     },
     {
         title: 'Twitter Spaces - Android (Jetpack Compose)',
-        description:
-            'A simple Twitter spaces clone with Jetpack Compose using the 100ms Android SDK',
+        description: 'A simple Twitter spaces clone with Jetpack Compose using the 100ms Android SDK',
         url: 'https://github.com/JoelKanyi/TwitterSpacesClone/tree/main',
         technologies: [TECHNOLOGIES.ANDROID],
         tags: ['Mobile', 'Jetpack Compose'],
@@ -220,7 +219,8 @@ const examples: {
     },
     {
         title: 'Screen Sharing - iOS',
-        description: 'A project demonstrating screen sharing using the 100ms iOS SDK',
+        description:
+            'A project demonstrating screen sharing using the 100ms iOS SDK',
         url: 'https://github.com/100mslive/100ms-ios-sdk/tree/main/ScreenSharingExample',
         technologies: [TECHNOLOGIES.IOS],
         tags: ['Mobile'],
@@ -281,7 +281,15 @@ const examples: {
         technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
         tags: ['Web', 'Plugins'],
         categories: [CATEGORIES.FEATURES, CATEGORIES.PLUGINS]
-    }
+    },
+    {
+        title: 'Noise Suppression - Web (deprecated)',
+        description: 'Background noise suppression using custom audio plugins and the 100ms SDK',
+        url: 'https://github.com/100mslive/100ms-web/blob/main/src/plugins/NoiseSuppression.js',
+        technologies: [TECHNOLOGIES.JAVASCRIPT, TECHNOLOGIES.REACT],
+        tags: ['Web', 'Plugins'],
+        categories: [CATEGORIES.FEATURES, CATEGORIES.PLUGINS]
+    },
 ];
 
 export default examples;
