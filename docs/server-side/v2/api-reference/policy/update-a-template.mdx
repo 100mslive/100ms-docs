@@ -33,17 +33,152 @@ curl --location --request POST 'https://api.100ms.live/v2/templates/6316d5ca5a26
     "roles": {
         "guest": {
             "name": "guest",
-            "publishParams": {},
-            "subscribeParams": {},
+            "publishParams": {
+                "allowed": ["audio", "video", "screen"],
+                "audio": {
+                    "bitRate": 32,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 300,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 480,
+                    "height": 360
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "simulcast": {
+                    "video": {
+                        "layers": [
+                            {
+                                "rid": "f",
+                                "scaleResolutionDownBy": 1,
+                                "maxBitrate": 700,
+                                "maxFramerate": 25
+                            },
+                            {
+                                "rid": "h",
+                                "scaleResolutionDownBy": 2,
+                                "maxBitrate": 350,
+                                "maxFramerate": 25
+                            },
+                            {
+                                "rid": "q",
+                                "scaleResolutionDownBy": 4,
+                                "maxBitrate": 100,
+                                "maxFramerate": 25
+                            }
+                        ]
+                    },
+                    "screen": {}
+                }
+            },
+            "subscribeParams": {
+                "subscribeToRoles": ["host", "guest"],
+                "maxSubsBitRate": 3200,
+                "subscribeDegradation": {
+                    "packetLossThreshold": 25,
+                    "degradeGracePeriodSeconds": 1,
+                    "recoverGracePeriodSeconds": 4
+                }
+            },
             "permissions": {
-                "sendRoomState": true
+                "rtmpStreaming": true,
+                "hlsStreaming": true,
+                "browserRecording": true,
+                "sendRoomState": false
             },
             "priority": 1,
             "maxPeerCount": 0
         },
-        "host": {}
+        "host": {
+            "name": "host",
+            "publishParams": {
+                "allowed": ["audio", "video", "screen"],
+                "audio": {
+                    "bitRate": 32,
+                    "codec": "opus"
+                },
+                "video": {
+                    "bitRate": 300,
+                    "codec": "vp8",
+                    "frameRate": 30,
+                    "width": 480,
+                    "height": 360
+                },
+                "screen": {
+                    "codec": "vp8",
+                    "frameRate": 10,
+                    "width": 1920,
+                    "height": 1080
+                },
+                "simulcast": {
+                    "video": {
+                        "layers": [
+                            {
+                                "rid": "f",
+                                "scaleResolutionDownBy": 1,
+                                "maxBitrate": 700,
+                                "maxFramerate": 25
+                            },
+                            {
+                                "rid": "h",
+                                "scaleResolutionDownBy": 2,
+                                "maxBitrate": 350,
+                                "maxFramerate": 25
+                            },
+                            {
+                                "rid": "q",
+                                "scaleResolutionDownBy": 4,
+                                "maxBitrate": 100,
+                                "maxFramerate": 25
+                           }
+                        ]
+                    },
+                    "screen": {}
+                }
+            },
+            "subscribeParams": {
+                "subscribeToRoles": ["guest", "host"],
+                "maxSubsBitRate": 3200,
+                "subscribeDegradation": {
+                    "packetLossThreshold": 25,
+                    "degradeGracePeriodSeconds": 1,
+                    "recoverGracePeriodSeconds": 4
+                }
+            },
+            "permissions": {
+                "endRoom": true,
+                "removeOthers": true,
+                "mute": true,
+                "unmute": true,
+                "changeRole": true,
+                "rtmpStreaming": true,
+                "hlsStreaming": true,
+                "browserRecording": true,
+                "sendRoomState": false
+            },
+            "priority": 1,
+            "maxPeerCount": 0
+        }
     },
-    "settings": {}
+    "settings": {
+        "region": "in",
+        "recording": null,
+        "roomState": {
+            "messageInterval": 5,
+            "sendPeerList": false,
+            "stopRoomStateOnJoin": true,
+            "enabled": false
+        },
+        "retry": {}
+    },
+    "destinations": {},
 }'
 ```
 
