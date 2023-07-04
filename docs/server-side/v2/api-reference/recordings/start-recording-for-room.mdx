@@ -29,13 +29,21 @@ curl --location --request POST 'https://api.100ms.live/v2/recordings/room/<room_
     "transcription": {
         "enabled": true,
         "output_modes": ["txt", "srt", "json"],
-        "custom_vocabulary": ["100ms", "SDK", "Sundar", "Pichai" ],
+        "custom_vocabulary": ["100ms", "WebSDK", "Flutter", "Sundar", "Pichai", "DALL-E"],
         "summary": {
             "enabled": true,
             "context": "this is a general call",
             "sections": [
                 {
-                    "title": "Key Points Discussed",
+                    "title": "Agenda",
+                    "format": "bullets"
+                },
+                {
+                    "title": "Key Points",
+                    "format": "bullets"
+                },
+                {
+                    "title": "Action Items",
                     "format": "bullets"
                 },
                 {
