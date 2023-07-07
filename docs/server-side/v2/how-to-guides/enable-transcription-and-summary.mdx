@@ -1,11 +1,9 @@
 ---
-title: Enable Transcription and Summary
+title: Enable Transcription and Summarisation
 nav: 6
 ---
 
-# Introduction
-
-This is a guide to enable 100ms **post call transcription** with **speaker labels** and **AI-generated summary**. The feature is currently in `Beta`. In case you’ve missed our launch note, you can read it here.
+This is a guide to enable 100ms **post call transcription** with **speaker labels** and **AI-generated summary**. The feature is currently in `Beta`. In case you’ve missed our launch note, you can read it [here](https://www.100ms.live/blog/transcript-summary-launch).
 
 <StepsToc
     parentId="transcription-flow"
@@ -38,9 +36,12 @@ You can enable transcription for all the rooms under a particular template.
 3. Enable the 'Transcribe Recordings' toggle. This will also enable the Room Composite Recording (if not already enabled) under the Recording tab.
 4. Enable the 'Summarise Transcripts' toggle. This will take the default settings for summary.
 5. Save the configuration.
-6. Join a room to initiate a session. Start recording using the SDK method or recording API. If it's your first time joining a 100ms room, you'll find the option to 'Start Recording' in the created room. For more information on creating room templates, refer to [this documentation](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-dashboard).
+6. Join a room to initiate a session. Start recording using the SDK or recording API. If it's your first time joining a 100ms room, you'll find the option to 'Start Recording' in the created room. For more information on creating room templates, refer to [this documentation](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-dashboard).
 
-![Transcription-config](/docs/v2/transcription-dashboard-config.gif)
+<video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
+    <source src="/docs/v2/transcription-dashboard-config.mp4" type="video/mp4" />
+</video>
+<br />
 
 **Advanced Transcription Settings**
 
@@ -53,11 +54,12 @@ When you enable the ‘Transcribe Recordings’ toggle, you will observe an acco
 
 
 > **Note - Dashboard Implementation Default Values**
+> The following are the default values with which the dashboard implementation initiates transcription and summary. If you want to understand more about these and use custom values, you can refer to our [Policy API](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-api).
 > ``` json
 >{
 >  "transcription": {
->    "output_modes": ["txt", "srt","json"],
->    "custom_vocabulary": ["100ms"],
+>    "outputModes": ["txt", "srt","json"],
+>    "customVocabulary": [],
 >    "summary": {
 >      "enabled": true,
 >      "context": "",
@@ -93,13 +95,13 @@ You can refer to our [Recording API documentation](https://www.100ms.live/docs/s
 2. You can override the transcription and summary settings given in the policy when starting the recording through the Recording API.
 3. If no input is given, the API will pick up the transcription configuration from the template policy.
 
-#### **Method 3: Policy API (Not Recommended)**
+#### **Method 3: Policy API**
 
 You can refer to our [Policy API documentation](https://www.100ms.live/docs/server-side/v2/api-reference/policy/template-object) to work with various aspects of creating and updating the template.
 
 > **Note for Policy API**:
 >
-> - You will have to create and configure a `transcriptions` *destinations* object as well as a `browserRecordings` destinations object.
+> - You will have to create and configure a `transcriptions` *destinations* object as well as a `browserRecordings` *destinations* object.
 > - The role given in the `transcriptions` *destinations* object and `browserRecordings` *destinations* object needs to be same and subscribed to the roles you want to record and transcribe.
 > - Refer to [this documentation](https://100ms-docs-git-docs-update-3-100mslive.vercel.app/docs/server-side/v2/api-reference/recordings/start-recording-for-room) to understand more about starting the recording.
 
@@ -111,7 +113,7 @@ Transcripts can be generated in the form of a txt, srt or a json file. Summaries
 ```
 John: Hello, hello, hello! How's your day been?
 
-Sarah:Hey, long time no see! What have you been up to?
+Sarah: Hey, long time no see! What have you been up to?
 ```
 
 2. **Transcript** - conversation.srt
@@ -211,7 +213,7 @@ Sarah: Hey, long time no see! What have you been up to?
 }
 ```
 
-### Consumption Flows
+### Consuming Transcripts and Summaries
 
 The transcripts and summaries will be saved as *[Recording Assets](https://www.100ms.live/docs/server-side/v2/api-reference/recording-assets/overview)*. If you’ve configured storage on 100ms, they’ll be stored in your cloud bucket. Otherwise, they’ll be stored in 100ms’ storage for the same duration as the recording. 
 
@@ -229,7 +231,10 @@ To access transcripts and summaries on the dashboard:
 4. This will open the Session Details page. Access the Recording Log to find the available assets and view them.
 5. Click on View Assets to open a pop-up with pre-signed URLs for the recording, chat, transcripts, and summary.
 
-![Transcription-consumption](/docs/v2/transcription-dashboard-consumption.gif)
+<video loop="true" autoplay="autoplay" controls="controls" id="vid" muted>
+    <source src="/docs/v2/transcription-dashboard-consumption.mp4" type="video/mp4" />
+</video>
+<br />
 
 #### **Method 2: Webhook**
 
@@ -251,4 +256,3 @@ You can always use 100ms’ Recording Assets API to access the transcripts and s
 3. Presently, you can only input a maximum of 6 sections in the summary through the API.
 4. There are chances of incomplete summary generation in case of recordings which are longer than 90 minutes.
 5. This feature only supports **English** language as of now.
-6. Enabling from the dashboard takes the following default values.
