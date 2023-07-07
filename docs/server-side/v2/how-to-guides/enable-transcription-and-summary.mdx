@@ -25,6 +25,7 @@ This is a guide to enable 100ms **post call transcription** with **speaker label
 2. Since recording is a pre-requisite to having the transcript, you will need to start the recording either through the SDK during the session, or through the [Recording API](https://www.100ms.live/docs/server-side/v2/api-reference/recordings/start-recording-for-room). You can use auto-start in Recordings to auto-transcribe all room sessions condition to transcription being enabled.
 
 ![Flow](/docs/v2/transcription-flow.png)
+The above flowchart shows the entire process 
 
 ### Enabling Transcription and Summary
 
@@ -49,6 +50,26 @@ You can enable transcription for all the rooms under a particular template.
 >
 > - **Roles to be Transcribed**: Selection is currently disabled. It reflects the same role as set in *Room Composite Recording* configurations as transcription is supported only with recording. To transcribe other roles, update *Roles to be Recorded* in *Room Composite Recording* under the *Recording* tab.
 > - **Custom Vocabulary**: Add non-dictionary words which are expected to be spoken to enhance recognition. Useful for names, abbreviations, slang, technical jargon, and more.
+
+> **Note on default values**
+> ``` json
+>"transcription": { 
+>				"output_modes": ["txt","srt","json"],
+>		    "custom_vocabulary": [100ms],
+>		    "summary": {
+>			     "enabled": true,
+>			     "context": "",
+>			     "sections": [ 
+>				      { "title": "Agenda", "format": "bullets" },
+>				      { "title": "Key Points Discussed", "format": "bullets" },
+>				      { "title": "Follow Up Action Items", "format": "bullets" },
+>				      { "title": "Short Summary", "format": "paragraph" }
+>						],
+>	         "temperature": 0.5,
+>		    },
+>		}
+>
+> ```
 
 #### **Method 2: Recording API**
 
@@ -216,3 +237,4 @@ You can always use 100ms’ Recording Assets API to access the transcripts and s
 3. Presently, you can only input a maximum of 6 sections in the summary through the API.
 4. There are chances of incomplete summary generation in case of recordings which are longer than 90 minutes.
 5. This feature only supports **English** language as of now.
+6. Enabling from the dashboard takes the following default values.
