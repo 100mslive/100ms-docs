@@ -1,0 +1,184 @@
+---
+title: Enable Transcription and Summary
+nav: 6
+---
+
+# Introduction
+
+This is a guide to enable 100ms **post call transcription** with **speaker labels** and **AI-generated summary**. The feature is currently in `Beta`. In case you’ve missed our launch note, you can read it here.
+
+<StepsToc
+    parentId="transcription-flow"
+    descriptions={[
+        "Understanding how 100ms' post call transcription works and its pre-requisites.",
+        'Enabling transcription and summary through various methods.',
+        "Understanding the generated output files.",
+        "Accessing and consuming the generated output."
+    ]}
+/>
+
+<StepsContainer id="transcription-flow">
+
+## Getting Started
+
+1. You will need to have **Room Composite Recording** enabled along with configured **Roles** which you want transcribed.
+2. Since recording is a pre-requisite to having the transcript, you will need to start the recording either through the SDK during the session, or through the [Recording API](https://www.100ms.live/docs/server-side/v2/api-reference/recordings/start-recording-for-room). You can use auto-start in Recordings to auto-transcribe all room sessions.
+
+<IMAGE>
+
+## Enabling Speaker Labelled Transcription and AI-Generated Summary
+
+### **Method 1: Dashboard Implementation**
+
+You can enable transcription for all the rooms under a particular template.
+
+1. Access an existing template via the sidebar.
+2. Navigate to the 'Transcription (Beta)' tab in the template configuration.
+3. Enable the 'Transcribe Recordings' toggle. This will also enable the Room Composite Recording (if not already enabled) under the Recording tab.
+4. Enable the 'Summarise Transcripts' toggle.
+5. Save the configuration.
+6. Join a room to initiate a session. Start recording using the SDK method or recording API. If it's your first time joining a 100ms room, you'll find the option to 'Start Recording' in the created room. For more information on creating room templates, refer to [this documentation](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-dashboard).
+
+**Advanced Transcription Settings**
+
+When you enable the ‘Transcribe Recordings’ toggle, you will observe an accordion with ‘Advanced Transcription Settings’.
+
+<IMAGE>
+
+- **Roles to be Transcribed**: Selection is currently disabled. It reflects the same role as set in *Room Composite Recording* configurations as transcription is supported only with recording. To transcribe other roles, update *Roles to be Recorded* in *Room Composite Recording* under the *Recording* tab.
+- **Custom Vocabulary**: Add non-dictionary words which are expected to be spoken to enhance recognition. Useful for names, abbreviations, slang, technical jargon, and more.
+
+### **Method 2: Recording API**
+
+You can refer to our [Recording API documentation](https://www.100ms.live/docs/server-side/v2/api-reference/recordings/start-recording-for-room) to start recording.
+
+1. You are required to mark the transcription enable flag in the request as true to transcribe unless you’ve already enabled transcription for the given room template. Refer Method 1.
+2. You can override the transcription and summary settings given in the policy when starting the recording through the Recording API.
+3. If no input is given, the API will pick up the transcription configuration from the template policy.
+
+### **Method 3: Policy API (Not Recommended)**
+
+You can refer to our [Policy API documentation](https://www.100ms.live/docs/server-side/v2/api-reference/policy/template-object) to work with various aspects of creating and updating the template.
+
+> **Note for Policy API**:
+>
+> - You will have to create and configure a `transcriptions` *destinations* object as well as a `browserRecordings` destinations object.
+> - The role given in the `transcriptions` destinations object and `browserRecordings` *destinations* object needs to be same and subscribed to the roles you want to record and transcribe.
+
+## Example output files
+
+Transcripts can be generated in the form of a txt, srt or a json file. Summaries are generated in the json file format only. Following are example outputs for reference:
+
+1. Transcript conversation.txt
+```
+SpeakerA: Hello, hello, hello, Lorem ipsum dolor sit amet, consectetur adipiscing elit
+
+SpeakerB: Hey, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+SpeakerA: Nice, nice, nice. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+```
+
+2. Transcript conversation.srt
+```
+SpeakerA: Hello, hello, hello, Lorem ipsum dolor sit amet, consectetur adipiscing elit
+
+SpeakerB: Hey, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+SpeakerA: Nice, nice, nice. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+```
+
+3. Transcript conversation.json
+```json
+{
+			"words": [
+				 { "word": "Hello", "name": "SpeakerA", "peer_id": "cf348192-f1d5-4cdb-9eb3-b62c2649e419", "start_time": "1010", "end_time": "1570"},
+			   .
+				 .
+			   { "word": "Hey", "name": "SpeakerB", "peer_id": "05292829-3603-4a64-be91-5a46abdbd5af", "start_time": "14230", "end_time": "14430"},
+				 .
+				 .          
+			],
+			"sentences": [
+					{ "sentence": "Hello, hello, hello Lorem Ipsum...", "name": "SpeakerA", "peer_id": "cf348192-f1d5-4cdb-9eb3-b62c2649e419", "start_time": "1010", "end_time": "12870"},													
+					.
+					.
+					{ "sentence": "Hey sed do...", "name": "SpeakerB", "peer_id": "05292829-3603-4a64-be91-5a46abdbd5af", "start_time": "14230", "end_time": "17390"},
+					.
+					.
+			]
+}
+```
+
+4. Summary summary.json
+
+```json
+{
+	"summary": { // only if summary was enabled
+						"sections": [
+								{
+									"title": "Speakers", 
+									"format": "bullets", 
+									"bullets": ["SpeakerA", "SpeakerB"], 
+									"paragraph": ""
+								}
+								{
+									"title": "Agenda",
+						      "format": "bullets",
+									"bullets":["Agenda item 1", "Agenda item 2", ...],
+									"paragraph":"",
+								},
+								{
+									"title": "Key Points Discussed",
+									"format": "bullets",
+									"bullets":["Key Point 1", "Key Point 2", ...],
+									"paragraph":"",
+								},
+								{
+									"title": "Follow-up Action Items",
+									"format": "bullets",
+									"bullets":["Follow-up Action Item 1", "Follow-up Action Item 2", ...],
+									"paragraph":"",
+								},
+								{
+									"title": "Short Summary",
+									"format": "paragraph",
+									"bullets":[],
+									"paragraph":"Short summary of the meeting here",
+								}
+						]
+			   }
+}
+```
+
+## Consumption Flow
+
+The transcripts and summaries will be saved as *[Recording Assets](https://www.100ms.live/docs/server-side/v2/api-reference/recording-assets/overview)*. If you’ve configured storage on 100ms, they’ll be stored in your cloud bucket. Otherwise, they’ll be stored in 100ms’ storage for the same duration as the recording. 
+
+There are three ways to consume the generated transcripts and summaries. 
+
+### **Method 1: 100ms Dashboard**
+
+Once you've recorded a session with transcription and summary enabled, please note that they won't be immediately available. However, you can expect them to be ready within 20% of the recording duration period.
+
+To access transcripts and summaries on the dashboard:
+
+1. Navigate to the Sessions tab in the sidebar to view previous sessions.
+2. Locate the session with transcription enabled. The Recording Status column will indicate the status of the recording.
+3. Click on the 'Completed' status of the chosen session ID.
+4. This will open the Session Details page. Access the Recording Log to find the available assets and view them.
+5. Click on View Assets to open a pop-up with pre-signed URLs for the recording, chat, transcripts, and summary.
+
+<GIF>
+
+### **Method 2: Webhook**
+
+As soon as the transcription is completed, the webhook containing the asset type, id, path and the pre-signed URL to the asset itself (transcript, summary) will be sent to the configured webhook URL. 
+
+1. Learn to configure the webhook using [this documentation](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/overview).
+2. Transcription specific webhook events can be found [here](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/webhook#transcriptionstartedsuccess).
+
+### **Method 3: Recording Assets API**
+
+You can always use 100ms’ Recording Assets API to access the transcripts and summaries files. Refer to [this documentation](https://www.100ms.live/docs/server-side/v2/api-reference/recording-assets/overview).
+
+</StepsContainer>
