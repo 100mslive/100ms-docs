@@ -11,7 +11,7 @@ This is a guide to enable 100ms **post call transcription** with **speaker label
     parentId="transcription-flow"
     descriptions={[
         "Understanding how 100ms' post call transcription works and its pre-requisites.",
-        'Enabling transcription and summary through various methods.',
+        'Enabling speaker labelled transcription and AI-generated summary through various methods.',
         "Understanding the generated output files.",
         "Accessing and consuming the generated output."
     ]}
@@ -22,10 +22,10 @@ This is a guide to enable 100ms **post call transcription** with **speaker label
 ### Getting Started
 
 1. You will need to have **Room Composite Recording** enabled along with configured **Roles** which you want transcribed.
-2. Since recording is a pre-requisite to having the transcript, you will need to start the recording either through the SDK during the session, or through the [Recording API](https://www.100ms.live/docs/server-side/v2/api-reference/recordings/start-recording-for-room). You can use auto-start in Recordings to auto-transcribe all room sessions.
+2. Since recording is a pre-requisite to having the transcript, you will need to start the recording either through the SDK during the session, or through the [Recording API](https://www.100ms.live/docs/server-side/v2/api-reference/recordings/start-recording-for-room). You can use auto-start in Recordings to auto-transcribe all room sessions condition to transcription being enabled.
 
 
-### Enabling Speaker Labelled Transcription and AI-Generated Summary
+### Enabling Transcription and Summary
 
 #### **Method 1: Dashboard Implementation**
 
@@ -118,40 +118,40 @@ SpeakerA: Nice, nice, nice. Ut enim ad minim veniam, quis nostrud exercitation u
 
 ```json
 {
-	"summary": { // only if summary was enabled
-		"sections": [
-								{
-									"title": "Speakers", 
-									"format": "bullets", 
-									"bullets": ["SpeakerA", "SpeakerB"], 
-									"paragraph": ""
-								}
-								{
-									"title": "Agenda",
-						      		"format": "bullets",
-									"bullets":["Agenda item 1", "Agenda item 2", ...],
-									"paragraph":"",
-								},
-								{
-									"title": "Key Points Discussed",
-									"format": "bullets",
-									"bullets":["Key Point 1", "Key Point 2", ...],
-									"paragraph":"",
-								},
-								{
-									"title": "Follow-up Action Items",
-									"format": "bullets",
-									"bullets":["Follow-up Action Item 1", "Follow-up Action Item 2", ...],
-									"paragraph":"",
-								},
-								{
-									"title": "Short Summary",
-									"format": "paragraph",
-									"bullets":[],
-									"paragraph":"Short summary of the meeting here",
-								}
-						]
-			   }
+  "summary": {
+    "sections": [
+      {
+        "title": "Speakers",
+        "format": "bullets",
+        "bullets": [ "SpeakerA", "SpeakerB" ],
+        "paragraph": ""
+      },
+      {
+        "title": "Agenda",
+        "format": "bullets",
+        "bullets": [ "Agenda item 1", "Agenda item 2" ],
+        "paragraph": ""
+      },
+      {
+        "title": "Key Points Discussed",
+        "format": "bullets",
+        "bullets": [ "Key Point 1", "Key Point 2" ],
+        "paragraph": ""
+      },
+      {
+        "title": "Follow-up Action Items",
+        "format": "bullets",
+        "bullets": [ "Follow-up Action Item 1", "Follow-up Action Item 2"],
+        "paragraph": ""
+      },
+      {
+        "title": "Short Summary",
+        "format": "paragraph",
+        "bullets": [],
+        "paragraph": "Short summary of the meeting here"
+      }
+    ]
+  }
 }
 ```
 
