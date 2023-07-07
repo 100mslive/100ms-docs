@@ -68,7 +68,7 @@ You can refer to our [Policy API documentation](https://www.100ms.live/docs/serv
 
 Transcripts can be generated in the form of a txt, srt or a json file. Summaries are generated in the json file format only. Following are example outputs for reference:
 
-1. Transcript conversation.txt
+1. **Transcript** - conversation.txt
 ```
 SpeakerA: Hello, hello, hello, Lorem ipsum dolor sit amet, consectetur adipiscing elit
 
@@ -77,7 +77,7 @@ SpeakerB: Hey, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
 SpeakerA: Nice, nice, nice. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 ```
 
-2. Transcript conversation.srt
+2. **Transcript** - conversation.srt
 ```
 1
 00:00:01,010 --> 00:00:12,870
@@ -92,29 +92,53 @@ SpeakerB: Hey, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
 SpeakerA: Nice, nice, nice. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 ```
 
-3. Transcript conversation.json
+3. **Transcript** - conversation.json
 ```json
 {
-	"words": [
-		 { "word": "Hello", "name": "SpeakerA", "peer_id": "cf348192-f1d5-4cdb-9eb3-b62c2649e419", "start_time": "1010", "end_time": "1570"},
-			.
-			.
-		{ "word": "Hey", "name": "SpeakerB", "peer_id": "05292829-3603-4a64-be91-5a46abdbd5af", "start_time": "14230", "end_time": "14430"},
-		 	.
-		 	.          
-		],
-	"sentences": [
-		{ "sentence": "Hello, hello, hello Lorem Ipsum...", "name": "SpeakerA", "peer_id": "cf348192-f1d5-4cdb-9eb3-b62c2649e419", "start_time": "1010", "end_time": "12870"},													
-			.
-			.
-		{ "sentence": "Hey sed do...", "name": "SpeakerB", "peer_id": "05292829-3603-4a64-be91-5a46abdbd5af", "start_time": "14230", "end_time": "17390"},
-			.
-			.
-		]
+  "words": [
+    {
+      "word": "Hello",
+      "name": "SpeakerA",
+      "peer_id": "cf348192-f1d5-4cdb-9eb3-b62c2649e419",
+      "start_time": "1010",
+      "end_time": "1570"
+    },
+	.
+	.
+    {
+      "word": "Hey",
+      "name": "SpeakerB",
+      "peer_id": "05292829-3603-4a64-be91-5a46abdbd5af",
+      "start_time": "14230",
+      "end_time": "14430"
+    },
+	.
+	.
+  ],
+  "sentences": [
+    {
+      "sentence": "Hello, hello, hello Lorem Ipsum...",
+      "name": "SpeakerA",
+      "peer_id": "cf348192-f1d5-4cdb-9eb3-b62c2649e419",
+      "start_time": "1010",
+      "end_time": "12870"
+    },
+	.
+	.
+    {
+      "sentence": "Hey sed do...",
+      "name": "SpeakerB",
+      "peer_id": "05292829-3603-4a64-be91-5a46abdbd5af",
+      "start_time": "14230",
+      "end_time": "17390"
+    }
+	.
+	.
+  ]
 }
 ```
 
-4. Summary summary.json
+4. **Summary** - summary.json
 
 ```json
 {
