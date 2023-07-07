@@ -447,6 +447,23 @@ For implementing control bar for local peer, this is used based with useAVToggle
 [`useScreenShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/useScreenShareResult)
 
 ___
+### useRegionCaptureScreenShare
+
+▸ **useRegionCaptureScreenShare**(): [`useRegionCaptureScreenShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/useRegionCaptureScreenShareResult)
+
+#### Returns
+
+[`useRegionCaptureScreenShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/useRegionCaptureScreenShareResult)
+___
+
+### usePDFConfig
+
+▸ **usePDFConfig**(): [`usePDFConfigResult`](/api-reference/javascript/v2/react-hooks/interfaces/usePDFConfigResult)
+
+#### Returns
+
+[`usePDFConfigResult`](/api-reference/javascript/v2/react-hooks/interfaces/usePDFConfigResult)
+___
 
 ### useVideo
 
