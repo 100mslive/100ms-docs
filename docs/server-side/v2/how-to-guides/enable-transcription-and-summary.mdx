@@ -54,7 +54,7 @@ When you enable the ‘Transcribe Recordings’ toggle, you will observe an acco
 
 > **Note - Dashboard Implementation Default Values**
 >
-> The following are the default values with which the dashboard implementation initiates transcription and summary. If you want to understand more about these and use custom values, you can refer to our [Policy API](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-api).
+> The following are the default values used in the template for transcription and summary. If you want to understand more about these and use custom values, you can refer to our [Policy API](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-api).
 >
 > ``` json
 >{
@@ -120,18 +120,10 @@ Sarah: Hey, long time no see! What have you been up to?
 2. **Transcript** - conversation.srt
 ```
 1
-00:00:01,010 --> 00:00:01,570
-John: Hello
-
-2
 00:00:01,010 --> 00:00:12,870
 John: Hello, hello, hello! How's your day been?
 
-3
-00:00:14,230 --> 00:00:17,390
-Sarah: Hey
-
-4
+2
 00:00:14,230 --> 00:00:17,390
 Sarah: Hey, long time no see! What have you been up to?
 ```
@@ -147,13 +139,17 @@ Sarah: Hey, long time no see! What have you been up to?
       "start_time": "1010",
       "end_time": "1570"
     },
+	.
+	.
     {
       "word": "Hey",
       "name": "Sarah",
       "peer_id": "05292829-3603-4a64-be91-5a46abdbd5af",
       "start_time": "14230",
       "end_time": "14430"
-    }
+    },
+	.
+	.
   ],
   "sentences": [
     {
@@ -182,7 +178,7 @@ Sarah: Hey, long time no see! What have you been up to?
       {
         "title": "Speakers",
         "format": "bullets",
-        "bullets": [ "SpeakerA", "SpeakerB" ],
+        "bullets": [ "John", "Sarah" ],
         "paragraph": ""
       },
       {
