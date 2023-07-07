@@ -74,26 +74,28 @@ Transcripts can be generated in the form of a txt, srt or a json file. Summaries
 
 1. **Transcript** - conversation.txt
 ```
-SpeakerA: Hello, hello, hello, Lorem ipsum dolor sit amet, consectetur adipiscing elit
+John: Hello, hello, hello! How's your day been?
 
-SpeakerB: Hey, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-SpeakerA: Nice, nice, nice. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Sarah:Hey, long time no see! What have you been up to?
 ```
 
 2. **Transcript** - conversation.srt
 ```
 1
-00:00:01,010 --> 00:00:12,870
-SpeakerA: Hello, hello, hello, Lorem ipsum dolor sit amet, consectetur adipiscing elit
+00:00:01,010 --> 00:00:01,570
+John: Hello
 
 2
-00:00:14,230 --> 00:00:17,390
-SpeakerB: Hey, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+00:00:01,010 --> 00:00:12,870
+John: Hello, hello, hello! How's your day been?
 
 3
-00:00:21,980 --> 00:00:33,380
-SpeakerA: Nice, nice, nice. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+00:00:14,230 --> 00:00:17,390
+Sarah: Hey
+
+4
+00:00:14,230 --> 00:00:17,390
+Sarah: Hey, long time no see! What have you been up to?
 ```
 
 3. **Transcript** - conversation.json
@@ -102,48 +104,39 @@ SpeakerA: Nice, nice, nice. Ut enim ad minim veniam, quis nostrud exercitation u
   "words": [
     {
       "word": "Hello",
-      "name": "SpeakerA",
+      "name": "John",
       "peer_id": "cf348192-f1d5-4cdb-9eb3-b62c2649e419",
       "start_time": "1010",
       "end_time": "1570"
     },
-	.
-	.
     {
       "word": "Hey",
-      "name": "SpeakerB",
+      "name": "Sarah",
       "peer_id": "05292829-3603-4a64-be91-5a46abdbd5af",
       "start_time": "14230",
       "end_time": "14430"
-    },
-	.
-	.
+    }
   ],
   "sentences": [
     {
-      "sentence": "Hello, hello, hello Lorem Ipsum...",
-      "name": "SpeakerA",
+      "sentence": "Hello, hello, hello! How's your day been?",
+      "name": "John",
       "peer_id": "cf348192-f1d5-4cdb-9eb3-b62c2649e419",
       "start_time": "1010",
       "end_time": "12870"
     },
-	.
-	.
     {
-      "sentence": "Hey sed do...",
-      "name": "SpeakerB",
+      "sentence": "Hey, long time no see! What have you been up to?",
+      "name": "Sarah",
       "peer_id": "05292829-3603-4a64-be91-5a46abdbd5af",
       "start_time": "14230",
       "end_time": "17390"
     }
-	.
-	.
   ]
 }
 ```
 
 4. **Summary** - summary.json
-
 ```json
 {
   "summary": {
@@ -222,4 +215,4 @@ You can always use 100ms’ Recording Assets API to access the transcripts and s
 2. This feature only works with Room Composite Recordings and does not work with HLS and SFU Recordings. 
 3. Presently, you can only input a maximum of 6 sections in the summary through the API.
 4. There are chances of incomplete summary generation in case of recordings which are longer than 90 minutes.
-5. This feature only supports English language as of now.
+5. This feature only supports **English** language as of now.
