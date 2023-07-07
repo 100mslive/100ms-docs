@@ -35,18 +35,15 @@ You can enable transcription for all the rooms under a particular template.
 1. Access an existing template via the sidebar.
 2. Navigate to the 'Transcription (Beta)' tab in the template configuration.
 3. Enable the 'Transcribe Recordings' toggle. This will also enable the Room Composite Recording (if not already enabled) under the Recording tab.
-4. Enable the 'Summarise Transcripts' toggle.
+4. Enable the 'Summarise Transcripts' toggle. This will take the default settings for summary.
 5. Save the configuration.
 6. Join a room to initiate a session. Start recording using the SDK method or recording API. If it's your first time joining a 100ms room, you'll find the option to 'Start Recording' in the created room. For more information on creating room templates, refer to [this documentation](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-dashboard).
 
 ![Transcription-config](/docs/v2/transcription-dashboard-config.gif)
 
-> **Advanced Transcription Settings**
-
+**Advanced Transcription Settings**
 > When you enable the ‘Transcribe Recordings’ toggle, you will observe an accordion with ‘Advanced Transcription Settings’.
-
 ![Advanced settings](/docs/v2/advanced-transcription-settings.png)
-
 > - **Roles to be Transcribed**: Selection is currently disabled. It reflects the same role as set in *Room Composite Recording* configurations as transcription is supported only with recording. To transcribe other roles, update *Roles to be Recorded* in *Room Composite Recording* under the *Recording* tab.
 > - **Custom Vocabulary**: Add non-dictionary words which are expected to be spoken to enhance recognition. Useful for names, abbreviations, slang, technical jargon, and more.
 
@@ -65,7 +62,8 @@ You can refer to our [Policy API documentation](https://www.100ms.live/docs/serv
 > **Note for Policy API**:
 >
 > - You will have to create and configure a `transcriptions` *destinations* object as well as a `browserRecordings` destinations object.
-> - The role given in the `transcriptions` destinations object and `browserRecordings` *destinations* object needs to be same and subscribed to the roles you want to record and transcribe.
+> - The role given in the `transcriptions` *destinations* object and `browserRecordings` *destinations* object needs to be same and subscribed to the roles you want to record and transcribe.
+> - Refer to [this documentation](https://100ms-docs-git-docs-update-3-100mslive.vercel.app/docs/server-side/v2/api-reference/recordings/start-recording-for-room) to understand more about starting the recording.
 
 ### Example Output Files
 
@@ -214,3 +212,9 @@ As soon as the transcription is completed, the webhook containing the asset type
 You can always use 100ms’ Recording Assets API to access the transcripts and summaries files. Refer to [this documentation](https://www.100ms.live/docs/server-side/v2/api-reference/recording-assets/overview).
 
 </StepsContainer>
+
+## Limitations
+
+1. Presently, you can only input a maximum of 6 sections through the API.
+2. There are chances of incomplete summary in case of recordings which are longer than 90 minutes.
+3. 
