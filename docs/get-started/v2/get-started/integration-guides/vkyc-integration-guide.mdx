@@ -126,11 +126,11 @@ Create a template through dashboard.
 
 # Frequently Asked Questions
 
-- How do I implement switch/tap-to-focus/zoom camera functionality?
+####- How do I implement switch/tap-to-focus/zoom camera functionality?
     
     Refer to [Building out the workflow necessities](#buildingouttheworkflownecessities) 
     
-- How do I implement capture image functionality?
+####- How do I implement capture image functionality?
     
     Refer to [Building out the workflow necessities](#buildingouttheworkflownecessities) 
     
@@ -141,42 +141,42 @@ Create a template through dashboard.
  >   In case you want to capture image, at a higher quality, you can use the browser’s native `getUserMedia` method to capture the image. [Codesandbox](https://codesandbox.io/s/kind-dubinsky-3h9wrg?file=/src/App.js) reference for you to check out.
     
 
-- How do I transfer the captured image to the agent?
+####- How do I transfer the captured image to the agent?
     
     Refer to this note in [Building out the workflow necessities](#buildingouttheworkflownecessities).
     
-- How do I initiate recording?
+####- How do I initiate recording?
     
     There are two ways to accomplish this.
     
     1. Recommend method: Use Room Composite Recording with or without auto-start functionality. This is a browser-based recording happening on a cloud browser. The benefits include lower A/V sync issues and faster time-to-video (p50 is 9 seconds). It does take about 2 seconds for this recording to auto-start. You can enable this through the *Recordings* tab on the dashboard. Use the [following guide](https://www.100ms.live/docs/server-side/v2/how-to-guides/recordings/overview#start-recording-with-api) to enable this.
     2. SFU Recording Method - This is done by composing the individual video tracks post-call. The benefit of using this is that it starts automatically with the room, but there can be potential A/V sync issues, and the time to get the video is longer (p50 is 1 minute 50 seconds for a 3-minute session). Enable this by [configuring the recording in the policy](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/create-via-api) itself.
 
-- How do I track active rooms and user/customer presence in those rooms?
+####- How do I track active rooms and user/customer presence in those rooms?
     - You can use our server-side [Active Rooms API](https://www.100ms.live/docs/server-side/v2/api-reference/active-rooms/overview) to track active rooms.
     - You can listen to [webhook events](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/overview#introduction) to track peers, sessions and rooms and push subsequent updates.
 
-- How do I receive recordings?
+####- How do I receive recordings?
     
     You can listen to [webhook events](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/webhook) for recording.
     
-- How does 100ms improve disconnection rates?
+####- How does 100ms improve disconnection rates?
     
     100ms’ SDK handles connection retries under the hood. This retry suite has been built up over browser versions, and devices, and uses a bandwidth estimation system that’s been iterated on for millions of calls. You can listen to these retries by listening to SDK [errors](https://www.100ms.live/docs/javascript/v2/how-to-guides/debugging/error-handling).
     
-- How does 100ms improve A/V sync recording failures?
+####- How does 100ms improve A/V sync recording failures?
     
     We have Room Composite Browser-based recording which uses 100ms’ cloud browser system. Browsers natively implement A/V sync correction better than server-side systems because it is recording what it sees.
     
-- How does 100ms improve permission errors?
+####- How does 100ms improve permission errors?
     
     100ms’ preview API and pre-built UI have been optimized with prompts, and readable error codes with actions. Using the same preview screen can help reduce permission errors.
     
-- How can I debug issues for a particular room?
+####- How can I debug issues for a particular room?
     
     Use 100ms’ [event inspector](https://dashboard.100ms.live/events-inspector) to debug detailed room logs with events for join, leave, join failures, subscribe degradations etc. Refer to [Setting up analytics](https://www.notion.so/Setting-up-analytics-8bf6043696f34ddba1740fc4a0bd17f9?pvs=21) and [Debugging and QA](https://www.notion.so/Debugging-and-QA-e3894432435b4888923e8eedecd84df6?pvs=21).
     
-- How can I track detailed network stats in real-time during call?
+####- How can I track detailed network stats in real-time during call?
     
     You can listen to [100ms’ network states](https://www.100ms.live/docs/javascript/v2/how-to-guides/measure-network-quality-and-performance/connection-quality) for an overall network picture and [stats for nerds](https://www.100ms.live/docs/javascript/v2/how-to-guides/measure-network-quality-and-performance/stats) to get more detailed stats including jitter, latency, frame drop etc. Refer to [Setting up analytics](https://www.notion.so/Setting-up-analytics-8bf6043696f34ddba1740fc4a0bd17f9?pvs=21).
 
