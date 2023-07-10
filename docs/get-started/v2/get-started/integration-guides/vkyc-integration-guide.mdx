@@ -95,11 +95,10 @@ Create a template through dashboard.
 ### Building out the workflow necessities
 1. Controlling the camera
     a. For Web, implement [Switch Camera API](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/device-change#switch-camera).
-    b. For Android, implement [Camera Controls API](https://www.100ms.live/docs/android/v2/how-to-guides/configure-your-device/camera/camera-controls).
-    
+    b. For Android, implement [Camera Controls API](https://www.100ms.live/docs/android/v2/how-to-guides/configure-your-device/camera/camera-controls).   
  >   **Note**
  > 
- >   To transfer the captured images to the agent, use any upload API of your choice. Our recommendation is to **not** use 100ms’ session store or broadcast methods for this as this can be lossy.
+ >   To transfer the captured images to the agent, use any upload API of your choice. Our recommendation is to **not** use 100ms’ session store or broadcast methods for this as this can cause loss of data.
     
 2. Capture images
     a. For Web, implement [Frame Capture API](https://app.eraser.io/8b4edacb6f2c4595bc87e54554da8b43#94dd28b552b4450e93bdec664ae8f3b8).
@@ -121,7 +120,7 @@ Create a template through dashboard.
 
 ### Debugging and QA
 1. Familiarise yourself with [events Inspector](https://dashboard.100ms.live/events-inspector) on the Dashboard to debug issues promptly.
-2. Test using [network throttling](https://techjourneyman.com/blog/throttle-your-network-macos/) to check for low bandwidth conditions performanc
+2. Test using [network throttling](https://techjourneyman.com/blog/throttle-your-network-macos/) to check for low bandwidth conditions performance.
 
 </StepsContainer>
 
@@ -165,7 +164,7 @@ Create a template through dashboard.
     
     100ms’ SDK handles connection retries under the hood. This retry suite has been built up over browser versions, and devices, and uses a bandwidth estimation system that’s been iterated on for millions of calls. You can listen to these retries by listening to SDK [errors](https://www.100ms.live/docs/javascript/v2/how-to-guides/debugging/error-handling).
     
-- How does 100ms improve a/v sync recording failures?
+- How does 100ms improve A/V sync recording failures?
     
     We have Room Composite Browser-based recording which uses 100ms’ cloud browser system. Browsers natively implement A/V sync correction better than server-side systems because it is recording what it sees.
     
