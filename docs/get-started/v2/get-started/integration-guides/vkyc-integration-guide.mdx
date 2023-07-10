@@ -78,39 +78,39 @@ Create a template through dashboard.
 1. Create a [Room via API](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/create-via-api)
 2. Add [Authentication and Tokens](https://www.100ms.live/docs/get-started/v2/get-started/security-and-tokens#code-sample-generate-management-token)
 3.  Join a Session
-    a. On [Web](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/join)
-    b. On [Android](https://www.100ms.live/docs/android/v2/how-to-guides/set-up-video-conferencing/join)
+    1. On [Web](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/join)
+    2. On [Android](https://www.100ms.live/docs/android/v2/how-to-guides/set-up-video-conferencing/join)
 4. Render the video
-    a. On [Web](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/render-video/overview)
-    b. On [Android](https://www.100ms.live/docs/android/v2/how-to-guides/set-up-video-conferencing/render-video/render-video)
+    1. On [Web](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/render-video/overview)
+    2. On [Android](https://www.100ms.live/docs/android/v2/how-to-guides/set-up-video-conferencing/render-video/render-video)
 5. End the Session - Two methods
-    a. Method 1 - Leave Room
+    1. Method 1 - Leave Room
         1. Using [Web SDK](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/join#leaving-a-room)
         2. Using [Android SDK](https://www.100ms.live/docs/android/v2/how-to-guides/set-up-video-conferencing/leave)
-    b. Method 2 - End Room
+    2. Method 2 - End Room
         1. Using [API](https://www.100ms.live/docs/server-side/v2/api-reference/active-rooms/end-active-room)
         2. Using [Web SDK](https://www.100ms.live/docs/javascript/v2/how-to-guides/control-remote-peers/end-room)
         3. Using [Android SD](https://www.100ms.live/docs/android/v2/how-to-guides/interact-with-room/room/end-room)
 
 ### Building out the workflow necessities
 1. Controlling the camera
-    a. For Web, implement [Switch Camera API](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/device-change#switch-camera).
-    b. For Android, implement [Camera Controls API](https://www.100ms.live/docs/android/v2/how-to-guides/configure-your-device/camera/camera-controls).   
+    1. For Web, implement [Switch Camera API](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/device-change#switch-camera).
+    2. For Android, implement [Camera Controls API](https://www.100ms.live/docs/android/v2/how-to-guides/configure-your-device/camera/camera-controls).   
  >   **Note**
  > 
  >   To transfer the captured images to the agent, use any upload API of your choice. Our recommendation is to **not** use 100ms’ session store or broadcast methods for this as this can cause loss of data.
-    
+<br/>    
 2. Capture images
-    a. For Web, implement [Frame Capture API](https://app.eraser.io/8b4edacb6f2c4595bc87e54554da8b43#94dd28b552b4450e93bdec664ae8f3b8).
-    b. For Android, use [Camera Controls API](https://www.100ms.live/docs/android/v2/how-to-guides/configure-your-device/camera/camera-controls) to capture at the high possible resolution.
+    1. For Web, implement [Frame Capture API](https://app.eraser.io/8b4edacb6f2c4595bc87e54554da8b43#94dd28b552b4450e93bdec664ae8f3b8).
+    2. For Android, use [Camera Controls API](https://www.100ms.live/docs/android/v2/how-to-guides/configure-your-device/camera/camera-controls) to capture at the high possible resolution.
 3. For error handling
-    a. For Web, handle [network (disconnection, reconnection) and autoplay errors](https://www.100ms.live/docs/javascript/v2/how-to-guides/debugging/error-handling).
-    b. For Android, handle [network errors](https://www.100ms.live/docs/android/v2/how-to-guides/debugging/error-handling).
+    1. For Web, handle [network (disconnection, reconnection) and autoplay errors](https://www.100ms.live/docs/javascript/v2/how-to-guides/debugging/error-handling).
+    2. For Android, handle [network errors](https://www.100ms.live/docs/android/v2/how-to-guides/debugging/error-handling).
 4. Add [cloud storage bucket details on the 100ms Dashboard](https://www.100ms.live/docs/get-started/v2/get-started/features/recordings#configure-recording-storage-with-100ms-dashboard) in the Recordings tab of your template to store your recordings.
 5. Setup and enable Room Composite Browser based recording
-    a. Through [API](https://www.100ms.live/docs/server-side/v2/how-to-guides/recordings/overview) 
-    b. Through [Web SDK](https://www.100ms.live/docs/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording) 
-    c. Through [Android SDK](https://www.100ms.live/docs/android/v2/how-to-guides/record-and-live-stream/rtmp-recording#starting-streaming-recording)
+    1. Through [API](https://www.100ms.live/docs/server-side/v2/how-to-guides/recordings/overview) 
+    2. Through [Web SDK](https://www.100ms.live/docs/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording) 
+    3. Through [Android SDK](https://www.100ms.live/docs/android/v2/how-to-guides/record-and-live-stream/rtmp-recording#starting-streaming-recording)
 
 ### Setting up analytics
 1. [Integrate webhooks](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/overview) for receiving callbacks from the server (E.g. peer.leave, peer.join, beam.recording.success, etc.)
