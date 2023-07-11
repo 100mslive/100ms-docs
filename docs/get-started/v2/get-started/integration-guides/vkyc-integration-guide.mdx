@@ -5,13 +5,13 @@ nav: 6.1
 
 # Introduction
 
-This guide focuses on helping you integrate 100ms in your Video KYC workflow. In a video KYC workflow, a user gets on a call with an agent who is doing the verification
+This guide focuses on helping you integrate 100ms in your Video KYC workflow. In a video KYC workflow, a customer gets on a call with an agent who does the KYC (Know Your Customer) verification digitally on a video conferencing solution.
 
 # Architectural Workflow
 
 ![vkyc-integration-flow](/docs/v2/vkyc-integration-doc-architecture.png)
 
-#Integration Milestone
+# Integration Milestones
 
 <StepsToc
     parentId="vkyc-integration-flow"
@@ -28,56 +28,54 @@ This guide focuses on helping you integrate 100ms in your Video KYC workflow. In
 
 ### Laying the vKYC keystone
 
-Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-dashboard).
-
-```
-- Roles
+Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-dashboard)
+1. Roles
     - agent
-        - Publish Strategy -
+        1. Publish Strategy -
             - Role can share: Audio, Video; No Screenshare
-                
-                Note: You can also keep this video off, this helps save bandwidth on the consumer’s side. The downside is the consumer doesn’t see any agent video, but only hears their audio. We recommend keeping this off.
-                
+            >  **Note**
+            >
+            > You can also keep this video off, this helps save bandwidth on the consumer’s side. The downside is the consumer doesn’t see any agent video, but only hears their audio. We recommend keeping this off.
+            > 
             - Video Quality: 360p
             - Can publish Simulcast?: Enable
             - Video Simulcast Layers: 360p, 180p
-        - Subscribe Strategy -
+        2. Subscribe Strategy -
             - Subscribe to: agent, customer
-        - Permissions -
+            - Subscribe Degradation: Enable
+        3. Permissions -
             - Mute any peer : Enable
             - Ask any peer to unmute : Enable
             - End current session : Enable
             - Receive preview room state : Enable
             - Maximum number of peers in a room : No limit
     - customer
-        - **Publish Strategy** -
-            - **Role can share:** A*udio, Video;* no *screenshare*
-                
-                Note: You can also keep this video off, this helps save bandwidth on the consumer’s side. The downside is the consumer doesn’t see any agent video, but only hears their audio. We recommend keeping this off.
-                
-            - **Video Quality:** 360p
-            - **Can publish Simulcast? :** Disable
-        - **Subscribe Strategy -**
-            - **Subscribe to :** agent, customer
-        - **Permissions -**
+        1. Publish Strategy -
+            - Role can share: Audio, Video; No Screenshare
+            - Video Quality: 720p
+              Note: Even though 720p has been set, our SDK will automatically degrade if the upload bandwidth is not enough, but it will never turn off the video.
+            - Can publish Simulcast? : Disable
+        2. Subscribe Strategy -
+            - Subscribe to : agent, customer
+            - Subscribe Degradation: Enable
+        3. Permissions -
             - Mute any peer : Enable
             - Ask any peer to unmute : Enable
             - End current session : Enable
             - Receive preview room state : Enable
             - Maximum number of peers in a room : No limit
-
-- Recordings
-    - Storage** : Configure your cloud storage bucket
+2. Recordings
+    - Storage : Configure your cloud storage bucket
     - Room Composite Recording : Enable
     - Enable auto-start on room join : Enable
     - SFU Recording : Disable
 
-- Advanced Settings
+3. Advanced Settings
     - Room-state : Enable
 
-- Additional settings to be turned on via API
+4. Additional settings to be turned on via API
     - Turn on subscribe degradation for the agent, but with the option to not turn video off. Use the [Update Template API](https://www.100ms.live/docs/server-side/v2/api-reference/policy/update-a-template). The parameter required ``"videoAlwaysEnabled": true``
-```
+
 
 ### Getting the basics right
 1. Create a [Room via API](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/create-via-api)
@@ -95,7 +93,7 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
     2. Method 2 - End Room
         1. Using [API](https://www.100ms.live/docs/server-side/v2/api-reference/active-rooms/end-active-room)
         2. Using [Web SDK](https://www.100ms.live/docs/javascript/v2/how-to-guides/control-remote-peers/end-room)
-        3. Using [Android SD](https://www.100ms.live/docs/android/v2/how-to-guides/interact-with-room/room/end-room)
+        3. Using [Android SDK](https://www.100ms.live/docs/android/v2/how-to-guides/interact-with-room/room/end-room)
 
 ### Building out the workflow necessities
 1. Controlling the camera
@@ -185,6 +183,9 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
     
     You can listen to [100ms’ network states](https://www.100ms.live/docs/javascript/v2/how-to-guides/measure-network-quality-and-performance/connection-quality) for an overall network picture and [stats for nerds](https://www.100ms.live/docs/javascript/v2/how-to-guides/measure-network-quality-and-performance/stats) to get more detailed stats including jitter, latency, frame drop etc. Refer to [Setting up analytics](https://www.notion.so/Setting-up-analytics-8bf6043696f34ddba1740fc4a0bd17f9?pvs=21).
 
+- **How do I know what resolutions and aspect ratios are best for my use-case?**
+
+    Based on the client side device, you will have to choose the aspect ratios. [This sheet](https://docs.google.com/spreadsheets/d/1h387escJ3UPl1BJC0lsZWNnZxyiTkVIS54QDthXif_s/edit?usp=sharing) will show calculations for checking how much bitrate is consumed in different resolutions/aspect ratios.
 
 # Extra Reading Resources
 
