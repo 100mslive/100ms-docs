@@ -46,11 +46,11 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
             - Subscribe to: *agent*, *customer*
             - Subscribe Degradation: Enable
         3. **Permissions** -
-            - Mute any peer : Enable
-            - Ask any peer to unmute : Enable
-            - End current session : Enable
-            - Receive preview room state : Enable
-            - Maximum number of peers in a room : No limit
+            - Mute any peer: Enable
+            - Ask any peer to unmute: Enable
+            - End current session: Enable
+            - Receive preview room state: Enable
+            - Maximum number of peers in a room: No limit
      </Tab>
 
      <Tab id='implementation-1'>
@@ -61,26 +61,26 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
             >
             > Even though 720p has been set, our SDK will automatically degrade if the upload bandwidth is not enough, but it will never turn off the video.
             >
-            - Can publish Simulcast? : Disable
+            - Can publish Simulcast?: Disable
         2. **Subscribe Strategy** -
-            - Subscribe to : *agent*, *customer*
+            - Subscribe to: *agent*, *customer*
             - Subscribe Degradation: Enable
         3. **Permissions** -
-            - Mute any peer : Enable
-            - Ask any peer to unmute : Enable
-            - End current session : Enable
-            - Receive preview room state : Enable
-            - Maximum number of peers in a room : No limit
+            - Mute any peer: Enable
+            - Ask any peer to unmute: Enable
+            - End current session: Enable
+            - Receive preview room state: Enable
+            - Maximum number of peers in a room: No limit
      </Tab>
 
 2. **Recordings**
-    - Storage : Configure your cloud storage bucket
-    - Room Composite Recording : Enable
-    - Enable auto-start on room join : Enable
-    - SFU Recording : Disable
+    - Storage: Configure your cloud storage bucket
+    - Room Composite Recording: Enable
+    - Enable auto-start on room join: Enable
+    - SFU Recording: Disable
 
 3. **Advanced Settings**
-    - Room-state : Enable
+    - Room-state: Enable
 
 4. Additional settings to be turned on via API
     - Turn on subscribe degradation for the agent, but with the option to not turn video off. Use the [Update Template API](https://www.100ms.live/docs/server-side/v2/api-reference/policy/update-a-template). The parameter required ``"videoAlwaysEnabled": true``
@@ -141,11 +141,11 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
 
 - **How do I implement switch/tap-to-focus/zoom camera functionality?**
     
-    Refer to [Building out the workflow necessities](#building-out-theworkflow-necessities) 
+    Refer to [Building out the workflow necessities](#building-out-theworkflow-necessities).
     
 - **How do I implement capture image functionality?**
     
-    Refer to [Building out the workflow necessities](#building-out-theworkflow-necessities)
+    Refer to [Building out the workflow necessities](#building-out-theworkflow-necessities).
     
     We have a native [Frame Capture API](https://www.100ms.live/docs/javascript/v2/how-to-guides/record-and-live-stream/frame-capture) that can capture the current camera frame at 720p which should be good enough for capturing OCR details. You can also use the [Camera Controls API](https://www.100ms.live/docs/android/v2/how-to-guides/configure-your-device/camera/camera-controls) on Android.
     
@@ -155,7 +155,7 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
 <br/>
 - **How do I transfer the captured image to the agent?**
     
-    Refer to this note in [Building out the workflow necessities](#building-out-theworkflow-necessities) 
+    Refer to this note in [Building out the workflow necessities](#building-out-theworkflow-necessities).
     
 - **How do I initiate recording?**
     
@@ -165,8 +165,8 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
     2. SFU Recording Method - This is done by composing the individual video tracks post-call. The benefit of using this is that it starts automatically with the room, but there can be potential A/V sync issues, and the time to get the video is longer (p50 is 1 minute 50 seconds for a 3-minute session). Enable this by [configuring the recording in the policy](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/create-via-api) itself.
 
 - **How do I track active rooms and user/customer presence in those rooms?**
-    - You can use our server-side [Active Rooms API](https://www.100ms.live/docs/server-side/v2/api-reference/active-rooms/overview) to track active rooms.
-    - You can listen to [webhook events](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/overview#introduction) to track peers, sessions and rooms and push subsequent updates.
+    1. You can use our server-side [Active Rooms API](https://www.100ms.live/docs/server-side/v2/api-reference/active-rooms/overview) to track active rooms.
+    2. You can listen to [webhook events](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/overview#introduction) to track peers, sessions and rooms and push subsequent updates.
 
 - **How do I receive recordings?**
     
