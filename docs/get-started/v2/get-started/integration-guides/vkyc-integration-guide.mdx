@@ -1,5 +1,5 @@
 ---
-title: Video KYC Integration Guide
+title: Video KYC
 nav: 6.1
 ---
 
@@ -29,9 +29,9 @@ This guide focuses on helping you integrate 100ms in your Video KYC workflow. In
 ### Laying the vKYC keystone
 
 Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-dashboard)
-1. Roles
-    - agent
-        1. Publish Strategy -
+1. **Roles**
+    - *agent*
+        1. **Publish Strategy** -
             - Role can share: Audio, Video; No Screenshare
             >  **Note**
             >
@@ -40,37 +40,40 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
             - Video Quality: 360p
             - Can publish Simulcast?: Enable
             - Video Simulcast Layers: 360p, 180p
-        2. Subscribe Strategy -
+        2. **Subscribe Strategy** -
             - Subscribe to: agent, customer
             - Subscribe Degradation: Enable
-        3. Permissions -
+        3. **Permissions** -
             - Mute any peer : Enable
             - Ask any peer to unmute : Enable
             - End current session : Enable
             - Receive preview room state : Enable
             - Maximum number of peers in a room : No limit
-    - customer
-        1. Publish Strategy -
+    - *customer*
+        1. **Publish Strategy** -
             - Role can share: Audio, Video; No Screenshare
             - Video Quality: 720p
-              Note: Even though 720p has been set, our SDK will automatically degrade if the upload bandwidth is not enough, but it will never turn off the video.
+            >  **Note*
+            >
+            > Even though 720p has been set, our SDK will automatically degrade if the upload bandwidth is not enough, but it will never turn off the video.
+            >
             - Can publish Simulcast? : Disable
-        2. Subscribe Strategy -
+        2. **Subscribe Strategy** -
             - Subscribe to : agent, customer
             - Subscribe Degradation: Enable
-        3. Permissions -
+        3. **Permissions** -
             - Mute any peer : Enable
             - Ask any peer to unmute : Enable
             - End current session : Enable
             - Receive preview room state : Enable
             - Maximum number of peers in a room : No limit
-2. Recordings
+2. **Recordings**
     - Storage : Configure your cloud storage bucket
     - Room Composite Recording : Enable
     - Enable auto-start on room join : Enable
     - SFU Recording : Disable
 
-3. Advanced Settings
+3. **Advanced Settings**
     - Room-state : Enable
 
 4. Additional settings to be turned on via API
@@ -140,9 +143,9 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
     
     We have a native [Frame Capture API](https://www.100ms.live/docs/javascript/v2/how-to-guides/record-and-live-stream/frame-capture) that can capture the current camera frame at 720p which should be good enough for capturing OCR details. You can also use the [Camera Controls API](https://www.100ms.live/docs/android/v2/how-to-guides/configure-your-device/camera/camera-controls) on Android.
     
- >   **Note**
- >
- >   In case you want to capture image, at a higher quality, you can use the browser’s native `getUserMedia` method to capture the image. [Codesandbox](https://codesandbox.io/s/kind-dubinsky-3h9wrg?file=/src/App.js) reference for you to check out.
+    >   **Note**
+    >
+    >   In case you want to capture image, at a higher quality, you can use the browser’s native `getUserMedia` method to capture the image. [Codesandbox](https://codesandbox.io/s/kind-dubinsky-3h9wrg?file=/src/App.js) reference for you to check out.
 <br/>
 - **How do I transfer the captured image to the agent?**
     
