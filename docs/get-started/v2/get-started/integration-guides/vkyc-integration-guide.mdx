@@ -30,6 +30,7 @@ This guide focuses on helping you integrate 100ms in your Video KYC workflow. In
 
 Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-dashboard)
 1. **Roles**
+    Create both of the following roles with the given settings.
     <Tabs id="implementation" items={['agent','customer']} />
      <Tab id='implementation-0'>
         1. **Publish Strategy** -
@@ -42,7 +43,7 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
             - Can publish Simulcast?: Enable
             - Video Simulcast Layers: 360p, 180p
         2. **Subscribe Strategy** -
-            - Subscribe to: agent, customer
+            - Subscribe to: *agent*, *customer*
             - Subscribe Degradation: Enable
         3. **Permissions** -
             - Mute any peer : Enable
@@ -62,7 +63,7 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
             >
             - Can publish Simulcast? : Disable
         2. **Subscribe Strategy** -
-            - Subscribe to : agent, customer
+            - Subscribe to : *agent*, *customer*
             - Subscribe Degradation: Enable
         3. **Permissions** -
             - Mute any peer : Enable
@@ -140,11 +141,11 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
 
 - **How do I implement switch/tap-to-focus/zoom camera functionality?**
     
-    Refer to [Building out the workflow necessities](#buildingouttheworkflownecessities) 
+    Refer to [Building out the workflow necessities](#building-out-theworkflow-necessities) 
     
 - **How do I implement capture image functionality?**
     
-    Refer to [Building out the workflow necessities](#buildingouttheworkflownecessities) 
+    Refer to [Building out the workflow necessities](#building-out-theworkflow-necessities)
     
     We have a native [Frame Capture API](https://www.100ms.live/docs/javascript/v2/how-to-guides/record-and-live-stream/frame-capture) that can capture the current camera frame at 720p which should be good enough for capturing OCR details. You can also use the [Camera Controls API](https://www.100ms.live/docs/android/v2/how-to-guides/configure-your-device/camera/camera-controls) on Android.
     
@@ -154,7 +155,7 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
 <br/>
 - **How do I transfer the captured image to the agent?**
     
-    Refer to this note in [Building out the workflow necessities](#buildingouttheworkflownecessities).
+    Refer to this note in [Building out the workflow necessities](#building-out-theworkflow-necessities) 
     
 - **How do I initiate recording?**
     
