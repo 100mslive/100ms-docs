@@ -30,7 +30,8 @@ This guide focuses on helping you integrate 100ms in your Video KYC workflow. In
 
 Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-dashboard)
 1. **Roles**
-    - *agent*
+    <Tabs id="implementation" items={['agent','customer']} />
+     <Tab id='implementation-0'>
         1. **Publish Strategy** -
             - Role can share: Audio, Video; No Screenshare
             >  **Note**
@@ -49,11 +50,13 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
             - End current session : Enable
             - Receive preview room state : Enable
             - Maximum number of peers in a room : No limit
-    - *customer*
+     </Tab>
+
+     <Tab id='implementation-1'>
         1. **Publish Strategy** -
             - Role can share: Audio, Video; No Screenshare
             - Video Quality: 720p
-            >  **Note*
+            >  **Note**
             >
             > Even though 720p has been set, our SDK will automatically degrade if the upload bandwidth is not enough, but it will never turn off the video.
             >
@@ -67,6 +70,8 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
             - End current session : Enable
             - Receive preview room state : Enable
             - Maximum number of peers in a room : No limit
+     </Tab>
+
 2. **Recordings**
     - Storage : Configure your cloud storage bucket
     - Room Composite Recording : Enable
@@ -190,7 +195,7 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
 
     Based on the client side device, you will have to choose the aspect ratios. [This sheet](https://docs.google.com/spreadsheets/d/1h387escJ3UPl1BJC0lsZWNnZxyiTkVIS54QDthXif_s/edit?usp=sharing) will show calculations for checking how much bitrate is consumed in different resolutions/aspect ratios.
 
-# Extra Reading Resources
+# Additional Resources
 
 - Understanding [Mental Model of 100ms SDK](https://www.100ms.live/docs/javascript/v2/quickstart/mental-model)
 - [Quickstart guide](https://www.100ms.live/docs/javascript/v2/how-to-guides/install-the-sdk/integration) on the basics of setting up video conferencing from scratch using JS on Web
