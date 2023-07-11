@@ -11,6 +11,8 @@ This guide focuses on helping you integrate 100ms in your Video KYC workflow. In
 
 ![vkyc-integration-flow](/docs/v2/vkyc-integration-doc-architecture.png)
 
+#Integration Milestone
+
 <StepsToc
     parentId="vkyc-integration-flow"
     descriptions={[
@@ -26,22 +28,22 @@ This guide focuses on helping you integrate 100ms in your Video KYC workflow. In
 
 ### Laying the vKYC keystone
 
-Create a template through dashboard.
+Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-dashboard).
 
 ```
 - Roles
     - agent
-        - **Publish Strategy** -
-            - **Role can share:** A*udio, Video;* no *screenshare*
+        - Publish Strategy -
+            - Role can share: Audio, Video; No Screenshare
                 
                 Note: You can also keep this video off, this helps save bandwidth on the consumer’s side. The downside is the consumer doesn’t see any agent video, but only hears their audio. We recommend keeping this off.
                 
-            - **Video Quality:** 360p
-            - **Can publish Simulcast? :** Enable
-            - **Video Simulcast Layers** : 360p, 180p
-        - **Subscribe Strategy -**
-            - **Subscribe to :** agent, customer
-        - **Permissions -**
+            - Video Quality: 360p
+            - Can publish Simulcast?: Enable
+            - Video Simulcast Layers: 360p, 180p
+        - Subscribe Strategy -
+            - Subscribe to: agent, customer
+        - Permissions -
             - Mute any peer : Enable
             - Ask any peer to unmute : Enable
             - End current session : Enable
@@ -63,13 +65,16 @@ Create a template through dashboard.
             - End current session : Enable
             - Receive preview room state : Enable
             - Maximum number of peers in a room : No limit
+
 - Recordings
-    - **Storage** : Configure your cloud storage bucket
-    - **Room Composite Recording** : Enable
-    - **Enable auto-start on room join** : Enable
-    - **SFU Recording** : Disable
+    - Storage** : Configure your cloud storage bucket
+    - Room Composite Recording : Enable
+    - Enable auto-start on room join : Enable
+    - SFU Recording : Disable
+
 - Advanced Settings
-    - **Room-state** : Enable
+    - Room-state : Enable
+
 - Additional settings to be turned on via API
     - Turn on subscribe degradation for the agent, but with the option to not turn video off. Use the [Update Template API](https://www.100ms.live/docs/server-side/v2/api-reference/policy/update-a-template). The parameter required ``"videoAlwaysEnabled": true``
 ```
@@ -95,14 +100,15 @@ Create a template through dashboard.
 ### Building out the workflow necessities
 1. Controlling the camera
     1. For Web, implement [Switch Camera API](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/device-change#switch-camera).
-    2. For Android, implement [Camera Controls API](https://www.100ms.live/docs/android/v2/how-to-guides/configure-your-device/camera/camera-controls).   
- >   **Note**
- > 
- >   To transfer the captured images to the agent, use any upload API of your choice. Our recommendation is to **not** use 100ms’ session store or broadcast methods for this as this can cause loss of data.
-<br/>    
+    2. For Android, implement [Camera Controls API](https://www.100ms.live/docs/android/v2/how-to-guides/configure-your-device/camera/camera-controls).     
 2. Capture images
     1. For Web, implement [Frame Capture API](https://app.eraser.io/8b4edacb6f2c4595bc87e54554da8b43#94dd28b552b4450e93bdec664ae8f3b8).
     2. For Android, use [Camera Controls API](https://www.100ms.live/docs/android/v2/how-to-guides/configure-your-device/camera/camera-controls) to capture at the high possible resolution.
+ 
+ >   **Note**
+ > 
+ >   To transfer the captured images to the agent, use any upload API of your choice. Our recommendation is to **not** use 100ms’ session store or broadcast methods for this as this can cause loss of data.
+<br/>  
 3. For error handling
     1. For Web, handle [network (disconnection, reconnection) and autoplay errors](https://www.100ms.live/docs/javascript/v2/how-to-guides/debugging/error-handling).
     2. For Android, handle [network errors](https://www.100ms.live/docs/android/v2/how-to-guides/debugging/error-handling).
