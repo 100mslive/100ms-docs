@@ -34,11 +34,11 @@ The above flowchart shows the entire workflow of transcription and summary gener
 You can enable transcription for all the rooms under a particular template.
 
 1. Access an existing template via the sidebar.
-2. Navigate to the 'Transcription (Beta)' tab in the template configuration.
-3. Enable the 'Transcribe Recordings' toggle. This will also enable the Room Composite Recording (if not already enabled) under the Recording tab.
-4. Enable the 'Summarise Transcripts' toggle. This will take the default settings for summary.
+2. Navigate to the `Transcription (Beta)` tab in the template configuration.
+3. Enable the `Transcribe Recordings` toggle. This will also enable the `Room Composite Recording` (if not already enabled) under the `Recording` tab.
+4. Enable the `Summarise Transcripts` toggle. This will take the default settings for summary.
 5. Save the configuration.
-6. Join a room to initiate a session. Start recording using the SDK or recording API. If it's your first time joining a 100ms room, you'll find the option to 'Start Recording' in the created room. For more information on creating room templates, refer to [this documentation](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-dashboard).
+6. Join a room to initiate a session. Start recording using the SDK or recording API. If it's your first time joining a 100ms room, you'll find the option to `Start Recording` in the created room. For more information on creating room templates, refer to [this documentation](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-dashboard).
 
 
 ![](/docs/v2/transcription-dashboard-config.gif)
@@ -46,12 +46,12 @@ You can enable transcription for all the rooms under a particular template.
 
 **Advanced Transcription Settings**
 
-When you enable the ‘Transcribe Recordings’ toggle, you will observe an accordion with ‘Advanced Transcription Settings’.
+When you enable the `Transcribe Recordings` toggle, you will observe an accordion with `Advanced Transcription Settings`.
 
 ![Advanced settings](/docs/v2/advanced-transcription-settings.png)
 
-- **Roles to be Transcribed**: Selection is currently disabled. It reflects the same role as set in *Room Composite Recording* configurations as transcription is supported only with recording. To transcribe other roles, update *Roles to be Recorded* in *Room Composite Recording* under the *Recording* tab.
-- **Custom Vocabulary**: Add non-dictionary words which are expected to be spoken to enhance recognition. Useful for names, abbreviations, slang, technical jargon, and more.
+- `Roles to be Transcribed`: Selection is currently disabled. It reflects the same role as set in *Room Composite Recording* configurations as transcription is supported only with recording. To transcribe other roles, update *Roles to be Recorded* in *Room Composite Recording* under the *Recording* tab.
+- `Custom Vocabulary`: Add non-dictionary words which are expected to be spoken to enhance recognition. Useful for names, abbreviations, slang, technical jargon, and more.
 
 
 > **Note - Dashboard Implementation Default Values**
@@ -96,7 +96,7 @@ When you enable the ‘Transcribe Recordings’ toggle, you will observe an acco
 
 You can refer to our [Recording API documentation](https://www.100ms.live/docs/server-side/v2/api-reference/recordings/start-recording-for-room) to start recording.
 
-1. You are required to mark the transcription enable flag in the request as true to transcribe unless you’ve already enabled transcription for the given room template. Refer Method 1.
+1. You are required to mark the transcription enable flag in the request as `true` to transcribe unless you’ve already enabled transcription for the given room template. Refer Method 1.
 2. You can override the transcription and summary settings given in the policy when starting the recording through the Recording API.
 3. If no input is given, the API will pick up the transcription configuration from the template policy.
 </Tab>
@@ -227,6 +227,9 @@ The transcripts and summaries will be saved as *[Recording Assets](https://www.1
 
 There are three ways to consume the generated transcripts and summaries. 
 
+<Tabs id="implementation" items={['100ms Dashboard','Webhooks', 'Recording Assets API']} />
+<Tab id='implementation-0'>
+
 #### **Method 1: 100ms Dashboard**
 
 Once you’ve recorded a session with transcription and summary enabled, you can expect recording assets to be ready within 20% of the recording duration time period.
@@ -235,12 +238,13 @@ To access transcripts and summaries on the dashboard:
 
 1. Navigate to the Sessions tab in the sidebar to view previous sessions.
 2. Locate the session with transcription enabled. The Recording Status column will indicate the status of the recording.
-3. Click on the 'Completed' status of the chosen session ID.
+3. Click on the `Completed` status of the chosen session ID.
 4. This will open the Session Details page. Access the Recording Log to find the available assets and view them.
-5. Click on View Assets to open a pop-up with pre-signed URLs for the recording, chat, transcripts, and summary.
+5. Click on `View Assets` to open a pop-up with pre-signed URLs for the recording, chat, transcripts, and summary.
 
 ![transcription-consumption](/docs/v2/transcription-dashboard-consumption.gif)
-
+</Tab>
+<Tab id='implementation-1'>
 #### **Method 2: Webhook**
 
 As soon as the transcription is completed, the webhook containing the asset type, id, path and the pre-signed URL to the asset itself (transcript, summary) will be sent to the configured webhook URL. 
@@ -248,9 +252,12 @@ As soon as the transcription is completed, the webhook containing the asset type
 1. Learn to configure the webhook using [this documentation](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/overview).
 2. Transcription specific webhook events can be found [here](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/webhook#transcriptionstartedsuccess).
 
+</Tab>
+<Tab id='implementation-2'>
 #### **Method 3: Recording Assets API**
 
 You can always use 100ms’ Recording Assets API to access the transcripts and summaries files. Refer to [this documentation](https://www.100ms.live/docs/server-side/v2/api-reference/recording-assets/overview).
+</Tab>
 
 </StepsContainer>
 
