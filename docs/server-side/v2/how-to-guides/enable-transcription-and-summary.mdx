@@ -29,6 +29,7 @@ The above flowchart shows the entire workflow of transcription and summary gener
 
 <Tabs id="implementation" items={['Dashboard Implementation', 'Recording API', 'Policy API']} />
 <Tab id='implementation-0'>
+
 #### **Method 1: Dashboard Implementation**
 
 You can enable transcription for all the rooms under a particular template.
@@ -89,6 +90,7 @@ When you enable the `Transcribe Recordings` toggle, you will observe an accordio
 >  }
 >}
 > ```
+
 </Tab>
 <Tab id='implementation-1'>
 
@@ -99,6 +101,7 @@ You can refer to our [Recording API documentation](https://www.100ms.live/docs/s
 1. You are required to mark the transcription enable flag in the request as `true` to transcribe unless you’ve already enabled transcription for the given room template. Refer Method 1.
 2. You can override the transcription and summary settings given in the policy when starting the recording through the Recording API.
 3. If no input is given, the API will pick up the transcription configuration from the template policy.
+
 </Tab>
 <Tab id='implementation-2'>
 
@@ -227,8 +230,9 @@ The transcripts and summaries will be saved as *[Recording Assets](https://www.1
 
 There are three ways to consume the generated transcripts and summaries. 
 
-<Tabs id="implementation" items={['100ms Dashboard','Webhooks','Recording Assets API']}/>
-<Tab id='implementation-0'>
+<Tabs id="consumption" items={['100ms Dashboard','Webhooks','Recording Assets API']}/>
+<Tab id='consumption-0'>
+
 #### **Method 1: 100ms Dashboard**
 
 Once you’ve recorded a session with transcription and summary enabled, you can expect recording assets to be ready within 20% of the recording duration time period.
@@ -244,9 +248,9 @@ To access transcripts and summaries on the dashboard:
 ![transcription-consumption](/docs/v2/transcription-dashboard-consumption.gif)
 
 </Tab>
+<Tab id='consumption-1'>
 
-<Tab id='implementation-1'>
-#### **Method 2: Webhook**
+#### **Method 2: Webhooks**
 
 As soon as the transcription is completed, the webhook containing the asset type, id, path and the pre-signed URL to the asset itself (transcript, summary) will be sent to the configured webhook URL. 
 
@@ -254,12 +258,14 @@ As soon as the transcription is completed, the webhook containing the asset type
 2. Transcription specific webhook events can be found [here](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/webhook#transcriptionstartedsuccess).
 
 </Tab>
-<Tab id='implementation-2'>
+<Tab id='consumption-2'>
+
 #### **Method 3: Recording Assets API**
 
 You can always use 100ms’ Recording Assets API to access the transcripts and summaries files. Refer to [this documentation](https://www.100ms.live/docs/server-side/v2/api-reference/recording-assets/overview).
 
 </Tab>
+
 </StepsContainer>
 
 ## Limitations
