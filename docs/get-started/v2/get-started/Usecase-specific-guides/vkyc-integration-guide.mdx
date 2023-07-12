@@ -26,7 +26,7 @@ This guide focuses on helping you integrate 100ms in your Video KYC workflow. In
 
 <StepsContainer id="vkyc-integration-flow">
 
-### Creating the vKYC call template (Week 1)
+### Creating the vKYC call template
 
 Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-dashboard)
 1. **Roles** <br/>
@@ -85,7 +85,7 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
     - Turn on subscribe degradation for the agent, but with the option to not turn video off. Use the [Update Template API](https://www.100ms.live/docs/server-side/v2/api-reference/policy/update-a-template). The parameter required ``"videoAlwaysEnabled": true``
 
 
-### Getting the basics right (Week 1)
+### Getting the basics right
 1. Create a [Room via API](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/create-via-api)
 2. Add [Authentication and Tokens](https://www.100ms.live/docs/get-started/v2/get-started/security-and-tokens#code-sample-generate-management-token)
 3.  Join a Session
@@ -106,7 +106,7 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
     3. Using [Android SDK](https://www.100ms.live/docs/android/v2/how-to-guides/interact-with-room/room/end-room)
     </Tab>
 
-### Building out the workflow necessities (Week 2)
+### Building out the workflow necessities
 1. Controlling the camera
     1. For Web, implement [Switch Camera API](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/device-change#switch-camera).
     2. For Android, implement [Camera Controls API](https://www.100ms.live/docs/android/v2/how-to-guides/configure-your-device/camera/camera-controls).     
@@ -127,13 +127,13 @@ Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2
     2. Through [Web SDK](https://www.100ms.live/docs/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording) 
     3. Through [Android SDK](https://www.100ms.live/docs/android/v2/how-to-guides/record-and-live-stream/rtmp-recording#starting-streaming-recording)
 
-### Setting up analytics (Week 3)
+### Setting up analytics
 1. [Integrate webhooks](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/overview) for receiving callbacks from the server (E.g. peer.leave, peer.join, beam.recording.success, etc.)
 2. Listen to [100ms’ network states](https://www.100ms.live/docs/javascript/v2/how-to-guides/measure-network-quality-and-performance/connection-quality) for an overall network picture.
 3. Use [stats for nerds](https://www.100ms.live/docs/javascript/v2/how-to-guides/measure-network-quality-and-performance/stats) to get more detailed stats including jitter, latency, frame drop, and more.
 
 
-### Debugging and QA (Week 3)
+### Debugging and QA
 1. Familiarise yourself with [events Inspector](https://dashboard.100ms.live/events-inspector) on the Dashboard to debug issues promptly.
 2. Test using [network throttling](https://techjourneyman.com/blog/throttle-your-network-macos/) to check for low bandwidth conditions performance.
 
