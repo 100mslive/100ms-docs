@@ -206,6 +206,7 @@ Let's look at what the `HMSMessage` class looks like:
 ```dart
 class HMSMessage(
 
+  final String messageId;
   final HMSPeer? sender;
   final String message;
   final String type;
@@ -213,6 +214,7 @@ class HMSMessage(
   HMSMessageRecipient? hmsMessageRecipient;
 
   HMSMessage({
+    required this.messageId,
     required this.sender,
     required this.message,
     required this.type,
@@ -222,6 +224,7 @@ class HMSMessage(
 )
 ```
 
+-   _messageId_: Id to uniquely identify the message
 -   _message_: Content of the text message or the text description of the raw message.
 -   _type_: Type of message sent. The default value is `chat`.
 -   _hmsMessageRecipient_: The intended recipient(s) of this message as a `HMSMessageRecipient`.
@@ -231,6 +234,10 @@ class HMSMessage(
 Let's break down each parameter a bit more in detail :
 
 <div className="steps-container">
+
+### Uniquely identifying the message
+
+To uniquely identify a message, you can use the `messageId` field of HMSMessage. If the `messageId` is null then we set it as an empty string by default.
 
 ### Identifying Senders:
 

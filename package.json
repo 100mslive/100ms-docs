@@ -29,19 +29,23 @@
         "updatereleases": "node updateReleases.js",
         "lint": "eslint  \"{components,lib}/**/*.{js,ts,tsx}\"",
         "format": "prettier --write 'components/**/*.{js,jsxts,tsx,scss,css,json}'",
-        "postbuild": "next-sitemap"
+        "postbuild": "next-sitemap",
+        "id": "yarn && yarn dev"
     },
     "engines": {
-        "node": "^14 || ^16"
+        "node": "^18"
     },
     "files": [
         "/dist",
         "/esm"
     ],
+    "resolutions": {
+        "@types/react": "16.9.22",
+        "@types/react-dom": "16.9.5"
+    },
     "devDependencies": {
         "@fec/remark-a11y-emoji": "^3.1.0",
         "@mdx-js/loader": "^1.6.22",
-        "@next/mdx": "^10.0.9",
         "@types/cors": "^2.8.12",
         "@types/marked": "^2.0.0",
         "@types/mdx-js__react": "^1.5.3",
@@ -71,7 +75,7 @@
         "gray-matter": "^4.0.2",
         "marked": "^2.0.1",
         "mdx-prism": "^0.3.3",
-        "next": "11",
+        "next": "12.3.4",
         "prettier": "^2.2.1",
         "prettier-eslint": "^12.0.0",
         "prettier-eslint-cli": "^5.0.0",
@@ -105,7 +109,6 @@
         "react": "^17.0.1",
         "react-instantsearch-dom": "^6.38.1",
         "react-lazyload": "^3.2.0",
-        "react-live": "^2.2.3",
         "recursive-readdir": "^2.2.2",
         "rehype-raw": "^6.1.1",
         "remark-gfm": "^3.0.1",
