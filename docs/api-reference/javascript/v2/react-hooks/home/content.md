@@ -455,7 +455,7 @@ ___
 
 | Name | Type | Default value | Description
 | :------ | :------ | :------ | :------ |
-| `resetConfig?` | (): `void` | `undefined` | Pass a method which will reset the embed config if screenshare stops. It is an optional Parameter
+| `resetConfig?` | ():`void` | `undefined` | Callback that implements cleanup after Embed sharing stops. It is an optional parameter.
 
 #### Returns
 
@@ -471,7 +471,7 @@ ___
 
 | Name | Type | Default value | Description
 | :------ | :------ | :------ | :------ |
-| `resetConfig?` | (): `void` | `undefined` | Pass a method which will reset the pdf config if screenshare stops. It is an optional Parameter
+| `resetConfig?` | ():`void` | `undefined` | Callback that implements cleanup after PDF sharing stops. Typically used to reset the currently selected PDF file or URL in your state. It is an optional parameter.
 
 #### Returns
 
