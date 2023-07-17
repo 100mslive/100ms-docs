@@ -447,22 +447,35 @@ For implementing control bar for local peer, this is used based with useAVToggle
 [`useScreenShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/useScreenShareResult)
 
 ___
-### useRegionCaptureScreenShare
+### useEmbedShare
 
-▸ **useRegionCaptureScreenShare**(): [`useRegionCaptureScreenShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/useRegionCaptureScreenShareResult)
+▸ **useEmbedShare**(): [`useEmbedShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/useEmbedShareResult)
+
+#### Parameters
+
+| Name | Type | Default value | Description
+| :------ | :------ |
+| `resetConfig?` | [() => `void`] | `undefined` | Pass a method which will reset the embed config if screenshare stops. It is an optional Parameter
 
 #### Returns
 
-[`useRegionCaptureScreenShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/useRegionCaptureScreenShareResult)
+[`useEmbedShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/useEmbedShareResult)
 ___
 
-### usePDFConfig
+### usePDFShare
 
-▸ **usePDFConfig**(): [`usePDFConfigResult`](/api-reference/javascript/v2/react-hooks/interfaces/usePDFConfigResult)
+▸ **usePDFShare**(): [`usePDFShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/usePDFShareResult)
+
+#### Parameters
+
+
+| Name | Type | Default value | Description
+| :------ | :------ |
+| `resetConfig?` | [() => `void`] | `undefined` | Pass a method which will reset the pdf config if screenshare stops. It is an optional Parameter
 
 #### Returns
 
-[`usePDFConfigResult`](/api-reference/javascript/v2/react-hooks/interfaces/usePDFConfigResult)
+[`usePDFShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/usePDFShareResult)
 ___
 
 ### useVideo
