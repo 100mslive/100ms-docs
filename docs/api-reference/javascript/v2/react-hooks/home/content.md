@@ -454,8 +454,8 @@ ___
 #### Parameters
 
 | Name | Type | Default value | Description
-| :------ | :------ |
-| `resetConfig?` | [() => `void`] | `undefined` | Pass a method which will reset the embed config if screenshare stops. It is an optional Parameter
+| :------ | :------ | :------ | :------ |
+| `resetConfig?` | [(): `void`] | `undefined` | Pass a method which will reset the embed config if screenshare stops. It is an optional Parameter
 
 #### Returns
 
@@ -470,8 +470,8 @@ ___
 
 
 | Name | Type | Default value | Description
-| :------ | :------ |
-| `resetConfig?` | [() => `void`] | `undefined` | Pass a method which will reset the pdf config if screenshare stops. It is an optional Parameter
+| :------ | :------ | :------ | :------ |
+| `resetConfig?` | [(): `void`] | `undefined` | Pass a method which will reset the pdf config if screenshare stops. It is an optional Parameter
 
 #### Returns
 
