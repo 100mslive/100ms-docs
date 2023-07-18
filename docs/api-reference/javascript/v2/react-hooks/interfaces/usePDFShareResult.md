@@ -9,20 +9,20 @@ nav: "5.2.19"
 
 • **startPDFShare**: (`value`: `File` | `string`): `Promise`<`void`\>
 
-Info related to file or url of a pdf is passed. It will start the screenshare once pdf is passed.
+Start sharing a PDF file or URL.
 
-It will throw error in below scenarios:
- - When file or url is not passed.
- - Reference to a iframe or element is not yet attached.
- - Unable to start screen share.
-
+It will throw an error in the following scenarios:
+ - When file or URL has not been passed, or is invalid
+ - When the reference has not been attached to an iframe
+ - When screen share cannot be started
+ 
 ___
 
 ### stopPDFShare
 
 • **stopPDFShare**: (): `Promise`<`void`\>
 
-It will stop screen sharing of pdf annotator.
+Stop sharing the PDF file or URL.
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 • **isPDFShareInProgress**: `boolean`
 
-It will tell the state of pdf share.
+Flag to check if PDF sharing is currently in progress.
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 • **iframeRef**:  React.RefObject<HTMLIFrameElement | null>
 
-Attached the reference to iframe where you are rendering the pdf annotator.
+Reference to attach to the iframe that is responsible for rendering the PDF.

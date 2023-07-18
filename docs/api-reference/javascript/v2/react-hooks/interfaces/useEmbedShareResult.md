@@ -9,12 +9,12 @@ nav: "5.2.18"
 
 • **startEmbedShare**: (`value`: `string`): `Promise`<`void`\>
 
-Info related to url to embed is passed. It will start the screenshare once embed is passed.
+Embed and start sharing a URL.
 
-It will throw error in below scenarios:
- - When file or url is not passed.
- - Reference to a iframe is not yet attached.
- - Unable to start screen share.
+It will throw an error in the following scenarios:
+ - When the URL has not been passed
+ - When the reference has not been attached to an iframe
+ - When screen share cannot be started
 
 ___
 
@@ -22,7 +22,7 @@ ___
 
 • **stopEmbedShare**: (): `Promise`<`void`\>
 
-It will stop screen sharing of Embed annotator.
+Stop sharing the embed.
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 • **isEmbedShareInProgress**: `boolean`
 
-It will tell the state of embed share.
+Flag to check if an embed is currently being shared.
 
 ___
 
@@ -38,4 +38,4 @@ ___
 
 • **iframeRef**:  React.RefObject<HTMLIFrameElement | null>
 
-Attached the reference to iframe where you are rendering the embed. It will be used to show to other peers during screenshare
+Reference to attach to the iframe that is responsible for rendering the URL passed.
