@@ -1,0 +1,133 @@
+---
+title: Share and Annotate PDFs
+nav: 1.35
+---
+
+You can now enable PDF annotations and sharing, allowing users to share and annotate PDFs in real-time, providing a rich immersive experience without tab switching. The PDF shared will be visible on all platforms (as a screen share).
+
+<video loop="true" autoplay="autoPlay" controls="false" id="vid" muted>
+    <source src="/docs/docs/v2/pdf-sharing/pdf-sharing-video.mp4" type="video/mp4" />
+</video>
+<br></br>
+
+<FlexContainer>
+    <Callout title="Using our Sample App?" icon="info">
+        If you are currently using a fork of our sample app, make sure to pull the most recent
+        updates from the main branch. PDF sharing functionality should work seamlessly without any
+        additional modifications.
+    </Callout>
+</FlexContainer>
+
+## Build your own UI
+
+If you aren't using our Sample App and are building a completely custom UI, there are a few steps required to enable PDF annotations and sharing.
+
+<StepsToc
+    parentId="pdf-sharing"
+    descriptions={[
+        'Add UI to enable PDF sharing for your users',
+        'Add UI to prompt the user to select a local PDF file or provide a URL',
+        'Add an iframe to embed the PDF within your UI and start sharing the PDF',
+        'Add UI to stop sharing the PDF'
+    ]}
+/>
+
+<StepsContainer id="pdf-sharing">
+
+### Add UI to Enable PDF Sharing
+
+![Enable PDF Sharing](/docs/v2/pdf-sharing/pdf-sharing-start-sharing.png)
+
+Add UI to enable PDF sharing for your users. Use role permissions to decide if you want to allow PDF sharing for users in a room. Note: Disable PDF sharing UI for users when there's an ongoing sharing session.
+
+You can refer to the code snippet in our repository to learn more about how we built this. [View Snippet](https://github.com/100mslive/100ms-web/blob/main/src/components/pdfAnnotator/shareScreenOptions.jsx)
+
+### Add UI to Enable PDF Selection
+
+![PDF Selection](/docs/v2/pdf-sharing/pdf-sharing-user-input.png)
+
+Next, you need to prompt the user to provide input, either by selecting a local PDF file or providing a PDF URL. We also recommend implementing validation to handle scenarios such as:
+
+1. Invalid local PDF file.
+2. Invalid or non-PDF URL.
+
+Check out the code snippet in our repository to see how we built this. [View Snippet](https://github.com/100mslive/100ms-web/blob/main/src/components/pdfAnnotator/pdfFileOptions.jsx)
+
+### Render the PDF and start sharing
+
+![Embed PDF Viewer](/docs/v2/pdf-sharing/pdf-sharing-embed.png)
+
+Finally, add an iframe to the DOM and make sure it refrences the `iframeRef` from `usePDFShare`. In the snippet below, as a logical next step, we automatically initiate `startSharing` when a local PDF is selected or URL is provided. 
+<br/>
+
+```jsx
+import { useCallback, useState, useEffect } from "react";
+import { usePDFShare } from "@100mslive/react-sdk";
+
+export const PDFAnnotatorComponent = () => {
+  // URL or File to the PDF. Use your own state management to set or reset the PDF config.
+  const [pdfConfig, setPdfConfig] = useState(pdfileOrUrl);
+
+  // Implement resetConfig to handle resetting the PDF configuration.
+  const resetConfig = useCallback(() => {
+    setPdfConfig(null);
+  }, []);
+
+  const { iframeRef, startPDFShare, stopPDFShare, isPDFSharingInProgress } =
+    usePDFShare(resetConfig);
+
+  useEffect(() => {
+    (async () => {
+      if (pdfConfig && !isPDFSharingInProgress) {
+        try {
+          await startPDFShare(pdfConfig);
+        } catch (error) {
+          resetConfig();
+          console.log("Couldn't start PDF Sharing", error);
+        }
+      }
+    })();
+  }, [isPDFSharingInProgress, pdfConfig, resetConfig, startPDFShare]);
+
+  return (
+    <iframe
+      ref={iframeRef}
+      style={{
+        width: "100%",
+        height: "100%",
+        border: 0,
+        borderRadius: "0.75rem",
+      }}
+      allow="autoplay; clipboard-write;"
+      referrerPolicy="no-referrer"
+    />
+  );
+};
+
+```
+
+### Stop Sharing
+Through your UI, typically a button, enable the user who is currently sharing a PDF to stop when they desire.
+
+```jsx
+import { usePDFShare } from "@100mslive/react-sdk";
+
+const StopSharingButton = ({ pdfConfig, resetConfig }) => {
+  const { stopPDFShare, isPDFSharingInProgress } = usePDFShare(resetConfig);
+
+  const stopPdfSharing = () => {
+    if (isPDFSharingInProgress && pdfConfig) {
+      stopPDFShare();
+      resetConfig();
+    }
+  };
+
+  return <button onClick={stopPdfSharing}>Stop Sharing</button>;
+};
+```
+
+</StepsContainer>
+
+### Learn More
+
+Read more about the [`usePDFShare`](/api-reference/javascript/v2/react-hooks/home/content#usepdfshare) hook to learn how you control and design the ideal PDF sharing experience.
