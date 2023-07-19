@@ -63,9 +63,8 @@ const nextConfig = {
                 basePath: false
             },
             {
-                destination:
-                    '/javascript/v2/how-to-guides/record-and-live-stream/hls/rtmp-recording',
-                source: '/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording',
+                source: '/javascript/v2/how-to-guides/record-and-live-stream/hls/rtmp-recording',
+                destination: '/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording',
                 permanent: true
             },
             {
