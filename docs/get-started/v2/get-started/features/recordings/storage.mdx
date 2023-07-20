@@ -1,19 +1,21 @@
 ---
-title: Storage location
+title: Storage configuration
 nav: 3.12
 ---
 
-You can store your recordings on a cloud storage provider through the recording settings of your template. We support:
+100ms can upload recordings to your preferred cloud storage location. We support these providers:
 
 - Amazon Simple Storage Service (AWS S3)
 - Google Cloud Storage (GCP)
 - Alibaba Object Storage (OSS)
 
-If you haven't configured a cloud storage service, then a recording will be stored temporarily (for 15 days) in a 100ms bucket. Recording links can be accessed on the [100ms dashboard](https://dashboard.100ms.live/sessions) or [through the API](/server-side/v2/api-reference/recording-assets/get-asset).
+If you don't configure a cloud storage service, then recordings will be stored temporarily (for 15 days) in a storage location managed by 100ms. Post a successful recording, the recording asset can be accessed on the [100ms dashboard](https://dashboard.100ms.live/sessions) or [through the REST API](/server-side/v2/api-reference/recording-assets/get-asset).
 
-### Configure with 100ms Dashboard
+## Configure storage
 
-You can setup cloud recording storage in your template's destination settings on the 100ms Dashboard. At present, the dashboard supports AWS S3 for storage configuration, with Google Cloud Storage and Alibaba OSS coming soon (already accessible through API).
+### On the 100ms Dashboard
+
+You can configure storage in your template's recording settings on the 100ms Dashboard. As an example, this is how you would configure an S3 location:
 
 1. Generate your credentials; for this example, you can check out a [guide from AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html). You can skip this step if you already have credentials. Please note that if you are running a Browser recording, you need to give upload permission to your key, but if you are running an SFU recording, you need to give both upload and download permission.
 
@@ -45,9 +47,11 @@ You can setup cloud recording storage in your template's destination settings on
 
 The above message ensures that your configuration is successful now, and all your recordings will start collecting in your configured destination.
 
-### Configure with 100ms API
+### With the REST API
 
-Recording storage for cloud providers like Amazon S3, Google Cloud and Alibaba OSS storage is currently supported through [Policy](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-api) API. You can configure the **`type`** field of recording object to `s3` for AWS, `oss` for Alibaba Object Storage Service and `gs` for Google Cloud Storage with the following details:
+Use the [Policy API](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-api) to programmatically configure your storage location.
+
+You can configure the **`type`** field of recording object to `s3` for AWS, `oss` for Alibaba Object Storage Service and `gs` for Google Cloud Storage with the following details:
 
 - Access Key: Access Key for your OSS/GCP Bucket
 - Secret Key: Secret Key for your OSS/GCP Bucket
@@ -55,36 +59,45 @@ Recording storage for cloud providers like Amazon S3, Google Cloud and Alibaba O
 - Region: Name of the region where your bucket is located in
 - Prefix for Upload Path: Define the directory name (optional)
 
-## Storage path for recordings
+## Fetching the asset
 
-If a storage destination is not configured for recordings and if you choose to record that room then such recordings are stored for **72 hours** in an internal 100ms bucket. You can access these recordings through [Sessions](https://dashboard.100ms.live/sessions).
+### On the 100ms Dashboard
+
+You can access your recordings on the [sessions page](https://dashboard.100ms.live/sessions) in the 100ms Dashboard.
 
 ![Recording Links](/docs/v2/recording-links-session.png)
 
-**Storage recording path is available in following webhook responses:**
+### With the REST API
 
-- Browser Recording: [beam.recording.success](/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `recording_path`)
-- SFU Recording: [recording.success](/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `recording_path`)
-- Multiresolution Recording: [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `recording_single_files` ; `recording_path`)
-- VOD Recording: [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `hls_vod_recording_path`)
+Recordings generate [recording assets](/server-side/v2/api-reference/recording-assets/overview) that can be fetched with the REST API.
 
-**The recording path for these respective recordings will look like follows:**
+### With webhooks
 
-1. Browser Recording: `s3://<location>/<prefix>/beam/<room_id>/<start_date>/Rec-<room_id>-<epoch>.mp4`
+Based on the type of recording 
 
-2. SFU Recording:
+Storage recording path is available in following webhook responses:
+
+- Room composite (also called browser) recording: [beam.recording.success](/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `recording_path`)
+- Room composite - legacy (also called SFU) recording: [recording.success](/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `recording_path`)
+- Recordings enabled with live streaming (HLS): [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess)
+
+### Path formats
+
+The recording path for these respective recordings will look like:
+
+1. Room composite (also called browser) recording: `s3://<location>/<prefix>/beam/<room_id>/<start_date>/Rec-<room_id>-<epoch>.mp4`
+
+2. Room composite - legacy (also called SFU) recording:
 
     1. Composite: `s3://<location>/<prefix>/<room_id>/<start_date>/<session_id>/Rec-<session_id>-<epoch>.mp4`
 
     2. Individual: `s3://<location>/<prefix>/<room_id>/<start_date>/<session_id>/<peer_id>/<stream_id>/<track_id>.webm`
 
-3. Multiresolution Recording: `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/file-recording/Rec-<room_id>-<epoch>-<layer_index>.mp4`
+3. Multi-resolution recording (available in HLS): `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/file-recording/Rec-<room_id>-<epoch>-<layer_index>.mp4`
 
-4. VOD Recording: `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/vod/Rec-<room_id>-<epoch>.zip`
+4. VOD recording (available in HLS): `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/vod/Rec-<room_id>-<epoch>.zip`
 
-**The breakdown of the aforementioned tags is as follows:**
-
-| Tag Name    | Description                                                                                                                                                                                 |
+| Name    | Description                                                                                                                                                                                 |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Location    | Name of the bucket where recordings are stored                                                                                                                                              |
 | Prefix      | Prefix for upload path which is configured in storage settings of your template. If not configured, the default value for this will be your Customer ID                                     |
