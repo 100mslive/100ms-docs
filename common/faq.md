@@ -176,10 +176,6 @@ You can continue using the existing routes (room_id/role) or set up your own rou
 
 ## Recording
 
-#### What is the difference between the Beam recording vs. SFU recording?
-
-Beam recording is the browser recording, built to give users a participant-first recording experience. SFU recording is a composite recording which gets created after recording each of the individual peers and merging it. Please check this [guide](/javascript/v2/foundation/recordings) for more information.
-
 #### After a live stream ends, how long does it take (for both Beam recording and SFU) to show up in our s3 bucket? 
 
 Beam recording should be available within 15-20 minutes after the call ends. SFU recording will take ~1.5 times the call duration, after the call ends. For example, if the call duration is 30 minutes, then SFU recording will be available in 45 minutes.
