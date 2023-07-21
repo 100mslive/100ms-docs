@@ -1,0 +1,110 @@
+---
+title: Create Room Codes
+nav: 3.013
+---
+
+Once you've created a Room via [Create Room API](/server-side/v2/Rooms/create-via-api), you need to create Room Codes to be able to create a Room Link and Join a Room. This API would automatically create Room Codes for any newly added Roles and would disable Room Codes for deleted Roles. 
+
+There are two ways to create Room Codes:
+
+## 1. Create a Room Code API
+Creates Room Code for every Role in the Room at once
+
+<PostRequest title="https://api.100ms.live/v2/room-codes/room/<room_id>" />
+<Request id="req-comp-0">
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/room-codes/room/<room_id>' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+
+```
+</Request>
+
+
+<ResponseBox id="resp-0" status="200 OK">
+
+```json
+{
+    "data": [
+		{
+			"code": "wpi-srjb-wer",
+			"room_id": "329ek8g8f2e4g30487862vdb",
+			"role": "host",
+			"enabled": true,
+			"created_at": "2023-03-14T15:54:18Z",
+			"updated_at": "2023-03-14T15:54:20Z",
+			},
+		{
+			"code": "dfj-ewbe-oqw",
+			"room_id": "329ek8g8f2e4g30487862vdb",
+			"role": "guest",
+			"enabled": true,
+			"created_at": "2023-03-14T15:14:18Z",
+			"updated_at": "2023-03-14T15:24:18Z",
+		}
+    ]
+}
+```
+
+</ResponseBox>
+
+### Arguments
+
+| Field | Type | Description |
+| :--- | :--- | :---|
+| room_id | `string` | mandatory |
+
+
+### Errors
+
+| Description | Code |
+| :--- | :--- |
+| Room not found | 404 |
+| Room is disabled | 403 |
+| Authentication Error | 401 |
+
+
+## 2. Create Role Room Code API
+Creates a Room Code for a specific Role in a Room
+
+<PostRequest title="https://api.100ms.live/v2/room-codes/room/<room_id>/role/<role>" />
+<Request id="req-comp-0">
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/room-codes/room/<room_id>/role/<role>' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+
+```
+</Request>
+    
+    
+### Arguments
+
+| Field | Type | Description |
+| :--- | :--- | :---|
+| room_id | `string` | mandatory |
+| role | `string` | mandatory |
+    
+<ResponseBox id="resp-0" status="200 OK">
+
+```json
+{
+    "code": "wet-qwgq-otr",
+    "room_id": "329ek8g8f2e4g30487862vdb",
+    "role": "host",
+    "enabled": true,
+    "created_at": "2023-03-14T15:14:18Z",
+    "updated_at": "2023-03-17T02:24:10Z",
+}
+```
+ </ResponseBox>
+
+    
+### Errors
+
+| Description | Code |
+| :--- | :--- |
+| Room not found | 404 |
+| Room is disabled | 403 |
+| Authentication Error | 401 |
+| Role not found | 404 |

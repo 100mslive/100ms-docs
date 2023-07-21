@@ -1,0 +1,42 @@
+---
+title: Stop recording by id
+nav: 3.145
+---
+
+Use this to stop a specific recording by its unique identifier.
+
+<PostRequest title="https://api.100ms.live/v2/recordings/<object_id>/stop" />
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/recordings/<object_id>/stop' \
+--header 'Authorization: Bearer <management_token>' \
+```
+
+</Request>
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "<recording-id>",
+    "room_id": "<room-id>",
+    "session_id": "<session-id>",
+    "status": "stopping",
+    "created_at": "2023-03-30T06:53:03.67Z",
+    "started_at": "2023-03-30T06:53:06.787Z",
+    "updated_at": "2023-03-30T06:53:06.833Z",
+    "stopped_at": null,
+    "meeting_url": "<meeting-url>",
+    "started_by": "",
+    "stopped_by": "",
+    "asset_types": [
+        "room-composite",
+        "chat",
+        "transcript",
+        "summary",
+    ],
+    "recording_assets": null
+}
+```
+
+</ResponseBox>

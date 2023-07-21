@@ -1,0 +1,84 @@
+---
+title: Integrating The SDK
+nav: 3.1
+---
+
+import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
+
+Three main sections here are:
+[Adding Dependencies](#adding-dependencies) - Dependencies for the 100ms Android SDK.
+[Adding the 100ms SDK](#adding-the-100ms-sdk) - To add the SDK to your project's dependencies.
+[Adding Permissions](#permissions) - Since a video calling app needs camera/record-audio permissions you'll need this for the apps to work.
+
+### Adding Dependencies
+
+<AndroidSdkVersionShield />
+
+<Tabs id="sdk-imports" items={['Maven Central', 'Jitpack']} />
+
+<Tab id='sdk-imports-0'>
+
+```json{5-8}:settings.gradle section=AddSDKDependencies sectionIndex=1
+dependencies {
+ // See the version in the badge above.
+ // There are separate libraries for the sdk, virtual background and hls-player-stats.
+ //     add just the ones you need.
+ def hmsVersion = "x.x.x"
+ implementation "live.100ms:android-sdk:$hmsVersion"    // Essential
+ implementation "live.100ms:virtual-background:$hmsVersion" // Optional
+ implementation "live.100ms:hls-player-stats:$hmsVersion"   // Optional
+ implementation "live.100ms:hls-player:$hmsVersion"   // Optional
+}
+```
+
+</Tab>
+
+<Tab id='sdk-imports-1'>
+
+There is one extra step to use the jitpack libraries.
+
+-   Add the JitPack repository to your root `settings.gradle` at the end of the `respositories` closure:
+
+You can open it in Android Studio by double tapping shift and typing `settings.gradle`.
+
+```json{7}:settings.gradle section=AddSDKDependencies sectionIndex=1
+dependencyResolutionManagement {
+ repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+ repositories {
+ google()
+ mavenCentral()
+ jcenter() // Warning: this repository is going to shut down soon
+ maven { url 'https://jitpack.io' }
+    }
+}
+rootProject.name = "MyVideoCallApp"
+include ':app'
+
+```
+
+-   Add the 100ms sdk dependency to your app-level `build.gradle`
+
+```json{2,4-6}:build.gradle section=AddSDKDependencies sectionIndex=2
+dependencies {
+ def hmsVersion = "x.x.x"
+ // See the version in the jitpack badge above.
+ implementation "com.github.100mslive.android-sdk:lib:$hmsVersion"          // Essential
+ implementation "com.github.100mslive.android-sdk:virtualBackground:$hmsVersion" // Optional
+ implementation "com.github.100mslive.android-sdk:stats:$hmsVersion"            // Optional
+
+}
+```
+
+</Tab>
+
+### Permissions
+
+Camera, Recording Audio and Internet permissions are required. Add them to your manifest.
+
+```xml:AndroidManifest.xml
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+```
+
+You will also need to request Camera and Record Audio permissions at runtime before you join a call or display a preview. Please follow [Android Documentation](https://developer.android.com/training/permissions/requesting#request-permission) for runtime permissions.

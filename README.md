@@ -77,25 +77,9 @@ Then Follow the Steps in 1. to add docs to it.
 
 So you don't have to copy paste it again and again.
 
-1. Create a new file `test.md` and add your Markdown content.
-2. then open to `/components/Content.tsx`
-3. Makes sure to import it like this `import Role from '../common/role.md';`
-
-4. Add it in the `data` which is just below it
-
-```js
-const data = {
-    foundation: Foundation,
-    // add below
-    roles: Role
-};
-```
-
-5. Then open up any `.mdx` file to use this
-
-```jsx
-<Content alias="roles" />
-```
+1. Create a new file with a .md extension e.g `common/test.md` and add your Markdown content or a file with .mdx extension e.g `common/test.mdx` if you want to embed JSX inside it (make sure to escape these characters `<>{}` with backslash or use backtick if it's a code snippet if you don't want it to be parsed as JSX).
+2. Import it at the top of the mdx file as a component in PascalCase e.g `import Test from '@/common/test.md'`
+3. Use the component anywhere within the MDX document e.g `<Test />`
 
 ## 🥵 Components
 
@@ -180,15 +164,6 @@ Super easy just get the `id`
 Every style of docs is fully customisable and is fully built with CSS Variables.
 
 All CSS Tokens , Baseline , Reset can be found in [theme.css](https://github.com/100mslive/100ms-docs/blob/main/styles/theme.css)
-
-```css
-:root {
-    /* Contains Tokens for Dark Mode */
-}
-[data-theme='light'] {
-    /* Contains Tokens for Light Mode */
-}
-```
 
 All CSS Variables prefixed with `token` control the Syntax Highlighting.
 

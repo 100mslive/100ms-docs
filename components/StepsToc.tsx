@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from 'react';
 import { Box, Text } from '@100mslive/react-ui';
-import { useMemo } from 'react';
 
 export type TocItem = {
     slug: string;
@@ -16,13 +16,16 @@ export default function StepsToc({
 }) {
     // props from mdx gets converted to a string
     if (typeof descriptions === 'string') {
-        let descriptionString = descriptions as string;
+        const descriptionString = descriptions as string;
         descriptions = JSON.parse(descriptionString) as string[];
     }
 
+    const [toc, setToc] = useState<TocItem[]>([]);
+
     const parentIdHash = parentId ? `#${parentId}` : '';
-    const toc = useMemo(() => {
-        let list: TocItem[] = [];
+
+    useEffect(() => {
+        const list: TocItem[] = [];
         if (typeof window !== 'undefined') {
             const ids = document.querySelectorAll(`${parentIdHash} h3`);
             ids.forEach((t, idx) =>
@@ -33,7 +36,7 @@ export default function StepsToc({
                 })
             );
         }
-        return list;
+        setToc(list);
     }, []);
 
     return (
@@ -48,6 +51,7 @@ export default function StepsToc({
             }}>
             {toc.map((item, index) => (
                 <Box
+                    key={item.slug}
                     as="a"
                     href={`#${item.slug}`}
                     css={{

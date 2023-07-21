@@ -1,0 +1,47 @@
+---
+title: Room Links
+nav: 5.4
+---
+
+A Room Link is a link that a peer can use to join a room. It is always associated to a specific room and role, allowing unique room links for each role in a room.
+
+<FlexContainer>
+<Callout icon="link" title="Room Links Basics">
+
+In order to construct unique room links for each role in your room, you need
+	- a domain to host the sample web app
+		- use 100ms hosted `template-subdomain` when using Prebuilt room links
+		- self-hosted `your-domain` when customising and deploying our sample web apps. 
+	- a role specific [room code](/get-started/v2/get-started/prebuilt/room-codes/overview). For instance,
+		- host : `abc-perj-xno`
+		- guest : `jnj-owef-kjs` 
+</Callout>
+</FlexContainer>
+
+## Prebuilt Room Links
+
+If you're using 100ms Prebuilt solution, the room link looks like : `https://<template-subdomain>/meeting/<room-code>`
+
+1. `template-subdomain` : This the subdomain that you’ve defined at the time of template creation on 100ms dashboard. 
+2. `room-code` : This belongs to a unique `room_id` and `role` for which you're creating the room link
+
+Head over to [Construct a Prebuilt Room Link](/concepts/v2/concepts/Prebuilt#create-prebuilt-room-links) for details.
+
+
+## Custom Domain Room Links
+
+If you're using 100ms sample apps or building from scratch, you'd need to construct a custom Room Link to embed or share it with your users. A custom domain Room Link looks like `https://<your-domain>/<room-code>`
+
+1. `your-domain` : This allows you to define a customised Room Link  
+2. `room-code` : This belongs to a unique `room_id` and `role` for which you're creating the Room Link
+
+
+### Sample Workflow for custom room links
+1. Create a Template, Room and at least one Role
+2. Use [Create Room Code](/server-side/v2/api-reference/room-codes/create-room-code-api) to generate room codes for one or more roles in a room
+3. [Retrieve Room Codes](/server-side/v2/api-reference/room-codes/get-room-code-api) for each role in the room.
+3. Construct your custom domain room link by appending the retrieved [room code](/get-started/v2/get-started/prebuilt/room-codes/overview) to the URL format for each role in the room.
+
+
+
+Make sure to use only enabled room codes to create room links. Read about [Room Code Basics](/concepts/v2/concepts/rooms/room-codes/room-codes#room-codes-basics)

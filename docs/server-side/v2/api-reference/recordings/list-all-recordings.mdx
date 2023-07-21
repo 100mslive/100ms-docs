@@ -1,0 +1,69 @@
+---
+title: List recordings
+nav: 3.144
+---
+
+Use this request to list and filter through recording jobs of a workspace. The response is paginated.
+
+This list can be filtered by `room_id`, `session_id` or `status` to find the relevant recording object for a room or session.
+
+## Recording assets
+
+> Note: This API does not return the list of [recording assets](../recording-assets/overview) to optimize for performance. To fetch the list of assets for a recording job, use the [get recording API](./get-recording).
+
+A common scenario is to fetch the recording assets for a room or session. To do so, use the [list recording assets API](../recording-assets/list-all-assets), and pass the `room_id` or `session_id` query parameter to filter the response.
+
+## API reference
+
+<GetRequest title="https://api.100ms.live/v2/recordings" />
+<Request id="req-0">
+
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/recordings' \
+--header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "limit": 10,
+    "data": [
+        {
+            "id": "642531cf94091a5af841456d",
+            "room_id": "635fe195f5e1f4a0abb7d1ae",
+            "session_id": "642531c8becbb0bb81952e36",
+            "status": "completed",
+            "created_at": "2023-03-30T06:53:03.67Z",
+            "started_at": "2023-03-30T06:53:06.787Z",
+            "updated_at": "2023-03-30T06:54:02.431Z",
+            "stopped_at": "2023-03-30T06:53:58.182Z",
+            "meeting_url": "<meeting-url>",
+            "started_by": "3f174686-cef9-4d9e-b3d5-ed91773e7f3e",
+            "stopped_by": "",
+            "asset_types": [
+                "room-composite",
+                "chat",
+                "transcript",
+                "summary",
+            ]
+        },
+        ...
+    ],
+    "last": "<object-id-of-last-recording>"
+}
+```
+
+</ResponseBox>
+
+## Query params
+
+| Name       | Description                                                                               | Required |
+| ---------- | ----------------------------------------------------------------------------------------- | -------- |
+| room_id    | Filter recordings for a particular room with its identifier                               | No       |
+| session_id | Filter recordings for a particular session with its identifier                            | No       |
+| status     | Can be one of `starting`, `running`, `stopping`, `post_processing`, `completed`, `failed` | No       |
+| start      | Sets the starting point for pagination                                                    | No       |
+| limit      | Sets the number of objects to returned in the response                                    | No       |

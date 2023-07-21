@@ -1,0 +1,34 @@
+---
+title: Echo Cancellation
+nav: 7.1
+---
+
+The 100ms React Native SDK automatically applies the best-known settings to cancel echoes from devices. However, some Android devices have issues with their hardware echo cancellation and can benefit from relying only on Software Echo cancellation.
+
+By default, Software Echo cancellation is enabled in the SDK instead of using the device's hardware echo cancellation.
+
+We have found that some Android devices have issues with their hardware echo cancellation, even though they have the hardware, it may be faulty. In such cases, we must rely on software-based echo cancellation on such devices.
+Although we continuously update the SDK with the latest known devices that have this issue, you may encounter one that we haven't tested yet.
+
+If you find that an Android device has the aforementioned hardware echo cancellation issue, you may try using software-based echo cancellation instead of relying on the device's hardware to solve the problem.
+
+The SDK provides you with an option to disable 'hardware echo cancellation' and use software-based echo cancellation on the device. You can create an instance of the `HMSAudioTrackSettings` class with the `useHardwareEchoCancellation` property set to `false`. When the `useHardwareEchoCancellation` property is set to `false`, the SDK will not use hardware echo cancellation. Then, you can use this `HMSAudioTrackSettings` instance when building an instance of the `HMSDK` class using the static `build` method.
+
+```js{3}
+// Creating Audio Setting with 'hardware echo cancellation' set to false
+const audioSettings = new HMSAudioTrackSettings({
+  useHardwareEchoCancellation: false
+});
+
+// Creating Track settings with Audio Settings for HMSSDK
+const trackSettings = HMSTrackSettings({
+  audio: audioSettings
+});
+
+// Pass the Track Settings object to the build function
+// Now, the SDK will not use hardware echo cancellation
+c̶o̶n̶s̶t̶ ̶h̶m̶s̶I̶n̶s̶t̶a̶n̶c̶e̶ ̶=̶ ̶a̶w̶a̶i̶t̶ ̶H̶M̶S̶S̶D̶K̶.̶b̶u̶i̶l̶d̶(̶)̶;̶
+const hmsInstance = await HMSSDK.build({ trackSettings });
+```
+
+> 💡 Note: It is important to note that hardware echo cancellation must be turned off based on specific device [models](https://developer.android.com/reference/android/os/Build#MODEL). Disabling it for all devices can result in echoing on devices that did not experience it before. It is important to use this feature selectively only on devices that require it.

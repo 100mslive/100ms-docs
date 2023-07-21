@@ -4,6 +4,95 @@ nav: 6.1
 description: Release Notes for 100ms iOS SDK
 ---
 
+## 0.9.6 - 2023-07-20
+### Added
+- Initialising state support for browser recording
+- Polls and quizzes APIs
+
+### Changed
+- Join API now overrides user name set in preview API
+
+### Fixed
+- Listener->speaker->listener->speaker crash when using audio sharing feature
+
+
+## 0.9.5 - 2023-06-01
+### Changed
+- Internal analytics improvements to aid faster debugging of call quality issues
+
+
+## 0.9.4 - 2023-05-16
+### Added
+- HMSMessage will have a messageID property that allows to uniquely identify a message.
+
+
+## 0.9.3 - 2023-04-27
+### Added
+- audioMode setting in HMSAudioTrackSettings which can be used to turn on Music Mode
+
+### Fixed
+- Peer tracks are not received by newly joined peers after publish -> non-publish -> publish role change
+
+
+## 0.9.2 - 2023-04-14
+### Added
+- HMSSessionStore API - a cloud based key value store for the session
+- Switch camera API with completion handler
+
+### Fixed
+- No audio/video when changing roles quickly
+- Potential crash due to overflow while screen sharing
+
+
+## 0.9.1 - 2023-03-31
+### Changed
+- Errors from getAuthTokenByRoomCode API will now include a more informative message
+
+### Fixed
+- Swift package manager error when both HMSSDK and HMSHLSPlayerSDK packages are added
+
+### Breaking
+- getAuthTokenByRoomCode API is now an instance method of HMSSDK
+
+
+## 0.8.1 - 2023-03-23
+### Breaking
+- endpoint param is removed from getAuthTokenByRoomCode API 
+
+
+## 0.7.1 - 2023-03-17
+### Added
+- getAuthTokenByRoomCode API
+
+### Changed
+- Performance improvement for screen-sharing
+- improve call failure detection and reporting
+
+### Breaking
+- HMSHLSStatsMonitor is moved to a separate HMSHLSPlayerSDK
+
+
+## 0.6.5 - 2023-03-13
+### Added
+ - cameraOrientationLock API for HMSVideoTrackSettings to lock camera orientation
+
+
+## 0.6.4 - 2023-02-14
+### Changed
+- Performance improvements for PiP mode
+- videoContentMode property now controls content resizing for HMSSampleBufferDisplayView
+
+
+## 0.6.3 - 2023-02-07
+### Added
+- modifyCaptureDeviceUsingBlock API on HMSLocalVideoTrack for fine grain camera control
+- captureImageAtMaxSupportedResolutionWithFlash API on HMSLocalVideoTrack for taking high res photos during video capture
+- decodedString extension API on AVMetadataItem to get timed metadata json payload
+
+### Changed
+- Improved disconnected state detection on certain networks
+
+
 ## 0.6.1 - 2023-01-19
 ### Added
 - Error callback onPlaybackFailure to monitor HLS error events

@@ -1,0 +1,228 @@
+---
+title: HLS Player
+nav: 11.2
+---
+
+import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
+
+The HmsHlsPlayer is an HLS player offered by 100ms that can be used to play HLS streams. The player takes a URL to play the stream. It also provides the ability to send analytics events related to the HLS playback to the 100ms dashboard when provided with 100ms SDK instance with an active room.
+
+## How to Integrate HLS Player SDK
+
+Add the import:
+<AndroidSdkVersionShield />
+
+`implementation "live.100ms:hls-player:$hmsVersion"`
+
+## How to Start HLS
+- Take a look at the [HLS](./hls/hls) section about how to start an hls stream in a HMS room.
+- [Here's](./hls/hls#current-room-status) how to read the hls url from the room.
+
+So you'd get the url from `onJoin` and `onRoomUpdate` as mentioned in the link above.
+
+## How to Play an HLS Stream
+
+You create an instance of HmsHlsPlayer like below:
+
+```kotlin
+let hlsPlayer = HmsHlsPlayer(context, hmsSdk)
+```
+
+> hmssdk is optional, it can be null.
+
+Next, you call play on this hlsPlayer instance passing the hls stream url like below:
+
+```kotlin
+val hlsUrl = room.hlsStreamingState?.variants?.get(0)?.hlsStreamUrl
+hmsPlayer.play(hlsUrl)
+```
+Note you may need to get this in both `onJoin` and `onRoomUpdated`. The type for `onRoomUpdated` should be something like:
+
+```kotlin
+override fun onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom) {
+    if (type == HMSRoomUpdate.HLS_STREAMING_STATE_UPDATED) {
+        val hlsUrl = room.hlsStreamingState?.variants?.get(0)?.hlsStreamUrl
+    }
+}
+```
+
+Take a look at [how the sample app does this](https://github.com/100mslive/100ms-android/blob/94b027efc89222d33db608fcd677b22f62a79784/app/src/main/java/live/hms/app2/ui/meeting/MeetingViewModel.kt#L604) if not clear.
+
+The actual url will look something like:
+`"https://cdn.100ms.live/beam/62a1bfa2071e483b48ef37f6/63b2bacc1d485406b9a2f27c/20230420/1681980133192/master.m3u8"`
+
+## How to Show Video Player UI
+
+In your xml, define `androidx.media3.ui.PlayerView` from `implementation 'com.google.android.exoplayer:exoplayer-ui:2.X.X'` like:
+```xml
+<androidx.media3.ui.PlayerView
+        android:id="@+id/hls_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+```
+Get an instance of `PlayerView` and then set `playerView.player = hlsPLayer.getNativePlayer()`.
+
+## How to stop the playback
+
+You call stop on the hlsPlayer instance like below:
+
+
+```kotlin
+
+hmsPlayer.stop()
+
+```
+
+## How to Pause and Resume the Playback
+
+You call pause/resume on the hlsPlayer instance like below:
+
+
+```kotlin
+
+hmsPlayer.pause()
+hmsPlayer.resume()
+
+```
+
+## How to Seek Forward or Backward
+
+You use seekForward and seekBackward methods on the hlsPlayer instance like below:
+
+
+```kotlin
+
+hmsPlayer.seekForward(5, TimeUnit.SECONDS)
+hmsPlaye.seekBackward(5, TimeUnit.SECONDS)
+
+```
+
+## How to Seek to Live Position
+
+You use `seekToLivePosition` methods on the hlsPlayer instance to go to the live position like below:
+
+
+```kotlin
+
+hmsPlayer.seekToLivePosition()
+
+```
+
+## How to Change Volume of HLS Playback
+
+Use volume property to change the volume of HLS player. The volume level is between 0-100. Volume is set to 100 by default.
+
+
+```kotlin
+
+hmsPlayer.volume = 50
+
+```
+
+
+## How to Know the Stats Related to HLS Playback
+
+`HmsHlsPlayer` exposes statMonitor interface to know about the statistics about current HLS playback. For more information about how to use this HLS Stats Monitor check it's documentation [here](/android/v2/how--to-guides/measure-network-quality-and-performance/hls-stats) The following snippet shows how you check check how far is the current HLS playback from live position. To monitor stats continuously you can use a timer to check the values of different stats.
+
+Override the onEventUpdate from `StatsMonitor`
+
+```kotlin
+override fun onEventUpdate(playerStats: PlayerStatsModel) {
+    updateLiveButtonVisibility(playerStats)
+}
+```
+
+```kotlin
+fun updateLiveButtonVisibility(playerStats: PlayerStatsModel) {
+        // It's live if the distance from the live edge is less than 10 seconds.
+        val isLive = playerStats.distanceFromLive/1000 < SECONDS_FROM_LIVE
+        // Show the button to go to live if it's not live.
+        binding.btnSeekLive.visibility =  if(!isLive)
+                View.VISIBLE
+            else
+                View.GONE
+    }
+```
+
+## How to Know When Player Changes State During Playback
+
+The player can be in one of the following states: playing, stopped, paused, buffering, failed, unknown during playback.
+
+You can implement class that follows `HmsHlsPlaybackEvents` interface, and listen for `onPlaybackStateChanged` callback to know about the state change event during the playback.
+
+
+```kotlin
+hlsPlayer.addPlayerEventListener(object : HmsHlsPlaybackEvents {
+
+            override fun onPlaybackFailure(error : HmsHlsException) {
+                Log.d("HMSHLSPLAYER","From App, error: $error")
+            }
+
+            override fun onPlaybackStateChanged(p1 : HmsHlsPlaybackState){
+                Log.d("HMSHLSPLAYER","From App, playback state: $p1")
+            }
+
+            override fun onCue(hlsCue : HmsHlsCue) {
+                
+            }
+        })
+```
+
+
+### How to Know When There is an Error During HLS Playback
+
+You can assign a class that follows `HmsHlsPlaybackEvents` interface and listen for `onPlaybackFailure` callback to know about the errors that happen during playback.
+
+
+## How to Use HLS Timed Metadata with 100ms HLS player
+
+Timed Metadata can be embeded in the HLS stream using 100ms SDK. When you use 100ms HLS player to play this HLS stream, onCue(cue: HMSHLSCue) callback is triggered when the player's current time matches that of a timed event in the HLS stream. You can utilise this callback to know about any HLS Timed Metadata cue and use it's data to show any UI like quizzes, poll etc. to HLS viewers.
+
+```kotlin
+
+class HLSStreamViewController: HmsHlsPlaybackEvents {
+
+    override fun onCue(hlsCue : HmsHlsCue) {
+        // Handle the hls timed metadata cue
+    }
+}
+
+```
+
+An example of it is provided in the sample app at [DisplayHlsCuesUseCase](https://github.com/100mslive/100ms-android/blob/469e7cd005e6762e02361d24eeaad945f3b7db8a/app/src/main/java/live/hms/app2/ui/meeting/activespeaker/DisplayHlsCuesUseCase.kt#L8).
+
+Note: following information on `HmsHlsCue` can be used to know more about what timed event is triggered and show UI accordingly:
+
+```kotlin
+
+public data class HmsHlsCue(
+    // startDate of the timed event
+    val startDate: Date,
+    // endDate of the timed event
+    val endDate: Date?,
+    // String payload of the timed event
+    val payloadval : String?,
+    // Unique id of the timed event
+    val id: String? = null,
+)
+
+```
+
+## How to Configure HLS Player to Send Analytics Events
+
+If your app already has an hmsSDK instance that you are using to join the 100ms room, you can assign this instance to HLS player's analytics interface to enable the player to sent analytics events. Currently only hard failure events (where the player encounters an unrecoverable error and playback can't continue) are sent to analytics.
+
+```kotlin
+let hlsPlayer = HmsHlsPlayer(context, hmsSdk)
+```
+
+OR
+
+```kotlin
+
+hlsPlayer.analytics = hmsSDK
+
+```
+
+
+👀 To see an example Android HLS Player implementation using 100ms SDK, checkout [HlsFragment](https://github.com/100mslive/100ms-android/blob/469e7cd005e6762e02361d24eeaad945f3b7db8a/app/src/main/java/live/hms/app2/ui/meeting/activespeaker/HlsFragment.kt#L40) from our example project.

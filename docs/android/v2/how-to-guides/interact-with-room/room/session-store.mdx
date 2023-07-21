@@ -1,0 +1,204 @@
+---
+title: Session Store
+nav: 10.2
+---
+
+Session store is a shared realtime key-value store that is accessible by everyone in the room. Consider it as additional data associated with the session at the top level. Session store can be utilized to implement features such as pinned text, spotlight (which brings a particular peer to the center stage for everyone in the room), and more.
+
+The session store persists throughout the session and is cleared when the last peer leaves the room.
+
+<Note>
+💡 Session Store vs Peer Metadata
+
+While peer metadata is associated with individual peers and each peer can have their own metadata, session store remains the same for every peer in the room.
+
+</Note>
+
+## How to use
+
+Session store is only available after user joins the session. To obtain a reference to the session store, you need to override the `fun onSessionStoreAvailable(sessionStore: HmsSessionStore)` function of the `HMSUpdateListener` protocol. Once you get the reference to the store you can save it in your app for accessing later.
+
+### Setting a value for a specific key
+
+Use the `set` API to assign a value to a specific key. Once a value is assigned, it will be available for other peers in the room who are observing this key.
+
+<Tabs id="sessionstoreset" items={['Kotlin', 'Java']} />
+
+<Tab id='sessionstoreset-0'>
+
+```kotlin
+fun updateSessionStore(data: Any?, key : String, hmsActionResultListener: HMSActionResultListener) {
+    hmsSessionStore.set(data, key, hmsActionResultListener)
+}
+```
+
+
+</Tab>
+
+<Tab id='sessionstoreset-1'>
+
+```java
+HmsSessionStore sessionStore;
+void updateSessionStore(String data, Object key, HMSActionResultListener listener) {
+        sessionStore.set(data,key, listener);
+}
+```
+
+</Tab>
+
+> 💡 It's important to make sure the object is serializeable. Primitive types Int, Boolean etc are fine to pass and read with parsing. For a custom class, add `Gson` `SerializedName` annotations or otherwise ensure that the object can be recreated after being sent across the network. If not `SerializedName`, consider [`Keep`](https://developer.android.com/reference/androidx/annotation/Keep) annotations on the data classes to prevent obfuscation might be the easiest way to do this.
+
+## Retrieving a value for a specific key
+
+### Retrieve the current value and receive updates
+
+Most of the time the application is interested not just in a current value of a key but also any updates to that value. To obtain the initial value and receive updates, use the `addKeyChangeListener` API.
+It takes a list of keys to observe and a closure that will be called for initial value and every time an update is received.
+
+> There are different ways to receive primitive values, objects and lists of objects.
+
+<Tabs id="sessionstoreget" items={['Kotlin', 'Java']} />
+
+<Tab id='sessionstoreget-0'>
+
+```kotlin
+sessionStore.addKeyChangeListener(listOf("time","cat","cats"), object : HMSKeyChangeListener {
+            override fun onKeyChanged(key: String, value: JsonElement?) {
+                when(key) {
+                    // Primitive values
+                    "time" -> { val time : Long? = value?.asLong }
+                    // Objects
+                    "cat" -> {
+                        if(value != null)
+                            val cat : Cat = Gson().fromJson(value as JsonElement, Cat::class.java)
+                    }
+                    // Lists of objects
+                    "cats" -> { 
+                        val type = TypeToken.getParameterized(List::class.java, Cat::class.java).type
+
+                        if(value !=null && key == catKey)
+                            val cats: List<Cats> = Gson().fromJson(value, type)                        
+                     }
+                }
+            }
+        },
+            object : HMSActionResultListener {
+                override fun onSuccess() {/* Added successfully */}
+                override fun onError(error: HMSException) {/* Error adding listener */}
+            }
+        )
+```
+
+
+</Tab>
+
+<Tab id='sessionstoreget-1'>
+
+```java
+sessionStore.addKeyChangeListener(Arrays.asList("time","cat","cats"),
+        new HMSKeyChangeListener() {
+        @Override
+        public void onKeyChanged(@NonNull String key, @Nullable JsonElement value) {
+
+            switch (key) {
+                case "time":
+                    if (value != null) {
+                        Long time = value.getAsLong();
+                    }
+                    break;
+
+                case "cat":
+                    if (value != null) {
+                        Cat cat = new Gson().fromJson(value, Cat.class);
+                    }
+                    break;
+
+                case "cats":
+                    if (value != null) {
+                        Type type = TypeToken.getParameterized(List.class, Cat.class).getType();
+                        List<Cat> cats = new Gson().fromJson(value, type);
+                    }
+                    break;
+            }
+        },
+        new HMSActionResultListener() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onError(@NonNull HMSException error) {
+
+            }
+        });
+```
+
+</Tab>
+
+You can have multiple observers running concurrently.
+
+### Managing the lifecycle of observers
+
+During the lifecycle of the app, you may need to subscribe and unsubscribe for value updates. To unsubscribe keep a reference to the `HMSKeyChangeListener`:
+
+Later when the observer is no longer needed call `sessionStore.removeKeyChangeListener(keyChangeListener)` API to stop receiving update.
+
+### Retrieve the current value once
+
+Use the `get(key : String, listener: HMSSessionMetadataListener)` API if your application does not require updates for the key.
+
+<Tabs id="sessionstoresingle" items={['Kotlin', 'Java']} />
+
+<Tab id='sessionstoresingle-0'>
+
+
+```kotlin
+sessionStore.get("mykey", object : HMSSessionMetadataListener {
+    override fun onSuccess(sessionMetadata: JsonElement?) {
+        // Use value
+        val data = Gson().fromJson(value, CustomMetadata::class.java)
+    }
+
+    override fun onError(error: HMSException) {
+        // Error while retrieving
+    }
+
+})
+
+```
+
+</Tab>
+
+<Tab id='sessionstoresingle-1'>
+
+```java
+sessionStore.get("mykey",new  HMSSessionMetadataListener(){
+
+    @Override
+    public void onSuccess(@Nullable JsonElement sessionMetadata) {
+        // Use value
+        CustomMetadata data = new Gson().fromJson(sessionMetadata, CustomMetadata.class);
+    }
+
+    @Override
+    public void onError(@NonNull HMSException error) {
+        //Error while retrieving
+    }
+
+});
+```
+</Tab>
+
+## Limitations and workarounds in Alpha release
+
+-   There is no permission support, which means anyone can read/write session metadata. If you want to restrict access to session metadata, you have to implement it at the app level logic.
+-   Locks are required to ensure consistency of the data. If two peers update the data at the same time, it may result in a race condition where the last update overwrites the previous ones.
+
+👀 For an example of how to implement pinned chat support using session store in an Android app with the 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-android/blob/dev/app/src/main/java/live/hms/app2/ui/meeting/SessionMetadataUseCase.kt).
+
+## Limits
+
+- Max payload size for data can be 1KB.
+- Maximum 100 keys are supported with 64KB limit applied to all keys combined.
+- Metadata size for 64 KB also include the key size.

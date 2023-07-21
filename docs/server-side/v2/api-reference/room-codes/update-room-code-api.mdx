@@ -1,0 +1,53 @@
+---
+title: Update Room Code status
+nav: 3.015
+---
+
+Updates the current state for a given Room Code.
+
+<PostRequest title="https://api.100ms.live/v2/room-codes/code" />
+<Request id="req-comp-0">
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/room-codes/code' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data '{
+    "code": <code>,
+    "enabled": false
+}'
+```
+</Request>
+
+
+### Arguments
+
+| Field   | Type      | Description                     | Required |
+| :------ | :-------- | :------------------------------ | :------- |
+| code    | `string`  | Room Code to be updated         | Required |
+| enabled | `boolean` | Can be updated to true or false | Required |
+
+<ResponseBox id="resp-0" status="200 OK">
+
+```json
+{
+    "code": "eiu-qwq-sdf",
+    "room_id": "329d23d4f772854d9bf633df",
+    "role": "host",
+    "enabled": false,
+    "created_at": "2023-03-03T11:41:08.082Z",
+    "updated_at": "2023-03-03T12:43:05.082Z"
+}
+```
+
+</ResponseBox>
+    
+   
+    
+### Errors
+
+| Description                                                                                                            | Code |
+| :--------------------------------------------------------------------------------------------------------------------- | :--- |
+| Code not found                                                                                                         | 404  |
+| Code can not be enabled (role/room does not exist)                                                                     | 403  |
+| Authentication Error                                                                                                   | 401  |
+| Invalid body parameter <ul><li>if body contains other field than enabled</li> <li> if enabled is not boolean</li></ul> | 400  |

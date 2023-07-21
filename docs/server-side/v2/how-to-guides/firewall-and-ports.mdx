@@ -1,0 +1,50 @@
+---
+title: Configure firewall
+nav: 7
+tags:
+    - domains
+    - ports
+    - firewall
+    - whitelisting
+---
+
+For smooth call experience add following domains and ports to your firewall whitelist
+
+## Domains
+
+`*.100ms.live`
+
+## Ports
+
+### Minimum requirement
+
+| Ports   | Protocol | Description              |
+| :------ | :------- | :----------------------- |
+| 80, 443 | TCP      | API, WebSocket, TURN/TLS |
+
+### Requirements for best experience
+
+| Ports                  | Protocol | Description                  |
+| :--------------------- | :------- | :--------------------------- |
+| 80, 443, 3478          | TCP      | API, WebSocket, TURN/TLS     |
+| 443, 3478, 41000-65535 | UDP      | TURN/UDP, ICE, Media traffic |
+
+### Turn server IP address
+```
+34.141.73.51/32
+35.207.178.162/32
+35.207.130.81/32
+35.207.168.133/32
+35.211.150.95/32
+35.211.73.217/32
+35.211.191.127/32
+35.207.224.32/32
+35.207.222.110/32
+35.207.209.133/32
+35.244.46.211/32
+34.74.251.112/32
+```
+
+### NAT gateway IP address whitelisting for webhooks
+
+Please refer to [how to secure webhooks section](/server-side/v2/introduction/webhook#how-to-secure-webhooks) in webhooks guide fore more details.

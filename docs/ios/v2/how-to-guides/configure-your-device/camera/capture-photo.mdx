@@ -1,0 +1,29 @@
+---
+title: Capture Photo at Highest Resolution (Beta)
+nav: 6.4
+---
+
+With this API you can take a high resolution photo from camera during a video call. You can optionally enable flash during the photo capture. This can be useful if you want to implement a remote KYC (know-your-customer) use-case to capture high quality photos of client's documents.
+
+## Minimum Requirements
+
+-   SDK version 0.6.3
+
+## How is this different from taking a snapshot of video view during call?
+
+This API utilizes the image processing capabilities of iOS device to take a high-resolution photo with stability and a shutter sound, similar to the native camera app. The iOS device enhances the quality of the image by removing blur and haziness. On the other hand, a snapshot or frame taken from a video may result in a low-resolution image due to the video quality setting for the call on your dashboard, and a random frame captured from a video has a possibility of being blurry.
+
+## How can you capture high-resolution photo from camera with 100ms SDK
+
+You call **captureImageAtMaxSupportedResolution** method on HMSLocalVideoTrack instance to get a UIImage as shown below:
+
+```swift
+let localVideoTrack = peer.localVideoTrack()
+...
+
+localVideoTrack.captureImageAtMaxSupportedResolution(withFlash: false) { image in
+    // do something with the image
+}
+```
+
+👀 To see an example iOS Capture Photo implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).

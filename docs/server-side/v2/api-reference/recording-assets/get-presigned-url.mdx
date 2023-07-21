@@ -1,0 +1,38 @@
+---
+title: Get pre-signed URL
+nav: 3.192
+---
+
+Use this API to generate a short-lived pre-signed URL for a recording asset.
+
+By default, the generated URL has an expiry of 3 days for AWS S3 and GCS buckets and 9 hours for Alibaba OSS storage. You can pass a `?presign_duration=number` query param to control the validity of the URL.
+
+<GetRequest title="https://api.100ms.live/v2/recording-assets/<asset_id>/presigned-url" />
+
+<Request id="req-0">
+
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/recording-assets/<asset_id>/presigned-url' \
+--header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "<asset-id>",
+    "path": "<path-of-asset>",
+    "url": "<presigned-url>",
+    "expiry": 3600 // in seconds
+}
+```
+
+</ResponseBox>
+
+
+## Query params
+
+| Name   | Description | Required |
+| ------ | -------- | ------- |
+| presign_duration | Specify a custom expiry duration (in seconds) to control the validity of the generated URL | No |

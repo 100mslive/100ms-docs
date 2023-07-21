@@ -1,0 +1,281 @@
+---
+title: HLS Player (Beta)
+nav: 8.23
+---
+
+The HMSHLSPlayer is an HLS player offered by 100ms that can be used to play HLS streams. The player takes a URL to play the stream. It also provides the ability to send analytics events related to the HLS playback to the 100ms dashboard when provided with 100ms SDK instance with an active room.
+
+## How to integrate HLS Player SDK
+
+You can either use Swift Package Manager or Cocoapods to add HMSHLSPlayerSDK iOS SDK to your project.
+
+#### Use Swift Package Manager
+Add HMSHLSPlayerSDK iOS SDK through Swift Package Manager in Xcode. Use https://github.com/100mslive/100ms-ios-hls-sdk.git as the package source.
+
+#### Use Cocoapods
+Assuming your project name is "basicvideocall", create "Podfile" in the project folder with the following contents
+then run `pod install`
+
+```jsx section=XcodeProjectSetup sectionIndex=1
+platform :ios, '13.0'
+
+target 'basicvideocall' do
+  use_frameworks!
+  pod 'HMSHLSPlayerSDK'
+
+end
+```
+
+Open .xcworkspace
+
+
+## How to use Play HLS stream
+
+You create an instance of HMSHLSPlayer like below:
+
+```swift
+
+import HMSHLSPlayerSDK
+
+let hlsPlayer = HMSHLSPlayer()
+
+```
+
+Next, you call play on this hlsPlayer instance passing the hls stream url like below:
+
+```swift
+
+let url = URL(string: "HLS-URL-HERE")
+hmsPlayer.play(url)
+
+```
+
+## How do I get the HLS URL of the room?
+
+There can be 2 cases:
+
+1. HLS streaming is already in progress when you join the room
+2. HLS stream is started after you have joined the session
+
+You should handle both cases by listening to onJoin and onRoomUpdate callbacks respectively, like below:
+
+```swift
+
+// Case 1 - play the hls stream if room has an active hls url
+func on(join room: HMSRoom) {
+  if let hlsUrl = room.hlsStreamingState.variants.first?.url {
+    hmsPlayer.play(hlsUrl)
+  }
+}
+
+// Case 2 - hls stream is started after you have joined the session
+func on(room: HMSRoom, update: HMSRoomUpdate) {
+  switch update {
+  case .hlsStreamingStateUpdated:
+    if let hlsUrl = room.hlsStreamingState.variants.first?.url {
+      hmsPlayer.play(hlsUrl)
+    }
+  }
+}
+
+```
+
+## How to show video player UI
+
+You can get access to video player view as a UIView. So that you can add it as a subview to any other view in your app's UI.
+
+You call videoPlayerViewController method on hls player instance to get AVPlayerViewController. You use this AVPlayerViewController instance to show the video player view in your own UIView. Below we show an example of how you can subview the video player view in your own UIViewController.
+
+
+```swift
+
+class HLSStreamViewController: UIViewController {
+
+...
+
+    override func viewDidAppear(_ animated: Bool) {
+    
+    ...
+    
+        let playerViewController = hmsPlayer.videoPlayerViewController(showsPlayerControls: true)
+        playerViewController.view.frame = self.view.bounds
+        self.view.addSubview(playerViewController.view)
+    }
+}
+
+```
+
+## How to stop the playback
+
+You call stop on the hlsPlayer instance like below:
+
+
+```swift
+
+hmsPlayer.stop()
+
+```
+
+## How to pause and resume the playback
+
+You call pause/resume on the hlsPlayer instance like below:
+
+
+```swift
+
+hmsPlayer.pause()
+hmsPlayer.resume()
+
+```
+
+## How to seek forward or backward
+
+You use seekForward and seekBackward methods on the hlsPlayer instance like below:
+
+
+```swift
+
+hmsPlayer.seekForward(seconds: 5)
+hmsPlaye.seekBackward(seconds: 5)
+
+```
+
+## How to seek to live position
+
+You use seekToLivePosition methods on the hlsPlayer instance to go to the live poition like below:
+
+
+```swift
+
+hmsPlayer.seekToLivePosition()
+
+```
+
+## How to change volume of HLS playback
+
+Use volume property to change the volume of HLS player. The volume level is between 0-100. Volume is set to 100 by default.
+
+
+```swift
+
+hmsPlayer.volume = 50
+
+```
+
+
+## How to know the stats related to HLS playback
+
+HMSHLSPlayer exposes statMonitor interface to know about the statistics about current HLS playback. For more information about how to use this HLS Stats Monitor check it's documentation [here](/ios/v2/how--to-guides/measure-network-quality-and-performance/hls-stats) The following snippet shows how you check check how far is the current HLS playback from live position. To monitor stats continuously you can use a timer to check the values of different stats.
+
+
+```swift
+
+Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+    let distanceFromLivePosition = hmsPlayer.statMonitor.distanceFromLiveEdge
+}
+
+```
+
+## How to know when player changes state during playback
+
+The player can be in one of the following states: playing, stopped, paused, buffering, failed, unknown during playback.
+
+You can assign a class that follows HMSHLSPlayerDelegate protocol as delegate to the hlsPlayer instance. And listen for onPlaybackStateChanged callback to know about the state change event during the playback.
+
+
+```swift
+
+class HLSStreamViewController: HMSHLSPlayerDelegate {
+    ...
+    
+    hlsPlayer.delegate = self
+    ...
+
+    func onPlaybackStateChanged(state: HMSHLSPlaybackState) {
+        // Do player UI related changes
+    }
+}
+
+```
+
+
+## How to know when there is an error during hls playback
+
+You can assign a class that follows HMSHLSPlayerDelegate protocol as delegate to the hlsPlayer instance. And listen for onPlaybackFailure callback to know about the errors that happen during playback.
+
+
+```swift
+
+class HLSStreamViewController: HMSHLSPlayerDelegate {
+    ...
+    
+    hlsPlayer.delegate = self
+    ...
+
+    func onPlaybackFailure(error: Error) {
+        guard let error = error as? HMSHLSError else { return }
+        
+        if error.isTerminal {
+            print("Player has encountered a terminal error, we need to restart the player: \(error.localizedDescription)")
+        }
+        else {
+            print("Player has encountered an error, but it's non-fatal and player might recover \(error.localizedDescription)")
+        }
+    }
+}
+
+```
+
+## How to use HLS Timed Metadata with 100ms HLS player
+
+Timed Metadata can be embeded in the HLS stream using 100ms SDK. When you use 100ms HLS player to play this HLS stream, onCue(cue: HMSHLSCue) callback is triggered when the player's current time matches that of a timed event in the HLS stream. You can utilise this callback to know about any HLS Timed Metadata cue and use it's data to show any UI like quizes, poll etc. to HLS viewers.
+
+```swift
+
+class HLSStreamViewController: HMSHLSPlayerDelegate {
+    ...
+    
+    hlsPlayer.delegate = self
+    ...
+
+    func onCue(cue: HMSHLSCue) {
+        // Handle the hls timed metadata cue
+    }
+}
+
+```
+
+Note: following information on HMSHLSCue can be used to know more about what timed event is triggered and show UI accordingly:
+
+```swift
+
+class HMSHLSCue: NSObject {
+    
+    /// Unique id of the timed event
+    public let id: String
+    
+    /// startDate of the timed event
+    public let startDate: Date
+    
+    /// endDate of the timed event
+    public let endDate: Date?
+    
+    /// String payload of the timed event
+    public let payload: String?
+    
+}
+
+```
+
+## How to configure hls player to send analytics events
+
+If your app already has an hmsSDK instance that you are using to join the 100ms room, you can assign this instance to HLS player's analytics interface to enable the player to sent analytics events. Currently only hard failure events (where the player encounters an unrecoverable error and playback can't continue) are sent to analytics.
+
+```swift
+
+hlsPlayer.analytics = hmsSDK
+
+```
+
+
+👀 To see an example iOS HLS Player implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).

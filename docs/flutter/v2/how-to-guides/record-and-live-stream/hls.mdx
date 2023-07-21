@@ -1,0 +1,454 @@
+---
+title: HLS Streaming
+nav: 9.2
+---
+
+[HLS Streaming](/flutter/v2/foundation/live-streaming) allows for scaling to millions of viewers in near real-time. We can give a link of our
+web app that will be converted to an HLS feed by our server and can be played across devices for consumption.
+
+Behind the scenes, this will be achieved by having a bot join our room and stream what it sees and hears. Once the feed is ready, the server will give a URL that can be played using any HLS Player.
+
+> Note that the media server serving the content in this case is owned by 100ms. If looking for a way to stream
+> on YouTube, Twitch etc., please have a look at our RTMP streaming docs [here](/flutter/v2/how--to-guides/record-and-live-stream/recording).
+
+## Start/Stop HLS
+
+HLS can be started in two ways depending on the level of customization we need.
+
+1. Default View: The simplest view to just begin a stream with default UI and parameters.
+
+2. Custom Views: To use our own UI for HLS streaming, we need to provide our web-app URL for our bot to join and stream.
+   Also, we can record the stream.
+
+### Default View
+
+Begins a stream with default parameters.
+
+To start HLS with Default View, call `hmsSDK.startHlsStreaming` method.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+  ...
+
+  void startHLSStreaming(){
+    ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+    //Here this is an instance of a class that implements HMSActionResultListener, that is, Meeting
+    hmsSDK.startHlsStreaming(hmsActionResultListener: this);
+  }
+
+  void stopHLSStreaming(){
+    ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+    //Here this is an instance of a class that implements HMSActionResultListener, that is, Meeting
+    hmsSDK.stopHlsStreaming(hmsActionResultListener: this);
+  }
+
+  @override
+  void onSuccess(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments}) {
+          switch (methodType) {
+          ...
+
+          case HMSActionResultListenerMethod.hlsStreamingStarted:
+          //HLS Started successfully
+          break;
+
+          case HMSActionResultListenerMethod.hlsStreamingStopped:
+          //HLS Stopped successfully
+          break;
+
+      }
+  }
+
+  @override
+  void onException(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments,
+      required HMSException hmsException}) {
+          switch (methodType) {
+          ...
+
+          case HMSActionResultListenerMethod.hlsStreamingStarted:
+          // Check the HMSException object for details about the error
+          break;
+
+          case HMSActionResultListenerMethod.hlsStreamingStopped:
+          // Check the HMSException object for details about the error
+          break;
+
+      }
+  }
+}
+```
+
+### Custom View
+
+To use our own browser UI for HLS, we'll need to pass in a meeting URL. The 100ms bot will open this URL to join our room, so it must allow access without any user-level interaction.
+
+We can call hmsSDK.startHLSStreaming with an `HMSHLSConfig` parameter.
+
+Let's look at its structure:
+
+```dart
+// this is the HLS config class
+class HMSHLSConfig {
+  List<HMSHLSMeetingURLVariant>? meetingURLVariant;
+  HMSHLSRecordingConfig? hmsHLSRecordingConfig;
+}
+```
+
+Let's look at its attributes one by one:
+
+#### meetingURLVariant
+
+This is a list of `HMSHLSMeetingURLVariant` objects. In the future, it'll be possible to start HLS for multiple such URLs for the same room. So it's a list but currently, only the first element of the list is used.
+The `HMSHLSMeetingURLVariant` class looks like this:
+
+```dart
+class HMSHLSMeetingURLVariant {
+  String? meetingUrl;
+  String metadata;
+}
+```
+
+-   _meetingUrl_ - URL of the meeting we wish to record
+-   _metadata_ - Metadata(Any extra info to identify the URL) we wish to pass with the URL.
+
+Let's look at how we can create an `HMSHLSMeetingURLVariant` and add it in meetingURLVariant :
+
+```dart
+
+List<HMSHLSMeetingURLVariant>? meetingURLVariant = [];
+
+HMSHLSMeetingURLVariant hlsUrlVariant = HMSHLSMeetingURLVariant(
+          meetingUrl: "Meeting URL of the room", metadata: "HLS started from Flutter");
+
+meetingURLVariant.add(hlsUrlVariant);
+
+```
+
+#### hmsHLSRecordingConfig
+
+To record the HLS stream we may specify an `HMSHLSRecordingConfig` within the `HMSHLSConfig`.
+
+Here's what the `HMSHlsRecordingConfig` class looks like -
+
+```dart
+class HMSHLSRecordingConfig {
+  bool singleFilePerLayer;
+  bool videoOnDemand;
+}
+```
+
+-   _singleFilePerLayer_: If the desired end result is a mp4 file per HLS layer, false by default.
+
+-   _enableVOD_: If the desired result is a zip of m3u8 and all the chunks, false by default.
+
+Here's an example of how to create a recording config & start HLS Streaming with Recording -
+
+```dart
+HMSHLSRecordingConfig recordingConfig = HMSHLSRecordingConfig(singleFilePerLayer: false, videoOnDemand: true);
+```
+
+This can be passed in `HMSHLSConfig` to start recording.
+
+Let's see the complete implementation of HLS streaming with recording turned ON:
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+  ...
+
+  void startHLSStreaming(String meetingUrl){
+
+    List<HMSHLSMeetingURLVariant>? meetingURLVariant = [];
+    HMSHLSMeetingURLVariant hlsUrlVariant = HMSHLSMeetingURLVariant(
+              meetingUrl: meetingUrl, metadata: "HLS started from Flutter");
+    meetingURLVariant.add(hlsUrlVariant);
+
+    //This config enables recording with streaming
+    HMSHLSRecordingConfig recordingConfig = HMSHLSRecordingConfig(singleFilePerLayer: false, videoOnDemand: true);
+
+    HMSHLSConfig hlsConfig = HMSHLSConfig(
+        meetingURLVariant: meetingURLVariant,
+        hmsHLSRecordingConfig: hmshlsRecordingConfig);
+
+    ///[hmshlsConfig]: an instance of HMSHLSConfig which we created above
+    ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+    //Here this is an instance of a class that implements HMSActionResultListener, that is, Meeting
+    hmsSDK.startHlsStreaming(hmshlsConfig: hlsConfig,hmsActionResultListener: this);
+  }
+
+  void stopHLSStreaming(){
+    ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+    //Here this is an instance of a class that implements HMSActionResultListener, that is, Meeting
+    hmsSDK.stopHlsStreaming(hmsActionResultListener: this);
+  }
+
+  @override
+  void onSuccess(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments}) {
+          switch (methodType) {
+          ...
+
+          case HMSActionResultListenerMethod.hlsStreamingStarted:
+          //HLS Started successfully
+          break;
+
+          case HMSActionResultListenerMethod.hlsStreamingStopped:
+          //HLS Stopped successfully
+          break;
+
+      }
+  }
+
+  @override
+  void onException(
+      {HMSActionResultListenerMethod methodType =
+          HMSActionResultListenerMethod.unknown,
+      Map<String, dynamic>? arguments,
+      required HMSException hmsException}) {
+          switch (methodType) {
+          ...
+
+          case HMSActionResultListenerMethod.hlsStreamingStarted:
+          // Check the HMSException object for details about the error
+          break;
+
+          case HMSActionResultListenerMethod.hlsStreamingStopped:
+          // Check the HMSException object for details about the error
+          break;
+
+      }
+  }
+}
+```
+
+## How to display HLS stream and get HLS state in room
+
+The current status of the room is always reflected in the `HMSRoom` object.
+
+Here are the relevant properties inside the `HMSRoom` object which we can read to get the current HLS streaming status of the room namely: `hlsStreamingState`.
+
+The object contains a boolean `running` which lets us know if HLS is running in the room right now
+Also, it contains the m3u8 URL which we will use to display HLS on the screen.
+Just like this:
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+  ...
+
+    @override
+  void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {
+
+    ...
+
+    /// this contains info about whether HLS is running in the room or not
+    ///  bool isHLSRunning = room.hmshlsStreamingState?.running??false;
+
+    /// this contains the m3u8 URL if the HLS stream is running
+    /// This URL can be passed to the video player to display HLS Stream.
+    String? hlsm3u8Url = hmshlsStreamingState?.variants[0]?.hlsStreamUrl
+
+    ...
+  }
+}
+```
+
+`isHLSRunning` can be used to show the live stream status on UI something similar to this:
+
+![hls-stream-state](/docs/v2/flutter-stream-state.jpg)
+
+> `hlsm3u8Url` string shown above contains the m3u8 URL which can be used to display HLS Stream.
+
+## When to check for room status
+
+The room status should be checked in the following places -
+
+1. In the `onJoin(room: HMSRoom)` callback of `HMSUpdateListener`
+   The properties mentioned above will be on the `HMSRoom` object.
+2. In the `onRoomUpdate(type: HMSRoomUpdate, hmsRoom: HMSRoom)` callback of `HMSUpdateListener`.
+   The `HMSRoomUpdate` type will be `HMSRoomUpdate.HLS_STREAMING_STATE_UPDATED`.
+
+## How to make the HLS peers join room faster 
+
+Since HLS peers don't publish or subscribe anything there is no point in waiting for `onJoin` or `onTrackUpdate` updates 
+to start showing them the stream as stream only needs the m3u8 URL. This time reduction might not be observed in small rooms
+but is extremely helpful in larger rooms.
+
+Let's see how we can make this faster for peers joining with HLS roles:
+
+1. Enable room state in preview from dashboard and ensure that the HLS peer is subscribed for the update as. 
+
+![Advanced settings](/docs/v2/flutter-advanced-settings.png)
+
+These options are available in advanced settings:
+
+![Room State in preview](/docs/v2/flutter-room-state-in-preview.png)
+
+In the `Roles with room-state permission` ensure that HLS role is checked to receive the updates.
+
+2. Add Preview in the application before the `join` method call and attach `HMSPreviewListener` to listen to `onRoomUpdate`
+
+```dart 
+class Preview implements HMSPreviewListener{
+
+    late HMSSDK hmsSDK;
+    String? hlsStreamURL = null
+
+    Preview(){
+      initHMSSDK();
+    }
+
+    void initHMSSDK() async {
+      hmsSDK = HMSSDK();
+      await hmsSDK.build(); // ensure to await while invoking the `build` method
+      HMSConfig config = HMSConfig(
+          userName: "John Doe",
+          authToken: "eyJH5c", // client-side token generated from your token service
+      );
+
+      //Here this is an instance of a class that implements HMSPreviewListener, that is, Preview
+      hmsSDK.addPreviewListener(listener:this);
+      hmsSDK.preview(config: config);
+    }
+
+    @override
+    void onPreview({required HMSRoom room, required List<HMSTrack> localTracks}) {
+      //We will get the callback here if the preview succeeds
+    }
+
+    @override
+    void onRoomUpdate({required HMSRoom room, required HMSRoomUpdate update}) {
+      switch (update) {
+
+        ...
+        case HMSRoomUpdate.hlsRecordingStateUpdated:
+          isRecordingStarted = room.hmshlsRecordingState?.running ?? false;
+          break;
+
+        case HMSRoomUpdate.rtmpStreamingStateUpdated:
+          isRTMPStreamingStarted = room.hmsRtmpStreamingState?.running ?? false;
+          break;
+
+        case HMSRoomUpdate.hlsStreamingStateUpdated:
+          isHLSStreamingStarted = room.hmshlsStreamingState?.running ?? false;
+
+          //This will contain the m3u8 URL if the HLS streaming is already running in the room
+          //We will use this URL to directly play the stream in player once participant joins the room
+          //rather than waiting for the onRoomUpdate callback in meeting.
+          if(isHLSStreamingStarted){
+              hlsStreamURL = room.hmshlsStreamingState?.variants[0]?.hlsStreamUrl;
+          }
+          break;
+
+        ... 
+        default:
+          break;
+      }
+    }
+
+    @override
+    void onPeerUpdate(
+      {required HMSPeer peer, required HMSPeerUpdate update}) async {
+       //Peer updates: https://www.100ms.live/docs/flutter/v2/features/update-listener-enums#hms-peer-update
+    }
+
+    @override
+    void onHMSError({required HMSException error}) {
+        //Error updates: https://www.100ms.live/docs/flutter/v2/features/error-handling#hms-exception
+    }
+
+    @override
+    void onAudioDeviceChanged(
+      {HMSAudioDevice? currentAudioDevice,
+      List<HMSAudioDevice>? availableAudioDevice}) {
+        //Get notified when the audio device is changed: https://www.100ms.live/docs/flutter/v2/features/audio-output-routing#adding-audio-device-change-event-listener-android-only
+    }
+
+    @override
+    void onSessionStoreAvailable(
+      {HMSSessionStore? hmsSessionStore}) {
+        // Get notified when the Session Store is available for usage. Read more about Session Store here: https://www.100ms.live/docs/flutter/v2/how-to-guides/interact-with-room/room/session-store
+    }
+
+}
+```
+
+3. Use the `hlsStreamURL` to display the stream in HLSPlayer after joining the room.
+
+## How to set HLS Stream to fit the mobile screen 
+
+If the device you are streaming is a mobile device, and also the people consuming the stream are on mobile follow the below configurations:
+
+1. In your 100ms dashboard, navigate to templates configure tile aspect ratio and stream video aspect ratio for the role which is broadcasting
+
+- Set the tile aspect ratio as 9:16 from destinations:
+
+![tile-aspect-ratio](/docs/v2/dashboard-tile-aspect-ratio.png)
+
+- Set the video aspect ratio from destinations->customise video tile layout
+
+![tile-aspect-ratio](/docs/v2/dashboard-video-aspect-ratio.png)
+
+2. After setting this peer tiles will be 9:16 in streams as well as the stream output will be in 9:16 ratio.
+Since the phones currently in market are not exactly 9:16, So some blank space might be observed on the phone screen.
+To get the output of stream similar to this:
+
+![Chat](/docs/v2/flutter-chat.gif)
+
+
+You need to wrap the player in `Transform.scale` widget as:
+
+```dart 
+//Wrap the player widget with Transform.scale to display the stream in full screen
+
+Transform.scale(
+    scaleX: //Scaling in x-axis(width),
+    scaleY: //Scaling in y-axis(height),
+    child: AspectRatio(
+      aspectRatio: //Aspect ratio of the player(9:16 in this case),
+      child: //Add your player here,
+    ),
+  ),
+```
+
+## Key Tips
+
+-   If using the dashboard web app from 100ms, please make sure to use a role that doesn't have publish permissions for the beam tile to not show up.
+-   If using a web app, do put in place retries for API calls like tokens etc. just in case any call fails. As human users, we're used to reloading the page in these scenarios which is difficult to achieve in the automated case.
+-   Make sure to not disable the logs for the passed-in meeting URL. This will allow us to have more visibility into the room, refreshing the page if joining doesn't happen within a time interval.
+
+## Supplementary bytes
+
+**hlsStreamingState** an instance of `HMSHLSStreamingState`, which looks like:
+
+```dart
+///[running]: bool value `true` indicates that RTMP streaming is running
+///[variants]: a list of HMSHLSVariants
+class HMSHLSStreamingState(
+  bool running;
+  List<HMSHLSVariant?> variants;
+)
+```
+
+-   _variants_ -> This represents a live stream to one or more HLS URLs in the container of `HMSHLSVariant`. Which looks like this:
+
+```dart
+///[hlsStreamUrl]: It contains m3u8 hlsStreamUrl which we will use to show the stream
+///[meetingUrl]: URL of the room which is getting streamed
+///[metadata]: Extra info about the room corresponding to meetingUrl which is passed in `HMSHLSMeetingURLVariant` while starting HLS
+///[startedAt]: time at which RTMP streaming was started
+class HMSHLSVariant(
+  String? hlsStreamUrl;
+  String? meetingUrl;
+  String? metadata;
+  DateTime? startedAt;
+)
+```

@@ -1,0 +1,241 @@
+## Overview
+
+Breakout rooms are a space within the main room where peers can participate in smaller groups for focused discussions during an ongoing session in the main room with a larger group of participants. The audio/video of participants can be available depending upon the permissions set from the [100ms template](https://dashboard.100ms.live/templates).
+
+**Example use case:**
+
+1. In the main room, the host is broadcasting along with some co-hosts
+2. Guests are listening to this stream
+3. During the stream, you want the guests to break out into smaller rooms
+4. Discuss among themselves, with or without watching the main room stream
+
+## Understand roles to enable breakout room
+
+You can implement breakout rooms using [roles](https://www.100ms.live/docs/javascript/v2/foundation/templates-and-roles) in 100ms. A role is a collection of permissions that allows you to perform a particular set of operations while being part of the room. You can create a role using the [100ms Dashboard](https://dashboard.100ms.live/templates/) or [server API](/server-side/v2/policy/create-update-role).
+
+Now, let's decide on the Architecture of Breakout Rooms, which will help create several breakout roles and set permissions accordingly.
+
+<Tabs id="pub-sub-tabs" items={['Publish Strategy', 'Subscribe Strategy', 'Permissions']} />
+
+<Tab id="pub-sub-tabs-0">
+
+-   **Publish Strategy**: This determines the tracks (audio/video/screen-share) and their quality that a role can publish.
+
+    -   For example:
+        -   _Host_ - This role can publish audio and video and also share screen.
+        -   Video Quality at 720p.
+        -   Video aspect ratio is 16:9 and screen share quality is 1080p
+
+    ![Publish-Strategy](/breakoutroom/publish-strategy.png)
+
+</Tab>
+
+<Tab id="pub-sub-tabs-1">
+- **Subscribe Strategy**: This helps define which roles the role can subscribe to; hence, those available tracks/details would be visible.
+  - For Example: 
+    - *Co-host* is subscribed to the host, co-host, and moderator.
+    - This means participants joining as co-hosts can see other participants with roles of host, co-host, and moderator if they are also publishing the track.
+
+![Subscribe-Strategy](/breakoutroom/subscribe-strategy.png)
+
+</Tab>
+
+<Tab id="pub-sub-tabs-2">
+- **Permissions**: These are params that can be set per role based on which participants joining as the given role can or cannot perform the activities
+  - For Example: *Moderator* - This role can have all permissions similar to host/co-host but does not have permission to end the ongoing session
+
+![Permission](/breakoutroom/permission.png)
+
+</Tab>
+
+## Try breakout room
+
+Let's consider the below flow to try out breakout room:
+
+-   The host and co-host are on the main stage of the stream, and the moderator in backstage.
+-   Guests are viewers watching a stream conducted by the host and co-host.
+-   Now guests want to discuss while watching the stream in the breakout room.
+
+<StepsContainer id="implement-breakout-room">
+
+### Create roles
+
+Create a template with roles host, co-host, guest, moderator and breakout room.
+
+<Tabs id="create-roles-tabs" items={['Host', 'Co-host', 'Moderator', 'Guest', 'Breakout room']} />
+
+<Tab id="create-roles-tabs-0">
+
+-   **Host:**
+
+    -   **Publish Strategy** - can publish all tracks (audio/video/screen-share)
+    -   **Subscribe Strategy** - subscribed to roles of host, co-host and moderator
+    -   **Permissions** - has all the permissions from the dashboard
+
+    ![Host](/breakoutroom/host.png)
+
+</Tab>
+
+<Tab id="create-roles-tabs-1">
+-   **Co-host**
+
+    -   **Publish Strategy** - can publish all tracks (audio/video/screen-share)
+    -   **Subscribe Strategy** - subscribed to roles host, co-host and moderator
+    -   **Permissions** - has all the permissions from the dashboard similar to host
+
+    ![cohost](/breakoutroom/cohost.png)
+
+</Tab>
+
+<Tab id="create-roles-tabs-2">
+-   **Moderator**
+
+    -   **Publish Strategy** - can publish tracks (audio/video) but cannot do screen-share
+    -   **Subscribe Strategy** - can subscribe to roles host, co-host and moderator
+    -   **Permissions** - has all the permissions from the dashboard
+
+    ![Moderator](/breakoutroom/moderator.png)
+
+</Tab>
+
+<Tab id="create-roles-tabs-3">
+-   **Guest**
+
+    -   **Publish Strategy** - cannot publish any tracks (audio/video/screen-share)
+    -   **Subscribe Strategy** - subscribe to roles host and co-host
+    -   **Permissions** - has no permissions from the dashboard except to view room state in preview
+
+    ![Guest](/breakoutroom/guest.png)
+
+</Tab>
+
+<Tab id="create-roles-tabs-4">
+-   **Breakout Room**
+
+    -   **Publish Strategy** - can publish tracks (audio/video) but cannot do screen-share
+    -   **Subscribe Strategy** - can subscribe to roles host, co-host and moderator
+    -   **Permissions** - has no permissions at all
+
+    ![Breakout-Room](/breakoutroom/breakout-room.png)
+
+</Tab>
+
+### Demo using 100ms links
+
+In this section, we will walk you through a demo of breakout rooms using 100ms demo links.
+
+#### View - before moving to breakout room
+
+Now, for the roles created from the previous section, you can check how the stream looks for each participant before moving to the breakout room based on their respective role.
+
+<Tabs id="view-tabs" items={['Host', 'Co-host', 'Moderator', 'Guest']} />
+
+<Tab id="view-tabs-0">
+
+-   **Host**: can see/hear co-host and moderator
+
+    ![Stream-Host](/breakoutroom/stream-host.png)
+
+</Tab>
+
+<Tab id="view-tabs-1">
+-   **Co-host**: can see/hear host and moderator
+
+    ![Stream-Cohost](/breakoutroom/stream-cohost.png)
+
+</Tab>
+
+<Tab id="view-tabs-2">
+-   **Moderator**: can see/hear host and co-host
+
+    ![Stream-Moderator](/breakoutroom/stream-moderator.png)
+
+</Tab>
+
+<Tab id="view-tabs-3">
+-   **Guest**: can see/hear host and co-host
+
+    ![Stream-Guest](/breakoutroom/stream-guest.png)
+
+</Tab>
+
+> Note: This is 100ms sample app UI on Web. You can customize the UI completely as per your requirements. Refer to [this guide](/javascript/v2/get-started/react-sample-app/quickstart) for more information.
+
+#### Move guests to breakout room
+
+-   **Fetch list of participants**: The moderator can fetch the list of participants from the peer list.
+
+    ![Role-change](/breakoutroom/moderator-to-guest.png)
+
+-   **Change role to breakout room role**:
+
+    -   The moderator can change the role of the participants with the _guest_ role to move them from the main room to the breakout room.
+    -   The role change can be forced by the moderator or upon permission granted by the guest.
+
+    ![Role-change-breakout](/breakoutroom/change-role1.png)
+
+-   **Role changed to breakout room**
+
+    ![Role-change-breakout1](/breakoutroom/change-role2.png)
+
+### View of Breakout room
+
+-   Once the roles are changed, guests can see and listen to each other and simultaneously watch the stream in the main room.
+
+    ![View-breakout1](/breakoutroom/view-breakout.png)
+
+-   You can enable the permission for the guest role in the template to self-movement to the breakout room.
+
+    ![Permission-breakout](/breakoutroom/role-permission.png)
+
+</StepsContainer>
+
+## Integrate in your app
+
+To integrate breakout rooms in your app, follow these steps:
+
+1. [Create roles to enable breakout room](#create-roles)
+2. [Client-side integration](#client-side-integration) - to manage breakout room
+3. [Server-side integration](#server-side-integration) - to create roles and manage breakout room
+
+<StepsContainer id="integrate-breakout-room">
+
+### Client-side integration
+
+Once the template is set up with roles to enable the breakout room, you can change a single peer role API to change a participant's role from one specific role to another. You can force the role change or do it upon permission granted by the guest.
+
+If a participant has to change another participant's role, you must enable respective permission for that role in the template.
+
+Check the below links for more information on the change role API for respective platforms:
+
+-   [JS/React](/javascript/v2/how--to-guides/control-remote-peers/change-role#change-single-peer-role-api)
+-   [Android](/android/v2/how--to-guides/interact-with-room/peer/change-role#single-peer-role-change)
+-   [iOS](/ios/v2/how--to-guides/interact-with-room/peer/change-role)
+-   [React Native](/react-native/v2/how--to-guides/interact-with-room/peer/change-role#single-peer-role-change)
+-   [Flutter](/flutter/v2/how--to-guides/interact-with-room/peer/change-role)
+
+### Server-side integration
+
+You can use server-sider APIs to manage this entirely from the server side.
+
+**Create roles:**
+
+-   Create a template with roles host, co-host, guest, moderator, and breakout room with respective publish/subscribe strategies and permissions.
+    -   To create a template with these roles, you can use the [create a template API](/server-side/v2/policy/create-template-via-api).
+    -   To create these roles to an existing template, you can use the [create a role API](/server-side/v2/policy/create-update-role).
+
+**Change roles:**
+You can use the [update a peer API](/server-side/v2/active-rooms/update-a-peer) in conjunction with the [list peers API](/server-side/v2/active-rooms/list-peers) to fetch the list of participants with role information and change their role to "breakout room" to move them to a breakout room.
+
+</StepsContainer>
+
+## Record a breakout room
+
+You can pass the meeting URL of the breakout room role in the browser-based recording, where the beam will record the breakout room. More on browser-based recording [here](/server-side/v2/Destinations/rtmp-streaming-and-browser-recording).
+
+> Note: Currently, 100ms supports only one beam per room; hence you can either record the main room or any of the breakout rooms. Although Supporting Multi beam is in the pipeline.
+
+## Example customer implementation
+
+Mingout automated the matching of participants, created predefined roles on the fly using template API and then automated the movement of participants without any manual intervention.
+More on that [here](https://www.100ms.live/blog/mingout-100ms-reimagine-online-dating#customizations-to-match-the-problem).

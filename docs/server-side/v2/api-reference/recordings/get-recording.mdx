@@ -1,0 +1,108 @@
+---
+title: Get recording
+nav: 3.143
+---
+
+Use this request to get the recording job object, at any point after it has been created.
+
+This can be used to fetch recording assets that are generated after the recording has completed.
+
+<GetRequest title="https://api.100ms.live/v2/recordings/<object_id>" />
+<Request id="req-0">
+
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/recordings/<object_id>' \
+--header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "642531cf94091a5af841456d",
+    "room_id": "635fe195f5e1f4a0abb7d1ae",
+    "session_id": "642531c8becbb0bb81952e36",
+    "status": "completed",
+    "created_at": "2023-03-30T06:53:03.67Z",
+    "started_at": "2023-03-30T06:53:06.787Z",
+    "updated_at": "2023-03-30T06:54:02.431Z",
+    "stopped_at": "2023-03-30T06:53:58.182Z",
+    "meeting_url": "<meeting-url>",
+    "started_by": "3f174686-cef9-4d9e-b3d5-ed91773e7f3e",
+    "stopped_by": "",
+    "asset_types": [
+        "room-composite",
+        "chat",
+        "transcript",
+        "summary"
+    ],
+    "recording_assets": [
+        {
+            "id": "6425320e94091a5af841456f",
+            "thumbnails": null,
+            "metadata": {
+                "resolution": {
+                    "width": 1280,
+                    "height": 720
+                }
+            },
+            "duration": 55,
+            "path": "<storage-path>",
+            "status": "completed",
+            "created_at": "2023-03-30T06:54:06.45Z",
+            "type": "room-composite",
+            "size": 26361961
+        },
+        {
+            "id": "6425320e94091a5af841456e",
+            "thumbnails": null,
+            "metadata": {},
+            "duration": 0,
+            "path": "<storage-path>",
+            "status": "completed",
+            "created_at": "2023-03-30T06:54:06.434Z",
+            "type": "chat",
+            "size": 74
+        },
+        {
+            "id": "6425320e94091a5af841456d",
+            "metadata": {
+                "output_mode": "txt"
+            },
+            "duration": 55,
+            "path": "<storage-path>",
+            "status": "completed",
+            "created_at": "2023-03-30T06:56:06.54Z",
+            "type": "transcript",
+            "size": 50
+        },
+        {
+            "id": "6425320e94091a5af841456c",
+            "metadata": {
+                "output_mode": "srt"
+            },
+            "duration": 55,
+            "path": "<storage-path>",
+            "status": "completed",
+            "created_at": "2023-03-30T06:56:06.58Z",
+            "type": "transcript",
+            "size": 148
+        },
+        {
+            "id": "6425320e94091a5af841456b",
+            "metadata": {
+                "output_mode": "json"
+            },
+            "duration": 55,
+            "path": "<storage-path>",
+            "status": "completed",
+            "created_at": "2023-03-30T06:56:06.59Z",
+            "type": "summary",
+            "size": 42
+        }
+    ]
+}
+```
+
+</ResponseBox>

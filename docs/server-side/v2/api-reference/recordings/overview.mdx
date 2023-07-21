@@ -1,0 +1,43 @@
+---
+title: Overview
+nav: 3.14
+---
+
+This object refers to recording jobs that are running in 100ms rooms. With these REST APIs, you can start a new recording job, fetch a recording job (which could have been started from a client SDK) and stop recording jobs.
+
+These jobs (called recordings) generate assets (called [recording assets](../recording-assets/overview)).
+
+![Recordings generate recording assets](/docs/v2/recording-vs-assets.png)
+
+Currently the following asset types are supported
+
+* `room-composite`
+* `chat`
+* `transcript`
+* `summary`
+
+<EndpointRequest title="https://api.100ms.live/v2/recordings" />
+
+## Object
+
+| Property         | Description                                                                                                                           |
+| ---------------- |---------------------------------------------------------------------------------------------------------------------------------------|
+| id               | Unique identifier for the recording job                                                                                               |
+| room_id          | Identifier of the room where this recording happened                                                                                  |
+| session_id       | Identifier of the session where this recording happened                                                                               |
+| status           | Status of the live stream, can be one of `starting`, `running`, `stopping`, `post_processing`, `completed`, `failed`                  |
+| meeting_url      | Meeting URL opened in the web browser that is composing the recording                                                                 |
+| asset_types      | Array of generated asset types, can have values from [`room-composite`, `chat`, `transcript`, `summary`]                                                                                                  |
+| recording_assets | Array of [recording assets](../recording-assets/overview) that are generated out of the recording                                     |
+| created_at       | Timestamp for when the recording job was created                                                                                      |
+| started_at       | Timestamp for when the recording job was started                                                                                      |
+| started_by       | Identifier of the peer who started the recording job. If the recording was started from server-side, this is an empty string          |
+| stopped_at       | Timestamp for when the recording job was stopped                                                                                      |
+| stopped_by       | Identifier of the peer who stopped the recording job. If the recording was stopped from server-side, this is an empty string          |
+| updated_at       | Timestamp for when the recording job was updated                                                                                      |
+
+## Postman collection
+
+You can use our Postman collection to start exploring 100ms APIs. Use the [Postman guide](/server-side/v2/introduction/postman-guide) to get started.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a?action=collection%2Ffork&collection-url=entityId%3D22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a%26entityType%3Dcollection%26workspaceId%3Dd9145dd6-337b-4761-81d6-21a30b4147a2)

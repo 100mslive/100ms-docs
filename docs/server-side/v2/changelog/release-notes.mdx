@@ -1,23 +1,103 @@
 ---
 title: Release Notes
-nav: 7.1
+nav: 5.1
 ---
 
 This Changelog highlights notable changes to the 100ms server-side API, such as API additions, improvements, and deprecations. Also, we've included developer experience improvements to this page to keep you on track with items that will enhance your integration journey.
 
-## January 13, 2023.
+## 2023-07-07
+#### Addition
+- Added support for `transcriptions` destination in template APIs
+- Added transcription support in start recording API
+- Introduced new recording assets types `transcript` and `summary` for speaker labelled transcript and AI-generated summary respectively
+
+## 2023-07-04
+#### Addition
+- Added reserved IP's of production turn load balancer of EU|US|IN.
+
+## 2023-05-11
+#### Addition
+- Added reserved turn IP of production TURN servers.
+
+#### Removed
+- Segregated the production turn IP's from NAT IP
+
+## 2023-04-28
+### Additions
+
+- Added reserved IP for production turn servers of EU|US|IN. When end user's is unable to join room or when join room is working but user is getting kicked out of room. This issues might be related to user's firewall blocking connection.In such scenarios end user needs to whitelist IP in the firewall for the 100ms call to work.
+
+## 2023-04-28
+### Additions
+
+- Added reserved IP addresses for TURN servers in EU|US|IN. These IP addresses can be whitelisted in firewall configuration to solve scenarios where a user is unable to join the room due to a restricted network firewall.
+
+## 2023-04-11
+
+### Additions
+
+-   Added guide for [Server-side Node.js SDK](../how--to-guides/nodejs-server-side-sdk)
+
+## 2023-03-22
+
+### Additions
+
+-   Added new APIs to start, stop and manage [Live Streams](../api-reference/live-streams/overview) and [External Streams](../api-reference/external-streams/overview)
+-   Added new APIs to generate pre-signed URLs for [Recording Assets](../api-reference/recording-assets/overview)
+
+## 2023-03-10
+
+### Additions
+
+-   Added `chat_recording_path` and `chat_recording_presigned_url` to recording completion webhooks across browser recording (`beam.recording.success`), SFU recording (`recording.success`), and HLS VOD recordings (`hls.recording.success`)
+
+## 2023-03-07
+
+### Additions
+
+-   Added [Analytics APIs](/server-side/v2/api-reference/analytics/overview) with support for fetching [Track events](/server-side/v2/api-reference/analytics/track-events)
+
+## 2023-02-23
+
+### Additions
+
+-   Added APIs for [retrieving](/server-side/v2/api-reference/policy/retrieve-destinations) and [updating](/server-side/v2/api-reference/policy/update-destinations) template's destinations.
+
+## 2023-02-16
+
+#### Additions
+
+-   Added `error_type` field in `recording.failed` webhook.
+
+#### Improvements
+
+-   Standardised `error` field in `recording.failed` webhook.
+
+## 2023-01-31
+
+#### Additions
+
+-   Added [List Peers](/server-side/v2/active-rooms/list-peers) API to [Active room APIs](/server-side/v2/active-rooms/object) that enables listing peers in a room with filtering support for `user_id`, `role` fields
+
+## 2023-01-23
+
+#### Additions
+
+-   Added `role_change_requested_by` field in `role.change.success` and `role.change.failure` webhooks.
+
+## 2023-01-13
 
 #### Additions
 
 -   Added support to [Google cloud](https://cloud.google.com/storage) - `gs` and [Alibaba Cloud](https://www.alibabacloud.com/product/object-storage-service) - `oss`. Check recording config for [Create a room API](../Rooms/create-via-api#recording_info-arguments) and [Create a template API](../policy/create-template-via-api#recording-object) for more information.
 
-## January 11, 2023.
+## 2023-01-11
 
 #### Additions
 
 -   Added a new IP address for whitelisting `129.154.236.15/32`. Check [IP whitelisting](./../introduction/webhook#ip-whitelisting) for more information.
 
-## January 04, 2023.
+## 2023-01-04
 
 #### Additions
 
@@ -27,7 +107,7 @@ This Changelog highlights notable changes to the 100ms server-side API, such as 
 
 -   Deprecated `user` field in `Sessions` object. `user_id` can be used instead of `user`.
 
-## December 29, 2022.
+## 2022-12-29
 
 #### Improvements
 
@@ -38,13 +118,13 @@ This Changelog highlights notable changes to the 100ms server-side API, such as 
 -   Deprecated `state_name`, `state_message`, and `state_timestamp` fields from since they do not add any value. `timestamp` can be used instead of `state_timestamp`.
 -   Deprecated `error_code`. This has always been 1 and does not have any significance.
 
-## November 23, 2022.
+## 2022-11-23
 
 #### Additions
 
 -   Added a new event [role.change.failure](./../introduction/webhook#role-change-failure) to notify role change failures.
 
-## November 18, 2022.
+## 2022-11-18
 
 #### Additions
 
@@ -65,7 +145,7 @@ This Changelog highlights notable changes to the 100ms server-side API, such as 
 | [peer.leave.success](./../introduction/webhook#peer-leave-success)         | `joined_at`,                                                                                                                   |
 | [session.close.success](./../introduction/webhook#session-close-success)   | `session_duration`.                                                                                                            |
 
-## November 03, 2022.
+## 2022-11-03
 
 #### Additions
 
@@ -78,7 +158,7 @@ This Changelog highlights notable changes to the 100ms server-side API, such as 
 
 -   Documentation improvements in [webhooks guide](/server-side/v2/introduction/webhook) -- merged description and example columns to provide better readability.
 
-## October 06, 2022.
+## 2022-10-06
 
 #### Additions
 
@@ -94,7 +174,7 @@ This Changelog highlights notable changes to the 100ms server-side API, such as 
 
 -   Removed `active` field from [room object](/server-side/v2/Rooms/object) as `enabled` field was already available to indicate whether the room is in enabled or disabled state.
 
-## September 24, 2022.
+## 2022-09-24
 
 #### Server update
 

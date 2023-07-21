@@ -1,0 +1,110 @@
+---
+title: Audio Output Routing
+nav: 7.2
+---
+
+Audio Output Routing is helpful when users want to switch the audio output to a connected device other than the default one.
+
+For example, you can implement an in-call speaker button that toggles audio output between the speaker, earpiece or any other connected earphones - wired or wireless, etc.
+
+Let's see how we can use hmsSDK to implement this:
+
+<div className="steps-container">
+
+### Fetch Available Audio Devices
+
+Invoke the `getAudioDevicesList` method to fetch the available audio device list. The method returns a list of `HMSAudioDevice` enum.
+
+```dart
+List<HMSAudioDevice> availableDevices = await hmsSDK.getAudioDevicesList();
+
+
+enum HMSAudioDevice {
+  SPEAKER_PHONE,
+  EARPIECE,
+  WIRED_HEADSET, // Android only
+  BLUETOOTH, // Android only
+  AUTOMATIC, // Android only
+  UNKNOWN
+}
+```
+
+The `getAudioDevicesList` API returns different values based on the Android & iOS platforms. It can return the following `HMSAudioDevice` enum values :
+
+#### - For Android
+
+-   SPEAKER_PHONE - route audio to the device speaker
+-   EARPIECE - route audio to earpiece
+-   WIRED_HEADSET - route audio to a connected wired device
+-   BLUETOOTH - route audio to connected Bluetooth device
+-   AUTOMATIC - automatic routing
+
+#### - For iOS
+
+-   SPEAKER_PHONE - route audio to device speaker
+-   EARPIECE - route audio earpiece
+
+### Switch Audio Focus to Another Device
+
+Invoke the `switchAudioOutput` method with the appropriate `HMSAudioDevice` value fetched from `getAudioDevicesList` to switch the audio to that device.
+
+The `audioDevice` is a required `HMSAudioDevice` enum type parameter which we discussed above.
+
+```dart
+///[audioDevice]: is an enum of type `HMSAudioDevice`
+hmsSDK.switchAudioOutput(audioDevice: audioDevice);
+```
+
+### Receive the device change updates (Android Only)
+
+Implementing the `onAudioDeviceChanged` listener allows you to get event updates if a new audio device gets connected such as Bluetooth, Wired Headset etc.
+This method needs to be overridden in the class where `HMSUpdateListener` is implemented.
+
+Note that this event is available only on the Android platform.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+  ...
+
+  @override
+  void onAudioDeviceChanged(
+  {HMSAudioDevice? currentAudioDevice,
+  List<HMSAudioDevice>? availableAudioDevice}) {
+
+    // currentAudioDevice : audio device to which audio is curently being routed to
+    // availableAudioDevice : all other available audio devices
+  }
+}
+```
+
+</div>
+
+## Get Current Focussed Device (Android Only)
+
+The `getCurrentAudioDevice` method allows you to get the device through which audio output is currently being routed to.
+
+```dart
+HMSAudioDevice currentAudioDevice = await hmsSDK.getCurrentAudioDevice();
+```
+
+> Note: `onAudioDeviceChanged` listener and `getCurrentAudioDevice` methods are available only on the Android platform.
+
+## Switch Audio Output Device UI (iOS Only)
+
+The `switchAudioOutputUsingiOSUI` allows you to display the native iOS UI for switching the audio output device.
+Something similar to this:
+
+<PortraitImage
+    src="/docs/docs/v2/flutter-audio-output-routing.png"
+    alt="Switch Audio Output"
+    height="400"
+    width="200"
+/>
+
+Let's look at the implementation:
+
+```dart
+///[hmsSDK] is the HMSSDK instance
+hmsSDK.switchAudioOutputUsingiOSUI();
+```

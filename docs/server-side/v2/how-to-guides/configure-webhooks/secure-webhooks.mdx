@@ -1,0 +1,45 @@
+---
+title: Secure Your Webhooks
+nav: 4.2
+---
+
+## How to secure webhooks
+
+You can secure webhooks in two ways:
+
+1. Specify secret headers in webhook configuration
+1. Whitelisting 100ms IP addresses
+
+## Secret headers
+
+You can specify headers that will be passed transparently to your webhook endpoint. At your end, verify the contents of the HTTP header (key) and value.
+
+Secret headers can be configured on the [100ms dashboard](https://dashboard.100ms.live/developer).
+
+![Webhook headers](/docs/v2/webhook-headers.png)
+
+## IP whitelist
+
+For additional security or if your firewall infrastructure can block incoming requests, you can whitelist the following IP addresses. This ensures webhooks that are sent from 100ms-owned NAT gateways are allowed to passthrough.
+
+```
+34.100.213.146/32
+35.200.143.211/32
+34.100.191.162/32
+34.100.132.35/32
+34.93.93.114/32
+34.131.109.150/32
+34.131.52.47/32
+34.131.200.41/32
+34.131.13.182/32
+34.131.24.136/32
+34.138.143.222/32
+35.242.196.203/32
+35.200.222.156/32
+34.93.74.33/32
+34.93.142.55/32
+34.93.176.177/32
+34.93.210.177/32
+34.93.175.47/32
+129.154.236.15/32
+```

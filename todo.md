@@ -6,7 +6,7 @@ That API Table and last 2 tables
 
 support description frontMatter
 
-Dont wrap headers in bold
+Don't wrap headers in bold
 
 use java as lang instead of kotlin better highlight
 

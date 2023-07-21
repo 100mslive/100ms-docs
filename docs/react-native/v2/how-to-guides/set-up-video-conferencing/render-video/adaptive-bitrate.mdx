@@ -1,0 +1,144 @@
+---
+title: Adaptive Bitrate (Simulcast)
+nav: 4.43
+---
+
+Simulcast enables [Adaptive Bitrate](/concepts/v2/concepts/adaptive-bitrate) (ABR) in video conferencing scenarios. This means 100ms SDKs can upgrade or downgrade video quality for remote video tracks based on user preferences or network conditions. To learn more about how Adaptive Bitrate enhances your applications refer the guide [here](/concepts/v2/concepts/adaptive-bitrate).
+
+In this guide, we'll see how to customize Simulcast settings from your apps using the 100ms React Native SDK.
+
+
+## Minimum Requirements
+
+-   SDK version 1.5.0 or higher
+-   Simulcast enabled in Room Template
+
+
+## Simulcast APIs
+
+You can interact with the simulcast feature by using the `setLayer` method of `HMSRemoteVideoTrack`.
+
+By default, on all Remote Video Tracks the layer is set to `HIGH` i.e `HMSLayer.HIGH`
+
+`HIGH` layer implies that the 100ms SDK tries to fetch the highest quality video available for a Remote peer.
+
+Let's look at the available APIs to customize Simulcast behaviour -
+
+```js
+/// [HMSRemoteVideoTrack] encapsulates the remote peer video track information
+class HMSRemoteVideoTrack {
+
+  // Invoke the function to get the current Simulcast layer of the Remote Video Track
+  async getLayer(): Promise<HMSLayer>;
+
+  // Invoke the function with the desired simulcast layer which can be of types - [HMSLayer.HIGH], [HMSLayer.LOW], [HMSLayer.MEDIUM]
+  async setLayer(layer: HMSLayer): Promise<true>;
+
+	// Invoke the function to get the list of available Simulcast Layers for a Remote Video Track
+  async getLayerDefinition(): Promise<HMSSimulcastLayerDefinition[]>
+}
+```
+
+The Simulcast layer definitions fetched from getLayerDefinition() method is as shown below -
+
+```js
+class HMSSimulcastLayerDefinition {
+
+  // HMSLayer layer enum can be of types - HIGH, MEDIUM, LOW
+  layer: HMSLayer;
+
+  // HMSVideoResolution defines the width and height of the Video Track
+  resolution: HMSVideoResolution;
+}
+
+// the available types of Simulcast layers which imply High, Medium or Low Video quality
+enum HMSLayer {
+  LOW = 'LOW',
+  MEDIUM = 'MEDIUM',
+  HIGH = 'HIGH',
+}
+```
+
+-   `getLayer`: Use this method to get the "current Simulcast Layer" for the Remote Video Track
+
+-   `getLayerDefinition`: Use this method to get "all available layers" on `HMSRemoteVideoTrack`
+
+-   `setLayer`: Use this method to change the current Simulcast Layer for the Remote Video Track. You can use any Simulcast Layer from the list returned by `getLayerDefinition` method
+
+-   `HMSSimulcastLayerDefinition`: The Simulcast layer definition class, you get its resolution and the layer name such as HIGH/MEDIUM/LOW.
+
+
+## Disabling Auto Simulcast
+
+[`HmsView` component](/react-native/v2/how--to-guides/set-up-video-conferencing/render-video/overview) has Automatic Simulcast Layer selection capability which is enabled if Adaptive Bitrate is enabled in the Room Template.
+
+ABR ensures that every participant is able to consume the highest possible quality video in conferencing or streaming use-cases, based on their bandwidth constraints.
+In addition to network, ABR can also optimise for the right video quality based on the size of the video element. For example, a video call running on active speaker layout has larger video tiles that require higher quality video track. These adjustments can be made dynamically with adaptive bitrate.
+It will select a layer that best matches the current view frame size and reacts to frame updates.
+
+In case manual layer selection is preferred, set `autoSimulcast` property on `HmsView` component to `false`.
+
+By default, the `autoSimulcast` property is `true` which means that an appropriate quality video track will be rendered by the `HmsView` component.
+
+```js
+<HmsView
+  autoSimulcast={false} // set value as `false` to Disable Automatic Simulcast Layer Selection of Video Track
+  trackId={trackId}
+/>
+```
+
+To learn more about Rendering Video refer the guide [here](/react-native/v2/how--to-guides/set-up-video-conferencing/render-video/overview).
+
+
+## Using Manual Simulcast APIs
+
+Simulcast APIs are available on `HMSRemoteVideoTrack` class instance.
+
+In the common events (such as ON_TRACK_UPDATE event) subscriptions, we get `HMSTrack` class 
+instance. Therfore, we need to get `HMSRemoteVideoTrack` class instance for the `HMSTrack` 
+instance -
+
+```js
+// We get `HMSTrack` in the function subscribed to ON_TRACK_UPDATE event
+const videoTrack: HMSTrack;
+
+// Get `HMSRemoteVideoTrack` class instance for the above `videoTrack`
+// becuase Simulcast APIs are only available on `HMSRemoteVideoTrack` class instance
+// Note: `getRemoteVideoTrackFromTrackId` returns valid instance only if trackId passed to it
+//  - is of remote peer,
+//  - is of type VIDEO
+const remoteVideoTrack: HMSRemoteVideoTrack = await hmsInstance.getRemoteVideoTrackFromTrackId(videoTrack.trackId);
+```
+
+Once we have `HMSRemoteVideoTrack` class instance, we can use Simulcast APIs as follows -
+
+### Get Current Layer
+
+Here's how to get the current layer of remote video track:
+
+```js
+// current simulcast layer of the Remote Video Track
+const layer: HMSLayer = await remoteVideoTrack.getLayer();
+```
+
+### Get all Available Layers
+
+Here's how to get the all available layers with their resolution:
+
+```js
+// available simulcast layers on the Remote Video Track
+const availableLayers: HMSSimulcastLayerDefinition[] = await remoteVideoTrack.getLayerDefinition();
+```
+
+### Change Current Layer
+
+If you want to change simulcast layer manually then follow the follwing steps:
+
+```js
+// availableLayers will contains all the layers which remote peer is publishing.
+// You can select any layer, for this example we are selecting first layer
+const firstLayer = availableLayers[0];
+
+const value = await remoteVideoTrack.setLayer(firstLayer);
+console.log('Set Layer Success: ', value);
+```

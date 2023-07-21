@@ -1,0 +1,87 @@
+---
+title: Reconnection Handling
+nav: 6.1
+---
+
+Real-world apps operate in varying network conditions and thus require handling for network bandwidth issues. The SDK provides callbacks when a user gets disconnected due to network issues or network switch and also when the user gets reconnected again.
+
+> 💡 Note: The SDK tries to reconnect automatically for 60 seconds after that the connection is terminated, the peer is removed from the room and the room has to be rejoined.
+
+## Reconnecting & Reconnected Events
+
+`HMSUpdateListenerActions.RECONNECTING` event is emitted when SDK detects a network issue and it's trying to Reconnect with servers.
+
+`HMSUpdateListenerActions.RECONNECTED` event is emitted when SDK has successfully recovered from a network drop, switch or a network issue etc.
+
+You should subscribe to these events to receive Reconnecting & Reconnected updates as follows -
+
+```js
+const onReconnectingListener = ({ error }: { error: HMSException }) => {
+    console.log('SDK is trying to Reconnect to servers due to error: ', error);
+};
+
+// Subscribing to `Reconnecting` updates
+hmsInstance.addEventListener(HMSUpdateListenerActions.RECONNECTING, onReconnectingListener);
+
+const onReconnectedListener = () => {
+    console.log('SDK has successfully Reconnected to servers!');
+};
+
+// Subscribing to `Reconnected` updates
+hmsInstance.addEventListener(HMSUpdateListenerActions.RECONNECTED, onReconnectedListener);
+```
+
+> 💡 Note: On getting reconnected, the SDK will send all the updates(Track and Peer updates) again.
+
+## Handle case when user fails to reconnect
+
+SDK tries to reconnect the user automatically for 60 seconds, after that the connection gets terminated and the peer is removed from the room by SDK. If reconnection fails the SDK emits `HMSUpdateListenerActions.ON_ERROR` event with error.
+
+```js
+const onErrorListener = (error: HMSException) => {
+    if (error.code === 1003 || error.code === 4005) {
+        // Free Resources and do cleanup
+        doCleanup();
+
+        // navigate user to the HomeScreen, showing a toast or errorDialog with error description.
+        navigation.navigate('HomeScreen');
+    }
+};
+
+// Subscribing to `Error` updates
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onErrorListener);
+```
+
+> To learn more about cleanup and freeing resources refer to [Release Resources](./release-resources) docs.
+
+The user will receive the error object which has `isTerminal` property set to `true` and `errorCode` property as:
+
+-   Error Code: 1003, Cause: Websocket disconnected
+
+![Error Code:1003](/docs/v2/flutter-errorCode-1003.png)
+
+-   Error Code: 4005, Cause: ICE Connection Failed due to network issue[PUBLISH]
+
+![Error Code:1003](/docs/v2/flutter-errorCode-4005-PUBLISH.png)
+
+-   Error Code: 4005, Cause: ICE Connection Failed due to network issue[SUBSCRIBE]
+
+![Error Code:1003](/docs/v2/flutter-errorCode-4005-SUBSCRIBE.png)
+
+## Best Practices
+
+The SDK emits:
+
+-   `HMSUpdateListenerActions.RECONNECTING` event, when the user disconnects
+-   `HMSUpdateListenerActions.RECONNECTED` event, when the user reconnects, and
+-   `HMSUpdateListenerActions.ON_ERROR` event, when the user **fails** to reconnect
+
+These callbacks can be handled as follows:
+
+-   In "Reconnecting" Mode: Do not allow the user to interact with UI and show loaders or Reconnecting indicator.
+-   When "Reconnected" back: Switch back to room UI allowing interactions as usual.
+-   When user fails to reconnect then SDK emits `HMSUpdateListenerActions.ON_ERROR` event, In the function subscribed to this event, look for `code` property and if it is something(generally 1003, 4005 etc.) such that the user can never reconnect then navigate user to the HomeScreen, showing a toast or errorDialog with error description.
+
+> 🗝️ You can find the errorCodes, descriptions and the suggested actions to be taken [here](./error-handling)
+
+You can also measure a users' connection speed. Learn more about connection quality API [here](/react-native/v2/how--to-guides/measure-network-quality-and-performance/network-quality)

@@ -1,0 +1,152 @@
+---
+ title: HLS Timed Metadata
+ nav: 8.22
+---
+
+HLS Timed Metadata feature helps you synchronise certain events with the HLS stream. This can be useful for showing interactive quizzes / product overlays etc.
+
+## Requirements
+
+-   100ms iOS SDK version 0.6.3 or higher
+-   The room should have active HLS stream
+
+## Sending HLS Timed Metadata
+
+To add HLS timed metadata cue to the currently running HLS stream use `sendHLSTimedMetadata` API like this:
+
+```swift
+let metadata = HMSHLSTimedMetadata(payload: "quiz id: 3")
+
+hmsSDK.sendHLSTimedMetadata([metadata], completion: { [weak self] _, error in
+    if let error = error as? HMSError {
+        print("Unable to send metadata: \(error)")
+    } else {
+        print("Metadata sent")
+    }
+})
+```
+
+## Receiving HLS Timed Metadata
+
+Using the 100ms HLS Player, you can easily receive timed metadata for your HLS Live Streams. Follow documentation [here](/ios/v2/how--to-guides/record-and-live-stream/hls/hls-player) to use 100ms HLS Player in your app to play the HLS Live Streams.
+
+When playing an HLS stream using the 100ms HLS player, your assigned delegate will receive a onCue(cue: HMSHLSCue) callback when the player's current time matches that of the timed event in the live HLS stream. You can then utilize the payload data of the event to display interactive elements such as quizzes, polls, and other UI components for your HLS viewers.
+
+```swift
+
+class HLSStreamViewController: HMSHLSPlayerDelegate {
+    ...
+    
+    hlsPlayer.delegate = self
+    ...
+
+    func onCue(cue: HMSHLSCue) {
+        // Use the hls timed metadata cue to show quiz UI for example
+    }
+}
+
+```
+
+Note: following information on HMSHLSCue can be used to know more about what timed event is triggered and show UI accordingly:
+
+```swift
+
+class HMSHLSCue: NSObject {
+    
+    /// Unique id of the timed event
+    public let id: String
+    
+    /// startDate of the timed event
+    public let startDate: Date
+    
+    /// endDate of the timed event
+    public let endDate: Date?
+    
+    /// String payload of the timed event
+    public let payload: String?
+    
+}
+
+```
+
+
+## Frequently Asked Questions
+
+**How to receive HLS Timed Metadata when you are using your own AVPlayer instance to play HLS**
+
+To receive metadata on the HLS player side use `AVPlayerItemMetadataCollector`. Detailed documentation is available [here](https://developer.apple.com/documentation/avfoundation/avplayeritemmetadatacollector) but to briefly summarize:
+
+1. Create a metadata collector and pass a delegate:
+
+```swift
+metadataCollector = AVPlayerItemMetadataCollector()
+metadataCollector.setDelegate(self, queue: DispatchQueue.main)
+```
+
+2. Add metadata collector to your `AVPlayerItem` item
+
+```swift
+playerItem.add(metadataCollector)
+```
+
+3. Conform to the AVPlayerItemMetadataCollectorPushDelegate protocol to save collected metadata
+
+```swift
+func metadataCollector(_ metadataCollector: AVPlayerItemMetadataCollector,
+                           didCollect metadataGroups: [AVDateRangeMetadataGroup],
+                           indexesOfNewGroups: IndexSet,
+                           indexesOfModifiedGroups: IndexSet) {
+   self.metadataGroups = metadataGroups
+}
+```
+
+4. Add playback observer to show the metadata when playback time reaches the timestamp defined by the metadata
+
+```swift
+player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 1.0, preferredTimescale: CMTimeScale(NSEC_PER_SEC)), queue: .main, using: { [weak self] time in
+    self?.updateMetadataView(for: time)
+})
+
+```
+
+```swift
+func updateMetadataView(for currentTime: CMTime) {
+    hideCurrentMetadataViewIfNeeded()
+
+    guard currentMetadataGroup == nil, let playerItem = playerItem else { return }
+
+    for group in metadataGroups {
+        if group.shouldShow(for: playerItem) {
+            showMetadataView(for: group)
+            break
+        }
+    }
+}
+
+func hideCurrentMetadataViewIfNeeded() {
+    guard let currentMetadataGroup = currentMetadataGroup,
+          let playerItem = playerItem,
+          !currentMetadataGroup.shouldShow(for: playerItem) else { return }
+    self.currentMetadataGroup = nil
+    metadataView.isHidden = true
+}
+
+func showMetadataView(for group: AVDateRangeMetadataGroup) {
+    guard currentMetadataGroup != group else { return }
+
+    currentMetadataGroup = group
+    metadataView.isHidden = false
+    metadataView.text = group.hmsPayloadString()
+}
+```
+
+```swift
+extension AVDateRangeMetadataGroup {
+    func shouldShow(for item: AVPlayerItem) -> Bool {
+        guard let endDate = endDate, let currentDate = item.currentDate() else { return false }
+        return startDate <= currentDate && currentDate < endDate
+    }
+}
+```
+
+👀 To see an example of HLS Timed Metadata implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/blob/main/Example/HMSSDKExample/Meeting/HLS/HLSStreamViewController.swift).

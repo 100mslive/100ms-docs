@@ -1,6 +1,9 @@
-import { readdirSync, readFileSync } from 'fs';
+import { existsSync, readdirSync, readFileSync } from 'fs';
 import matter from 'gray-matter';
 import { join } from 'path';
+import { fromMarkdown } from 'mdast-util-from-markdown';
+import { mdxFromMarkdown } from 'mdast-util-mdx';
+import { mdxjs } from 'micromark-extension-mdxjs';
 import setValue from 'set-value';
 
 /**
@@ -38,6 +41,27 @@ export const getDocsPaths = () => {
         .map((path) => path.replace(MARKDOWN_REGEX, ''));
 };
 
+// function seperateDots(dotSeperatedNumber) {
+//     return dotSeperatedNumber.split('.').map((numStr) => Number.parseInt(numStr));
+// }
+
+// function dotSeperatedNumberCompare(a, b) {
+//     const aNumbers = seperateDots(a),
+//         bNumbers = seperateDots(b);
+
+//     for (let i = 0; i < Math.min(aNumbers.length, bNumbers.length); i++) {
+//         if (aNumbers[i] !== bNumbers[i]) {
+//             return aNumbers[i] > bNumbers[i] ? 1 : -1;
+//         }
+//     }
+
+//     if (aNumbers.length === bNumbers.length) {
+//         return 0;
+//     } else {
+//         return aNumbers.length > bNumbers.length ? 1 : -1;
+//     }
+// }
+
 /**
  * Gets a list of all docs and their meta in the `DOCS_PATH` directory
  */
@@ -45,7 +69,11 @@ export const getAllDocs = () => {
     const docs = getDocsPaths()
         .map((path) => {
             // Get frontMatter from markdown
-            const source = readFileSync(join(DOCS_PATH, `${path}.mdx`));
+            let filePath = join(DOCS_PATH, `${path}.mdx`);
+            if (!existsSync(filePath)) {
+                filePath = join(DOCS_PATH, `${path}.md`);
+            }
+            const source = readFileSync(filePath);
             const { data, content } = matter(source);
             // Normalize paths for web
             const url = path.replace(/\\/g, '/');
@@ -57,11 +85,11 @@ export const getAllDocs = () => {
                 url,
                 title: data.title || pathname!.replace(/-/g, ' '),
                 description: data.description || '',
-                nav: data.nav ?? Infinity,
+                nav: data.nav ?? '',
                 content
             };
         })
-        .sort((a, b) => (a.nav > b.nav ? 1 : -1));
+        .sort((a, b) => Number(a.nav) - Number(b.nav));
     return docs;
 };
 
@@ -80,4 +108,22 @@ export const getNavfromDocs = (docs) => {
         setValue(n, pathV, file);
         return n;
     }, {});
+};
+
+export const slugify = (text) =>
+    text
+        .toString()
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]+/g, '')
+        .replace(/--+/g, '-')
+        .replace(/^-+/, '')
+        .replace(/-+$/, '');
+
+export const toMdxJsxFlowElement = (input) => {
+    const tree = fromMarkdown(input, {
+        extensions: [mdxjs()],
+        mdastExtensions: [mdxFromMarkdown()]
+    });
+    return tree.children[0];
 };

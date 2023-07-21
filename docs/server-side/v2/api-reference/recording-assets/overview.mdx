@@ -1,0 +1,69 @@
+---
+title: Overview
+nav: 3.19
+---
+
+Recording assets are files that are generated after a successful [recording](../recordings/overview). Recording assets are also generated through [live streams](../live-streams/overview) and [external streams](../external-streams/overview) when recording is enabled.
+
+If a cloud storage location (for example, AWS S3 or GCS) is configured on the template, we upload the recording asset to the defined location. Else, the asset is uploaded to 100ms storage buckets. These recordings can be downloaded by [generating short-live pre-signed URLs](./get-presigned-url) before the retention period of 15 days.
+
+<EndpointRequest title="https://api.100ms.live/v2/recording-assets" />
+
+## Asset types
+
+* `room-composite`: This type composes a single video (mp4) out of all peers in the room.
+* `room-vod`: This is also a composition of all peers in the room and is available in HLS (or m3u8) format for on-demand playback.
+* `chat`: This type captures chat messages that were exchanged while recording was running.
+* `transcript`: This type is composed of generated transcripts of the recording, if transcription was enabled. The `metadata` will contain the `output_mode` (`txt`, `srt`, `json`).
+* `summary`: This type contains the summary generated from the transcript. The `metadata` will contain the `output_mode` (`json`).
+
+## Object
+
+| Property    | Description                                                                                |
+|-------------|--------------------------------------------------------------------------------------------|
+| id          | Unique identifier for the recording asset                                                  |
+| job_id      | Unique identifier for the [recording job](../recordings/overview) that generated the asset |
+| room_id     | Unique identifier of the room which was recorded                                           |
+| session_id  | Unique identifier of the session which was recorded                                        |
+| type        | Type of recording asset (`room-composite`, `room-vod`, `chat`,`transcript`,`summary`)      |
+| status      | Status for this asset, can be `completed` or `failed`                                      |
+| path        | Path of the recording asset (pointing to your or 100ms cloud storage bucket)               |
+| size        | Size of the asset (in bytes)                                                               |
+| duration    | Duration of the media in asset (in seconds)                                                |
+| created_at  | Timestamp when the asset was created (in ISO-8601 format)                                  |
+| thumbnails  | Array of paths of thumbnails generated out of the recording (only for `room-vod`)          |
+| metadata    | Additional information (e.g. resolution, VOD layers, output mode) based on asset type      |
+
+### Object as JSON
+
+```json
+{
+    "id": "<asset-id>",
+    "job_id": "<job-id>",
+    "room_id": "<room-id>",
+    "session_id": "<session-id>",
+    "type": "<asset-type>",
+    "path": "<recording_path",
+    "status": "<status",
+    "size": 42,
+    "duration": 42,
+    "created_at": "2023-03-02T07:44:27.010516042Z",
+    "thumbnails": ["<thumbnail_path"],
+    "metadata": {
+        "resolution": {
+            "width": 1280,
+            "height": 720
+        },
+        "num_layers": "<num_layers>",
+        "layer": "<layer_idx>",
+        "max_width": 1920,
+        "max_height": 1080
+    }
+}
+```
+
+## Postman collection
+
+You can use our Postman collection to start exploring 100ms APIs. Use the [Postman guide](/server-side/v2/introduction/postman-guide) to get started.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a?action=collection%2Ffork&collection-url=entityId%3D22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a%26entityType%3Dcollection%26workspaceId%3Dd9145dd6-337b-4761-81d6-21a30b4147a2)

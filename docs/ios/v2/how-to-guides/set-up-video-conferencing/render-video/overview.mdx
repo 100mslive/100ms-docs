@@ -1,0 +1,30 @@
+---
+title: Overview
+nav: 4.41
+---
+
+It's finally time to bring everything together and display live streaming video in our app. Don't worry, it's easier than you think.
+
+Here's what you need to do:
+
+1. Create an HMSVideoView object in your view hierarchy. This is a subclass of UIView, so add it to your UI just like any other view, using Storyboard, XIB or in-code.
+
+2. Get a reference to a video track object, specifically an HMSVideoTrack or one of its subclasses (eg. HMSLocalVideoTrack). For example, the local peer's video track can be accessed like this:
+
+```swift
+let track = hmsSDK.localPeer?.videoTrack
+```
+
+3. Connect the video track to the video view using the setVideoTrack method of HMSVideoView:
+
+```swift
+let videoView = HMSVideoView()
+videoView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+...
+
+videoView.setVideoTrack(track) // videoView is HMSVideoView, track is HMSVideoTrack
+```
+
+That's it. The video transmitted by the peer will now be displayed and start playing in your video view. 🥳
+
+Remember, it's all about connecting the Video Track to the Video View. You'll be doing this often.

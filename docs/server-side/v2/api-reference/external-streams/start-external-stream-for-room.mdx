@@ -1,0 +1,85 @@
+---
+title: Start external stream for a room
+nav: 3.151
+---
+
+import MeetingUrlConfig from '@/common/meeting-url.md';
+
+Use this to start an external stream for a room. This will stream to a list of RTMP endpoints (up to 3).
+
+The external stream will be in `starting` state to begin with, and turn into `running` shortly.
+
+<PostRequest title="https://api.100ms.live/v2/external-streams/room/<room_id>/start" />
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/external-streams/room/<room_id>/start' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "meeting_url" : "<meeting_url>",
+    "rtmp_urls": ["<rtmp_url_1>", "<rtmp_url_2>"],
+    "recording": true,
+    "resolution" : {"width": 1280, "height": 720}
+}'
+```
+
+</Request>
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "id": "<job_id>",
+    "room_id": "<room_id>>",
+    "session_id": "<session_id>",
+    "status": "starting",
+    "destination": "<destination_name>",
+    "rtmp_urls": ["<rtmp_url_1>", "<rtmp_url_2>"],
+    "meeting_url": "<meeting_url>",
+    "recording": true,
+    "resolution": {
+        "width": 1280,
+        "height": 720
+    },
+    "created_at": "2023-03-02T07:44:27.010516042Z",
+    "started_at": "2023-03-02T07:44:27.010516042Z",
+    "stopped_at": "2023-03-02T07:44:27.010516042Z",
+    "updated_at": "2023-03-02T07:44:27.010516042Z",
+    "started_by": "<peer_id>",
+    "stopped_by": "<peer_id>",
+    "recording_assets": null
+}
+```
+
+</ResponseBox>
+
+## Parameters
+
+| Name         | Type     | Description                                                                           | Required |
+|--------------|----------|---------------------------------------------------------------------------------------|----------|
+| meeting_url  | `string` | Single click meeting URL for the stream                                               | No       |
+| rtmp_urls    | `array`  | List of RTMP output URLs to stream to (up to 3 `rtmp://` / `rtmps://` URLs supported) | Yes      |
+| recording    | `bool`   | Flag to enable recording                                                              | No       |
+| resolution   | `object` | Video resolution for stream                                                           | No       |
+| destination  | `string` | Name of destination from template to pick up configuration                            | No       |
+
+##### meeting_url
+
+<MeetingUrlConfig />
+
+##### rtmp_urls
+
+This URL is the combination of RTMP server URL and stream key. You can add up to 3 URLs (as array of strings) for this parameter.
+
+-   Format: `rtmp://server.com/app/STREAM_KEY`
+-   Example: `rtmp://a.rtmp.youtube.com/live2/k0jv-329m-1y7f-ktth-ck48`
+
+##### resolution
+
+* Minimum supported: 500x480 (in landscape) and 500x500 (in portrait)
+* Maximum supported: 1920x1080 (in landscape) and 1080x1920 (in portrait)
+
+| Name   | Type  | Description  | Required |
+| :----- | :---- | :----------- | :------- |
+| width  | `int` | Width of the video, defaults to 1280 | Yes      |
+| height | `int` | Height of the video, defaults to 720 | Yes      |

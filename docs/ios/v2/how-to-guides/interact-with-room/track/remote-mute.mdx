@@ -1,0 +1,54 @@
+---
+title: Remote Mute
+nav: 7.3
+---
+
+You're running a room and decide that someone who's currently talking shouldn't be talking. You'd prefer they'd stay mute. Or perhaps you want their video turned-off as well as their audio. Then you're looking for a remote mute feature.
+
+Muting can apply to both audio and video.
+
+### Unmuting
+
+You may also decide that you want to let someone else speak who was currently muted. Or may want to ask someone to turn on their video. You can request people to un-mute themselves as well.
+
+### Permissions
+
+You can't let just anyone mute others. First you need to create a [role](/concepts/v2/concepts/templates-and-roles/overview) with the permissions to mute other participants and unmute other participants. Please note that they are two separate permissions.
+
+![Permissions - Remote mute/unmute](/guides/permissions.png)
+
+The permission to mute others is called `mute` and you should check for that within the `permissions` property of `HMSRole` of the peer to see if they have it. Similarly permission to unmute others is called 'unmute'.
+
+### Muting/Unmuting
+
+Once you have checked that the caller has permissions to mute another peer's audio or video, you can use `hmsSdk.changeTrackState` to make a remote mute/unmute request.
+
+To mute a track:
+
+Get the audio or video track of the peer whom you want to mute and pass it as the first parameter to `hmsSdk.changeTrackState`.
+
+The second parameter is a boolean for muting. If true, the track will be muted. If false the track will be requested to un-mute.
+
+Finally you can pass a completion handler to check whether changeTrackState succeeded or failed as the third parameter.
+
+### Handling a mute callback
+
+Muting is automatically applied to the receiver tracks. No action is required.
+
+### Handling an un-mute callback
+
+Unmute callbacks are received in the target peer's `on(changeTrackStateRequest:)` callback of `HMSUpdateListener`.
+
+The target peer will receive an object of `HMSChangeTrackStateRequest`.
+
+Here's its structure.
+
+```swift
+class HMSChangeTrackStateRequest {
+    public let track: HMSTrack
+    public let mute: Bool
+    public let requestedBy: HMSPeer
+}
+```
+
+With the information here, show a dialog to the user to ask if they want to accept the change and then apply the settings locally. The same as in a regular user [Mute/Unmute](/ios/v2/how--to-guides/set-up-video-conferencing/mute).

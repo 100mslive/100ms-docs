@@ -1,0 +1,58 @@
+---
+title: Frame Capture (HmsView)
+nav: 10.1
+---
+
+The 100ms React Native SDK provides `HmsView` component that renders the video on screen. Check out [Render Video docs](/react-native/v2/how--to-guides/set-up-video-conferencing/render-video/overview) to know more about `HmsView` component.
+
+You render videos of yourself (Local Peer) and remote peers on screen using this component. Sometimes, you may want to take a screenshot (or capture frame) only from video of a single remote peer instead of whole screen.
+
+You can use `capture` method available on the ref([React Refs docs](https://reactjs.org/docs/refs-and-the-dom.html)) of `HmsView` component to capture frame of video currently rendered by this component. `capture` method call resolves with `base64 string` which is the captured frame of the video stream.
+
+> You also need ["External Storage Permission (WRITE_EXTERNAL_STORAGE)"](https://developer.android.com/reference/android/Manifest.permission#WRITE_EXTERNAL_STORAGE) to capture frame of video stream.
+
+This is how you can use `capture` method to capture frame of peers' video stream -
+
+```js
+import React from 'react';
+import { TouchableOpacity, Text, View } from 'react-native';
+
+// This Component handles rendering of HmsView
+export const PeerTile = () => {
+    // this `ref` will be reference to HmsView componentˀ
+    const hmsViewRef = React.useRef(null);
+
+    // This function handles capturing frame of the video stream
+    const captureVideoFrame = async () => {
+        try {
+            // First -> request for `WRITE_EXTERNAL_STORAGE` permission before calling `capture` method on ref
+
+            const base64Data = await hmsViewRef.current?.capture();
+            // {base64Data} is the captured frame of the video stream
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    // `hmsInstance` acquired from `build` method
+    // HmsView is available on `HMSSDK` instance.
+    const HmsView = hmsInstance.HmsView;
+
+    return (
+        <View>
+            {/* HmsView rendering video of a Peer */}
+            <HmsView
+                ref={hmsViewRef} // this ref can be used to capture frame of video stream with current tracKId
+                key={trackId}
+                trackId={trackId}
+                style={{ height: '100%', width: '100%' }}
+            />
+
+            {/* Button to press when you want to take screenshot of peers' video */}
+            <TouchableOpacity onPress={captureVideoFrame}>
+                <Text>Take Screenshot</Text>
+            </TouchableOpacity>
+        </View>
+    );
+};
+```

@@ -1,0 +1,37 @@
+---
+title: Overview
+nav: 3.15
+---
+
+100ms rooms can be live streamed to external platforms that support RTMP-in (for example, YouTube, Twitch). These live streams are called **external streams**. An external stream maps to up to 3 RTMP URLs.
+
+External streams can be optionally recorded by passing a boolean flag. This generates a `room-composite` [recording asset](../recording-assets/overview) at the end of the external stream.
+
+<EndpointRequest title="https://api.100ms.live/v2/external-streams" />
+
+## Object
+
+| Property         | Description                                      |
+|------------------|--------------------------------------------------|
+| id               | Unique identifier for the external stream object |
+| room_id          | Identifier of the room where this stream was started |
+| session_id       | Identifier of the session where this stream was started |
+| status           | Status of the external stream, can be one of `starting`, `running`, `stopping`, `post_processing`, `completed`, `failed` |
+| rtmp_urls        | Array of RTMP URLs where the live stream is sent |
+| recording        | Boolean flag of whether recording was enabled for this external stream |
+| resolution       | Width and height of the external stream |
+| meeting_url      | Meeting URL opened in the web browser that is composing the stream |
+| destination      | Name of the destination on your template to define stream configuration |
+| recording_assets | Array of [recording assets](../recording-assets/overview) that are generated out of the stream |
+| created_at       | Timestamp for when the external stream was created |
+| started_at       | Timestamp for when the external stream was started |
+| started_by       | Identifier of the peer who started the external stream. If the stream was started from server-side, this is an empty string |
+| stopped_at       | Timestamp for when the external stream was stopped |
+| stopped_by       | Identifier of the peer who stopped the external stream. If the stream was stopped from server-side, this is an empty string |
+| updated_at       | Timestamp for when the external stream was updated |
+
+## Postman collection
+
+You can use our Postman collection to start exploring 100ms APIs. Use the [Postman guide](/server-side/v2/introduction/postman-guide) to get started.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a?action=collection%2Ffork&collection-url=entityId%3D22726679-47dcd974-29d5-4965-a35b-bf9b74a8b25a%26entityType%3Dcollection%26workspaceId%3Dd9145dd6-337b-4761-81d6-21a30b4147a2)

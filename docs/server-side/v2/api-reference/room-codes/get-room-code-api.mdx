@@ -1,0 +1,63 @@
+---
+title: Retrieve Room Codes
+nav: 3.014
+---
+
+Retrieves Room Codes for all Roles in a Room. You can choose to retrive Room Codes for a specific Role and/or only enabled Room Codes using these as filter in the API endpoint. 
+
+<GetRequest title="https://api.100ms.live/v2/room-codes/room/<room_id>" />
+<Request id="req-comp-0">
+
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/room-codes/room/<room_id>' \
+--header 'Authorization: Bearer <management_token>' 
+```
+</Request>
+   
+<ResponseBox id="resp-0" status="200 OK">
+```json
+{
+    "limit": 20,
+    "data": [
+        {
+            "code": "hkj-sdf-fda",
+            "room_id": "329d23d4f772854d9bf633df",
+            "role": "host",
+            "enabled": true,
+            "created_at": "2023-03-03T11:41:08.082Z",
+            "updated_at": "2023-03-03T11:41:08.082Z",
+    	},
+    	{
+            "code": "wiw-giw-bzs",
+            "room_id": "329d23d4f772854d9bf633df",
+            "role": "guest",
+            "enabled": false,
+            "created_at": "2023-03-03T11:41:08.082Z",
+            "updated_at": "2023-03-03T11:41:08.082Z",
+    	}
+    ],
+    "last": ""
+}
+```
+
+</ResponseBox>    
+ 
+### Allowed Filters  
+
+| Field   | Type     | Description                                                           | Required |
+| :----- | :------- | :----------------------------------------------------------------------- | :------- |
+| role | `string` | When specified, it retrieves all Room Codes for the specified Role in the room. | No       |
+| enabled | `boolean` | Specify enabled as true or false to retrieve enabled or disabled Room Codes | No       |
+| limit | `int` | Determines the number of Room Code objects to be included in the response.  | No       |
+| start | `string` |  | No       |
+
+
+ ### Errors
+ 
+ | Description | Code |
+ | :--- | :--- |
+ | Room not found | 404 |
+ | Room is disabled | 403 |
+ | Authentication Error | 401 |
+ | Role not found | 404 |
+ | Invalid query parameter | 400 |

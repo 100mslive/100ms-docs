@@ -1,0 +1,274 @@
+---
+title: Session Store
+nav: 8.2
+---
+
+Session store is a shared realtime key-value store that is accessible by everyone in the room. Consider it as additional data associated with the session at the top level. Session store can be utilized to implement features such as pinned text, spotlight (which brings a particular peer to the center stage for everyone in the room), and more.
+
+The session store persists throughout the session and is cleared when the last peer leaves the room.
+
+<Note>
+💡 Session Store vs Peer Metadata
+
+While peer metadata is associated with individual peers and each peer can have their own metadata, session store remains the same for every peer in the room.
+
+</Note>
+
+## How to use
+
+Session store is only available after user joins the session. To obtain a reference to the session store, you need to override the `void onSessionStoreAvailable({HMSSessionStore? hmsSessionStore})` function of the `HMSUpdateListener` protocol. Once you get the reference to the store you can save it in your app for accessing later.
+
+```dart
+class Meeting implements HMSUpdateListener{
+
+    ... 
+
+    ///[_hmsSessionStore] : This instance will be used in future to access any session metadata methods
+    HMSSessionStore? _hmsSessionStore;
+
+    ///Here we get the instance of HMSSessionStore using which
+    ///we will be performing the session metadata actions
+    @override
+    void onSessionStoreAvailable({HMSSessionStore? hmsSessionStore}) {
+        _hmsSessionStore = hmsSessionStore;
+    }
+
+    ...
+
+}
+```
+
+### Setting a value for a specific key
+
+Use the `setSessionMetadataForKey` method to assign a value to a specific key. Once a value is assigned, it will be available for other peers in the room who are observing this key.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener{
+
+  ...
+
+    void setSessionMetadata({required String key, String? metadata}) {
+       ///[key]: String key for the session metadata
+      ///[metadata]: String? data for the key which you wish to set as session metadata
+      ///[hmsActionResultListener]: an instance of a class which implements HMSActionResultListener
+      ///Here this is an instance of a class that implements HMSActionResultListener, that is, Meeting
+
+    _hmsSessionStore?.setSessionMetadataForKey(
+        key: key, data: metadata, hmsActionResultListener: this);
+    }
+
+  ...
+
+}
+```
+
+## Retrieving a value for a specific key
+
+### Retrieve the current value and receive updates
+
+Most of the time the application is interested not just in a current value of a key but also any updates to that value. To obtain the initial value and receive updates, use the `addKeyChangeListener` method.
+It takes a list of keys to observe and a `HMSKeyChangeListener` instance that will be called for initial value and every time an update is received.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener,HMSKeyChangeListener{
+
+    ...
+
+    HMSSessionStore? _hmsSessionStore;
+
+    void addKeyListener(List<String> keysToBeListened){
+        
+        ///[keysToBeListened]: List of String containing the session keys which are needed to be listened
+        ///[hmsKeyChangeListener]: an instance of a class which implements HMSKeyChangeListener
+        ///Here this is an instance of a class that implements HMSKeyChangeListener, that is, Meeting
+
+        _hmsSessionStore?.addKeyChangeListener(keys: keysToBeListened,hmsKeyChangeListener: this);
+    }
+
+    ...
+}
+```
+
+You can have multiple key change listeners running concurrently.
+
+### Stop listening to updates for keys
+
+To stop receiving updates on key values, especially in cases like when you leave the room, you can utilize the removeKeyChangeListener method.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener,HMSKeyChangeListener{
+
+    ...
+
+    ///[hmsKeyChangeListener]: an instance of a class which implements HMSKeyChangeListener which was passed
+    ///in addKeyChangeListener method while adding the key change listener
+    ///Here this is an instance of a class that implements HMSKeyChangeListener, that is, Meeting
+    _hmsSessionStore?.removeKeyChangeListener(hmsKeyChangeListener: this);
+
+    ...
+
+}
+```
+
+> It is recommended to remove all the key change listeners while leaving the room.
+
+### Retrieve the current value once
+
+If you want to obtain session metadata without any subsequent updates, you can utilize the getSessionMetadataForKey method, which can be viewed as a getter method for session metadata.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener,HMSKeyChangeListener{
+
+    void getSessionMetadata(String key) async {
+        ///[key]: key for which you wish to get the metadata
+        ///This method returns a dynamic object that can be a String in case of success
+        ///or can be an HMSException object in case of failure
+
+        dynamic sessionMetadata = await _hmsSessionStore?.getSessionMetadataForKey(key: key);
+        if (result is HMSException) {
+            // Show the corresponding error
+        }
+        if (result != null) {
+            // You can find the session metadata value in sessionMetadata variable
+        }
+    }
+}
+```
+
+## Limitations and workarounds in Alpha release
+
+-   There is no permission support, which means anyone can read/write session metadata. If you want to restrict access to session metadata, you have to implement it at the app level logic.
+-   Locks are required to ensure consistency of the data. If two peers update the data at the same time, it may result in a race condition where the last update overwrites the previous ones.
+
+👀 For an example of how to implement pinned chat support using session store in a flutter app with the 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-flutter/blob/main/example/lib/meeting/meeting_store.dart).
+
+## Limits
+
+- Max payload size for data can be 1KB.
+- Maximum 100 keys are supported with 64KB limit applied to all keys combined.
+- Metadata size for 64 KB also include the key size.
+
+## Migrating from older HMSSDK version to 1.6.0 or above for using session store
+
+With the introduction of session store, `HMSUpdateListener` has undergone some changes. 
+One notable addition is the `onSessionStoreAvailable` callback, which enables developers to implement session store functionality in their apps.
+This callback is particularly useful because it is triggered when the session store becomes available, allowing developers to retrieve and manage the data stored within it.
+
+<div className="steps-container">
+
+### Update the HMSSDK version to 1.6.0 or above
+
+```yaml
+hmssdk_flutter: ^1.6.0
+```
+
+Run `flutter pub get` and ensure that SDK is updated
+
+### Add onSessionStoreAvailable override in class which implements HMSUpdateListener
+
+```dart
+class Meeting implements HMSUpdateLister{
+
+
+    //We will be storing the HMSSessionStore instance in _hmsSessionStore variable for future usages.
+    //This instance can be shared with other classes as well.
+    HMSSessionStore? _hmsSessionStore;
+    ...
+
+    ///Here we get the instance of HMSSessionStore using which
+    ///we will be performing the session metadata actions
+    @override
+    void onSessionStoreAvailable({HMSSessionStore? hmsSessionStore}) {
+        _hmsSessionStore = hmsSessionStore;
+    }
+
+    ...
+}
+```
+
+</div>
+
+That's it. You are all set to use Session Store.
+
+## Spotlight a peer
+
+In large video conferences or webinars where numerous participants are present, 
+`spotlighting` helps draw attention to a speaker, presenter, or panelist. By highlighting their video feed, it ensures that their message or presentation remains front and center, reducing distractions and maximizing engagement.
+
+Let's see we can spotlight a peer using `HMSSessionStore`
+
+<div className="steps-container">
+
+### Setup the Session store using the steps mentioned above.
+
+### Set the session metadata using setSessionMetadataForKey method
+
+Here we set the session metadata using `setSessionMetadataForKey` method with key as `spotlight` and value as anything unique for a particular peer so here we are using audio trackId as the unique value.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener,HMSKeyChangeListener{
+
+...
+
+/// Here [_hmsSessionStore] is an instance of HMSSessionStore
+/// Details about how to get this are mentioned above
+
+///Setting key as spotlight and data as peer's audio track Id
+///[hmsActionResultListener] is an instance of class implementing HMSActionResultListener
+_hmsSessionStore?.setSessionMetadataForKey(
+        key: 'spotlight', data: audioTrackId, hmsActionResultListener: this);
+
+...
+
+}
+```
+
+### Listen to onKeyChanged method for updates regarding the session store values
+
+The `onKeyChanged` method is a listener that allows us to receive updates about the values stored in the session. In this case, we are interested in updates related to the `spotlight` key. When we receive an update with the key as `spotlight`, it means that there is new data available to indicate which participant's video feed should be highlighted.
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener,HMSKeyChangeListener{
+
+  ...
+
+  @override
+  void onKeyChanged({required String key, required String? value}) {
+    switch (key) {
+      case 'spotlight':
+        //Set the peer to spotlight here
+        break;
+      default:
+        break;
+    }
+  }
+
+  ...
+}
+```
+
+### Remove a peer from spotlight
+
+To remove a peer from spotlight just set the `spotlight` key as null using `setSessionMetadataForKey` method
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener,HMSKeyChangeListener{
+
+/// Here [_hmsSessionStore] is an instance of HMSSessionStore
+/// Details about how to get this are mentioned in above docs: https://www.100ms.live/docs/flutter/v2/how-to-guides/interact-with-room/room/session-store
+
+///Setting key as spotlight and data as null
+///[hmsActionResultListener] is an instance of class implementing HMSActionResultListener
+_hmsSessionStore?.setSessionMetadataForKey(
+        key: 'spotlight', data: null, hmsActionResultListener: this);
+
+}
+```
+
+</div>
+
+Checkout spotlight in action:
+
+https://github.com/100mslive/100ms-flutter/assets/93931528/0a9df0b9-8518-4ca4-8cd3-7447a450acb8
+
+Checkout the spotlight implementation in our example Github repository [here](https://github.com/100mslive/100ms-flutter/tree/main/example)

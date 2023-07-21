@@ -1,0 +1,114 @@
+---
+title: Session Metadata (Deprecated)
+nav: 8.3
+---
+
+> [Session Store](session-store) is the new API for this functionality.
+
+Session Metadata is an alpha feature that allows you to set and get metadata for a given session.
+
+> A session is defined as the period from when the first peer joins an empty room till the last peer leaves.
+
+The same room can have multiple sessions. During one session the metadata will be preserved. Once a session ends the session metadata will also be cleared, that is, when the last peer leaves.
+
+## Limits
+
+Since session metadata is an alpha feature, it does not have the following:
+
+1. Locks to ensure consistency of the data. If two peers update it at the same time, it will be a race condition for which one succeeds last, overwriting whatever was before.
+2. SDKs are not made aware of session metadata updates on their own. This has to be done manually. One suggested way is listed [below](#detect-when-session-metadata-changes).
+
+## Set Session Metadata
+
+Any peer can set the session metadata by calling `setSessionMetaData` method on `HMSSDK` instance with `string` value as metadata parameter.
+
+> No updates are sent to other peers after calling `setSessionMetadata` as it's an alpha feature. So, some extra code needs to be written
+> to send updates. The implementation can be found [here](#detect-when-session-metadata-changes)
+
+```js{4}
+try {
+  const metadata: string = '...'; // metadata to set, this can be stringified object as well, that is, JSON.stringify('{}')
+
+  await hmsInstance.setSessionMetaData(metadata);
+  console.log('Set Session Metadata Success');
+} catch (error) {
+  console.log('Set Session Metadata Error: ', error);
+}
+```
+
+## Get Session Metadata
+
+Any peer can get the current session metadata by calling `getSessionMetaData` method on `HMSSDK` instance.
+
+```js{2}
+try {
+  const metadata: string | null = await hmsInstance.getSessionMetaData();
+
+  console.log('Get Session Metadata Success: ', metadata);
+} catch (error) {
+  console.log('Get Session Metadata Error: ', error);
+}
+```
+
+## Detect when session metadata changes
+
+Since no updates are sent for session metadata as it is an alpha feature, here is one suggested way of getting peers to receive it when it is set.
+
+One way to notify other apps of a change in session metadata is to send a custom broadcast message when a set succeeds. The type can be set to something like "metadata" or whatever you choose and this should then be handled when the SDK emits `ON_MESSAGE` event. Inside the function subscribed to `ON_MESSAGE` event, you can get the current session metadata and handle it as per your usecase instead of showing a message.
+
+Let's understand it from a diagram:
+
+![session-metadata](/docs/v2/flutter-session-metadata.png)
+
+Let's look at them step-by-step:
+
+<div className="steps-container">
+
+### PeerA sets Session Metadata and Broadcast Message with type 'metadata'
+
+```js
+try {
+    const metadata: string = '...'; // metadata to set, this can be stringified object as well, that is, JSON.stringify('{}')
+
+    await hmsInstance.setSessionMetaData(metadata);
+    console.log('Set Session Metadata Success');
+
+    // On successfully setting session metdata, you can broadcast this update to other users
+    await hmsInstance.sendBroadcastMessage('refresh', 'metadata'); // 'metadata' is the message type
+    console.log('Broadcast Message Success');
+} catch (error) {
+    console.log('Set Session Metadata Error: ', error);
+}
+```
+
+> 🔑 Note: We can set the type as any string just make sure you check the same `type` string on the `ON_MESSAGE` event.
+> We have taken `metadata` string as an example.
+
+### Other peers receive `ON_MESSAGE` event
+
+In `onMessage` callback check for message type and update session Metadata value using `getSessionMetadata`.
+
+```js
+const onMessageListener = async (message: HMSMessage) => {
+    try {
+        // if message type is `metadata`, then get current session metadata
+        if (message.type === 'metadata') {
+            const metadata: string | null = await hmsInstance.getSessionMetaData();
+
+            console.log('Get Session Metadata Success: ', metadata);
+
+            // Handle `metadata` as per your usecase
+
+            return;
+        }
+
+        // Add Message to your chat
+    } catch (error) {
+        console.log('Error: ', error);
+    }
+};
+
+hmsInstance.addEventListener(HMSUpdateListenerActions.ON_MESSAGE, onMessageListener);
+```
+
+</div>

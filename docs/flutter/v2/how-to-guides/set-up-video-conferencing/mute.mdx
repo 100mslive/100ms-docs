@@ -1,0 +1,219 @@
+---
+title: Mute / Unmute Peer
+nav: 4.5
+---
+
+Mute is something that applies to both audio and video. When you mute audio, you can't be heard by other people i.e your audio is OFF. When you mute a video, you will not be broadcasting your video to other people i.e your video is OFF.
+
+## Methods to mute/unmute
+
+This example shows implementation of three methods namely :
+
+### 1. toggleMicMuteState : To switch local peer's audio on/off.
+### 2. toggleCameraMuteState : To switch local peer's video on/off.
+### 3. switchCamera: Switch camera to the front or rear mode
+
+Let's look at their implementation:
+
+```dart
+class Meeting implements HMSUpdateListener,HMSActionResultListener{
+
+...
+/// To switch local peer's audio on/off.
+hmsSDK.toggleMicMuteState(); //This toggles the current mic status(mute/unmute)
+
+
+/// To switch local peer's video on/off.
+hmsSDK.toggleCameraMuteState(); //This toggles current camera status(mute/unmute)
+
+/// Switch camera from front or rear mode
+hmsSDK.switchCamera();
+
+...
+
+}
+```
+
+## How to mute microphone 
+
+Let's look at how we can mute microphone:
+
+<div className="steps-container">
+
+### Call toggleMicMuteState on HMSSDK instance
+
+To mute microphone we need to call `toggleMicMuteState`
+
+```dart
+class Meeting implements HMSUpdateListener,HMSActionResultListener{
+
+...
+/// To switch local peer's audio on/off.
+hmsSDK.toggleMicMuteState(); //This toggles the current mic status(mute/unmute)
+...
+
+}
+```
+
+### Receive the onTrackUpdate with update type trackUnmuted
+
+After calling `toggleMicMuteState` we will receive `onTrackUpdate` with `HMSTrackUpdate.trackUnmuted` type 
+and track kind as `HMSTrackKind.kHMSTrackKindAudio`
+
+```dart
+class Meeting implements HMSUpdateListener,HMSActionResultListener{
+
+bool isMicOff = true;
+...
+@override
+void onTrackUpdate(
+    {required HMSTrack track,
+    required HMSTrackUpdate trackUpdate,
+    required HMSPeer peer}) {
+    
+        //To check mute/unmute status for local peer
+        if (peer.isLocal) {
+            if ((track.kind == HMSTrackKind.kHMSTrackKindAudio) &&
+                (track.source == "REGULAR") && (trackUpdate == HMSTrackUpdate.trackUnMuted)) {
+                //Here we will receive the trackUnmuted update for audio track of local peer.
+                //i.e. track.isMute will be false
+                isMicOff = track.isMute;
+            }
+            ...
+        }
+    }
+...
+
+}
+```
+
+</div>
+
+## How to get the current mute/unmute state
+
+To get the current mute/unmute state for local peer we will use local peer's `HMSTrack` object.
+
+```dart
+class Meeting implements HMSUpdateListener,HMSActionResultListener{
+
+bool isMicOff = false;
+bool isCameraOff = false;
+...
+@override
+void onTrackUpdate(
+    {required HMSTrack track,
+    required HMSTrackUpdate trackUpdate,
+    required HMSPeer peer}) {
+    
+        //To check mute/unmute status for local peer
+        if (peer.isLocal) {
+            if (track.kind == HMSTrackKind.kHMSTrackKindAudio &&
+                track.source == "REGULAR") {
+                isMicOff = track.isMute;
+            }
+            if (track.kind == HMSTrackKind.kHMSTrackKindVideo &&
+                track.source == "REGULAR") {
+                isCameraOff = track.isMute;
+            }
+        }
+    }
+...
+
+}
+```
+
+## When to show mic/camera buttons on UI 
+
+On UI we only want to show mic or camera buttons when the peer has permissions to publish audio or video respectively.
+This can be done by leveraging publish permissions for a particular role.
+
+### Display mic mute/unmute button
+
+```dart
+//Setting a variable for checking whether to display mic button or not
+bool displayMicrophoneButton = true;
+
+//Here we get all the track updates in the room
+@override
+void onTrackUpdate(
+      {required HMSTrack track,
+      required HMSTrackUpdate trackUpdate,
+      required HMSPeer peer}) {
+
+    //Checking whether peer is local or not
+    if (peer.isLocal) {
+       if(peer?.role.publishSettings?.allowed.contains("audio")??false){
+            displayMicrophoneButton = true;
+       }
+       else{
+        displayMicrophoneButton = false;
+       }
+       setState(() {});
+    }
+
+}
+
+///Here we will add the check to render the widget on screen or not based on [displayMicrophoneButton] variable
+if(displayMicrophoneButton){
+    //Show the mic button widget here
+}
+```
+
+### Display camera mute/unmute button
+
+```dart
+//Setting a variable for checking whether to display camera button or not
+bool displayCameraButton = true;
+
+//Here we get all the track updates in the room
+@override
+void onTrackUpdate(
+      {required HMSTrack track,
+      required HMSTrackUpdate trackUpdate,
+      required HMSPeer peer}) {
+
+    //Checking whether peer is local or not
+    if (peer.isLocal) {
+       if(peer?.role.publishSettings?.allowed.contains("video")??false){
+            displayCameraButton = true;
+       }
+       else{
+        displayCameraButton = false;
+       }
+       setState(() {});
+    }
+
+}
+
+///Here we will add the check to add the widget on screen or not based on [displayCameraButton] variable
+if(displayCameraButton){
+    //Show the camera button widget here
+}
+```
+
+## Mute Remote peers locally 
+
+To mute peers all the peers for yourself `HMSSDK` provides dedicated methods `muteRoomAudioLocally` for audio and `muteRoomVideoLocally` for video. Execution
+of this method mutes audio and video only locally others will still be able to hear audio and video.
+
+> These methods mute/unmute the room audio/video of all the peers for yourself.To mute/unmute certain peer check [this](/flutter/v2/features/remote-mute-unmute)
+
+```dart
+//To mute room audio locally
+hmsSDK.muteRoomAudioLocally();
+
+//To mute room video locally
+hmsSDK.muteRoomVideoLocally();
+```
+
+Similarly their counterparts:
+
+```dart
+//To unmute room audio locally
+hmsSDK.unMuteRoomAudioLocally();
+
+//To unmute room video locally
+hmsSDK.unMuteRoomVideoLocally();
+```
+
+If you are looking to Mute other (remote) Peers in Room, checkout the [Remote Mute here](/flutter/v2/how--to-guides/interact-with-room/track/remote-mute-unmute).

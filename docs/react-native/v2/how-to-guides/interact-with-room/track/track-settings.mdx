@@ -1,0 +1,192 @@
+---
+title: Set Track Settings
+nav: 8.34
+---
+
+You can customize local peers' Audio & Video track settings before Joining the Room.
+
+These settings are a optional parameter and meant to be passed in the `build` function of `HMSSDK` as `trackSettings` parameter which is a `HMSTrackSettings` object.
+
+## Set Audio Track settings
+
+Audio Track settings are defined by `HMSAudioTrackSettings` class. We have following settings for the Audio Track:
+
+-   `initialState`
+
+    Property to set the initial state of the Audio track (microphone), that is Mute/Unmute before joining the room. By default Audio track is Unmuted meaning microphone is ON.
+
+    You can use `HMSTrackSettingsInitState` enum to set this value.
+
+    ```js
+    enum HMSTrackSettingsInitState {
+      // If the track needs to be kept mute while joining
+      MUTED,
+
+      // If the track needs to be kept unmute while joining
+      UNMUTED
+    }
+
+    ...
+
+    // Creating "Audio Track settings" config object
+    const audioSettings = new HMSAudioTrackSettings({
+      initialState: HMSTrackSettingsInitState.MUTED,
+    });
+
+    // Creating "Track settings" config object
+    const trackSettings = new HMSTrackSettings({
+      audio: audioSettings,
+    });
+
+    // Pass the Track Settings object to the build function
+    c̶o̶n̶s̶t̶ ̶h̶m̶s̶I̶n̶s̶t̶a̶n̶c̶e̶ ̶=̶ ̶a̶w̶a̶i̶t̶ ̶H̶M̶S̶S̶D̶K̶.̶b̶u̶i̶l̶d̶(̶)̶;̶
+    const hmsInstance = await HMSSDK.build({ trackSettings });
+
+    ...
+
+    // add Event Listeners to subscribe to Join Success or Failure updates
+    hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
+    hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoin);
+
+    // Join Room with above created config
+    hmsInstance.join(config);
+    ```
+
+    More info about this can be found in [Join with Muted Audio](/react-native/v2/how--to-guides/set-up-video-conferencing/join#join-with-muted-audio-video) docs.
+
+    For more info about Muting and Unmuting Audio Track, check out [Mute and Unmute](/react-native/v2/how--to-guides/set-up-video-conferencing/mute) docs.
+
+-   `useHardwareEchoCancellation` [Android Only]
+
+    Property to enable Hardware echo cancellation. It's set to `false` by default which implies that Software Echo Cancellation is enabled by default. Passing a `true` value here forces the device to use the phone's Hardware Acoustic echo Cancellation instead of relying on the 100ms' Software-based implementation.
+
+-   `audioSource` [iOS Only]
+
+    Property to configure audio nodes for audio sharing. More info about this can be found in [Audio Share](/react-native/v2/how--to-guides/set-up-video-conferencing/local-audio-share) docs.
+
+-   `audioMode` [iOS Only]
+
+    Property to capture audio from device in its highest quality by disabling voice processing and increasing the bandwidth limit from 32 Kbps to 320 Kbps. More info about this can be found in [Music Mode](/react-native/v2/how--to-guides/set-up-video-conferencing/music-mode) docs.
+
+We can create `HMSAudioTrackSettings` with above mentioned properties as follows -
+
+```js
+const audioTrackSettings = new HMSAudioTrackSettings({
+    initialState: HMSTrackSettingsInitState.UNMUTED,
+    useHardwareEchoCancellation: true,
+    audioSource: ['audio_file_player_node'],
+    audioMode: HMSIOSAudioMode.MUSIC,
+});
+```
+
+## Set Video Track settings
+
+Video Track settings are defined by `HMSVideoTrackSettings` class. We have following settings for the Video Track:
+
+-   `initialState`
+
+    Property to set the initial state of the Video track (camera) i.e Mute/Unmute before joining the room. By default Video track is Unmuted meaning camera is ON.
+
+    You can use `HMSTrackSettingsInitState` enum to set this value.
+
+    ```js
+    enum HMSTrackSettingsInitState {
+      // If the track needs to be kept mute while joining
+      MUTED,
+
+      // If the track needs to be kept unmute while joining
+      UNMUTED
+    }
+
+    ...
+
+    // Creating "Video Track settings" config object
+    const videoSettings = new HMSVideoTrackSettings({
+      initialState: HMSTrackSettingsInitState.MUTED,
+    });
+
+    // Creating "Track settings" config object
+    const trackSettings = new HMSTrackSettings({
+      video: videoSettings,
+    });
+
+    // Pass the Track Settings object to the build function
+    c̶o̶n̶s̶t̶ ̶h̶m̶s̶I̶n̶s̶t̶a̶n̶c̶e̶ ̶=̶ ̶a̶w̶a̶i̶t̶ ̶H̶M̶S̶S̶D̶K̶.̶b̶u̶i̶l̶d̶(̶)̶;̶
+    const hmsInstance = await HMSSDK.build({ trackSettings });
+
+    ...
+
+    // add Event Listeners to subscribe to Join Success or Failure updates
+    hmsInstance.addEventListener(HMSUpdateListenerActions.ON_ERROR, onError);
+    hmsInstance.addEventListener(HMSUpdateListenerActions.ON_JOIN, onJoin);
+
+    // Join Room with above created config
+    hmsInstance.join(config);
+    ```
+
+    More info about this can be found in [Join with Muted Video](/react-native/v2/how--to-guides/set-up-video-conferencing/join#join-with-muted-audio-video) docs.
+
+    For more info about Muting and Unmuting Video Track, check out [Mute and Unmute](/react-native/v2/how--to-guides/set-up-video-conferencing/mute) docs.
+
+-   `cameraFacing`
+
+    Property specifies which camera to open while joining. It can be toggled later on. You can use `HMSCameraFacing` enum to set this value. The default value is `HMSCameraFacing.FRONT`.
+
+-   `forceSoftwareDecoder` [Android Only]
+
+    This can be used when a lot of videos are rendered at a single time. It is known that the hardware decoder on certain phones doesn't tend to work well with large grids. This may cause an adverse effect like the phone heating up, use this flag only when required. The default value is set as `false`.
+
+-   `disableAutoResize` [Android Only]
+
+    The SDK intelligently downscales the resolution when publisher's bandwidth is flaky or is CPU bound. This results in a low resolution for the viewers. But if the viewers are persistent, they want the highest resolution at all times, then this setting comes in handy. The default value is set as `false`.
+
+We can create `HMSVideoTrackSettings` with above mentioned properties as follows -
+
+```js
+const videoTrackSettings = new HMSVideoTrackSettings({
+    initialState: HMSTrackSettingsInitState.MUTED,
+    cameraFacing: HMSCameraFacing.BACK,
+    forceSoftwareDecoder: false,
+    disableAutoResize: false
+});
+```
+
+## Using Track Settings in HMSSDK constructor
+
+Here's a sample implementation of adding track settings while initializing 100ms SDK -
+
+```js
+import {
+    HMSSDK,
+    HMSAudioTrackSettings,
+    HMSVideoTrackSettings,
+    HMSTrackSettings,
+    HMSTrackSettingsInitState,
+    HMSCameraFacing
+} from '@100mslive/react-native-hms';
+
+const getTrackSettings = () => {
+    const audioTrackSettings = new HMSAudioTrackSettings({
+        initialState: HMSTrackSettingsInitState.UNMUTED,
+        useHardwareEchoCancellation: true,
+        audioSource: ['audio_file_player_node'],
+        audioMode: HMSIOSAudioMode.MUSIC,
+    });
+
+    const videoTrackSettings = new HMSVideoTrackSettings({
+        initialState: HMSTrackSettingsInitState.MUTED,
+        cameraFacing: HMSCameraFacing.BACK,
+        forceSoftwareDecoder: false,
+        disableAutoResize: false
+    });
+
+    return new HMSTrackSettings({
+        video: videoTrackSettings,
+        audio: audioTrackSettings
+    });
+};
+
+const trackSettings = getTrackSettings();
+
+const build = await HMSSDK.build({ trackSettings });
+```

@@ -1,5 +1,5 @@
 export default {
-    title: '100ms - Video conferencing infrastructure for a video-first world',
+    title: '100ms - Video conferencing and live streaming infrastructure',
     description:
         'Quick to integrate native iOS, Android & Web SDKs to add live video & audio conferencing to your applications.',
     author: '100ms',
@@ -10,7 +10,7 @@ export default {
         site_name: '100ms.live',
         images: [
             {
-                url: `https://100ms.live/images/banner.png`,
+                url: `https://storage.googleapis.com/100ms-cms-prod/cms/Docs_SEO_14a3dcc31c/Docs_SEO_14a3dcc31c.png`,
                 alt: '100ms Banner'
             }
         ]

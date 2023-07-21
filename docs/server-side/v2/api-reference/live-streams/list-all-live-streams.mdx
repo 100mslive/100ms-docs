@@ -1,0 +1,63 @@
+---
+title: List live streams
+nav: 3.164
+---
+
+Use this request to list and filter through live stream objects of a workspace. The response is paginated.
+
+This list can be filtered by `room_id`, `session_id` or `status` to find the relevant live stream object.
+
+<GetRequest title="https://api.100ms.live/v2/live-streams" />
+<Request id="req-0">
+
+```bash
+curl --location --request GET 'https://api.100ms.live/v2/live-streams' \
+--header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "limit": 10,
+    "data": [
+        {
+            "id": "<job_id>",
+            "room_id": "<room_id>>",
+            "session_id": "<session_id>",
+            "status": "<status>",
+            "destination": "<destination_name>",
+            "playback": {
+                "url": "<master-manifest>"
+            },
+            "meeting_url": "<meeting_url>",
+            "recording": {
+                "hls_vod": false,
+                "single_file_per_layer": false
+            },
+            "created_at": "2023-03-02T07:44:27.010516042Z",
+            "started_at": "2023-03-02T07:44:27.010516042Z",
+            "updated_at": "2023-03-02T07:44:27.010516042Z",
+            "stopped_at": "2023-03-02T07:44:27.010516042Z",
+            "started_by": "<peer_id>",
+            "stopped_by": "<peer_id>",
+            "recording_assets": null
+        }
+    ],
+    "last": "<stream-id-of-last>"
+}
+```
+
+</ResponseBox>
+
+## Query params
+
+| Name   | Description | Required |
+| ------ | -------- | ------- |
+| room_id | Filter live streams for a particular room with its identifier | No |
+| session_id | Filter live streams for a particular session with its identifier | No |
+| status | Can be one of `starting`, `running`, `stopping`, `post_processing`, `completed`, `failed` | No |
+| start | Sets the starting point for pagination | No |
+| limit | Sets the number of objects to returned in the response | No |

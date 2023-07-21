@@ -1,0 +1,307 @@
+---
+title: Local Audio Share
+nav: 4.8
+---
+
+> This feature is still in Beta. To know more or report any issues, feel free to reach out to us
+> over [Discord](https://discord.com/invite/kGdmszyzq2).
+
+This feature is the analog of screen capture, but for audio.
+There may be cases where the application needs to stream music which is either stored in the device locally or from some other app present on the device in the room where the peer is joined.
+
+Examples of such use cases can be an FM-like application where the host would want to stream music while also interacting with others in the room or a host in a gaming app who would want to stream music from their device in the room along with their regular audio track.
+
+## Android Setup
+
+-   The Audio share option is currently available in Android 10 and above.
+
+### How does audio share work in android
+
+100ms SDK uses the [MediaProjection](https://developer.android.com/guide/topics/media/av-capture#capture_audio_playback) APIs of Android to capture the device audio and stream it along with the user's regular audio track. To achieve this, SDK starts a foreground service
+and starts capturing the device audio and mixes the bytes with the data collected from the mic, so that the stream contains both system music and mic data.
+
+This API gives apps the ability to copy the audio being played by other apps which have set their usage
+to USAGE_MEDIA, USAGE_GAME, or USAGE_UNKNOWN. (Audio from apps like YouTube etc can be captured)
+Let's see how you can implement this using HMSSDK :
+
+First, we will need to pass the intent from native android to HMSSDK. For this in your app's `MainActivity` add -
+
+```kotlin
+import live.hms.hmssdk_flutter.HmssdkFlutterPlugin
+import android.app.Activity
+import android.content.Intent
+import live.hms.hmssdk_flutter.Constants
+
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+super.onActivityResult(requestCode, resultCode, data)
+
+    if (requestCode == Constants.AUDIO_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+        data?.action = Constants.HMSSDK_RECEIVER
+        activity.sendBroadcast(data?.putExtra(Constants.METHOD_CALL, Constants.AUDIO_SHARE_REQUEST))
+    }
+}
+
+```
+
+> DO NOT forget to add the permission for foreground service in AndroidManifest.xml
+
+```kotlin
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+```
+
+### Migrating from older HMSSDK version to 1.5.0 or above
+
+Since there is a breaking change in the audio share setup in [1.5.0](https://github.com/100mslive/100ms-flutter/releases/tag/1.5.0) version of HMSSDK compared to older versions.
+Let's see how we can migrate from older versions to 1.5.0 or above.
+
+Replace these two line of application's `MainActivity.kt` file:
+
+```kotlin
+if (requestCode == Constants.AUDIO_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+    HmssdkFlutterPlugin.hmssdkFlutterPlugin?.requestAudioShare(data)
+}
+```
+
+with these lines:
+
+```kotlin
+if (requestCode == Constants.AUDIO_SHARE_INTENT_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+    data?.action = Constants.HMSSDK_RECEIVER
+    activity.sendBroadcast(data?.putExtra(Constants.METHOD_CALL, Constants.AUDIO_SHARE_REQUEST))
+}
+```
+
+Here's a Screenshot showing the Git Diff between older and the implementation in version 1.5.0 and above.
+![FlutterAudioshareDiff](/docs/v2/FlutterAudioshareDiff.png)
+
+
+That's it 🥳🥳 
+
+You can run the application now and use the Audio Share functionality. 
+
+### How to start/stop device audio streaming from the application
+
+To start streaming device audio, the application needs to call the `startAudioShare` method of `HMSSDK`, which takes in two parameters -
+
+1. The first one is `HMSActionResultListener` which is a callback object needed to inform about the `success` or `failure` of the action
+
+2. The second one is one of the modes of type `HMSAudioMixingMode` in which the user wants to stream.
+   This can be one out of the three available types -
+    - TALK_ONLY : Data captured by the mic will be streamed in the room
+    - TALK_AND_MUSIC: Data captured by the mic as well as playback audio being captured from the device will be streamed in the room
+    - MUSIC_ONLY: The playback audio being captured from the device will be streamed into the room
+
+Following is the snippet on how to start and stop audio share:
+
+```dart
+class Meeting  implements HMSUpdateListener, HMSActionResultListener{
+
+    ...
+
+    void startAudioShare() {
+        ///[audioMixingMode] HMSAudioMixingMode enum with values discussed above
+        ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+        //Here this is an instance of a class that implements HMSActionResultListener that is Meeting
+        //For example if the mode needed is TALK_AND_MUSIC
+        hmsSDK.startAudioShare(audioMixingMode: HMSAudioMixingMode.TALK_AND_MUSIC,hmsActionResultListener: this);
+    }
+
+    void stopAudioShare() {
+        ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+        //Here this is an instance of a class that implements HMSActionResultListener that is Meeting
+        hmsSDK.stopAudioShare(hmsActionResultListener: this);
+    }
+
+    @override
+    void onSuccess(
+        {HMSActionResultListenerMethod methodType =
+            HMSActionResultListenerMethod.unknown,
+        Map<String, dynamic>? arguments}) {
+
+            switch (methodType) {
+
+            ...
+
+            case HMSActionResultListenerMethod.startAudioShare:
+            //Here we will receive the startAudioShare success callback
+            break;
+
+            case HMSActionResultListenerMethod.stopAudioShare:
+            //Here we will receive the stopAudioShare success callback
+            break;
+            ...
+        }
+    }
+
+    @override
+    void onException(
+        {HMSActionResultListenerMethod methodType =
+            HMSActionResultListenerMethod.unknown,
+        Map<String, dynamic>? arguments,
+        required HMSException hmsException}) {
+
+            switch (methodType) {
+
+                ...
+
+                case HMSActionResultListenerMethod.startAudioShare:
+                 // Check the HMSException object for details about the error
+                break;
+
+                case HMSActionResultListenerMethod.stopAudioShare:
+                 // Check the HMSException object for details about the error
+                break;
+                ...
+        }
+    }
+}
+```
+
+### How to change the audio mixing mode
+
+To change the audio sharing mode, call the `setAudioMixingMode` API and pass one of the modes out of
+`TALK_ONLY` or `TALK_AND_MUSIC` or `MUSIC_ONLY`
+
+```dart
+//For setting mode as MUSIC_ONLY
+hmsSDK.setAudioMixingMode(audioMixingMode:HMSAudioMixingMode.MUSIC_ONLY);
+```
+
+Note that `TALK_ONLY` mode is equivalent to regular mode, that is without starting this API
+
+## iOS Setup
+
+-   Minimum iOS version required to support Audio Share is iOS 13
+
+### How audio sharing works in iOS
+
+The audio that the device shares go to other peers through the mic channel. To be able to share audio we need to set up the SDK to use a custom audio source instead of the default mic. To do that you pass an instance of a custom audio source to HMSAudioTrackSettings on your HMSSDK instance.
+
+### How to use HMSSDK to share audio from a file
+
+1. You create an instance of `HMSAudioFilePlayerNode` and an instance of `HMSMicNode` like below:
+   HMSAudioFilePlayerNode required a parameter type `String` which will be used at the control music player in the room.
+
+```dart
+HMSAudioFilePlayerNode audioFilePlayerNode = HMSAudioFilePlayerNode("nodeName");
+HMSMicNode micNode = HMSMicNode();
+```
+
+2. Next, you create an instance of `HMSAudioMixerSource`, passing an array of nodes that we created in the step above like below:
+
+```dart
+HMSAudioMixerSource audioMixerSource = HMSAudioMixerSource(nodes: [audioFilePlayerNode, micNode]);
+```
+
+3. Next, you pass this custom audio source to the 'audioSource' parameter of HMSAudioTrackSetting that you set on HMSSDK instance like so:
+
+```dart
+HMSAudioTrackSetting audioSettings = HMSAudioTrackSetting(..., audioSource: audioMixerSource);
+HMSTrackSetting = HMSTrackSetting(..., audioTrackSetting: audioSettings);
+HMSSDK hmsSDK = HMSSDK(hmsTrackSetting: trackSetting);
+await hmsSDK.build(); // ensure to await while invoking the `build` method
+```
+
+That's all you need to set up the SDK to use your custom audio source.
+
+4. You call the play function on audioFilePlayerNode to play a file on a local device in a meeting room with its file URL like below:
+
+```dart
+    HMSAudioFilePlayerNode audioFilePlayerNode = HMSAudioFilePlayerNode("nodeName");
+    audioFilePlayerNode.play(fileUrl: ...);
+```
+
+Note the parameter value in `HMSAudioFilePlayerNode` must be the same as defined at the time of initializing `HMSSDK`.
+
+### How to change the volume of different nodes
+
+You can use the volume property on nodes to control the volume.
+
+```dart
+audioFilePlayerNode.setVolume(0.5);
+micNode.setVolume(0.9);
+```
+
+Note volume value range from 0.0 to 1.0
+
+### How to schedule multiple audio files for back-to-back playback
+
+You can set `interrupts` parameter to false to tell audioFilePlayerNode to not interrupt the current file playback, but schedule the file after the current file is finished. Like below:
+
+```dart
+audioFilePlayerNode.play(fileUrl: URL to file 1)
+audioFilePlayerNode.play(fileUrl: URL to file 2, interrupts: false)
+audioFilePlayerNode.play(fileUrl: URL to file 3, interrupts: false)
+...
+```
+
+### How to play multiple files concurrently
+
+You can pass multiple instances of audioFilePlayerNode and pass them as nodes when creating audioMixerSource like so:
+
+```dart
+HMSAudioFilePlayerNode backgroundMusicNode = HMSAudioFilePlayerNode("backgroundMusicNode")
+backgroundMusicNode.setVolume(0.2)
+HMSAudioFilePlayerNode audioFilePlaybackNode = HMSAudioFilePlayerNode("audioFilePlaybackNode")
+audioFilePlaybackNode.setVolume(0.5)
+HMSMicNode micNode = HMSMicNode()
+
+HMSAudioMixerSource audioMixerSource = HMSAudioMixerSource(nodes: [backgroundMusicNode, audioFilePlaybackNode, micNode])
+```
+
+Now, you can play looping background music at low volume and an audio file at the same time:
+
+```dart
+backgroundMusicNode.play(fileUrl: ..., loops: true)
+audioFilePlayerNode.play(fileUrl: ...)
+```
+
+### How to pause, resume, stop playback and more
+
+You can use the following interfaces on HMSAudioFilePlayerNode to pause, resume or stop playback and more:
+
+```dart
+audioFilePlayerNode.pause()
+audioFilePlayerNode.resume()
+audioFilePlayerNode.stop()
+
+bool isPlaying = await audioFilePlayerNode.isPlaying()
+double currentPlaybackTime = audioFilePlayerNode.currentDuration()
+double totalPlaybackDuration = audioFilePlayerNode.duration()
+```
+
+### How to share audio that's playing on your iPhone
+
+Note: iOS allows you to get access to audio playing on an iOS device (for example, from another app like Spotify) only while broadcasting your entire iPhone screen. So for this to work you should implement screen sharing in your app. You can follow along here to set it up [Screen Share](/flutter/v2/how--to-guides/set-up-video-conferencing/screen-share)
+
+Now once you have implemented the screen share feature from above. You can follow the below steps to enable system audio broadcasting while sharing your screen:
+
+1. You get an instance of HMSScreenBroadcastAudioNode and add it to your mixer.
+
+```dart
+HMSScreenBroadcastAudioReceiverNode screenAudioNode = HMSScreenBroadcastAudioReceiverNode()
+HMSAudioMixerSource audioMixerSource = HMSAudioMixerSource(nodes: [audioFilePlaybackNode, micNode, screenAudioNode])
+```
+
+Note: you can pass only a single instance of HMSMicNode and HMSScreenBroadcastAudioNode to HMSAudioMixerSource, else you will receive an error.
+
+Now your mixer source is set to receive audio from your broadcast extension.
+
+2. Next, you need to set up a broadcast extension to send audio to the main app.
+
+Broadcast extension receives audio that's playing on your iOS device in processSampleBuffer function in your RPBroadcastSampleHandler class. To send audio from the broadcast extension to the main app, you call the process(audioSampleBuffer) function on HMSScreenRenderer:
+
+```swift
+override func processSampleBuffer(_ sampleBuffer: CMSampleBuffer, with sampleBufferType: RPSampleBufferType) {
+    ...
+
+    case RPSampleBufferType.audioApp:
+        _ = self.screenRenderer.process(audioSampleBuffer: sampleBuffer)
+        break
+    ...
+}
+```
+
+Now your broadcast extension is set to send audio to the main app.
+
+And that's it. Now your custom mixer source in the main app can receive the audio from the broadcast extension as well.

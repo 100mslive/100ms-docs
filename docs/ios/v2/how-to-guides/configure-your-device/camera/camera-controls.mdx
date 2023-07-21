@@ -1,0 +1,58 @@
+---
+title: Camera Controls (Beta)
+nav: 6.3
+---
+
+You can use the camera control API to adjust camera settings such as zoom level, flashlight, night-mode, HDR etc.
+
+## Minimum Requirements
+
+-   SDK version 0.6.3
+
+## What are camera controls?
+
+The iPhone camera offers some settings on camera object that you can configure, like zoom level, flash toggle, night mode, HDR mode etc. You can use these settings to configure camera to your liking. Or you can create camera control UI in your apps to give users a way to change these settings. For example you can implement a UI to change zoom level of the camera.
+
+## How does camera control works in 100ms SDK
+
+100ms SDK provides you safe access to the current [AVCaptureDevice](https://developer.apple.com/documentation/avfoundation/avcapturedevice) object representing the camera being used on the iOS device. You can modify the settings on this object.
+
+## How can you modify camera settings with 100ms SDK
+
+You call **modifyCaptureDevice** method on HMSLocalVideoTrack instance to get access to [AVCaptureDevice](https://developer.apple.com/documentation/avfoundation/avcapturedevice) object. This object then can be used to change current camera settings.
+
+### A zoom level toggle can be implemented like below:
+
+```swift
+let localVideoTrack = peer.localVideoTrack()
+...
+
+localVideoTrack.modifyCaptureDevice { device in
+
+    guard let device = device else { return }
+    
+    device.videoZoomFactor = device.videoZoomFactor == 1.0 ? 2.0 : 1.0
+}
+```
+
+### A flash-light toggle can be implemented like below:
+
+
+```swift
+let localVideoTrack = peer.localVideoTrack()
+...
+
+localVideoTrack.modifyCaptureDevice { device in
+
+    guard let device = device else { return }
+    guard device.isTorchModeSupported(.on) else { return }
+    
+    device.torchMode = device.torchMode == .off ? .on : .off
+}
+```
+
+## What all camera settings are available to modify
+
+100ms iOS SDK gives you safe access to underlying camera device in the form of [AVCaptureDevice](https://developer.apple.com/documentation/avfoundation/avcapturedevice). This means you have access to all the settings available on [AVCaptureDevice](https://developer.apple.com/documentation/avfoundation/avcapturedevice) object. To see what settings are available, refer to Apple's documentation [here](https://developer.apple.com/documentation/avfoundation/avcapturedevice).
+
+👀 To see an example iOS camera controls implementation using 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example).

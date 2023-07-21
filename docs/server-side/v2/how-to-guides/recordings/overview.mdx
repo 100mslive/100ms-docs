@@ -1,0 +1,127 @@
+---
+title: Start and stop recording
+nav: 5.1
+---
+
+import MeetingUrlConfig from '@/common/meeting-url.md';
+
+This guide focuses on using room composite (browser-based) recordings.
+
+A composite recording is a single MP4 file that records all peers and their tracks (audio, video and screen share). It captures the experience that a peer has in the room and is equivalent to recordings generated from Google Meet and Zoom.
+
+A composite recording is different from track-level recordings, which generate single file per audio/video track. To use track-level recordings, enable [SFU recordings](../../api-reference/legacy-api-v1/destinations/recording) on your template.
+
+<StepsToc
+    parentId="start-stop-recording"
+    descriptions={[
+        "Use server-side REST API to start recording",
+        "Combine room lifecycle events with recording API to automate recordings",
+        "Use server-side webhooks to listen to recording status changes",
+        "Use server-side REST API to stop recording",
+        "Choose a way to get recording assets (files)",
+    ]}
+/>
+
+<StepsContainer id="start-stop-recording">
+
+### Start recording with API
+
+Use the server-side API to start recording for a given room (passed as `room_id` in the request body).
+
+Also see [API reference](../../api-reference/recordings/start-recording-for-room).
+
+<PostRequest title="https://api.100ms.live/v2/recordings/room/<room_id>/start" />
+
+<Request id="req-0">
+
+```bash
+curl --request POST 'https://api.100ms.live/v2/recordings/room/<room_id>/start' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer <management_token>' \
+    --data-raw '{
+        "meeting_url" : "<meeting_url>",
+        "resolution" : {"width": 1280, "height": 720}
+    }'
+```
+
+</Request>
+
+Internally, this API launches a browser window that opens the `meeting_url` of the room. This browser instance joins the room and records it, similar to what a peer would do. You can [define a role](./customize) for this peer to ensure the peer's tile is not visible.
+
+##### meeting_url
+
+<MeetingUrlConfig />
+
+### Automate start recording (Optional)
+
+Instead of relying on peers in the room to start recording, you use room lifecycle events to automate start recording.
+
+To do so, set up a [webhook listener](../configure-webhooks/overview) and act on the relevant webhook:
+
+- Start recording for every session: Use the [`session.open.success` event](../configure-webhooks/webhook#sessionopensuccess) to start recording (with the above API)
+- Start recording when a particular peer joins: Use the [`peer.join.success` event](../configure-webhooks/webhook#peerjoinsuccess) to start recording (with the above API)
+
+### Listen to recording status updates
+
+Start recording is asynchronous and you can listen to status changes to the recording jobs with [webhooks](../configure-webhooks/overview).
+
+- [`beam.started.success` event](../configure-webhooks/webhook#beamstartedsuccess): This is sent when recording starts successfully
+- [`beam.recording.success` event](../configure-webhooks/webhook#beamrecordingsuccess): This is sent when recording ends successfully
+- [`beam.failure` event](../configure-webhooks/webhook#beamfailure): This is sent when there is a failure
+
+### Stop recording with API
+
+Use the server-side API to end recording for a given room (passed as `room_id` in the request body).
+
+<PostRequest title="https://api.100ms.live/v2/recordings/room/<room_id>/stop" />
+
+<Request id="req-0">
+
+```bash
+curl --request POST 'https://api.100ms.live/v2/recordings/room/<room_id>/stop' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Bearer <management_token>'
+```
+
+</Request>
+
+Also see [API reference](../../api-reference/recordings/stop-recording-for-room).
+
+#### Automatically stop recording
+
+Note that recording automatically ends in 5 minutes after all peers (excluding Beam) have left the room.
+
+To instantly end recording when peers have left the room, you can also chain up our APIs to run relevant business logic before stopping the recording. This ensures the video file will not have the extra 5 minutes of empty frames.
+
+* Listen to the [`peer.leave.success` webhook event](../configure-webhooks/webhook#peerleavesuccess)
+* Make an API call to get peers in the session with the active room APIs: [fetching the active room (session)](../../api-reference/active-rooms/retrieve-active-room) and [relevant peer info](../../api-reference/active-rooms/retrieve-peer)
+* If Beam (bot peer that records the session) is the only peer in the room, you can end the recording with the above API
+
+### Get recording assets
+
+There are multiple ways to get the recording assets (files). By default, recording assets are saved in 100ms storage buckets and retained up to 15 days. We recommend configuring your own storage buckets so that assets are automatically transferred and you control their retention lifecycle.
+
+If you are relying on the 100ms storage bucket, we recommend downloading the asset from the dashboard or programmatically via the webhook/API.
+
+#### Configure your own storage
+
+100ms supports AWS S3, Google Cloud Storage and Alibaba OSS as storage buckets. These can be configured on [the 100ms dashboard](../../../../concepts/v2/concepts/recordings#configure-storage).
+
+#### Download assets from dashboard
+
+Recording assets can be downloaded from the 100ms dashboard. Use the [sessions page](https://dashboard.100ms.live/sessions) to navigate to the relevant session page, which has links to the recorded assets.
+
+![Recording links](/docs/v2/recording-links.png)
+
+#### Download assets via webhooks
+
+The [`beam.recording.success` webhook event](../configure-webhooks/webhook#beamrecordingsuccess) contains the pre-signed URL to the recording asset (in the property called `recording_presigned_url`). This is a short-lived URL, that can be used to download the asset.
+
+#### Fetch assets via API
+
+You can use the [recording assets](../../api-reference/recording-assets/overview) REST APIs to fetch the assets:
+
+* [List recording assets](../../api-reference/recording-assets/list-all-assets) for a room/session
+* [Generate a pre-signed URL for an asset](../../api-reference/recording-assets/get-presigned-url)
+
+</StepsContainer>

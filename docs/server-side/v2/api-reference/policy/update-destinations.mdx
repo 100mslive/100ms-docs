@@ -1,0 +1,234 @@
+---
+title: Update destinations
+nav: 13
+---
+
+This endpoint is used to update [destinations](/server-side/v2/policy/create-template-via-api#destinations-object).
+
+<PostRequest title="https://api.100ms.live/v2/templates/<template_id>/destinations" />
+
+<Request id="req-0">
+
+```bash
+curl --location --request POST 'https://api.100ms.live/v2/<template_id>/destinations' \
+--header 'Authorization: Bearer <management_token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "browserRecordings": {
+        "test": {
+            "name": "test",
+            "width": 1920,
+            "height": 1080,
+            "maxDuration": 1800,
+            "thumbnails": {
+                "width": 0,
+                "height": 0
+            },
+            "presignDuration": 3600
+        }
+    },
+    "rtmpDestinations": {
+        "test": {
+            "name": "test",
+            "width": 1080,
+            "height": 1920,
+            "maxDuration": 1800,
+            "rtmpUrls": ["url", "ashdas", "ddsfsdf"],
+            "recordingEnabled": true
+        }
+    },
+    "hlsDestinations": {
+        "test": {
+            "name": "test",
+            "maxDuration": 28800,
+            "layers": [
+                {
+                    "width": 1080,
+                    "height": 720,
+                    "videoBitrate": 1100,
+                    "audioBitrate": 32
+                },
+                {
+                    "width": 720,
+                    "height": 720,
+                    "videoBitrate": 600
+                },
+                {}
+            ],
+            "playlistType": "event",
+            "numPlaylistSegments": 12,
+            "videoFrameRate": 25,
+            "enableMetadataInsertion": true,
+            "enableStaticUrl": true,
+            "recording": {
+                "hlsVod": true,
+                "singleFilePerLayer": true,
+                "layers": [
+                    {
+                        "width": 720,
+                        "height": 1920,
+                        "videoBitrate": 2000,
+                        "audioBitrate": 64
+                    }
+                ],
+                "thumbnails": {
+                    "enabled": true,
+                    "width": 720,
+                    "height": 1920,
+                    "offsets": [2],
+                    "fps": 60
+                },
+                "presignDuration": 604800
+            }
+        }
+    },
+    "transcriptions": {
+        "test": {
+            "name": "test",
+            "role": "host",
+            "outputModes": [ "txt", "srt", "json" ],
+            "customVocabulary": ["100ms", "SDK", "Sundar", "Pichai" ],
+            "summary": {
+                "enabled": true,
+                "context": "this is a meeting between 100ms SDK team and a user representative",
+                "temperature": 0.5,
+                "sections": [
+                    {
+                        "title": "Agenda",
+                        "format": "bullets"
+                    },
+                    {
+                        "title": "Key Points",
+                        "format": "bullets"
+                    },
+                    {
+                        "title": "Action Items",
+                        "format": "bullets"
+                    },
+                    {
+                        "title": "Short Summary",
+                        "format": "paragraph"
+                    }
+                ]
+            }
+        }
+    }
+}'
+```
+
+</Request>
+
+<ResponseBox id="res-0" status="200 OK">
+
+```json
+{
+    "browserRecordings": {
+        "test": {
+            "name": "test",
+            "width": 1920,
+            "height": 1080,
+            "maxDuration": 1800,
+            "thumbnails": {
+                "width": 0,
+                "height": 0
+            },
+            "presignDuration": 3600
+        }
+    },
+    "rtmpDestinations": {
+        "test": {
+            "name": "test",
+            "width": 1080,
+            "height": 1920,
+            "maxDuration": 1800,
+            "rtmpUrls": ["url", "ashdas", "ddsfsdf"],
+            "recordingEnabled": true
+        }
+    },
+    "hlsDestinations": {
+        "test": {
+            "name": "test",
+            "maxDuration": 28800,
+            "layers": [
+                {
+                    "width": 1080,
+                    "height": 720,
+                    "videoBitrate": 1100,
+                    "audioBitrate": 32
+                },
+                {
+                    "width": 720,
+                    "height": 720,
+                    "videoBitrate": 600
+                },
+                {}
+            ],
+            "playlistType": "event",
+            "numPlaylistSegments": 12,
+            "videoFrameRate": 25,
+            "enableMetadataInsertion": true,
+            "enableStaticUrl": true,
+            "recording": {
+                "hlsVod": true,
+                "singleFilePerLayer": true,
+                "layers": [
+                    {
+                        "width": 720,
+                        "height": 1920,
+                        "videoBitrate": 2000,
+                        "audioBitrate": 64
+                    }
+                ],
+                "thumbnails": {
+                    "enabled": true,
+                    "width": 720,
+                    "height": 1920,
+                    "offsets": [2],
+                    "fps": 60
+                },
+                "presignDuration": 604800
+            }
+        }
+    },
+    "transcriptions": {
+        "test": {
+            "name": "test",
+            "role": "host",
+            "outputModes": [ "txt", "srt", "json" ],
+            "customVocabulary": ["100ms", "SDK", "Sundar", "Pichai" ],
+            "summary": {
+                "enabled": true,
+                "context": "this is a meeting between 100ms SDK team and a user representative",
+                "temperature": 0.5,
+                "sections": [
+                    {
+                        "title": "Agenda",
+                        "format": "bullets"
+                    },
+                    {
+                        "title": "Key Points",
+                        "format": "bullets"
+                    },
+                    {
+                        "title": "Action Items",
+                        "format": "bullets"
+                    },
+                    {
+                        "title": "Short Summary",
+                        "format": "paragraph"
+                    }
+                ]
+            }
+        }
+    }
+}
+```
+
+</ResponseBox>
+
+## Arguments
+
+| Name                           | Type     | Description                                                                                                                                                                                                                     | Required |
+| :----------------------------- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------- |
+| template_id <br/> — path param | `string` | Unique identifier of the template you wish to update destinations details for. <br/> **Example:** 6316d5ca5a2635a5849a0216                                                                                                      | Yes      |
+| destinationsObject <br/>       | `object` | Destinations object corresponding to the given template_id. <br/><br/>check the [destinations object arguments section](/server-side/v2/policy/create-template-via-api#destinations-object) for the list of arguments supported | Yes      |

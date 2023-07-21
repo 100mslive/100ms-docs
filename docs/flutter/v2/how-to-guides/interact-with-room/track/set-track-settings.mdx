@@ -1,0 +1,154 @@
+---
+title: Set Track Settings (Video/Audio)
+nav: 8.33
+---
+
+Sometimes it is required to customize local peer's Audio & Video track settings while creating instances of 100ms SDK.
+
+These settings are optional parameters and are meant to be passed in the `HMSSDK` function as the `hmsTrackSetting` parameter which is an `HMSTrackSetting` object.
+
+## Set Audio Track Settings
+
+For the audio track, we have the following settings:
+
+#### - useHardwareAcousticEchoCanceler
+
+Property to enable Hardware echo cancellation. It's set to `false` by default which implies that Software Echo Cancellation is enabled by default.
+Passing a `true` value here forces the device to use the phone's Hardware Acoustic echo Cancellation instead of relying on the 100ms' Software-based implementation.
+
+#### - audioSource
+
+Property to configure audio nodes for audio sharing.(iOS Only) More info about this can be found [here](/flutter/v2/how--to-guides/set-up-video-conferencing/local-audio-share#i-os-setup)
+
+#### - trackInitialState
+
+Property to set the audio track's initial state, i.e. Mute/Unmute. More info about this can be found [here](/flutter/v2/how--to-guides/set-up-video-conferencing/mute#setting-video-and-mic-off-while-joining)
+
+We can create HMSAudioTrackSetting with these properties:
+
+```dart
+//To join with muted audio
+HMSAudioTrackSetting audioTrackSetting = HMSAudioTrackSetting(
+    useHardwareAcousticEchoCanceler: true,
+    trackInitialState: HMSTrackInitState.MUTED);
+```
+
+#### - audioMode
+
+Property to set the audio mode i.e. `MUSIC` or `VOICE`. More info about this can be found [here](/flutter/v2/how-to-guides/configure-your-device/microphone/music-mode.mdx)
+
+```dart
+//To join with `MUSIC` mode and muted audio
+HMSAudioTrackSetting audioTrackSetting = HMSAudioTrackSetting(
+    trackInitialState: HMSTrackInitState.MUTED,
+    audioMode: HMSAudioMode.MUSIC);
+```
+
+#### - phoneCallState (Android Only)
+
+Property to set the microphone state when you receive a phone call. `phoneCallState` is an enum of type `HMSAndroidPhoneCallState` which can be set to the following values:
+
+```dart
+enum HMSAndroidPhoneCallState {
+
+  /// To keep the microphone unmuted while receiving a phone call
+  DISABLE_MUTE_ON_VOIP_PHONE_CALL_RING,
+
+  /// To mute the microphone while receiving a phone call
+  ENABLE_MUTE_ON_PHONE_CALL_RING,
+}
+```
+
+> 🔑 Note: If you set the `phoneCallState` to `DISABLE_MUTE_ON_VOIP_PHONE_CALL_RING` then too the microphone gets muted if you accept the call. In this case you 
+           will get `onRoomUpdate` callback with type as `roomMuted` as the call starts and `roomUnmuted` as the call ends.
+
+```dart
+//To mute the microphone when you receive a call
+HMSAudioTrackSetting audioTrackSetting = HMSAudioTrackSetting(
+  phoneCallState: HMSAndroidPhoneCallState.ENABLE_MUTE_ON_PHONE_CALL_RING
+);
+```
+By default it is set to `DISABLE_MUTE_ON_VOIP_PHONE_CALL_RING`
+
+- For Android Versions >= 12
+
+You need to add the call permissions in `AndroidManifest.xml` file as follows:
+
+```xml
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+```
+
+In Dart, if you are using the `permission_handler` package, make sure to request the following permission before joining the room:
+
+```dart
+void getPermissions(){
+  await Permission.phone.request();
+}
+```
+
+## Set Video Track Settings
+
+For the video track, we can set the following properties:
+
+#### - cameraFacing
+
+Property specifies which camera to open while joining. It can be toggled later on. The default value is `HMSCameraFacing.FRONT`.
+
+```dart
+HMSCameraFacing.FRONT
+HMSCameraFacing.BACK
+```
+
+#### - disableAutoResize
+
+The SDK intelligently downscales the resolution when publisher's bandwidth is flaky or is CPU bound. This results in a low resolution for the viewers. But if the viewers are persistent they want the highest resolution at all times, then this setting comes in handy.
+The default value is set as `false`
+
+#### - trackInitialState
+
+Property to set the initial state of the video track i.e Mute/Unmute. More info about this can be found [here](/flutter/v2/how--to-guides/set-up-video-conferencing/mute#setting-video-and-mic-off-while-joining)
+
+#### - forceSoftwareDecoder
+
+This can be used when a lot of videos are rendered at a single time. It is known that the hardware decoder on certain phones doesn't tend to work well with large grids.
+This may cause an adverse effect like the phone heating up, use this flag only when required. The default value is set as `false`.(Android Only)
+
+We can create HMSVideoTrackSetting with these properties:
+
+```dart
+//To join the room with muted video but with a back camera
+HMSVideoTrackSetting videoTrackSetting = HMSVideoTrackSetting(
+                cameraFacing: HMSCameraFacing.BACK,
+                trackInitialState:HMSTrackInitState.MUTED,
+                forceSoftwareDecoder: true);
+```
+
+## Passing track settings in HMSSDK constructor
+
+Here's a sample implementation of adding track settings while initializing 100ms SDK -
+
+```dart
+  HMSAudioTrackSetting audioTrackSetting = HMSAudioTrackSetting(
+    useHardwareAcousticEchoCanceler: false,
+    trackInitialState: HMSTrackInitState.UNMUTED
+  );
+
+  HMSVideoTrackSetting videoTrackSetting = HMSVideoTrackSetting(
+    cameraFacing: HMSCameraFacing.FRONT,
+    trackInitialState: HMSTrackInitState.UNMUTED
+  );
+
+HMSTrackSetting trackSetting = HMSTrackSetting(
+      audioTrackSetting: audioTrackSetting,
+      videoTrackSetting: videoTrackSetting
+    );
+
+HMSSDK hmsSDK = HMSSDK(hmsTrackSetting: trackSetting);
+```
+
+We can fetch the track Setting using the method after the build method is called as follows -
+
+```dart
+HMSTrackSetting trackSetting = hmsSDK.getTrackSettings();
+```

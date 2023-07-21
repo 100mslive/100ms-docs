@@ -1,0 +1,46 @@
+---
+title: Embed with iframe
+nav: 1.09
+---
+
+## Overview
+
+If you want a quick integration of a fully featured video conferencing/live streaming app inside your application within a day, embedding [room links](/get-started/v2/get-started/prebuilt/room-codes/room-links) as iframe is the way to go.
+
+<FlexContainer>
+<Callout icon="link" title="iFrame Basics">
+Embed role specific room links as iFrame
+    - when you customise, fork and deploy our [sample web app](https://github.com/100mslive/100ms-web/); create role specific [custom room links](/get-started/v2/get-started/prebuilt/room-codes/room-links#custom-domain-room-links) to embed in your app.
+    - alternatively, use [Prebuilt room links](/docs/get-started/v2/get-started/prebuilt/prebuilt) that uses the sample web app fully-featured video conferencing/live streaming UI embedded to your web app 
+</Callout>
+</FlexContainer>
+
+## Implementation
+
+1. When customising and deploying our sample web app, you can create unique [custom domain room links](/javascript/v2/quickstart/react-sample-app/build-and-deploy) for each role in your room. For instance, custom room links for a self-hosted app with domain "my.video.app"  
+    - host : https://`my.video.app`/meeting/`room-code`
+    - guest : https://`my.video.app`/meeting/`room-code`
+
+Here, [room codes](/get-started/v2/get-started/prebuilt/room-codes/overview) are unique role specific short-codes that helps generate room links.
+ 
+
+2. Once you have created role specific room links for your deployed app, embed these links as iframe in your application
+
+```html
+<html>
+    <style>
+      /* normalize css snippet */
+      body {
+        margin: 0;
+      }
+    </style>
+    <body>
+        <iframe
+            title="100ms-app"
+            allow="camera *;microphone *;display-capture *"
+            src="https://`<your-domain>`/meeting/`<room-code>`"
+            style="height: 100vh; width: 100%; border:0;">
+        </iframe>
+    </body>
+<html>
+```
