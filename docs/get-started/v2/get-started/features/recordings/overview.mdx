@@ -1,53 +1,24 @@
 ---
-title: Overview
+title: Video recording
 nav: 3.1
 ---
 
-Recordings enable you to convert live video from 100ms rooms into content assets. But the use of this asset varies from business to business depending on their respective use case.
+Recordings enable you to convert live video from 100ms rooms into long-lived media assets. 100ms can generate different types of recordings
 
-100ms can generate different types of recordings
+- [Composite recordings](#composite-recordings): One video file, composed with tracks of all peers in the room
+- [Track recordings](#track-recordings): Separate media files for audio, video and screen-share tracks
 
-- Composite recordings `room-composite` 
-    - Also available as `room-composite-legacy` - from SFU
-- Peer and track level recordings
-- Video-on-demand (VOD) recordings
-- `chat` 
+## Composite recordings
 
-If you using live streaming or external streaming, you can record the stream. For live stream with HLS, 100ms can generate  
+This asset type is `room-composite`.
 
-Based on your end goal, you can choose one of the recording types and its implementation. You can understand some key differences using the comparison table below.
-
-- [Recording types](#recording-types)
-  - [Quick Comparison](#quick-comparison)
-  - [Browser Recording \[Recommended\]](#browser-recording-recommended)
-  - [SFU Recording \[Advanced\]](#sfu-recording-advanced)
-  - [Recordings for Live Streaming Use-cases](#recordings-for-live-streaming-use-cases)
-  - [Video-on-demand Recording](#video-on-demand-recording)
-  - [Multiresolution Recording](#multiresolution-recording)
-  - [Chat Recording](#chat-recording)
-
-## Basic recording
-
-- go to dashboard
-
-
-## Recording types
-
-### Room Composite Recording `room-composite`
-
-> Earlier called beam or browser recording.
-
-Capabilities
-
-- customization
-  - choose which roles to be recorded
-  - specify UI to be recorded
-    - custom UI composition
-  - customize resolution or get audio-only
-- methods
-  - auto start and auto stop
+> Earlier called browser recording. This recording type is built with a browser, and has a peer join the call. Peer is called beam. 
 
 Browser recording is built to give users a participant-first recording experience. When enabled, our browser-based bot Beam joins a room to record the viewport like any other participant. The output is an MP4 file that captures the room's published audio/video tracks together into one single file. This option removes the complexity of syncing various audio/video tracks and offers an intuitive, participant-first recording experience. An example use case is to record a sales meeting for later usage.
+
+![Composite recording on 100ms Dashboard](/docs/v2/composite-recording-dashboard.png)
+
+### Start and stop recording
 
 <FlexContainer>
 
@@ -85,41 +56,27 @@ Start recording within the client-side SDK.
 
 </FlexContainer>
 
-### SFU Recording [Advanced]
+### Fetch the recording
 
-SFU recording is built for advanced use cases, which require individual audio and video tracks for each participant. This recording option allows you to isolate recording at a participant level. Track recording allows you to record audio and video streams separately, making it easier to edit, layer, or reuse each of them. An example use case is to record a live podcast and later edit it for publishing.
+### Customizing the recording
 
-You can get track recordings in two forms:
+- customization
+  - choose which roles to be recorded
+  - specify UI to be recorded
+    - custom UI composition
+  - customize resolution or get audio-only
 
-- Individual: Media for each peer is provided as a separate mp4 file. This file will have both audio and video of the peer. These files can be used for offline review or in implementing custom composition.
+### Legacy composite
 
-- Composite [currently in beta]: Audio and video of all peers are composed as per their joining/leaving the meeting and provided as a single mp4. This file can be used for offline viewing of the meeting.
+This asset type is `room-composite-legacy`. SFU recording. Quality of composition is inferior.
 
-* `room-composite-legacy` type
-
-**Resources**
-
-- [How to implement SFU Recording](/server-side/v2/Destinations/recording)
-
-### Quick comparison
-
-| Features                | room-composite | room-composite-legacy |
-| ----------------------- | -------------- | --------------------- |
-| Recording method        | Browser        | SFU                   |
-| Resolution              | Customizable up to 1080p     | 720p    |
-| Portrait/landscape mode | Available      | Not available         |
-| Start method            | Auto-start with session and on-demand | Auto start with session only |
-| UI customization        | Available      | Not available         |
-| Role-specific recording | Available      | Not available         |
+See [migration doc](./migrating)
 
 
-### Peer and track 
+### Recording with live streaming
 
-only possible for SFU
+If you using live streaming or external streaming, you can record the stream. For live stream with HLS, 100ms can generate
 
-### Recordings for Live Streaming Use-cases
-
-These are the types of live streaming recordings:
 
 #### Video-on-demand Recording
 
@@ -129,44 +86,26 @@ Video-on-demand recording is available for our Interactive Live Streaming capabi
 
 - can i start this without recording API
 
-#### Multiresolution Recording
+#### Multi-resolution Recording
 
 A multi-resolution recording is available for Interactive Live Streaming capability. This type of recording will have a multi-file structure for all available resolutions of the stream. The output will be multiple MP4 files with these resolutions: 240p, 480p, 720p, and 1080p. For an implementation of this type of recording, please [contact us](https://www.100ms.live/contact).
 
 * `room-composite` type
 
-## Chat Recording
 
-Chat recording is a feature through which you will receive all chats messages sent by peers during the SFU/browser recording. Chat recording is available for both SFU recording and browser recording. Only chats sent to some or all roles will be recorded. The `.csv` file will be uploaded to the recording bucket configured for your video recordings. The file header will be: `SenderPeerID,SenderName,SenderUserID,Roles,SentAt,Type,Message`
 
-**Header information**
+## Track recordings
 
-| Header | Description |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| SenderPeerID |Sender's peer id |
-| SenderName | Sender's name |
-| SenderUserID | Sender's user id |
-| Roles | Roles to which the message is sent; `[]` in case of all roles |
-| SentAt| SentAt in RFC.3339 format |
-| Type| Message type - `chat`|
-| Message| Message that was sent |
+SFU recording is built for advanced use cases, which require individual audio and video tracks for each participant. This recording option allows you to isolate recording at a participant level. Track recording allows you to record audio and video streams separately, making it easier to edit, layer, or reuse each of them. An example use case is to record a live podcast and later edit it for publishing.
 
-**Chat recording path is available in following webhook responses:**
+You can get track recordings in two forms:
 
-- Browser Recording: [beam.recording.success](/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `chat_recording_path` ; `chat_recording_presigned_url`)
-- SFU Recording: [recording.success](/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `chat_recording_path` ; `chat_recording_presigned_url`)
-- Multiresolution Recording: [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess) (attribute: `chat_recording_path` ; `chat_recording_presigned_url`)
+- Individual: Media for each peer is provided as a separate mp4 file. This file will have both audio and video of the peer. These files can be used for offline review or in implementing custom composition.
 
-**The recording path for these respective recordings will look like follows:**
+- Composite [currently in beta]: Audio and video of all peers are composed as per their joining/leaving the meeting and provided as a single mp4. This file can be used for offline viewing of the meeting.
 
-`s3://<location>/<prefix>/chat/<room_id>/<start_date>/Rec-<room_id>-<epoch>.csv`
+only possible for SFU
 
-**The breakdown of the aforementioned tags is as follows:**
+How to enable?
 
-| Tag Name    | Description |
-| ----------- | ---------------------------------------------- |
-| Location    | Name of the bucket where recordings are stored |
-| Prefix      | Prefix for upload path which is configured in storage settings of your template. If not configured, the default value for this will be your Customer ID |
-| Room ID     | The identifier for the room which was recorded |
-| Start Date  | Start date of the session |
-| Epoch       | Start time of the recorder in the session |
+![SFU recording on 100ms Dashboard](/docs/v2/sfu-recording-dashboard.png)
