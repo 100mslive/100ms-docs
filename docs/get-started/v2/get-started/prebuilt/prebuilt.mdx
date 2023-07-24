@@ -3,19 +3,19 @@ title: 100ms Prebuilt
 nav: 4.3
 ---
 
-
 100ms Prebuilt is a feature-rich video conferencing/live streaming app built on top of our [sample web app](https://github.com/100mslive/100ms-web/). Prebuilt allows users to join sharable room links via desktop, meeting invites, or as an embeddable experience using an [iFrame](/docs/get-started/v2/get-started/prebuilt/prebuilt#share-or-embed-as-iframe), or as a native component in your apps.
 
 ![testPrebuilt](/docs/v2/testPrebuilt.png)
 
 [**Demo 100ms Pre-built link →**](https://examples-videoconferencing.app.100ms.live/meeting/tmz-qdi-cyp)
 
-
 ### Using Pre-built
 
-- Operate at high speeds and set up Prebuilt in your application within minutes, allowing you to focus your time on building your core product.
-- With low-level audio and video nuances already taken care of, using 100ms Prebuilt allows for faster Go-To-Market, without requiring upfront investment or ongoing maintenance.
+-   Operate at high speeds and set up Prebuilt in your application within minutes, allowing you to focus your time on building your core product.
+-   With low-level audio and video nuances already taken care of, using 100ms Prebuilt allows for faster Go-To-Market, without requiring upfront investment or ongoing maintenance.
+
 ## Share and Embed Prebuilt
+
 Depending on the desired user experience, you can use Prebuilt in versatile ways with just few lines of code.
 
 <FlexContainer>
@@ -27,7 +27,6 @@ Create role specific prebuilt links and share it with you users or embed it as i
 
 </Callout>
 
-
 <Callout icon="link" title="Embed Prebuilt, natively">
 Embed the prebuilt HMSRoom component natively in your apps.
 
@@ -36,8 +35,6 @@ Embed the prebuilt HMSRoom component natively in your apps.
 </Callout>
 </FlexContainer>
 
-
-
 ## Get started with Prebuilt links
 
 In this guide, we will create role specific prebuilt room links and share/embed the link as an iFrame in your application.
@@ -45,6 +42,7 @@ In this guide, we will create role specific prebuilt room links and share/embed 
 <StepsContainer id="implement-breakout-room">
 
 ### Get room code and template subdomain
+
 <FlexContainer>
 <Callout icon="link" title="Prebuilt Link Structure">
 Prebuilt links are role specific room links with a format `https://<template-subdomain>.app.100ms.live/<room-code>` where,
@@ -56,35 +54,35 @@ Prebuilt links are role specific room links with a format `https://<template-sub
 </FlexContainer>
 
 ### Construct the link
+
 Once you have the template-subdomain and room code ready, append these to the link structure for all roles in your room.
 
 <FlexContainer>
-<Callout icon="link" title="Prebuilt Link for roles">
-- Host Prebuilt Link : https://`template-subdomain`/meeting/`room-code-for-host`
-- Guest Prebuilt Link : https://`template-subdomain`/meeting/`room-code-for-guest`
-</Callout>
+    <Callout icon="link" title="Prebuilt Link for roles">
+        - Host Prebuilt Link : https://`template-subdomain`/meeting/`room-code-for-host` - Guest
+        Prebuilt Link : https://`template-subdomain`/meeting/`room-code-for-guest`
+    </Callout>
 </FlexContainer>
 
 ### Share or Embed as iFrame
-Once you have a Prebuilt room link ready, you can share it with your users on the fly as Push notification, SMS, Email etc or directly embed the link in your application. Refer a sample code snippet to embed the prebuilt link as an iFrame.
 
+Once you have a Prebuilt room link ready, you can share it with your users on the fly as Push notification, SMS, Email etc or directly embed the link in your application. Refer a sample code snippet to embed the prebuilt link as an iFrame.
 
 ```html
 <iframe
     title="100ms-app"
     allow="camera *;microphone *;display-capture *"
     src="https://<your-template-subdomain>/meeting/<room-code>"
-    style="height: 100vh; width: 100%; border:0;">
+    style="height: 100vh; width: 100%; border:0;"
+>
 </iframe>
 ```
 
 </StepsContainer>
 
-
-
 ## Embed as Component
-100ms Prebuilt can be embedded as a native component `HMSPrebuilt` by importing HMSRoomKit in your apps.
 
+100ms Prebuilt can be embedded as a native component `HMSPrebuilt` by importing HMSRoomKit in your apps.
 
 <FlexContainer>
 <Callout icon="link" title="HMSPrebuilt Component Basics">
@@ -96,20 +94,22 @@ Once you have a Prebuilt room link ready, you can share it with your users on th
     - **HMSRoomKit** -  Collection of embeddable 100ms UI components for your apps.
         - It is the first embeddable UI component of HMSRoomKit.
             - Have a Component request? Drop a note here
+
 </Callout>
 </FlexContainer>
-
 
 <StepsContainer id="implement-breakout-room">
 
 ### Create and Get room code
-HMSPrebuilt uses [room code](/concepts/v2/concepts/rooms/room-codes/room-codes) to get initialised, it allow users to uniquely join a `room_id` with a specifc `role`. Head over to 
-- [Create Room Codes](/docs/get-started/v2/get-started/prebuilt/room-codes/overview#creating-room-codes)
-- [Get Room Code](/docs/server-side/v2/api-reference/room-codes/create-room-code-api)
 
+HMSPrebuilt uses [room code](/concepts/v2/concepts/rooms/room-codes/room-codes) to get initialised, it allow users to uniquely join a `room_id` with a specifc `role`. Head over to
+
+-   [Create Room Codes](/docs/get-started/v2/get-started/prebuilt/room-codes/overview#creating-room-codes)
+-   [Get Room Code](/docs/server-side/v2/api-reference/room-codes/create-room-code-api)
 
 ### Embedding HMSPrebuilt component
-    - Import - HMSPrebuilt component requires importing HMSRoomKit 
+
+    - Import - HMSPrebuilt component requires importing HMSRoomKit
     - Initialise - Along with room code, you can additionally add options such as `userName` and `userID` in the component
         - `userName` - prefills the user name on HMSPrebuilt preview screen
         - `userID` - use your user IDs to track joins, if not passed 100ms auto-generates a userID
@@ -117,7 +117,7 @@ HMSPrebuilt uses [room code](/concepts/v2/concepts/rooms/room-codes/room-codes) 
 
 Sample code snippet to embed Prebuilt component. Head over for a step by step guides for [Flutter](docs/flutter/v2/quickstart/prebuilt-flutter), [React Native](/docs/react-native/v2/quickstart/quickstart), [Android](/docs/android/v2/quickstart/prebuilt-android), [iOS](docs/iOS/v2/quickstart/prebuilt-iOS)
 
-<Tabs id="sample-code" items={['React Native','Android','iOS','Flutter']} />
+<Tabs id="sample-code" items={['React Native', 'Android', 'iOS', 'Flutter']} />
 
 <Tab id='sample-code-0'>
 
@@ -151,6 +151,7 @@ export const HMSPrebuiltScreen = () => {
   return <HMSPrebuilt roomCode={roomCode} options={route.params} />;
 };
 ```
+
 </Tab>
 
 <Tab id='sample-code-1'>
@@ -166,14 +167,13 @@ import live.hms.roomkit.ui.HMSRoomKit
 HMSRoomKit.launchPrebuilt(roomCode: String, context: ActivityContext, options: HMSPrebuiltOptions? = null)
 
 class HMSPrebuiltOptions {
-    val userName : String?, //Peer user name
-    val userId: String?, // Optional Customer given User-id 
-    val endPoints: Map?, // Optional end points. Not needed for production apps
-  val debugInfo: Bool = false, // Optional debug info. Not needed for production apps
+val userName : String?, //Peer user name
+val userId: String?, // Optional Customer given User-id
+val endPoints: Map?, // Optional end points. Not needed for production apps
+val debugInfo: Bool = false, // Optional debug info. Not needed for production apps
 }
 
-
-```
+````
 </Tab>
 
 <Tab id='sample-code-2'>
@@ -182,20 +182,20 @@ class HMSPrebuiltOptions {
 import HMSRoomKit
 
 struct ContentView: View {
-    
+
     var body: some View {
         HMSPrebuiltView(roomCode: "ojb-blc-ncx")
 //          specific color override from code
                         .themeOverride { theme in
-                                theme.primaryDefault = .green 
-                                theme.onSurface = .gray 
+                                theme.primaryDefault = .green
+                                theme.onSurface = .gray
                         }
 //          we will also be able to take json generated by dashboard
 //          to make it easy to move from prebuilt to code
                         .themeOverride { "json" }
     }
 }
-```
+````
 
 </Tab>
 
@@ -203,13 +203,14 @@ struct ContentView: View {
 ```dart section=SampleCode tab=Flutter
 
 import 'package:hms_room_kit/hms_room_kit.dart';
+
 // Client app usage
-HMSPrebuilt(roomCode: "abc-lmno-xyz",hmsConfig:HMSPrebuiltOptions(userName: "")
+HMSPrebuilt(roomCode: "abc-lmno-xyz", options: HMSPrebuiltOptions(userName: "John Appleseed")
 
 // class definitions
 class HMSPrebuilt extends StatelessWidget {
   final String roomCode;
-  final HMSPrebuiltOptions? hmsConfig;
+  final HMSPrebuiltOptions? options;
 
   const HMSPrebuilt({super.key, required this.roomCode, this.hmsConfig});
 
@@ -218,11 +219,13 @@ class HMSPrebuilt extends StatelessWidget {
     return ScreenController(
       roomCode: roomCode,
       hmsConfig: hmsConfig,
-    );
-  }
+  );
+}
+
 ```
 </Tab>
 
 </StepsContainer>
 
 
+```
