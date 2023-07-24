@@ -33,7 +33,9 @@ curl --location --request GET 'https://api.100ms.live/v2/recordings/<object_id>'
     "stopped_by": "",
     "asset_types": [
         "room-composite",
-        "chat"
+        "chat",
+        "transcript",
+        "summary"
     ],
     "recording_assets": [
         {
@@ -62,6 +64,42 @@ curl --location --request GET 'https://api.100ms.live/v2/recordings/<object_id>'
             "created_at": "2023-03-30T06:54:06.434Z",
             "type": "chat",
             "size": 74
+        },
+        {
+            "id": "6425320e94091a5af841456d",
+            "metadata": {
+                "output_mode": "txt"
+            },
+            "duration": 55,
+            "path": "<storage-path>",
+            "status": "completed",
+            "created_at": "2023-03-30T06:56:06.54Z",
+            "type": "transcript",
+            "size": 50
+        },
+        {
+            "id": "6425320e94091a5af841456c",
+            "metadata": {
+                "output_mode": "srt"
+            },
+            "duration": 55,
+            "path": "<storage-path>",
+            "status": "completed",
+            "created_at": "2023-03-30T06:56:06.58Z",
+            "type": "transcript",
+            "size": 148
+        },
+        {
+            "id": "6425320e94091a5af841456b",
+            "metadata": {
+                "output_mode": "json"
+            },
+            "duration": 55,
+            "path": "<storage-path>",
+            "status": "completed",
+            "created_at": "2023-03-30T06:56:06.59Z",
+            "type": "summary",
+            "size": 42
         }
     ]
 }
