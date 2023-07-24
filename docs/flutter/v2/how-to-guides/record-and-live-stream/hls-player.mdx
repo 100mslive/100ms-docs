@@ -1,0 +1,444 @@
+---
+title: HLS Player
+nav: 9.3
+---
+
+The `HMSHLSPlayer` is an HLS player offered by 100ms that can be used to play HLS streams. The player takes a URL to play the stream. It also provides the ability to send analytics events related to the HLS playback to the 100ms dashboard.
+
+## How to add HLS Player to your application
+
+You can add the `HMSHLSPlayer` just like some other widget. It has three parameters:
+
+- hlsUrl: m3u8 HLS Stream URL, this is an optional field if not passed SDK gets this from `onJoin` or `onRoomUpdate` callback
+
+- isHLSStatsRequired: If HLS stats are required set this to true. Default is false
+
+- showPlayerControls: To show the default player UI set this to true. Default is false
+
+Let's check how you can Add `HMSHLSPlayer` to your widget tree:
+
+```dart
+
+///This returns the basic HMSHLSPlayer with stats and player controls disabled.
+Widget HLSPlayer(){
+    return HMSHLSPlayer();
+}
+```
+
+This is how the HLS Player will look like this:
+
+![hls-player](/docs/v2/flutter-hls-player.png)
+
+To get a player with default OS player controls and stats enabled:
+
+```dart
+Widget HLSPlayer(){
+    return HMSHLSPlayer(
+        showPlayerControls: true
+    );
+}
+```
+
+With controls enabled the HLS Player will look like this:
+
+![hls-player](/docs/v2/flutter-hls-player-controls.png)
+
+## HLS Player controls
+
+HMSSDK exposes `HMSHLSPlayerController` to control the HLS Player. We can have our own custom UI over HLS Player and use 
+this controller to control the player.
+
+### How to start/stop the playback
+
+- **Start**
+
+To start the HLS Player we can use the `start` method. This takes an optional `hlsUrl` String which is HLS m3u8 stream URL.
+
+> 🔑 Note: If `hlsUrl` is not passed then the HMSSDK tries to get the stream URL internally.
+
+```dart
+HMSHLSPlayerController.start();
+```
+
+- **Stop**
+
+To stop HLS Player we can use the `stop` method.
+
+> 🔑 Note: There is no need to call `stop` explicitly. The SDK automatically calls `stop` as soon as the `HMSHLSPlayer` is unmounted 
+>          from the screen.
+
+```dart
+HMSHLSPlayerController.stop();
+```
+
+### How to Pause and Resume the Playback
+
+- **Pause**
+
+To pause the HLS stream we can use the `pause` method
+
+```dart
+HMSHLSPlayerController.pause();
+```
+
+- **Resume**
+
+To resume the paused stream we can use the `resume` method
+
+```dart
+HMSHLSPlayerController.resume();
+```
+
+### How to Seek to Live Position
+
+To seek to the live position we can use the `seekToLivePosition` method
+
+```dart
+HMSHLSPlayerController.seekToLivePosition();
+```
+
+### How to Seek Forward or Backward
+
+- **seekForward**
+
+To seek forward we can use the `seekForward` method
+
+```dart
+HMSHLSPlayerController.seekForward(seconds:"Time in seconds you wish to seek forward");
+```
+
+- **seekBackward**
+
+To seek backward we can use the `seekBackward` method
+
+```dart
+HMSHLSPlayerController.seekBackward(seconds:"Time in seconds you wish to seek backward");
+```
+
+### How to Change Volume of HLS Playback
+
+To set volume for HLS Playback we can use the `setVolume` method
+
+```dart
+HMSHLSPlayerController.seekBackward(volume:"Volume between 0 to 100");
+```
+
+> Note: `volume` can only take values from 0 to 100. It is set to 100 by default.
+
+### How to get HLS Callbacks
+
+HMSSDK exposes `HMSHLSPlaybackEventsListener` to get the callbacks related to HLS Playback.
+
+Let's see how we can use this in our application 
+
+<div className="steps-container">
+
+### Implement HMSHLSPlaybackEventsListener
+
+```dart
+class Meeting implements HMSHLSPlaybackEventsListener{}
+```
+
+This will show error since we will need to implement the HMSHLSPlaybackEventsListener
+
+### Call addHMSHLSPlaybackEventsListener listener method
+
+To start getting the playback events we call the `addHMSHLSPlaybackEventsListener` method.
+
+```dart
+class Meeting implements HMSHLSPlaybackEventsListener{
+
+    ...
+
+    ///Here we add the HLS Playback event listener
+    //Here this is an instance of class that implements HMSHLSPlaybackEventsListener, that is, Meeting
+    void addHLSPlaybackEventListener(){
+        HMSHLSPlayerController.addHMSHLSPlaybackEventsListener(this);
+    }
+
+    ...
+
+}
+```
+
+### Override the HMSHLSPlaybackEventsListener methods:
+
+```dart
+class Meeting implements HMSHLSPlaybackEventsListener{
+
+  ...
+  
+  ///override the methods related to HMSHLSPlaybackEventsListener
+
+  ///Callback to know about any HLS Timed Metadata cue and use it's data to show any UI like quizzes, poll etc. to HLS viewers.
+  @override
+  void onCue({required HMSHLSCue hlsCue}) {
+    ///Handle the hlsCue object as per your UI
+  }
+
+  ///Callback to know about the errors that happen during playback.
+  @override
+  void onPlaybackFailure({required String? error}) {
+    /// Handle the error here
+  }
+
+  ///Callback to know about the state change event during the playback.
+  @override
+  void onPlaybackStateChanged({required HMSHLSPlaybackState playbackState}) {
+    /// This is used to update the UI based on the playback state like
+    /// showing loaders in case of BUFFERING.
+  }
+
+  /// These two methods are related to HLS Stats and will only get called if HLS Stats is enabled
+
+  ///Callback to know about failures in HLS Stats.
+  @override
+  void onHLSError({required HMSException hlsException}) {
+    /// Handle the stats error here
+  }
+
+  /// Callback to get HLS Player stats
+  @override
+  void onHLSEventUpdate({required HMSHLSPlayerStats playerStats}) {
+    /// Render the HLS Player stats here.
+  }
+
+
+  ...
+
+}
+```
+
+### Call removeHMSHLSPlaybackEventsListener listener method
+
+To stop getting the playback events we call the `removeHMSHLSPlaybackEventsListener` method.
+
+```dart
+class Meeting implements HMSHLSPlaybackEventsListener{
+
+    ...
+
+    ///Here we remove the HLS Playback event listener
+    //Here this is an instance of class that implements HMSHLSPlaybackEventsListener, that is, Meeting
+    void removeHMSHLSPlaybackEventsListener(){
+      HMSHLSPlayerController.removeHMSHLSPlaybackEventsListener(this);
+    }
+
+    ...
+}
+```
+
+</div>
+
+Let us understand the `HMSHLSCue` class:
+
+```dart
+class HMSHLSCue {
+  // Unique id of the timed event
+  final String? id;
+
+  // startDate of the timed event
+  final DateTime startDate;
+
+  // endDate of the timed event
+  final DateTime? endDate;
+
+  // String payload of the timed event
+  final String? payload;
+}
+```
+
+- **id**: Unique String containing the `Id` of the event
+
+- **startDate**: DateTime object containing the startDate of the event
+
+- **endDate**: DateTime object containing the endDate of the event
+
+- **payload**: String payload received from other peers.
+
+> 🔑 Note: The difference between `endDate` and `startDate` can be used to get the duration for which the payload is valid.
+
+
+### How to Know the Stats Related to HLS Playback
+
+To get the stats for HLS Player `HMSHLSPlayerController` provides a method to attach and detach the stats listener similar to other listeners like HMSUpdateListener, HMSKeyChangeListener etc.
+
+To enable stats in HLS Player by default, use the `isHLSStatsRequired` property of `HMSHLSPlayer`.
+Let's see how we can enable the stats by default in HLS Player:
+
+```dart
+Widget HLSPlayer(){
+    return HMSHLSPlayer(
+        isHLSStatsRequired: true
+    );
+}
+```
+
+> 🔑 Note: If `isHLSStatsRequired` is set as `true` in `HMSHLSPlayer` then there is no need to call `addHLSStatsListener` method again.
+
+Let's look at the step by step implementation to attach stats listener in HLS Player:
+
+<div className="steps-container">
+
+### Attach a listener
+
+To start getting HLS Stats we need to call the `addHLSStatsListener` method
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener,HMSHLSPlaybackEventsListener{
+
+    ...
+
+    ///This method enables the HLS Player Stats
+    void enableStats(){
+        HMSHLSPlayerController.addHLSStatsListener();
+    }
+
+    ...
+
+
+    ///Implement all the override methods here
+}
+```
+
+### Listen to onHLSEventUpdate method callback
+
+We get the HLS Stats in `onHLSEventUpdate` method:
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener,HMSHLSPlaybackEventsListener{
+
+    ...
+
+    ///This method enables the HLS Player Stats
+    void enableStats(){
+        HMSHLSPlayerController.addHLSStatsListener();
+    }
+
+    ...
+
+
+    @override
+    void onHLSEventUpdate({required HMSHLSPlayerStats playerStats}) {
+        ///We will get the stats here in playerStats parameter
+    }
+
+    @override
+    void onHLSError({required HMSException hlsException}) {
+      // If there is any failure in HLS Stats we will get the callback here
+    }
+
+}
+```
+
+Let us understand the `HMSHLSPlayerStats` class and it's properties:
+
+```dart
+class HMSHLSPlayerStats {
+  final double bandWidthEstimate;
+  final int totalBytesLoaded;
+  final double bufferedDuration;
+  final double distanceFromLive;
+  final double averageBitrate;
+  final double videoHeight;
+  final double videoWidth;
+  final int droppedFrameCount;
+}
+```
+
+- **bandWidthEstimate**:  The current bandwidth, as estimated by the player
+
+- **totalBytesLoaded**: The total bytes downloaded within the given poll duration
+
+- **bufferedDuration**: An estimate of the total buffered duration from the current position
+
+- **distanceFromLive**: Distance of current playing position from live edge
+
+- **averageBitrate**:  bitrate of the current layer being played
+
+- **videoHeight**:  The height of the video
+
+- **videoWidth**:  The width of the video
+
+- **droppedFrameCount**: The number of dropped frames since the last call to this method
+
+Based on these properties we can render the HLS Player UI as:
+
+<PortraitImage
+    src="/docs/docs/v2/flutter-ios-hls-stats.jpg"
+    alt="HLS Player Stats"
+    height="400"
+    width="200"
+/>
+
+### Detach a listener
+
+To stop getting HLS Stats we need to call the `removeHLSStatsListener` method
+
+```dart
+HMSHLSPlayerController.removeHLSStatsListener();
+```
+
+</div>
+
+### How to send HLS Timed Metadata
+
+To send HLS Timed Metadata, HMSSDK exposes `sendHLSTimedMetadata` method which takes in a list of `HMSHLSTimedMetadata` objects.
+
+Let us first understand the `HMSHLSTimedMetadata` class:
+
+```dart
+class HMSHLSTimedMetadata {
+  ///metadata contains the message/data which can be sent to a HLS Stream
+  final String metadata;
+
+  ///duration is the time interval for which the metadata is valid
+  final int duration;
+}
+```
+
+- **metadata**: Metadata is the message or payload that needs to be sent as HLS Stream
+
+- **duration**: It is the time duration for which the metadata is valid. Duration is 1 second by default.
+
+Now let us see how we can send timed metadata:
+
+```dart
+class Meeting implements HMSUpdateListener, HMSActionResultListener,HMSHLSPlaybackEventsListener{
+
+    ...
+
+    /// We create a list of metadata to be sent
+    List<HMSHLSTimedMetadata> hlsMetadata = [
+
+        /// Metadata for 1 second
+        HMSHLSTimedMetadata(
+            metadata: "Hey from 100ms for 1 seconds"),
+
+        /// Metadata for 10 seconds
+        HMSHLSTimedMetadata(metadata: "Hey from 100ms for 10 seconds",duration: 10)
+    ];
+
+    ///Here [hmsSDK] is the HMSSDK instance used to join the room
+
+    /// metadata is a list of HMSHLSTimedMetadata objects 
+    /// since we can send multiple messages at the same time.
+    ///[hmsActionResultListener]: an instance of a class that implements HMSActionResultListener
+    
+    ///Here this is an instance of a class that implements HMSActionResultListener, that is, Meeting
+
+    void sendHLSTimedMetadata() {
+        hmsSDK.sendHLSTimedMetadata(metadata: hlsMetadata, hmsActionResultListener: this);
+    }
+
+    ...
+}
+```
+
+Let's understand the HLS Timed metadata flow with the help of a diagram:
+
+![HLS Timed Metadata](/docs/v2/flutter-timed-metadata.png)
+
+## How to Configure HLS Player to Send Analytics Events
+
+There is no configuration required to send the HLS Playback analytics to 100ms dashboard, `HMSHLSPlayer` sends all the analytics events to 100ms dashboard by default.

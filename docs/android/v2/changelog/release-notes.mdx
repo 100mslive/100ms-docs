@@ -3,10 +3,27 @@ title: Release Notes
 nav: 4
 description: Release Notes for 100ms Android SDK
 ---
+## v2.7.2 - 2023-07-13
+
+### Fix
+- Override the local peer name given in preview with the name given in join
+
+## v2.7.1 - 2023-07-13
+
+### Changed
+- Unnecessary imports for `hls-player` were removed.
+- Analytics related fixes
+- Pixel distortion issue using SimulcastEncoderFactory
+
+## v2.6.8 - 2023-06-28
+
+### Added
+- Added option to NOT mute when phone is in ringing state. Using this also means that SDK cannot mute local peer on receiving a VoIP phone call
+
 ## v2.6.7 - 2023-06-2
 
 ### Added
-- SDK now sends detailed analytics from the webrtc publisher side for debugging call quality issues. 
+- SDK now sends detailed analytics from the webrtc publisher side for debugging call quality issues.
 
 ## v2.6.6 - 2023-05-29
 
@@ -43,7 +60,7 @@ description: Release Notes for 100ms Android SDK
 ### Breaking Changes
 - KeyChangeListener for the session store now returns `Any` instead of `String` as data. This is equivalent to `Object` in Java.
 
-### Added 
+### Added
 - Simplifying how the videos can be shown on the app. [Here's](https://github.com/100mslive/100ms-android/pull/358/files) the code it reduces.
 - Session Store now receives data of Any/Object type rather than just strings.
 
@@ -91,7 +108,7 @@ description: Release Notes for 100ms Android SDK
 
 ## v2.5.8 - 2023-03-07
 
-### Added 
+### Added
 - Allow echo cancellation, noise suppression and automatic gain control to be configureable from `HMSAudioTrackSettings`.
 - Limit the number of peers in the room with [Max Peer Count](https://www.100ms.live/docs/javascript/v2/how--to-guides/debugging/faq#is-there-any-way-to-limit-participants-in-a-room).
 - Added extra analytics for 100ms. (cluster)

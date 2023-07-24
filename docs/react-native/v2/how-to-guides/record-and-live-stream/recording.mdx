@@ -78,15 +78,15 @@ Let's look at how `HMSRTMPConfig` object looks like -
 
 ```js
 interface HMSRTMPConfig {
-    meetingURL: string;
+    meetingURL?: string;
     rtmpURLs?: string[];
     record: boolean;
     resolution?: HMSRtmpVideoResolution;
 }
 ```
 
-1. _meetingURL_: `string`, The URL that the 100ms bot user will open to join your room. It must allow access without any user-level interaction.
-2. _rtmpURLs_: `string[]`, If streaming is required, this has to be one or more RTMP Ingest URLs with a max limit of 3 URLs where the stream should go. If only recording, this can be an empty list.
+1. _meetingURL_: `string | undefined`, The URL that the 100ms bot user will open to join your room. It must allow access without any user-level interaction. It is an optional parameter.
+2. _rtmpURLs_: `string[] | undefined`, If streaming is required, this has to be one or more RTMP Ingest URLs with a max limit of 3 URLs where the stream should go. If only recording, this can be an empty list.
 
     - Format: `rtmp://server.com/app/STREAM_KEY`
     - Example: `rtmp://a.rtmp.youtube.com/live2/k0jv-329m-1y7f-ktth-ck48`

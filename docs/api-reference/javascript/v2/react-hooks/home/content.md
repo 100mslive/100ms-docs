@@ -447,6 +447,36 @@ For implementing control bar for local peer, this is used based with useAVToggle
 [`useScreenShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/useScreenShareResult)
 
 ___
+### useEmbedShare
+
+▸ **useEmbedShare**(): [`useEmbedShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/useEmbedShareResult)
+
+#### Parameters
+
+| Name | Type | Default value | Description
+| :------ | :------ | :------ | :------ |
+| `resetConfig?` | ():`void` | `undefined` | Callback that implements cleanup after Embed sharing stops. It is an optional parameter.
+
+#### Returns
+
+[`useEmbedShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/useEmbedShareResult)
+___
+
+### usePDFShare
+
+▸ **usePDFShare**(): [`usePDFShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/usePDFShareResult)
+
+#### Parameters
+
+
+| Name | Type | Default value | Description
+| :------ | :------ | :------ | :------ |
+| `resetConfig?` | ():`void` | `undefined` | Callback that implements cleanup after PDF sharing stops. Typically used to reset the currently selected PDF file or URL in your state. It is an optional parameter.
+
+#### Returns
+
+[`usePDFShareResult`](/api-reference/javascript/v2/react-hooks/interfaces/usePDFShareResult)
+___
 
 ### useVideo
 
