@@ -58,7 +58,7 @@ Audio Track settings are defined by `HMSAudioTrackSettings` class. We have follo
 
 -   `useHardwareEchoCancellation` [Android Only]
 
-    Property to enable Hardware echo cancellation. By default, it's set to `true` if the device supports it. Please note that on some devices the hardware wrongly reports the HW echo canceler to be present whereas it does not work. In such cases, the application needs to set this to false, so that SW echo canceler is picked up. This setting uses the phone's Acoustic echo Cancellation instead of relying on the SDK's software-based implementation.
+    Property to enable Hardware echo cancellation. It's set to `false` by default which implies that Software Echo Cancellation is enabled by default. Passing a `true` value here forces the device to use the phone's Hardware Acoustic echo Cancellation instead of relying on the 100ms' Software-based implementation.
 
 -   `audioSource` [iOS Only]
 

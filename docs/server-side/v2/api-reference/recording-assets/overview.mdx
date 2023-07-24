@@ -14,23 +14,25 @@ If a cloud storage location (for example, AWS S3 or GCS) is configured on the te
 * `room-composite`: This type composes a single video (mp4) out of all peers in the room.
 * `room-vod`: This is also a composition of all peers in the room and is available in HLS (or m3u8) format for on-demand playback.
 * `chat`: This type captures chat messages that were exchanged while recording was running.
+* `transcript`: This type is composed of generated transcripts of the recording, if transcription was enabled. The `metadata` will contain the `output_mode` (`txt`, `srt`, `json`).
+* `summary`: This type contains the summary generated from the transcript. The `metadata` will contain the `output_mode` (`json`).
 
 ## Object
 
-| Property   | Description                                      |
-|------------|--------------------------------------------------|
-| id         | Unique identifier for the recording asset        |
-| job_id     | Unique identifier for the [recording job](../recordings/overview) that generated the asset |
-| room_id    | Unique identifier of the room which was recorded |
-| session_id | Unique identifier of the session which was recorded |
-| type      | Type of recording asset (`room-composite`, `room-vod`, `chat`) |
-| status    | Status for this asset, can be `completed` or `failed` |
-| path      | Path of the recording asset (pointing to your or 100ms cloud storage bucket) |
-| size      | Size of the asset (in bytes)  |
-| duration  | Duration of the media in asset (in seconds) |
-| created_at | Timestamp when the asset was created (in ISO-8601 format) |
-| thumbnails | Array of paths of thumbnails generated out of the recording (only for `room-vod`) |
-| metadata  | Additional information (e.g. resolution, VOD layers) based on asset type |
+| Property    | Description                                                                                |
+|-------------|--------------------------------------------------------------------------------------------|
+| id          | Unique identifier for the recording asset                                                  |
+| job_id      | Unique identifier for the [recording job](../recordings/overview) that generated the asset |
+| room_id     | Unique identifier of the room which was recorded                                           |
+| session_id  | Unique identifier of the session which was recorded                                        |
+| type        | Type of recording asset (`room-composite`, `room-vod`, `chat`,`transcript`,`summary`)      |
+| status      | Status for this asset, can be `completed` or `failed`                                      |
+| path        | Path of the recording asset (pointing to your or 100ms cloud storage bucket)               |
+| size        | Size of the asset (in bytes)                                                               |
+| duration    | Duration of the media in asset (in seconds)                                                |
+| created_at  | Timestamp when the asset was created (in ISO-8601 format)                                  |
+| thumbnails  | Array of paths of thumbnails generated out of the recording (only for `room-vod`)          |
+| metadata    | Additional information (e.g. resolution, VOD layers, output mode) based on asset type      |
 
 ### Object as JSON
 

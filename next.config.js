@@ -63,6 +63,11 @@ const nextConfig = {
                 basePath: false
             },
             {
+                source: '/javascript/v2/how-to-guides/record-and-live-stream/hls/rtmp-recording',
+                destination: '/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording',
+                permanent: true
+            },
+            {
                 source: '/server-side/v2/api-reference/Sessions/example-build-attendance',
                 destination: '/server-side/v2/how--to-guides/build-attendance',
                 permanent: true
@@ -1508,17 +1513,13 @@ const nextConfig = {
             },
             {
                 source: '/react-native/v2/how-to-guides/handle-interruptions/release-resources',
-                destination: '/react-native/v2/how-to-guides/set-up-video-conferencing/release-resources',
+                destination:
+                    '/react-native/v2/how-to-guides/set-up-video-conferencing/release-resources',
                 permanent: true
             },
             {
                 source: '/react-native/v2/how-to-guides/handle-interruptions/error-handling',
                 destination: '/react-native/v2/how-to-guides/debugging/error-handling',
-                permanent: true
-            },
-            {
-                destination: '/javascript/v2/how-to-guides/record-and-live-stream/hls/rtmp-recording',
-                source: '/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording',
                 permanent: true
             },
             {

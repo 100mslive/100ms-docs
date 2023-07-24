@@ -1,0 +1,216 @@
+---
+title: Video KYC
+nav: 6.1
+---
+
+## Introduction
+
+This guide focuses on helping you integrate 100ms in your Video KYC workflow. In a video KYC workflow, a customer gets on a call with an agent who does the KYC (Know Your Customer) verification digitally on a video conferencing solution.
+
+## Architectural Workflow
+
+![vkyc-integration-flow](/docs/v2/vkyc-integration-doc-architecture.png)
+
+## Integration Milestones
+
+<StepsToc
+    parentId="vkyc-integration-flow"
+    descriptions={[
+        "Create a template.",
+        "Create a room via API, join a session, token service, and implement video rendering.",
+        'Implement switch camera API, capture image functionality, handle errors, and configure recording.',
+        "Integrate webhooks, track network stats.",
+        "Debug using 100ms' Event Inspector, conduct network throttling tests."
+    ]}
+/>
+
+<StepsContainer id="vkyc-integration-flow">
+
+### Creating the vKYC call template 
+
+**Estimated Effort - 2 Days**
+
+Create a [template through dashboard](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-dashboard)
+1. **Roles** <br/>
+    Create both of the following roles with the given settings.
+    <Tabs id="implementation" items={['agent','customer']} />
+     <Tab id='implementation-0'>
+        1. **Publish Strategy** -
+            - Role can share: Audio, Video; No Screenshare
+            >  **Note**
+            >
+            > You can also keep this video off, this helps save bandwidth on the consumer’s side. The downside is the consumer doesn’t see any agent video, but only hears their audio. We recommend keeping this off.
+            > 
+            - Video Quality: 360p
+            - Can publish Simulcast?: Enable
+            - Video Simulcast Layers: 360p, 180p
+        2. **Subscribe Strategy** -
+            - Subscribe to: *agent*, *customer*
+            - Subscribe Degradation: Enable
+        3. **Permissions** -
+            - Mute any peer: Enable
+            - Ask any peer to unmute: Enable
+            - End current session: Enable
+            - Receive preview room state: Enable
+            - Maximum number of peers in a room: No limit
+     </Tab>
+     <Tab id='implementation-1'>
+        1. **Publish Strategy** -
+            - Role can share: Audio, Video; No Screenshare
+            - Video Quality: 720p
+            >  **Note**
+            >
+            > Even though 720p has been set, our SDK will automatically degrade if the upload bandwidth is not enough, but it will never turn off the video.
+            >
+            - Can publish Simulcast?: Disable
+        2. **Subscribe Strategy** -
+            - Subscribe to: *agent*, *customer*
+            - Subscribe Degradation: Enable
+        3. **Permissions** -
+            - Mute any peer: Enable
+            - Ask any peer to unmute: Enable
+            - End current session: Enable
+            - Receive preview room state: Enable
+            - Maximum number of peers in a room: No limit
+     </Tab>
+
+2. **Recordings**
+    - Storage: Configure your cloud storage bucket
+    - Room Composite Recording: Enable
+    - Enable auto-start on room join: Enable
+    - SFU Recording: Disable
+
+3. **Advanced Settings**
+    - Room-state: Enable
+
+4. Additional settings to be turned on via API
+    - Turn on subscribe degradation for the agent, but with the option to not turn video off. Use the [Update Template API](https://www.100ms.live/docs/server-side/v2/api-reference/policy/update-a-template). The parameter required ``"videoAlwaysEnabled": true``
+
+
+### Getting the basics right
+**Estimated Effort - 2 Days**
+1. Create a [Room via API](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/create-via-api)
+2. Add [Authentication and Tokens](https://www.100ms.live/docs/get-started/v2/get-started/security-and-tokens#code-sample-generate-management-token)
+3.  Join a Session
+    1. On [Web](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/join)
+    2. On [Android](https://www.100ms.live/docs/android/v2/how-to-guides/set-up-video-conferencing/join)
+4. Render the video
+    1. On [Web](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/render-video/overview)
+    2. On [Android](https://www.100ms.live/docs/android/v2/how-to-guides/set-up-video-conferencing/render-video/render-video)
+5. End the Session - Two methods
+    <Tabs id="sessionend" items={['Leave Room','End Room']} />
+    <Tab id='sessionend-0'>
+    
+    1. Using [Web SDK](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/join#leaving-a-room)
+    2. Using [Android SDK](https://www.100ms.live/docs/android/v2/how-to-guides/set-up-video-conferencing/leave)
+    
+    </Tab>
+    
+    <Tab id='sessionend-1'>
+    
+    1. Using [API](https://www.100ms.live/docs/server-side/v2/api-reference/active-rooms/end-active-room)
+    2. Using [Web SDK](https://www.100ms.live/docs/javascript/v2/how-to-guides/control-remote-peers/end-room)
+    3. Using [Android SDK](https://www.100ms.live/docs/android/v2/how-to-guides/interact-with-room/room/end-room)
+    
+    </Tab>
+
+### Building out the workflow necessities
+**Estimated Effort - 7 Days**
+1. Controlling the camera
+    1. For Web, implement [Switch Camera API](https://www.100ms.live/docs/javascript/v2/how-to-guides/set-up-video-conferencing/device-change#switch-camera).
+    2. For Android, implement [Camera Controls API](https://www.100ms.live/docs/android/v2/how-to-guides/configure-your-device/camera/camera-controls).     
+2. Capture images
+    1. For Web, implement [Frame Capture API](https://www.100ms.live/docs/javascript/v2/how-to-guides/record-and-live-stream/frame-capture).
+    2. For Android, use [Camera Controls API](https://www.100ms.live/docs/android/v2/how-to-guides/configure-your-device/camera/camera-controls) to capture at the high possible resolution.
+ 
+ >   **Note**
+ > 
+ >   To transfer the captured images to the agent, use any upload API of your choice. Our recommendation is to **not** use 100ms’ session store or broadcast methods for this as this can cause loss of data.
+<br/>  
+3. For error handling
+    1. For Web, handle [network (disconnection, reconnection) and autoplay errors](https://www.100ms.live/docs/javascript/v2/how-to-guides/debugging/error-handling).
+    2. For Android, handle [network errors](https://www.100ms.live/docs/android/v2/how-to-guides/debugging/error-handling).
+4. Add [cloud storage bucket details on the 100ms Dashboard](https://www.100ms.live/docs/get-started/v2/get-started/features/recordings#configure-recording-storage-with-100ms-dashboard) in the Recordings tab of your template to store your recordings.
+5. Setup and enable Room Composite Browser based recording
+    1. Through [API](https://www.100ms.live/docs/server-side/v2/how-to-guides/recordings/overview) 
+    2. Through [Web SDK](https://www.100ms.live/docs/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording) 
+    3. Through [Android SDK](https://www.100ms.live/docs/android/v2/how-to-guides/record-and-live-stream/rtmp-recording#starting-streaming-recording)
+
+### Setting up analytics
+**Estimated Effort - 2 Days**
+1. [Integrate webhooks](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/overview) for receiving callbacks from the server (E.g. peer.leave, peer.join, beam.recording.success, etc.)
+2. Listen to [100ms’ network states](https://www.100ms.live/docs/javascript/v2/how-to-guides/measure-network-quality-and-performance/connection-quality) for an overall network picture.
+3. Use [stats for nerds](https://www.100ms.live/docs/javascript/v2/how-to-guides/measure-network-quality-and-performance/stats) to get more detailed stats including jitter, latency, frame drop, and more.
+
+
+### Debugging and QA
+**Estimated Effort - 7 Days**
+1. Familiarise yourself with [events Inspector](https://dashboard.100ms.live/events-inspector) on the Dashboard to debug issues promptly.
+2. Test using [network throttling](https://techjourneyman.com/blog/throttle-your-network-macos/) to check for performance in low bandwidth conditions.
+
+</StepsContainer>
+
+## Frequently Asked Questions
+
+- **How do I implement switch/tap-to-focus/zoom camera functionality?**
+    
+    Refer to [Building out the workflow necessities](#building-out-the-workflow-necessities).
+    
+- **How do I implement capture image functionality?**
+    
+    Refer to [Building out the workflow necessities](#building-out-the-workflow-necessities).
+    
+    We have a native [Frame Capture API](https://www.100ms.live/docs/javascript/v2/how-to-guides/record-and-live-stream/frame-capture) that can capture the current camera frame at 720p which should be good enough for capturing OCR details. You can also use the [Camera Controls API](https://www.100ms.live/docs/android/v2/how-to-guides/configure-your-device/camera/camera-controls) on Android.
+    
+    >   **Note**
+    >
+    >   In case you want to capture image, at a higher quality, you can use the browser’s native `getUserMedia` method to capture the image. [Codesandbox](https://codesandbox.io/s/kind-dubinsky-3h9wrg?file=/src/App.js) reference for you to check out.
+<br/>
+- **How do I transfer the captured image to the agent?**
+    
+    Refer to this note in [Building out the workflow necessities](#building-out-the-workflow-necessities).
+    
+- **How do I initiate recording?**
+    
+    There are two ways to accomplish this.
+    
+    1. Recommend method: Use Room Composite Recording with or without auto-start functionality. This is a browser-based recording happening on a cloud browser. The benefits include lower A/V sync issues and faster time-to-video (p50 is 9 seconds). It does take about 2 seconds for this recording to auto-start. You can enable this through the *Recordings* tab on the dashboard. Use the [following guide](https://www.100ms.live/docs/server-side/v2/how-to-guides/recordings/overview#start-recording-with-api) to enable this.
+    2. SFU Recording Method - This is done by composing the individual video tracks post-call. The benefit of using this is that it starts automatically with the room, but there can be potential A/V sync issues, and the time to get the video is longer (p50 is 1 minute 50 seconds for a 3-minute session). Enable this by [configuring the recording in the policy](https://www.100ms.live/docs/server-side/v2/api-reference/Rooms/create-via-api) itself.
+
+- **How do I track active rooms and user/customer presence in those rooms?**
+    1. You can use our server-side [Active Rooms API](https://www.100ms.live/docs/server-side/v2/api-reference/active-rooms/overview) to track active rooms.
+    2. You can listen to [webhook events](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/overview#introduction) to track peers, sessions and rooms and push subsequent updates.
+
+- **How do I receive recordings?**
+    
+    You can listen to [webhook events](https://www.100ms.live/docs/server-side/v2/how-to-guides/configure-webhooks/webhook) for recording.
+    
+- **How does 100ms improve disconnection rates?**
+    
+    100ms’ SDK handles connection retries under the hood. This retry suite has been built up over browser versions, and devices, and uses a bandwidth estimation system that’s been iterated on for millions of calls. You can listen to these retries by listening to SDK [errors](https://www.100ms.live/docs/javascript/v2/how-to-guides/debugging/error-handling).
+    
+- **How does 100ms improve A/V sync recording failures?**
+    
+    We have Room Composite browser-based recording which uses 100ms’ cloud browser system. Browsers natively implement A/V sync correction better than server-side systems because it is recording what it sees.
+    
+- **How does 100ms improve permission errors?**
+    
+    100ms’ preview API and pre-built UI have been optimized with prompts, and readable error codes with actions. Using the same preview screen can help reduce permission errors.
+    
+- **How can I debug issues for a particular room?**
+    
+    Use 100ms’ [event inspector](https://dashboard.100ms.live/events-inspector) to debug detailed room logs with events for join, leave, join failures, subscribe degradations etc. Refer to [Setting up analytics](#setting-up-analytics) and [Debugging and QA](#debugging-and-qa).
+    
+- **How can I track detailed network stats in real-time during call?**
+    
+    You can listen to [100ms’ network states](https://www.100ms.live/docs/javascript/v2/how-to-guides/measure-network-quality-and-performance/connection-quality) for an overall network picture and [stats for nerds](https://www.100ms.live/docs/javascript/v2/how-to-guides/measure-network-quality-and-performance/stats) to get more detailed stats including jitter, latency, frame drop etc. Refer to [Setting up analytics](#setting-up-analytics).
+
+- **How do I know what resolutions and aspect ratios are best for my use-case?**
+
+    Based on the client side device, you will have to choose the aspect ratios. [This sheet](https://docs.google.com/spreadsheets/d/1h387escJ3UPl1BJC0lsZWNnZxyiTkVIS54QDthXif_s/edit?usp=sharing) will show calculations for checking how much bitrate is consumed in different resolutions/aspect ratios.
+
+## Additional Resources
+
+- Understanding [Mental Model of 100ms SDK](https://www.100ms.live/docs/javascript/v2/quickstart/mental-model)
+- [Quickstart guide](https://www.100ms.live/docs/javascript/v2/how-to-guides/install-the-sdk/integration) on the basics of setting up video conferencing from scratch using JS on Web
+- [Quickstart guide](https://www.100ms.live/docs/android/v2/quickstart/quickstart) on the basics of setting up video conferencing from scratch using Android
