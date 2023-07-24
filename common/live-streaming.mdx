@@ -78,14 +78,14 @@ By default, the live stream is composed in landscape mode for desktop viewers (w
 
 To integrate 100ms Interactive Live Streaming in your app, follow these steps:
 
-1. [Enable live streaming destination](#enable-destination)
+1. [Enable live streaming](#enable-live-streaming)
 2. [Integrate the 100ms SDK in your app](#sdk-integration)
 3. [Integrate live stream playback](#live-stream-playback)
 4. [Video on demand (VOD) use cases](#video-on-demand-vod-use-cases)
 
-### Enable destination
+### Enable live streaming
 
-![Enable HLS](/docs/v2/live-streaming-enable.gif)
+![Enable live streaming](/docs/v2/live-streaming-enable.png)
 
 If your app is based on the Live Streaming Starter Kit (as shown above), the live streaming destination is enabled out-of-the-box.
 
@@ -111,9 +111,7 @@ The process is so simple:
 If you need to only enable HLS playback and don't need interactivity, you can follow one of the below approaches to get the HLS URL:
 
 -   **Webhook:** You can listen to `hls.started.success` [webhook event](/server-side/v2/introduction/webhook#hls-started-success) and get the HLS URL from the `url` field. Please check the [webhooks guide](/server-side/v2/introduction/webhook) to learn more about webhooks.
--   **Static URL:** This configuration will help you get a static URL for playback. You can enable the `Static playback URLs` in your template from the [dashboard](https://dashboard.100ms.live/dashboard). You can go to Destination > enable "Live streaming with HLS" > under "Customise stream video output" section > enable "Static playback URLs."
-
-    ![Enable Static URL](/docs/v2/enable-static-url.png)
+-   **Static URL:** This configuration will help you get a static URL for playback. You can enable the `Static playback URLs` in your template from the [dashboard](https://dashboard.100ms.live/dashboard). You can go to Destination > enable "Live streaming with HLS" > under "Stream Video Output" section > enable "Static Playback URLs"
 
     -   _Format_: `https://cdn.100ms.live/beam/<customer_id>/<room_id>/master.m3u8`
     -   `customer_id`: replace this placeholder with your customer_id from [developer section](https://dashboard.100ms.live/developer) on your dashboard.
