@@ -141,26 +141,26 @@ We will be adding a join button to the app, on the button click we will route th
 
 ```dart
 Scaffold(
-      body: Center(
+    body: Center(
         child: ElevatedButton(
-          style: ButtonStyle(
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
-          ))),
-          onPressed: () async => {
-           ///Here will route the user to the 100ms room kit
-          },
-          child: const Padding(
+            ))),
+            onPressed: () async => {
+            ///Here will route the user to the 100ms room kit
+            },
+            child: const Padding(
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-            child: Text(
-              'Join',
-              style: TextStyle(fontSize: 20),
+                child: Text(
+                    'Join',
+                    style: TextStyle(fontSize: 20),
+                ),
             ),
-          ),
         ),
-      ),
-    );
+    ),
+);
 ```
 
 2. Update the code in the `onPressed` method of the `Join` button by following code:
