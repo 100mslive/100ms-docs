@@ -3,11 +3,12 @@
  nav: 7.26
 ---
 
-## Introduction
-
 The Poll feature in the HMS SDK allows you to create, manage, and participate in polls and quizzes. Polls are an effective way to gather opinions, feedback, and insights from a group of people in a quick and convenient manner. With the Poll feature, you can create custom polls, set their properties, add questions, and manage responses. You can also receive real-time updates on poll status, and view poll results in an organized and easy-to-use format.
 
+This feature can also be used to create quizzes. Under the hood, quizzes are like polls where questions have right or wrong answers.
+
 This document provides guidance on how to use the Poll APIs to create a poll, receive updates on a poll, and vote on a poll.
+
 
 ## Prerequisites
 
@@ -147,6 +148,7 @@ Use `stop(poll:completion:)` when you wan’t to prevent further responses recor
 ## Viewing Poll Results Summary
 
 After poll has ended you can get a poll summary to get statistics like how many peers responded and how many total peers were in the room at the time of poll.  
+See [HMSPollResult](/api-reference/ios/v2/documentation/hmssdk/hmspollresult) class reference for details.
 
 ```swift
 hmsSDK.interactivityCenter.fetchPollResult(for: poll) { [weak self] poll, error in
@@ -154,3 +156,5 @@ hmsSDK.interactivityCenter.fetchPollResult(for: poll) { [weak self] poll, error 
 	let countOfPeersWithNoResponses = pollResult.maxUserCount - pollResult.userCount
 }
 ```
+
+👀 For an example of how to implement polls in an iOS app with the 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example/HMSSDKExample/Meeting/Polls).
