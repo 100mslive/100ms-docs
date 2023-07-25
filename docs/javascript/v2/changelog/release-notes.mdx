@@ -10,254 +10,297 @@ description: Release Notes for 100ms JavaScript SDK
 | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | @100mslive/hms-video-store             | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-store.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-store) |
 | @100mslive/react-sdk                   | [![npm version](https://badge.fury.io/js/%40100mslive%2Freact-sdk.svg)](https://badge.fury.io/js/%40100mslive%2Freact-sdk)             |
-| @100mslive/hls-player                  | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhls-player.svg)](https://badge.fury.io/js/%40100mslive%2Fhls-player)             |
+| @100mslive/hls-player                  | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhls-player.svg)](https://badge.fury.io/js/%40100mslive%2Fhls-player)           |
 | @100mslive/hms-video-react(deprecated) | [![npm version](https://badge.fury.io/js/%40100mslive%2Fhms-video-react.svg)](https://badge.fury.io/js/%40100mslive%2Fhms-video-react) |
 
+## 2023-07-14
+
+Released: `@100mslive/hms-video-store@0.10.9`, `@100mslive/react-sdk@0.8.9`, `@100mslive/hls-player@0.1.9`
+
+### Added:
+
+-   React hooks for sharing PDF(`usePdfShare`) and iframe embeds(`useEmbedShare`)
+
+### Fixed:
+
+-   Device list on role change
 
 ## 2023-06-21
+
 Released: `@100mslive/hms-video-store@0.10.8`, `@100mslive/react-sdk@0.8.8`, `@100mslive/hls-player@0.1.8`
 
 ### Fixed:
-- Video getting stretched in some iOS versions
-- Fix terminal server errors not being marked as terminal in [`HMSException`](/api-reference/javascript/v2/interfaces/HMSException)
+
+-   Video getting stretched in some iOS versions
+-   Fix terminal server errors not being marked as terminal in [`HMSException`](/api-reference/javascript/v2/interfaces/HMSException)
 
 ## 2023-06-01
 
 Released: `@100mslive/hms-video-store@0.10.6`, `@100mslive/react-sdk@0.8.6`, `@100mslive/hls-player@0.1.6`
 
 ### Added
-- WebRTC publish stats collection [`alpha`]
+
+-   WebRTC publish stats collection [`alpha`]
 
 ## 2023-05-30
 
 Released: `@100mslive/hms-video-store@0.10.5`, `@100mslive/react-sdk@0.8.5`, `@100mslive/hls-player@0.1.5`
 
 ### Fixed:
-- High memory footprint issue
-- Black tile when reusing the same video element frequently e.g. ActiveSpeaker
-- Video not getting published when you turn on the camera just before join
+
+-   High memory footprint issue
+-   Black tile when reusing the same video element frequently e.g. ActiveSpeaker
+-   Video not getting published when you turn on the camera just before join
 
 ## 2023-05-19
 
 Released: `@100mslive/hms-video-store@0.10.4`, `@100mslive/react-sdk@0.8.4`, `@100mslive/hls-player@0.1.4`
 
 ### Added:
-- Introduced unique `id` for [HMSMessage](/api-reference/javascript/v2/interfaces/HMSMessage)
+
+-   Introduced unique `id` for [HMSMessage](/api-reference/javascript/v2/interfaces/HMSMessage)
 
 ## 2023-05-11
 
 Released: `@100mslive/hms-video-store@0.10.3`, `@100mslive/react-sdk@0.8.3`, `@100mslive/hls-player@0.1.3`
 
 #### Fixed:
-- Made ping pong strategy less aggressive. Increased ping/pong interval to 3 sec.
-- Meeting URL made optional for [RTMP Streaming / Recording APIs](/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording)
-- [HLS Player](/javascript/v2/how-to-guides/record-and-live-stream/hls/hls-player) switching to higher quality layer made more aggressive to ensure high quality live stream.
-- Updated UI for audio level border on tile
 
+-   Made ping pong strategy less aggressive. Increased ping/pong interval to 3 sec.
+-   Meeting URL made optional for [RTMP Streaming / Recording APIs](/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording)
+-   [HLS Player](/javascript/v2/how-to-guides/record-and-live-stream/hls/hls-player) switching to higher quality layer made more aggressive to ensure high quality live stream.
+-   Updated UI for audio level border on tile
 
 ## 2023-05-02
 
 Released: `@100mslive/hms-video-store@0.10.2`, `@100mslive/react-sdk@0.8.2`
 
 #### Added:
-- Keep screen awake using `autoManageWakeLock` config option - enabled by default
+
+-   Keep screen awake using `autoManageWakeLock` config option - enabled by default
 
 #### Fixed:
-- Use device pixel ratio for auto layer selection
-- Observing session store keys from multiple components
-- Audio of some peer not audible after bluetooth reconnect
-- Limit for event emitter leak
-- Fix correct video not getting rendered when reusing video elements
-- Multiple timed metadata events not working
 
+-   Use device pixel ratio for auto layer selection
+-   Observing session store keys from multiple components
+-   Audio of some peer not audible after bluetooth reconnect
+-   Limit for event emitter leak
+-   Fix correct video not getting rendered when reusing video elements
+-   Multiple timed metadata events not working
 
 ## 2023-04-18
 
 Released: `@100mslive/hms-video-store@0.10.1`, `@100mslive/react-sdk@0.8.1`
 
 #### Added
-- Session store - a realtime shared database between all peers in a session. Refer documentation [here](https://www.100ms.live/docs/javascript/v2/how--to-guides/build-interactive-features/session-store)
-- Switch camera action
+
+-   Session store - a realtime shared database between all peers in a session. Refer documentation [here](https://www.100ms.live/docs/javascript/v2/how--to-guides/build-interactive-features/session-store)
+-   Switch camera action
 
 #### Fixed:
-- Bulk role change resulting in black tile or no audio
-- Role change with simulcast
-- Audio of some peers not audible on device change
-- Device change resulting in `Capture Device in use by another application(3003 error code)`.
+
+-   Bulk role change resulting in black tile or no audio
+-   Role change with simulcast
+-   Audio of some peers not audible on device change
+-   Device change resulting in `Capture Device in use by another application(3003 error code)`.
 
 #### Deprecated:
-- Alpha version of Session Metadata is deprecated and is now replaced with Session Store
 
+-   Alpha version of Session Metadata is deprecated and is now replaced with Session Store
 
 ## 2023-03-31
 
 Released: `@100mslive/hms-video-store@0.10.0`, `@100mslive/react-sdk@0.8.0`
 
 #### Added
-- alpha release of `@100mslive/hls-player` is done.
- `@100mslive/hls-player` is currently a wrapper on hls.js with easy to use interface and few add-ons for [100ms's interactive live streaming feature](../how--to-guides/record-and-live-stream/hls/hls).
+
+-   alpha release of `@100mslive/hls-player` is done.
+    `@100mslive/hls-player` is currently a wrapper on hls.js with easy to use interface and few add-ons for [100ms's interactive live streaming feature](../how--to-guides/record-and-live-stream/hls/hls).
 
 #### Fixed:
-- SDK causing memory exception in preview when room state peer list is enabled for 1500+ peers.
-- All servers setting `isTerminal: true` on the `HMSException`. Now only the terminal server errors will set `isTerminal: true`
-- Analytics events
+
+-   SDK causing memory exception in preview when room state peer list is enabled for 1500+ peers.
+-   All servers setting `isTerminal: true` on the `HMSException`. Now only the terminal server errors will set `isTerminal: true`
+-   Analytics events
 
 #### Breaking:
-- [`getAuthTokenByRoomCode`](/api-reference/javascript/v2/interfaces/HMSActions#getauthtokenbyroomcode) in hmsActions now returns the token as a string in response.
+
+-   [`getAuthTokenByRoomCode`](/api-reference/javascript/v2/interfaces/HMSActions#getauthtokenbyroomcode) in hmsActions now returns the token as a string in response.
 
 ## 2023-03-14
 
 Released: `@100mslive/hms-video-store@0.9.0`, `@100mslive/react-sdk@0.7.0`
 
 #### Added:
-- [`getAuthTokenByRoomCode`](/api-reference/javascript/v2/interfaces/HMSActions#getauthtokenbyroomcode) in hmsActions to get token for room short code.
-- The SDK now handles auto subscribing/unsubscribing while [rendering video](../how--to-guides/set-up-video-conferencing/render-video/overview) based on the element's visibility. If Simulcast is enabled, the appropriate resolution based on the video element's dimensions will also be auto-selected. Note that this was already available for react-sdk via the useVideo hook. With this release, we've also added it for the core SDK.
+
+-   [`getAuthTokenByRoomCode`](/api-reference/javascript/v2/interfaces/HMSActions#getauthtokenbyroomcode) in hmsActions to get token for room short code.
+-   The SDK now handles auto subscribing/unsubscribing while [rendering video](../how--to-guides/set-up-video-conferencing/render-video/overview) based on the element's visibility. If Simulcast is enabled, the appropriate resolution based on the video element's dimensions will also be auto-selected. Note that this was already available for react-sdk via the useVideo hook. With this release, we've also added it for the core SDK.
 
 #### Breaking:
-- SDK now handles subscribing and unsubscribing to video based on the element's visibility. If you're using hmsActions.detachVideo function to unsubscribe to video for e.g. when it's not visible, you may have to pass the flag `autoManageVideo: false` in join config. This will avoid any conflict between SDK and your app's code by disabling SDK's functionality. For more details, please check our docs for [rendering video](../how--to-guides/set-up-video-conferencing/render-video/overview).
+
+-   SDK now handles subscribing and unsubscribing to video based on the element's visibility. If you're using hmsActions.detachVideo function to unsubscribe to video for e.g. when it's not visible, you may have to pass the flag `autoManageVideo: false` in join config. This will avoid any conflict between SDK and your app's code by disabling SDK's functionality. For more details, please check our docs for [rendering video](../how--to-guides/set-up-video-conferencing/render-video/overview).
 
 ## 2023-02-22
 
 Released: `@100mslive/hms-video-store@0.8.4`, `@100mslive/react-sdk@0.6.4`
 
 #### Added:
-- Preview field in HMSStore and role related selectors helpful for preview
+
+-   Preview field in HMSStore and role related selectors helpful for preview
 
 #### Fixed:
-- Return type of `selectLocalPeer` which will now return `HMSPeer | undefined`
-- Network interruption during join
-- Video background not always updating in virtual background plugin
-- Camera light not turning off at times
-- In some chrome versions, default devices are not prefixed with default- which is resulting in device not being selected on device change
-- Make error in `setRemoteDescription` terminal
-- Browser tab showing indicator that mic is active even when audio disabled
-- `No sender found` log while stopping playlist
+
+-   Return type of `selectLocalPeer` which will now return `HMSPeer | undefined`
+-   Network interruption during join
+-   Video background not always updating in virtual background plugin
+-   Camera light not turning off at times
+-   In some chrome versions, default devices are not prefixed with default- which is resulting in device not being selected on device change
+-   Make error in `setRemoteDescription` terminal
+-   Browser tab showing indicator that mic is active even when audio disabled
+-   `No sender found` log while stopping playlist
 
 ## 2023-02-03
 
 Released: `@100mslive/hms-video-store@0.8.3`, `@100mslive/react-sdk@0.6.3`
 
 #### Added:
-- Preview and join using different roles. Use `asRole` in preview config to pass the name of the role you want to use
+
+-   Preview and join using different roles. Use `asRole` in preview config to pass the name of the role you want to use
 
 #### Fixed:
-- Screenshare quality degrading after role change
-- Detect slow network/disconnection earlier using ice connection state disconnected
-- Apply frame rate specified in template on tracks
-- Media decode error on certain audio elements
-- Blank video or no audio when there is an error on device change
-- `requested_by` is added to webhook on role change
-- Remote track update coming in before peer list leading to no peer tile
-- Analytics and debug logs improved.
 
+-   Screenshare quality degrading after role change
+-   Detect slow network/disconnection earlier using ice connection state disconnected
+-   Apply frame rate specified in template on tracks
+-   Media decode error on certain audio elements
+-   Blank video or no audio when there is an error on device change
+-   `requested_by` is added to webhook on role change
+-   Remote track update coming in before peer list leading to no peer tile
+-   Analytics and debug logs improved.
 
 ## 2022-12-19
 
 Released: `@100mslive/hms-video-store@0.8.1`, `@100mslive/react-sdk@0.6.1`
 
 #### Added:
-- [Bulk role change API](https://www.100ms.live/docs/javascript/v2/features/change-role#change-bulk-peer-role-api)
+
+-   [Bulk role change API](https://www.100ms.live/docs/javascript/v2/features/change-role#change-bulk-peer-role-api)
 
 #### Fixed:
-- Analytics fixes
-- FPS for the `HMSVBPlugin`
-- Device change not working sometimes with some bluetooth devices
-- Audio track not received on remote end on role change due to no data being sent
-- Reestablishment of audio track after external call interuption
+
+-   Analytics fixes
+-   FPS for the `HMSVBPlugin`
+-   Device change not working sometimes with some bluetooth devices
+-   Audio track not received on remote end on role change due to no data being sent
+-   Reestablishment of audio track after external call interuption
 
 ## 2022-11-25
 
 Released: `@100mslive/hms-video-store@0.8.0`, `@100mslive/react-sdk@0.6.0`
 
 #### Added:
-- Simulcast support
-- New virtual background plugin with improved cpu usage compared to the previous one. Refer [usage](https://github.com/100mslive/100ms-web/blob/main/src/plugins/VirtualBackground/VirtualBackground.jsx)
+
+-   Simulcast support
+-   New virtual background plugin with improved cpu usage compared to the previous one. Refer [usage](https://github.com/100mslive/100ms-web/blob/main/src/plugins/VirtualBackground/VirtualBackground.jsx)
 
 #### Fixed:
-- Black tile when video tile is on screen only for a split second(Example scenario: pagination)
-- Join promise not getting resolved in some rare case
-- leave.failure webhook getting triggered when closing tab from preview 
+
+-   Black tile when video tile is on screen only for a split second(Example scenario: pagination)
+-   Join promise not getting resolved in some rare case
+-   leave.failure webhook getting triggered when closing tab from preview
 
 #### Breaking:
-- `hmsActions.setVolume` is a promise now
-- `HMSStatsStore` interface updated and some of the selectors are removed 
+
+-   `hmsActions.setVolume` is a promise now
+-   `HMSStatsStore` interface updated and some of the selectors are removed
 
 ## 2022-11-10
 
 Released: `@100mslive/hms-video-store@0.7.1`, `@100mslive/react-sdk@0.5.1`
 
 #### Fixed:
-- `@100mslive/react-sdk` failing in nextjs environment
-- Fix dropdown from `@100mslive/react-ui` making the UI unresponsive when closed
-- Screenshare not working in macOS Ventura
-- Improved device change analytics
+
+-   `@100mslive/react-sdk` failing in nextjs environment
+-   Fix dropdown from `@100mslive/react-ui` making the UI unresponsive when closed
+-   Screenshare not working in macOS Ventura
+-   Improved device change analytics
 
 #### Added:
-- Stats for nerds for HLS - @alpha release
+
+-   Stats for nerds for HLS - @alpha release
 
 #### Breaking
-- `customerDescription` on [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer) is now removed. Use `metadata` field instead
-- Screenshare config is updated. Please refer [here](https://www.100ms.live/docs/api-reference/javascript/v2/interfaces/HMSScreenShareConfig)
+
+-   `customerDescription` on [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer) is now removed. Use `metadata` field instead
+-   Screenshare config is updated. Please refer [here](https://www.100ms.live/docs/api-reference/javascript/v2/interfaces/HMSScreenShareConfig)
 
 ## 2022-10-20
 
 Released: `@100mslive/hms-video-store@0.6.4`, `@100mslive/react-sdk@0.4.4`
 
 #### Fixed:
-- [`hmsActions.setAudioOutputDevice`](https://www.100ms.live/docs/api-reference/javascript/v2/interfaces/HMSActions#set-audio-output-device) is now async, the returned promise will resolve once the device change is applied to all the audio tracks in the room
-- Terminal errors, join promise not getting resolved on certain join failures
-- WebRTC stats not working on rejoining a room
-- `new HMSReactiveStore()` doesn't work in server side rendering
-- Handling null in track selectors
-- End room sending both peer.leave.success and peer.leave.failure events for same peer in webhook
 
+-   [`hmsActions.setAudioOutputDevice`](https://www.100ms.live/docs/api-reference/javascript/v2/interfaces/HMSActions#set-audio-output-device) is now async, the returned promise will resolve once the device change is applied to all the audio tracks in the room
+-   Terminal errors, join promise not getting resolved on certain join failures
+-   WebRTC stats not working on rejoining a room
+-   `new HMSReactiveStore()` doesn't work in server side rendering
+-   Handling null in track selectors
+-   End room sending both peer.leave.success and peer.leave.failure events for same peer in webhook
 
 ## 2022-09-30
 
 Released: `@100mslive/hms-video-store@0.6.2`, `@100mslive/react-sdk@0.4.2`
 
 #### Fixed:
-- setSessionMetadata API type
+
+-   setSessionMetadata API type
 
 ## 2022-09-28
 
 Released: `@100mslive/hms-video-store@0.6.1`, `@100mslive/react-sdk@0.4.1`
 
 #### Added:
-- Session Metadata API (alpha release)
-- Strict track types
-    - Added HMSVideoTrack, HMSScreenVideoTrack, HMSAudioTrack, HMSScreenAudioTrack
-- Added HMSReconnectionNotification to notification types 
+
+-   Session Metadata API (alpha release)
+-   Strict track types
+    -   Added HMSVideoTrack, HMSScreenVideoTrack, HMSAudioTrack, HMSScreenAudioTrack
+-   Added HMSReconnectionNotification to notification types
 
 #### Fixed:
-- Type error when subscribing to all notifications.
+
+-   Type error when subscribing to all notifications.
 
 ## 2022-09-13
 
 Released: `@100mslive/hms-video-store@0.6.0`, `@100mslive/react-sdk@0.4.0`
 
 #### Added:
-- `join` is now async
-- An error will be returned if `validateVideoPluginSupport` is called before video track is available
-- [facingMode](https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackSettings/facingMode) property for local videoTrack.(Note: This will be useful on mobile browsers)
+
+-   `join` is now async
+-   An error will be returned if `validateVideoPluginSupport` is called before video track is available
+-   [facingMode](https://developer.mozilla.org/en-US/docs/Web/API/MediaTrackSettings/facingMode) property for local videoTrack.(Note: This will be useful on mobile browsers)
 
 #### Fixed:
-- Cleanup on leave
-- Improved logging for browser recording
+
+-   Cleanup on leave
+-   Improved logging for browser recording
 
 #### Breaking:
-- A `HMSNotificationTypes.PEER_LIST` will be sent after join even if there are no peers already in the room
-- Specific types are added to Notifications
+
+-   A `HMSNotificationTypes.PEER_LIST` will be sent after join even if there are no peers already in the room
+-   Specific types are added to Notifications
 
 ## 2022-08-01
 
 Released: `@100mslive/hms-video-store@0.5.0`, `@100mslive/react-sdk@0.3.0`
 
 #### Added:
+
 -   retry calls for all the websocket messages
 -   params are now optional in `startHLSStreaming`
 
 #### Breaking:
+
 -   react-ui theme colors have been updated
 -   react-ui, styling for components is updated
 
