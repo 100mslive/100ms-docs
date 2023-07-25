@@ -80,7 +80,7 @@ function MuteButton() {
     let muted = false;  // state
     const button = getButtonIcon("unmutedAudio");
     button.onClick = () => {  // handling action
-        muted = !!muted;  // toggle the state when clicked
+        muted = !muted;  // toggle the state when clicked
         broadcastNewMuteState(muted);  // tell others in the room about the change
         // change the icon per the state
         button.setIcon(muted ? "mutedAudio" : "unmutedAudio");

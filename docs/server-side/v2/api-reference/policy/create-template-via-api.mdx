@@ -78,7 +78,9 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                 }
             },
             "permissions": {
-                "sendRoomState": false
+                "sendRoomState": false,
+                "pollRead": true,
+                "pollWrite": true
             },
             "priority": 1,
             "maxPeerCount": 0
@@ -145,7 +147,9 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                 "mute": true,
                 "unmute": true,
                 "changeRole": true,
-                "sendRoomState": false
+                "sendRoomState": false,
+                "pollRead": true,
+                "pollWrite": true
             },
             "priority": 1,
             "maxPeerCount": 0
@@ -350,7 +354,9 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                 "rtmpStreaming": true,
                 "hlsStreaming": true,
                 "browserRecording": true,
-                "sendRoomState": false
+                "sendRoomState": false,
+                "pollRead": true,
+                "pollWrite": true
             },
             "priority": 1,
             "maxPeerCount": 0
@@ -420,7 +426,9 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                 "rtmpStreaming": true,
                 "hlsStreaming": true,
                 "browserRecording": true,
-                "sendRoomState": false
+                "sendRoomState": false,
+                "pollRead": true,
+                "pollWrite": true
             },
             "priority": 1,
             "maxPeerCount": 0
@@ -655,6 +663,8 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | unmute           | `boolean` | Permission to request others to unmute them.                                                                                                                                | No       | `false` |
 | changeRole       | `boolean` | Permission to request others to change their role.                                                                                                                          | No       | `false` |
 | sendRoomState    | `boolean` | Permission to receive room state like peer-count and peer-list                                                                                                              | No       | `false` |
+| pollRead    | `boolean` | Permission whether poll/quiz information can be read and responses can be made to a poll/quiz    | No       | `false` |
+| pollWrite    | `boolean` | Permission whether poll/quiz information can be modified. PollWrite is a superset of pollRead and enables all pollRead functionalities.  | No       | `false` |
 | browserRecording | `boolean` | Permission to start/stop browser (beam) recording. <br/><br/> This is also required to start/stop RTMP + browser recording in conjunction with `rtmpStreaming` permissions. | No       | `true`  |
 | rtmpStreaming    | `boolean` | Permission to start/stop RTMP streaming. <br/><br/> This is also required to start/stop RTMP + browser recording in conjunction with `browserRecording` permissions.        | No       | `true`  |
 | hlsStreaming     | `boolean` | Permission to start/stop HLS streaming (with or without recording). <br/><br/>This is also required to - pause/unpause HLS recording or insert metadata in HLS stream.      | No       | `true`  |
