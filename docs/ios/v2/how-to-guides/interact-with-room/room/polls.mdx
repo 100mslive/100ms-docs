@@ -23,7 +23,7 @@ Here is how to quickly create a poll using poll builder:
 
 ```swift
 let pollBuilder = HMSPollBuilder()
-            .addSingleChoiceQuestion(with: "How is the weather today?", options: ["hot", "warm", "cold"])
+    .addSingleChoiceQuestion(with: "How is the weather today?", options: ["hot", "warm", "cold"])
         
 hmsSDK.interactivityCenter.quickStartPoll(with: pollBuilder) { success, error in
 		// handle error if any
@@ -101,16 +101,17 @@ You can use the `HMSPoll` object returned by the closure to access information a
 ```swift
 // Listen for poll updates 
 hmsSDK.interactivityCenter.addPollUpdateListner { [weak self] updatedPoll, update in
-  guard let self else { return }  
-		case .started:
-        self.showPollStartedToast()
-    case .resultsUpdated:
-        self.updateResultsScreen()
-    case .stopped:
-        self.loadResultsSummaryIfNeeded()
-    @unknown default:
-        break
-    }
+  guard let self = self else { return }  
+  switch update {
+  case .started:
+    self.showPollStartedToast()
+  case .resultsUpdated:
+    self.updateResultsScreen()
+  case .stopped:
+    self.loadResultsSummaryIfNeeded()
+  @unknown default:
+  break
+  }
 }
 ```
 
