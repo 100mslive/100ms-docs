@@ -1,6 +1,6 @@
 ---
 title: HMSStore<T>
-nav: '4.55'
+nav: '4.60'
 ---
 
 ## Type parameters
@@ -57,6 +57,12 @@ nav: '4.55'
 ### playlist
 
 • **playlist**: [`HMSPlaylist`](/api-reference/javascript/v2/interfaces/HMSPlaylist)<`any`\>
+
+---
+
+### polls
+
+• **polls**: `Record`<`string`, [`HMSPoll`](/api-reference/javascript/v2/interfaces/HMSPoll)\>
 
 ---
 
