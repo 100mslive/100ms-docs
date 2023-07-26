@@ -1,6 +1,6 @@
 ---
 title: HMSPreviewConfig
-nav: '4.38'
+nav: '4.43'
 ---
 
 the config object tells the SDK options you want to preview with(use if you want preview and join with different roles)

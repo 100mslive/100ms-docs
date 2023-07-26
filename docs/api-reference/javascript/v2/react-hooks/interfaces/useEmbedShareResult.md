@@ -1,30 +1,17 @@
 ---
 title: useEmbedShareResult
-nav: "5.2.18"
+nav: '5.2.6'
 ---
 
 ## Properties
 
-### startEmbedShare
+### iframeRef
 
-• **startEmbedShare**: (`value`: `string`): `Promise`<`void`\>
+• **iframeRef**: `RefObject`<`null` \| `HTMLIFrameElement`\>
 
-Embed and start sharing a URL.
+Reference to attach to the iframe that is responsible for rendering the URL passed.
 
-It will throw an error in the following scenarios:
- - When the URL has not been passed
- - When the reference has not been attached to an iframe
- - When screen share cannot be started
-
-___
-
-### stopEmbedShare
-
-• **stopEmbedShare**: (): `Promise`<`void`\>
-
-Stop sharing the embed.
-
-___
+---
 
 ### isEmbedShareInProgress
 
@@ -32,10 +19,46 @@ ___
 
 Flag to check if an embed is currently being shared.
 
-___
+---
 
-### iframeRef
+### startEmbedShare
 
-• **iframeRef**:  React.RefObject<HTMLIFrameElement | null>
+• **startEmbedShare**: (`value`: `string`) => `Promise`<`void`\>
 
-Reference to attach to the iframe that is responsible for rendering the URL passed.
+#### Type declaration
+
+▸ (`value`): `Promise`<`void`\>
+
+Embed and start sharing a URL.
+
+It will throw an error in the following scenarios:
+
+- When the URL has not been passed
+- When the reference has not been attached to an iframe
+- When screen share cannot be started
+
+##### Parameters
+
+| Name    | Type     |
+| :------ | :------- |
+| `value` | `string` |
+
+##### Returns
+
+`Promise`<`void`\>
+
+---
+
+### stopEmbedShare
+
+• **stopEmbedShare**: () => `Promise`<`void`\>
+
+#### Type declaration
+
+▸ (): `Promise`<`void`\>
+
+Stop sharing the embed.
+
+##### Returns
+
+`Promise`<`void`\>

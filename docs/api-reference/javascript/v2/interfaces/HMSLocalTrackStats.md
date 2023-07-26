@@ -288,6 +288,16 @@ BaseTrackStats.timestamp
 
 ---
 
+### totalPacketSendDelay
+
+• `Optional` **totalPacketSendDelay**: `number`
+
+#### Inherited from
+
+MissingOutboundStats.totalPacketSendDelay
+
+---
+
 ### totalRoundTripTime
 
 • `Optional` **totalRoundTripTime**: `number`
