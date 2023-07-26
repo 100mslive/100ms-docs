@@ -1,13 +1,13 @@
 ---
 title: useVideoOutput
-nav: "5.2.16"
+nav: '5.2.18'
 ---
 
 ## Properties
 
 ### videoRef
 
-• **videoRef**: (`instance`: ``null`` \| `HTMLVideoElement`) => `void`
+• **videoRef**: (`instance`: `null` \| `HTMLVideoElement`) => `void`
 
 #### Type declaration
 
@@ -15,9 +15,9 @@ nav: "5.2.16"
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `instance` | ``null`` \| `HTMLVideoElement` |
+| Name       | Type                         |
+| :--------- | :--------------------------- |
+| `instance` | `null` \| `HTMLVideoElement` |
 
 ##### Returns
 
