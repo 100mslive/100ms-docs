@@ -1,19 +1,19 @@
 ---
-title: HMSReconnectionNotification
-nav: '4.46'
+title: HMSPollNotification
+nav: '4.40'
 ---
 
 ## Hierarchy
 
 - `BaseNotification`
 
-  ↳ **`HMSReconnectionNotification`**
+  ↳ **`HMSPollNotification`**
 
 ## Properties
 
 ### data
 
-• **data**: `null`
+• **data**: [`HMSPoll`](/api-reference/javascript/v2/interfaces/HMSPoll)
 
 ---
 
@@ -49,7 +49,7 @@ BaseNotification.severity
 
 ### type
 
-• **type**: [`RECONNECTING`](/api-reference/javascript/v2/enums/HMSNotificationTypes#reconnecting) \| [`RECONNECTED`](/api-reference/javascript/v2/enums/HMSNotificationTypes#reconnected)
+• **type**: [`POLL_STARTED`](/api-reference/javascript/v2/enums/HMSNotificationTypes#poll_started) \| [`POLL_STOPPED`](/api-reference/javascript/v2/enums/HMSNotificationTypes#poll_stopped) \| [`POLL_VOTES_UPDATED`](/api-reference/javascript/v2/enums/HMSNotificationTypes#poll_votes_updated)
 
 #### Overrides
 

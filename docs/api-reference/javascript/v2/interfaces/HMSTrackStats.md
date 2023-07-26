@@ -1,6 +1,6 @@
 ---
 title: HMSTrackStats
-nav: '4.58'
+nav: '4.63'
 ---
 
 Extends RTCOutboundRtpStreamStats
@@ -367,6 +367,16 @@ https://www.w3.org/TR/webrtc-stats/#dom-rtcremoteinboundrtpstreamstats
 #### Inherited from
 
 [HMSRemoteTrackStats](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats).[timestamp](/api-reference/javascript/v2/interfaces/HMSRemoteTrackStats#timestamp)
+
+---
+
+### totalPacketSendDelay
+
+• `Optional` **totalPacketSendDelay**: `number`
+
+#### Inherited from
+
+[HMSLocalTrackStats](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats).[totalPacketSendDelay](/api-reference/javascript/v2/interfaces/HMSLocalTrackStats#totalpacketsenddelay)
 
 ---
 

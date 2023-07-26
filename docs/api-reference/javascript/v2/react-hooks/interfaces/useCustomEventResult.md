@@ -1,13 +1,13 @@
 ---
 title: useCustomEventResult<T>
-nav: "5.2.4"
+nav: '5.2.4'
 ---
 
 ## Type parameters
 
 | Name |
-| :------ |
-| `T` |
+| :--- |
+| `T`  |
 
 ## Properties
 
@@ -21,27 +21,29 @@ nav: "5.2.4"
 
 sends the event data to others in the room who will receive it in onEvent
 
-**`Example`**
-
-to send message to peers of specific roles
-```js
-sendEvent(data, {roleNames: ['host','guest']})
-```
-
-**`Example`**
-
-to send message to single peer
-```js
-sendEvent(data, {peerId})
-```
-
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `data` | `T` |
+| Name        | Type            |
+| :---------- | :-------------- |
+| `data`      | `T`             |
 | `receiver?` | `EventReceiver` |
 
 ##### Returns
 
 `void`
+
+**`Example`**
+
+to send message to peers of specific roles
+
+```js
+sendEvent(data, { roleNames: ['host', 'guest'] });
+```
+
+**`Example`**
+
+to send message to single peer
+
+```js
+sendEvent(data, { peerId });
+```
