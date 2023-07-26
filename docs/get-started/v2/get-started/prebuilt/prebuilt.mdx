@@ -117,66 +117,34 @@ HMSPrebuilt uses [room code](/concepts/v2/concepts/rooms/room-codes/room-codes) 
 
 Sample code snippet to embed Prebuilt component. Head over for a step by step guides for [Flutter](docs/flutter/v2/quickstart/prebuilt-flutter), [React Native](/docs/react-native/v2/quickstart/quickstart), [Android](/docs/android/v2/quickstart/prebuilt-android), [iOS](docs/iOS/v2/quickstart/prebuilt-iOS)
 
-<Tabs id="sample-code" items={['Flutter', 'React Native', 'Android', 'iOS']} />
+<Tabs id="sample-code" items={['Flutter', 'React Native', 'Android']} />
 
 <Tab id='sample-code-0'>
 ```dart section=SampleCode tab=Flutter
 
+// import roomkit package
 import 'package:hms_room_kit/hms_room_kit.dart';
 
-// Client app usage
-HMSPrebuilt(roomCode: "abc-lmno-xyz", options: HMSPrebuiltOptions(userName: "John Appleseed")
-
-// class definitions
-class HMSPrebuilt extends StatelessWidget {
-  final String roomCode;
-  final HMSPrebuiltOptions? options;
-
-  const HMSPrebuilt({super.key, required this.roomCode, this.options});
-
-  @override
-  Widget build(BuildContext context) {
-    return ScreenController(
-      roomCode: roomCode,
-      options: options,
-  );
-}
+// add pre-built component
+HMSPrebuilt(roomCode: "<room-code>");
 
 ```
 </Tab>
 
 <Tab id='sample-code-1'>
 
+```js section=SampleCode tab=React Native
+
+// import roomkit package
 import { HMSPrebuilt } from '@100mslive/react-native-room-kit';
 
-```js section=SampleCode tab=React Native
-// Simple Client Usage Example
-const MeetingScreen = () => {
+// add pre-built component
+const ConferencingScreen = () => {
     return (
-        <HMSPrebuilt
-            roomCode="abc-lmno-xyz"
-            options={{
-                userName: "John Appleseed"
-            }}
-        />
+        <HMSPrebuilt roomCode="<room-code>" />
     );
 };
 
-// Example App Usage Example
-export const HMSPrebuiltScreen = () => {
-  const route = useRoute<RouteProp<AppStackParamList, 'HMSPrebuiltScreen'>>();
-
-    // `route.params` should have all the config options
-    // required for `HMSPrebuilt` component
-
-  const roomCode = route.params?.roomCode;
-
-  if (!roomCode) {
-    return <Text>Room Code is Required</Text>;
-  }
-
-  return <HMSPrebuilt roomCode={roomCode} options={route.params} />;
-};
 ```
 
 </Tab>
@@ -184,31 +152,16 @@ export const HMSPrebuiltScreen = () => {
 <Tab id='sample-code-2'>
 ```kotlin section=SampleCode sectionIndex=2 tab=Kotlin
 
-// Add HMSRoomKit dependency in your gradle file
+// add roomkit dependency in gradle file
 implementation "live.100ms:room-kit:$roomKitVersion"
 
-//Add package import in your activity or fragment
+// import roomkit package
 import live.hms.roomkit.ui.HMSRoomKit
 
-//To launch prebuilt from your activity or fragment
-HMSRoomKit.launchPrebuilt(roomCode: String, context: ActivityContext, options: HMSPrebuiltOptions? = null)
+// launch prebuilt from your activity or fragment
+HMSRoomKit.launchPrebuilt(roomCode = "<room-code>", context = Activity)
 
-class HMSPrebuiltOptions {
-  val userName : String?, //Peer user name
-  val userId: String?, // Optional Customer given User-id
-  val endPoints: Map?, // Optional end points. Not needed for production apps
-  val debugInfo: Bool = false, // Optional debug info. Not needed for production apps
-}
-
-````
-</Tab>
-
-<Tab id='sample-code-3'>
-
-```swift section=SampleCode  tab=iOS
-Coming Soon
-````
-
+```
 </Tab>
 
 </StepsContainer>
