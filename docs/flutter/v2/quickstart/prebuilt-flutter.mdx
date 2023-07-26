@@ -132,6 +132,19 @@ platform :ios, '12.0'
   ![Entitlements](/docs/v2/flutter-multitasking-camera-entitlement.png)
 
 3. To add screen share support in iOS app, checkout the docs [here](https://www.100ms.live/docs/flutter/v2/how-to-guides/set-up-video-conferencing/screen-share#ios-setup)
+ 
+4. Pass the `iOSScreenshareConfig` in `HMSPrebuiltOptions` parameter of `HMSPrebuilt` widget to enable screen share in your app.
+
+```dart
+// Pass the correct App Group & Preferred Extension parameters in HMSIOSScreenshareConfig class.
+HMSPrebuilt(
+    roomCode: meetingLinkController.text.trim(),
+    options: HMSPrebuiltOptions(
+        iOSScreenshareConfig:  HMSIOSScreenshareConfig(
+    appGroup: "appGroup", // App Group value linked to your Apple Developer Account
+    preferredExtension: "preferredExtension" // Name of the Broadcast Upload Extension Target created in Xcode
+)));
+```
 
 </Tab>
 
