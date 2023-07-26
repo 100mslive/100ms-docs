@@ -244,9 +244,22 @@ Paste the following in your `Info.plist` file -
 
 #### Additional Setup
 
-You can follow guides to add ScreenShare and Audio Share features in your app.
+You can follow [ScreenShare setup](https://www.100ms.live/docs/react-native/v2/how-to-guides/set-up-video-conferencing/screenshare) and [AudioShare setup](https://www.100ms.live/docs/react-native/v2/how-to-guides/set-up-video-conferencing/local-audio-share) guides to add ScreenShare and Audio Share features in your app.
 
-After doing changes related to ScreenShare feature, Pass `ios`
+After doing changes related to ScreenShare feature, To use screenshare feature on iOS, pass `appGroup` and `preferredExtension` options to `HMSPrebuilt` componnets -
+
+```js{6-7}
+<HMSPrebuilt
+  roomCode="..."
+  options={{
+    ...
+    ios: {
+      appGroup: "...";
+      preferredExtension: "...";
+    }
+  }}
+/>
+```
 
 
 ### Complete code example
