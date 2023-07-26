@@ -182,7 +182,7 @@ We'll also use the same function returned from the hook to clear the pinned chat
 
 ```js
 import { useHMSStore } from '@100mslive/react-sdk';
-import { Box, Flex, IconButton, Text } from '@100mslive/react-ui';
+import { Box, Flex, IconButton, Text } from '@100mslive/roomkit-react';
 import { CrossIcon, PinIcon } from '@100mslive/react-icons';
 import { useSetPinnedMessage } from '../hooks/useSetPinnedMessage';
 
@@ -214,7 +214,7 @@ You can use session store to bring a particular peer/set of peers to center stag
 // https://github.com/100mslive/100ms-web/blob/sync-webapp/src/components/TileMenu.jsx
 
 import { selectSessionStore, useHMSActions, useHMSStore } from '@100mslive/react-sdk';
-import { StyledMenuTile } from '@100mslive/react-ui';
+import { StyledMenuTile } from '@100mslive/roomkit-react';
 
 const isSameTile = ({ trackId, videoTrackID, audioTrackID }) =>
     trackId &&
@@ -255,7 +255,7 @@ const SpotlightActions = ({ audioTrackID, videoTrackID }) => {
 
 import React from 'react';
 import { selectPeers, selectVideoTrackByPeerID, useHMSStore } from '@100mslive/react-sdk';
-import { Flex } from '@100mslive/react-ui';
+import { Flex } from '@100mslive/roomkit-react';
 import VideoTile from '../components/VideoTile';
 
 const CenterStageView = () => {
