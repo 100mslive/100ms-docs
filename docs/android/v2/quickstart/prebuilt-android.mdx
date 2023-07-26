@@ -1,0 +1,49 @@
+---
+title: Prebuilt Quickstart
+nav: 5.3
+---
+
+100ms Prebuilt is a feature-rich video conferencing/live streaming [app](https://github.com/100mslive/100ms-web/) made using our prebuilt components. Prebuilt allows users to join sharable room links via desktop, meeting invites, coming soon as embeddable components in your apps.
+
+// replace with preview for android
+![testPrebuilt](/docs/v2/testPrebuilt.png)
+
+[**Demo 100ms Pre-built link →**](https://examples-videoconferencing.app.100ms.live/meeting/tmz-qdi-cyp)
+
+### Using Pre-built
+
+-   Simplify building for video conferencing by using Prebuilt in your application within minutes, allowing you to focus on building your core product.
+-   With low-level audio and video nuances already taken care of using 100ms Prebuilt allows for faster Go-To-Market, without requiring upfront investment or ongoing maintenance.
+
+## To Use Prebuilt
+
+Create a project or open your existing project.
+
+Add the import for prebuilt.
+[![](https://img.shields.io/badge/dynamic/xml.svg?label=100ms-Prebuilt&color=blue&query=%2F%2Fmetadata%2Fversioning%2Flatest&url=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Flive%2F100ms%2Froom-kit%2Fmaven-metadata.xml)](https://jitpack.io/#100mslive/room-kit)
+
+`implementation "live.100ms:room-kit:$version`
+
+Launch Prebuilt from an activity/fragment.
+
+```kotlin
+val options = HMSPrebuiltOptions("My Name")
+HMSRoomKit.launchPrebuilt("tmz-qdi-cyp", this, options)
+```
+
+## Additional Parameters
+Additional properties that can be specified are `userName` and `userId`.
+
+Username: The user's display name.
+UserId: An id that you may choose so that peers on 100ms can be associated with customers identifiers from your system.
+
+```
+class HMSPrebuiltOptions {
+  val userName : String?, //Peer user name
+  val userId: String?, // Optional Customer given User-id
+}
+
+```
+
+</StepsContainer>
+
