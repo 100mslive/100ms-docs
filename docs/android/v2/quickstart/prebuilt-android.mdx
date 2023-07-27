@@ -3,42 +3,68 @@ title: Prebuilt Quickstart
 nav: 5.3
 ---
 
-100ms Prebuilt is a feature-rich video conferencing/live streaming [app](https://github.com/100mslive/AndroidPrebuiltDemo/) made using our prebuilt components. Prebuilt allows users to join sharable room links via desktop, meeting invites, coming soon as embeddable components in your apps.
+## Overview
 
-![Preview Screen](/docs/v2/prebuilt_scr1.png)
-![Meeting Screen](/docs/v2/prebuilt_scr2.png)
+This guide will walk you through the steps to create a video conferencing app using Prebuilt components of the `room-kit` package.
+Prebuilt is currently available for Android applications.
 
-[**Demo 100ms Pre-built link →**](https://examples-videoconferencing.app.100ms.live/meeting/tmz-qdi-cyp)
+> If you get stuck at any point or need help in understanding a concept, you can put your query in our [Discord Channel](https://100ms.live/discord).
 
-### Using Pre-built
 
--   Simplify building for video conferencing by using Prebuilt in your application within minutes, allowing you to focus on building your core product.
--   With low-level audio and video nuances already taken care of using 100ms Prebuilt allows for faster Go-To-Market, without requiring upfront investment or ongoing maintenance.
+## Prerequisites
 
-## To Implement Prebuilt
+-   _Android_: A basic familiarity with Android is required to follow this guide.
+-   _100ms account_: You need to have a 100ms account to create a room and get a room-code. You can create a 100ms account [here](https://dashboard.100ms.live/signup).
+-   _Room-code_: Prebuilt components require a `room-code` to join a room. You can get a `room-code` for a room using the 100ms dashboard. Refer to [this](/get-started/v2/get-started/prebuilt/room-codes/overview) guide to learn more about room-codes.
 
-Create a project or open your existing project.
+## Start a New Android Project (or use an existing one)
+[Here's how](https://developer.android.com/studio/projects/create-project) to create a new Android project.
 
-1. Add the import for prebuilt.
 
+## Install Roomkit
+
+The `room-kit` library is available on Maven. Add it your app level build.gradle in the dependencies block.
+
+Latest Version:
 [![](https://img.shields.io/badge/dynamic/xml.svg?label=100ms-Prebuilt&color=blue&query=%2F%2Fmetadata%2Fversioning%2Flatest&url=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Flive%2F100ms%2Froom-kit%2Fmaven-metadata.xml)](https://jitpack.io/#100mslive/room-kit)
 
 ```groovy
-
-implementation "live.100ms:room-kit:$version"
+dependencies { ....
+    implementation "live.100ms:room-kit:$version"
+}
 ```
 
-2. Launch Prebuilt from an activity.
-Before you join a video conferencing room, you need to create one. [Get a room code](https://www.100ms.live/docs/get-started/v2/get-started/prebuilt/room-codes/room-links).
+## Add the Prebuilt Component
 
-```kotlin
-val roomCode = "tmz-qdi-cyp"
-val userName = "My Name"
+```kotlin{1,6}
+import live.hms.roomkit.ui.HMSRoomKit
 
-val options = HMSPrebuiltOptions(userName)
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val roomCode = "tmz-qdi-cyp"
+        val userName = "My Name"
 
-HMSRoomKit.launchPrebuilt(roomCode, this, options)
+        val options = HMSPrebuiltOptions(userName)
+
+        HMSRoomKit.launchPrebuilt(roomCode, this, options)
+    }
+}
 ```
+
+## Launch the App
+You will see a preview of your own video and can turn it on or off.
+
+![Preview](/docs/v2/prebuilt_scr1.png)
+
+## Join a Room
+Here's what joining a room with another person looks like.
+
+![Join](/docs/v2/prebuilt_scr2.png)
+
+After joining with the app, join on web as well with the following link.
+
+[**Demo 100ms Pre-built link →**](https://examples-videoconferencing.app.100ms.live/meeting/tmz-qdi-cyp)
 
 ## Additional Parameters
 Additional properties that can be specified are `userName` and `userId`.
