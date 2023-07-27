@@ -1,0 +1,90 @@
+---
+title: Prebuilt Quickstart
+nav: 1.06
+---
+
+## Overview
+
+This guide will walk you through steps to create a video vonferencing app using Prebuilt component of Roomkit package.
+Prebuilt is currently available for React application, so basic familiarity with [React](https://reactjs.org/) is required to follow this guide.
+
+> If you get stuck at any point or need help in understanding a concept, you can put your query in our [Discord Channel](https://100ms.live/discord).
+
+## Prerequisites
+
+-   _React_: Prebuilt is currently available for React application, so basic familiarity with [React](https://reactjs.org/) is required to follow this guide.
+-   _100ms account_: You need to have a 100ms account to create a room and get a room-code. You can create a 100ms account [here](https://dashboard.100ms.live/signup).
+-   _Room-code_: Prebuilt component requires a room-code to join a room. You can get a room-code for a room using 100ms dashboard. Refer [this](/get-started/v2/get-started/prebuilt/room-codes/overview) guide to learn more about room-codes.
+
+## Start a New React Project
+
+To begin with setting up a new React project, you can follow the steps mentioned in [React Quickstart](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app).
+Currently Prebuilt supports Next.js and Create React App with a React version of 17 and above.
+
+Setps to create a new React project using Create React App:
+
+```bash
+npx create-react-app my-app
+cd my-app
+```
+
+Steps to create a new React project using Next.js:
+
+```bash title="Next.js" {1}
+npx create-next-app my-app
+cd my-app
+```
+
+## Install Roomkit
+
+Roomkit package is available as an npm package. You can install it using the following command:
+
+```bash
+npm install @100mslive/roomkit-react --save
+```
+
+## Add Prebuilt Component
+
+Once your app is setup using create react app, you can add the Prebuilt component to your app. You can do this by adding the following code to your `App.js` file:
+
+```jsx title="App.js"
+import { HMSPrebuilt } from '@100mslive/roomkit-react';
+
+function App() {
+    return (
+        <div style={{ height: '100%' }}>
+            <HMSPrebuilt roomCode="<room-code>" />
+        </div>
+    );
+}
+```
+
+For Next.js, you can add the Prebuilt component to your `pages/index.js` file:
+
+```jsx title="pages/index.js"
+import { HMSPrebuilt } from '@100mslive/roomkit-react';
+
+export default function Home() {
+    return (
+        <div style={{ height: '100%' }}>
+            <HMSPrebuilt roomCode="<room-code>" />
+        </div>
+    );
+}
+```
+
+## Run the App
+
+You can run the app using the following command:
+
+```bash
+npm start
+```
+
+For NextJS app, you can run the app using the following command:
+
+```bash
+npm run dev
+```
+
+## Join a Room
