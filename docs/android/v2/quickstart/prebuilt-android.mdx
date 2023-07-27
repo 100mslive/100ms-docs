@@ -14,8 +14,8 @@ Prebuilt is currently available for Android applications.
 ## Prerequisites
 
 -   _Android_: A basic familiarity with Android is required to follow this guide.
--   _100ms account_: You need to have a 100ms account to create a room and get a room-code. You can create a 100ms account [here](https://dashboard.100ms.live/signup).
--   _Room-code_: Prebuilt components require a `room-code` to join a room. You can get a `room-code` for a room using the 100ms dashboard. Refer to [this](/get-started/v2/get-started/prebuilt/room-codes/overview) guide to learn more about room-codes.
+-   _100ms account_: You need to have a 100ms account to create a room and get a `room-code`. You can create a 100ms account [here](https://dashboard.100ms.live/signup).
+-   _Room-code_: Prebuilt components require a `room-code` to join a room. You can get a `room-code` for a room using the 100ms dashboard. Refer to [this guide](/get-started/v2/get-started/prebuilt/room-codes/overview) to learn more about room codes.
 
 ## Start a New Android Project (or use an existing one)
 [Here's how](https://developer.android.com/studio/projects/create-project) to create a new Android project.
@@ -36,15 +36,15 @@ dependencies { ....
 
 ## Add the Prebuilt Component
 
-```kotlin{1,6}
+```kotlin{1,7-9,11}
 import live.hms.roomkit.ui.HMSRoomKit
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val roomCode = "tmz-qdi-cyp"
         val userName = "My Name"
-
         val options = HMSPrebuiltOptions(userName)
 
         HMSRoomKit.launchPrebuilt(roomCode, this, options)
