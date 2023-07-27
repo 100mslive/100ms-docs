@@ -218,8 +218,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                         "width": 720,
                         "height": 720,
                         "videoBitrate": 600
-                    },
-                    {}
+                    }
                 ],
                 "playlistType": "event",
                 "numPlaylistSegments": 12,
@@ -498,8 +497,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
                         "width": 720,
                         "height": 720,
                         "videoBitrate": 600
-                    },
-                    {}
+                    }
                 ],
                 "playlistType": "event",
                 "numPlaylistSegments": 12,
@@ -627,9 +625,13 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 
 #### simulcast object
 
+| Name   | Type     | Description                                                                                                                                  | Required |
+| :----- | :------- | :------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
+| layers | `object` | Object of type `layers`. Use this to configure various dimensions to be supported for simulcast. <br/>The max length of this array can be 3. | Yes      |
+
+##### simulcast - layer object
 | Name                  | Type           | Description                                                                                                                                                                                                                                                                                                                                                                                                                  | Required |
 | :-------------------- | :------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
-| layers                | `object`       | Object of type `layers`. Use this to configure various dimensions to be supported for simulcast. <br/>The max length of this array can be 3.                                                                                                                                                                                                                                                                                 | Yes      |
 | maxBitrate            | `int`          | Specifies the maximum number of kilobits per second to allow for encoding. <br/>It should be in the range [0, 2e3] (max is 2 Mbps)—defaults to 0.                                                                                                                                                                                                                                                                            | No       |
 | maxFramerate          | `int`          | Specifies the maximum number of frames per second to allow for encoding. <br/>It should be in the range [1, 30].                                                                                                                                                                                                                                                                                                             | Yes      |
 | scaleResolutionDownBy | `long integer` | Specifies a factor to reduce the size of a video track during encoding. <br/>It should be in the range [1.0, 12.0]. <br/><br/>The value should always be strictly greater than the previous value (if it exists) in the layers array.                                                                                                                                                                                        | Yes      |
@@ -768,6 +770,16 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | layers             | `object`  | Object of type `layers`. This can be used to configure the various dimensions to be supported for HLS recording - both `hlsVod` and `singleFilePerLayer`. `recording.layers` should be subset of `hlsDestinations.layers` and has the same validations as `hlsDestinations.layers`. When not specified, recordings will be generated for all `hlsDestinations.layers` | No       |
 | thumbnails         | `object`  | Object of type `thumbnails`. This can be used to configure thumbnail's dimension.                                                                                                                                                                                                                                                                                      | No       |
 | presignDuration    | `int`     | Indicates the expiry of the pre-signed URLs—the duration for which the pre-signed URL should be signed.                                                                                                                                                                                                                                                               | No       |
+
+#### HLS/ HLS Recording - Layers
+Minimum between `width` and `height` should be in range [144, 1080] and Maximum between `width` and `height` should be in range [192, 1920].
+
+| Name         | Type  | Description                                                                                            | Required |
+| ------------ | ----- | ------------------------------------------------------------------------------------------------------ | -------- |
+| width        | `int` | Indicates the width of the screen to be recorded in pixels (Must be an even number). For example, 1280 | Yes      |
+| height       | `int` | Indicates the height of the screen to be recorded in pixels (Must be an even number). For example, 720 | Yes      |
+| videoBitrate | `int` | Bitrate of video track in kbps.                                                                        | Yes      |
+| audioBitrate | `int` | Bitrate of audio track in kbps.                                                                        | No       |
 
 ### transcriptions object
 
