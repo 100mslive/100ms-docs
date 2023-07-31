@@ -1,13 +1,13 @@
 ---
 title: useCustomEventInput<T>
-nav: "5.2.3"
+nav: '5.2.3'
 ---
 
 ## Type parameters
 
 | Name |
-| :------ |
-| `T` |
+| :--- |
+| `T`  |
 
 ## Properties
 
@@ -17,7 +17,7 @@ nav: "5.2.3"
 
 function to handle errors happening during sending the event
 
-___
+---
 
 ### json
 
@@ -33,7 +33,7 @@ Set it to `true` if you want to send/receive objects
 
 default value is true
 
-___
+---
 
 ### onEvent
 
@@ -51,15 +51,15 @@ handling event in the UI.
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `data` | `T` |
+| Name   | Type |
+| :----- | :--- |
+| `data` | `T`  |
 
 ##### Returns
 
 `void`
 
-___
+---
 
 ### type
 

@@ -1,6 +1,6 @@
 ---
 title: useParticipantListResult
-nav: "5.2.6"
+nav: '5.2.8'
 ---
 
 ## Properties
@@ -9,19 +9,19 @@ nav: "5.2.6"
 
 • **isConnected**: `boolean`
 
-___
+---
 
 ### participantsByRoles
 
 • **participantsByRoles**: `Record`<`string`, `HMSPeer`[]\>
 
-___
+---
 
 ### peerCount
 
 • **peerCount**: `number`
 
-___
+---
 
 ### roles
 
