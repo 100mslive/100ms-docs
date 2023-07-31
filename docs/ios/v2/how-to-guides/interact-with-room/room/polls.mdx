@@ -1,0 +1,160 @@
+---
+ title: Polls
+ nav: 7.26
+---
+
+The Poll feature in the HMS SDK allows you to create, manage, and participate in polls and quizzes. Polls are an effective way to gather opinions, feedback, and insights from a group of people in a quick and convenient manner. With the Poll feature, you can create custom polls, set their properties, add questions, and manage responses. You can also receive real-time updates on poll status, and view poll results in an organized and easy-to-use format.
+
+This feature can also be used to create quizzes. Under the hood, quizzes are like polls where questions have right or wrong answers.
+
+This document provides guidance on how to use the Poll APIs to create a poll, receive updates on a poll, and vote on a poll.
+
+
+## Prerequisites
+
+- iOS SDK 0.9.6
+- Poll Read permission should be enabled for roles that can view polls
+- Poll Write and Poll Read permission should be enabled for roles that can create polls
+
+## Creating a Poll
+
+### Quick Create
+
+Here is how to quickly create a poll using poll builder:
+
+```swift
+let pollBuilder = HMSPollBuilder()
+    .addSingleChoiceQuestion(with: "How is the weather today?", options: ["hot", "warm", "cold"])
+        
+hmsSDK.interactivityCenter.quickStartPoll(with: pollBuilder) { success, error in
+		// handle error if any
+}
+```
+
+This code will create a poll with a default title and a single choice question and share it with the room. 
+
+### Staged Poll Creation
+
+Sometimes you might want to create a poll but not start it immediately or you might want meeting co-host to review and edit the poll before starting. For this you can use separate APIs to create a poll, set its questions and start it. 
+
+```swift
+// Create a poll
+let poll = HMSPollBuilder()
+    .withTitle("My New Poll").build()
+
+hmsSDK.interactivityCetner.create(poll: poll) { success, error in
+    // handle error if any
+}
+
+// Add questions to the created poll
+let question = HMSPollQuestionBuilder()
+    .withType(.multipleChoice)
+    .withTitle("How is the weather today?")
+    .addOption(with: "Hot")
+    .addOption(with: "Warm")
+    .addOption(with: "Cold")
+    .build()
+
+hmsSDK.interactivityCetner.setPollQuestions(poll: poll, questions: [question]) { success, error in
+    // handle error if any
+}
+
+// After this you can use fetchPollList and fetchPollQuestions APIs
+// so that other users can view/edit them prior to start.
+
+// Start the poll
+hmsSDK.interactivityCetner.start(poll: poll) { success, error in
+    // handle error if any
+}
+
+```
+
+### Quiz Creation
+
+Quiz assumes that correct answers are provided to each question which are then used to evaluate the user’s score. Use question builder API to indicate which options are correct.
+
+```swift
+let questionBuilder = HMSPollQuestionBuilder()
+    .withType(.multipleChoice)
+    .withTitle("How is the weather today?")
+    .addQuizOption(with: "hot", isCorrect: true)
+    .addQuizOption(with: "warm", isCorrect: true)
+    .addQuizOption(with: "cold", isCorrect: false)
+    .addQuizOption(with: "freezing", isCorrect: false)
+
+// Create a quz
+let pollBuilder = HMSPollBuilder()
+    .withTitle("My Weather Quiz")
+    .withCategory(.quiz)
+    .addQuestion(with: questionBuilder)
+
+hmsSDK.interactivityCenter.quickStartPoll(with: pollBuilder) { success, error in
+		// handle error if any
+}
+```
+
+## Receiving Updates on a Poll
+
+Once you have start a poll, you can receive real-time updates on the poll's status and results using the `addPollUpdateListner` method in `HMSInteractivityCenter`. This method takes a closure as a parameter, which is called whenever an update occurs, such as when a poll starts, stops, or has its results updated.
+
+You can use the `HMSPoll` object returned by the closure to access information about the poll, such as its current state, duration, and questions. 
+
+```swift
+// Listen for poll updates 
+hmsSDK.interactivityCenter.addPollUpdateListner { [weak self] updatedPoll, update in
+  guard let self = self else { return }  
+  switch update {
+  case .started:
+    self.showPollStartedToast()
+  case .resultsUpdated:
+    self.updateResultsScreen()
+  case .stopped:
+    self.loadResultsSummaryIfNeeded()
+  @unknown default:
+  break
+  }
+}
+```
+
+## Voting on a Poll
+
+To participate in a poll, you can use the `add(response:completion:)` method in `HMSInteractivityCenter`. This method takes a poll response builder object as a parameter, which you can use to add responses to the poll's questions. You can provide selected options or answers to short or long answer questions, depending on the question type.
+
+```swift
+let builder = HMSPollResponseBuilder(poll: poll)
+builder.addResponse(for: firstQuestion, options: selectedOption)
+hmsSDK.interactivityCetner.add(response: builder) { results, error in
+		// handle error if any
+}
+```
+
+Once you have submitted your responses, other peers in the room will get `resultsUpdated` update from the `addPollUpdateListner` callback. You can check updated vote counts for each option of poll questions:
+
+```swift
+hmsSDK.interactivityCenter.addPollUpdateListner { [weak self] updatedPoll, update in
+...
+		case .resultsUpdated:
+			print("Vote count for first option of first question is \(updatedPoll.questions?.first?.options?.first?.voteCount)")
+...
+}
+```
+
+You can use the `fetchResponses` method in `HMSInteractivityCenter` to fetch the detailed responses for the poll that will contain the information about the voter (in case of non anonymous poll) as well as responses to open ended questions that can’t be summarised. 
+
+## Stopping a Poll
+
+Use `stop(poll:completion:)` when you wan’t to prevent further responses recorded.
+
+## Viewing Poll Results Summary
+
+After poll has ended you can get a poll summary to get statistics like how many peers responded and how many total peers were in the room at the time of poll.  
+See [HMSPollResult](/api-reference/ios/v2/documentation/hmssdk/hmspollresult) class reference for details.
+
+```swift
+hmsSDK.interactivityCenter.fetchPollResult(for: poll) { [weak self] poll, error in
+	let pollResult = poll?.result else { return }
+	let countOfPeersWithNoResponses = pollResult.maxUserCount - pollResult.userCount
+}
+```
+
+👀 For an example of how to implement polls in an iOS app with the 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-ios-sdk/tree/main/Example/HMSSDKExample/Meeting/Polls).
