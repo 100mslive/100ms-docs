@@ -1,5 +1,5 @@
 ---
-title: 100ms Prebuilt
+title: Overview
 nav: 4.3
 ---
 
@@ -13,8 +13,8 @@ Using 100ms Roomkit package, one can also embed 100ms Prebuilt as a native compo
 
 ### Using Prebuilt
 
--   Operate at high speeds and set up Prebuilt in your application within minutes, allowing you to focus your time on building your core product.
--   With low-level audio and video nuances already taken care of, using 100ms Prebuilt allows for faster Go-To-Market, without requiring upfront investment or ongoing maintenance.
+- Operate at high speeds and set up Prebuilt in your application within minutes, allowing you to focus your time on building your core product.
+- With low-level audio and video nuances already taken care of, using 100ms Prebuilt allows for faster Go-To-Market, without requiring upfront investment or ongoing maintenance.
 
 ## Share and Embed Prebuilt
 
@@ -47,7 +47,7 @@ In this guide, we will create role specific Prebuilt link and share/embed the li
 
 <FlexContainer>
 <Callout icon="link" title="Prebuilt Link Structure">
-Prebuilt links are role specific room links with a format `https://<template-subdomain>.app.100ms.live/<room-code>` where,
+Prebuilt links are role specific room links with a format `https://<template-subdomain>/<room-code>` where,
     - `template-subdomain`- is the subdomain that you’ve defined at the time of template creation on [100ms Dashboard](https://dashboard.100ms.live/dashboard). Copy `subdomain` from Template details page on 100ms Dashboard
     - `room-code`- is a [room code](/concepts/v2/concepts/rooms/room-codes/room-codes) that belongs to a unique`room_id` and `role` for which you're creating the room link. Get room codes for each role 
             - Copy role specific room code from Join Room section for a role in a room
@@ -60,10 +60,11 @@ Prebuilt links are role specific room links with a format `https://<template-sub
 Once you have the template-subdomain and room code ready, append these to the link structure for all roles in your room.
 
 <FlexContainer>
-    <Callout icon="link" title="Prebuilt Link for roles">
-        - Host Prebuilt Link : https://`template-subdomain`/meeting/`room-code-for-host` - Guest
-        Prebuilt Link : https://`template-subdomain`/meeting/`room-code-for-guest`
-    </Callout>
+  <Callout icon="link" title="Prebuilt Link for roles">
+    - Host Prebuilt Link :
+    https://`template-subdomain`/meeting/`room-code-for-host` - Guest Prebuilt
+    Link : https://`template-subdomain`/meeting/`room-code-for-guest`
+  </Callout>
 </FlexContainer>
 
 ### Share or Embed as iFrame
@@ -73,10 +74,10 @@ Refer the sample code snippet to embed the Prebuilt link as an iframe.
 
 ```html
 <iframe
-    title="100ms-app"
-    allow="camera *;microphone *;display-capture *"
-    src="https://<your-template-subdomain>/meeting/<room-code>"
-    style="height: 100vh; width: 100%; border:0;"
+  title="100ms-app"
+  allow="camera *;microphone *;display-capture *"
+  src="https://<your-template-subdomain>/meeting/<room-code>"
+  style="height: 100vh; width: 100%; border:0;"
 >
 
 
@@ -91,25 +92,23 @@ Refer the sample code snippet to embed the Prebuilt link as an iframe.
 
 <FlexContainer>
 <Callout icon="link" title="HMSPrebuilt Component Basics">
-    - **RoomKit** -  Collection of embeddable 100ms UI components for your app.
-        - `HMSPrebuilt` is the first embeddable UI component of RoomKit package.
-            - Have a Component request? Drop a note here
-
-    - **HMSPrebuilt** - high-order component from HMSRoom Kit that handles all audio/video functionality within a room.
-        - Has default colors and styles of 100ms
-        - HMSPrebuilt requires room-code for peers to join the room
+    - **RoomKit**
+        -  collection of embeddable 100ms UI components for your app.
+        -  **HMSPrebuilt** is a higher-order component of `RoomKit` package.
+            - handles all audio/video functionality within a room
+            - has default colors and styles of 100ms
+        - have a component request? Drop a note here
 
 </Callout>
 </FlexContainer>
 
 <StepsContainer id="implement-breakout-room">
-
 ### Create and Get room code
 
 HMSPrebuilt uses [room code](/concepts/v2/concepts/rooms/room-codes/room-codes) to get initialised, it allow users to uniquely join a `room_id` with a specifc `role`. Head over to
 
--   [Create Room Codes](/docs/get-started/v2/get-started/prebuilt/room-codes/overview#creating-room-codes)
--   [Get Room Code](/docs/server-side/v2/api-reference/room-codes/create-room-code-api)
+- [Create Room Codes](/docs/get-started/v2/get-started/prebuilt/room-codes/overview#creating-room-codes)
+- [Get Room Code](/docs/server-side/v2/api-reference/room-codes/create-room-code-api)
 
 ### Embedding HMSPrebuilt component
 
@@ -118,11 +117,32 @@ HMSPrebuilt uses [room code](/concepts/v2/concepts/rooms/room-codes/room-codes) 
         - `userName` - prefills the user name on HMSPrebuilt preview screen
         - `userID` - use your user IDs to track user of your app
 
-Sample code snippet to embed Prebuilt component. Head over for a step by step guides for [Flutter](docs/flutter/v2/quickstart/prebuilt-flutter), [React Native](/docs/react-native/v2/quickstart/quickstart), [Android](/docs/android/v2/quickstart/prebuilt-android), [iOS](docs/iOS/v2/quickstart/prebuilt-iOS)
+Sample code snippet to embed Prebuilt component. Head over for a step by step guides for [React](/docs/javascript/v2/quickstart/prebuilt-quickstart)) [Flutter](docs/flutter/v2/quickstart/prebuilt-flutter), [React Native](/docs/react-native/v2/quickstart/quickstart), [Android](/docs/android/v2/quickstart/prebuilt-android)
 
-<Tabs id="sample-code" items={['Flutter', 'React Native', 'Android']} />
+<Tabs
+  id="sample-code"
+  items={["React", "Flutter", "React Native", "Android"]}
+/>
 
 <Tab id='sample-code-0'>
+```jsx section=SampleCode tab=React
+
+// import HMSPrebuilt component from Roomkit package
+import { HMSPrebuilt } from '@100mslive/roomkit-react';
+
+// add pre-built component
+function App() {
+    return (
+        <div style={{ height: "100vh" }}>
+            <HMSPrebuilt roomCode="<room-code>" />
+        </div>
+    );
+ }
+
+````
+</Tab>
+
+<Tab id='sample-code-1'>
 ```dart section=SampleCode tab=Flutter
 
 // import roomkit package
@@ -130,29 +150,25 @@ import 'package:hms_room_kit/hms_room_kit.dart';
 
 // add pre-built component
 HMSPrebuilt(roomCode: "<room-code>");
-
-````
-</Tab>
-
-<Tab id='sample-code-1'>
-
-```js section=SampleCode tab=React Native
-
-// import roomkit package
-import { HMSPrebuilt } from '@100mslive/react-native-room-kit';
-
-// add pre-built component
-const ConferencingScreen = () => {
-    return (
-        <HMSPrebuilt roomCode="<room-code>" />
-    );
-};
-
 ````
 
 </Tab>
 
 <Tab id='sample-code-2'>
+
+```jsx section=SampleCode tab=React Native
+// import roomkit package
+import { HMSPrebuilt } from "@100mslive/react-native-room-kit";
+
+// add pre-built component
+const ConferencingScreen = () => {
+  return <HMSPrebuilt roomCode="<room-code>" />;
+};
+```
+
+</Tab>
+
+<Tab id='sample-code-3'>
 ```kotlin section=SampleCode sectionIndex=2 tab=Android
 
 // add roomkit dependency in gradle file
@@ -168,6 +184,4 @@ HMSRoomKit.launchPrebuilt(roomCode = "<room-code>", context = Activity)
 </Tab>
 
 </StepsContainer>
-
-
 ```
