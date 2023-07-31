@@ -51,13 +51,13 @@ through the IHMSActions instance returned by this
 Any action which may modify the store or may need to talk to the SDK will happen
 through the IHMSActions instance returned by this
 
-**`Deprecated`**
-
-use getActions
-
 #### Returns
 
 [`HMSActions`](/api-reference/javascript/v2/interfaces/HMSActions)<`T`\>
+
+**`Deprecated`**
+
+use getActions
 
 ---
 

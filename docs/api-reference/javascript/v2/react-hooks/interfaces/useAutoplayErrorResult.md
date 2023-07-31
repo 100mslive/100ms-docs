@@ -1,6 +1,6 @@
 ---
 title: useAutoplayErrorResult
-nav: "5.2.2"
+nav: '5.2.2'
 ---
 
 ## Properties
@@ -9,7 +9,7 @@ nav: "5.2.2"
 
 • **error**: `string`
 
-___
+---
 
 ### resetError
 
@@ -25,7 +25,7 @@ Call this method to reset(hide) the UI that is rendered when there was an error
 
 `void`
 
-___
+---
 
 ### unblockAudio
 

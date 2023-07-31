@@ -1,6 +1,6 @@
 ---
 title: useRecordingStreamingResult
-nav: "5.2.10"
+nav: '5.2.12'
 ---
 
 ## Properties
@@ -9,37 +9,37 @@ nav: "5.2.10"
 
 • **isBrowserRecordingOn**: `boolean`
 
-___
+---
 
 ### isHLSRecordingOn
 
 • **isHLSRecordingOn**: `boolean`
 
-___
+---
 
 ### isHLSRunning
 
 • **isHLSRunning**: `boolean`
 
-___
+---
 
 ### isRTMPRunning
 
 • **isRTMPRunning**: `boolean`
 
-___
+---
 
 ### isRecordingOn
 
 • **isRecordingOn**: `boolean`
 
-___
+---
 
 ### isServerRecordingOn
 
 • **isServerRecordingOn**: `boolean`
 
-___
+---
 
 ### isStreamingOn
 

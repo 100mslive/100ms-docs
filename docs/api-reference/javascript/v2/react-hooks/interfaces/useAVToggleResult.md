@@ -1,6 +1,6 @@
 ---
 title: useAVToggleResult
-nav: "5.2.1"
+nav: '5.2.1'
 ---
 
 ## Properties
@@ -11,13 +11,13 @@ nav: "5.2.1"
 
 true if unmuted and vice versa
 
-___
+---
 
 ### isLocalVideoEnabled
 
 • **isLocalVideoEnabled**: `boolean`
 
-___
+---
 
 ### toggleAudio
 
@@ -34,7 +34,7 @@ has permission to unmute audio
 
 `void`
 
-___
+---
 
 ### toggleVideo
 

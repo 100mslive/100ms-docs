@@ -155,7 +155,7 @@ Please follow the below instructions to add advanced features like screen share,
 
 import live.hms.hmssdk_flutter.methods.HMSPipAction
 import android.os.Build
-
+                                  
 override fun onUserLeaveHint() {
     super.onUserLeaveHint()
     // This should only work for android version above 8 since PIP is only supported after
@@ -165,7 +165,7 @@ override fun onUserLeaveHint() {
     }
 }
 ```
-
+                                                                                                        
 3. For screenshare in your `MainActivity.kt` file(android/app/src/main/kotlin/{package_name}/MainActivity.kt) add:
 
 ```kotlin
@@ -183,7 +183,7 @@ super.onActivityResult(requestCode, resultCode, data)
     }
 }
 ```
-
+                                                                                                        
 4. Add the `FOREGROUND_SERVICE` permission in `AndroidManifest.xml` file(android/app/src/main/AndroidManifest.xml):
 
 ```xml
@@ -222,3 +222,5 @@ HMSPrebuilt(
 ```
 
 </Tab>
+  
+That's it, You can now join the room by clicking on the Join button.

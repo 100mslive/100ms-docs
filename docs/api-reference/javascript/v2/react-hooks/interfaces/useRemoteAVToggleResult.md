@@ -1,6 +1,6 @@
 ---
 title: useRemoteAVToggleResult
-nav: "5.2.11"
+nav: '5.2.13'
 ---
 
 ## Properties
@@ -11,13 +11,13 @@ nav: "5.2.11"
 
 true if unmuted and vice versa
 
-___
+---
 
 ### isVideoEnabled
 
 • **isVideoEnabled**: `boolean`
 
-___
+---
 
 ### setVolume
 
@@ -32,15 +32,15 @@ only be present if the remote peer has an audio track to change volume for
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
+| Name     | Type     |
+| :------- | :------- |
 | `volume` | `number` |
 
 ##### Returns
 
 `void`
 
-___
+---
 
 ### toggleAudio
 
@@ -57,7 +57,7 @@ has permission to mute/unmute remote audio
 
 `void`
 
-___
+---
 
 ### toggleVideo
 
@@ -74,7 +74,7 @@ has permission to mute/unmute remote video
 
 `void`
 
-___
+---
 
 ### volume
 

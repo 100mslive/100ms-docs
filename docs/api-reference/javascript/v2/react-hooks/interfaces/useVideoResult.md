@@ -1,6 +1,6 @@
 ---
 title: useVideoResult
-nav: "5.2.17"
+nav: '5.2.19'
 ---
 
 ## Properties
@@ -11,7 +11,7 @@ nav: "5.2.17"
 
 This returns a list of all pages with every page containing the list of all tiles on it.
 
-___
+---
 
 ### ref
 
