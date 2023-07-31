@@ -139,7 +139,7 @@ Please follow the below instructions to add advanced features like screen share,
 
 <Tab id="sample-app-0">
 
-1. To add PIP support in your app manifest file(android/app/src/main/AndroidManifest.xml) add:
+1. To add PIP support in your app manifest file("android/app/src/main/AndroidManifest.xml") add:
 
 ```xml
 <activity
@@ -149,7 +149,7 @@ Please follow the below instructions to add advanced features like screen share,
     ... />
 ```
 
-2. For Auto Enter PIP support(below android 12) in your `MainActivity.kt` file(android/app/src/main/kotlin/{package_name}/MainActivity.kt) add: 
+2. For Auto Enter PIP support(below android 12) in your `MainActivity.kt` file("android/app/src/main/kotlin/<your-package-name>/MainActivity.kt") add: 
 
 ```kotlin
 
@@ -166,7 +166,7 @@ override fun onUserLeaveHint() {
 }
 ```
                                                                                                         
-3. For screenshare in your `MainActivity.kt` file(android/app/src/main/kotlin/<your-package-name>/MainActivity.kt) add:
+3. For screenshare in your `MainActivity.kt` file("android/app/src/main/kotlin/<your-package-name>/MainActivity.kt") add:
 
 ```kotlin
 
@@ -184,7 +184,7 @@ super.onActivityResult(requestCode, resultCode, data)
 }
 ```
                                                                                                         
-4. Add the `FOREGROUND_SERVICE` permission in `AndroidManifest.xml` file(android/app/src/main/AndroidManifest.xml):
+4. Add the `FOREGROUND_SERVICE` permission in `AndroidManifest.xml` file("android/app/src/main/AndroidManifest.xml"):
 
 ```xml
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
