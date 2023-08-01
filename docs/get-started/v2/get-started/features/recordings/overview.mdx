@@ -10,15 +10,19 @@ Recordings enable you to convert live video from 100ms rooms into long-lived med
 
 ## Composite recordings
 
-This asset type is `room-composite`.
+> Previously called browser or beam recording.
 
-> Earlier called browser recording. This recording type is built with a browser, and has a peer join the call. Peer is called beam. 
+100ms can record a room to capture the perspective of a participant, who can hear and see other participants in the room. These recordings are a mix of multiple audio/video tracks, composed in a UI that is similar to the UI of the room. The output is a single MP4 file.
 
-Browser recording is built to give users a participant-first recording experience. When enabled, our browser-based bot Beam joins a room to record the viewport like any other participant. The output is an MP4 file that captures the room's published audio/video tracks together into one single file. This option removes the complexity of syncing various audio/video tracks and offers an intuitive, participant-first recording experience. An example use case is to record a sales meeting for later usage.
+Composite recordings can be customized: which roles to record, which video resolution to record and, other modifications to the UI.
+
+Internally, these recordings are created using an automated web browser that joins the room as a hidden peer (called "beam"). It uses a URL to join the room and records the screen to generate a composite recording.
+
+### Start and stop recording
 
 ![Composite recording on 100ms Dashboard](/docs/v2/composite-recording-dashboard.png)
 
-### Start and stop recording
+Enable the 
 
 <FlexContainer>
 
@@ -58,6 +62,8 @@ Start recording within the client-side SDK.
 
 ### Fetch the recording
 
+This asset type is `room-composite`.
+
 ### Customizing the recording
 
 - customization
@@ -67,6 +73,9 @@ Start recording within the client-side SDK.
   - customize resolution or get audio-only
 
 ### Legacy composite
+
+> Also called SFU recording.
+
 
 This asset type is `room-composite-legacy`. SFU recording. Quality of composition is inferior.
 
