@@ -19,21 +19,21 @@ const cards = [
     {
         icon: <LayersIcon width={20} />,
         title: 'Concepts',
-        subText: 'Learn concepts to help you model your usecase with 100ms',
+        subText: 'Learn concepts to help you build your use-case with 100ms',
         link: '/get-started/v2/get-started/concepts/basics',
         cta: "View Concepts"
     },
     {
         icon: <LayoutIcon width={20} />,
         title: 'Prebuilt',
-        subText: 'Embed or share room links without building UI using Room Links',
+        subText: 'Use links and UI components to go live with a feature-rich live video app',
         link: '/get-started/v2/get-started/prebuilt/overview',
         cta: "View Prebuilt"
     },
     {
         icon: <RocketIcon width={20} />,
         title: 'Examples',
-        subText: 'Discover platform specific opensource examples built with 100ms',
+        subText: 'Discover open-source examples for your preferred platform',
         link: '/examples',
         cta: "View Examples"
     }
