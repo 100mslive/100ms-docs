@@ -743,7 +743,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | name             | `string`  | The name you can assign to identify the RTMP destination                                                           | Yes      |
 | width            | `int`     | Indicates the width of the screen to be recorded in pixels. For example, 1280 pixels                               | No       |
 | height           | `int`     | Indicates the height of the screen to be recorded in pixels. For example, 720 pixels                               | No       |
-| maxDuration      | `int`     | Sets the maximum duration, in seconds. For example, 1800 seconds(30 mins)                                          | No       |
+| maxDuration      | `int`     | Set maximum duration for RTMP stream, in seconds. For example, 1800 seconds(30 mins)                                          | No       |
 | rtmpUrls         | `object`  | Object of type `rtmpUrls`. This can be used to configure the RTMP URLs(max 3) you wish to broadcast the stream to. | No       |
 | recordingEnabled | `boolean` | If recording is required this can be set as true. This value has no effect on streaming.                           | No       |
 
@@ -752,7 +752,7 @@ curl --location --request POST 'https://api.100ms.live/v2/templates' \
 | Name                    | Type      | Description                                                                                                                                                                                        | Required |
 | :---------------------- | :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------- |
 | name                    | `string`  | The name you can assign to identify the HLS destination                                                                                                                                            | Yes      |
-| maxDuration             | `int`     | Sets the maximum duration, in seconds. For example, 1800 seconds(30 minutes)                                                                                                                       | No       |
+| maxDuration             | `int`     | Sets maximum duration for the live stream, in seconds. For example, 1800 seconds(30 minutes)                                                                                                                       | No       |
 | layers                  | `object`  | Object of type `layers`. This can be used to configure the various dimensions to be supported for HLS streaming. The layers are expected to be in descending order of resolution and video bitrate | No       |
 | playlistType            | `string`  | Indicates the type of playlist. Can be of type `event` or `live`.                                                                                                                                  | No       |
 | numPlaylistSegments     | `int`     | Indicates the number of media segments in the playlist. Applicable only for `live` playlistType. Each segment is 2 seconds. Min/max/default = 3/150/5.                                             | No       |
@@ -776,9 +776,9 @@ Minimum between `width` and `height` should be in range [144, 1080] and Maximum 
 
 | Name         | Type  | Description                                                                                            | Required |
 | ------------ | ----- | ------------------------------------------------------------------------------------------------------ | -------- |
-| width        | `int` | Indicates the width of the screen to be recorded in pixels (Must be an even number). For example, 1280 | Yes      |
-| height       | `int` | Indicates the height of the screen to be recorded in pixels (Must be an even number). For example, 720 | Yes      |
-| videoBitrate | `int` | Bitrate of video track in kbps.                                                                        | Yes      |
+| width        | `int` | Indicates the width of the screen to be recorded in pixels (Must be an even number). For example, 1280 | No       |
+| height       | `int` | Indicates the height of the screen to be recorded in pixels (Must be an even number). For example, 720 | No       |
+| videoBitrate | `int` | Bitrate of video track in kbps.                                                                        | No       |
 | audioBitrate | `int` | Bitrate of audio track in kbps.                                                                        | No       |
 
 ### transcriptions object
