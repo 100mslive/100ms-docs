@@ -178,8 +178,10 @@ class HMSBrowserRecordingState {
   ///[error]: Gets populated if there is some error in starting the browser recording
   ///[running]: bool value `true` indicates that browser recording is running
   ///[startedAt]: time at which browser recording was started
+  ///[initialising]: flag to identify the recording initialisation status
   final HMSException? error;
   final bool running;
+  final bool initialising;
   DateTime? startedAt;
   HMSBrowserRecordingState({required this.error, required this.running, this.startedAt});
 }
