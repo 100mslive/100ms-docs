@@ -1,0 +1,127 @@
+---
+title: Prebuilt Quickstart
+nav: 1.06
+---
+
+## Overview
+
+This guide will walk you through the steps to create a video conferencing app using the Prebuilt component of the Roomkit package.
+Prebuilt is currently available for React applications, so basic familiarity with [React](https://reactjs.org/) is required to follow this guide.
+
+> If you get stuck at any point or need help in understanding a concept, you can put your query in our [Discord Channel](https://100ms.live/discord).
+
+## Prerequisites
+
+-   _React_: Prebuilt is currently available for React applications, so basic familiarity with [React](https://reactjs.org/) is required to follow this guide.
+-   _100ms account_: You need to have a 100ms account to create a room and get a room-code. You can create a 100ms account [here](https://dashboard.100ms.live/signup).
+-   _Room-code_: Prebuilt component requires a room-code to join a room. You can get a room-code for a room using the 100ms dashboard. Refer [this](/get-started/v2/get-started/prebuilt/room-codes/overview) guide to learn more about room-codes.
+
+## Start a New React Project
+
+To begin with setting up a new React project, you can follow the steps mentioned in [React Quickstart](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app).
+Currently, Prebuilt supports Next.js and Create React App with a React version of 17 and above.
+
+Steps to create a new React project:
+
+<Tabs id="start-project" items={['Create React App', 'Next.js']} />
+
+<Tab id="start-project-0">
+```bash
+npx create-react-app my-app
+cd my-app
+```
+</Tab>
+
+<Tab id="start-project-1">
+```bash title="Next.js" {1}
+npx create-next-app my-app
+cd my-app
+```
+</Tab>
+
+
+## Install Roomkit
+
+
+The latest version of Roomkit package is available on npm:
+
+[![npm version](https://badge.fury.io/js/%40100mslive%2Froomkit-react.svg)](https://badge.fury.io/js/%40100mslive%2Froomkit-react)
+
+You can install it using the following command:
+
+```bash
+npm install @100mslive/roomkit-react --save
+```
+
+## Add Prebuilt Component
+
+Once your app is setup using create react app, you can add the Prebuilt component to your app.
+
+<Tabs id="add-component" items={['Create React App', 'Next.js']} />
+
+<Tab id="add-component-0">
+For Create React App, you can add the Prebuilt component to your `App.js` file:
+
+```jsx title="App.js"
+import { HMSPrebuilt } from '@100mslive/roomkit-react';
+
+function App() {
+  return (
+    <div style={{ height: "100vh" }}>
+      <HMSPrebuilt roomCode="<room-code>" />
+    </div>
+  );
+}
+
+export default App;
+```
+</Tab>
+
+<Tab id="add-component-1">
+
+For Next.js, you can add the Prebuilt component to your `pages/index.js` file. If you have opted for app router during initialization, you can add the snippet in the `app/page.js` file. Depending on the initialization configuration, the files can be in typescript. The `src` directory is also optional and only affects the file paths:
+
+```jsx title="pages/index.js"
+"use client";
+
+import { HMSPrebuilt } from '@100mslive/roomkit-react';
+
+export default function Home() {
+    return (
+        <div style={{ height: '100vh' }}>
+            <HMSPrebuilt roomCode="<room-code>" />
+        </div>
+    );
+}
+```
+</Tab>
+
+## Run the App
+You can run the app using the following command:
+
+<Tabs id="run-app" items={['Create React App', 'Next.js']} />
+
+<Tab id="run-app-0">
+
+
+
+```bash
+npm start
+```
+
+</Tab>
+
+<Tab id="run-app-1">
+
+```bash
+npm run dev
+```
+</Tab>
+
+![Preview](/docs/v2/prebuilt-preview.png)
+
+## Join a Room
+
+![Join](/docs/v2/prebuilt-room.png)
+
+The Prebuilt component behaves like the 100ms sample app which can be forked from this [GitHub repository](https://github.com/100mslive/100ms-web).

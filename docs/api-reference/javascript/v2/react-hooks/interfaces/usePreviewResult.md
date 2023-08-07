@@ -1,6 +1,6 @@
 ---
 title: usePreviewResult
-nav: "5.2.9"
+nav: '5.2.11'
 ---
 
 ## Properties
@@ -11,7 +11,7 @@ nav: "5.2.9"
 
 enable the join button for the user only when this is true
 
-___
+---
 
 ### isConnected
 
@@ -20,7 +20,7 @@ ___
 once the user has joined the room, till leave happens this flag will be true. It can be used
 to decide to show between preview form and conferencing component/video tiles.
 
-___
+---
 
 ### join
 
@@ -36,7 +36,7 @@ call this function to join the room
 
 `Promise`<`void`\>
 
-___
+---
 
 ### preview
 

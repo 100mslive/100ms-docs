@@ -27,7 +27,7 @@ const cards = [
         icon: <LayoutIcon width={20} />,
         title: 'Prebuilt',
         subText: 'Embed or share room links without building UI using Room Links',
-        link: '/get-started/v2/get-started/prebuilt/prebuilt',
+        link: '/get-started/v2/get-started/prebuilt/overview',
         cta: "View Prebuilt"
     },
     {

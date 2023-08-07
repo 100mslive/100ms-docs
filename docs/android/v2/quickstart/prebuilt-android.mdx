@@ -1,0 +1,82 @@
+---
+title: Prebuilt Quickstart
+nav: 5.3
+---
+
+## Overview
+
+This guide will walk you through the steps to create a video conferencing app using Prebuilt component of the `room-kit` package.
+
+> If you get stuck at any point or need help in understanding a concept, you can put your query in our [Discord Channel](https://100ms.live/discord).
+
+
+## Prerequisites
+
+-   _Android_: A basic familiarity with Android is required to follow this guide.
+-   _100ms account_: You need to have a 100ms account to create a room and get a `room-code`. You can create a 100ms account [here](https://dashboard.100ms.live/signup).
+-   _Room-code_: Prebuilt components require a `room-code` to join a room. You can get a `room-code` for a room using the 100ms dashboard. Refer to [this guide](/get-started/v2/get-started/prebuilt/room-codes/overview) to learn more about room codes.
+
+## Start a New Android Project (or use an existing one)
+[Here's how](https://developer.android.com/studio/projects/create-project) to create a new Android project.
+
+
+## Install Roomkit
+
+The `room-kit` library is available on Maven. Add it your app level build.gradle in the dependencies block.
+
+Latest Version:
+
+[![](https://img.shields.io/badge/dynamic/xml.svg?label=100ms-Prebuilt&color=blue&query=%2F%2Fmetadata%2Fversioning%2Flatest&url=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Flive%2F100ms%2Froom-kit%2Fmaven-metadata.xml)](https://jitpack.io/#100mslive/room-kit)
+
+```groovy
+dependencies { ....
+    implementation "live.100ms:room-kit:$GET_VERSION_FROM_ABOVE_BADGE"
+}
+```
+
+## Add the Prebuilt Component
+
+Look up how to get `room code` in [this guide](/get-started/v2/get-started/prebuilt/room-codes/overview).
+
+```kotlin{1-2,12}
+import live.hms.roomkit.ui.HMSRoomKit
+import live.hms.roomkit.ui.HMSPrebuiltOptions
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val roomCode = "<room-code>"
+        val userName = "<my-name>"
+        val options = HMSPrebuiltOptions(userName)
+
+        HMSRoomKit.launchPrebuilt(roomCode, this, options)
+    }
+}
+```
+
+## Launch the App
+You will see a preview of your own video and can turn it on or off.
+
+![Preview](/docs/v2/prebuilt_scr1.png)
+
+## Join a Room
+Here's what joining a room with another person looks like.
+
+![Join](/docs/v2/prebuilt_scr2.png)
+
+## Additional Parameters
+Additional properties that can be specified in `HMSPrebuiltOptions` are `userName` and `userId`.
+
+Username: The user's display name.
+UserId: An id that you may choose so that peers on 100ms can be associated with customers identifiers from your system.
+
+```kotlin
+class HMSPrebuiltOptions {
+  val userName : String?, //Peer user name
+  val userId: String?, // Optional Customer given User-id
+}
+
+```
+## Sample Code
+The sample project for the library is at https://github.com/100mslive/AndroidPrebuiltDemo#readme you can download the app for it [here](https://github.com/100mslive/AndroidPrebuiltDemo/suites/14604646490/artifacts/827757135).
