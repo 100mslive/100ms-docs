@@ -1,0 +1,119 @@
+---
+title: Video recording
+nav: 3.1
+---
+
+Recordings enable you to convert live video from 100ms rooms into long-lived video assets. 100ms can generate different types of recordings
+
+- [Composite recordings](#composite-recordings): One video file, composed with tracks of all peers in the room
+- [Track recordings](#track-recordings): Separate media files for audio, video and screen-share tracks
+
+## Composite recordings
+
+> Previously called browser or beam recording.
+
+100ms can record a room to capture the perspective of a participant, who can hear and see other participants in the room. These recordings are a mix of multiple audio/video tracks, composed together in one video file—with a layout that is similar to the UI of the room. The output is a single MP4 file.
+
+Composite recordings can be customized: you can define which roles to record, which video resolution to record and, other modifications to the UI.
+
+Internally, these recordings are created using an automated web browser that joins the room as a hidden peer (called "beam")—which records the screen to generate a composite recording.
+
+### Start and stop recording
+
+Enable "room composite recordings" on any template created on the [100ms Dashboard](https://dashboard.100ms.live). This enables the feature for your template, and exposes options to customize the recording. You can control when to **start and stop** recording, based on your use-case.
+
+![Composite recording on 100ms Dashboard](/docs/v2/composite-recording-dashboard.png)
+
+There are 3 methods to start a recording.
+
+<FlexContainer>
+
+<Callout icon="link" title="Auto-start">
+Start recording automatically when the first peer joins a room.
+<br/>
+
+[Enable on dashboard →](/docs/v2/auto-start-dashboard.png)
+
+</Callout>
+
+<Callout icon="link" title="Start with API">
+Start recording by calling the 100ms server-side REST API. This is suitable to start/stop based on business logic.
+<br/>
+
+[REST API docs →](/server-side/v2/how-to-guides/recordings/overview)
+
+</Callout>
+
+<Callout icon="shield" title="Start from SDK">
+Start recording with the client-side SDK. This is suitable to start/stop based on user action (click a button).
+<br/>
+
+[Web docs →](/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording)
+
+[iOS docs →](/ios/v2/how-to-guides/record-and-live-stream/rtmp-recording)
+
+[Android docs →](/android/v2/how-to-guides/record-and-live-stream/rtmp-recording)
+
+[Flutter docs →](/flutter/v2/how-to-guides/record-and-live-stream/recording)
+
+[React Native docs →](/react-native/v2/how-to-guides/record-and-live-stream/recording)
+
+</Callout>
+
+</FlexContainer>
+
+### Fetch the recording
+
+After the recording is stopped and processed, a [recording asset](/server-side/v2/api-reference/recording-assets/overview) is generated. Composite generates an asset of type `room-composite`. You can fetch this asset through multiple methods:
+
+* [Fetch on 100ms Dashboard](./storage#using-the-100ms-dashboard)
+* Auto-send to your [cloud storage location](./storage)
+* REST API to [get recording asset](/server-side/v2/api-reference/recording-assets/get-asset)
+* Server-side webhooks: [use the `beam.recording.success` webhook](/server-side/v2/how-to-guides/configure-webhooks/webhook#beamrecordingsuccess)
+
+### Customizing the recording
+
+- No-code customization on the 100ms Dashboard: Modify the video resolution, which roles to be recorded
+- Get audio-only recording: possible via the [REST API to start recording](/server-side/v2/how-to-guides/recordings/customize)
+- [Customize the composition UI](./../ui-composition)
+
+### Legacy composite through SFU recording
+
+100ms has an alternative method to generate a composite video. This method is not recommended since above described method generates a higher quality video.
+
+SFU recording generates the asset type called `room-composite-legacy`.
+
+See [migration doc](./migrating) to compare these 2 methods and pick a preferred approach.
+
+### Recording with live streaming
+
+If you using live streaming or external streaming, you can enable recording while starting the stream. For live stream with HLS, 100ms can generate 2 types of recordings.
+
+#### Video-on-demand (VOD) Recording
+
+This recording is an M3U8 file (same playback format as HLS), which can be used for replaying your HLS stream. This option is more suitable for Video-on-Demand use-cases as it has adaptive bitrate (ABR).
+
+- Enable recording while starting a live stream: through the [server-side REST API](/server-side/v2/api-reference/live-streams/start-live-stream-for-room) or via a client SDK
+- This generates a recording asset with `room-vod` type. Use the server-side [REST API to fetch the asset](/server-side/v2/api-reference/recording-assets/get-asset)
+
+#### Single file per layer
+
+This type of recording will generate multiple video files: one for each resolution layer of the live stream.
+
+- Enable recording while starting a live stream: through the [server-side REST API](/server-side/v2/api-reference/live-streams/start-live-stream-for-room) or via a client SDK
+- This generates multiple recording assets with `room-composite` type. Use the server-side [REST API to fetch the assets](/server-side/v2/api-reference/recording-assets/get-asset)
+
+## Track recordings
+
+Some use-cases require 1 file per 1 track (audio, video or screen-share). This can be generated through the SFU recording.
+
+Track recordings can be enabled for your template through the 100ms Dashboard. Once enabled, the recording **starts automatically** when the first peer joins a room, and stops automatically when the last peer leaves the room.
+
+![SFU recording on 100ms Dashboard](/docs/v2/sfu-recording-dashboard.png)
+
+### Fetch the recording
+
+You can fetch track recordings through two methods:
+
+* Auto-send to your [cloud storage location](./storage)
+* Server-side webhooks: use the `track.recording.success` webhook
