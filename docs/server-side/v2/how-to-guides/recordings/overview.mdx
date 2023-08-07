@@ -5,7 +5,7 @@ nav: 5.1
 
 import MeetingUrlConfig from '@/common/meeting-url.md';
 
-This guide focuses on using room composite (browser-based) recordings.
+This guide focuses on using room composite (browser-based) recordings. Learn more in [recordings overview](/get-started/v2/get-started/features/recordings/overview).
 
 A composite recording is a single MP4 file that records all peers and their tracks (audio, video and screen share). It captures the experience that a peer has in the room and is equivalent to recordings generated from Google Meet and Zoom.
 
@@ -14,6 +14,7 @@ A composite recording is different from track-level recordings, which generate s
 <StepsToc
     parentId="start-stop-recording"
     descriptions={[
+        "Configure recordings on your template",
         "Use server-side REST API to start recording",
         "Combine room lifecycle events with recording API to automate recordings",
         "Use server-side webhooks to listen to recording status changes",
@@ -24,9 +25,15 @@ A composite recording is different from track-level recordings, which generate s
 
 <StepsContainer id="start-stop-recording">
 
+### Enable recordings on the dashboard
+
+In your template configuration, enable room composite recordings.
+
+![Composite recording on 100ms Dashboard](/docs/v2/composite-recording-dashboard.png)
+
 ### Start recording with API
 
-Use the server-side API to start recording for a given room (passed as `room_id` in the request body).
+Use the server-side API to start recording for a given room (passed as `room_id` in the request body). Any configuration specified here will override the configuration on the template.
 
 Also see [API reference](../../api-reference/recordings/start-recording-for-room).
 
@@ -39,26 +46,18 @@ curl --request POST 'https://api.100ms.live/v2/recordings/room/<room_id>/start' 
     --header 'Content-Type: application/json' \
     --header 'Authorization: Bearer <management_token>' \
     --data-raw '{
-        "meeting_url" : "<meeting_url>",
         "resolution" : {"width": 1280, "height": 720}
     }'
 ```
 
 </Request>
 
-Internally, this API launches a browser window that opens the `meeting_url` of the room. This browser instance joins the room and records it, similar to what a peer would do. You can [define a role](./customize) for this peer to ensure the peer's tile is not visible.
-
-##### meeting_url
-
-<MeetingUrlConfig />
-
 ### Automate start recording (Optional)
 
-Instead of relying on peers in the room to start recording, you use room lifecycle events to automate start recording.
+Instead of relying on peers in the room to start recording, you use room lifecycle events to automate start recording. If you want to start recording when the first peer joins, you can also enable "auto-start" on the template configuration (see step 1).
 
 To do so, set up a [webhook listener](../configure-webhooks/overview) and act on the relevant webhook:
 
-- Start recording for every session: Use the [`session.open.success` event](../configure-webhooks/webhook#sessionopensuccess) to start recording (with the above API)
 - Start recording when a particular peer joins: Use the [`peer.join.success` event](../configure-webhooks/webhook#peerjoinsuccess) to start recording (with the above API)
 
 ### Listen to recording status updates
