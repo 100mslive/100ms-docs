@@ -45,6 +45,15 @@ const LinkCustom = (props) => {
         const { asPath = '' } = router;
         href = asPath.substring(0, asPath.lastIndexOf('/')) + href.replace('./', '/');
     }
+    // If href contains instances of ../ then split the url and remove the instances from the front, join and return
+    if (href.includes('../')) {
+        const { asPath = '' } = router;
+        const instanceCount = href.split('../').length;
+        const asPathSplit = asPath.split('/');
+        asPathSplit.splice(asPathSplit.length - instanceCount);
+        const cleanedHref = href.split('../').join('');
+        href = asPathSplit.join('/') + '/' + cleanedHref;
+    }
 
     if (isInternalLink) {
         return (
