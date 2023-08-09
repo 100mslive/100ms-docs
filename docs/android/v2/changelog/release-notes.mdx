@@ -3,6 +3,20 @@ title: Release Notes
 nav: 4
 description: Release Notes for 100ms Android SDK
 ---
+## v2.7.3 - 2023-08-09
+
+### Added
+- Polls: Polls are now native to 100ms! Start quizzes or run a poll to get everyone's opinions.
+- LayoutConfig (is this public?)
+- Permissions callback: SDK reads the role and requests only the permissions needed, audio for audio users, audio and camera for broadcasters etc. The callback contains the required permissions, requesting is still up to the app.
+
+### Fixed
+- Publish stats: If `preview` wasn't used, stats weren't sent.
+
+### Breaking Changes:
+- `peerCount` in `HMSRoom` is now nullable.
+
+
 ## v2.7.2 - 2023-07-13
 
 ### Fix
