@@ -1,0 +1,54 @@
+---
+title: Permissions
+nav: 4.9
+---
+
+With `HMSRoles` it's important to only request the appropriate permissions for user comfort. Some roles may require camera permissions, some may require the microphones and there are complex rules around whether bluetooth permission or bluetooth_connect permissions are required.
+
+`HMSSDK` can simplify this by returning a callback during `join` and `preview` that contains the appropriate permissions to request. Since permissions require an activity to request and watch approvals, this part of the handling requires action on your part to:
+1. Actually request the permissions
+2. Tell the SDK when they've been granted.
+
+## Implementation
+
+### Request the permissions callbacks be enabled.
+
+```kotlin
+val hmsSDK = HMSSDK
+        .Builder(application)
+        .haltPreviewJoinForPermissionsRequest(true)
+        ..... // other builder params
+        .build()
+```
+
+### Implement the callback in ALL preview and join calls.
+
+```kotlin
+hmsSDK.preview(hmsConfig!!, object : HMSPreviewListener {
+ 
+    override fun onPermissionsRequested(permissions : List<String>) {
+        // Send the permissions to your activity and request them.
+    }
+}
+```
+
+### Tell the SDK permissions have been granted.
+
+When the permissions are granted call:
+
+```kotlin
+hmsSDK.setPermissionsAccepted()
+```
+
+Without this call the SDK will remain stuck waiting in preview or join. It doesn't matter if the user denies some permissions, in that case the associated devices will not work.
+
+Whether the permissions have been accepted or denied, if you want the join/preview to continue, call this.
+
+## What permissions may be requested
+1. `Manifest.permission.RECORD_AUDIO`: For roles with an audio broadcasting permission.
+    - Without it the user's microphone will remain disabled throughout the call.
+2. `Manifest.permission.CAMERA`: For roles with camera publish permissions.
+    - Without it the user's camera will remain disabled throughout the call.
+3. `Manifest.permission.BLUETOOTH_CONNECT`: For all roles. This is required on android 30+ if your app targets android 30+. 
+    - Without it the user's audio will never be received or played on bluetooth headphones even if they're connected to the device. 
+    - It appears as "Allow (app) to find, connect to and determine the relative position of nearby devices."
