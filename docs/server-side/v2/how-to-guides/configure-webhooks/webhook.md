@@ -206,8 +206,8 @@ This event will be sent when peer leaves the room
 2. `peer kicked`: if the peer is removed by someone else from an active room using the [Client SDK](/javascript/v2/features/remove-peer) or the [Server API](/server-side/v2/active-rooms/remove-peers).
     - _Example scenarios:_
         - If the peer is removed by a role which has `Can remove participant from the room` [permissions](/server-side/v2/api-reference/policy/create-template-via-dashboard#permissions) enabled in the template.
-        - If the peer is removed using the [remove peer API](./../active-rooms/remove-peers) from the application server. <br />  
-          **Note**: If you remove a peer from an [active room](./../active-rooms/overview) using the
+        - If the peer is removed using the [remove peer API](/server-side/v2/active-rooms/remove-peers) from the application server. <br />  
+          **Note**: If you remove a peer from an [active room](/server-side/v2/active-rooms/overview) using the
           [client SDK](/javascript/v2/features/remove-peer) or the [server API](/server-side/v2/active-rooms/remove-peers),
           you can pass the reason as a message and the `peer.leave.success` event will contain the
           same in the `message` field.
