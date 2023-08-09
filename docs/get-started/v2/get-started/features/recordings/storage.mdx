@@ -1,0 +1,108 @@
+---
+title: Storage configuration
+nav: 3.13
+---
+
+100ms can upload recordings to your preferred cloud storage location. We support these providers:
+
+- Amazon Simple Storage Service (AWS S3)
+- Google Cloud Storage (GCP)
+- Alibaba Object Storage (OSS)
+
+If you don't configure a cloud storage service, then recordings will be stored temporarily (for 15 days) in a storage location managed by 100ms. Post a successful recording, the recording asset can be accessed on the [100ms dashboard](https://dashboard.100ms.live/sessions) or [through the REST API](/server-side/v2/api-reference/recording-assets/get-asset).
+
+## Configure storage
+
+### On the 100ms Dashboard
+
+You can configure storage in your template's recording settings on the 100ms Dashboard. As an example, this is how you would configure an S3 location:
+
+1. Generate your credentials; for this example, you can check out a [guide from AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html). You can skip this step if you already have credentials. Please note that if you are running a Browser recording, you need to give upload permission to your key, but if you are running an SFU recording, you need to give both upload and download permission.
+
+2. Go to 100ms Dashboard and go to template **configuration by selecting the configure icon**.
+
+![Create your first app](/docs/v2/recording-storage-settings-step2.png)
+
+3. Head over to the **Destinations** tab.
+
+![Destinations](/docs/v2/recording-storage-settings-step3.png)
+
+1. Key in your credentials (using an example of an S3 bucket here):
+
+    - Access Key: Access Key generated from AWS IAM Console
+    - Secret Key: Secret Key generated from AWS IAM Console
+    - Bucket: Name of the bucket in S3
+    - Region: Name of the region, for example, ap-south-1
+    - Prefix for Upload Path: Define the directory name (optional)
+
+![Destinations](/docs/v2/recording-storage-settings-step4.png)
+
+5. Use the **Validate Config** button to test your storage setup.
+
+![Destinations](/docs/v2/recording-storage-settings-step5.png)
+
+6. You will see a message that the AWS **configuration was successfully validated**.
+
+![Destinations](/docs/v2/recording-storage-settings-step6.png)
+
+The above message ensures that your configuration is successful now, and all your recordings will start collecting in your configured destination.
+
+### With the REST API
+
+Use the [Policy API](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-api) to programmatically configure your storage location.
+
+You can configure the **`type`** field of recording object to `s3` for AWS, `oss` for Alibaba Object Storage Service and `gs` for Google Cloud Storage with the following details:
+
+- Access Key: Access Key for your OSS/GCP Bucket
+- Secret Key: Secret Key for your OSS/GCP Bucket
+- Bucket: Name of the bucket
+- Region: Name of the region where your bucket is located in
+- Prefix for Upload Path: Define the directory name (optional)
+
+## Fetching the asset
+
+### Using the 100ms Dashboard
+
+You can access your recordings on the [sessions page](https://dashboard.100ms.live/sessions) in the 100ms Dashboard.
+
+![Recording Links](/docs/v2/recording-links-session.png)
+
+### Using the REST API
+
+Recordings generate [recording assets](/server-side/v2/api-reference/recording-assets/overview) that can be fetched with the REST API.
+
+### Get webhooks
+
+100ms can send webhooks when the recording has stopped and is available for download. The recording path is available in following webhook responses:
+
+- Room composite (also called browser) recording: [beam.recording.success](/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `recording_path`)
+- Room composite - legacy (also called SFU) recording: [recording.success](/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `recording_path`)
+- Recordings enabled with live streaming (HLS): [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess)
+
+### Path formats
+
+The recording path for these respective recordings will look like:
+
+1. Room composite (also called browser) recording: `s3://<location>/<prefix>/beam/<room_id>/<start_date>/Rec-<room_id>-<epoch>.mp4`
+
+2. Room composite - legacy (also called SFU) recording:
+
+    1. Composite: `s3://<location>/<prefix>/<room_id>/<start_date>/<session_id>/Rec-<session_id>-<epoch>.mp4`
+
+    2. Individual: `s3://<location>/<prefix>/<room_id>/<start_date>/<session_id>/<peer_id>/<stream_id>/<track_id>.webm`
+
+3. Multi-resolution recording (available in HLS): `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/file-recording/Rec-<room_id>-<epoch>-<layer_index>.mp4`
+
+4. VOD recording (available in HLS): `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/vod/Rec-<room_id>-<epoch>.zip`
+
+| Name    | Description                                                                                                                                                                                 |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Location    | Name of the bucket where recordings are stored                                                                                                                                              |
+| Prefix      | Prefix for upload path which is configured in storage settings of your template. If not configured, the default value for this will be your Customer ID                                     |
+| Room ID     | The identifier for the room which was recorded                                                                                                                                              |
+| Start Date  | Start date of the session                                                                                                                                                                   |
+| Epoch       | Start time of the recorder in the session                                                                                                                                                   |
+| Peer ID     | Unique identifier of a peer in a room                                                                                                                                                       |
+| Stream ID   | Unique identifier for a particular stream of a room (audio-video/screenshare)                                                                                                               |
+| Track ID    | Unique identifier for a particular track (audio or video) of a stream                                                                                                                       |
+| Layer Index | Layer index values show descending HLS resolutions - 0(1080p), 1(720p), 2(480p), 3(360p) and 4(240p). If highest resolution of template is 720p, then 0(720p), 1(480p), 2(360p) and 3(240p) |

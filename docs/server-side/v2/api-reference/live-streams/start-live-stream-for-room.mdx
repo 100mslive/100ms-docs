@@ -58,13 +58,20 @@ curl --location --request POST 'https://api.100ms.live/v2/live-streams/room/<roo
 
 ## Parameters
 
-| Name         | Type     | Description                                                                                                                                        | Required |
-|--------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------- |----------|
-| meeting_url  | `string` | Single click meeting URL for the stream                                                                                                            | No       |
-| recording    | `object` | Flags to enable recording                                                                                                                          | No       |
-| destination  | `string` | Name of destination from template to pick up configuration. If more than one HLS destination present in the template then destination is mandatory | No       |
+| Name         | Type     | Description    | Required |
+|--------------|----------|--------------- |----------|
+| meeting_url  | `string` | Single click meeting URL for the stream  | No[1]       |
+| recording    | `object` | Flags to enable recording  |  No       |
+| destination  | `string` | Name of destination from template to pick up configuration | No[2]       |
 
-### destination
+
+> [1] `meeting_url` is **required** when
+> - Live streaming is not enabled on the dashboard
+> - The template of this room does not have a subdomain (templates created through the REST API don't have subdomains)
+
+
+> [2] (Advanced usage only) `destination` is **required** when
+> - There are multiple destinations of this type on the template
 
 
 ##### meeting_url
