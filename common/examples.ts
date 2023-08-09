@@ -147,7 +147,7 @@ const examples: {
     {
         title: 'Callkit - Flutter',
         description: 'A Flutter app for one-to-one calls using the 100ms Flutter SDK',
-        url: 'https://github.com/Decoder07/hms-callkit-demo',
+        url: 'https://github.com/100mslive/100ms-flutter/tree/main/sample%20apps/hms-callkit-app',
         technologies: [TECHNOLOGIES.FLUTTER],
         tags: ['Mobile'],
         categories: [CATEGORIES.APPS]
