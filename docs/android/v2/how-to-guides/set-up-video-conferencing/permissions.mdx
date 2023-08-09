@@ -13,7 +13,7 @@ With `HMSRoles` it's important to only request the appropriate permissions for u
 
 ### Request the permissions callbacks be enabled.
 
-```kotlin
+```kotlin{3}
 val hmsSDK = HMSSDK
         .Builder(application)
         .haltPreviewJoinForPermissionsRequest(true)
@@ -23,7 +23,7 @@ val hmsSDK = HMSSDK
 
 ### Implement the callback in ALL preview and join calls.
 
-```kotlin
+```kotlin{4}
 hmsSDK.preview(hmsConfig!!, object : HMSPreviewListener {
  
     override fun onPermissionsRequested(permissions : List<String>) {
