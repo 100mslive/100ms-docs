@@ -35,12 +35,6 @@ nav: '4.60'
 
 ---
 
-### hideLocalPeer
-
-• **hideLocalPeer**: `boolean`
-
----
-
 ### messages
 
 • **messages**: `Object`
