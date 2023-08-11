@@ -20,14 +20,14 @@ Released: `@100mslive/hms-video-store:@0.10.12`
 ## Important 
 
 Starting from version *0.10.12* of @100mslive/hms-video-store:
-When using *room-composite browser recording* (formerly **beam recording**) with `meetingURL` using the specified or a newer SDK version:
+When using *room-composite browser recording* (formerly *beam recording*) with `meetingURL` using the specified or a newer SDK version:
 - `beam` (bot peer) won't appear in the peers' list on all platforms (Web, Android, and iOS)
-- (Peer webhook events)[/server-side/v2/how-to-guides/configure-webhooks/webhook#peer-events] like `peer.join.success` and `peer.leave.success` won't be sent for the `beam` peer.
-- (Beam webhook events)[/server-side/v2/how-to-guides/configure-webhooks/webhook#rtmp-streaming-browser-recording-events] like `beam.started.success' will still be sent.
-- Valid when starting (room-composite recording, RTMP stream)[/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording] or (HLS stream)[/javascript/v2/how-to-guides/record-and-live-stream/hls/hls].
+- [Peer webhook events](/server-side/v2/how-to-guides/configure-webhooks/webhook#peer-events) like `peer.join.success` and `peer.leave.success` won't be sent for the `beam` peer.
+- [Beam webhook events](/server-side/v2/how-to-guides/configure-webhooks/webhook#rtmp-streaming-browser-recording-events) like `beam.started.success' will still be sent.
+- Valid when starting [room-composite recording, RTMP stream](/javascript/v2/how-to-guides/record-and-live-stream/rtmp-recording) or [HLS stream](/javascript/v2/how-to-guides/record-and-live-stream/hls/hls).
 - No need to explain the presence of an extra peer (`beam`).
 <br/>
-We highly recommend you to update any business logic dependent on beam's *peer webhook events* and instead use (*beam webhook events*)[/server-side/v2/how-to-guides/configure-webhooks/webhook#rtmp-streaming-browser-recording-events].
+We highly recommend you to update any business logic dependent on beam's *peer webhook events* and instead use *[beam webhook events](/server-side/v2/how-to-guides/configure-webhooks/webhook#rtmp-streaming-browser-recording-events)*.
 
 
 ## 2023-07-25
