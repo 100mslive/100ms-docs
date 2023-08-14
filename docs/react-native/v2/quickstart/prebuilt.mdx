@@ -171,8 +171,8 @@ npm install --save @100mslive/react-native-room-kit
   ```
 
   Add Reanimated's babel plugin to your `babel.config.js`
-  ```js
-    module.exports = {
+  ```json{7}
+  module.exports = {
     presets: [
       ...
     ],
@@ -193,8 +193,58 @@ npm install --save @100mslive/react-native-room-kit
   ```bash
   npm install react-native-vector-icons@9.1.0
   ```
+  Follow the [official installation steps](https://github.com/oblador/react-native-vector-icons/tree/v9.1.0#installation) for correctly installing React Native Vector Icons `v9.1.0`.
 
-  Follow [official installation steps](https://github.com/oblador/react-native-vector-icons/tree/v9.1.0#installation) for `v9.1.0`.
+  <Tabs id="native-file-changes-react-native-vector-icons" items={['Android', 'iOS']} />
+
+  <Tab id="native-file-changes-react-native-vector-icons-0">
+  The following step allows fonts being copied from this module at build time so that the fonts and JS are always in sync, making upgrades painless.
+
+  Edit `android/app/build.gradle` ( NOT `android/build.gradle` ) and add the following:
+  ```kt
+  apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+  ```
+  </Tab>
+
+  <Tab id="native-file-changes-react-native-vector-icons-1">
+  Add the following to your Podfile and run pod update:
+
+  ```ruby
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+  ```
+
+  Edit the `Info.plist` and add a property called `Fonts` provided by application (or `UIAppFonts` if Xcode won't autocomplete/not using Xcode) and type in as shown below. It will look something like this -
+
+  ![info-plist-vector-icons](/guides/rn-info-plist-vector-icons.png)
+
+  ```xml
+  <key>UIAppFonts</key>
+  <array>
+    <string>AntDesign.ttf</string>
+    <string>Entypo.ttf</string>
+    <string>EvilIcons.ttf</string>
+    <string>Feather.ttf</string>
+    <string>FontAwesome.ttf</string>
+    <string>FontAwesome5_Brands.ttf</string>
+    <string>FontAwesome5_Regular.ttf</string>
+    <string>FontAwesome5_Solid.ttf</string>
+    <string>Foundation.ttf</string>
+    <string>Inter.ttf</string>
+    <string>Ionicons.ttf</string>
+    <string>MaterialIcons.ttf</string>
+    <string>MaterialCommunityIcons.ttf</string>
+    <string>SimpleLineIcons.ttf</string>
+    <string>Octicons.ttf</string>
+    <string>Zocial.ttf</string>
+    <string>Fontisto.ttf</string>
+  </array>
+  ```
+
+  If you are using `use_frameworks!` in your `Podfile` you need to dynamically load the icon font by doing `Icon.loadFont()` when boostrapping your application.
+
+  <br/>
+  <i>Note: You must be consuming React itself via CocoaPods for this to work, see [React Native documentation](https://reactnative.dev/docs/integration-with-existing-apps) on how to set that up.</i>
+  </Tab>
 
 #### Install the dependencies of react-native-room-kit package
 
@@ -243,10 +293,10 @@ Paste the following in your `Info.plist` file -
 ```xml{3-6}
 <dict>
   ...
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>audio</string>
-	</array>
+<key>UIBackgroundModes</key>
+  <array>
+    <string>audio</string>
+  </array>
   ...
 </dict>
 ```
