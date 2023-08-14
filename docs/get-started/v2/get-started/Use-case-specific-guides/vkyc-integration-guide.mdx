@@ -160,7 +160,7 @@ Create a [template through dashboard](/server-side/v2/api-reference/policy/creat
     
     Refer to [Building out the workflow necessities](#building-out-the-workflow-necessities).
     
-    We have a native [Frame Capture API](/javascript/v2/how-to-guides/record-and-live-stream/frame-capture) that can capture the current camera frame at 720p which should be good enough for capturing OCR details. You can also use the [Camera Controls API](/android/v2/how-to-guides/configure-your-device/camera/camera-controls) on Android.
+    Our native [Frame Capture API](/javascript/v2/how-to-guides/record-and-live-stream/frame-capture) can capture the current camera frame at 720p which should be good enough for capturing OCR details. You can also use the [Camera Controls API](/android/v2/how-to-guides/configure-your-device/camera/camera-controls) on Android.
     
     >   **Note**
     >
@@ -174,8 +174,8 @@ Create a [template through dashboard](/server-side/v2/api-reference/policy/creat
     
     There are two ways to accomplish this.
     
-    1. Recommend method: Use Room Composite Recording with or without auto-start functionality. This is a browser-based recording happening on a cloud browser. The benefits include lower A/V sync issues and faster time-to-video (p50 is 9 seconds). It does take about 2 seconds for this recording to auto-start. You can enable this through the *Recordings* tab on the dashboard. Use the [following guide](/server-side/v2/how-to-guides/recordings/overview#start-recording-with-api) to enable this.
-    2. SFU Recording Method - This is done by composing the individual video tracks post-call. The benefit of using this is that it starts automatically with the room, but there can be potential A/V sync issues, and the time to get the video is longer (p50 is 1 minute 50 seconds for a 3-minute session). Enable this by [configuring the recording in the policy](/server-side/v2/api-reference/Rooms/create-via-api) itself.
+    1. Recommended method: Use Room Composite Recording with or without the auto-start functionality. This is a browser-based recording happening on a cloud browser. The benefits include lower A/V sync issues and faster time-to-video (p50 is 9 seconds). It does take about 2 seconds for this recording to auto-start. You can enable this through the *Recordings* tab on the dashboard. Use the [following guide](/server-side/v2/how-to-guides/recordings/overview#start-recording-with-api) to enable this.
+    2. SFU Recording method: This is done by composing the individual video tracks post-call. The benefit of using this is that it starts automatically with the room, but there can be potential A/V sync issues, and the time to get the video is longer (p50 is 1 minute 50 seconds for a 3-minute session). Enable this by [configuring the recording in the policy](/server-side/v2/api-reference/Rooms/create-via-api) itself.
 
 - **How do I track active rooms and user/customer presence in those rooms?**
     1. You can use our server-side [Active Rooms API](/server-side/v2/api-reference/active-rooms/overview) to track active rooms.
