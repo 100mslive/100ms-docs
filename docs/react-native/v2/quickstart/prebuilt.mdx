@@ -28,7 +28,7 @@ Once you have the prerequisites, follow the steps below to create a React Native
 1. Open your Terminal and navigate to directory/folder where you would like to create your app.
 
 2. Run the below command to create React Native app:
-   ​
+
 
 ```bash section=CreateRnApp
 npx react-native init PrebuiltSampleApp --version 0.68.5 --npm && cd ./PrebuiltSampleApp
@@ -170,7 +170,20 @@ npm install --save @100mslive/react-native-room-kit
   npm install react-native-reanimated@2.17.0
   ```
 
-  Follow [official installation steps](https://docs.swmansion.com/react-native-reanimated/docs/2.x/fundamentals/installation) for `v2.17.0`.
+  Add Reanimated's babel plugin to your `babel.config.js`
+  ```js
+    module.exports = {
+    presets: [
+      ...
+    ],
+    plugins: [
+      ...
+      'react-native-reanimated/plugin',
+    ],
+  };
+  ```
+
+  For iOS, do run `pod install` in the `ios/` directory.
 
   > Note: If you already have the setup for `react-native-reanimated` package, then you can continue with your existing setup. We recommend using `>= 2.x.x` versions.
 
