@@ -1,0 +1,129 @@
+---
+ title: Polls
+ nav: 1.35
+---
+
+The Poll feature in the HMS SDK allows you to create, manage, and participate in polls and quizzes. Polls are an effective way to gather opinions, feedback, and insights from a group of people in a quick and convenient manner. With the Poll feature, you can create custom polls, set their properties, add questions, and manage responses. You can also receive real-time updates on poll status, and view poll results in an organized and easy-to-use format.
+
+This feature can also be used to create quizzes. Under the hood, quizzes are like polls where questions have right or wrong answers.
+
+This document provides guidance on how to use the Poll APIs to create a poll, receive updates on a poll, and vote on a poll.
+
+## Prerequisites
+
+- `@100mslive/hms-video-store@0.10.10` / `@100mslive/react-sdk@0.8.10` or higher
+- Poll Read permission should be enabled for roles that can view polls
+- Poll Write and Poll Read permission should be enabled for roles that can create polls
+
+## Creating a Poll
+
+### Quick Start
+
+Here is how to quickly start a poll
+
+```jsx
+await actions.interactivityCenter
+  .startPoll({
+    id,
+    title,
+    anonymous,
+    rolesThatCanViewResponses: ["host", "guest"],
+    type: "poll", // or "quiz"
+    questions: [
+      {
+        type: "single-choice",
+        text: "How is the weather today?",
+        options: [
+          {
+            text: "hot",
+            isCorrectAnswer: true, // in case of quiz
+          },
+          { text: "warm" },
+          { text: "cold" },
+        ],
+      },
+    ],
+  })
+```
+
+This code will create a poll with the specified title and a single choice question and share it with the room. 
+
+### Staged Poll Creation
+
+Sometimes you might want to create a poll but not start it immediately or you might want meeting co-host to review and edit the poll before starting. For this you can use separate APIs to create a poll, set its questions and start it. 
+
+```jsx
+// Create a poll
+await actions.interactivityCenter
+  .createPoll({
+    id,
+    title,
+    anonymous,
+    rolesThatCanViewResponses: ["host", "guest"],
+    type: "poll", // or "quiz"
+  })
+
+
+// Add questions to the created poll
+await actions.interactivityCenter.addQuestionsToPoll(id, [
+  {
+    type: "single-choice",
+    text: "How is the weather today?",
+    options: [
+      {
+        text: "hot",
+        isCorrectAnswer: true, // in case of quiz
+      },
+      { text: "warm" },
+      { text: "cold" },
+    ],
+  },
+]);
+
+// After this you can use selectPolls selector on remote peers end so that other users can view/edit them prior to start.
+
+// Start the poll
+await actions.interactivityCenter.startPoll(id);
+```
+
+## Receiving Updates on a Poll
+
+Once you have start a poll, you can receive real-time updates on the poll's status and results using POLL_CREATED, POLL_STARTED, POLL_STOPPED, POLL_VOTES_UPDATED notifications. Also the poll is updated in the HMSStore and can be retrieved as
+
+```jsx
+// vanilla JS usage
+const poll = hmsStore.getState(selectPollByID(id));
+
+// react-sdk usage
+const poll = useHMSStore(selectPollByID(id));
+```
+
+You can use the `HMSPoll` object returned by the selector to access information about the poll, such as its current state, duration, and questions. 
+
+## Voting on a Poll
+
+To participate in a poll, you can use the `addResponsesToPoll(id: string)` method in `HMSInteractivityCenter`. You can provide selected options or answers to short or long answer questions, depending on the question type.
+
+```jsx
+await actions.interactivityCenter.addResponsesToPoll(pollID, [
+  {
+    questionIndex: 5, // index of the question
+    option: 1, // index of the option if it's a single-choice question
+    options: [1, 2], // array of indices if it's a multiple-choice question
+  },
+]);
+```
+
+Once you have submitted your responses, other peers in the room will get `POLL_VOTES_UPDATED` notification. You can check updated vote counts for each option of poll questions.
+
+## Stopping a Poll
+
+Use `hmsActions.interactivityCenter.stopPoll(id)` when you wan’t to prevent further responses recorded.
+
+## Viewing Poll Results Summary
+
+After poll has ended you can use `poll.result` to get statistics like how many peers responded and how many total peers were in the room at the time of poll.
+
+> Have a look at the [API reference of polls](https://www.100ms.live/docs/api-reference/javascript/v2/interfaces/HMSPoll) to understand the interface better 
+
+👀 For an example of how to implement polls in an React sample app with the 100ms SDK, checkout [our example project](https://github.com/100mslive/100ms-web/tree/main/src/components/Polls).
