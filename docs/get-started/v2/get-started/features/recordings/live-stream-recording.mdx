@@ -32,15 +32,21 @@ Get single recording files (MP4) for different resolution layers.
 
 
 ## Video-on-demand (VOD) recording (M3U8)
-This recording is an M3U8 file (same playback format as HLS), which can be used for replaying your recorded HLS streams. This option is more suitable for Video-on-Demand use-cases as it has adaptive bitrate (ABR).
+This recording is an M3U8 file (same playback format as HLS), which can be used for replaying the recorded HLS streams. This option is more suitable for Video-on-Demand use-cases as it has adaptive bitrate (ABR).
 
 You need a special player like [the one from Akamai](https://players.akamai.com/players/hlsjs) to play a M3U8 file. 
 
 ### Configuring VOD recordings
 
-1. Configure your recording storage. Use [this guide](/get-started/v2/get-started/features/recordings/storage) as your reference. Depending upon your choice of storage (100ms hosted or personal cloud storage), you will be met with slightly different options when configuring recording during live streams.
+1. Configure your recording storage. Use [this guide](/get-started/v2/get-started/features/recordings/storage) as your reference. Depending upon your choice of storage (100ms hosted or user cloud bucket), you will be met with slightly different options when configuring recording during live streams.
 2. Enable and configure your [live stream on the dashboard](/get-started/v2/get-started/features/live-streaming#customize-the-stream). 
 3. Enable and configure the `Stream Recording` settings under the `Live Streaming` tab on the 100ms dashboard.
+
+<br/>
+<video loop="true" controls="controls" id="vid">
+    <source src="https://storage.googleapis.com/100ms-cms-prod/cms/enable_vod_recording_l_aa16608ff0/enable_vod_recording_l_aa16608ff0.mp4?updated_at=2023-08-24T07:09:42.167Z" type="video/mp4" />
+</video>
+<br/>
 
 > **Note** 
 >
@@ -48,7 +54,7 @@ You need a special player like [the one from Akamai](https://players.akamai.com/
 
 You can choose between zipped and unzipped VOD files upload during the configuration. By default, it will be unzipped.
 
-|                                  | 100ms Hosted                                                                                        | Personal Cloud (Non-100ms)                                                     |
+|                                  | 100ms Hosted                                                                                        | User Cloud Bucket (Non-100ms)                                                     |
 |:---------------------------------|:----------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------|
 | Default Template Configuration   | Unzipped M3U8                                                                                       | Unzipped M3U8                                                                    |
 | Zipped Recording (M3U8) Upload   | Not Available                                                                                       | Available                                                                        |
