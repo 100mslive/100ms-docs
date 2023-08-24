@@ -7,14 +7,32 @@ nav: 3.12
 This document is specifically for recording the **HLS streams**. To learn more about 100ms recordings in general, you can refer to [this document](/get-started/v2/get-started/features/recordings/overview).
 100ms offers two major output formats for your HLS stream recordings. You can choose to record in *either* or *both* formats.
 
-- [**Video-on-demand (VOD)** recording (M3U8)](#video-on-demand-vod-recording)
-- [Single recording file per resolution layer (MP4)]()
+<FlexContainer>
+<Callout icon="link" title="Video-on-demand (VOD) recording">
+
+Get M3U8 file which enables replayable recorded streams.
+
+[Get Started with Prebuilt Links →](#prebuilt-links)
+
+</Callout>
+
+<Callout icon="link" title="Single file per layer">
+
+Get single recording files (MP4) for different resolution layers.
+
+[Embed as a component →](#embed-as-component)
+
+</Callout>
+</FlexContainer>
+
 
 > **Note - External Streaming**
 > 
 > Recordings of **External Streams (RTMP-Out)** are similar to `Room Composite Recording` and will be recorded in a single chosen resolution layer and generate a MP4 file. This recording will be a [recording asset]() of type `room-composite`. 
 
-## **Video-on-demand** (VOD) recording (M3U8)
+
+
+## Video-on-demand (VOD) recording (M3U8)
 This recording is an M3U8 file (same playback format as HLS), which can be used for replaying your recorded HLS streams. This option is more suitable for Video-on-Demand use-cases as it has adaptive bitrate (ABR).
 
 You need a special player like [the one from Akamai](https://players.akamai.com/players/hlsjs) to play a M3U8 file. 
@@ -29,8 +47,8 @@ You need a special player like [the one from Akamai](https://players.akamai.com/
 >
 > You can also configure recording settings through the Policy API or provide a runtime configuration using the Live streams API.  
 
-
 You can choose between zipped and unzipped VOD files upload during the configuration. By default, it will be unzipped.
+
 |                                  | 100ms Hosted                                                       | Privately Hosted (Non-100ms)                         |
 
 | :-----------------------------   | :----------------------------------------------------------------- | :--------------------------------------------------  |
@@ -64,8 +82,7 @@ Tabs id="fetching-vod" items={['Recording Assets API','Webhooks','Dashboard']} /
     <Tab id='fetching-vod-1'>
     
     - Create a webhook listener and configure the webhook using the Developer section of 100ms Dashboard. You can learn more about 100ms webhooks [here](/server-side/v2/how-to-guides/configure-webhooks/overview).
-    - On the successful completion of the recording, you will receive a webhook event called `hls.recording.success` which will contain the path in the storage bucket (`hls_vod_recording_path`) and the CDN URL in `hls_vod_recording_presigned_url` (only if you're using 100ms storage). 
-    
+    - On the successful completion of the recording, you will receive a webhook event called `hls.recording.success` which will contain the path in the storage bucket (`hls_vod_recording_path`) and the CDN URL in `hls_vod_recording_presigned_url` (only if you're using 100ms storage).
     
     </Tab>
 
@@ -92,6 +109,14 @@ Tabs id="fetching-vod" items={['Recording Assets API','Webhooks','Dashboard']} /
 
 ## Single recording file per resolution layer (MP4)
 Based on the chosen resolution layers for live streaming, you can choose to record all or selected resolution layers and generate a MP4 file for each of those layers. This can be done in the following way.
+
+
+### Configuring MP4 recordings
+
+
+
+### Fetching the recordings
+
 
 
 
