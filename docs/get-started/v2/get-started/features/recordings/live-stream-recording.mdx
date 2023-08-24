@@ -1,0 +1,86 @@
+---
+title: Live stream recording
+nav: 3.12
+---
+
+# Recording your live streams
+This document is specifically for recording the **HLS streams**. To learn more about 100ms recordings in general, you can refer to [this document](/get-started/v2/get-started/features/recordings/overview).
+100ms offers two major output formats for your HLS stream recordings. You can choose to record in *either* or *both* formats.
+
+- [**Video-on-demand (VOD)** recording (M3U8)](#video-on-demand-vod-recording)
+- [Single recording file per resolution layer (MP4)]()
+
+> **Note - External Streaming**
+> 
+> Recordings of **External Streams (RTMP-Out)** are similar to `Room Composite Recording` and will be recorded in a single chosen resolution layer and generate a MP4 file. This recording will be a [recording asset]() of type `room-composite`. 
+
+## **Video-on-demand** (VOD) recording (M3U8)
+This recording is an M3U8 file (same playback format as HLS), which can be used for replaying your recorded HLS streams. This option is more suitable for Video-on-Demand use-cases as it has adaptive bitrate (ABR).
+
+You need a special player like [the one from Akamai](https://players.akamai.com/players/hlsjs) to play a M3U8 file. 
+
+### Configuring VOD recordings
+
+1. Configure your recording storage. Use [this guide](/get-started/v2/get-started/features/recordings/storage) as your reference. Depending upon your choice of storage (100ms hosted or privately hosted), you will be met with slightly different options when configuring recording during live streams.
+2. Enable and configure your live stream.
+3. Enable and configure the `Stream Recording` settings on the 100ms dashboard.
+
+> **Note** 
+>
+> You can also configure recording settings through the Policy API or provide a runtime configuration using the Live streams API.  
+
+
+You can choose between zipped and unzipped VOD files upload during the configuration. By default, it will be unzipped.
+|                                  | 100ms Hosted                                                       | Privately Hosted (Non-100ms)                         |
+
+| :-----------------------------   | :----------------------------------------------------------------- | :--------------------------------------------------  |
+
+| Default Template Configuration   | Unzipped M3U8                                                      | Unzipped M3U8                                        |
+| Zipped Recording (M3U8) Upload   | Not available                                                      | Available                                            |
+| Unzipped Recording (M3U8) Upload | Available                                                          | Available                                            |
+| Direct VOD Playback (Via CDN)    | Yes, we host the recordings and provide you with CDN URL directly in our Recording Assets API. | No, you are required to set up your own CDN servers to allow on-demand playback. |
+
+>**Important Note - Zipped Recording Files **
+>
+> - For all the templates created before <date> / <release>, the M3U8 file is zipped and uploaded, irrespective of the storage you've configured. 
+> - For older templates with recordings hosted on 100ms, you have an option to switched from Zipped to Unzipped recording files upload, but you cannot switch back.
+> - If you've hosted the recordings in your private cloud storage bucket, you will still have the option to choose between zipped or unzipped M3U8 file uploads.
+> - If you're using 100ms storage, you cannot upload utilise the option of zipped M3U8 upload on any new templates.
+
+
+### Fetching VOD recordings
+There are effectively 3 methods for you to access and consume your recordings.
+
+Tabs id="fetching-vod" items={['Recording Assets API','Webhooks','Dashboard']} />
+    <Tab id='fetching-vod-0'>
+    
+    1. 
+    
+    </Tab>
+    
+    <Tab id='fetching-vod-1'>
+    
+    1. Using [API](/server-side/v2/api-reference/active-rooms/end-active-room)
+    2. Using [Web SDK](/javascript/v2/how-to-guides/control-remote-peers/end-room)
+    3. Using [Android SDK](/android/v2/how-to-guides/interact-with-room/room/end-room)
+    
+    </Tab>
+
+    <Tab id='fetching-vod-2'>
+
+    </Tab>
+
+
+
+## Single recording file per resolution layer (MP4)
+Based on the chosen resolution layers for live streaming, you can choose to record all or selected resolution layers and generate a MP4 file for each of those layers. This can be done in the following way.
+
+
+
+
+
+
+
+
+
+
