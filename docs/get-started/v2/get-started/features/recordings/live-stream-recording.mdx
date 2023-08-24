@@ -54,19 +54,37 @@ There are effectively 3 methods for you to access and consume your recordings.
 Tabs id="fetching-vod" items={['Recording Assets API','Webhooks','Dashboard']} />
     <Tab id='fetching-vod-0'>
     
-    1. 
+    - All files generated after recording are called Recording Assets. These will include various video and stream recordings, chat, transcripts and summary. You can access these using the [Recording Assets API](/server-side/v2/api-reference/recording-assets/overview).
+    - VOD Recording is generated as an asset type called `room-vod`. Depending upon your choice of zipped or unzipped uploads, you can access the path using the [GET recording asset API](/server-side/v2/api-reference/recording-assets/get-asset).
+    - If you've configured 100ms as your cloud storage, you can also use [GET pre-signed URL API](/server-side/v2/api-reference/recording-assets/get-presigned-url) to get the CDN URL for on-demand playback by inputing it in a compatible player.
+    - If you've configured your own storage, the 
     
     </Tab>
     
     <Tab id='fetching-vod-1'>
     
-    1. Using [API](/server-side/v2/api-reference/active-rooms/end-active-room)
-    2. Using [Web SDK](/javascript/v2/how-to-guides/control-remote-peers/end-room)
-    3. Using [Android SDK](/android/v2/how-to-guides/interact-with-room/room/end-room)
+    - Create a webhook listener and configure the webhook using the Developer section of 100ms Dashboard. You can learn more about 100ms webhooks [here](/server-side/v2/how-to-guides/configure-webhooks/overview).
+    - On the successful completion of the recording, you will receive a webhook event called `hls.recording.success` which will contain the path in the storage bucket (`hls_vod_recording_path`) and the CDN URL in `hls_vod_recording_presigned_url` (only if you're using 100ms storage). 
+    
     
     </Tab>
 
     <Tab id='fetching-vod-2'>
+
+    To access the various recording assets including the recordings on the dashboard:
+
+    1. Navigate to the `Sessions` tab in the sidebar to view previous sessions.
+    2. Locate the sessions which you've recorded. The `Recording Status` column will indicate the status of the recording.
+    3. Click on the `Completed` status of the chosen session ID.
+    4. This will open the Session Details page. Access the `Recording Log` to find the available assets and view them.
+    5. Click on `View Assets` to open a pop-up with pre-signed URLs for the recording, chat, transcripts, and summary.
+    
+    > Note 
+    >
+    > - If the template configured VOD Upload Format is zipped, your `room-vod` asset, which will be a zipped M3U8 file, will be downloaded. 
+    > - If the selected storage is 100ms' and the VOD Upload Format is unzipped (default), you will be able to view the recording of the stream.
+    > - If the configured storage is your cloud bucket and the VOD Upload Format is unzipped (default), you will be served with the following error toast:
+    >   `The given VOD recording cannot be played because it is not hosted in 100ms storage. Use GET recording assets API to retrieve location of the recording in your configured storage.`
 
     </Tab>
 
