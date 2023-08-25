@@ -92,6 +92,27 @@ react part of your code.
 
 ---
 
+### getPeersWithTiles
+
+▸ **getPeersWithTiles**(`peers`, `tracks`, `includeScreenShareForPeer`, `filterNonPublishingPeers?`): `TrackWithPeer`[]
+
+given list of peers and all tracks in the room, get a list of tile objects to show in the UI
+
+#### Parameters
+
+| Name                        | Type                             | Default value | Description                                                                              |
+| :-------------------------- | :------------------------------- | :------------ | :--------------------------------------------------------------------------------------- |
+| `peers`                     | `HMSPeer`[]                      | `undefined`   |                                                                                          |
+| `tracks`                    | `Record`<`string`, `HMSTrack`\>  | `undefined`   |                                                                                          |
+| `includeScreenShareForPeer` | (`peer`: `HMSPeer`) => `boolean` | `undefined`   | fn will be called to check whether to include screenShare for the peer in returned tiles |
+| `filterNonPublishingPeers`  | `boolean`                        | `true`        | by default a peer with no tracks won't be counted towards final tiles                    |
+
+#### Returns
+
+`TrackWithPeer`[]
+
+---
+
 ### throwErrorHandler
 
 ▸ **throwErrorHandler**(`err`, `method?`): `void`
