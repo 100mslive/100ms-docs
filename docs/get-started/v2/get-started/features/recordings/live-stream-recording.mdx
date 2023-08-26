@@ -34,8 +34,6 @@ Get single recording files (MP4) for different resolution layers.
 ## Video-on-demand (VOD) recording (M3U8)
 This recording is an M3U8 file (same playback format as HLS), which can be used for replaying the recorded HLS streams. This option is more suitable for Video-on-Demand use-cases as it has adaptive bitrate (ABR).
 
-You need a special player like [the one from Akamai](https://players.akamai.com/players/hlsjs) to play a M3U8 file. 
-
 ### Configuring VOD recordings
 
 1. Configure your recording storage. Use [this guide](/get-started/v2/get-started/features/recordings/storage) as your reference. Depending upon your choice of storage (100ms hosted or user cloud bucket), you will be met with slightly different options when configuring recording during live streams.
@@ -73,7 +71,7 @@ To understand the difference between 100ms hosted and non-hosted storage, and ho
 > - For all the templates created before 27th August 2023, the M3U8 file is zipped and uploaded, irrespective of the storage you've configured. 
 > - For older templates with recordings hosted on 100ms, you have an option to switch from Zipped to Unzipped recording files upload, but you cannot switch back once you've saved that setting.
 > - If you've hosted the recordings in your personal cloud storage bucket, you will still have the option to choose between zipped or unzipped M3U8 file uploads.
-> - If you're using 100ms storage, you cannot upload utilise the option of zipped M3U8 upload on any new templates.
+> - If you're using 100ms storage, you cannot choose the option of zipped M3U8 upload on any newly created templates which are created after the above given date.
 
 
 ### Fetching VOD recordings
@@ -108,7 +106,7 @@ There are effectively 3 methods to access and consume the recordings.
     
     > **Note**
     >
-    > - If the template configured VOD Upload Format is zipped, your `room-vod` asset, which will be a zipped M3U8 file, will be downloaded. 
+    > - If the template configured **'VOD Upload Format'** is zipped, your `room-vod` asset, which will be a zipped VOD file, will be downloaded. 
     > - If the selected storage is 100ms' and the VOD Upload Format is unzipped (default), you will be able to view the recording of the stream.
     > - If the configured storage is your cloud bucket and the *VOD Upload Format* is unzipped (default), you will be served with the following error toast:
     >   ```
