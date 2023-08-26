@@ -1,0 +1,141 @@
+---
+title: Live stream recording
+nav: 3.12
+---
+
+# Recording your live streams
+This document is specifically for recording the **HLS streams**. To learn more about 100ms recordings in general, you can refer to [this document](/get-started/v2/get-started/features/recordings/overview).
+100ms offers two major output formats for your HLS stream recordings. You can choose to record in *either* or *both* formats.
+
+<FlexContainer>
+<Callout icon="link" title="Video-on-demand (VOD) recording">
+
+Get M3U8 file which enables replayable recorded streams.
+
+[Read more →](#video-on-demand-vod-recording-m3u8)
+
+</Callout>
+
+<Callout icon="link" title="Single file per layer">
+
+Get single recording files (MP4) for different resolution layers.
+
+[Read more →](#single-recording-file-per-resolution-layer-mp4)
+
+</Callout>
+</FlexContainer>
+
+
+> **Note - External Streaming**
+> 
+> Recordings of **External Streams (RTMP-Out)** are similar to **Room Composite Recording**. They will be recorded in a single chosen resolution layer and generate a MP4 file. This recording will be a [recording asset](/server-side/v2/api-reference/recording-assets/overview#asset-types) of type `room-composite`. 
+
+
+## Video-on-demand (VOD) recording (M3U8)
+This recording is an M3U8 file (same playback format as HLS), which can be used for replaying the recorded HLS streams. This option is more suitable for Video-on-Demand use-cases as it has adaptive bitrate (ABR).
+
+### Configuring VOD recordings
+
+1. Configure your recording storage. Use [this guide](/get-started/v2/get-started/features/recordings/storage) as your reference. Depending upon your choice of storage (100ms hosted or user cloud bucket), you will be met with slightly different options when configuring recording during live streams.
+2. Enable and configure your [live stream settings on the dashboard](/get-started/v2/get-started/features/live-streaming#customize-the-stream). 
+3. Enable and configure the **Stream Recording** settings under the **Live Streaming** tab on the 100ms dashboard.
+4. When configuring the recording settings, you will have two important options:
+    1. **Type of Recording** - Select VOD (On-demand playback)
+    2. **VOD Upload Format** - You can select either of the two options, albeit with some limitations based on the configured recording storage.
+        1. **Unzipped** - This is chunked upload (M3U8) and is immediately playable.
+        2. **Zipped** - This is M3U8 file zipped and uploaded, which is optimised for storage. 
+
+The following video will do a walkthrough of the settings.
+
+<br/>
+<video loop="true" controls="controls" id="vid">
+    <source src="https://storage.googleapis.com/100ms-cms-prod/cms/enable_vod_recording_l_aa16608ff0/enable_vod_recording_l_aa16608ff0.mp4?updated_at=2023-08-24T07:09:42.167Z" type="video/mp4" />
+</video>
+<br/>
+
+> **Note** 
+>
+> You can also configure recording settings through the Policy API or provide a runtime configuration using the Live streams API.  
+
+To understand the difference between 100ms hosted and non-hosted storage, and how it affects your VOD recording upload settings, you can refer to the table below.
+
+|                                                       | 100ms Hosted                                                                                        | User Cloud Bucket (Non-100ms)                                                    |
+|:------------------------------------------------------|:----------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------|
+| Default Template Configuration (At template creation) | Unzipped M3U8                                                                                       | Unzipped M3U8                                                                    |
+| Zipped Recording (M3U8) Upload                        | Not Available                                                                                       | Available                                                                        |
+| Unzipped Recording (M3U8) Upload                      | Available                                                                                           | Available                                                                        |
+| Direct VOD Playback (Via CDN)                         | Yes, we host the recordings and provide you with CDN URL directly through our Recording Assets API. | No, you are required to set up your own CDN servers to allow on-demand playback. |
+
+> **Important Note - Zipped Recording Files**
+>
+> - For all the templates created before 27th August 2023, the M3U8 file is zipped and uploaded, irrespective of the storage you've configured. 
+> - For older templates with recordings hosted on 100ms, you have an option to switch from Zipped to Unzipped recording files upload, but you cannot switch back once you've saved that setting.
+> - If you've hosted the recordings in your personal cloud storage bucket, you will still have the option to choose between zipped or unzipped M3U8 file uploads.
+> - If you're using 100ms storage, you cannot choose the option of zipped M3U8 upload on any newly created templates which are created after the above given date.
+
+
+### Fetching VOD recordings
+There are effectively 3 methods to access and consume the recordings.
+
+<Tabs id="fetching-vod" items={['Recording Assets API','Webhooks','Dashboard']} />
+    <Tab id='fetching-vod-0'>
+    
+    - All files generated after recording are called Recording Assets. These will include various video and stream recordings, chat, transcripts and summary. You can access these using the [Recording Assets API](/server-side/v2/api-reference/recording-assets/overview).
+    - VOD Recording is generated as an asset type called `room-vod`. Depending upon your choice of zipped or unzipped uploads, you can access the path using the [GET recording asset API](/server-side/v2/api-reference/recording-assets/get-asset).
+    - If you've configured 100ms as your cloud storage, you can also use [GET pre-signed URL API](/server-side/v2/api-reference/recording-assets/get-presigned-url) to get the CDN URL for on-demand playback by inputing it in a compatible player.
+    - If you've configured your own cloud bucket storage, the GET pre-signed URL will return the presigned url of M3U8 file. This file is not usable as it is not playable unless you connect your cloud bucket to a CDN to enable on-demand playback.
+    
+    </Tab>
+    
+    <Tab id='fetching-vod-1'>
+    
+    - Create a webhook listener and configure the webhook using the Developer section of 100ms Dashboard. You can learn more about 100ms webhooks [here](/server-side/v2/how-to-guides/configure-webhooks/overview).
+    - On the successful completion of the recording, you will receive a webhook event called `hls.recording.success` which will contain the path in the storage bucket (`hls_vod_recording_path`) and the CDN URL in `hls_vod_recording_presigned_url` (only if you're using 100ms storage).
+    
+    </Tab>
+
+    <Tab id='fetching-vod-2'>
+
+    To access the various recording assets including the recordings on the dashboard:
+
+    1. Navigate to the `Sessions` tab in the sidebar to view previous sessions.
+    2. Locate the sessions which you've recorded. The `Recording Status` column will indicate the status of the recording.
+    3. Click on the `Completed` status of the chosen session ID.
+    4. This will open the Session Details page. Access the `Recording Log` to find the available assets and view them.
+    5. Click on `View Assets` to open a pop-up with pre-signed URLs for the recording, chat, transcripts, and summary.
+    
+    > **Note**
+    >
+    > - If the template configured **'VOD Upload Format'** is zipped, your `room-vod` asset, which will be a zipped VOD file, will be downloaded. 
+    > - If the selected storage is 100ms' and the VOD Upload Format is unzipped (default), you will be able to view the recording of the stream.
+    > - If the configured storage is your cloud bucket and the *VOD Upload Format* is unzipped (default), you will be served with the following error toast:
+    >   ```
+    >   The given VOD recording cannot be played because it is not hosted in 100ms storage. 
+    >   Use GET recording assets API to retrieve location of the recording in your configured storage.
+    >   ```
+
+    </Tab>
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+## Single recording file per resolution layer (MP4)
+Based on the chosen resolution layers for live streaming, you can choose to record all or selected resolution layers and generate a MP4 file for each of those layers. This can be done in the following way. Also, Since the generated files are MP4, VOD Upload Format is not relevant to this.
+
+
+### Configuring MP4 recordings
+The process is similar to [configuring VOD recordings](/get-started/v2/get-started/features/recordings/live-stream-recording#configuring-vod-recordings). The only difference in the process is to make sure you select 'Video files per layer' option under **Type of Recording** under the **Stream Recording** option.
+
+![select Video files per layer in Type of Recording](/docs/v2/type-of-recording-dashboard.png)
+
+### Fetching the recordings
+The method of fetching these recordings is same as mentioned [above](#fetching-vod-recordings). Only thing to note is that the these recordings have an asset type called `room-composite` and they will be available in the resolutions selected in the template.
+
+
+
+
+
+
+
+
+
+
