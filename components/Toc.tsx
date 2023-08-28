@@ -34,7 +34,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                             : ''
                             }`}
                         key={item.slug}>
-                        <a style={{ padding: '0 2rem 0 1rem' }} href={`#${item.slug}`}>
+                        <a style={{ padding: '0 1rem 0 1rem' }} href={`#${item.slug}`}>
                             {item.title}
                         </a>
                     </span>
@@ -85,7 +85,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                     display: block;
                 }
                 .child {
-                    margin-left: 1.25rem;
+                    margin-left: 1rem;
                 }
                 ::-webkit-scrollbar {
                     width: 0px;
@@ -107,7 +107,7 @@ const TocContainer = ({ activeHeading, activeSubHeading, CurrentDocsSlug }) => {
                 }
                 hr {
                     margin: 24px 0;
-                    max-width: 245px;
+                    max-width: 285px;
                 }
             `}</style>
         </div>
