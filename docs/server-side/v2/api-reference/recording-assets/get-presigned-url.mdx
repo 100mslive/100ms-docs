@@ -30,9 +30,18 @@ curl --location --request GET 'https://api.100ms.live/v2/recording-assets/<asset
 
 </ResponseBox>
 
+> **Note on `url` in the API response**
+> <br/>
+> In the case of `room-vod` asset type, the `url` can contain 3 things depending on the configured storage and VOD upload format. It will contain:
+> - Pre-signed URL to let you download the zipped VOD file if the VOD upload format is 'zipped', irrespective of the configured storage.
+> - CDN URL which you can put in any compatible player to play the VOD file if the recording storage is 100ms' and the VOD upload format in 'unzipped'.
+> - Pre-signed URL to the M3U8 file which is not playable if the configured recording storage is the user's cloud bucket and the VOD upload format is 'unzipped'.
+> <br/>
+> Learn more about VOD on 100ms [here](/get-started/v2/get-started/features/recordings/live-stream-recording#video-on-demand-vod-recording-m3u8).
 
 ## Query params
 
 | Name             | Description                                                                                | Required |
 |------------------|--------------------------------------------------------------------------------------------|----------|
 | presign_duration | Specify a custom expiry duration (in seconds) to control the validity of the generated URL | No       |
+
