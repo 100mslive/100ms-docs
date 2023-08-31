@@ -1163,7 +1163,7 @@ This event will be sent when HLS recordings are successful and uploaded to the s
 #### Attributes
 
 | Name                                | Type                 | Description                                                                                                                    |
-| :---------------------------------- | :------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
+|:------------------------------------|:---------------------|:-------------------------------------------------------------------------------------------------------------------------------|
 | beam_id                             | `string`             | Unique beam id <br/><br/> Example: 61d3def54b616982bd80ed83                                                                    |
 | room_id                             | `string`             | 100ms assigned room id <br/><br/> Example: 5f9edc6ac238215aec2312df                                                            |
 | metadata_id                         | `string`             | Webhook metadata ID <br/><br/> Example: 14f350f5-18c4-46ca-8a33-71cbcc836600                                                   |
@@ -1171,8 +1171,8 @@ This event will be sent when HLS recordings are successful and uploaded to the s
 | duration                            | `int`                | Duration of HLS recording in seconds <br/><br/> Example: 12                                                                    |
 | session_id                          | `string`             | 100ms assigned id to identify the session <br/><br/> Example: 5f9edc6bd238215aec7700df                                         |
 | template_id                         | `string`             | Template ID of the room <br/><br/> Example: 66112497abcd52312556c4gg                                                           |
-| hls_vod_recording_path              | `string`             | Upload path of the HLS vod playlist such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.mp4                               |
-| hls_vod_recording_presigned_url     | `string`             | Pre signed url for HLS vod playlist url <br/><br/> Example: <https://upload-location/bucket/hls-vod.zip>                       |
+| hls_vod_recording_path              | `string`             | Upload path of the HLS VOD playlist such as s3 URL <br/><br/> Example: s3://bucket/prefix/ac.mp4                               |
+| hls_vod_recording_presigned_url     | `string`             | This will be a playable CDN URL for the VOD file or the pre-signed URL of the M3U8 file, depending upon the configured storage and the VOD upload format. Learn more about this [here](/get-started/v2/get-started/features/recordings/live-stream-recording#video-on-demand-vod-recording) <br/><br/> Example: <https://upload-location/bucket/hls-vod.zip> , <https://upload-location/bucket/hls-vod.m3u8>                     |
 | chat_recording_path                 | `string`             | Upload path of chat recording files such as s3 URI <br/><br/> Example: s3://bucket/prefix/ac.csv                               |
 | chat_recording_presigned_url        | `string`             | Pre signed url for chat recording files <br/><br/> Example: <https://upload-location/bucket/chat.csv>                          |
 | hls_vod_recording_size              | `int`                | Size of the HLS vod recording (in bytes) <br/><br/> Example: 10024                                                             |
@@ -1207,7 +1207,7 @@ This event will be sent when HLS recordings are successful and uploaded to the s
         "max_height": 720,
         "max_width": 1280,
         "meeting_url": "https://app.100ms.live/preview/rpe-pwl-akt?token=beam_recording",
-        "hls_vod_recording_path": "s3://<hls-vod-bucket-address>.zip",
+        "hls_vod_recording_path": "s3://<hls-vod-bucket-address>.m3u8",
         "hls_vod_recording_presigned_url": "https://<hls-vod-access-url>?<signature>",
         "chat_recording_path": "s3://<chat-recording-address>.csv",
         "chat_recording_presigned_url": "https://<chat-recording-access-url>?<signature>",
