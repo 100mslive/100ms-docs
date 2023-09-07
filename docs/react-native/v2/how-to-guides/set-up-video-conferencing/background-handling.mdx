@@ -117,4 +117,113 @@ When your app implements a Foreground Service it continues access to capturing A
 | Camera is unmuted                 | Camera will remain unmuted and the user will able to publish video without any restriction |
 | Remote Peers are publishing audio | Able to play incoming audio from the Room                                                  |
 
-For implementing a Foreground Service we recommend using the [@voximplant/react-native-foreground-service](https://www.npmjs.com/package/@voximplant/react-native-foreground-service) package which allows the app to run in the background with a Persistent Status Bar Notification.
+For implementing a Foreground Service, we recommend using the [@voximplant/react-native-foreground-service](https://github.com/ygit/react-native-foreground-service.git) package which allows the app to run in the background with a Persistent Status Bar Notification.
+
+
+Below are the steps to implement Android Foreground Service using [@voximplant/react-native-foreground-service](https://github.com/ygit/react-native-foreground-service.git) in your React Native App
+
+<div className="steps-container">
+### Install the package
+
+```bash
+npm i git+https://github.com/ygit/react-native-foreground-service
+```
+
+### Update AndroidManifest.xml
+
+1. Add the FOREGROUND_SERVICE permission to the application's `AndroidManifest.xml`:
+```xml
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+```
+
+2. Add VIForegroundService as a service to the application's `AndroidManifest.xml`:
+```xml{8}
+<application>
+    ...
+    <activity>
+        ...
+    </activity>
+
+      // Set Service Type to capture Audio or Video as per your use-case. In most cases, only `microphone` access would be required. Then do not pass the `camera`. If stopWithTask set to true then it will stop the notification if app is force killed.
+    <service android:name="com.voximplant.foregroundservice.VIForegroundService"
+        android:foregroundServiceType="camera|microphone"
+        android:stopWithTask="true" />
+
+</application>
+```
+
+3. If you have targetSdkVersion Android API >= 31 then perform the following step:
+
+    Add `android:exported="true"` to the application's `AndroidManifest.xml` activity section
+```xml{6}
+<activity
+    android:name=".MainActivity"
+    android:label="@string/app_name"
+    android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+    android:windowSoftInputMode="adjustResize"
+    android:exported="true">        <===== Add this line
+```
+
+### Usage of the package
+
+1. Import the module
+```js
+import VIForegroundService from '@voximplant/react-native-foreground-service';
+```
+
+2. Create Notification Channel
+```js
+const androidForegroundServiceChannelConfig = {
+    id: 'MyAppChannelID',
+    name: 'My App Channel name',
+    enableVibration: true,
+    importance: 5,
+};
+
+VIForegroundService.getInstance().createNotificationChannel(
+    androidForegroundServiceChannelConfig
+).then((r: any) => console.log('Created Android Foreground Service channel', r));
+```
+
+3. Start Foreground Service
+```js
+const startAndroidForegroundService = async () => {
+    const notificationConfig = {
+        channelId: 'MyAppChannelID',
+        id: 1000,
+        title: 'Foreground Service', // modify your notification title here!
+        text: 'Starting Android Foreground Service now', // modify your notification text here!
+        icon: '../assets/my-app-logo.png', // add your app's icon here
+        priority: 2,
+    };
+    try {
+        VIForegroundService.getInstance().startService(notificationConfig);
+    } catch (e) {
+        console.error(e);
+    }
+};
+```
+4. Stop Foreground Service
+When the user leaves the Room or Room is ended, always stop the Foreground Service by calling the `stopService` method.
+```js{3}
+// a sample callback function invoked when user leaves the Room
+const handleMeetingLeave = useCallback(() => {
+    VIForegroundService.getInstance().stopService().then((result: any) => {  // stop the Foreground Service
+        console.log('Stopped Android Foreground service: ', result);
+    navigation.navigate('MyAppHomeScreen'); // navigate to app's Home Screen or any other appropriate screen
+    });
+}, []);
+```
+
+### That's it
+
+You have successfully implemented Android Foreground Service in your React Native App.
+
+You can refer the sample implementation in 100ms Example app [here](https://github.com/100mslive/100ms-react-native/blob/main/packages/react-native-room-kit/example/src/screens/HMSPrebuiltScreen/index.tsx).
+
+Here's a sample screenshot of the Foreground Service Notification on Android.
+
+![Android Foreground Service Notification](/guides/foregroundservice.png)
+
+
+</div>
