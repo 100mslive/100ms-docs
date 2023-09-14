@@ -3,6 +3,24 @@
  nav: 4
  description: Release Notes for 100ms Android SDK
 ---
+## v2.7.4 - 2023-09-14
+
+### Breaking Changes
+- The SDK is now compiled with Java 11 and if you're using an older version of the JDK you'll get an error like "class file has wrong version 55.0, should be 52.0". To fix this please upgrade your JDK to at least Java 11. This was necessitated by a change in webrtc.
+
+### Added
+- Preview API for role change.
+- `onPermissionsRequested` also comes during the Preview API.
+Added pan and zoom for HMSVideoView
+
+### Fixed
+- A nullpointer when comparing an hls peer to a non-hls peer was fixed.
+- Analytics fixes.
+- `HMSBrowserRecordingState` of HMSRoom can also be in 'initializing' state.
+- Track was wrongly marked degraded in some cases.
+- Peercount was being set to 0 on reconnection
+
+
 ## v2.7.3 - 2023-08-09
 
 ### Added
