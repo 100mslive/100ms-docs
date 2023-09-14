@@ -1,8 +1,40 @@
 ---
  title: Release Notes
  nav: 4
- description: Release Notes for 100ms Android SDK
+ description: Release Notes for 100ms Android
 ---
+import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
+
+## Latest Versions
+
+| Package                                | Version                                                                                                                                |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| live.100ms:room-kit             | [![](https://img.shields.io/badge/dynamic/xml.svg?label=100ms-Prebuilt&color=blue&query=%2F%2Fmetadata%2Fversioning%2Flatest&url=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Flive%2F100ms%2Froom-kit%2Fmaven-metadata.xml)](https://jitpack.io/#100mslive/room-kit)
+ |
+| live.100ms:android-sdk:                   |  <AndroidSdkVersionShield />  |
+| live.100ms:video-view:               |   <AndroidSdkVersionShield />  |
+| live.100ms:hls-player:                  |<AndroidSdkVersionShield />            |
+| live.100ms:hls-player-stats: |<AndroidSdkVersionShield /> 
+| live.100ms:virtual-background: |<AndroidSdkVersionShield />|
+
+## v2.7.5 - 2023-09-14
+### Breaking Changes
+- The SDK is now compiled with Java 11 and if you're using an older version of the JDK you'll get an error like "class file has wrong version 55.0, should be 52.0". To fix this please upgrade your JDK to at least Java 11. This was necessitated by a change in webrtc.
+- SDK uses webrtc m107.
+
+### Added
+- Preview API for role change.
+- `onPermissionsRequested` also comes during the Preview API.
+- Added pan and zoom for HMSVideoView.
+- `HMSBrowserRecordingState` of HMSRoom can also be in 'initializing' state.
+
+### Fixed
+- A nullpointer when comparing an hls peer to a non-hls peer was fixed.
+- Analytics fixes.
+- Track was wrongly marked degraded in some cases.
+- Peercount was being set to 0 on reconnection.
+
+
 ## v2.7.3 - 2023-08-09
 
 ### Added
