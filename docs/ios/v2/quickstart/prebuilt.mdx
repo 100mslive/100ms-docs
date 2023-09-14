@@ -18,7 +18,7 @@ This guide will walk you through the steps to create a video conferencing/live-s
 RoomKit SDK for iOS enables you to integrate our production-ready conferencing and livestreaming UI into your own app effortlessly. This doc will guide you through the integration process and provide examples of common use cases.
   
 ## Pre-requisites
-- _100ms account_: You need to have a 100ms account to create a room and get a room-code/auth-token. You can create a 100ms account [here](https://dashboard.100ms.live/signup).
+- _100ms account_: You need to have a 100ms account to create a room and get a [room-code](/docs/get-started/v2/get-started/prebuilt/room-codes/overview)/[auth-token](/docs/get-started/v2/get-started/security-and-tokens#auth-token-for-client-sdks). You can create a 100ms account [here](https://dashboard.100ms.live/signup).
 - Xcode 14 or higher
 - iOS 15 or higher
 - NSMicrophoneUsageDescription (ie. Privacy - Microphone Usage Description) in info.plist of your app
@@ -111,7 +111,7 @@ import HMSRoomKit
 
 struct ContentView: View {
     var body: some View {
-        HMSPrebuiltView(roomCode: "qsw-mik-seb")
+        HMSPrebuiltView(roomCode: "<your-room-code>")
           .screenShare(appGroupName: "group.live.100ms.videoapp.roomkit", screenShareBroadcastExtensionBundleId: "live.100ms.videoapp.roomkit.Screenshare")
     }
 }
@@ -155,22 +155,3 @@ struct ContentView: View {
 ```
 
 This code allows you to conditionally display the Prebuilt Screen based on user input.
-
-# How to make changes, debug, preview and contribute to RoomKit
-
-1. Clone https://github.com/100mslive/100ms-roomkit-ios and https://github.com/100mslive/100ms-roomkit-models-ios in same folder.
-2. Open **HMSRoomKitDevelopmentProject** Xcode project inside **100ms-roomkit-ios** repository.
-
-<img width="864" alt="Screenshot 2023-09-13 at 5 37 57 PM" src="https://github.com/100mslive/100ms-roomkit-ios/assets/103245157/4a10c272-a986-44ce-a1e4-2bdecd388a47"/>
-
-3. In HMSRoomKitDevelopmentProject Xcode project, use **HMSRoomKitDevelopment** target scheme to run the app in simulator or device. Use **HMSRoomKitPreview** target to see SwiftUI preview of files under **HMSRoomKit folder** (HMSRoomKit source files).
-
-<img width="348" alt="Screenshot 2023-09-13 at 5 44 58 PM" src="https://github.com/100mslive/100ms-roomkit-ios/assets/103245157/dff9264c-966f-4487-bb1c-a7d3d0f22b0b"/>
-
-5. You can make changes to files in HMSRoomKit folder (**HMSRoomKit source files**) or HMSRoomModels folder (**HMSRoomModels source files**) to add a feature/improvement or fix any issue.
-
-<img width="380" alt="Screenshot 2023-09-13 at 5 40 07 PM" src="https://github.com/100mslive/100ms-roomkit-ios/assets/103245157/779aad71-9bee-4d42-bb2b-c7a875f37f31"/>
-
-7. Once you are done, create PRs with your changes to **main branch** of **respective repositories**.
-
-<img width="993" alt="Screenshot 2023-09-13 at 5 51 01 PM" src="https://github.com/100mslive/100ms-roomkit-ios/assets/103245157/d1102bde-e081-4857-af2b-4bb969feeffb"/>
