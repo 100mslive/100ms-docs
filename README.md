@@ -179,6 +179,12 @@ All CSS Variables prefixed with `token` control the Syntax Highlighting.
     -   VSCode : [Vale](https://marketplace.visualstudio.com/items?itemName=errata-ai.vale-server)
     -   Android Studio/IntelliJ : [Vale-CLI](https://plugins.jetbrains.com/plugin/19613-vale-cli)
 
+## #️⃣ Viewing updated release versions on local before pushing changes
+
+- To view the updated release version on local after adding changelog, run the following command before starting the local server:
+    -   `yarn updatereleases`
+    -   `yarn dev`
+
 ## 🙏🏽 Acknowledgement
 
 -   Nextjs
