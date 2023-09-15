@@ -3,6 +3,38 @@ title: Release Notes
 nav: 4.1
 ---
 
+## Latest Versions
+
+| Package                                | Version                                                                                                                                  |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| @100mslive/react-native-room-kit       | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-room-kit)](https://www.npmjs.com/package/@100mslive/react-native-room-kit)  |
+| @100mslive/react-native-hms            | [![npm](https://img.shields.io/npm/v/@100mslive/react-native-hms)](https://www.npmjs.com/package/@100mslive/react-native-hms)            |
+
+
+# 1.8.0 - 2023-09-15
+
+Released: `@100mslive/react-native-room-kit@1.0.0`, `@100mslive/react-native-hms@1.8.0`
+
+### Added
+
+- Added `previewForRole` and `cancelPreview` APIs to preview the video of a particular role before joining the room
+  ```js
+  // preview video of a particular role
+  await hmsInstance.previewForRole("viewer-on-stage");
+
+  // cancel preview
+  await hmsInstance.cancelPreview();
+  ```
+
+### Changed
+
+- Stopped sending `ON_ERROR` event when an action API fails. Instead, the promise wiil be rejected with an appropriate error message.
+
+Updated to Android SDK 2.7.6 & iOS SDK 0.9.12
+
+**Full Changelog**: [1.7.2...1.8.0](https://github.com/100mslive/react-native-hms/compare/1.7.2...1.8.0)
+
+
 # 1.7.2 - 2023-09-04
 
 ### Changed
