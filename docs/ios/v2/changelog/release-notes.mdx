@@ -4,6 +4,16 @@ nav: 6.1
 description: Release Notes for 100ms iOS SDK
 ---
 
+## 1.0.1 - 2023-09-15
+Added:
+- Support for large scale rooms
+- First class APIs for raising hand in a room: raiseLocalPeerHand, lowerLocalPeerHand, lowerRemotePeerHand. isHandRaised property on HMSPeer
+
+Breaking change:
+- peerJoin update type in on(peer:update:) callback will not be sent for every peer in the room upon room join, onPeerListUpdate callback will be sent instead. This new callback should be the main source of notification regrading peer list updates. The peerJoin / peerLeave update types should only be used for showing notifications to the user if app has this feature. 
+
+
+
 ## 0.9.12 - 2023-09-13
 ### Fixed
 - High simulcast layer not published for 720p with 1:1 aspect template setting
