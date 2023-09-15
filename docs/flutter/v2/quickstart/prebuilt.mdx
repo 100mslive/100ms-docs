@@ -13,12 +13,12 @@ This section contains instructions to create a simple Flutter video conferencing
 
 ### Prerequisites
 
-To complete this implementation for the Android platform, you must have the following:
+To complete this implementation, you must have the following:
 
 -   A [100ms account](https://dashboard.100ms.live/register) if you don't have one already.
--   [Flutter](https://docs.flutter.dev/get-started/install) `3.3.0` or higher
+-   [Flutter](https://docs.flutter.dev/get-started/install) `3.7.12` or higher
 -   Dart `2.12.0` or above
--   Use [VS code](https://code.visualstudio.com/), [Android Studio](https://developer.android.com/studio), or any other IDE that supports Flutter. For more information on setting up an IDE, check [Flutter's official guide](https://docs.flutter.dev/get-started/editor).
+-   Use [VS code](https://code.visualstudio.com/), [Android Studio](https://developer.android.com/studio), [Xcode](https://developer.apple.com/xcode/) or any other IDE that supports Flutter. For more information on setting up an IDE, check [Flutter's official guide](https://docs.flutter.dev/get-started/editor).
 
 ### Create a Flutter app
 
@@ -66,7 +66,7 @@ defaultConfig {
 ...
 ```
 
-2. To add PIP support in your app manifest files add:
+2. To add PIP support in your app manifest file("android/app/src/main/AndroidManifest.xml") add:
 
 ```xml
 <activity
@@ -76,9 +76,14 @@ defaultConfig {
     ... />
 ```
 
-3. For Auto Enter PIP support(below android 12) in your `MainActivity.kt` file add:
+3. For Auto Enter PIP support(below android 12) in your `MainActivity.kt` file("android/app/src/main/kotlin/live/hms/flutter/MainActivity.kt") add:
 
 ```kotlin
+import android.content.res.Configuration
+import android.os.Build
+import live.hms.hmssdk_flutter.methods.HMSPipAction
+import live.hms.hmssdk_flutter.Constants
+
 override fun onUserLeaveHint() {
     super.onUserLeaveHint()
     // This should only work for android version above 8 since PIP is only supported after
@@ -89,9 +94,13 @@ override fun onUserLeaveHint() {
 }
 ```
 
-4. For screenshare in your `MainActivity.kt` add:
+4. For screenshare in your `MainActivity.kt` file("android/app/src/main/kotlin/live/hms/flutter/MainActivity.kt") add:
 
 ```kotlin
+import android.app.Activity
+import android.content.Intent
+import live.hms.hmssdk_flutter.Constants
+
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 super.onActivityResult(requestCode, resultCode, data)
 
@@ -102,7 +111,7 @@ super.onActivityResult(requestCode, resultCode, data)
 }
 ```
 
-5. Add the `FOREGROUND_SERVICE` permission in `AndroidManifest.xml`:
+5. Add the `FOREGROUND_SERVICE` permission in `AndroidManifest.xml` file("android/app/src/main/AndroidManifest.xml"):
 
 ```xml
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -183,17 +192,21 @@ Scaffold(
 2. Update the code in the `onPressed` method of the `Join` button by following code:
 
 ```dart
+import 'package:hms_room_kit/hms_room_kit.dart';
+
+///For screenshare pass the config as mentioned above
  onPressed: () async => {
         await Navigator.push(
             context,
             MaterialPageRoute(
-            builder: (context) => const HMSPrebuilt(roomCode: "xno-jwn-phi")
+            ///To know about how to get the room codes check the docs here: https://www.100ms.live/docs/get-started/v2/get-started/prebuilt/room-codes/room-code-auth
+            builder: (context) => const HMSPrebuilt(roomCode: "Enter your room code here")
         ),
     ),
 }
 ```
 
-### Checkout the 100ms Apps powered by `hms_room_kit` on App store / Play store
+### Checkout the 100ms Apps powered by hms_room_kit on App store / Play store
 
 You can download & check out the 100ms Flutter app -
 
