@@ -17,6 +17,17 @@ import AndroidSdkVersionShield from '@/common/android-sdk-version-shield.md';
 | live.100ms:hls-player-stats: |<AndroidSdkVersionShield /> 
 | live.100ms:virtual-background: |<AndroidSdkVersionShield />|
 
+##v2.7.7-alpha - 2023-09-15
+### Added
+- Support for very large rooms
+- First class APIs to raise/lower hand of local/remote peer
+- `isHandRaised` property in `HMSPeer`
+- `HAND_RAISE_CHANGED` type in `HMSPeerUpdate`
+- `onPeerListUpdated` callback in `HMSUpdateListener` - This will be called whenever there is change detected in peerlist
+
+### Breaking
+- Upon joining a room with existing peers, `onPeerListUpdated` will be called with the list of peers present in the room instead of getting `onPeerUpdate` for each peer in the room. Subsequent peer joins/leaves would be notified via both `onPeerUpdate` and `onPeerListUpdated`
+
 ## v2.7.6 - 2023-09-14
 ### Breaking Changes
 - The SDK is now compiled with Java 11 and if you're using an older version of the JDK you'll get an error like "class file has wrong version 55.0, should be 52.0". To fix this please upgrade your JDK to at least Java 11. This was necessitated by a change in webrtc.
