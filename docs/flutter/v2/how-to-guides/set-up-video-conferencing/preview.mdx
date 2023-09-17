@@ -194,6 +194,80 @@ These options are available in advanced settings:
 
 ![Room State in preview](/docs/v2/flutter-room-state-in-preview.png)
 
+## Preview For Role
+
+Preview for role is a feature that allows you to preview the camera/mic states of the new role in which you are transitioning to. This is useful when you want to check if your camera/mic is working before you transition to a new role.
+This provides two methods:
+
+- previewForRole
+- cancelPreview
+
+### previewForRole
+
+This returns an object of `Future<dynamic>` which can be either of `HMSException` type or a `List<HMSTrack>` type based on whether method execution is completed successfully or not.
+It takes a `HMSRole` as a parameter which is the role in which you want to preview.
+
+```dart
+void previewForRole({required String role}) async {
+
+   HMSLocalVideoTrack? previewForRoleVideoTrack;
+   HMSLocalAudioTrack? previewForRoleAudioTrack;
+
+   ///hmsSDK is the instance of HMSSDK
+   var result = await hmsSDK.previewForRole(role: role);
+
+   if (result is HMSException) {
+      //Handle the exception here
+   }
+   else{
+      ///Here we find the index of video track from the result list
+      var indexForVideoTrack = (result as List<HMSTrack>).indexWhere(
+          (element) =>
+              element.kind == HMSTrackKind.kHMSTrackKindVideo &&
+              element.source == "REGULAR");
+      if (indexForVideoTrack != -1) {
+        ///We will use this track to display video preview
+        previewForRoleVideoTrack =
+            result[indexForVideoTrack] as HMSLocalVideoTrack;
+      }
+
+      ///Here we find the index of audio track from the result list
+      var indexForAudioTrack = result.indexWhere(
+          (element) => element.kind == HMSTrackKind.kHMSTrackKindAudio);
+      if (indexForAudioTrack != -1) {
+        previewForRoleAudioTrack =
+            result[indexForAudioTrack] as HMSLocalAudioTrack;
+      }
+   }
+}
+```
+
+### cancelPreview
+
+If a [previewForRole] call was performed previously then calling this method clears the tracks created anticipating a change of role.
+This method only needs to be called if the user declined the request for role change.
+
+This returns an object of Future<dynamic> which can be either of HMSException type or a boolean value [true] based on whether method execution is completed successfully or not.
+
+```dart
+Future<dynamic> cancelPreview() async {
+
+   ///hmsSDK is the instance of HMSSDK
+   var result = await hmsSDK.cancelPreview();
+
+   ///If the result is of type HMSException then handle the exception
+   if (result is HMSException) {
+      //Handle the exception here
+   }
+   else{
+      ///If the result is of type bool then check if it is true
+      if(result){
+         ///Preview cancelled successfully
+      }
+   }
+}
+```
+
 ## Supplementary bytes
 
 Now, let's take a look at the listener class in detail.
