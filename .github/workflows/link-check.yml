@@ -20,14 +20,14 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         max_timeout: 300
-        check_interval: 10
+        check_interval: 5
 
     - name: Print Preview URL
       run: echo ${{steps.getPreviewUrl.outputs.url}}
 
     - name: Update mlc_config
       run: |
-        sed -i "s/<PREVIEW_URL>/${{steps.getPreviewUrl.outputs.url}}/" ./mlc_config.json
+        sed -i "s#<PREVIEW_URL>#${{steps.getPreviewUrl.outputs.url}}#" ./mlc_config.json
 
     - name: Run link check
       uses: gaurav-nelson/github-action-markdown-link-check@v1
