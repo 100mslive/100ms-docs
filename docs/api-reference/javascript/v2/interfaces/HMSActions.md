@@ -60,7 +60,7 @@ If lock is passed as true, the room cannot be used further.
 
 ### interactivityCenter
 
-• **interactivityCenter**: `IHMSInteractivityCenter`
+• **interactivityCenter**: [`IHMSInteractivityCenter`](/api-reference/javascript/v2/interfaces/IHMSInteractivityCenter)
 
 ---
 
@@ -204,6 +204,18 @@ the stream coming from server saving significant bandwidth for the user.
 | :------------- | :----------------- | :-------------------------------------------------- |
 | `localTrackID` | `string`           | trackID as stored in the store for the peer         |
 | `videoElement` | `HTMLVideoElement` | HTML native element where the video has to be shown |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### cancelMidCallPreview
+
+▸ **cancelMidCallPreview**(): `Promise`<`void`\>
+
+stop tracks fetched during midcall preview and general cleanup
 
 #### Returns
 
@@ -436,6 +448,32 @@ This function can be used to leave the room, if the call is repeated it's ignore
 
 ---
 
+### lowerLocalPeerHand
+
+▸ **lowerLocalPeerHand**(): `Promise`<`void`\>
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### lowerRemotePeerHand
+
+▸ **lowerRemotePeerHand**(`peerId`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name     | Type     |
+| :------- | :------- |
+| `peerId` | `string` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
 ### populateSessionMetadata
 
 ▸ **populateSessionMetadata**(): `Promise`<`void`\>
@@ -458,9 +496,35 @@ use `actions.sessionStore.observe` instead
 
 #### Parameters
 
-| Name     | Type                                                                           |
-| :------- | :----------------------------------------------------------------------------- |
-| `config` | [`HMSPreviewConfig`](/api-reference/javascript/v2/interfaces/HMSPreviewConfig) |
+| Name     | Type                                                                                                        |
+| :------- | :---------------------------------------------------------------------------------------------------------- |
+| `config` | `HMSMidCallPreviewConfig` \| [`HMSPreviewConfig`](/api-reference/javascript/v2/interfaces/HMSPreviewConfig) |
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### raiseLocalPeerHand
+
+▸ **raiseLocalPeerHand**(): `Promise`<`void`\>
+
+#### Returns
+
+`Promise`<`void`\>
+
+---
+
+### raiseRemotePeerHand
+
+▸ **raiseRemotePeerHand**(`peerId`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name     | Type     |
+| :------- | :------- |
+| `peerId` | `string` |
 
 #### Returns
 

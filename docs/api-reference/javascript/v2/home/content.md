@@ -90,6 +90,7 @@ nav: '1.1'
 - [HMSTrackStats](/api-reference/javascript/v2/interfaces/HMSTrackStats)
 - [HMSVideoTrack](/api-reference/javascript/v2/interfaces/HMSVideoTrack)
 - [HMSVideoTrackSettings](/api-reference/javascript/v2/interfaces/HMSVideoTrackSettings)
+- [IHMSInteractivityCenter](/api-reference/javascript/v2/interfaces/IHMSInteractivityCenter)
 - [IHMSPlaylistActions](/api-reference/javascript/v2/interfaces/IHMSPlaylistActions)
 - [IHMSSessionStoreActions](/api-reference/javascript/v2/interfaces/IHMSSessionStoreActions)
 - [IHMSStatsStore](/api-reference/javascript/v2/interfaces/IHMSStatsStore)
@@ -125,9 +126,9 @@ Renames and re-exports [HMSNotifications](/api-reference/javascript/v2/interface
 
 #### Type parameters
 
-| Name | Type                                                                                                |
-| :--- | :-------------------------------------------------------------------------------------------------- |
-| `T`  | extends [`HMSNotificationTypeParam`](/api-reference/javascript/v2/modules#hmsnotificationtypeparam) |
+| Name | Type                                                                                                     |
+| :--- | :------------------------------------------------------------------------------------------------------- |
+| `T`  | extends [`HMSNotificationTypeParam`](/api-reference/javascript/v2/home/content#hmsnotificationtypeparam) |
 
 #### Type declaration
 
@@ -135,9 +136,9 @@ Renames and re-exports [HMSNotifications](/api-reference/javascript/v2/interface
 
 ##### Parameters
 
-| Name           | Type                                                                                                |
-| :------------- | :-------------------------------------------------------------------------------------------------- |
-| `notification` | [`HMSNotificationInCallback`](/api-reference/javascript/v2/modules#hmsnotificationincallback)<`T`\> |
+| Name           | Type                                                                                                     |
+| :------------- | :------------------------------------------------------------------------------------------------------- |
+| `notification` | [`HMSNotificationInCallback`](/api-reference/javascript/v2/home/content#hmsnotificationincallback)<`T`\> |
 
 ##### Returns
 
@@ -147,19 +148,19 @@ Renames and re-exports [HMSNotifications](/api-reference/javascript/v2/interface
 
 ### HMSNotificationInCallback
 
-Ƭ **HMSNotificationInCallback**<`T`\>: `T` extends [`HMSNotificationTypes`](/api-reference/javascript/v2/enums/HMSNotificationTypes)[] ? `MappedNotifications`<`T`\>[`number`] : `T` extends [`HMSNotificationTypes`](/api-reference/javascript/v2/enums/HMSNotificationTypes) ? [`HMSNotificationMapping`](/api-reference/javascript/v2/modules#hmsnotificationmapping)<`T`\> : [`HMSNotification`](/api-reference/javascript/v2/modules#hmsnotification)
+Ƭ **HMSNotificationInCallback**<`T`\>: `T` extends [`HMSNotificationTypes`](/api-reference/javascript/v2/enums/HMSNotificationTypes)[] ? [`MappedNotifications`](/api-reference/javascript/v2/home/content#mappednotifications)<`T`\>[`number`] : `T` extends [`HMSNotificationTypes`](/api-reference/javascript/v2/enums/HMSNotificationTypes) ? [`HMSNotificationMapping`](/api-reference/javascript/v2/home/content#hmsnotificationmapping)<`T`\> : [`HMSNotification`](/api-reference/javascript/v2/home/content#hmsnotification)
 
 #### Type parameters
 
-| Name | Type                                                                                                |
-| :--- | :-------------------------------------------------------------------------------------------------- |
-| `T`  | extends [`HMSNotificationTypeParam`](/api-reference/javascript/v2/modules#hmsnotificationtypeparam) |
+| Name | Type                                                                                                     |
+| :--- | :------------------------------------------------------------------------------------------------------- |
+| `T`  | extends [`HMSNotificationTypeParam`](/api-reference/javascript/v2/home/content#hmsnotificationtypeparam) |
 
 ---
 
 ### HMSNotificationMapping
 
-Ƭ **HMSNotificationMapping**<`T`, `C`\>: { `CHANGE_MULTI_TRACK_STATE_REQUEST`: [`HMSChangeMultiTrackStateRequestNotification`](/api-reference/javascript/v2/interfaces/HMSChangeMultiTrackStateRequestNotification) ; `CHANGE_TRACK_STATE_REQUEST`: [`HMSChangeTrackStateRequestNotification`](/api-reference/javascript/v2/interfaces/HMSChangeTrackStateRequestNotification) ; `DEVICE_CHANGE_UPDATE`: [`HMSDeviceChangeEventNotification`](/api-reference/javascript/v2/interfaces/HMSDeviceChangeEventNotification) ; `ERROR`: [`HMSExceptionNotification`](/api-reference/javascript/v2/interfaces/HMSExceptionNotification) ; `METADATA_UPDATED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `NAME_UPDATED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `NEW_MESSAGE`: [`HMSMessageNotification`](/api-reference/javascript/v2/interfaces/HMSMessageNotification) ; `PEER_JOINED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `PEER_LEFT`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `PEER_LIST`: [`HMSPeerListNotification`](/api-reference/javascript/v2/interfaces/HMSPeerListNotification) ; `PLAYLIST_TRACK_ENDED`: [`HMSPlaylistItemNotification`](/api-reference/javascript/v2/interfaces/HMSPlaylistItemNotification)<`C`\> ; `POLL_CREATED`: [`HMSPollNotification`](/api-reference/javascript/v2/interfaces/HMSPollNotification) ; `POLL_STARTED`: [`HMSPollNotification`](/api-reference/javascript/v2/interfaces/HMSPollNotification) ; `POLL_STOPPED`: [`HMSPollNotification`](/api-reference/javascript/v2/interfaces/HMSPollNotification) ; `POLL_VOTES_UPDATED`: [`HMSPollNotification`](/api-reference/javascript/v2/interfaces/HMSPollNotification) ; `RECONNECTED`: [`HMSReconnectionNotification`](/api-reference/javascript/v2/interfaces/HMSReconnectionNotification) ; `RECONNECTING`: [`HMSReconnectionNotification`](/api-reference/javascript/v2/interfaces/HMSReconnectionNotification) ; `REMOVED_FROM_ROOM`: [`HMSLeaveRoomRequestNotification`](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequestNotification) ; `ROLE_UPDATED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `ROOM_ENDED`: [`HMSLeaveRoomRequestNotification`](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequestNotification) ; `TRACK_ADDED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_DEGRADED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_DESCRIPTION_CHANGED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_MUTED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_REMOVED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_RESTORED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_UNMUTED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) }[`T`]
+Ƭ **HMSNotificationMapping**<`T`, `C`\>: { `CHANGE_MULTI_TRACK_STATE_REQUEST`: [`HMSChangeMultiTrackStateRequestNotification`](/api-reference/javascript/v2/interfaces/HMSChangeMultiTrackStateRequestNotification) ; `CHANGE_TRACK_STATE_REQUEST`: [`HMSChangeTrackStateRequestNotification`](/api-reference/javascript/v2/interfaces/HMSChangeTrackStateRequestNotification) ; `DEVICE_CHANGE_UPDATE`: [`HMSDeviceChangeEventNotification`](/api-reference/javascript/v2/interfaces/HMSDeviceChangeEventNotification) ; `ERROR`: [`HMSExceptionNotification`](/api-reference/javascript/v2/interfaces/HMSExceptionNotification) ; `HAND_RAISE_CHANGED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `METADATA_UPDATED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `NAME_UPDATED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `NEW_MESSAGE`: [`HMSMessageNotification`](/api-reference/javascript/v2/interfaces/HMSMessageNotification) ; `PEER_JOINED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `PEER_LEFT`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `PEER_LIST`: [`HMSPeerListNotification`](/api-reference/javascript/v2/interfaces/HMSPeerListNotification) ; `PLAYLIST_TRACK_ENDED`: [`HMSPlaylistItemNotification`](/api-reference/javascript/v2/interfaces/HMSPlaylistItemNotification)<`C`\> ; `POLL_CREATED`: [`HMSPollNotification`](/api-reference/javascript/v2/interfaces/HMSPollNotification) ; `POLL_STARTED`: [`HMSPollNotification`](/api-reference/javascript/v2/interfaces/HMSPollNotification) ; `POLL_STOPPED`: [`HMSPollNotification`](/api-reference/javascript/v2/interfaces/HMSPollNotification) ; `POLL_VOTES_UPDATED`: [`HMSPollNotification`](/api-reference/javascript/v2/interfaces/HMSPollNotification) ; `RECONNECTED`: [`HMSReconnectionNotification`](/api-reference/javascript/v2/interfaces/HMSReconnectionNotification) ; `RECONNECTING`: [`HMSReconnectionNotification`](/api-reference/javascript/v2/interfaces/HMSReconnectionNotification) ; `REMOVED_FROM_ROOM`: [`HMSLeaveRoomRequestNotification`](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequestNotification) ; `ROLE_UPDATED`: [`HMSPeerNotification`](/api-reference/javascript/v2/interfaces/HMSPeerNotification) ; `ROOM_ENDED`: [`HMSLeaveRoomRequestNotification`](/api-reference/javascript/v2/interfaces/HMSLeaveRoomRequestNotification) ; `TRACK_ADDED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_DEGRADED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_DESCRIPTION_CHANGED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_MUTED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_REMOVED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_RESTORED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) ; `TRACK_UNMUTED`: [`HMSTrackNotification`](/api-reference/javascript/v2/interfaces/HMSTrackNotification) }[`T`]
 
 #### Type parameters
 
@@ -245,6 +246,18 @@ selfBrowser - the current browser tab is being shared
 
 ---
 
+### MappedNotifications
+
+Ƭ **MappedNotifications**<`Type`\>: { [index in keyof Type]: HMSNotificationMapping<Type[index]\> }
+
+#### Type parameters
+
+| Name   | Type                                                                                        |
+| :----- | :------------------------------------------------------------------------------------------ |
+| `Type` | extends [`HMSNotificationTypes`](/api-reference/javascript/v2/enums/HMSNotificationTypes)[] |
+
+---
+
 ### RID
 
 Ƭ **RID**: `"f"` \| `"h"` \| `"q"`
@@ -279,7 +292,7 @@ selfBrowser - the current browser tab is being shared
 | `localPeerStats`              | `OutputSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats), (`res1`: `Record`<`string`, `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)\>, `res2`: `string`) => `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)\>                        |
 | `localVideoTrackStats`        | `OutputSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats), (`res1`: `Record`<`string`, `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)[]\>, `res2`: `undefined` \| `string`) => `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)\> |
 | `localVideoTrackStatsByID`    | (`id?`: `string`) => `StoreSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)[]\>                                                                                                                                                                                                                                 |
-| `localVideoTrackStatsByLayer` | (`layer?`: [`HMSPreferredSimulcastLayer`](/api-reference/javascript/v2/modules#hmspreferredsimulcastlayer)) => (`id?`: `string`) => `StoreSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)\>                                                                                                                    |
+| `localVideoTrackStatsByLayer` | (`layer?`: [`HMSPreferredSimulcastLayer`](/api-reference/javascript/v2/home/content#hmspreferredsimulcastlayer)) => (`id?`: `string`) => `StoreSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSTrackStats`](/api-reference/javascript/v2/interfaces/HMSTrackStats)\>                                                                                                               |
 | `packetsLost`                 | `OutputSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| `number`, (`res`: `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)) => `undefined` \| `number`\>                                                                                                                                                                                            |
 | `peerStatsByID`               | (`id?`: `string`) => `StoreSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)\>                                                                                                                                                                                                                                     |
 | `publishBitrate`              | `OutputSelector`<[`HMSStatsStore`](/api-reference/javascript/v2/interfaces/HMSStatsStore), `undefined` \| `number`, (`res`: `undefined` \| [`HMSPeerStats`](/api-reference/javascript/v2/interfaces/HMSPeerStats)) => `undefined` \| `number`\>                                                                                                                                                                                            |
@@ -472,7 +485,7 @@ Select the first auxiliary audio track of a peer given a peer ID.
 
 ### selectAuxiliaryTracksByPeerID
 
-▸ **selectAuxiliaryTracksByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSTrack`](/api-reference/javascript/v2/modules#hmstrack)[]\>
+▸ **selectAuxiliaryTracksByPeerID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSTrack`](/api-reference/javascript/v2/home/content#hmstrack)[]\>
 
 Select an array of auxiliary tracks of a peer given a peer ID.
 
@@ -484,7 +497,7 @@ Select an array of auxiliary tracks of a peer given a peer ID.
 
 #### Returns
 
-`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSTrack`](/api-reference/javascript/v2/modules#hmstrack)[]\>
+`StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, [`HMSTrack`](/api-reference/javascript/v2/home/content#hmstrack)[]\>
 
 ---
 
@@ -748,6 +761,38 @@ Select the number of messages(sent and received).
 #### Returns
 
 `number`
+
+---
+
+### selectHandRaisedPeers
+
+▸ **selectHandRaisedPeers**(`state`): [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]
+
+#### Parameters
+
+| Name    | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
+| `state` | [`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\> |
+
+#### Returns
+
+[`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)[]
+
+---
+
+### selectHasPeerHandRaised
+
+▸ **selectHasPeerHandRaised**(`peerId`): `OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `boolean`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `boolean`\>
+
+#### Parameters
+
+| Name     | Type     |
+| :------- | :------- |
+| `peerId` | `string` |
+
+#### Returns
+
+`OutputSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `boolean`, (`res`: `null` \| [`HMSPeer`](/api-reference/javascript/v2/interfaces/HMSPeer)) => `boolean`\>
 
 ---
 
@@ -2247,7 +2292,7 @@ Select the audio level of a track given a track ID.
 
 ▸ **selectTrackByID**(`id?`): `StoreSelector`<[`HMSStore`](/api-reference/javascript/v2/interfaces/HMSStore)<{ `sessionStore`: `Record`<`string`, `any`\> }\>, `null` \| [`HMSAudioTrack`](/api-reference/javascript/v2/interfaces/HMSAudioTrack) \| [`HMSVideoTrack`](/api-reference/javascript/v2/interfaces/HMSVideoTrack) \| [`HMSScreenVideoTrack`](/api-reference/javascript/v2/interfaces/HMSScreenVideoTrack)\>
 
-Select the [HMSTrack](/api-reference/javascript/v2/modules#hmstrack) object given a track ID.
+Select the [HMSTrack](/api-reference/javascript/v2/home/content#hmstrack) object given a track ID.
 
 #### Parameters
 

@@ -27,6 +27,21 @@ nav: '5.1.1'
 
 ## Type Aliases
 
+### TrackWithPeerAndDimensions
+
+Ƭ **TrackWithPeerAndDimensions**: `Object`
+
+#### Type declaration
+
+| Name      | Type                                     |
+| :-------- | :--------------------------------------- |
+| `height?` | `number`                                 |
+| `peer`    | `HMSPeer`                                |
+| `track?`  | `HMSVideoTrack` \| `HMSScreenVideoTrack` |
+| `width?`  | `number`                                 |
+
+---
+
 ### hooksErrHandler
 
 Ƭ **hooksErrHandler**: (`err`: `Error`, `method?`: `string`) => `void`
@@ -231,9 +246,9 @@ Note:
 
 #### Parameters
 
-| Name          | Type                                                                                  | Default value     | Description                                       |
-| :------------ | :------------------------------------------------------------------------------------ | :---------------- | :------------------------------------------------ |
-| `handleError` | [`hooksErrHandler`](/api-reference/javascript/v2/react-hooks/modules#hookserrhandler) | `logErrorHandler` | error handler for any errors during device change |
+| Name          | Type                                                                                       | Default value     | Description                                       |
+| :------------ | :----------------------------------------------------------------------------------------- | :---------------- | :------------------------------------------------ |
+| `handleError` | [`hooksErrHandler`](/api-reference/javascript/v2/react-hooks/home/content#hookserrhandler) | `logErrorHandler` | error handler for any errors during device change |
 
 #### Returns
 
@@ -418,9 +433,9 @@ filtered by role or metadata with isHandRaised or the entire participants if no 
 
 #### Parameters
 
-| Name      | Type                                                                                              |
-| :-------- | :------------------------------------------------------------------------------------------------ |
-| `params?` | [`useParticipantsParams`](/api-reference/javascript/v2/react-hooks/modules#useparticipantsparams) |
+| Name      | Type                                                                                                   |
+| :-------- | :----------------------------------------------------------------------------------------------------- |
+| `params?` | [`useParticipantsParams`](/api-reference/javascript/v2/react-hooks/home/content#useparticipantsparams) |
 
 #### Returns
 
@@ -474,11 +489,11 @@ This hook can be used to implement remote mute/unmute + audio volume changer on 
 
 #### Parameters
 
-| Name           | Type                                                                                  | Default value     | Description                                      |
-| :------------- | :------------------------------------------------------------------------------------ | :---------------- | :----------------------------------------------- |
-| `audioTrackId` | `string`                                                                              | `undefined`       | of the peer whose tracks need to be managed      |
-| `videoTrackId` | `string`                                                                              | `undefined`       | of the peer whose tracks need to be managed      |
-| `handleError`  | [`hooksErrHandler`](/api-reference/javascript/v2/react-hooks/modules#hookserrhandler) | `logErrorHandler` | to handle any error during toggle of audio/video |
+| Name           | Type                                                                                       | Default value     | Description                                      |
+| :------------- | :----------------------------------------------------------------------------------------- | :---------------- | :----------------------------------------------- |
+| `audioTrackId` | `string`                                                                                   | `undefined`       | of the peer whose tracks need to be managed      |
+| `videoTrackId` | `string`                                                                                   | `undefined`       | of the peer whose tracks need to be managed      |
+| `handleError`  | [`hooksErrHandler`](/api-reference/javascript/v2/react-hooks/home/content#hookserrhandler) | `logErrorHandler` | to handle any error during toggle of audio/video |
 
 #### Returns
 
@@ -499,9 +514,9 @@ For implementing control bar for local peer, this is used based with useAVToggle
 
 #### Parameters
 
-| Name          | Type                                                                                  | Default value     | Description                                    |
-| :------------ | :------------------------------------------------------------------------------------ | :---------------- | :--------------------------------------------- |
-| `handleError` | [`hooksErrHandler`](/api-reference/javascript/v2/react-hooks/modules#hookserrhandler) | `logErrorHandler` | to handle any errors during screenshare toggle |
+| Name          | Type                                                                                       | Default value     | Description                                    |
+| :------------ | :----------------------------------------------------------------------------------------- | :---------------- | :--------------------------------------------- |
+| `handleError` | [`hooksErrHandler`](/api-reference/javascript/v2/react-hooks/home/content#hookserrhandler) | `logErrorHandler` | to handle any errors during screenshare toggle |
 
 #### Returns
 
