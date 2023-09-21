@@ -1,0 +1,25 @@
+name: Link Check
+
+on:
+  pull_request:
+    branches:
+      - qa
+      - main
+  workflow_dispatch:
+
+jobs:
+  link-check:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Run link check
+      uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        use-quiet-mode: 'no'
+        use-verbose-mode: 'yes'
+        check-modified-files-only: 'no'
+        base-branch: 'main'
+        file-extension: '.mdx'
+
+
