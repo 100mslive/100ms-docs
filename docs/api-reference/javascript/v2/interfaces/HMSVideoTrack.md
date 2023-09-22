@@ -116,7 +116,7 @@ BaseTrack.plugins
 
 ### preferredLayer
 
-• `Optional` **preferredLayer**: [`HMSPreferredSimulcastLayer`](/api-reference/javascript/v2/modules#hmspreferredsimulcastlayer)
+• `Optional` **preferredLayer**: [`HMSPreferredSimulcastLayer`](/api-reference/javascript/v2/home/content#hmspreferredsimulcastlayer)
 
 ---
 

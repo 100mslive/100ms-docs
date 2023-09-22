@@ -13,6 +13,8 @@ https://docs.100ms.live/javascript/v2/features/preview
 
 - [`HMSConfig`](/api-reference/javascript/v2/interfaces/HMSConfig)
 
+- `HMSMidCallPreviewConfig`
+
   ↳ **`HMSPreviewConfig`**
 
 ## Properties
@@ -34,6 +36,10 @@ Request Camera/Mic permissions irrespective of role to avoid delay in getting de
 • `Optional` **asRole**: `string`
 
 the role that would be used for preview, note that the role from token would be used to join
+
+#### Inherited from
+
+HMSMidCallPreviewConfig.asRole
 
 ---
 

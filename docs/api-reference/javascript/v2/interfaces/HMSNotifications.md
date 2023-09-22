@@ -22,10 +22,10 @@ We'll provide a display message which can be displayed as it is for common cases
 
 #### Parameters
 
-| Name     | Type                                                                                            |
-| :------- | :---------------------------------------------------------------------------------------------- |
-| `cb`     | [`HMSNotificationCallback`](/api-reference/javascript/v2/modules#hmsnotificationcallback)<`T`\> |
-| `types?` | `T`                                                                                             |
+| Name     | Type                                                                                                 |
+| :------- | :--------------------------------------------------------------------------------------------------- |
+| `cb`     | [`HMSNotificationCallback`](/api-reference/javascript/v2/home/content#hmsnotificationcallback)<`T`\> |
+| `types?` | `T`                                                                                                  |
 
 #### Returns
 
