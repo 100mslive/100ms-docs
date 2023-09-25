@@ -18,9 +18,9 @@ interface HMSPeer {
 
 ## Raise Hand
 
-<Tabs id="meta" items={['Javascript', 'React']} />
+<Tabs id="hand-raise" items={['Javascript', 'React']} />
 
-<Tab id='meta-0'>
+<Tab id='hand-raise-0'>
 
 ```js
 async function toggleRaiseHand() {
@@ -36,7 +36,7 @@ async function toggleRaiseHand() {
 
 </Tab>
 
-<Tab id='meta-1'>
+<Tab id='hand-raise-1'>
 
 ```jsx
 const RaiseHand = () => {
@@ -62,13 +62,13 @@ const RaiseHand = () => {
 
 ## Hand Raise update Notification
 
-Once the metadata is updated, all the peers will receive a notification
-with type `METADATA_UPDATED` and [HMSPeer](/api-reference/javascript/v2/interfaces/HMSPeer)
+Once the hand raise is updated by local peer, all the peers will receive a notification
+with type `HAND_RAISE_CHANGED` and [HMSPeer](/api-reference/javascript/v2/interfaces/HMSPeer)
 object as notification data.
 
-<Tabs id="meta-notif" items={['Javascript', 'React']} />
+<Tabs id="hand-raise-notif" items={['Javascript', 'React']} />
 
-<Tab id='meta-notif-0'>
+<Tab id='hand-raise-notif-0'>
 
 ```js
 hmsNotifications.onNotification((notification) => {
@@ -82,7 +82,7 @@ hmsNotifications.onNotification((notification) => {
 
 </Tab>
 
-<Tab id='meta-notif-1'>
+<Tab id='hand-raise-notif-1'>
 
 ```jsx
 const notification = useHMSNotifications(HMSNotificationTypes.HAND_RAISE_CHANGED);
