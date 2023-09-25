@@ -1,34 +1,32 @@
 ## Overview
 
-Live video interactions can span various levels of interactivity. For example, in a virtual event, some participants can be on stage talking to each other, whereas participants in the audience can be listening to them.
+Live video interactions can span across levels of interactivity; for instance, in a virtual event, some participants may be on stage conversing, while others off stage listen
 
-At 100ms, we think of this as the **3 levels of interactivity**. 100ms enables you to build live video use-cases by mixing and matching these 3 levels to get to your ideal solution.
+At 100ms, we categorize live video interactions into three levels of interactivity. This enables you to construct live video use-cases by mixing and matching these levels to achieve your ideal solution.
 
--   **Level 1**: Full duplex audio/video in real-time
+-   **On Stage** (WebRTC): Full duplex audio/video in real-time\
+    On stage participants can publish their audio/video and interact with others with sub-second latency, similar to real-time video conferencing platforms like Zoom or Google Meet
 
-    Level 1 participants publish their audio/video, and interact with others in sub-second latency. This is real-time video conferencing, similar to Zoom or Google Meet.
+-   **Off Stage** (WebRTC): Webinar-style audience with sub-second latency
 
--   **Level 2**: Webinar-style audience in real-time
+    Off stage pariticpants consume audio/video from On stage participants with sub-second latency but do not publish their own audio/video. They can, however, engage with on stage participants through messaging, such as chat, emojis, and custom events, similar to a Zoom webinar.
+    Both on stage and off stage interactions are enabled using WebRTC.
 
-    Level 2 participants consume audio/video from level 1 participants with sub-second latency, without publishing their own audio/video. Level 2 participants can engage with level 1 through messaging (chat, emojis, custom events). This is similar to a Zoom webinar.
+-   **Delayed Stream** (HLS): Live stream audience consuming a delayed Stream (\<10s delay)
 
-    Levels 1 and 2 are enabled using WebRTC.
-
--   **Level 3**: Live stream audience consuming in near real-time
-
-    Level 3 participants consume a composite live stream in near real-time (\<10 secs of latency) without publishing their audio/video. They can interact with other participants via messaging. This is similar to viewers on Twitch or YouTube Live, and is enabled via **100ms Interactive Live Streaming**.
+    Delayed Stream particpants consume a composite live stream, with less than 10 seconds of latency, without publishing their own audio/video, interacting with other participants via messaging. This experience is similar to platforms like Twitch or YouTube Live and is facilitated through 100ms Interactive Live Streaming
 
     Live streaming uses [HLS](https://www.100ms.live/blog/hls-101-beginners-guide) to achieve near real-time latency at scale.
 
-The [roles primitive](/javascript/v2/foundation/templates-and-roles) can be used to define capabilities of a participant and associate them to an interaction level. A participant can move between levels using a single API call to change roles.
+The [roles primitive](/javascript/v2/foundation/templates-and-roles#roles) allows defining participant capabilities and associating them with an interaction level, enabling participants to move between levels with a single API call to change roles.
 
 ## Try Interactive Live Streaming
 
-Use our [Live Streaming Starter Kit](https://www.100ms.live/marketplace/live-streaming-starter-kit) to try out the experience before you write a line of code.
+Create your Live Streaming use-case using [Prebuilt and Customiser](https://www.100ms.live/marketplace/live-streaming-starter-kit) to try out the experience before you write a line of code.
 
 <StepsToc
 parentId="try-live-streaming"
-descriptions={["Use our Live streaming starter kit to try out the experience before you write a line of code.", "Understand the difference between a stream broadcaster and stream viewer.", "Use the demo app link to go live for the first time as a broadcaster and join the stream as viewer.", "Use the 100ms self-serve dashboard to update the layout, aspect ratio, etc of the stream."]}
+descriptions={["Use our Live streaming starter kit to try out the experience before you write a line of code.", "Understand the difference between a stream broadcaster and stream viewer.", "Use the demo app link to go live for the first time as a broadcaster and join the stream as viewer.", "Use the 100ms self-serve dashboard to update the layout, aspect ratio, etc., of the stream."]}
 
 />
 
@@ -36,27 +34,32 @@ descriptions={["Use our Live streaming starter kit to try out the experience bef
 
 ### Create a new template
 
-![Live streaming starter kit](/docs/v2/live-streaming-starter-kit.png)
+![Live streaming starter kit](/docs/v2/live-streaming/live-streaming-template.png)
 
-1. Make sure that you have [an account with 100ms](https://dashboard.100ms.live/register) and can access the [100ms dashboard](https://dashboard.100ms.live/)
-1. On the dashboard, create a new template using the Live Streaming preset
-1. Specify a subdomain and region on the next screen
+1. Make sure that you have [an account with 100ms](https://dashboard.100ms.live/register), then go to [100ms dashboard](https://dashboard.100ms.live/)
+1. On the dashboard, start by creating a new Template and select the Live Streaming use-case
+1. Configure the template with your preferences
+1. Select add-ons such as recording and storage
+1. Specify a template name, subdomain and region
 
 ### Understand roles
 
-![Live Streaming roles](/docs/v2/live-streaming-roles.png)
+![Live Streaming roles](/docs/v2/live-streaming/live-streaming-roles.png)
 
-This preset configures your new template with [two roles](/javascript/v2/foundation/templates-and-roles). All rooms created based on this template will have this configuration.
+This preset configures your new template with 4/5 [roles](/javascript/v2/foundation/templates-and-roles). All rooms created based on this template will have this configuration.
 
--   `broadcaster`: This role represents a streamer who publishes their audio/video. There can be multiple peers who join as broadcasters
--   `hls-viewer`: This role represents a circle 3 audience, who subscribes to the composite live stream and can interact using messaging
+-   `broadcaster`: This role represents a streamer who can publish their audio/video. There can be multiple peers who join as broadcasters
+-   `co-broadcaster`: This role represents a streamer who can publish their audio/video but cannot start/end the streaming session
+-   `viewer-realtime`: This role represents a participant at level 2 (WebRTC), who subscribes participants at level 1, but cannot publish audio/video
+-   `viewer-near-realtime`: This role represents a participant at level 3 (HLS), who subscribes to the composite live stream and can interact using messaging
 
 ### Go live
-
-![Go live](/docs/v2/live-streaming-go-live.gif)
+<video loop="true" autoplay="autoPlay" controls="false" id="vid" muted>
+    <source src="/docs/docs/v2/live-streaming/live-streaming-go-live.mp4" type="video/mp4" />
+</video>
 
 1. To go live for the first time, join the room as a `broadcaster` and start the live stream
-2. Once the stream has started, join the room as an `hls-viewer` and you should be able to see the ongoing live stream
+2. Once the stream has started, join the room as an `viewer-realtime` and you should be able to see the ongoing live stream
 3. Use chat messages to interact between the viewer and the broadcaster
 
 ### Customize the stream
