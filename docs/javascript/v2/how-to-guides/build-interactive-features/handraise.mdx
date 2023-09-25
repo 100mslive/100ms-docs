@@ -1,0 +1,99 @@
+---
+title: Hand Raise
+nav: 1.37
+---
+
+Prerequisites:
+
+Minimum required SDK version: [here](../../changelog/release-notes#2023-09-13)
+
+Raise Hand and lower hand is now supported as a first class API with 100ms.
+
+```ts
+interface HMSPeer {
+    ...
+    isHandRaised: boolean;
+}
+```
+
+## Raise Hand
+
+<Tabs id="meta" items={['Javascript', 'React']} />
+
+<Tab id='meta-0'>
+
+```js
+async function toggleRaiseHand() {
+    const localPeerId = hmsStore.getState(selectLocalPeerID);
+    const isHandRaised = hmsStore.getState(selectHasPeerHandRaised(localPeerId));
+    if (isHandRaised) {
+        await hmsActions.lowerLocalPeerHand();
+    } else {
+        await hmsActions.raiseLocalPeerHand();
+    }
+}
+```
+
+</Tab>
+
+<Tab id='meta-1'>
+
+```jsx
+const RaiseHand = () => {
+    const localPeerId = useHMSStore(selectLocalPeerID);
+    const isHandRaised = useHMSStore(selectHasPeerHandRaised(localPeerId));
+    const hmsActions = useHMSActions();
+    const toggleRaiseHand = useCallback(async () => {
+        if (isHandRaised) {
+            await hmsActions.lowerLocalPeerHand();
+        } else {
+            await hmsActions.raiseLocalPeerHand();
+        }
+    }, [hmsActions, isHandRaised]);
+    return (
+        <button onClick={toggleRaiseHand}>
+            {isHandRaised ? 'Lower Hand' : 'Raise Hand'}
+        </button>
+    );
+};
+```
+
+</Tab>
+
+## Hand Raise update Notification
+
+Once the metadata is updated, all the peers will receive a notification
+with type `METADATA_UPDATED` and [HMSPeer](/api-reference/javascript/v2/interfaces/HMSPeer)
+object as notification data.
+
+<Tabs id="meta-notif" items={['Javascript', 'React']} />
+
+<Tab id='meta-notif-0'>
+
+```js
+hmsNotifications.onNotification((notification) => {
+    const peer = notification.data;
+    constisHandRaised  = peer.isHandRaised;
+    if (isHandRaised && !peer.isLocal) {
+        toast(`${peer.name} raised their hand.`);
+    }
+}, HMSNotificationTypes.HAND_RAISE_CHANGED);
+```
+
+</Tab>
+
+<Tab id='meta-notif-1'>
+
+```jsx
+const notification = useHMSNotifications(HMSNotificationTypes.HAND_RAISE_CHANGED);
+const peer = notification?.data;
+
+useEffect(() => {
+    if (peer && !peer.isLocal && peer.isHandRaised) {
+        toast(`${peer.name} raised their hand.`);
+    }
+}, [peer]);
+```
+
+</Tab>
+
