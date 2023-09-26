@@ -9,12 +9,12 @@ At 100ms, we categorize live video interactions into three levels of interactivi
 
 -   **Off Stage (WebRTC)**: Webinar-style audience with sub-second latency
 
-    Off stage pariticpants consume audio/video from On stage participants with sub-second latency but do not publish their own audio/video. They can, however, engage with on stage participants through messaging, such as chat, emojis, and custom events, similar to a Zoom webinar.
+    Off stage pariticipants consume audio/video from On stage participants with sub-second latency but do not publish their own audio/video. They can, however, engage with on stage participants through messaging, such as chat, emojis, and custom events, similar to a Zoom webinar.
     Both on stage and off stage interactions are enabled using WebRTC.
 
 -   **Off Stage (HLS Delayed Stream)**: Live stream audience consuming a delayed Stream (\<10s delay)
 
-    Delayed Stream particpants consume a composite live stream, with less than 10 seconds of latency, without publishing their own audio/video, interacting with other participants via messaging. This experience is similar to platforms like Twitch or YouTube Live and is facilitated through 100ms Interactive Live Streaming
+    Delayed Stream participants consume a composite live stream, with less than 10 seconds of latency, without publishing their own audio/video, interacting with other participants via messaging. This experience is similar to platforms like Twitch or YouTube Live and is facilitated through 100ms Interactive Live Streaming
 
     **Live streaming uses [HLS](https://www.100ms.live/blog/hls-101-beginners-guide) to achieve near real-time latency at scale.**
 
@@ -47,7 +47,7 @@ descriptions={["Use our Live Streaming template to build your use-case without w
 </video>
 
 1. Choose where the Broadcaster will join from. This will ensure the end user experience is optimised based on Broadcaster's video aspect ratio.
-1. Select if viewers can be temporarily brought on stage to enable the broadcaster and co-broadcaster to temporarilty invite viewers on stage, and remove them later.
+1. Select if viewers can be brought on stage to enable the broadcaster and co-broadcaster to temporarily invite viewers on stage, and remove them later.
 1. Choose if you want to record the stream. Recording will automatically start when the Broadcaster goes live.
 1. Finally, choose what type of recording you require. Video on demand (.m3u8) is optimised for re-streaming content later, while .mp4 is optimised for post processing (such as editing the video).
 
@@ -60,7 +60,7 @@ This configures your new template with [roles](/javascript/v2/foundation/templat
 -   `broadcaster`: This role represents a streamer, on stage, who can publish their audio/video. There can be multiple peers who join as broadcasters
 -   `co-broadcaster`: This role represents a streamer, on stage, who can publish their audio/video but cannot start/end the streaming session
     {/* -   `viewer-realtime`: This role represents an off stage participant (WebRTC), who subscribes to on stage participants, but cannot publish audio/video */}
--   `viewer-delayed-stream`: This role represents an off stage particpant (HLS) with a delayed stream, who subscribes to the composite live stream and can interact using messaging
+-   `viewer-delayed-stream`: This role represents an off stage participant (HLS) with a delayed stream, who subscribes to the composite live stream and can interact using messaging
 -   `viewer-on-stage` (optional): This role represents a temporarily on stage participant (WebRTC), who subscribes to on stage participants, and can share video/audio
 
 ### Experience
