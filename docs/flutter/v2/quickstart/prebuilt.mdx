@@ -24,8 +24,8 @@ This section contains instructions to create a simple Flutter video conferencing
 To complete this implementation, you must have the following:
 
 -   A [100ms account](https://dashboard.100ms.live/register) if you don't have one already.
--   [Flutter](https://docs.flutter.dev/get-started/install) `3.7.12` or higher
--   Dart `2.12.0` or above
+-   [Flutter](https://docs.flutter.dev/get-started/install) `3.10.0` or higher
+-   Dart `3.0.0` or above
 -   Use [VS code](https://code.visualstudio.com/), [Android Studio](https://developer.android.com/studio), [Xcode](https://developer.apple.com/xcode/) or any other IDE that supports Flutter. For more information on setting up an IDE, check [Flutter's official guide](https://docs.flutter.dev/get-started/editor).
 
 ### Create a Flutter app
@@ -167,6 +167,23 @@ HMSPrebuilt(
 
 </Tab>
 
+### Leave Room callback
+
+Sometimes your apps need to do some cleanup when the user leaves the room. To do this, you can use the `onLeave` callback of `HMSPrebuilt` widget.
+You need to pass a function to the `onLeave` callback which will be called when the user leaves the room.
+
+```dart
+void performCleanup() {
+    // Do some cleanup here
+}
+
+HMSPrebuilt(
+    roomCode: "abc-defg-hij",
+    ///This function will be called when the user leaves the room
+    onLeave: performCleanup
+);
+```
+
 ### Add the 100ms room kit to your app
 
 We will be adding a join button to the app, on the button click we will route the user to the 100ms room kit. To do this, follow the steps below:
@@ -221,3 +238,53 @@ You can download & check out the 100ms Flutter app -
 🤖 Flutter Android app from [Google Play Store](https://play.google.com/store/apps/details?id=live.hms.flutter).
 
 📱 Flutter iOS app from [Apple App Store](https://apps.apple.com/app/100ms-live/id1576541989).
+
+### Supplementary Bytes
+
+Let's understand the `HMSPrebuilt` Widget and its parameters a bit more in detail.
+
+`HMSPrebuilt` is a StatelessWidget that you can plug in anywhere in your application to get a fully functional video conferencing/streaming experience,
+Customizable via dashboard.
+
+It takes following parameters:
+
+- `roomCode` - The room code of the room you want to join. You can get the room code from the [100ms dashboard](https://dashboard.100ms.live/).
+                 To know more about room code check the docs [here](https://www.100ms.live/docs/get-started/v2/get-started/prebuilt/room-codes/room-code-auth).
+
+- `onLeave`  - A callback function that will be called when the user leaves the room. This is useful in cases where you wish to perform some operations when the user leaves the room.
+
+- `options`  - This is an instance of `HMSPrebuiltOptions` which is used to send parameters to prebuilt such as endPoints, userId, screenshare configs etc.
+
+HMSPrebuiltOptions class has following fields:
+
+```dart
+class HMSPrebuiltOptions {
+
+  //The name of the user
+  final String? userName;
+
+  //The id of the user
+  final String? userId;
+
+  //The token and init endpoints
+  final Map<String, String>? endPoints;
+
+  //To enable the debug mode for the prebuilt
+  final bool debugInfo;
+
+  //Screen share Config, to enable screen share for iOS
+  //If you wish to enable screen share for iOS, you need to pass
+  //this config
+  final HMSIOSScreenshareConfig? iOSScreenshareConfig;
+
+}
+```
+
+- userName: String? - The name of the user that will be displayed in the room.
+- userId: String? - The userId of the user.
+- endPoints: Map<String, String>? - If you have your own token server you can pass the endPoints using the `endPoints` parameter.
+- iOSScreenshareConfig: HMSIOSScreenshareConfig? - If you want to enable screenshare in your iOS app, you need to pass the `iOSScreenshareConfig` parameter.
+                                                   To know more about how to set iOSScreenshareConfig check the docs [here](https://www.100ms.live/docs/flutter/v2/how-to-guides/set-up-video-conferencing/screen-share#ios-setup).
+
+Have questions or need help? 
+Feel free to join us on [Discord](https://discord.gg/jD94Fp74Ea)
