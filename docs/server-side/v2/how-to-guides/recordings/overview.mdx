@@ -52,11 +52,25 @@ curl --request POST 'https://api.100ms.live/v2/recordings/room/<room_id>/start' 
 
 ### Automate start recording (Optional)
 
-Instead of relying on peers in the room to start recording, you use room lifecycle events to automate start recording. If you want to start recording when the first peer joins, you can also enable "auto-start" on the template configuration (see step 1).
+<Tabs id="automate-start-recording" items={['For all rooms and sessions (Through Dashboard)','For specific rooms and sessions ']} />
+
+<Tab id='automate-start-recording-0'>
+
+If you wish to automatically start 'Room composite' recordings for all your rooms and sessions when the first peer joins, you can enable the **'Enable auto-start on room join'** toggle in the **Recording** settings on the template dashboard. Note that enabling this will disable HLS and RTMP streaming for that template if you have them enabled.
+
+![enable autostart recording](/docs/v2/enable-auto-start-recording.gif)
+
+
+</Tab>
+<Tab id ='automate-start-recording-1'>
+
+If you wish to only automatically trigger recording only for *specific* rooms and sessions, then it'll have to be instrumented using our webhooks and APIs. Instead of relying on peers in the room to start recording, you use room lifecycle events to automate start recording operation.
 
 To do so, set up a [webhook listener](../configure-webhooks/overview) and act on the relevant webhook:
 
 - Start recording when a particular peer joins: Use the [`peer.join.success` event](../configure-webhooks/webhook#peerjoinsuccess) to start recording (with the above API)
+
+</Tab>
 
 ### Listen to recording status updates
 

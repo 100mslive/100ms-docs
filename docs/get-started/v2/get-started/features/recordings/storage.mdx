@@ -3,51 +3,57 @@ title: Storage configuration
 nav: 3.14
 ---
 
-100ms can upload recordings to your preferred cloud storage location. We support these providers:
+100ms can upload your recordings to your preferred cloud storage location. We support the following providers:
 
 - Amazon Simple Storage Service (AWS S3)
 - Google Cloud Storage (GCP)
 - Alibaba Object Storage (OSS)
 
-If you don't configure a cloud storage service, then recordings will be stored temporarily (for 15 days) in a storage location managed by 100ms. Post a successful recording, the recording asset can be accessed on the [100ms dashboard](https://dashboard.100ms.live/sessions) or [through the REST API](/server-side/v2/api-reference/recording-assets/get-asset).
+By default, recordings will be stored temporarily (for 15 days) in a storage location managed by 100ms if nothing is configured. Post a successful recording, the recording asset(s) can be accessed on the [100ms dashboard](https://dashboard.100ms.live/sessions) or [through the REST API](/server-side/v2/api-reference/recording-assets/get-asset).
 
-## Configure storage
+## Configure recording storage
 
-### On the 100ms Dashboard
+<Tabs id="configure-storage" items={['Dashboard','REST API']} />
 
-You can configure storage in your template's recording settings on the 100ms Dashboard. As an example, this is how you would configure an S3 location:
+<Tab id='configure-storage-0'>
 
-1. Generate your credentials; for this example, you can check out a [guide from AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html). You can skip this step if you already have credentials. Please note that if you are running a Browser recording, you need to give upload permission to your key, but if you are running an SFU recording, you need to give both upload and download permission.
+You can configure storage in your template's recording settings on the 100ms Dashboard. As an example, this is how you would configure a GCP location:
 
-2. Go to 100ms Dashboard and go to template **configuration by selecting the configure icon**.
+1. Generate your credentials; for this example, you can check out a [guide from AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html). Skip this step if you already have credentials. 
+    
+    > **Note**
+    > 
+    > If you are using [Room Composite recording](/get-started/v2/get-started/features/recordings/overview#composite-recordings), you need to give upload permission to your key, but if you are using the [SFU legacy recording](/get-started/v2/get-started/features/recordings/overview#legacy-composite-through-sfu-recording), you need to give both upload and download permissions.
 
-![Create your first app](/docs/v2/recording-storage-settings-step2.png)
+2. Go to 100ms Dashboard and go to template configuration by selecting **'Configure'** under **Templates**
 
-3. Head over to the **Destinations** tab.
+3. Head over to the **Recordings** tab.
 
-![Destinations](/docs/v2/recording-storage-settings-step3.png)
+4. Key in your credentials (using an example of an Google Cloud Services (GCP) bucket here):
 
-1. Key in your credentials (using an example of an S3 bucket here):
-
-    - Access Key: Access Key generated from AWS IAM Console
-    - Secret Key: Secret Key generated from AWS IAM Console
-    - Bucket: Name of the bucket in S3
-    - Region: Name of the region, for example, ap-south-1
+    - Access Key: Access Key generated from GCP IAM Console
+    - Secret Key: Secret Key generated from GCP IAM Console
+    - Bucket: Name of the bucket in GCP
+    - Region: Name of the region, for example, asia-south1
     - Prefix for Upload Path: Define the directory name (optional)
 
-![Destinations](/docs/v2/recording-storage-settings-step4.png)
+5. Click on the **Validate** button to test your storage setup.
 
-5. Use the **Validate Config** button to test your storage setup.
+6. A toast with the message 'Recording upload config validated successfully' will pop-up in the top right. This confirms that the configuration is successful.
 
-![Destinations](/docs/v2/recording-storage-settings-step5.png)
+7. Save your updated settings.
 
-6. You will see a message that the AWS **configuration was successfully validated**.
+The following video will walk you through the above steps.
 
-![Destinations](/docs/v2/recording-storage-settings-step6.png)
+<br/>
+<video loop="true" controls="controls" id="vid">
+    <source src="https://storage.googleapis.com/100ms-cms-prod/cms/Storage_Configuration_0f8798fee3/Storage_Configuration_0f8798fee3.mp4?updated_at=2023-09-26T15:27:18.214Z" type="video/mp4" />
+</video>
+<br/>
 
-The above message ensures that your configuration is successful now, and all your recordings will start collecting in your configured destination.
+</Tab>
 
-### With the REST API
+<Tab id='configure-storage-1'>
 
 Use the [Policy API](https://www.100ms.live/docs/server-side/v2/api-reference/policy/create-template-via-api) to programmatically configure your storage location.
 
@@ -59,33 +65,43 @@ You can configure the **`type`** field of recording object to `s3` for AWS, `oss
 - Region: Name of the region where your bucket is located in
 - Prefix for Upload Path: Define the directory name (optional)
 
+</Tab>
+
 ## Fetching the asset
 
-### Using the 100ms Dashboard
+<Tabs id="fetch-recordings" items={['Dashboard','REST API','Webhooks']} />
+
+<Tab id='fetch-recordings-0'>
 
 You can access your recordings on the [sessions page](https://dashboard.100ms.live/sessions) in the 100ms Dashboard.
 
 ![Recording Links](/docs/v2/recording-links-session.png)
 
-### Using the REST API
+</Tab>
+
+<Tab id='fetch-recordings-1'>
 
 Recordings generate [recording assets](/server-side/v2/api-reference/recording-assets/overview) that can be fetched with the REST API.
 
-### Get webhooks
+</Tab>
+
+<Tab id='fetch-recordings-2'>
 
 100ms can send webhooks when the recording has stopped and is available for download. The recording path is available in following webhook responses:
 
-- Room composite (also called browser) recording: [beam.recording.success](/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `recording_path`)
-- Room composite - legacy (also called SFU) recording: [recording.success](/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `recording_path`)
-- Recordings enabled with live streaming (HLS): [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess)
+- Room Composite (also called browser) recording: [beam.recording.success](/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `recording_path`)
+- Room Composite - Legacy (also called SFU) recording: [recording.success](/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `recording_path`)
+- Live Stream Recording (HLS): [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess)
+
+</Tab>
 
 ### Path formats
 
 The recording path for these respective recordings will look like:
 
-1. Room composite (also called browser) recording: `s3://<location>/<prefix>/beam/<room_id>/<start_date>/Rec-<room_id>-<epoch>.mp4`
+1. Room Composite (also called browser) recording: `s3://<location>/<prefix>/beam/<room_id>/<start_date>/Rec-<room_id>-<epoch>.mp4`
 
-2. Room composite - legacy (also called SFU) recording:
+2. Room Composite - Legacy (also called SFU) recording:
 
     1. Composite: `s3://<location>/<prefix>/<room_id>/<start_date>/<session_id>/Rec-<session_id>-<epoch>.mp4`
 
@@ -93,10 +109,10 @@ The recording path for these respective recordings will look like:
 
 3. Multi-resolution recording (available in HLS): `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/file-recording/Rec-<room_id>-<epoch>-<layer_index>.mp4`
 
-4. VOD recording (available in HLS): `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/vod/Rec-<room_id>-<epoch>.zip`
+4. VOD recording (Zipped - available in HLS): `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/vod/Rec-<room_id>-<epoch>.zip`
 
-| Name    | Description                                                                                                                                                                                 |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Name        | Description                                                                                                                                                                                 |
+|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Location    | Name of the bucket where recordings are stored                                                                                                                                              |
 | Prefix      | Prefix for upload path which is configured in storage settings of your template. If not configured, the default value for this will be your Customer ID                                     |
 | Room ID     | The identifier for the room which was recorded                                                                                                                                              |
