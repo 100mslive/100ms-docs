@@ -19,37 +19,39 @@ By default, recordings will be stored temporarily (for 15 days) in a storage loc
 
 You can configure storage in your template's `Recording` tab on the 100ms Dashboard. As an example, this is how you would configure a GCP location:
 
+<br/>
+<video loop="true" controls="controls" id="vid">
+    <source src="https://storage.googleapis.com/100ms-cms-prod/cms/Storage_Configuration_0f8798fee3/Storage_Configuration_0f8798fee3.mp4?updated_at=2023-09-26T15:27:18.214Z" type="video/mp4" />
+</video>
+<br/>
+
 1. Generate your credentials; for this example, you can check out a [guide from AWS](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html). Skip this step if you already have credentials. 
     
     > **Note**
     > 
     > If you are using [Room Composite recording](/get-started/v2/get-started/features/recordings/overview#composite-recordings), you need to give upload permission to your key, but if you are using the [SFU legacy recording](/get-started/v2/get-started/features/recordings/overview#legacy-composite-through-sfu-recording), you need to give both upload and download permissions.
 
-2. Go to 100ms Dashboard and go to template configuration by selecting **'Configure'** under **Templates**
+2. Go to 100ms Dashboard and go to template configuration by selecting **'Configure'** under **Templates**. The below image shows two options to access template configuration.
+
+![configure template](/docs/v2/configure-template.png)
 
 3. Head over to the **Recording** tab.
 
 4. Key in your credentials (using an example of an Google Cloud Services (GCP) bucket here):
 
-    - Access Key: Access Key generated from GCP IAM Console
-    - Secret Key: Secret Key generated from GCP IAM Console
-    - Bucket: Name of the bucket in GCP
-    - Region: Name of the region, for example, asia-south1
-    - Prefix for Upload Path: Define the directory name (optional)
+    - **Access Key**: Access Key generated from GCP IAM Console
+    - **Secret Key**: Secret Key generated from GCP IAM Console
+    - **Bucket**: Name of the bucket in GCP
+    - **Region**: Name of the region, for example, asia-south1
+    - **Prefix for Upload Path**: Define the directory name (optional)
 
 5. Click on the **Validate** button to test your storage setup.
 
 6. A toast with the message 'Recording upload config validated successfully' will pop-up in the top right. This confirms that the configuration is successful.
 
+![Recording storage validation](/docs/v2/storage-validation.png)
+
 7. Save your updated settings.
-
-The following video will walk you through the above steps.
-
-<br/>
-<video loop="true" controls="controls" id="vid">
-    <source src="https://storage.googleapis.com/100ms-cms-prod/cms/Storage_Configuration_0f8798fee3/Storage_Configuration_0f8798fee3.mp4?updated_at=2023-09-26T15:27:18.214Z" type="video/mp4" />
-</video>
-<br/>
 
 </Tab>
 
@@ -90,8 +92,8 @@ Recordings generate [recording assets](/server-side/v2/api-reference/recording-a
 100ms can send webhooks when the recording has stopped and is available for download. The recording path is available in following webhook responses:
 
 - Room composite recording: [beam.recording.success](/server-side/v2/introduction/webhook#beamrecordingsuccess) (attribute: `recording_path`)
-- Room Composite - Legacy (also called SFU) recording: [recording.success](/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `recording_path`)
-- Live Stream Recording (HLS): [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess)
+- Room composite - legacy recording (SFU recording): [recording.success](/server-side/v2/introduction/webhook#sfu-recording-events) (attribute: `recording_path`)
+- HLS Recording: [hls.recording.success](/server-side/v2/introduction/webhook#hlsrecordingsuccess)
 
 </Tab>
 
@@ -99,17 +101,17 @@ Recordings generate [recording assets](/server-side/v2/api-reference/recording-a
 
 The recording path for these respective recordings will look like:
 
-1. Room Composite (also called browser) recording: `s3://<location>/<prefix>/beam/<room_id>/<start_date>/Rec-<room_id>-<epoch>.mp4`
+1. Room composite recording: `s3://<location>/<prefix>/beam/<room_id>/<start_date>/Rec-<room_id>-<epoch>.mp4`
 
-2. Room Composite - Legacy (also called SFU) recording:
+2. Room composite - legacy recording (SFU recording):
 
     1. Composite: `s3://<location>/<prefix>/<room_id>/<start_date>/<session_id>/Rec-<session_id>-<epoch>.mp4`
 
     2. Individual: `s3://<location>/<prefix>/<room_id>/<start_date>/<session_id>/<peer_id>/<stream_id>/<track_id>.webm`
 
-3. Multi-resolution recording (available in HLS): `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/file-recording/Rec-<room_id>-<epoch>-<layer_index>.mp4`
+3. HLS recording - Multi-resolution layer: `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/file-recording/Rec-<room_id>-<epoch>-<layer_index>.mp4`
 
-4. VOD recording (Zipped - available in HLS): `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/vod/Rec-<room_id>-<epoch>.zip`
+4. HLS recording - Zipped Video-on-demand: `s3://<location>/<prefix>/hls/<room_id>/<start_date>/<epoch>/vod/Rec-<room_id>-<epoch>.zip`
 
 | Name        | Description                                                                                                                                                                                 |
 |-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
