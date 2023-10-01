@@ -7,16 +7,20 @@ There are 2 methods to get composite recordings in 100ms. If you have been using
 
 ### Quick comparison
 
-| Features                | Composite recordings | SFU recording (legacy) |
-| ----------------------- | -------------- | --------------------- |
-| Asset type generated    | room-composite | room-composite-legacy |
-| Recording method        | Browser        | SFU                   |
-| Composition quality     | Higher | Lower |
-| Portrait/landscape mode | Available      | Not available         |
-| Start method            | Auto-start and on-demand | Auto start only |
-| UI customization        | Available      | Not available         |
-| Role-specific recording | Available      | Not available         |
-| Resolution              | Customizable up to 1080p     | 720p    |
+| Features                | Composite recordings     | SFU recording (legacy) |
+|-------------------------|--------------------------|------------------------|
+| Asset type generated    | room-composite           | room-composite-legacy  |
+| Recording method        | Browser                  | SFU                    |
+| Composition quality     | Higher                   | Lower                  |
+| Portrait/landscape mode | Available                | Not available          |
+| Start method            | Auto-start and on-demand | Auto start only        |
+| UI customization        | Available                | Not available          |
+| Role-specific recording | Available                | Not available          |
+| Resolution              | Customizable up to 1080p | 720p                   |
+
+> **Note**
+>
+> Another way to start SFU recording is to programmatically create a room using the [Create Room REST API](/server-side/v2/api-reference/Rooms/create-via-api) and passing `recording_info` object with `enabled` key set as `true`. Instead, we recommend to use the [Room APIs](/server-side/v2/api-reference/Rooms/overview) paired with the [Recording APIs](/server-side/v2/api-reference/recordings/overview) if you wish to programmatically control room and recording operations.
 
 ### How-to migrate
 
