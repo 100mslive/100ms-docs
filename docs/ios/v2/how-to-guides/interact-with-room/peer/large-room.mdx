@@ -1,0 +1,146 @@
+---
+ title: HandRaise, Peer count and Support for Large Rooms
+ nav: 7.26
+---
+
+Previously, you had to implement **handRaise** functionality with peer metadata. But that is no more required. We have made raising/lowering hand as **first class API** on HMSSDK.
+
+## How to raise hand
+
+```swift
+hmsSDK.raiseLocalPeerHand() { success, error in
+    // handle error if any
+}
+```
+
+## How to lower hand
+
+```swift
+hmsSDK.lowerLocalPeerHand() { success, error in
+    // handle error if any
+}
+```
+
+## How to lower hand of remote peer
+
+```swift
+let remotePeer: HMSPeer
+hmsSDK.lowerRemotePeerHand(remotePeer) { success, error in
+    // handle error if any
+}
+```
+
+## How to know when a peer raises hand
+
+Listen to callbacks when local  or remote peer’s hand raise status is changed in **on(peer:update:)** callback of **HMSUpdateListener**:
+
+```swift
+func on(peer: HMSPeer, update: HMSPeerUpdate) {
+	if(update == .handRaiseUpdated) {
+		// Update UI of hmsPeer
+	}
+}
+```
+
+Or you can use the new getter **isHandRaised** on **HMSPeer** to fetch the status of handRaise of any peer. **isHandRaised** property is added in **HMSPeer** to denote if hand is raised for the peer.
+
+```swift
+hmsPeer.isHandRaised
+```
+
+## How to get Total Peer count of the room
+
+Use **peerCount** property of HMSRoom to get the latest peer count of the room. Whenever peer count is udated, SDK sends a **peerCountUpdated** notification to the app in **on(room:update:)** as well.
+
+```swift
+func on(room: HMSRoom, update: HMSRoomUpdate) {
+	if(update == .peerCountUpdated) {
+		// Update UI of peer count
+	}
+}
+```
+
+# How to get list of peers in a large room
+
+You don't want to fetch every peer if the room is very large. You get a peer list iterator instead.
+
+## How to get peer list iterator in a large room
+
+You call **getPeerListIterator** method on **HMSSDK** instance to get **HMSPeerListIterator**.
+
+```swift
+let options = HMSPeerListIteratorOptions(filterByRoleName: nil, filterByPeerIds: nil, limit: 10)
+let peerListIterator = hmsSDK.getPeerListIterator(options: options)
+```
+
+Now with **peerListIterator** instance you can incremently load peers, or check peer count without fetching the peers.
+
+## How to use peer iterator to load peers incremently
+
+You use **next** method on **HMSPeerListIterator** to check if there are more peers available to fetch.
+
+```swift
+peerListIterator.next() { loadedPeers, error in
+    if let loadedPeers = loadedPeers {
+        // store newly loaded peers to show in UI
+    }
+}
+```
+
+### How to check if more peers are available to load
+
+You use **hasNext** property on **HMSPeerListIterator** to check if there are more peers available to fetch.
+
+```swift
+if peerListIterator.hasNext {
+    // load next set of peers
+}
+```
+
+### How to check the total count of peers in the peer list
+
+You use **totalCount** property on **HMSPeerListIterator** to check if there are more peers available to fetch.
+
+```swift
+if peerListIterator.hasNext {
+    // load next set of peers
+}
+```
+
+
+Metadata can be set initially in the `HMSConfig` object that's passed into the join method.
+
+This section will show you how to:
+
+1.  [Read Peer Metadata](#reading-metadata).
+2.  [Respond to when a remote peer changes its metadata](#responding-to-updates).
+3.  [How to set a peer's metadata](#updating-metadata).
+
+The `HMSPeer` object prior to 0.2.1 contained `customerDescription` a read-only string whose value wouldn't change throughout a call. This has been replaced with `metadata`. The value is initially assigned as before but now can be changed by the peer who owns it.
+
+Any peer can change the metadata for themselves. Currently one peer cannot change another peer's metadata.
+
+To change their own metadata value the peer should call `change(metadata:completion:)` on their `HMSSSDK` instance.
+
+The data may be any arbitrary string.
+
+## Reading metadata
+
+To read metadata, read the `metadata` value on any `HMSPeer` instance.
+
+## Responding to updates
+
+Whenever a remote peer's metadata is updated a callback will be received in `on(peer: HMSPeer, update: HMSPeerUpdate)` of `HMSUpdateListener` where the `update` value will be of type `HMSPeerUpdate.metadataUpdated`.
+
+When this callback is received the UI for that peer should be updated as well.
+
+## Updating Metadata
+
+Here is how a peer can set their own metadata to a random string. In this case the string is stringified json.
+
+```swift
+let newMetadata = "{\"ms\": 100 }"
+hmsSdk.change(metadata: newMetadata) { success, error in
+   ...
+}
+```
